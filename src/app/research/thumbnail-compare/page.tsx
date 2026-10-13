@@ -44,7 +44,7 @@ function GalleryGrid({ items, label }: { items: typeof images; label: string }) 
   return (
     <div className="mb-10">
       <h3 className="text-sm font-medium text-secondary mb-3 uppercase tracking-wide">
-        {label} <span className="text-muted font-normal normal-case">(aspect-square, object-contain — used on /gallery)</span>
+        {label} <span className="text-muted font-normal normal-case">(aspect-square, object-contain, used on /gallery)</span>
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {items.map((img, i) => (
@@ -75,7 +75,7 @@ function HomepageGrid({ items, label, useFull }: { items: typeof images; label: 
   return (
     <div className="mb-10">
       <h3 className="text-sm font-medium text-secondary mb-3 uppercase tracking-wide">
-        {label} <span className="text-muted font-normal normal-case">(aspect-3/4, object-cover — homepage &quot;From the Collection&quot;)</span>
+        {label} <span className="text-muted font-normal normal-case">(aspect-3/4, object-cover, homepage &quot;From the Collection&quot;)</span>
       </h3>
       <p className="text-xs text-muted mb-3">
         Using: <code className="bg-warm px-1 py-0.5 rounded">{useFull ? 'extracted_url (full crop)' : 'thumbnail_url (300px)'}</code>
@@ -125,9 +125,9 @@ export default function ThumbnailComparePage() {
 
           <GalleryGrid items={good} label="Gallery Grid (thumbnail_url)" />
 
-          <HomepageGrid items={good} label="Homepage — OLD (thumbnail_url 300px)" useFull={false} />
+          <HomepageGrid items={good} label="Homepage: OLD (thumbnail_url 300px)" useFull={false} />
 
-          <HomepageGrid items={good} label="Homepage — NEW (extracted_url full crop)" useFull={true} />
+          <HomepageGrid items={good} label="Homepage: NEW (extracted_url full crop)" useFull={true} />
         </div>
 
         <hr className="border-border-light mb-16" />
@@ -135,11 +135,11 @@ export default function ThumbnailComparePage() {
         {/* Section 2: Bad examples that should be filtered */}
         <div className="mb-16">
           <h2 className="text-2xl font-display text-primary mb-2">Filtered Out (bbox &lt; 10%)</h2>
-          <p className="text-sm text-muted mb-6">These tiny decorative initials are now excluded from the homepage showcase by the new <code className="text-xs bg-warm px-1 py-0.5 rounded">bbox.width &ge; 0.1</code> filter.</p>
+          <p className="text-sm text-muted mb-6">These tiny decorative initials are now excluded from the homepage selection by the new <code className="text-xs bg-warm px-1 py-0.5 rounded">bbox.width &ge; 0.1</code> filter.</p>
 
           <GalleryGrid items={bad} label="Gallery Grid (still shown in gallery)" />
 
-          <HomepageGrid items={bad} label="Homepage — would look like this (now filtered)" useFull={false} />
+          <HomepageGrid items={bad} label="Homepage: would look like this (now filtered)" useFull={false} />
         </div>
 
         <div className="mt-8 p-5 bg-warm rounded-lg text-sm text-secondary">

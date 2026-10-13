@@ -29,7 +29,7 @@ export function SectionDivider({ imageUrl, alt, caption, source, bookUrl }: Sect
         />
         <figcaption className="mt-3 px-6 text-center text-xs text-stone-500 dark:text-stone-400 leading-relaxed max-w-prose mx-auto">
           <span className="italic">{caption}</span>
-          {' — '}
+          {'. '}
           {bookUrl ? (
             <a href={bookUrl} target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">
               {source}

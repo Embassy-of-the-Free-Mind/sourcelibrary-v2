@@ -45,7 +45,7 @@ export const POST = withAdminAuth(async (request, session) => {
             withOcr: {
               $sum: {
                 $cond: [
-                  { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+                  { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] },
                   1, 0
                 ]
               }
@@ -54,7 +54,7 @@ export const POST = withAdminAuth(async (request, session) => {
               $sum: {
                 $cond: [
                   { $or: [
-                    { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                    { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
                     { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
                   ] },
                   1, 0
@@ -99,11 +99,11 @@ export const POST = withAdminAuth(async (request, session) => {
           _id: null,
           total: { $sum: 1 },
           withOcr: {
-            $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, 1, 0] }
+            $sum: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] }, 1, 0] }
           },
           withTranslation: {
             $sum: { $cond: [{ $or: [
-              { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+              { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
               { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
             ] }, 1, 0] }
           }
@@ -139,11 +139,11 @@ export const GET = withAdminAuth(async () => {
           _id: null,
           total: { $sum: 1 },
           withOcr: {
-            $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, 1, 0] }
+            $sum: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] }, 1, 0] }
           },
           withTranslation: {
             $sum: { $cond: [{ $or: [
-              { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+              { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] },
               { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
             ] }, 1, 0] }
           }

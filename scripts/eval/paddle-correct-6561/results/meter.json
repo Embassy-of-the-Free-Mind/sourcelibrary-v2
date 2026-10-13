@@ -1,0 +1,6 @@
+{
+ "note": "Opus: the team@ account moved 70->74% weekly (all sessions) while this job made 170 Opus calls (01:49-02:56 UTC), so >= 4,250 Opus page-calls per account-week (lower bound: other sessions shared the window). Gemini thinking models: the shared agy account returned 429 on every model at 03:41 after 2,285 calls in the preceding 5 h and at 08:43 after 1,036 (both mixed models, all jobs); taken at the low figure, ~1,000 calls per 5 h = ~33,600 per week for the whole account. Flash-low sustained ~900 calls/h (agy meter, 10-09/10-10).",
+ "quota_pages_per_week": {"opus-correct": 4250, "opus-redo": 4250, "pro-correct": 33600, "flashhigh-correct": 33600, "flashlow-second": 151200},
+ "accounts": {"opus-correct": 4, "opus-redo": 4},
+ "flashlow_sustained_per_hour": 900
+}

@@ -4,12 +4,12 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { publishedReleases, allReleases, type PressReleaseMeta } from '@/lib/press-releases';
 
 export const metadata: Metadata = {
-  title: 'Press Releases — Source Library',
+  title: 'Press Releases | Source Library',
   description:
     'Official announcements from Source Library and the Embassy of the Free Mind.',
   alternates: { canonical: '/press-releases' },
   openGraph: {
-    title: 'Press Releases — Source Library',
+    title: 'Press Releases | Source Library',
     description: 'Official announcements from Source Library and the Embassy of the Free Mind.',
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630 }],
   },
@@ -76,7 +76,7 @@ export default async function PressReleasesIndex({
 
       {showDrafts && (
         <div className="mb-8 bg-accent-gold/5 border border-accent-gold/30 rounded-lg p-4 text-sm text-secondary">
-          Preview mode — showing draft releases. Drafts are hidden from the public list and search engines.
+          Preview mode: showing draft releases. Drafts are hidden from the public list and search engines.
         </div>
       )}
 

@@ -1,0 +1,47 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>2</columns>
+<page-num>7</page-num>
+<meta>catchword: quia-</meta>
+
+### 4. MANDAMIENTO.
+
+**M.** Ninoyolcuitia: ca oniquinmahuizpolo nohuampohua oniquimilhui ixtecqui tlahuanqui ahuilnenqui tetlachiahqui; ompohualpa, ihuan chicocpa.
+
+**C.** *Me confieſſo que deſhonré à mis Proximos, les dixe: Ladron, Borracho, Luxurioſo, Hechizero; quarenta, y ſiete vezes.*
+
+**M.** Niquincocolia nohuanpohua, ihuan yequipiyè ce xihuitl inin neyolcoliztli.
+
+**C.** *Les tengo odio à mis proximos, y tiene un año eſte odio.*
+
+**M.** Oniquinmahuizpolo huehuetque, ihuan ilamatlacame, oniquinpanahui, amo oniquintlapalo; ompualpa, ihuan chicuexpa.
+
+**C.** *Deſhonré à los Viejos, y Viejas perſonas,*
+
+<column-break/>
+
+*los pasè, no les ſaludè quarenta, y ocho vezes.*
+
+**M.** Amo onicmahuiztili notatzin, ompoalpa, ihuan chiuhnacpa.
+
+**C.** *No honré à mi Padre, quarenta, y nueve vezes.*
+
+**M.** Amo onicmahuiztili nonantzin, ompoalpa, ihuan matlacpa.
+
+**C.** *No honrè à mi Madre, cinquenta vezes.*
+
+**M.** Tecaonitlato ompualpa, ihuan matlacpa, ihuan cecpa.
+
+**C.** *Hablè mal de otro, ſinquenta, y una vez.*
+
+### 5. MANDAMIENTO.
+
+**M.** Oniquinmicti nohuampohua, Ompualpa, ihuan matlacpa, ihuan ôcpa.
+
+**C.** *Heri, ó les di golpeando, ó aporreando à mis proximos cinquenta, y dos vezes.*
+
+**M.** Oniquinmicti, oni-
+
+<vocab>mandamiento, ninoyolcuitia, oniquinmahuizpolo, nohuanpohua, ixtecqui, tlahuanqui, ahuilnenqui, tetlachiahqui, niquincocolia, huehuetque, ilamatlacame, onicmahuiztili, tecaonitlato, oniquinmicti</vocab>

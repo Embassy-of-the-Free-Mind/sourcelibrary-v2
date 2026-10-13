@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA cera/scholz1",
+  "edition": "Epistolarum Philosophicarum: Medicinalium, Ac Chymicarum a Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Vol — Frankfurt am Main: Andreas Wechel (Erben), Claude de Marne, Johann Aubry (I.), 1598.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "origin": "library",
+  "book_id": "6a26beae0e247ebad6de8612",
+  "page_number": 208,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 925480,
+    "to_char": 930462,
+    "overlap": 0.432,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-3)",
+    "at": "2026-10-06T10:05:28.759Z",
+    "note": "two-column folio opening (pp.391-392); ref covers both columns in full; Greek words and line numbers left out, marginalia inlined",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      208,
+      209,
+      210
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.542Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "2537d87225c5af8c7644c0f1679ff76757289e7a6d20f2eaebe1d1f938b83513",
+  "unit": {
+    "chars": 4982
+  }
+}

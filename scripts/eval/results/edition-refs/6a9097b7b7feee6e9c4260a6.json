@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "book_id": "6a9097b7b7feee6e9c4260a6",
+    "title": "Accidentia ex Stranbrigiana [sic] editione nuper recognita & castigata lima Roberti Whitintoni Lichfeldiensis in florentissima Oxoniensi academia laureati",
+    "published": "1529",
+    "source": "EEBO-TCP A12851",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 0,
+    "skips": {
+      "no-window": 8
+    },
+    "median_char_acc": null,
+    "median_char_acc_windowed": null,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p7",
+      "page": 7,
+      "skipped": "no-window",
+      "overlap": 0.205
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p8",
+      "page": 8,
+      "skipped": "no-window",
+      "overlap": 0.153
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p9",
+      "page": 9,
+      "skipped": "no-window",
+      "overlap": 0.15
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p10",
+      "page": 10,
+      "skipped": "no-window",
+      "overlap": 0.127
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p15",
+      "page": 15,
+      "skipped": "no-window",
+      "overlap": 0.086
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p16",
+      "page": 16,
+      "skipped": "no-window",
+      "overlap": 0.12
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p24",
+      "page": 24,
+      "skipped": "no-window",
+      "overlap": 0.032
+    },
+    {
+      "slug": "ed-6a9097b7b7feee6e9c4260a6-p25",
+      "page": 25,
+      "skipped": "no-window",
+      "overlap": 0.127
+    }
+  ]
+}

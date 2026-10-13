@@ -174,7 +174,7 @@ export async function budgetAllowsDispatch(db, label, { bypass = false, control:
 // ─── Scope envelopes (#4540) ────────────────────────────────────────────────
 //
 // A scope in processing_control.allow_scopes may carry its own budget:
-//   allow_scopes.<tag> = { book_ids, collections, budget_usd, created_at, created_by, lanes?, meter_endpoints? }
+//   allow_scopes.<tag> = { book_ids, collections, budget_usd, created_at, created_by, expires_at, lanes?, meter_endpoints? }
 // A book in such a scope may dispatch while the SCOPE's envelope has room,
 // even when the global daily dial is closed. This is a second, separately
 // accounted ceiling — never an absence of one (#3826 is why the dial is
@@ -189,8 +189,48 @@ export async function budgetAllowsDispatch(db, label, { bypass = false, control:
 // dial), so an envelope's measured spend is a floor; the envelope is a
 // brake, not an accounting system, same as the dial.
 
-/** Scopes that carry a positive budget envelope. */
-export function readScopeEnvelopes(control) {
+// Every envelope expires (#4599). 40 envelopes were open on 2026-10-04, 10 of them SPENT and
+// the oldest 33 days old (#5827): a permission nobody closes is a permission still granted.
+// set-scope.mjs stamps expires_at = created + ENVELOPE_TTL_DAYS on create (now + TTL the first
+// time it writes an envelope that predates this field); --expires / --extend move it.
+export const ENVELOPE_TTL_DAYS = 14;
+const DAY_MS = 24 * 3600 * 1000;
+
+/**
+ * The expires_at a set-scope write should store.
+ *   expires: an explicit date (--expires) wins.
+ *   extendDays: push the current expiry out by N days (--extend); an already-expired
+ *     envelope is extended from now, so reopening one grants N days, not N minus the lapse.
+ *   otherwise: keep the stored value; an envelope without one gets base + TTL, where base
+ *     is now — for a new envelope that IS its created_at, for an old one it is the first
+ *     write after this field existed (never created + TTL, which would expire it on the spot).
+ */
+export function nextEnvelopeExpiry({ existing = null, now = new Date(), expires = null, extendDays = null } = {}) {
+  if (expires) {
+    const d = new Date(expires);
+    if (Number.isNaN(d.getTime())) throw new Error(`expires_at '${expires}' is not a date`);
+    return d;
+  }
+  const current = existing ? new Date(existing) : null;
+  const valid = current && !Number.isNaN(current.getTime()) ? current : null;
+  if (extendDays != null) {
+    if (!Number.isFinite(extendDays) || extendDays <= 0) throw new Error('extend must be a positive number of days');
+    const from = valid && valid > now ? valid : now;
+    return new Date(from.getTime() + extendDays * DAY_MS);
+  }
+  return valid ?? new Date(now.getTime() + ENVELOPE_TTL_DAYS * DAY_MS);
+}
+
+/**
+ * Scopes that carry a positive budget envelope and have not expired.
+ *
+ * An envelope whose expires_at is in the past is CLOSED: it is left out, so no gate opens on
+ * it and every driver that looks its tag up finds nothing (they refuse or re-ask set-scope,
+ * which will not reopen it without --extend). An unparseable expires_at counts as expired —
+ * fail closed. No expires_at at all is the pre-#4599 shape, open until the backfill stamps it.
+ * Pass includeExpired to see them anyway (set-scope --show), each marked `expired: true`.
+ */
+export function readScopeEnvelopes(control, { now = new Date(), includeExpired = false } = {}) {
   const scopes = control?.allow_scopes;
   if (!scopes || typeof scopes !== 'object') return [];
   const out = [];
@@ -198,12 +238,17 @@ export function readScopeEnvelopes(control) {
     const s = scopes[tag];
     const b = s?.budget_usd;
     if (typeof b === 'number' && Number.isFinite(b) && b > 0) {
+      const expiresAt = s.expires_at != null ? new Date(s.expires_at) : null;
+      const expired = expiresAt != null && (Number.isNaN(expiresAt.getTime()) || expiresAt <= now);
+      if (expired && !includeExpired) continue;
       out.push({
         tag,
         budget_usd: b,
         book_ids: Array.isArray(s.book_ids) ? s.book_ids.filter(Boolean).map(String) : [],
         collections: Array.isArray(s.collections) ? s.collections.filter(Boolean).map(String) : [],
         created_at: s.created_at ? new Date(s.created_at) : null,
+        expires_at: expiresAt,
+        expired,
         // Optional: gate LABEL prefixes this envelope opens for. Absent = every worker that asks
         // the scoped gate may spend it on these books (the original contract).
         lanes: Array.isArray(s.lanes) && s.lanes.length ? s.lanes.filter(Boolean).map(String) : null,
@@ -350,7 +395,7 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
   }
 
   // Global dial closed (spent, or unset = default-closed). Envelope lane.
-  const envelopes = readScopeEnvelopes(control);
+  const envelopes = readScopeEnvelopes(control, { includeExpired: true });
   if (envelopes.length === 0) {
     console.log(`  [spend-guard] ${label}: ${budget === null ? 'no daily_budget_usd set (default-closed)' : 'daily ceiling reached'} and no scope envelopes — no new dispatch.`);
     return { allowed: false, envelopeIds: null };
@@ -358,6 +403,12 @@ export async function budgetAllowsDispatchScoped(db, label, { bypass = false, co
   const open = new Set();
   const parts = [];
   for (const env of envelopes) {
+    // Listed only so the log says why it is shut: an expired envelope never opens (#4599).
+    if (env.expired) {
+      const when = Number.isNaN(env.expires_at.getTime()) ? '(unparseable expires_at)' : env.expires_at.toISOString();
+      parts.push(`${env.tag}: EXPIRED ${when} — closed`);
+      continue;
+    }
     // A lane-restricted envelope is a permission on a set of books FOR ONE WORKER. Without it, an
     // envelope opened for translation paid image extraction more than translation on the same
     // books (2026-09-30: $2.80 image-extract vs $2.52 chained translation, chained-stalled-2026-09-30),

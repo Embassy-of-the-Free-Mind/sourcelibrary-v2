@@ -291,11 +291,11 @@ export interface ScoredCoverPick<T> {
  */
 export function selectScoredCoverPage<
   T extends { page_number?: number; page_type?: string | null; ocr_head?: string | null; hidden?: boolean },
->(pages: ReadonlyArray<T>, bookTitle?: string | null): ScoredCoverPick<T> | undefined {
+>(pages: ReadonlyArray<T>, bookTitle?: string | null, bookAuthor?: string | null): ScoredCoverPick<T> | undefined {
   let best: { page: T; score: number; reason: string } | null = null;
   for (const page of pages) {
     if (isJunkRepresentativePage(page)) continue;
-    const scored = scorePageForCover(page, { bookTitle });
+    const scored = scorePageForCover(page, { bookTitle, bookAuthor });
     if (!best || scored.score > best.score) best = { page, ...scored };
   }
   if (best && best.score >= COVER_SCORE_CONFIDENT) {

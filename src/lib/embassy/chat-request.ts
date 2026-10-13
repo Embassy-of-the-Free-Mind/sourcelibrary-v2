@@ -21,7 +21,7 @@ export const chatRequestSchema = z.object({
   threadId: z.string().nullable().optional(),
   message: z.string()
     .min(1, 'Message cannot be empty')
-    .max(5000, 'That message is too long for the Librarian — please keep it under 5,000 characters, or share the text a section at a time.'),
+    .max(5000, 'That message is too long for the Librarian. Please keep it under 5,000 characters, or share the text a section at a time.'),
   history: z.array(messageSchema).max(50).optional(),
   // The reader's listing choice, not a name-sharing choice — those were the
   // same switch until now and that is what went wrong twice. Publishing under

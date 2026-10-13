@@ -109,5 +109,32 @@ export function alignSpan(hyp, ref) {
     [prev, cur] = [cur, prev]; [ps, cs] = [cs, ps];
   }
   let best = Infinity, end = 0; for (let j = 0; j <= m; j++) if (prev[j] < best) { best = prev[j]; end = j; }
-  return { start: ps[end], end, wer: best / Math.max(1, n) };
+  return { start: ps[end], end, wer: best / Math.max(1, n), edits: best };
+}
+
+// Letter-level window trim by alignment (moved from benchmark-refs.mjs, where it was Greek-only; #5584).
+// Each scored read of the page is aligned to the best SUBSTRING of the window's letters (free skip at
+// both ends); reads that align at < 0.5 CER over ≥ `minLetters` contribute their span, and the window is
+// cut to the UNION of the spans. No engine is charged for text another engine read; text no engine read
+// (the next leaf, a header) is dropped for all of them alike. A fixed character pad cannot do this: the
+// Chinese 4-gram trim padded ±8 characters, and on a spaceless script 8 characters is a column of the
+// neighbouring page, charged to every engine as deletions (#5584: ~8 of 9.8 CER points on one page).
+// `isLetter` picks the window's scored letters, `refFold` folds each one, `hypLetters` turns a read into
+// the same alphabet. Iterates code points, so astral Han (𨼆) is one letter, not two halves.
+export function alignTrimWindow(window, reads, { isLetter, refFold = c => c, hypLetters, minLetters = 80, cap = 6000 }) {
+  const w = window.normalize('NFC'); const pos = [], letters = [];
+  let i = 0; for (const ch of w) { if (isLetter(ch)) { pos.push([i, i + ch.length]); letters.push(refFold(ch)); } i += ch.length; }
+  const refL = letters.slice(0, cap);
+  let lo = Infinity, hi = -Infinity; const used = [];
+  for (const [e, text] of Object.entries(reads)) {
+    const hypL = hypLetters(text).slice(0, cap);
+    if (hypL.length < minLetters) continue;
+    const a = alignSpan(hypL, refL); if (!a) continue;
+    const cer = a.edits / Math.max(1, a.end - a.start);
+    if (cer >= 0.5 || a.end - a.start < minLetters) continue;
+    lo = Math.min(lo, a.start); hi = Math.max(hi, a.end); used.push(`${e}:${cer.toFixed(2)}`);
+  }
+  const note = { letters_before: letters.length, reads_used: used };
+  if (!used.length || refL.length < letters.length) { note.letters_after = letters.length; note.kept = 'whole window (no aligning read, or window over the cap)'; return { window: w, note, trimmed: false }; }
+  note.letters_after = hi - lo; return { window: w.slice(pos[lo][0], pos[hi - 1][1]), note, trimmed: true };
 }

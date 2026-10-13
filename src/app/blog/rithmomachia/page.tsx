@@ -4,10 +4,10 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Research Notes - Source Library',
-  description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers" — a mathematical board game played across Europe for six centuries. Now translated for the first time.',
+  description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers," a mathematical board game played across Europe for six centuries. Now translated for the first time.',
   openGraph: {
     title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
-    description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers" — a mathematical board game played across Europe for six centuries.',
+    description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers," a mathematical board game played across Europe for six centuries.',
     images: [
       {
         url: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
@@ -58,7 +58,7 @@ export default function RithmomachiaPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           Before chess conquered Europe, scholars played a different game. It was played on a double-length
           chessboard. Its pieces bore numbers instead of ranks. You captured opponents not through positional
-          strategy but through arithmetic — addition, subtraction, multiplication, and the elegant proportions
+          strategy but through arithmetic: addition, subtraction, multiplication, and the elegant proportions
           of Pythagorean number theory. You won by arranging captured pieces into mathematical harmonies.
           Its name was Rithmomachia, the &ldquo;Battle of Numbers,&rdquo; and for six centuries it was the
           game of the educated mind.
@@ -66,7 +66,7 @@ export default function RithmomachiaPage() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Source Library now holds the five major printed treatises on Rithmomachia, spanning 1496 to 1616,
-          written in Latin, French, English, Italian, and German — all translated into English for the
+          written in Latin, French, English, Italian, and German, all translated into English for the
           first time as a complete collection. Together they document one of the most remarkable intellectual
           games ever invented, and its slow disappearance from European culture.
         </p>
@@ -112,7 +112,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Pythagoras almost certainly did not invent Rithmomachia. The game first appears in the historical
           record around 1030 CE, in the monastic schools of southern Germany, where a monk named Asilo of
-          Würzburg devised it as a teaching tool. But the attribution is not mere flattery — the mathematics
+          Würzburg devised it as a teaching tool. But the attribution is not mere flattery: the mathematics
           are genuinely Pythagorean. The game&rsquo;s pieces, captures, and victory conditions are all built
           from the theory of ratios and proportions laid out in Boethius&rsquo;s <em>De Institutione
           Arithmetica</em> (c. 500 CE), which itself transmitted Pythagorean number theory to the medieval West.
@@ -145,8 +145,8 @@ export default function RithmomachiaPage() {
           in explicitly cosmological terms: &ldquo;Let the side of the Even numbers
           be blackish, for the Evens belong to the sensible world. And the side of the Odd be
           white and shining, for the Odds are masculine and of undivided substance, always expressing
-          a likeness of the same.&rdquo; The pyramids receive special sacred colors &mdash; red for
-          the perfect pyramid (Even, 91), blue for the imperfect (Odd, 190) &mdash; &ldquo;on account
+          a likeness of the same.&rdquo; The pyramids receive special sacred colors: red for
+          the perfect pyramid (Even, 91), blue for the imperfect (Odd, 190), &ldquo;on account
           of the excellence both of their nature and of the divinity of the squares from whose
           accumulation they arise.&rdquo;
         </p>
@@ -154,7 +154,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Then comes a moment any student will recognize. Alcmeon, warming to his theme, begins
           explaining that the pyramid&rsquo;s base is &ldquo;the first sensible circle of moving
-          things&rdquo; and its apex represents divinity &mdash; and Bathillus cuts him off:
+          things&rdquo; and its apex represents divinity, and Bathillus cuts him off:
         </p>
 
         <div className="border-l-4 border-accent-violet pl-6 my-10">
@@ -169,8 +169,8 @@ export default function RithmomachiaPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Alcmeon catches himself &mdash; &ldquo;You remind me rightly, Bathillus; I was almost
-          neglecting myself, and straying far from the task at hand&rdquo; &mdash; and returns to
+          Alcmeon catches himself (&ldquo;You remind me rightly, Bathillus; I was almost
+          neglecting myself, and straying far from the task at hand&rdquo;) and returns to
           the rules. But at the end of the lesson, after compressing the entire game into{' '}
           <Link href="/book/arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis?page=146" className="text-accent-rust hover:text-accent-rust">
             twelve numbered rules
@@ -191,7 +191,7 @@ export default function RithmomachiaPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The game is not the destination. It is a gateway &mdash; a way to begin thinking in
+          The game is not the destination. It is a gateway, a way to begin thinking in
           numbers, ratios, and harmonies before the student is ready for the deeper silence
           of Pythagorean contemplation. No other board game in history has been framed as a
           stage in philosophical initiation.
@@ -205,7 +205,7 @@ export default function RithmomachiaPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The board is a double chessboard — 8 squares wide and 16 long, &ldquo;as if two chessboards
+          The board is a double chessboard, 8 squares wide and 16 long, &ldquo;as if two chessboards
           were joined together,&rdquo; as Lever and Fulke describe it. Each side commands 24 pieces in
           three shapes: circles, triangles, and squares. Every piece bears a number.
         </p>
@@ -236,7 +236,7 @@ export default function RithmomachiaPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The two sides are not symmetric. One side plays the even numbers, the other the odd — a
+          The two sides are not symmetric. One side plays the even numbers, the other the odd: a
           fundamental Pythagorean distinction. Barozzi describes how the numbers on each piece are
           derived from the first four even or odd integers through multiplication:
         </p>
@@ -259,7 +259,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The shapes determine how pieces move. Circles move one space diagonally, &ldquo;no differently than
           the soldiers of Mars&rdquo; (pawns in chess), as Selenus puts it. Triangles leap two spaces.
-          Squares leap three. Each side also has a king — a pyramid of stacked pieces whose combined
+          Squares leap three. Each side also has a king, a pyramid of stacked pieces whose combined
           value represents the pinnacle of the army.
         </p>
 
@@ -292,25 +292,25 @@ export default function RithmomachiaPage() {
         <div className="bg-warm rounded-xl p-6 border border-border-light my-10">
           <p className="text-sm font-medium text-stone-800 mb-4">Methods of capture</p>
           <div className="space-y-3 text-secondary font-body">
-            <p><strong className="text-stone-800">Equality</strong> — A piece that can reach an enemy
+            <p><strong className="text-stone-800">Equality</strong>: A piece that can reach an enemy
             of the same value captures it.</p>
-            <p><strong className="text-stone-800">Addition</strong> — Two of your pieces whose values
+            <p><strong className="text-stone-800">Addition</strong>: Two of your pieces whose values
             sum to an enemy&rsquo;s value capture it. Barozzi gives the example: white triangle 9 plus
             white triangle 16 equals black circle 25.</p>
-            <p><strong className="text-stone-800">Subtraction</strong> — Two of your pieces whose
+            <p><strong className="text-stone-800">Subtraction</strong>: Two of your pieces whose
             difference equals an enemy&rsquo;s value capture it.</p>
-            <p><strong className="text-stone-800">Multiplication</strong> — A piece&rsquo;s value
+            <p><strong className="text-stone-800">Multiplication</strong>: A piece&rsquo;s value
             multiplied by the number of empty squares between it and an enemy equals the enemy&rsquo;s
             value.</p>
-            <p><strong className="text-stone-800">Division</strong> — The reverse: the enemy&rsquo;s
+            <p><strong className="text-stone-800">Division</strong>: The reverse: the enemy&rsquo;s
             value divided by the distance equals your piece&rsquo;s value.</p>
-            <p><strong className="text-stone-800">Siege</strong> — Surround a piece so that &ldquo;its
+            <p><strong className="text-stone-800">Siege</strong>: Surround a piece so that &ldquo;its
             lawful movement is blocked,&rdquo; and it falls when you place the fourth surrounding piece.</p>
           </div>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Every capture requires mental arithmetic. You don&rsquo;t just see the board — you calculate it.
+          Every capture requires mental arithmetic. You don&rsquo;t just see the board; you calculate it.
           A player scanning for captures is simultaneously running addition, subtraction, multiplication,
           and division in their head, checking whether any combination of their pieces relates arithmetically
           to any reachable opponent. This is not a game you can play by intuition. It is a game that
@@ -324,7 +324,7 @@ export default function RithmomachiaPage() {
             className="w-full max-w-xl mx-auto rounded-lg shadow-md"
           />
           <figcaption className="text-center text-sm text-muted mt-3 italic">
-            Game board with pieces in starting position — circles, triangles, and squares bearing numerical values. Boissiere, 1554.{' '}
+            Game board with pieces in starting position: circles, triangles, and squares bearing numerical values. Boissiere, 1554.{' '}
             <Link href="/book/le-tres-excellent-et-ancien-jeu-pythagorique-dit-boissiere?page=39" className="text-accent-rust hover:text-accent-rust not-italic">Read &rarr;</Link>
           </figcaption>
         </figure>
@@ -339,7 +339,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Rithmomachia&rsquo;s victory conditions are its most extraordinary feature. You don&rsquo;t
           win by eliminating the opponent. You win by arranging your captured pieces on the
-          opponent&rsquo;s side of the board in mathematical progressions — arithmetic, geometric, or
+          opponent&rsquo;s side of the board in mathematical progressions: arithmetic, geometric, or
           harmonic.
         </p>
 
@@ -352,7 +352,7 @@ export default function RithmomachiaPage() {
           <div className="space-y-4 text-secondary font-body">
             <div>
               <p className="font-medium text-stone-800">The Small Victory</p>
-              <p>Arrange three captured pieces in a single proportion — arithmetic (e.g., 2, 4, 6),
+              <p>Arrange three captured pieces in a single proportion: arithmetic (e.g., 2, 4, 6),
               geometric (e.g., 2, 4, 8), or harmonic (e.g., 3, 4, 6).</p>
             </div>
             <div>
@@ -361,7 +361,7 @@ export default function RithmomachiaPage() {
             </div>
             <div>
               <p className="font-medium text-stone-800">The Greatest Victory</p>
-              <p>Arrange four pieces satisfying all three proportions at once — arithmetic, geometric,
+              <p>Arrange four pieces satisfying all three proportions at once: arithmetic, geometric,
               and harmonic.</p>
             </div>
           </div>
@@ -390,7 +390,7 @@ export default function RithmomachiaPage() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           This is a game where you win by creating beauty. Not by destroying the opponent, but by
-          demonstrating mastery of the mathematical harmonies that — in the Pythagorean worldview —
+          demonstrating mastery of the mathematical harmonies that, in the Pythagorean worldview,
           govern the cosmos.
         </p>
 
@@ -477,7 +477,7 @@ export default function RithmomachiaPage() {
                 The only English treatise, written as an explicit alternative to dice and card games. Lever
                 appeals to moral reformers: &ldquo;This causes no contention, nor any debate at all; by this,
                 no hatred, wrath, nor guile arises in any way.&rdquo; Fulke, a mathematician, supplies the
-                technical details. The result is the most accessible of all five treatises — a practical
+                technical details. The result is the most accessible of all five treatises: a practical
                 how-to guide.
               </p>
             </div>
@@ -500,7 +500,7 @@ export default function RithmomachiaPage() {
               </Link>
               <p className="text-sm text-muted mt-1 mb-3">Venice, 1572 &middot; Italian &middot; 66 pages</p>
               <p className="text-secondary text-sm leading-relaxed font-body">
-                Barozzi was a Venetian mathematician with a taste for Pythagorean mysticism — he was later
+                Barozzi was a Venetian mathematician with a taste for Pythagorean mysticism; he was later
                 tried by the Inquisition for magical practices. His treatise is compact, precise, and features
                 the clearest explanation of how piece values are derived from Pythagorean number sequences.
                 His preface laments that the &ldquo;ancient philosophers discovered many most beautiful games&rdquo;
@@ -527,7 +527,7 @@ export default function RithmomachiaPage() {
               <p className="text-sm text-muted mt-1 mb-3">Leipzig, 1616 &middot; German &middot; 540 pages</p>
               <p className="text-secondary text-sm leading-relaxed font-body">
                 The grandest of the five. &ldquo;Gustavus Selenus&rdquo; was a pseudonym for Duke August the Younger
-                of Brunswick-Lüneburg, who later founded the famous Wolfenbüttel library — one of the largest in
+                of Brunswick-Lüneburg, who later founded the famous Wolfenbüttel library, one of the largest in
                 Europe. His massive chess treatise includes Rithmomachia as an appendix (from page 495), treating
                 it as chess&rsquo;s scholarly cousin. The copperplate engravings are the finest visual record of
                 the game, and his account of the victory conditions is the most complete.
@@ -561,7 +561,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           What is most striking in reading these five treatises side by side is how consistently the
           authors defend the game&rsquo;s moral and intellectual value. Rithmomachia was not just a
-          pastime — it was a pedagogical tool, a form of mental discipline, and a demonstration of
+          pastime; it was a pedagogical tool, a form of mental discipline, and a demonstration of
           Pythagorean principles.
         </p>
 
@@ -587,7 +587,7 @@ export default function RithmomachiaPage() {
           The game&rsquo;s appeal was always tied to its Pythagorean credentials: &ldquo;Its invention
           is ascribed to Pythagoras; it bears the name of philosophers; prudent men practice it, and
           godly men praise it.&rdquo; Thomas More had recommended it in <em>Utopia</em> (1516) as a
-          wholesome alternative to dice. The game occupied a unique cultural niche — respectable
+          wholesome alternative to dice. The game occupied a unique cultural niche: respectable
           enough for clerics, intellectually rigorous enough for mathematicians, and entertaining
           enough to survive in print.
         </p>
@@ -614,7 +614,7 @@ export default function RithmomachiaPage() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The game&rsquo;s deepest structure reflects Pythagorean cosmology. The two sides are not
-          interchangeable armies — they represent the fundamental duality of the universe. Even numbers
+          interchangeable armies; they represent the fundamental duality of the universe. Even numbers
           represent the sensible, material world. Odd numbers represent the intelligible, formal world.
           The Jordanus treatise makes this explicit:
         </p>
@@ -636,7 +636,7 @@ export default function RithmomachiaPage() {
           of the two sides: &ldquo;Here you may consider this most noble alliance: how the
           parts of even numbers always proceed by progression from the odd number; conversely,
           the parts of the odd number have their progression according to the even number.&rdquo;
-          Even and odd are not merely opponents — they are complementary aspects of mathematical
+          Even and odd are not merely opponents; they are complementary aspects of mathematical
           reality, locked in a generative relationship.
         </p>
 
@@ -671,11 +671,11 @@ export default function RithmomachiaPage() {
 
         <div className="bg-warm rounded-xl p-6 border border-border-light my-10">
           <div className="space-y-2 text-secondary font-body text-sm">
-            <p><strong className="text-stone-800">3:2</strong> &mdash; the Fifth (<em>Diapente</em>)</p>
-            <p><strong className="text-stone-800">4:3</strong> &mdash; the Fourth (<em>Diatessaron</em>)</p>
-            <p><strong className="text-stone-800">4:2 = 2:1</strong> &mdash; the Octave (<em>Diapason</em>)</p>
-            <p><strong className="text-stone-800">6:2 = 3:1</strong> &mdash; the Twelfth (<em>Diapason + Diapente</em>)</p>
-            <p><strong className="text-stone-800">4:1</strong> &mdash; the Fifteenth, or Double Octave (<em>Disdiapason</em>)</p>
+            <p><strong className="text-stone-800">3:2</strong>, the Fifth (<em>Diapente</em>)</p>
+            <p><strong className="text-stone-800">4:3</strong>, the Fourth (<em>Diatessaron</em>)</p>
+            <p><strong className="text-stone-800">4:2 = 2:1</strong>, the Octave (<em>Diapason</em>)</p>
+            <p><strong className="text-stone-800">6:2 = 3:1</strong>, the Twelfth (<em>Diapason + Diapente</em>)</p>
+            <p><strong className="text-stone-800">4:1</strong>, the Fifteenth, or Double Octave (<em>Disdiapason</em>)</p>
           </div>
         </div>
 
@@ -697,7 +697,7 @@ export default function RithmomachiaPage() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           You don&rsquo;t just win Rithmomachia by arranging numbers. You play a chord on the
-          board &mdash; a harmony you could literally reproduce on a monochord or a set of
+          board, a harmony you could literally reproduce on a monochord or a set of
           tuned metal bars. The game&rsquo;s ultimate victory is an act of musical composition.
         </p>
 
@@ -706,8 +706,8 @@ export default function RithmomachiaPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          Barozzi reveals a fact buried in the mathematics: two specific pieces &mdash; the white
-          square 153 and the black pyramid 190 &mdash; cannot be captured by any arithmetic method.
+          Barozzi reveals a fact buried in the mathematics: two specific pieces (the white
+          square 153 and the black pyramid 190) cannot be captured by any arithmetic method.
           No combination of opposing pieces can sum, subtract, multiply, or divide to reach
           these values.
         </p>
@@ -725,7 +725,7 @@ export default function RithmomachiaPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          This makes siege &mdash; surrounding a piece on all four sides &mdash; strategically
+          This makes siege (surrounding a piece on all four sides) strategically
           essential. The strongest pieces on the board can only fall to positional play, not
           calculation. It also means these two pieces are the ultimate anchors: they can roam
           the board knowing they are immune to every form of arithmetic attack.
@@ -738,7 +738,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Rithmomachia is emphatically not chess. But there is exactly one moment where chess
           intrudes. Both Barozzi and Selenus describe a unique privilege of the pyramid: when
-          besieged &mdash; surrounded on all four sides &mdash; the pyramid can escape using a
+          besieged (surrounded on all four sides), the pyramid can escape using a
           chess knight&rsquo;s leap.
         </p>
 
@@ -756,8 +756,8 @@ export default function RithmomachiaPage() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           This is the only chess move in the entire game. It applies only to the pyramid, and only
-          when besieged. It cannot be used to capture &mdash; only to escape. The distinction
-          matters: it means a besieging player must not only surround the pyramid, but also control
+          when besieged. It cannot be used to capture, only to escape. The distinction
+          matters: it means a besieging player must both surround the pyramid and control
           all knight-jump escape squares, making siege of the pyramid extraordinarily difficult.
         </p>
 
@@ -768,7 +768,7 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Barozzi&rsquo;s seven rules for achieving victory include a remarkable protocol.
           When you place the second-to-last piece of your victory formation, you must
-          announce your intention &mdash; giving your opponent a chance to disrupt it. Once
+          announce your intention, giving your opponent a chance to disrupt it. Once
           proclaimed, the pieces in your formation become immune to capture.
         </p>
 
@@ -787,7 +787,7 @@ export default function RithmomachiaPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The victory is not a surprise attack. It is a demonstration &mdash; a public proof
+          The victory is not a surprise attack. It is a demonstration, a public proof
           that you have achieved mathematical harmony despite your opponent&rsquo;s best
           efforts to prevent it. This is the game&rsquo;s most chivalric rule: you win
           not by stealth, but by openly declaring your mastery and daring your opponent to
@@ -807,9 +807,9 @@ export default function RithmomachiaPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The circles (low-value, short-range) form the front rank &mdash; infantry. The
+          The circles (low-value, short-range) form the front rank: infantry. The
           triangles are the mobile middle ranks. The squares (high-value, long-range) hold
-          the back &mdash; heavy reserves. The pyramid is the king, protected at the center.
+          the back: heavy reserves. The pyramid is the king, protected at the center.
           This isn&rsquo;t a metaphor invented by modern commentators; the original authors
           explicitly thought of the game in military terms.
         </p>
@@ -822,7 +822,7 @@ export default function RithmomachiaPage() {
           Lever and Fulke describe not one but three complete rulesets, which they call
           &ldquo;kinds of play.&rdquo; In the first kind (the standard rules), circles move
           diagonally and triangles and squares move orthogonally. In the third kind,
-          attributed to the Chaldean tradition, <em>no piece moves diagonally at all</em> &mdash;
+          attributed to the Chaldean tradition, <em>no piece moves diagonally at all</em>;
           Buxerius writes that they move &ldquo;straight, not through corners, like the mad
           chess bishops.&rdquo; The second kind introduces a different capture system where
           multiplication and division use the empty squares between pieces as the operand.
@@ -873,13 +873,13 @@ export default function RithmomachiaPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The simplest answer is that chess won. Chess is adversarial, fast, and infinitely deep
           in its strategic complexity. It requires no mathematical knowledge to learn. Rithmomachia,
-          by contrast, demands that both players share a mathematical education — you cannot
+          by contrast, demands that both players share a mathematical education: you cannot
           play it without understanding ratios and proportions.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           But there is a deeper reason. Rithmomachia is a game that only makes sense within the
-          Pythagorean worldview — a world where number is the essence of reality, where mathematical
+          Pythagorean worldview, a world where number is the essence of reality, where mathematical
           ratios produce musical harmonies, and where understanding proportion is the highest
           intellectual achievement. As the Scientific Revolution replaced Pythagorean numerology
           with empirical measurement, the philosophical framework that gave Rithmomachia its meaning
@@ -969,7 +969,7 @@ export default function RithmomachiaPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          If you want to start with one book, choose Lever and Fulke — it&rsquo;s in English, the
+          If you want to start with one book, choose Lever and Fulke: it&rsquo;s in English, the
           most practically oriented, and reads like a game manual. If you want the richest
           intellectual experience, read Selenus&rsquo;s account of the victory conditions alongside
           Barozzi&rsquo;s derivation of the piece values. And if you want to understand the

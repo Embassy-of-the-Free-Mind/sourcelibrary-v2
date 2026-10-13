@@ -1,0 +1,17 @@
+{
+ "rule": "queue books with 150–500 pages, Mulberry32(5926) order, first two whose images all fetch; sweep = first 160 tp pages",
+ "books": [
+  {
+   "book_id": "6a90e7e5544007b776b3806a",
+   "title": "Disputatio theologica de vero discrimine peccati mortalis & venialis, deque impossibilitate implendi",
+   "year": 1633,
+   "pages": 189
+  },
+  {
+   "book_id": "69b686ec70c69d645a747167",
+   "title": "Complementum artis exorcisticae. Cui simile numquam visum est: cum litaniis, benedictionibus, &amp; ",
+   "year": 1618,
+   "pages": 472
+  }
+ ]
+}

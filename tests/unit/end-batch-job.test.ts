@@ -10,6 +10,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   endBatchJob, endNamelessBatchJobs, markRecovered, meterRecovered, decideEnd, normalizeGeminiState, ROUTE_TO_COLLECTION_STATUS,
+  discardBatchJob, decideDiscard, DISCARDED_STATUS,
 } from '../../scripts/lib/end-batch-job.mjs';
 
 class ApiErrorStub extends Error {
@@ -224,5 +225,70 @@ describe('nameless rows and argument checks', () => {
     await expect(endBatchJob(db, named(), { ...base, status: 'failed', set: { status: 'failed' } })).rejects.toThrow(/opts.status/);
     await expect(endBatchJob(db, named(), { status: 'failed', by: 'x' })).rejects.toThrow(/reason and by/);
     await expect(endNamelessBatchJobs(db, {}, { ...base, status: 'pending' })).rejects.toThrow(/terminal-loss/);
+  });
+});
+
+// #6333: until discardBatchJob() there was no way to record "finished, looked at, not written":
+// a stopped experiment or a superseded re-submission stayed a loss finding until it aged out.
+describe('discardBatchJob: a finished job is ended on purpose, or not at all', () => {
+  const held = { path: '/data/scratch/sl/batch-recover-6333/results/abc.jsonl', sha256: 'a'.repeat(64), bytes: 9052 };
+  const succeeded = { verdict: 'exists', state: 'BATCH_STATE_SUCCEEDED', requests: 2, ok: 1 };
+  const opts = { name: 'batches/abc', displayName: 'eval/pareto-6182 G36', reason: 'stopped experiment', by: 'tests', issue: 6293 };
+  function db(rows: Record<string, unknown>[]) {
+    const writes: Array<{ filter: Record<string, unknown>; update: Record<string, Record<string, unknown>>; opts?: unknown }> = [];
+    return { writes, db: { collection: (n: string) => { expect(n).toBe('batch_jobs'); return {
+      find: () => ({ toArray: async () => rows }),
+      updateOne: async (filter: Record<string, unknown>, update: Record<string, Record<string, unknown>>, o?: { upsert?: boolean }) => { writes.push({ filter, update, opts: o }); return { modifiedCount: o?.upsert ? 0 : 1, upsertedCount: o?.upsert ? 1 : 0 }; },
+    }; } } };
+  }
+
+  it('REFUSES without a reason, without Gemini’s word, on a live job, and on a key that could not answer', () => {
+    expect(decideDiscard(null, { reason: ' ', gemini: succeeded, result: held })).toMatchObject({ action: 'refuse', why: 'no reason given' });
+    expect(decideDiscard(null, { reason: 'x', gemini: null, result: held }).action).toBe('refuse');
+    expect(decideDiscard(null, { reason: 'x', gemini: { verdict: 'exists', state: 'JOB_STATE_RUNNING' }, result: held }).action).toBe('refuse');
+    expect(decideDiscard(null, { reason: 'x', gemini: { verdict: 'unmeasurable' }, result: held }).action).toBe('refuse');
+  });
+
+  it('REFUSES paid output it does not hold: a discard records where the bytes are', () => {
+    expect(decideDiscard(null, { reason: 'x', gemini: succeeded, result: null })).toMatchObject({ action: 'refuse' });
+    expect(decideDiscard(null, { reason: 'x', gemini: succeeded, result: { ...held, sha256: 'nope' } }).action).toBe('refuse');
+    expect(decideDiscard(null, { reason: 'x', gemini: succeeded, result: held }).action).toBe('discard');
+  });
+
+  it('needs no saved result when nothing was paid: every request failed, or the job is dead', () => {
+    expect(decideDiscard(null, { reason: 'x', gemini: { verdict: 'exists', state: 'JOB_STATE_SUCCEEDED', requests: 20000, ok: 0 } })).toMatchObject({ action: 'discard' });
+    expect(decideDiscard(null, { reason: 'x', gemini: { verdict: 'exists', state: 'JOB_STATE_CANCELLED' } }).action).toBe('discard');
+  });
+
+  it('REFUSES a row the collector still owns, and one already collected', () => {
+    expect(decideDiscard({ status: 'processing' }, { reason: 'x', gemini: succeeded, result: held }).why).toMatch(/collector still owns/);
+    expect(decideDiscard({ status: 'saved' }, { reason: 'x', gemini: succeeded, result: held }).why).toMatch(/already collected/);
+    expect(decideDiscard({ status: 'cancelled', results_collected: true }, { reason: 'x', gemini: succeeded, result: held }).why).toMatch(/already collected/);
+  });
+
+  it('writes the discard on the job’s own row, filtered on the status it decided on', async () => {
+    const f = db([{ _id: 'r1', id: 'pareto-6182-G36', status: 'external_eval', gemini_job_name: 'batches/abc' }]);
+    const r = await discardBatchJob(f.db, { ...opts, gemini: succeeded, result: held });
+    expect(r).toMatchObject({ action: 'discarded', modified: 1, inserted: 0 });
+    expect(f.writes[0].filter).toMatchObject({ _id: 'r1', status: 'external_eval' });
+    expect(f.writes[0].update.$set).toMatchObject({ status: DISCARDED_STATUS, status_before_discard: 'external_eval' });
+    expect(f.writes[0].update.$set.discard).toMatchObject({ reason: 'stopped experiment', by: 'tests', issue: 6293, result_sha256: held.sha256, requests: 2, requests_ok: 1 });
+  });
+
+  it('inserts a record when no batch_jobs row names the job, and never twice', async () => {
+    const f = db([]);
+    const r = await discardBatchJob(f.db, { ...opts, gemini: succeeded, result: held });
+    expect(r).toMatchObject({ action: 'discarded', inserted: 1 });
+    expect(f.writes[0].filter).toEqual({ gemini_job_name: 'batches/abc' });
+    expect(f.writes[0].opts).toEqual({ upsert: true });
+    expect(f.writes[0].update.$setOnInsert).toMatchObject({ status: DISCARDED_STATUS, type: 'discard_record', job_name: 'batches/abc', display_name: 'eval/pareto-6182 G36' });
+  });
+
+  it('writes nothing when refused or on a dry run', async () => {
+    const f = db([{ _id: 'r1', status: 'pending', job_name: 'batches/abc' }]);
+    expect((await discardBatchJob(f.db, { ...opts, gemini: succeeded, result: held })).action).toBe('refused');
+    const g = db([]);
+    expect((await discardBatchJob(g.db, { ...opts, gemini: succeeded, result: held, dryRun: true })).action).toBe('discarded');
+    expect([...f.writes, ...g.writes]).toEqual([]);
   });
 });

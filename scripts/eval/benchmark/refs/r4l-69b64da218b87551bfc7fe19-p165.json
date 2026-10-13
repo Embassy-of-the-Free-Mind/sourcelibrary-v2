@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg4",
+  "edition": "Iudas Iscariotes: tragoedia nova et sacra. Adiunctae sunt quoque duae Sophoclis tragoediae, Aiax flagellifer et Philoctetes: ab eodem auctore carmine versae. — Basel [?] or Leipzig [?]: 1552 [?].",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b64da218b87551bfc7fe19",
+  "page_number": 165,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 157166,
+    "to_char": 158205,
+    "overlap": 0.391,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "Naogeorg's Latin Ajax; ref matches 'CHO. Sum promptus' to 'soporem iniciat ut'; ends about one line early ('mihi bonum, / Saltu simul...' missing); marginal gloss '(huic) i. mihi' not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      165,
+      166,
+      167
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.508Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "d9f031a3e6fc7bec9ddb3900dbe517f3e2f445bb920d3fb5fd82d1814c7b7b91",
+  "unit": {
+    "chars": 1039
+  }
+}

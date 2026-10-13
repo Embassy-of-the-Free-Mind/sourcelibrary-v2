@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: preference
+languages: [de, it, la]
+scripts: [Latn]
+canons: []
+n_books: 3
+n_pages: 48
+verdict: "First live shadow of the batch lane: Batch API cancelled 8 of 15 jobs; judge preferred production 5-1 on 6 decided junctions vs A/A floor 79% ties; too thin to call"
+status: superseded
+decision: null
+superseded_by: "2026-09-25-retraction-of-the-arm-label-on-both-4681-seam-4681.md"
+issue: [4681, 5000, 5011, 5013]
+---
 ## 2026-09-24 — Batch API translation lane, first live shadow run on three books: A/A floor, blind judge vs production, and what the Batch API did (#4681 steps 3–4; PRs #5000/#5011/#5013)
 
 **Headline: the lane runs end to end on real books and writes what it should (nothing, in shadow),

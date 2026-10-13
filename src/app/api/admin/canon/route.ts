@@ -216,7 +216,7 @@ export const GET = withAdminAuth(async () => {
   const snapshot = await db.collection('system_config').findOne({ _id: SNAPSHOT_ID as any });
   if (!snapshot?.data) {
     return NextResponse.json(
-      { _computing: true, message: 'No snapshot yet — hit refresh to compute one.' },
+      { _computing: true, message: 'No snapshot yet. Hit refresh to compute one.' },
       { status: 202 },
     );
   }

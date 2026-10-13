@@ -157,6 +157,7 @@ async function processBook(book) {
           // Same trim the client parser applies before searching (clean()): quotes, spaces,
           // trailing punctuation. Without it the server verified 71% where the client verified 91%.
           vars: { q: { $trim: { input: { $arrayElemAt: ['$$n.captures', 0] }, chars: ' \t\n"\'“”‘’«»,;:.' } } },
+          // strlen-safe: $$q is $trim output, a string
           in: { match: '$$n.match', ctx: CTX('$$n.idx'), q: { $arrayElemAt: ['$$n.captures', 0] },
                 v: { $and: [{ $gt: [{ $strLenCP: '$$q' }, 0] }, { $gte: [{ $indexOfCP: [OCR_WS, '$$q'] }, 0] }] } },
         } },

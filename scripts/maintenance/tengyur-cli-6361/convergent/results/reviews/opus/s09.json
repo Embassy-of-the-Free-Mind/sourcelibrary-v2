@@ -1,0 +1,36 @@
+[
+  {
+    "book_id": "6abeb325896ea18127c83819", "slot": 9,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ར (Derge Tengyur, vol. 104)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio, a commentary on a sūtra passage about a Buddha's unshared qualities (mindfulness, knowing beings' faculties and dispositions). It belongs on the Tengyur shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 608,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 5,
+        "tr_errors_A": [
+          { "source": "དེ་བཞིན་གཤེགས་པ་རྣམས་ལ་རྣམ་པར་རྟོག་པ་མི་མངའ་བས་སོ", "english": "the Tathāgatas possess no conceptual elaboration", "problem": "rnam par rtog pa means conceptualisation, not 'elaboration' (prapañca). The sense survives.", "severity": "minor" },
+          { "source": "ཕྱིར། དེ་ཅིའི་ཕྱིར་ཞེ་ན", "english": "<meta>continues from previous page: because</meta> Therefore, the passage beginning with \"Why is that?\"", "problem": "The carried-over ཕྱིར is shown twice, once in the meta as 'because' and again in the text as 'Therefore'. It reads awkwardly.", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "དེ་ཤེས་པར་བྱ་བའི་དོན་དུ་ཡང་ཡེ་ཤེས་ཚོར་བར་མི་མཛད་པའོ", "english": "he does not experience wisdom as something to be perceived as a separate object for the sake of knowing that conduct", "problem": "Adds 'as a separate object', an interpretive gloss that is not in the Tibetan.", "severity": "minor" },
+          { "source": "ཕུང་པོ་གསུམ་", "english": "<note>... often referring to the three categories of beings: those certain of the right path, those certain of the wrong path, and those who are undecided</note>", "problem": "The note brings in the standard three rāśi reading, but the commentary on this very page explains the three groups by the śrāvaka, pratyekabuddha and bodhisattva lineages. The note disagrees with the text it annotates.", "severity": "moderate", "class": "T10" },
+          { "source": "ཕྱིར།", "english": "<meta>The text is a commentary on the Madhyamaka (Middle Way) philosophy ...</meta>", "problem": "The meta is a generic description instead of the continuity marker. It also calls the work a commentary on 'Madhyamaka philosophy' because of the volume's section label, when the page comments on a sūtra about the qualities of a Buddha.", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Neither version has a serious error. A follows the Tibetan lemma by lemma and adds nothing. B adds an interpretive gloss, a note that contradicts the commentary's own explanation of the three groups, and a generic meta.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge folio. The transcription matches the woodblock as far as I can read it, and both translations are faithful. A is the tighter of the two; B's extra notes add mild noise but no serious error."
+  }
+]

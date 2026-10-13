@@ -93,7 +93,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const data = await getArtist(slug);
   if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
   return {
-    title: `${data.name} — Source Library Visual Art`,
+    title: `${data.name} | Source Library Visual Art`,
     description: `${data.artworks.length} works by ${data.name} in Source Library.`,
     robots: { index: true, follow: true },
   };

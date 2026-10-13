@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/celtis2",
+  "edition": "Libri odarum — Argentorati: Matthia Schuerer, 1513.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b64a0b18b87551bfc6261e",
+  "page_number": 28,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 27928,
+    "to_char": 29025,
+    "overlap": 0.456,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Index libri quarti + index epodum match; ref opens with 5 short lines from previous page; footer line 'In carminibus Gerbellij...' not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "index",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      27,
+      28,
+      29
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.392Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "053cf21d969918796f9ef0deb84e941fccdd283fe2c8df263d28594697881166",
+  "unit": {
+    "chars": 1097
+  }
+}

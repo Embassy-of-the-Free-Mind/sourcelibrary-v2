@@ -1,0 +1,102 @@
+{
+ "issue": 6203,
+ "run": "run1",
+ "seed": 6203,
+ "drawn_at": "2026-10-12T21:31:14.375Z",
+ "scored_at": "2026-10-12T21:41:20.876Z",
+ "pages": 33,
+ "natural": 30,
+ "readers": [
+  "opus"
+ ],
+ "reader_status": {
+  "opus": {
+   "requested": 33,
+   "read": 33,
+   "not_run": 0,
+   "failed": {},
+   "unparsable": 0,
+   "quota_stopped": false,
+   "quota_at": null,
+   "models": [],
+   "ok": true,
+   "why": null
+  }
+ },
+ "per_reader": {
+  "opus": {
+   "read": 30,
+   "serious_pages": 18,
+   "kinds": {
+    "confabulation": 2,
+    "recitation": 0,
+    "wrong_leaf": 0,
+    "carry_over": 1,
+    "show_through": 0,
+    "illegible_fill": 4,
+    "misread": 10,
+    "mistranslation": 10,
+    "omission": 2,
+    "layout": 2,
+    "added_gloss": 5,
+    "other": 1
+   }
+  }
+ },
+ "pairs": [],
+ "controls": [
+  {
+   "packet": "p004",
+   "class": "dropped",
+   "expect_kind": "omission",
+   "book_id": "69f33dcd876dd827cbc5c954",
+   "page_number": 23,
+   "readers": {
+    "opus": {
+     "detected": true,
+     "serious": true,
+     "kind_named": true,
+     "missing": false
+    }
+   }
+  },
+  {
+   "packet": "p020",
+   "class": "negation",
+   "expect_kind": "mistranslation",
+   "book_id": "6970e37b9b09d309d780a2bc",
+   "page_number": 73,
+   "readers": {
+    "opus": {
+     "detected": true,
+     "serious": true,
+     "kind_named": true,
+     "missing": false
+    }
+   }
+  },
+  {
+   "packet": "p023",
+   "class": "wrong_leaf",
+   "expect_kind": "wrong_leaf",
+   "book_id": "69528aaeab34727b1f04ef1d",
+   "page_number": 178,
+   "readers": {
+    "opus": {
+     "detected": true,
+     "serious": true,
+     "kind_named": true,
+     "missing": false
+    }
+   }
+  }
+ ],
+ "control_recall": {
+  "opus": {
+   "detected": 3,
+   "serious": 3,
+   "kind_named": 3,
+   "n": 3
+  }
+ }
+}

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en, la, de, grc]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: 383
+verdict: "olmOCR-2-7B-FP8 beats flash-lite on English 1600-1699 (CER 0.036 vs 0.053, routes to box) but keeps lite elsewhere; Greek catastrophic on 55 of 114 pages."
+status: undecided
+decision: null
+superseded_by: null
+issue: 5660
+---
 ## 2026-10-03 (later), the second open engine: olmOCR-2-7B-FP8 passes English 1600–1699 and loses every other cell (#5660, job olmocr-5660b)
 
 **Design.** Same 632 JPEGs, same `cells.json`, same `benchmark-score.mjs`, same `open-engine-markup@1` rule (unchanged: it touched 22 olmOCR pages), and the same `benchmark-cost-lane.mjs --cells` rule. Prompt, weights and settings were fixed in **Amendment 1** of the prereg (commit ea04d2aab, pushed before any scoring). The engine is `allenai/olmOCR-2-7B-1025-FP8` (HF snapshot `40bd7202…`) on vLLM 0.10.2 (torch 2.8.0, transformers 4.57.6). It used olmOCR's own v4 YAML prompt, temperature 0, 4,500 max tokens, pages at 1,288 px on the longest side, and 8 clients, on one RunPod SECURE RTX PRO 4000 Blackwell. It was scored in a separate bench root without Paddle's outputs, so `invention` is measured against the same other-engine set Paddle faced. Artifacts: `scored-olmocr/`, `cost-lane-olmocr.json`, `summary-olmocr.json`, `weak-spots-olmocr.json`, `olmocr-arm-run.json`.

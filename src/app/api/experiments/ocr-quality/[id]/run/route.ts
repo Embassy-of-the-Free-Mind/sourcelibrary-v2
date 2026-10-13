@@ -8,6 +8,7 @@ import { images } from '@/lib/api-client';
 import { withAuth } from '@/lib/auth-helpers';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { getPageSource, type PageImageFields } from '@/lib/page-image-url';
 
 // Allow long-running OCR processing
 export const maxDuration = 300; // 5 minutes
@@ -185,7 +186,8 @@ export const POST = withAuth(async (request, session, context) => {
         // Single page processing
         const page = batch[0];
         try {
-          const imageUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
+          // getPageSource: on a split page archived_photo is the whole spread.
+          const imageUrl = getPageSource(page as PageImageFields);
           const image = imageUrl ? await fetchImageAsBase64(imageUrl) : null;
           if (!image) {
             results.push({

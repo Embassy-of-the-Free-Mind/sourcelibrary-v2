@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 304
+n_pages: 304
+verdict: "On the same pages flash invents more (15.8% vs 8.2%/9.2% for two lite runs); fidelity >= 4 and omission do not differ measurably. Rule output: lite stays."
+status: undecided
+decision: null
+superseded_by: null
+issue: 5274
+---
 ## 2026-09-30 — Lite vs flash on the SAME pages: does the model change judged fidelity, omission or invention? (#5274)
 
 **Headline: flash invents more (15.8% of pages against 8.2% and 9.2% for two lite runs); fidelity ≥ 4 and

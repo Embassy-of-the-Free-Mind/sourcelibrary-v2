@@ -91,7 +91,7 @@ export default function ShrutiTestDemo() {
 
   return (
     <LabCard
-      title="Station III — Measure your śruti"
+      title="Station III: Measure your śruti"
       headerRight={
         <button
           onClick={start}
@@ -100,14 +100,14 @@ export default function ShrutiTestDemo() {
           {trials ? 'Restart' : 'Begin the test'}
         </button>
       }
-      caption="Sixteen pairs of tones. Some pairs are identical; some differ by as much as a śruti or as little as 5 cents. Use headphones, answer honestly, and the smallest difference you reliably catch is your own pitch quantum — Bharata's two-vīṇā procedure, run on yourself."
+      caption="Sixteen pairs of tones. Some pairs are identical; some differ by as much as a śruti or as little as 5 cents. Use headphones, answer honestly, and the smallest difference you reliably catch is your own pitch quantum: Bharata's two-vīṇā procedure, run on yourself."
       sourceHref="/book/dattilam-treatise-on-music-dattila?page=24"
       sourceLabel="Dattilam, on the 22 śrutis (1st c. CE)"
     >
       {!trials && (
         <p className="text-sm text-secondary">
           The claim on the bench: the octave holds <span className="font-mono">22</span> distinguishable
-          steps — one śruti ≈ <span className="font-mono">55 ¢</span>. Modern ears usually resolve far
+          steps, so one śruti ≈ <span className="font-mono">55 ¢</span>. Modern ears usually resolve far
           finer. Where do you land?
         </p>
       )}

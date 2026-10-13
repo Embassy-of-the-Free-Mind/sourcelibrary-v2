@@ -5,7 +5,8 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth, isAdmin } from '@/lib/auth-helpers';
-import { withApiAuth } from '@/lib/api-auth';
+import { withApiAuth, type ApiIdentity } from '@/lib/api-auth';
+import { isWindowedCaller, resolvePageWindow, countPagesForWindow, type PagesWindow } from '@/lib/page-window';
 import { EDITION_COUNTER_PROJECTION } from '@/lib/page-translations';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
@@ -46,7 +47,8 @@ const DEFAULT_INDEX_FIELDS: readonly BookIndexProjectionField[] = [
 
 export const GET = withApiAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
+  identity: ApiIdentity,
 ) => {
   try {
     const { id } = await params;
@@ -87,7 +89,9 @@ export const GET = withApiAuth(async (
       // Muqaddimah: language French, original_language Arabic). Without these
       // three, every MCP caller saw one scalar and had no way to tell a
       // translation-of-a-translation from a source text.
-      original_language: 1, text_role: 1, is_translation: 1,
+      // text_role_source lets the apparatus tell a classified "original" from
+      // the heuristic's default (#4441).
+      original_language: 1, text_role: 1, text_role_source: 1, is_translation: 1,
       pages_count: 1, pages_translated: 1,
       // The stamped translation rung (#5287) — the reader's whole-book
       // download panel reads it instead of its own page arithmetic.
@@ -158,8 +162,12 @@ export const GET = withApiAuth(async (
     }
 
     const bookId = (book.id || book._id?.toString()) as string;
-    const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
-    const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
+    // Anonymous callers and bots get the page list in windows of at most
+    // ANON_PAGE_WINDOW (#6281): one request no longer yields every page id of
+    // a book. Sessions and API keys keep the whole list. `pages_window` tells
+    // every caller where this slice sits so it can fetch the next one.
+    const windowed = isWindowedCaller(identity.kind);
+    const { offset: pageOffset, limit: pageLimit } = resolvePageWindow(searchParams, windowed);
     const pageFilter: Record<string, unknown> = { book_id: bookId, page_number: { $gte: 0 } };
     if (tenantId) pageFilter.tenantId = tenantId;
     let cursor = db.collection('pages')
@@ -169,12 +177,26 @@ export const GET = withApiAuth(async (
     if (pageOffset > 0) cursor = cursor.skip(pageOffset);
     if (pageLimit > 0) cursor = cursor.limit(pageLimit);
     const pages = await cursor.toArray();
+    const pagesWindow: PagesWindow = {
+      offset: pageOffset,
+      limit: pageLimit,
+      returned: pages.length,
+      total: await countPagesForWindow(pageOffset, pageLimit, pages.length,
+        () => db.collection('pages').countDocuments(pageFilter)),
+    };
 
     // Keyed on wantsFull, not includeFull: the same URL answers differently for
-    // an admin, so neither answer may be stored by a shared cache.
+    // an admin, so neither answer may be stored by a shared cache. The same
+    // holds for the page window: an uncapped answer (session / API key) is
+    // `private`, so a shared cache can never hand a whole book's page list to
+    // an anonymous caller; the capped answer stays `public` but varies on the
+    // credentials that would uncap it, so a cache that honours Vary never
+    // serves it to a signed-in reader either.
     const cacheControl = wantsFull
       ? 'private, no-cache'
-      : 'public, max-age=60, stale-while-revalidate=300';
+      : windowed
+        ? 'public, max-age=60, stale-while-revalidate=300'
+        : 'private, max-age=60, stale-while-revalidate=300';
 
     // Merge index data from the dedicated collection (heavy fields moved out
     // of book docs). Field list by mode — see the constants above.
@@ -214,8 +236,9 @@ export const GET = withApiAuth(async (
       ...book,
       ...(attribution ? { attribution } : {}),
       pages: publicPages,
+      pages_window: pagesWindow,
     }, {
-      headers: { 'Cache-Control': cacheControl }
+      headers: { 'Cache-Control': cacheControl, Vary: 'Cookie, Authorization' }
     });
   } catch (error) {
     console.error('Error fetching book:', error);

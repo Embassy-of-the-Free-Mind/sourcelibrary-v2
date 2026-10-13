@@ -48,7 +48,7 @@ export default function FirstTranslationMethodologyPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library has identified nearly 2,500 books that appear to be first-ever English translations &mdash; over 1,200 of which are now fully translated. This is a strong claim, and it deserves a transparent explanation of how we arrive at it. This post describes the methodology &mdash; the AI classification system, the multi-stage verification pipeline, the confidence levels, and the known limitations.
+          Source Library has identified nearly 2,500 books that appear to be first-ever English translations, over 1,200 of which are now fully translated. This is a strong claim, and it deserves a transparent explanation of how we arrive at it. This post describes the methodology: the AI classification system, the multi-stage verification pipeline, the confidence levels, and the known limitations.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -64,7 +64,7 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Determining whether a book has ever been translated into English is a surprisingly difficult bibliographic question. For famous works &mdash; the <em>Corpus Hermeticum</em>, Paracelsus&apos;s major treatises, the Rosicrucian manifestos &mdash; the answer is well documented. But for the vast majority of pre-1800 Latin, German, French, and Sanskrit texts in a collection like ours, there is no central registry of translations. You cannot look up &ldquo;has this book been translated into English&rdquo; in a database.
+          Determining whether a book has ever been translated into English is a surprisingly difficult bibliographic question. For famous works (the <em>Corpus Hermeticum</em>, Paracelsus&apos;s major treatises, the Rosicrucian manifestos) the answer is well documented. But for the vast majority of pre-1800 Latin, German, French, and Sanskrit texts in a collection like ours, there is no central registry of translations. You cannot look up &ldquo;has this book been translated into English&rdquo; in a database.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -76,7 +76,7 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Every book in Source Library passes through an AI metadata enrichment step. After OCR is complete, the system reads the first 25 pages of transcribed text and asks Google&apos;s Gemini model to classify the book across several dimensions: language, subject categories, estimated publication year, author detection, and &mdash; crucially &mdash; first-translation status.
+          Every book in Source Library passes through an AI metadata enrichment step. After OCR is complete, the system reads the first 25 pages of transcribed text and asks Google&apos;s Gemini model to classify the book across several dimensions: language, subject categories, estimated publication year, author detection, and (crucially) first-translation status.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -141,7 +141,7 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong className="text-primary">The text itself.</strong> The model reads the actual OCR text from the book&apos;s pages &mdash; title page, preface, and opening chapters. This gives it direct evidence of the language, subject matter, author, and approximate date, all of which bear on translation likelihood. A 400-page Latin commentary on Pseudo-Dionysius from 1593 is far less likely to have been translated than a 30-page English summary of alchemical principles from 1650.
+          <strong className="text-primary">The text itself.</strong> The model reads the actual OCR text from the book&apos;s pages: title page, preface, and opening chapters. This gives it direct evidence of the language, subject matter, author, and approximate date, all of which bear on translation likelihood. A 400-page Latin commentary on Pseudo-Dionysius from 1593 is far less likely to have been translated than a 30-page English summary of alchemical principles from 1650.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -153,7 +153,7 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Books classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> or <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> are surfaced throughout the site with a gold &ldquo;First Translation&rdquo; badge. This appears on book cards in the library and collection pages, in search results, and on the book detail page. The badge is also available as a search filter &mdash; you can search for books and filter to show only first translations.
+          Books classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> or <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> are surfaced throughout the site with a gold &ldquo;First Translation&rdquo; badge. This appears on book cards in the library and collection pages, in search results, and on the book detail page. The badge is also available as a search filter: you can search for books and filter to show only first translations.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -173,18 +173,18 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <ol className="space-y-3 text-secondary mb-8 ml-4 list-decimal list-outside pl-2">
-          <li className="leading-relaxed pl-2"><strong>Local translation catalogs</strong> &mdash; a database of ~14,000 records from UNESCO&apos;s <em>Index Translationum</em>, the Loeb Classical Library, Brill&apos;s translations, Penguin Classics, HathiTrust, and other standard translation catalogs</li>
-          <li className="leading-relaxed pl-2"><strong>Open Library API</strong> &mdash; searches for English-language editions by title and author, returns ISBNs, publishers, and edition history</li>
-          <li className="leading-relaxed pl-2"><strong>Google Books API</strong> &mdash; broad coverage, including out-of-print and academic works with language filtering</li>
-          <li className="leading-relaxed pl-2"><strong>Internet Archive</strong> &mdash; searches 30 million+ digitized texts for public domain translations, older academic editions, and reprints that other catalogs miss</li>
-          <li className="leading-relaxed pl-2"><strong>OpenAlex</strong> &mdash; an open catalog of 250 million scholarly works, excellent for finding academic press translations (Brill, De Gruyter, Cambridge, Oxford) and translations published in journals or edited volumes</li>
-          <li className="leading-relaxed pl-2"><strong>Library of Congress</strong> &mdash; the authoritative US library catalog, catching recent cataloging and translations held by research libraries</li>
-          <li className="leading-relaxed pl-2"><strong>Universal Short Title Catalogue (USTC)</strong> &mdash; verifies the identity of the original work in the standard catalog of early printed books</li>
-          <li className="leading-relaxed pl-2"><strong>make_determination</strong> &mdash; a structured output tool the model calls when it has gathered enough evidence to render a verdict, citing specific translations found (with URLs) or explaining why none were found</li>
+          <li className="leading-relaxed pl-2"><strong>Local translation catalogs</strong>: a database of ~14,000 records from UNESCO&apos;s <em>Index Translationum</em>, the Loeb Classical Library, Brill&apos;s translations, Penguin Classics, HathiTrust, and other standard translation catalogs</li>
+          <li className="leading-relaxed pl-2"><strong>Open Library API</strong>: searches for English-language editions by title and author, returns ISBNs, publishers, and edition history</li>
+          <li className="leading-relaxed pl-2"><strong>Google Books API</strong>: broad coverage, including out-of-print and academic works with language filtering</li>
+          <li className="leading-relaxed pl-2"><strong>Internet Archive</strong>: searches 30 million+ digitized texts for public domain translations, older academic editions, and reprints that other catalogs miss</li>
+          <li className="leading-relaxed pl-2"><strong>OpenAlex</strong>: an open catalog of 250 million scholarly works, excellent for finding academic press translations (Brill, De Gruyter, Cambridge, Oxford) and translations published in journals or edited volumes</li>
+          <li className="leading-relaxed pl-2"><strong>Library of Congress</strong>: the authoritative US library catalog, catching recent cataloging and translations held by research libraries</li>
+          <li className="leading-relaxed pl-2"><strong>Universal Short Title Catalogue (USTC)</strong>: verifies the identity of the original work in the standard catalog of early printed books</li>
+          <li className="leading-relaxed pl-2"><strong>make_determination</strong>: a structured output tool the model calls when it has gathered enough evidence to render a verdict, citing specific translations found (with URLs) or explaining why none were found</li>
         </ol>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The model decides which tools to call and in what order, typically running 3&ndash;8 searches per book. It evaluates results semantically &mdash; not just checking whether a title appears, but whether the result is actually a translation of the specific work in question, as opposed to a book <em>about</em> the work, a translation of a <em>different</em> work by the same author, or a secondary study that shares a similar title.
+          The model decides which tools to call and in what order, typically running 3&ndash;8 searches per book. It evaluates results semantically, not just checking whether a title appears, but whether the result is actually a translation of the specific work in question, as opposed to a book <em>about</em> the work, a translation of a <em>different</em> work by the same author, or a secondary study that shares a similar title.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -253,7 +253,7 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          When a translation is found, the model cites the specific translator, publication year, publisher, and &mdash; when available from catalog searches &mdash; a direct URL to the catalog record. This makes every claim independently verifiable.
+          When a translation is found, the model cites the specific translator, publication year, publisher, and (when available from catalog searches) a direct URL to the catalog record. This makes every claim independently verifiable.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -317,7 +317,7 @@ export default function FirstTranslationMethodologyPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The distinction between <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code>, <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_complete_translation</code>, and <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_modern_translation</code> captures a bibliographic reality that binary first/not-first classifications miss. Many canonical texts have had parts translated &mdash; Ficino&apos;s <em>Opera Omnia</em> has never been fully translated, but individual dialogues within it have been translated separately. Paracelsus&apos;s collected Latin works have never been translated as a whole, but Arthur Edward Waite rendered roughly 30% of them in 1894. All three dispositions receive the first-translation badge because the contribution is genuinely novel.
+          The distinction between <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code>, <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_complete_translation</code>, and <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_modern_translation</code> captures a bibliographic reality that binary first/not-first classifications miss. Many canonical texts have had parts translated: Ficino&apos;s <em>Opera Omnia</em> has never been fully translated, but individual dialogues within it have been translated separately. Paracelsus&apos;s collected Latin works have never been translated as a whole, but Arthur Edward Waite rendered roughly 30% of them in 1894. All three dispositions receive the first-translation badge because the contribution is genuinely novel.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -325,7 +325,7 @@ export default function FirstTranslationMethodologyPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          An earlier version of this pipeline asked the model a simple question: &ldquo;Do you know of an English translation of this work?&rdquo; The model sometimes produced plausible-looking but fictitious references &mdash; a real translator paired with a nonexistent book, or a real publisher with a fabricated publication year. In our sampling, roughly two-thirds of the model&apos;s unsourced claims could not be verified.
+          An earlier version of this pipeline asked the model a simple question: &ldquo;Do you know of an English translation of this work?&rdquo; The model sometimes produced plausible-looking but fictitious references: a real translator paired with a nonexistent book, or a real publisher with a fabricated publication year. In our sampling, roughly two-thirds of the model&apos;s unsourced claims could not be verified.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -341,7 +341,7 @@ export default function FirstTranslationMethodologyPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For books where verification found existing English translations, the book&apos;s bibliographic information panel shows a &ldquo;Known English Translations&rdquo; section. Each entry includes the English title, translator, publication year, publisher, and &mdash; when available from catalog searches &mdash; a link to the record on Open Library, Google Books, or Internet Archive. This allows readers to compare Source Library&apos;s AI translation with existing scholarly translations of the same work.
+          For books where verification found existing English translations, the book&apos;s bibliographic information panel shows a &ldquo;Known English Translations&rdquo; section. Each entry includes the English title, translator, publication year, publisher, and (when available from catalog searches) a link to the record on Open Library, Google Books, or Internet Archive. This allows readers to compare Source Library&apos;s AI translation with existing scholarly translations of the same work.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -353,15 +353,15 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong className="text-primary">The model can be wrong.</strong> AI language models have broad but imperfect knowledge of bibliographic history. A translation published in a small-circulation journal in the 1930s, or included in an unpublished PhD thesis, could easily be missed. We expect occasional false positives &mdash; books classified as first translations where an obscure prior translation does exist. We welcome corrections.
+          <strong className="text-primary">The model can be wrong.</strong> AI language models have broad but imperfect knowledge of bibliographic history. A translation published in a small-circulation journal in the 1930s, or included in an unpublished PhD thesis, could easily be missed. We expect occasional false positives: books classified as first translations where an obscure prior translation does exist. We welcome corrections.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong className="text-primary">Partial translations are a grey area.</strong> Many canonical texts have been partially translated &mdash; selected chapters in anthologies, key passages quoted in secondary literature, or abridged versions. The <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">has_partial</code> status captures this, but the line between &ldquo;partial translation&rdquo; and &ldquo;no translation&rdquo; is blurry. A book that has had three pages quoted in a scholarly article is not &ldquo;translated&rdquo; in any meaningful sense, but neither is it entirely unknown to English readers.
+          <strong className="text-primary">Partial translations are a grey area.</strong> Many canonical texts have been partially translated: selected chapters in anthologies, key passages quoted in secondary literature, or abridged versions. The <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">has_partial</code> status captures this, but the line between &ldquo;partial translation&rdquo; and &ldquo;no translation&rdquo; is blurry. A book that has had three pages quoted in a scholarly article is not &ldquo;translated&rdquo; in any meaningful sense, but neither is it entirely unknown to English readers.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong className="text-primary">Confidence is unevenly distributed.</strong> The model is most reliable for texts that are either very famous (it knows the translation history) or very obscure (the absence of any mention is itself strong evidence). It is least reliable for texts of intermediate fame &mdash; well-known enough that a translation <em>might</em> exist, but not so famous that the model can definitively say. These cases are typically classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> and do not receive the first-translation badge.
+          <strong className="text-primary">Confidence is unevenly distributed.</strong> The model is most reliable for texts that are either very famous (it knows the translation history) or very obscure (the absence of any mention is itself strong evidence). It is least reliable for texts of intermediate fame: well-known enough that a translation <em>might</em> exist, but not so famous that the model can definitively say. These cases are typically classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> and do not receive the first-translation badge.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -369,7 +369,7 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong className="text-primary">Catalog coverage has limits.</strong> The verification pipeline now searches seven major sources &mdash; including Internet Archive, OpenAlex, and the Library of Congress &mdash; but cannot find translations that exist only in unpublished dissertations, private archives, or out-of-print anthologies with no digital footprint. Our March 2026 accuracy evaluation suggests the false positive rate is under 0.5%, but a small number of edge cases will inevitably be missed.
+          <strong className="text-primary">Catalog coverage has limits.</strong> The verification pipeline now searches seven major sources (including Internet Archive, OpenAlex, and the Library of Congress) but cannot find translations that exist only in unpublished dissertations, private archives, or out-of-print anthologies with no digital footprint. Our March 2026 accuracy evaluation suggests the false positive rate is under 0.5%, but a small number of edge cases will inevitably be missed.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -383,19 +383,19 @@ export default function FirstTranslationMethodologyPage() {
         <ul className="space-y-3 text-secondary mb-8">
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span><strong>Stored with provenance</strong> &mdash; the model used, the confidence level, the reasoning, and the date of classification are all preserved in the book&apos;s metadata record.</span>
+            <span><strong>Stored with provenance</strong>: the model used, the confidence level, the reasoning, and the date of classification are all preserved in the book&apos;s metadata record.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span><strong>Based on actual text analysis</strong> &mdash; the model reads the OCR text, not just the title. This catches cases where a title might suggest familiarity but the actual content is a different or expanded work.</span>
+            <span><strong>Based on actual text analysis</strong>: the model reads the OCR text, not just the title. This catches cases where a title might suggest familiarity but the actual content is a different or expanded work.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span><strong>Conservative by default</strong> &mdash; only <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> and <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> receive the badge. Books classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> are not badged, even if the balance of probability suggests no prior translation exists.</span>
+            <span><strong>Conservative by default</strong>: only <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> and <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> receive the badge. Books classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> are not badged, even if the balance of probability suggests no prior translation exists.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span><strong>Correctable</strong> &mdash; if a specialist identifies a prior translation we missed, the classification can be updated. The original text and translation remain valuable regardless.</span>
+            <span><strong>Correctable</strong>: if a specialist identifies a prior translation we missed, the classification can be updated. The original text and translation remain valuable regardless.</span>
           </li>
         </ul>
 
@@ -447,15 +447,15 @@ export default function FirstTranslationMethodologyPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          2,455 books &mdash; roughly 57% of the non-English collection &mdash; are classified as first translations of some kind. This is significantly higher than the initial AI classification alone (which flagged ~1,000 books) because the tool-calling verification discovered hundreds of new first translations: books where the initial AI enrichment was too conservative, marking them as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> when a thorough catalog search would have revealed no prior translation.
+          2,455 books (roughly 57% of the non-English collection) are classified as first translations of some kind. This is significantly higher than the initial AI classification alone (which flagged ~1,000 books) because the tool-calling verification discovered hundreds of new first translations: books where the initial AI enrichment was too conservative, marking them as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> when a thorough catalog search would have revealed no prior translation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The verification also works in the opposite direction: 1,527 books were found to have existing translations that the initial classification had not identified. Several of these were recent publications (2020s) that postdate the training data of any AI model, demonstrating why catalog search is essential &mdash; no amount of parametric knowledge can catch translations published after training cutoff.
+          The verification also works in the opposite direction: 1,527 books were found to have existing translations that the initial classification had not identified. Several of these were recent publications (2020s) that postdate the training data of any AI model, demonstrating why catalog search is essential: no amount of parametric knowledge can catch translations published after training cutoff.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Of the 2,455 first translations, 1,276 are now fully translated &mdash; readable from the first page to the last. Another 223 are 80% or more complete. The translations span 670 Latin works, 430 German, 420 Chinese, 182 French, 144 Greek, 135 Sanskrit, and dozens of other languages including Syriac, Dutch, Italian, Armenian, Hebrew, and Arabic.
+          Of the 2,455 first translations, 1,276 are now fully translated, readable from the first page to the last. Another 223 are 80% or more complete. The translations span 670 Latin works, 430 German, 420 Chinese, 182 French, 144 Greek, 135 Sanskrit, and dozens of other languages including Syriac, Dutch, Italian, Armenian, Hebrew, and Arabic.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -502,7 +502,7 @@ export default function FirstTranslationMethodologyPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          77 cases out of 5,836 &mdash; 1.3% &mdash; were flagged for manual review. On inspection, the majority turned out to be correct nuanced classifications: collected works where only excerpts had been translated (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_complete_translation</code>), or Latin versions of Greek texts where only the Greek had been translated to English (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_from_source</code>). The tool&apos;s reasoning on these hard cases &mdash; Paracelsus&apos;s collected works, Boccaccio&apos;s Italian <em>volgarizzamento</em>, Mersenne&apos;s French adaptation of Galileo &mdash; was precise and defensible.
+          77 cases out of 5,836 (1.3%) were flagged for manual review. On inspection, the majority turned out to be correct nuanced classifications: collected works where only excerpts had been translated (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_complete_translation</code>), or Latin versions of Greek texts where only the Greek had been translated to English (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_from_source</code>). The tool&apos;s reasoning on these hard cases (Paracelsus&apos;s collected works, Boccaccio&apos;s Italian <em>volgarizzamento</em>, Mersenne&apos;s French adaptation of Galileo) was precise and defensible.
         </p>
 
         <h3 className="text-xl text-primary mt-10 mb-4">
@@ -514,21 +514,21 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The results were significant: 34 out of 77 dispositions changed (44%). Of those, 12 books changed from &ldquo;first translation&rdquo; to &ldquo;translation found&rdquo; &mdash; genuine corrections. Examples:
+          The results were significant: 34 out of 77 dispositions changed (44%). Of those, 12 books changed from &ldquo;first translation&rdquo; to &ldquo;translation found&rdquo;: genuine corrections. Examples:
         </p>
 
         <ul className="space-y-3 text-secondary mb-8">
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span>Marsilio Ficino&apos;s <em>De Christiana Religione</em> &mdash; Google Books found a 2022 University of Toronto Press translation the old pipeline missed</span>
+            <span>Marsilio Ficino&apos;s <em>De Christiana Religione</em>: Google Books found a 2022 University of Toronto Press translation the old pipeline missed</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span>Leonhard Euler&apos;s <em>Einleitung in die Analysis des Unendlichen</em> &mdash; the German title didn&apos;t match the English catalog entry; with more sources, the tool found Blanton&apos;s translation</span>
+            <span>Leonhard Euler&apos;s <em>Einleitung in die Analysis des Unendlichen</em>: the German title didn&apos;t match the English catalog entry; with more sources, the tool found Blanton&apos;s translation</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
-            <span>Cesare Ripa&apos;s <em>Iconologia</em> &mdash; Open Library surfaced the 1709 English translation that the old pipeline overlooked</span>
+            <span>Cesare Ripa&apos;s <em>Iconologia</em>: Open Library surfaced the 1709 English translation that the old pipeline overlooked</span>
           </li>
         </ul>
 
@@ -537,7 +537,7 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We are now re-running the full pipeline with the expanded tool set across all previously verified books, starting with the Latin corpus (2,400+ books). The estimated false positive rate for outright errors is under 0.5%. The remaining edge cases are legitimate scholarly judgment calls about what constitutes &ldquo;the same work&rdquo; &mdash; whether a partial anthology counts as a translation, whether a Latin rendering of a Greek text is distinct from the Greek original, and similar questions that reasonable bibliographers could disagree on.
+          We are now re-running the full pipeline with the expanded tool set across all previously verified books, starting with the Latin corpus (2,400+ books). The estimated false positive rate for outright errors is under 0.5%. The remaining edge cases are legitimate scholarly judgment calls about what constitutes &ldquo;the same work&rdquo;: whether a partial anthology counts as a translation, whether a Latin rendering of a Greek text is distinct from the Greek original, and similar questions that reasonable bibliographers could disagree on.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -549,7 +549,7 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          If you are a specialist in any of the fields covered by Source Library &mdash; Renaissance Latin literature, Early Modern German, Sanskrit philosophical traditions, alchemical bibliography &mdash; we would welcome your review of our classifications. If you know of a prior English translation that we missed, or if you can confirm that our classification is correct, that information makes the library more reliable for everyone.
+          If you are a specialist in any of the fields covered by Source Library (Renaissance Latin literature, Early Modern German, Sanskrit philosophical traditions, alchemical bibliography), we would welcome your review of our classifications. If you know of a prior English translation that we missed, or if you can confirm that our classification is correct, that information makes the library more reliable for everyone.
         </p>
 
         <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">
@@ -564,7 +564,7 @@ export default function FirstTranslationMethodologyPage() {
 
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
-            Source Library is a project of the Embassy of the Free Mind. Corrections and feedback are welcome &mdash;{' '}
+            Source Library is a project of the Embassy of the Free Mind. Corrections and feedback are welcome:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

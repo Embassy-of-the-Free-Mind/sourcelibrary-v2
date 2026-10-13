@@ -1,0 +1,40 @@
+{
+ "works": 500,
+ "identifiable": 490,
+ "by_class": {
+  "identifiable": 490,
+  "volume or collection label": 5,
+  "shelfmark": 4,
+  "generic": 1
+ },
+ "author_scorable": 416,
+ "author_why": {
+  "ok": 416,
+  "institution, not a person": 11,
+  "no catalogue author": 65,
+  "editor/translator only": 8
+ },
+ "identifiable_and_scorable": 416,
+ "author_in_title_masked": 123,
+ "genre": {
+  "other": 369,
+  "manuscript": 8,
+  "disputatio/oratio/dissertatio": 79,
+  "scripture/commentary": 44
+ },
+ "century": {
+  "15th c.": 10,
+  "16th c.": 38,
+  "17th c.": 57,
+  "18th c.": 67,
+  "1900+": 29,
+  "19th c.": 36,
+  "before 1400": 10,
+  "unknown": 253
+ },
+ "obscure_pool": 88,
+ "obscure_tier": 25,
+ "controls": 111,
+ "nalanda": 24,
+ "nalanda_by_master": 17
+}

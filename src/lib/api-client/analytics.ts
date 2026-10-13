@@ -8,7 +8,6 @@ import type {
   PerformanceData,
   PipelineData,
   SearchAnalyticsData,
-  TrafficData,
   CanonData,
 } from './types/analytics';
 
@@ -49,13 +48,6 @@ export const analytics = {
     return await apiClient.get(url, { timeout: 90000 });
   },
 
-  /**
-   * Get traffic data (pageviews, referrers, countries)
-   */
-  traffic: async (): Promise<TrafficData> => {    
-    const url = `/api/analytics`;
-    return await apiClient.get(url);
-  },
 
   /**
    * Get search query analytics

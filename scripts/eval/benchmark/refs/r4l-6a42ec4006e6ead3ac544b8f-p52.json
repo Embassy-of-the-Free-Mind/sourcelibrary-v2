@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A36017",
+  "edition": "Poemata varii argumenti partim E. Georgio Herberto Latinè (utcunque) reddita, partim conscripta, a Wilh. Dillingham ... ; adscitis etiam aliis aliorum. — Wing D1484; ESTC R17058 (1678)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A36017",
+  "origin": "library",
+  "book_id": "6a42ec4006e6ead3ac544b8f",
+  "page_number": 52,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 57806,
+    "to_char": 59130,
+    "overlap": 0.441,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "Gaudium poem; ref matches start to end",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      51,
+      52,
+      53
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.556Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "9fef667c079bdec37d1dd07033707366e096bc338faf1ea4be5b98fde7e70629",
+  "unit": {
+    "chars": 1324
+  }
+}

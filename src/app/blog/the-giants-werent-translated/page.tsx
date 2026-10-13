@@ -53,8 +53,8 @@ export default function GiantsPage() {
           The most-read book on Source Library is Robert Fludd&rsquo;s{' '}
           <Link href="/book/history-of-both-worlds-macrocosm-fludd" className="text-accent-rust hover:underline">
             <em>Utriusque Cosmi Historia</em>
-          </Link>{' '}
-          &mdash; his 1617 history of the two worlds, the macrocosm and the microcosm, the source of that
+          </Link>
+          , his 1617 history of the two worlds, the macrocosm and the microcosm, the source of that
           famous engraving of Nature as a chained woman standing between God and the ape of art. Thousands of
           people opened it here over the past months.
         </p>
@@ -64,13 +64,13 @@ export default function GiantsPage() {
         <p>
           Not for lack of trying. In 1979, Patricia Tahil rendered the first two books of the macrocosm for
           Adam McLean&rsquo;s Hermetic Sourceworks series; a recent edition adds part of the rest. But the whole
-          work &mdash; five folio volumes &mdash; has never been carried into English. A reader who wants to
+          work (five folio volumes) has never been carried into English. A reader who wants to
           follow Fludd&rsquo;s actual argument, end to end, still cannot, four hundred years on.
         </p>
 
         <p>
           I assumed, when we started measuring this, that the famous esoteric authors were the <em>done</em>{' '}
-          part &mdash; that the gap was all obscure humanists nobody has heard of, and the Fludds and Kirchers
+          part: that the gap was all obscure humanists nobody has heard of, and the Fludds and Kirchers
           and Ficinos had been safely translated long ago. I was wrong, and the way I was wrong turns out to be
           the whole story.
         </p>
@@ -79,21 +79,21 @@ export default function GiantsPage() {
 
         <p>
           When you ask a catalog whether an author has been translated, it answers at the level of the{' '}
-          <em>author</em>, not the <em>work</em>. Has anything by Fludd appeared in English? Yes &mdash; so the
+          <em>author</em>, not the <em>work</em>. Has anything by Fludd appeared in English? Yes, so the
           box gets ticked. But a sourcebook excerpt is not the book. A 1993 anthology that prints six pages of
           Fludd on music does not make the <em>Utriusque Cosmi</em> readable.
         </p>
 
         <p>
-          Athanasius Kircher is the sharper case. The seventeenth century&rsquo;s most famous polymath &mdash;{' '}
+          Athanasius Kircher is the sharper case. The seventeenth century&rsquo;s most famous polymath:{' '}
           <em>Oedipus Aegyptiacus</em>,{' '}
           <Link href="/book/mundus-subterraneus-kircher" className="text-accent-rust hover:underline">
             <em>Mundus Subterraneus</em>
           </Link>
-          , <em>Musurgia Universalis</em> &mdash; thousand-page folios that shaped how Europe imagined Egypt,
+          , <em>Musurgia Universalis</em>, thousand-page folios that shaped how Europe imagined Egypt,
           the underworld, and the harmony of the cosmos. What exists in English? A translation of one minor work,{' '}
-          <em>China Illustrata</em>; some biographies; an anthology. His monumental works &mdash; the ones that
-          made him Kircher &mdash; have never been translated at all. And his <em>Mundus Subterraneus</em> is,
+          <em>China Illustrata</em>; some biographies; an anthology. His monumental works, the ones that
+          made him Kircher, have never been translated at all. And his <em>Mundus Subterraneus</em> is,
           as I write this, the <strong>fifth most-read book on Source Library</strong>. Two of our ten
           most-read books have no English edition.
         </p>
@@ -101,7 +101,7 @@ export default function GiantsPage() {
         <p>
           Even Marsilio Ficino, the man who <em>started</em> the Renaissance by translating Plato and the
           Hermetic writings into Latin, was largely untranslated until our own century. His <em>Platonic
-          Theology</em>, his Plato commentaries, his letters &mdash; these reached English only in the 2000s,
+          Theology</em>, his Plato commentaries, his letters: these reached English only in the 2000s,
           through Harvard&rsquo;s I Tatti Renaissance Library, one beautiful volume at a time. The translator of
           the Renaissance waited five hundred years for his own translation.
         </p>
@@ -109,7 +109,7 @@ export default function GiantsPage() {
         <p>
           This is why <strong>&ldquo;first full translation&rdquo; is a meaningful thing to claim</strong>, even
           for a famous author with his name in a few anthologies. The unit that matters is the <em>work made
-          whole</em> &mdash; the thing a reader can actually sit down and read from beginning to end. By that
+          whole</em>, the thing a reader can actually sit down and read from beginning to end. By that
           measure, the giants are mostly still waiting.
         </p>
 
@@ -122,18 +122,18 @@ export default function GiantsPage() {
         </p>
 
         <p>
-          We wanted to know what that means in books, so we counted &mdash; and the counting is most of the
+          We wanted to know what that means in books, so we counted, and the counting is most of the
           story. Start with the <em>Universal Short Title Catalogue</em>, the union catalog of nearly everything
           printed in Europe before 1700: about 1.6 million editions, of which roughly half a million are in
-          Latin. Editions are not works &mdash; a popular text was reprinted dozens of times &mdash; so collapse
+          Latin. Editions are not works (a popular text was reprinted dozens of times), so collapse
           them down to distinct titles, and you are left with on the order of{' '}
           <strong>four hundred thousand distinct Latin works.</strong>
         </p>
 
         <p>
-          Now the other side of the ratio. We gathered every English translation we could find &mdash; thirty
+          Now the other side of the ratio. We gathered every English translation we could find (thirty
           catalogs, from the UNESCO Index Translationum to Harvard&rsquo;s I Tatti library to library holdings
-          worldwide &mdash; and matched them, work by work, against that corpus. The number that lands a
+          worldwide) and matched them, work by work, against that corpus. The number that lands a
           translation is <strong>fewer than nine thousand.</strong> About <strong>one in fifty.</strong> You can
           search the whole census, author by author, at{' '}
           <Link href="/census" className="text-accent-rust hover:underline">/census</Link>.
@@ -141,8 +141,8 @@ export default function GiantsPage() {
 
         <p>
           We have tried hard to break that figure, in both directions, and it keeps its shape. The count of
-          translations is surely <em>too low</em> &mdash; catalogs are incomplete, and we already know we are
-          missing volumes of I Tatti and Brill. And the corpus is surely a little <em>too high</em> &mdash; some
+          translations is surely <em>too low</em>: catalogs are incomplete, and we already know we are
+          missing volumes of I Tatti and Brill. And the corpus is surely a little <em>too high</em>: some
           of those &ldquo;works&rdquo; are reprints of antiquity that slipped the filter, and our
           edition-to-work clustering is conservative. But push every lever as far as it will honestly go and the
           translated share still comes out at a percent or two. The order of magnitude does not move. (The full
@@ -154,8 +154,8 @@ export default function GiantsPage() {
         </p>
 
         <p>
-          And the work is slow. We measured the pace of genuinely new translations &mdash; distinct works opened
-          for the <em>first</em> time, with retranslations of Plato and Cicero stripped out &mdash; across the
+          And the work is slow. We measured the pace of genuinely new translations (distinct works opened
+          for the <em>first</em> time, with retranslations of Plato and Cicero stripped out) across the
           late twentieth century: roughly <strong>twenty to thirty a year.</strong> It is accelerating, which is
           the hopeful part. But divide the hundreds of thousands still untouched by a few dozen a year and the
           arithmetic is brutal:{' '}
@@ -175,7 +175,7 @@ export default function GiantsPage() {
         <p>
           That number is the reason Source Library exists. We use AI to produce a first full translation of a
           work, and we place it beside a scan of the original page, so any line can be checked against the
-          source &mdash; because a translation you cannot verify is not scholarship, it is a rumor. The machine
+          source, because a translation you cannot verify is not scholarship, it is a rumor. The machine
           is fast and fallible; the original is the ground truth; the reader is the judge.
         </p>
 
@@ -188,8 +188,8 @@ export default function GiantsPage() {
 
         <p>
           The first full English translation of Fludd&rsquo;s <em>Utriusque Cosmi Historia</em> is still ahead
-          of us. So are tens of thousands of others. That gap &mdash; not the famous tip of it, but the whole
-          dark mass below &mdash; is the work.
+          of us. So are tens of thousands of others. That gap, not the famous tip of it but the whole
+          dark mass below, is the work.
         </p>
 
         <hr className="my-10 border-stone-200" />

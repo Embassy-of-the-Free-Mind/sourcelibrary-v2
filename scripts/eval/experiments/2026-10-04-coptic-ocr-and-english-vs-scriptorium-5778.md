@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [accuracy, judged_vs_reference]
+languages: [cop]
+scripts: [Copt]
+canons: []
+n_books: 7
+n_pages: 15
+verdict: "Flash reads Coptic at 10.1% CER against SCRIPTORIUM, Lite 32.2% (wrong alphabet); served English on 3 Nag Hammadi pages is recited from other sayings."
+status: informational
+decision: null
+superseded_by: null
+issue: 5778
+---
 <!-- PRIOR ART: 2026-10-03-translation-vs-reference-harness-smoke-5695.md (the judge harness reused here for the English); scripts/eval/en-ocr-reference-5124.mjs (CER against a typed reference, English/Wikisource only). No earlier run measured Coptic; `gh issue list --search Coptic` returned only #5778. -->
 ## 2026-10-04 · Can we read our Coptic books? CER of stored / Lite / Flash against Coptic SCRIPTORIUM on 15 pages, and the served English against WEB/Brenton on 6 (#5778)
 

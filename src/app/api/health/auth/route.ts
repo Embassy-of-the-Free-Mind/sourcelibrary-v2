@@ -241,7 +241,7 @@ async function sendAuthAlert(
   // off a single probe; on 2026-07-31 that was false — accounts were being
   // created while the email sat in the inbox.
   const confidence = streak.storeUnavailable
-    ? 'The streak store was unreachable, so this fired on the first failed probe — Atlas itself is likely down.'
+    ? 'The streak store was unreachable, so this fired on the first failed probe. Atlas itself is likely down.'
     : `Failing on ${CONSECUTIVE_FAILURES_TO_ALERT}+ consecutive probes (10 min apart), so this is not a transient blip.`;
 
   const html = `
@@ -256,7 +256,7 @@ async function sendAuthAlert(
         ${failureRows}
       </table>
       <p style="color:#666;font-size:13px">
-        Confirm real user impact before treating this as an outage — check for recent
+        Confirm real user impact before treating this as an outage. Check for recent
         account creations and sign-in links, not just this probe.
       </p>
       <p style="color:#666;font-size:13px">

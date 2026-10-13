@@ -1,0 +1,31 @@
+{
+ "run": "/root/tengyur-cli-6361",
+ "checked_at": "2026-10-10T14:25:11.293Z",
+ "pages": 23629,
+ "manifest_rows": 23629,
+ "staged": 22636,
+ "failed": 993,
+ "failure_rows": 11696,
+ "reasons": {
+  "denied_tool": 991,
+  "status_ERROR": 1,
+  "safety_filter": 1
+ },
+ "attempts_to_stage": {
+  "1": 15663,
+  "2": 5229,
+  "3": 1744
+ },
+ "file_sha256": {
+  "scope.json": "d5414a41a3e26f762c0f213af682ca8db05ce4afe297a47c0438780cee05b4c7",
+  "pages.jsonl": "156ed42a355a4b7ab7d6834abca1df736d22cd82f4d3638d34a6ce3e727060e8",
+  "manifest.jsonl": "b8e58b99604c70b73248605f087647160620d05215fa4ab607b1d8e13686696d",
+  "failures.jsonl": "a8377ee48c9cbdbc367f6f469e689e0cf7710b68001a1ff575b739f6324a4133",
+  "excluded.jsonl": "a2fef06bf711eddff86d6bdbabd09cc30b1955b8a17439c299fab5bd2b8c4e07",
+  "quota.log": "c5862dde488d411ae8987b0cf1afbb41863df8c5764ed8630db7ea7a2f501be2",
+  "driver.mjs": "540c3d0e722f73c7c32f41e501826bb8cb2252242dbeb542a6646b8c9cdc983f",
+  "build-prompts.mjs": "b676c0116734697c820d499bcee83a9fa5426cef725590cc0a86a29e77910d02"
+ },
+ "problems": 0,
+ "problem_examples": []
+}

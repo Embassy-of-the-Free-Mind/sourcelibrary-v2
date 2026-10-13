@@ -800,7 +800,44 @@ export const isExcess = (ocr, tr) => {
 };
 
 /**
+ * Recited page: a SHORT source with a LONG English body (#6297). A Derge Tengyur title leaf is one
+ * framed line ("{D4049}༄༅། །ཆོས་མངོན་པ་ཀུན་ལས་བཏུས་པ་བཞུགས་སོ། །", 49 characters); the model wrote the
+ * title and then 2,286 characters of the work's first chapter from memory. `isExcess` cannot see
+ * it: it does not judge a source under 300 characters, because a ratio over a tiny denominator
+ * flags every heading.
+ *
+ * So the source is measured generously and the English strictly. `sourceWeight` keeps everything
+ * the transcription holds — metadata blocks, picture descriptions, vocab — and only removes the
+ * tags themselves, so a page whose `bodyLen` is 0 because of a mis-closed tag, or whose words are
+ * a described picture, is not read as empty; a Han, kana or Hangul character counts 16, the
+ * CJK_EXCESS_RATIO over the alphabetic one. The English is `bodyLen`: notes, summaries and keywords
+ * are not counted, so a title with a paragraph of apparatus is not a recitation (11 of the 14
+ * pages the raw-length signal named on #6297 were that, read from image 2026-10-13).
+ *
+ * Measured 2026-10-13 (scripts/eval/experiments/2026-10-13-recited-short-source-6297.md): on 208
+ * short-source pages in a random draw of 34,335 translated pages the rule fired on 5, and on all 5
+ * the English was not the page's text; it fires on all 7 Tengyur title leaves withheld by eye.
+ */
+export const RECITED_SOURCE_MAX = 300;
+export const RECITED_BODY_FLOOR = 600;
+export const RECITED_RATIO = 3;
+export function sourceWeight(ocr) {
+  const t = String(ocr || '').replace(/->|<-/g, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ')
+    .replace(WS_ENTITY, ' ').replace(LEADER_RUN, ' ').replace(/\s+/g, ' ').trim();
+  return t.length + (CJK_EXCESS_RATIO - 1) * (t.match(HAN_CHAR) || []).length;
+}
+export const isRecited = (ocr, tr) => {
+  const w = sourceWeight(ocr);
+  // No source in hand (a caller judging the translation alone): not judged, never guessed.
+  if (!w || w >= RECITED_SOURCE_MAX) return false;
+  return bodyLen(tr) > Math.max(RECITED_BODY_FLOOR, RECITED_RATIO * w);
+};
+export const RECITED_REASON = 'recited';
+
+/**
  * THE semantic health check for a freshly generated translation.
+ *
+ * `recited` (#6297) is the short-source twin of `runaway`: see `isRecited` above.
  *
  * Four refusals. `hidden-meta` needs only the translation: the page's text is inside the
  * continuity <meta>, which no reader surface shows (`hidesPageInMeta`, #5376). It is asked first
@@ -823,7 +860,7 @@ export const isExcess = (ocr, tr) => {
  * ("Wait, the prompt says…", "Please provide the OCR transcription…"), by the same rule the corpus count
  * and the withhold use (page-integrity `refusableReasoningLeak`).
  *
- * @returns {{healthy: boolean, reason: 'hidden-meta'|'reasoning-leak'|'collapsed'|'runaway'|'stray-script'|'echo'|'leaf-seam'|'leaf-drift'|null}}
+ * @returns {{healthy: boolean, reason: 'hidden-meta'|'reasoning-leak'|'collapsed'|'runaway'|'recited'|'stray-script'|'echo'|'leaf-seam'|'leaf-drift'|null}}
  */
 export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
   if (hidesPageInMeta(translationText)) return { healthy: false, reason: HIDDEN_META_REASON };
@@ -832,6 +869,8 @@ export function assessTranslationHealth(ocrText, translationText, { lang } = {})
   if (refusableReasoningLeak(translationText)) return { healthy: false, reason: REASONING_LEAK_REASON };
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
   if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
+  // #6297: a title leaf given a chapter. After `runaway`, which keeps the 20,000-character cap's name.
+  if (isRecited(ocrText, translationText)) return { healthy: false, reason: RECITED_REASON };
   // #5734: a script in the English that is in neither the source nor the book's language, outside
   // the tags that carry original-script words (Korean 그 for "that" in the Tibetan run). Judged only
   // with the source in hand — without it a Greek quotation in a Latin page would read as stray.

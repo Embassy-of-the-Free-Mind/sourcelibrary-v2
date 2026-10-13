@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/bald10",
+  "edition": "De Eclipsi Solari Anno MDCLIV Die XII. Augusti, In Europa — 1662",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a48d782df05f7ea342b7309",
+  "page_number": 162,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 177014,
+    "to_char": 178125,
+    "overlap": 0.506,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Ref matches 'fuisse videremur ... diversas'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      161,
+      162,
+      163
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.755Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "800a221c59b6525de6580ec783c87618964c0f435ca5616ae9e499d678a369e3",
+  "unit": {
+    "chars": 1111
+  }
+}

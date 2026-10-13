@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: null
+n_pages: null
+verdict: "Grounded Gemini verifier caught 48 of 49 planted seeds but only 4 of 15 known real note errors; 3 of its 11 'wrong' verdicts held; $22.62 for 3 repairs."
+status: rejected
+decision: "Not scaled as a corpus lane; reseed from real error shapes if retried; 9 notes repaired (DECISIONS.md)"
+superseded_by: null
+issue: [5647, 5624]
+---
 ## 2026-10-03 · Does a grounded Gemini verifier find the wrong translation notes the $0 table cannot? (#5647 stage 3)
 <!-- PRIOR ART: 2026-10-02-note-fact-check-lane-stages-1-2-5647.md (PR #5670) built stages 1–2 and the stage-3 estimate this run executes; 2026-10-02-note-facts-full-tibetan-run-5624.md (PR #5640) is the subagent sweep whose 359 verdicts are the calibration set here. -->
 

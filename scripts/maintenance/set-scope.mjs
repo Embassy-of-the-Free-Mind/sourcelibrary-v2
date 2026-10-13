@@ -29,6 +29,12 @@
  *     (--meter-endpoints: the envelope's meter counts only usage rows with these endpoints —
  *      without it, every lane's spend on these books counts against it, #5729)
  *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --remove --by "done"
+ *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --tag wellcome-2026-09 --extend 7 --by "why"
+ *     (every envelope expires, #4599: expires_at = created + 14 days unless --expires <ISO date>
+ *      sets it; --extend <days> pushes it out — from now, if it has already lapsed. An expired
+ *      envelope is closed: no gate opens on it. Nothing else reopens one, not even --budget.)
+ *   node --env-file=.env.production.local scripts/maintenance/set-scope.mjs --backfill-expiry [--apply] --by "why"
+ *     (stamps expires_at = now + 14 days on every envelope that has none; dry run without --apply)
  *
  * --books and --collection ADD to the existing scope (set union) — the safe
  * default for shared state (the 2026-06-20 clobber was a replace). To shrink
@@ -41,7 +47,7 @@
 
 import { withMongo } from '../lib/mongo.mjs';
 import { updateConfigVersioned } from '../lib/versioned-config.mjs';
-import { readScopeEnvelopes, getScopeSpendUsd } from '../lib/spend-guard.mjs';
+import { readScopeEnvelopes, getScopeSpendUsd, nextEnvelopeExpiry, ENVELOPE_TTL_DAYS } from '../lib/spend-guard.mjs';
 
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
@@ -54,7 +60,7 @@ await withMongo(async (db) => {
   if (flag('show')) {
     const tags = Object.keys(scopes);
     if (!tags.length) { console.log('No allow_scopes configured.'); return; }
-    const envelopes = new Map(readScopeEnvelopes(control).map((e) => [e.tag, e]));
+    const envelopes = new Map(readScopeEnvelopes(control, { includeExpired: true }).map((e) => [e.tag, e]));
     for (const tag of tags) {
       const s = scopes[tag];
       const env = envelopes.get(tag);
@@ -66,14 +72,38 @@ await withMongo(async (db) => {
           for (const b of rows) ids.add(String(b.id));
         }
         const spend = await getScopeSpendUsd(db, { ids: [...ids], since: env.created_at, endpoints: env.meter_endpoints });
-        const state = spend.meterError ? `METER ERROR: ${spend.meterError}` : (spend.usd < env.budget_usd ? 'OPEN' : 'SPENT');
+        const state = env.expired ? 'EXPIRED (closed)'
+          : spend.meterError ? `METER ERROR: ${spend.meterError}` : (spend.usd < env.budget_usd ? 'OPEN' : 'SPENT');
         spendNote = `envelope $${spend.usd.toFixed(2)} / $${env.budget_usd.toFixed(2)} → ${state} (${ids.size} books, ${spend.rows} usage rows${env.meter_endpoints ? `; metering only ${env.meter_endpoints.join(', ')}` : ''})`;
       }
       console.log(`${tag}`);
       console.log(`  book_ids: ${(s.book_ids || []).length}  collections: ${(s.collections || []).join(', ') || '(none)'}`);
       console.log(`  created: ${s.created_at ? new Date(s.created_at).toISOString() : '(unknown)'} by ${s.created_by || '(unknown)'}`);
+      if (env) {
+        const exp = !env.expires_at ? '(none — run --backfill-expiry)'
+          : Number.isNaN(env.expires_at.getTime()) ? `unparseable (${s.expires_at}) — treated as expired`
+          : env.expires_at.toISOString();
+        console.log(`  expires: ${exp}`);
+      }
       console.log(`  ${spendNote}`);
     }
+    return;
+  }
+
+  if (flag('backfill-expiry')) {
+    // One-off for envelopes written before expires_at existed (#4599): each gets now + TTL, one
+    // versioned write per tag touching only that tag's expires_at.
+    const by = val('by');
+    if (!by) { console.error('--by "who/why" is required for any change (the trail is the point)'); process.exit(1); }
+    const now = new Date();
+    const todo = readScopeEnvelopes(control, { now, includeExpired: true }).filter((e) => !e.expires_at);
+    const expiresAt = nextEnvelopeExpiry({ now });
+    console.log(`${todo.length} envelope(s) without expires_at → ${expiresAt.toISOString()} (now + ${ENVELOPE_TTL_DAYS} d)${flag('apply') ? '' : ' — DRY RUN, pass --apply to write'}`);
+    for (const e of todo) {
+      console.log(`  ${e.tag}  budget $${e.budget_usd}  created ${e.created_at ? e.created_at.toISOString() : '(unknown)'}`);
+      if (flag('apply')) await updateConfigVersioned(db, 'processing_control', { $set: { [`allow_scopes.${e.tag}.expires_at`]: expiresAt } }, by);
+    }
+    if (flag('apply')) console.log('(prior state snapshotted to system_config_revisions, one revision per tag)');
     return;
   }
 
@@ -129,9 +159,26 @@ await withMongo(async (db) => {
   else if (existing?.meter_endpoints) next.meter_endpoints = existing.meter_endpoints;
   if (budget != null) next.budget_usd = budget;
   else if (existing?.budget_usd != null) next.budget_usd = existing.budget_usd;
+  const extendRaw = val('extend');
+  if ((val('expires') || extendRaw != null) && next.budget_usd == null) {
+    console.error('--expires/--extend apply to an envelope; this scope has no --budget.'); process.exit(1);
+  }
+  if (next.budget_usd != null) {
+    try {
+      next.expires_at = nextEnvelopeExpiry({
+        existing: existing?.expires_at ?? null,
+        expires: val('expires'),
+        extendDays: extendRaw != null ? Number(extendRaw) : null,
+      });
+    } catch (err) { console.error(`--expires/--extend: ${err.message}`); process.exit(1); }
+  }
 
   await updateConfigVersioned(db, 'processing_control', { $set: { [`allow_scopes.${tag}`]: next } }, by);
   console.log(`${existing ? 'Updated' : 'Created'} scope '${tag}': ${next.book_ids.length} book_ids, collections [${next.collections.join(', ')}]${next.budget_usd != null ? `, envelope $${next.budget_usd}` : ' (no envelope — pause bypass only)'}${next.lanes ? `, envelope lanes [${next.lanes.join(', ')}]` : ''}${next.meter_endpoints ? `, metering only [${next.meter_endpoints.join(', ')}]` : ''}`);
+  if (next.expires_at) {
+    const lapsed = next.expires_at <= new Date();
+    console.log(`Envelope expires ${next.expires_at.toISOString()}${lapsed ? ' — ALREADY EXPIRED, so it is CLOSED: pass --extend <days> to reopen it' : ''}`);
+  }
   if (next.budget_usd != null) {
     console.log('Envelope spend is measured from created_at over both usage stores; monitor with scripts/audit/scope-progress.mjs --scope ' + tag);
   }

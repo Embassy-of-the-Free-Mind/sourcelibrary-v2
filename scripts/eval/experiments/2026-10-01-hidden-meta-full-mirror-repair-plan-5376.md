@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "92,684 translated pages hide 8+ words in the continuity meta; 10,160 still-hidden own-text pages can be opened for $0."
+status: undecided
+decision: "Write guard PR #5432 and v16 bare marker PR #5433 merged; the tier A-F repair plan on #5376 is not recorded as run"
+superseded_by: null
+issue: 5376
+---
 <!-- PRIOR ART: tq9 (#5363) sampled 3,000 books for the same defect; this is the full-mirror count and repair plan, not a repeat. -->
 ## 2026-10-01 — Text hidden in the continuity `<meta>`: full-mirror count, classes, live re-check, repair plan (#5376 tq11)
 

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 82
+n_pages: 178
+verdict: "Against the page image the Archive gets 5.1% of printed numbers wrong vs lite 1.8% (82 books, 5,212 numbers); lite fewer wrong on 39 books, the Archive on 7."
+status: undecided
+decision: null
+superseded_by: null
+issue: [5224, 5124, 5186]
+---
 ## 2026-09-30 — Which engine reads printed NUMBERS correctly? Engine disagreements adjudicated blind on the page image (#5224; feeds #5124, #5186)
 
 - **Question.** #5124 put the Archive's silent number misreads at ~1.5% on 10 cases and lite at 0/750. For county histories, genealogies and directories the numbers are the payload, and a silent 1836→1886 passes every word-level gate. Per engine, how often is a printed 2–4-digit number wrong, with the page image as truth?

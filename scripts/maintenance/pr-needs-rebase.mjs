@@ -22,6 +22,13 @@
  *   - UNKNOWN after retries → leave the PR as it is (never guess).
  *   - Never re-comment on a PR that already carries the label.
  *   - Informational only: the label changes no tier and blocks nothing.
+ *   - Base is not `main` → add `stacked` with ONE comment naming the parent PR;
+ *     remove it once the PR is retargeted to `main`. A stacked PR never gets
+ *     `test`/`next-build` (both run on `branches: [main]`), so auto-merge.yml
+ *     waits on it forever and nothing said so: 6 of 14 open `tier:auto` PRs on
+ *     2026-10-08, one stack four deep. safe-merge.sh retargets the children
+ *     when the parent merges, and the merge of `main` the child then needs (its
+ *     parent was squashed) is a push, which runs the checks.
  *
  * Usage:
  *   node scripts/maintenance/pr-needs-rebase.mjs            # dry run: print what would change
@@ -34,6 +41,8 @@ import { execFileSync, execSync } from 'node:child_process';
 
 const LABEL = 'needs-rebase';
 const MARKER = '<!-- pr-needs-rebase -->';
+const STACKED = 'stacked';
+const STACKED_MARKER = '<!-- pr-needs-rebase:stacked -->';
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 const val = (f) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : undefined; };
@@ -94,8 +103,27 @@ function commentBody(number, overlap) {
   return lines.join('\n');
 }
 
+/** What the `stacked` label should do for a PR with this base: 'add', 'remove' or null (leave it). */
+export function stackedAction(baseRefName, labels) {
+  if (!baseRefName) return null;
+  const has = labels.includes(STACKED);
+  if (baseRefName !== 'main') return has ? null : 'add';
+  return has ? 'remove' : null;
+}
+
+function stackedBody(base, parent) {
+  const parentRef = parent ? `#${parent.number} (\`${base}\`)` : `\`${base}\` (no open PR has that head)`;
+  return [
+    STACKED_MARKER,
+    `**stacked** — this PR targets ${parentRef}, not \`main\`.`,
+    '',
+    '`test` and `next-build` run only on PRs into `main`, so `auto-merge.yml` cannot merge this one, whatever its tier. It moves when its parent does: `scripts/maintenance/safe-merge.sh <parent>` merges the parent and retargets this PR to `main`; then merge `main` into this branch (the parent was squashed), and that push runs the checks. The label comes off by itself once the base is `main`.',
+  ].join('\n');
+}
+
 function ensureLabel() {
   try { execSync(`gh label create "${LABEL}" --color FBCA04 --description "Conflicts with main; rebase before auto-merge or a human can merge it (pr-needs-rebase.yml)" --force`, { stdio: 'ignore' }); } catch { /* exists */ }
+  try { execSync(`gh label create "${STACKED}" --color C5DEF5 --description "Targets another PR's branch, not main; merges after its parent (pr-needs-rebase.yml)" --force`, { stdio: 'ignore' }); } catch { /* exists */ }
 }
 
 async function main() {
@@ -103,11 +131,25 @@ async function main() {
     ? [parseInt(val('--pr'), 10)]
     : JSON.parse(sh('gh pr list --state open --limit 200 --json number')).map((p) => p.number);
   if (APPLY) ensureLabel();
-  const report = { labelled: [], unlabelled: [], unknown: [], unchanged: 0 };
+  const report = { labelled: [], unlabelled: [], unknown: [], unchanged: 0, stacked: [], unstacked: [] };
   for (const n of numbers) {
     const pr = await mergeableOf(n);
     if (!pr) { report.unknown.push(n); continue; }
     const labels = (pr.labels || []).map((l) => l.name);
+    const stack = stackedAction(pr.baseRefName, labels);
+    if (stack === 'add') {
+      const parent = JSON.parse(sh(`gh pr list --state open --head "${pr.baseRefName}" --json number`) || '[]')[0];
+      report.stacked.push(n);
+      console.log(`#${n} base=${pr.baseRefName} → +${STACKED}${parent ? ` (parent #${parent.number})` : ''}`);
+      if (APPLY) {
+        sh(`gh pr edit ${n} --add-label "${STACKED}"`);
+        sh(`gh pr comment ${n} --body-file -`, { input: stackedBody(pr.baseRefName, parent) });
+      }
+    } else if (stack === 'remove') {
+      report.unstacked.push(n);
+      console.log(`#${n} base=main → -${STACKED}`);
+      if (APPLY) sh(`gh pr edit ${n} --remove-label "${STACKED}"`);
+    }
     const hasLabel = labels.includes(LABEL);
     if (pr.mergeable === 'CONFLICTING') {
       if (hasLabel) { report.unchanged++; continue; }
@@ -127,7 +169,7 @@ async function main() {
       report.unknown.push(n);
     }
   }
-  console.log(`\n${APPLY ? 'applied' : 'dry run'}: +${report.labelled.length} labelled, -${report.unlabelled.length} cleared, ${report.unchanged} unchanged, ${report.unknown.length} still UNKNOWN${report.unknown.length ? ' (' + report.unknown.map((n) => '#' + n).join(' ') + ')' : ''}`);
+  console.log(`\n${APPLY ? 'applied' : 'dry run'}: +${report.labelled.length} labelled, -${report.unlabelled.length} cleared, ${report.unchanged} unchanged, ${report.unknown.length} still UNKNOWN${report.unknown.length ? ' (' + report.unknown.map((n) => '#' + n).join(' ') + ')' : ''}; ${STACKED}: +${report.stacked.length} -${report.unstacked.length}`);
 }
 
 if (process.argv[1] && process.argv[1].endsWith('pr-needs-rebase.mjs')) main().catch((e) => { console.error(e.message); process.exit(1); });

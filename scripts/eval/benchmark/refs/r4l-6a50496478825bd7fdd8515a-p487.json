@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/welser1",
+  "edition": "Opera Historica Et Philologica, Sacra Et Profana : In quibus Historia Boica, Res Augustanae, Conversio &amp; Passio SS. Martyrum [...], Narratio eorum, quae contigerunt Apollonio Tyrio, Tabulae Peutingerianae integrae, Epistolae ad Viros Illustres Latinae Italicaeque, &amp; Proteus satyra continentu",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a50496478825bd7fdd8515a",
+  "page_number": 487,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1550823,
+    "to_char": 1553039,
+    "overlap": 0.451,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-2)",
+    "at": "2026-10-06T10:11:07+00:00",
+    "note": "printed p.287; ref matches body incl. last lines after coin engraving; coin image and marginal notes inline in ref",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      487,
+      488,
+      489
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.649Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "09e313a81c391034cefb5aef93f487c4663400d31135e194c8c8d3af6c657f3c",
+  "unit": {
+    "chars": 2216
+  }
+}

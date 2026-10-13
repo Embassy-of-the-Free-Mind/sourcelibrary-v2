@@ -1,3 +1,17 @@
+---
+stage: image
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 6
+n_pages: 491
+verdict: "Contact-sheet vision screen finds illustrated pages at 79% recall (v2 prompt); union of two tilings reaches 93.6% at $0.00029/page, 6.8x cheaper than full-page calls"
+status: informational
+decision: null
+superseded_by: null
+issue: 5009
+---
 ## 2026-09-24 — contact-sheet screen for illustrated pages (#5009)
 
 **Question.** Books filled with free Internet Archive text carry no `<page-type>` or `<image-desc>`

@@ -1,0 +1,11 @@
+{
+  "note": "Gate 3 (final rule: four agreeing page reads, no trace of the label's script on any read, OCR tags agree where present). Fresh books, none seen in gates 1-2. Four pages per book read from the images. All 40 judged.",
+  "result": { "Greek → Latin": "27/27", "Greek → Latin-script vernacular": "7/7", "Latin → Greek": "3/3", "Sanskrit → English": "3/3", "total": "40/40" },
+  "miss": [],
+  "remarks": {
+    "16": "catalogued as Homer; the four pages are a Latin commentary on Suetonius (composite or mis-titled scan). Latin either way.",
+    "21": "titled Patrologia Graeca 158; the pages are Anselm in Latin (it is Patrologia Latina 158). Title is wrong too.",
+    "27": "titled Patrologia Graeca 46; the pages are the index to Augustine (Patrologia Latina 46). Title is wrong too.",
+    "3,22": "Latin incunable with heavy Latin manuscript annotation"
+  }
+}

@@ -24,11 +24,8 @@
  * Also the alarm: reports how many books older than 7 days are still missing
  * fields (should be 0 — nonzero means this worker has not been running).
  *
- * Covers BOTH `books` and `books_warehouse`: import dedup (`checkDuplicate`)
- * queries the warehouse alongside the live library, so an unstamped warehouse
- * row is invisible to any identity-keyed tier — the edition-key dedup flip
- * (#3730 §2) cannot happen against a warehouse with no keys. Measured
- * 2026-08-08: 22,543 warehouse docs, 0 with edition_key.
+ * Covers `books` only. It also stamped the warehouse collection until that
+ * was retired 2026-10 and merged into `books` (#5470).
  *
  * Cron: Hetzner, every 2 hours at :40, under flock — the exact line lives in
  * scripts/workers/crontab.production (kept as a snapshot of the live crontab).
@@ -137,14 +134,9 @@ async function main() {
 
   console.log(`[IDENTITY] ${new Date().toISOString()} — limit=${LIMIT}/collection, dry-run=${DRY_RUN}`);
 
-  // The warehouse needs the same index the live collection got in #3710, or
-  // every edition-keyed lookup against it is a collection scan. No-op when it
-  // already exists.
-  if (!DRY_RUN) await db.collection('books_warehouse').createIndex({ edition_key: 1 });
-
   const perCollection = {};
   const totals = { stamped: 0, unkeyable: 0, remaining: 0, stale_missing: 0 };
-  for (const name of ['books', 'books_warehouse']) {
+  for (const name of ['books']) {
     const r = await stampCollection(db.collection(name));
     perCollection[name] = r;
     totals.stamped += r.stamped;
@@ -154,8 +146,7 @@ async function main() {
     console.log(`[IDENTITY]   ${name}: stamped ${r.stamped}, ${r.unkeyable} unkeyable, ${r.remaining} queued, ${r.staleMissing} stale-missing`);
   }
   const { stamped, unkeyable, remaining } = totals;
-  // stale_missing stays the COMBINED number — the gates table and the alarm
-  // read this one field, and a stalled warehouse lane must trip it too.
+  // stale_missing is the number the gates table and the alarm read.
   const staleMissing = totals.stale_missing;
 
   const summary = `${RESTAMP ? 'RESTAMP: ' : ''}stamped ${stamped}${DRY_RUN ? ' (dry-run)' : ''}, ${unkeyable} unkeyable, ${remaining} queued, ${staleMissing} stale-missing`;

@@ -24,13 +24,15 @@ import { readJsonl } from '../translation-vs-reference/common.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
-const DIR = new URL('../results/translation-notes-free-2026-10/', import.meta.url).pathname;
-const SAMPLE = new URL('../results/translation-prompt-v17-2026-10/sample.jsonl', import.meta.url).pathname;
+// #5942 re-runs this file on another sample (Lite pages only): NOTES_FREE_DIR / NOTES_FREE_SAMPLE / NOTES_FREE_ENVELOPE
+// point it there. Unset, it is the #5919 run exactly.
+const DIR = process.env.NOTES_FREE_DIR ? path.resolve(process.env.NOTES_FREE_DIR) + '/' : new URL('../results/translation-notes-free-2026-10/', import.meta.url).pathname;
+const SAMPLE = process.env.NOTES_FREE_SAMPLE ? path.resolve(process.env.NOTES_FREE_SAMPLE) : new URL('../results/translation-prompt-v17-2026-10/sample.jsonl', import.meta.url).pathname;
 const MAX_USD = Number(opt('max-usd', 3));
 const MAX_ESTIMATE_USD = 2;
 const DRY = args.includes('--dry-run');
 const CONC = Number(opt('concurrency', 4));
-const ENVELOPE = 'notes-free-5919';
+const ENVELOPE = process.env.NOTES_FREE_ENVELOPE || 'notes-free-5919';
 const ARMS = {
   'v13-a': { name: 'Standard Translation', version: 13 },
   'v13-b': { name: 'Standard Translation', version: 13 },
@@ -118,7 +120,7 @@ async function runOne(arm, r) {
   const failf = outf.replace(/\.json$/, '.failed.json');
   for (let attempt = 1; ; attempt++) {
     try {
-      res = await callGemini({ model, prompt, endpoint: 'scripts/eval/translation-notes-free/run-arms.mjs', thinkingBudget: 0, temperature: 1, maxOutputTokens, safetySettings: SAFETY_SETTINGS, type: 'eval', bookId: ENVELOPE, pageIds: [id], promptVersion: `v${rows[arm].ref.version}`, triggeredBy: `notes-free-5919:${arm}` });
+      res = await callGemini({ model, prompt, endpoint: 'scripts/eval/translation-notes-free/run-arms.mjs', thinkingBudget: 0, temperature: 1, maxOutputTokens, safetySettings: SAFETY_SETTINGS, type: 'eval', bookId: ENVELOPE, pageIds: [id], promptVersion: `v${rows[arm].ref.version}`, triggeredBy: `${ENVELOPE}:${arm}` });
       break;
     } catch (err) {
       if (attempt >= 4 || !/(503|429|500|overloaded|UNAVAILABLE)/i.test(String(err.message))) {

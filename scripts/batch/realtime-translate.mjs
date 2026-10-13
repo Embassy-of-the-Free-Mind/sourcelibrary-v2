@@ -41,7 +41,7 @@
 
 import { MongoClient } from 'mongodb';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
-import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
+import { outputTokensFrom, calculateUsageCost } from '../workers/lib/supabase-usage-logger.mjs';
 import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
 import {
   getTranslateModelForBook,
@@ -309,6 +309,8 @@ async function processBook(book, pages, prompts, db, globalStats) {
         book_id: book.id, page_ids: [page.id],
         input_tokens: result.usage.inputTokens,
         output_tokens: result.usage.outputTokens,
+        // Without a cost the dial reads these rows as $0: 14,913 rows, ~$86 at list price, 10-06..10-07 (#5499).
+        cost_usd: calculateUsageCost(model, result.usage.inputTokens, result.usage.outputTokens, false),
         status: 'success', duration_ms: durationMs,
         prompt_version: String(promptRef?.version ?? ''),
         endpoint: 'scripts/realtime-translate.mjs',

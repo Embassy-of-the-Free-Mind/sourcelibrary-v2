@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA cera/hessus2",
+  "edition": "Tertius Libellus Epistolarum H. Eobani Hessi Et Aliorum Quorundam Virorum, Autoritate, Virtute, Sapientia, Doctrinaque excellentium. Editus Autore Ioachimo Camerario Pabeperg. - Lipsiae: (In Officina M. Ernesti Voegelini Constantiensis). — Leipzig: M. Ernestus Voegelin, 1561.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a9078467f9d520dd42e41e2",
+  "page_number": 76,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 73159,
+    "to_char": 74259,
+    "overlap": 0.412,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-1)",
+    "at": "2026-10-06T10:13:11.615684+00:00",
+    "note": "Letters (Adam Fulda); ref begins with 5 words of previous heading (padding) then matches through catchword 'patian-'; show-through.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      76,
+      77,
+      78
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.769Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "5dc667f387db873c35ec1bcafbaf714ee784fd791345a4f0b87a2b86a58abcbe",
+  "unit": {
+    "chars": 1100
+  }
+}

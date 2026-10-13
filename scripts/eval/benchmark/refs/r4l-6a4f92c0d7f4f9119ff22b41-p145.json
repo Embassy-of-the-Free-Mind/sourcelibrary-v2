@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/bider1",
+  "edition": "Epigrammatum libri tres. — Paris: Cramoisy, 1621.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a4f92c0d7f4f9119ff22b41",
+  "page_number": 145,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 140730,
+    "to_char": 141804,
+    "overlap": 0.534,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "p.139 epigram LXXXIX; noisy scan; ref matches",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      143,
+      144,
+      145
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.644Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "b3eaac6aa7fb717bd306acd9d085409c03c899ab46cd9237caab3cf795b84c8b",
+  "unit": {
+    "chars": 1074
+  }
+}

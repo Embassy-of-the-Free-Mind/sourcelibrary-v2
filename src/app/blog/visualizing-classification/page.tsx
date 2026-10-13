@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Visualizing 20,000 Books Across Six Dimensions - Source Library',
-  description: 'Interactive visualizations of Source Library\'s faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram — showing how 17 traditions flow into 15 domains across 11 cultural spheres.',
+  description: 'Interactive visualizations of Source Library\'s faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram, showing how 17 traditions flow into 15 domains across 11 cultural spheres.',
   openGraph: {
     images: [{ url: 'https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg', alt: 'Jyotisha classification tree in Sanskrit from the Celestial Tree of Natal Astrology' }],
     title: 'Visualizing 20,000 Books Across Six Dimensions',
@@ -49,7 +49,7 @@ export default function VisualizingClassificationPage() {
       <article className="prose-content max-w-none">
 
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          We tagged every book in Source Library with six independent facets &mdash; tradition, domain,
+          We tagged every book in Source Library with six independent facets: tradition, domain,
           form, cultural sphere, era, and epistemic mode. That created a rich dataset: 20,000 books,
           each with 6&ndash;12 tags from a controlled vocabulary of 68 values.
           Here are four ways to see the structure that emerged.
@@ -87,7 +87,7 @@ export default function VisualizingClassificationPage() {
           Each dot is a book, positioned by semantic similarity (UMAP projection of text embeddings).
           Books with similar content are near each other. The toggle buttons let you recolor the
           same map by any facet: tradition, domain, form, sphere, era, or mode. Watch how the
-          structure shifts &mdash; the alchemical texts (gold) cluster together when colored by
+          structure shifts: the alchemical texts (gold) cluster together when colored by
           tradition, but scatter across natural-philosophy and medicine when colored by domain.
         </p>
 
@@ -96,7 +96,7 @@ export default function VisualizingClassificationPage() {
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
           The dark cells are where the collection is deep. The white cells are where it&rsquo;s thin.
-          This is Francis Bacon&rsquo;s <em>desiderata</em> made visible &mdash; a map of what knowledge
+          This is Francis Bacon&rsquo;s <em>desiderata</em> made visible, a map of what knowledge
           is <em>missing</em>. Alchemy &times; natural-philosophy is dark (hundreds of books).
           Sufi &times; music is white (a known gap). Every white cell is a curation opportunity.
         </p>
@@ -106,8 +106,8 @@ export default function VisualizingClassificationPage() {
         </h3>
         <p className="text-secondary leading-relaxed mb-6">
           A Sankey diagram showing how intellectual traditions flow into subject domains.
-          Some traditions are narrow &mdash; masonic texts flow almost entirely into theology.
-          Others are broad &mdash; classical Greek and Roman thought feeds into history, ethics,
+          Some traditions are narrow: masonic texts flow almost entirely into theology.
+          Others are broad: classical Greek and Roman thought feeds into history, ethics,
           natural philosophy, theology, and art. The width of each ribbon is the number of books
           at that intersection.
         </p>
@@ -119,7 +119,7 @@ export default function VisualizingClassificationPage() {
           A chord diagram showing tradition co-occurrence. When two traditions appear as tags on the
           same book, they share a ribbon. Hermetic and alchemical are tightly linked (many books
           carry both tags). Classical and neoplatonic overlap heavily. But vedic and rosicrucian
-          never appear together &mdash; they are intellectually isolated from each other in this collection.
+          never appear together; they are intellectually isolated from each other in this collection.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-6">
@@ -134,7 +134,7 @@ export default function VisualizingClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <strong>Christian mystical is the second-largest tradition</strong> after classical Greek &amp; Roman.
-          We thought of the library as primarily &ldquo;esoteric&rdquo; &mdash; alchemy, Hermeticism,
+          We thought of the library as primarily &ldquo;esoteric&rdquo;: alchemy, Hermeticism,
           Kabbalah. But the data says it&rsquo;s as much a library of Christian contemplative theology
           as it is of Western esotericism.
         </p>
@@ -146,8 +146,8 @@ export default function VisualizingClassificationPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          <strong>Speculative mode is everywhere.</strong> Over half the books are tagged &ldquo;speculative&rdquo;
-          &mdash; reasoning from principles rather than from observation. This is a library of
+          <strong>Speculative mode is everywhere.</strong> Over half the books are tagged &ldquo;speculative&rdquo;:
+          reasoning from principles rather than from observation. This is a library of
           metaphysics, not of experiment. Bacon would have been disappointed.
         </p>
 

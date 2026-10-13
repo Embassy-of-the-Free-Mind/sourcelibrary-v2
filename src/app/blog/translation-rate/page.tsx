@@ -85,7 +85,7 @@ export default function TranslationRatePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             This is the same catalog we used for our{' '}
             <Link href="/blog/untranslated-renaissance" className="text-accent-rust hover:text-accent-rust underline">translation census</Link>.
-            It is not exhaustive &mdash; no single catalog is &mdash; but it is the most
+            It is not exhaustive (no single catalog is), but it is the most
             comprehensive compilation of pre-modern-to-English translations that exists,
             to our knowledge. It covers every major bilingual series and scholarly press.
           </p>
@@ -147,11 +147,11 @@ export default function TranslationRatePage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            But these are translations of <em>all</em> pre-modern Latin and Greek texts &mdash;
+            But these are translations of <em>all</em> pre-modern Latin and Greek texts:
             Cicero, Augustine, Aquinas, everything back to antiquity. The top of the most-translated
             list is dominated by classical authors: the Aeneid has been translated 41 times,
             Ovid&apos;s Metamorphoses 37 times, Augustine&apos;s Confessions at least 28 times.
-            How many of the 145 per year are specifically Renaissance texts &mdash; works from
+            How many of the 145 per year are specifically Renaissance texts, works from
             the 1450&ndash;1700 window we care about?
           </p>
         </section>
@@ -203,8 +203,8 @@ export default function TranslationRatePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The UNESCO Index Translationum &mdash; which contributes 7,542 of our 13,862
-            records &mdash; effectively stopped receiving comprehensive submissions from
+            The UNESCO Index Translationum, which contributes 7,542 of our 13,862
+            records, effectively stopped receiving comprehensive submissions from
             national libraries around 2009. Before that year, UNESCO contributed 114&ndash;174
             records annually. After 2009, it dropped to 22&ndash;46 per year, probably capturing
             only what could be scraped from publisher catalogs rather than national library submissions.
@@ -212,16 +212,16 @@ export default function TranslationRatePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Our other 11 sources (CUA/Paulist, Cambridge, Routledge, Penguin, etc.) collectively
-            contribute only 10&ndash;15 records per year. They were never meant to be comprehensive &mdash;
+            contribute only 10&ndash;15 records per year. They were never meant to be comprehensive;
             they cover specific presses and series. Without UNESCO&apos;s systematic collection,
             our post-2009 data captures perhaps a quarter to a third of actual translation activity.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
             The true post-2009 rate is unknowable from our data alone. But cross-referencing with
-            the major series &mdash; I Tatti publishes 2&ndash;4 volumes per year, the Other Voice
+            the major series (I Tatti publishes 2&ndash;4 volumes per year, the Other Voice
             in Early Modern Europe publishes 5&ndash;8, plus scattered volumes from Brill, Cambridge,
-            and others &mdash; suggests the real rate for Renaissance texts is probably still in the
+            and others) suggests the real rate for Renaissance texts is probably still in the
             range of <strong>20&ndash;50 per year</strong>. It may be declining as humanities departments
             shrink and university press budgets contract, but we cannot prove that from the data we have.
           </p>
@@ -244,8 +244,8 @@ export default function TranslationRatePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            At 30 new Renaissance first-translations per year &mdash; a generous
-            estimate of the current rate &mdash; clearing the backlog would take:
+            At 30 new Renaissance first-translations per year (a generous
+            estimate of the current rate), clearing the backlog would take:
           </p>
 
           <div className="bg-warm rounded-xl p-6 md:p-8 border border-border-light mb-6">
@@ -255,16 +255,16 @@ export default function TranslationRatePage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Even at the 2000&ndash;2008 peak &mdash; 72 first translations per year,
-            generously assuming all of them were Renaissance texts &mdash; it would
+            Even at the 2000&ndash;2008 peak (72 first translations per year,
+            generously assuming all of them were Renaissance texts), it would
             take <strong>14,000 years</strong>.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
             This is not a problem that can be solved by hiring more translators. It is not a
             funding gap. The entire global infrastructure for scholarly translation of
-            early modern texts &mdash; every university press, every bilingual series, every
-            Classics department, every fellowship program &mdash; produces a volume of work
+            early modern texts (every university press, every bilingual series, every
+            Classics department, every fellowship program) produces a volume of work
             that does not meaningfully dent the backlog, even over centuries.
           </p>
         </section>
@@ -390,7 +390,7 @@ export default function TranslationRatePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             For the historically curious, here is the full trend. Note that our sources
-            have uneven coverage before 1980 &mdash; early decades are reconstructed
+            have uneven coverage before 1980: early decades are reconstructed
             primarily from Open Library and HathiTrust retroactive cataloging and
             should be read as lower bounds, not absolute counts.
           </p>
@@ -414,7 +414,7 @@ export default function TranslationRatePage() {
                 <tr className="border-b border-border-light/50"><td className="py-1.5">1940s</td><td className="text-right">41</td><td className="text-right">411</td><td className="pl-4 text-muted text-xs">WWII disruption</td></tr>
                 <tr className="border-b border-border-light/50"><td className="py-1.5">1960s</td><td className="text-right">127</td><td className="text-right">1,269</td><td className="pl-4 text-muted text-xs">GI Bill &rarr; university expansion &rarr; demand for translations</td></tr>
                 <tr className="border-b border-border-light/50"><td className="py-1.5">1990s</td><td className="text-right">131</td><td className="text-right">1,305</td><td className="pl-4 text-muted text-xs">Post-Cold War; I Tatti series launches (2001)</td></tr>
-                <tr className="border-b border-border-light/50"><td className="py-1.5">2000s</td><td className="text-right">152</td><td className="text-right">1,516</td><td className="pl-4 text-muted text-xs">Peak era &mdash; best UNESCO coverage</td></tr>
+                <tr className="border-b border-border-light/50"><td className="py-1.5">2000s</td><td className="text-right">152</td><td className="text-right">1,516</td><td className="pl-4 text-muted text-xs">Peak era; best UNESCO coverage</td></tr>
                 <tr className="border-b border-border-light/50"><td className="py-1.5">2010s</td><td className="text-right">55</td><td className="text-right">553</td><td className="pl-4 text-muted text-xs">UNESCO collection largely stops</td></tr>
                 <tr className="font-medium border-t border-border-light"><td className="py-1.5">2020s</td><td className="text-right">24</td><td className="text-right">238</td><td className="pl-4 text-muted text-xs">Data gap; true rate likely 50&ndash;100</td></tr>
               </tbody>
@@ -423,9 +423,9 @@ export default function TranslationRatePage() {
 
           <p className="text-secondary leading-relaxed font-body">
             The 2000s were the high-water mark we can measure: 152 translations per year,
-            of which perhaps 145 were unique works. At that pace &mdash; which required the
+            of which perhaps 145 were unique works. At that pace (which required the
             combined output of every major university press, every bilingual series, and every
-            funded translation fellowship in the English-speaking world &mdash; it would take
+            funded translation fellowship in the English-speaking world), it would take
             seven thousand years to translate the USTC backlog.
           </p>
         </section>
@@ -457,7 +457,7 @@ export default function TranslationRatePage() {
             <a href="https://supabase.com" className="text-accent-rust hover:text-accent-rust underline">Supabase</a>{' '}
             (1.57M records). Analysis scripts are in{' '}
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2" className="text-accent-rust hover:text-accent-rust underline">our repo</a>.
-            If you know of translation catalogs we&apos;re missing, please reach out &mdash;{' '}
+            If you know of translation catalogs we&apos;re missing, please reach out:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

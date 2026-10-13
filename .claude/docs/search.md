@@ -16,7 +16,8 @@ The unified search (`/api/search/unified`) fires all lanes in parallel with per-
 | **Visual** | Hetzner CLIP server → Supabase `clip_embeddings` | Images by visual similarity to text |
 | **Semantic** | Gemini embedding → Supabase `book_embeddings` (HNSW) | Conceptually related books |
 | **Artworks** | Gemini embedding → Supabase `artwork_embeddings` | Artwork by semantic similarity |
-| **Collections** | MongoDB `collections` (regex) | Collection name/description matches |
+| **Collections** | MongoDB `collections` (name match, then regex) | Collection name/description matches |
+| **Site** | Supabase `site_pages` (embedding + name tokens) | The site's own pages: essays, tools, editorial pages, author pages |
 
 ### Similarity Floors
 
@@ -48,6 +49,20 @@ The page lane reads its 25 best-scoring pages, and for a name those sit in a han
 - **Not applied** to `pages_only` (the MCP passage contract), `book_id`, or `lang=<iso>` searches. A query with no countable word, or more than eight, adds nothing.
 - **Failure:** the roll-up has its own 4 s budget; past it the lane keeps its 25 pages and the response reports `degraded_lanes: ['page_rollup']`. `search_queries.degraded_lanes` records every degraded lane per request.
 - **Measure a change** with `scripts/eval/search-recall/` (30 fixed queries, recall@10/@20 against expected books by page count). Its expected set ranks by the same count the roll-up uses, so also read result lists by eye.
+
+## Search as navigation: pages found by name (#5945)
+
+A short query is often the NAME of a place on the site ("timeline", "check pages", "Drebbel collection", "Huygens"). Three things answer it, and `/search` shows them above everything else:
+
+- **The "go here" card** (`matchKnownEntity`, client-side): exact match on a collection, a library partner or an alias in `src/lib/site-features.json`.
+- **The name match** in `/api/search/unified` (`navSiteSearch` in `src/lib/semantic-search.ts`, rule in `src/lib/search/site-nav.ts`): one GIN lookup on `site_pages.name_tokens` (`match_site_pages_by_name`), ranked in JS. A page matches when ONE of its names contains every query token; the score is the share of that name the query covers; below 0.5 the page is not shown; an exact name silences partial ones. A type word ("collection", "author", "essay", "page") is dropped from the query and restricts the page type. Results arrive first in `site.results`, marked `match: 'name'`.
+- **The collections lane** applies the same rule to collection names and slugs before its regex, so a named collection is the first card. If a collection is named exactly, partial site matches are dropped.
+
+What a page is called comes from `scripts/workers/embed-site-pages.mjs` (daily): its title, the words of its URL, `site-features.json` aliases, and for authors the canonical name plus safe `variants[]` (never `aliases[]`). Both sides fold with `scripts/lib/site-nav-names.mjs`. To give a page another name, add an alias in `site-features.json`.
+
+- **Page list is derived**, never hand-kept: static routes in `src/app`, sitemap chunk 0, `/languages/*`, collections, and the sitemap's author pages. A path is indexed only if robots.txt allows it, it answers 200 without redirecting, and it has no `noindex`.
+- **Not applied** under a tenant, in embed mode or on localized surfaces (the lane is main-site and English-only, like the site lane). Search filters do not apply to it: it returns places, not books.
+- **Measure a change** with `tsx scripts/eval/search-recall/run.mjs --suite nav` (42 fixed queries → expected URL, recall@1/@3 over the destinations the page shows above the books).
 
 ## Quoted Phrase Search (2026-05-02)
 

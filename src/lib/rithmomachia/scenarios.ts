@@ -61,7 +61,7 @@ const captureEquality: Scenario = {
   hints: [
     'A piece captures an enemy of equal value that it could move to.',
     'Triangles threaten squares 2 spaces away orthogonally.',
-    'Select your triangle, then move it — the capture prompt will appear.',
+    'Select your triangle, then move it. The capture prompt will appear.',
   ],
   pieces: [
     { shape: 'triangle', value: 25, owner: 'even', position: { col: 2, row: 5 } },
@@ -74,7 +74,7 @@ const captureEquality: Scenario = {
     { source: 'barozzi', page: 30, detail: '25 triangle captures 25 round by numbering' },
     { source: 'selenus', page: 510, detail: 'Capture by counting (Zehlen)' },
   ],
-  explanation: 'Equality is the most common capture. All five sources list the same capturable values: 9, 16, 25, 36, 49, 64, 81 — numbers that appear on both sides.',
+  explanation: 'Equality is the most common capture. All five sources list the same capturable values: 9, 16, 25, 36, 49, 64, 81, numbers that appear on both sides.',
   illustration: {
     imageUrl: 'https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/39.jpg',
     caption: 'Board with pieces in starting position (Boissiere, 1554)',
@@ -133,7 +133,7 @@ const captureSubtraction: Scenario = {
     { source: 'lever', page: 43, detail: '2 out of 9 remaineth 7 — captures the 7' },
     { source: 'barozzi', page: 32, detail: '15 - 6 = 9, both whites can reach the 9 black' },
   ],
-  explanation: 'Subtraction is the inverse of addition. Lever & Fulke note it uses the same positioning but different arithmetic — a player scanning the board must check both operations simultaneously.',
+  explanation: 'Subtraction is the inverse of addition. Lever & Fulke note it uses the same positioning but different arithmetic: a player scanning the board must check both operations simultaneously.',
 };
 
 const captureMultiplication: Scenario = {
@@ -146,7 +146,7 @@ const captureMultiplication: Scenario = {
   hints: [
     'Your piece\'s value multiplied by its distance to the enemy equals the enemy\'s value.',
     'Distance counts the empty squares between them plus 1 (the enemy\'s square).',
-    'The path must be clear — no pieces blocking the line.',
+    'The path must be clear, with no pieces blocking the line.',
   ],
   pieces: [
     { shape: 'circle', value: 4, owner: 'even', position: { col: 3, row: 7 } },
@@ -170,7 +170,7 @@ const captureDivision: Scenario = {
   difficulty: 2,
   description: 'Your white triangle (20) is on a straight line with the black circle (5), with 3 empty squares between them. 20 ÷ 4 (distance) = 5. Capture by division.',
   hints: [
-    'The enemy\'s value divided by the distance equals your piece\'s value — wait, it\'s the reverse: YOUR piece / distance is not right.',
+    'The enemy\'s value divided by the distance equals your piece\'s value. Wait, it\'s the reverse: YOUR piece / distance is not right.',
     'Actually: enemy value / distance = your value. So 20 / 4 is not 5. Try: your position lets distance work.',
     'The distance is empty squares + 1. With 3 empty squares, distance = 4. Check: 20 / 4 = 5.',
   ],
@@ -184,7 +184,7 @@ const captureDivision: Scenario = {
     { source: 'lever', page: 45, detail: '4 in 20 is contained 5 times — captures the 5' },
     { source: 'barozzi', page: 33, detail: 'Division is the inverse of multiplication' },
   ],
-  explanation: 'Division and multiplication are mirror images. Barozzi notes that if two opposing pieces are positioned for either capture, whoever moves first wins — making the relative position a loaded trigger.',
+  explanation: 'Division and multiplication are mirror images. Barozzi notes that if two opposing pieces are positioned for either capture, whoever moves first wins, making the relative position a loaded trigger.',
 };
 
 const captureSiege: Scenario = {
@@ -193,10 +193,10 @@ const captureSiege: Scenario = {
   title: 'Capture by Siege',
   subtitle: 'Surround and conquer',
   difficulty: 2,
-  description: 'The black square (153) can ONLY be captured by siege — no arithmetic combination of white pieces can reach the value 153. Three white pieces already surround it. Move your fourth piece to complete the siege.',
+  description: 'The black square (153) can ONLY be captured by siege: no arithmetic combination of white pieces can reach the value 153. Three white pieces already surround it. Move your fourth piece to complete the siege.',
   hints: [
     'Siege requires blocking all 4 orthogonal exits (up, down, left, right).',
-    'The board edge counts as blocking — pieces near the edge need fewer besiegers.',
+    'The board edge counts as blocking, so pieces near the edge need fewer besiegers.',
     'The south side is still open. Move a piece there.',
   ],
   pieces: [
@@ -213,7 +213,7 @@ const captureSiege: Scenario = {
     { source: 'lever', page: 41, detail: 'By oblivion any man may be taken, even the king' },
     { source: 'selenus', page: 515, detail: 'Capture by besieging (Einsperren)' },
   ],
-  explanation: 'Barozzi reveals that 153 and 190 are mathematically uncapturable — no combination of opposing pieces can sum, subtract, multiply, or divide to reach these values. Siege is the only option, making positional play essential.',
+  explanation: 'Barozzi reveals that 153 and 190 are mathematically uncapturable: no combination of opposing pieces can sum, subtract, multiply, or divide to reach these values. Siege is the only option, making positional play essential.',
   illustration: {
     imageUrl: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/499.jpg',
     caption: 'Perspective view with pyramid "towers" (Selenus, 1616)',
@@ -235,7 +235,7 @@ const victoryArithmetic: Scenario = {
   description: 'Place three pieces with values in arithmetic progression (equal differences) in a line on the enemy\'s half of the board. You have pieces valued 2, 4, and 6. Move the 6 into position to complete the line.',
   hints: [
     'Arithmetic progression: the difference between consecutive values is constant.',
-    '2, 4, 6 — the difference is always 2.',
+    '2, 4, 6: the difference is always 2.',
     'The pieces must be on the enemy half (rows 8-15 for Even/White) and in a straight line.',
   ],
   pieces: [
@@ -250,7 +250,7 @@ const victoryArithmetic: Scenario = {
     { source: 'barozzi', page: 40, detail: 'Arithmetic proportion: equal differences' },
     { source: 'selenus', page: 521, detail: 'Victory by Zahl-Kunst (arithmetic)' },
   ],
-  explanation: 'Selenus calls the arithmetic progression the most basic of the three victory types. All five sources list extensive tables of valid progressions — Lever & Fulke alone enumerate over 40 valid triples.',
+  explanation: 'Selenus calls the arithmetic progression the most basic of the three victory types. All five sources list extensive tables of valid progressions; Lever & Fulke alone enumerate over 40 valid triples.',
 };
 
 const victoryGeometric: Scenario = {
@@ -262,8 +262,8 @@ const victoryGeometric: Scenario = {
   description: 'Place three pieces with values in geometric progression (constant ratio) in a line on the enemy\'s half. You have pieces valued 2, 4, and 8. Move the 8 to complete the diagonal.',
   hints: [
     'Geometric progression: each value is the same multiple of the previous.',
-    '2, 4, 8 — each is doubled. The ratio is 2.',
-    'A diagonal line counts — the pieces don\'t have to be in the same row or column.',
+    '2, 4, 8: each is doubled. The ratio is 2.',
+    'A diagonal line counts. The pieces don\'t have to be in the same row or column.',
   ],
   pieces: [
     { shape: 'circle', value: 2, owner: 'even', position: { col: 2, row: 10 } },
@@ -285,10 +285,10 @@ const victoryHarmonic: Scenario = {
   title: 'Harmonic Progression',
   subtitle: 'Playing a chord',
   difficulty: 3,
-  description: 'The harmonic progression is the game\'s deepest victory. Place pieces valued 3, 4, and 6 in a line on the enemy\'s half. These numbers encode the musical intervals of the fourth and the fifth — a chord.',
+  description: 'The harmonic progression is the game\'s deepest victory. Place pieces valued 3, 4, and 6 in a line on the enemy\'s half. These numbers encode the musical intervals of the fourth and the fifth: a chord.',
   hints: [
     'Harmonic progression: the reciprocals form an arithmetic progression.',
-    '1/6, 1/4, 1/3 — the differences between consecutive reciprocals are equal (1/12 each).',
+    '1/6, 1/4, 1/3: the differences between consecutive reciprocals are equal (1/12 each).',
     'Selenus: "In those numbers all the harmonies are contained."',
   ],
   pieces: [
@@ -303,10 +303,10 @@ const victoryHarmonic: Scenario = {
     { source: 'barozzi', page: 43, detail: 'Musical proportion: reciprocals form arithmetic' },
     { source: 'selenus', page: 523, detail: 'Singe-Kunst table lists 3, 4, 6 as harmonic proportion' },
   ],
-  explanation: 'Selenus demonstrates that 3, 4, 6 encodes the musical fifth (3:2), fourth (4:3), and octave (6:3). Buxerius confirms: "These ratios, if examined by weight or measured in strings, always provide Musical Harmony." You don\'t just win — you play a chord.',
+  explanation: 'Selenus demonstrates that 3, 4, 6 encodes the musical fifth (3:2), fourth (4:3), and octave (6:3). Buxerius confirms: "These ratios, if examined by weight or measured in strings, always provide Musical Harmony." You don\'t just win; you play a chord.',
   illustration: {
     imageUrl: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
-    caption: 'The game board — copperplate engraving (Selenus, 1616)',
+    caption: 'The game board: copperplate engraving (Selenus, 1616)',
     source: 'selenus',
     page: 498,
   },
@@ -324,7 +324,7 @@ const strategyUseEnemyPieces: Scenario = {
   difficulty: 3,
   description: 'Barozzi\'s third rule: "Make victories as much as possible with the adversary\'s pieces." An enemy piece valued 4 sits on the enemy half. You have a 2 and a 6. Move the 6 into line with the enemy 4 and your 2 to form the arithmetic progression 2, 4, 6.',
   hints: [
-    'You don\'t need to capture the enemy 4 — it counts for your victory formation while it sits there.',
+    'You don\'t need to capture the enemy 4. It counts for your victory formation while it sits there.',
     'Arrange your pieces so all three form a straight line on the enemy half.',
     'The progression 2, 4, 6 has a constant difference of 2.',
   ],

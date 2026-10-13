@@ -1,0 +1,517 @@
+{
+  "generated_at": "2026-10-04T16:08:15.200Z",
+  "books_scanned": 96205,
+  "candidates": 8575,
+  "by_pattern": {
+    "greek-label/unread": {
+      "books": 3642,
+      "visible": 1,
+      "pages": 1711680
+    },
+    "devanagari/confusable": {
+      "books": 1983,
+      "visible": 386,
+      "pages": 342842
+    },
+    "arabic-script/confusable": {
+      "books": 732,
+      "visible": 321,
+      "pages": 200763
+    },
+    "greek-label/latin-ocr-letters": {
+      "books": 396,
+      "visible": 316,
+      "pages": 162577
+    },
+    "greek-label/latin-pages": {
+      "books": 193,
+      "visible": 16,
+      "pages": 58891
+    },
+    "latin-label/greek-pages": {
+      "books": 185,
+      "visible": 123,
+      "pages": 65184
+    },
+    "cjk-label/latin-ocr-letters": {
+      "books": 183,
+      "visible": 112,
+      "pages": 18245
+    },
+    "indic-label/latin-ocr-letters": {
+      "books": 112,
+      "visible": 29,
+      "pages": 16986
+    },
+    "southeast-asian-label/tibetan-pages": {
+      "books": 104,
+      "visible": 1,
+      "pages": 8620
+    },
+    "mongolian-label/arabic-pages": {
+      "books": 100,
+      "visible": 0,
+      "pages": 76769
+    },
+    "southeast-asian-label/arabic-pages": {
+      "books": 95,
+      "visible": 7,
+      "pages": 23870
+    },
+    "cjk-label/latin-pages": {
+      "books": 66,
+      "visible": 4,
+      "pages": 2910
+    },
+    "egyptian-label/latin-pages": {
+      "books": 66,
+      "visible": 64,
+      "pages": 2447
+    },
+    "tibetan-label/indic-pages": {
+      "books": 60,
+      "visible": 32,
+      "pages": 14869
+    },
+    "southeast-asian-label/latin-pages": {
+      "books": 55,
+      "visible": 37,
+      "pages": 5095
+    },
+    "latin-label/latin-ocr-letters": {
+      "books": 46,
+      "visible": 24,
+      "pages": 15623
+    },
+    "arabic-label/latin-ocr-letters": {
+      "books": 42,
+      "visible": 34,
+      "pages": 13022
+    },
+    "latin-label/arabic-pages": {
+      "books": 35,
+      "visible": 31,
+      "pages": 6866
+    },
+    "arabic-label/latin-pages": {
+      "books": 31,
+      "visible": 1,
+      "pages": 509
+    },
+    "latin-label/hebrew-pages": {
+      "books": 31,
+      "visible": 13,
+      "pages": 12594
+    },
+    "hebrew-label/latin-ocr-letters": {
+      "books": 30,
+      "visible": 20,
+      "pages": 6342
+    },
+    "syriac-label/latin-ocr-letters": {
+      "books": 29,
+      "visible": 28,
+      "pages": 13222
+    },
+    "latin-label/indic-pages": {
+      "books": 29,
+      "visible": 15,
+      "pages": 9497
+    },
+    "indic-label/arabic-pages": {
+      "books": 24,
+      "visible": 0,
+      "pages": 5534
+    },
+    "latin-label/cyrillic-pages": {
+      "books": 15,
+      "visible": 8,
+      "pages": 6359
+    },
+    "tibetan-label/latin-ocr-letters": {
+      "books": 14,
+      "visible": 5,
+      "pages": 983
+    },
+    "southeast-asian-label/indic-pages": {
+      "books": 14,
+      "visible": 0,
+      "pages": 2264
+    },
+    "egyptian-label/other-pages": {
+      "books": 12,
+      "visible": 12,
+      "pages": 16
+    },
+    "hebrew-label/syriac-pages": {
+      "books": 12,
+      "visible": 11,
+      "pages": 2393
+    },
+    "cjk-label/syriac-pages": {
+      "books": 12,
+      "visible": 0,
+      "pages": 28
+    },
+    "southeast-asian-label/other-pages": {
+      "books": 11,
+      "visible": 7,
+      "pages": 2994
+    },
+    "hebrew-label/latin-pages": {
+      "books": 11,
+      "visible": 6,
+      "pages": 4214
+    },
+    "coptic-label/greek-pages": {
+      "books": 11,
+      "visible": 1,
+      "pages": 1113
+    },
+    "southeast-asian-label/syriac-pages": {
+      "books": 10,
+      "visible": 0,
+      "pages": 3241
+    },
+    "latin-label/cjk-pages": {
+      "books": 10,
+      "visible": 6,
+      "pages": 3588
+    },
+    "armenian-label/latin-ocr-letters": {
+      "books": 8,
+      "visible": 8,
+      "pages": 3536
+    },
+    "indic-label/latin-pages": {
+      "books": 7,
+      "visible": 1,
+      "pages": 899
+    },
+    "arabic-label/syriac-pages": {
+      "books": 7,
+      "visible": 0,
+      "pages": 16
+    },
+    "tibetan-label/latin-pages": {
+      "books": 7,
+      "visible": 0,
+      "pages": 2461
+    },
+    "indic-label/other-pages": {
+      "books": 7,
+      "visible": 0,
+      "pages": 878
+    },
+    "latin-label/other-pages": {
+      "books": 7,
+      "visible": 2,
+      "pages": 2149
+    },
+    "arabic-label/cjk-pages": {
+      "books": 6,
+      "visible": 6,
+      "pages": 446
+    },
+    "cyrillic-label/latin-ocr-letters": {
+      "books": 6,
+      "visible": 2,
+      "pages": 1336
+    },
+    "latin-label/syriac-pages": {
+      "books": 6,
+      "visible": 4,
+      "pages": 2459
+    },
+    "tibetan-label/southeast-asian-pages": {
+      "books": 6,
+      "visible": 0,
+      "pages": 5961
+    },
+    "hebrew-label/other-pages": {
+      "books": 5,
+      "visible": 1,
+      "pages": 758
+    },
+    "egyptian-label/syriac-pages": {
+      "books": 4,
+      "visible": 4,
+      "pages": 12
+    },
+    "hebrew-label/arabic-pages": {
+      "books": 4,
+      "visible": 4,
+      "pages": 794
+    },
+    "southeast-asian-label/mongolian-pages": {
+      "books": 4,
+      "visible": 0,
+      "pages": 1974
+    },
+    "indic-label/tibetan-pages": {
+      "books": 4,
+      "visible": 2,
+      "pages": 1077
+    },
+    "cjk-label/mongolian-pages": {
+      "books": 4,
+      "visible": 4,
+      "pages": 753
+    },
+    "cyrillic-label/latin-pages": {
+      "books": 4,
+      "visible": 0,
+      "pages": 1598
+    },
+    "egyptian-label/coptic-pages": {
+      "books": 3,
+      "visible": 3,
+      "pages": 6
+    },
+    "cjk-label/hebrew-pages": {
+      "books": 3,
+      "visible": 0,
+      "pages": 8
+    },
+    "egyptian-label/tibetan-pages": {
+      "books": 3,
+      "visible": 3,
+      "pages": 12
+    },
+    "coptic-label/latin-ocr-letters": {
+      "books": 3,
+      "visible": 2,
+      "pages": 1255
+    },
+    "syriac-label/arabic-pages": {
+      "books": 3,
+      "visible": 2,
+      "pages": 1146
+    },
+    "tibetan-label/georgian-pages": {
+      "books": 3,
+      "visible": 0,
+      "pages": 2477
+    },
+    "ethiopic-label/latin-ocr-letters": {
+      "books": 3,
+      "visible": 2,
+      "pages": 1178
+    },
+    "indic-label/greek-pages": {
+      "books": 3,
+      "visible": 0,
+      "pages": 2723
+    },
+    "egyptian-label/greek-pages": {
+      "books": 2,
+      "visible": 2,
+      "pages": 2
+    },
+    "arabic-label/mongolian-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 7
+    },
+    "southeast-asian-label/cjk-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 492
+    },
+    "latin-label/southeast-asian-pages": {
+      "books": 2,
+      "visible": 1,
+      "pages": 377
+    },
+    "southeast-asian-label/hebrew-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 474
+    },
+    "latin-label/egyptian-pages": {
+      "books": 2,
+      "visible": 2,
+      "pages": 576
+    },
+    "arabic-label/indic-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 488
+    },
+    "latin-label/tibetan-pages": {
+      "books": 2,
+      "visible": 1,
+      "pages": 597
+    },
+    "syriac-label/greek-pages": {
+      "books": 2,
+      "visible": 2,
+      "pages": 1088
+    },
+    "southeast-asian-label/greek-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 943
+    },
+    "mongolian-label/cjk-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 1471
+    },
+    "tibetan-label/cjk-pages": {
+      "books": 2,
+      "visible": 0,
+      "pages": 17871
+    },
+    "egyptian-label/arabic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 1
+    },
+    "egyptian-label/cuneiform-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 1
+    },
+    "latin-label/coptic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 1
+    },
+    "tibetan-label/cuneiform-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 2
+    },
+    "cjk-label/arabic-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 2
+    },
+    "georgian-label/armenian-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 10
+    },
+    "cjk-label/other-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 15
+    },
+    "indic-label/cjk-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 24
+    },
+    "cjk-label/tibetan-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 33
+    },
+    "cyrillic-label/armenian-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 44
+    },
+    "hebrew-label/ethiopic-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 82
+    },
+    "greek-label/other-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 118
+    },
+    "cjk-label/armenian-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 138
+    },
+    "armenian-label/cyrillic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 173
+    },
+    "tibetan-label/mongolian-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 190
+    },
+    "arabic-label/cyrillic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 224
+    },
+    "greek-label/cyrillic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 240
+    },
+    "syriac-label/hebrew-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 260
+    },
+    "greek-label/arabic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 297
+    },
+    "arabic-label/other-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 304
+    },
+    "southeast-asian-label/coptic-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 305
+    },
+    "armenian-label/greek-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 329
+    },
+    "tibetan-label/hebrew-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 394
+    },
+    "coptic-label/cyrillic-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 398
+    },
+    "tibetan-label/other-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 460
+    },
+    "tibetan-label/coptic-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 482
+    },
+    "hebrew-label/cuneiform-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 571
+    },
+    "greek-label/syriac-pages": {
+      "books": 1,
+      "visible": 1,
+      "pages": 638
+    },
+    "southeast-asian-label/latin-ocr-letters": {
+      "books": 1,
+      "visible": 1,
+      "pages": 754
+    },
+    "mongolian-label/indic-pages": {
+      "books": 1,
+      "visible": 0,
+      "pages": 835
+    }
+  }
+}

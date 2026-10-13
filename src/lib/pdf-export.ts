@@ -500,7 +500,7 @@ export function writePdfColophon(
     'License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)',
     'https://creativecommons.org/licenses/by-sa/4.0/',
     '',
-    'This edition carries a Trithemian imprimatur — an invisible provenance',
+    'This edition carries a Trithemian imprimatur, an invisible provenance',
     "mark in the tradition of the printer's device, asserting that this",
     'translation was produced by Source Library. It does not identify you',
     'or track your usage.',
@@ -649,7 +649,7 @@ export function generatePdfFacsimileStream<P extends PdfExportPage>(
     doc.on('pageAdded', () => { physical++; });
 
     writePdfTitlePage(doc, fonts, book, {
-      subtitle: 'Facsimile Edition — page scans facing their English translation',
+      subtitle: 'Facsimile Edition: page scans facing their English translation',
       baseUrl: opts.baseUrl,
       now,
     });
@@ -725,7 +725,7 @@ export function generatePdfFacsimileStream<P extends PdfExportPage>(
               + 'the whole book.'
             : '',
           '',
-          'If you need the complete facsimile as a single file, please get in touch — we would '
+          'If you need the complete facsimile as a single file, please get in touch. We would '
           + 'rather generate it for you offline than hand you a partial edition without saying so.',
         ].filter(Boolean).join('\n'),
         { lineGap: 3 },

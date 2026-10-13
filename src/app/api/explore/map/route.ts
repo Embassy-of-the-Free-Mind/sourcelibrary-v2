@@ -55,7 +55,7 @@ export async function GET() {
       // degraded output).
       if (docs.length > 0 && docs.every((d) => !('book_year_range' in d))) {
         throw new Error(
-          'canonical_entities docs have no book_year_range — rerun build-canonical-entities.mjs before enabling CANONICAL_ENTITIES_READPATH',
+          'canonical_entities docs have no book_year_range; rerun build-canonical-entities.mjs before enabling CANONICAL_ENTITIES_READPATH',
         );
       }
       entities = docs.map((d) => ({

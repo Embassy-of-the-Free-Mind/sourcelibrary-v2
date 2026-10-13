@@ -152,13 +152,13 @@ export async function generateGenericMetadata(
 ) {
   const row = await fetchRow(tenant, catalogId);
   if (!row) {
-    return { title: `Catalogue entry not found — ${partner.shortName}`, robots: { index: false, follow: false } };
+    return { title: `Catalogue entry not found | ${partner.shortName}`, robots: { index: false, follow: false } };
   }
   const title = row.title || row.parallel_title || row.uniform_title || `Catalogue entry ${catalogId}`;
   const author = row.author || row.variant_author || '';
   const yearStr = row.year ? `(${row.year})` : row.year_text ? `(${row.year_text})` : '';
-  const description = `${partner.name} catalogue entry. ${author ? author + '. ' : ''}${yearStr ? yearStr + ' ' : ''}Shelf mark: ${row.shelf_mark || '—'}.`;
-  return { title: `${title} — ${partner.shortName} catalogue`, description };
+  const description = `${partner.name} catalogue entry. ${author ? author + '. ' : ''}${yearStr ? yearStr + ' ' : ''}Shelf mark: ${row.shelf_mark || '–'}.`;
+  return { title: `${title} | ${partner.shortName} catalogue`, description };
 }
 
 export default async function GenericCatalogEntry({
@@ -181,7 +181,7 @@ export default async function GenericCatalogEntry({
     ? await fetchBookById(row.sl_external_book_id)
     : null;
 
-  const displayTitle = row.title || row.parallel_title || row.uniform_title || `(untitled — ${catalogId})`;
+  const displayTitle = row.title || row.parallel_title || row.uniform_title || `(untitled, ${catalogId})`;
   const slBookHref = slBook ? `/embed/${tenant}/book/${encodeURIComponent(slBook.slug || slBook.id)}` : null;
   const slCoverUrl = slBook ? getBookThumbnailUrl(slBook, 'display') : null;
   const externalBookHref = externalBook

@@ -121,16 +121,19 @@ export type ImageIdentity = Omit<ApiIdentity, 'kind'> & {
 };
 
 /**
- * Clean (visible-mark-free) serving is a capability, not a default: implied by
- * full-scope paid tiers, or admin-granted per key via permissions.clean_images.
+ * Clean (visible-mark-free) serving is a PAID capability, not a default: a
+ * full-scope tier backed by a Stripe subscription, or an admin grant via
+ * permissions.clean_images (for a contract paid offline). A full/enterprise
+ * key minted free for a partner keeps the visible marks — tier alone is not
+ * payment (13 free partner keys were serving clean until this check).
  * Only the VISIBLE marks come off — the invisible evidence layer (EXIF, keyed
  * watermark) stays on every tier by design; a bit-clean corpus is a negotiated
  * deal, not an API parameter.
  */
-export function keyAllowsCleanImages(doc: Pick<ApiKeyDoc, 'tier' | 'permissions'>): boolean {
+export function keyAllowsCleanImages(doc: Pick<ApiKeyDoc, 'tier' | 'permissions' | 'stripe_subscription_id'>): boolean {
   if (doc.permissions?.clean_images === true) return true;
   const cfg = DATASET_TIERS[doc.tier as DatasetTier];
-  return cfg?.scope === 'full';
+  return cfg?.scope === 'full' && !!doc.stripe_subscription_id;
 }
 
 export interface ImageAccessDecision {
@@ -284,21 +287,21 @@ export async function checkImageAccess(request: NextRequest): Promise<ImageAcces
 export function imageBudgetExceededBody(decision: ImageAccessDecision) {
   if (decision.reason === 'clean_requires_capability') {
     return {
-      error: 'Unmarked (clean=1) image serving requires a full-tier API key, or a key with the clean-images grant. Send your key as "Authorization: Bearer sl_data_…". Tiers: https://sourcelibrary.org/dataset — or drop clean=1 for the standard (marked) image.',
+      error: 'Unmarked (clean=1) image serving requires a full-tier API key, or a key with the clean-images grant. Send your key as "Authorization: Bearer sl_data_…". Tiers: https://sourcelibrary.org/dataset. Or drop clean=1 for the standard (marked) image.',
       next_steps: { tiers: 'https://sourcelibrary.org/dataset', get_api_key: 'https://sourcelibrary.org/developers' },
     };
   }
   if (decision.reason === 'key_rate_limit') {
     return {
-      error: 'Your API key\'s requests-per-minute limit was reached. Slow your request rate — the daily budget is unaffected. Higher rates come with paid tiers: https://sourcelibrary.org/licensing.',
+      error: 'Your API key\'s requests-per-minute limit was reached. Slow your request rate; the daily budget is unaffected. Higher rates come with paid tiers: https://sourcelibrary.org/licensing.',
       next_steps: { upgrade: 'https://sourcelibrary.org/licensing' },
       retry_after_seconds: 60,
     };
   }
   const next =
     decision.identity.kind === 'apikey'
-      ? `Your free Explorer key is capped at ${decision.limit} images/day. Paid tiers are uncapped — see https://sourcelibrary.org/licensing.`
-      : 'Bulk image access requires an API key — free at https://sourcelibrary.org/developers; paid tiers (uncapped) at https://sourcelibrary.org/licensing.';
+      ? `Your free Explorer key is capped at ${decision.limit} images/day. Paid tiers are uncapped: see https://sourcelibrary.org/licensing.`
+      : 'Bulk image access requires an API key, free at https://sourcelibrary.org/developers; paid tiers (uncapped) at https://sourcelibrary.org/licensing.';
   return {
     error: `Daily image budget reached (${decision.used}/${decision.limit} in the last 24h). ${next}`,
     used: decision.used,

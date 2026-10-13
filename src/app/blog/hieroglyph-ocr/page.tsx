@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Can AI Read Hieroglyphs? (No.) - Research Notes - Source Library',
-  description: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash — direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
+  description: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash: direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
   openGraph: {
     title: 'Can AI Read Hieroglyphs? (No.)',
     description: 'Four approaches to AI hieroglyphic OCR. Four failures. What the results reveal about the limits of visual language models.',
@@ -151,7 +151,7 @@ export default function HieroglyphOcrPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           We selected three pages from E.A. Wallis Budge&rsquo;s <em>Egyptian Reading Book for Beginners</em> (1896),
-          a standard text where hieroglyphic passages are printed alongside Latin-character transliteration &mdash;
+          a standard text where hieroglyphic passages are printed alongside Latin-character transliteration,
           a built-in answer key. Each page has 5&ndash;8 lines of hieroglyphs in the upper portion, with
           the corresponding transliteration below.
         </p>
@@ -173,10 +173,10 @@ export default function HieroglyphOcrPage() {
 
         <ul className="list-disc pl-6 mb-8 space-y-2 text-secondary leading-relaxed">
           <li><strong>~1,071 distinct signs</strong> in the Unicode Egyptian Hieroglyphs block (U+13000&ndash;U+1342F), far more than any alphabet</li>
-          <li><strong>Dense visual similarity</strong> &mdash; many signs differ by tiny details (the owl 𓅓 vs. the vulture 𓄿, the mouth 𓂋 vs. the forearm 𓂝)</li>
-          <li><strong>No word boundaries</strong> &mdash; hieroglyphs are arranged in visual groups, read right-to-left or left-to-right depending on which way the animals face</li>
-          <li><strong>Stacking</strong> &mdash; signs can be arranged vertically within a single group, not just sequentially</li>
-          <li><strong>Determinatives</strong> &mdash; some signs are semantic classifiers that aren&rsquo;t pronounced, making the mapping from text to transliteration non-obvious</li>
+          <li><strong>Dense visual similarity</strong>: many signs differ by tiny details (the owl 𓅓 vs. the vulture 𓄿, the mouth 𓂋 vs. the forearm 𓂝)</li>
+          <li><strong>No word boundaries</strong>: hieroglyphs are arranged in visual groups, read right-to-left or left-to-right depending on which way the animals face</li>
+          <li><strong>Stacking</strong>: signs can be arranged vertically within a single group, not just sequentially</li>
+          <li><strong>Determinatives</strong>: some signs are semantic classifiers that aren&rsquo;t pronounced, making the mapping from text to transliteration non-obvious</li>
         </ul>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -240,13 +240,13 @@ export default function HieroglyphOcrPage() {
         <ApproachCard
           number={2}
           title="Gardiner Sign List codes"
-          description="Instead of Unicode, ask for Gardiner codes (A1, M17, N35...) — the standard Egyptological catalog — then convert to Unicode with a lookup table."
+          description="Instead of Unicode, ask for Gardiner codes (A1, M17, N35...), the standard Egyptological catalog, then convert to Unicode with a lookup table."
           verdict="Much worse"
           verdictColor="bg-red-100 text-red-800"
         >
           <p className="text-secondary leading-relaxed mb-4">
             The hypothesis: maybe the model knows the <a href="https://en.wikipedia.org/wiki/Gardiner%27s_sign_list" className="text-accent-rust hover:underline">Gardiner Sign List</a> better
-            than Unicode codepoints. The Gardiner list assigns memorable codes to each hieroglyph &mdash;
+            than Unicode codepoints. The Gardiner list assigns memorable codes to each hieroglyph:
             A1 is &ldquo;seated man,&rdquo; M17 is &ldquo;reed,&rdquo; N35 is &ldquo;water ripple.&rdquo; Egyptology textbooks use
             these codes extensively, so they should be well-represented in training data.
           </p>
@@ -254,7 +254,7 @@ export default function HieroglyphOcrPage() {
           <p className="text-secondary leading-relaxed mb-4">
             We built a comprehensive Gardiner-to-Unicode mapping table (750+ signs, A1 through Aa32)
             and asked Gemini to OCR in Gardiner codes instead of Unicode. The conversion step worked
-            perfectly &mdash; 100% of the Gardiner codes the model produced mapped to valid Unicode
+            perfectly: 100% of the Gardiner codes the model produced mapped to valid Unicode
             codepoints.
           </p>
 
@@ -280,7 +280,7 @@ export default function HieroglyphOcrPage() {
           verdictColor="bg-amber-50 text-amber-800"
         >
           <p className="text-secondary leading-relaxed mb-4">
-            Self-correction works well for text generation &mdash; show a model its own output and
+            Self-correction works well for text generation: show a model its own output and
             ask it to fix mistakes. We tried a two-pass pipeline: Pass 1 does direct Unicode OCR,
             Pass 2 gets the image plus the Pass 1 output and is asked to carefully re-examine each
             sign and correct errors.
@@ -296,7 +296,7 @@ export default function HieroglyphOcrPage() {
             The corrected version was virtually identical to the original. The model made the same
             mistakes both times, because it lacks the underlying knowledge to distinguish correct
             from incorrect readings. Self-correction only works when the model knows what
-            &ldquo;correct&rdquo; looks like &mdash; and for hieroglyphic Unicode, it doesn&rsquo;t.
+            &ldquo;correct&rdquo; looks like, and for hieroglyphic Unicode, it doesn&rsquo;t.
           </p>
 
           <div className="bg-warm rounded-lg p-4 my-6">
@@ -365,7 +365,7 @@ export default function HieroglyphOcrPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-4">
-            This produced the most interesting results. The visual descriptions are often correct &mdash;
+            This produced the most interesting results. The visual descriptions are often correct:
             the model really can see &ldquo;a seated man,&rdquo; &ldquo;an owl,&rdquo; &ldquo;a water ripple.&rdquo;
             The breakdown happens at the mapping step: knowing you&rsquo;re looking at an owl
             doesn&rsquo;t always produce the correct Unicode codepoint for &ldquo;owl&rdquo; (𓅓, Gardiner G17).
@@ -434,7 +434,7 @@ export default function HieroglyphOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The four failures point to a consistent diagnosis. The bottleneck is not vision &mdash;
+          The four failures point to a consistent diagnosis. The bottleneck is not vision;
           the model <em>can</em> see hieroglyphic signs and describe them correctly. The bottleneck
           is the mapping from visual recognition to the correct Unicode codepoint. This is a training
           data problem, not an architecture problem.
@@ -454,17 +454,17 @@ export default function HieroglyphOcrPage() {
 
         <ol className="list-decimal pl-6 mb-8 space-y-3 text-secondary leading-relaxed">
           <li>
-            <strong>Fine-tuning on a hieroglyphic dataset</strong> &mdash; a few hundred pages of
+            <strong>Fine-tuning on a hieroglyphic dataset</strong>: a few hundred pages of
             aligned image/Unicode pairs would probably be enough, given that the vision component
             already works.
           </li>
           <li>
-            <strong>A sign-level classifier</strong> &mdash; crop individual signs from the page,
+            <strong>A sign-level classifier</strong>: crop individual signs from the page,
             classify each one against the ~750 Gardiner signs using a dedicated image classifier,
             then assemble into text. This sidesteps the Unicode mapping problem entirely.
           </li>
           <li>
-            <strong>Few-shot prompting with a sign chart</strong> &mdash; include a reference sheet
+            <strong>Few-shot prompting with a sign chart</strong>: include a reference sheet
             of all ~100 common signs with their Unicode codepoints in the prompt, so the model can
             look up signs rather than recall them from memory.
           </li>
@@ -472,8 +472,8 @@ export default function HieroglyphOcrPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           For now, Source Library will hold the hieroglyphic books in their original scanned form
-          without AI transcription. The six Egyptian texts we imported &mdash; Budge&rsquo;s
-          Reading Book, Book of the Dead, and four others &mdash; are accessible as page images
+          without AI transcription. The six Egyptian texts we imported (Budge&rsquo;s
+          Reading Book, Book of the Dead, and four others) are accessible as page images
           through the Internet Archive scans. When the Unicode mapping problem is solved, either
           through model improvements or a dedicated classifier, we&rsquo;ll run the pipeline again.
         </p>
@@ -493,8 +493,8 @@ export default function HieroglyphOcrPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           But the failure mode is also different. Cuneiform failed because the 3D wedge shapes are
-          hard to see in 2D photographs &mdash; a genuine vision problem. Hieroglyphs fail because the
-          model can&rsquo;t map what it sees to the right Unicode codepoints &mdash; a knowledge problem.
+          hard to see in 2D photographs: a genuine vision problem. Hieroglyphs fail because the
+          model can&rsquo;t map what it sees to the right Unicode codepoints: a knowledge problem.
           The cuneiform bottleneck is upstream (seeing); the hieroglyph bottleneck is downstream (naming).
         </p>
 

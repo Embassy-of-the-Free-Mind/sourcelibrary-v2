@@ -51,7 +51,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       categories,
       work_id,
       license_default: 'CC0-1.0',
-      attribution_default: 'Staatsbibliothek zu Berlin — Preußischer Kulturbesitz',
+      attribution_default: 'Staatsbibliothek zu Berlin, Preußischer Kulturbesitz',
       duplicate_query: {
         $or: [
           { sbb_ppn: normalizedPpn },

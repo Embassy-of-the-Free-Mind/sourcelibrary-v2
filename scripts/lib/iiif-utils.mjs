@@ -16,6 +16,8 @@
  * and we want to be a good citizen.
  */
 
+import { fetchWithStallTimeout } from './fetch-stall-timeout.mjs';
+
 // ── Per-domain rate limits (requests per second) ──
 
 export const DOMAIN_LIMITS = {
@@ -207,9 +209,20 @@ export function _agePenaltyClockForTest(url, ms) {
  * Fetch a URL respecting per-domain rate limits.
  * Returns a Buffer on success, throws on HTTP error or timeout.
  *
+ * `timeout` is a STALL timeout — an attempt aborts when no bytes have arrived
+ * for that long, re-armed per body chunk — with `maxMs` as the absolute
+ * backstop (#4402). This is the fetch-stall-timeout.mjs discipline the other
+ * archivers already use, and it matters here because archive-acquired fetches
+ * uncapped full-res masters through this function. The previous timer was
+ * cleared as soon as headers arrived, so it bounded time-to-headers and left
+ * the body — where a master spends its time — with no bound at all: a body
+ * that stalled mid-transfer held a pool worker forever. Do not answer slowness
+ * here by requesting a smaller IIIF size (#3186).
+ *
  * @param {string} url
  * @param {object} [opts]
- * @param {number} [opts.timeout=30000]
+ * @param {number} [opts.timeout=30000]  Abort an attempt after this long with no data.
+ * @param {number} [opts.maxMs=900000]   Absolute per-attempt backstop.
  * @param {string} [opts.userAgent]
  * @param {number} [opts.retries=3]  Retry count for transient network errors.
  * @returns {Promise<Buffer>}
@@ -217,6 +230,7 @@ export function _agePenaltyClockForTest(url, ms) {
 export async function rateLimitedFetch(url, opts = {}) {
   const {
     timeout = 30000,
+    maxMs = 15 * 60_000,
     userAgent = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)',
     retries = 3,
   } = opts;
@@ -231,36 +245,37 @@ export async function rateLimitedFetch(url, opts = {}) {
     // rather than jumping ahead of them.
     await claimSlot(host, limit);
 
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), timeout);
+    let refused = null;
     try {
-      const res = await fetch(url, {
-        signal: controller.signal,
+      const { res, buffer } = await fetchWithStallTimeout(url, {
+        stallMs: timeout,
+        maxMs,
         headers: { 'User-Agent': userAgent },
       });
-      clearTimeout(t);
       if (!res.ok) {
         // 4xx is unlikely to recover; bail without retrying. 5xx and 429 are
-        // worth retrying with backoff.
+        // worth retrying with backoff. Not a `throw` here: it would land in the
+        // catch below, which treats everything as transient — every 404 cost
+        // four requests and ~3.5 s of backoff (#5084).
         if (res.status >= 400 && res.status < 500 && res.status !== 429) {
-          throw new Error(`HTTP ${res.status}`);
+          refused = new Error(`HTTP ${res.status}`);
         }
         // A 429 is the host telling us our RATE is wrong. Retrying at the same
         // rate is the one response guaranteed not to work — slow this host down
         // for every subsequent caller, not just this retry.
-        if (res.status === 429) {
+        else if (res.status === 429) {
           const ra = Number(res.headers.get('retry-after'));
           noteRateLimited(url, ra);
         }
         lastErr = new Error(`HTTP ${res.status}`);
       } else {
-        return Buffer.from(await res.arrayBuffer());
+        return buffer;
       }
     } catch (e) {
-      clearTimeout(t);
       lastErr = e;
-      // Abort, ECONNRESET, ETIMEDOUT, "fetch failed" — all transient, retry.
+      // Stall/backstop abort (the message names which), ECONNRESET, ETIMEDOUT, "fetch failed" — all transient, retry.
     }
+    if (refused) throw refused;
     if (attempt < retries) {
       const backoff = 500 * Math.pow(2, attempt); // 500ms, 1s, 2s
       await new Promise(r => setTimeout(r, backoff));
@@ -300,6 +315,37 @@ export function repairIiifV3Size(url) {
     return url.replace(/\/full\/full\/(\d+\/[a-z]+\.)/i, '/full/max/$1');
   }
   return url;
+}
+
+/**
+ * True when a IIIF Image service is API 3.0 — by its PATH (`/iiif/3/`, as in
+ * isIiifV3Path) or by what the service object itself declares (`type:
+ * ImageService3`, or an image/3 `@context`). `service` is the manifest's
+ * service object when the caller has one; a bare id string is fine.
+ * dl.ndl.go.jp is never v3 here (it 500s on `max`).
+ */
+export function isIiifImageV3Service(serviceId, service) {
+  if (!serviceId || typeof serviceId !== 'string') return false;
+  if (serviceId.includes('dl.ndl.go.jp')) return false;
+  if (isIiifV3Path(`${serviceId}/`)) return true;
+  const s = Array.isArray(service) ? service[0] : service;
+  if (!s || typeof s !== 'object') return false;
+  const type = s.type || s['@type'] || '';
+  if (/ImageService3/.test(String(type))) return true;
+  const ctx = [].concat(s['@context'] || []).join(' ');
+  return /iiif\.io\/api\/image\/3/.test(ctx);
+}
+
+/**
+ * The full-size image URL for a IIIF Image service id: `max` for a v3 service,
+ * `full` otherwise. Every manifest→page builder must use this instead of
+ * appending `/full/full/0/default.jpg` — a v3 service answers that with
+ * `400 Invalid size`, and 91,695 stored pages were minted that way (#4655).
+ * Twin: src/lib/iiif-image-service.ts `iiifFullSizeUrl`.
+ */
+export function iiifFullSizeUrl(serviceId, service) {
+  const size = isIiifImageV3Service(serviceId, service) ? 'max' : 'full';
+  return `${serviceId}/full/${size}/0/default.jpg`;
 }
 
 /**
@@ -480,6 +526,31 @@ export function tileFits(reqW, reqH, gotW, gotH) {
 }
 
 /**
+ * Did a single `/full/full/` response come back at the native size info.json
+ * advertises? Exact match only: unlike a tile, the whole master is at stake,
+ * and a capped response is usually far off (1.67x on e-rara) — but a 1px-short
+ * "native" would still be a derivative stored as the master (#6006).
+ */
+export function fullIsNative(nativeW, nativeH, gotW, gotH) {
+  if (!nativeW || !nativeH || !gotW || !gotH) return false;
+  return gotW === nativeW && gotH === nativeH;
+}
+
+/**
+ * Hosts in SILENT_CAP_HOSTS that cap only SOME pages, so fetchIiifNativeRes
+ * tries one `/full/full/` request before stitching (#6006).
+ *
+ * e-rara: ten pages sampled 2026-10-10 across the id range all served
+ * `/full/full/` at exactly info.json's size, while its `w,` region tiles come
+ * back a few pixels taller than asked at the right/bottom edge — so stitching
+ * was both unnecessary and impossible there. EAP is NOT here: it caps every
+ * page, and the extra request would be pure cost on ~89k pages.
+ */
+export const FULL_FIRST_HOSTS = [
+  'www.e-rara.ch',
+];
+
+/**
  * Fetch a IIIF image at native pixel resolution, stitching tiles when the
  * server caps single-request output below the master dimensions.
  *
@@ -514,6 +585,9 @@ export function tileFits(reqW, reqH, gotW, gotH) {
  * @param {object} [opts.info] Pre-fetched info.json (avoids a roundtrip).
  * @param {number} [opts.maxChunk=1024] Max per-request chunk dimension.
  * @param {Function} [opts.onProgress] (done, total) callback.
+ * @param {boolean} [opts.fullFirst] Try `/full/full/` before stitching; defaults
+ *                            to true on FULL_FIRST_HOSTS. `tiles: 0` in the
+ *                            result means the single image was native.
  * @returns {Promise<{buffer: Buffer, width: number, height: number, tiles: number}>}
  */
 export async function fetchIiifNativeRes(photoUrl, opts = {}) {
@@ -536,6 +610,22 @@ export async function fetchIiifNativeRes(photoUrl, opts = {}) {
   if (info.maxWidth) chunk = Math.min(chunk, info.maxWidth);
   if (info.maxHeight) chunk = Math.min(chunk, info.maxHeight);
   if (chunk < 256) chunk = 256;
+
+  // FULL FIRST on hosts that cap only SOME pages (#6006). One `/full/full/`
+  // request is cheaper than a grid, and on e-rara it is also the only route
+  // that works: its `w,` edge tiles come back mis-scaled (asked 138x1024, got
+  // 138x1031) and the extent check below rightly refuses them. Accept the
+  // single image only when it IS native per info.json; anything short falls
+  // through to the stitch, guard and all.
+  const fullFirst = opts.fullFirst
+    ?? FULL_FIRST_HOSTS.some(h => String(serviceBase).includes(h));
+  if (fullFirst) {
+    const full = await rateLimitedFetch(`${serviceBase}/full/full/0/default.jpg`, opts);
+    const meta = await sharp(full).metadata();
+    if (fullIsNative(W, H, meta.width, meta.height)) {
+      return { buffer: full, width: meta.width, height: meta.height, tiles: 0, chunk: null };
+    }
+  }
 
   // PROBE: ask for one full-size chunk and see what actually comes back. A host
   // that silently downscales returns a SMALLER image for the same region; if we

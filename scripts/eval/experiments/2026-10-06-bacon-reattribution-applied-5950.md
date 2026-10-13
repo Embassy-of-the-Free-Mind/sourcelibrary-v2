@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 238
+verdict: "Read in full, the same-book tier was right on 143 of 163 Bacon moves (88%) and the note tier on 61 of 63; with by-eye fixes 340 mentions moved to Roger or Francis."
+status: adopted
+decision: "340 mentions moved in production; by-eye verdicts outrank the tiers and every same-book and note proposal is read before an apply (#6024)"
+superseded_by: null
+issue: [5950, 6024]
+---
 ## 2026-10-06 · Moving "Bacon" mentions to Roger and Francis: applied, and how good each evidence tier was (#5950)
 <!-- PRIOR ART: 2026-10-06-shared-name-mislinks-5950.md measured how many mentions sit on the wrong person and dry-ran this plan, checking 5 moves per tier. This entry is the apply and the full read of two tiers that the 5-row check could not judge. -->
 

@@ -10,13 +10,13 @@ export const revalidate = 21600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Dataset — Source Library',
+  title: 'Dataset | Source Library',
   description:
     'Structured parallel-text training data from 19,000+ historical texts in 200+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'Dataset — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'Dataset | Source Library',
     description:
       'The only structured parallel-text dataset for historical languages. Page-aligned original text, English translation, and metadata.',
   },
@@ -94,7 +94,7 @@ export default async function DatasetPage() {
       header={
         <ContentHeader
           title="The Dataset"
-          subtitle="Page-aligned parallel text for historical languages. OCR, English translation, and scholarly metadata — ready for training."
+          subtitle="Page-aligned parallel text for historical languages. OCR, English translation, and scholarly metadata, ready for training."
         />
       }
       maxWidth="standard"
@@ -104,7 +104,7 @@ export default async function DatasetPage() {
       <section className="mb-24">
         <p className="font-serif text-2xl md:text-[28px] text-[#1a1a18] leading-[1.5] max-w-2xl">
           {formatNumber(stats.totalBooks)} texts. {formatNumber(stats.pagesTranslated)} pages
-          translated into English. {stats.languages.length} languages — Sumerian to Renaissance Latin.
+          translated into English. {stats.languages.length} languages, from Sumerian to Renaissance Latin.
           Available via streaming API.
         </p>
       </section>
@@ -118,7 +118,7 @@ export default async function DatasetPage() {
         </p>
         <p className="text-[#444] leading-[1.75]">
           We have done that work for {formatNumber(stats.totalBooks)} texts
-          across {stats.languages.length} languages — and the dataset grows every week.
+          across {stats.languages.length} languages, and the dataset grows every week.
         </p>
       </section>
 
@@ -216,7 +216,7 @@ export default async function DatasetPage() {
 
         <div className="space-y-px rounded-lg border border-[#e8e6e3] overflow-hidden">
           {[
-            { name: 'Explorer', price: 'Free', scope: '2,000 pages/day, any language', note: 'Self-serve — instant' },
+            { name: 'Explorer', price: 'Free', scope: '2,000 pages/day, any language', note: 'Self-serve, instant' },
             { name: 'Single Language', price: '$4,990/yr', scope: 'One language corpus, unlimited', note: 'or $499/mo' },
             { name: 'Domain', price: '$14,990/yr', scope: 'One scholarly domain, unlimited', note: 'or $1,499/mo' },
             { name: 'Full Collection', price: '$49,990/yr', scope: 'All languages, all domains + unmarked image serving', note: 'or $4,999/mo' },
@@ -240,9 +240,9 @@ export default async function DatasetPage() {
         <p className="text-[#666] text-[15px] leading-[1.75] mt-6 max-w-2xl">
           These subscriptions are the cooperative path to a training license:
           non-exclusive, with attribution, delivered through the API rather than
-          crawling. Outside a subscription, our standing rate card applies —
-          at least $250 per book, or $200,000/year for full-corpus export with
-          quarterly refresh — and it is the basis on which unlicensed training
+          crawling. Outside a subscription, our standing rate card applies
+          (at least $250 per book, or $200,000/year for full-corpus export with
+          quarterly refresh), and it is the basis on which unlicensed training
           use is invoiced. See{' '}
           <Link href="/licensing" className="text-[#1a1a18] underline hover:no-underline">
             AI &amp; Data-Mining Licensing
@@ -294,11 +294,11 @@ export default async function DatasetPage() {
       <section className="mb-24 max-w-2xl">
         <p className="text-xs uppercase tracking-[0.15em] text-[#999] mb-6">Legal</p>
         <p className="text-[#444] leading-[1.75]">
-          Source texts are public domain. The curated compilation — OCR, translations,
-          taxonomy, and metadata — is protected under the EU Database Directive (96/9/EC).
+          Source texts are public domain. The curated compilation (OCR, translations,
+          taxonomy, and metadata) is protected under the EU Database Directive (96/9/EC).
           Licenses are non-exclusive and cover training, fine-tuning, and evaluation.
-          Our full position — what&apos;s freely permitted, what&apos;s reserved, and the
-          standard training rate card — is at{' '}
+          Our full position (what&apos;s freely permitted, what&apos;s reserved, and the
+          standard training rate card) is at{' '}
           <Link href="/licensing" className="text-[#1a1a18] underline hover:no-underline">
             /licensing
           </Link>.

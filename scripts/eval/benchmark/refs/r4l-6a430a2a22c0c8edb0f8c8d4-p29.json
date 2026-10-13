@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A42256",
+  "edition": "Roberti Grovii, Carmen de sanguinis circuitu a Gulielmo Harvaeo Anglo, primum invento adjecta sunt miscellanea quaedam. — Wing G2148; ESTC R23959 (1685)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A42256",
+  "origin": "library",
+  "book_id": "6a430a2a22c0c8edb0f8c8d4",
+  "page_number": 29,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 34535,
+    "to_char": 34989,
+    "overlap": 0.574,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "p.25 PROV xxi.17 + Ad Ponticum; ref ends with next poem's heading words",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      27,
+      28,
+      29
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.637Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "2ff48cdc7012ca4bc5850bd709be06da5a82944e9fde8ded24b51749a2ee645c",
+  "unit": {
+    "chars": 454
+  }
+}

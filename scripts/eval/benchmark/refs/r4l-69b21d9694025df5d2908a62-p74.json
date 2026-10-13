@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/declarationes1",
+  "edition": "Declarationes Illustr. Sac. Rom. Cardinalium Congregationis, Ipsis Sacrosancti et Oecumenici Concilii Tridentini Canonib — K�ln: Peter Henning, 1619.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "origin": "library",
+  "book_id": "69b21d9694025df5d2908a62",
+  "page_number": 74,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 165554,
+    "to_char": 167180,
+    "overlap": 0.398,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-2)",
+    "at": "2026-10-06T10:11:07+00:00",
+    "note": "printed p.70, end of L-list and APPENDIX; ref starts ~1 line early; matches",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      73,
+      74,
+      75
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.681Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "8cc32df9511ccb20e0275e8483ffc665d6e59cbc589aba1af84ca8398a5e0396",
+  "unit": {
+    "chars": 1626
+  }
+}

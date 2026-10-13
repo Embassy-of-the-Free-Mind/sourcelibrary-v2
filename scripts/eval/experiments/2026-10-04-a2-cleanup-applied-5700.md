@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 200
+verdict: "Three cleanup classes passed the by-eye gate (40/40 each) and were applied to 277,832 pages in 14,931 books; a_scan (~29/40) and b_original (~27/40) failed."
+status: adopted
+decision: "a_initial, c_tags, c_visible applied with page_revisions undo rows; a_scan and b_original not applied (#5700)"
+superseded_by: null
+issue: 5700
+---
 ## 2026-10-04 · Which of the $0 translation cleanups (A2/A3) are safe to apply, and what did applying them change? (#5700)
 
 PRIOR ART: `2026-10-03-quality-census-backfill-sizes-5700.md` sized the classes on one page per book and listed the fixes without applying them. `scripts/lib/translation-text-repair.mjs` (`repairTranslationText`) is the guarded door for an edit to stored translation text (#5624, #5644); `fix-unclosed-note-tags.mjs` and `tengyur-draft-repairs-5497.mjs` use it for a named page list. No script walked the corpus with these classes, and none had a by-eye gate per class.

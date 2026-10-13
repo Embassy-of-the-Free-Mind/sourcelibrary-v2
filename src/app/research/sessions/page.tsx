@@ -12,13 +12,13 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: 'Research Sessions - Source Library',
   description:
-    'Browse AI-assisted curator research sessions — conversations discovering, evaluating, and importing historical texts across alchemy, Hermetica, Kabbalah, and 30+ traditions.',
+    'Browse AI-assisted curator research sessions: conversations discovering, evaluating, and importing historical texts across alchemy, Hermetica, Kabbalah, and 30+ traditions.',
   alternates: { canonical: '/research/sessions' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Research Sessions - Source Library',
     description:
-      'Browse AI-assisted curator research sessions — conversations discovering, evaluating, and importing historical texts.',
+      'Browse AI-assisted curator research sessions: conversations discovering, evaluating, and importing historical texts.',
   },
 };
 
@@ -30,7 +30,7 @@ export default async function ResearchPage() {
       header={
         <ContentHeader
           title="Research Sessions"
-          subtitle="Browse AI-assisted curator conversations — discovering, evaluating, and importing historical texts across 30+ traditions."
+          subtitle="Browse AI-assisted curator conversations: discovering, evaluating, and importing historical texts across 30+ traditions."
         />
       }
     >

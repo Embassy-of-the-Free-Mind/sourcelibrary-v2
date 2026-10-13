@@ -1,0 +1,566 @@
+[
+  {
+    "book_id": "69e7ac5c5f1a22ab19aa6c50",
+    "slot": 17,
+    "title": "Neyphug Thor bu gTor ma rgya rtsa'i phyag len sogs",
+    "tradition": "bl-other-neyphug",
+    "shelf_fit": "fits",
+    "shelf_note": "A Neyphug Monastery manuscript bundle (BL). Its main text is Ngagchang Kunga Rinchen's Sakya practice of the hundred torma offerings, which belongs in this monastery collection.",
+    "rights_flag": null,
+    "structure_note": "Each page record is one photograph of 3 pecha leaves (I5), so the reader sees three folios per 'page'. The bundle holds the same torma text twice: p1 leaves 2–3 (title page 'dpal sa skya pa sngags 'chang … gtor ma brgya rtsa'i phyag len') and p22 leaves 1–2 (a second copy beginning 'oM swa sti … gtor ma brgya rtsa gtong tshul') carry the same ritual wording. That fits a 'sogs' bundle and is not a duplicate scan, but the catalogue should say it. pages_ocr field 23 vs 35 pages that have OCR; 21/35 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "བསོད་ནམས་འཐོབ་བོ། ། བསོད་ནམས་འཐོབ་བོ།། … (four lines, ~15 repetitions of 'bsod nams 'thob/bsod pa 'thob')",
+            "image": "one short later-hand line below the frame on the title leaf (\"…\" ~4 syllables); nothing else",
+            "problem": "repetition loop: the one marginal line is expanded into four lines of invented repeated text",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "ཕྱག་ལེན་རིམས་",
+            "image": "title ends '…ཕྱག་ལེན་…' with further syllables at the frame edge",
+            "problem": "end of the title line misread/clipped",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "བསོད་ནམས་འཐོབ་བོ།། ×15",
+            "english": "May merit be obtained! May merit be obtained! … Merit! Merit be obtained!",
+            "problem": "the invented repetition block is translated as if it were text on the title page",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "source": "སྔགས་ (margin label)",
+            "english": "Mantra",
+            "problem": "marginal volume label rendered as a heading",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "A reader opens the title page and sees four lines of 'May merit be obtained!' that are not on the leaf",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ན་མོ་བདག་གི་བསམ་པའི་སོགས་",
+            "english": "<note>Recite \"By my intention,\" etc.</note>",
+            "problem": "reasonable, but the note wrapper turns a source instruction into editorial apparatus",
+            "severity": "minor",
+            "class": "T3"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སངས་རྒྱས་དང་བྱང་ཆུབ་ / བསྐོར་བ་",
+            "image": "སངས་རྒྱས་དང་བྱང་ཆུབ་སེམས་དཔའི་ཚོགས་ཀྱིས་ / བསྐོར་བ་ (leaf 2, end of line 5)",
+            "problem": "'sems dpa'i tshogs kyis' dropped at the line end (translation supplies it from context)",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "གཏོར་ཞེས་ཀྱི་ནང་དུ",
+            "image": "གཏོར་ཐེབ་ཀྱི་ནང་དུ",
+            "problem": "thebs misread as zhes",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འདི་ན་སྣོད་མིན་སེམས་ཅན་གང་ཡང་མེད",
+            "english": "There is no sentient being here who is not of that nature",
+            "problem": "'snod min' (unfit vessel) is softened to 'not of that nature'",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 28,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དགའ་བོ་ཉི་དགའ",
+            "image": "དགའ་བོ་ཉེ་དགའ (Nanda and Upananda)",
+            "problem": "nye misread as nyi",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "དགའ་བོ་ཉི་དགའ་ལ་སོགས་པ",
+            "english": "the indigenous deities led by Ananda and Sunanda",
+            "problem": "the naga kings Nanda and Upananda become 'Ananda and Sunanda'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "སྟོན་མཆོག་དམ་པ་སོགས་བཀྲ་ཤིས་ཀྱི་ཚིག་ཇི་ལྟར་རིགས་པ་བརྗོད། །",
+            "english": "(nothing)",
+            "problem": "the closing instruction to recite verses of auspiciousness is dropped",
+            "severity": "moderate",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A Neyphug manuscript of a Sakya torma practice. The transcription is careful on running text, but the title page carries an OCR repetition loop: four invented lines of 'May merit be obtained!', which the translation renders.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      6,
+      22
+    ],
+    "reader_summary": "A Sakya liturgy for offering the hundred tormas, by Ngagchang Kunga Rinchen, in a Neyphug bundle that has the text twice. Apart from the title page, the transcription matches the leaves line for line, and the English follows the Tibetan closely enough to perform the rite. The title page shows an invented block of repeated 'merit' lines, and a few names (Nanda/Upananda) are wrong."
+  },
+  {
+    "book_id": "69e7ac455f1a22ab19aa618e",
+    "slot": 18,
+    "title": "Neyphug Thor bu Tshe khrid sogs",
+    "tradition": "bl-other-neyphug",
+    "shelf_fit": "fits",
+    "shelf_note": "A Neyphug bundle of Nyingma empowerment manuals ('chi med dpal ster long-life, the Twelve Tenma, Rahula, Four-Armed Mahakala). It is a monastery collection and fits.",
+    "rights_flag": null,
+    "structure_note": "Each page record is a photograph of 3 leaves (I5), and p57 is a single colophon leaf. The leaves in one photo can come from different texts in the bundle: on p5 the left-margin sigla differ and leaf 3 opens a new section, so 'page' order is not text order. The left- and right-margin folio numbers are not transcribed. 40/72 translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(not transcribed)",
+            "image": "left/right margin title siglum 'tshe' and folio numerals",
+            "problem": "margin furniture dropped",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བསོད་ནམས་མཆོག་ལྡན་དཔལ།།",
+            "english": "# Glorious Sonam Chokden!",
+            "problem": "a line of a lineage prayer becomes a Markdown heading",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "རྒྱལ་པོ་ཞེས་གྲགས་པ།",
+            "english": "# Known as the King...",
+            "problem": "a mid-sentence leaf opening becomes a heading",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "other": [
+          {
+            "note": "Invented headings ('# Glorious Sonam Chokden!', '# Known as the King...') at the leaf breaks",
+            "severity": "moderate",
+            "class": "T16"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བྱིན་གྱིས་བརླབས་྾྾྾་སོ",
+            "image": "a red pigment blot over 2–3 syllables (leaf 2, line 5)",
+            "problem": "the stain is marked with ྾ rather than flagged as illegible; acceptable",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བླ་མ་མངའ་བདག་ཆེན་པོ",
+            "english": "the Great Sovereign Master <note>Nyang Ralpa</note>",
+            "problem": "correct identification, but the note is the model's own gloss",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 37,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཏྲི་དུ་བའི་མདོག",
+            "english": "a particle of dark yellow color",
+            "problem": "a garbled/obscure colour term is rendered fluently as 'particle'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "མ་ལས་སྟག་སྲིད་ཟོར་བའི་གདོང་ཅན",
+            "english": "from Ma, is the Tiger-Existence with a sickle face",
+            "problem": "the deity names ('stag srid', 'bam srid', 'kong srin', 'brog srid') are calqued into nonsense ('Tiger-Existence', 'Nomad-Existence')",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ཨོཾ་སྭསྟི།",
+            "english": "# Om Svasti!",
+            "problem": "heading markup invented",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 57,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མི་འགྱུར་ཟག་མེད་ཡིས་ཀྱི། །རྣམ་རོལ་རྡོ་རྗེ་ནག་པོ་ཆེས།",
+            "english": "Through the manifestation of the unchanging, untainted wisdom, the Black Vajra Mahakala, …",
+            "problem": "the author's name in the colophon is rendered as a deity description; the author is lost",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A sound Nyingma ritual bundle. The OCR matches the leaves line for line, and the translations are usable, with invented Markdown headings at the leaf breaks and some deity names calqued.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      29,
+      57
+    ],
+    "reader_summary": "Empowerment and sadhana manuals from Neyphug: the long-life rite 'Bestowing the Splendor of Deathlessness', the Twelve Tenma life-entrustment, Rahula, and Four-Armed Mahakala. The transcription is of the right leaves, and the English follows it well enough for ritual study. Warn the reader that headings like '# Glorious Sonam Chokden!' are not in the source, and that some retinue names are calqued."
+  },
+  {
+    "book_id": "69e7ac425f1a22ab19aa607c",
+    "slot": 19,
+    "title": "Neyphug Thor bu Pad gling bka' 'bum",
+    "tradition": "bl-other-neyphug",
+    "shelf_fit": "fits",
+    "shelf_note": "Writings of Pema Lingpa (visions, supplications, songs, aspiration prayers), held at Neyphug. The work fits.",
+    "rights_flag": null,
+    "structure_note": "Each page record is a photograph of 3 xylograph/manuscript leaves (I5). The pages_ocr field (153) disagrees with the 197 pages that have OCR; 146/197 translated. On p190 the abbreviation crosses on the leaf are transcribed as ྾, which is faithful.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སྒྲ་I་རེ་སྐྱལ་ལོ",
+            "image": "སྒྲ་ཅིག་རེ་… (Tibetan)",
+            "problem": "a Latin 'I' appears inside the Tibetan",
+            "severity": "minor",
+            "class": "O6"
+          },
+          {
+            "ocr": "བུམ་ཆོག་འདི་རུ་སྡོད་ཅིག",
+            "image": "likely བུ་མཆོག་ ('supreme son')",
+            "problem": "tsheg placement turns 'bu mchog' into 'bum chog' (vase rite)",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཀནི་གྱི་རྩེ་ལ་ཤིང་གཅིག་སྐྱེས",
+            "english": "I saw a tree growing from the tip of his thumb",
+            "problem": "kaniṣṭhā is the little finger, not the thumb",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "བུམ་ཆོག་འདི་རུ་སྡོད་ཅིག",
+            "english": "Stay here for the vase ritual!",
+            "problem": "the OCR misread is carried into a fluent wrong instruction",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "ཕ་ཅིག་ཨྱན་པདྨ་ཡིས།།བུ་དེ་གསུམ་ཅིའི་བརྡ་རུ་གོ",
+            "english": "\"Sole father, Padma, what do I understand these three signs to be?\" In response to his speech, I replied",
+            "problem": "Padmasambhava's question to Pema Lingpa ('Son, what do you take these three to signify?') is put in Pema Lingpa's mouth",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 69,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "འབྱུང་གནས་རྡོ་ཆོས་དབང་བརྒྱུད་དང་མཇལ",
+            "english": "he met the lineage of Nyangral Nyima Ozer and Guru Chowang",
+            "problem": "Nyangral Nyima Özer is not in the source; the name is supplied by the model",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "རིག་འཛིན་ཆེན་པོ་སུམ་རེ་ཛ་ལ",
+            "english": "the Great Knowledge-Holder Sumreza",
+            "problem": "Kumārarāja left as an OCR-garbled name",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཉ་ཉོན་མོངས་འཁྲུལ་པའི་ཕུགས་ཐག་ཅད",
+            "english": "—not being primordial, cut the distance to the source of the delusion of afflictions!",
+            "problem": "the NYA letter-label of the acrostic is dropped (every other letter is bolded), and 'phugs thag chod' becomes 'cut the distance'",
+            "severity": "minor",
+            "class": "T16"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 190,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "འདོག་པར་རིང་སྐྱེ་བའི་སྨོན་ལམ་ཅིག་ཞུ་ཞུས་པས",
+            "english": "Requested an aspiration for being born in <unclear>...</unclear>.",
+            "problem": "an <unclear> tag is shown in the reader text",
+            "severity": "moderate",
+            "class": "D1"
+          },
+          {
+            "source": "དྷེ་བ་ཙནྡའི་སྨོན་྾",
+            "english": "Whatever aspirations Dhana-Sanskrita made",
+            "problem": "Devacandra becomes the non-name 'Dhana-Sanskrita'",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "དགེ་བཅུ་དང་འཚམས་མེད་ལྔ།།ལས་ངན་སྡིག་སྒྲིབ་…སྤང་ཞིང་དག་གྱུར་ནས",
+            "english": "The ten virtues and the five crimes … be abandoned and purified",
+            "problem": "at the leaf seam 'mi dge bcu' (ten non-virtues) loses 'mi', so the English prays to abandon the ten virtues",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "other": [
+          {
+            "note": "<unclear>…</unclear> markup visible at the top of the translation",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "Pema Lingpa's own writings, transcribed well. The English reads fluently, but it slips on hand gestures, speakers and names in ways a Bhutanese-Nyingma reader would catch.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      113
+    ],
+    "reader_summary": "Pema Lingpa's collected writings: visionary narratives, supplications to Longchenpa, an alphabet acrostic on Mahamudra-style view, and aspiration prayers. The Tibetan is the right text and largely accurate. The English is a usable reading aid, but not citable without checking: it gets a finger wrong, reverses a speaker, invents one lineage name, and in one prayer asks to abandon the ten virtues."
+  },
+  {
+    "book_id": "69e7ac4d5f1a22ab19aa6607",
+    "slot": 20,
+    "title": "Neyphug Thor bu Phyag chen chos skor",
+    "tradition": "bl-other-neyphug",
+    "shelf_fit": "fits",
+    "shelf_note": "A cycle of Kagyu/Shangpa-style Mahamudra instructions in dbu med, from Neyphug. Fits.",
+    "rights_flag": null,
+    "structure_note": "Each page record is a photograph of 4 dbu med leaves (I5). Only 56 of 188 pages are translated, and the pages_ocr field (61) disagrees with the 188 pages that have OCR. The dbu med contractions (སེཾས, ཐཾད, ཡྔག) are kept as written, which is faithful, but they trip the translator (see p183).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རེས་འཇིག་རྟེན་འདི་ལ་དགའ་སྙམ་པའི་བསམ་པ་ཡང་གཞན་ལ་འོང",
+            "english": "Others may think \"He is fond of this world.\"",
+            "problem": "plausible but uncertain reading of who has the thought",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཐ་མ་རྟོགས་པ་ཐོས་པའི་དུས",
+            "image": "likely ཐོབ་པའི་ (the text later says 'rtogs pa thob pa'i dus')",
+            "problem": "thob misread as thos",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཐ་མ་རྟོགས་པ་ཐོས་པའི་དུས",
+            "english": "the time when realization is heard",
+            "problem": "the third stage reads 'heard', contradicting 'the final time of obtaining realization' on the same page",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "ཕྱག་དྱ་ཆེན་པོ་གཉུག་མ་ཆིག་ཆོད",
+            "english": "Single Sufficiency of the Co-emergent Great Mudra",
+            "problem": "gnyug ma is 'innate/natural', not 'co-emergent' (lhan skyes)",
+            "severity": "minor",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 137,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "གང་ཕྱིར་ཡིད་ཀྱི་མི་སྒོམ་པར་འགྲོ་བ་ཐཾད་སྒོམ་པར་བྱ",
+            "english": "Because the mind does not meditate, all beings shall meditate",
+            "problem": "Saraha's line ('do not meditate with the mind; take all movement as meditation') becomes 'all beings shall meditate'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "དཀར་བརྒྱུད་གོང་མའི་བླ་ནཱ་རོ་པས",
+            "english": "Naropa, the forefather of the Dakpo Kagyu",
+            "problem": "'Dakpo' added; the source says Kagyu",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 183,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "࿓࿔།།",
+            "image": "༄༅། (yig mgo)",
+            "problem": "head mark transcribed with a different glyph",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ཡྔག་ཉིད་ལ་ཡྔག་བལྟ་། … ཡྔག་མཐོང་ནས་རྣཾར་གྲོལ་",
+            "english": "Looking at one's own mind is like a yak looking at itself.",
+            "problem": "ཡྔག is the dbu med contraction of yang dag ('look truly at the true; seeing the true, one is liberated', Ratnagotravibhāga), and the book's own p137 renders it so; here it becomes an invented simile about a yak",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "བླ་མ་གཉི་བསྒོམ་གྱི་གསུང་སྒྲོས",
+            "english": "The verbal instructions of Guru Nyigom",
+            "problem": "an uncertain name passed through without a flag",
+            "severity": "minor",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "'like a yak looking at itself' in a Mahamudra pith instruction reads as a howler",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A rich dbu med Mahamudra cycle with accurate OCR. The English is mostly sound but does not consistently resolve dbu med contractions: one classic verse becomes 'a yak looking at itself'.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      86
+    ],
+    "reader_summary": "Kagyu Mahamudra instructions and songs (Lingrepa, Saraha, a stage-by-stage 'innate' guide), copied in cursive dbu med. The transcription is of the right leaves and keeps the scribe's contractions. Most of the English can be trusted for the sense, but it mistranslates at least one canonical verse and one Saraha line, and only about a third of the book is translated."
+  }
+]

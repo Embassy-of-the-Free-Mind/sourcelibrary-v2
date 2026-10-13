@@ -80,13 +80,9 @@ To redrive a backlog, raising `processing_priority` is preferred over restarting
 
 ## Two Import Paths (the "archive late" footgun)
 
-The pipeline has two routes into the visible library, and they archive at very different times:
-
-**Warehouse path** — `books_warehouse` → archive → `books`
-- New book lands in `books_warehouse` with `pipeline_auto.status: 'queued'`
-- Orchestrator moves it through `archiving` → `archive_complete`
-- Only after `archive_complete` is the book promoted to `books`
-- **Archive happens before the book is visible.** No "archive late" perception.
+There used to be two routes into the visible library. The warehouse path
+(land in `books_warehouse`, archive, then promote to `books`) was retired
+2026-10 (#5470) along with the warehouse collections; only the direct path remains.
 
 **Direct path** — `books` immediately, then cron archives
 - Importer (e.g. `bncf-aldine-direct.mjs`, `al-badri-direct.mjs`, `ia-bundle-import.mjs`) inserts straight into `books` as `hidden: true, visible: false`
@@ -94,9 +90,7 @@ The pipeline has two routes into the visible library, and they archive at very d
 - `archive-bulk`/`archive-ocr` cron discovers it on its next pass, sorted by the priority above
 - Lag from import to `archived_photo` populated can be hours to days depending on backlog depth
 
-Most batch imports use the direct path. If "archive happens late" matters for a given operation (e.g. you want to unhide right after import), either:
-1. Route the import through `books_warehouse`, or
-2. Set `processing_priority` high at import time (the new default — 80)
+If "archive happens late" matters for a given operation (e.g. you want to unhide right after import), set `processing_priority` high at import time (the new default — 80).
 
 ## Pipeline Phase Ordering
 

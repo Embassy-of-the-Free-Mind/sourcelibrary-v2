@@ -76,12 +76,12 @@ export default function InterlinearExperimentPage() {
 
         <p>
           Source Library uses a <strong>facing-page reader</strong>: the original manuscript scan on the left,
-          AI translation on the right. This mirrors how scholars have read texts for centuries &mdash;
+          AI translation on the right. This mirrors how scholars have read texts for centuries:
           the Loeb Classical Library, Bud&eacute; editions, and every bilingual critical edition since Erasmus.
         </p>
 
         <p>
-          But for ancient Near Eastern texts &mdash; Sumerian, Akkadian, Egyptian &mdash; there&apos;s a problem.
+          But for ancient Near Eastern texts (Sumerian, Akkadian, Egyptian), there&apos;s a problem.
           These languages are written in scripts most readers can&apos;t parse visually.
           The scan of a cuneiform tablet or hieratic papyrus doesn&apos;t help you follow along the way
           a Latin or German page does. The visual parallel breaks down.
@@ -118,7 +118,7 @@ export default function InterlinearExperimentPage() {
                     className="w-full rounded opacity-90"
                   />
                 </div>
-                <p className="text-stone-500 text-xs mt-2">K.3514 — Tablet IX</p>
+                <p className="text-stone-500 text-xs mt-2">K.3514, Tablet IX</p>
               </div>
             </div>
             {/* Right: translation panel */}
@@ -147,7 +147,7 @@ export default function InterlinearExperimentPage() {
 
         <p className="text-sm text-stone-500 mb-4">
           Same text, displayed with transliteration and translation aligned line by line.
-          No scan image &mdash; the structure itself becomes the artifact.
+          No scan image: the structure itself becomes the artifact.
         </p>
 
         {/* Gilgamesh interlinear */}
@@ -211,14 +211,14 @@ export default function InterlinearExperimentPage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://cdli.earth/dl/photo/P273210.jpg"
-              alt="K.3375 — The Flood Tablet (Gilgamesh XI)"
+              alt="K.3375: The Flood Tablet (Gilgamesh XI)"
               className="max-h-[200px] rounded shadow-lg"
             />
           </div>
           {/* Interlinear below */}
           <div className="bg-stone-50 p-6 space-y-3">
             <div className="text-[10px] text-stone-400 uppercase tracking-wider mb-2">
-              K.3375 &mdash; Tablet XI &mdash; &ldquo;The Flood&rdquo;
+              K.3375, Tablet XI, &ldquo;The Flood&rdquo;
             </div>
             {GILGAMESH_LINES.slice(0, 4).map((line, i) => (
               <div key={i} className="pb-2 border-b border-stone-100 last:border-0 last:pb-0">
@@ -236,7 +236,7 @@ export default function InterlinearExperimentPage() {
 
         <p>
           <strong>For poetry (most ancient Near Eastern lit), interlinear wins.</strong> The
-          parallelism in Shuruppag, the repetition in Gilgamesh &mdash; these are structural features
+          parallelism in Shuruppag, the repetition in Gilgamesh: these are structural features
           that facing-page prose translation erases. Interlinear preserves them naturally.
         </p>
 

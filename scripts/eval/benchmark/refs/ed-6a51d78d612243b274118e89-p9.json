@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A04717",
+  "edition": "EEBO-TCP A04717 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a51d78d612243b274118e89",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 12658,
+    "to_char": 14663,
+    "overlap": 0.955,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts Nobilitas ut erat (few extra); ends jactasset alumno (+2)",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:53:07.334Z",
+  "text_location": "repo",
+  "text_sha256": "26f026857e3d565b3a9021a203d59389f37b45b79f1b064a08b97ea44a634cd1",
+  "unit": {
+    "chars": 2005
+  }
+}

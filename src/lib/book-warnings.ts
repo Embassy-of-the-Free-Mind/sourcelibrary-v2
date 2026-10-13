@@ -89,7 +89,7 @@ export const NO_WARNINGS: QualityWarnings = { book: null, pages: {} };
 
 // No runtime ships Latin month names; `la` takes the en-GB form ("7 Oct 2026"), whose
 // abbreviations a Latin reader also reads as Latin.
-const DATE_LOCALE = { en: 'en-GB', es: 'es-ES', la: 'en-GB' } as const;
+const DATE_LOCALE = { en: 'en-GB', es: 'es-ES', la: 'en-GB', nl: 'nl-NL', zh: 'zh-CN' } as const;
 /** "7 Oct 2026". UTC and a fixed locale, so a server render and the browser agree. */
 export function qualityDate(iso: string, locale: keyof typeof DATE_LOCALE): string {
   return new Date(iso).toLocaleDateString(DATE_LOCALE[locale], { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });

@@ -4,13 +4,13 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import PassageComparison from '@/components/comparison/PassageComparison';
 
 export const metadata: Metadata = {
-  title: 'What Ficino Heard — Translations Across Civilizations | Source Library',
+  title: 'What Ficino Heard: Translations Across Civilizations | Source Library',
   description:
     'The same Hermetic vision, rendered by a Renaissance philosopher in 1481, a 17th-century English scribe, and an AI in 2026. Three translations, three centuries, one text.',
   openGraph: {
     title: 'What Ficino Heard',
     description:
-      'Three translations of the Corpus Hermeticum — Ficino (1481), an anonymous English scribe (1650), and AI (2026) — reveal what each era sought in the same ancient text.',
+      'Three translations of the Corpus Hermeticum, by Ficino (1481), an anonymous English scribe (1650), and AI (2026), reveal what each era sought in the same ancient text.',
     images: [
       {
         url: 'https://images.sourcelibrary.org/archived/69938e765d28b693146d0f99/19.jpg',
@@ -34,7 +34,7 @@ export default function TranslationsAcrossCivilizationsPage() {
       header={
         <ContentHeader
           title="What Ficino Heard"
-          subtitle="Three translations of the Poimandres &mdash; 1481, 1650, 2026"
+          subtitle="Three translations of the Poimandres: 1481, 1650, 2026"
         >
           <p className="text-stone-400 text-sm mt-4">
             19 April 2026 &middot; 10 min read
@@ -69,7 +69,7 @@ export default function TranslationsAcrossCivilizationsPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           Something new is possible now that has never been possible before.
           Source Library holds thousands of pre-modern texts in their original
-          languages &mdash; Greek, Latin, Sanskrit, Arabic, Chinese &mdash;
+          languages (Greek, Latin, Sanskrit, Arabic, Chinese)
           alongside AI translations generated directly from those originals.
           For hundreds of these works, we also hold historical human
           translations: the versions that shaped civilizations. Place them
@@ -86,7 +86,7 @@ export default function TranslationsAcrossCivilizationsPage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           In 1463, a Greek manuscript arrived at the court of Cosimo
           de&rsquo; Medici in Florence. Cosimo ordered his best scholar,
-          Marsilio Ficino, to drop everything &mdash; including Plato &mdash;
+          Marsilio Ficino, to drop everything (including Plato)
           and translate it immediately. The text was the{' '}
           <em>Corpus Hermeticum</em>, attributed to the legendary sage Hermes
           Trismegistus. Ficino believed it was older than Moses.
@@ -100,7 +100,7 @@ export default function TranslationsAcrossCivilizationsPage() {
           place his rendering next to two others: a 1650 English manuscript
           translation, and a direct AI translation from the 1554 Greek editio
           princeps. The AI has no patron, no theology, no agenda. It is a
-          mirror &mdash; and what it reflects is what the human translators
+          mirror, and what it reflects is what the human translators
           chose to add.
         </p>
 
@@ -119,14 +119,14 @@ export default function TranslationsAcrossCivilizationsPage() {
         </h2>
 
         <p className="text-sm text-muted uppercase tracking-wider mb-4">
-          Poimandres I.1&ndash;2 &mdash; The Opening Vision
+          Poimandres I.1&ndash;2: The Opening Vision
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The text opens with Hermes in a state of meditation. His bodily
           senses are &ldquo;put to sleep,&rdquo; and a being of immense size
-          appears. Watch how each translator handles the moment of encounter
-          &mdash; what Ficino makes formal and theological, the English scribe
+          appears. Watch how each translator handles the moment of encounter:
+          what Ficino makes formal and theological, the English scribe
           makes intimate, and the AI keeps literal.
         </p>
 
@@ -168,7 +168,7 @@ export default function TranslationsAcrossCivilizationsPage() {
                 '/book/corpus-hermeticum-17th-century-english-translation-ms-imming?page=54',
             },
           ]}
-          commentary='Notice how Ficino adds "raising the sharp point of my mind toward the heavens" — the Greek says only that his understanding "was lifted high." Ficino makes the ascent active and intellectual, reflecting his Neoplatonic commitment to the mind as the instrument of divine contact. The English scribe, working from a different tradition, drops the elaborate scene-setting entirely and plunges straight into dialogue. The AI preserves the passive construction of the Greek: understanding was lifted, senses were restrained. Something happens to Hermes. He does not make it happen.'
+          commentary='Notice how Ficino adds "raising the sharp point of my mind toward the heavens"; the Greek says only that his understanding "was lifted high." Ficino makes the ascent active and intellectual, reflecting his Neoplatonic commitment to the mind as the instrument of divine contact. The English scribe, working from a different tradition, drops the elaborate scene-setting entirely and plunges straight into dialogue. The AI preserves the passive construction of the Greek: understanding was lifted, senses were restrained. Something happens to Hermes. He does not make it happen.'
         />
 
         {/* ──────── PASSAGE 2: THE COSMOGONIC VISION ──────── */}
@@ -179,14 +179,14 @@ export default function TranslationsAcrossCivilizationsPage() {
         </h2>
 
         <p className="text-sm text-muted uppercase tracking-wider mb-4">
-          Poimandres I.5&ndash;9 &mdash; The Creation of the Elements
+          Poimandres I.5&ndash;9: The Creation of the Elements
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           After the initial vision of light and darkness, Poimandres reveals
           the cosmogony: how fire, air, earth, and water separated, and how
           the divine Word (Logos) organized chaos into cosmos. This is the
-          passage that most closely parallels Genesis &mdash; and where
+          passage that most closely parallels Genesis, and where
           Ficino&rsquo;s Christian theology leaves its deepest mark.
         </p>
 
@@ -228,7 +228,7 @@ export default function TranslationsAcrossCivilizationsPage() {
                 '/book/corpus-hermeticum-17th-century-english-translation-ms-imming?page=55',
             },
           ]}
-          commentary='The Greek says the Logos "stepped upon" (ἐπέβη) the nature — a verb of physical contact, almost violent. Ficino softens this dramatically: his Word "stood near the moist nature and cherished it" (adstans eam fovebat). This is not a translation choice; it is a theological intervention. Ficino&rsquo;s Word is gentle, nurturing, Christological. The Greek Logos is imperious — it treads on chaos. The English scribe preserves the dynamic quality: the spiritual word is "carried upon" the elements, echoing Genesis 1:2 ("the Spirit of God moved upon the face of the waters"). Three translators, three cosmologies.'
+          commentary='The Greek says the Logos "stepped upon" (ἐπέβη) the nature, a verb of physical contact, almost violent. Ficino softens this dramatically: his Word "stood near the moist nature and cherished it" (adstans eam fovebat). This is not a translation choice; it is a theological intervention. Ficino&rsquo;s Word is gentle, nurturing, Christological. The Greek Logos is imperious: it treads on chaos. The English scribe preserves the dynamic quality: the spiritual word is "carried upon" the elements, echoing Genesis 1:2 ("the Spirit of God moved upon the face of the waters"). Three translators, three cosmologies.'
         />
 
         {/* ──────── PASSAGE 3: THE CREATION OF MAN ──────── */}
@@ -239,7 +239,7 @@ export default function TranslationsAcrossCivilizationsPage() {
         </h2>
 
         <p className="text-sm text-muted uppercase tracking-wider mb-4">
-          Poimandres I.12&ndash;14 &mdash; The Creation of the Archetypal
+          Poimandres I.12&ndash;14: The Creation of the Archetypal
           Human
         </p>
 
@@ -290,7 +290,7 @@ export default function TranslationsAcrossCivilizationsPage() {
                 '/book/corpus-hermeticum-17th-century-english-translation-ms-imming?page=58',
             },
           ]}
-          commentary='The Greek says God "gave birth" (ἀπεκύησεν) to a human "equal" (ἴσον) to himself and "loved" (ἠράσθη) him with erotic love — the same verb used for romantic desire. Ficino cannot say this. His God "produced" (procreauit) a human merely "similar" (similem) to himself and "rejoiced" (congratulatus est) rather than loved with eros. The theological distance between "equal" and "similar," between "loved" and "rejoiced," is the distance between Hermeticism and Christianity. The AI preserves the radical equality of the Greek. The English scribe splits the difference: "like unto himself" (similar, not equal), but "loved as his proper birth" (the intimacy is preserved, the equality is not).'
+          commentary='The Greek says God "gave birth" (ἀπεκύησεν) to a human "equal" (ἴσον) to himself and "loved" (ἠράσθη) him with erotic love, the same verb used for romantic desire. Ficino cannot say this. His God "produced" (procreauit) a human merely "similar" (similem) to himself and "rejoiced" (congratulatus est) rather than loved with eros. The theological distance between "equal" and "similar," between "loved" and "rejoiced," is the distance between Hermeticism and Christianity. The AI preserves the radical equality of the Greek. The English scribe splits the difference: "like unto himself" (similar, not equal), but "loved as his proper birth" (the intimacy is preserved, the equality is not).'
         />
 
         {/* ──────── CODA ──────── */}
@@ -301,7 +301,7 @@ export default function TranslationsAcrossCivilizationsPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The point of this exercise is not &ldquo;AI vs. human &mdash; who
+            The point of this exercise is not &ldquo;AI vs. human: who
             wins?&rdquo; No one wins. Every translation is an interpretation,
             and every interpretation reveals something the others miss.
             Ficino&rsquo;s Logos &ldquo;cherishes&rdquo; nature because Ficino
@@ -309,12 +309,12 @@ export default function TranslationsAcrossCivilizationsPage() {
             scribe&rsquo;s Word is &ldquo;carried upon&rdquo; the waters
             because the scribe is steeped in the King James Bible. The
             AI&rsquo;s Logos &ldquo;steps upon&rdquo; nature because the AI
-            has no theology &mdash; only the Greek.
+            has no theology, only the Greek.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             What the AI gives us is not a better translation. It is a{' '}
-            <em>baseline</em> &mdash; a rendering with no cultural agenda, no
+            <em>baseline</em>: a rendering with no cultural agenda, no
             patron to please, no Romantic sensibility to project. Against this
             baseline, the human translations become legible as the creative
             acts they always were. We can see what Ficino <em>added</em>. We
@@ -359,7 +359,7 @@ export default function TranslationsAcrossCivilizationsPage() {
             Pick a work you know. Find two editions in different languages.
             Open them side by side and read the same passage through different
             centuries, different cultures, different agendas. You will notice
-            things that no single translation could show you &mdash; because
+            things that no single translation could show you, because
             every translation is a theory about what the original means, and
             theories are most visible when you can compare them.
           </p>

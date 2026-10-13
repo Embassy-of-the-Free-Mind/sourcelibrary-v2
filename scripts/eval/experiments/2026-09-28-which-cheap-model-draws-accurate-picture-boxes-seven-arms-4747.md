@@ -1,3 +1,17 @@
+---
+stage: image
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 72
+n_pages: 72
+verdict: "Flash draws 81.6% tight boxes vs 3.1-lite 8-21% (finds pictures but crops them) and Qwen3-VL 63%; flash on the Batch API reproduces realtime boxes at half price."
+status: adopted
+decision: "Extraction stays on gemini-3-flash-preview, routed to the Batch API by default (IMAGE_EXTRACTION_USE_BATCH, PR #5238)"
+superseded_by: null
+issue: 4747
+---
 ## 2026-09-28 — Which cheap model draws ACCURATE picture boxes? Seven arms, boxes graded by eye against the page (#4747, widened)
 
 - **Question.** Image extraction runs on full `gemini-3-flash-preview` realtime because a 5-page test

@@ -1,0 +1,40 @@
+[
+  {
+    "book_id": "6abeb1dc896ea18127c828bc",
+    "slot": 2,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཚ (Derge Tengyur, vol. 97)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio (Tsha 255, margin 'ཚ' and leaf numeral) of a Madhyamaka commentary on MMK ch. 9 (the 'prior entity' / appropriator), correctly shelved under Tengyur, dbu ma.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 255,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "མྱོང་# / རྐྱེན་གྱིས་#སྐྱེ་མཆེད", "image": "མྱོང་ / རྐྱེན་གྱིས་སྐྱེ་མཆེད (no mark on the block)", "problem": "stray '#' characters inserted into the transcription (line 4 end, line 6)", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "ལྷས་བྱིན་གྱི་ལྟ་བ་ལ་སོགས་པ ... ལྟ་བ་ལ་སོགས་པ་ཡིན་པའི་ཕྱིར", "english": "the views and other attributes belonging to Devadatta ... because they are views and so forth", "problem": "ལྟ་བ here is the act/faculty of seeing (seeing, hearing etc., as the following seer/hearer argument makes clear); 'views' reads as philosophical views and obscures the argument", "severity": "moderate", "class": "other:polysemous-term-misrendered" },
+          { "source": "དེའི་ཕྱིར་ཉེ་བར་ལེན་པ་པོ་ཡིན་པར་གྱུར་པ་ལྟ་བ་ལ་སོགས་པ་སྐྱེ་མཆེད་དྲུག་དང་ལྡན་པ་སྔ་ན་གནས་པའི་རིམ་", "english": "the appropriator exists beforehand, possessing the six sense bases such as the faculty of seeing.", "problem": "page-final sentence breaks off at 'རིམ་' (sequence/order, continued overleaf); A drops 'རིམ་' and closes the fragment as a finished assertion", "severity": "moderate", "class": "T6" },
+          { "source": "བདག་གི་ཡིན་པར་བརྗོད་པའི་ཕྱིར", "english": "because you still describe the self as the owner", "problem": "'owner' is an interpretive addition not in the Tibetan", "severity": "minor" },
+          { "source": "ཡང་ན", "english": "Furthermore", "problem": "'alternatively' (introducing a second line of refutation) rendered as 'furthermore'", "severity": "minor" },
+          { "source": "རེག་པ་པོ", "english": "a \"feeler\"", "problem": "toucher rendered as 'feeler'", "severity": "minor" }
+        ],
+        "tr_score_B": 5,
+        "tr_errors_B": [
+          { "source": "མྱོང་བ་པོ", "english": "the experiencer of taste", "problem": "'of taste' supplied (reasonable in the sense list, but added)", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B renders ལྟ་བ correctly as seeing/sense faculties, keeps 'alternatively', and leaves the page-final 'རིམ་' sentence open as the block does, while A mistranslates ལྟ་བ as 'views' and closes the broken-off sentence into an assertion.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge Tengyur Madhyamaka folio with an accurate transcription (only stray '#' marks); translation B is faithful throughout, translation A is serviceable but has two moderate slips."
+  }
+]

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Fix with lookahead preferred 32-15 on fidelity (omissions 24 to 11) but only 10-7-7 on the 24 device breaks it targets; the lookahead raised duplication 5 to 12."
+status: rejected
+decision: "Lookahead arm F not shipped; the no-lookahead PAGE_BREAK_SCOPED variant went live instead (PR #5170)"
+superseded_by: null
+issue: 5103
+---
 ## 2026-09-25 (night) — Page-break fix (#5103), three arms on the 63 seams, source-grounded fidelity judge — fix preferred 32–15 overall, TIE on the device subset it targets; the lookahead trades omissions for duplications
 
 The fix, behind `buildTranslationPrompt({ pageBreak: PAGE_BREAK_FIX })` (default OFF, production untouched):

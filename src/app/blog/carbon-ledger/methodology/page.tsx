@@ -8,7 +8,7 @@ import perBook from '@/data/carbon-ledger/per-book.json';
 import { fmtCO2 } from '@/components/blog/carbon-ledger/format';
 
 export const metadata: Metadata = {
-  title: 'Methodology — Carbon Ledger — Source Library',
+  title: 'Methodology | Carbon Ledger | Source Library',
   description: 'Every number, every assumption, every source for the Source Library AI carbon footprint estimate.',
   alternates: { canonical: '/blog/carbon-ledger/methodology' },
 };
@@ -109,7 +109,7 @@ export default function MethodologyPage() {
           <p className="mt-3 text-stone-700">
             Validated against MLPerf Inference v5.1 (Llama 3.1-70B on
             8×H200 = 31,391 tok/s at ~5.6 kW = 0.178 J/output-tok).<sup>[5]</sup>{' '}
-            Our model predicts 0.114 J/output-tok for that workload — within 36%, so we apply a 1.56× correction.
+            Our model predicts 0.114 J/output-tok for that workload, within 36%, so we apply a 1.56× correction.
           </p>
           <p className="mt-3 text-xs text-stone-500">
             Source: <code className="font-mono">scripts/co2-footprint-model.py</code>
@@ -159,7 +159,7 @@ export default function MethodologyPage() {
 
         <section id="equivalents" className="mt-12">
           <h2 className="text-2xl font-serif font-bold border-b border-stone-200 pb-2">
-            4. Equivalents — conversion factors
+            4. Equivalents: conversion factors
           </h2>
           <p className="mt-3 text-stone-700">
             Every &quot;{fmtCO2(1805)} equals X burgers&quot; statement in the post
@@ -262,12 +262,12 @@ export default function MethodologyPage() {
           </p>
           <ul className="mt-3 list-disc list-inside text-stone-700 space-y-2 leading-relaxed">
             <li>
-              <strong>Translation page-count under-logging — FIXED 2026-05-25.</strong>{' '}
+              <strong>Translation page-count under-logging: FIXED 2026-05-25.</strong>{' '}
               The long-form translation endpoint had been logging ~0.45 page-credits per
               call (vs ~3 for OCR). Root cause: the batch-collector wrote{' '}
               <code className="font-mono">page_count: successCount</code>, which
-              is the count of pages whose DB row was matched at result-collection time
-              — zero for batches whose results were already collected on a prior pass.
+              is the count of pages whose DB row was matched at result-collection time,
+              zero for batches whose results were already collected on a prior pass.
               Separately, ~748K legacy <code className="font-mono">gemini_usage</code>{' '}
               records written before the April 2026 Supabase migration had{' '}
               <code className="font-mono">page_ids</code> populated but no{' '}
@@ -282,7 +282,7 @@ export default function MethodologyPage() {
               Older records use <code className="font-mono">type: &quot;translate&quot;</code>{' '}
               (per-page, manual scripts) and newer records use{' '}
               <code className="font-mono">type: &quot;translation&quot;</code>{' '}
-              (long-form, batched context — current default). A 2026-03 normalization
+              (long-form, batched context; current default). A 2026-03 normalization
               consolidated the active code paths but ~250K legacy{' '}
               <code className="font-mono">translate</code> rows remain. Both are summed
               in this post&apos;s totals.
@@ -303,15 +303,15 @@ export default function MethodologyPage() {
               drafts assumed more re-OCR than is actually happening. Now corrected.
               The <code className="font-mono">page_revisions</code> collection
               (164K rows) stores pre-overwrite snapshots, but only for pages that
-              were re-OCR&apos;d, so it can&apos;t derive an absolute rate by itself
-              — the API-log ratio of 7.24M OCR page-credits ÷ 6.14M unique OCR&apos;d
+              were re-OCR&apos;d, so it can&apos;t derive an absolute rate by itself;
+              the API-log ratio of 7.24M OCR page-credits ÷ 6.14M unique OCR&apos;d
               pages is the authoritative source.
             </li>
             <li>
               <strong>Per-book denominator: 14,295 books with index/summary generated in window.</strong>{' '}
               The carbon-per-book averages divide window-total tokens by this count.
-              Alternatives — 28K visible books, 15K with any OCR, 17K with any
-              <code className="font-mono">pipeline_auto.last_updated</code> in window —
+              Alternatives (28K visible books, 15K with any OCR, 17K with any
+              <code className="font-mono">pipeline_auto.last_updated</code> in window)
               would shift the per-book number 10–40%. We use index-generation because
               that&apos;s the phase that fires the full enrichment pass (summary +
               chapters + quality + collection assignment).
@@ -321,7 +321,7 @@ export default function MethodologyPage() {
               14,544 books with <code className="font-mono">language=Visual</code>{' '}
               (image-only manuscripts, alchemical plates) and 10,703 with{' '}
               <code className="font-mono">language=Unknown</code> have no OCR filter
-              upstream — the pipeline runs Gemini on them and saves whatever
+              upstream; the pipeline runs Gemini on them and saves whatever
               auto-detect returns. Net impact on this post&apos;s totals is small
               because batch API discount is 50%, but it&apos;s wasted compute. Pending
               fix as of 2026-05-25.

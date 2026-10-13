@@ -1,0 +1,28 @@
+{
+ "packet": 3,
+ "prompt_version": "ai-exposure-r2-6038-neutral",
+ "ids": [
+  "decoy-10",
+  "decoy-29",
+  "6a3c5f3b879008ba7e153836",
+  "25dfd63a-8080-4864-aa79-a0fcb1c76102",
+  "decoy-09",
+  "decoy-17",
+  "69f331a6876dd827cbc4927d",
+  "decoy-20",
+  "decoy-19",
+  "694f45b610e4f9487722ec40",
+  "694fd600435f95fd0c9556d1",
+  "6970e3689b09d309d780a282",
+  "606a74d7-2ac1-420b-924d-de761439fb3f",
+  "69cfb6fe709cb88a028365a4",
+  "69520571ab34727b1f042c78",
+  "decoy-28",
+  "decoy-16",
+  "decoy-23",
+  "6990630be7b7642c081de08b",
+  "6955943d7bd6d2cd1d61d196",
+  "decoy-22"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: Geistlicher Rosengarten der wahren Weißheit | Author: Michael Sternfeldt | Year: 1622 | Language: German\n2. Title: ספר מאור הגנוז | Author: ר׳ יהודה בן שמואל מקרקא | Year: 1612 | Language: Hebrew\n3. Title: 金剛般若波羅蜜經 (vol 1) | Author: 菩提流支 | Language: Chinese\n4. Title: Comento sopra la Commedia di Dante | Author: Cristoforo Landino | Year: 1481 | Language: Italian\n5. Title: Von der verborgenen Krafft der Kräuter und Steine | Author: Johann Christoph Hellwig von Zeitz | Year: 1687 | Language: German\n6. Title: Verhandeling van de geheime vuuren der natuur | Author: Cornelis van Hoogeveen | Year: 1694 | Language: Dutch\n7. Title: De imitatione Christi et contemptu omnium vanitatum mundi | Year: 1430 | Language: Latin\n8. Title: Λόγος περὶ τῆς τῶν ἀστέρων φύσεως | Author: Νικηφόρος Καλλιόπης | Year: 1520 | Language: Greek\n9. Title: Περὶ τῆς ἱερᾶς τέχνης ὑπομνήματα | Author: Θεόδωρος ὁ Φιλαδελφεύς | Year: 1550 | Language: Greek\n10. Title: Elementa (Elements) | Author: Euclid | Year: 1482 | Language: Latin\n11. Title: Opera Omnia (Complete Works) | Author: Plato (Ficino translation) | Year: 1557 | Language: Latin\n12. Title: Alkoran | Author: Muhammad | Year: 1707 | Language: Dutch\n13. Title: De Revolutionibus Orbium Coelestium | Author: Nicolaus Copernicus | Year: 1543 | Language: Latin\n14. Title: Orbis Sensualium Pictus (1698 Nuremberg edition) | Author: Jan Amos Comenius | Year: 1698 | Language: Latin\n15. Title: Monas hieroglyphica | Author: John Dee | Year: 1564 | Language: Latin\n16. Title: رساله در خواص سنگ‌ها و فلزات | Author: میرزا حسن کرمانی | Year: 1650 | Language: Persian\n17. Title: Le miroir des secrets de nature | Author: Jacques Ourlin | Year: 1611 | Language: French\n18. Title: 易理通微 | Author: 黃世瑾 | Year: 1705 | Language: Chinese\n19. Title: Sefer ha-Zohar (Cremona 1558) | Author: Moses de León (attributed) | Year: 1558 | Language: Hebrew\n20. Title: Boethius Consolation of Philosophy (English 1609) | Author: Boethius / I.T. | Year: 1671 | Language: English\n21. Title: 丹臺秘錄 | Author: 陳元澄 | Year: 1638 | Language: Chinese\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

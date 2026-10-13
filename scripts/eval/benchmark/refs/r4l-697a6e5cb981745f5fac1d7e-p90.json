@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/besold4",
+  "edition": "Operis Politici Editio Nova. — Argentorati : Zetzner, 1626.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "697a6e5cb981745f5fac1d7e",
+  "page_number": 90,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 212826,
+    "to_char": 215202,
+    "overlap": 0.406,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Ref matches the page incl. CAP. VIII heading; Greek word garbled in ref; starts with 6 padding words from p.83.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      89,
+      90,
+      91
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.738Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "15826339c8f9f8e41be34c965766a9e55fbae3224496dcd0c2e10b06283c2ce4",
+  "unit": {
+    "chars": 2376
+  }
+}

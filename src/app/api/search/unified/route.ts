@@ -9,14 +9,14 @@ import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, type SemanticSiteResult } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, navSiteSearch, type SemanticSiteResult, type NavSiteResult } from '@/lib/semantic-search';
 import { filterVisibleArtworks } from '@/lib/artwork-visibility';
 import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, ANON_SEARCHES_PER_HOUR, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { resolveSearchScope, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
-import { CLIP_URL } from '@/lib/clip';
+import { resolveSearchScope, closedScopeResponse, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { assessMatchQuality } from '@/lib/search/match-quality';
@@ -24,6 +24,7 @@ import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { findNameChoices, type NameChoices } from '@/lib/search/name-chooser';
+import { rankNavMatches } from '@/lib/search/site-nav';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
@@ -153,27 +154,21 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    if (tenantContext.slug && !tenantContext.id) {
-      return NextResponse.json({
-        query,
-        books: { results: [], total: 0 },
-        index: { results: [], total: 0 },
-        gallery: { results: [], total: 0 },
-        visual: { results: [], total: 0 },
-      });
-    }
     // The book set the vector lanes (semantic books, artworks, CLIP) rank
     // inside (#4330). The Mongo "defense-in-depth" filter further down stays.
+    // A slug the proxy could not resolve is resolved here rather than answered
+    // empty on sight; a scope that stays closed says so (#6426).
     const scope = await resolveSearchScope(request.headers);
     if (scope.kind === 'closed') {
-      return NextResponse.json({
+      return closedScopeResponse(scope, {
         query,
         books: { results: [], total: 0 },
         index: { results: [], total: 0 },
         gallery: { results: [], total: 0 },
         visual: { results: [], total: 0 },
-      });
+      }, 'search.unified');
     }
+    const tenantId = scope.kind === 'tenant' ? scope.tenantId : null;
 
     const db = await getDb();
     // Strip surrounding quotes for regex/semantic matching (phrase detection handled by each subsystem)
@@ -191,7 +186,7 @@ export async function GET(request: NextRequest) {
     if (hasTranslation) searchFilters.hasTranslation = true;
     if (yearFrom !== undefined) searchFilters.yearFrom = yearFrom;
     if (yearTo !== undefined) searchFilters.yearTo = yearTo;
-    if (tenantContext.id) searchFilters.tenantId = tenantContext.id;
+    if (tenantId) searchFilters.tenantId = tenantId;
 
     // Run book, index, gallery, and visual search in parallel.
     // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
@@ -210,7 +205,7 @@ export async function GET(request: NextRequest) {
     // catalogue entries and returns each as a page result at the text's opening page. Same book
     // filters as the keyword lane, applied in the query.
     const canonFilter: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
-    if (tenantContext.id) canonFilter.tenantId = tenantContext.id;
+    if (tenantId) canonFilter.tenantId = tenantId;
     if (language) canonFilter.language = language;
     if (category) canonFilter.categories = category;
     if (firstTranslation) canonFilter.is_first_translation = true;
@@ -254,7 +249,7 @@ export async function GET(request: NextRequest) {
       slug?: string | null;
     }
     const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
-    const emptyCollections = { results: [] as CollectionResult[] };
+    const emptyCollections = { results: [] as CollectionResult[], nameCoverage: 0 };
 
     const emptyLexicalArtworks: ArtworkSearchResult[] = [];
 
@@ -263,18 +258,31 @@ export async function GET(request: NextRequest) {
     // reading room never shows SL-wide pages. Started before the book lanes so
     // it shares their query embedding (getQueryEmbedding caches the promise).
     const emptySite: { results: SemanticSiteResult[] } = { results: [] };
-    const siteResultPromise = tenantContext.id
+    const siteResultPromise = tenantId
       ? Promise.resolve(emptySite)
       : withTimeout(
           semanticSiteSearch(matchQuery, 6).then(results => ({ results })).catch(() => emptySite),
           emptySite, 'site', 4000,
+        );
+    // Navigational match (#5945): pages, tools, essays and author pages whose
+    // NAME the query spells ("timeline", "check pages", "Huygens"). One indexed
+    // lookup on site_pages.name_tokens. Main site only, like the site lane.
+    const emptyNav: { results: NavSiteResult[] } = { results: [] };
+    const navResultPromise = tenantId
+      ? Promise.resolve(emptyNav)
+      : withTimeout(
+          navSiteSearch(matchQuery, 3).then(results => ({ results })).catch((err) => {
+            console.error('Site name match error:', err);
+            return emptyNav;
+          }),
+          emptyNav, 'site-nav', 2000,
         );
 
     // "Which Bacon?" (#5950): the people a bare surname could mean. Main site only — the counts
     // and the /author links are library-wide, which a tenant's reading room must not show. Started
     // here so it runs beside the lanes; for anything but a one-word query it resolves at once,
     // without a lookup.
-    const nameChoicesPromise: Promise<NameChoices | null> = tenantContext.id || isPhrase
+    const nameChoicesPromise: Promise<NameChoices | null> = tenantId || isPhrase
       ? Promise.resolve(null)
       : withTimeout(findNameChoices(matchQuery).catch(() => null), null, 'name-chooser', 2000);
 
@@ -282,13 +290,13 @@ export async function GET(request: NextRequest) {
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
       isPhrase ? Promise.resolve(emptyIndex) : withTimeout(
-        searchIndex(db, matchQuery, limit, tenantContext.id || undefined, yearRange).catch((err) => {
+        searchIndex(db, matchQuery, limit, tenantId || undefined, yearRange).catch((err) => {
           console.error('Index search error:', err);
           return emptyIndex;
         }),
         emptyIndex, 'index',
       ),
-      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined, yearRange), emptyGallery, 'gallery'),
+      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantId || undefined, yearRange), emptyGallery, 'gallery'),
       withTimeout(searchVisual(db, matchQuery, galleryLimit, scope, yearRange), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
@@ -357,7 +365,7 @@ export async function GET(request: NextRequest) {
       // that literally contains the term (#2735).
       withTimeout(
         // Related word forms too (#5517): "herbal" matched no artwork, "herbs" nine.
-        lexicalArtworkSearch(db, wordFormRegex, 24, tenantContext.id || undefined, yearRange)
+        lexicalArtworkSearch(db, wordFormRegex, 24, tenantId || undefined, yearRange)
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
@@ -433,7 +441,6 @@ export async function GET(request: NextRequest) {
     };
 
     const collectionsWithTenantSlug = {
-      ...collectionsResult,
       results: collectionsResult.results.map((collection: any) => ({
         ...collection,
         tenant_slug: collection.tenantId ? tenantSlugById.get(collection.tenantId) || null : null,
@@ -505,11 +512,11 @@ export async function GET(request: NextRequest) {
 
     // Filter visual results by tenant if needed
     let filteredVisualResults = visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR);
-    if (tenantContext.id && filteredVisualResults.length > 0) {
+    if (tenantId && filteredVisualResults.length > 0) {
       const visualBookIds = [...new Set(filteredVisualResults.map((r: any) => r.bookId).filter(Boolean))];
       if (visualBookIds.length > 0) {
         const allowedBooks = await db.collection('books')
-          .find({ id: { $in: visualBookIds }, tenantId: tenantContext.id }, { projection: { id: 1 } })
+          .find({ id: { $in: visualBookIds }, tenantId }, { projection: { id: 1 } })
           .toArray();
         const allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
         filteredVisualResults = filteredVisualResults.filter((r: any) => allowedBookIds.has(r.bookId));
@@ -615,7 +622,7 @@ export async function GET(request: NextRequest) {
     let scopedIndex = indexResult;
     let scopedGallery = galleryResult;
     let scopedSemantic = filteredSemantic;
-    if (tenantContext.id) {
+    if (tenantId) {
       const collectIds = [
         ...booksResult.results.map((r: any) => r.id),
         ...indexResult.results.map((r: any) => r.book_id),
@@ -628,7 +635,7 @@ export async function GET(request: NextRequest) {
       if (uniqueIds.length > 0) {
         const docs = await db.collection('books')
           .find(
-            { id: { $in: uniqueIds }, tenantId: tenantContext.id },
+            { id: { $in: uniqueIds }, tenantId },
             { projection: { _id: 0, id: 1 }, maxTimeMS: 3000 },
           )
           .toArray();
@@ -655,7 +662,7 @@ export async function GET(request: NextRequest) {
     // under a tenant: an edition census across the global library is not a
     // partner reading room's claim to make (tenant-lockdown.md).
     const fanouts = await fetchWorkFanouts(db, collapsedByKey, {
-      tenantScoped: !!tenantContext.id || !!tenantContext.slug || tenantContext.isEmbedded,
+      tenantScoped: !!tenantId || !!tenantContext.slug || tenantContext.isEmbedded,
     });
     if (fanouts.size > 0) {
       scopedBooks = {
@@ -680,7 +687,7 @@ export async function GET(request: NextRequest) {
     logSearchEvent({
       request, db, query, source: 'unified',
       resultsCount: scopedBooks.total + scopedIndex.total + scopedGallery.total + filteredVisual.total + scopedSemantic.total + filteredArtworks.total,
-      tenantId: tenantContext.id || null,
+      tenantId: tenantId || null,
       filters: { language, category, library },
     });
 
@@ -689,8 +696,19 @@ export async function GET(request: NextRequest) {
     // any lane contains ALL the query's tokens, say so instead of bluffing.
     // A collection already shown as a card is not repeated as a site link.
     const shownCollectionUrls = new Set(collectionsWithTenantSlug.results.map((c: any) => `/collections/${c.slug}`));
-    const siteResult = {
-      results: (await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url)).slice(0, 3),
+    // Pages the query NAMES come first and are marked `match: 'name'`, so the
+    // page can show them above everything else; then up to three by meaning.
+    // A collection named exactly outranks a page that only shares the word:
+    // "kabbalah" is the Kabbalah collection, not the Jewish Kabbalah category.
+    const navResults = (await navResultPromise).results
+      .filter(r => r.coverage === 1 || collectionsResult.nameCoverage < 1)
+      .map(({ coverage: _coverage, ...r }) => r);
+    const navUrls = new Set(navResults.map(r => r.url));
+    const siteResult: { results: Array<Omit<NavSiteResult, 'coverage'> | SemanticSiteResult> } = {
+      results: [
+        ...navResults,
+        ...(await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url) && !navUrls.has(r.url)).slice(0, 3),
+      ],
     };
 
     const matchQuality = assessMatchQuality(query, [
@@ -1077,7 +1095,7 @@ async function searchVisual(db: any, query: string, limit: number, scope: Search
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(4000),
     });
@@ -1211,18 +1229,38 @@ async function lexicalArtworkSearch(
  * Search collections by name/description.
  * ~300 docs, fast regex on a small collection.
  *
+ * A collection the query NAMES comes first (#5945): the regex matches the
+ * whole phrase in order, so "Drebbel collection" found nothing for the
+ * collection called "Cornelis Drebbel", and "alchemy" ranked by size, not by
+ * which collection is called Alchemy. Same rule as the site name match
+ * (rankNavMatches), over the collection's name and the words of its slug.
+ *
  * `queryRegex` also matches related word forms (#5517), which is many more
- * collections than the three shown. A collection NAMED for the word (or one of
- * its forms) comes before one that only mentions it, largest first within
- * each. Ordered by size alone, "poetic" lost the Poetry collection to three
- * larger ones whose descriptions mention a poet.
+ * collections than the three shown, so the candidate pool is 60 wide. After
+ * the collections the query names, one NAMED for the word (or one of its
+ * forms) comes before one that only mentions it, largest first within each.
  */
-async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[] }> {
-  const matched = await db.collection('collections')
+async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[]; nameCoverage: number }> {
+  const live = { visible: { $ne: false }, book_count: { $gt: 0 } };
+  const all = await db.collection('collections')
+    .find(live)
+    .project({ slug: 1, name: 1, book_count: 1 })
+    .maxTimeMS(2000)
+    .toArray();
+  const named = rankNavMatches(query, all.filter((c: any) => c.slug && c.name).map((c: any) => ({
+    url: c.slug,
+    page_type: 'collection' as const,
+    title: c.name,
+    names: [c.name, String(c.slug).replace(/-/g, ' ')],
+    weight: c.book_count || 0,
+  })), 3);
+  const namedSlugs: string[] = named.map(m => m.candidate.url);
+
+  const found = await db.collection('collections')
     .find({
-      visible: { $ne: false },
-      book_count: { $gt: 0 },
+      ...live,
       $or: [
+        { slug: { $in: namedSlugs } },
         { name: queryRegex },
         { description: queryRegex },
         { slug: queryRegex },
@@ -1230,19 +1268,25 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
     })
     .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
-    .limit(60)
+    .limit(60 + namedSlugs.length)
     .maxTimeMS(2000)
     .toArray();
-
-  const rank = (c: any) => (queryRegex.test(c.name || '') || queryRegex.test(c.slug || '') ? 0 : 1);
-  // Stable sort: within a rank the order stays largest first.
-  const cols = matched
+  // Named-by-the-query collections first (in match order), then ones whose name
+  // or slug matches the word forms, then the rest; stable, so size order holds.
+  const rank = (c: any) => {
+    const i = namedSlugs.indexOf(c.slug);
+    if (i !== -1) return i;
+    return namedSlugs.length + (queryRegex.test(c.name || '') || queryRegex.test(c.slug || '') ? 0 : 1);
+  };
+  const cols = found
     .map((c: any) => ({ c, r: rank(c) }))
     .sort((x: any, y: any) => x.r - y.r)
     .slice(0, 3)
     .map((x: any) => x.c);
 
   return {
+    // How fully the best-named collection that made the cards is named (0 = none).
+    nameCoverage: named.find(m => cols.some((c: any) => c.slug === m.candidate.url))?.coverage ?? 0,
     results: cols.map((c: any) => {
       // A curated hero_image (set per collection in Mongo, cut for a 4:3 card)
       // beats the first auto-featured plate — the same rule the collections

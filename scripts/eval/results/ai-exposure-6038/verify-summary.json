@@ -1,0 +1,9 @@
+{
+ "quotes": 944,
+ "judgeable": 895,
+ "verified": 141,
+ "null_n": 875,
+ "null_q99": 0.25,
+ "null_max": 1,
+ "threshold": 0.5
+}

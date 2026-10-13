@@ -186,7 +186,7 @@ export async function GET() {
     passages,
     notes,
     note:
-      'faithful_pct is computed over pages whose transcription held — the only population ' +
+      'faithful_pct is computed over pages whose transcription held, the only population ' +
       'where "is the English faithful?" is a well-posed question. Transcription failures are ' +
       'reported separately, not folded in.',
     languages,

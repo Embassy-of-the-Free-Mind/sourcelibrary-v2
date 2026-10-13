@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [preference, judged]
+languages: [la, de]
+scripts: [Latn]
+canons: []
+n_books: 9
+n_pages: 63
+verdict: "Repaired batch lane ties production on seam fluency (19-18, inside the A/A gap), but the repair echoes untranslated source on 2 of 63 seams and invents bridging text"
+status: rejected
+decision: "No flip of the batch + seam-repair lane; echo and omission gates added (PR #5089)"
+superseded_by: null
+issue: 4681
+---
 ## 2026-09-25 — Batch + seam-repair lane vs production, judged for REAL this time (#4681) — TIE on fluency; the repair step has fidelity defects the judge cannot see
 
 Same nine shadow runs as the 2026-09-24 decisive draw, re-packeted after PR #5077 (the harness now substitutes

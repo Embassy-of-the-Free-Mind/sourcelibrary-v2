@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A17090",
+  "edition": "EEBO-TCP A17090 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a4fa9cdb5772a3dacaac6a6",
+  "page_number": 9,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 5335,
+    "to_char": 6964,
+    "overlap": 0.817,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts Malchus & Gamaliel (6 extra); ends caput vix tollere (2 extra)",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:52:47.387Z",
+  "text_location": "repo",
+  "text_sha256": "fa9ffb6fc34f58ce2e5641a16437c457f61aac0c66460f8439a4bfd9e4b51d6c",
+  "unit": {
+    "chars": 1629
+  }
+}

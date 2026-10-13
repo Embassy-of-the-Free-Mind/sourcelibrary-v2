@@ -2,6 +2,7 @@ import { revalidatePath } from 'next/cache';
 import type { Db, Document } from 'mongodb';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 import { setPublicationMany } from '@/lib/publication';
+import { planQueuedPair, resolveWorkIds, type StalePairReason } from '@/lib/work-alias';
 
 /**
  * The write half of the identity-review surface (#3846, batched in #4271).
@@ -55,6 +56,8 @@ export interface WorkMergeResult {
   loser?: string;
   booksMoved?: number;
   message?: string;
+  /** Set with `stale`: which of the three ways the pair stopped being mergeable. */
+  staleReason?: StalePairReason;
   /** ISR paths this row's write invalidated. Callers dedupe across a batch. */
   paths?: string[];
 }
@@ -76,10 +79,39 @@ export async function applyWorkMerge(
 ): Promise<WorkMergeResult> {
   const now = opts.now ?? new Date();
   const id = row._id as string;
-  const a = row.a as string;
-  const b = row.b as string;
+  const queuedA = row.a as string;
+  const queuedB = row.b as string;
   const queue = db.collection('work_merge_queue');
   const booksCol = db.collection('books');
+
+  // The row stores ids as they were when it was enqueued. Follow each to the
+  // id its books carry NOW (#4329): a side that was merged or re-minted since
+  // is still the same work under a new name, and the pair is still mergeable.
+  const resolution = await resolveWorkIds(db, [queuedA, queuedB]);
+  const plan = planQueuedPair(queuedA, queuedB, resolution);
+  if (plan.kind === 'stale') {
+    // Nothing to merge. The row still leaves the pending lane, but it says WHY:
+    // `orphaned-id` (nothing carries the id and no alias remembers it) is a
+    // lost reference, not a finished one, and must stay tellable from
+    // `already-merged` so it can be found and re-pended once the trail exists.
+    await queue.updateOne(
+      { _id: id as never, status: 'pending' },
+      {
+        $set: {
+          status: 'stale',
+          stale_reason: plan.reason,
+          stale_ids: plan.ids,
+          reviewed_by: opts.reviewer,
+          reviewed_at: now,
+          updated_at: now,
+        },
+      },
+    );
+    return { id, status: 'stale', staleReason: plan.reason, message: `${plan.reason}: ${plan.ids.join(', ')}` };
+  }
+  const a = plan.a;
+  const b = plan.b;
+  const followed = a !== queuedA || b !== queuedB;
 
   const cluster = await booksCol
     .find({ work_id: { $in: [a, b] } }, { projection: { _id: 0, id: 1, work_id: 1 } })
@@ -87,17 +119,14 @@ export async function applyWorkMerge(
   const nA = cluster.filter((x) => x.work_id === a).length;
   const nB = cluster.filter((x) => x.work_id === b).length;
   if (nA === 0 || nB === 0) {
-    // One side has no books left — an earlier merge or repair already moved
-    // them. Nothing to do; mark it so it leaves the pending lane.
-    await queue.updateOne(
-      { _id: id as never, status: 'pending' },
-      { $set: { status: 'stale', reviewed_by: opts.reviewer, reviewed_at: now, updated_at: now } },
-    );
-    return { id, status: 'stale', message: `no books left on ${nA === 0 ? a : b}` };
+    // Resolved a moment ago, empty now: another writer moved the books mid-request.
+    return { id, status: 'error', message: 'books moved during approval; row left pending, retry' };
   }
 
-  const winner = opts.winner && (opts.winner === a || opts.winner === b)
-    ? opts.winner
+  // A reviewer picks a winner by the id the row shows; carry the pick across.
+  const picked = opts.winner === queuedA ? a : opts.winner === queuedB ? b : opts.winner;
+  const winner = picked && (picked === a || picked === b)
+    ? picked
     : pickWorkWinner(a, b, nA, nB);
   const loser = winner === a ? b : a;
 
@@ -129,6 +158,7 @@ export async function applyWorkMerge(
     reviewed_by: opts.reviewer,
     issue: 3846,
     applied_at: now,
+    ...(followed ? { queued_as: { a: queuedA, b: queuedB } } : {}),
     ...(opts.batch ? { batch: opts.batch } : {}),
   });
 
@@ -138,6 +168,7 @@ export async function applyWorkMerge(
       $set: {
         status: 'approved',
         winner,
+        ...(followed ? { resolved: { a, b } } : {}),
         note: opts.note || null,
         ...(opts.batch ? { batch: opts.batch } : {}),
         reviewed_by: opts.reviewer,

@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/Boschius_symbolographia",
+  "edition": "Symbolographia Sive De Arte Symbolica Sermones Septem. Quibus accessit Studio &amp; Operâ Ejusdem Sylloge Celebriorum Symbolorum In Qvatvor Divisa Classes Sacrorum, Heroicorum, Ethicorum, Et Satyricorum Bis Mille Iconismis Expressa [...] . — Augsburg; Dillingen: Johann Caspar Bencard, 1702.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6c2018566c8381465699b",
+  "page_number": 81,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 110089,
+    "to_char": 111947,
+    "overlap": 0.467,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Ref matches 'Tonsorum ... UNUS NON SUFFICIT ORBIS' with footnotes interleaved; first word 'Tonsorum' missing.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1700s",
+    "pages": [
+      80,
+      81,
+      82
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.758Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "3589ac1f7a3a78cf2ed388969c8c0ead5cb30619f64c8c3c216b63db0e7675ab",
+  "unit": {
+    "chars": 1858
+  }
+}

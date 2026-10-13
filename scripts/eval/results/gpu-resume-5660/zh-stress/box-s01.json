@@ -1,0 +1,21 @@
+{
+ "host": "sl-zh-paddle-5660-s01",
+ "gpu": "NVIDIA L4",
+ "workers": 8,
+ "backend": "server",
+ "max_side": 0,
+ "layout": 0,
+ "paddle_version": "3.2.1",
+ "paddleocr_version": "3.7.0",
+ "paddlex_version": "3.7.2",
+ "vl_model": "PaddleOCRVL() default pipeline",
+ "weights_files": [
+  "PaddleOCR-VL-1.6/model.safetensors"
+ ],
+ "vllm_version": "0.10.2",
+ "weights_sha256": "85a479d506a11e724e7285d395c551be69f41dbc16b6342d3cacfb189aed71db",
+ "pages_out": 80,
+ "pages_err": 0,
+ "infer_secs": 97,
+ "wall_secs_per_page": 1.21
+}

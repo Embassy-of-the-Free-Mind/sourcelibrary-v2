@@ -76,14 +76,15 @@ function buildClientTools(
     search_semantic: ({ query }: { query: string }): Promise<string> => runVoiceSearch(query, 'search_semantic'),
     read_page: async ({ book_id, page_number }: { book_id: string; page_number: number }): Promise<string> => {
       try {
-        const res = await fetch(`/api/books/${book_id}/pages?page=${page_number}`);
+        // The public quote endpoint: GET, editorial wrappers already stripped,
+        // and it says whose words the text is (#5173 — /pages is POST-only).
+        const res = await fetch(`/api/books/${encodeURIComponent(book_id)}/quote?page=${page_number}&include_image=true`);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-        const data = await res.json();
-        const page = data.pages?.[0] || data;
-        const text = page.translation?.data || page.ocr?.data || '';
-        const imageUrl = page.compressed_photo || page.archived_photo || page.photo;
-        if (imageUrl) addVisual({ type: 'page', url: imageUrl, title: `Page ${page.page_number || page_number}`, caption: text.slice(0, 120) + (text.length > 120 ? '...' : ''), pageNumber: page.page_number || page_number });
-        return JSON.stringify({ text: text.slice(0, 2000), pageNumber: page.page_number || page_number, hasTranslation: !!page.translation?.data });
+        const { quote } = await res.json();
+        const text: string = quote?.translation || quote?.original || '';
+        const pageNumber = quote?.page || page_number;
+        if (quote?.page_image_url) addVisual({ type: 'page', url: quote.page_image_url, title: `Page ${pageNumber}`, caption: text.slice(0, 120) + (text.length > 120 ? '...' : ''), pageNumber });
+        return JSON.stringify({ text: text.slice(0, 2000), pageNumber, hasTranslation: !!quote?.translation, lang: quote?.lang });
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
     search_images: async ({ query }: { query: string }): Promise<string> => {

@@ -28,7 +28,7 @@ import { memorixAliasesFor } from '@/lib/bph-cataloguer-identity';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Catalogue workspace — BPH',
+  title: 'Catalogue workspace | BPH',
   robots: { index: false, follow: false },
 };
 
@@ -74,7 +74,7 @@ const fieldLabel = (f: string) =>
   FIELD_LABELS[f] || f.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
 function formatDate(iso: string | null): string {
-  if (!iso) return '—';
+  if (!iso) return '–';
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
@@ -207,7 +207,7 @@ export default async function CatalogueWorkspacePage({ params }: Props) {
                       <span className="text-muted"> · {formatDate(r.applied_at)}</span>
                       <div className="text-primary">
                         {r.change_type === 'create' ? 'Created this record' : fields.map(fieldLabel).join(', ')}
-                        {source && <span className="text-muted"> — cited: {source}</span>}
+                        {source && <span className="text-muted"> · cited: {source}</span>}
                       </div>
                     </li>
                   );

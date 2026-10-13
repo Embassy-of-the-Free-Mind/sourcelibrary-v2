@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA cera/languet3",
+  "edition": "Arcana Seculi Decimi Sexti. Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Saxoniae Ducem / Ex ARXEIWI Saxonico Descriptas Primus E Museo Edit Io. Petr. Ludovicus. — Halle: Joh. Friedrich Zeitleri, Heinrich Georg Mussel, 1699.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a4a5d1f9050f0b434324995",
+  "page_number": 112,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 899909,
+    "to_char": 902179,
+    "overlap": 0.452,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-0)",
+    "at": "2026-10-06T10:13:06.818764+00:00",
+    "note": "Languet p.108; ref matches 'stituerunt munire' to '1575' plus next heading pad; foxing/stain lower right.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      112,
+      113,
+      114
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.768Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "293ce279d7e9f689dd0c1dd9d0022398be60758dad2c4aa07ca3919e3edbe259",
+  "unit": {
+    "chars": 2270
+  }
+}

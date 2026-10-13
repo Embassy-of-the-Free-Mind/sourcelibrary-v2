@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { displayPublished, citationYear, citationYearOrNd } from '@/lib/publication-date';
+import { displayPublished, citationYear, citationYearOrNd, assertableYear } from '@/lib/publication-date';
 
 // Values below are REAL `books.published` strings from the production corpus
 // (counts as of 2026-07-21, visible books only) — see #3310.
@@ -83,5 +83,27 @@ describe('citationYearOrNd', () => {
     expect(citationYearOrNd('Unknown')).toBe('n.d.');
     expect(citationYearOrNd('15th century')).toBe('n.d.');
     expect(citationYearOrNd(null)).toBe('n.d.');
+  });
+});
+
+describe('assertableYear', () => {
+  it('passes an ordinary numeric year through', () => {
+    expect(assertableYear({ year: 1573 })).toBe(1573);
+    expect(assertableYear({ year: 1573, field_provenance: { year: { source: 'ustc_catalog' } } })).toBe(1573);
+    expect(assertableYear({ year: 1573, field_provenance: { title: { source: 'import_placeholder_cleared' } } })).toBe(1573);
+  });
+
+  // Shape of the 1,445 EAP books as they stand in production (2026-10-12):
+  // `published` unset, `year: 1700` kept, the correction recorded in provenance.
+  it('withholds a year the record itself marks as a cleared import placeholder (#3307)', () => {
+    expect(assertableYear({
+      year: 1700,
+      field_provenance: { year: { source: 'import_placeholder_cleared' } },
+    })).toBeUndefined();
+  });
+
+  it('returns undefined when there is no numeric year', () => {
+    expect(assertableYear({})).toBeUndefined();
+    expect(assertableYear({ year: null })).toBeUndefined();
   });
 });

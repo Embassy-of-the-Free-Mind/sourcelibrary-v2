@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/Beze_icones",
+  "edition": "Icones, id est Verae Imagines Virorum Doctrina Simul Et Pietate Illustrium... additis eorundem vitae et operae descriptionibus, quibus adiectae sunt nonnullae picturae quas emblemata vocant. — [Geneve]: Joannes Laonius, 1580.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a42ca0be76baa13aa84c734",
+  "page_number": 107,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 55307,
+    "to_char": 56341,
+    "overlap": 0.463,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "Roman prose end, then italic epigrams to Zwingli and Oecolampadius; ref matches; signature M.ij not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      106,
+      107,
+      108
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.461Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "f54d9089dd4727aeab5cad3d57fd0b39fa73e279acfa9c74a436fb9ccf9b4d5c",
+  "unit": {
+    "chars": 1034
+  }
+}

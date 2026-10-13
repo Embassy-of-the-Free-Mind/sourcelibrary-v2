@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A43130",
+  "edition": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne. — Wing H1219; ESTC R28067 (1648)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A43130",
+  "origin": "library",
+  "book_id": "6a42aecb5207af7c42f5333c",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 18485,
+    "to_char": 19322,
+    "overlap": 0.482,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "Secunda Positio heading + italic thesis; ref starts with 2 words of prev page; marginal Gen.11.1 inline",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      20,
+      21,
+      22
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.602Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "224beaf6df0f5ca7dcb6fb1b9032da8319703f44ea0ae60e1140463e545762cb",
+  "unit": {
+    "chars": 837
+  }
+}

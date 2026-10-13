@@ -1,0 +1,49 @@
+[
+ {
+  "book_id": "6abeb20a896ea18127c82b01",
+  "slot": 3,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur Madhyamaka section volume 98 (dza), containing Ashvaghosha's Vajrasūcī refuting Brahminical caste arguments.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 607,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "དྲང་སྲོང་ཤེད་",
+      "english": "Rishi Sage Shanti",
+      "problem": "Mistranslates the proper name of Sage Manu (ཤེད་ / Shed) as Shanti.",
+      "severity": "moderate"
+     },
+     {
+      "source": "ཡུལ་འཁོར་འཛིན་",
+      "english": "by holding territory",
+      "problem": "Mistranslates the proper name Dhṛtarāṣṭra (ཡུལ་འཁོར་འཛིན་) literally as a descriptive phrase.",
+      "severity": "moderate"
+     },
+     {
+      "source": "མདར་རྒྱུ་ཚལ་གྱི་དཱུར་བ་དག",
+      "english": "the durva sacred grass in the flowing forest",
+      "problem": "Omits the numeral 'nine' (དག) and misrenders the grove name as 'flowing forest'.",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately identifies and restores classical Sanskrit proper names (Sage Manu, Daśapura, Dhṛtarāṣṭra) that Translation A misinterprets.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A clean, well-preserved folio from the Madhyamaka section of the Derge Tengyur with flawless OCR transcription; Translation B provides an expert-quality rendering with correct classical names."
+ }
+]

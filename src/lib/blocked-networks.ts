@@ -88,7 +88,7 @@ const BLOCKED_CIDRS: string[] = [
 
 export const BLOCKED_NETWORK_RESPONSE =
   'Automated bulk access from this network is not permitted. ' +
-  'Source Library is free to read and the full corpus is available under licence — see https://sourcelibrary.org/licensing.';
+  'Source Library is free to read and the full corpus is available under licence: see https://sourcelibrary.org/licensing.';
 
 /** Dotted-quad → 32-bit integer, or null if it is not an IPv4 literal. */
 function ipv4ToInt(ip: string): number | null {

@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg7",
+  "edition": "Satyrarum libri quinque priores. — Basel: Oporinus, 1555.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6446b18b87551bfc38978",
+  "page_number": 125,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 135323,
+    "to_char": 136607,
+    "overlap": 0.505,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "p.120; ref matches 'Serue Iacobe Dei' to 'undique praedis,'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      123,
+      124,
+      125
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.515Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "0b8b1810ba010980f3beaccf5ad9a37cb202912d877b5919cef801f234b38bfd",
+  "unit": {
+    "chars": 1284
+  }
+}

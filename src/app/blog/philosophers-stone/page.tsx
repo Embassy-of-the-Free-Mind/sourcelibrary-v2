@@ -5,10 +5,10 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources - Source Library",
   description:
-    'The most famous concept in alchemy means radically different things depending on which text you read. An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
+    'The most famous concept in alchemy means radically different things depending on which text you read. An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb: eight primary sources, eight different answers.',
   openGraph: {
     title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
-    description: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
+    description: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb: eight primary sources, eight different answers.',
     images: [{ url: 'https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg', width: 1200, height: 630 }],
   },
   twitter: {
@@ -65,7 +65,7 @@ export default function PhilosophersStonePage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           These are not variations on a theme. They are genuinely different claims about what the
           Stone is, where it comes from, and what it does. Source Library holds the primary texts
-          behind eight of these accounts &mdash; not modern commentaries but the actual printed books,
+          behind eight of these accounts: not modern commentaries but the actual printed books,
           in Latin, German, and English, now translated and annotated for the first time.
         </p>
 
@@ -79,7 +79,7 @@ export default function PhilosophersStonePage() {
             />
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
-            Frontispiece to Lambspringk&rsquo;s <em>De Lapide Philosophico</em>, Frankfurt 1625. The philosopher stands beside the <em>athanor</em> &mdash; the alchemical furnace.{' '}
+            Frontispiece to Lambspringk&rsquo;s <em>De Lapide Philosophico</em>, Frankfurt 1625. The philosopher stands beside the <em>athanor</em>, the alchemical furnace.{' '}
             <Link href="/book/69804b952c52aad359879321?page=6" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
           </figcaption>
         </figure>
@@ -94,7 +94,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Lambspringk&rsquo;s <em>De Lapide Philosophico</em> (Frankfurt, 1625) is the most visually
-            striking alchemical text in Source Library &mdash; and perhaps the most honest about what the
+            striking alchemical text in Source Library, and perhaps the most honest about what the
             Stone actually is. Rather than claiming to teach a recipe, Lambspringk presents fifteen
             allegorical engravings, each accompanied by Latin verse. Two fish in the sea. A stag and a
             unicorn in a forest. A knight fighting a dragon. An ouroboros. The images build on each other,
@@ -132,13 +132,13 @@ export default function PhilosophersStonePage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The Two Fish &mdash; Soul and Spirit swimming in the Sea of the Body.{' '}
+              The Two Fish: Soul and Spirit swimming in the Sea of the Body.{' '}
               <Link href="/book/69804b952c52aad359879321?page=12" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The second emblem introduces <em>putrefactio</em> &mdash; putrefaction, the necessary
+            The second emblem introduces <em>putrefactio</em>: putrefaction, the necessary
             death before rebirth. A knight battles a dragon, and the inscription makes the meaning
             explicit: decomposition is not failure but the precondition of the Work.
           </p>
@@ -155,8 +155,8 @@ export default function PhilosophersStonePage() {
                 className="text-accent-rust hover:underline"
               >
                 Lambspringk, p. 88
-              </Link>{' '}
-              &mdash; the <em>nigredo</em>, or blackening stage
+              </Link>
+              , the <em>nigredo</em>, or blackening stage
             </p>
           </div>
 
@@ -170,13 +170,13 @@ export default function PhilosophersStonePage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The Stag and the Unicorn &mdash; Soul and Spirit in the Forest of the Body.{' '}
+              The Stag and the Unicorn: Soul and Spirit in the Forest of the Body.{' '}
               <Link href="/book/69804b952c52aad359879321?page=20" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            By the sixth figure, Lambspringk introduces the ouroboros &mdash; the dragon that devours
+            By the sixth figure, Lambspringk introduces the ouroboros, the dragon that devours
             its own tail, the most enduring of all alchemical symbols. This is the moment where
             matter consumes itself and is reborn:
           </p>
@@ -207,7 +207,7 @@ export default function PhilosophersStonePage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The Ouroboros &mdash; the dragon that devours itself, symbol of cyclical transformation.{' '}
+              The Ouroboros: the dragon that devours itself, symbol of cyclical transformation.{' '}
               <Link href="/book/69804b952c52aad359879321?page=26" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
@@ -232,7 +232,7 @@ export default function PhilosophersStonePage() {
             The anonymous German treatise <em>Das Wehmütige Kind-Bett des Steins der Weisen</em>
             (1692) takes a different approach. Its author, writing under the guise of the legendary
             Trismosinus addressing his student Paracelsus, insists that the Stone is a
-            &ldquo;universal root&rdquo; hidden beneath all manifest nature &mdash; and that virtually
+            &ldquo;universal root&rdquo; hidden beneath all manifest nature, and that virtually
             everyone is looking for it in the wrong place.
           </p>
 
@@ -255,7 +255,7 @@ export default function PhilosophersStonePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The argument is a kind of negative theology: the Stone is not in gold, not in silver,
             not in any of the common metals. It is not in the shops of apothecaries. It exists prior
-            to the differentiation of matter into the three kingdoms &mdash; animal, vegetable,
+            to the differentiation of matter into the three kingdoms: animal, vegetable,
             mineral. It is the root from which all three emerge.
           </p>
 
@@ -271,14 +271,14 @@ export default function PhilosophersStonePage() {
                 className="text-accent-rust hover:underline"
               >
                 The Child-Bed, p. 5
-              </Link>{' '}
-              &mdash; the Stone as pre-manifest potential
+              </Link>
+              , the Stone as pre-manifest potential
             </p>
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             This is some of the most philosophically sophisticated language in the alchemical
-            literature. The Stone is not a thing but a state &mdash; matter at the threshold of
+            literature. The Stone is not a thing but a state: matter at the threshold of
             manifestation, &ldquo;still naturally in potentiality.&rdquo; The image of hidden light
             in an unformed Chaos reads less like a recipe and more like a creation myth.
           </p>
@@ -295,8 +295,8 @@ export default function PhilosophersStonePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Ali Puli&rsquo;s <em>Centrum Naturae Concentratum</em> (1694) opens with a remarkable
             subtitle: <em>The Salt of Nature Regenerated, for the most part improperly called The
-            Philosopher&rsquo;s Stone</em>. The renaming is deliberate. Ali Puli &mdash; possibly
-            a pseudonym, attributed to a &ldquo;Mauritanian born of Asiatic parents&rdquo; &mdash;
+            Philosopher&rsquo;s Stone</em>. The renaming is deliberate. Ali Puli (possibly
+            a pseudonym, attributed to a &ldquo;Mauritanian born of Asiatic parents&rdquo;)
             argues that the name &ldquo;Philosopher&rsquo;s Stone&rdquo; is itself a category error.
             What the alchemists have been pursuing is the regenerated Salt of Nature, the concentrated
             center of the natural world.
@@ -324,7 +324,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The English translator&rsquo;s preface goes even further, describing the treasure as
-            something that &ldquo;lies hidden deep within themselves&rdquo; &mdash; explicitly
+            something that &ldquo;lies hidden deep within themselves&rdquo;, explicitly
             relocating the Stone from the laboratory to the interior life. Ali Puli represents the
             tradition in which the Philosopher&rsquo;s Stone is less a chemical achievement than a
             spiritual one: a regeneration of nature&rsquo;s hidden salt that requires moral
@@ -342,7 +342,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Bernard of Treviso&rsquo;s <em>De Chymico Miraculo</em> (Strasbourg, 1583) is the most
-            human document in the alchemical literature &mdash; an autobiography of failure. Where
+            human document in the alchemical literature: an autobiography of failure. Where
             most alchemists write as if they possess the secret, Bernard writes as someone who
             searched for it for the better part of a lifetime, cataloguing his disasters with painful
             specificity.
@@ -351,7 +351,7 @@ export default function PhilosophersStonePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             He tried eggs. He tried vitriol. He tried dissolving metallic solutions &ldquo;in the
             bottoms of vessels for five years.&rdquo; He distilled toxic substances fifteen times a
-            day for two months and contracted a quartan fever from the fumes &mdash; a recurring
+            day for two months and contracted a quartan fever from the fumes, a recurring
             malarial episode every 72 hours, almost certainly caused by mercury poisoning.
           </p>
 
@@ -380,7 +380,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             What makes Bernard&rsquo;s account significant is that it was published alongside the
-            philosophical tracts. It served as a cautionary tale &mdash; the alchemical tradition
+            philosophical tracts. It served as a cautionary tale: the alchemical tradition
             admitting, in its own voice, that the search could consume a lifetime and produce nothing.
             The Stone, for Bernard, is defined primarily by its absence: the thing that eluded
             decades of determined effort.
@@ -399,7 +399,7 @@ export default function PhilosophersStonePage() {
             Edward Kelly&rsquo;s <em>Alchemical Writings</em> (1893 edition of 16th-century texts)
             gives us something entirely different: an origin story for a physical substance. According
             to the biographical preface, Kelly acquired his knowledge of transmutation from a
-            manuscript and two vials of powder &mdash; one red, one white &mdash; discovered in a
+            manuscript and two vials of powder (one red, one white) discovered in a
             bishop&rsquo;s tomb near Glastonbury.
           </p>
 
@@ -436,7 +436,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The story is vivid, specific, and probably invented. But what matters for our purposes
-            is that Kelly&rsquo;s Stone is a <em>thing</em> &mdash; a physical powder with
+            is that Kelly&rsquo;s Stone is a <em>thing</em>: a physical powder with
             measurable potency. The biographer claims that in a goldsmith&rsquo;s laboratory in 1579,
             Kelly and John Dee accomplished a transmutation of base metal into gold, and that the
             Tincture&rsquo;s power was calculated with absurd precision:
@@ -460,7 +460,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The precision is the tell. One part Tincture to 272,230 parts base metal. This is the
-            language of empirical measurement applied to a claim that cannot be verified &mdash;
+            language of empirical measurement applied to a claim that cannot be verified:
             science-shaped rhetoric in the service of an alchemical legend. But it reveals what
             Kelly&rsquo;s Stone <em>is</em>: a physical substance, a red powder, with a numerically
             quantifiable power of transmutation.
@@ -476,7 +476,7 @@ export default function PhilosophersStonePage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The Trinity emblem from Kelly&rsquo;s <em>Theatre of Terrestrial Astronomy</em> &mdash; a three-headed deity on a globe, framed by sun, moon, and divine triangle.{' '}
+              The Trinity emblem from Kelly&rsquo;s <em>Theatre of Terrestrial Astronomy</em>: a three-headed deity on a globe, framed by sun, moon, and divine triangle.{' '}
               <Link href="/book/6952d13377f38f6761bc5e29?page=190" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
@@ -493,7 +493,7 @@ export default function PhilosophersStonePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Lorenzo Ventura&rsquo;s <em>De Ratione Conficiendi Lapidis Philosophici</em>
             (Basel, 1571) translates to <em>On the Method of Making the Philosopher&rsquo;s
-            Stone</em> &mdash; and the title is literal. This is a recipe book. Ventura, a
+            Stone</em>, and the title is literal. This is a recipe book. Ventura, a
             Venetian physician, dedicated his work to the Elector Palatine Otto Henry and
             structured it as a systematic compilation of laboratory procedures drawn from
             the authorities. Where Lambspringk gives emblems and the Child-Bed gives metaphysics,
@@ -517,15 +517,15 @@ export default function PhilosophersStonePage() {
                 className="text-accent-rust hover:underline"
               >
                 Ventura, <em>De Ratione Conficiendi Lapidis</em>, Dedication
-              </Link>{' '}
-              &mdash; on the three motives for pursuing alchemy
+              </Link>
+              , on the three motives for pursuing alchemy
             </p>
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The anonymous <em>Revealer of the Great Secret</em> (1688) goes further still, providing
-            what amounts to a laboratory recipe for the Stone as a red medicinal powder &mdash;
-            &ldquo;potable gold&rdquo; &mdash; complete with ingredients and procedures:
+            what amounts to a laboratory recipe for the Stone as a red medicinal powder
+            (&ldquo;potable gold&rdquo;), complete with ingredients and procedures:
           </p>
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
@@ -535,7 +535,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69819203084978306e4933f6?page=1"
+                href="/book/revealer-of-the-great-secret-of-the-philosophers-anonymous-2"
                 className="text-accent-rust hover:underline"
               >
                 The Revealer of the Great Secret, p. 186
@@ -564,13 +564,13 @@ export default function PhilosophersStonePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Huginus &agrave; Barma&rsquo;s <em>Regnum Saturni</em> (&ldquo;The Kingdoms of
             Saturn,&rdquo; 1657, reprinted Paris 1779) puts the emphasis on where the Work
-            <em> begins</em> rather than where it ends. The starting point is Saturn &mdash; lead,
+            <em> begins</em> rather than where it ends. The starting point is Saturn: lead,
             the heaviest, basest, most despised of metals. The title itself is programmatic:
             the Stone emerges from the &ldquo;kingdoms&rdquo; over which Saturn rules.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The subtitle promises the book is &ldquo;turned toward the Golden Age&rdquo; &mdash;
+            The subtitle promises the book is &ldquo;turned toward the Golden Age&rdquo;,
             a dual reference to the astrological age of gold (which Saturn governed in classical
             mythology) and to the alchemical transformation of base metal into gold. Huginus
             positions himself squarely within the Hermetic tradition:
@@ -593,7 +593,7 @@ export default function PhilosophersStonePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Saturnian approach is important because it inverts the usual expectations. You
-            don&rsquo;t start with something precious. You start with lead &mdash; the material
+            don&rsquo;t start with something precious. You start with lead, the material
             everyone else throws away. The Stone is hidden in what is most despised, most
             overlooked, most associated with heaviness and death. This is the alchemical
             principle of inversion: the last shall be first, the basest shall be noblest, the
@@ -608,8 +608,8 @@ export default function PhilosophersStonePage() {
           <h2 className="font-serif text-3xl text-primary mb-6">The Stone as Mirror</h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            What becomes clear when you read these texts side by side &mdash; as Source Library now
-            makes possible for the first time &mdash; is that the Philosopher&rsquo;s Stone
+            What becomes clear when you read these texts side by side (as Source Library now
+            makes possible for the first time) is that the Philosopher&rsquo;s Stone
             functions less as a single concept than as a mirror. What you see in it depends on
             what you bring.
           </p>
@@ -634,7 +634,7 @@ export default function PhilosophersStonePage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              The King on the Dragon &mdash; mastery achieved. Lambspringk, Figure 10.{' '}
+              The King on the Dragon: mastery achieved. Lambspringk, Figure 10.{' '}
               <Link href="/book/69804b952c52aad359879321?page=34" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
@@ -662,42 +662,42 @@ export default function PhilosophersStonePage() {
               {
                 href: '/book/69804b952c52aad359879321',
                 title: 'Lambspringk, De Lapide Philosophico',
-                detail: 'Frankfurt, 1625 — 15 allegorical engravings with Latin verse',
+                detail: 'Frankfurt, 1625: 15 allegorical engravings with Latin verse',
               },
               {
                 href: '/book/69804b95370ddc6f3e47c57d',
                 title: 'The Child-Bed of the Philosopher\'s Stone',
-                detail: 'Anonymous, 1692 — the Stone as universal root',
+                detail: 'Anonymous, 1692: the Stone as universal root',
               },
               {
                 href: '/book/6977b866112cb9b4f70c3ff8',
                 title: 'Ali Puli, Centrum Naturae Concentratum',
-                detail: '1694 — "The Salt of Nature Regenerated"',
+                detail: '1694: "The Salt of Nature Regenerated"',
               },
               {
                 href: '/book/6978ee3a01b1963bc31ee9f0',
                 title: 'Bernhardus Trevisanus, De Chymico Miraculo',
-                detail: 'Strasbourg, 1583 — forty years of failed experiments',
+                detail: 'Strasbourg, 1583: forty years of failed experiments',
               },
               {
                 href: '/book/6952d13377f38f6761bc5e29',
                 title: 'Edward Kelly, Alchemical Writings',
-                detail: '1893 edition of 16th-century texts — transmutation claims',
+                detail: '1893 edition of 16th-century texts: transmutation claims',
               },
               {
                 href: '/book/6985ca72d480ab10e5c48434',
                 title: 'Ventura, De Ratione Conficiendi Lapidis',
-                detail: 'Basel, 1571 — systematic laboratory method',
+                detail: 'Basel, 1571: systematic laboratory method',
               },
               {
                 href: '/book/69819203084978306e4933f6',
                 title: 'The Revealer of the Great Secret',
-                detail: '1688 — recipe for potable gold and the red powder',
+                detail: '1688: recipe for potable gold and the red powder',
               },
               {
                 href: '/book/6988a5a1215deb318410d5ea',
                 title: 'Huginus à Barma, The Saturnian Kingdoms',
-                detail: '1657/1779 — the Stone hidden in Saturn\'s lead',
+                detail: '1657/1779: the Stone hidden in Saturn\'s lead',
               },
             ].map((source) => (
               <Link

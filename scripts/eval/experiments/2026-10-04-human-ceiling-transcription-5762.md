@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [agreement, accuracy]
+languages: [en, grc, lzh]
+scripts: [Latn, Grek, Hani]
+canons: [cbeta]
+n_books: 104
+n_pages: 183
+verdict: "Two human transcriptions differ by 0.14% of letters (English), 0.43% (Greek), 0.28% (Taisho Chinese after glyph folding); our English OCR's median page is at that floor."
+status: informational
+decision: null
+superseded_by: null
+issue: 5762
+---
 ## 2026-10-04 · How far apart are two human transcriptions of the same printed page, and where does our OCR sit against both? English, Greek, Chinese (#5762 track 2)
 
 <!-- PRIOR ART: 2026-09-28 English reference pages (#5124: Wikisource/Gutenberg page references, one transcription per page, both engines scored against it); scripts/eval/build-edition-refs.mjs (EEBO-TCP cut to our pages, scored against our OCR, "OCR error + edition variance until reference_error_rate is measured"); PREREGISTRATION-chinese-skqs-5568.md (Kanripo page ↔ scan page). Each holds ONE human transcription per page; none measures the reference's own error. -->

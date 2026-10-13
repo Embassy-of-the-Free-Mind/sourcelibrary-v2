@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/besold7",
+  "edition": "Operis Politici Editio Nova. — Argentorati : Zetzner, 1626.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "origin": "library",
+  "book_id": "6970e3599b09d309d780a252",
+  "page_number": 226,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 504162,
+    "to_char": 506820,
+    "overlap": 0.425,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "p.209; Latin with French quotations; ref matches",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      225,
+      226,
+      227
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.621Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "e97f344fae47b786d02af388a2a117e3c62bbddb2fa0874507b5a6018154f669",
+  "unit": {
+    "chars": 2658
+  }
+}

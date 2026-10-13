@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 450
+n_pages: 450
+verdict: "4.9% [3.3, 7.3] of 450 live pages carry an untagged addition the detector sees, almost all in pre-v10 translations (v13: 0/124); OCR also invents text on 4/86 typed-text pages."
+status: informational
+decision: null
+superseded_by: null
+issue: [5982, 5942]
+---
 ## 2026-10-06 · How often does a translation carry untagged words of ours, and at which stage do they come in? (source-grounded additions detector, #5982)
 <!-- PRIOR ART: 2026-10-02-what-the-judge-calls-invention-5274.md typed the audit judge's "invention" flags by hand on 45 pages; 2026-10-06-translation-notes-free-5919.md and the #5942 phase-1 entry (PR #5958) hold the judge verdicts re-read in Q1; scripts/audit/translation-bridging.mjs (#5305) is the mechanical work list. None lists the untagged sentences of a page that render nothing in the source, and none compares against a typed text. -->
 

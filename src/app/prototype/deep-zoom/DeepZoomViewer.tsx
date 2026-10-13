@@ -240,7 +240,7 @@ export default function DeepZoomViewer({ items }: { items: DeepZoomItem[] }) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/75 to-transparent px-4 pb-3 pt-10">
           <p className="pointer-events-auto text-sm font-medium text-white">
             {item.title}
-            <span className="font-normal text-stone-400"> — {item.book}</span>
+            <span className="font-normal text-stone-400"> · {item.book}</span>
           </p>
           <p className="pointer-events-auto mt-0.5 text-xs text-stone-400">
             {item.width.toLocaleString()} × {item.height.toLocaleString()} px ·{' '}

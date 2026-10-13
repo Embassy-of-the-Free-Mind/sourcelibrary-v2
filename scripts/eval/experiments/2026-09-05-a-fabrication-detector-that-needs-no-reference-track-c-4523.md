@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [bo, la, grc, de]
+scripts: [Tibt, Latn, Grek]
+canons: [derge-kangyur]
+n_books: null
+n_pages: 349
+verdict: "A reference-free detector flagged 51/51 known recitation pages with 0/5 false positives, but only 56 of 349 pages are judgeable and the highest-risk pages are abstained."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-09-05 — A fabrication detector that needs no reference (Track C, #4523)
 
 - **Question.** Every metric we own compares OCR to a reference. A model that has memorised

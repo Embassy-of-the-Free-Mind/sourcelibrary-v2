@@ -17,7 +17,7 @@ import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, T
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'The Open Canons — Source Library Research',
+  title: 'The Open Canons | Source Library Research',
   description:
     'Which Buddhist, Hindu, Jewish, Islamic, Chinese, Latin and Greek canons are already typed in openly, how much of each has any English, and what a draft English translation would cost.',
   alternates: { canonical: '/research/canon-gap' },
@@ -276,7 +276,7 @@ function CorpusRow({ r }: { r: Row }) {
         <div>
           <dt className="md:hidden text-[11px] uppercase tracking-wider text-stone-400">Typed text</dt>
           <dd className="text-stone-800">
-            {r.size.base_chars ? `${short(r.size.base_chars)} chars` : '—'}
+            {r.size.base_chars ? `${short(r.size.base_chars)} chars` : '–'}
             {r.size.texts != null && <span className="block text-[11px] text-stone-400">{fmt(r.size.texts)} texts</span>}
           </dd>
         </div>
@@ -351,7 +351,8 @@ export default function CanonGapPage() {
           <p className="mt-4 text-base text-stone-600">
             Latin is our largest language, about {fmt(LATIN_BOOKS_ALL)} books, so the Latin row counts only the
             books in four of our collections: Hermetica, alchemy, Kabbalah and natural philosophy. Latin books on
-            Kabbalah are counted in the Kabbalah row too. The Greek row counts every book in Greek.
+            Kabbalah are counted in the Kabbalah row too. The Greek row counts every book in Greek, and the Chinese
+            classics row every book in Chinese outside the Buddhist canon.
           </p>
           <TraditionProgress n={1} rows={TRADITIONS} />
         </Section>

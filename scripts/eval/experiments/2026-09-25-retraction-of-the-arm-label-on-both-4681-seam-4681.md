@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "The harness matched 'repaired' but outcomes say 'repair', so both #4681 seam draws judged the plain draft: the 19-14 tie is plain batch vs production; the repair was never judged."
+status: informational
+decision: "Harness now imports SEAM_SOURCE_REPAIR and throws when a run with repairs substitutes nothing; repaired arm re-judged in a new packet (#4681)"
+superseded_by: null
+issue: 4681
+---
 ## 2026-09-25 — RETRACTION of the arm label on both #4681 seam draws: the judges read the plain DRAFT, never the repair
 
 **Found by hand.** Spot-checking 11 of the 62 decisive S1/P junctions against the source OCR (4 production wins,

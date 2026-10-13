@@ -1,0 +1,962 @@
+[
+ {
+  "uid": "69aec48e3b6ebce5e0ee6a89-p142",
+  "packet": "p00",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "main text lines 1-10 (no long s on page; 19th-c. print)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 35,
+   "long_s_as_f": 0,
+   "notes": "Empty output; the whole page is lost (main text and footnote)."
+  },
+  "cli": {
+   "invented": true,
+   "invented_quote": "I am unable to provide a verbatim transcription of this text. However, I can provide a high-level summary",
+   "dropped_lines": 13,
+   "long_s_as_f": 0,
+   "notes": "Main text is accurate, but the footnote is replaced by a summary and a chatbot question after a one-line fragment."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69ae9be3f3bd47924cacd360-p214",
+  "packet": "p01",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (no long s on page)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 26,
+   "long_s_as_f": 0,
+   "notes": "Empty output; the whole page is lost."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete and accurate, sidenote included; no significant errors."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6abc9080b19f98fd4680f-p40",
+  "packet": "p02",
+  "type": "roman",
+  "leaf": "blank",
+  "closer": "tie",
+  "window": "n/a (blank leaf)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Correctly marked blank."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Correctly marked blank."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a08a41dfc6cdaefe240c874-p204",
+  "packet": "p03",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (no long s on page)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 34,
+   "long_s_as_f": 0,
+   "notes": "Empty output; the whole page is lost."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete and accurate (English translation page); line-break hyphens joined."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a42f6163ad4d80da1236e8a-p58",
+  "packet": "p04",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "verse text lines 1-10 below synopsis (no long s; 19th-c. print)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 55,
+   "long_s_as_f": 0,
+   "notes": "Empty output; the whole page is lost."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete and faithful; minor slips such as 'ad bravium' for the printed 'ab bravium', and the Greek is slightly normalised."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6487618b87551bfc55415-p25",
+  "packet": "p05",
+  "type": "other",
+  "leaf": "blank",
+  "closer": "cli",
+  "window": "n/a (no printed text; mirrored show-through only)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Treats the show-through as a faded, illegible text page (and calls it a manuscript); transcribes nothing, so no harm beyond the wrong page-type."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Correctly labels the leaf blank with show-through only."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a4df502739bc1fc670e6ef7-p98",
+  "packet": "p06",
+  "type": "other",
+  "leaf": "blank",
+  "closer": "tie",
+  "window": "n/a (blank leaf)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Correctly blank."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Correctly blank."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a08ac090e77acb4f93094c6-p90",
+  "packet": "p07",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (no long s on page)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 45,
+   "long_s_as_f": 0,
+   "notes": "Empty output; the whole page (about 45 lines) is lost."
+  },
+  "cli": {
+   "invented": true,
+   "invented_quote": "A summary and overview of the page content is provided instead ... Would you like a summary or philological breakdown",
+   "dropped_lines": 13,
+   "long_s_as_f": 0,
+   "notes": "Three restarts: the opening repeats, the fullest pass breaks off at 'ordered the yacht to' (about the last 13 lines of section IV lost), and it ends in a recitation-refusal summary plus a chat question."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a905e19785d9b40577fe091-p4",
+  "packet": "p08",
+  "type": "other",
+  "leaf": "blank",
+  "closer": "cli",
+  "window": "n/a (no text; stained and binarised leaf)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Wrongly calls the stains illegible handwritten text; transcribes nothing."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Correctly blank, with staining and foxing."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a243fcf0f0e4f405e6362af-p126",
+  "packet": "p09",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 18-27 (TILIA ... folii longitudinem; no long s, round s only)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 40,
+   "long_s_as_f": 0,
+   "notes": "Empty output; the whole page (about 40 lines) is lost."
+  },
+  "cli": {
+   "invented": true,
+   "invented_quote": "*Nectarium* petalorum densum glandulosum. ... *Nymphaea  (aborted first pass, then repeated)",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "An aborted first pass repeats the opening 3 lines before the full transcription; otherwise faithful, though 'Nenuphar lutea' is printed and it writes 'Nuphar lutea'."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a4afa1b19bd0084b1bf0920-p33",
+  "packet": "p10",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "Latin italic block, lines 'indigitatur Philippi' to 'genuisse' (9 lines)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 2,
+   "notes": "Complete; long-s misread as f in 'fatis' and 'genuiffe' (also 'Menf.' in header), otherwise accurate. Page mixes roman caps, schwabacher German verse and Latin italic."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete and accurate; only 'Als' for 'Alß' and normalised spacing."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a90923a0f0bff48dccbcf4d-p140",
+  "packet": "p11",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "left column, Centuria entry ('Centuria.rie.fe.ge.' to 'milites diuisas', ~10 lines)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 8,
+   "long_s_as_f": 2,
+   "notes": "Drops Centipeda/Centuplico entries and several lines in Centurio and Cerannia entries; many misreads and long-s as f ('in fura', 'difas', 'Ceraftes', 'filiqua'); falsely labels the print as handwriting."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Full abbreviation expansion with some guessed/garbled expansions ('centum hominum/literam', 'Vide in centuplus', 'Lucullus civitatem cum lualluo'), but covers the whole page."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6464518b87551bfc423b9-p261",
+  "packet": "p12",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "third column (main text col 2), lines 1-14 ('sterijs zenodochijs' to 'negocijs religiosos')",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 60,
+   "long_s_as_f": 4,
+   "notes": "Omits the entire right-hand gloss column (~60 short lines) and some main-text phrases; diplomatic but many misreads and long-s as f ('pfo:nas', 'fibi', 'fo:lum', 'religiofos')."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 1,
+   "long_s_as_f": 0,
+   "notes": "Covers main text plus both gloss columns with full expansion; drops 'Multa quidem de litigiosis tam' at the second initial ('Dantumque legislatorum') and garbles the rubric."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69bf61c276287c6679d5f4d7-p82",
+  "packet": "p13",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "left gloss column, 'Mutuum in amore' to 'miles Thraso miserat' (~10 lines)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 1,
+   "long_s_as_f": 4,
+   "notes": "Line-faithful but reads Cherea as 'Eberea' throughout, drops the 'termedio ducit vxorem... cepit in vxorem' gloss line, and renders the s. (scilicet) and 'reconsiliato' with f."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete with expansions; a few misreads ('persulit', 'maritum nonno', 'Tortellius' ok) and normalised spellings."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a90d6af723952418ddd1d33-p240",
+  "packet": "p14",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "left column lines 1-10 ('minus benedicam' to 'Hinc euidenter')",
+  "lite": {
+   "invented": true,
+   "invented_quote": "Laueat ne corrumpat et acquerere sperantiam. (repeated hundreds of times)",
+   "dropped_lines": 40,
+   "long_s_as_f": 0,
+   "notes": "Collapses into a repetition loop at 'Caueat ne corruat' mid-column 2, losing the rest of the page (~35 lines plus the Hic queri solet section) and the right marginal note; also skips 'nes illos sacerdotes... claue scie' line."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete including both marginal notes; minor expansion slips and a doubled 'erat erat'."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6480418b87551bfc516ed-p21",
+  "packet": "p15",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 5-14",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 2,
+   "notes": "Line-by-line but many misreads: filibus/fides for silibus/siles, appendi, habi, oriditur, 'erit aliqua sit si'."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Fully expanded abbreviations, mostly correct; a few misreads (servantur for saluant, inveniretur fine)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a454ee389beae48d3af88e5-p166",
+  "packet": "p16",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 13-22",
+  "lite": {
+   "invented": true,
+   "invented_quote": "<margin> femp / im et / is dif ... </margin>",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "Transcribes facing-page edge fragments as margin text; garbles 'dixisti a spiritu sancto proficisci' to 'dixi: si a spiritu sancto effici'; deferatur."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Near-perfect; minor normalisation (repugnanter for repugnater)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a94462c7ec53276be45beda-p90",
+  "packet": "p17",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Wrong expansions: opponitur, Comprimis, de presbyteris, potentia, presentia; gloss 'offerendi' lost and large-type line split oddly."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Accurate expansions (Comperimus, de consecratione, contentum); glosses reordered but complete."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b51eb347b06ecd58195363-p699",
+  "packet": "p18",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 28-37",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "Accurate German text but drops most italics and writes 'hiefsen' for hieſsen."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Very close; keeps long s and italics; trivial 'verschaffte' for verschafte."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b632dd1c1c21a373814112-p98",
+  "packet": "p19",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "col 1 lines 4-13",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 1,
+   "long_s_as_f": 0,
+   "notes": "Diplomatic but drops 'Ca. VIII' heading and many initial letters (Ine, Emo, Ignus, Esignauit), omits 'seminare', misreads 'neqz pera' as 'et pera', x as r throughout."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Expanded and largely correct; some guessed expansions (Frater for Ira, 'supra' for §-marks)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6486218b87551bfc54b91-p72",
+  "packet": "p20",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "col 1, lines 1-10 (sed eua:nico ... tur falsitate)",
+  "lite": {
+   "invented": true,
+   "invented_quote": "et in christo et in christo et in christo ...",
+   "dropped_lines": 83,
+   "long_s_as_f": 0,
+   "notes": "Degenerate repetition loop in a fabricated <margin> ('Epistola ad Timotheum ... et in christo' repeated thousands of times); none of the main text is transcribed."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Faithful expanded reading of both columns; transcribes the facing-page edge strip at left as <margin> (not this page's text) and has minor slips (e.g. 'Solemne?' for 'Solem9', 'ples' left unexpanded)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b647e018b87551bfc4fba2-p116",
+  "packet": "p21",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "col 2, lines 1-10 (us none expsse dicit ... multa iugiter ac qsi violeter impingit)",
+  "lite": {
+   "invented": true,
+   "invented_quote": "dū ē tibi ilucta ista: ne debili aut fragi mū ꝗ ꝗteriri nō possem",
+   "dropped_lines": 4,
+   "long_s_as_f": 6,
+   "notes": "Diplomatic but sloppy: drops several lines (e.g. 'supponit luctator aduersario siue', 'trasgredi non liceret: vl mandatu vrgetissi'), duplicates a line in their place, reads facing-page strip as margin, and writes f for long s throughout (fuient, fuitis, fmoib, vfus, fodomis)."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Clean full expansion of both columns with marginal refs; small misreadings only (e.g. 'Jos.10.c.' for 'Job.10.c.', drops lone marginal letters)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6bbbe8566c838146380d0-p49",
+  "packet": "p22",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (terung wurd ... beschaffenheit der Lasteren)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete but silently normalises spelling (wiederum, versöhnt, vergünstiget, als, 'Abs-laß', 'Indulgenzen') away from what is printed."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Near-diplomatic and complete; only slips are 'kerung' for 'terung' and 'reüen'."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69af4ad93fdb796f745b5eeb-p295",
+  "packet": "p23",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "col 1, lines 1-10 (nam et sua exsiccatione ... aurce arenule sepius inueniuntur)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 6,
+   "notes": "Very garbled reading of a tiny low-resolution page with systematic f for long s (fedanum, refoluta, fimilem, folomia, fepinto, fepius) and many nonsense words."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "Also error-heavy on a tiny image (many guessed words, editorial headings '[Jdaltum]', '[Aurum]'), but more readable Latin and long s mostly rendered as s."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a455d5989beae48d3af9110-p60",
+  "packet": "p24",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "col 1, lines 1-10 (Et hoc vult August. ... punitus. Et ideo cu dicit)",
+  "lite": {
+   "invented": true,
+   "invented_quote": "tunc fi non potest nūc uitare peccatū: ergo nūc nō potest uitare peccatū: et",
+   "dropped_lines": 2,
+   "long_s_as_f": 1,
+   "notes": "Semi-diplomatic with dropped tokens; omits 'naturalibus: qd concedo: sed de potentijs actiuis' and substitutes a repeated line for 'nunc non peccat: quia nemo peccat in'; f for long s (fi, fubito, fui, glofatur, fcz)."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Full, accurate expansion of both columns and margins; minor misexpansions (e.g. 'penam' for 'pnam', 'ad philosophum quarto aristotelis ... quod non sit')."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b645e618b87551bfc3fba3-p81",
+  "packet": "p25",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "lite",
+  "window": "lines 1-10",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "Complete; misreads 'Eos.n.sanos' as 'Eos insanos', 'quorum...quasi' as 'quos...aliquo', 'fit' for 'ſit'."
+  },
+  "cli": {
+   "invented": true,
+   "invented_quote": "I cannot provide a verbatim transcription of this text. However, I can offer an overview and summary",
+   "dropped_lines": 23,
+   "long_s_as_f": 0,
+   "notes": "First ~8 lines transcribed twice then truncated at 'libid', followed by a refusal and a summary in place of the rest."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b636b01c1c21a37382e9a6-p18",
+  "packet": "p26",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "lite",
+  "window": "lines 1-10 (chapter 6 body)",
+  "lite": {
+   "invented": true,
+   "invented_quote": "in omni loco sunt in omni loco sunt in omni loco rectos angulos",
+   "dropped_lines": 1,
+   "long_s_as_f": 0,
+   "notes": "Near-complete; drops the 'cipientes. Instrumentis quoque umbrarum...' line, short phrase stutter, misreads fm as 'sim'/'firmam', 'Aius' for the initial."
+  },
+  "cli": {
+   "invented": true,
+   "invented_quote": "I cannot provide a verbatim transcription of this text. However, I can provide a general summary",
+   "dropped_lines": 40,
+   "long_s_as_f": 0,
+   "notes": "Chapter 6 transcribed twice then cut off mid-word; chapter 7 (most of the page) replaced by a refusal and summary."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b645cb18b87551bfc3f134-p199",
+  "packet": "p27",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete but several misreads: 'Nec' for 'Hec', 'per' for 'pro', 'torpeant', 'et' for 'id est', 'et hoc fit' for 'ut hoc sit'."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Accurate line-by-line with abbreviations expanded; only trivial slips."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a514a72e7035973effbbe37-p340",
+  "packet": "p28",
+  "type": "gothic",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "left column lines 1-10",
+  "lite": {
+   "invented": true,
+   "invented_quote": "prmo. ver. sane. ¶ Nono no. ibi: vt verbis eoz vts mur. (repeated twice)",
+   "dropped_lines": 0,
+   "long_s_as_f": 3,
+   "notes": "Heavy garbling of abbreviations throughout, f for ſ (ficut, feruari, diocefe), one line repeated."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 3,
+   "long_s_as_f": 0,
+   "notes": "First paragraphs silently expand abbreviations (normalised rather than diplomatic); Decio paragraph collapsed, losing ~3 lines."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b633c51c1c21a37381bccd-p74",
+  "packet": "p29",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "tie",
+  "window": "lines 1-10",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete and accurate; drops macrons ('pede', 'pannu') and ę caudata."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Complete and accurate; expands macrons and keeps ę."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a4976cb7bb5de633e30cf52-p128",
+  "packet": "p30",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (top paragraph)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "'et si quæ' for 'eiusque', 'Præfes' for 'Præſes', drops 'quæ' in the verse, 'sit ale' for 'si tale', 'atque' for 'sitque'."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Very close; 'atque' for printed 'sitque' is the main slip."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b663f4b3f4fc044154cd30-p25",
+  "packet": "p31",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (para LV)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Small misreads: 'eogi' for 'cogi', 'multeq' for 'multoque', 'Euangelica'/'praedicatione' left unexpanded, drops 'ij' in 'pagani ij sint'."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Accurate; only minor normalisation of ij to ÿ; places first margin note before LV rather than beside it."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b64c0d18b87551bfc70f11-p211",
+  "packet": "p32",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10 (first lemma paragraph)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 2,
+   "notes": "Long-s as f ('feruandum','uniuerfis','infolescunt'), keeps unexpanded 'retinent'/'prumpunt', drops 'di' of 'dignior', garbled Hebrew."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Good abbreviation expansion; 'puta Israëli' for printed 'puta libro' is a substitution, plus 'habent' for 'habet'."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6ed963c7947b468d3a627-p11",
+  "packet": "p33",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "tie",
+  "window": "lines 1-10",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Near-perfect; completes catchword 'respe-' as 'respectu' inline and 'que' for 'quæ'; mirrored margin text is bleed-through, rightly skipped."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Near-perfect; 'sit eruditus' for printed 'fit eruditus'."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a94358e7680120fac24f40e-p225",
+  "packet": "p34",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 1-10",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "'Reuerendus' for 'Reu.mus' (Reuerendissimus), 'fluêtis' unexpanded, 'Conditae' for 'Conditio'."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Accurate; 'Conditis' for 'Conditio' in the subtitle; catchword moved to meta."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a4bb188241e69221d26db19-p239",
+  "packet": "p35",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 6-15 (Pendasius ... philosophum legit)",
+  "lite": {
+   "invented": true,
+   "invented_quote": "<margin>Animaduertendum autem, valdè decipi eos, qui putant 5. Met. cap. 4. ...</margin>",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "Duplicates three paragraphs as fake marginalia (the left margin is the facing page), and reads ſ as f in Pendafius/Sueffanum."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Near-perfect; normalises ſ to s, only trivial differences (Naturam for Naturā)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b6e97cb1a3146c0524205c-p2",
+  "packet": "p36",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "lite",
+  "window": "lines 8-17 (Clarissim. ... Thurnisiorum)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Accurate title page; only normalises ſ to s."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 1,
+   "notes": "Accurate apart from Clariffim for Clariſſim; keeps ſ elsewhere."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b67d0f2467723471250928-p20",
+  "packet": "p37",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "lines 11-20 (96. Pulvis insignis ... 97. ... adsociantur)",
+  "lite": {
+   "invented": true,
+   "invented_quote": "fiat pulvis subtilis, cuius scrupulum unum ... cum saccharo drachmas duas",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Silently expands abbreviations and symbols into words, with wrong quantities (℈ij to 'scrupulum unum', ʒiiij to 'drachmas duas'), and substitutes words ('subtilis' for minutiss., 'adsciscantur')."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Faithful, keeps apothecary symbols; minor slips (finiss.)."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "69b647db18b87551bfc4f8d4-p241",
+  "packet": "p38",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "main-text block lines 1-10 (ſiuis participiis ... rumpitur anguis)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 3,
+   "long_s_as_f": 2,
+   "notes": "Main text is interleaved as a margin inside the commentary, many readings are garbled (fuis, fui, pfenti, fint, 'Constet aute de rebus'), and it drops the 'Idem habuimus superius ... recipiunt' passage."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Expands abbreviations and reorders the commentary into one block before the main text; the Greek is somewhat garbled."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ },
+ {
+  "uid": "6a429a2e8e351c27eb8594a3-p313",
+  "packet": "p39",
+  "type": "roman",
+  "leaf": "text",
+  "closer": "cli",
+  "window": "right col lines 'Sed forma facti gregis' ... 'castitate' (~10 lines)",
+  "lite": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 10,
+   "notes": "Pervasive ſ to f (fex-ta, fit, fuo, fed, præfcribat, fuccinit, Epifcopo, conuerfatione), garbled Greek ('A, zw'), and drops 'Timotheus, aut'."
+  },
+  "cli": {
+   "invented": false,
+   "invented_quote": "",
+   "dropped_lines": 0,
+   "long_s_as_f": 0,
+   "notes": "Very accurate, but normalises u/v (gravis, servus) and drops the catchword."
+  },
+  "source": "read-from-image",
+  "reader": "opus subagent"
+ }
+]

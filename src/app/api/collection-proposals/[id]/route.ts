@@ -78,7 +78,7 @@ export const POST = withAdminAuth(async (
       slugify(title);
 
     if (!slug) {
-      return NextResponse.json({ error: 'Could not derive a slug — provide one' }, { status: 400 });
+      return NextResponse.json({ error: 'Could not derive a slug. Provide one' }, { status: 400 });
     }
 
     let result;

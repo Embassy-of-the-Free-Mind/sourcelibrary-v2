@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 195
+verdict: "By the pre-registered rule v18: white-leaf fabrication 0.91 to 0.29; v19 cuts fabrication most (0.78 to 0.35) but fails the over-decline guard (S3 0.381 vs limit 0.372)."
+status: superseded
+decision: "Led to v19.1, which was promoted instead of v18 (PR #5661)"
+superseded_by: "2026-10-02-ocr-v19-1-stamps-4195.md"
+issue: [4195, 4149]
+---
 ## 2026-10-02 · Do OCR prompts v18 / v19 stop invented text on white and show-through leaves without declaring real pages blank? Screened, labelled by eye, four arms, Batch, k=3 (#4195, #4149)
 <!-- PRIOR ART: 2026-10-ocr-v18-blank-insert run (ocr-v18-ab.mjs, same request and scorer — its stages are imported); prompt-ab.mjs (#4610); blank-page-study.mjs (#3444). None screened on the current model or labelled the strata by eye. -->
 

@@ -171,7 +171,7 @@ export async function GET(request: NextRequest) {
           collection: `${BASE}/api/dts/collection/{?id,page,nav}`,
           title: 'Source Library',
           description:
-            'Pre-modern texts in translation — alchemy, Hermetica, Kabbalah, natural philosophy, and the encyclopedic ambitions of early modern Europe.',
+            'Pre-modern texts in translation: alchemy, Hermetica, Kabbalah, natural philosophy, and the encyclopedic ambitions of early modern Europe.',
           totalChildren: collections.length,
           totalParents: 0,
           member: members,

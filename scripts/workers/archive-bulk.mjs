@@ -32,6 +32,7 @@ import { isPaused } from '../lib/pause.mjs';
 import { fetchAccessLeaves, indexJp2FilesByLeaf } from '../lib/ia-access-leaves.mjs';
 import { hashBuffer, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
+import { makeOwnedScratchDir, sweepLeakedScratchDirs, freeBytes } from './lib/scratch-dirs.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -67,7 +68,12 @@ const ALIGN_SAMPLES = parseInt(getArg('align-samples') || '3', 10);
 // Escape hatch for backfills over items already proven aligned. Never default
 // this on — the check is what stops a silent off-by-one reaching readers.
 const SKIP_ALIGN_CHECK = process.argv.includes('--skip-align-check');
-const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;  // 6h — older sl-bulk-* dirs are leaked, sweep them
+// Only for sl-bulk-* dirs with no `.owner` file (pre-#4564, or archive-images-fast.ts);
+// owned dirs are swept as soon as their owner process is gone.
+const STALE_TMP_AGE_MS = 6 * 60 * 60 * 1000;
+// Don't start a book's multi-GB extraction with less than this free on the scratch
+// filesystem (#4564: a large Sanskrit volume needs 3-4GB, BOOK_CONCURRENCY run at once).
+const MIN_SCRATCH_FREE_GB = parseFloat(getArg('min-free-gb') || '15');
 const MAX_BULK_FAILURES = 5;  // Circuit-break a book after N consecutive bulk-archive failures
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -99,38 +105,26 @@ const stats = {
   startTime: Date.now(),
 };
 
-// Sweep leftover sl-bulk-* tmpdirs older than STALE_TMP_AGE_MS. A SIGKILL
-// (OOM, scheduler kill, wrapper teardown) skips the per-book finally block and
-// strands the 700MB-2GB JP2 extraction dir on disk.
+// Sweep leaked sl-bulk-* tmpdirs. A SIGKILL (OOM, scheduler kill, wrapper
+// teardown) skips the per-book finally block and strands the 700MB-4GB JP2
+// extraction dir; the retry mkdtemps a new one. Dirs whose owner process is dead
+// go at once, whatever their age (#4564) — the old age-only rule let 44GB pile up.
 function cleanupStaleTmpDirs() {
-  const tmpRoot = os.tmpdir();
-  const cutoff = Date.now() - STALE_TMP_AGE_MS;
-  let removed = 0;
-  let bytesFreed = 0;
-  let entries;
-  try { entries = fs.readdirSync(tmpRoot); } catch { return; }
-  for (const name of entries) {
-    if (!name.startsWith('sl-bulk-')) continue;
-    const full = path.join(tmpRoot, name);
-    try {
-      const st = fs.statSync(full);
-      if (!st.isDirectory() || st.mtimeMs >= cutoff) continue;
-      let size = 0;
-      try { size = parseInt(execSync(`du -sb "${full}" 2>/dev/null | cut -f1`).toString().trim()) || 0; } catch {}
-      fs.rmSync(full, { recursive: true, force: true });
-      removed++;
-      bytesFreed += size;
-    } catch {}
+  const r = sweepLeakedScratchDirs(os.tmpdir(), 'sl-bulk-', { unownedMaxAgeMs: STALE_TMP_AGE_MS });
+  if (r.removed > 0) {
+    console.log(`[archive-bulk] Swept ${r.removed} leaked tmpdirs (${(r.bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
   }
-  if (removed > 0) {
-    console.log(`[archive-bulk] Swept ${removed} stale tmpdirs (${(bytesFreed / (1024 ** 3)).toFixed(2)} GB freed)`);
-  }
+}
+
+// Free GB on the scratch filesystem, or Infinity if statfs is unavailable.
+function scratchFreeGb() {
+  try { return freeBytes(os.tmpdir()) / (1024 ** 3); } catch { return Infinity; }
 }
 
 // After repeated failures, mark a book as blocked so it stops being selected.
 // Resets to 0 on the next successful archive run.
 async function recordBulkFailure(db, book, errorMsg) {
-  const booksCol = book._booksCol || 'books';
+  const booksCol = 'books';
   const prevFailures = book.archive_metadata?.bulk_failures || 0;
   const failures = prevFailures + 1;
   const update = {
@@ -149,7 +143,7 @@ async function recordBulkFailure(db, book, errorMsg) {
 
 async function clearBulkFailures(db, book) {
   if (!book.archive_metadata?.bulk_failures) return;
-  const booksCol = book._booksCol || 'books';
+  const booksCol = 'books';
   await db.collection(booksCol).updateOne(
     { id: book.id },
     { $unset: { 'archive_metadata.bulk_failures': '', 'archive_metadata.bulk_last_failed_at': '', 'archive_metadata.bulk_last_error': '' } }
@@ -177,6 +171,28 @@ async function downloadToFile(url, destPath, timeoutMs = 600000) {
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return bytes;
+}
+
+// IIIF-imported IA books (#4835) carry their identifier only in the manifest URL —
+// `https://iiif.archive.org/iiif/<id>/manifest.json` (or `/iiif/3/<id>/...`) in
+// `image_source.manifest_url` / `source_url` — never in `ia_identifier`.
+const IA_MANIFEST_ID_RE = /^https?:\/\/iiif\.archive\.org\/iiif\/(?:3\/)?([^/?#]+)\/manifest/;
+const IA_MANIFEST_FIELDS = ['image_source.iiif_manifest', 'image_source.manifest_url', 'image_source.source_url', 'source_url'];
+// The reason #4989 wrote before the manifest fallback existed. Books carrying it are
+// re-admitted when a manifest URL is present; a book that still fails gets
+// NO_ID_REASON instead, so it cannot re-enter the window and livelock it again.
+const LEGACY_NO_ID_REASON = 'no IA identifier (ia_identifier and image_source.identifier both empty)';
+const NO_ID_REASON = 'no IA identifier (ia_identifier, image_source.identifier and manifest URL all empty)';
+
+function resolveIaIdentifier(book) {
+  const direct = book.ia_identifier || book.image_source?.identifier;
+  if (direct) return direct;
+  for (const field of IA_MANIFEST_FIELDS) {
+    const value = field.split('.').reduce((o, k) => o?.[k], book);
+    const m = typeof value === 'string' && value.match(IA_MANIFEST_ID_RE);
+    if (m) return decodeURIComponent(m[1]);
+  }
+  return null;
 }
 
 async function resolveDownloadUrl(iaId) {
@@ -291,7 +307,7 @@ async function jp2ToJpeg(jp2Path) {
 }
 
 async function processBook(book, db) {
-  const iaId = book.ia_identifier || book.image_source?.identifier;
+  const iaId = resolveIaIdentifier(book);
   if (!iaId) {
     // LIVELOCK (#4966, 2026-09-23): a book can match the selection query on
     // `image_source.provider: 'internet_archive'` alone while carrying no identifier on either
@@ -301,12 +317,12 @@ async function processBook(book, db) {
     // nothing. The tell is a log of `Books: 0 processed, 0 failed, 30 skipped` with no [SKIP]
     // lines. Mark it the same way the no-download branch below does, so the queue drains.
     console.log(`  [SKIP] ${book.title?.slice(0, 50)} — no IA identifier, marking bulk_unsuitable`);
-    await db.collection(book._booksCol || 'books').updateOne(
+    await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
         'archive_metadata.bulk_unsuitable': true,
         'archive_metadata.bulk_unsuitable_at': new Date(),
-        'archive_metadata.bulk_unsuitable_reason': 'no IA identifier (ia_identifier and image_source.identifier both empty)',
+        'archive_metadata.bulk_unsuitable_reason': NO_ID_REASON,
         updated_at: new Date(),
       } },
     );
@@ -314,8 +330,8 @@ async function processBook(book, db) {
     return;
   }
 
-  const pagesCol = book._pagesCol || 'pages';
-  const booksCol = book._booksCol || 'books';
+  const pagesCol = 'pages';
+  const booksCol = 'books';
 
   const pages = await db.collection(pagesCol)
     .find({ book_id: book.id, $or: [{ archived_photo: { $exists: false } }, { archived_photo: null }, { archived_photo: '' }] },
@@ -328,7 +344,16 @@ async function processBook(book, db) {
     .find({ book_id: book.id }, { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } })
     .sort({ page_number: 1 }).toArray();
 
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `sl-bulk-${iaId.slice(0, 20)}-`));
+  // Low disk is the box's problem, not the book's: skip without recording a failure.
+  if (scratchFreeGb() < MIN_SCRATCH_FREE_GB) cleanupStaleTmpDirs();
+  const freeGb = scratchFreeGb();
+  if (freeGb < MIN_SCRATCH_FREE_GB) {
+    console.log(`  [SKIP] ${book.title?.slice(0, 50)} — only ${freeGb.toFixed(1)}GB free in ${os.tmpdir()} (need ${MIN_SCRATCH_FREE_GB}GB, --min-free-gb)`);
+    stats.booksSkipped++;
+    return;
+  }
+
+  const tmpDir = makeOwnedScratchDir(os.tmpdir(), `sl-bulk-${iaId.slice(0, 20)}-`);
 
   try {
     const download = await resolveDownloadUrl(iaId);
@@ -691,10 +716,18 @@ async function main() {
         'archive_metadata.blocked': { $ne: true },
         // bulk_unsuitable books have IA JP2 zips that don't align with photo URLs
         // (archive drift, #1504) — leave them to archive-ocr's per-page IIIF path.
-        'archive_metadata.bulk_unsuitable': { $ne: true },
-        $or: [
-          { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
-          { 'image_source.provider': 'internet_archive' },
+        // Exception: books marked only for lacking an identifier, which a manifest URL now
+        // supplies (#4835).
+        $and: [
+          { $or: [
+            { 'archive_metadata.bulk_unsuitable': { $ne: true } },
+            { 'archive_metadata.bulk_unsuitable_reason': LEGACY_NO_ID_REASON,
+              $or: IA_MANIFEST_FIELDS.map((f) => ({ [f]: IA_MANIFEST_ID_RE })) },
+          ] },
+          { $or: [
+            { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
+            { 'image_source.provider': 'internet_archive' },
+          ] },
         ],
         // Selective-unpause scope: confine to allowlisted books while paused.
         ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
@@ -714,53 +747,15 @@ async function main() {
         },
       }},
       { $sort: { _priority: 1, hidden: 1, _id: -1 } },
-      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
+      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, source_url: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
       { $limit: BOOK_LIMIT },
     ])
     .toArray();
 
-  // Also include warehouse IA books — prioritize likely first translations.
-  // When targeting a single book by --book-id, only the live books collection
-  // is consulted (the live id is the canonical surface).
-  const warehouseIaBooks = TARGET_BOOK_ID ? [] : await db.collection('books_warehouse')
-    .aggregate([
-      { $match: {
-        pages_count: { $gt: 0 },
-        $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
-        'archive_metadata.blocked': { $ne: true },
-        'archive_metadata.bulk_unsuitable': { $ne: true },
-        $or: [
-          { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
-          { 'image_source.provider': 'internet_archive' },
-        ],
-        ...(SCOPE_IDS ? { id: { $in: SCOPE_IDS } } : {}),
-      }},
-      { $addFields: {
-        _priority: {
-          $switch: {
-            branches: [
-              { case: { $eq: ['$is_first_translation', true] }, then: 0 },
-              { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
-            ],
-            default: 1,
-          },
-        },
-      }},
-      { $sort: { _priority: 1, _id: -1 } },
-      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1, archive_metadata: 1 } },
-      { $limit: BOOK_LIMIT },
-    ])
-    .toArray()
-    .catch(() => []);
-
-  // Tag warehouse books with their collection names
-  warehouseIaBooks.forEach(b => { b._pagesCol = 'pages_warehouse'; b._booksCol = 'books_warehouse'; });
-  iaBooks.push(...warehouseIaBooks);
-
-  console.log(`[archive-bulk] Found ${iaBooks.length - warehouseIaBooks.length} live + ${warehouseIaBooks.length} warehouse IA books to archive`);
+  console.log(`[archive-bulk] Found ${iaBooks.length} IA books to archive`);
 
   if (DRY_RUN) {
-    iaBooks.forEach((b, i) => console.log(`  ${i + 1}. ${b._booksCol === 'books_warehouse' ? '[WH] ' : ''}${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ${b.language || '?'})`));
+    iaBooks.forEach((b, i) => console.log(`  ${i + 1}. ${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ${b.language || '?'})`));
     await client.close();
     return;
   }

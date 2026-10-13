@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A00325",
+  "edition": "Familiarium colloquiorum formulae. Et alia quedam per Erasmu[m] recognita; Colloquia. Selections — STC 10450.6; ESTC S119187 (1519)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A00325",
+  "origin": "library",
+  "book_id": "69b637a31c1c21a3738330ae",
+  "page_number": 36,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 28551,
+    "to_char": 29488,
+    "overlap": 0.468,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "Erasmus formulae p.37 (wine); ref matches, starts ~1 line early (prev-page words 'Equidem vtroque iuxta delector'); TCP heavily abbreviated but same words.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      36,
+      37,
+      38
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.481Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "dabe069f4594cdf1802892c7f68150d4b2cab9dd7da2d25a7b3e24815cd4bb63",
+  "unit": {
+    "chars": 937
+  }
+}

@@ -836,21 +836,16 @@ export async function verifyFirstTranslation(
   options?: {
     dryRun?: boolean;
     force?: boolean;
-    collection?: 'books' | 'books_warehouse';
     triggered_by?: GeminiTrigger;
-    /**
-     * Also write `is_first_translation` (the public badge boolean). Default false:
-     * the badge is owned by scripts/maintenance/reconcile-first-translation-flag.ts [RETIRED #4536: the badge is card-governed now — propose a Translation Card edit instead],
-     * which applies verified-only gating; this function writes evidence
-     * (`translation_verification`) and returns the would-be flag for the caller.
-     * Only opt in for non-public collections (books_warehouse). See #3726.
-     */
-    writeBadge?: boolean;
   },
 ): Promise<VerificationResult> {
   const startTime = Date.now();
-  const booksCol = options?.collection || 'books';
-  const pagesCol = booksCol === 'books_warehouse' ? 'pages_warehouse' : 'pages';
+  // This function writes evidence (`translation_verification`) and returns the
+  // would-be flag; it never writes the public `is_first_translation` badge
+  // (card-governed, #4536; see #3726). The `collection`/`writeBadge` options
+  // existed only for the warehouse, retired 2026-10 (#5470).
+  const booksCol = 'books';
+  const pagesCol = 'pages';
 
   // Fetch book
   const book = await db.collection(booksCol).findOne(
@@ -911,12 +906,8 @@ export async function verifyFirstTranslation(
   // Persist to database (skip in dry-run mode)
   if (!options?.dryRun) {
     const previousVerification = book.translation_verification;
-    const previousIsFirst = book.is_first_translation;
 
     const setFields: Record<string, unknown> = { translation_verification: verification };
-    if (options?.writeBadge) {
-      setFields.is_first_translation = isFirstTranslation;
-    }
     await db.collection(booksCol).updateOne({ id: bookId }, { $set: setFields });
 
     // Log to gemini_usage
@@ -942,13 +933,6 @@ export async function verifyFirstTranslation(
         field: 'translation_verification',
         previous: previousVerification ?? null,
         new_value: { disposition: verification.disposition, confidence: verification.confidence, translations_found: verification.translations_found.length },
-      });
-    }
-    if (options?.writeBadge && previousIsFirst !== isFirstTranslation) {
-      changes.push({
-        field: 'is_first_translation',
-        previous: previousIsFirst ?? null,
-        new_value: isFirstTranslation,
       });
     }
     if (changes.length > 0) {

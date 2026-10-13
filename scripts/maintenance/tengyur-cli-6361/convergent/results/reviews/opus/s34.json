@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6abed90a896ea18127c8f9ee",
+    "slot": 34,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio (margin volume letter ཞེ) of a Pramāṇa commentary refuting Sāṃkhya (vyakta/prakṛti/vikāra, asiddha and anaikāntika reasons). It belongs in the Tshad ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 286,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "གྲུབ་པའི་སྒྲུབ་པར་བྱེད་པའི་སྐྱོན་བསྟན་པ་མེད་པ", "english": "without pointing out or explaining the fault in the proof established by the Sāṃkhya", "problem": "The source names the fault of proving what is already proven (siddhasādhana). A turns it into 'the proof established by the Sāṃkhya', which loses the technical fault the Naiyāyika is blamed for not raising.", "severity": "moderate" },
+          { "source": "གྲངས་ཅན་ལ་མ་གྲུབ་པའི་སྐྱོན་གྱི་རྣམ་པ་འདི་ཉིད་ཀྱི་རང་བཞིན་དང་འགྱུར་བའི་མཚན་ཉིད་རྣམ་པར་གཞག་པའི་སྒོ་ནས", "english": "We spoke to the Sāṃkhya precisely through defining this nature of the fault of being unestablished and the characteristics of transformation", "problem": "Misparsed: the source says the opponent stated this very form of the asiddha fault by setting out the definitions of prakṛti and vikāra. A attaches 'nature' to the fault rather than to prakṛti.", "severity": "moderate" },
+          { "source": "འོ་ན་འདི་ལ་རྣ་བ་དང་རྐང་མིག་དང་", "english": "asking: \"Now, where are its ears, its feet, and its eyes?\"", "problem": "The page breaks off mid-sentence, but A finishes it with an invented 'where are' and a closed question.", "severity": "moderate", "class": "T5" },
+          { "source": "བར་སྐབས་སུ་ངོ་མཚར་བྱེད་དེ", "english": "temporarily creates an illusion", "problem": "ངོ་མཚར་བྱེད means 'performs a marvel/show', not 'creates an illusion'. A gives the reading in advance.", "severity": "minor" },
+          { "source": "དེའི་བཟློག་པའི་ཆོས་ཡིན་པའི་ཕྱིར", "english": "because it possesses contradictory properties", "problem": "A drops the 'its/that' (the property is contrary to manifestness), which leaves the reason vague.", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "གསལ་བ (throughout)", "english": "clarity", "problem": "Here གསལ་བ is the Sāṃkhya vyakta, 'the manifest' (as against prakṛti). B renders it 'clarity' throughout, so the argument about the manifest world sharing a nature with pleasure and prakṛti is hard to recognise.", "severity": "moderate" },
+          { "source": "གསལ་བ་འདི་དང་རང་བཞིན་གཅིག་པ་ཡིན་ནོ", "english": "the claim that clarity and this nature are one and the same", "problem": "Here རང་བཞིན is prakṛti (primordial nature), and 'this' belongs to the manifest. B blurs the thesis being refuted.", "severity": "moderate" },
+          { "source": "<summary>", "english": "using logical arguments from the Nyaya perspective", "problem": "The page also faults the Naiyāyika. It is not argued from the Nyāya side, so the summary misstates the stance.", "severity": "minor" },
+          { "source": "བདེ་བ་དང་གསལ་བ་...འམ།", "english": "Pleasure and clarity are not of the same nature", "problem": "The alternative 'or' (འམ) that introduces the second argument is dropped.", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "same",
+        "prefer_reason": "A has the right Sāṃkhya terms (manifest, primordial matter) but misreads the siddhasādhana fault and the opponent's statement, and invents the end of the broken sentence. B gets the structure of the debate right but mistranslates vyakta as 'clarity' throughout. Neither has a serious error, and their moderate errors roughly balance.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge folio. The OCR follows the print closely as far as I can read it at this resolution. Both English versions are usable, with only moderate terminology or parsing slips and nothing a reader would be misled by on sight."
+  }
+]

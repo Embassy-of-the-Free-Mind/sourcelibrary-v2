@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A66493",
+  "edition": "Diatribae duæ medico-philosophicæ quarum prior agit de fermentatione, sive, de motu intestino particularum in quovis corpore : altera de febribus, sive, de motu earundem in sanguine animalium : his ac — Wing W2832; ESTC R38656 (1659)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A66493",
+  "origin": "library",
+  "book_id": "69ac83ddf37088db519184d5",
+  "page_number": 52,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 61991,
+    "to_char": 63811,
+    "overlap": 0.467,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-1)",
+    "at": "2026-10-06T10:13:11.615684+00:00",
+    "note": "Matches 'tum cloaca sive sentina' to '...sanguis aut'; only padding words at start; adjacent page strip at right.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      51,
+      52,
+      53
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.771Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "e6aff49b34973eb0e9c99652bf5dff93b819462804b4228ac2090108d2617a9f",
+  "unit": {
+    "chars": 1820
+  }
+}

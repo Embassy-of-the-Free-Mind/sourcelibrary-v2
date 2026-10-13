@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [lzh, sa, pi]
+scripts: []
+canons: [chinese-buddhist, chinese-classics, sanskrit, pali]
+n_books: 111
+n_pages: 138
+verdict: "Gemini 3.8 Flash via the CLI is the route for Chinese, Sanskrit and Pali and clears the good-enough bar (fidelity 4.31 / 4.39 / 4.67); Sonnet is never shown better."
+status: undecided
+decision: "Route recommended in the #6331 decision table (PR #6350); running the canon gap on the CLI waits on the subscription-plan decision"
+superseded_by: null
+issue: 6331
+---
 ## 2026-10-08 · Which subscription route translates the typed Chinese canon, Sanskrit and Pali well enough to run the canon gap on? (#6331 tests 2 and 5)
 
 PRIOR ART: `2026-10-08-canon-reference-set-6331.md` (#6339, the 138-unit reference set this judges),

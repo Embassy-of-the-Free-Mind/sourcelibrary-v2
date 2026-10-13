@@ -10,7 +10,7 @@ export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'Browse by Subject | Source Library',
-  description: 'Explore the illustrations in Source Library books by what they show — plants and herbals, geometry, astronomy, alchemy, emblems, anatomy, music, maps and more.',
+  description: 'Explore the illustrations in Source Library books by what they show: plants and herbals, geometry, astronomy, alchemy, emblems, anatomy, music, maps and more.',
   alternates: { canonical: '/browse/subjects' },
 };
 

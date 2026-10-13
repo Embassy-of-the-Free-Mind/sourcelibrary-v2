@@ -297,7 +297,7 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           const total = squares(t.pages_scanned);
           const tr = Math.min(squares(t.pages_translated), total);
           const tx = Math.min(Math.max(squares(t.pages_transcribed) - tr, 0), total - tr);
-          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '—');
+          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '–');
           return (
             <div key={t.id} className="py-5 md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-6">
               <div className="font-body text-sm mb-3 md:mb-0">
@@ -492,7 +492,7 @@ export type Improvement = {
   status: string;
   /** what was measured on what, against what, by whom, when: the row's provenance in one line */
   basis: string;
-  /** the write-up the numbers are copied from (a file pinned to a commit, or the issue comment that reports them) */
+  /** the write-up the numbers are copied from: its link in the experiment index (#5939) */
   source: string;
 };
 

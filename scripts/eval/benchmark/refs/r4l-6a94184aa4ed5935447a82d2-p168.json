@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/drama",
+  "edition": "Dramata sacra: comoediae atque tragoediae aliquot e Veteri Testamento desumptae. Tomus 1. — Basel: Johannes Oporinus, 1547.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a94184aa4ed5935447a82d2",
+  "page_number": 168,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 143020,
+    "to_char": 144257,
+    "overlap": 0.397,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-3)",
+    "at": "2026-10-06T10:05:28.759Z",
+    "note": "ref has 1.5 lines of the previous page and then matches the full page; e-text normalises u/v and ae",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      168,
+      169,
+      170
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.534Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "5ea677dde75f0289f6c9ef249c98462b86d77cc02ac0e2b676ddd1d423918b65",
+  "unit": {
+    "chars": 1237
+  }
+}

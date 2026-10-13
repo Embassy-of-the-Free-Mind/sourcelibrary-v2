@@ -1,0 +1,2188 @@
+{
+  "latin-r4-acc": {
+    "stratum": "latin-r4-acc",
+    "issue": 5924,
+    "date": "2026-10-06",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 290,
+    "n_with_ref": 238,
+    "ref_mismatch": [
+      "r4l-6a43001a4e06bc233ecf5ef6-p12"
+    ],
+    "textless": [
+      "r4l-69b65bc918b87551bfd0f087-p131"
+    ],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "calamari-gt4histocr-bin": {
+        "pages_run": 290,
+        "empty": 4,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.106,
+          "mean_cer": 0.133,
+          "catastrophic": 6,
+          "median_gap": 0,
+          "median_seq": 0.74,
+          "refused": 0,
+          "n_answered": 238,
+          "median_cer_answered": 0.106,
+          "mean_cer_answered": 0.133,
+          "catastrophic_answered": 6
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.103,
+          "catastrophic": 11,
+          "median_gap": 0,
+          "median_bow": 0.669,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.103,
+          "mean_cer": 0.272,
+          "mean_cer_answered": 0.272
+        },
+        "invention": {
+          "median": 0.093,
+          "mean": 0.143,
+          "n_engines": 10,
+          "ref_median": 0.238,
+          "ref_mean": 0.254
+        },
+        "paired_vs_ref": {
+          "n": 236,
+          "excluded_refused": 2,
+          "wins": 137,
+          "losses": 95,
+          "ties": 4,
+          "median_delta_cer": 0.005,
+          "p_sign": 0.007,
+          "invention_wins": 134,
+          "invention_losses": 100
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p882",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434784201f98f53c3eff29-p4",
+            "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+            "year": 1568,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a94390b45a4780cb83dba46-p4",
+            "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ ",
+            "year": 1661,
+            "cer": 0.988,
+            "gap": 0,
+            "invention": 0.875,
+            "has_ref": false,
+            "unsupported": [
+              "rrrm",
+              "ruvo",
+              "mrrm",
+              "mnnn",
+              "opvy",
+              "uurn",
+              "dirser"
+            ]
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 0.943,
+            "gap": 0.016,
+            "invention": 0.276,
+            "has_ref": false,
+            "unsupported": [
+              "priorissced",
+              "atiu",
+              "vedos",
+              "vetuu",
+              "zonra",
+              "iieẽ",
+              "3eeũ",
+              "semletrum"
+            ]
+          },
+          {
+            "slug": "r4l-6a48e2591e36bf8015227d14-p2",
+            "title": "Appendix ad Catalogum plantarum circa Cantabrigiam nascentium: continens addenda et emendanda.",
+            "year": 1663,
+            "cer": 0.918,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "flash+cal": {
+        "pages_run": 290,
+        "empty": 0,
+        "refused": 3,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.087,
+          "mean_cer": 0.114,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.816,
+          "refused": 3,
+          "n_answered": 235,
+          "median_cer_answered": 0.086,
+          "mean_cer_answered": 0.102,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.047,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_bow": 0.824,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.047,
+          "mean_cer": 0.167,
+          "mean_cer_answered": 0.167
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 10,
+          "ref_median": 0.168,
+          "ref_mean": 0.174
+        },
+        "paired_vs_ref": {
+          "n": 234,
+          "excluded_refused": 4,
+          "wins": 194,
+          "losses": 31,
+          "ties": 9,
+          "median_delta_cer": 0.027,
+          "p_sign": 0,
+          "invention_wins": 203,
+          "invention_losses": 25
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a434784201f98f53c3eff29-p4",
+            "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+            "year": 1568,
+            "cer": 1.797,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 1.522,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p107",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p108",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6ba018566c8381462e8fa-p477",
+            "title": "Philosophiæ Naturalis Principia Mathematica",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 290,
+        "empty": 0,
+        "refused": 3,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.091,
+          "mean_cer": 0.117,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.807,
+          "refused": 3,
+          "n_answered": 235,
+          "median_cer_answered": 0.09,
+          "mean_cer_answered": 0.106,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.045,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_bow": 0.824,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.045,
+          "mean_cer": 0.165,
+          "mean_cer_answered": 0.165
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.003,
+          "n_engines": 10,
+          "ref_median": 0.174,
+          "ref_mean": 0.193
+        },
+        "paired_vs_ref": {
+          "n": 234,
+          "excluded_refused": 4,
+          "wins": 178,
+          "losses": 41,
+          "ties": 15,
+          "median_delta_cer": 0.016,
+          "p_sign": 0,
+          "invention_wins": 190,
+          "invention_losses": 33
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a434784201f98f53c3eff29-p4",
+            "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+            "year": 1568,
+            "cer": 1.797,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 1.522,
+            "gap": 0.033,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p107",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p108",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6ba018566c8381462e8fa-p477",
+            "title": "Philosophiæ Naturalis Principia Mathematica",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 290,
+        "empty": 1,
+        "refused": 2,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.109,
+          "mean_cer": 0.133,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.704,
+          "refused": 2,
+          "n_answered": 236,
+          "median_cer_answered": 0.109,
+          "mean_cer_answered": 0.126,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 10,
+          "ref_median": 0.3,
+          "ref_mean": 0.287
+        },
+        "worst": [
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p108",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6ba018566c8381462e8fa-p478",
+            "title": "Philosophiæ Naturalis Principia Mathematica",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b69ef5080b19f98fd0f8ca-p115",
+            "title": "Historiæ Naturalis De Auibus Libri VI : Cum æneis figuris",
+            "year": 1650,
+            "cer": 0.733,
+            "gap": 0.338,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434778201f98f53c3efe9d-p91",
+            "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+            "year": 1688,
+            "cer": 0.604,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b694f8080b19f98fcee93f-p36",
+            "title": "De Natvra Populorum, Ejvsqve Pro Loci Positu, ac temporis decursu variatione : Et insimul etiam, De Linguarum Ortv Atqve",
+            "year": 1632,
+            "cer": 0.359,
+            "gap": 0.139,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 290,
+        "empty": 1,
+        "refused": 2,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.109,
+          "mean_cer": 0.133,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.704,
+          "refused": 2,
+          "n_answered": 236,
+          "median_cer_answered": 0.109,
+          "mean_cer_answered": 0.126,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0,
+          "mean_cer": 0,
+          "mean_cer_answered": 0
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 10,
+          "ref_median": 0.3,
+          "ref_mean": 0.287
+        },
+        "paired_vs_ref": {
+          "n": 236,
+          "excluded_refused": 2,
+          "wins": 0,
+          "losses": 0,
+          "ties": 236,
+          "median_delta_cer": 0,
+          "p_sign": 1,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p108",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6ba018566c8381462e8fa-p478",
+            "title": "Philosophiæ Naturalis Principia Mathematica",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b69ef5080b19f98fd0f8ca-p115",
+            "title": "Historiæ Naturalis De Auibus Libri VI : Cum æneis figuris",
+            "year": 1650,
+            "cer": 0.733,
+            "gap": 0.338,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434778201f98f53c3efe9d-p91",
+            "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+            "year": 1688,
+            "cer": 0.604,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b694f8080b19f98fcee93f-p36",
+            "title": "De Natvra Populorum, Ejvsqve Pro Loci Positu, ac temporis decursu variatione : Et insimul etiam, De Linguarum Ortv Atqve",
+            "year": 1632,
+            "cer": 0.359,
+            "gap": 0.139,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-pro-preview": {
+        "pages_run": 95,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 77,
+          "median_cer": 0.102,
+          "mean_cer": 0.124,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.762,
+          "refused": 0,
+          "n_answered": 77,
+          "median_cer_answered": 0.102,
+          "mean_cer_answered": 0.124,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 18,
+          "median_cer": 0.077,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_bow": 0.829,
+          "refused": 0,
+          "n_answered": 18,
+          "median_cer_answered": 0.077,
+          "mean_cer": 0.271,
+          "mean_cer_answered": 0.271
+        },
+        "invention": {
+          "median": 0.007,
+          "mean": 0.029,
+          "n_engines": 10,
+          "ref_median": 0.225,
+          "ref_mean": 0.237
+        },
+        "paired_vs_ref": {
+          "n": 77,
+          "excluded_refused": 0,
+          "wins": 54,
+          "losses": 21,
+          "ties": 2,
+          "median_delta_cer": 0.021,
+          "p_sign": 0,
+          "invention_wins": 57,
+          "invention_losses": 15
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a434784201f98f53c3eff29-p4",
+            "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+            "year": 1568,
+            "cer": 1.859,
+            "gap": 0,
+            "invention": 0.625,
+            "has_ref": false,
+            "unsupported": [
+              "scriptvras",
+              "continens",
+              "qvaedam",
+              "formatis",
+              "argumentibus",
+              "conditis",
+              "ioachimo",
+              "camerario"
+            ]
+          },
+          {
+            "slug": "r4l-6a26beae0e247ebad6de8612-p210",
+            "title": "Epistolarvm Philosophicarvm Medicinalivm, Ac Chymicarvm à Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Volv",
+            "year": 1598,
+            "cer": 0.782,
+            "gap": 0.335,
+            "invention": 0.109,
+            "has_ref": true,
+            "unsupported": [
+              "prescriterquam",
+              "ptione",
+              "exiquisite",
+              "stimem",
+              "pericu",
+              "prohilo",
+              "equam",
+              "roprædicant"
+            ]
+          },
+          {
+            "slug": "r4l-6a26beae0e247ebad6de8612-p209",
+            "title": "Epistolarvm Philosophicarvm Medicinalivm, Ac Chymicarvm à Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Volv",
+            "year": 1598,
+            "cer": 0.77,
+            "gap": 0.322,
+            "invention": 0.098,
+            "has_ref": false,
+            "unsupported": [
+              "tumofrustrabitur",
+              "necesego",
+              "sario",
+              "decupio",
+              "monstrare",
+              "symptohabeas",
+              "matibus",
+              "iudicaquidem"
+            ]
+          },
+          {
+            "slug": "r4l-69b64a0b18b87551bfc6261e-p29",
+            "title": "Conradi Celtis Protucii, primi in Germania poetae coronati, libri odarum quatuor : cum epodo, &amp; saeculari carmine : ",
+            "year": 1513,
+            "cer": 0.682,
+            "gap": 0.28,
+            "invention": 0.162,
+            "has_ref": false,
+            "unsupported": [
+              "syllius",
+              "horatius",
+              "comi",
+              "saltan",
+              "riman",
+              "pimi"
+            ]
+          },
+          {
+            "slug": "r4l-6a503c772f6539fb38937d92-p50",
+            "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa t",
+            "year": 1590,
+            "cer": 0.406,
+            "gap": 0.083,
+            "invention": 0.24,
+            "has_ref": false,
+            "unsupported": [
+              "ofgere",
+              "titul",
+              "nitur",
+              "nosc",
+              "dicii",
+              "pret",
+              "nisi",
+              "dign"
+            ]
+          }
+        ]
+      },
+      "gemini-3.8-flash": {
+        "pages_run": 290,
+        "empty": 4,
+        "refused": 2,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.089,
+          "mean_cer": 0.115,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.805,
+          "refused": 2,
+          "n_answered": 236,
+          "median_cer_answered": 0.089,
+          "mean_cer_answered": 0.107,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.049,
+          "catastrophic": 5,
+          "median_gap": 0,
+          "median_bow": 0.81,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.049,
+          "mean_cer": 0.185,
+          "mean_cer_answered": 0.185
+        },
+        "invention": {
+          "median": 0.009,
+          "mean": 0.028,
+          "n_engines": 10,
+          "ref_median": 0.176,
+          "ref_mean": 0.193
+        },
+        "paired_vs_ref": {
+          "n": 235,
+          "excluded_refused": 3,
+          "wins": 181,
+          "losses": 41,
+          "ties": 13,
+          "median_delta_cer": 0.025,
+          "p_sign": 0,
+          "invention_wins": 182,
+          "invention_losses": 37
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 1.458,
+            "gap": 0.028,
+            "invention": 0.447,
+            "has_ref": false,
+            "unsupported": [
+              "stulucoxxi",
+              "xxvii",
+              "lepauistxxii",
+              "gardellacaxiii",
+              "lusomouisxii",
+              "xiiii",
+              "vetussalu",
+              "annonelia"
+            ]
+          },
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p108",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6ba018566c8381462e8fa-p477",
+            "title": "Philosophiæ Naturalis Principia Mathematica",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p882",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a42d56d1894955eb725e97f-p48",
+            "title": "Conclave Ignati: Sive Eius in Nuperis Inferni Comitiis Inthronisatio : Ubi varia De Jesuitarum Indole, De novo inferno c",
+            "year": 1611,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "glm+longs": {
+        "pages_run": 290,
+        "empty": 1,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 3,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.088,
+          "mean_cer": 0.116,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_seq": 0.789,
+          "refused": 0,
+          "n_answered": 238,
+          "median_cer_answered": 0.088,
+          "mean_cer_answered": 0.116,
+          "catastrophic_answered": 3
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.069,
+          "catastrophic": 7,
+          "median_gap": 0,
+          "median_bow": 0.73,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.069,
+          "mean_cer": 0.282,
+          "mean_cer_answered": 0.282
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 10,
+          "ref_median": 0.196,
+          "ref_mean": 0.204
+        },
+        "paired_vs_ref": {
+          "n": 236,
+          "excluded_refused": 2,
+          "wins": 171,
+          "losses": 59,
+          "ties": 6,
+          "median_delta_cer": 0.024,
+          "p_sign": 0,
+          "invention_wins": 164,
+          "invention_losses": 71
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a94390b45a4780cb83dba46-p4",
+            "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ ",
+            "year": 1661,
+            "cer": 4.234,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434778201f98f53c3efe9d-p93",
+            "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+            "year": 1688,
+            "cer": 3.585,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p882",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 2.306,
+            "gap": 0.178,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434784201f98f53c3eff29-p4",
+            "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+            "year": 1568,
+            "cer": 1.047,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 0.937,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "glm-ocr": {
+        "pages_run": 290,
+        "empty": 1,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 3,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.091,
+          "mean_cer": 0.117,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_seq": 0.783,
+          "refused": 0,
+          "n_answered": 238,
+          "median_cer_answered": 0.091,
+          "mean_cer_answered": 0.117,
+          "catastrophic_answered": 3
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.068,
+          "catastrophic": 7,
+          "median_gap": 0,
+          "median_bow": 0.74,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.068,
+          "mean_cer": 0.282,
+          "mean_cer_answered": 0.282
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.004,
+          "n_engines": 10,
+          "ref_median": 0.203,
+          "ref_mean": 0.212
+        },
+        "paired_vs_ref": {
+          "n": 236,
+          "excluded_refused": 2,
+          "wins": 169,
+          "losses": 64,
+          "ties": 3,
+          "median_delta_cer": 0.022,
+          "p_sign": 0,
+          "invention_wins": 160,
+          "invention_losses": 73
+        },
+        "worst": [
+          {
+            "slug": "r4l-6a94390b45a4780cb83dba46-p4",
+            "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ ",
+            "year": 1661,
+            "cer": 4.234,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434778201f98f53c3efe9d-p93",
+            "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+            "year": 1688,
+            "cer": 3.586,
+            "gap": 0,
+            "invention": 0.01,
+            "has_ref": true,
+            "unsupported": [
+              "chrysoftomus"
+            ]
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p882",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 2.306,
+            "gap": 0.178,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a434784201f98f53c3eff29-p4",
+            "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+            "year": 1568,
+            "cer": 1.047,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+            "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+            "year": 1682,
+            "cer": 0.937,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "lite+longs": {
+        "pages_run": 290,
+        "empty": 1,
+        "refused": 2,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 238,
+          "median_cer": 0.089,
+          "mean_cer": 0.114,
+          "catastrophic": 4,
+          "median_gap": 0,
+          "median_seq": 0.803,
+          "refused": 2,
+          "n_answered": 236,
+          "median_cer_answered": 0.088,
+          "mean_cer_answered": 0.107,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 51,
+          "median_cer": 0.01,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.95,
+          "refused": 0,
+          "n_answered": 51,
+          "median_cer_answered": 0.01,
+          "mean_cer": 0.017,
+          "mean_cer_answered": 0.017
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.001,
+          "n_engines": 10,
+          "ref_median": 0.176,
+          "ref_mean": 0.189
+        },
+        "paired_vs_ref": {
+          "n": 236,
+          "excluded_refused": 2,
+          "wins": 201,
+          "losses": 5,
+          "ties": 30,
+          "median_delta_cer": 0.022,
+          "p_sign": 0,
+          "invention_wins": 194,
+          "invention_losses": 8
+        },
+        "worst": [
+          {
+            "slug": "r4l-69b6b9618566c8381462b415-p108",
+            "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b6ba018566c8381462e8fa-p478",
+            "title": "Philosophiæ Naturalis Principia Mathematica",
+            "year": 1687,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b69ef5080b19f98fd0f8ca-p115",
+            "title": "Historiæ Naturalis De Auibus Libri VI : Cum æneis figuris",
+            "year": 1650,
+            "cer": 0.732,
+            "gap": 0.361,
+            "invention": 0.005,
+            "has_ref": true,
+            "unsupported": [
+              "supelocus",
+              "desinebat"
+            ]
+          },
+          {
+            "slug": "r4l-6a434778201f98f53c3efe9d-p91",
+            "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+            "year": 1688,
+            "cer": 0.558,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "r4l-69b694f8080b19f98fcee93f-p36",
+            "title": "De Natvra Populorum, Ejvsqve Pro Loci Positu, ac temporis decursu variatione : Et insimul etiam, De Linguarum Ortv Atqve",
+            "year": 1632,
+            "cer": 0.359,
+            "gap": 0.15,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    }
+  },
+  "latin-r4-pop": {
+    "stratum": "latin-r4-pop",
+    "issue": 5924,
+    "date": "2026-10-06",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 191,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [
+      "r4p-6a4383af57a09c2c0fcbe0fd-p618",
+      "r4p-6a4b1d687622bb5aba12bd8e-p6"
+    ],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "calamari-gt4histocr-bin": {
+        "pages_run": 191,
+        "empty": 8,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.085,
+          "catastrophic": 16,
+          "median_gap": 0.003,
+          "median_bow": 0.67,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.085,
+          "mean_cer": 0.171,
+          "mean_cer_answered": 0.171
+        },
+        "invention": {
+          "median": 0.163,
+          "mean": 0.21,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-69b68ae453f0f937bfd588a4-p3",
+            "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 Martii anni 1620. ...",
+            "year": 1620,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a4383af57a09c2c0fcbe0fd-p619",
+            "title": "Opera Omnia Argumentis, Explicationibus, et Notis illustrata , A Joanne Ludovico de la Cerda Toletano. E Societate Jesu",
+            "year": 1647,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9091d50f0bff48dccbce1f-p3",
+            "title": "Oratio ad Fridericum III Imperatorem et Maximilianum I Regem Romanorum",
+            "year": 1486,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a495f2402fc7ff012c2664b-p32",
+            "title": "Oratio De Nobili Illa Quaestione, Utrum cum aliis tum vero maxime literarum cultoribus prosit peregrinatio? , conscripta",
+            "year": null,
+            "cer": 0.985,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9053e3dbce5358e41f69d3-p35",
+            "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+            "year": 1497,
+            "cer": 0.958,
+            "gap": 0.028,
+            "invention": 0.844,
+            "has_ref": false,
+            "unsupported": [
+              "vcau",
+              "noiü",
+              "nocunin",
+              "auun",
+              "eihea",
+              "agsi",
+              "mnbinr",
+              "alno"
+            ]
+          }
+        ]
+      },
+      "flash+cal": {
+        "pages_run": 191,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.05,
+          "catastrophic": 6,
+          "median_gap": 0,
+          "median_bow": 0.78,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.05,
+          "mean_cer": 0.338,
+          "mean_cer_answered": 0.338
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.001,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-6a4383af57a09c2c0fcbe0fd-p619",
+            "title": "Opera Omnia Argumentis, Explicationibus, et Notis illustrata , A Joanne Ludovico de la Cerda Toletano. E Societate Jesu",
+            "year": 1647,
+            "cer": 24.5,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9091d50f0bff48dccbce1f-p3",
+            "title": "Oratio ad Fridericum III Imperatorem et Maximilianum I Regem Romanorum",
+            "year": 1486,
+            "cer": 19.875,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b68ae453f0f937bfd588a4-p3",
+            "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 Martii anni 1620. ...",
+            "year": 1620,
+            "cer": 3.288,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a495f2402fc7ff012c2664b-p32",
+            "title": "Oratio De Nobili Illa Quaestione, Utrum cum aliis tum vero maxime literarum cultoribus prosit peregrinatio? , conscripta",
+            "year": null,
+            "cer": 2.091,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9053e3dbce5358e41f69d3-p35",
+            "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+            "year": 1497,
+            "cer": 0.969,
+            "gap": 0.042,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "pages_run": 191,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.049,
+          "catastrophic": 6,
+          "median_gap": 0,
+          "median_bow": 0.795,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.049,
+          "mean_cer": 0.335,
+          "mean_cer_answered": 0.335
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.002,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-6a4383af57a09c2c0fcbe0fd-p619",
+            "title": "Opera Omnia Argumentis, Explicationibus, et Notis illustrata , A Joanne Ludovico de la Cerda Toletano. E Societate Jesu",
+            "year": 1647,
+            "cer": 24.5,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9091d50f0bff48dccbce1f-p3",
+            "title": "Oratio ad Fridericum III Imperatorem et Maximilianum I Regem Romanorum",
+            "year": 1486,
+            "cer": 19.875,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b68ae453f0f937bfd588a4-p3",
+            "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 Martii anni 1620. ...",
+            "year": 1620,
+            "cer": 3.288,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a495f2402fc7ff012c2664b-p32",
+            "title": "Oratio De Nobili Illa Quaestione, Utrum cum aliis tum vero maxime literarum cultoribus prosit peregrinatio? , conscripta",
+            "year": null,
+            "cer": 2.091,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9053e3dbce5358e41f69d3-p35",
+            "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+            "year": 1497,
+            "cer": 0.969,
+            "gap": 0.04,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 191,
+        "empty": 5,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "r4p-69b51e48768235dc6598f1dd-p668",
+            "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+            "year": 1612,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b51e48768235dc6598f1dd-p669",
+            "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+            "year": 1612,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b51e48768235dc6598f1dd-p670",
+            "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+            "year": 1612,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b634431c1c21a37381eba2-p687",
+            "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam Thomae Aquinatis cum ",
+            "year": 1496,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b634431c1c21a37381eba2-p688",
+            "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam Thomae Aquinatis cum ",
+            "year": 1496,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite-b": {
+        "pages_run": 191,
+        "empty": 5,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 1,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0,
+          "mean_cer": 0,
+          "mean_cer_answered": 0
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-69b51e48768235dc6598f1dd-p668",
+            "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+            "year": 1612,
+            "cer": 0,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b51e48768235dc6598f1dd-p669",
+            "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+            "year": 1612,
+            "cer": 0,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b51e48768235dc6598f1dd-p670",
+            "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+            "year": 1612,
+            "cer": 0,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b634431c1c21a37381eba2-p687",
+            "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam Thomae Aquinatis cum ",
+            "year": 1496,
+            "cer": 0,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b634431c1c21a37381eba2-p688",
+            "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam Thomae Aquinatis cum ",
+            "year": 1496,
+            "cer": 0,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "gemini-3.1-pro-preview": {
+        "pages_run": 15,
+        "empty": 1,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 15,
+          "median_cer": 0.17,
+          "catastrophic": 2,
+          "median_gap": 0.002,
+          "median_bow": 0.608,
+          "refused": 0,
+          "n_answered": 15,
+          "median_cer_answered": 0.17,
+          "mean_cer": 0.259,
+          "mean_cer_answered": 0.259
+        },
+        "invention": {
+          "median": 0.097,
+          "mean": 0.167,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-6a9091d50f0bff48dccbce1f-p3",
+            "title": "Oratio ad Fridericum III Imperatorem et Maximilianum I Regem Romanorum",
+            "year": 1486,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9053e3dbce5358e41f69d3-p35",
+            "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+            "year": 1497,
+            "cer": 0.871,
+            "gap": 0.027,
+            "invention": 0.497,
+            "has_ref": false,
+            "unsupported": [
+              "cõtinuo",
+              "ignificat",
+              "bonũ",
+              "oxdant",
+              "aliqñqꝫ",
+              "rerũ",
+              "iudiciũ",
+              "absoluit"
+            ]
+          },
+          {
+            "slug": "r4p-69b634431c1c21a37381eba2-p688",
+            "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam Thomae Aquinatis cum ",
+            "year": 1496,
+            "cer": 0.399,
+            "gap": 0.029,
+            "invention": 0.328,
+            "has_ref": false,
+            "unsupported": [
+              "tans",
+              "ptem",
+              "totꝰ",
+              "aliqua",
+              "dimi",
+              "ttes",
+              "accipiať",
+              "falsa"
+            ]
+          },
+          {
+            "slug": "r4p-69b634431c1c21a37381eba2-p687",
+            "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam Thomae Aquinatis cum ",
+            "year": 1496,
+            "cer": 0.361,
+            "gap": 0.028,
+            "invention": 0.294,
+            "has_ref": false,
+            "unsupported": [
+              "aliqđ",
+              "sortꝰ",
+              "maior",
+              "accipiať",
+              "thegorematice",
+              "cathegorematice",
+              "capí",
+              "maiori"
+            ]
+          },
+          {
+            "slug": "r4p-6a9053e3dbce5358e41f69d3-p33",
+            "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+            "year": 1497,
+            "cer": 0.211,
+            "gap": 0.005,
+            "invention": 0.389,
+            "has_ref": false,
+            "unsupported": [
+              "patiãtur",
+              "extensionẽ",
+              "cerebrũ",
+              "ternaliter",
+              "nicolus",
+              "cõciliatoris",
+              "calidũ",
+              "sanguineũ"
+            ]
+          }
+        ]
+      },
+      "gemini-3.8-flash": {
+        "pages_run": 191,
+        "empty": 6,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.055,
+          "catastrophic": 9,
+          "median_gap": 0,
+          "median_bow": 0.799,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.055,
+          "mean_cer": 0.111,
+          "mean_cer_answered": 0.111
+        },
+        "invention": {
+          "median": 0.018,
+          "mean": 0.05,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-69b68ae453f0f937bfd588a4-p3",
+            "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 Martii anni 1620. ...",
+            "year": 1620,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a4383af57a09c2c0fcbe0fd-p619",
+            "title": "Opera Omnia Argumentis, Explicationibus, et Notis illustrata , A Joanne Ludovico de la Cerda Toletano. E Societate Jesu",
+            "year": 1647,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9091d50f0bff48dccbce1f-p3",
+            "title": "Oratio ad Fridericum III Imperatorem et Maximilianum I Regem Romanorum",
+            "year": 1486,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a9053e3dbce5358e41f69d3-p35",
+            "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+            "year": 1497,
+            "cer": 0.969,
+            "gap": 0.05,
+            "invention": 0.338,
+            "has_ref": false,
+            "unsupported": [
+              "posteriori",
+              "primũ",
+              "anteriori",
+              "pręternãliter",
+              "ōbie",
+              "ōbitur",
+              "extēdit",
+              "pinuitaēẽ"
+            ]
+          },
+          {
+            "slug": "r4p-6a90c0763822dc24e5402110-p346",
+            "title": "De militia Romana libri quinque: commentarius ad Polybium",
+            "year": 1598,
+            "cer": 0.853,
+            "gap": 0.333,
+            "invention": 0.165,
+            "has_ref": false,
+            "unsupported": [
+              "ἐκκλησίαν",
+              "παραστησάμενος",
+              "δόξαντάς",
+              "συνυπάρχῃ",
+              "μνήμης",
+              "δωρεῖται",
+              "καταβαλόντι",
+              "φιάλην"
+            ]
+          }
+        ]
+      },
+      "glm+longs": {
+        "pages_run": 191,
+        "empty": 3,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.073,
+          "catastrophic": 12,
+          "median_gap": 0,
+          "median_bow": 0.724,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.073,
+          "mean_cer": 0.149,
+          "mean_cer_answered": 0.149
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.001,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-6a90c0763822dc24e5402110-p346",
+            "title": "De militia Romana libri quinque: commentarius ad Polybium",
+            "year": 1598,
+            "cer": 2.379,
+            "gap": 0.005,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b6b38d96dc15d4a16da2aa-p35",
+            "title": "Dissertatio de Solomonis salute",
+            "year": 1677,
+            "cer": 1.494,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b6b38d96dc15d4a16da2aa-p34",
+            "title": "Dissertatio de Solomonis salute",
+            "year": 1677,
+            "cer": 1.345,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a42556edfbbb4d07aa506c7-p313",
+            "title": "Opera Omnia Anatomica Et Medica : Ex postrema recognitione, accessione quorundam librorum, qui lucem antea non viderant,",
+            "year": 1627,
+            "cer": 1.014,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b68ae453f0f937bfd588a4-p3",
+            "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 Martii anni 1620. ...",
+            "year": 1620,
+            "cer": 1,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "glm-ocr": {
+        "pages_run": 191,
+        "empty": 3,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.072,
+          "catastrophic": 11,
+          "median_gap": 0,
+          "median_bow": 0.73,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.072,
+          "mean_cer": 0.148,
+          "mean_cer_answered": 0.148
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.004,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-6a90c0763822dc24e5402110-p346",
+            "title": "De militia Romana libri quinque: commentarius ad Polybium",
+            "year": 1598,
+            "cer": 2.379,
+            "gap": 0.005,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b6b38d96dc15d4a16da2aa-p35",
+            "title": "Dissertatio de Solomonis salute",
+            "year": 1677,
+            "cer": 1.494,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b6b38d96dc15d4a16da2aa-p34",
+            "title": "Dissertatio de Solomonis salute",
+            "year": 1677,
+            "cer": 1.343,
+            "gap": 0,
+            "invention": 0.005,
+            "has_ref": false,
+            "unsupported": [
+              "adfistrici"
+            ]
+          },
+          {
+            "slug": "r4p-6a42556edfbbb4d07aa506c7-p313",
+            "title": "Opera Omnia Anatomica Et Medica : Ex postrema recognitione, accessione quorundam librorum, qui lucem antea non viderant,",
+            "year": 1627,
+            "cer": 1.014,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b68ae453f0f937bfd588a4-p3",
+            "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 Martii anni 1620. ...",
+            "year": 1620,
+            "cer": 1,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          }
+        ]
+      },
+      "lite+longs": {
+        "pages_run": 191,
+        "empty": 5,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 188,
+          "median_cer": 0.025,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_bow": 0.895,
+          "refused": 0,
+          "n_answered": 188,
+          "median_cer_answered": 0.025,
+          "mean_cer": 0.022,
+          "mean_cer_answered": 0.022
+        },
+        "invention": {
+          "median": 0,
+          "mean": 0.002,
+          "n_engines": 10,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "r4p-6a9070a5336010794b0d468c-p164",
+            "title": "De legibus XII tabularum tripartita commentatio",
+            "year": 1564,
+            "cer": 0.068,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-69b64ea118b87551bfc8ae85-p64",
+            "title": "Catechismus, hoc est brevis et pia explicatio Decalogi, Symboli Apostolici, Orationis Dominice ac Sacramentorum in grati",
+            "year": 1557,
+            "cer": 0.059,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a90e31743335ae0648762ff-p30",
+            "title": "Articuli, qui nostrae partis nomine exhibendi fuerant in concilio mantuae, vel ubicunque illud futurum esset: et quid ve",
+            "year": 1579,
+            "cer": 0.057,
+            "gap": 0,
+            "invention": 0.009,
+            "has_ref": false,
+            "unsupported": [
+              "firmisfime"
+            ]
+          },
+          {
+            "slug": "r4p-6a90e31743335ae0648762ff-p28",
+            "title": "Articuli, qui nostrae partis nomine exhibendi fuerant in concilio mantuae, vel ubicunque illud futurum esset: et quid ve",
+            "year": 1579,
+            "cer": 0.056,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "r4p-6a909b7ab7feee6e9c42a728-p227",
+            "title": "Disputationes. In quibus primum ex professo monomachia <quam singulare certamen Latini, recentiores duellum vocant> phil",
+            "year": 1562,
+            "cer": 0.054,
+            "gap": 0,
+            "invention": 0.003,
+            "has_ref": false,
+            "unsupported": [
+              "postmodum"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A50530",
+  "edition": "Dissertationum ecclesiasticarum triga De sanctitate relativa De veneratione sacra, De sortitione & alea : quibus accednnt [sic] fragmenta sacra / a Josepho Medo ... — Wing M1599; ESTC R15135 (1653)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A50530",
+  "origin": "library",
+  "book_id": "6a42777528e9db2e39c1ece8",
+  "page_number": 28,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 18499,
+    "to_char": 19983,
+    "overlap": 0.506,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "ref matches; Greek phrase (~1.5 lines) missing from ref",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      26,
+      27,
+      28
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.566Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "ba3404a145a036d8dcca0299a8eb6fccbf20bade93fc8c32c43d776184fbfa8c",
+  "unit": {
+    "chars": 1484
+  }
+}

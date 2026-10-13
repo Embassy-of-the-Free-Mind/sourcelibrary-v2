@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 2
+n_pages: 57
+verdict: "Checking the source for a repeat across the seam releases all 57 refused Tibetan refrain pages (57 to 0); on a 1,000-book sample 10 of 229 duplicate flags are released, all real source repeats."
+status: adopted
+decision: "sourceRepeatsAcrossBoundary added to block-drift.mjs leaf-drift guard (PR #5306)"
+superseded_by: null
+issue: [5275, 5021]
+---
 ## 2026-09-30 — Duplicate-run guard grounded in the source (#5275): the 57 refrain pages the per-leaf guard refused go 57 → 0, the narrative book and the #5021 fixtures are untouched, 10 of 229 page-level duplicate flags on a 1,000-book mirror sample are released, all of them the source repeating itself
 
 **Why:** the #5260 re-pilot (2026-09-29) refused 57 of 168 seam pages of the canonical Tibetan pilot

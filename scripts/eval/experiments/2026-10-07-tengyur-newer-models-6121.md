@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged_vs_reference, judged]
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 58
+verdict: "gemini-3.8-flash (+0.39) and Opus (+0.64) beat the stored Tengyur English on 58 reference sides and pass the rule on both texts; gemini-3.5-flash does not (-0.01)."
+status: undecided
+decision: "Re-translating Pramana + Madhyamaka with G38 is pending Derek; the CLI run's apply gate stopped it, nothing written (#6361)"
+superseded_by: null
+issue: [6121, 6182, 6361]
+---
 ## 2026-10-07 · Tengyur weak sections, round 2: do newer models (Gemini 3.8 / 3.5 Flash, Opus) fix them? (#6121)
 <!-- PRIOR ART: 2026-10-07-tengyur-weak-section-levers-6121.md (round 1: same sample, same aligned references, same harness; context and Pro tested, no lever adopted, reviewer gate failed). Round 2 reuses all of it and changes only the arms. -->
 

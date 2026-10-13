@@ -295,7 +295,7 @@ async function page(r, level) {
       : 'Newest production build is READY and production is not behind main.';
   const res = await fetch(NTFY_TOPIC, {
     method: 'POST',
-    headers: { Title: titles[level], Priority: level === 'ok' ? 'default' : level === 'fail' ? 'urgent' : 'high', Tags: 'rocket' },
+    headers: { Title: titles[level], Priority: level === 'ok' ? 'low' : level === 'fail' ? 'urgent' : 'high', Tags: 'rocket' },
     body, signal: AbortSignal.timeout(15_000),
   });
   if (!res.ok) throw new Error(`ntfy HTTP ${res.status}`);

@@ -1,0 +1,32 @@
+{
+ "issue": 5660,
+ "lane": "bo",
+ "tag": "gate0-bo",
+ "shard": "0",
+ "pages_judged": 5718,
+ "served": 3634,
+ "classes": {
+  "serve:gained": 3625,
+  "reject:validity-drop": 1348,
+  "reject:duplication": 734,
+  "serve:same-lines": 9,
+  "reject:loop": 2
+ },
+ "accuracy": {
+  "measure": "accuracy",
+  "ref": "Derge Kangyur e-text (kanjur_align NW syllable identity)",
+  "n_books": 33,
+  "median_identity": 0.9535,
+  "iqr": [
+   0.9176,
+   0.9791
+  ],
+  "ge_0_9": 27,
+  "shuffle_floor_median": 0.2817,
+  "earlier": "0.947 manuscripts (#4523, 100 books), 0.955 woodblock canary (#5660, 30 books)"
+ },
+ "foreign_script_raw": {
+  "latin": 261
+ },
+ "eye_packet": 10
+}

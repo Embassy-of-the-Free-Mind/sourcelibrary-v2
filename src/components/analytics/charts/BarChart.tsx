@@ -8,6 +8,12 @@ interface BarChartProps {
   height?: number;
   color?: string;
   yLabel?: (v: number) => string;
+  /** Format an x value for the axis and tooltip (defaults to the raw value). */
+  xLabel?: (v: string) => string;
+  /** Print each bar's value above it when there is room (≤ 40 bars). */
+  showValues?: boolean;
+  /** Draw the last bar faded: a bucket still filling (today, this hour). */
+  partialLast?: boolean;
 }
 
 /**
@@ -19,10 +25,14 @@ export function BarChart({
   height = 200,
   color = 'var(--accent-violet)',
   yLabel = compactNumber,
+  xLabel = (v: string) => v,
+  showValues = false,
+  partialLast = false,
 }: BarChartProps) {
   if (data.length === 0) return null;
 
-  const margin = { top: 8, right: 12, bottom: 28, left: 48 };
+  const labelValues = showValues && data.length <= 40;
+  const margin = { top: labelValues ? 18 : 8, right: 12, bottom: 28, left: 48 };
   const w = width - margin.left - margin.right;
   const h = height - margin.top - margin.bottom;
 
@@ -53,8 +63,14 @@ export function BarChart({
         {data.map((d, i) => {
           const x = (i / data.length) * w + gap / 2;
           const barH = h - yScale(d.y);
+          const partial = partialLast && i === data.length - 1;
           return (
             <g key={i}>
+              {labelValues && (
+                <text x={x + barWidth / 2} y={yScale(d.y) - 4} textAnchor="middle" fontSize={9} fill="var(--text-muted)">
+                  {compactNumber(d.y)}
+                </text>
+              )}
               <rect
                 x={x}
                 y={yScale(d.y)}
@@ -62,9 +78,9 @@ export function BarChart({
                 height={Math.max(0, barH)}
                 rx={2}
                 fill={color}
-                opacity={0.8}
+                opacity={partial ? 0.35 : 0.8}
               >
-                <title>{`${d.x}: ${yLabel(d.y)}`}</title>
+                <title>{`${xLabel(d.x)}: ${d.y.toLocaleString('en-US')}${partial ? ' (so far)' : ''}`}</title>
               </rect>
             </g>
           );
@@ -81,7 +97,7 @@ export function BarChart({
               fontSize={10}
               fill="var(--text-muted)"
             >
-              {d.x}
+              {xLabel(d.x)}
             </text>
           ) : null
         )}

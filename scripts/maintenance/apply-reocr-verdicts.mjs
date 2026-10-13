@@ -106,7 +106,8 @@ function withLeafSeams(stem, text) {
   if (foreign.length) return { text, leaf: `foreign-tags:${foreign.slice(0, 3).join(',')}` };
   return { text: r.text, leaf: `marked:${r.seams.length}`, seams: r.seams, leafLines };
 }
-const ISSUE = 4523;
+// --issue: a later lane run with this writer names its own issue on the verdict and book_events (#5660 job gpu-backlog-5660)
+const ISSUE = Number(ARG('--issue', '4523'));
 const SWEEP = 'tibetan-reocr-4523';
 const BOOK_EVENT = 'tibetan_reocr_applied';
 

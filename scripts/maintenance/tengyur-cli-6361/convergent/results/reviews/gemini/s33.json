@@ -1,0 +1,39 @@
+[
+ {
+  "book_id": "6abed8c2896ea18127c8f75e",
+  "slot": 33,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཝེ (Derge Tengyur, vol. 189)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Derge Tengyur Pramāṇa (epistemology/logic) commentary addressing Buddhist theories of perception, determination, and exclusion (apoha).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 600,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "གྲུབ་པ་ཡིན་ནོ་ཞེ་ན། གྲུབ་པའི་མཐའ་སྨྲ་བས་མི་དམིགས་པ་",
+      "english": "Thus says the proponent of the philosophical tenet regarding non-observation…",
+      "problem": "Misinterprets the objection marker (zhe na) and the following agent (grub pa'i mtha' smra bas) as a concluding attribution of the opponent's objection rather than introducing the Siddhāntin's rebuttal continuing onto the next leaf.",
+      "severity": "moderate",
+      "class": "T8",
+      "reversal": false
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B accurately preserves the dialectical structure (distinguishing the opponent's objection from the Siddhāntin's reply) and uses more precise philosophical terminology.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A well-preserved woodblock folio from the Derge Tengyur Pramāṇa section with completely accurate OCR and an excellent translation B."
+ }
+]

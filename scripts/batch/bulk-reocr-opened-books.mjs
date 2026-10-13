@@ -208,6 +208,7 @@ async function run() {
     // 6. Create parent batch_job record
     const parentJobId = nanoid();
     await db.collection('batch_jobs').insertOne({
+      submitted_by: 'scripts/batch/bulk-reocr-opened-books.mjs',
       id: parentJobId,
       type: 'ocr',
       book_id: book.id,
@@ -275,6 +276,7 @@ async function run() {
 
         // Create child batch_job record
         await db.collection('batch_jobs').insertOne({
+          submitted_by: 'scripts/batch/bulk-reocr-opened-books.mjs',
           id: childJobId,
           parent_job_id: parentJobId,
           job_name: batchJob.name,

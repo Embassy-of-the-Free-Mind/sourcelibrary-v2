@@ -1,0 +1,963 @@
+{
+ "seed": 5942,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-notes-layer-5942/scripts/eval/results/notes-layer-2026-10/lite/records.jsonl",
+ "input_sha": "8f62246eb68e8ff5",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "698fb77b6b95eeda7d2d1eaf_00187": {
+    "donor": "69ade7946a6b945bbdfa2d0a_00091",
+    "donor_arm": "v13-plain",
+    "text": "**D. G.** And I would not grow weary of repeating it in every possible way, if I had to fear that you had not yet grasped it, and had not yet imprinted it upon yourself in an indelible manner. Can you say: I am conscious of external objects?\n\n**J.** By no means, if I take it precisely: for the seeing and feeling, etc., with which I encompass things, is not consciousness itself, but only that of which I am conscious first and most immediately. Strictly speaking, I could only say: I am conscious of my seeing or feeling of things.\n\n**D. G.** Well then, never again forget what you have now clearly understood. In all perception, you perceive merely your own state.\n\n---\n\nBut I will continue to speak your language, because it is the common one. You see, feel, hear\n\n<summary>The dialogue explores the subjective nature of perception, where the interlocutor acknowledges that direct consciousness is limited to one's own sensory states rather than external objects.</summary>\n<keywords>consciousness, perception, subjective experience, external objects, sensory states</keywords>"
+   },
+   "69b21d1a429e087c6f866ee7_00452": {
+    "donor": "69b21c6c429e087c6f8646f6_00223",
+    "donor_arm": "v13-a",
+    "text": "VIRGIN\n\nEUPHEMIUS: What birds do I see here?\nCATHARINA: That is the patriarch of the college. Do not withdraw; they have already finished drinking. Sit with me for a little while, and once he has departed, we shall converse in our usual manner.\nEUPHEMIUS: Come now, I will entreat you for what you previously refused me. Now that we are alone, tell me the whole story, for I would prefer to learn it from you.\nCATHARINA: Of all the many friends whom I thought I valued most, I now realize there was no one who gave me more prudent or mature advice than you, the youngest of them all.\nEUPHEMIUS: But how did you overcome the affection of your parents?\nCATHARINA: First, it was through the wicked urgings of monks and nuns. Then, my mother’s spirit was swayed by my own prayers and entreaties. My father could not be persuaded by any means. Finally, after all possible devices were employed, he was defeated and overwhelmed rather than truly consenting. It happened while they were drinking; they threatened a horrible and ruinous end if he refused his daughter to Christ.\nEUPHEMIUS: O, the wickedness of these fools! What happened next?\nCATHARINA: I was kept hidden at home for three days. In the meantime, several women from that college, whom they call <term>Conversae</term> <gloss>lay sisters or converts</gloss>, were always present. They added courage with their exhortations, urging me to persist in my holy purpose, and they carefully guarded against any of my female relatives or friends approaching me, for fear they might seem to change my mind. Meanwhile, my garments and other things pertaining to the celebration were being prepared.\nEUPHEMIUS: What was your state of mind during this time? Did you waver?\nCATHARINA: No, but I suffered something so horrific that I would rather die ten times over than endure it again.\nEUPHEMIUS: I beg you, what was that?\nCATHARINA: I cannot speak of it.\nEUPHEMIUS: What you tell me, you tell to your friend.\nCATHARINA: Do you promise silence?\nEUPHEMIUS: I would have guaranteed that even if you had not stipulated it. As if you did not know me yet.\n\n<summary>Catharina recounts to Euphemius the intense psychological and social pressure she endured from monks, nuns, and her own parents to force her into religious life, mentioning an traumatic secret event she cannot yet voice.</summary>\n<keywords>monasticism, parental pressure, conversion, religious coercion, Euphemius, Catharina</keywords>"
+   },
+   "69a6849d7ab725b59be41319_00173": {
+    "donor": "69aebfa4c337b1e6a4d582f3_00161",
+    "donor_arm": "v13-b",
+    "text": "BOOK\n\n<meta>continues from previous page: Et</meta>\n\nnow some call them <term>argutie</term> <gloss>witticisms</gloss>. I say, therefore, that in the first manner, which is that festive narration, no art is needed, because nature herself creates and forms men apt to narrate pleasantly, and gives them the face, the gestures, the voice, and the words appropriate to imitate that which they wish. As for the other type, that of witticisms, what can art do? Since that false statement must have been uttered and have hit the mark before it appears that the person saying it could have thought about it, otherwise it is cold and lacks goodness. Therefore, I estimate that it is all a work of wit and nature.\n\nThen M. Pietro Bembo replied to these words and said, The Signor Prefect does not deny you that which you say, namely that nature and wit do not have the primary roles, especially regarding invention, but it is certain that in the mind of everyone, even if the man is of the best wit he can be, good and bad concepts are born, and more and less, but judgment and art then polish and correct them, and make an election of the good and reject the bad. Therefore, leaving aside that which belongs to wit, declare to us that which consists in art, that is, the <term>facetie</term> <gloss>jokes/witty remarks</gloss> and <term>motti</term> <gloss>quips</gloss> that induce laughter, which ones are suitable for the Courtier and which are not, and in what time and manner they ought to be used, for this is what the Signor Prefect asks of you.\n\nThen M. Fede, also laughing, said, There is no one here among us to whom I do not yield in everything, and especially in being witty, except if perhaps the foolishness that often makes others laugh more than fine sayings might itself be accepted as jokes. And thus, turning to Count Lodovico and to M. Bernardo Bibiena, he said, Behold the masters of this.\n\n<summary>The interlocutors discuss the role of nature and art in the creation of humor, specifically distinguishing between spontaneous storytelling and sharp, quick-witted remarks. Pietro Bembo argues that while natural talent is essential, artistic judgment is necessary to refine and select the most appropriate witticisms for a courtier.</summary>\n<keywords>humor, courtly conduct, wit, art, nature, Pietro Bembo, Bernardo Bibiena, Lodovico da Canossa, facetiousness, judgment</keywords>"
+   }
+  },
+  "planted": {
+   "699062f5ef12272ffdc8e9d5_00505": {
+    "base_arm": "v13-a",
+    "text": "XIX\n\n<meta>continues from previous page: discusses the nature of God and the worship due to Him as established by the Hebrews versus the erroneous practices of those who venerate demons.</meta>\n\nHe warns of God and exhorts all everywhere to worship Him. But the unlearned and even the philosopher himself, who truly did not receive gifts from the Lord, nor did he possess a notion of the immortal Jove, not listening to both gods and divine men, rejected the gods entirely. However, they chose not only to harbor no hatred toward prohibited demons but even to revere them. While pretending to worship God, they do not perform the only things through which God is adored. For God, as the Father of all, needs nothing; but it is good for us when we adore Him through justice, chastity, and other virtues, making our very lives a prayer to Him through imitation and instruction from Him. For instruction cleanses the soul, and imitation makes the affection divine by acting toward Him. He correctly preached God as Father and said with what morals He should be worshipped. The prophetic books of the Hebrews are full of these precepts, for the life of the saints is either praised or blamed. But it was only among the Christians, or they are slandered as much as the demons—whom they suppose to be gods—desire. As if it were difficult for anyone to recall what shameful and disgraceful things were done in theaters and temples regarding the worship of gods, and to attend to what is read, said, and heard in churches, or what is offered to God, and from this to understand where there is a building up and where there is a ruin of morals. \n\nBut who said this to him or inspired him, if not a diabolical spirit, such a vain and fitting lie, that Christians would rather revere than hate the demons whom the Hebrews were forbidden to worship? But that God whom the wise men of the Hebrews worshipped, and whom we—along with the celestial holy angels and the virtues of God, whom we venerate and love as the most blessed citizens in this our mortal pilgrimage—worship, forbids in His law that He gave to His people, the Hebrews, that sacrifice be made to idols. And He spoke very menacingly, saying: \"He who sacrifices to gods shall be rooted out.\" And lest anyone think it was permitted to sacrifice to the worst demons and earthly spirits—whom he <note>the philosopher previously mentioned</note> calls mimes or lesser ones—because they were also called \"gods\" in the holy scriptures, not of the Hebrews\n\n<column-break/>\n\nbut of the nations, which the seventy translators clearly set down in the Psalm <note>Psalm 95:5 (Septuagint/Vulgate numbering 96:5): \"For all the gods of the nations are demons.\"</note>, saying: \"For all the gods of the nations are demons.\" Lest anyone think, therefore, that it was forbidden to sacrifice to these demons, but permitted to sacrifice to the celestial ones, or to all, or to some, He soon added: \"Except to the Lord alone,\" that is, except to the Lord only. Lest perhaps someone, because it says \"to the Lord alone,\" might believe that there is only one God to whom one must think sacrifice is to be offered. That this is to be understood in that way is easily found in the Greek scriptures. Therefore, the God of the Hebrews—to whom even this philosopher gives so great a testimony—gave the law to His Hebrew people, written in the Hebrew language, not obscure and unknown, but now spread among all nations, in which law it is written: \"He who sacrifices to gods shall be rooted out, except to the Lord only.\" What is the need in this His law and His prophets to seek out much on this matter? Indeed, there is no need to seek; for they are not hidden or rare, but manifest and frequent, and I could collect them and place them in this my disputation, by which it appears clearer than light that the true and supreme God wished sacrifice to be made to no one at all except to Himself alone. Behold this one thing, briefly, or rather grandly, menacingly, but truthfully spoken by that God whom their own most learned men preach: let it be heard, feared, and fulfilled, lest the destruction follow the disobedient. \"He who sacrifices to gods,\" He says, \"shall be rooted out, except to the Lord only.\" Not that He lacks anything, but because it is expedient for us that we should be His. For it is sung to Him in the holy scriptures of the Hebrews: \"I said to the Lord, You are my God, for You do not need my goods.\" And the most excellent and best sacrifice of Him is we ourselves. This is His city, the mystery of which we celebrate with our offerings, which are known to the faithful, as I have disputed in the preceding books. For the prophets of the Hebrews interpreted through oracles that the victims which the Jews offered in the shadow of what was to come were to cease, and that one sacrifice would be offered by the nations from the rising of the sun to its setting, as we now see happening.\n\n<summary>Augustine argues that the God of the Hebrews demands exclusive worship and rejects sacrifices to demons, contrasting biblical law with pagan practices and theater-based moral decay.</summary>\n<keywords>God, Hebrews, demons, sacrifice, idolatry, virtue, moral law, prophecy, worship, Christians</keywords>",
+    "op": "drop-negation",
+    "from": "is not",
+    "to": "is",
+    "at": 3153,
+    "before_context": "re is only one God to whom one must think sacrifice is to be offered. That this is not to be understood in that way is easily found in the Greek scriptures. Therefore",
+    "after_context": "re is only one God to whom one must think sacrifice is to be offered. That this is to be understood in that way is easily found in the Greek scriptures. Therefore"
+   },
+   "69de989b1b234a773e438e19_00234": {
+    "base_arm": "v13-b",
+    "text": "CHAPTER II.\n\nso that everything is thoroughly dry; and for this reason, the fire must be renewed several times, because the earth in question needs to be not just dry, but perfectly baked. After these precautions, having the metal well-melted, remove all the ashes and coals, blowing with a small bellows so that nothing remains on top that could obstruct the metal. Once this is done, all the rags <note>original: \"stoppe\"</note> that plug the vents must be removed, as well as those clay stoppers from the mouths where the molten bronze is to enter. Furthermore, two or three tallow candles should be placed up along the said channel, which should exceed a pound in weight; then, go to the mouth of the furnace and refresh it with a certain amount of tin, more than the standard alloy, which should be about half a pound per hundred more than the alloy you have already put in. Then, with speed, while maintaining the fire in the furnace continuously with fresh wood, boldly strike the said plug <note>original: \"spina\"</note> with the rod <term>mandriano</term> <gloss>a long iron tool used to strike or open the furnace tap</gloss> (for that is what the iron used to strike the plug is called), and let the bronze flow out in a controlled manner, always keeping the point of the rod inside the plug until a certain quantity of metal is seen to have come out; which <unclear>de-</unclear>\n\n<summary>This passage provides technical instructions for the final stages of bronze casting, specifically focusing on the preparation of the mold, the furnace, and the technique for tapping the molten metal.</summary>\n<keywords>bronze casting, furnace, metalwork, mold preparation, tin alloy, goldsmithing</keywords>",
+    "op": "drop-negation",
+    "from": "should not",
+    "to": "should",
+    "at": 643,
+    "before_context": ", two or three tallow candles should be placed up along the said channel, which should not exceed a pound in weight; then, go to the mouth of the furnace and refresh it w",
+    "after_context": ", two or three tallow candles should be placed up along the said channel, which should exceed a pound in weight; then, go to the mouth of the furnace and refresh it w"
+   },
+   "69905e262fd6a039938a154f_00067": {
+    "base_arm": "v13-b",
+    "text": "Petrus de Abano.\nE 2\n\nnine, and which are distant one from another by one span: and in the middle circle, write first the name of the hour in which you perform the work, in the second place the name of the Angel of the hour, in the third the seal of the Angel of the hour: Fourth, the name of the Angel who presides over the day in which you perform the work, and his ministers: Fifth, the name of the current time. Sixth, the name of the Spirits reigning in that part of time, and presiding over it. Seventh, the name of the head of the sign reigning in that part of time in which you perform the work. Eighth, the name of the Earth, according to that part of time in which you perform the work. Ninth, and for the completion of the middle circle, write the names of the Sun and Moon, according to the aforesaid calculation of time. For when the Time is not changed, the names also change. In the upper circle, however, let the names of the angels presiding over the air on that day in which you perform the work be assigned in the four corners: namely, the King and his three ministers. Outside the circle, in the four corners, let there be Pentagons. In the lower circle, let four Divine names be written, with crosses placed between them. In the middle of the circle, namely to the east, let Alpha be written: and to the west, let be written\n\n<summary>This page provides technical instructions for the construction of a magical circle, specifying the required inscriptions, planetary, and angelic names based on the timing of the ritual.</summary>\n<keywords>magical circle, ritual timing, planetary angels, Divine names, Petrus de Abano</keywords>",
+    "op": "add-negation",
+    "from": "is ",
+    "to": "is not ",
+    "at": 852,
+    "before_context": "Sun and Moon, according to the aforesaid calculation of time. For when the Time is changed, the names also change. In the upper circle, however, let the names of t",
+    "after_context": "Sun and Moon, according to the aforesaid calculation of time. For when the Time is not changed, the names also change. In the upper circle, however, let the names of t"
+   }
+  },
+  "duplicate": {
+   "6952603cab34727b1f04647b_00194": {
+    "arm": "v13-a"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "arm": "v13-plain"
+   },
+   "69dbcc3e0f8c5edf20f484a0_00330": {
+    "arm": "v13-plain"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69b6fb4a3c7947b468d7aa52_00309": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "1a8485e5-5331-41df-bfc1-6efd65238f55_00581": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69b6e791f8a84d859cde1de2_00473": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69529509b184004c526a2793_00237": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69dbcc3e0f8c5edf20f484a0_00330": {
+    "T1": "v13-plain#dup",
+    "T2": "v13-b",
+    "T3": "v13-plain",
+    "T4": "v13-a"
+   },
+   "69b21c6c429e087c6f8646f6_00223": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "695262d8ab34727b1f046ade_00167": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69ac7ee520878c5c9ba51e75_00098": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69b21d1a429e087c6f866ee7_00452": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "control:wrong_page",
+    "T4": "v13-plain"
+   },
+   "695594f97bd6d2cd1d61e685_00331": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "699062f5ef12272ffdc8e9d5_00505": {
+    "T1": "v13-a",
+    "T2": "control:planted",
+    "T3": "v13-plain",
+    "T4": "v13-b"
+   },
+   "6a2198155ce215cb9ac70f53_00209": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "694bf8d2343422769f237558_00277": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69b4d643853c26e0d15603c8_00136": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69905e262fd6a039938a154f_00067": {
+    "T1": "control:planted",
+    "T2": "v13-plain",
+    "T3": "v13-a",
+    "T4": "v13-b"
+   },
+   "6954347b1479a63c11089b35_00091": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "6a22d6e168f6a1498e2ffe6a_00160": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69ade6cc2fcf4ffa86cec233_00093": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "6952603cab34727b1f04647b_00194": {
+    "T1": "v13-a#dup",
+    "T2": "v13-b",
+    "T3": "v13-a",
+    "T4": "v13-plain"
+   },
+   "69b51dc947b06ecd581849ee_00128": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69ade7946a6b945bbdfa2d0a_00091": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69b51dcc47b06ecd58184b91_00073": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "698fb77b6b95eeda7d2d1eaf_00187": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "control:wrong_page",
+    "T4": "v13-b"
+   },
+   "69593274b91a6184ea943873_00315": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "699068a7249ce014347d715a_00159": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69593291b91a6184ea943bbe_00122": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69906485ef12272ffdc93acc_00116": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "6953e58d77f38f6761bf0cfc_00123": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "6991eac02f801130a473e424_00074": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "6a06d39b9a48d5139996355a_00151": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69a6849d7ab725b59be41319_00173": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain",
+    "T4": "control:wrong_page"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69de989b1b234a773e438e19_00234": {
+    "T1": "v13-plain",
+    "T2": "control:planted",
+    "T3": "v13-b",
+    "T4": "v13-a"
+   },
+   "69b1de4ea205bd982d8285bd_00396": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69b525ba6be60460830310a9_00065": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69a5d924a63a00aaae8aae3b_00105": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69e7518010ee9075bcdcdaf0_00223": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-plain#dup",
+    "T4": "v13-b"
+   },
+   "695910f2ecb01322b3068302_00444": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   }
+  },
+  "j2": {
+   "69b6fb4a3c7947b468d7aa52_00309": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "1a8485e5-5331-41df-bfc1-6efd65238f55_00581": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69b6e791f8a84d859cde1de2_00473": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69529509b184004c526a2793_00237": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69dbcc3e0f8c5edf20f484a0_00330": {
+    "T1": "v13-plain",
+    "T2": "v13-plain#dup",
+    "T3": "v13-a",
+    "T4": "v13-b"
+   },
+   "69b21c6c429e087c6f8646f6_00223": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "695262d8ab34727b1f046ade_00167": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69ac7ee520878c5c9ba51e75_00098": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69b21d1a429e087c6f866ee7_00452": {
+    "T1": "control:wrong_page",
+    "T2": "v13-b",
+    "T3": "v13-a",
+    "T4": "v13-plain"
+   },
+   "695594f97bd6d2cd1d61e685_00331": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "699062f5ef12272ffdc8e9d5_00505": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain",
+    "T4": "control:planted"
+   },
+   "6a2198155ce215cb9ac70f53_00209": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "694bf8d2343422769f237558_00277": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69b4d643853c26e0d15603c8_00136": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69905e262fd6a039938a154f_00067": {
+    "T1": "v13-plain",
+    "T2": "control:planted",
+    "T3": "v13-b",
+    "T4": "v13-a"
+   },
+   "6954347b1479a63c11089b35_00091": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "6a22d6e168f6a1498e2ffe6a_00160": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69ade6cc2fcf4ffa86cec233_00093": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "6952603cab34727b1f04647b_00194": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-a#dup",
+    "T4": "v13-b"
+   },
+   "69b51dc947b06ecd581849ee_00128": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69ade7946a6b945bbdfa2d0a_00091": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69b51dcc47b06ecd58184b91_00073": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "698fb77b6b95eeda7d2d1eaf_00187": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "control:wrong_page",
+    "T4": "v13-plain"
+   },
+   "69593274b91a6184ea943873_00315": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "699068a7249ce014347d715a_00159": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69593291b91a6184ea943bbe_00122": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69906485ef12272ffdc93acc_00116": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "6953e58d77f38f6761bf0cfc_00123": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "6991eac02f801130a473e424_00074": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "6a06d39b9a48d5139996355a_00151": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69a6849d7ab725b59be41319_00173": {
+    "T1": "v13-plain",
+    "T2": "control:wrong_page",
+    "T3": "v13-b",
+    "T4": "v13-a"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69de989b1b234a773e438e19_00234": {
+    "T1": "control:planted",
+    "T2": "v13-b",
+    "T3": "v13-plain",
+    "T4": "v13-a"
+   },
+   "69b1de4ea205bd982d8285bd_00396": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69b525ba6be60460830310a9_00065": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69a5d924a63a00aaae8aae3b_00105": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69e7518010ee9075bcdcdaf0_00223": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-plain#dup",
+    "T4": "v13-a"
+   },
+   "695910f2ecb01322b3068302_00444": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69b6fb4a3c7947b468d7aa52_00309": {
+    "T1": "c489c99e2a0a3230",
+    "T2": "bdf2d86c9f21a5e8",
+    "T3": "5938154fe05df8e9"
+   },
+   "1a8485e5-5331-41df-bfc1-6efd65238f55_00581": {
+    "T1": "9b0ffcb492ad55d3",
+    "T2": "9633555461af4c0f",
+    "T3": "616197c3624959ec"
+   },
+   "69b6e791f8a84d859cde1de2_00473": {
+    "T1": "e226da3007b2de8d",
+    "T2": "251cf39b58386270",
+    "T3": "c051262a6dc0cdfd"
+   },
+   "69529509b184004c526a2793_00237": {
+    "T1": "769e078b2d001e41",
+    "T2": "27dd400a7c1242bc",
+    "T3": "cafa18289949c3eb"
+   },
+   "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256": {
+    "T1": "adc44f6bb2d327ff",
+    "T2": "d189475bd6d04b0c",
+    "T3": "2c869ad3849e0e5b"
+   },
+   "69dbcc3e0f8c5edf20f484a0_00330": {
+    "T1": "3d17ce66b9bdbb42",
+    "T2": "42e058be3464b896",
+    "T3": "3d17ce66b9bdbb42",
+    "T4": "e6621964ce6f8810"
+   },
+   "69b21c6c429e087c6f8646f6_00223": {
+    "T1": "6a059964f9291ae1",
+    "T2": "bdd183dc729920eb",
+    "T3": "46f9b037ebba8dfd"
+   },
+   "695262d8ab34727b1f046ade_00167": {
+    "T1": "ae046a2875f987a9",
+    "T2": "e674940834f14986",
+    "T3": "c2f3cfcd0224484d"
+   },
+   "69ac7ee520878c5c9ba51e75_00098": {
+    "T1": "8a3300d4148237c2",
+    "T2": "6f313592a1b7c9f9",
+    "T3": "6634f00fe7f47795"
+   },
+   "69b21d1a429e087c6f866ee7_00452": {
+    "T1": "0a1ee2ccd16edba4",
+    "T2": "1a5eaeba5be6b12a",
+    "T3": "bdd183dc729920eb",
+    "T4": "100109dd6d4a700e"
+   },
+   "695594f97bd6d2cd1d61e685_00331": {
+    "T1": "dddb84d30a37c7db",
+    "T2": "6f981e2b99c607ca",
+    "T3": "9d096afdf5dc2cbc"
+   },
+   "699062f5ef12272ffdc8e9d5_00505": {
+    "T1": "bbfae6d5a5de9cb4",
+    "T2": "961bf945c6e3511a",
+    "T3": "0706844d3878f3e8",
+    "T4": "e1a5fa5bb8e7e72a"
+   },
+   "6a2198155ce215cb9ac70f53_00209": {
+    "T1": "5150eee852580ef0",
+    "T2": "c016e7cab16c5c7f",
+    "T3": "3ca93fdba22c1e22"
+   },
+   "694bf8d2343422769f237558_00277": {
+    "T1": "164dd02886d4b1ee",
+    "T2": "356b73d1b2534dc1",
+    "T3": "8a311d0d4170f0f0"
+   },
+   "69b4d643853c26e0d15603c8_00136": {
+    "T1": "1c45b39d57129983",
+    "T2": "e13a01470242bc5d",
+    "T3": "59c21b24252b8def"
+   },
+   "69905e262fd6a039938a154f_00067": {
+    "T1": "fca60e9728465a28",
+    "T2": "b3ab3c5f8f81601c",
+    "T3": "9e62be31da489fc4",
+    "T4": "9ed55e46bfde6627"
+   },
+   "6954347b1479a63c11089b35_00091": {
+    "T1": "6fdc6782bb5f273d",
+    "T2": "23039e77b6386fee",
+    "T3": "6cf1c0fe3904e297"
+   },
+   "6a22d6e168f6a1498e2ffe6a_00160": {
+    "T1": "127c04cec3a2b194",
+    "T2": "be8095341c4949ae",
+    "T3": "7c55a596eab40ba2"
+   },
+   "69ade6cc2fcf4ffa86cec233_00093": {
+    "T1": "ecd7443d6afee040",
+    "T2": "e310cb9b4c691d5f",
+    "T3": "13ec8dc9efe818d5"
+   },
+   "6952603cab34727b1f04647b_00194": {
+    "T1": "fdca36a5c1e016d8",
+    "T2": "724ed1f43f307539",
+    "T3": "fdca36a5c1e016d8",
+    "T4": "4b9801288343d4eb"
+   },
+   "69b51dc947b06ecd581849ee_00128": {
+    "T1": "1ca0c76d5b5ef293",
+    "T2": "19d143110ad63067",
+    "T3": "43e5b3fb2a433d6e"
+   },
+   "69ade7946a6b945bbdfa2d0a_00091": {
+    "T1": "dfaa3fc6d95426e2",
+    "T2": "5783bafdd5865588",
+    "T3": "81c1878a2ef5634e"
+   },
+   "69b51dcc47b06ecd58184b91_00073": {
+    "T1": "d25f81ee0faa8b63",
+    "T2": "fb75625f080184a7",
+    "T3": "964b06578a6b0434"
+   },
+   "698fb77b6b95eeda7d2d1eaf_00187": {
+    "T1": "1d40ee59fc68141b",
+    "T2": "7ca0cf17ba301ea2",
+    "T3": "5783bafdd5865588",
+    "T4": "a1819a0b699fc609"
+   },
+   "69593274b91a6184ea943873_00315": {
+    "T1": "93a66c91e29ea7bb",
+    "T2": "723728627770584d",
+    "T3": "50810d6d5d134ba8"
+   },
+   "699068a7249ce014347d715a_00159": {
+    "T1": "cd81616f112e10bf",
+    "T2": "fc2b1dcdb9f96d8c",
+    "T3": "9427294dc0527857"
+   },
+   "69593291b91a6184ea943bbe_00122": {
+    "T1": "fc02a22a6096480d",
+    "T2": "7c4d666a6cf79147",
+    "T3": "63371eca77144b06"
+   },
+   "69906485ef12272ffdc93acc_00116": {
+    "T1": "c277022ff18477bd",
+    "T2": "81666f84a656da7e",
+    "T3": "8f10f944e4eeb050"
+   },
+   "6953e58d77f38f6761bf0cfc_00123": {
+    "T1": "e0ba6e09c26a21d3",
+    "T2": "4218b6cf89323ed2",
+    "T3": "199d75a7b2511cb4"
+   },
+   "6991eac02f801130a473e424_00074": {
+    "T1": "a2317f1597e1c602",
+    "T2": "d6e0e280d6422fe1",
+    "T3": "dccec2160507bbd2"
+   },
+   "6a06d39b9a48d5139996355a_00151": {
+    "T1": "68f060447669fb22",
+    "T2": "65558e7d7fd70777",
+    "T3": "36185f8cdea074f1"
+   },
+   "69a6849d7ab725b59be41319_00173": {
+    "T1": "6ad4ba9f753ed07c",
+    "T2": "1fa3300bf6b57ccf",
+    "T3": "b364e41bdeee9a37",
+    "T4": "557b83239727b693"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "0756337b8d7a619c",
+    "T2": "5f33b69fe3604e71",
+    "T3": "557b83239727b693"
+   },
+   "69de989b1b234a773e438e19_00234": {
+    "T1": "291ae1faab568018",
+    "T2": "1f36de1954639516",
+    "T3": "36d0e2a1f3bf70d5",
+    "T4": "0cbd8fa4a276950c"
+   },
+   "69b1de4ea205bd982d8285bd_00396": {
+    "T1": "8efa1c84e17bc0fe",
+    "T2": "40f819af9a4fee02",
+    "T3": "b3b9ff169c1f2808"
+   },
+   "69b525ba6be60460830310a9_00065": {
+    "T1": "f7bea012965f7273",
+    "T2": "2ae324485cf16aa3",
+    "T3": "907a61ccb1233834"
+   },
+   "69a5d924a63a00aaae8aae3b_00105": {
+    "T1": "edeb01ccfa67442c",
+    "T2": "8bb134fad0e19573",
+    "T3": "9ddf1cfef305e952"
+   },
+   "69e7518010ee9075bcdcdaf0_00223": {
+    "T1": "6732a377946549ab",
+    "T2": "8fa8133d94712b5f",
+    "T3": "d1f2760d0a029f6a"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "fdfdef84c42f6879",
+    "T2": "a26c2d69d4fb9d06",
+    "T3": "fdfdef84c42f6879",
+    "T4": "218ebf6c81b41df6"
+   },
+   "695910f2ecb01322b3068302_00444": {
+    "T1": "ef3abb0224fdd259",
+    "T2": "ab9c91adfe86c764",
+    "T3": "0eaa954beb9eb101"
+   }
+  },
+  "j2": {
+   "69b6fb4a3c7947b468d7aa52_00309": {
+    "T1": "bdf2d86c9f21a5e8",
+    "T2": "5938154fe05df8e9",
+    "T3": "c489c99e2a0a3230"
+   },
+   "1a8485e5-5331-41df-bfc1-6efd65238f55_00581": {
+    "T1": "9b0ffcb492ad55d3",
+    "T2": "616197c3624959ec",
+    "T3": "9633555461af4c0f"
+   },
+   "69b6e791f8a84d859cde1de2_00473": {
+    "T1": "c051262a6dc0cdfd",
+    "T2": "e226da3007b2de8d",
+    "T3": "251cf39b58386270"
+   },
+   "69529509b184004c526a2793_00237": {
+    "T1": "27dd400a7c1242bc",
+    "T2": "cafa18289949c3eb",
+    "T3": "769e078b2d001e41"
+   },
+   "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256": {
+    "T1": "2c869ad3849e0e5b",
+    "T2": "adc44f6bb2d327ff",
+    "T3": "d189475bd6d04b0c"
+   },
+   "69dbcc3e0f8c5edf20f484a0_00330": {
+    "T1": "3d17ce66b9bdbb42",
+    "T2": "3d17ce66b9bdbb42",
+    "T3": "e6621964ce6f8810",
+    "T4": "42e058be3464b896"
+   },
+   "69b21c6c429e087c6f8646f6_00223": {
+    "T1": "46f9b037ebba8dfd",
+    "T2": "bdd183dc729920eb",
+    "T3": "6a059964f9291ae1"
+   },
+   "695262d8ab34727b1f046ade_00167": {
+    "T1": "e674940834f14986",
+    "T2": "c2f3cfcd0224484d",
+    "T3": "ae046a2875f987a9"
+   },
+   "69ac7ee520878c5c9ba51e75_00098": {
+    "T1": "6634f00fe7f47795",
+    "T2": "8a3300d4148237c2",
+    "T3": "6f313592a1b7c9f9"
+   },
+   "69b21d1a429e087c6f866ee7_00452": {
+    "T1": "bdd183dc729920eb",
+    "T2": "0a1ee2ccd16edba4",
+    "T3": "1a5eaeba5be6b12a",
+    "T4": "100109dd6d4a700e"
+   },
+   "695594f97bd6d2cd1d61e685_00331": {
+    "T1": "dddb84d30a37c7db",
+    "T2": "9d096afdf5dc2cbc",
+    "T3": "6f981e2b99c607ca"
+   },
+   "699062f5ef12272ffdc8e9d5_00505": {
+    "T1": "e1a5fa5bb8e7e72a",
+    "T2": "bbfae6d5a5de9cb4",
+    "T3": "0706844d3878f3e8",
+    "T4": "961bf945c6e3511a"
+   },
+   "6a2198155ce215cb9ac70f53_00209": {
+    "T1": "c016e7cab16c5c7f",
+    "T2": "3ca93fdba22c1e22",
+    "T3": "5150eee852580ef0"
+   },
+   "694bf8d2343422769f237558_00277": {
+    "T1": "356b73d1b2534dc1",
+    "T2": "164dd02886d4b1ee",
+    "T3": "8a311d0d4170f0f0"
+   },
+   "69b4d643853c26e0d15603c8_00136": {
+    "T1": "1c45b39d57129983",
+    "T2": "59c21b24252b8def",
+    "T3": "e13a01470242bc5d"
+   },
+   "69905e262fd6a039938a154f_00067": {
+    "T1": "b3ab3c5f8f81601c",
+    "T2": "fca60e9728465a28",
+    "T3": "9ed55e46bfde6627",
+    "T4": "9e62be31da489fc4"
+   },
+   "6954347b1479a63c11089b35_00091": {
+    "T1": "6fdc6782bb5f273d",
+    "T2": "23039e77b6386fee",
+    "T3": "6cf1c0fe3904e297"
+   },
+   "6a22d6e168f6a1498e2ffe6a_00160": {
+    "T1": "127c04cec3a2b194",
+    "T2": "7c55a596eab40ba2",
+    "T3": "be8095341c4949ae"
+   },
+   "69ade6cc2fcf4ffa86cec233_00093": {
+    "T1": "13ec8dc9efe818d5",
+    "T2": "e310cb9b4c691d5f",
+    "T3": "ecd7443d6afee040"
+   },
+   "6952603cab34727b1f04647b_00194": {
+    "T1": "4b9801288343d4eb",
+    "T2": "fdca36a5c1e016d8",
+    "T3": "fdca36a5c1e016d8",
+    "T4": "724ed1f43f307539"
+   },
+   "69b51dc947b06ecd581849ee_00128": {
+    "T1": "19d143110ad63067",
+    "T2": "1ca0c76d5b5ef293",
+    "T3": "43e5b3fb2a433d6e"
+   },
+   "69ade7946a6b945bbdfa2d0a_00091": {
+    "T1": "81c1878a2ef5634e",
+    "T2": "5783bafdd5865588",
+    "T3": "dfaa3fc6d95426e2"
+   },
+   "69b51dcc47b06ecd58184b91_00073": {
+    "T1": "fb75625f080184a7",
+    "T2": "d25f81ee0faa8b63",
+    "T3": "964b06578a6b0434"
+   },
+   "698fb77b6b95eeda7d2d1eaf_00187": {
+    "T1": "a1819a0b699fc609",
+    "T2": "1d40ee59fc68141b",
+    "T3": "5783bafdd5865588",
+    "T4": "7ca0cf17ba301ea2"
+   },
+   "69593274b91a6184ea943873_00315": {
+    "T1": "723728627770584d",
+    "T2": "93a66c91e29ea7bb",
+    "T3": "50810d6d5d134ba8"
+   },
+   "699068a7249ce014347d715a_00159": {
+    "T1": "9427294dc0527857",
+    "T2": "cd81616f112e10bf",
+    "T3": "fc2b1dcdb9f96d8c"
+   },
+   "69593291b91a6184ea943bbe_00122": {
+    "T1": "63371eca77144b06",
+    "T2": "7c4d666a6cf79147",
+    "T3": "fc02a22a6096480d"
+   },
+   "69906485ef12272ffdc93acc_00116": {
+    "T1": "8f10f944e4eeb050",
+    "T2": "81666f84a656da7e",
+    "T3": "c277022ff18477bd"
+   },
+   "6953e58d77f38f6761bf0cfc_00123": {
+    "T1": "199d75a7b2511cb4",
+    "T2": "e0ba6e09c26a21d3",
+    "T3": "4218b6cf89323ed2"
+   },
+   "6991eac02f801130a473e424_00074": {
+    "T1": "a2317f1597e1c602",
+    "T2": "dccec2160507bbd2",
+    "T3": "d6e0e280d6422fe1"
+   },
+   "6a06d39b9a48d5139996355a_00151": {
+    "T1": "68f060447669fb22",
+    "T2": "36185f8cdea074f1",
+    "T3": "65558e7d7fd70777"
+   },
+   "69a6849d7ab725b59be41319_00173": {
+    "T1": "b364e41bdeee9a37",
+    "T2": "557b83239727b693",
+    "T3": "1fa3300bf6b57ccf",
+    "T4": "6ad4ba9f753ed07c"
+   },
+   "69aebfa4c337b1e6a4d582f3_00161": {
+    "T1": "557b83239727b693",
+    "T2": "0756337b8d7a619c",
+    "T3": "5f33b69fe3604e71"
+   },
+   "69de989b1b234a773e438e19_00234": {
+    "T1": "1f36de1954639516",
+    "T2": "36d0e2a1f3bf70d5",
+    "T3": "291ae1faab568018",
+    "T4": "0cbd8fa4a276950c"
+   },
+   "69b1de4ea205bd982d8285bd_00396": {
+    "T1": "8efa1c84e17bc0fe",
+    "T2": "b3b9ff169c1f2808",
+    "T3": "40f819af9a4fee02"
+   },
+   "69b525ba6be60460830310a9_00065": {
+    "T1": "907a61ccb1233834",
+    "T2": "2ae324485cf16aa3",
+    "T3": "f7bea012965f7273"
+   },
+   "69a5d924a63a00aaae8aae3b_00105": {
+    "T1": "edeb01ccfa67442c",
+    "T2": "8bb134fad0e19573",
+    "T3": "9ddf1cfef305e952"
+   },
+   "69e7518010ee9075bcdcdaf0_00223": {
+    "T1": "6732a377946549ab",
+    "T2": "8fa8133d94712b5f",
+    "T3": "d1f2760d0a029f6a"
+   },
+   "69ea0f5413a685002bb8dc8a_00107": {
+    "T1": "218ebf6c81b41df6",
+    "T2": "fdfdef84c42f6879",
+    "T3": "fdfdef84c42f6879",
+    "T4": "a26c2d69d4fb9d06"
+   },
+   "695910f2ecb01322b3068302_00444": {
+    "T1": "ab9c91adfe86c764",
+    "T2": "0eaa954beb9eb101",
+    "T3": "ef3abb0224fdd259"
+   }
+  }
+ },
+ "gate_items": [
+  "698fb77b6b95eeda7d2d1eaf_00187",
+  "69b21d1a429e087c6f866ee7_00452",
+  "69a6849d7ab725b59be41319_00173",
+  "699062f5ef12272ffdc8e9d5_00505",
+  "69de989b1b234a773e438e19_00234",
+  "69905e262fd6a039938a154f_00067",
+  "6952603cab34727b1f04647b_00194",
+  "69ea0f5413a685002bb8dc8a_00107",
+  "69dbcc3e0f8c5edf20f484a0_00330"
+ ],
+ "main_items": [
+  "69b6fb4a3c7947b468d7aa52_00309",
+  "1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+  "69b6e791f8a84d859cde1de2_00473",
+  "69529509b184004c526a2793_00237",
+  "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+  "69b21c6c429e087c6f8646f6_00223",
+  "695262d8ab34727b1f046ade_00167",
+  "69ac7ee520878c5c9ba51e75_00098",
+  "695594f97bd6d2cd1d61e685_00331",
+  "6a2198155ce215cb9ac70f53_00209",
+  "694bf8d2343422769f237558_00277",
+  "69b4d643853c26e0d15603c8_00136",
+  "6954347b1479a63c11089b35_00091",
+  "6a22d6e168f6a1498e2ffe6a_00160",
+  "69ade6cc2fcf4ffa86cec233_00093",
+  "69b51dc947b06ecd581849ee_00128",
+  "69ade7946a6b945bbdfa2d0a_00091",
+  "69b51dcc47b06ecd58184b91_00073",
+  "69593274b91a6184ea943873_00315",
+  "699068a7249ce014347d715a_00159",
+  "69593291b91a6184ea943bbe_00122",
+  "69906485ef12272ffdc93acc_00116",
+  "6953e58d77f38f6761bf0cfc_00123",
+  "6991eac02f801130a473e424_00074",
+  "6a06d39b9a48d5139996355a_00151",
+  "69aebfa4c337b1e6a4d582f3_00161",
+  "69b1de4ea205bd982d8285bd_00396",
+  "69b525ba6be60460830310a9_00065",
+  "69a5d924a63a00aaae8aae3b_00105",
+  "69e7518010ee9075bcdcdaf0_00223",
+  "695910f2ecb01322b3068302_00444"
+ ]
+}

@@ -219,7 +219,7 @@ export const GET = withAuth(async (request, session, context) => {
         });
         recommendation += ` Significant results: ${sigSummary.join('; ')}.`;
       } else {
-        recommendation += ` No statistically significant differences found — consider more pages for stronger signal.`;
+        recommendation += ` No statistically significant differences found. Consider more pages for stronger signal.`;
       }
     } else if (best) {
       recommendation += `only one condition has data: **${best.label}**.`;

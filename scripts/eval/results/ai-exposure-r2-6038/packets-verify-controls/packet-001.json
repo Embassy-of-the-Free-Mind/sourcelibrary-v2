@@ -1,0 +1,26 @@
+{
+ "packet": 1,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "6970e3689b09d309d780a282",
+  "6a4427d8b7cda65c60864525",
+  "1a8485e5-5331-41df-bfc1-6efd65238f55",
+  "69a5d7f94d84314297c07fca",
+  "6990630be7b7642c081de08b",
+  "6a905556ce61c4a7de1451e4",
+  "69529492b184004c526a1963",
+  "69c63cd593cbf3c0fd742523",
+  "694f8d99efce46492e19fdad",
+  "69ef3d8c72c1376fdf2b04e9",
+  "69b525c06be6046083031c99",
+  "decoy-32",
+  "6992541059cdabeb78f1b737",
+  "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "6ab6d1cd8a91de9cd82fcad6",
+  "decoy-02",
+  "decoy-14",
+  "69568c79be7c607c5f03d7bb",
+  "decoy-40"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: Alkoran | Year of this edition: 1707 | Language: Dutch\n2. Title: De re diplomatica libri VI | Language: Latin\n3. Title: Magia Naturalis | Year of this edition: 1607 | Language: Latin\n4. Title: Le Theatre d'Agriculture et Mesnage des Champs | Year of this edition: 1603 | Language: French\n5. Title: Sefer ha-Zohar (Cremona 1558) | Year of this edition: 1558 | Language: Hebrew\n6. Title: Practica der Wundatzney Felix Würtzen, deß weyland berühmten und wolerfahrnen Wundartztes zu Basel: Darinnen allerley schädliche Mißbräuche, welche bißhero von unerfahrnen, ungeschickten Wundärtzten in gemeinem schwang g | Language: German\n7. Title: Novum organum scientiarum | Year of this edition: 1660 | Language: Latin\n8. Title: Les vies des plus celèbres et anciens poètes provensaux | Year of this edition: 1575 | Language: French\n9. Title: Conclusiones sive Theses DCCCC | Year of this edition: 1486 | Language: Latin\n10. Title: Laokoon, oder über die Grenzen der Mahlerey und Poesie | Year of this edition: 1766 | Language: German\n11. Title: De voyagien van Johan Davis, gedaan na Oost-Indien, in de jaren 1598 en 1604. :, Waar in veel bysonderheden en seldsame ontmoetingen voorkomen., Nu aldereerst uyt het Engelsch vertaald, en met konst-platen en een volkome | Year of this edition: 1706 | Language: Dutch\n12. Title: योगसारमञ्जरी | Year of this edition: 1550 | Language: Sanskrit\n13. Title: Bishop Sarapion's Prayer-Book | Year of this edition: 1899 | Language: Greek\n14. Title: Oedipus Aegyptiacus Vol. II | Year of this edition: 1653 | Language: Latin\n15. Title: High Frequency Oscillators for Electro-Therapeutic and Other Purposes | Year of this edition: 1898 | Language: English\n16. Title: Tractatus de lumine metallorum occulto | Year of this edition: 1617 | Language: Latin\n17. Title: Trattato della pietra filosofale e delle sue virtù | Year of this edition: 1588 | Language: Italian\n18. Title: The Theory of Moral Sentiments | Year of this edition: 1759 | Language: English\n19. Title: De arcanis numerorum Pythagoricis dialogus | Year of this edition: 1574 | Language: Latin\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

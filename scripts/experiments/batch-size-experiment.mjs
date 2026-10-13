@@ -215,6 +215,7 @@ async function run() {
 
   // Record in DB for the collector to pick up
   await db.collection('batch_jobs').insertOne({
+    submitted_by: 'scripts/experiments/batch-size-experiment.mjs',
     id: nanoid(),
     job_name: batchJob.name,
     type: 'ocr',

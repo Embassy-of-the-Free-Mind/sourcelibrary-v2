@@ -3,54 +3,56 @@ import pareto from '@/data/ocr-pareto.json';
 import xlate from '@/data/translation-pareto.json';
 import ParetoDownload from './ParetoDownload';
 
-// Cost against quality, one figure per script (OCR) or per language (translation) (#5983).
-// Server-rendered SVG; the only client code is the download button. Exact values ride on <title>
-// tooltips and on the table under each plot, which is the table view. Engines are told apart by
-// NUMBER (keyed in the table), not by colour, so identity never depends on hue and labels cannot
-// collide at 390 px. Colours are the house pair from /research/canon-gap/diagrams.tsx (validated
-// there): teal for the frontier, amber for production. Every number comes from
-// src/data/ocr-pareto.json (scripts/eval/build-ocr-pareto.mjs) or src/data/translation-pareto.json
-// (scripts/eval/build-translation-pareto.mjs); the "what it means" sentence is composed from it.
+// Cost against quality, one section per script (OCR) or per language (translation) (#5983, rebuilt in #6386,
+// laid out around the decision in #6524). Server-rendered; the only client code is the download button.
+// Every number, verdict and grade comes from src/data/ocr-pareto.json (scripts/eval/build-ocr-pareto.mjs) or
+// src/data/translation-pareto.json (scripts/eval/build-translation-pareto.mjs): the renderer composes no claim.
 //
-// Used twice: the grids on /quality (anchors #pareto-<id>, #pareto-translation-<id>) and the
-// presenting page /quality/pareto, one panel per screen. Type is sized to read at 14 px or more
-// when the page is 1280 px wide.
+// Three things are drawn from the same panels:
+//   ParetoSummary       one row per script or language: engine in use, best clear switch, gain, cost, grade.
+//                       summaryRow() repeats the choice verdictSentence() makes in scripts/eval/lib/pareto-stats.mjs
+//                       (the engine marked `better` with the largest paired difference), so a row and its section's
+//                       verdict sentence always name the same engine and the same figures (pinned by a unit test).
+//   ParetoPresentation  one section per script or language whose primary panel is fit to read: the verdict sentence,
+//                       then a forest plot of each engine's paired difference from the engine in use, sorted, with
+//                       its 95% interval and its price as text. The full table and every other run sit in disclosures.
+//   NotMeasured         every script or language whose primary panel is not fit to rank, as one list with the reason.
+// The plot's x axis is a difference, so zero is the engine in use on every chart. A few far-worse engines may run
+// off the left edge (an arrow marks them); their figures are always printed in the row.
+// Colour follows the engine's role, never its rank: amber for the engine in use, teal for an engine the data file
+// marks better, stone for everything else. Colours are hex rather than var(--…) because the download serialises
+// the SVG outside the page's CSS; each one is a Tailwind token the page already uses (named beside it).
 
-const FRONTIER = '#0b9488';
-const PRODUCTION = '#b45309';
-const INK = '#44403c';
-const MUTED = '#57534e';
+const BETTER = '#0b9488'; // teal-600
+const PRODUCTION = '#b45309'; // amber-700
+const INK = '#44403c'; // stone-700
+const MUTED = '#57534e'; // stone-600
+const FAINT = '#a8a29e'; // stone-400
+const GRID = '#e7e5e4'; // stone-200
 const FONT = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
 const GH = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/';
-// Below this many books, a figure says on its face that it is provisional.
-const FEW_BOOKS = 30;
 
-type Cost = { usd_per_1k: number; basis: string; detail: string; source: string };
+type Cost = { usd_per_1k: number; basis: 'billed' | 'quota'; detail: string; source: string };
+type Vs = { diff: number; ci95: number[] | null; n_pages: number; n_works: number };
+type Verdict = 'better' | 'same' | 'worse';
 /** One engine on one figure, in the measure-neutral shape the renderer draws. */
 type Point = {
-  engine: string; label: string; production: boolean; y: number | null; y_ci95: number[] | null;
-  /** the ring: a share in 0–1 (invented words, or pages with a reversed statement) */
-  ring: number | null; ring_text: string | null;
-  cost: Cost | null; on_frontier?: boolean;
-  /** an off-plot engine scored on only some of the pages, with production's score on the same pages */
-  subset?: { n_pages: number; production_label: string; production_y: number; separate_read?: boolean } | null;
-  note?: string | null;
+  engine: string; label: string; production: boolean; y: number; y_ci95: number[] | null;
+  cost: Cost | null; no_price: string | null; on_frontier: boolean;
+  vs: Vs | null; verdict: Verdict | null;
+  /** the measure's extra table cells (pages over half wrong; words not in the reference; reversals) */
+  extra: (string | null)[];
+  /** position in the data file (placed, then no_cost): the tie-break the verdict sentence uses */
+  order: number;
 };
+type Noise = { kind: 'spread' | 'identical' | 'not_reproduced' | 'unlike'; band: number | null; diff?: number; why?: string | null; n?: number };
+type Grade = { level: 'decide' | 'directional' | 'not_fit'; why: string };
 type Panel = {
-  kind: string; n_pages: number; n_books: number; frontier: boolean; frontier_note: string | null;
-  /** a panel that is its own read (another packet) names itself; otherwise the heading follows `kind` */
-  heading?: string;
-  references: { stratum: string; reference: string; pages: number; date: string }[]; date: string;
-  judges?: number; notes?: string[];
-  placed: Point[]; no_cost: Point[];
+  kind: string; role: string; heading: string | null; n_pages: number; n_works: number; reference: string;
+  grade: Grade; frontier: boolean; noise: Noise | null; date: string | null; verdict: string;
+  notes: string[]; points: Point[]; extraHeads: { head: string; title: string }[];
 };
-export type Chart = {
-  id: string; title: string; production_label: string; panels: Panel[]; not_on_shared_pages: { label: string; pages: number; why?: string }[]; not_tested: string[];
-  /** engines to be run on these same pages on the subscription, not yet run (#6295) */
-  pending?: string[];
-};
-const PENDING = 'CLI arm pending';
-const pendingText = (c: Chart) => `${PENDING} (to run on these same pages through the command-line tool on the subscription, not yet run): ${c.pending!.join(', ')}.`;
+export type Chart = { id: string; title: string; production_label: string; caption: string | null; mentions: string[]; panels: Panel[] };
 type NoChartRow = { title: string; why: string; source: string };
 
 /** Everything that differs between the OCR and the translation figures. No figures in here either. */
@@ -59,260 +61,340 @@ export type Measure = {
   anchor: string;
   title: (c: Chart) => string;
   exportTitle: (c: Chart) => string;
-  explain: string;
-  /** on the face of the plot, under the sample line */
-  badge: string | null;
+  /** what the plot's axis measures, after "Difference from the engine in use in " */
   yAxis: string;
-  yTick: (v: number) => string;
-  fmtY: (v: number | null | undefined, d?: number) => string;
-  yRange: [number, number];
-  step: (span: number) => number;
+  fmtY: (v: number | null | undefined) => string;
+  fmtDiff: (d: number) => string;
+  /** the unit a difference is in, after the number */
+  diffUnit: string;
+  /** the summary table's gain column */
+  gainHead: string;
   yColumn: string;
-  ringColumn: string;
-  ringTitle: string;
-  ringLegend: string;
-  verb: string;
-  unit: string;
-  more: string;
-  less: string;
-  most: string;
-  mostAdj: string;
-  better: string;
-  scoreWord: string;
-  judgesNote: (p: Panel) => string;
-  extraLegend: string;
   charts: Chart[];
   noChart: NoChartRow[];
+  gradeRules: Record<Grade['level'], string>;
 };
 
-const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '—' : `${(x * 100).toFixed(d)}%`);
+const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '–' : `${(x * 100).toFixed(d)}%`);
+const signed = (s: string, d: number) => `${d >= 0 ? '+' : '−'}${s}`;
+const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 
 // ── adapters: each data file to the renderer's shape ─────────────────────────────────────────
-type OcrPoint = { engine: string; label: string; production: boolean; accuracy: number | null; accuracy_ci95: number[] | null; invented: { median: number | null } | null; cost: Cost | null; on_frontier?: boolean };
-type OcrPanel = Omit<Panel, 'placed' | 'no_cost'> & { placed: OcrPoint[]; no_cost: OcrPoint[] };
-export function ocrPanel(p: OcrPanel): Panel {
-  const pt = (x: OcrPoint): Point => ({
-    engine: x.engine, label: x.label, production: x.production, y: x.accuracy, y_ci95: x.accuracy_ci95,
-    ring: x.invented?.median ?? null, ring_text: x.invented?.median != null ? pctOf(x.invented.median, 0) : null,
-    cost: x.cost, on_frontier: x.on_frontier,
-  });
-  return { ...p, placed: p.placed.map(pt), no_cost: p.no_cost.map(pt) };
+type RawCost = { usd_per_1k: number; basis: string; detail: string; source: string } | null;
+type OcrPoint = {
+  engine: string; label: string; production: boolean; accuracy: number; accuracy_ci95: number[] | null; fail_share: number;
+  words_not_in_ref: number | null; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict;
+  did_not_read: { k: number; n: number; kinds: Record<string, number> }; partly_measured?: string;
+};
+// #6523: a failed read is counted, not scored
+const KIND_WORDS: Record<string, string> = { copy_filter: 'copy filter', refusal: 'refused', empty: 'empty', timeout: 'timed out', other: 'no transcription' };
+const didNotRead = (x: OcrPoint) => (x.did_not_read.k === 0 ? '0'
+  : `${x.did_not_read.k} of ${x.did_not_read.n} (${Object.entries(x.did_not_read.kinds).map(([k, n]) => `${KIND_WORDS[k] ?? k} ${n}`).join(', ')})${x.partly_measured ? ', partly measured' : ''}`);
+type RawPanel<P> = {
+  kind: string; role?: string; heading: string | null; n_pages: number; n_works: number; reference: string; grade: Grade;
+  frontier: boolean; noise: Noise | null; date: string | null; verdict: string; notes?: string[]; placed: P[]; no_cost: P[];
+};
+type RawChart<P> = { id: string; title: string; production_label: string; caption?: string | null; mentions?: string[]; panels: RawPanel<P>[] };
+
+const base = <P,>(p: RawPanel<P>, i: number) => ({
+  kind: p.kind, role: p.role ?? (i === 0 ? 'primary' : 'secondary'), heading: p.heading, n_pages: p.n_pages, n_works: p.n_works,
+  reference: p.reference, grade: p.grade, frontier: p.frontier, noise: p.noise, date: p.date, verdict: p.verdict, notes: p.notes ?? [],
+});
+const common = (x: { engine: string; label: string; production: boolean; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs | null; verdict?: Verdict }) => ({
+  engine: x.engine, label: x.label, production: x.production, cost: x.cost as Cost | null, no_price: x.no_price ?? null,
+  on_frontier: !!x.on_frontier, vs: x.vs_in_use ?? null, verdict: x.verdict ?? null,
+});
+export function ocrPanel(p: RawPanel<OcrPoint>, i = 0): Panel {
+  const all = [...p.placed, ...p.no_cost];
+  const words = all.some(x => x.words_not_in_ref != null);
+  return {
+    ...base(p, i),
+    extraHeads: [
+      { head: 'over half wrong', title: 'share of the pages it read with a character error rate above one half' },
+      ...(words ? [{ head: 'words not in ref.', title: "median share of the engine's words found nowhere in the reference; a misspelling counts too" }] : []),
+      { head: 'did not read', title: 'pages the engine refused, left empty, ran out of time on, or declined to copy because it recognised a published text; not scored. Above one page in five, its accuracy is partly measured: it rests on the pages it chose to answer' },
+    ],
+    points: all.map((x, order) => ({ ...common(x), order, y: x.accuracy, y_ci95: x.accuracy_ci95, extra: [pctOf(x.fail_share, 0), ...(words ? [pctOf(x.words_not_in_ref, 0)] : []), didNotRead(x)] }))
+      .sort((a, b) => b.y - a.y || a.engine.localeCompare(b.engine)),
+  };
 }
 type XPoint = {
   engine: string; label: string; production: boolean; fidelity: number; fidelity_ci95: number[] | null;
-  reversals: { per_100: number; pages: number; n: number }; cost: Cost | null; on_frontier?: boolean;
-  subset?: { n_pages: number; production_label: string; production_fidelity: number; separate_read?: boolean }; note?: string;
+  reversals: { per_100: number }; cost: RawCost; no_price?: string; on_frontier?: boolean; vs_in_use?: Vs; verdict?: Verdict;
 };
-type XPanel = Omit<Panel, 'placed' | 'no_cost'> & { placed: XPoint[]; no_cost: XPoint[] };
-export function translationPanel(p: XPanel): Panel {
-  const pt = (x: XPoint): Point => ({
-    engine: x.engine, label: x.label, production: x.production, y: x.fidelity, y_ci95: x.fidelity_ci95,
-    ring: x.reversals.per_100 / 100, ring_text: x.reversals.per_100.toFixed(1),
-    cost: x.cost, on_frontier: x.on_frontier, note: x.note ?? null,
-    subset: x.subset ? { n_pages: x.subset.n_pages, production_label: x.subset.production_label, production_y: x.subset.production_fidelity, separate_read: x.subset.separate_read } : null,
-  });
-  return { ...p, placed: p.placed.map(pt), no_cost: p.no_cost.map(pt) };
+export function translationPanel(p: RawPanel<XPoint>, i = 0): Panel {
+  return {
+    ...base(p, i),
+    extraHeads: [{ head: 'reversed per 100 pages', title: 'pages where either judge quoted a statement the English reverses, per 100 pages' }],
+    points: [...p.placed, ...p.no_cost].map((x, order) => ({ ...common(x), order, y: x.fidelity, y_ci95: x.fidelity_ci95, extra: [x.reversals.per_100.toFixed(1)] }))
+      .sort((a, b) => b.y - a.y || a.engine.localeCompare(b.engine)),
+  };
 }
+const adapt = <P,>(c: RawChart<P>, f: (p: RawPanel<P>, i: number) => Panel): Chart => ({
+  id: c.id, title: c.title, production_label: c.production_label, caption: c.caption ?? null, mentions: c.mentions ?? [], panels: c.panels.map(f),
+});
 
-type OcrData = { charts: (Omit<Chart, 'panels'> & { panels: OcrPanel[] })[]; no_chart: NoChartRow[] };
-type XData = { charts: (Omit<Chart, 'panels'> & { panels: XPanel[] })[]; no_chart: NoChartRow[] };
-const ocrData = pareto as unknown as OcrData;
-const xData = xlate as unknown as XData;
-
-const score = (v: number | null | undefined, d = 2) => (v == null ? '—' : v.toFixed(d));
+type Data<P> = { charts: RawChart<P>[]; no_chart: NoChartRow[]; grade_rules: Record<Grade['level'], string> };
+const ocrData = pareto as unknown as Data<OcrPoint>;
+const xData = xlate as unknown as Data<XPoint>;
 
 export const OCR: Measure = {
   key: 'ocr', anchor: 'pareto-',
   title: c => c.title,
   exportTitle: c => `${c.title}: what it costs to read, against how well it reads`,
-  explain:
-    'Each dot is a reading engine. Further right costs more per 1,000 pages; higher reads more accurately. ' +
-    'The line joins the engines that nothing else beats on both. The one we use now is amber.',
-  badge: null,
-  yAxis: '↑ accuracy against a typed edition',
-  yTick: v => `${Math.round(v * 100)}%`,
-  fmtY: pctOf,
-  yRange: [0, 1],
-  step: span => (span > 0.5 ? 0.2 : span > 0.2 ? 0.1 : span > 0.08 ? 0.05 : span > 0.03 ? 0.02 : 0.01),
-  yColumn: 'accuracy', ringColumn: 'invented', ringTitle: "share of the engine's words absent from the reference",
-  ringLegend: 'Dashed ring: share of words found nowhere in the reference (bigger ring, more invented text).',
-  verb: 'read', unit: 'script',
-  more: 'reads more accurately', less: 'reads less accurately', most: 'reads most accurately', mostAdj: 'most accurate', better: 'reads better', scoreWord: 'accuracy',
-  judgesNote: () => '',
-  extraLegend: 'Hollow dot: self-hosted, priced on inference time alone, so it reads low.',
-  charts: ocrData.charts.map(c => ({ ...c, panels: c.panels.map(ocrPanel) })),
+  yAxis: 'accuracy against a typed text, in points a page',
+  fmtY: v => pctOf(v),
+  fmtDiff: d => signed(Math.abs(d * 100).toFixed(1), d), diffUnit: 'points', gainHead: 'Gain, points a page',
+  yColumn: 'mean accuracy',
+  charts: ocrData.charts.map(c => adapt(c, ocrPanel)),
   noChart: ocrData.no_chart,
+  gradeRules: ocrData.grade_rules,
 };
 
 export const TRANSLATION: Measure = {
   key: 'translation', anchor: 'pareto-translation-',
   title: c => `${c.title} into English`,
   exportTitle: c => `${c.title} into English: translation cost against fidelity`,
-  explain:
-    'Each dot is a translation engine. Further right costs more per 1,000 pages; higher, the closer its English keeps ' +
-    'to the meaning of a published human translation of the same page, scored from 1 to 5 by blind AI judges. ' +
-    'The line joins the engines that nothing else beats on both. The one we use now is amber. ' +
-    'The dashed ring grows with the share of pages where the English reverses a statement.',
-  badge: 'Model-judged, not human-scored',
-  yAxis: '↑ fidelity to a published translation (1–5)',
-  yTick: v => v.toFixed(1),
-  fmtY: score,
-  yRange: [1, 5],
-  step: span => (span > 0.8 ? 0.5 : span > 0.3 ? 0.2 : 0.1),
-  yColumn: 'fidelity, 1–5', ringColumn: 'reversed per 100 pages', ringTitle: 'pages where either judge quoted a reversed statement, per 100 pages',
-  ringLegend: 'Dashed ring: pages where the English reverses a statement, per 100 (bigger ring, more reversals).',
-  verb: 'translated', unit: 'language',
-  more: 'scores higher', less: 'scores lower', most: 'scores highest', mostAdj: 'highest-scoring', better: 'scores higher', scoreWord: 'fidelity',
-  judgesNote: p => `Fidelity is the mean of ${p.judges === 1 ? 'one blind judge' : 'two blind judges'}, AI models reading our English beside the published one; it is not a human score and not accuracy against the page.`,
-  extraLegend: '',
-  charts: xData.charts.map(c => ({ ...c, panels: c.panels.map(translationPanel) })),
+  yAxis: 'fidelity to a published translation, on the 1 to 5 scale (model-judged)',
+  fmtY: v => (v == null ? '–' : v.toFixed(2)),
+  fmtDiff: d => signed(Math.abs(d).toFixed(2), d), diffUnit: 'on the 1 to 5 scale', gainHead: 'Gain a page, on the 1 to 5 scale',
+  yColumn: 'mean fidelity',
+  charts: xData.charts.map(c => adapt(c, translationPanel)),
   noChart: xData.no_chart,
+  gradeRules: xData.grade_rules,
 };
 
-/** Kept for the OCR grid's callers. */
-export const charts = OCR.charts;
-export const EXPLAIN = OCR.explain;
-
-const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'}`;
-const listOf = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+const GRADE_LABEL: Record<Grade['level'], string> = { decide: 'Decide', directional: 'Directional', not_fit: 'Not fit to rank' };
+const GRADE_COLOR: Record<Grade['level'], string> = { decide: BETTER, directional: PRODUCTION, not_fit: MUTED };
 
-const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
+/** "44 works · 44 pages · Wikisource transcriptions": always beside the verdict. */
+const sample = (p: Panel) => `${plural(p.n_works, 'work')} · ${plural(p.n_pages, 'page')} · ${p.reference}`;
+const ciText = (m: Measure, ci: number[] | null) => (ci ? `${m.fmtDiff(ci[0])} to ${m.fmtDiff(ci[1])}` : 'no interval');
 
-/** "28 pages from 28 books" — always on the face of the figure. */
-function sample(p: Panel) {
-  return p.n_books === p.n_pages ? `${plural(p.n_pages, 'page')}, one per book` : `${plural(p.n_pages, 'page')} from ${plural(p.n_books, 'book')}`;
+const SUBSCRIPTION = '$0 via subscription';
+const priceText = (p: Point) => (p.cost ? (p.cost.basis === 'quota' ? SUBSCRIPTION : usd(p.cost.usd_per_1k)) : 'no price');
+const costText = (p: Point) => (p.cost ? (p.cost.basis === 'quota' ? SUBSCRIPTION : `${usd(p.cost.usd_per_1k)} per 1,000 pages`) : `no price: ${p.no_price}`);
+const anchorOf = (m: Measure, chart: Chart, panel?: Panel) =>
+  `${m.anchor}${chart.id}${panel && chart.panels.indexOf(panel) > 0 ? `-${panel.kind}` : ''}`;
+const svgId = (m: Measure, chart: Chart, panel: Panel) => `${m.anchor}svg-${chart.id}-${panel.kind}`;
+
+// ── the summary: one row per script or language ──────────────────────────────
+/** One row of the summary table, read off a chart's primary panel. */
+export type SummaryRow = {
+  id: string; title: string; anchor: string; grade: Grade; inUse: string;
+  /** switch: a Decide panel names a better engine. toward: a Directional one points at one. none: nothing stands out.
+   *  withheld: two runs of the engine in use disagreed. not_fit: the panel is not fit to rank. */
+  state: 'switch' | 'toward' | 'none' | 'withheld' | 'not_fit';
+  best: string | null; gain: string | null; interval: string | null;
+  /** "13×" where both prices are billed; `cost` is the price beside it, or the reason there is none */
+  multiple: string | null; cost: string | null;
+  /** the other engines marked better, in the verdict sentence's order, each with its cost the same way */
+  also: { label: string; cost: string }[];
+};
+
+/** The engines the data file marks better than the engine in use, largest paired difference first: the same
+ *  choice, with the same tie-break, as verdictSentence() in scripts/eval/lib/pareto-stats.mjs. */
+const betterOf = (p: Panel) => p.points.filter(x => x.verdict === 'better' && x.vs).sort((a, b) => b.vs!.diff - a.vs!.diff || a.order - b.order);
+
+export function summaryRow(chart: Chart, m: Measure): SummaryRow {
+  const p = chart.panels[0];
+  const prod = p.points.find(x => x.production);
+  const row: SummaryRow = {
+    id: chart.id, title: m.title(chart), anchor: anchorOf(m, chart), grade: p.grade, inUse: chart.production_label,
+    state: 'none', best: null, gain: null, interval: null, multiple: null, cost: null, also: [],
+  };
+  if (p.grade.level === 'not_fit' || !prod) return { ...row, state: 'not_fit' };
+  row.inUse = prod.label;
+  if (p.noise?.kind === 'not_reproduced') return { ...row, state: 'withheld' };
+  const [b, ...rest] = betterOf(p);
+  if (!b) return row;
+  const multiple = (x: Point) => (x.cost?.basis === 'billed' && prod.cost?.basis === 'billed'
+    ? `${(r => (r >= 10 ? r.toFixed(0) : r.toFixed(1)))(x.cost.usd_per_1k / prod.cost.usd_per_1k)}×` : null);
+  return {
+    ...row, state: p.grade.level === 'decide' ? 'switch' : 'toward', best: b.label,
+    gain: m.fmtDiff(b.vs!.diff), interval: b.vs!.ci95 ? ciText(m, b.vs!.ci95) : null,
+    multiple: multiple(b),
+    cost: multiple(b) ? `${usd(b.cost!.usd_per_1k)} against ${usd(prod.cost!.usd_per_1k)} per 1,000 pages` : costText(b),
+    also: p.grade.level === 'decide' ? rest.map(x => ({ label: x.label, cost: multiple(x) ?? priceText(x) })) : [],
+  };
 }
 
-/** The warning a figure must carry on its face, if any. */
-function caution(p: Panel): string | null {
-  if (!p.frontier) return 'Too few engines for a frontier';
-  if (p.n_books < FEW_BOOKS) return `Only ${plural(p.n_books, 'book')}: provisional`;
-  return null;
+const fit = (c: Chart) => c.panels[0].grade.level !== 'not_fit';
+
+function GradeLabel({ g }: { g: Grade }) {
+  return <span className="uppercase tracking-wider text-[0.75rem] font-semibold whitespace-nowrap" style={{ color: GRADE_COLOR[g.level] }} title={g.why}>{GRADE_LABEL[g.level]}</span>;
 }
 
-const overlaps = (a: Point, b: Point) =>
-  !!a.y_ci95 && !!b.y_ci95 && a.y_ci95[0] <= b.y_ci95[1] && b.y_ci95[0] <= a.y_ci95[1];
-
-/** "Claude …, scored on 7 of these pages: 4.93, against 4.21 for … there." */
-function subsetText(p: Point, m: Measure) {
-  const s = p.subset!;
-  return `on ${s.n_pages} of these pages${s.separate_read ? ' (graded in a separate read)' : ''} it scores ${m.fmtY(p.y)}, against ${m.fmtY(s.production_y)} for ${s.production_label} on the same pages`;
-}
-
-/** One or two sentences on what the figure means for this script or language, composed from the data. */
-export function meaning(p: Panel, m: Measure = OCR): string {
-  const pts = p.placed;
-  if (!pts.length) return '';
-  const best = pts.reduce((a, b) => (b.y! > a.y! ? b : a));
-  const cheap = pts.reduce((a, b) => (b.cost!.usd_per_1k < a.cost!.usd_per_1k ? b : a));
-  const prod = pts.find(x => x.production);
-  // An engine with no measured cost is off the plot, but if it scores better, the sentence must say so.
-  // One read on only some of the pages is compared with the production engine on those same pages.
-  const beats = (x: Point) => x.y != null && (x.subset ? x.y > x.subset.production_y : x.y > best.y!);
-  const better = p.no_cost.filter(beats).sort((a, b) => b.y! - a.y!);
-  const offPlot = !better.length ? '' : better[0].subset
-    ? ` ${better[0].label}, not plotted because its cost is not metered, ${m.better}: ${subsetText(better[0], m)}.`
-    : ` ${better[0].label}, not plotted because its cost is not measured, ${m.better} still, at ${m.fmtY(better[0].y)}` +
-      (better.length > 1 ? `, as ${better.length === 2 ? 'does one other' : `do ${better.length - 1} others`} without a measured cost.` : '.');
-  if (!p.frontier) {
-    return `Only ${plural(pts.length, 'engine')} with a measured cost ${m.verb} these pages, too few to draw a frontier` +
-      (pts.length > 1 ? `; of ${pts.length === 2 ? 'the two' : 'those'}, ${best.label} ${m.more}${pts.some(x => x !== best && overlaps(x, best)) ? ', though the intervals overlap' : ''}.` : '.') + offPlot;
-  }
-  const out = [best === cheap
-    ? `${best.label} is both the cheapest engine here and the ${m.mostAdj}.`
-    : `${cheap.label} is the cheapest engine here; ${best.label} ${m.most}.`];
-  if (prod) {
-    if (prod === best) out.push(`The one we use now, ${prod.label}, is that ${m.mostAdj} engine.`);
-    else if (prod.on_frontier) {
-      out.push(`The one we use now, ${prod.label}, is on the frontier` +
-        (overlaps(prod, best) ? `, and its interval overlaps ${best.label}’s.` : `, but ${m.less} than ${best.label}.`));
-    } else {
-      const beaters = pts.filter(b => b !== prod && b.cost!.usd_per_1k <= prod.cost!.usd_per_1k && b.y! >= prod.y!);
-      const settled = beaters.some(b => !overlaps(b, prod));
-      out.push(`The one we use now, ${prod.label}, is beaten on both cost and ${m.scoreWord} by ${listOf(beaters.map(b => b.label))}` +
-        (settled ? '.' : ', though the intervals overlap, so that is not yet settled.'));
-    }
-  }
-  return out.join(' ') + offPlot;
-}
-
-// ── geometry ─────────────────────────────────────────────────────────────────
-// Font sizes are in viewBox units. The grid figure is 300 wide and shows at ≈ 400 px on /quality at
-// 1280, so 11 units ≈ 14.7 px; at 390 px it shows at ≈ 310 px, so 11 units ≈ 11.4 px.
-const X_TICKS = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
-
-/** The plot itself, drawn into a W×H box: header lines (sample, badge, caution), axes, frontier, points. */
-function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; H: number; f: number }) {
-  const pts = panel.placed;
-  const warn = caution(panel);
-  const heads = [m.badge, warn].filter(Boolean) as string[];
-  // The y-axis title sits horizontally above the plot: rotated, it outgrows a short axis.
-  const M = { l: f * 3.6, r: f * 1.2, t: f * (3.7 + heads.length * 1.3), b: f * 3.4 };
-  const costs = pts.map(p => p.cost!.usd_per_1k);
-  const x0 = Math.log10(Math.min(...costs) / 1.8), x1 = Math.log10(Math.max(...costs) * 1.8);
-  const lows = pts.map(p => p.y_ci95?.[0] ?? p.y ?? m.yRange[1]);
-  const highs = pts.map(p => p.y_ci95?.[1] ?? p.y ?? m.yRange[1]);
-  // y range in whole steps that leave a margin; the measure picks a step that gives 3–6 ticks
-  const step = m.step(Math.max(...highs) - Math.min(...lows));
-  const y0 = Math.max(m.yRange[0], Math.floor((Math.min(...lows) - step / 4) / step) * step);
-  const y1 = Math.min(m.yRange[1], Math.ceil((Math.max(...highs) + step / 4) / step) * step);
-  const sx = (c: number) => M.l + ((Math.log10(c) - x0) / (x1 - x0)) * (W - M.l - M.r);
-  const sy = (a: number) => H - M.b - ((a - y0) / (y1 - y0 || 1)) * (H - M.t - M.b);
-  const yTicks: number[] = [];
-  for (let v = y0; v <= y1 + 1e-9; v += step) yTicks.push(Math.round(v * 1000) / 1000);
-  const xTicks = X_TICKS.filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
-  const frontier = panel.frontier ? pts.filter(p => p.on_frontier) : [];
-  const r = f * 0.8;
-
+/** The table at the top of /quality/pareto. A table from the sm breakpoint up; on a phone each row stacks,
+ *  with the column name written before each value. */
+export function ParetoSummary({ m = OCR }: { m?: Measure }) {
+  const rows = [...m.charts.filter(fit), ...m.charts.filter(c => !fit(c))].map(c => summaryRow(c, m));
+  const th = 'font-normal py-2 pr-4';
+  const td = 'block sm:table-cell sm:py-2 sm:pr-4';
+  const lab = (s: string) => <span className="sm:hidden text-stone-600">{s}: </span>;
   return (
+    <table className="w-full text-base block sm:table">
+      <thead className="hidden sm:table-header-group">
+        <tr className="text-left text-sm text-stone-600 border-b border-stone-300 align-bottom">
+          <th className={th}>{m.key === 'ocr' ? 'Script' : 'Language'}</th>
+          <th className={th}>Engine in use</th>
+          <th className={th}>Best clear switch</th>
+          <th className={th}>{m.gainHead} (95% interval)</th>
+          <th className={th}>Cost against the engine in use</th>
+          <th className="font-normal py-2">Grade</th>
+        </tr>
+      </thead>
+      <tbody className="block sm:table-row-group">
+        {rows.map(r => (
+          <tr key={r.id} className="block sm:table-row py-3 sm:py-0 border-b border-stone-200 align-top">
+            <th scope="row" className={`${td} text-left font-normal`}>
+              <a href={`#${r.anchor}`} className="font-serif text-lg text-stone-900 hover:text-amber-800">{r.title}</a>
+              <span className="sm:hidden ml-2"><GradeLabel g={r.grade} /></span>
+            </th>
+            <td className={`${td} text-stone-700`}>{lab('In use')}{r.inUse}</td>
+            {r.state === 'not_fit' || r.state === 'withheld' ? (
+              <td colSpan={3} className={`${td} text-stone-600`}>
+                {r.state === 'withheld' ? 'Verdict withheld: two runs of the engine in use disagreed.' : `Not measured well enough yet: ${r.grade.why}.`}
+              </td>
+            ) : r.state === 'none' ? (
+              <>
+                <td className={`${td} text-stone-700`}>{lab('Best clear switch')}None</td>
+                <td className="hidden sm:table-cell sm:py-2 sm:pr-4 text-stone-600">{'–'}</td>
+                <td className="hidden sm:table-cell sm:py-2 sm:pr-4 text-stone-600">{'–'}</td>
+              </>
+            ) : (
+              <>
+                <td className={td}>
+                  {lab(r.state === 'switch' ? 'Best clear switch' : 'Points toward')}
+                  <span className="text-stone-900 font-semibold">{r.best}</span>
+                  {r.state === 'toward' && <span className="hidden sm:block text-sm text-stone-600">points toward; directional only</span>}
+                  {r.also.length > 0 && <span className="block text-sm text-stone-600">Also better: {r.also.map(a => `${a.label} (${a.cost})`).join(', ')}</span>}
+                </td>
+                <td className={`${td} tabular-nums`}>
+                  {lab('Gain')}
+                  <span className="text-stone-900 font-semibold">{r.gain}</span>
+                  <span className="sm:hidden text-stone-900"> {m.diffUnit}</span>
+                  {r.interval && <span className="text-stone-600 whitespace-nowrap"> ({r.interval})</span>}
+                </td>
+                <td className={`${td} tabular-nums`}>
+                  {lab('Cost')}
+                  {r.multiple && <span className="text-stone-900 font-semibold">{r.multiple} </span>}
+                  <span className={r.multiple ? 'sm:block text-sm text-stone-600' : 'text-stone-700'}>{r.cost}</span>
+                </td>
+              </>
+            )}
+            <td className="hidden sm:table-cell sm:py-2"><GradeLabel g={r.grade} /></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+// ── the forest plot ──────────────────────────────────────────────────────────
+// Font sizes are in viewBox units, and each plot is drawn at close to 1:1, so f is the type size in CSS pixels.
+type Row = { p: Point; diff: number; ci: number[] | null };
+
+/** Engines sorted by their paired difference from the engine in use, which sits at zero. An engine with no
+ *  paired difference (it shared no page with the engine in use) is left to the table. */
+const forestRows = (panel: Panel): Row[] => panel.points
+  .filter(p => p.production || p.vs)
+  .map(p => ({ p, diff: p.vs?.diff ?? 0, ci: p.vs?.ci95 ?? null }))
+  .sort((a, b) => b.diff - a.diff || Number(b.p.production) - Number(a.p.production) || a.p.order - b.p.order);
+
+/** The x range and its ticks. The range always holds zero, the noise band and every engine's upper end. On the low
+ *  side, take the range without the few lowest engines (at most a third, at most five): one of those is cut off only
+ *  where it lies more than twice that range below it. Otherwise one failed engine would squeeze every other row into
+ *  a line beside zero. `maxTicks` is how many tick labels fit side by side. */
+function forestScale(rows: Row[], band: number, maxTicks = 5) {
+  const hi = Math.max(0, band, ...rows.flatMap(r => [r.diff, ...(r.ci ?? [])]));
+  const lows = rows.map(r => Math.min(r.diff, ...(r.ci ?? []))).sort((a, b) => a - b);
+  const coreLo = Math.min(0, -band, ...lows.slice(Math.min(5, Math.floor(rows.length / 3))));
+  const floor = coreLo - 2 * (hi - coreLo);
+  const lo = Math.min(coreLo, ...lows.filter(v => v >= floor));
+  const cut = lows.some(v => v < floor);
+  const span = hi - lo || 1;
+  let ticks: number[] = [];
+  for (let pow = 10 ** Math.floor(Math.log10(span / maxTicks)), k = 0; ; k++) {
+    const step = pow * [1, 2, 5][k % 3] * 10 ** Math.floor(k / 3);
+    ticks = [];
+    for (let i = Math.ceil(lo / step); i * step <= hi + step * 1e-6; i++) ticks.push(i * step);
+    if (ticks.length <= maxTicks) break;
+  }
+  return { lo: lo - span * 0.04, hi: hi + span * 0.04, cut, ticks };
+}
+
+/** The plot. Wide: one line per engine (name, mark, difference, price). Stacked, for a phone: two lines per engine
+ *  (name and price, then mark and difference). No label is placed by the data, so none can overlap. */
+function forest(panel: Panel, m: Measure, W: number, f: number, stacked: boolean): { H: number; body: ReactNode } {
+  const rows = forestRows(panel);
+  const band = panel.noise?.kind === 'spread' && panel.noise.band ? panel.noise.band : 0;
+  const fs = f * 0.92, r = Math.max(3.5, f * 0.3), gap = f * 0.9;
+  const diffW = f * 13.2, priceW = f * 11.2;
+  const x0 = stacked ? r + 2 : f * 17.7 + gap;
+  const x1 = stacked ? W - diffW - gap : W - priceW - diffW - gap * 2;
+  const { lo, hi, ticks } = forestScale(rows, band, Math.floor((x1 - x0) / (fs * 4.2)));
+  const sx = (v: number) => x0 + ((Math.min(Math.max(v, lo), hi) - lo) / (hi - lo)) * (x1 - x0);
+  const head = f * 2.3, rh = stacked ? f * 3.4 : f * 2;
+  const H = Math.ceil(head + rows.length * rh + 2);
+  const decide = panel.grade.level === 'decide';
+  const body = (
     <g fontFamily={FONT}>
-      <text x={0} y={f} fontSize={f} fill={MUTED}>{sample(panel)}</text>
-      {heads.map((h, i) => (
-        <text key={h} x={0} y={f * (2.3 + i * 1.3)} fontSize={f} fontWeight={700} fill={h === warn ? PRODUCTION : INK}>{h}</text>
-      ))}
-
-      {/* grid + axes: recessive */}
-      {yTicks.map(v => (
-        <g key={`y${v}`}>
-          <line x1={M.l} x2={W - M.r} y1={sy(v)} y2={sy(v)} stroke="#e7e5e4" strokeWidth={1} />
-          <text x={M.l - f * 0.5} y={sy(v)} dy="0.32em" textAnchor="end" fontSize={f} fill={MUTED}>{m.yTick(v)}</text>
-        </g>
-      ))}
-      {xTicks.map(t => (
-        <g key={`x${t}`}>
-          <line x1={sx(t)} x2={sx(t)} y1={M.t} y2={H - M.b} stroke="#f5f5f4" strokeWidth={1} />
-          <text x={sx(t)} y={H - M.b + f * 1.3} textAnchor="middle" fontSize={f} fill={MUTED}>${t}</text>
-        </g>
-      ))}
-      <text x={(M.l + W - M.r) / 2} y={H - f * 0.4} textAnchor="middle" fontSize={f} fill={INK}>cost per 1,000 pages →</text>
-      <text x={0} y={M.t - f * 0.9} fontSize={f} fill={INK}>{m.yAxis}</text>
-
-      {/* frontier */}
-      {frontier.length >= 2 && (
-        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${sy(p.y!)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={f * 0.2} strokeLinejoin="round" />
-      )}
-
-      {pts.map((p, i) => {
-        const cx = sx(p.cost!.usd_per_1k), cy = sy(p.y!);
-        const ring = p.ring != null ? r + f * 0.2 + p.ring * f * 3 : null;
-        const compute = p.cost!.basis === 'compute';
-        const tip = `${p.label}${p.production ? ' (in production)' : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0])}–${m.fmtY(p.y_ci95[1])}]` : ''}, ${usd(p.cost!.usd_per_1k)} per 1,000 pages (${p.cost!.basis})${p.ring_text ? `, ${m.ringColumn}: ${p.ring_text}` : ''}${p.on_frontier ? ', on the frontier' : ''}`;
+      {!stacked && <text x={0} y={f} fontSize={fs} fill={MUTED}>engine</text>}
+      {!stacked && <text x={x1 + gap} y={f} fontSize={fs} fill={MUTED}>difference (95% interval)</text>}
+      {!stacked && <text x={W} y={f} textAnchor="end" fontSize={fs} fill={MUTED}>per 1,000 pages</text>}
+      {ticks.map(t => <text key={t} x={sx(t)} y={stacked ? f * 1.5 : f} textAnchor="middle" fontSize={fs} fill={MUTED}>{t === 0 ? '0' : m.fmtDiff(t)}</text>)}
+      <line x1={0} x2={W} y1={head - f * 0.5} y2={head - f * 0.5} stroke={GRID} strokeWidth={1} />
+      {rows.map(({ p, diff, ci }, i) => {
+        const top = head + i * rh;
+        const cy = stacked ? top + f * 2.35 : top + rh / 2;
+        const y0 = stacked ? top + f * 1.5 : top, y1 = stacked ? top + f * 3.2 : top + rh;
+        const c = p.production ? PRODUCTION : p.verdict === 'better' ? BETTER : INK;
+        const strong = p.production || p.verdict === 'better';
+        const off = Math.min(diff, ...(ci ?? [])) < lo;
+        const diffText = p.production ? 'in use' : `${m.fmtDiff(diff)}${ci ? ` (${ciText(m, ci)})` : ''}`;
         return (
           <g key={p.engine}>
-            <title>{tip}</title>
-            {p.y_ci95 && (
-              <line x1={cx} x2={cx} y1={sy(p.y_ci95[0])} y2={sy(p.y_ci95[1])} stroke="#a8a29e" strokeWidth={f * 0.2} strokeLinecap="round" />
+            {band > 0 && <rect x={sx(-band)} width={sx(band) - sx(-band)} y={y0} height={y1 - y0} fill={GRID} opacity={0.7} />}
+            {ticks.map(t => <line key={t} x1={sx(t)} x2={sx(t)} y1={y0} y2={y1} stroke={t === 0 ? FAINT : GRID} strokeWidth={1} />)}
+            {ci && ci[1] > lo && (
+              <g stroke={c} strokeWidth={1.5}>
+                <line x1={sx(ci[0])} x2={sx(ci[1])} y1={cy} y2={cy} />
+                {ci[0] >= lo && <line x1={sx(ci[0])} x2={sx(ci[0])} y1={cy - 3} y2={cy + 3} />}
+                <line x1={sx(ci[1])} x2={sx(ci[1])} y1={cy - 3} y2={cy + 3} />
+              </g>
             )}
-            {ring && <circle cx={cx} cy={cy} r={ring} fill="none" stroke="#a8a29e" strokeWidth={1} strokeDasharray="2 2" />}
-            <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.5 : 2} />
-            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.95} fontWeight={700} fill={compute ? INK : '#fff'}>{i + 1}</text>
-            {/* a hit target bigger than the mark */}
-            <circle cx={cx} cy={cy} r={r * 1.6} fill="transparent" />
+            {off && <path d={`M${x0 - r - 2} ${cy} l${r * 1.6} ${-r} v${r * 2} z`} fill={c} />}
+            {diff >= lo && <circle cx={sx(diff)} cy={cy} r={r} fill={c} />}
+            <text x={0} y={stacked ? top + f * 1.05 : cy} dy={stacked ? undefined : '0.34em'} fontSize={f} fontWeight={strong ? 600 : 400} fill={p.production ? PRODUCTION : INK}>{p.label}</text>
+            <text x={stacked ? W : x1 + gap} y={cy} dy="0.34em" textAnchor={stacked ? 'end' : 'start'} fontSize={fs}
+              fontWeight={decide && (p.verdict === 'better' || p.verdict === 'worse') ? 600 : 400} fill={p.production ? PRODUCTION : INK}>{diffText}</text>
+            <text x={W} y={stacked ? top + f * 1.05 : cy} dy={stacked ? undefined : '0.34em'} textAnchor="end" fontSize={fs} fill={MUTED}>{priceText(p)}</text>
           </g>
         );
       })}
     </g>
+  );
+  return { H, body };
+}
+
+/** What the plot's marks mean: only the marks this plot uses. */
+function Key({ panel }: { panel: Panel }) {
+  const rows = forestRows(panel);
+  const band = panel.noise?.kind === 'spread' && !!panel.noise.band;
+  const item = 'inline-flex items-center gap-1';
+  const dot = (c: string) => <svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill={c} /></svg>;
+  return (
+    <p className="text-sm text-stone-600 mt-2 flex flex-wrap gap-x-4 gap-y-1">
+      <span className={item}>{dot(PRODUCTION)}in use</span>
+      {rows.some(x => x.p.verdict === 'better') && <span className={item}>{dot(BETTER)}{panel.grade.level === 'decide' ? 'clearly better' : 'the evidence points toward it'}</span>}
+      <span className={item}><svg width="18" height="10" aria-hidden="true"><g stroke={INK} strokeWidth="1.5"><line x1="1" x2="17" y1="5" y2="5" /><line x1="1" x2="1" y1="2" y2="8" /><line x1="17" x2="17" y1="2" y2="8" /></g></svg>95% interval</span>
+      {band && <span className={item}><svg width="14" height="10" aria-hidden="true"><rect width="14" height="10" fill={GRID} /></svg>spread between two runs of the engine in use</span>}
+      {forestScale(rows, band ? panel.noise!.band! : 0).cut && (
+        <span className={item}><svg width="8" height="10" aria-hidden="true"><path d="M0 5 l7 -4 v8 z" fill={INK} /></svg>runs off the scale; its figures are in the row</span>
+      )}
+    </p>
   );
 }
 
@@ -327,257 +409,236 @@ function wrap(s: string, n: number): string[] {
   return lines;
 }
 
-const svgId = (m: Measure, chart: Chart, panel: Panel) => `${m.anchor}svg-${chart.id}-${panel.kind}`;
-const anchorOf = (m: Measure, chart: Chart, panel?: Panel) =>
-  `${m.anchor}${chart.id}${panel && chart.panels.indexOf(panel) > 0 ? `-${panel.kind}` : ''}`;
+const axisText = (m: Measure) => `Difference from the engine in use in ${m.yAxis}, on the same pages.`;
 
-/** The key line for one engine, in the export and nowhere else. */
-function keyLine(p: Point, i: number, nPlaced: number, m: Measure) {
-  const n = i < nPlaced ? `${i + 1}  ` : '–  ';
-  const tags = [p.production ? 'in use now' : '', p.on_frontier ? 'on the frontier' : ''].filter(Boolean).join(', ');
-  if (p.subset) return `${n}${p.label}: not plotted; ${subsetText(p, m)}${p.note ? `. ${p.note[0].toUpperCase()}${p.note.slice(1)}.` : '.'}`;
-  return `${n}${p.label}${tags ? ` (${tags})` : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0], m.key === 'ocr' ? 0 : 2)}–${m.fmtY(p.y_ci95[1], m.key === 'ocr' ? 0 : 2)}]` : ''}; ${p.cost ? `${usd(p.cost.usd_per_1k)} per 1,000 pages${p.cost.basis === 'compute' ? ' (inference time only)' : ''}` : 'cost not measured'}${p.ring_text ? `; ${m.ringColumn}: ${p.ring_text}` : ''}`;
-}
-
-/** A self-contained figure for a slide: title, explanation, plot, key, notes. Hidden on the page. */
+/** A self-contained figure for a slide: title, verdict, grade and sample, then the plot. Hidden on the page. */
 function ExportSvg({ chart, panel, m }: { chart: Chart; panel: Panel; m: Measure }) {
-  const W = 960, f = 16, pad = 32, PH = 480, chars = 100;
-  const lines: { t: string; size: number; weight?: number; fill: string; gap?: number }[] = [];
+  const W = 1040, f = 15, pad = 32, chars = 110;
   const head = [
     { t: m.exportTitle(chart), size: f * 1.5, weight: 700, fill: '#1c1917' },
-    ...(chart.panels.length > 1 ? [{ t: panelHeading(panel), size: f, fill: MUTED }] : []),
-    ...wrap(m.explain, chars).map(t => ({ t, size: f, fill: INK })),
-    ...wrap(meaning(panel, m), Math.round(chars * 0.9)).map(t => ({ t, size: f, weight: 600, fill: '#1c1917' })),
+    ...(panel.heading ? [{ t: panel.heading, size: f, weight: 400, fill: MUTED }] : []),
+    { t: `${GRADE_LABEL[panel.grade.level]}: ${panel.grade.why}. ${sample(panel)}.`, size: f * 0.9, weight: 400, fill: MUTED },
+    ...wrap(panel.verdict, Math.round(chars * 0.9)).map(t => ({ t, size: f, weight: 600, fill: '#1c1917' })),
+    { t: axisText(m), size: f * 0.9, weight: 400, fill: MUTED },
   ];
   let y = pad;
   const headEls = head.map((l, i) => { y += l.size * 1.35; return <text key={i} x={pad} y={y} fontSize={l.size} fontWeight={l.weight} fill={l.fill}>{l.t}</text>; });
   const plotY = y + f;
-  y = plotY + PH + f * 0.5;
-  for (const [i, p] of [...panel.placed, ...panel.no_cost].entries()) {
-    wrap(keyLine(p, i, panel.placed.length, m), chars).forEach((t, j) => lines.push({ t: j ? `     ${t}` : t, size: f * 0.9, fill: INK }));
-  }
-  const nKey = lines.length;
-  const notes = [
-    `Bar: 95% interval. ${m.ringLegend}${m.extraLegend ? ` ${m.extraLegend}` : ''}`,
-    `${sample(panel)}, ${m.verb} by every engine shown.${panel.n_books < panel.n_pages ? ' Pages of one book are not independent, so the intervals are too narrow.' : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`,
-    ...(m.judgesNote(panel) ? [m.judgesNote(panel)] : []),
-    ...(panel.notes || []).map(n => `${n}.`),
-    `Reference: ${panel.references.map(r => `${r.reference} (${r.pages})`).join('; ')}. Scored ${panel.date}.`,
-    ...(chart.pending?.length ? [pendingText(chart)] : []),
-    `Not yet tested on this ${m.unit}: ${chart.not_tested.join(', ')}.`,
-    `Source Library, sourcelibrary.org/quality/pareto#${anchorOf(m, chart, panel)}`,
-  ];
-  for (const n of notes) for (const t of wrap(n, Math.round(chars * 1.12))) lines.push({ t, size: f * 0.8, fill: MUTED });
-  if (lines[nKey]) lines[nKey].gap = f * 0.6;
-  const bodyEls = lines.map((l, i) => { y += l.size * 1.4 + (l.gap ?? 0); return <text key={i} x={pad} y={y} fontSize={l.size} fill={l.fill}>{l.t}</text>; });
+  const plot = forest(panel, m, W - 2 * pad, f, false);
+  y = plotY + plot.H + f * 1.6;
   const H = Math.ceil(y + pad);
   return (
     <svg id={svgId(m, chart, panel)} xmlns="http://www.w3.org/2000/svg" width={W} height={H} viewBox={`0 0 ${W} ${H}`} fontFamily={FONT}>
       <rect width={W} height={H} fill="#fff" />
       {headEls}
-      <g transform={`translate(${pad} ${plotY})`}><PlotBody panel={panel} m={m} W={W - 2 * pad} H={PH} f={f} /></g>
-      {bodyEls}
+      <g transform={`translate(${pad} ${plotY})`}>{plot.body}</g>
+      <text x={pad} y={y} fontSize={f * 0.85} fill={MUTED}>Source Library, sourcelibrary.org/quality/pareto#{anchorOf(m, chart, panel)}. Scored {panel.date ?? ''}.</text>
     </svg>
   );
 }
 
-function Tag({ color, children }: { color: string; children: ReactNode }) {
-  return <span className="ml-1 text-[0.7rem] uppercase tracking-wider whitespace-nowrap" style={{ color }}>{children}</span>;
+function GradeBadge({ g }: { g: Grade }) {
+  return (
+    <span>
+      <span className="uppercase tracking-wider text-[0.75rem] font-semibold whitespace-nowrap" style={{ color: GRADE_COLOR[g.level] }}>{GRADE_LABEL[g.level]}</span>
+      <span className="text-stone-600">: {g.why}</span>
+    </span>
+  );
 }
 
-function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m: Measure; present?: boolean }) {
-  const refs = panel.references;
-  const ciDigits = m.key === 'ocr' ? 0 : 2;
-  // Presenting: wider and shorter, so the plot and its table fit one 1280×800 screen.
-  const [W, H, f] = present ? [340, 230, 11] : [300, 250, 11];
-  const plot = (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={`${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`}>
-      <PlotBody panel={panel} m={m} W={W} H={H} f={f} />
-    </svg>
+/** What the repeat run of the engine in use says about noise, in one sentence (or nothing when there was none). */
+function noiseText(panel: Panel, m: Measure): string | null {
+  const n = panel.noise;
+  if (!n) return null;
+  if (n.kind === 'spread') return `Noise band from a repeat run of the engine in use: ${m.fmtDiff(n.band!).slice(1)}.`;
+  if (n.kind === 'identical') return `A repeat run of the engine in use scored the same on all ${n.n} pages.`;
+  if (n.kind === 'not_reproduced') return `Repeat run of the engine in use: ${m.fmtDiff(n.diff!)} ${m.diffUnit}.`;
+  return `Repeat run not used: ${n.why}.`;
+}
+
+function VsCell({ p, m, decide }: { p: Point; m: Measure; decide: boolean }) {
+  if (p.production) return <span className="text-stone-600">in use</span>;
+  if (!p.vs) return <span className="text-stone-600">{'–'}</span>;
+  const strong = decide && (p.verdict === 'better' || p.verdict === 'worse');
+  return (
+    <span className={strong ? 'text-stone-900 font-semibold' : 'text-stone-700'}>
+      {m.fmtDiff(p.vs.diff)}
+      {p.vs.ci95 && <span className="text-stone-600 font-normal whitespace-nowrap"> ({m.fmtDiff(p.vs.ci95[0])} to {m.fmtDiff(p.vs.ci95[1])})</span>}
+    </span>
   );
-  const table = (
-    <div className="overflow-x-auto"><table className="w-full tabular-nums text-sm">
+}
+
+/** Every engine on the panel, sorted by score, with every figure the data file holds for it. */
+function Table({ panel, m }: { panel: Panel; m: Measure }) {
+  return (
+    <div className="overflow-x-auto"><table className="w-full max-w-3xl tabular-nums text-sm">
       <thead>
-        <tr className="text-left text-stone-600 border-b border-stone-200">
-          <th className="font-normal py-1 pr-1 w-5">#</th>
+        <tr className="text-left text-stone-600 border-b border-stone-200 align-bottom">
           <th className="font-normal py-1 pr-2">engine</th>
-          <th className="font-normal py-1 pr-2 text-right">{m.yColumn} <span className="whitespace-nowrap">[95% interval]</span></th>
-          <th className="font-normal py-1 pr-2 text-right">per 1,000 pages</th>
-          <th className="font-normal py-1 text-right" title={m.ringTitle}>{m.ringColumn}</th>
+          <th className="font-normal py-1 pr-2 text-right">{m.yColumn}</th>
+          {panel.extraHeads.map(h => <th key={h.head} className="font-normal py-1 pr-2 text-right" title={h.title}>{h.head}</th>)}
+          <th className="font-normal py-1 pr-2 text-right" title="mean difference per page from the engine in use, on the same pages, with its 95% interval">vs in use</th>
+          <th className="font-normal py-1 text-right">per 1,000 pages</th>
         </tr>
       </thead>
       <tbody>
-        {panel.placed.map((p, i) => (
+        {panel.points.map(p => (
           <tr key={p.engine} className="border-b border-stone-100 align-top">
-            <td className="py-1 pr-1 text-stone-600">{i + 1}</td>
-            <td className="py-1 pr-2 text-stone-800">
-              {p.label}
-              {p.production && <Tag color={PRODUCTION}>in use</Tag>}
-              {p.on_frontier && <Tag color={FRONTIER}>frontier</Tag>}
-            </td>
-            <td className="py-1 pr-2 text-right text-stone-800">
-              {m.fmtY(p.y)}
-              {p.y_ci95 && <span className="text-stone-600 whitespace-nowrap"> [{m.fmtY(p.y_ci95[0], ciDigits)}–{m.fmtY(p.y_ci95[1], ciDigits)}]</span>}
-            </td>
-            <td className="py-1 pr-2 text-right whitespace-nowrap">
+            <td className="py-1 pr-2" style={{ color: p.production ? PRODUCTION : undefined }}>{p.label}</td>
+            <td className="py-1 pr-2 text-right text-stone-800">{m.fmtY(p.y)}</td>
+            {p.extra.map((c, k) => <td key={k} className="py-1 pr-2 text-right text-stone-700">{c ?? '–'}</td>)}
+            <td className="py-1 pr-2 text-right"><VsCell p={p} m={m} decide={panel.grade.level === 'decide'} /></td>
+            <td className="py-1 text-right">
               {p.cost ? (
                 <a href={`${GH}${p.cost.source}`} title={p.cost.detail} className="text-stone-800 hover:text-amber-800">
-                  {usd(p.cost.usd_per_1k)}{p.cost.basis === 'compute' && <sup className="text-stone-600">c</sup>}
+                  {p.cost.basis === 'quota' ? <>{SUBSCRIPTION} <span className="text-stone-600 whitespace-nowrap">({usd(p.cost.usd_per_1k)} at the API price)</span></> : usd(p.cost.usd_per_1k)}
                 </a>
-              ) : <span className="text-stone-600">not measured</span>}
+              ) : <span className="text-stone-600" title={p.no_price ?? undefined}>no price</span>}
             </td>
-            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
-          </tr>
-        ))}
-        {panel.no_cost.map(p => (
-          <tr key={p.engine} className="border-b border-stone-100 align-top">
-            <td className="py-1 pr-1" />
-            {p.subset ? (
-              <td colSpan={4} className="py-1 text-stone-700">
-                <span className="text-stone-800">{p.label}</span>, not plotted: {subsetText(p, m)}.{p.note && <span className="text-stone-600"> {p.note[0].toUpperCase() + p.note.slice(1)}.</span>}
-              </td>
-            ) : (<>
-              <td className="py-1 pr-2 text-stone-800">{p.label}</td>
-              <td className="py-1 pr-2 text-right text-stone-800">
-                {m.fmtY(p.y)}
-                {p.y_ci95 && <span className="text-stone-600 whitespace-nowrap"> [{m.fmtY(p.y_ci95[0], ciDigits)}–{m.fmtY(p.y_ci95[1], ciDigits)}]</span>}
-              </td>
-              <td className="py-1 pr-2 text-right whitespace-nowrap"><span className="text-stone-600">not measured</span></td>
-              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
-            </>)}
-          </tr>
-        ))}
-        {chart.panels.indexOf(panel) === 0 && (chart.pending || []).map(label => (
-          <tr key={`pending-${label}`} className="border-b border-stone-100 align-top">
-            <td className="py-1 pr-1" />
-            <td className="py-1 pr-2 text-stone-600">{label}</td>
-            <td colSpan={3} className="py-1 text-right text-stone-600">{PENDING}</td>
           </tr>
         ))}
       </tbody>
     </table></div>
   );
-  const notes = (
-    <p className="text-stone-600 mt-2 leading-snug text-sm">
-      {panel.n_books === panel.n_pages
-        ? <>{panel.n_books} books, one page each, {m.verb} by every engine above.</>
-        : <>{panel.n_pages} pages from {plural(panel.n_books, 'book')}, {m.verb} by every engine above; pages of one book are not independent, so the intervals are too narrow.</>}{' '}
-      {m.judgesNote(panel) && <>{m.judgesNote(panel)} </>}
-      {(panel.notes || []).map(n => <span key={n}>{n}. </span>)}
-      Reference: {refs.map((r, i) => (
-        <span key={r.stratum}>{i > 0 && '; '}{r.reference} ({r.pages})</span>
-      ))}. Scored {panel.date}.
-    </p>
-  );
-  const heading = chart.panels.length > 1 && (
-    <div className={`uppercase tracking-wider text-stone-600 mb-1 ${present ? 'text-sm' : 'text-xs'}`}>{panelHeading(panel)}</div>
-  );
-  const says = <p className={`text-stone-900 leading-snug ${present ? 'text-lg' : 'text-sm font-medium mb-2'}`}>{meaning(panel, m)}</p>;
-  const download = (
-    <div className={`text-stone-600 mt-2 ${present ? 'text-base' : 'text-sm'}`}>
-      <ParetoDownload svgId={svgId(m, chart, panel)} name={anchorOf(m, chart, panel)} />
-    </div>
-  );
-  const hidden = <div hidden aria-hidden="true"><ExportSvg chart={chart} panel={panel} m={m} /></div>;
+}
 
-  if (present) {
+/** One panel. Fit to read: verdict, plot, and the table under a disclosure. Not fit to rank: the table alone,
+ *  because a plot of differences would read as a ranking the grade says the pages cannot support. */
+function PanelView({ chart, panel, m, sub }: { chart: Chart; panel: Panel; m: Measure; sub?: boolean }) {
+  const id = chart.panels.indexOf(panel) > 0 ? anchorOf(m, chart, panel) : undefined;
+  const provenance = [noiseText(panel, m), ...panel.notes].filter(Boolean).join(' ');
+  if (panel.grade.level === 'not_fit') {
     return (
-      <div className="grid gap-8 lg:grid-cols-[4fr_3fr] items-start">
-        <div className="min-w-0">{heading}{plot}{download}</div>
-        <div className="min-w-0">{says}<div className="mt-4">{table}</div>{notes}</div>
-        {hidden}
+      <div id={id} className="scroll-mt-24">
+        {panel.heading && <div className="font-serif text-lg text-stone-900">{panel.heading}</div>}
+        <p className="text-sm"><GradeBadge g={panel.grade} /></p>
+        <p className="text-sm text-stone-600 mb-2">{sample(panel)}.{provenance && <> {provenance}</>}</p>
+        <Table panel={panel} m={m} />
       </div>
     );
   }
+  // Drawn twice at close to 1:1, so the type holds its size: a phone's column and a wider one.
+  const sizes: [string, number, number, boolean][] = [['sm:hidden', 350, 12, true], ['hidden sm:block', 820, 13, false]];
+  const label = `${m.title(chart)}: each engine's difference from the engine in use, for ${panel.points.length} engines. ${sample(panel)}. ${panel.verdict}`;
   return (
-    <div className="mt-5 first:mt-0">
-      {heading}
-      {says}
-      {plot}
-      {table}
-      {notes}
-      {download}
-      {hidden}
+    <div id={id} className="scroll-mt-24">
+      {panel.heading && <div className={`font-serif text-stone-900 ${sub ? 'text-lg' : 'text-base text-stone-600'}`}>{panel.heading}</div>}
+      <p className={`text-stone-900 leading-snug mt-1 max-w-3xl ${sub ? 'text-base' : 'text-lg'}`}>{panel.verdict}</p>
+      <p className="text-sm mt-1"><GradeBadge g={panel.grade} /></p>
+      <p className="text-sm text-stone-600">{sample(panel)}.</p>
+      <p className="text-sm text-stone-600 mt-4 max-w-3xl">{axisText(m)}</p>
+      {sizes.map(([cls, W, f, stacked]) => {
+        const plot = forest(panel, m, W, f, stacked);
+        return (
+          <svg key={cls} viewBox={`0 0 ${W} ${plot.H}`} className={`w-full h-auto mt-1 ${cls}`} style={{ maxWidth: W }} role="img" aria-label={label}>{plot.body}</svg>
+        );
+      })}
+      <Key panel={panel} />
+      <details className="mt-3">
+        <summary className="cursor-pointer text-stone-700 hover:text-amber-800">Full table and notes</summary>
+        <div className="mt-3 pl-4 border-l border-stone-200">
+          <Table panel={panel} m={m} />
+          {provenance && <p className="text-sm text-stone-600 mt-2 max-w-3xl">{provenance}</p>}
+          <div className="text-sm text-stone-600 mt-2"><ParetoDownload svgId={svgId(m, chart, panel)} name={anchorOf(m, chart, panel)} /></div>
+        </div>
+      </details>
+      <div hidden aria-hidden="true"><ExportSvg chart={chart} panel={panel} m={m} /></div>
     </div>
   );
 }
 
-function Explain({ m, present }: { m: Measure; present?: boolean }) {
-  return <p className={`text-stone-700 leading-snug ${present ? 'text-lg max-w-4xl' : 'text-sm mb-3'}`}>{m.explain}</p>;
-}
-
-function Caption({ chart, m, present }: { chart: Chart; m: Measure; present?: boolean }) {
+/** Every panel after the primary one, under a closed disclosure. */
+function OtherRuns({ chart, m, panels }: { chart: Chart; m: Measure; panels: Panel[] }) {
+  if (!panels.length && !chart.mentions.length) return null;
   return (
-    <figcaption className={`text-stone-600 mt-3 pt-3 border-t border-stone-100 leading-snug space-y-1 ${present ? 'text-base' : 'text-sm'}`}>
-      {chart.not_on_shared_pages.length > 0 && (
-        <p>{m.key === 'ocr' ? 'Also run here, on too few of the same pages to compare' : 'Also run, not compared here'}: {chart.not_on_shared_pages.map(e => `${e.label} (${plural(e.pages, 'page')}${e.why ? `: ${e.why}` : ''})`).join('; ')}.</p>
-      )}
-      {chart.pending?.length ? <p>{pendingText(chart)}</p> : null}
-      <p>Not yet tested on this {m.unit}: {chart.not_tested.join(', ')}.</p>
-    </figcaption>
-  );
-}
-
-/** The anchor link shown beside a figure's title. */
-function Anchor({ chart, m, base }: { chart: Chart; m: Measure; base: string }) {
-  return (
-    <a href={`${base}#${anchorOf(m, chart)}`} className="ml-2 font-sans text-sm text-stone-400 hover:text-amber-800 no-underline" aria-label={`Link to the ${m.title(chart)} chart`}>#</a>
-  );
-}
-
-/** One script or language per screen, for presenting (/quality/pareto). Each panel takes its own screen.
- *  The first one is top-aligned: centred in a full screen, a short first chart left a blank band under the
- *  section heading that read as a chart failing to load (#6011). */
-export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
-  return (
-    <div>
-      {m.charts.map(chart => chart.panels.map((panel, i) => (
-        <figure key={`${chart.id}-${panel.kind}`} id={anchorOf(m, chart, panel)}
-          className="min-h-screen flex flex-col justify-center first:justify-start py-8 border-b border-stone-200 scroll-mt-0">
-          <div className="font-serif text-3xl md:text-4xl text-stone-900">
-            {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
-          </div>
-          <div className="text-base text-stone-600 mb-2">In use now: {chart.production_label}</div>
-          <Explain m={m} present />
-          <div className="mt-4"><PanelView chart={chart} panel={panel} m={m} present /></div>
-          {i === chart.panels.length - 1 && <Caption chart={chart} m={m} present />}
-        </figure>
-      )))}
-      <NoChart m={m} />
-    </div>
-  );
-}
-
-function NoChart({ m }: { m: Measure }) {
-  return (
-    <div className="mt-6 text-base text-stone-700 max-w-3xl">
-      <p className="font-semibold text-stone-900 mb-1">No chart yet</p>
-      <ul className="list-disc pl-5 space-y-1">
-        {m.noChart.map(n => (
-          <li key={n.title}>
-            <span className="text-stone-900">{n.title}</span>: {n.why}.
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default function ParetoCharts({ m = OCR }: { m?: Measure }) {
-  return (
-    <div>
-      <div className="grid gap-6 md:grid-cols-2">
-        {m.charts.map(chart => (
-          <figure key={chart.id} id={anchorOf(m, chart)} className="rounded-sm border border-stone-200 bg-white px-4 py-5 min-w-0 scroll-mt-24">
-            <div className="font-serif text-xl text-stone-900">{m.title(chart)}<Anchor chart={chart} m={m} base="" /></div>
-            <div className="text-sm text-stone-600 mb-2">In use now: {chart.production_label}</div>
-            <Explain m={m} />
-            {chart.panels.map(p => <PanelView key={p.kind} chart={chart} panel={p} m={m} />)}
-            <Caption chart={chart} m={m} />
-          </figure>
-        ))}
+    <details className="mt-2">
+      <summary className="cursor-pointer text-stone-700 hover:text-amber-800">Other runs ({panels.length})</summary>
+      <div className="mt-3 space-y-10 pl-4 border-l border-stone-200">
+        <p className="text-sm text-stone-600 max-w-3xl">Each is its own page set or judging round: compare engines within a run, never across runs. {chart.mentions.join(' ')}</p>
+        {panels.map(p => <PanelView key={p.kind} chart={chart} panel={p} m={m} sub />)}
       </div>
-      <NoChart m={m} />
-    </div>
+    </details>
+  );
+}
+
+/** One script or language: its primary panel, then every other run under a closed disclosure. */
+function Figure({ chart, m }: { chart: Chart; m: Measure }) {
+  const [primary, ...rest] = chart.panels;
+  return (
+    <figure id={anchorOf(m, chart)} className="py-10 border-b border-stone-200 scroll-mt-16 min-w-0">
+      <div className="font-serif text-2xl md:text-3xl text-stone-900">
+        {m.title(chart)}
+        <a href={`#${anchorOf(m, chart)}`} className="ml-2 font-sans text-sm text-stone-400 hover:text-amber-800 no-underline" aria-label={`Link to the ${m.title(chart)} section`}>#</a>
+      </div>
+      <PanelView chart={chart} panel={primary} m={m} />
+      {chart.caption && <figcaption className="text-sm text-stone-600 mt-3 max-w-3xl">{chart.caption}</figcaption>}
+      <OtherRuns chart={chart} m={m} panels={rest} />
+    </figure>
+  );
+}
+
+/** The sections of /quality/pareto: every script or language whose primary panel is fit to read. */
+export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
+  return <div>{m.charts.filter(fit).map(chart => <Figure key={chart.id} chart={chart} m={m} />)}</div>;
+}
+
+/** Everything that cannot be ranked yet, as one list: the scripts and languages whose primary panel is graded
+ *  not fit (their tables open in place, so no figure is lost), then the ones with no panel at all. */
+export function NotMeasured({ measures = [OCR, TRANSLATION] }: { measures?: Measure[] }) {
+  const tag = (m: Measure) => <span className="uppercase tracking-wider text-[0.75rem] font-semibold text-stone-600 mr-2">{m.key === 'ocr' ? 'Reading' : 'Translating'}</span>;
+  return (
+    <ul className="divide-y divide-stone-200 border-y border-stone-200 max-w-4xl text-stone-700">
+      {measures.flatMap(m => [
+        ...m.charts.filter(c => !fit(c)).map(chart => {
+          const p = chart.panels[0];
+          return (
+            <li key={`${m.key}-${chart.id}`} id={anchorOf(m, chart)} className="py-2 scroll-mt-24">
+              <details>
+                <summary className="cursor-pointer hover:text-amber-800">
+                  {tag(m)}<span className="text-stone-900">{chart.title}</span> ({plural(p.n_works, 'work')}, {plural(p.n_pages, 'page')}): {p.grade.why}.
+                </summary>
+                <div className="mt-3 mb-2 space-y-8 pl-4 border-l border-stone-200">
+                  {chart.caption && <p className="text-sm text-stone-600 max-w-3xl">{chart.caption}</p>}
+                  {chart.mentions.map(t => <p key={t} className="text-sm text-stone-600 max-w-3xl">{t}</p>)}
+                  {chart.panels.map(x => <PanelView key={x.kind} chart={chart} panel={x} m={m} sub />)}
+                </div>
+              </details>
+            </li>
+          );
+        }),
+        ...m.noChart.map(n => (
+          <li key={`${m.key}-${n.title}`} className="py-2">{tag(m)}<span className="text-stone-900">{n.title}</span>: {n.why}.</li>
+        )),
+      ])}
+    </ul>
+  );
+}
+
+/** The grade rules, verbatim from the data file (scripts/eval/lib/pareto-stats.mjs GRADE_RULES). */
+export function GradeRules({ m = OCR }: { m?: Measure }) {
+  return (
+    <ul className="space-y-1">
+      {(['decide', 'directional', 'not_fit'] as const).map(k => (
+        <li key={k}><span className="uppercase tracking-wider text-[0.75rem] font-semibold" style={{ color: GRADE_COLOR[k] }}>{GRADE_LABEL[k]}</span>: {m.gradeRules[k]}</li>
+      ))}
+    </ul>
+  );
+}
+
+/** The list on /quality: one line per script or language, its grade and its verdict, linking to /quality/pareto. */
+export default function ParetoCharts({ m = OCR }: { m?: Measure }): ReactNode {
+  return (
+    <ul className="divide-y divide-stone-200 border-y border-stone-200 max-w-4xl">
+      {m.charts.map(chart => {
+        const p = chart.panels[0];
+        return (
+          <li key={chart.id} id={anchorOf(m, chart)} className="py-3 scroll-mt-24">
+            <a href={`/quality/pareto#${anchorOf(m, chart)}`} className="font-serif text-lg text-stone-900 hover:text-amber-800">{m.title(chart)}</a>
+            <span className="text-sm ml-2"><GradeBadge g={p.grade} /></span>
+            <p className="text-stone-700 leading-snug mt-1">{p.verdict}</p>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

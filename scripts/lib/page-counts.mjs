@@ -661,3 +661,21 @@ export async function translationStateStampCoverage(books, filter, { min = 0.99 
   const share = total ? stamped / total : 1;
   return { total, stamped, share, ok: share >= min };
 }
+
+/**
+ * The two values the Supabase `books_catalog` mirror carries (#5288). The stored
+ * stamp wins when it is at the current rule version; otherwise the SAME function
+ * sync-worker uses is applied to the book's stored counters. That fallback is a
+ * mirror of the rule, not a second writer: nothing goes back to Mongo, and
+ * whenever the stored counters are current (sync-worker bumps `updated_at` when
+ * they are not, which re-syncs the row) it yields the rung sync-worker stamps.
+ * The projection must carry the counters, `pages_translatable`, `language`,
+ * `content_type` and `translation_state`.
+ */
+export function catalogTranslationColumns(book) {
+  const stored = book?.translation_state;
+  const state = stored && stored.version === TRANSLATION_STATE_VERSION && typeof stored.rung === 'string'
+    ? stored
+    : computeTranslationState(book, { language: book?.language, content_type: book?.content_type });
+  return { translation_rung: state.rung, english_original: state.english_original === true };
+}

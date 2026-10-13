@@ -47,16 +47,16 @@ export default function TermsPage() {
             <strong>Page images</strong> are sourced from over{' '}
             <Link href="/libraries" className="text-accent-rust hover:underline">160 partner institutions</Link>{' '}
             worldwide. Most are public domain or open access, but some carry restrictions
-            set by the digitizing institution &mdash; particularly non-commercial clauses
+            set by the digitizing institution, particularly non-commercial clauses
             on high-resolution scans. Each book&rsquo;s bibliographic information shows the
             specific license and attribution requirements for its images.
           </p>
           <div className="bg-cream rounded-lg p-6">
             <p className="text-secondary font-medium mb-2">Image license summary:</p>
             <ul className="text-secondary space-y-1 list-disc list-inside text-sm">
-              <li><strong>Most books</strong> &mdash; public domain or CC0 (use freely)</li>
-              <li><strong>Some books</strong> &mdash; non-commercial only (e.g., Bavarian State Library, Bodleian, Vatican, Cambridge)</li>
-              <li><strong>Some books</strong> &mdash; institution-specific terms (check per book)</li>
+              <li><strong>Most books:</strong> public domain or CC0 (use freely)</li>
+              <li><strong>Some books:</strong> non-commercial only (e.g., Bavarian State Library, Bodleian, Vatican, Cambridge)</li>
+              <li><strong>Some books:</strong> institution-specific terms (check per book)</li>
             </ul>
             <p className="text-secondary text-xs mt-2">
               See our{' '}
@@ -93,14 +93,14 @@ export default function TermsPage() {
             </ul>
             <p className="text-secondary font-medium mt-4 mb-2">Under these conditions:</p>
             <ul className="text-secondary space-y-1 list-disc list-inside">
-              <li><strong>Attribution</strong> &mdash; credit Source Library with a link</li>
-              <li><strong>ShareAlike</strong> &mdash; distribute derivatives under the same or compatible license</li>
+              <li><strong>Attribution:</strong> credit Source Library with a link</li>
+              <li><strong>ShareAlike:</strong> distribute derivatives under the same or compatible license</li>
             </ul>
           </div>
           <p className="text-secondary">
             This applies to individuals, researchers, educators, independent developers,
             small organizations, and anyone using the content directly.
-            AI-generated content may contain errors &mdash; verify against original sources for academic citation.
+            AI-generated content may contain errors. Verify against original sources for academic citation.
           </p>
         </section>
 
@@ -117,18 +117,18 @@ export default function TermsPage() {
           <div className="bg-cream rounded-lg p-6 mb-4">
             <p className="text-secondary font-medium mb-2">What we&rsquo;re looking for:</p>
             <ul className="text-secondary space-y-2 list-disc list-inside">
-              <li><strong>Use our API</strong> &mdash; access content through our{' '}
+              <li><strong>Use our API:</strong> access content through our{' '}
                 <Link href="/developers" className="text-accent-rust hover:underline">MCP server or REST API</Link>
                 {' '}instead of scraping the site</li>
-              <li><strong>Credit the source</strong> &mdash; when our translations appear in your
+              <li><strong>Credit the source:</strong> when our translations appear in your
                 products, attribute them to Source Library</li>
-              <li><strong>Reach out</strong> &mdash; let&rsquo;s talk about a partnership that works
+              <li><strong>Reach out:</strong> let&rsquo;s talk about a partnership that works
                 for both sides</li>
             </ul>
           </div>
           <p className="text-secondary mb-4">
             We&rsquo;re not adversarial about this. We want these texts to be part of AI
-            training data &mdash; they represent centuries of human thought that the world
+            training data. They represent centuries of human thought that the world
             should have access to. We just want to make sure it&rsquo;s done in a way that
             sustains the work and credits the source.
           </p>
@@ -139,8 +139,8 @@ export default function TermsPage() {
             </a>
           </p>
           <p className="text-secondary mt-4 text-sm">
-            For our full position on AI training and text-and-data-mining — including
-            our express reservation of those rights — see{' '}
+            For our full position on AI training and text-and-data-mining, including
+            our express reservation of those rights, see{' '}
             <Link href="/licensing" className="text-accent-rust hover:underline">AI &amp; Data-Mining Licensing</Link>.
           </p>
         </section>
@@ -198,14 +198,14 @@ export default function TermsPage() {
           <div className="bg-cream rounded-lg p-6 mb-4">
             <p className="text-secondary font-medium mb-2">Automated access rules:</p>
             <ul className="text-secondary space-y-2 list-disc list-inside">
-              <li><strong>Respect robots.txt</strong> &mdash; all automated agents must comply with
+              <li><strong>Respect robots.txt:</strong> all automated agents must comply with
                 our robots.txt directives. Disallowed paths are off-limits.</li>
-              <li><strong>Use the API</strong> &mdash; our{' '}
+              <li><strong>Use the API:</strong> our{' '}
                 <Link href="/developers" className="text-accent-rust hover:underline">REST API and MCP server</Link>
                 {' '}provide structured, efficient access. Do not scrape the website when an API is available.</li>
-              <li><strong>No bulk downloading</strong> &mdash; systematic downloading of page images,
+              <li><strong>No bulk downloading:</strong> systematic downloading of page images,
                 artwork, or full-text content via the website (as opposed to the API) is prohibited.</li>
-              <li><strong>Rate limits</strong> &mdash; automated access is subject to rate limiting.
+              <li><strong>Rate limits:</strong> automated access is subject to rate limiting.
                 Exceeding reasonable limits will result in blocking.</li>
             </ul>
           </div>
@@ -221,8 +221,8 @@ export default function TermsPage() {
             Database Rights
           </h2>
           <p className="text-secondary mb-4">
-            Source Library&rsquo;s curated collection &mdash; including its selection, organization,
-            metadata, translations, transcriptions, and image descriptions &mdash; constitutes a
+            Source Library&rsquo;s curated collection, including its selection, organization,
+            metadata, translations, transcriptions, and image descriptions, constitutes a
             database protected under the{' '}
             <strong>EU Database Directive (96/9/EC)</strong> and Dutch copyright law
             (<em>Databankenwet</em>). The substantial investment in obtaining, verifying,

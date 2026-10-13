@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A07382",
+  "edition": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem studiúmq[ue] indiderit prophetiam illam admirandam cognoscendi scrutandíque. — STC 17766; ESTC S112504 (1627)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A07382",
+  "origin": "library",
+  "book_id": "6a42acc65207af7c42f4db34",
+  "page_number": 7,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 6286,
+    "to_char": 8038,
+    "overlap": 0.356,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "blurred scan; ref ends ~1.3 lines early ('designari'), otherwise matches",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      7,
+      8,
+      9
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.570Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "d8195a519a6d51bee0cb1663736696e009fc3f6126d81ce27134618d56261452",
+  "unit": {
+    "chars": 1752
+  }
+}

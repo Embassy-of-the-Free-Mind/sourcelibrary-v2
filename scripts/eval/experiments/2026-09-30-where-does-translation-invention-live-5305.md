@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 930
+n_pages: null
+verdict: "Major served inventions sit in the body (14 of 15); under the current prompt the continuity meta is the top location (21 of 57) and hides page text on 0.84% of translated pages."
+status: informational
+decision: "metaPayload detector shipped; led to the write guard (PR #5432) and v16 bare continuity marker (PR #5433, #5376)"
+superseded_by: null
+issue: [5305, 5376]
+---
 ## 2026-09-30 — Where does translation invention live, and can a reader see it? (#5305, tq9)
 
 **Headline: on served pages the major inventions are in the BODY (14 of 15: the next page pulled back across

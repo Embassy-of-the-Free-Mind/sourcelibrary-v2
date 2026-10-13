@@ -26,6 +26,7 @@ import { fileURLToPath } from 'url';
 import { tmpdir } from 'os';
 import crypto from 'crypto';
 import { cleanOcrArtifacts } from './strip-editorial-wrappers.mjs';
+import { repairLeakedMarkup } from './leaked-markup.mjs';
 
 // ── Text processing ─────────────────────────────────────────────────
 
@@ -172,7 +173,7 @@ export function findRunningHeads(pages) {
 export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false } = {}) {
   if (!text) return { body: '', printedPage: null };
 
-  let out = text;
+  let out = repairLeakedMarkup(text, { plain: true });
   let printedPage = null;
 
   const pageNum = out.match(/<page-num>\s*([^<]{1,12}?)\s*<\/page-num>/i);
@@ -1166,7 +1167,7 @@ export function urlDisplay(url) {
  * ("[Bottom center signature mark] A [Bottom right catchword]"), so a short
  * run of them is consumed too.
  *
- * Related: `LEADING_FURNITURE` in src/lib/page-continuity.ts does the same job
+ * Related: `stripLeadingFurniture` in src/lib/page-continuity.ts does the same job
  * for the reader's continuity flags, but only for TAGGED furniture and bare
  * uppercase lines — it does not know this bracketed form. Teaching it that is
  * a change to a live reading surface and belongs in its own PR.

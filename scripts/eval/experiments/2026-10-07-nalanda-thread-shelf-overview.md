@@ -1,5 +1,19 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 16
+n_pages: 64
+verdict: "Frame-weighted, 16% of pages on four Nalanda-Java-Tibet shelves carry a serious error (4 books per shelf); OCR-dropped negations reverse the English in 5 books."
+status: informational
+decision: "Filed #6184 with a negation-flip detector; Or. 1332 hidden and held; one date corrected"
+superseded_by: null
+issue: 6184
+---
 <!-- PRIOR ART: scripts/eval/experiments/2026-10-06-eternity-shelf-review.md — the hand-picked curation check (no rates); this is a random-draw overview of different shelves. -->
-# Shelf overview: the Nalanda–Indonesia–Tibet thread (2026-10-07)
+## 2026-10-07 · Shelf overview: the Nalanda–Indonesia–Tibet thread
 
 **Question.** How often does a page carry a serious error on the four shelves a reader following
 Nālandā → Sumatra/Java → Tibet would open, and what can we show?

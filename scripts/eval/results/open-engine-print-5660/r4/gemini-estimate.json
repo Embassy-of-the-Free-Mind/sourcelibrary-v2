@@ -1,0 +1,52 @@
+{
+ "at": "2026-10-06T10:17:03.592Z",
+ "prompt": "Transcribe ALL text visible in this image using the appropriate Unicode script. Output ONLY the raw text. No commentary, no translation, no labels, no markdown.",
+ "arms": {
+  "lite": {
+   "model": "gemini-3.1-flash-lite",
+   "engine": "gemini-3.1-flash-lite",
+   "requests": 484,
+   "in_tokens_per_page": 1122,
+   "out_tokens_per_page_assumed": 900,
+   "thinking": "off (thinkingBudget 0)",
+   "usd": 0.3946
+  },
+  "lite-b": {
+   "model": "gemini-3.1-flash-lite",
+   "engine": "gemini-3.1-flash-lite-b",
+   "requests": 484,
+   "in_tokens_per_page": 1122,
+   "out_tokens_per_page_assumed": 900,
+   "thinking": "off (thinkingBudget 0)",
+   "usd": 0.3946
+  },
+  "flash": {
+   "model": "gemini-3-flash-preview",
+   "engine": "gemini-3-flash-preview",
+   "requests": 484,
+   "in_tokens_per_page": 1122,
+   "out_tokens_per_page_assumed": 900,
+   "thinking": "off (thinkingBudget 0)",
+   "usd": 0.7892
+  },
+  "f38": {
+   "model": "gemini-3.8-flash",
+   "engine": "gemini-3.8-flash",
+   "requests": 484,
+   "in_tokens_per_page": 1122,
+   "out_tokens_per_page_assumed": 900,
+   "thinking": "off (thinkingBudget 0)",
+   "usd": 1.0204
+  },
+  "pro": {
+   "model": "gemini-3.1-pro-preview",
+   "engine": "gemini-3.1-pro-preview",
+   "requests": 111,
+   "in_tokens_per_page": 1119,
+   "out_tokens_per_page_assumed": 3400,
+   "thinking": "default",
+   "usd": 2.9858
+  }
+ },
+ "usd": 5.5845
+}

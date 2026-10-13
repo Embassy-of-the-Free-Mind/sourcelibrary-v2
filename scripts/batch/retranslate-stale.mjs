@@ -243,6 +243,7 @@ async function main() {
 
         // Record in batch_jobs
         await db.collection('batch_jobs').insertOne({
+          submitted_by: 'scripts/batch/retranslate-stale.mjs',
           job_name: job.name,
           book_id: bookId,
           type: 'translation',

@@ -25,6 +25,7 @@ import { fileURLToPath } from 'node:url';
 import {
   buildCorpusPageCountPipeline, diffPageCounters, recountSet, PAGE_COUNTERS,
   computeTranslationMetrics, computeTranslationState,
+  READABLE_IN_ENGLISH_FILTER, translationStateStampCoverage,
 } from '../lib/page-counts.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { NEXT_STEP_PROJECTION, PIPELINE_NEXT_VERSION, buildPipelineNext, pipelineNextChanged, resolveOpenJobs } from '../lib/pipeline-next-step.mjs';
@@ -253,8 +254,23 @@ async function syncCollectionCounts(db) {
   // (source of truth for the /collections/[id] artwork query) — change both together.
   const ART_EXCLUDED_RESOURCE_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
 
+  // book_count = members in the named view `readable_in_english` (#5288,
+  // .claude/docs/translation-state.md) — the same view the collection grid
+  // (browseBooks hasTranslation, Supabase) renders, so header and grid agree.
+  // It was `pages_translated > 0`, which counted a 25-page preview as a
+  // readable book and an English original as unreadable.
+  //
+  // The view reads the stored `translation_state`; an unstamped book matches
+  // nothing. If the stamp is not yet on (nearly) every visible book — first
+  // deploy, or syncPageCounts failed this run — book_count is left as it is
+  // rather than collapsed toward zero on every collection.
+  const coverage = await translationStateStampCoverage(db.collection('books'), { visible: true });
+  const ladderReady = coverage.total > 0 && coverage.ok;
+  if (!ladderReady) {
+    console.warn(`  translation_state on ${coverage.stamped}/${coverage.total} visible books — keeping existing book_count values this run`);
+  }
+
   // One pass over books per counter, instead of 2 countDocuments per collection.
-  // book_count uses the canonical "readable book" filter from the archived cron;
   // artwork_count must match what the public /collections/[id] page shows — VISIBLE
   // artworks only, excluding the documentary resource types (was counting hidden
   // artworks too, overstating card counts by ~14.6K — e.g. natural-philosophy 800 vs 1697).
@@ -264,7 +280,7 @@ async function syncCollectionCounts(db) {
   // their own artwork_count.
   const [bookCounts, artworkCounts, totalBookCounts] = await Promise.all([
     db.collection('books').aggregate([
-      { $match: { status: { $ne: 'deleted' }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, resource_type: { $exists: false } } },
+      { $match: { status: { $ne: 'deleted' }, visible: true, pages_count: { $gt: 0 }, resource_type: { $exists: false }, ...READABLE_IN_ENGLISH_FILTER } },
       { $unwind: '$collections' },
       { $group: { _id: '$collections', n: { $sum: 1 } } },
     ]).toArray(),
@@ -290,7 +306,7 @@ async function syncCollectionCounts(db) {
   const ops = [];
   let mismatchCount = 0;
   for (const col of collections) {
-    const liveBookCount = bookMap.get(col.slug) || 0;
+    const liveBookCount = ladderReady ? (bookMap.get(col.slug) || 0) : (col.book_count || 0);
     const liveArtworkCount = artMap.get(col.slug) || 0;
     const liveTotalBookCount = totalMap.get(col.slug) || 0;
     if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount || (col.total_book_count || 0) !== liveTotalBookCount) {

@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
     'unknown';
   if (rateLimitHit(ip)) {
     return NextResponse.json(
-      { error: 'Rate limit exceeded — try again in a minute' },
+      { error: 'Rate limit exceeded. Try again in a minute' },
       { status: 429 },
     );
   }

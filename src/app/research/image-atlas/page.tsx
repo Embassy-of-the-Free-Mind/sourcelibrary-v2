@@ -5,7 +5,7 @@ import dataRaw from '@/data/image-constellation.json';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'Image Atlas — Source Library',
+  title: 'Image Atlas | Source Library',
   description:
     'Explore thousands of illustrations from pre-modern texts as an interactive constellation, clustered by visual content similarity.',
   alternates: { canonical: '/research/image-atlas' },

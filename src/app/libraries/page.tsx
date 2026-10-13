@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Library, ExternalLink, BookOpen, Globe } from 'lucide-react';
+import { Library, ExternalLink, Globe } from 'lucide-react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
 import HeroScrim from '@/components/HeroScrim';
@@ -119,10 +119,9 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
     .sort((a, b) => b.count - a.count);
 }
 
-function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: {
+function PartnerCard({ partner, heroImage, languages, size = 'normal' }: {
   partner: typeof LIBRARY_PARTNERS[string];
   heroImage?: string;
-  count: number;
   languages: string[];
   size?: 'hero' | 'featured' | 'normal';
 }) {
@@ -198,10 +197,6 @@ function PartnerCard({ partner, heroImage, count, languages, size = 'normal' }: 
         <div className={`flex items-center gap-x-3 gap-y-1 min-w-0 ${
           isCompact ? 'mt-2 flex-nowrap' : 'mt-5 flex-wrap'
         }`}>
-          <span className="inline-flex shrink-0 items-center gap-1.5 px-3 py-1 text-xs font-medium text-white/90 bg-white/15 backdrop-blur-sm rounded-full">
-            <BookOpen className="w-3 h-3" />
-            {count.toLocaleString('en-US')} books
-          </span>
           {topLangs && (
             <span className={`items-center gap-1.5 text-xs text-white/60 min-w-0 ${isCompact ? 'hidden md:inline-flex' : 'inline-flex'}`}>
               <Globe className="w-3 h-3 shrink-0" />
@@ -248,8 +243,6 @@ export default async function LibrariesPage() {
     .map(({ languageSet, ...p }) => ({ ...p, languages: [...languageSet].sort() }))
     .sort((a, b) => b.count - a.count) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
 
-  const totalBooks = partners.reduce((s, p) => s + p.count, 0);
-  const totalInstitutions = contributingLibraries.length;
 
   // The page credits two different kinds of source, in two sections: HOLDING
   // institutions (they own and digitized what we show) and digital PLATFORMS
@@ -259,6 +252,8 @@ export default async function LibrariesPage() {
   const bph = partners.find(p => p.providerKey === 'bph');
   const holdingLibraries = partners.filter(p => p.providerKey !== 'bph' && p.kind !== 'platform');
   const platforms = partners.filter(p => p.kind === 'platform');
+  // Rounded DOWN to the thousand so "over N" stays true between revalidations.
+  const holdingWorksFloor = Math.floor(holdingLibraries.reduce((n, p) => n + p.count, 0) / 1000) * 1000;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -284,8 +279,7 @@ export default async function LibrariesPage() {
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6 py-20 md:py-28" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Libraries</h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">
-            {totalBooks.toLocaleString('en-US')} books sourced from {partners.length} libraries and archives
-            {totalInstitutions > 0 ? ` across ${totalInstitutions} contributing institutions` : ''} worldwide.
+            Rare books and manuscripts from libraries and archives around the world, read, transcribed and translated on Source Library.
           </p>
         </div>
       </div>
@@ -295,7 +289,7 @@ export default async function LibrariesPage() {
         {/* BPH — Home Library (full-width hero) */}
         {bph && (
           <section className="mb-12">
-            <PartnerCard partner={bph} heroImage={bph.heroImage} count={bph.count} languages={bph.languages} size="hero" />
+            <PartnerCard partner={bph} heroImage={bph.heroImage} languages={bph.languages} size="hero" />
           </section>
         )}
 
@@ -303,8 +297,10 @@ export default async function LibrariesPage() {
         <section className="mb-16">
           <h2 className="text-2xl font-display text-primary mb-2">Libraries &amp; Archives</h2>
           <p className="text-sm text-muted mb-6 max-w-3xl">
-            The institutions whose collections we read from. Each one holds the books it digitized.
-            Every card links to its holdings on Source Library.
+            These are the collection sources, comprising over {holdingWorksFloor.toLocaleString('en-US')} accumulated
+            works, that we have developed so far. More are added regularly.{' '}
+            <a href="mailto:team@sourcelibrary.org" className="underline hover:text-primary">Contact us</a> if you would
+            like your works to join Source Library.
           </p>
 
           <div className="grid gap-4 sm:gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
@@ -313,7 +309,6 @@ export default async function LibrariesPage() {
                 key={partner.slug}
                 partner={partner}
                 heroImage={partner.heroImage}
-                count={partner.count}
                 languages={partner.languages}
               />
             ))}
@@ -335,8 +330,7 @@ export default async function LibrariesPage() {
                   key={partner.slug}
                   partner={partner}
                   heroImage={partner.heroImage}
-                  count={partner.count}
-                  languages={partner.languages}
+                    languages={partner.languages}
                 />
               ))}
             </div>
@@ -361,7 +355,6 @@ export default async function LibrariesPage() {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-border-light rounded-full text-secondary hover:border-accent-rust/30 transition-colors"
                 >
                   {lib.name}
-                  <span className="text-xs text-muted">({lib.count})</span>
                 </span>
               ))}
             </div>

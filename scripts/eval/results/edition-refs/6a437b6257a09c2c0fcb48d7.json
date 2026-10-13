@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a437b6257a09c2c0fcb48d7",
+    "title": "Barnabæ itinerarium, Mirtili & Faustuli nominibus insignitum viatoris solatio nuperrimè editum, aptissimis numeris redactum, veterique Tono Barnabæ, publicè decantatum.",
+    "published": "1636",
+    "source": "EEBO-TCP A16649",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.8025,
+    "median_char_acc_windowed": 0.8025,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+      "page": 10,
+      "overlap": 0.96,
+      "probe_words": 26,
+      "ref_chars": 678,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.212,
+      "char_acc": 0.8025,
+      "char_acc_windowed": 0.8025
+    }
+  ]
+}

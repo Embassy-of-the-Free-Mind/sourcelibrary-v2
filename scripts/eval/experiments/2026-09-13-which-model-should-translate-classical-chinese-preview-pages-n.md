@@ -1,3 +1,16 @@
+---
+stage: translation
+measure: none
+languages: [lzh]
+scripts: [Hani]
+canons: []
+n_books: 60
+n_pages: 60
+verdict: "Pre-registration: nine-arm blind-ranking comparison on 60 classical Chinese pages with a fixed decision rule that keeps lite unless an arm beats it cheaply."
+status: informational
+decision: null
+superseded_by: null
+---
 ## 2026-09-13 — Which model should translate classical Chinese? (樂舞 preview pages, N-arm) — PREREGISTRATION
 
 _Written before the paid run; the result entry goes above this one when it exists.

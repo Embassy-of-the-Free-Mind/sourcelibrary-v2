@@ -1,0 +1,78 @@
+[
+  {
+    "book_id": "6abed724896ea18127c8ec34",
+    "slot": 28,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། བེ (Derge Tengyur, vol. 184)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa commentary (discussion of time, direct perception and inference, with lemmata cited by ཞེས་བྱ་བ / ཞེས་གསུངས་སོ) in the Derge Tengyur Tshad ma section; belongs on the shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 321,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "མདུན་ན་གནས་པ་མ་ཡིན་པའི་རྣམ་པ་འཛིན་པ་ནི་ཁྱད་པར་མེད་པའི་ཕྱིར་རོ",
+            "image": "line 7 is visibly longer between འཛིན་པ་ and ཁྱད་པར; it appears to read approx. འཛིན་པ་ནི་འཁྲུལ་པ་དང་ཁྱད་པར་མེད་པའི་ཕྱིར་རོ ('no different from error')",
+            "problem": "a word (apparently 'error', འཁྲུལ་པ) dropped, leaving 'no distinction' with no term of comparison",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "རྣམ་པར་དབྱེ་བ་ལས་འོངས་པ་ལ་སོགས་པའི་རྣམ་པར་དབྱེ་བ",
+            "image": "the cluster after ལས is hard to resolve at this resolution; the reading is plausible but uncertain",
+            "problem": "possible misreading in line 2 (uncertain)",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "པའོ། །",
+            "english": "is established.",
+            "problem": "the page-initial fragment (end of a word from the previous page) is filled out with a guessed verb",
+            "severity": "minor"
+          },
+          {
+            "source": "དུས་ནི་ཚད་མ་ཞེས་བྱ་བ་ལ་སོགས་པའོ",
+            "english": "This is explained in the commentary beginning with the words \"Time is valid cognition.\"",
+            "problem": "'commentary' for what is a lemma from the root text; 'independent time' also added to དུས",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "དེ་དང་བྲལ་བ་ནི་མེད་པའོ",
+            "english": "That which is free from <note>the object</note> does not exist.",
+            "problem": "the note supplies 'the object' as referent of དེ, an interpretation not on the page",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "མདུན་ན་གནས་པ་མ་ཡིན་པའི་རྣམ་པ་འཛིན་པ་ནི་ཁྱད་པར་མེད་པའི་ཕྱིར་རོ",
+            "english": "there would be no distinction <note>between presence and absence</note>",
+            "problem": "invented note fills the missing term of comparison with a wrong guess (the image appears to say 'no different from error')",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "མདུན་ན་གནས་པའི་རྣམ་པ",
+            "english": "the aspect of staying in front",
+            "problem": "awkward literalism for 'the aspect present before one'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Both are faithful in argument with no serious errors, but B adds two interpretive notes not on the page (one a wrong guess at the comparison term), while A's 'no distinction from error' matches what the image appears to say.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Right leaf with a good transcription (one probable dropped word); both English versions follow the argument on time and perception faithfully, A slightly cleaner than B, which adds speculative notes."
+  }
+]

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: preference
+languages: []
+scripts: []
+canons: []
+n_books: 57
+n_pages: null
+verdict: "Unseeded batch loses to chained production at the block seam 41-11 (blind judge); a one-page seam repair ties production 27-27 at +15% cost; prereg rule fired 'do not migrate'"
+status: superseded
+decision: null
+superseded_by: "2026-09-25-late-seam-fidelity-judge-source-beside-both-translations-gated-4681.md"
+issue: [4681, 4905]
+---
 ## 2026-09-17 — Does translation survive the Batch API? The block-boundary continuity A/B (#4681, prereg #4905) — RESULT
 
 **Headline: by the rule as written, nothing passes (rung 5, "do not migrate") — but the

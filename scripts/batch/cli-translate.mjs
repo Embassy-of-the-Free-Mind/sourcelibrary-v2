@@ -22,23 +22,29 @@
  *          page_revisions, provenance block with api 'cli', the CLI name and version, model and prompt hash), leaves a
  *          sweep_log row per page and one book_events row per book, and recounts the book.
  *
+ * THE CALL (#6523, the OCR runner's config, shared code in scripts/lib/agy-cli.mjs): the prompt asks for the translation
+ * between <<<BEGIN>>> / <<<END>>> markers and nothing outside them; a PreToolUse hook in the call's empty workspace
+ * (scripts/lib/agy-tool-gate.py, task 'translate') denies every tool with a reason, so the turn goes on to the
+ * translation instead of ending empty. The raw reply is kept as <page_id>.raw.txt; .txt holds the text between the
+ * markers. `apply` refuses a reply with text outside the markers or cut before <<<END>>>, and still runs the chatter
+ * guard on every read.
+ *
  * HOW IT FAILS: a CLI that is not signed in, out of quota or timing out leaves an empty .txt and a non-zero `exit`
  * (up to 3 attempts in place); a quota error is logged to agy-calls.jsonl and the run STOPS rather than burning the
  * other jobs' quota. `apply` skips what it refuses and says why. Nothing is retried silently.
  */
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
+import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
 import { geminiEngine, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
-const CLI = 'agy';
 const JOB = process.env.CLI_JOB_NAME || 'xunzi-translate-6307';
 const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
 const STAGE = process.argv[2];
@@ -49,7 +55,11 @@ const APPLY = process.argv.includes('--apply');
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-translate.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
 // Part of the prompt SENT, so part of what is hashed: the CLI is an agent and must answer with text, not tool use.
-const CLI_SUFFIX = '\n\nOutput only the English translation in the format above. Do not open, read or write any file, do not use any tool, and add no preamble or commentary.\n';
+// #6523: the answer between <<<BEGIN>>> / <<<END>>> markers, nothing outside them (the OCR runner's config), with the
+// tool gate in the call's empty workspace (scripts/lib/agy-cli.mjs). A read made before that records no
+// `prompt_variant`; apply checks it with the chatter guard alone, as before.
+const PROMPT_VARIANT = 'sentinels-6523';
+const CLI_SUFFIX = TRANSLATE_SUFFIX;
 const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 };
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
@@ -85,30 +95,24 @@ if (STAGE === 'read') {
     const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
     const built = buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
     const sent = built.prompt + CLI_SUFFIX;
-    let text = '', r, t0, attempts = 0;
-    for (; attempts < 3 && text.length < 5; attempts++) {
-      t0 = new Date();
-      // cwd is an empty scratch dir, so the CLI's workspace holds nothing to wander into.
-      const ws = fs.mkdtempSync(path.join(os.tmpdir(), 'cli-tr-'));
-      r = spawnSync(CLI,
-      // Plan mode: the CLI is an agent, and it must not run tools here (never auto-approve; see cli-ocr.mjs).
-      ['-p', sent, '--model', MODEL, '--mode', 'plan', '--print-timeout', '120s'], { encoding: 'utf8', cwd: ws, maxBuffer: 64 * 1024 * 1024, timeout: 180_000 });
-      fs.rmSync(ws, { recursive: true, force: true });
-      text = (r.stdout || '').trim();
-      const quota = /RESOURCE_EXHAUSTED|quota/i.test(`${r.stdout}${r.stderr}`) && text.length < 200;
-      logCall({ kind: 'translate', seconds: Math.round((Date.now() - t0) / 1000), ok: text.length >= 5 && !quota, error_class: quota ? 'quota' : text.length < 5 ? (r.status ? `exit_${r.status}` : 'empty') : null });
-      if (quota) { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${(r.stderr || r.stdout).slice(-300)}`); await client.close(); process.exit(3); }
-    }
+    const t0 = new Date();
+    // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
+    const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
+    if (r.cls === 'quota') { console.error(`QUOTA reached at p.${p.page_number}: stopping. ${r.err}`); await client.close(); process.exit(3); }
+    // The raw reply is kept beside the translation; `.txt` holds only what was between the markers.
+    const text = r.cls ? '' : r.answer;
+    fs.writeFileSync(path.join(OUT, `${id}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${id}.txt`), text);
     fs.writeFileSync(path.join(OUT, `${id}.meta.json`), JSON.stringify({
       page_id: id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.status, attempts, chars: text.length,
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
+      prompt_variant: PROMPT_VARIANT, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls,
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
       prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
-      stderr_tail: (r.stderr || '').slice(-300),
+      stderr_tail: r.err,
     }, null, 1));
-    console.log(`  ${p.page_number} exit ${r.status} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s attempts ${attempts}`);
+    console.log(`  ${p.page_number} ${r.cls || r.problem || 'ok'} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s calls ${r.calls}`);
   }
   await client.close();
   process.exit(0);
@@ -125,6 +129,10 @@ const books = {};
 for (const m of metas) {
   const text = readOf(m.page_id);
   if (m.exit !== 0 && text.length < 5) { skip(m, `cli exit ${m.exit}`); continue; }
+  if (m.error_class) { skip(m, `cli ${m.error_class}`); continue; }
+  // #6523: text outside the markers, or a reply cut before <<<END>>> (often a recitation-filter cut), is never written
+  if (m.wrapper) { skip(m, `reply wrapper: ${m.wrapper}`); continue; }
+  // the backstop, for every read: chatter where the translation should be
   const chatter = cliChatterReason(text);
   if (chatter) { skip(m, `not a translation: ${chatter}`); continue; }
   const page = await db.collection('pages').findOne({ id: m.page_id }, { projection: PAGE_PROJECTION });

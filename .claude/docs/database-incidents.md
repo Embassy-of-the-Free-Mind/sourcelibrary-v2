@@ -87,7 +87,7 @@ No `maxTimeMS`, no supporting index. Hung for 30+ seconds under load.
 Historical import bug. `id` and `_id` diverge by one hex digit. App standardized on `id` for all lookups. Never "fix" pages to match `_id`.
 
 ### Collection Size → Warehouse Migration
-9.6M pages in one collection. Warehousing moved 7M to `pages_warehouse`, cutting live to ~2.5M.
+9.6M pages in one collection. Warehousing moved 7M to `pages_warehouse`, cutting live to ~2.5M. (Reversed 2026-10: the warehouse was merged back into `books`/`pages` and the collections renamed `*_warehouse_retired_2026_10`, #5470.)
 
 ---
 

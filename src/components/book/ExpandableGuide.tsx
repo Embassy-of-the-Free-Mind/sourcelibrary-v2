@@ -64,7 +64,7 @@ export default function ExpandableGuide({ bookId, detailedSummary, defaultExpand
 
     setLoadingExtras(true);
     Promise.all([
-      books.get(bookId, { full: true }).catch(() => null) as Promise<any>,
+      books.getWithAllPages(bookId, { full: true }).catch(() => null) as Promise<any>,
       gallery.list({ bookId, limit: 50, minQuality: 0.75 }).catch(() => ({ items: [] })),
     ]).then(([bookData, galleryData]) => {
       const idx = bookData?.index;

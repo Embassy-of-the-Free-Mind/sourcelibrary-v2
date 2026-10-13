@@ -294,6 +294,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const basePath = `/libraries/${slug}`;
 
   const viewProps: SharedLibraryViewProps = {
+    hideCounts: true,
     partner: {
       name: partner.name,
       description: partner.description,
@@ -308,6 +309,9 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
     galleryImages,
     contributingLibraries,
     basePath,
+    // /libraries/[slug]/gallery is a 308 to the UNSCOPED /gallery; the global
+    // gallery takes the library as a filter instead (#5954).
+    gallery: { path: '/gallery', query: `library=${encodeURIComponent(partner.providerKey)}` },
     sort,
     language,
     q,
@@ -325,7 +329,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         name={partner.name}
         description={partner.description}
         url={partner.url}
-        bookCount={total}
+        bookCount={0}
       />
       <SharedLibraryView {...viewProps} />
     </>

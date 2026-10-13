@@ -116,13 +116,24 @@
 # them at 48 h), duplicate/repeat/paid-for-nothing waste, and on Mondays the invoice vs metered
 # vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
 # and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
-10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
+0 5 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
 # Daily spend check (#5743): ONE verdict over (a) paid-vs-got for yesterday, (b) machines the lease watchdog
 # flags + RunPod pods past the deadline in their name, (c) budget envelopes (paid with no pages, near cap, stored
 # spend), (d) the dial in force that day vs the invoice. Writes one ops_reports row (spend-daily-<day>), shown as the
 # "spend check" line on /admin/work; emails only on FAIL (7-day cooldown per failure set). Exit 1 = FAIL, 2 = a
-# source unreadable. No model call. Runs after paid-vs-got (06:10), whose row it reads.
-0 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# source unreadable. No model call. Runs after paid-vs-got (05:00, ~20 min), whose row it reads, and before the 06:00 ntfy digest.
+40 5 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# Quality dashboard (#6429; Derek approved the daily line 2026-10-10): appends today's points to the trend history
+# (ops_reports quality-history-<day>: the #6388 panel's stored text scored against its key, books/pages readable in
+# English) and copies paid-vs-got's ledger days and bill weeks into it, then rebuilds ops_reports/quality-dashboard,
+# which /admin/quality renders. Reads pages/books/ops_reports; writes ops_reports only. No model call ($0).
+# Runs after paid-vs-got (05:00, ~20 min), whose rows it copies. The monthly re-run (series 1b) is by hand, not here.
+30 6 * * * cd /root/sourcelibrary && [ -f scripts/eval/quality-dashboard/trends.mjs ] && flock -n /tmp/sl-quality-dashboard.lock bash -c "set -a; source .env.production.local; set +a; node scripts/eval/quality-dashboard/build.mjs --push" >> /var/log/sourcelibrary/quality-dashboard.log 2>&1
+# Morning ntfy digest (#6181): the ONE default-priority message of the day — jobs landed / not landed on both boxes,
+# yesterday's spend vs the dial + envelopes near cap, decisions waiting, stuck jobs, tier:hold count. Read-only.
+# 06:00 UTC = 08:00 Europe/Amsterdam in summer (CEST). After the clocks go back (last Sunday of October) it arrives
+# at 07:00 CET — move it to 07:00 UTC for winter if Derek wants 08:00 local year-round. Crontab here is UTC.
+0 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/ntfy-morning-digest.mjs ] && flock -n /tmp/sl-morning-digest.lock node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/ntfy-morning-digest.mjs >> /var/log/sourcelibrary/morning-digest.log 2>&1
 # Weekly spend cut list (#5743), Mondays 06:30: a headless claude job (subscription; no API spend) runs
 # spend-daily.mjs --week and posts ONE comment on #5743, at most 5 numbered cuts with recommended defaults, which
 # /admin/work lists under WAITING ON YOU. It never stops, deletes or changes anything. Brief: scripts/audit/spend-weekly-brief.md
@@ -158,8 +169,7 @@
 # log says "CEILING REACHED" or site_pages' newest indexed_at is more than two days old.
 20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
 
-# Warm author pages: regenerate ISR cache (daily 5am)
-0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
+# warm-author-pages.mjs retired (#4753): 15.7K author renders a day into a Vercel ISR cache that empties on every production deploy (~19/day). Readers and crawlers fill it on demand.
 
 # Browse pre-warm + homepage stats (daily 5:15am)
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
@@ -182,3 +192,14 @@
 # DECISIONS-PENDING rows, tier:hold PRs > 24 h. Telegram (bridge bot, one-way send), else the "Daily digest"
 # GitHub issue; always /var/log/sourcelibrary/daily-digest/<date>.txt. Reads only, no model call. (06:30 UTC)
 30 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/daily-digest.mjs ] && flock -n /tmp/sl-daily-digest.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/daily-digest.mjs" >> /var/log/sourcelibrary/daily-digest.log 2>&1
+
+# climits: poll all four Claude accounts every 5 min; history + latest.json in /root/.claude-limits (#6360)
+*/5 * * * * /usr/local/bin/climits check --quiet >> /var/log/climits.log 2>&1
+# Box mesh (#6360): copy that meter to cloudlayer and l7a a minute later, so each box's job wrapper can refuse a
+# start on an account at >= 90% weekly. Pages once if a box is unreachable for 30 min. scripts/workers/box.sh
+1-59/5 * * * * [ -x /root/bin/box.sh ] && /root/bin/box.sh push-limits >> /var/log/box-mesh.log 2>&1
+
+# Edge crawl detector (#6398 follow-up): who read more /book pages in the last hour than a person could, from Cloudflare (sees clients our own analytics cannot). Pushes ntfy on change. Needs CLOUDFLARE_API_TOKEN_READ in .env.production.local.
+7 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
+# Crawl-protection canary (weekly, Mon 06:13): 70 book loads must hit the Cloudflare rate-limit challenge, and the edge detector must see traffic. ntfy only on failure. See .claude/docs/crawl-register.md.
+13 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs --canary" >> /var/log/sourcelibrary/edge-crawl.log 2>&1

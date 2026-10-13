@@ -12,7 +12,7 @@ import Specimen, { SpecimenLegend, pageHref, type SpecimenData } from './Specime
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: 'What Goes Wrong on a Page (draft) — Source Library Research',
+  title: 'What Goes Wrong on a Page (draft) | Source Library Research',
   description:
     'How AI transcription and translation of historical books fail, page by page: 43 classes of error seen by eye in 78 books, grouped by seven mechanisms, with real scans. A paper draft, with the data.',
   alternates: { canonical: '/research/page-errors' },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: 'What goes wrong on a page',
     description:
       'A by-eye taxonomy of errors in AI transcription and translation of historical books, with real pages. A paper draft from Source Library.',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630, alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', width: 1200, height: 630, alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
 };
 
@@ -196,7 +196,7 @@ function InstrumentTable() {
     const count = (d: Detect) => cs.filter(c => c.detect === d);
     return { k, total: cs.length, yes: count('yes'), partly: count('partly'), no: count('no') };
   });
-  const ids = (cs: Cls[]) => cs.map(c => c.id).join(', ') || '—';
+  const ids = (cs: Cls[]) => cs.map(c => c.id).join(', ') || '–';
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm text-left border-collapse">

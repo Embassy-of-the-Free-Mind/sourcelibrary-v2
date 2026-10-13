@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A34333",
+  "edition": "Evangelium medici, seu, Medicina mystica de suspensis naturæ legibus, sive, de miraculis .. / a Bernardo Connor. — Wing C5886; ESTC R29325 (1697)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A34333",
+  "origin": "library",
+  "book_id": "6a425af0744db9e3105a14b7",
+  "page_number": 118,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 80085,
+    "to_char": 80463,
+    "overlap": 0.565,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Short end-of-article paragraph, rest of page blank with rule; ref matches; marginal 'Artic. 9.' not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      118,
+      119,
+      120
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.752Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "42af642e47b43c912ffdcf192f407734bfcb038055b1a03cebcf69cd16178cbf",
+  "unit": {
+    "chars": 378
+  }
+}

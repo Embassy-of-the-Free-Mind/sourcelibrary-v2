@@ -1,0 +1,101 @@
+[
+  {
+    "book_id": "6abeb2b1896ea18127c8327d",
+    "slot": 6,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary on Mūlamadhyamakakārikā ch. 24 (the four noble truths). It belongs in the Madhyamaka (དབུ་མ) section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 486,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཞེས་བྱ་བ་སྨྲས་སོ།",
+            "image": "a tall stacked syllable before སོ that could be སྨྲས or a བསྒྲུ- form; I cannot settle it at this resolution",
+            "problem": "The closing formula may have been normalised. Sense unaffected.",
+            "severity": "minor"
+          },
+          {
+            "ocr": "སྐྱོན་ཡོངས་སུ་མ་ཤེས་པ་",
+            "image": "a single stacked syllable between ཡིན་ན and ཡོངས (one syllable wide, so སྐྱོན་ rather than the two-syllable སྡུག་བསྔལ་)",
+            "problem": "A reviewer suggested སྡུག་བསྔལ་ here. The spacing on the print fits one syllable, so the OCR is probably right, but the glyph is not fully legible.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "གལ་ཏེ་ངོ་བོ་ཉིད་ཀྱིས་ནི། །ཡོངས་སུ་ཤེས་པ་མ་ཡིན་ན། །དེ་ནི་ཇི་ལྟར་ཡོངས་ཤེས་འགྱུར།",
+            "english": "If suffering has an intrinsic nature, / It cannot be completely understood. / How could it be completely understood?",
+            "problem": "The root verse's protasis ('if it is not fully known by intrinsic nature') is recast as 'if it has intrinsic nature, it cannot be understood'. That moves the conclusion into the condition and leaves the next line redundant. The stanza is also padded to five lines with the prose 'Furthermore, according to your system'. The argument's gist survives.",
+            "severity": "moderate",
+            "class": "T16"
+          },
+          {
+            "source": "གང་ཞིག་ཐོབ་པར་འགྱུར་བར་འདོད།",
+            "english": "how would the cessation of suffering on the Path be attained?",
+            "problem": "Drops 'which ... do you claim' (འདོད), so the point that this is the opponent's own position is lost.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "ཡོངས་སུ་ཤེས་པ་མ་ཡིན་ན་སྐྱོན་ཡོངས་སུ་མ་ཤེས་པ་དེའི་རྒྱུ་སྲེད་པ",
+            "english": "then just as that fault is not fully known, its cause, craving",
+            "problem": "'Just as' is not in the source, and the clause is awkward. The cause of what is not fully known is craving, and B garbles that relation slightly. The meaning is recoverable.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "adjudication": [
+          {
+            "raised_by": "reviewer1",
+            "version": "B",
+            "claim": "The print reads སྡུག་བསྔལ་ where the OCR has སྐྱོན་, so B's 'that fault' follows an OCR error.",
+            "verdict": "rejected",
+            "why": "On c1 line 4 only one stacked syllable fits between ཡིན་ན and ཡོངས་སུ་མ་ཤེས་པ. That suits སྐྱོན་, not the two syllables of སྡུག་བསྔལ་. B's 'fault' follows the likely text. Its only slip is the added 'just as', which is minor."
+          },
+          {
+            "raised_by": "reviewer1",
+            "version": "A",
+            "claim": "The opening ན། is a misread head ornament.",
+            "verdict": "rejected",
+            "why": "The image shows the ornament and then a separate ། ན། before ། ལམ་གྱི, so ན is on the page."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "A",
+            "claim": "A recasts the root verse's conditional ('if not known by intrinsic nature') as 'if it has intrinsic nature, it cannot be understood' and pads the stanza.",
+            "verdict": "confirmed",
+            "why": "The verse on the print reads གལ་ཏེ་ངོ་བོ་ཉིད་ཀྱིས་ནི། །ཡོངས་སུ་ཤེས་པ་མ་ཡིན་ན། and A changes that structure. This is a moderate error, not a reversal, because the argument's conclusion is the same."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "A",
+            "claim": "A drops 'do you claim' (འདོད).",
+            "verdict": "confirmed",
+            "why": "The image shows ཐོབ་པར་འགྱུར་བར་འདོད། and A omits it. This is minor."
+          },
+          {
+            "raised_by": "me",
+            "version": "A",
+            "claim": "Serious errors that both reviewers missed, in either version.",
+            "verdict": "rejected",
+            "why": "Both versions render the four-truths reductio, the root verse 'Likewise ... untenable just as full knowledge' and the four fruits correctly. Neither reverses a claim or drops a passage."
+          }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Neither version has a serious error. B renders the root verse's conditional faithfully as a quatrain and keeps 'do you claim', while A recasts the verse's protasis (moderate). B's added 'just as' is only minor.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge folio from a Madhyamaka commentary on MMK 24, with a close OCR. Both translations follow the argument, and B is somewhat more faithful in the root verse."
+  }
+]

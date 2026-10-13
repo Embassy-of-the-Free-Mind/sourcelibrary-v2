@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/Pena_adversaria_2",
+  "edition": "Stirpium Adversaria Nova : perfacilis Vestigatio, luculentaqne [recte: luculentaque] accessio ad Priscorum, praesertim Dioscoridis &amp; Recentiorum, Materiam Medicam ; Quibus Propediem Accedet Altera Pars [...]. — London: Thomae Purfoetius, 1571.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6958de4ecf7070242ed412dc",
+  "page_number": 304,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 294486,
+    "to_char": 298314,
+    "overlap": 0.517,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "Pena/Lobel Stirpium adversaria p.280; roman/italic prose with Greek words and blackletter vernacular plant names; ref matches start to end.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      304,
+      305,
+      306
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.469Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "64880609dfdb83693401d3ca412dca817608ccd40da16d53189d9274580525b3",
+  "unit": {
+    "chars": 3828
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a90e7e5544007b776b3806a",
+    "title": "Disputatio theologica de vero discrimine peccati mortalis & venialis, deque impossibilitate implendi legem Dei ob quotidianam peccatorum venialium incursionem. Cvi annexa est appendix de possibilitate præstandi legem consideratam secundum epieikeian euangelicam. Authore, Roberto Baronio, Ecclesiæ Abredonensi, S.S. Theologiæ Doctore, & ejusdem in Academia Marescallana professore.",
+    "published": "1633",
+    "source": "EEBO-TCP A04814",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9579,
+    "median_char_acc_windowed": 0.9302,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a90e7e5544007b776b3806a-p10",
+      "page": 10,
+      "overlap": 0.813,
+      "probe_words": 152,
+      "ref_chars": 1309,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.077,
+      "char_acc": 0.9579,
+      "char_acc_windowed": 0.9302
+    }
+  ]
+}

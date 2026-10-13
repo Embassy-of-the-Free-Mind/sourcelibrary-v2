@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: none
+languages: [la, de, en]
+scripts: [Latn]
+canons: []
+n_books: 754
+n_pages: 107252
+verdict: "DTA, CAMENA and EEBO-TCP give typed references for 754 of our books (107,252 aligned pages); 35/36 leaves right by eye, 30/38 same-edition claims hold; 211 works get a period English translation."
+status: informational
+decision: null
+superseded_by: null
+issue: 6012
+---
 ## 2026-10-06 · How many of our Latin and German pages can be checked against a human-typed text, and against a period English translation? DTA, CAMENA and EEBO-TCP as internal references (#6012)
 <!-- PRIOR ART: 2026-10-06-typed-editions-ground-truth-chinese-pali-5935.md (Kanripo, CBETA, VRI: the storage precedent and the k-gram offset voting reused here; it scores CER, this run builds the references and scores nothing); 2026-10-04-latin-print-by-century-5126.md (82 same-edition Latin pages, 65 from CAMENA, one page per book, located by hand); 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md (72 IA microfilm books joined to EEBO-TCP Phase I by catalogue number). None holds a whole corpus with provenance, matches German, or uses Phase II. -->
 

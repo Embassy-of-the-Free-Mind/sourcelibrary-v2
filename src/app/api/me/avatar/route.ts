@@ -64,7 +64,7 @@ async function renderAvatar(input: Buffer, bbox: Bbox | null): Promise<Buffer> {
     const width = Math.min(iw - left, Math.round(bbox.w * iw));
     const height = Math.min(ih - top, Math.round(bbox.h * ih));
     if (width < MIN_SOURCE_CROP_PX || height < MIN_SOURCE_CROP_PX) {
-      throw new Error('That crop is too small to make a clear photo — zoom out a little.');
+      throw new Error('That crop is too small to make a clear photo. Zoom out a little.');
     }
     pipeline = pipeline.extract({ left, top, width, height });
   }

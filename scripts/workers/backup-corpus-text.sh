@@ -4,7 +4,7 @@
 #
 # WHY THIS EXISTS
 # ---------------
-# `backup-books.sh` dumps `books`, `books_warehouse`, `deleted_books` and stops,
+# `backup-books.sh` dumps `books`, `deleted_books` and stops,
 # on the stated reasoning: "Images live on R2; pages can be re-OCR'd from R2 if
 # needed." That leaves ~20.6M `pages` documents — every line of OCR and every
 # translation — with no offsite copy at all.

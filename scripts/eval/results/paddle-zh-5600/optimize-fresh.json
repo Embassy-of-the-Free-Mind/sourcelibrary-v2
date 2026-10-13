@@ -1,0 +1,92 @@
+{
+ "generated_at": "2026-10-02T22:00:12.661Z",
+ "gate": {
+  "delta": 0.01,
+  "catastrophic": 0.02
+ },
+ "sample": 100,
+ "scored_pages": 95,
+ "excluded": {
+  "textless": [],
+  "ref_mismatch": [
+   "chinese-cohort-5547-16555c-p78",
+   "chinese-cohort-5547-1af295-p17",
+   "chinese-cohort-5547-1ccdad-p29",
+   "chinese-cohort-5547-5cdd1a-p48",
+   "chinese-cohort-5547-e30b3a-p42"
+  ]
+ },
+ "anchors": [
+  "gemini-3.1-flash-lite",
+  "gemini-3-flash-preview"
+ ],
+ "prereg": "scripts/eval/PREREGISTRATION-paddle-zh-optimize-5600.md",
+ "scorer": "benchmark-score.mjs (--ref=base)",
+ "rows": [
+  {
+   "arm": "base",
+   "config": "#5547 pilot recipe: native, 2 runners, ≤2400 px wide, layout on",
+   "gpu": "L4-1-24G",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.194,
+   "delta_vs_base": 0,
+   "catastrophic": 0,
+   "catastrophic_rate": 0,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": null,
+   "s_per_page": 3.3519,
+   "eur_per_page": 0.000733,
+   "gate": "baseline",
+   "note": "#5547 pilot throughput (3,422 pages incl. bench; 3.35 s/page on book pages)"
+  },
+  {
+   "arm": "fresh-layout-on",
+   "config": "vLLM c8, full size, layout=1 (fresh pages)",
+   "gpu": "RTX PRO 4000 Blackwell",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.196,
+   "delta_vs_base": 0,
+   "catastrophic": 0,
+   "catastrophic_rate": 0,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    13,
+    18,
+    64
+   ],
+   "s_per_page": null,
+   "eur_per_page": null,
+   "gate": "PASS",
+   "note": null
+  },
+  {
+   "arm": "fresh-nolayout",
+   "config": "vLLM c8, full size, layout=0 (fresh pages)",
+   "gpu": "RTX PRO 4000 Blackwell",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.172,
+   "delta_vs_base": -0.007,
+   "catastrophic": 0,
+   "catastrophic_rate": 0,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    60,
+    15,
+    20
+   ],
+   "s_per_page": null,
+   "eur_per_page": null,
+   "gate": "PASS",
+   "note": null
+  }
+ ]
+}

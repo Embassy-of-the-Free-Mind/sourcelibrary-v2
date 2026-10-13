@@ -10,12 +10,12 @@ export const revalidate = 21600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Browse by Category — Source Library',
+  title: 'Browse by Category | Source Library',
   description: 'Explore rare esoteric, alchemical, and philosophical texts organized by tradition: alchemy, Hermeticism, Kabbalah, Neoplatonism, Rosicrucianism, astrology, and more.',
   alternates: { canonical: '/categories' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
-    title: 'Browse by Category — Source Library',
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
+    title: 'Browse by Category | Source Library',
     description: 'Explore rare esoteric texts organized by tradition and subject.',
   },
 };

@@ -3,18 +3,18 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Does the AI Get Religion? — Research Notes — Source Library',
+  title: 'Does the AI Get Religion? | Research Notes | Source Library',
   description:
     "The longest page in our library is one leaf of a Javanese Old Testament that the AI translated into 491,418 characters of 'generations of generations of generations.' It does this only with scripture.",
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'Does the AI Get Religion?',
     description:
       "An AI translation model that picked up a book of sacred genealogies and could not stop generating generations. It only happens with scripture.",
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/does-ai-get-religion',
@@ -55,7 +55,7 @@ export default function DoesAiGetReligionPage() {
             Old Testament in Javanese
           </a>
           . The AI&rsquo;s English translation of that one leaf is <strong className="text-stone-800">491,418
-          characters</strong> long &mdash; about eighty thousand words, longer than <em>The Great
+          characters</strong> long, about eighty thousand words, longer than <em>The Great
           Gatsby</em>. It begins like an ordinary genealogy, and then it finds a word it likes:
         </p>
 
@@ -64,11 +64,11 @@ export default function DoesAiGetReligionPage() {
           generations of generations of generations of generations of generations of generations of
           generations of generations of generations of generations of generations of generations of
           generations of generations of generations of generations of generations of generations
-          <span className="text-stone-500"> &mdash; [for 491,418 characters]</span>
+          <span className="text-stone-500"> [for 491,418 characters]</span>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          A genealogy &mdash; <em>the generations of Adam, the generations of Noah</em> &mdash; asked
+          A genealogy (<em>the generations of Adam, the generations of Noah</em>) asked
           the machine for the generations, and the machine, ever obliging, generated them. Handed a list
           of begettings, it begat without end.
         </p>
@@ -79,7 +79,7 @@ export default function DoesAiGetReligionPage() {
           <a href="https://sourcelibrary.org/book/sgrub-pa-bka-brgyad-kyi-phrin-las-collection" className="text-accent-rust hover:underline">
             Buddhist canon
           </a>{' '}
-          &mdash; a liturgy of accomplishment for the benefit of all beings &mdash; which it renders,
+          (a liturgy of accomplishment for the benefit of all beings), which it renders,
           faithfully, into the one thing the liturgy is for:
         </p>
 
@@ -88,7 +88,7 @@ export default function DoesAiGetReligionPage() {
           producing happiness, producing happiness, producing happiness, producing happiness, producing
           happiness, producing happiness, producing happiness, producing happiness, producing happiness,
           producing happiness, producing happiness, producing happiness
-          <span className="text-stone-500"> &mdash; [for 458,627 characters]</span>
+          <span className="text-stone-500"> [for 458,627 characters]</span>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -97,7 +97,7 @@ export default function DoesAiGetReligionPage() {
             Zohar
           </a>
           , the central text of Kabbalah, where it locks onto one of the divine attributes and will not
-          let go &mdash; a mind circling a single mystery, which is more or less what the book is about:
+          let go, a mind circling a single mystery, which is more or less what the book is about:
         </p>
 
         <div className="bg-stone-900 text-stone-200 rounded-lg p-5 my-8 font-mono text-xs leading-relaxed overflow-hidden">
@@ -105,7 +105,7 @@ export default function DoesAiGetReligionPage() {
           the Secret Kindness. Foundation of the Secret Kindness. Foundation of the Secret Kindness.
           Foundation of the Secret Kindness. Foundation of the Secret Kindness. Foundation of the Secret
           Kindness. Foundation of the Secret Kindness
-          <span className="text-stone-500"> &mdash; [for 372,416 characters]</span>
+          <span className="text-stone-500"> [for 372,416 characters]</span>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -115,7 +115,7 @@ export default function DoesAiGetReligionPage() {
           </a>
           ), with Syriac homilies, with Ethiopic gospels, with the Mishnah. Hand it Cicero and it
           translates all day without breaking a sweat. But the texts that undo it are, almost without
-          exception, the ones built out of <em>sacred repetition</em> &mdash; mantras meant to be recited
+          exception, the ones built out of <em>sacred repetition</em>: mantras meant to be recited
           ten thousand times, litanies, the names of God, the long chains of who begat whom. Repetition is
           the whole point: the thing a devotee chants on purpose, for hours, to empty the mind. Feed that
           to a machine that is already unsure of the script, and it does exactly what the devotee does. It

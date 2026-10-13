@@ -1,0 +1,32 @@
+{
+  "summary": {
+    "book_id": "6a9437f67e41ac276318823e",
+    "title": "Carmen panegyricum, sive Paræneticum, postridie inaugurationis Dom. Protectori ab Auguo. Wingfieldo dicatum. Ac nuper cum scholiis & animadversionibus in selectiora vocabula, ab anonymo benevolo illustratum.",
+    "published": "1656",
+    "source": "EEBO-TCP A66675",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 1,
+    "referenced": 1,
+    "skips": {},
+    "median_char_acc": 0.9614,
+    "median_char_acc_windowed": 0.9531,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": true,
+    "private_dir": "/root/sourcelibrary-ops/evals/refs-private"
+  },
+  "rows": [
+    {
+      "slug": "ed-6a9437f67e41ac276318823e-p10",
+      "page": 10,
+      "overlap": 0.915,
+      "probe_words": 240,
+      "ref_chars": 2062,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9614,
+      "char_acc_windowed": 0.9531
+    }
+  ]
+}

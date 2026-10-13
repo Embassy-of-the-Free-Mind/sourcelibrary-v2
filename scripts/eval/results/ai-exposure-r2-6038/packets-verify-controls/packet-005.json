@@ -1,0 +1,25 @@
+{
+ "packet": 5,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "69aec50d3b6ebce5e0ee87d0",
+  "69e8b25c2ff2a8dc09e7773b",
+  "69b221c408069e96e84310d0",
+  "69af0da3067c0c26ee26d7df",
+  "69af42693fd91d3991399785",
+  "69b3e5f9304c1c6b3950aace",
+  "606a74d7-2ac1-420b-924d-de761439fb3f",
+  "decoy-36",
+  "decoy-11",
+  "decoy-05",
+  "decoy-31",
+  "decoy-39",
+  "695933aab282844d7b277612",
+  "6956953e8c9559f6c2db0b6d",
+  "69ac9bb499d9a0170d090bb2",
+  "69e8b24d2ff2a8dc09e77295",
+  "decoy-29",
+  "decoy-34"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: Ethical Writings of […]: De Officiis, De Senectute, De Amicitia | Year of this edition: 1887 | Language: English\n2. Title: 道德經 (Dào Dé Jīng) | Year of this edition: 1842 | Language: Chinese\n3. Title: […], Commentarii — De Bello Gallico and De Bello Civili (Aldine Press) | Year of this edition: 1513 | Language: Latin\n4. Title: Tabulae Eclypsium | Year of this edition: 1514 | Language: Latin\n5. Title: Сущность брака | Year of this edition: 1901 | Language: Russian\n6. Title: Aeneid, with marginal glosses from Servius (11th century MS) | Year of this edition: 1050 | Language: Latin\n7. Title: De Revolutionibus Orbium Coelestium | Year of this edition: 1543 | Language: Latin\n8. Title: Lexicon alchemicum novum et emendatum | Year of this edition: 1679 | Language: Latin\n9. Title: Kurtzer Bericht von dem Philosophischen Saltz | Year of this edition: 1709 | Language: German\n10. Title: Clavis sapientiae Salomonis restituta | Year of this edition: 1598 | Language: Latin\n11. Title: रसतत्त्वप्रदीपिका | Year of this edition: 1600 | Language: Sanskrit\n12. Title: Annotationes in Picatricem | Year of this edition: 1604 | Language: Latin\n13. Title: Chymische Hochzeit Christiani Rosencreutz | Year of this edition: 1616 | Language: German\n14. Title: The Rhetoric, Poetic, and Nicomachean Ethics of […] | Year of this edition: 1908 | Language: English\n15. Title: Confessions | Year of this edition: 1900 | Language: English\n16. Title: 論語 (Analects) — Chinese Classics Vol. 1 | Year of this edition: 1861 | Language: Chinese\n17. Title: ספר מאור הגנוז | Year of this edition: 1612 | Language: Hebrew\n18. Title: སྨན་དཔྱད་གསེར་གྱི་ཕྲེང་བ | Year of this edition: 1650 | Language: Tibetan\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

@@ -17,9 +17,9 @@ const JUST_TABLE: [number, string][] = [
   [204, 'a whole tone'],
   [498, 'a pure fourth'],
   [702, 'a pure fifth'],
-  [996, 'a minor seventh — two fourths'],
+  [996, 'a minor seventh (two fourths)'],
   [1200, 'the octave'],
-  [1404, 'an octave and a tone — two fifths'],
+  [1404, 'an octave and a tone (two fifths)'],
   [1698, 'an octave and a fourth'],
   [1902, 'an octave and a fifth'],
   [2400, 'a double octave'],
@@ -36,7 +36,7 @@ export function justName(c: number): string | null {
 export function outcomeName(c: number): { label: string; pure: boolean } {
   const name = justName(c);
   if (name) return { label: name, pure: true };
-  if (Math.abs(c - 600) <= 6) return { label: 'the tritone — √2', pure: false };
+  if (Math.abs(c - 600) <= 6) return { label: 'the tritone, √2', pure: false };
   return { label: 'no name in the scale', pure: false };
 }
 

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: null
+n_pages: 519
+verdict: "Clef ties Jev as an instruction-page text screen (rubric AUC 0.944 vs 0.943 on 519 pages) at 5x the price; Jev stays the default."
+status: rejected
+decision: "Jev stays the default text screen: same AUC at a fifth of Clef's price"
+superseded_by: null
+issue: null
+---
 ## 2026-10-04 — Is Cloudflare's Clef a substitute for Jev as a page screen? — RESULT
 
 PRIOR ART: scripts/eval/experiments/2026-09-24-can-jev-typesafe-s-typed-decision-model-screen-pages.md — the Jev-only pilot this re-runs; its results were not committed, so all three models are re-run here.

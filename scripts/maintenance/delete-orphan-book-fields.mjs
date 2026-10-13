@@ -52,7 +52,7 @@ export const ORPHAN_FIELDS = [
   // pipeline-priority / hold experiment
   'pipeline_hold', 'pipeline_priority_at', 'pipeline_priority_reason',
   'current_job_id', 'enrichment_phase',
-  // warehouse-as-a-flag (superseded by the books_warehouse collection)
+  // warehouse-as-a-flag (superseded by the warehouse collection, itself retired 2026-10, #5470)
   'warehouse_reason',
   // IA re-point / dedup forensics
   'ia_identifier_previous', 'ia_repoint_reason', 'ica_records', 'dedup_note',

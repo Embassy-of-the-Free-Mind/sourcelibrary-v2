@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Source Libraries — Source Library',
+  title: 'Source Libraries | Source Library',
   description:
     'The 50+ digital libraries, archives, and manuscript repositories that Source Library draws from, with IIIF status, collection highlights, and access notes.',
   alternates: { canonical: '/about/sources' },
@@ -94,7 +94,7 @@ const sources: SourceLibrary[] = [
     status: 'live',
     holdings: '~20K MSS digitized (88 collections)',
     highlights: 'Vat.gr. (1,262 MSS), Vat.lat., Barb., Borg. collections. Codex Vaticanus, Plethon, Bessarion.',
-    notes: 'No OAI-PMH — bulk harvest via collection browse + IIIF manifest scraping. 7,941 MSS catalogued.',
+    notes: 'No OAI-PMH; bulk harvest via collection browse + IIIF manifest scraping. 7,941 MSS catalogued.',
   },
   {
     name: 'Cambridge University Library',
@@ -114,7 +114,7 @@ const sources: SourceLibrary[] = [
     iiif: 'v2',
     status: 'live',
     holdings: '~300 Greek MSS',
-    highlights: 'Cod. phil. gr., Cod. theol. gr. series. Habsburg collections. No search API — manual catalog.',
+    highlights: 'Cod. phil. gr., Cod. theol. gr. series. Habsburg collections. No search API; manual catalog.',
   },
   {
     name: 'HAB Wolfenbüttel',
@@ -125,7 +125,7 @@ const sources: SourceLibrary[] = [
     status: 'live',
     holdings: '42K digitized (OAI-PMH)',
     highlights: 'Herzog August collection. Alchemical, Rosicrucian, early modern German texts. VD17 sets.',
-    notes: 'No public IIIF manifests — legacy viewer only. OAI-PMH bulk harvest active.',
+    notes: 'No public IIIF manifests; legacy viewer only. OAI-PMH bulk harvest active.',
   },
   {
     name: 'Staatsbibliothek zu Berlin',
@@ -306,7 +306,7 @@ const sources: SourceLibrary[] = [
     status: 'live',
     holdings: '87K records (OAI-PMH)',
     highlights: 'Mathematics, Orientalia, medieval manuscripts and fragments. Resolver URLs for viewer access.',
-    notes: 'No IIIF in OAI-DC metadata. ~40K pre-1700 items — highest yield of any new OAI source.',
+    notes: 'No IIIF in OAI-DC metadata. ~40K pre-1700 items, the highest yield of any new OAI source.',
   },
   {
     name: 'Biblissima',
@@ -337,7 +337,7 @@ const sources: SourceLibrary[] = [
     status: 'planned',
     holdings: '~11M items',
     highlights: 'Joseon dynasty texts, Buddhist printing (Tripitaka Koreana), medical texts.',
-    notes: 'Has XML Open API requiring registration. No IIIF — proprietary viewer.',
+    notes: 'Has XML Open API requiring registration. No IIIF; proprietary viewer.',
   },
   {
     name: 'Trove (NLA Australia)',
@@ -548,7 +548,7 @@ const sources: SourceLibrary[] = [
     iiif: 'v2 (gated)',
     status: 'blocked',
     holdings: '~7M items',
-    highlights: 'Garrett Collection (Islamic MSS \u2014 one of the largest in the US), Scheide Library (incunabula, Gutenberg).',
+    highlights: 'Garrett Collection (Islamic MSS, one of the largest in the US), Scheide Library (incunabula, Gutenberg).',
     notes: 'Cloudflare Turnstile CAPTCHA blocks automated access. Samvera-based Figgy platform.',
   },
   {
@@ -601,7 +601,7 @@ const sources: SourceLibrary[] = [
     status: 'blocked',
     holdings: 'Unknown',
     highlights: 'Naskah Nusantara: Javanese, Malay, Batak, Bugis manuscripts. Palm-leaf MSS.',
-    notes: 'khastanah.perpusnas.go.id — connection refused during testing.',
+    notes: 'khastanah.perpusnas.go.id: connection refused during testing.',
   },
 ];
 
@@ -743,7 +743,7 @@ export default function SourcesPage() {
             Source Library connects to these IIIF servers directly. When we import a book, we
             fetch the manifest (a structured list of pages), record the provenance, and build
             our OCR and translation pipeline on top of the original images. We never re-host
-            images unnecessarily &mdash; we link to the source.
+            images unnecessarily; we link to the source.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link

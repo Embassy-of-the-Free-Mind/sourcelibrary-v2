@@ -11,6 +11,12 @@ export interface BooksListResponse {
 
 export interface BookWithPages extends Book {
   pages: Page[];
+  /**
+   * Where `pages` sits in the book (#6281). Anonymous callers get a capped
+   * window; `offset + returned < total` means more pages exist. Absent on a
+   * hidden book's catalog card.
+   */
+  pages_window?: { offset: number; limit: number; returned: number; total: number };
 }
 
 export interface BookSearchResponse {

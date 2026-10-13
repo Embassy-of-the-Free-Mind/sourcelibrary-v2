@@ -1,0 +1,450 @@
+{
+ "2026-10-02-are-the-facts-translation-notes-add-right-5624.md": {
+  "header": {
+   "issue": 5624,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 1439,
+   "n_pages": 30665,
+   "verdict": "| stratum | model | notes / pages | claims | correct | wrong | partly-wrong | unverifiable | units with ≥1 wrong or partly-wrong |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-can-open-sefaria-text-be-fitted-to-ocr-failed-pages-5560.md": {
+  "header": {
+   "issue": 5560,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "he"
+   ],
+   "scripts": [
+    "Hebr"
+   ],
+   "canons": [
+    "kabbalah"
+   ],
+   "n_books": null,
+   "n_pages": 43,
+   "verdict": "43 written, 765 refused with reasons.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-corpus-page-profile-5643.md": {
+  "header": {
+   "issue": 5643,
+   "stage": "metadata",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 41555,
+   "n_pages": 5629,
+   "verdict": "(Wilson 95%).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-corpus-typeface-every-book-5643.md": {
+  "header": {
+   "issue": 5643,
+   "stage": "metadata",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 41555,
+   "n_pages": 155,
+   "verdict": "(Wilson 95%, all 41,555 books).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-greek-manuscripts-fit-open-edition-5619.md": {
+  "header": {
+   "issue": 5619,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "grc"
+   ],
+   "scripts": [
+    "Grek"
+   ],
+   "canons": [],
+   "n_books": 385,
+   "n_pages": 5,
+   "verdict": "Greek manuscripts: can an open published edition be fitted to the scans instead of re-OCR?",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 1, translation 1, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-10-02-illegible-gate-5305.md": {
+  "header": {
+   "issue": [
+    5305,
+    4883
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 300,
+   "n_pages": 15,
+   "verdict": "Deferred to Derek (#5305).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 3, translation 3, image 0, metadata 0, pipeline 0)",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-loghi-vs-gemini-on-voc-handwriting-5648.md": {
+  "header": {
+   "issue": 5648,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 20,
+   "verdict": "| Arm | Best-line CER | Word recall (median) | GT lines >60% wrong | Whole-page CER |",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-02-note-fact-check-lane-stages-1-2-5647.md": {
+  "header": {
+   "issue": 5647,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo",
+    "sa"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 533,
+   "n_pages": 96926,
+   "verdict": "Can a $0 reference table settle translation-note facts before a model is paid to?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-note-facts-full-tibetan-run-5624.md": {
+  "header": {
+   "issue": 5624,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": 197,
+   "n_pages": 30665,
+   "verdict": "| unit | n | correct | wrong | partly-wrong | unverifiable | no checkable claim |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-ocr-benchmark-refusals-scored-apart-5581.md": {
+  "header": {
+   "issue": 5581,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 0,
+   "verdict": "26 meter-recorded refusals across 10 strata (25 RECITATION, 1 PROHIBITED_CONTENT), plus 7 inferred on EEBO-TCP, whose outputs are not on Hetzner.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-ocr-v18-blank-insert-4195.md": {
+  "header": {
+   "issue": [
+    4195,
+    4149
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 6,
+   "n_pages": 5,
+   "verdict": "(page means; A / A2 / B):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-ocr-v19-1-stamps-4195.md": {
+  "header": {
+   "issue": 4195,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 195,
+   "verdict": "Verdict, by the pre-registered rule: v19.1.",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-10-02-ocr-v19-showthrough-4195.md": {
+  "header": {
+   "issue": [
+    4195,
+    4149
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 35,
+   "verdict": "Verdict, by the pre-registered rule: v18.",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-10-02-quality-by-date-chars-resolution-5615.md": {
+  "header": {
+   "issue": 5615,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 327,
+   "n_pages": 892,
+   "verdict": "- Translation: script is the only covariate with a detectable association.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (image 1, metadata 1, ocr 0, translation 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-quality-by-manuscript-library-content-5623.md": {
+  "header": {
+   "issue": 5623,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [
+    "la"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 327,
+   "n_pages": 165,
+   "verdict": "- Manuscripts score lower, but manuscript and script are tangled.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-self-declared-blank-4149.md": {
+  "header": {
+   "issue": 4149,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 34467,
+   "n_pages": 41,
+   "verdict": "| stratum | flagged | on live books | ink-white (of 20) | by eye: white / show-through / real ink | invented text on a blank leaf |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-translation-flash-vs-lite-sanskrit-pali-chinese-5606.md": {
+  "header": {
+   "issue": 5606,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo",
+    "lzh",
+    "sa",
+    "pi"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt",
+    "Hani"
+   ],
+   "canons": [
+    "pali"
+   ],
+   "n_books": 57,
+   "n_pages": 57,
+   "verdict": "Decision taken / deferred.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-02-translation-page-boundary-3918.md": {
+  "header": {
+   "issue": 3918,
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1800,
+   "n_pages": 311,
+   "verdict": "How many served translations carry text from the adjacent page, and which lane writes it?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ }
+}

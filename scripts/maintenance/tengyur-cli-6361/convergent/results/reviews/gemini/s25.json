@@ -1,0 +1,46 @@
+[
+ {
+  "book_id": "6abed619896ea18127c8e464",
+  "slot": 25,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ནེ (Derge Tengyur, vol. 181)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur Pramāṇa section volume Ne (vol. 181), authentic canonical Tibetan Buddhist epistemological treatise.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 432,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 3,
+    "tr_errors_A": [
+     {
+      "source": "ག་ལས་ཡིན་ཞེས་བྱ་བ་ནི་མི་ནུས་པ་ལས་མི་སྐྱེ་བ་ནི་སྐྱེ་བའི་ཕྱིར་",
+      "english": "The phrase \"from where would it be\" means that what is not produced from incapacity is indeed produced",
+      "problem": "Reverses the epistemological causal argument: the source states that an effect cannot arise from an incapable cause, whereas the English states that it is produced from incapacity.",
+      "severity": "serious",
+      "class": "T3",
+      "reversal": true
+     },
+     {
+      "source": "སྔོན་པོ་ལ་སོགས་པའི་བློ་ལས་སེར་པོ་ལ་སོགས་པའི་བློ་མ་ཡིན་པ་མ་ཡིན་ནམ་ཞེས་ཟེར་བ་ལ།",
+      "english": "Regarding the objection, \"Is it not the case that from an intellect perceiving blue and so forth, an intellect perceiving yellow and so forth does not fail to arise?\",",
+      "problem": "Double negation misconstrued: converts the opponent's premise that yellow cognition does not arise from blue cognition into the assertion that it does not fail to arise.",
+      "severity": "moderate",
+      "class": "T3"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B is accurate, philosophically sound, and preserves the logical flow, whereas Translation A contains a serious reversal in the refutation based on causal incapacity.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic folio of the Derge Tengyur Pramāṇa section with completely accurate OCR; Translation B provides an exceptionally faithful translation, while Translation A reverses the core causal logic."
+ }
+]

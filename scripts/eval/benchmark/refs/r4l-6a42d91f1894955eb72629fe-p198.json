@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A33731",
+  "edition": "De secretione animali cogitata authore Gulielmo Cole, M.D. — Wing C5041; ESTC R12693 (1674)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A33731",
+  "origin": "library",
+  "book_id": "6a42d91f1894955eb72629fe",
+  "page_number": 198,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 151888,
+    "to_char": 152750,
+    "overlap": 0.558,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-1)",
+    "at": "2026-10-06T10:13:11.615684+00:00",
+    "note": "Microfilm, high contrast; 'potest, quin tam' to 'succus nervosus, dum' matches; padding at start.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      198,
+      199,
+      200
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.776Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "f7ae00eb868e217289071c595480319cd8a27f308c3bf872891dea2d80a9b91d",
+  "unit": {
+    "chars": 862
+  }
+}

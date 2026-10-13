@@ -1,0 +1,54 @@
+{
+  "source": "la.wikisource Liber:Principia newton la.djvu",
+  "edition": "Liber:Principia newton la.djvu — ",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3APrincipia_newton_la.djvu",
+  "origin": "library",
+  "book_id": "6953e4fa77f38f6761bef1dc",
+  "page_number": 495,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 770037,
+    "to_char": 772075,
+    "overlap": 0.462,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.[493]: ref matches start 'transibat inter stellas H & I' to 'Et'",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      493,
+      494,
+      495
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.702Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "888cbad903a93275dbb496460f872301c515880b423ce60f230bd304144e6fbf",
+  "unit": {
+    "chars": 2038
+  }
+}

@@ -50,7 +50,7 @@ type Question = VocabQuestion | DateQuestion | AuthorQuestion | TraditionQuestio
 const TOPICS: Record<string, { label: string; description: string; collections: string[] }> = {
   alchemy: {
     label: 'Alchemy',
-    description: 'The art of transformation — prima materia, the philosopher\'s stone, and the Great Work',
+    description: 'The art of transformation: prima materia, the philosopher\'s stone, and the Great Work',
     collections: ['alchemy', 'alchemical-emblems'],
   },
   hermetica: {
@@ -60,7 +60,7 @@ const TOPICS: Record<string, { label: string; description: string; collections: 
   },
   kabbalah: {
     label: 'Kabbalah',
-    description: 'Jewish mystical tradition — the sefirot, the Tree of Life, and divine emanation',
+    description: 'Jewish mystical tradition: the sefirot, the Tree of Life, and divine emanation',
     collections: ['kabbalah', 'christian-kabbalah'],
   },
   astrology: {

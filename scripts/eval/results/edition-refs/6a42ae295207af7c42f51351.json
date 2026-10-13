@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "book_id": "6a42ae295207af7c42f51351",
+    "title": "Accidentia ex stanbrigiana ...",
+    "published": "1529",
+    "source": "EEBO-TCP A12851",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 0,
+    "skips": {
+      "probe-too-short": 1,
+      "no-window": 7
+    },
+    "median_char_acc": null,
+    "median_char_acc_windowed": null,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p1",
+      "page": 1,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p7",
+      "page": 7,
+      "skipped": "no-window",
+      "overlap": 0.205
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p8",
+      "page": 8,
+      "skipped": "no-window",
+      "overlap": 0.192
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p9",
+      "page": 9,
+      "skipped": "no-window",
+      "overlap": 0.146
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p10",
+      "page": 10,
+      "skipped": "no-window",
+      "overlap": 0.111
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p12",
+      "page": 12,
+      "skipped": "no-window",
+      "overlap": 0.2
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p15",
+      "page": 15,
+      "skipped": "no-window",
+      "overlap": 0.075
+    },
+    {
+      "slug": "ed-6a42ae295207af7c42f51351-p16",
+      "page": 16,
+      "skipped": "no-window",
+      "overlap": 0.109
+    }
+  ]
+}

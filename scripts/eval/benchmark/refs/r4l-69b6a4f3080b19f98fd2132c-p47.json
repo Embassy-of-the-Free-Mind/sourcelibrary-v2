@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/barza1",
+  "edition": "Heroum Helvetiorum Epistolae — Freiburg i.Ue.: David Irrbisch, 1657.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6a4f3080b19f98fd2132c",
+  "page_number": 47,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 52589,
+    "to_char": 54275,
+    "overlap": 0.46,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "p.26 verse; ref matches",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      46,
+      47,
+      48
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.639Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "da15b0ba8fdc6835eda306e8bc53813bd2471e914cd3bddb4700511052dbacee",
+  "unit": {
+    "chars": 1686
+  }
+}

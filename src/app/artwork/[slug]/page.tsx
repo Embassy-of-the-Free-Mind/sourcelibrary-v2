@@ -139,7 +139,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const baseDescription =
     (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`;
   return {
-    title: `${artworkTitle.display} — ${artwork.author} — Source Library`,
+    title: `${artworkTitle.display}, ${artwork.author} | Source Library`,
     description: artworkTitle.isDescriptive && provenanceNote
       ? `${provenanceNote} ${baseDescription}`
       : baseDescription,
@@ -155,7 +155,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         : `${artworkTitle.display} by ${artwork.author}`,
       // Omit rather than emit an empty url when the record has no image.
       ...((artwork.thumbnail_blob || artwork.thumbnail)
-        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: `${artworkTitle.display} \u2014 ${artwork.author}` }] }
+        ? { images: [{ url: (artwork.thumbnail_blob || artwork.thumbnail) as string, alt: `${artworkTitle.display}, ${artwork.author}` }] }
         : {}),
     },
   };

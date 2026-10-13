@@ -41,6 +41,7 @@ const WINDOW = 40;
 
 /** Files that write the field but are not a change of the page's reading. */
 const ALLOWED: Record<string, string> = {
+  'scripts/maintenance/backfill-woodblock-provenance-4523.mjs': "matches 'ocr.data' only in the update FILTER (a race guard on the unchanged text); its $set stamps source/engine/content_hash and never writes text (#4523)",
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself; writes only page_revisions',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/import/import-thirukkural.ts': 'seeds an empty ocr object at import',

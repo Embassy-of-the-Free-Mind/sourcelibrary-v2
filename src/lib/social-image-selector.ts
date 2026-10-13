@@ -159,7 +159,7 @@ export async function selectImagesForPosts(
             // Museum description bonus (+15)
             {
               $cond: [
-                { $gt: [{ $strLenCP: { $ifNull: ['$detected_images.museum_description', ''] } }, 50] },
+                { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$detected_images.museum_description' }, 'string'] }, '$detected_images.museum_description', ''] } }, 50] },
                 15,
                 0
               ]

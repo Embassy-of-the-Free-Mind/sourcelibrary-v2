@@ -5,14 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Check, Heart, X } from 'lucide-react';
 import { cn, getBookThumbnailUrl, getBookCardUrl } from '@/lib/utils';
-import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
+import { bookCoverResponsiveLoader, framedCardLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
 import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
+import FramedImg from '@/components/FramedImg';
+import { coverFrame } from '@/lib/framed-image';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
 import { useLocale, useLocalePath, type Locale } from '@/lib/i18n';
+import { languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLocalizedEdition } from '@/lib/localized';
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { translationPercent, translationVerdict, type StoredTranslationState } from '@/lib/translation-completeness';
@@ -49,6 +52,9 @@ export interface CollectionBook {
    *  silently falls back to the 2000px scan. */
   image_display?: string | null;
   image_card?: string | null;
+  /** Where the page sits inside the cover scan (#6010). Applied only while it
+   *  names the cover being drawn; a feed that does not project it changes nothing. */
+  thumbnail_frame?: unknown;
   language?: string;
   has_doi?: boolean;
   is_first_translation?: boolean;
@@ -109,7 +115,27 @@ export const CARD_LABELS_LA: CollectionBookCardLabels = {
   editedBy: 'edidit',
 };
 
-const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES, la: CARD_LABELS_LA };
+export const CARD_LABELS_NL: CollectionBookCardLabels = {
+  firstTranslation: 'Eerste vertaling',
+  pages: 'pagina’s',
+  ocr: 'OCR',
+  translated: 'Vertaald',
+  complete: 'Volledig',
+  inEnglish: 'Engelstalig',
+  editedBy: 'bezorgd door',
+};
+
+export const CARD_LABELS_ZH: CollectionBookCardLabels = {
+  firstTranslation: '首次译出',
+  pages: '页',
+  ocr: 'OCR',
+  translated: '已译',
+  complete: '全译',
+  inEnglish: '英文原著',
+  editedBy: '编者',
+};
+
+const CARD_LABELS: Record<Locale, CollectionBookCardLabels> = { en: CARD_LABELS_EN, es: CARD_LABELS_ES, la: CARD_LABELS_LA, nl: CARD_LABELS_NL, zh: CARD_LABELS_ZH };
 
 interface CollectionBookCardProps {
   book: CollectionBook;
@@ -180,6 +206,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   // behaviour for every non-card book.
   const fallbackUrl = (cardUrl && displayUrl) || getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
+  // A framed cover is drawn larger than its card (#6010): when the 500px card
+  // variant would be upscaled, take the display scan of the same page.
+  const frame = coverFrame(book, thumbnailUrl);
+  const coverLoader = frame && thumbnailUrl === cardUrl && displayUrl ? framedCardLoader(displayUrl) : bookCoverResponsiveLoader;
   const slug = book.slug || book.id || book.bookId || '';
 
   // "Does this book exist in the surface language?" — asked through the shared
@@ -223,9 +253,11 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         )}
 
         {thumbnailUrl && !imageError ? (
-          <Image
+          <FramedImg
+            as={Image}
+            frame={frame}
             src={thumbnailUrl}
-            loader={bookCoverResponsiveLoader}
+            loader={coverLoader}
             alt={shownTitle}
             fill
             quality={85}
@@ -312,7 +344,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         </p>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-2 text-[11px] text-muted">
-          {book.language && <span className="bg-warm px-1.5 py-0.5 text-secondary">{book.language}</span>}
+          {book.language && <span className="bg-warm px-1.5 py-0.5 text-secondary">{languageName(book.language, lang)}</span>}
           {(book.year ?? 0) > 0 ? <span>{book.year}</span> : (book.published ? <span>{book.published}</span> : null)}
           {isArtwork
             ? (book.resource_type ? <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span> : null)

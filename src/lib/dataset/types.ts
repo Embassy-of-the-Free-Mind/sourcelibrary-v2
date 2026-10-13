@@ -18,7 +18,7 @@ export interface DatasetTierConfig {
 export const DATASET_TIERS: Record<DatasetTier, DatasetTierConfig> = {
   explorer: {
     name: 'Explorer',
-    description: 'Free keyed tier — 2,000 pages/day, any language',
+    description: 'Free keyed tier: 2,000 pages/day, any language',
     monthlyPrice: 0,
     annualPrice: 0,
     // A key must be an UPGRADE over staying anonymous (#4366): anon gets 500
@@ -77,7 +77,8 @@ export interface ApiKeyDoc {
     languages: string[] | '*';
     clusters: string[] | '*';
     /** Serve images without VISIBLE provenance marks (?clean=1 on the image
-     *  proxy). Implied by full-scope tiers; admin-grantable on any key.
+     *  proxy). Implied by full-scope tiers WITH a Stripe subscription;
+     *  admin-grantable on any key (offline-paid contracts only).
      *  Invisible marks (EXIF, keyed watermark) stay regardless — see
      *  src/lib/image-marks.ts. */
     clean_images?: boolean;

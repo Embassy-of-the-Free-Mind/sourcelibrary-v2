@@ -1,0 +1,146 @@
+{
+  "2026-09-25-night-page-break-fix-three-arms-on-the-63-5103.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "Fix with lookahead preferred 32-15 on fidelity (omissions 24 to 11) but only 10-7-7 on the 24 device breaks it targets; the lookahead raised duplication 5 to 12.",
+    "status": "rejected",
+    "decision": "Lookahead arm F not shipped; the no-lookahead PAGE_BREAK_SCOPED variant went live instead (PR #5170)",
+    "superseded_by": null, "issue": 5103
+  },
+  "2026-09-25-retraction-of-the-arm-label-on-both-4681-seam-4681.md": {
+    "stage": "translation", "measure": "none", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "The harness matched 'repaired' but outcomes say 'repair', so both #4681 seam draws judged the plain draft: the 19-14 tie is plain batch vs production; the repair was never judged.",
+    "status": "informational",
+    "decision": "Harness now imports SEAM_SOURCE_REPAIR and throws when a run with repairs substitutes nothing; repaired arm re-judged in a new packet (#4681)",
+    "superseded_by": null, "issue": 4681
+  },
+  "2026-09-25-round-4-guards-echo-gate-sized-on-the-local-5103.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 1000, "n_pages": 225583,
+    "verdict": "Echo gate flags 166 of 225,583 judged pages (0.07%) after three exemptions, 8 of 11 hand-read real; about 5% of production blocks return short and now go single-page.",
+    "status": "adopted",
+    "decision": "Echo gate and block-shift guard shipped before the page-break flip (PR #5176)",
+    "superseded_by": null, "issue": 5103
+  },
+  "2026-09-25-round-4-page-break-fix-hardened-and-re-measured-5103.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "Hardened fix Fs2 beats production 10-5-9 on the 24 device breaks, defective 38% vs 58%, duplication 2 vs 6; one seam shape (syllable catchword on an open sentence) fails in both rounds.",
+    "status": "adopted",
+    "decision": "Join guards shipped (PR #5169); PAGE_BREAK_SCOPED flipped ON in both worker paths (PR #5170)",
+    "superseded_by": null, "issue": [5103, 5021]
+  },
+  "2026-09-25-which-engine-should-retranslate-the-re-ocr-d-kanjur-4742.md": {
+    "stage": "translation", "measure": "judged_vs_reference", "languages": ["bo"], "scripts": ["Tibt"], "canons": ["tibetan"],
+    "n_books": 21, "n_pages": 21,
+    "verdict": "Against 84000, MITRA-MT trails Gemini badly (fidelity median 3 vs 5, invention 50%); flash mean 4.79, lite 4.43, and lite is the rule's cheapest eligible engine.",
+    "status": "rejected",
+    "decision": "MITRA-MT not used for manuscript-OCR Tibetan; lite vs flash left PENDING Derek, re-measured on Batch 2026-10-01 (#4742)",
+    "superseded_by": null, "issue": [4742, 4523]
+  },
+  "2026-09-26-by-eye-reference-for-the-free-ia-text-lane.md": {
+    "stage": "ocr", "measure": "judged", "languages": ["en"], "scripts": ["Latn"], "canons": [],
+    "n_books": 184, "n_pages": null,
+    "verdict": "Two-leaf by-eye reads accepted 142 of 184 held IA books (3 of 9 pilot, 139 of 175 cohort); the split follows the scan, not the date. CER and paid-gate agreement unmeasured.",
+    "status": "adopted",
+    "decision": "ia-ocr-ingest --by-eye fills held books with method by_eye (PRs #5190, #5197); 3,372 pages written",
+    "superseded_by": null, "issue": null
+  },
+  "2026-09-26-page-break-fix-scoped-and-in-production-s-block-5103.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": null,
+    "verdict": "In production's 8-page block shape the scoped fix wins device breaks 11-3-10 (defective 29% vs 50%, duplication 6 to 1); plain breaks unchanged; A/A floor 18-19.",
+    "status": "adopted",
+    "decision": "PAGE_BREAK_SCOPED with adjacent-page OCR flipped ON in translateBatch and translatePage (PR #5170)",
+    "superseded_by": null, "issue": 5103
+  },
+  "2026-09-28-for-which-english-ia-books-may-the-archive-s-5124.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["en"], "scripts": ["Latn"], "canons": [],
+    "n_books": 122, "n_pages": 122,
+    "verdict": "Against English references lite beats the Archive's OCR on the same page 57-5 (43 ties); the Archive silently misreads about 1.5% of printed numbers, lite 0 of 750.",
+    "status": "adopted",
+    "decision": "Archive text admitted only for number-free 1880-1930 Latin-script pages (ia-ocr-cohort.mjs) and as refusal fallback; lite stays default (#5186)",
+    "superseded_by": null, "issue": [5124, 5186, 5180, 5014]
+  },
+  "2026-09-28-is-flash-lite-adequate-on-modern-english-print-or-5216.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["en"], "scripts": ["Latn"], "canons": [],
+    "n_books": 114, "n_pages": 114,
+    "verdict": "Flash beats lite 14-3 (75 ties) on 114 English reference pages but the median difference is 0.00 pp; both fail on RECITATION refusals (lite 14.9%, flash 17.5%).",
+    "status": "rejected",
+    "decision": "Lite kept for English print; a refusal-fallback lane is the open item (PR #5248, Derek 2026-09-29)",
+    "superseded_by": null, "issue": [5182, 5216]
+  },
+  "2026-09-28-which-cheap-model-draws-accurate-picture-boxes-seven-arms-4747.md": {
+    "stage": "image", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": 72, "n_pages": 72,
+    "verdict": "Flash draws 81.6% tight boxes vs 3.1-lite 8-21% (finds pictures but crops them) and Qwen3-VL 63%; flash on the Batch API reproduces realtime boxes at half price.",
+    "status": "adopted",
+    "decision": "Extraction stays on gemini-3-flash-preview, routed to the Batch API by default (IMAGE_EXTRACTION_USE_BATCH, PR #5238)",
+    "superseded_by": null, "issue": 4747
+  },
+  "2026-09-29-chained-batch-api-translation-lane-pilot-on-5-stalled-4681.md": {
+    "stage": "pipeline", "measure": "none", "languages": ["la", "he", "fr", "grc"], "scripts": ["Latn", "Hebr", "Grek"], "canons": [],
+    "n_books": 5, "n_pages": 847,
+    "verdict": "Chained Batch lane wrote 847 pages of 5 stalled books at $0.00056/page (4.3x under realtime), median round 2.7 min; 16% of rounds cancelled, all recovered.",
+    "status": "adopted",
+    "decision": "Chained Batch lane merged (PR #5267) and runs from the production crontab; seam-repair design (#4912/#4973 arm Et) retired",
+    "superseded_by": null, "issue": 4681
+  },
+  "2026-09-29-does-a-stronger-image-matcher-dinov2-small-siglip2-beat-3193.md": {
+    "stage": "image", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 63,
+    "verdict": "The CLIP index at probes=1 hid matches (top-1 21 to 30 of 63 at probes 10); SigLIP2 fp32 beats CLIP on top-1, 59 vs 49 (random pool) and 47 vs 34 (hard negatives).",
+    "status": "undecided",
+    "decision": "probes=10 shipped (PR #5256); SigLIP2 as the /identify recall model awaits Derek (#3193)",
+    "superseded_by": null, "issue": 3193
+  },
+  "2026-09-29-does-image-preprocessing-binarise-contrast-deskew-upscale-crop-help-5250.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["bo", "syc", "grc", "la", "lzh"], "scripts": ["Tibt", "Syrc", "Grek", "Latn", "Hani"], "canons": [],
+    "n_books": null, "n_pages": 277,
+    "verdict": "Only per-leaf cropping helps (Yigdzin +46 matched Derge syllables per page, 98-2); Otsu hurts every engine; Sauvola, CLAHE, deskew and upscaling are null or harmful.",
+    "status": "rejected",
+    "decision": "No preprocessing step added to the OCR path; leafcrop (production since 09-28) kept (#5250)",
+    "superseded_by": null, "issue": 5250
+  },
+  "2026-09-29-round-2-of-5250-do-tighter-band-crops-help-5250.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["bo", "syc"], "scripts": ["Tibt", "Syrc"], "canons": [],
+    "n_books": null, "n_pages": 158,
+    "verdict": "Band crops do not beat leafcrop for Yigdzin (identity -9 pp, duplicated lines); photometric arms null for Yigdzin, but unsharp, flatten and denoise help Kraken on Syriac.",
+    "status": "rejected",
+    "decision": "Band crops not adopted; the exploratory Kraken gains went to a fresh-page replication (round 3, #5250)",
+    "superseded_by": null, "issue": 5250
+  },
+  "2026-09-29-round-3-of-5250-do-the-round-2-kraken-5250.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["syc"], "scripts": ["Syrc"], "canons": [],
+    "n_books": null, "n_pages": 80,
+    "verdict": "On 80 fresh Syriac folios every prediction held: sauvola -3.8 pp CER on dark spreads, flatten -10.6 pp on clean leaves, unsharp helps both; flatten hurts dark spreads.",
+    "status": "informational",
+    "decision": "No lane change; per-stratum routing was then tested on library pages and did not transfer (#5277)",
+    "superseded_by": null, "issue": [5250, 5277]
+  },
+  "2026-09-30-can-a-0-per-page-garble-score-find-the-5313.md": {
+    "stage": "ocr", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 327, "n_pages": 327,
+    "verdict": "A $0 lexicon and repetition garble score reaches precision 0.24-0.60 and recall 0.09-0.19 against the judge's 32 positives; corpus precision about 15-20%.",
+    "status": "rejected",
+    "decision": "Gate (P >= 0.8) not met; no ocr.read_quality field written, reader note unchanged (#5313)",
+    "superseded_by": null, "issue": 5313
+  },
+  "2026-09-30-chained-batch-lane-at-scale-154-books-at-once-4681.md": {
+    "stage": "pipeline", "measure": "none", "languages": [], "scripts": [], "canons": [],
+    "n_books": 154, "n_pages": 3602,
+    "verdict": "154 books at once in shared Batch jobs: $0.00061 per written page, 5.4% of rounds cancelled (vs 16-18% one job per book), about 4,700 pages/hour at full concurrency.",
+    "status": "adopted",
+    "decision": "Shared jobs (#5375), one fallback round (#5381) and auto-enrol (#5385) run in the chained cron; tick faults fixed in #5391, #5392",
+    "superseded_by": null, "issue": [4681, 5375, 5381, 5385]
+  },
+  "2026-09-30-cursive-census-of-pre-1868-japanese-the-router-checked-5100.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["ja"], "scripts": ["Jpan"], "canons": [],
+    "n_books": 356, "n_pages": 1068,
+    "verdict": "116 of 356 pre-1868 Japanese books are cursive (about 8,210 pages); the flash classifier agrees with eye labels on 57 of 60 fresh pages, catching all 28 cursive ones.",
+    "status": "adopted",
+    "decision": "The census classifier is the NDL koten lane's per-book router (scripts/lib/ndl-koten-lane.mjs; 20-book pilot #4925)",
+    "superseded_by": null, "issue": [5100, 4925]
+  }
+}

@@ -1,0 +1,190 @@
+# page-image-pick baseline — hand-rolled archived_photo/display_photo picks that predate
+# the guard (2026-10-11). Each may send a split page's whole spread. Fix one (use
+# getPageSource) and delete its line; do not add lines — waive with // image-pick-ok: <reason>.
+scripts/analysis/check-urls.mjs	console.log(' archived_photo:', page?.archived_photo || 'null');
+scripts/analysis/get-fludd-pages.mjs	const img = page?.cropped_photo || page?.archived_photo || page?.photo;
+scripts/audit/detect-fabricated-ocr.mjs	rows.push({ page: d.page_number, langs, text, model: d.ocr?.model, source: d.ocr?.source, img: d.display_photo || d.archived_photo || d.photo });
+scripts/audit/ia-model-ocr-off-leaf.mjs	const m = String(p.photo || '').match(/\/page\/n(\d+)\//); const shown = p.display_photo || p.cropped_photo || p.photo;
+scripts/audit/ia-ocr-leaf-drift.mjs	bulk_pages: pages.filter((p) => p.archive_metadata?.source === 'bulk_jp2').length, archived_pages: pages.filter((p) => /^https?:/.test(p.archived_photo || '')).length,
+scripts/audit/ia-ocr-leaf-drift.mjs	const usable = pages.filter((p) => /\/page\/n\d+\//.test(p.photo || '') && /^https?:/.test(p.archived_photo || '') && E(p.page_number - 1) >= 1);
+scripts/audit/page-image-pick.mjs	* page-image-pick — no hand-rolled `archived_photo || …` image pick outside the resolver.
+scripts/audit/quality-sprint-classes.mjs	const url = p.thumbnail_blob || p.display_photo;
+scripts/audit/tile-stitch-gutters.mjs	return p.cropped_photo || p.archived_photo || p.photo_original || p.photo || null;
+scripts/audit/warehouse-overlap-diff-5470.mjs	if (goodArchive(w) && !goodArchive(l)) { tally.archive++; gains.push({ ...base, kind: 'archive', value: w.archived_photo, live_value: l.archived_photo ?? null, archive_metadata: w.archive_metadata ?? null }); }
+scripts/auto-crop-black-borders.mjs	const imageUrl = page.archived_photo || page.photo_original || page.photo;
+scripts/batch/split-waveA-6114/before.mjs	out.push({ page_number: p.page_number, page_id: String(p.id || p._id), fold_pct: pos[p.page_number], image_url: url, archived_photo: p.archived_photo || null, photo: p.photo,
+scripts/batch/split-waveA-6114/flagged.mjs	const n = Number((a.archived_photo || '').match(/\/(\d+)\.jpg$/)?.[1]);
+scripts/batch/split-waveA-6114/review.mjs	const tiles = [await fit(fs.existsSync(`${D}/before/spread-${s.page_number}.jpg`) ? fs.readFileSync(`${D}/before/spread-${s.page_number}.jpg`) : await get(s.archived_photo || s.image_url), `BEFORE spread ${s.page_number} (cut at ${s.fold_pct}%)`)];
+scripts/batch/split-waveA-6114/review.mjs	for (const p of bySide) tiles.push(await fit(await get(p.archived_photo || p.photo), `AFTER leaf p.${p.page_number} (${p.split_side})`));
+scripts/batch/split-waveA-6114/review.mjs	txt += `\n${'='.repeat(100)}\nSPREAD ${s.page_number} → leaves ${leaves.map((p) => `p.${p.page_number} (${p.split_side})`).join(', ')} image: ${name}\nspread image: ${s.archived_photo || s.image_url}\n${leaves.map((p) => `leaf p.${p.page_number} image: ${p.archived_photo || p.photo}`).join('\n')}\n${'='.repeat(100)}\n`;
+scripts/enrichment/normalize-languages.mjs	.map(p => p.archived_photo || p.photo || p.photo_original)
+scripts/eval/audit-pareto-samples.mjs	row.image = side?.archived_photo || side?.photo || null;
+scripts/eval/audit-pareto-samples.mjs	row.page_type = doc?.page_type ?? null; row.image_url = doc?.archived_photo || doc?.photo || reg?.image_url || null;
+scripts/eval/audit-pareto-samples.mjs	row.work = b?.work_id || `book:${p.book}`; row.dims = dims(b); row.page_type = doc?.page_type ?? null; row.image = doc?.archived_photo || doc?.photo || null;
+scripts/eval/en-ocr-reference-5124.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/eval/gpu-backlog-5660/eye-fetch.mjs	const url = p?.archived_photo || p?.display_photo || p?.photo || p?.photo_original;
+scripts/eval/gpu-backlog-5660/sheet.mjs	const url = p?.archived_photo || p?.display_photo || p?.photo; const r = await fetch(url.startsWith('http') ? url : `https://images.sourcelibrary.org/${url}`);
+scripts/eval/gpu-backlog-5660/y527.mjs	const url = pg.archived_photo || pg.photo; meta.push({ stem: p.stem, model: pg.ocr?.model, source: pg.ocr?.source, url });
+scripts/eval/greek-ms-census-5619.mjs	const url = mid?.archived_photo || mid?.photo;
+scripts/eval/greek-ms-fit-5619.mjs	return { id: p.id, page_number: p.page_number, image: p.archived_photo || p.photo, model: READS === 'kraken' ? 'kraken greek-cllg' : (p.ocr?.model || null), body, q: greekLetters(body) };
+scripts/eval/ground-truth-5935/floor.mjs	const img = p.cropped_photo || p.archived_photo || p.photo;
+scripts/eval/hard-page-sample.mjs	image: { url: getPageSource(r) || r.archived_photo || r.photo || null },
+scripts/eval/ia-ocr-cjk-control.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/eval/ia-ocr-cleanup-exp.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/eval/ia-ocr-cleanup-exp.mjs	const row = { band: pk.band, bid: pk.bid, year: String(b.published || '').slice(0, 4), title: (b.title || '').slice(0, 60), page_id: p.id, page_number: p.page_number, leaf: k + offset, offset, before: +before.toFixed(3), after: +after.toFixed(3), len_ratio: +lenRatio.toFixed(2), image: p.display_photo || p.photo, ia: iaText.slice(0, 1500), cleaned: c.text.slice(0, 1500), gemini: p.ocr.data.slice(0, 1500) };
+scripts/eval/ia-ocr-delivered-quality.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/eval/ia-ocr-delivered-quality.mjs	page_id: pick.p.id, page_number: pick.p.page_number, leaf: pick.k, image_url: getPageSource(pick.p), display_url: pick.p.display_photo || null,
+scripts/eval/illegible-gate-5305.mjs	flags.push({ book_id: b.id, title: (b.title || '').slice(0, 80), language: b.language, page_number: p.page_number, page_id: p.id, page_type: p.page_type || null, kind: v.kind, legible_letters: v.legibleLetters, translated: tr, warning: illegibleWarning(v), ocr: p.ocr.data.slice(0, 1500), translation_head: (p.translation?.data || '').slice(0, 600), image: p.display_photo || p.archived_photo || p.photo || null, url: `https://sourcelibrary.org/book/${b.id}?page=${p.page_number}` });
+scripts/eval/jev/clef-book-offset-map.mjs	const readerUrl = (p) => p?.cropped_photo || p?.display_photo || p?.archived_photo || p?.photo;
+scripts/eval/jev/clef-corpus-screen.mjs	const text = ocrText(p), url = p.cropped_photo || p.display_photo || p.archived_photo;
+scripts/eval/jev/clef-corpus-screen.mjs	const url = p.cropped_photo || p.display_photo || p.archived_photo;
+scripts/eval/jev/clef-image-screens.mjs	const url = p?.display_photo || p?.archived_photo;
+scripts/eval/jev/clef-leaf-match.mjs	const img = a.cropped_photo || a.display_photo || a.archived_photo; // the crop is what the reader shows for a split spread
+scripts/eval/jev/clef-shift-check.mjs	const url = p?.cropped_photo || p?.display_photo || p?.archived_photo;
+scripts/eval/jev/leaf-match-gemini-arm.mjs	const url = cur?.display_photo || cur?.archived_photo; // same image source as the Clef run
+scripts/eval/kraken-refused-4686/draw.mjs	image_url: p.archived_photo || p.display_photo || p.photo,
+scripts/eval/lib/contact-sheet.mjs	* @param {object[]} pages page docs; each tile is `archived_photo || photo` unless `urlOf` says otherwise
+scripts/eval/lib/contact-sheet.mjs	export async function sheetFor(pages, { perSheet, cellPx, urlOf = (p) => p.archived_photo || p.photo }) {
+scripts/eval/lib/sampling.mjs	const imageUrl = page.archived_photo || page.photo || page.compressed_photo;
+scripts/eval/numbers-5224.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/eval/ocr-difficulty-taxonomy.mjs	for (const r of chunk) { const p = m.get(r.page_id); if (p) out.push({ ...r, text: p.ocr?.data || '', img: p.display_photo || p.archived_photo || p.photo }); }
+scripts/eval/ocr-prompt-v17-acceptance.mjs	const url = p.display_photo || p.photo;
+scripts/eval/ocr-triage.mjs	img: p.display_photo || p.archived_photo || p.photo,
+scripts/eval/paddle-zh-qa-6388/draw.mjs	image: p.ocr?.engine?.input?.image_url || p.archived_photo, photo_original: p.photo_original ?? null,
+scripts/eval/paddle-zh-qa-6388/prepare.mjs	bases.push({ book_id: id, title: String(b.title || '').slice(0, 80), page_id: p.id, page_number: p.page_number, image: p.ocr?.engine?.input?.image_url || p.archived_photo, text: p.ocr.data, kanripo_cer: k.cer });
+scripts/eval/page-verification-sample.mjs	image_url: p.archived_photo || p.display_photo || p.photo || null,
+scripts/eval/persian-ganjoor/sample.mjs	provider: b?.image_source?.provider || null, image: p.archived_photo || p.photo, arm: p.ocr.model || p.ocr.source || 'unknown',
+scripts/eval/pre-translation-gate-5915.mjs	refused.push({ k: f.row.k, book: f.row.book.id, title: (f.row.book.title || '').slice(0, 70), language: f.row.book.language, visible: !!f.row.book.visible, page_id: f.row.page.id, page_number: f.row.page.page_number, page_type: f.row.page.page_type || null, reason: v.page.reason, detail: v.page.detail, image: f.row.page.archived_photo || f.row.page.photo, crop: f.row.page.crop || null, has_translation: !!f.row.page.has_translation, ocr_model: f.row.page.ocr?.model || null, text: f.t.text.slice(0, 400) });
+scripts/eval/prompt-ab.mjs	const res = await fetch(p.display_photo || p.photo);
+scripts/eval/reocr-lift-5700/pilot.mjs	if (!pg?.display_photo || pg.display_photo === p.image) { fs.writeFileSync(f.replace(/\.json$/, '.skipped.json'), JSON.stringify({ id: p.id, arm: 'reocr-display', error: pg?.display_photo ? 'display_photo is the OCR source' : 'no display_photo' })); return; }
+scripts/eval/repeat-instability-draw.mjs	const imgById = new Map(pages.map(p => [p.id, p.display_photo || p.archived_photo || p.photo]));
+scripts/eval/shared-name-mislinks/draw-sample.mjs	image: page.archived_photo || page.photo || null,
+scripts/eval/tengyur-pilot-qa/dump.mjs	out.write(JSON.stringify({book_id:id, vol, page_id:p.id, page_number:p.page_number, label:p.page_label, image:p.archived_photo||p.photo, src:p.ocr?.data||'', tohoku:p.ocr?.text_edition?.tohoku||[], folio:p.ocr?.text_edition?.folio, en:p.translation?.data||'', tr_updated:p.translation?.updated_at, prompt_version:p.translation?.prompt_version, finish:p.translation?.engine?.run?.finish_reason ?? p.translation?.finish_reason})+'\n'); n++;
+scripts/eval/tengyur-ref/dump-pages.mjs	image: p.archived_photo || p.photo || null,
+scripts/eval/tibetan-proofread/build-page.mjs	const src = r.archived_photo || r.display_photo;
+scripts/eval/tibetan-proofread/build-page.mjs	reader_url: r.reader_url, full_img: r.archived_photo || r.display_photo, served_text_sha256: r.served_text_sha256,
+scripts/eval/tibetan-proofread/draw.mjs	display_photo: p.display_photo || null,
+scripts/eval/translation-corpus-audit/draw-chained.mjs	image: page.display_photo || page.cropped_photo || page.photo || null,
+scripts/eval/translation-corpus-audit/draw.mjs	image: page.display_photo || page.cropped_photo || page.photo || null,
+scripts/eval/translation-vs-reference/t2/draw-pages.mjs	if (ok) picks.push({ page_number: pn, script: gs >= 0.6 ? 'greek' : 'bilingual', greek_share: +gs.toFixed(3), ocr_chars: o.length, tr_chars: t.length, tr_model: p.translation?.model ?? null, prompt_version: p.translation?.prompt_version ?? null, ocr_model: p.ocr?.model ?? null, image: p.display_photo || p.photo || p.archived_photo || null });
+scripts/eval/two-read-garble-5313.mjs	live.push({ id: r.id, page_id: p.id, book_id: r.book_id, page_number: p.page_number, photo: p.photo ?? null, archived_photo: p.archived_photo ?? null, archive_source: p.archive_metadata?.source ?? null,
+scripts/eval/xlref-t1/page-tool.mjs	console.log(`=== page ${p.page_number} image: ${p.display_photo || p.archived_photo || p.photo}`);
+scripts/eval/xlref-t3/check-records.mjs	rec.book_meta = { ...(r.book_meta || {}), title: b.title, author: b.author, year: b.year, scan_provider: b.image_source?.provider ?? r.book_meta?.scan_provider ?? null, scan_licence: b.image_source?.license ?? r.book_meta?.scan_licence ?? null, text_licence: 'CC-BY-SA-4.0', ocr_model: p.ocr?.model ?? null, image: p.display_photo || p.photo || null };
+scripts/eval/xlref-t3/show-source.mjs	else console.log(`--- PAGE p${n} type=${p.page_type || ''} ocr_model=${p.ocr?.model || ''} chars=${String(p.ocr?.data || '').length} image=${p.display_photo || p.photo || ''} ---\n${p.ocr?.data || '(no OCR)'}`);
+scripts/eval/xlref-t4/page-tool.mjs	console.log(`=== page ${p.page_number} image: ${p.display_photo || p.archived_photo || p.photo}`);
+scripts/eval/xlref-t5/book-meta.mjs	out[`${r.book_id}_${String(r.page_number).padStart(5, '0')}`] = { title: b?.display_title || b?.title, author: b?.author, published: b?.published ?? b?.year, language: b?.language, provider: b?.image_source?.provider, image_license: b?.image_source?.license ?? b?.image_source?.rights ?? null, license: b?.license ?? null, rights_status: b?.rights_status ?? null, commons_license: b?.commons_license ?? null, pages_count: b?.pages_count, translated_count: b?.translated_count, photo: p?.display_photo || p?.archived_photo || p?.photo, ocr_model: p?.ocr?.model, ocr_updated: p?.ocr?.updated_at, tr_updated: p?.translation?.updated_at, ocr_source: p?.ocr?.source };
+scripts/fix-bad-covers.mjs	const hasImage = p.cropped_photo || p.archived_photo || p.photo;
+scripts/fix-bad-covers.mjs	const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo || bestPage.photo_original;
+scripts/fix-bph-flagged-covers.mjs	return !!(p.archived_photo || p.cropped_photo || p.photo || p.photo_original || p.image_display);
+scripts/fix-bph-flagged-covers.mjs	return p.image_display || p.archived_photo || p.cropped_photo || p.photo || p.photo_original || null;
+scripts/identity-evidence/collection-copies-2026-10-03.method/11-recheck-pages.mjs	const url = p && (p.display_photo || p.archived_photo || p.photo);
+scripts/identity-evidence/collection-copies-2026-10-03.method/2-manifest.mjs	b.mid_url=p?.display_photo||null; b.mid_page=p?.page_number;
+scripts/identity-evidence/collection-copies-2026-10-03.method/9-recheck-plan.mjs	img: p.display_photo || p.archived_photo || p.photo || null,
+scripts/import/cbeta-chan-import.mjs	const p = { vol: vi, pid: bookId, n: r.page_number, bookId, pageId: r.id, photo: r.archived_photo || r.photo, width: r.image_width, height: r.image_height,
+scripts/import/cbeta-chan-import.mjs	const url = pg.archived_photo || pg.photo;
+scripts/import/ia-ocr-by-eye-pack.mjs	await fetchImage(p.photo || p.archived_photo, jpg);
+scripts/import/ia-ocr-by-eye-pack.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/import/ia-ocr-by-eye-pack.mjs	const u = String(p.photo || p.archived_photo || '');
+scripts/import/ia-ocr-ingest.mjs	const m = String(page.photo || page.archived_photo || '').match(/\/page\/n(\d+)\//);
+scripts/import/oraec-paginate-translate.mjs	photo: pageNum === 1 ? (sourcePage.archived_photo || sourcePage.photo) : null,
+scripts/import/sefaria-fit-5560.mjs	out.pages.push({ id: p.id, page_number: p.page_number, run: out.runs.length - 1, target: isTarget.has(p.id), image: p.photo || p.archived_photo, human: isHumanEdited(p.ocr),
+scripts/lib/cover-write.mjs	|| page.archived_photo
+scripts/lib/gallery-doc.mjs	page?.archived_photo ||
+scripts/maintenance/atisha-leaf-order-6142.mjs	photo_original: page.archived_photo || page.photo_original || page.photo,
+scripts/maintenance/backfill-covers-from-detected-images.mjs	const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo || bestPage.photo_original;
+scripts/maintenance/backfill-missing-covers.mjs	const url = p?.display_photo || p?.image_thumb || p?.photo;
+scripts/maintenance/backfill-split-check.mjs	const imageUrl = samplePage.archived_photo || samplePage.photo_original || samplePage.photo;
+scripts/maintenance/backfill-split-page-thumbnails.mjs	previous_display_photo: page.display_photo ?? null,
+scripts/maintenance/backfill-split-page-thumbnails.mjs	return page.archived_photo || page.photo_original || page.photo || null;
+scripts/maintenance/bake-provenance-mark.mjs	|| p.archived_photo || p.photo_original || p.photo;
+scripts/maintenance/build-review-candidates.mjs	p.archived_photo ||
+scripts/maintenance/fix-covers.mjs	const fullSizeUrl = bestPage.archived_photo || bestPage.cropped_photo || bestPage.photo || bestPage.photo_original;
+scripts/maintenance/fix-external-thumbnails.mjs	const newThumb = matchedPage.cropped_photo || matchedPage.archived_photo;
+scripts/maintenance/fix-false-split-portrait-pages.mjs	const replacement = page.display_photo || page.image_thumb;
+scripts/maintenance/fix-false-split-portrait-pages.mjs	const source = page.archived_photo || page.photo_original;
+scripts/maintenance/fix-half-display-variants.mjs	const source = p.archived_photo || p.photo_original;
+scripts/maintenance/generate-missing-page-thumbs.mjs	return p.archived_photo || p.photo_original || p.photo || null;
+scripts/maintenance/migrate-blob-stragglers.mjs	const r2Url = firstPage?.cropped_photo || firstPage?.archived_photo || firstPage?.photo;
+scripts/maintenance/quarantine-fabricated-ocr.mjs	const url = doc.display_photo || doc.archived_photo || doc.photo;
+scripts/maintenance/reextract-zombie-pages.mjs	function getPageImageUrl(p) { return p.cropped_photo || p.archived_photo || p.photo_original || p.photo; }
+scripts/maintenance/repair-ia-ocr-leaf-offset.mjs	const leafIndex = (p) => { const m = String(p.photo || p.archived_photo || '').match(/\/page\/n(\d+)\//); return m ? +m[1] : (p.page_number || 1) - 1; };
+scripts/maintenance/repoint-blob-to-r2-fast.mjs	const newThumb = firstPage?.cropped_photo || firstPage?.archived_photo || firstPage?.photo;
+scripts/maintenance/repoint-blob-to-r2.mjs	const newThumb = firstPage?.cropped_photo || firstPage?.archived_photo || firstPage?.photo;
+scripts/maintenance/repoint-gallery-image-url-to-cdn.mjs	* from pages.cropped_photo || archived_photo || photo_original || photo, so
+scripts/maintenance/split-audit-visual.mjs	const url = p.archived_photo || p.photo;
+scripts/maintenance/tengyur-cli-6361/convergent/draw.mjs	const url = doc.archived_photo || doc.photo;
+scripts/maintenance/tengyur-cli-6361/draw-byeye.mjs	const url = d.archived_photo || d.photo;
+scripts/migration/backfill-fullres-split-pages.mjs	const sourceUrl = page.archived_photo || page.photo_original;
+scripts/migration/backfill-split-detection.mjs	const imageUrl = samplePage.archived_photo || samplePage.photo_original || samplePage.photo;
+scripts/migration/bulk-copy-pages-to-supabase.mjs	archived_photo: doc.archived_photo || null,
+scripts/migration/create-pages-images-supabase.mjs	archived_photo: p.archived_photo || null,
+scripts/migration/create-pages-images-supabase.mjs	display_photo: p.display_photo || null,
+scripts/migration/dump-pages-jsonl.mjs	archived_photo: doc.archived_photo || null,
+scripts/repair-foreign-folder-pair.mjs	console.log(` pg ${p.page_number} → 1..N (next), type=${p.page_type}, url=...${(p.archived_photo || '').slice(-50)}`);
+scripts/repair-foreign-folder-pair.mjs	const fileId = extractFileObjectId(p.archived_photo) ||
+scripts/repair-foreign-folder-pair.mjs	const u = p.archived_photo || '';
+scripts/split-book-v2.mjs	const imageUrl = page.archived_photo || page.photo_original || page.photo;
+scripts/split-book-v2.mjs	const url = p.archived_photo || p.photo_original || p.photo;
+scripts/split-book-v2.mjs	const url = page.archived_photo || page.photo_original || page.photo;
+scripts/split-book-v2.mjs	photo_original: page.archived_photo || page.photo_original || page.photo,
+scripts/split-pecha.mjs	const src = page.archived_photo || page.display_photo || page.photo;
+scripts/split-pecha.mjs	photo_original: page.archived_photo || page.photo,
+scripts/thumbnails/backfill-covers.mjs	return page.cropped_photo || page.archived_photo || page.photo;
+scripts/tmp-recitation-retry.mjs	const imageUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
+scripts/tmp-split-book-v2.mjs	const imageUrl = page.archived_photo || page.photo_original || page.photo;
+scripts/tmp-split-book-v2.mjs	photo_original: page.archived_photo || page.photo_original || page.photo,
+scripts/workers/batch-split-bph.mjs	|| firstPage?.archived_photo
+scripts/workers/pipeline-orchestrator.mjs	const imageUrl = page.archived_photo || page.photo_original || page.photo;
+scripts/workers/pipeline-orchestrator.mjs	const url = best.page.cropped_photo || best.page.archived_photo || best.page.photo;
+scripts/workers/supabase-sync.mjs	archived_photo: p.archived_photo || null,
+scripts/workers/supabase-sync.mjs	display_photo: p.display_photo || null,
+scripts/workers/sync-pages-content.mjs	archived_photo: doc.archived_photo ?? null,
+src/app/api/[tenant]/books/[id]/download/route.ts	? ((coverPage as any).cropped_photo || (coverPage as any).archived_photo || coverPage.photo)
+src/app/api/[tenant]/books/[id]/download/route.ts	? ((fallbackPage as any).cropped_photo || (fallbackPage as any).archived_photo || fallbackPage.photo)
+src/app/api/[tenant]/books/[id]/download/route.ts	? ((illusPage as any).cropped_photo || (illusPage as any).archived_photo || illusPage.photo)
+src/app/api/[tenant]/books/[id]/download/route.ts	const scanUrl = (titlePageScan as any).cropped_photo || (titlePageScan as any).archived_photo || titlePageScan.photo;
+src/app/api/[tenant]/likes/mine/route.ts	imageUrl: page.archived_photo || page.cropped_photo || page.photo_original,
+src/app/api/[tenant]/likes/mine/route.ts	thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
+src/app/api/[tenant]/likes/mine/route.ts	thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+src/app/api/[tenant]/likes/popular/route.ts	imageUrl: page.archived_photo || page.cropped_photo || page.photo_original,
+src/app/api/[tenant]/likes/popular/route.ts	thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
+src/app/api/[tenant]/likes/popular/route.ts	thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+src/app/api/[tenant]/pages/batch-split/route.ts	const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+src/app/api/admin/aspect-ratio-audit/route.ts	const imageUrl = (page.archived_photo || page.photo || page.photo_original) as string;
+src/app/api/admin/backfill-cropped-images/route.ts	const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+src/app/api/books/[id]/download/route.ts	? ((coverPage as any).cropped_photo || (coverPage as any).archived_photo || coverPage.photo)
+src/app/api/books/[id]/download/route.ts	? ((fallbackPage as any).cropped_photo || (fallbackPage as any).archived_photo || fallbackPage.photo)
+src/app/api/books/[id]/download/route.ts	? ((illusPage as any).cropped_photo || (illusPage as any).archived_photo || illusPage.photo)
+src/app/api/books/[id]/download/route.ts	const scanUrl = (titlePageScan as any).cropped_photo || (titlePageScan as any).archived_photo || titlePageScan.photo;
+src/app/api/experiments/ocr-quality/[id]/auto-judge/route.ts	const imageUrl = judgment.page.cropped_photo || judgment.page.archived_photo || judgment.page.photo || judgment.page.photo_original;
+src/app/api/experiments/ocr-quality/[id]/route.ts	image_url: page?.archived_photo || page?.photo || '',
+src/app/api/gallery/collections/route.ts	const baseUrl = page.archived_photo || page.cropped_photo || page.photo;
+src/app/api/gallery/image/[id]/route.ts	: (pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo);
+src/app/api/gallery/similar/route.ts	imageUrl: (d.extracted_url || d.thumbnail_url || p.cropped_photo || p.archived_photo || p.photo) as string,
+src/app/api/gallery/similar/route.ts	imageUrl: (det.extracted_url || det.thumbnail_url || page.cropped_photo || page.archived_photo || page.photo) as string,
+src/app/api/identify/route.ts	const imgUrl = p.display_photo || p.cropped_photo || p.archived_photo || p.photo;
+src/app/api/iiif/[id]/manifest/route.ts	const originalUrl = page.archived_photo || page.photo_original || page.photo;
+src/app/api/iiif/[id]/manifest/route.ts	const paintedUrl = page.display_photo || originalUrl;
+src/app/api/likes/mine/route.ts	imageUrl: page.archived_photo || page.cropped_photo || page.photo_original,
+src/app/api/likes/mine/route.ts	image_full: page.archived_photo || page.cropped_photo || page.photo || page.thumbnail_blob,
+src/app/api/likes/mine/route.ts	thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
+src/app/api/likes/mine/route.ts	thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+src/app/api/likes/popular/route.ts	imageUrl: page.archived_photo || page.cropped_photo || page.photo_original,
+src/app/api/likes/popular/route.ts	thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
+src/app/api/likes/popular/route.ts	thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+src/app/api/pages/batch-split/route.ts	const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+src/app/book/[id]/page.tsx	return !!(q.photo || q.photo_original || q.archived_photo || q.cropped_photo
+src/app/book/[id]/split/page.tsx	const bestImage = page.archived_photo || page.cropped_photo || page.photo || page.photo_original;
+src/app/book/[id]/split/page.tsx	const originalImage = page.photo_original || page.photo || page.archived_photo;
+src/app/book/[id]/split/page.tsx	const reviewImage = page.archived_photo || page.cropped_photo || page.photo || page.photo_original || '';
+src/app/gallery/image/[id]/layout.tsx	|| page.archived_photo
+src/components/book/CoverImagePicker.tsx	const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
+src/components/pipeline/TranslationEditor.tsx	const baseUrl = p.archived_photo || p.photo_original || p.photo;
+src/components/pipeline/TranslationEditor.tsx	{pageDisplayUrl && (page.image_width || page.archived_photo) && (
+src/lib/gallery-doc.ts	page?.archived_photo ||
+src/lib/kdp-cover.ts	page?.archived_photo ||
+src/lib/kdp-epub.ts	return page.cropped_photo || page.archived_photo || page.photo || null;
+src/lib/og-page-card.tsx	|| (page as any)?.display_photo || page?.archived_photo || page?.photo;
+src/lib/user-lists.ts	imageUrl: page.archived_photo || page.cropped_photo || page.photo_original || '',
+src/lib/user-lists.ts	thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+src/lib/utils.ts	const baseUrl = page.archived_photo || page.photo_original || page.photo;

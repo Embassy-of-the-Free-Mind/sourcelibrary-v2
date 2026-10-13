@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 21
+n_pages: 21
+verdict: "Against 84000, MITRA-MT trails Gemini badly (fidelity median 3 vs 5, invention 50%); flash mean 4.79, lite 4.43, and lite is the rule's cheapest eligible engine."
+status: rejected
+decision: "MITRA-MT not used for manuscript-OCR Tibetan; lite vs flash left PENDING Derek, re-measured on Batch 2026-10-01 (#4742)"
+superseded_by: null
+issue: [4742, 4523]
+---
 ## 2026-09-25 — Which engine should retranslate the re-OCR'd Kanjur pages: Gemini flash, flash-lite, or the Dharmamitra specialist (MITRA-MT)? Blind A/B against 84000 (#4742, gates the #4523 $430 retranslation)
 
 **Question.** Nobody has published a specialist-vs-Gemini Tibetan translation comparison, and nothing

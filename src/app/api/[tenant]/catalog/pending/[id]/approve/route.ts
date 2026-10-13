@@ -101,7 +101,7 @@ export const POST = withAuth(
     for (const [key, change] of Object.entries(row.field_changes || {})) {
       if (!EDITABLE_SET.has(key)) {
         return NextResponse.json(
-          { error: `Field "${key}" is no longer editable — cannot apply` },
+          { error: `Field "${key}" is no longer editable; cannot apply` },
           { status: 400 },
         );
       }

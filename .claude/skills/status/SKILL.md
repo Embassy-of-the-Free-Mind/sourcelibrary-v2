@@ -17,7 +17,7 @@ async function status() {
   await client.connect();
   const db = client.db('bookstore');
 
-  const [totals, readable, firstTranslations, jobs, paused, failed24h, recentTranslations, batchHealth, funnel, ocrQueue, warehouse, translated] = await Promise.all([
+  const [totals, readable, firstTranslations, jobs, paused, failed24h, recentTranslations, batchHealth, funnel, ocrQueue, translated] = await Promise.all([
     // Totals from book-level caches (fast)
     db.collection('books').aggregate([
       { $match: { hidden: { $ne: true } } },
@@ -82,9 +82,6 @@ async function status() {
       { $group: { _id: null, books: { $sum: 1 }, totalPages: { $sum: '$pages_count' }, ocrDone: { $sum: '$pages_ocr' } } }
     ]).toArray(),
 
-    // Warehouse backlog
-    db.collection('books_warehouse').countDocuments({}),
-
     // Books with any translation
     db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
   ]);
@@ -100,7 +97,6 @@ async function status() {
   console.log(`  ${t.books.toLocaleString()} visible books | ${t.pages.toLocaleString()} pages`);
   console.log(`  ${translated.toLocaleString()} translated | ${readable.toLocaleString()} readable (>=90%)`);
   console.log(`  ${firstTranslations.toLocaleString()} first English translations`);
-  console.log(`  ${warehouse.toLocaleString()} warehouse (not yet live)`);
   console.log('');
   console.log('Coverage:');
   console.log(`  OCR: ${t.ocr.toLocaleString()}/${t.pages.toLocaleString()} pages (${(t.ocr/t.pages*100).toFixed(1)}%)`);
@@ -157,7 +153,6 @@ Source Library Status
 
 Library: 13,000 visible books | 4.2M pages
   10,900 translated | 9,800 readable (>=90%) | 1,800 first English translations
-  22,500 warehouse (not yet live)
 
 Coverage: OCR 2.8M/4.2M (67%) | Translation 2.1M/4.2M (50%)
 

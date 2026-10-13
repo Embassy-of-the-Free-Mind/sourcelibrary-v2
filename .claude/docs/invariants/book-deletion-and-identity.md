@@ -33,9 +33,8 @@ a convention five scripts follow and one doesn't is not a guard.
 delete. It is named that way so an unrecoverable path cannot read like an
 ordinary `deleteOne` to the next person grepping.
 
-`moveToWarehouse()` in `src/lib/warehouse.ts` is the one bare `books.deleteOne`
-that is **not** a deletion — the record survives in `books_warehouse`. It now
-re-reads the warehouse copy before deleting, for the same reason.
+(`moveToWarehouse()`, the one bare `books.deleteOne` that was not a deletion,
+went away with the warehouse collections, retired 2026-10 — #5470.)
 
 **2. A book has TWO keys. Look it up by both.**
 Importers mint them together — `{ _id: oid, id: oid.toHexString() }` — so `id`
@@ -76,8 +75,10 @@ evidence of a ledgerless delete; there had been no delete.
 
 The shape generalises: **a missing thing is not a missing behaviour.** Before
 reporting a record as lost, query it by every key it has, and check
-`books_warehouse` and `deleted_books` too. `findBookByEitherKey()` does all of
-this; use it rather than hand-rolling a lookup.
+`deleted_books` too. `findBookByEitherKey()` does all of this; use it rather
+than hand-rolling a lookup. For history only: the warehouse was merged into
+`books` and renamed `books_warehouse_retired_2026_10` /
+`pages_warehouse_retired_2026_10` (#5470) — no code reads them.
 
 ---
 

@@ -1,0 +1,40 @@
+[
+  {
+    "book_id": "6abeb4e5896ea18127c849f3",
+    "slot": 16,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio (margin foliation 319) from a Mahayana commentary in the dbu ma section, discussing the limbs of worship and quoting the Dasabhumika's great aspirations; belongs on the Tengyur shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 318,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "སུ་བཅད་པའམ། ཟླ་བ་སྒྲོན་མའི་རྗེས་སུ་ཡི་རང་བའི་ལེའུ་ལས་སོ།", "english": "...from the Chapter on Rejoicing in the Samadhiraja Sutra", "problem": "drops 'in verse, or' (the continuation of tshigs su bcad pa'am), so the alternative the source offers is lost", "severity": "moderate" },
+          { "source": "བསྐལ་པ་བགྲང་བར་སངས་རྒྱས་འབྱུང་བ་བགྲངས་པ་ཐམས་ཅད་ཀྱིས་དམ་པའི་ཆོས་ཡོངས་སུ་བཟུང་བ་རྒྱུན་མི་འཆད་པ", "english": "This aspiration is as extensive as the dharmadhatu, reaching the limits of space and the end of future time.", "problem": "the closing qualifier 'through all the counted appearances of buddhas across the counting of eons' is dropped from the second aspiration", "severity": "minor" },
+          { "source": "ཟླ་བ་སྒྲོན་མ", "english": "Samadhiraja Sutra <gloss>... also known as the Moon Lamp Sutra</gloss>", "problem": "renders the Tibetan title 'Moon Lamp' by its other name; correct identification but not what the page says; the <meta> then calls it 'the Moon Lamp Sutra tradition'", "severity": "minor" },
+          { "source": "ཡོངས་སུ་མྱ་ངན་ལས་འདས་པ་ཆེན་པོ་སྟོན་པའི་དྲུང་དུ་འགྲོ་ཞིང་མཆོད་པ་དང", "english": "The third great aspiration is to approach and make offerings in the presence of all the Buddhas...", "problem": "the sentence breaks off at the page end ('making offerings and'); A resolves it into a complete statement, which smooths over the page seam (content is correct)", "severity": "minor" }
+        ],
+        "tr_score_B": 5,
+        "tr_errors_B": [
+          { "source": "སྟོན་པའི་དྲུང་དུ་འགྲོ་ཞིང", "english": "going before the Teacher as he displays the great final nirvāṇa", "problem": "ston pa here is 'displaying' (going into the presence of those displaying parinirvana); B reads it both as 'the Teacher' and as 'displays'", "severity": "minor" },
+          { "source": "རྡོ་རྗེ་རྒྱལ་མཚན་གྱི་ཡོངས་སུ་བསྔོ་བ", "english": "the dedication found in the Vajradhvaja Sūtra", "problem": "Vajradhvaja is a chapter (dedication) of the Avatamsaka rather than a separate sutra; 'Sūtra' is added", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "stray '#' characters inside the transcription (e.g. 'རྒྱ་ཆེན་པོ་#རྣམ་པར', 'བལྟམ་#པ'), not on the print", "severity": "minor", "class": "D1" }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Neither has a serious error, but B keeps 'in verse, or', the full qualifiers of each aspiration and the page-end break, while A compresses and drops a clause.",
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "Clean Derge folio: the transcription matches the print word for word apart from stray '#' marks, and both English versions are faithful; B is the closer, more complete rendering."
+  }
+]

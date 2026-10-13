@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [judged, accuracy]
+languages: [syc]
+scripts: [Syrc]
+canons: []
+n_books: 38
+n_pages: 40
+verdict: "The #5250 Syriac preprocessing gains do not transfer to library pages: the classifier finds 0/6 dark pages and routed auto vs production is +0.7% letters read, p 0.26."
+status: rejected
+decision: "Preprocess flag ships OFF (--preprocess none); no re-read; #4883 re-translation proceeds on existing reads"
+superseded_by: null
+issue: [5277, 5250]
+---
 ## 2026-09-30 — Syriac per-stratum preprocessing on LIBRARY pages: does the #5250 result transfer? NO (#5277)
 
 **2026-09-30 · Hetzner CPU, $0.** Question: the #5250 round-3 arms (sauvola on dark spreads −3.8 pp CER, flatten on clean leaves −10.6 pp) were confirmed within two external manuscripts. Do they transfer to the library's 38 Kraken-read manuscript books, behind a capture-class classifier?

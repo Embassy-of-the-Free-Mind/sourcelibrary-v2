@@ -1,0 +1,86 @@
+{
+ "PRIOR ART": "none — looked in scripts/eval/routing-eval/languages.json (page counts, specialist lanes and aliases for the generated table; it names languages, not ledger rows), scripts/eval/results/benchmark/decisions/*.json (one rule output per run, no link to a routing constant) and scripts/lib/lanes.mjs (lanes by pipeline step). This file says which probe cells of scripts/audit/routing-drift.mjs a row of scripts/eval/DECISIONS.md speaks for.",
+ "how_to_edit": "Keys of `rows` are row ids: `node scripts/audit/routing-drift.mjs --rows`. A row gets `probes` (selectors: fn ocr | translate | gate | constant; language a name, a list or \"*\"; optional visibility [visible | new | hidden backlog], provider [none | bph], period, hand [manuscript | print]; `expect` is what the row says the router does there) or `not_routing` with the reason the three routing functions cannot show it. A translate selector without `provider` means a book with no provider. Every DECIDED row must be here; a row of another status may be, so that finding (b) can name the row that proposed a branch. Editing a row's Stratum or Question cell changes its id: move the entry.",
+ "extra_languages": [
+  { "family": "arc", "name": "Aramaic" }
+ ],
+ "rows": {
+  "ocr/english-print-1800-1930--lite-adequate-or-flash": {
+   "probes": [{ "fn": "ocr", "language": "English", "expect": "lite" }]
+  },
+  "ocr/english-ia-imports-archive-text-vs-lite--may-the-archive-s-own-ocr-replace-a-paid": {
+   "note": "Only 'lite stays default' is probed; the import-time hold and the refusal fallback live outside the router (#5186).",
+   "probes": [{ "fn": "ocr", "language": "English", "expect": "lite" }]
+  },
+  "ocr/all-scripts-cost-switch--batch-ocr-on-lite-only-until-the-spend-d": {
+   "note": "The row names the scripts it overrides; Greek left it in the next row.",
+   "probes": [
+    { "fn": "constant", "name": "OCR_LITE_ONLY", "expect": "on" },
+    { "fn": "ocr", "language": ["Chinese", "Hebrew", "Armenian", "Russian", "Japanese"], "expect": "lite" }
+   ]
+  },
+  "ocr/greek-exception-to-the-cost-switch--read-greek-on-flash-batch-again-instead": {
+   "probes": [
+    { "fn": "ocr", "language": "Greek", "visibility": ["visible", "new"], "expect": "flash" },
+    { "fn": "ocr", "language": "Greek", "visibility": "hidden backlog", "expect": "lite" }
+   ]
+  },
+  "ocr/persian-sanskrit-pali-arabic-ge-ez-exception-to-the-cost-swi--read-on-flash-batch-instead-of-lite": {
+   "note": "Persian's hidden backlog is the next DECIDED row's.",
+   "probes": [
+    { "fn": "ocr", "language": ["Persian", "Sanskrit", "Pali", "Arabic", "Ge'ez"], "visibility": ["visible", "new"], "expect": "flash" },
+    { "fn": "ocr", "language": ["Sanskrit", "Pali", "Arabic", "Ge'ez"], "visibility": "hidden backlog", "expect": "lite" }
+   ]
+  },
+  "ocr/persian-hidden-backlog-55-6k-pp--override-the-5795-rule-s-b-failure": {
+   "probes": [{ "fn": "ocr", "language": "Persian", "visibility": "hidden backlog", "expect": "flash" }]
+  },
+  "ocr/syriac-print-and-ms--gemini-or-the-kraken-lane": {
+   "not_routing": "Syriac is read by its own lane (syriac-kraken-lane) and kept from Gemini by holds; getOcrModelForBook still answers lite for a Syriac book, so the router cannot show this decision."
+  },
+  "ocr/tibetan-dbu-can-print-ms--lite-ocr-trustworthy": {
+   "not_routing": "Tibetan is re-read by the BDRC Yigdzin lane (reocr_bdrc_4523) and the books are held; getOcrModelForBook still answers lite for a Tibetan book."
+  },
+  "translation/all-non-latin-script-books--translation-on-lite-instead-of-flash": {
+   "note": "The row says ALL non-Latin-script books; these are the non-Latin-script languages of the probe grid.",
+   "probes": [{ "fn": "translate", "language": ["Greek", "Chinese", "Tibetan", "Sanskrit", "Russian", "Hebrew", "Arabic", "Persian", "Mongolian", "Syriac", "Korean", "Japanese", "Armenian", "Pali", "Ge'ez", "Aramaic"], "expect": "lite" }]
+  },
+  "translation/all-non-latin-script-books--translation-on-lite-instead-of-flash#2": {
+   "note": "A second copy of the row above (the Translation table repeats five rows).",
+   "probes": [{ "fn": "translate", "language": ["Greek", "Chinese", "Tibetan", "Sanskrit", "Russian", "Hebrew", "Arabic", "Persian", "Mongolian", "Syriac", "Korean", "Japanese", "Armenian", "Pali", "Ge'ez", "Aramaic"], "expect": "lite" }]
+  },
+  "translation/tibetan-retranslation-1-439-held-books--worth-430-and-which-engine": {
+   "probes": [{ "fn": "translate", "language": "Tibetan", "expect": "flash" }]
+  },
+  "translation/tibetan-retranslation-1-439-held-books--worth-430-and-which-engine#2": {
+   "probes": [{ "fn": "translate", "language": "Tibetan", "expect": "flash" }]
+  },
+  "translation/sanskrit-pali-classical-chinese-translation-routed-lite--flash-instead-of-lite-as-tibetan-4742": {
+   "probes": [{ "fn": "translate", "language": "Sanskrit", "expect": "flash" }]
+  },
+  "translation/greek-hebrew-aramaic-arabic-persian-sanskrit-pali-chinese-tr--flash-instead-of-lite-judged-against-pub": {
+   "probes": [{ "fn": "translate", "language": ["Greek", "Hebrew", "Aramaic", "Arabic", "Persian", "Sanskrit", "Pali", "Chinese"], "expect": "flash" }]
+  },
+  "translation/greek-manuscripts-greek-print-1450-1599-persian-latin-incuna--should-a-book-be-translated-while-its-tr": {
+   "probes": [
+    { "fn": "gate", "language": "Greek", "hand": "manuscript", "expect": "refuse" },
+    { "fn": "gate", "language": "Greek", "hand": "print", "period": ["1450–1500", "1501–1599"], "expect": "refuse" },
+    { "fn": "gate", "language": "Persian", "expect": "refuse" },
+    { "fn": "gate", "language": "Latin", "hand": "print", "period": "1450–1500", "expect": "refuse" }
+   ]
+  },
+  "translation/prompt-v15-verified-notes--flip-v13-v15": { "not_routing": "prompt version, not a model or gate choice" },
+  "translation/prompt-v15-verified-notes--flip-v13-v15#2": { "not_routing": "prompt version (second copy of the row)" },
+  "translation/restraint-block-in-v16-stop-where-the-page-stops--add-it-to-the-v16-candidate": { "not_routing": "prompt content" },
+  "translation/batch-api-lane-4681--move-translation-to-batch-50-cheaper": { "not_routing": "which API lane sends the request, not which model translates" },
+  "translation/batch-api-lane-4681--move-translation-to-batch-50-cheaper#2": { "not_routing": "which API lane sends the request (second copy of the row)" },
+  "translation/garble-passthrough-reader-note-coverage--can-a-0-page-score-extend-pagereadcautio": { "not_routing": "a reader note, decided as 'no field, no reader change'" },
+  "translation/prompt-v16-v15-note-scope-sentence--flip-v13-v16": { "not_routing": "prompt version" },
+  "translation/seam-lines-alone-5305-items-1-1b--do-they-cut-page-boundary-invention-on-t": { "not_routing": "prompt content" },
+  "translation/request-shape-where-the-source-is-page-exact-tengyur-e-text--chained-lane-8-page-blocks-neighbour-con": { "not_routing": "request shape for one corpus (Tengyur), applied by its own runner (#5717)" },
+  "translation/tengyur-quality-levers-on-top-of-one-page-b--glossary-sanskrit-parallel-thinking-nega": { "not_routing": "prompt add-ons, none adopted" },
+  "translation/chained-batch-lane-page-breaks-where-the-sentence-runs-on-la--folio-markers-on-translate-folio-markers": { "not_routing": "the TRANSLATE_FOLIO_MARKERS flag, read by the chained lane; the three routing functions do not see it" },
+  "other/served-translation-cleanup-a2-a3-5700--0-deterministic-removal-of-decorative-in": { "not_routing": "a one-off cleanup of served text" },
+  "other/ocr-prompt-v20-tag-wording-4195--does-tighter-tag-wording-improve-page-nu": { "not_routing": "OCR prompt version" }
+ }
+}

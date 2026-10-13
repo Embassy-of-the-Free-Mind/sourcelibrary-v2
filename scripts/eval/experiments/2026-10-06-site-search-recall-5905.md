@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Rolling page hits up into books lifts site-search recall@10 from 0.32 to 0.42 and recall@20 from 0.23 to 0.38 on 30 queries; forcing RRF did nothing."
+status: adopted
+decision: "Book roll-up by facet count and kept passages shipped; RRF routing not shipped; the higher-scoring evidence-first ordering left as a decision (#5905)"
+superseded_by: null
+issue: [5905, 5893]
+---
 ## 2026-10-06 · Why does site search return so few books for a name, and does RRF fix concept queries? (#5905)
 <!-- PRIOR ART: scripts/eval/librarian-search/ (golden set at page grain for the Librarian's tools, precision/recall/MRR@5) and scripts/eval/search-quality-eval.mjs (pass/fail assertions). Neither scores /api/search for book recall, and no earlier entry measures the page lane's roll-up. -->
 

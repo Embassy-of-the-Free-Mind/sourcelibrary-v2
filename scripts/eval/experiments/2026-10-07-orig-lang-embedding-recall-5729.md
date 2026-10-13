@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: [la, de, fr, lzh]
+scripts: [Latn, Hani]
+canons: []
+n_books: 40
+n_pages: 40
+verdict: "Stored Gemini OCR vectors reach recall@10 0.93 vs e5-base 0.38 (BGE-M3 0.82 on a 3K sub-pool); the shared index, not the model, drops untranslated pages to 0.10."
+status: rejected
+decision: "No open-model backfill; Gemini OCR-tail embed approved and an original-text lane built behind SEARCH_UNTRANSLATED_LANE (#5729)"
+superseded_by: null
+issue: 5729
+---
 ## 2026-10-07 · Can an English query find an untranslated Latin/German/French/Chinese page by meaning? (#5729)
 <!-- PRIOR ART: scripts/eval/search-recall/ (#5905; book recall of /api/search over the live English lanes, expected sets from period-term phrase facets) and scripts/eval/librarian-search/ (page-grain golden set over TRANSLATED books). Neither embeds original-language OCR with an open model, and neither has a gold set of untranslated pages. -->
 

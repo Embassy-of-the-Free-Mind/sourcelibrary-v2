@@ -332,7 +332,7 @@ export default function AccountClient({ user }: AccountClientProps) {
               Reader profile
             </h2>
             <p className="text-sm mb-5 max-w-md" style={{ color: 'var(--text-muted)' }}>
-              What you told us when you joined. Change it whenever you like — every field is optional.
+              What you told us when you joined. Change it whenever you like. Every field is optional.
             </p>
 
             <div className="p-5 sm:p-6" style={{ background: 'white', border: '1px solid var(--border-light)' }}>
@@ -399,7 +399,7 @@ export default function AccountClient({ user }: AccountClientProps) {
                       value={helpDescription}
                       onChange={e => setHelpDescription(e.target.value)}
                       maxLength={2000}
-                      placeholder="Reviewing translations, annotating texts, suggesting books, writing, coding, study groups — or just here to read."
+                      placeholder="Reviewing translations, annotating texts, suggesting books, writing, coding, study groups, or just here to read."
                       className="w-full px-3 py-2 resize-y"
                       style={inputStyle}
                     />

@@ -1,0 +1,425 @@
+[
+  {
+    "book_id": "69e78a4b4a6785cfd60d31ba",
+    "slot": 1,
+    "title": "rab gnas dpe cha",
+    "tradition": "bl-other-ogyen-choling",
+    "shelf_fit": "fits",
+    "shelf_note": "A handwritten pothi from the Ogyen Choling collection (BL EAP): a consecration (rab gnas) liturgy with the ye dharmā dhāraṇī, su-pratiṣṭha mantra and verses of auspiciousness. It fits the shelf.",
+    "rights_flag": null,
+    "structure_note": "Each image is a single bound-pothi leaf. The page records are clean, and no page number is below 1. pages_ocr says 19 while 25 pages hold OCR, and only 17 of 48 pages are translated, so most of the book reads untranslated. The title page carries a library shelfmark and an accession stamp, not a printed folio number.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "།ཐབས་དཔལ་ཆེན་བཞུགས་སོ།།",
+            "image": "།།རབ་གནས་དཔེ་ཆ་བཞུགས་སོ།།",
+            "problem": "The one line on the title page, 'rab gnas dpe cha bzhugs so' (the book's own catalogue title), is read as 'thabs dpal chen'. The work is misnamed.",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "A. 269",
+            "image": "a shelfmark that looks like a Tibetan letter + '269', written sideways",
+            "problem": "The letter of the shelfmark is not certain",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "ཐབས་དཔལ་ཆེན་བཞུགས་སོ",
+            "english": "The Great Method resides here.",
+            "problem": "This translates the misread title, so the reader is told the book is 'The Great Method' and not 'consecration text'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "(none)",
+            "english": "<note>…referring to the tantric practices of the Great Glorious One.</note>",
+            "problem": "The note builds an invented gloss on the misread words",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The image description reads the stamp's Latin text as 'OSLO'. That cannot be confirmed at this resolution.",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 8,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྣཾས་ཀྱང་གནས་འདིར་བྱོན་ལས",
+            "english": "Having come to this place",
+            "problem": "The invitation ('may they come to this place') is flattened into a participle. The sense survives.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "རབ་ཏུ་གནས་པར་གྱུར་ཅིང་",
+            "image": "…གྱུར་ཅིག",
+            "problem": "One letter slip",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "'<meta>continues from previous page</meta>' sits at the head of the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བཀྲིས་ངེས / བཀྲིས་ཞེས / བཀྲིས་དས",
+            "image": "བཀྲིས་དེས (repeated refrain)",
+            "problem": "The refrain is misread three different ways",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལངྐ་མགྲིན་བཅུ་སྲིན་པོ་འདུལ་བའི་གཙོ ༔ བླ་མ་དྲག་པོའི་བཀྲིས",
+            "english": "From Lanka of the Ten-Necked Rakshasa, the chief who tames spirits, whatever auspiciousness belongs to the Wrathful Guru",
+            "problem": "This misparses 'the chief who tamed the ten-necked rākṣasa of Laṅkā' (an epithet of the Wrathful Guru) as a place name",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page</meta> in the translation",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The liturgy pages read well and are translated faithfully. But the title page, the first thing a reader sees, gives a wrong title ('The Great Method') with an invented gloss in place of 'rab gnas dpe cha'.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      8,
+      19
+    ],
+    "reader_summary": "A short manuscript consecration (rab gnas) liturgy: dhāraṇīs, consecration formulas and verses of auspiciousness. The body transcription is of the right text and the English follows it closely. The title page is misread and mistranslated, and only about a third of the leaves are translated."
+  },
+  {
+    "book_id": "69e78b5c4a6785cfd60d5329",
+    "slot": 2,
+    "title": "dpal ldan sa skya ba'i mchog sgrub pa'i gser chos mkha' spyod bskor gsum",
+    "tradition": "bl-other-ogyen-choling",
+    "shelf_fit": "fits",
+    "shelf_note": "A Sakya 'golden dharma' compendium on Nāro Khecarī / Vajrayoginī: a catalogue of contents, the eleven yogas, a feast liturgy, sindhura and transference instructions. It is an Ogyen Choling manuscript.",
+    "rights_flag": null,
+    "structure_note": "Every image is a board of four loose leaves photographed together (I5). The OCR and translation mark each leaf with <leaf-break/>, and the translator respects the seams ('Composed by <note>unclear</note>' where a leaf opens mid-phrase). The leaves on a board are not always consecutive (p.10, leaf 1 ends 'ཁ་', leaf 2 opens 'མཛད་པ་'), so reading order across boards is in doubt. The 30 printed repeats and 8 backsteps among 42 printed numbers are most likely the marginal folio numbers of several leaves in one frame, not real duplicates. Only 148 of 449 pages are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(ཨེ་དྷི་) inserted inline at several points",
+            "image": "small red interlinear marks above the line",
+            "problem": "Interlinear correction or insertion marks are read into the line as text",
+            "severity": "minor",
+            "class": "O13"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྔགས་འཆང་བཟུང་པས་མཛད་པ",
+            "english": "composed by the Mantra-Holder Zungpa",
+            "problem": "The author's name is uncertain and possibly misread. The cursive (dbu med) script is too small to confirm at this resolution.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 129,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ས་སྐྱ་པ་ཆེན་པོ",
+            "english": "Sachen Kunga Nyingpo",
+            "problem": "The translation supplies a personal name the text does not write",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 199,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 430,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "རེའང་བཞི་བཞིར་གནས་པ་ནི་དག་པ་བཅུག་ཡིན་ནོ",
+            "english": "The fact that each has four is the \"fourteen purities.\"",
+            "problem": "Four times four is the sixteen purities (bcu drug). The number is wrong.",
+            "severity": "moderate",
+            "class": "O7"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary>…</summary> and <keywords>…</keywords> are stored at the end of the translation",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription is sound and the English is careful on a demanding tantric compendium. It is marred by four-leaf boards whose reading order is uncertain, a summary/keywords block leaking into one translation, and an occasional wrong number.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      129,
+      199
+    ],
+    "reader_summary": "A Sakya collection of 'golden dharma' instructions on Nāro Khecarī (Vajrayoginī): the eleven yogas, feast rite, sindhura practice and transference. The Tibetan is the right text, leaf by leaf, and the English can be followed with confidence for content, if not for every name and number. Each 'page' is four separate leaves, which may not be in reading order, and two thirds of the book is not yet translated."
+  },
+  {
+    "book_id": "69e78b0f4a6785cfd60d4f68",
+    "slot": 3,
+    "title": "byang chub bka’ ‘bum las/ g.yo ba rlung gi rnam bshad n’a da’i sgra dbyangs",
+    "tradition": "bl-other-ogyen-choling",
+    "shelf_fit": "fits",
+    "shelf_note": "A cursive manuscript meditation manual: renunciation, empowerment, the two truths, śamatha obstacles, conduct and the four yogas of Mahāmudrā. It is an Ogyen Choling manuscript.",
+    "rights_flag": null,
+    "structure_note": "Each image holds two loose leaves (I5), marked with <leaf-break/>. The OCR line counts match both leaves on the pages checked, and no lower-leaf first line is dropped. Only 35 of 68 pages are translated. The 3 printed repeats among 5 printed numbers fit the two-leaves-per-frame layout.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 24,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བདེ་མཆོག་བོད་ཞལ་ཅན",
+            "image": "not verifiable at resolution; the tradition (cf. slot 4 'bde mchog bong zhal') is the donkey-faced (bong zhal) Cakrasaṃvara",
+            "problem": "'bong' is probably misread as 'bod'",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བདེ་མཆོག་བོད་ཞལ་ཅན",
+            "english": "the \"Tibetan-faced\" Chakrasamvara",
+            "problem": "An unknown deity form follows from the misread. It should be donkey-faced.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "source": "རྒྱལ་བ་ལྷ་པའི་ཞལ་ནས",
+            "english": "the Lord of Conquerors, Lapa",
+            "problem": "Gyalwa Lhapa is garbled to 'Lapa'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྔ་རྫིས་རྔ་བོང་གི་ཕྲུ་གུ་ཕུར་པ་ལ་གཏོད",
+            "english": "When a herder tethers a calf to a stake",
+            "problem": "A camel herder and a young camel (rnga bong) become a generic calf",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<summary>…</summary> and <keywords>…</keywords> are stored in the translation text",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 60,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རི་དྭཊ་ལྟ་བུའི་སྤྱོད་པ་ཡིས།། འཁྲུལ་པའི་རྐྱེན་ཡུལ་རྣམ་པར་སྤངས།།",
+            "english": "With conduct like a rhinoceros, completely abandon the objects that cause confusion.",
+            "problem": "ri dwags is a wild deer, not a rhinoceros (bse ru)",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A readable, mostly faithful English for a cursive meditation manual. There are scattered moderate slips (a misread deity epithet, an animal swapped) and a summary/keywords block leaking into one page.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      24
+    ],
+    "reader_summary": "A manual of meditation from the 'byang chub bka' 'bum' cycle, running from renunciation and empowerment through śamatha obstacles to the stages of Mahāmudrā. The cursive transcription appears to be of the right leaves, and the English conveys the argument and the quoted verses well. Individual names and images are sometimes wrong, and half the book is untranslated."
+  },
+  {
+    "book_id": "69e78b804a6785cfd60d588f",
+    "slot": 4,
+    "title": "bde chog bong zhal snyan brgyud kyi sngon ‘gro’i khrid yig sku gsum rgyal ba’i gzhal med khang",
+    "tradition": "bl-other-ogyen-choling",
+    "shelf_fit": "fits",
+    "shelf_note": "A preliminary-practice (sngon 'gro) manual of the donkey-faced Cakrasaṃvara oral lineage. It is an Ogyen Choling manuscript.",
+    "rights_flag": null,
+    "structure_note": "Every image is a board of two or three loose leaves (I5), with marked seams. The single printed backstep comes from only 2 printed numbers and is most likely a misread marginal folio. The last board (p.21) ends mid-leaf, consistent with the end of the text. Only 8 of 22 pages are translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 5,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བསཾ་པས་མི་འཁྱུད་པ་བྱོན་ཏེ",
+            "english": "coming forth beyond reach",
+            "problem": "'Inconceivable in number' becomes 'beyond reach'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 6,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 19,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འོག་མ་ཁཊྭཱཾ་རྩེ་གསུམ",
+            "english": "the lower two hold a khatvanga and a trident",
+            "problem": "A three-pointed khaṭvāṅga becomes two separate implements, so the iconography is wrong",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 21,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "པར་གདོན་ནོ",
+            "english": "will be expelled.",
+            "problem": "gdon here means 'recite'. The instruction to recite (the prayer) is turned into 'expelled'.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "སྒེག་པ་དཔའ་བ་མི་སྡུག་པ་སྐུ་། འཇིཊ་རུང་བཞད་གད་དྲག་ཤུལ་གསུང་",
+            "english": "body: graceful, heroic, and terrifying; speech: fierce, laughing, and ferocious",
+            "problem": "mi sdug pa (repulsive) and 'jigs rung (terrifying) are shuffled",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean transcription with a faithful, readable English for a ngöndro manual. The slips are a few moderate ones in iconography and ritual instruction.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      5,
+      6
+    ],
+    "reader_summary": "A preliminary-practice manual of the donkey-faced Cakrasaṃvara oral lineage: speech blessing with the AH syllable, the precious human birth, offerings and the Heruka visualisation. The transcription is of the right leaves and the English is trustworthy for the practice, with occasional iconographic slips. Only 8 of 22 pages are translated, and each page is a board of loose leaves."
+  }
+]

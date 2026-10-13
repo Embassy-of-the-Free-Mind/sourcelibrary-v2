@@ -64,6 +64,29 @@ export const books = {
   },
 
   /**
+   * Get a book and every one of its pages. Anonymous callers of the book API
+   * get the page list in capped windows (#6281); this follows `pages_window`
+   * until the list is complete. For surfaces that summarise or index the whole
+   * book (reading guide, translation progress) — a page grid should page
+   * through as the reader scrolls instead (BookPagesSection).
+   */
+  getWithAllPages: async (id: string, options?: { full?: boolean }): Promise<Book | BookWithPages> => {
+    const first = await books.get(id, options);
+    if (!('pages' in first) || !first.pages || !first.pages_window) return first;
+    const pages = [...first.pages];
+    let win = first.pages_window;
+    while (win.returned > 0 && win.offset + win.returned < win.total) {
+      const params = new URLSearchParams({ pageOffset: String(win.offset + win.returned) });
+      if (options?.full) params.set('full', 'true');
+      const next: BookWithPages = await apiClient.get(getBookUrl(`/${id}?${params.toString()}`));
+      if (!next.pages_window) break;
+      pages.push(...(next.pages ?? []));
+      win = next.pages_window;
+    }
+    return { ...first, pages };
+  },
+
+  /**
    * Create a new book
    */
   create: async (book: Partial<Book>): Promise<Book> => {

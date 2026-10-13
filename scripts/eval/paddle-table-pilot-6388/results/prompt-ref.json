@@ -1,0 +1,10 @@
+{
+ "id": "6ac02220413a82637da889bb",
+ "name": "Standard OCR",
+ "version": "19.1",
+ "hash": "9d8f959e053491362b2c4acec1e20c9a",
+ "base_chars": 12761,
+ "base_sha256": "34f12611ca3d77e9",
+ "addendum_sha256": "ae7079080a8ab8cd",
+ "fetched_at": "2026-10-11T23:36:52.057Z"
+}

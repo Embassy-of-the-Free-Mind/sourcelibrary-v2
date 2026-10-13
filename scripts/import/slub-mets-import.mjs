@@ -7,7 +7,7 @@
  * manifest URL). But the OAI METS record lists every page image directly
  * (USE="ORIGINAL" → full-res .tif.original.jpg). This fetches the METS, builds a
  * minimal IIIF v2 manifest from those image URLs, and imports via the normal
- * /api/import/iiif path (so the warehouse-aware checkDuplicate dedup + pipeline
+ * /api/import/iiif path (so the checkDuplicate dedup + pipeline
  * all apply). Recovers the ~739 SLUB mission-core books that had no manifest_url.
  *
  *   set -a; source .env.production.local; set +a

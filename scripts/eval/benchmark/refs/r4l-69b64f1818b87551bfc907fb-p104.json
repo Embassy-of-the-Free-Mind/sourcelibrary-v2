@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/witzel1",
+  "edition": "Historiarum De Divis Tam Veteris Quam Novi Testamenti Tempore Celeberrimis, Omni Mythologia Libere Resecta, Liber Unus. Accessit Tuba Gratiae, per Christum factae, Et Pædagogiae Christianae initium, una cum nonnullis alijs ; Cum Indice locupletißimo. — Basel: Jacobus Parcus, Joannes Oporinus, 1557.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b64f1818b87551bfc907fb",
+  "page_number": 104,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 149166,
+    "to_char": 151062,
+    "overlap": 0.576,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "Witzel, De sanctis p.66 (St Barbara); ref matches 'dico insectatur' to 'pro uulnere corpus.'; ref's first word reads 'immedico' where print has 'dico'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      104,
+      105,
+      106
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.516Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "86ba61983a98857921165cdd2111e3f8c32bc36d3215d53ac59a8d705a06c252",
+  "unit": {
+    "chars": 1896
+  }
+}

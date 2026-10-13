@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [lzh, pi]
+scripts: [Hani, Latn]
+canons: [chinese-classics, chinese-buddhist, pali]
+n_books: 1258
+n_pages: null
+verdict: "Typical body CER 3.3% (Paddle, Siku MS), 2.6% (Gemini, CBETA Chan), 4.7% (Pali vs VRI, mostly edition difference); a pooled model extrapolates within Chinese, not across scripts."
+status: informational
+decision: null
+superseded_by: null
+issue: [5935, 5918]
+---
 ## 2026-10-06 · How accurate is our Chinese and Pali transcription against typed editions, and can it be extrapolated to pages nobody checked? (#5935, phase 1)
 <!-- PRIOR ART: quality-covariates.mjs (#5623/#5643) models judged translation pages by covariate, unpooled, with no reference CER and no held-out test; zh-skqs-5568-kanripo.mjs and the #5600 lane's Kanripo Dice screen (which Kanripo page, not how many characters differ); the #5566 CBETA fit (spans, not scored against our reads independently). This run is the first ground-truth CER over those references, with a floor, a pooled model and leave-one-reference-out. -->
 

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [{ url: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg', alt: 'Minerva in a library with putti studying a globe, from Chemical Library, 1727' }],
     title: 'Ten Thousand Years of Tagging',
-    description: 'The history of knowledge classification, told through the books that invented it — most of which are in our collection.',
+    description: 'The history of knowledge classification, told through the books that invented it, most of which are in our collection.',
   },
   twitter: {
     card: 'summary_large_image',
@@ -30,7 +30,7 @@ export default function HistoryOfClassificationPage() {
       header={
         <ContentHeader
           title="Ten Thousand Years of Tagging"
-          subtitle="A history of how humans organize knowledge — told through the books that invented it"
+          subtitle="A history of how humans organize knowledge, told through the books that invented it"
           image="https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg"
           imageAlt="Minerva in a library with putti studying a globe, from Chemical Library, 1727"
         >
@@ -55,7 +55,7 @@ export default function HistoryOfClassificationPage() {
 
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          We recently built a new classification system for Source Library &mdash; six independent facets
+          We recently built a new classification system for Source Library: six independent facets
           that tag every book by tradition, domain, form, cultural sphere, era, and epistemic mode.
           While designing it, we realized something: most of the key documents in the history
           of knowledge classification are books we already have. So we read them.
@@ -65,19 +65,19 @@ export default function HistoryOfClassificationPage() {
         <div className="border border-border-light rounded-lg p-6 md:p-8 bg-white mb-12">
           <h2 className="text-lg font-medium text-primary mb-4">The Timeline (2-minute version)</h2>
           <div className="space-y-3 text-sm text-secondary">
-            <p><strong>~245 BCE</strong> &mdash; <strong>Callimachus</strong> at Alexandria: first library catalog. One scroll, one genre, filed by author.</p>
-            <p><strong>~350 BCE / 270 CE</strong> &mdash; <strong>Aristotle&rsquo;s <em>Categories</em></strong>, then <strong>Porphyry&rsquo;s <em>Isagoge</em></strong>: the hierarchical tree. Everything descends from Substance through binary splits.</p>
-            <p><strong>~500 CE</strong> &mdash; <strong>Pseudo-Dionysius</strong>: hierarchy as emanation, not containment. Three ranks of tags (source, bridge, browse).</p>
-            <p><strong>3rd&ndash;10th c.</strong> &mdash; <strong>Chinese Sibu</strong> (four divisions) and <strong>Ibn al-Nadim&rsquo;s <em>Fihrist</em></strong>: independent non-Western systems classifying hundreds of thousands of works.</p>
-            <p><strong>1305</strong> &mdash; <strong>Llull&rsquo;s <em>Ars Brevis</em></strong>: the combinatorial turn. Nine principles freely combined &mdash; the ancestor of faceted classification.</p>
-            <p><strong>1543&ndash;1545</strong> &mdash; <strong>Ramus</strong> (dichotomous tables) and <strong>Gessner</strong> (first universal catalog, multiple access points).</p>
-            <p><strong>1623&ndash;1705</strong> &mdash; <strong>Bacon</strong> (cognitive tree: Memory/Imagination/Reason), <strong>Leibniz</strong> (universal symbolic language from Llull), <strong>Hooke</strong> (classification by method/instrument).</p>
-            <p><strong>1651&ndash;1752</strong> &mdash; <strong>Comenius</strong> (classification as curriculum) and <strong>Samuel Johnson</strong> (Ramist method reaches Yale, shapes the founding generation).</p>
-            <p><strong>1735&ndash;1751</strong> &mdash; <strong>Linnaeus</strong> (binomial nomenclature &mdash; the most successful classification ever) and <strong>Diderot&rsquo;s <em>Encyclop&eacute;die</em></strong> (Bacon&rsquo;s tree realized at scale).</p>
-            <p><strong>1876&ndash;1934</strong> &mdash; <strong>Dewey</strong> (decimal system), <strong>Otlet</strong> (proto-internet from index cards), <strong>Ranganathan</strong> (faceted classification &mdash; multiple independent dimensions).</p>
-            <p><strong>1945&ndash;2004</strong> &mdash; <strong>Vannevar Bush</strong> (associative trails), the internet, <strong>folksonomy</strong> (user tagging: Delicious, Flickr, hashtags).</p>
-            <p><strong>2012&ndash;2024</strong> &mdash; <strong>Knowledge graphs</strong> (Wikidata, Google KG) and <strong>vector embeddings</strong> (clustering by semantic similarity).</p>
-            <p><strong>2024&ndash;2026</strong> &mdash; <strong>LLM-assigned faceted tags</strong>: controlled vocabulary + machine understanding. What we just built.</p>
+            <p><strong>~245 BCE</strong>.<strong>Callimachus</strong> at Alexandria: first library catalog. One scroll, one genre, filed by author.</p>
+            <p><strong>~350 BCE / 270 CE</strong>.<strong>Aristotle&rsquo;s <em>Categories</em></strong>, then <strong>Porphyry&rsquo;s <em>Isagoge</em></strong>: the hierarchical tree. Everything descends from Substance through binary splits.</p>
+            <p><strong>~500 CE</strong>.<strong>Pseudo-Dionysius</strong>: hierarchy as emanation, not containment. Three ranks of tags (source, bridge, browse).</p>
+            <p><strong>3rd&ndash;10th c.</strong><strong>Chinese Sibu</strong> (four divisions) and <strong>Ibn al-Nadim&rsquo;s <em>Fihrist</em></strong>: independent non-Western systems classifying hundreds of thousands of works.</p>
+            <p><strong>1305</strong>. <strong>Llull&rsquo;s <em>Ars Brevis</em></strong>: the combinatorial turn. Nine principles freely combined, the ancestor of faceted classification.</p>
+            <p><strong>1543&ndash;1545</strong>.<strong>Ramus</strong> (dichotomous tables) and <strong>Gessner</strong> (first universal catalog, multiple access points).</p>
+            <p><strong>1623&ndash;1705</strong>.<strong>Bacon</strong> (cognitive tree: Memory/Imagination/Reason), <strong>Leibniz</strong> (universal symbolic language from Llull), <strong>Hooke</strong> (classification by method/instrument).</p>
+            <p><strong>1651&ndash;1752</strong>.<strong>Comenius</strong> (classification as curriculum) and <strong>Samuel Johnson</strong> (Ramist method reaches Yale, shapes the founding generation).</p>
+            <p><strong>1735&ndash;1751</strong>. <strong>Linnaeus</strong> (binomial nomenclature, the most successful classification ever) and <strong>Diderot&rsquo;s <em>Encyclop&eacute;die</em></strong> (Bacon&rsquo;s tree realized at scale).</p>
+            <p><strong>1876&ndash;1934</strong>. <strong>Dewey</strong> (decimal system), <strong>Otlet</strong> (proto-internet from index cards), <strong>Ranganathan</strong> (faceted classification: multiple independent dimensions).</p>
+            <p><strong>1945&ndash;2004</strong>.<strong>Vannevar Bush</strong> (associative trails), the internet, <strong>folksonomy</strong> (user tagging: Delicious, Flickr, hashtags).</p>
+            <p><strong>2012&ndash;2024</strong>.<strong>Knowledge graphs</strong> (Wikidata, Google KG) and <strong>vector embeddings</strong> (clustering by semantic similarity).</p>
+            <p><strong>2024&ndash;2026</strong>.<strong>LLM-assigned faceted tags</strong>: controlled vocabulary + machine understanding. What we just built.</p>
           </div>
         </div>
 
@@ -101,8 +101,8 @@ export default function HistoryOfClassificationPage() {
           This was a <strong>single-axis system</strong>: one scroll, one category, filed by genre.
           The categories were literary forms, not subjects. If you wanted to find everything about
           astronomy, you had to already know that Eudoxus wrote about astronomy and look him up
-          by name. The <em>Pinakes</em> is lost, but its logic &mdash; sort by type, then by
-          author &mdash; persisted for two thousand years.
+          by name. The <em>Pinakes</em> is lost, but its logic (sort by type, then by
+          author) persisted for two thousand years.
         </p>
 
         {/* ═══════ 2. ARISTOTLE ═══════ */}
@@ -122,7 +122,7 @@ export default function HistoryOfClassificationPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          These aren&rsquo;t library categories &mdash; they&rsquo;re the grammar of existence. But they set the
+          These aren&rsquo;t library categories; they&rsquo;re the grammar of existence. But they set the
           template for all Western classification: there exists a finite set of fundamental types,
           and everything in the world can be assigned to one. Every classification system since
           is either extending Aristotle or rebelling against him.
@@ -157,7 +157,7 @@ export default function HistoryOfClassificationPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The result is the <strong>Tree of Porphyry</strong> &mdash; the first hierarchical
+          The result is the <strong>Tree of Porphyry</strong>, the first hierarchical
           classification diagram. It became THE model for over a millennium.
           When we designed our faceted vocabulary, we borrowed Porphyry&rsquo;s key insight:
           every tag value carries a one-sentence <em>differentia</em> explaining what distinguishes
@@ -204,7 +204,7 @@ export default function HistoryOfClassificationPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The Western story from Aristotle to Porphyry was not the only game. Three other
-          civilizations independently invented comprehensive classification systems &mdash;
+          civilizations independently invented comprehensive classification systems,
           and two of them predate most European innovations.
         </p>
 
@@ -220,18 +220,18 @@ export default function HistoryOfClassificationPage() {
           <Link href="/book/sancai-tuhui-illustrated-encyclopedia-of-the-three-realms" className="text-accent-rust hover:underline">
             <em>Sancai Tuhui</em> (Illustrated Encyclopedia of the Three Realms)
           </Link>{' '}
-          (96 pages, fully translated) &mdash; a Ming dynasty encyclopedia that organizes
+          (96 pages, fully translated), a Ming dynasty encyclopedia that organizes
           heaven, earth, and humanity into systematic visual catalogs.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           <strong>Ibn al-Nadim&rsquo;s{' '}
           <ExtLink href="https://en.wikipedia.org/wiki/Kitab_al-Fihrist"><em>Kitab al-Fihrist</em></ExtLink>
-          </strong> (987 CE) is the Islamic world&rsquo;s Gessner &mdash; 550 years earlier. It catalogs
+          </strong> (987 CE) is the Islamic world&rsquo;s Gessner, 550 years earlier. It catalogs
           every Arabic book known to a Baghdad bookseller, organized into ten sections: Holy Scriptures,
           Grammar, History, Poetry, Theology, Jurisprudence, Philosophy, Legends, Doctrines of
           non-Muslims, and Alchemy. Each section has subsections and author biographies. It covers
-          roughly 10,000 works &mdash; an astonishing scope for the 10th century.
+          roughly 10,000 works, an astonishing scope for the 10th century.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -265,8 +265,8 @@ export default function HistoryOfClassificationPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A book isn&rsquo;t <em>in</em> a category &mdash; it <em>combines</em> attributes. Nine principles
-          give 36 pairs, 84 triples, 126 quadruples &mdash; far more distinctions than 126 flat categories.
+          A book isn&rsquo;t <em>in</em> a category; it <em>combines</em> attributes. Nine principles
+          give 36 pairs, 84 triples, 126 quadruples: far more distinctions than 126 flat categories.
           Llull needed only nine because he understood: <strong>the number of categories should be small
           enough to hold in mind simultaneously</strong>. The power comes from combination, not enumeration.
         </p>
@@ -289,7 +289,7 @@ export default function HistoryOfClassificationPage() {
           Peter Ramus&rsquo;s <em>Dialecticae Institutiones</em>{' '}
           (1543) proposed replacing Aristotelian logic with <strong>dichotomous
           division</strong>: take any subject, split it into two, split each part into two, repeat.
-          Where Porphyry&rsquo;s tree was metaphysical, Ramus&rsquo;s was pedagogical &mdash; not classifying
+          Where Porphyry&rsquo;s tree was metaphysical, Ramus&rsquo;s was pedagogical, not classifying
           reality but organizing <em>how to teach</em> it. These &ldquo;Ramist tables&rdquo; conquered
           Protestant education across Europe and, crucially, crossed the Atlantic.
         </p>
@@ -298,11 +298,11 @@ export default function HistoryOfClassificationPage() {
           Two years later, Conrad Gessner published the{' '}
           <Link href="/book/bibliotheca-universalis-gessner" className="text-accent-rust hover:underline">
             <em>Bibliotheca Universalis</em>
-          </Link>{' '}
-          &mdash; the first attempt to catalog every book ever printed (~12,000 works). Alphabetical by author,
+          </Link>,
+          the first attempt to catalog every book ever printed (~12,000 works). Alphabetical by author,
           then reclassified by 21 subject divisions in the companion <em>Pandectae</em>. Gessner&rsquo;s
-          innovation: <strong>multiple access points to the same content</strong>. Author, subject, date
-          &mdash; all first-class entry points. Our faceted system has six.
+          innovation: <strong>multiple access points to the same content</strong>. Author, subject, date:
+          all first-class entry points. Our faceted system has six.
         </p>
 
         {/* ═══════ 8. BACON & LEIBNIZ ═══════ */}
@@ -324,15 +324,15 @@ export default function HistoryOfClassificationPage() {
         <p className="text-secondary leading-relaxed mb-6">
           This suggests a tagging dimension library science mostly ignored: not just <em>what</em> a book
           is about, but <em>what kind of thinking it requires</em>. We built this as the &ldquo;epistemic
-          mode&rdquo; facet. Bacon also invented <em>desiderata</em> &mdash; mapping what knowledge is
-          <em>missing</em> &mdash; a tagging system for gaps.
+          mode&rdquo; facet. Bacon also invented <em>desiderata</em> (mapping what knowledge is
+          <em>missing</em>), a tagging system for gaps.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
           Gottfried Wilhelm Leibniz took Llull&rsquo;s combinatorial vision further. In his <em>Dissertatio
           de Arte Combinatoria</em> (1666) and the lifelong project of a <em>characteristica universalis</em>,
           Leibniz imagined a universal symbolic language where all knowledge could be represented as
-          combinations of primitive concepts &mdash; and <em>reasoned about</em> mechanically. He explicitly
+          combinations of primitive concepts, and <em>reasoned about</em> mechanically. He explicitly
           built on Llull. We hold multiple volumes of{' '}
           <Link href="/book/die-philosophischen-schriften-vol-7-leibniz" className="text-accent-rust hover:underline">
             Leibniz&rsquo;s philosophical writings
@@ -340,8 +340,8 @@ export default function HistoryOfClassificationPage() {
           and his{' '}
           <Link href="/book/mathematische-schriften-vol-iv-leibniz" className="text-accent-rust hover:underline">
             mathematical writings
-          </Link>. His dream of a <em>calculus ratiocinator</em> &mdash; a machine that could
-          compute with categories &mdash; anticipated both Ranganathan&rsquo;s faceted classification
+          </Link>. His dream of a <em>calculus ratiocinator</em> (a machine that could
+          compute with categories) anticipated both Ranganathan&rsquo;s faceted classification
           and modern knowledge graphs.
         </p>
 
@@ -356,16 +356,16 @@ export default function HistoryOfClassificationPage() {
             <em>Posthumous Works</em>
           </Link>{' '}
           (594 pages, 10 translated) included &ldquo;A General Scheme, or Idea of the Present
-          State of Natural Philosophy&rdquo; &mdash; the &ldquo;superstructure&rdquo; on Bacon&rsquo;s foundation.
+          State of Natural Philosophy,&rdquo; the &ldquo;superstructure&rdquo; on Bacon&rsquo;s foundation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
           Where Bacon organized knowledge by cognitive faculty, Hooke organized nature by
           <strong> observational method</strong>: what instruments you need, what senses are involved,
-          what scale of phenomena. Light, sound, motion, gravity, magnetism &mdash; each domain broken
+          what scale of phenomena. Light, sound, motion, gravity, magnetism: each domain broken
           down by the type of experiment needed to investigate it. This is a different axis: not
           <em> what</em> knowledge is about, not <em>what the mind does</em>, but <em>what tools you need</em>.
-          The &ldquo;General Scheme&rdquo; is mostly untranslated &mdash; a priority for our OCR pipeline.
+          The &ldquo;General Scheme&rdquo; is mostly untranslated, a priority for our OCR pipeline.
         </p>
 
         {/* ═══════ 10. COMENIUS & SAMUEL JOHNSON ═══════ */}
@@ -385,8 +385,8 @@ export default function HistoryOfClassificationPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A century later, this idea crossed the Atlantic. Samuel Johnson (1696&ndash;1772) &mdash;
-          not the English lexicographer, but the first president of King&rsquo;s College (now Columbia) &mdash;
+          A century later, this idea crossed the Atlantic. Samuel Johnson (1696&ndash;1772),
+          not the English lexicographer, but the first president of King&rsquo;s College (now Columbia),
           created an <em>Encyclopaedia of Philosophy</em> that organized all knowledge into Ramist-style
           dichotomous trees blended with Lockean empiricism. Published in his collected
           <em> Career and Writings</em>, it became a textbook at King&rsquo;s College and shaped how the
@@ -396,7 +396,7 @@ export default function HistoryOfClassificationPage() {
         <p className="text-secondary leading-relaxed mb-12">
           The connection to the founding of the republic is not metaphorical. The men who wrote
           the Constitution were products of this educational system. Separate powers, enumerated rights,
-          hierarchical jurisdiction &mdash; these reflect the Ramist habit of dividing any complex subject
+          hierarchical jurisdiction: these reflect the Ramist habit of dividing any complex subject
           into a branching structure of named parts. The chain: Ramus (1543) &rarr; Protestant universities &rarr;
           Samuel Johnson at Yale/King&rsquo;s (1752) &rarr; colonial curriculum &rarr; the founding
           generation&rsquo;s mental models.
@@ -412,7 +412,7 @@ export default function HistoryOfClassificationPage() {
           <Link href="/book/carl-linnaeus-systema-naturae-1735-linnaeus" className="text-accent-rust hover:underline">
             <em>Systema Naturae</em>
           </Link>{' '}
-          in 1735 &mdash; just 21 pages in the first edition, but it contained the most successful
+          in 1735: just 21 pages in the first edition, but it contained the most successful
           classification system ever created. <strong>Binomial nomenclature</strong> (Kingdom &rarr;
           Phylum &rarr; Class &rarr; Order &rarr; Family &rarr; Genus &rarr; Species) is Porphyry&rsquo;s
           tree made operational for biology. It&rsquo;s still in use 290 years later. We hold the
@@ -426,11 +426,10 @@ export default function HistoryOfClassificationPage() {
         <p className="text-secondary leading-relaxed mb-12">
           In 1751, Diderot and d&rsquo;Alembert published the first volume of the{' '}
           <em>Encyclop&eacute;die</em>. Its famous &ldquo;Syst&egrave;me Figur&eacute; des
-          Connaissances Humaines&rdquo; diagram &mdash; viewable in the{' '}
+          Connaissances Humaines&rdquo; diagram (viewable in the{' '}
           <ExtLink href="https://encyclopedie.uchicago.edu/content/syst%C3%A8me-figur%C3%A9-des-connaissances-humaines">
             ARTFL Encyclop&eacute;die Project
-          </ExtLink>{' '}
-          &mdash; is Bacon&rsquo;s cognitive tree (Memory/Imagination/Reason) realized at
+          </ExtLink>) is Bacon&rsquo;s cognitive tree (Memory/Imagination/Reason) realized at
           industrial scale. 72,000 articles, 17 volumes of text, 11 volumes of plates.
           The Enlightenment&rsquo;s operating system for knowledge.
         </p>
@@ -450,19 +449,19 @@ export default function HistoryOfClassificationPage() {
           The Belgian bibliographer{' '}
           <ExtLink href="https://en.wikipedia.org/wiki/Paul_Otlet">Paul Otlet</ExtLink>{' '}
           took Dewey further. Starting in 1905, he and Henri La Fontaine created the{' '}
-          <ExtLink href="https://en.wikipedia.org/wiki/Mundaneum">Mundaneum</ExtLink>{' '}
-          &mdash; a vast paper-based knowledge system in Brussels containing over 12 million
+          <ExtLink href="https://en.wikipedia.org/wiki/Mundaneum">Mundaneum</ExtLink>,
+          a vast paper-based knowledge system in Brussels containing over 12 million
           index cards cross-referenced by subject. Otlet expanded Dewey into the{' '}
           <ExtLink href="https://en.wikipedia.org/wiki/Universal_Decimal_Classification">Universal Decimal Classification</ExtLink>,
           adding a notation for combining subjects (a book on &ldquo;chemistry of food in France&rdquo;
           could be expressed as a compound number). In 1934, he described a &ldquo;r&eacute;seau mondial&rdquo;
-          (world network) that would connect all knowledge through electric signals &mdash;
+          (world network) that would connect all knowledge through electric signals,
           essentially imagining the internet.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           The real breakthrough came from India. S.R. Ranganathan invented <strong>Colon Classification</strong>
-          (1933) &mdash; the first truly faceted system. Instead of one category per book, every book gets
+          (1933), the first truly faceted system. Instead of one category per book, every book gets
           one tag from each of five fundamental facets: Personality, Matter, Energy, Space, and Time.
           &ldquo;History of Indian medicine in the 18th century&rdquo; becomes L:2:f:44:N.
         </p>
@@ -485,7 +484,7 @@ export default function HistoryOfClassificationPage() {
           <ExtLink href="https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/">
             &ldquo;As We May Think&rdquo;
           </ExtLink>{' '}
-          in <em>The Atlantic</em>, describing the <em>memex</em> &mdash; a desk-sized device that stores
+          in <em>The Atlantic</em>, describing the <em>memex</em>, a desk-sized device that stores
           all of a person&rsquo;s books and records, accessed through <strong>associative trails</strong>
           rather than hierarchical filing. &ldquo;The human mind operates by association,&rdquo; Bush wrote.
           &ldquo;It should be possible to beat the speed and permanency of the brain.&rdquo; The memex never
@@ -511,7 +510,7 @@ export default function HistoryOfClassificationPage() {
           (2012) and{' '}
           <ExtLink href="https://www.wikidata.org/">Wikidata</ExtLink>{' '}
           (2012) model knowledge not as categories but as <strong>entities and relationships</strong>.
-          Aristotle isn&rsquo;t &ldquo;filed under Philosophy&rdquo; &mdash; he&rsquo;s an entity with
+          Aristotle isn&rsquo;t &ldquo;filed under Philosophy&rdquo;; he&rsquo;s an entity with
           properties (born: Stagira, teacher of: Alexander, student of: Plato) connected to other entities.
           This is fundamentally different from all tree and facet models: there are no categories at
           all, only a web of typed links. It&rsquo;s closer to Bush&rsquo;s associative trails than to
@@ -530,12 +529,12 @@ export default function HistoryOfClassificationPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          We did this with Source Library &mdash; embedding 5,993 book summaries and discovering{' '}
+          We did this with Source Library, embedding 5,993 book summaries and discovering{' '}
           <Link href="/blog/clustering" className="text-accent-rust hover:underline">48 clusters</Link>.
           The algorithm found groupings no human would have proposed: a &ldquo;Thirty Years&rsquo; War
           Pamphlets&rdquo; cluster connecting Frankfurt book fair catalogs with Rosicrucian texts.
           But embeddings have no labels, no explanations, no stability. Blavatsky&rsquo;s{' '}
-          <em>Isis Unveiled</em> ended up in &ldquo;Christian Kabbalah&rdquo; &mdash; wrong as a label,
+          <em>Isis Unveiled</em> ended up in &ldquo;Christian Kabbalah,&rdquo; wrong as a label,
           but revealing as a neighborhood.
         </p>
 
@@ -547,7 +546,7 @@ export default function HistoryOfClassificationPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Large language models changed what&rsquo;s possible. They can read a book&rsquo;s title,
           author, year, language, and summary, <em>understand</em> what kind of text it is, and assign
-          tags from a controlled vocabulary &mdash; with the judgment of a specialist librarian and
+          tags from a controlled vocabulary, with the judgment of a specialist librarian and
           the speed of a database.
         </p>
 
@@ -668,7 +667,7 @@ export default function HistoryOfClassificationPage() {
           embeddings). Llull&rsquo;s combinatorial insight was 700 years ahead of Ranganathan.
           Ramus&rsquo;s pedagogical trees shaped how a nation organized its government, and nobody in
           library science seems to have noticed. The Chinese Sibu system and the Islamic <em>Fihrist</em>
-          both predate European innovations by centuries. The ideas were there all along &mdash;
+          both predate European innovations by centuries. The ideas were there all along;
           they just took time to be heard across traditions.
         </p>
 

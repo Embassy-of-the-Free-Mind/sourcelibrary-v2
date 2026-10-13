@@ -72,7 +72,7 @@ export default function TenThousandBooksPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          Four years ago the collection was one book &mdash; Ficino&apos;s <em>Liber de Voluptate</em>,
+          Four years ago the collection was one book: Ficino&apos;s <em>Liber de Voluptate</em>,
           untranslated for five centuries, sitting in a glass case at the{' '}
           <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:text-accent-rust underline">
             Embassy of the Free Mind
@@ -112,13 +112,13 @@ export default function TenThousandBooksPage() {
             >
               <em>Mirabilium divinorum humanorumque volumina quattuor</em>
             </a>{' '}
-            &mdash; &ldquo;Four Volumes of Divine and Human Marvels&rdquo; &mdash; published in 1517.
+            (&ldquo;Four Volumes of Divine and Human Marvels&rdquo;), published in 1517.
             Never translated into English. 165 pages of Latin, accessible only to specialists for
             five hundred and nine years.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Champier was a physician from Lyon. He knew the circle around Pico della Mirandola &mdash;
+            Champier was a physician from Lyon. He knew the circle around Pico della Mirandola;
             the dedication mentions both Pico and Jacques Lef&egrave;vre d&apos;&Eacute;taples by name.
             The book is his attempt to synthesize everything: Orphic, Hermetic, Zoroastrian, Pythagorean,
             Platonic, Aristotelian. Four volumes asking what all these traditions actually agreed on
@@ -127,7 +127,7 @@ export default function TenThousandBooksPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The physical copy resides at the Bibliotheca Philosophica Hermetica &mdash; the same
+            The physical copy resides at the Bibliotheca Philosophica Hermetica, the same
             library where this project began. That felt appropriate.
           </p>
         </section>
@@ -142,7 +142,7 @@ export default function TenThousandBooksPage() {
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
             The pipeline doesn&apos;t finish one book at a time. It translates thousands of pages
-            simultaneously &mdash; forty books in parallel, eight pages per API call, rotating across
+            simultaneously: forty books in parallel, eight pages per API call, rotating across
             multiple Gemini keys. On the day we hit 10,000, the pipeline was processing nearly 20,000
             pages per hour. Books arrive in waves, not in a queue. Here are three that crossed the
             line alongside Champier.
@@ -174,7 +174,7 @@ export default function TenThousandBooksPage() {
             >
               <em>Etliche Underricht zu Befestigung der Stett</em>
             </a>{' '}
-            contains extraordinary woodcuts &mdash; precise geometric plans for bastions, casemates,
+            contains extraordinary woodcuts: precise geometric plans for bastions, casemates,
             and an ideal fortified city, drawn with the same hand that engraved <em>Melencolia I</em>.
             This is the first complete English translation.
           </p>
@@ -211,7 +211,7 @@ export default function TenThousandBooksPage() {
           <p className="text-secondary leading-relaxed mb-4 font-body">
             Schurman was arguably the most learned woman in seventeenth-century Europe. She read
             fourteen languages, corresponded with Descartes, Rivet, and Voetius, and was the first
-            woman admitted to a Dutch university (Utrecht, 1636 &mdash; though she had to listen from
+            woman admitted to a Dutch university (Utrecht, 1636, though she had to listen from
             behind a screen). Her{' '}
             <a
               href="https://sourcelibrary.org/book/minor-works-opuscula-schurman"
@@ -222,7 +222,7 @@ export default function TenThousandBooksPage() {
             collects her shorter works: letters, poems in Latin, Greek, and Hebrew, and her famous
             argument that women are capable of scholarly education. Individual pieces have been
             translated before, notably <em>The Learned Maid</em> in 1659. But the complete{' '}
-            <em>Opuscula</em> &mdash; the full collection as published by Elzevir &mdash; has never
+            <em>Opuscula</em> (the full collection as published by Elzevir) has never
             appeared in English until now. Our copy bears the bookplate of the Bibliotheca Philosophica
             Hermetica and an ownership inscription from 1652 linking it to Justus Laigneau, a medical
             doctor at Padua.
@@ -255,7 +255,7 @@ export default function TenThousandBooksPage() {
 
           <p className="text-secondary leading-relaxed mb-4 font-body">
             Reuchlin visited Pico in Italy and caught the fire. He spent years tracking down Jewish
-            tutors &mdash; Jacob ben Jehiel Loans taught him in Germany; Obadiah Sforno taught him
+            tutors: Jacob ben Jehiel Loans taught him in Germany; Obadiah Sforno taught him
             in Rome, &ldquo;every day, though not without the payment of a significant fee.&rdquo;
             Then he did what Pico never did: he wrote it all down in a textbook.
           </p>
@@ -295,8 +295,8 @@ export default function TenThousandBooksPage() {
           <p className="text-secondary leading-relaxed mb-4 font-body">
             Three years after publication, the book made Reuchlin famous and nearly destroyed him.
             Johannes Pfefferkorn launched a campaign to confiscate and burn all Jewish books in
-            Germany. Reuchlin opposed it. The resulting controversy &mdash; the &ldquo;Reuchlin
-            affair&rdquo; &mdash; dragged in the Pope, the Dominican order, the Emperor, and most
+            Germany. Reuchlin opposed it. The resulting controversy (the &ldquo;Reuchlin
+            affair&rdquo;) dragged in the Pope, the Dominican order, the Emperor, and most
             of the intellectuals in Europe. It became one of the defining conflicts of the early
             Reformation.
           </p>
@@ -304,7 +304,7 @@ export default function TenThousandBooksPage() {
           <p className="text-secondary leading-relaxed mb-4 font-body">
             The book survived. It became the foundation of Christian Hebraism. And for 520 years,
             it was never translated into English. Our copy is from the Bibliotheca Philosophica
-            Hermetica &mdash; a library founded to collect exactly the kind of texts Reuchlin was
+            Hermetica, a library founded to collect exactly the kind of texts Reuchlin was
             trying to unlock.
           </p>
         </section>
@@ -366,7 +366,7 @@ export default function TenThousandBooksPage() {
         <section className="mb-16">
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The constraint is no longer technical. Models are fast enough and cheap enough. The
-            constraint is curatorial &mdash; deciding what to translate next, in what order, and
+            constraint is curatorial: deciding what to translate next, in what order, and
             how to make it findable once it arrives. A year ago the question was whether this
             was possible at all.
           </p>
@@ -387,7 +387,7 @@ export default function TenThousandBooksPage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
             Source Library is a project of the Embassy of the Free Mind. If you have leads on
-            untranslated texts that belong in the collection &mdash;{' '}
+            untranslated texts that belong in the collection, write to{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
               team@sourcelibrary.org
             </a>.

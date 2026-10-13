@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 40
+n_pages: 40
+verdict: "In the Tibetan v13 flash run 6 of 40 sampled factual notes (15%) are wrong or partly wrong, all identifications or Sanskrit equivalents, none dates; audit 'invention' flags are often correct facts."
+status: superseded
+decision: "Prompt not changed; a prompt line for unsure equivalents went to DECISIONS-PENDING (#4523)"
+superseded_by: "2026-10-02-note-facts-full-tibetan-run-5624.md"
+issue: [5624, 4523]
+---
 ## 2026-10-02 · Are the facts translation notes add right? (#5624)
 <!-- PRIOR ART: 2026-10-02-what-the-judge-calls-invention-5274.md (PR #5622) typed the audit's invention flags and listed the 21 editorial-addition pages, but did not check whether the added facts are true; the #4523 QA comments read the Tibetan run for fidelity, not note facts. This file checks the facts. -->
 

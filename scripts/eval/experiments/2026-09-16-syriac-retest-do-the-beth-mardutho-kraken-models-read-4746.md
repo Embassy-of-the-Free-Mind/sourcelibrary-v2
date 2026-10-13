@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [accuracy, agreement]
+languages: [syc]
+scripts: [Syrc]
+canons: []
+n_books: 2
+n_pages: 40
+verdict: "Kraken Sophro Mhiro reads Syriac manuscripts at 19% line CER vs 74-79% for both Gemini arms (40/0 vs lite on 40 published-GT pages); Gemini re-OCR does not fix print"
+status: adopted
+decision: "Syriac OCR goes to the Kraken lane on Hetzner, never Gemini re-OCR (#4883, PR #5081)"
+superseded_by: null
+issue: [4883, 4746]
+---
 ## 2026-09-16 — Syriac retest: do the Beth Mardutho Kraken models read what Gemini loops on? (#4746 addendum, decides #4883)
 
 **Headline: yes. Against 40 pages of PUBLISHED ground truth (MS Jerusalem SMMJ 36, ÖNB Cod.

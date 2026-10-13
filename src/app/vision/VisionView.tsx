@@ -201,7 +201,7 @@ export default function VisionView({
 
       {editable && (
         <div className="bg-accent-rust text-white text-sm text-center px-4 py-2">
-          Edit mode — change any text below, or click into a paragraph and press <strong>Add comment</strong>.
+          Edit mode: change any text below, or click into a paragraph and press <strong>Add comment</strong>.
           Then <strong>Copy JSON</strong> and send it back. Nothing is saved automatically.
         </div>
       )}
@@ -275,7 +275,7 @@ export default function VisionView({
             <figcaption className="mt-4 text-sm tracking-wide uppercase text-muted">
               {editable ? (
                 <span>
-                  {F({ as: 'span', path: 'quote.source', value: quote.source })} &mdash;{' '}
+                  {F({ as: 'span', path: 'quote.source', value: quote.source })} &middot;{' '}
                   {F({ as: 'span', path: 'quote.linkLabel', value: quote.linkLabel })}
                 </span>
               ) : (
@@ -285,7 +285,7 @@ export default function VisionView({
                   rel="noopener noreferrer"
                   className="hover:text-accent-rust underline"
                 >
-                  {formatInline(quote.source)} &mdash; {quote.linkLabel}
+                  {formatInline(quote.source)} &middot; {quote.linkLabel}
                 </a>
               )}
             </figcaption>
@@ -720,7 +720,7 @@ export default function VisionView({
           )}
           <div className="max-w-[var(--container-wide)] mx-auto px-6 py-3 flex items-center gap-3 flex-wrap">
             <span className="text-sm text-white/70">
-              Editing locally — copy the JSON (edits + comments) and send it back.
+              Editing locally. Copy the JSON (edits + comments) and send it back.
             </span>
             <div className="flex-1" />
             <button

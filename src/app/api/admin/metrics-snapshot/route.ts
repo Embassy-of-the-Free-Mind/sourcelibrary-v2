@@ -91,7 +91,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
     },
     ai_crawlers: {
       window_days: 7,
-      note: 'declared AI crawlers on the licensing funnel — warm leads, see /licensing rate card',
+      note: 'declared AI crawlers on the licensing funnel: warm leads, see /licensing rate card',
       by_bot: await aiCrawlersPromise,
     },
   });

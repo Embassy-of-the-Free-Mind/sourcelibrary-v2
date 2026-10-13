@@ -4,7 +4,7 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { findBookForTenant } from '@/lib/tenant-catalog-books';
 import { getTenantContext } from '@/lib/tenant-context';
 import { Book, Page } from '@/lib/types';
-import type { Locale } from '@/lib/locale-path';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
 import { localizedTitle } from '@/lib/localized';
 import type { LocalizedBookMap } from '@/lib/localized';
 import { languageName } from '@/lib/book-i18n';
@@ -89,6 +89,8 @@ export const PAGE_OG_ALT: Record<Locale, string> = {
   en: 'Page from Source Library',
   es: 'Página de Source Library',
   la: 'Pagina ex Source Library',
+  nl: 'Pagina uit Source Library',
+  zh: 'Source Library 书页',
 };
 
 /** Card chrome, per locale. Excerpt labels name the language of the TEXT. */
@@ -119,6 +121,20 @@ const CARD_STRINGS: Record<Locale, {
     unknownAuthor: 'Auctor ignotus',
     englishExcerpt: 'Conversio Anglica',
     ownExcerpt: 'Textus Latinus',
+  },
+  nl: {
+    page: (n) => `Pagina ${n}`,
+    unknownTitle: 'Onbekende titel',
+    unknownAuthor: 'Onbekende auteur',
+    englishExcerpt: 'Engelse vertaling',
+    ownExcerpt: 'Nederlandse tekst',
+  },
+  zh: {
+    page: (n) => `第 ${n} 页`,
+    unknownTitle: '书名不详',
+    unknownAuthor: '作者不详',
+    englishExcerpt: '英文译文',
+    ownExcerpt: '中文原文',
   },
 };
 
@@ -187,7 +203,7 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
   // Latin is never a translation here: a `/la` page exists only for a book
   // WRITTEN in Latin, so its own text is the transcription (#6254).
   const localizedText = lang === 'en' || !page ? null
-    : lang === 'la' ? ((page as any)?.ocr?.data as string | undefined) || null
+    : readsOriginal(lang) ? ((page as any)?.ocr?.data as string | undefined) || null
     : getTranslation(page, lang)?.data || null;
   const excerptLabel = localizedText ? t.ownExcerpt : t.englishExcerpt;
   const rawTranslation = localizedText || (page as any)?.translation?.data || '';

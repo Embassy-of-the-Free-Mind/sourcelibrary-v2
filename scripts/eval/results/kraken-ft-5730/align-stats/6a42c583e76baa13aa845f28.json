@@ -1,0 +1,160 @@
+{
+ "book_id": "6a42c583e76baa13aa845f28",
+ "tcp": "A49852",
+ "pages": 20,
+ "pages_kept": 3,
+ "page_drop": {
+  "no-page-match": 12,
+  "too-little-text": 1,
+  "low-confidence": 4
+ },
+ "lines": 584,
+ "lines_kept": 57,
+ "line_drop": {
+  "page-dropped": 391,
+  "short": 52,
+  "cer>0.3": 28,
+  "page-low-confidence": 44,
+  "length": 5,
+  "unaligned": 7
+ },
+ "per_page": [
+  {
+   "page": "10",
+   "match": 0.328,
+   "kept": 0,
+   "lines": 22
+  },
+  {
+   "page": "11",
+   "match": 0.413,
+   "kept": 0,
+   "lines": 28
+  },
+  {
+   "page": "12",
+   "match": 0.392,
+   "kept": 0,
+   "lines": 25
+  },
+  {
+   "page": "13",
+   "match": 0.39,
+   "kept": 0,
+   "lines": 25
+  },
+  {
+   "page": "14",
+   "match": 0.21,
+   "kept": 0,
+   "lines": 27
+  },
+  {
+   "page": "15",
+   "match": 0.407,
+   "kept": 0,
+   "lines": 33
+  },
+  {
+   "page": "17",
+   "match": 0.351,
+   "kept": 0,
+   "lines": 26
+  },
+  {
+   "page": "18",
+   "match": 0.25,
+   "kept": 0,
+   "lines": 24
+  },
+  {
+   "page": "19",
+   "match": 0.324,
+   "kept": 0,
+   "lines": 23
+  },
+  {
+   "page": "20",
+   "match": 0.607,
+   "sides": [
+    20
+   ],
+   "kept": 8,
+   "lines": 19
+  },
+  {
+   "page": "22",
+   "match": 0.588,
+   "sides": [
+    22
+   ],
+   "kept": 19,
+   "lines": 26
+  },
+  {
+   "page": "23",
+   "match": 0.658,
+   "sides": [
+    23
+   ],
+   "kept": 19,
+   "lines": 50
+  },
+  {
+   "page": "24",
+   "match": 0.676,
+   "sides": [
+    24
+   ],
+   "kept": 19,
+   "lines": 26
+  },
+  {
+   "page": "26",
+   "match": 0.557,
+   "sides": [
+    26
+   ],
+   "kept": 7,
+   "lines": 16
+  },
+  {
+   "page": "27",
+   "match": 0.642,
+   "sides": [
+    27
+   ],
+   "kept": 19,
+   "lines": 30
+  },
+  {
+   "page": "28",
+   "match": 0.512,
+   "kept": 0,
+   "lines": 26
+  },
+  {
+   "page": "4",
+   "match": 0.581,
+   "sides": [
+    4
+   ],
+   "kept": 10,
+   "lines": 26
+  },
+  {
+   "page": "7",
+   "match": 0.489,
+   "kept": 0,
+   "lines": 28
+  },
+  {
+   "page": "9",
+   "match": 0.508,
+   "kept": 0,
+   "lines": 26
+  }
+ ],
+ "kept_read_cer_median": 0.118,
+ "kept_read_cer_mean": 0.1333
+}

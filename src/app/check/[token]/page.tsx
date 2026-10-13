@@ -17,7 +17,7 @@ import InviteCheck from '@/components/review/InviteCheck';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Translation check — Source Library',
+  title: 'Translation check | Source Library',
   robots: { index: false, follow: false },
 };
 

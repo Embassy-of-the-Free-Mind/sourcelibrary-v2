@@ -1,0 +1,100 @@
+[
+  {
+    "book_id": "6abeb39f896ea18127c83db1",
+    "slot": 11,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཤ (Derge Tengyur, vol. 106)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary on the applications of mindfulness and the two truths; belongs in the dbu ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 301,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "ཚོར་བ་ཉམས་མྱོང་ཞེས་བརྗོད་པ། །",
+            "english": "(absent; the quotation begins \"If one does not see that which is to be felt...\")",
+            "problem": "First line of the Dharmasaṃgīti verse ('feeling is called experience') dropped; the rest of the verse is rendered correctly and the argument survives",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "དེ་ཡང་གཞན་ཏེ་རྒྱུད་གཞན་གྱི་བློས་རྣམ་པར་འཇོག་པར་བྱེད་དོ།",
+            "english": "that too is established other <note>than it</note>, namely by the intellect of another mental continuum",
+            "problem": "གཞན་ཏེ ('by another, i.e.') garbled as 'other than it'; the following clause recovers the sense",
+            "severity": "minor"
+          },
+          {
+            "source": "དེ་ཉིད་ཀྱི་འཐད་པ་ཡང་སྟབས་གཅིག་ཆོས་དྲན་པ་ཉེ་བར་གཞག་པ་བསྟན་པར་བཞེད་ནས།",
+            "english": "Wishing simultaneously to teach the application of mindfulness to phenomena as the justification for that very point",
+            "problem": "The two things taught together (the reasoning for that point, and mindfulness of phenomena) are collapsed into one",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "གང་གིས་ན་ཉིད་ཉམས་སུ་མྱོང་།",
+            "english": "By what can the self experience anything?",
+            "problem": "'the self' is read into ཉིད; the verse asks what could experience anything, with no self introduced. Doctrinally loaded, but the verse's point (nothing experiences) still comes through",
+            "severity": "moderate",
+            "class": "T1"
+          },
+          {
+            "source": "དུ་མངོན་པར་ཞེན་པ་ལས་མ་གཏོགས་པའི་ཚོར་བ་",
+            "english": "Apart from a deep-seated attachment to feelings, sensation",
+            "problem": "'to feelings' supplied; the object of the fixation is on the previous page",
+            "severity": "minor"
+          },
+          {
+            "source": "དངོས་པོ་ཅུང་ཟད་ཀྱང་ཡོད་པ་མ་ཡིན་ནོ།",
+            "english": "it does not exist as any kind of material thing",
+            "problem": "dngos po (real entity) narrowed to 'material thing'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "same",
+        "prefer_reason": "Neither has a serious error. A drops the opening line of the quoted verse and B reads 'the self' into the same verse. Each is one moderate slip in the same passage, and the rest of both is faithful, so neither is clearly better.",
+        "confidence": "medium",
+        "adjudication": [
+          {
+            "raised_by": "both",
+            "version": "A",
+            "claim": "First verse line ཚོར་བ་ཉམས་མྱོང་ཞེས་བརྗོད་པ omitted (reviewer2: serious T8; reviewer1: moderate)",
+            "verdict": "confirmed",
+            "why": "The line is on the image (end of line 1 into the start of line 2) and A has no rendering of it. I rate it moderate, not serious: one definitional line is lost, the remaining five lines are correct, and the argument is unchanged."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "B",
+            "claim": "Speaker reversal: 'Wishing to address an opponent's argument... he says if' gives the opponent's objection to the author",
+            "verdict": "rejected",
+            "why": "B still says the untenability of the two truths is the opponent's argument and gives the 'if' clause as the objection. 'He says if' (the root-text author voicing the objection) is a normal way to read a commentary's lemma. No claim moves to the wrong speaker; at most a minor framing difference from གཞན་གྱིས...བརྩད་པར་འདོད་ནས."
+          },
+          {
+            "raised_by": "both",
+            "version": "B",
+            "claim": "'By what can the self experience anything?' invents 'the self' (reviewer2: serious T1 with reversal; reviewer1: minor)",
+            "verdict": "confirmed",
+            "why": "Confirmed as a mistranslation of ཉིད, but rated moderate, not serious. It is not a reversal: the rhetorical question still says that nothing experiences."
+          },
+          {
+            "raised_by": "reviewer2",
+            "version": "A",
+            "claim": "OCR misreads: ན་ཉིད for གང་ཉིད, and མ་ཡིན་ཏེ for མེད་དེ",
+            "verdict": "rejected",
+            "why": "At this resolution the print reads a single letter (ན) before ཉིད and reads པ་མ་ཡིན་ཏེ before དངོས་པོ, which matches the transcription. The canonical sūtra wording may differ, but the transcription follows this block."
+          }
+        ]
+      }
+    ],
+    "book_verdict": "A correct Derge Madhyamaka folio with a clean transcription. Both English versions are faithful in substance, and each has one moderate slip in the Dharmasaṃgīti verse."
+  }
+]

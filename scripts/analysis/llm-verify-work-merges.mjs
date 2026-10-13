@@ -31,6 +31,7 @@
  */
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
+import { remintAliasPlan } from '../lib/work-id-remint.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const COVERAGE_ONLY = process.argv.includes('--coverage-only');
@@ -146,8 +147,12 @@ if (APPLY_FROM) {
   fs.writeFileSync(`${outDir2}llm-work-merge-apply-backup.json`, JSON.stringify({ when: 'apply-from', source: APPLY_FROM, groups: high.length, writes }, null, 2));
   console.log(`apply-from ${APPLY_FROM}: ${high.length} HIGH merge groups → ${writes.length} book writes`);
   let mod = 0;
+  // ids this merge retires stay followable (#4329): see scripts/lib/work-id-remint.mjs
+  const { aliasFor, tally } = await remintAliasPlan(books, writes);
+  console.log(`retired ids kept as aliases: ${tally.renamed} (${tally.split} split, ${tally.partial} still live elsewhere: no alias)`);
   for (const w of writes) {
-    const r = await books.updateOne({ id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() } });
+    const alias = aliasFor.get(w.id);
+    const r = await books.updateOne(alias ? { id: w.id, work_id: alias } : { id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() }, ...(alias ? { $addToSet: { work_id_aliases: alias } } : {}) });
     mod += r.modifiedCount;
   }
   console.log(`applied: ${mod} book records updated`);
@@ -359,9 +364,13 @@ if (APPLY) {
   fs.writeFileSync(backup, JSON.stringify({ when: 'apply', groups: high.length, writes }, null, 2));
   console.log(`\n--apply: ${high.length} HIGH merges → ${writes.length} book writes (backup ${backup})`);
   let mod = 0;
+  // ids this merge retires stay followable (#4329): see scripts/lib/work-id-remint.mjs
+  const { aliasFor, tally } = await remintAliasPlan(books, writes);
+  console.log(`retired ids kept as aliases: ${tally.renamed} (${tally.split} split, ${tally.partial} still live elsewhere: no alias)`);
   for (const w of writes) {
     // reassign even if already set (cross-slug unify) — but only within this LLM pass's books
-    const r = await books.updateOne({ id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() } });
+    const alias = aliasFor.get(w.id);
+    const r = await books.updateOne(alias ? { id: w.id, work_id: alias } : { id: w.id }, { $set: { work_id: w.work_id, work_title: w.title, work_id_source: 'work-merge:llm-verified', work_id_confidence: 'high', updated_at: new Date() }, ...(alias ? { $addToSet: { work_id_aliases: alias } } : {}) });
     mod += r.modifiedCount;
   }
   console.log(`applied: ${mod} book records updated`);

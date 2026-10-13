@@ -1,0 +1,43 @@
+[
+  {
+    "book_id": "6abed47a896ea18127c8d820", "slot": 39,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Pramāṇa commentary (on apoha and universals, sāmānya) in the Derge Tengyur tshad ma section. It belongs on this shelf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 252,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "རང་གི་མཚན་ཉིད་ལོག་པའི་སྒོ་ནས", "image": "appears to read ལྡོག་པའི", "problem": "ldog/log spelling variant (low confidence at this resolution)", "severity": "minor" },
+          { "ocr": "དམིགས་པའི་མཚན་ཉིད་ཀྱིར་གྱུར་པའོ", "image": "seems to read མཚན་ཉིད་ཅན་དུ་གྱུར་པའོ (the OCR's ཀྱིར is not a word)", "problem": "garbled syllable; the sense is still recoverable", "severity": "minor" },
+          { "ocr": "སྤྱི་ཡོད་ན་ཡང་བརྟགས་པའི་ཕྱིར་བོགས་དབྱུང་དུ་མེད་པ", "image": "the syllable is unclear: བརྟགས or བརྟན. The argument (a permanent universal cannot be benefited) expects 'permanent'", "problem": "possible misreading of permanent as imputed; it splits the two translations", "severity": "moderate", "class": "O6" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "རྣམ་པར་རྟོག་པ་ནི་བརྒྱུད་པས་རང་གི་མཚན་ཉིད་ལོག་པའི་སྒོ་ནས་འོངས་པའི་ཕྱིར་རོ", "english": "because conceptual thought arises through a process of excluding its own characteristic", "problem": "drops 'indirectly' (བརྒྱུད་པས), which is the point of the argument; the svalakṣaṇa's exclusion is turned into thought excluding its own characteristic", "severity": "moderate" },
+          { "source": "ཉེ་བར་བཏགས་པའི་མ་ཡིན་པ་ཡོད་པ་ཞེས་ཚིག་རྣམ་པར་སྦྱར་ཏེ", "english": "not something metaphorically ascribed. The phrase is applied", "problem": "loses the gloss that the word 'exists' (ཡོད་པ) is to be construed here", "severity": "minor" },
+          { "source": "འདིས་ནི་རིམ་གྱིས་རྣམ་པར་རྟོག་པའི་རྒྱུར་གྱུར་པ་རྣམས་ཀྱིས་ཞེས་བྱ་བའི་དོན་འདི་ཁོ་ན་གསལ་བར་བྱས་པ", "english": "this clearly illustrates the point that these factors gradually become the cause of conceptual thought", "problem": "a quoted root-text phrase ('by those that gradually become causes…') is turned into a free-standing claim", "severity": "moderate" },
+          { "source": "རྣམ་པ་བསྲེས་པ", "english": "<term>mixed aspect</term> <gloss>samakara</gloss>", "problem": "the gloss 'samakara' is not a plausible Sanskrit equivalent; looks invented", "severity": "minor" },
+          { "source": "བཏགས་པའི་ཕྱིར་བོགས་དབྱུང་དུ་མེད་པ", "english": "since it is imputed and lacks any practical efficiency", "problem": "follows a doubtful OCR reading ('imputed'); 'lacks practical efficiency' misreads 'cannot be benefited'", "severity": "minor" },
+          { "source": "དེ་ཡང་བཤད་ཟིན་ཏོ་ཞེས་བྱ་བ་འདི་དང་སྦྱར་ཏེ", "english": "This has already been explained, and it is applied here", "problem": "the lemma being connected is no longer marked as a quotation", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "དེ་ཉིད་དོན་དམ་པ་ཡིན་གྱི་ཉེ་བར་བཏགས་པའི་མ་ཡིན་པ་ཡོད་པ་ཞེས་ཚིག་རྣམ་པར་སྦྱར་ཏེ", "english": "is itself ultimately real, whereas nominal imputation does not exist in reality; in this manner the words are connected", "problem": "misparse: the source says this nature is ultimate, not imputed, and that 'exists' is to be construed with it. It does not say that imputation does not exist", "severity": "moderate" },
+          { "source": "བོགས་དབྱུང་དུ་མེད་པ", "english": "an unchanging entity cannot produce any benefit", "problem": "has the direction backwards: the universal cannot be benefited (anupakārya), not 'cannot produce benefit'", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Neither version has a serious error. B keeps the quoted lemmas and the key 'indirectly' (བརྒྱུད་པས) and reads the permanence argument plausibly; A has more moderate slips and an invented gloss.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf, and the woodblock text is transcribed well apart from a few doubtful syllables. Both translations are serviceable and have no serious errors; B is the more precise of the two."
+  }
+]

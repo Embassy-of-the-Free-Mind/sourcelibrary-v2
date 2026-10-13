@@ -91,3 +91,59 @@ export function expandTerm(term: string, opts: { minConfidence?: number } = {}):
   const labelled = e.equivalents.filter((r) => r.confidence >= min).map((r) => r.term).filter((t) => !silent.includes(t));
   return { concept: e.concept, silent, labelled };
 }
+
+export interface ConceptVocabulary {
+  concept: string;
+  /** The words of the query that named the concept. */
+  matched: string;
+  tradition?: string;
+  /** variant tier: the same word in other spellings, scripts, inflections. */
+  same_word: string[];
+  /** equivalent tier: another translator's rendering. */
+  other_renderings: string[];
+  /** related tier: adjacent concepts and other traditions' analogues. NOT synonyms. */
+  related: string[];
+}
+
+const RELATED_FLOOR = 0.6;
+const RELATED_CAP = 40;
+
+function vocabularyOf(entry: ConceptEntry, matched: string, min: number): ConceptVocabulary {
+  const x = expandTerm(entry.concept, { minConfidence: min })!;
+  const taken = new Set([...x.silent, ...x.labelled]);
+  const related = entry.related
+    .filter((r) => r.confidence >= RELATED_FLOOR && !taken.has(r.term))
+    .sort((a, b) => b.confidence - a.confidence)
+    .slice(0, RELATED_CAP)
+    .map((r) => r.term);
+  return { concept: entry.concept, matched, ...(entry.tradition ? { tradition: entry.tradition } : {}), same_word: x.silent, other_renderings: x.labelled, related };
+}
+
+/**
+ * The curated vocabulary of the concept(s) a query NAMES (#4251) — all three tiers, kept apart.
+ *
+ * This is for SHOWING a searcher which words each tradition files a concept under, so they can
+ * search those words themselves; it is not an expansion set (`expandTerm` is, and it still
+ * never returns `related`). The whole query is tried first, then its word runs, longest first,
+ * so "remembrance of God in Sufi practice" finds dhikr. Words are matched whole, never as
+ * substrings — the single-CJK-character caveat above. At most `max` concepts.
+ */
+export function conceptsInQuery(query: string, opts: { minConfidence?: number; max?: number } = {}): ConceptVocabulary[] {
+  const min = opts.minConfidence ?? 0.7;
+  const max = opts.max ?? 2;
+  const words = query.normalize('NFC').split(/\s+/).map((w) => w.replace(/^[\p{P}\p{S}]+|[\p{P}\p{S}]+$/gu, '')).filter(Boolean);
+  if (!words.length || words.length > 40) return [];
+  const out: ConceptVocabulary[] = [];
+  const used = new Array<boolean>(words.length).fill(false);
+  for (let n = Math.min(words.length, 4); n >= 1 && out.length < max; n--) {
+    for (let i = 0; i + n <= words.length && out.length < max; i++) {
+      if (used.slice(i, i + n).some(Boolean)) continue;
+      const run = words.slice(i, i + n).join(' ');
+      const hit = conceptFor(run);
+      if (!hit || out.some((v) => v.concept === hit.entry.concept)) continue;
+      out.push(vocabularyOf(hit.entry, run, min));
+      used.fill(true, i, i + n);
+    }
+  }
+  return out;
+}

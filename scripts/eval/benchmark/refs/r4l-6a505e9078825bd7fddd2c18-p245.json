@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg7",
+  "edition": "Satyrarum libri quinque priores. — Basel: Oporinus, 1555.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a505e9078825bd7fddd2c18",
+  "page_number": 245,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 288394,
+    "to_char": 289747,
+    "overlap": 0.468,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Ref starts at 'Stoliditate quadam solemus' (misses ~1.3 opening lines 'non mendicamus ... Verum quoniam'); marginal notes interpolated into ref text; end matches.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      243,
+      244,
+      245
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.390Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "610d09b27d2065b4d9baad0895bec47fe6230d4e043793db91f4f4cab198a4b3",
+  "unit": {
+    "chars": 1353
+  }
+}

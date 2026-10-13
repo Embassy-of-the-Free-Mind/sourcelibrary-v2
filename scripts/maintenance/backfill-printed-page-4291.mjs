@@ -75,7 +75,7 @@ export async function bookRows(db, bookId) {
   const rows = await db.collection('pages').aggregate([
     { $match: { book_id: bookId } },
     { $project: {
-      _id: 1, p: '$page_number', type: '$page_type', pv: '$ocr.prompt_version', has: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+      _id: 1, p: '$page_number', type: '$page_type', pv: '$ocr.prompt_version', has: { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] },
       prior: '$printed_page',
       pn: { $regexFind: { input: { $ifNull: ['$ocr.data', ''] }, regex: '<page-num>[^<]{0,80}</page-num>', options: 'i' } },
       head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 300] },

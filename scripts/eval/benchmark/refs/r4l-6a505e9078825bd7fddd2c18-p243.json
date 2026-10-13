@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg7",
+  "edition": "Satyrarum libri quinque priores. — Basel: Oporinus, 1555.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a505e9078825bd7fddd2c18",
+  "page_number": 243,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 285619,
+    "to_char": 286956,
+    "overlap": null,
+    "located_by": "pb-neighbour",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Plutarch De animi tranquillitate; ref matches first to last line, marginal note 'Inferiores nobis...' not in ref; some show-through.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      243,
+      244,
+      245
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.387Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "9d62b33972f64bf588b09ccef784a1e1b253abf8e3e770f9f6be303e276cce98",
+  "unit": {
+    "chars": 1335
+  }
+}

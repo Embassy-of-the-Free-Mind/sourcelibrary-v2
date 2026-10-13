@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Fish-Voiced Priest',
     description:
-      'Reading the Codex Marcianus with AI: the model rendered Zosimos fluently and fabricated a speaker. The fix is 140 years old — a critical edition, not a better OCR pass.',
+      'Reading the Codex Marcianus with AI: the model rendered Zosimos fluently and fabricated a speaker. The fix is 140 years old: a critical edition, not a better OCR pass.',
     images: [
       {
         url: 'https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg',
@@ -60,7 +60,7 @@ export default function FishVoicedPriestPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           A scribe in tenth-century Constantinople copied out a dream. A priest stands on an altar shaped like a
           flask; a voice describes being torn apart with a knife and reassembled as spirit. It is one of the strangest
-          passages in the Greek alchemical corpus &mdash; the visions of Zosimos of Panopolis. When we asked a modern
+          passages in the Greek alchemical corpus: the visions of Zosimos of Panopolis. When we asked a modern
           AI to read the page, it rendered the scene fluently, in confident English, and introduced a character who is
           not there.
         </p>
@@ -71,7 +71,7 @@ export default function FishVoicedPriestPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Below are two English translations of the same six lines of Greek, from the same page &mdash; folio 93 recto
+          Below are two English translations of the same six lines of Greek, from the same page: folio 93 recto
           of the <em>Codex Marcianus graecus</em> Z. 299, the manuscript that carries the Corpus of the Greek
           Alchemists. On the left is the reading printed in the standard critical edition. On the right is what our
           own pipeline produced when it transcribed the manuscript directly and translated its own transcription.
@@ -119,13 +119,13 @@ export default function FishVoicedPriestPage() {
         <p className="text-secondary leading-relaxed mb-6">
           One of these says the speaker is a priest named Ion. The other says he is a fish-voiced one who wants to be
           left alone. They cannot both be reading the same words, and only one of them is. The name of the speaker
-          &mdash; the whole point of the sentence &mdash; is simply gone from the right-hand column.
+          (the whole point of the sentence) is simply gone from the right-hand column.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           The divergence turns on a single misread word. Where the edition reads <span lang="el">&#7984;&#963;&#967;&#957;&#959;&#966;&#974;&#957;&#969;&#962;</span>{' '}
-          &mdash; <em>ischnoph&#333;n&#333;s</em>, &ldquo;in a thin voice,&rdquo; describing <em>how</em> the priest
-          answered &mdash; the OCR saw <span lang="el">&#7984;&#967;&#952;&#965;&#972;&#966;&#969;&#957;&#959;&#962;</span>,{' '}
+          (<em>ischnoph&#333;n&#333;s</em>, &ldquo;in a thin voice,&rdquo; describing <em>how</em> the priest
+          answered), the OCR saw <span lang="el">&#7984;&#967;&#952;&#965;&#972;&#966;&#969;&#957;&#959;&#962;</span>,{' '}
           <em>ichthyoph&#333;nos</em>, &ldquo;fish-voiced.&rdquo; From that one slip the sentence unravels:{' '}
           <span lang="el">&#7952;&#947;&#974; &#949;&#7984;&#956;&#953; &#8001; &#7992;&#969;&#957;</span>{' '}
           (&ldquo;I am Ion&rdquo;) dissolves into <span lang="el">&#7940;&#966;&#949;&#962; &#956;&#949; &#8001; &#7952;&#956;&#8050;</span>{' '}
@@ -139,7 +139,7 @@ export default function FishVoicedPriestPage() {
         </h2>
 
         <div className="mb-6">
-          <p className="text-xs text-muted mb-2 uppercase tracking-wide">The page in question &mdash; folio 93r</p>
+          <p className="text-xs text-muted mb-2 uppercase tracking-wide">The page in question: folio 93r</p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg"
@@ -152,11 +152,11 @@ export default function FishVoicedPriestPage() {
         <p className="text-secondary leading-relaxed mb-6">
           Look at the hand. This is tenth- or eleventh-century Greek minuscule: a fast, ligatured, heavily abbreviated
           book script where letters flow into one another and a single stroke can carry a whole syllable. And look at
-          what the model has to read it from. The best public scan of this codex &mdash; from Internet Culturale, the
-          digitization we and everyone else rely on &mdash; is about 892&nbsp;&times;&nbsp;1143 pixels for the{' '}
+          what the model has to read it from. The best public scan of this codex (from Internet Culturale, the
+          digitization we and everyone else rely on) is about 892&nbsp;&times;&nbsp;1143 pixels for the{' '}
           <em>entire</em> two-column folio. That is low: perhaps a third of the linear resolution you would want for a
           hand this dense, an order of magnitude fewer pixels per character. Between the script and the pixels, this is
-          exactly the kind of surface on which a modern vision model stops reading and starts guessing &mdash; and the
+          exactly the kind of surface on which a modern vision model stops reading and starts guessing, and the
           guesses come out fluent. A model trained on oceans of Greek will always produce something that{' '}
           <em>looks</em> like a plausible sentence, whether or not it matches the ink.
         </p>
@@ -165,13 +165,13 @@ export default function FishVoicedPriestPage() {
           You can measure the guessing without any answer key. A faithful transcriber is deterministic: give it the
           same page twice, get the same letters twice. So we transcribed all 393 text pages of the Marcianus twice,
           with the same model on the same images, and compared the runs. They agreed with themselves only about{' '}
-          <strong>62% of the time</strong> at the level of individual Greek words &mdash; the model disagrees with its
+          <strong>62% of the time</strong> at the level of individual Greek words: the model disagrees with its
           own reading of roughly a third of the page every time it looks. (That figure is the Greek text alone; the
-          editorial tags are stripped out before the comparison, and they in fact agree rather more &mdash; the
+          editorial tags are stripped out before the comparison, and they in fact agree rather more; the
           instability is in the transcription, not the markup.) That is not the profile of a machine reading letters;
           it is the profile of a machine interpolating text. We have{' '}
           <Link href="/blog/ocr-consistency" className="text-accent-rust hover:underline">written before</Link>{' '}
-          about why self-consistency is a floor on error and not a measure of accuracy &mdash; on clean printed pages
+          about why self-consistency is a floor on error and not a measure of accuracy. On clean printed pages
           it runs above 98%; here it collapses.
         </p>
 
@@ -179,7 +179,7 @@ export default function FishVoicedPriestPage() {
           One honest caveat: that number cannot tell the two causes apart. A hard script and an under-resolved image
           both push a model from reading toward guessing, and self-agreement measures the guessing without saying how
           much is the hand and how much is the pixels. It is very likely both. What matters for a reader is that the
-          instability is real at the resolution we can actually obtain &mdash; and higher-resolution scans of this
+          instability is real at the resolution we can actually obtain, and higher-resolution scans of this
           particular codex are not publicly available. That is not a limit a better model removes. It is one the
           edition removes.
         </p>
@@ -207,7 +207,7 @@ export default function FishVoicedPriestPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           There is no fish. The model misread one letter, produced a word that does not belong in the sentence, and
-          then reasoned confidently about what its own mistake might mean &mdash; an &ldquo;aquatic-themed
+          then reasoned confidently about what its own mistake might mean: an &ldquo;aquatic-themed
           initiate.&rdquo; Fluent, footnoted, and wrong. This is the pattern we have named elsewhere the{' '}
           <Link href="/blog/confident-hallucinator" className="text-accent-rust hover:underline">confident hallucinator</Link>:
           the danger is never that the output looks broken. It is that it looks finished. The same failure mode, one
@@ -218,7 +218,7 @@ export default function FishVoicedPriestPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           To be fair to the machine: this is a dense, allegorical, narrative folio, the hardest thing in the book.
-          On display script, recipe headings, and diagram labels the same model is nearly flawless &mdash; it reads
+          On display script, recipe headings, and diagram labels the same model is nearly flawless: it reads
           the famous alchemical motto <span lang="el">&#7953;&#957; &#964;&#8056; &#960;&#8118;&#957;</span>,{' '}
           &ldquo;the One, the All,&rdquo; off a ringed diagram without a stumble. The problem is that you cannot know,
           from the output alone, which kind of page you are on. Every page comes back fluent.
@@ -235,11 +235,11 @@ export default function FishVoicedPriestPage() {
           <Link href="/book/collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot" className="text-accent-rust hover:underline">
             <em>Collection des anciens alchimistes grecs</em>
           </Link>
-          , the critical edition of the Greek alchemical corpus &mdash; transcribed, letter by letter, from this very
+          , the critical edition of the Greek alchemical corpus, transcribed, letter by letter, from this very
           manuscript. Where our model guessed &ldquo;fish-voiced,&rdquo; Berthelot&rsquo;s editors read{' '}
           <span lang="el">&#7992;&#969;&#957;</span>, Ion, and recorded in their apparatus that the surviving witnesses
-          themselves disagree &mdash; one copy reads <span lang="el">&#959;&#7990;&#969;&#957;</span>, another{' '}
-          <span lang="el">&#8001; &#8038;&#957;</span> &mdash; before adjudicating between them. That is work OCR
+          themselves disagree (one copy reads <span lang="el">&#959;&#7990;&#969;&#957;</span>, another{' '}
+          <span lang="el">&#8001; &#8038;&#957;</span>) before adjudicating between them. That is work OCR
           cannot do. It is not cleaner character recognition; it is scholarly judgment exercised across a thousand
           years of copies.
         </p>
@@ -247,7 +247,7 @@ export default function FishVoicedPriestPage() {
         <p className="text-secondary leading-relaxed mb-6">
           So we invert the usual assumption. For a hard hand, the manuscript is not the source of the <em>text</em>.
           It is the source of the <em>facsimile</em>. The edition carries the words; the manuscript carries everything
-          that is only true of the physical object &mdash; the ink, the layout, the marginalia, the diagrams, the fact
+          that is only true of the physical object: the ink, the layout, the marginalia, the diagrams, the fact
           of the thing. This is not a demotion of the manuscript. It is a division of labour that respects what each
           one can actually be trusted to say.
         </p>
@@ -259,17 +259,17 @@ export default function FishVoicedPriestPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Berthelot&rsquo;s edition and the digitized manuscript turn out to share a coordinate system. Because
-          Berthelot transcribed <em>from</em> this codex, his printed pages are studded with its folio marks &mdash;
-          &ldquo;f.&nbsp;92&nbsp;v.,&rdquo; an inline &ldquo;(f.&nbsp;171&nbsp;r.),&rdquo; a headnote{' '}
-          &ldquo;transcribed from M, f.&nbsp;92&nbsp;v.&rdquo; &mdash; and the digitization&rsquo;s page labels carry
+          Berthelot transcribed <em>from</em> this codex, his printed pages are studded with its folio marks
+          (&ldquo;f.&nbsp;92&nbsp;v.,&rdquo; an inline &ldquo;(f.&nbsp;171&nbsp;r.),&rdquo; a headnote{' '}
+          &ldquo;transcribed from M, f.&nbsp;92&nbsp;v.&rdquo;), and the digitization&rsquo;s page labels carry
           the same foliation. They lock together directly. We built that concordance and verified it against
-          independent anchors; 195 folios now sit paired, page for page, with the running sequence staying monotonic
-          &mdash; the signature of a correct alignment rather than a lucky one.
+          independent anchors; 195 folios now sit paired, page for page, with the running sequence staying monotonic,
+          the signature of a correct alignment rather than a lucky one.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           On the reader, Berthelot&rsquo;s Greek and English now sit <em>above</em> the manuscript&rsquo;s own AI
-          transcription as the reading text of record. The machine reading is not deleted &mdash; it is demoted to a
+          transcription as the reading text of record. The machine reading is not deleted; it is demoted to a
           clearly flagged aid, labelled for exactly what it is. Nothing in the manuscript&rsquo;s own data is
           overwritten; the pairing is an additive layer, so every folio now offers a three-way comparison: the
           facsimile, the AI&rsquo;s attempt, and the critical edition, side by side. You can{' '}
@@ -281,7 +281,7 @@ export default function FishVoicedPriestPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           We are deliberately careful about how confident this looks. We do not publish an accuracy percentage for the
-          AI transcription, because we have no ground truth to measure it against &mdash; both the transcription and
+          AI transcription, because we have no ground truth to measure it against: both the transcription and
           any second reading are machine-made. What we publish instead is honest about its own limits: a stability
           signal drawn from how much the two OCR passes agree, and a badge marking whether a critical edition is
           available for that folio. Green on the clean pages, a caution flag on the dense narrative ones. A number we
@@ -295,8 +295,8 @@ export default function FishVoicedPriestPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           None of this is new. We already refuse to OCR the hardest scripts directly. When the library holds Akkadian
-          or Egyptian material, the text is carried by the printed scholarly edition &mdash; King&rsquo;s{' '}
-          <em>Seven Tablets of Creation</em>, Budge&rsquo;s <em>Book of the Dead</em> &mdash; whose transliteration
+          or Egyptian material, the text is carried by the printed scholarly edition (King&rsquo;s{' '}
+          <em>Seven Tablets of Creation</em>, Budge&rsquo;s <em>Book of the Dead</em>), whose transliteration
           and translation read cleanly, with the wedges and glyphs shown as plates. We have{' '}
           <Link href="/blog/cuneiform-ocr" className="text-accent-rust hover:underline">asked whether AI can read cuneiform</Link>{' '}
           and <Link href="/blog/hieroglyph-ocr" className="text-accent-rust hover:underline">whether it can read hieroglyphs</Link>,
@@ -305,8 +305,8 @@ export default function FishVoicedPriestPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The rule generalizes cleanly: <strong>where a public-domain critical edition of a work exists &mdash;
-          especially one whose base manuscript you are digitizing &mdash; prefer the edition&rsquo;s text to raw OCR
+          The rule generalizes cleanly: <strong>where a public-domain critical edition of a work exists
+          (especially one whose base manuscript you are digitizing), prefer the edition&rsquo;s text to raw OCR
           of the ancient hand.</strong> OCR the clean print; keep the manuscript for the facsimile, the images, and
           everything object-native. It is the same instinct that runs through our other work: trust the catalogued,
           adjudicated record over a model&rsquo;s unaided fluency, and be loud about uncertainty rather than papering
@@ -322,7 +322,7 @@ export default function FishVoicedPriestPage() {
           The manuscript still matters more than the edition. It is the only witness to what a scribe&rsquo;s hand
           actually did in the tenth century; the edition is a reading of it, and a good reading can still be revised.
           But a witness is not a text, and an AI is not a scholar. The model is a flashlight you carry into the
-          archive &mdash; useful, fast, and blind to its own mistakes. On folio 93 the flashlight found a fish.
+          archive: useful, fast, and blind to its own mistakes. On folio 93 the flashlight found a fish.
           Berthelot found Ion. The point of pairing them is not to decide who wins. It is to put the facsimile, the
           machine, and the edition on the same page, and let the reader see the difference.
         </p>
@@ -333,28 +333,28 @@ export default function FishVoicedPriestPage() {
           <li>
             <Link href="/book/marcianus-graecus-299-greek-alchemists" className="text-accent-rust hover:underline">
               <em>Marcianus graecus</em> Z. 299 (=584), Corpus of the Greek Alchemists
-            </Link>{' '}
-            &mdash; the tenth&ndash;eleventh-century manuscript, folio 93r quoted above.
+            </Link>:{' '}
+            the tenth&ndash;eleventh-century manuscript, folio 93r quoted above.
           </li>
           <li>
             <Link href="/book/collection-des-anciens-alchimistes-grecs-vols-2-3-berthelot" className="text-accent-rust hover:underline">
               Marcellin Berthelot &amp; Charles-&Eacute;mile Ruelle, <em>Collection des anciens alchimistes grecs</em> (Paris, 1887&ndash;88)
-            </Link>{' '}
-            &mdash; the critical edition whose base manuscript is the Marcianus.
+            </Link>:{' '}
+            the critical edition whose base manuscript is the Marcianus.
           </li>
           <li>
-            <Link href="/blog/confident-hallucinator" className="text-accent-rust hover:underline">The Confident Hallucinator</Link>{' '}
-            &mdash; why manuscript OCR fails fluently, and why consistency is not accuracy.
+            <Link href="/blog/confident-hallucinator" className="text-accent-rust hover:underline">The Confident Hallucinator</Link>:{' '}
+            why manuscript OCR fails fluently, and why consistency is not accuracy.
           </li>
           <li>
-            <Link href="/blog/ocr-consistency" className="text-accent-rust hover:underline">Measuring OCR Consistency</Link>{' '}
-            &mdash; the self-agreement method, and the baseline for printed text.
+            <Link href="/blog/ocr-consistency" className="text-accent-rust hover:underline">Measuring OCR Consistency</Link>:{' '}
+            the self-agreement method, and the baseline for printed text.
           </li>
           <li>
             <Link href="/blog/cuneiform-ocr" className="text-accent-rust hover:underline">Can AI Read Cuneiform?</Link>{' '}
             and{' '}
-            <Link href="/blog/hieroglyph-ocr" className="text-accent-rust hover:underline">Can AI Read Hieroglyphs?</Link>{' '}
-            &mdash; the ancient-script series this post extends.
+            <Link href="/blog/hieroglyph-ocr" className="text-accent-rust hover:underline">Can AI Read Hieroglyphs?</Link>:{' '}
+            the ancient-script series this post extends.
           </li>
         </ul>
 

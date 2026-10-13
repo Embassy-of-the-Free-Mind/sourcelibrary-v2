@@ -1,0 +1,242 @@
+[
+ {
+  "n": 1,
+  "book_id": "6a26bf510e247ebad6dec04c",
+  "page_number": 17,
+  "annotations": 22
+ },
+ {
+  "n": 2,
+  "book_id": "6992ce6d77d26f9321776d69",
+  "page_number": 34,
+  "annotations": 2
+ },
+ {
+  "n": 3,
+  "book_id": "69f3255e52a77bb28fdb471f",
+  "page_number": 56,
+  "annotations": 13
+ },
+ {
+  "n": 4,
+  "book_id": "6988a59f090ba3597e45028a",
+  "page_number": 96,
+  "annotations": 3
+ },
+ {
+  "n": 5,
+  "book_id": "69c849576c6f3cc53c851e42",
+  "page_number": 261,
+  "annotations": 3
+ },
+ {
+  "n": 6,
+  "book_id": "6991bd1c70254d38471e23cc",
+  "page_number": 255,
+  "annotations": 2
+ },
+ {
+  "n": 7,
+  "book_id": "69d8ca14a09828f83ddc9902",
+  "page_number": 20,
+  "annotations": 1
+ },
+ {
+  "n": 8,
+  "book_id": "6992f3e9c8c6ac61574e7225",
+  "page_number": 35,
+  "annotations": 3
+ },
+ {
+  "n": 9,
+  "book_id": "6911cf678cb6d2ae494a1061",
+  "page_number": 18,
+  "annotations": 3
+ },
+ {
+  "n": 10,
+  "book_id": "6985ca72077b71ae19896a1c",
+  "page_number": 346,
+  "annotations": 3
+ },
+ {
+  "n": 11,
+  "book_id": "69aec0f0dd3c98abc0da80ce",
+  "page_number": 734,
+  "annotations": 2
+ },
+ {
+  "n": 12,
+  "book_id": "69b51dcbefd8df28f2dab248",
+  "page_number": 127,
+  "annotations": 3
+ },
+ {
+  "n": 13,
+  "book_id": "6a26c563aad44c98627d6a00",
+  "page_number": 16,
+  "annotations": 5
+ },
+ {
+  "n": 14,
+  "book_id": "6a267b916c1f37c9c4f32919",
+  "page_number": 13,
+  "annotations": 2
+ },
+ {
+  "n": 15,
+  "book_id": "6a3c60ae40c88a541d8e9a7f",
+  "page_number": 110,
+  "annotations": 10
+ },
+ {
+  "n": 16,
+  "book_id": "6a1956983e125aa8d6dfe98e",
+  "page_number": 31,
+  "annotations": 3
+ },
+ {
+  "n": 17,
+  "book_id": "6988a5a2c9cb59aebe69eda0",
+  "page_number": 7,
+  "annotations": 9
+ },
+ {
+  "n": 18,
+  "book_id": "69b99ec16ed9e0490990a6f2",
+  "page_number": 183,
+  "annotations": 10
+ },
+ {
+  "n": 19,
+  "book_id": "69ac5f82ebeb54840de0f318",
+  "page_number": 348,
+  "annotations": 7
+ },
+ {
+  "n": 20,
+  "book_id": "69ac8509960d5ad0b47313a9",
+  "page_number": 436,
+  "annotations": 1
+ },
+ {
+  "n": 21,
+  "book_id": "6993899b74305116d72d25ac",
+  "page_number": 667,
+  "annotations": 1
+ },
+ {
+  "n": 22,
+  "book_id": "69b65cdeb3f4fc0441515650",
+  "page_number": 8,
+  "annotations": 2
+ },
+ {
+  "n": 23,
+  "book_id": "6a243db50f0e4f405e631659",
+  "page_number": 51,
+  "annotations": 1
+ },
+ {
+  "n": 24,
+  "book_id": "69f33013876dd827cbc46318",
+  "page_number": 143,
+  "annotations": 4
+ },
+ {
+  "n": 25,
+  "book_id": "69af119523aa4b6749dc3238",
+  "page_number": 361,
+  "annotations": 1
+ },
+ {
+  "n": 26,
+  "book_id": "6a3c63ab93327f06e8351cea",
+  "page_number": 134,
+  "annotations": 18
+ },
+ {
+  "n": 27,
+  "book_id": "69907df7b91bcb2db3f6d826",
+  "page_number": -141,
+  "annotations": 5
+ },
+ {
+  "n": 28,
+  "book_id": "69b51dc6efd8df28f2daad31",
+  "page_number": 2,
+  "annotations": 1
+ },
+ {
+  "n": 29,
+  "book_id": "69a0278c71a9e3ffd8bfe901",
+  "page_number": 66,
+  "annotations": 6
+ },
+ {
+  "n": 30,
+  "book_id": "6a425e47dfbbb4d07aa63ddf",
+  "page_number": 12,
+  "annotations": 8
+ },
+ {
+  "n": 31,
+  "book_id": "6a4a8aec393655740c43c64e",
+  "page_number": 5,
+  "annotations": 0
+ },
+ {
+  "n": 32,
+  "book_id": "69b2ff7fe5d6d64d8e196c2c",
+  "page_number": 589,
+  "annotations": 0
+ },
+ {
+  "n": 33,
+  "book_id": "6a4eab3051c8b82b11e89ce9",
+  "page_number": 20,
+  "annotations": 0
+ },
+ {
+  "n": 34,
+  "book_id": "6a08539315c643eb1af50394",
+  "page_number": 78,
+  "annotations": 0
+ },
+ {
+  "n": 35,
+  "book_id": "69afe61257adc49dbfc41edb",
+  "page_number": 3,
+  "annotations": 0
+ },
+ {
+  "n": 36,
+  "book_id": "6a3c68c0af3c49b59c5dc1a9",
+  "page_number": 78,
+  "annotations": 0
+ },
+ {
+  "n": 37,
+  "book_id": "69af0fa2024c2bf295284eeb",
+  "page_number": 30,
+  "annotations": 0
+ },
+ {
+  "n": 38,
+  "book_id": "69aff31fc83500af1dbf6e2d",
+  "page_number": 202,
+  "annotations": 0
+ },
+ {
+  "n": 39,
+  "book_id": "6992ce9a673ee1e40e321259",
+  "page_number": 12,
+  "annotations": 0
+ },
+ {
+  "n": 40,
+  "book_id": "6a4c9c0e9e5143679f1d9d72",
+  "page_number": 12,
+  "annotations": 0
+ }
+]

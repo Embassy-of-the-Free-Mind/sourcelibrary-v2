@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 1216
+n_pages: null
+verdict: "On the same 1,216 books the concept-abstract lane adds +0.60 [0.16, 1.00] relevant traditions in the top ten over page vectors, with no loss of precision; smaller than the pilot's +1.12."
+status: adopted
+decision: "Stage-1 abstract lane serves conceptPageSearch in /api/search; corpus-wide pass (~$530) waits for human-written queries (#6173)"
+superseded_by: null
+issue: 6173
+---
 ## 2026-10-07 · Does the concept-abstract lane, built on 1,216 books, put more traditions in the first ten results than the page vectors? (#6173 stage 1)
 <!-- PRIOR ART: scripts/eval/experiments/2026-10-07-embedding-granularity-cross-tradition.md (#6173 pilot; the same 25 queries on a 12K-page scratch pool with in-memory vectors) and 2026-10-07-tradition-diversity-rerank.md (#6211; the page lane's re-rank, judged on the pilot pool and counted by label in production). Neither reads the stage-1 `page_concepts` table through the production code path, and neither has a same-books control. -->
 

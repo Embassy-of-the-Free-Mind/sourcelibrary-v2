@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/gwalt2",
+  "edition": "Nabal : comoedia sacra ... desumpta ex I. Samuelis XXV. cap. - Nunc primum conscripta et aedita. — [Zuerich: Christof. Froschover, 1550?]",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6419e1c1c21a3738868c2",
+  "page_number": 70,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 65891,
+    "to_char": 66940,
+    "overlap": 0.45,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Act IV sc. II argumentum + dialogue; ref starts with 6-word pad from previous page, ends at 'irati mouent' as page does.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      70,
+      71,
+      72
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.374Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "29fc19e1836b43ae63092012c778499527f5a10682505253d39ed56c51da1f6e",
+  "unit": {
+    "chars": 1049
+  }
+}

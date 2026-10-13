@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la, de, en, grc]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: 383
+verdict: "PaddleOCR-VL-1.6 routes no print cell to the box: worse than flash-lite on Latin, German and early English, catastrophic on Greek print (58 of 114)."
+status: rejected
+decision: "Latin-script and Greek print backlog stays on flash-lite; no routing change (DECISIONS.md, #5660)"
+superseded_by: null
+issue: 5660
+---
 ## 2026-10-03 — Can an open engine on our own GPU replace flash-lite for the Latin-script and Greek print backlog? PaddleOCR-VL-1.6: no, in every cell (#5660)
 
 PRIOR ART: 2026-09-18-is-paddleocr-vl-1-6-an-acceptable-cost-lane-4925.md (the same engine and the same cost-lane rule, adopted for Chinese brush manuscript; never run on Latin-script or Greek print); 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md and 2026-09-28-is-flash-lite-adequate-on-modern-english-print-or-5216.md (the references reused here, lite and flash only); 2026-09-21-which-engine-should-read-greek-print-per-period-4925.md (Greek print, Kraken vs lite vs flash).

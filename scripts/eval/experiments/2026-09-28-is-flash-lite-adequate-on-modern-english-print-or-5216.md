@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 114
+n_pages: 114
+verdict: "Flash beats lite 14-3 (75 ties) on 114 English reference pages but the median difference is 0.00 pp; both fail on RECITATION refusals (lite 14.9%, flash 17.5%)."
+status: rejected
+decision: "Lite kept for English print; a refusal-fallback lane is the open item (PR #5248, Derek 2026-09-29)"
+superseded_by: null
+issue: [5182, 5216]
+---
 ## 2026-09-28 — Is flash-lite adequate on modern English print, or should it go to flash-preview? Paired on the #5216 references (#5182)
 
 - **Question.** English (`LATIN_SCRIPT_LANGUAGES` → lite) was never compared with flash-preview against a

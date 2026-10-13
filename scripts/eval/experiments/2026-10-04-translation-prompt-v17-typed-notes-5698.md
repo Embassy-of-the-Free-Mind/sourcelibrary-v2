@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 40
+n_pages: 40
+verdict: "v17 not established: the study stance lifts transparency +0.57 but costs 1.1 readability and fails typing (85%) and alternatives (33% real); the reading stance changes nothing."
+status: rejected
+decision: "v13 stays the default; v17 study and reading rows seeded is_default:false (#5698)"
+superseded_by: null
+issue: 5698
+---
 ## 2026-10-04 · Do typed notes and a stance (prompt v17) make the translation's apparatus more honest than v13's single `<note>`? (#5698 steps 2–3)
 <!-- PRIOR ART: 2026-10-03-translation-prompt-v16-3825.md (PR #5703) is step 1 of the same issue: v16 kept v15's verbatim originals and still lost 29% of interpretive notes, so it was not flipped. v17 is built on the v16 row. The #5695 track files (2026-10-03-xlref-t1 … t5, translation-vs-reference-*) supply the reference pages and the fidelity judge reused here unchanged. Nothing before this typed the notes or tested a stance. -->
 

@@ -3,7 +3,7 @@ import { auth } from '@/lib/auth';
 import AccountClient from './AccountClient';
 
 export const metadata = {
-  title: 'Account — Source Library',
+  title: 'Account | Source Library',
 };
 
 export default async function AccountPage() {

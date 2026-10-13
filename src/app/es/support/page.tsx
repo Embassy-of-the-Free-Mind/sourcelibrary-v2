@@ -12,14 +12,14 @@ const ES_SUPPORT_DESCRIPTION =
   'Apoya la digitalización y traducción de textos históricos raros de la Bibliotheca Philosophica Hermetica.';
 
 export const metadata: Metadata = {
-  title: 'Apoya — Source Library',
+  title: 'Apoya | Source Library',
   description: ES_SUPPORT_DESCRIPTION,
   alternates: { canonical: '/es/support', languages: { en: '/support', es: '/es/support' } },
   // Spanish card, Spanish page: this link is pasted into WhatsApp and Instagram
   // by Spanish-speaking supporters, and the preview is the whole first
   // impression of the ask (#4162).
   openGraph: {
-    title: 'Apoya — Source Library',
+    title: 'Apoya | Source Library',
     description: ES_SUPPORT_DESCRIPTION,
     siteName: 'Source Library',
     type: 'website',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@SourceLibrary_',
-    title: 'Apoya — Source Library',
+    title: 'Apoya | Source Library',
     description: ES_SUPPORT_DESCRIPTION,
     images: [siteOgImage('es')],
   },

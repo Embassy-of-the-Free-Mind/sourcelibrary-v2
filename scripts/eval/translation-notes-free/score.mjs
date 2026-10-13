@@ -16,8 +16,10 @@ import { pageScore, pairedCI } from '../translation-prompt-v17/score.mjs';
 import { mean } from '../lib/paired-stats.mjs';
 import { readJsonl, writeJsonl } from '../translation-vs-reference/common.mjs';
 
-const DIR = new URL('../results/translation-notes-free-2026-10/', import.meta.url).pathname;
-const SAMPLE = new URL('../results/translation-prompt-v17-2026-10/sample.jsonl', import.meta.url).pathname;
+// NOTES_FREE_DIR / NOTES_FREE_SAMPLE / NOTES_FREE_ISSUE: the #5942 Lite-only re-run. Unset, this is #5919 exactly.
+const DIR = process.env.NOTES_FREE_DIR ? path.resolve(process.env.NOTES_FREE_DIR) + '/' : new URL('../results/translation-notes-free-2026-10/', import.meta.url).pathname;
+const SAMPLE = process.env.NOTES_FREE_SAMPLE ? path.resolve(process.env.NOTES_FREE_SAMPLE) : new URL('../results/translation-prompt-v17-2026-10/sample.jsonl', import.meta.url).pathname;
+const ISSUE = Number(process.env.NOTES_FREE_ISSUE || 5919);
 const ARMS = ['v13-a', 'v13-b', 'v13-plain'];
 const count = (text, re) => (String(text || '').match(re) || []).length;
 const inner = (text, tag) => [...String(text || '').matchAll(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`, 'gi'))].reduce((n, m) => n + m[1].trim().length, 0);
@@ -131,9 +133,9 @@ const p2 = { reversal_pages_either_judge: rev, reversal_pages_both_judges: Objec
   pages: fp.filter((p) => ARMS.some((a) => p[a].reversal_any)).map((p) => ({ id: p.id, lang: p.lang, ...Object.fromEntries(ARMS.map((a) => [a, p[a].reversal_quotes])) })) };
 const perJudge = Object.fromEntries(fid.judges.map((j) => { const ps = fp.filter((p) => ARMS.every((a) => p[a].by_judge[j] != null)); return [j, { ...Object.fromEntries(ARMS.map((a) => [a, mean(ps.map((p) => p[a].by_judge[j]))])), plain_minus_v13a: pairedCI(ps.map((p) => Object.fromEntries(ARMS.map((a) => [a, { f: p[a].by_judge[j] }]))), (x) => x.f, 'v13-a', 'v13-plain') }]; }));
 const byModel = Object.fromEntries(Object.keys(mech.models).map((mod) => { const ids = new Set(mech.per_page.filter((p) => p.model === mod).map((p) => { const [b, n] = p.id.split('_'); return `${b}_${n.padStart(5, '0')}`; })); const ps = scored.filter((p) => ids.has(p.id)); return [mod, { n: ps.length, ...Object.fromEntries(ARMS.map((a) => [a, mean(ps.map((p) => p[a].fidelity))])), plain_minus_v13a: pairedCI(ps, (x) => x.fidelity, 'v13-a', 'v13-plain') }]; }));
-const GROUPS = { 'Latin': ['Latin'], 'Greek': ['Greek'], 'vernaculars': ['German', 'French', 'Italian', 'Dutch'], 'Hebrew/Aramaic': ['Hebrew', 'Aramaic'], 'Arabic/Persian': ['Arabic', 'Persian'], 'Sanskrit/Pali': ['Sanskrit', 'Pali'], 'Chinese': ['Chinese'] };
+const GROUPS = { 'Latin': ['Latin'], 'Greek': ['Greek'], 'vernaculars': ['German', 'French', 'Italian', 'Dutch'], 'Hebrew/Aramaic': ['Hebrew', 'Aramaic'], 'Arabic/Persian': ['Arabic', 'Persian'], 'Sanskrit/Pali': ['Sanskrit', 'Pali'], 'Chinese': ['Chinese'], 'Spanish': ['Spanish'] };
 const byLang = Object.fromEntries(Object.entries(GROUPS).map(([g, langs]) => { const ps = scored.filter((p) => langs.includes(p.lang)); return [g, { n: ps.length, ...Object.fromEntries(ARMS.map((a) => [a, mean(ps.map((p) => p[a].fidelity))])) }]; }));
-const out = { generated: new Date().toISOString(), issue: 5919, n_main: fp.length, n_scored: scored.length, measure: 'fidelity: judged against a human reference, two blind Opus judges (#5695 harness, unchanged); mechanical: exact string counts',
+const out = { generated: new Date().toISOString(), issue: ISSUE, n_main: fp.length, n_scored: scored.length, measure: 'fidelity: judged against a human reference, two blind Opus judges (#5695 harness, unchanged); mechanical: exact string counts',
   gate: fid.gate, agreement: fid.agreement, P1_fidelity: p1, P2_reversals: p2,
   omission_rate: { ...Object.fromEntries(ARMS.map((a) => [a, m(a, (x) => x.omission)])), plain_minus_v13a: pairedCI(scored, (x) => x.omission, 'v13-a', 'v13-plain'), v13b_minus_v13a: pairedCI(scored, (x) => x.omission, 'v13-a', 'v13-b') },
   P3_cost: Object.fromEntries(ARMS.map((a) => [a, { usd_per_page: mech.arms[a].per_page.cost_usd, output_tokens_per_page: mech.arms[a].per_page.outputTokens, output_tokens_ratio_vs_v13a: mech.arms[a].output_tokens_ratio_vs_v13a, cost_ratio_vs_v13a: mech.arms[a].cost_ratio_vs_v13a, by_model: mech.arms[a].by_model }])),

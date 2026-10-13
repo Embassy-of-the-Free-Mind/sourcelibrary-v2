@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 import { trackEvent } from '@/lib/track-event';
+import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Image, GraduationCap, FileType } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 import { isImageFormat, isPremiumFormat } from '@/lib/download-formats';
@@ -34,6 +35,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
   const { data: session } = useSession();
   const isMember = (session?.user as any)?.membership != null;
   const [isOpen, setIsOpen] = useState(inline);
+  const chrome = CHROME_STRINGS[useLocale()];
   const [downloading, setDownloading] = useState<string | null>(null);
   const [hasAccess, setHasAccess] = useState(false);
   const [accessChecked, setAccessChecked] = useState(false);
@@ -89,7 +91,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
     if (!session?.user) {
       toast('Sign in to download', {
         description: 'Text formats are free once you sign in. Premium formats (facsimiles, parallel text, scholarly editions) need purchase or membership.',
-        action: { label: 'Sign in', onClick: goToSignIn },
+        action: { label: chrome.signIn, onClick: goToSignIn },
       });
       return;
     }
@@ -217,7 +219,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           className={buttonClass}
         >
           <Download className="w-4 h-4" />
-          {!iconOnly && <>Download<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
+          {!iconOnly && <>{chrome.download}<ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} /></>}
         </button>
       )}
 
@@ -230,8 +232,8 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
           : 'fixed inset-x-0 bottom-0 max-h-[80vh] overflow-y-auto rounded-t-2xl sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:bottom-auto sm:mt-2 sm:w-72 sm:max-h-[70vh] sm:rounded-lg bg-white shadow-xl border border-stone-200 py-2 z-[9999]'}>
           {/* Header with close (mobile bottom sheet) */}
           <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
-            <span className="text-[15px] font-semibold text-stone-900">Download</span>
-            <button type="button" onClick={() => setIsOpen(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">Close</button>
+            <span className="text-[15px] font-semibold text-stone-900">{chrome.download}</span>
+            <button type="button" onClick={() => setIsOpen(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">{chrome.close}</button>
           </div>
 
           {/* Sign-in wall — all downloads require an account */}

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 9
+n_pages: null
+verdict: "No model continues our text with our misreads (0/9 unpredictable), and the positive control does not fire (0-1 of 36 Archive misreads): the instrument is unpowered."
+status: informational
+decision: "None; no routing, field or publish rule changed (#5549)"
+superseded_by: null
+issue: 5549
+---
 ## 2026-10-01 · Fingerprint test: do models continue our transcriptions with OUR misreads? No signal, and no power to show one: our served text postdates every model's cutoff, and the models do not reproduce even the Archive's pre-cutoff misreads (#5549)
 
 **Question.** A canary GUID is weak evidence (§3.4). A misread that exists only in our served text is a natural fingerprint. Given the words before it, does a model continue with our misread rather than the printed reading?

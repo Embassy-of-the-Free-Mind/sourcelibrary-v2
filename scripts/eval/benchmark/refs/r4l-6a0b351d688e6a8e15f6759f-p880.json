@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/welser1",
+  "edition": "Opera Historica Et Philologica, Sacra Et Profana : In quibus Historia Boica, Res Augustanae, Conversio &amp; Passio SS. Martyrum [...], Narratio eorum, quae contigerunt Apollonio Tyrio, Tabulae Peutingerianae integrae, Epistolae ad Viros Illustres Latinae Italicaeque, &amp; Proteus satyra continentu",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a0b351d688e6a8e15f6759f",
+  "page_number": 880,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 815072,
+    "to_char": 817783,
+    "overlap": 0.455,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-4)",
+    "at": "2026-10-06T10:11:18.118606+00:00",
+    "note": "Commentary p.741, roman and italic mixed; ref matches the whole body and ends a few words early, before 'Iccium convenire jubet'.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      880,
+      881,
+      882
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.718Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "0e722094050548af0368ca0301e57dc03369e45576dbba5b689739e32f679baa",
+  "unit": {
+    "chars": 2711
+  }
+}

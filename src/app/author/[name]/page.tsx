@@ -283,18 +283,18 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
     : name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   return {
-    title: `${authorName} — Source Library`,
+    title: `${authorName} | Source Library`,
     description: `Browse works by ${authorName} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
     alternates: {
       canonical: `/author/${name}`,
     },
     openGraph: {
-      title: `${authorName} — Source Library`,
+      title: `${authorName} | Source Library`,
       description: `Works by ${authorName} in Source Library`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${authorName} — Source Library`,
+      title: `${authorName} | Source Library`,
       description: `Works by ${authorName} in Source Library`,
     },
   };

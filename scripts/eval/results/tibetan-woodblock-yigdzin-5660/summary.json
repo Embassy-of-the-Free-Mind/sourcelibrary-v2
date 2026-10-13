@@ -1,0 +1,25 @@
+{
+ "issue": 5660,
+ "measure": "accuracy",
+ "n": 30,
+ "median_identity": 0.9554,
+ "iqr": [
+  0.9328,
+  0.9787
+ ],
+ "ge_0_9": 26,
+ "shuffle_floor_median": 0.2732,
+ "devanagari_pages": 0,
+ "by_eye": {
+  "n": 10,
+  "wrong_leaf": 0,
+  "invented": 0,
+  "levels": {
+   "clean": 2,
+   "minor": 8,
+   "heavy": 0
+  }
+ },
+ "judge": "v4 absolute (empty reference): 30/30 served",
+ "verdict": "PASS"
+}

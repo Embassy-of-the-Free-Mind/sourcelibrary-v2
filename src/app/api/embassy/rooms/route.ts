@@ -18,10 +18,10 @@ export async function GET() {
     const now = new Date();
     const defaults = [
       { slug: 'general', name: 'General', description: 'Welcome to the Embassy. Introduce yourself, ask questions, share discoveries.', pinned: true },
-      { slug: 'alchemy', name: 'Alchemy', description: 'The Great Work — Paracelsus, Maier, Fludd, Ripley, and the alchemical tradition.' },
+      { slug: 'alchemy', name: 'Alchemy', description: 'The Great Work: Paracelsus, Maier, Fludd, Ripley, and the alchemical tradition.' },
       { slug: 'hermetica', name: 'Hermetica', description: 'The Corpus Hermeticum, Asclepius, and the Hermetic tradition from antiquity to the Renaissance.' },
-      { slug: 'kabbalah', name: 'Kabbalah', description: 'Jewish and Christian Kabbalah — Zohar, Reuchlin, Rosenroth, Knorr von Rosenroth.' },
-      { slug: 'astrology', name: 'Astrology', description: 'Celestial arts — Ptolemy, Bonatti, Lilly, and the astrological tradition.' },
+      { slug: 'kabbalah', name: 'Kabbalah', description: 'Jewish and Christian Kabbalah: Zohar, Reuchlin, Rosenroth, Knorr von Rosenroth.' },
+      { slug: 'astrology', name: 'Astrology', description: 'Celestial arts: Ptolemy, Bonatti, Lilly, and the astrological tradition.' },
       { slug: 'translations', name: 'Translations', description: 'Discuss translation quality, suggest improvements, request new translations.' },
       { slug: 'reading-groups', name: 'Reading Groups', description: 'Organize and find reading groups. Post schedules, share notes.' },
     ];

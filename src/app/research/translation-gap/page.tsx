@@ -6,12 +6,12 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'The Translation Gap — Source Library Research',
+  title: 'The Translation Gap | Source Library Research',
   description:
     'Of ~1.4 million early-modern works in the Universal Short Title Catalogue, how many have a known modern translation? A federated, authority-reconciled census. About one in a hundred.',
   alternates: { canonical: '/research/translation-gap' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'The Translation Gap',
     description:
       'Of ~1.4 million early-modern works, roughly 1% have a known modern translation. A federated census against the Universal Short Title Catalogue.',
@@ -70,7 +70,7 @@ export default function TranslationGapPage() {
       header={
         <ContentHeader
           title="The Translation Gap"
-          subtitle="The Universal Short Title Catalogue records roughly 1.4 million distinct works printed in Europe before 1700. How many can a modern reader actually read in translation? We built a federated, authority-reconciled census to find out — the short answer is about one in a hundred."
+          subtitle="The Universal Short Title Catalogue records roughly 1.4 million distinct works printed in Europe before 1700. How many can a modern reader actually read in translation? We built a federated, authority-reconciled census to find out. The short answer is about one in a hundred."
         />
       }
     >
@@ -79,7 +79,7 @@ export default function TranslationGapPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-sm bg-stone-50 my-8">
           <Stat n="1.39" unit="M" label="distinct early-modern works in the USTC corpus" />
           <Stat n="~0.9" unit="%" label="have a known modern translation, across all languages" />
-          <Stat n="~2" unit="%" label="of the Latin corpus — the largest — is translated" />
+          <Stat n="~2" unit="%" label="of the Latin corpus (the largest) is translated" />
           <Stat n="30+" label="catalogues & publishers federated to count translations" />
         </div>
 
@@ -110,7 +110,7 @@ export default function TranslationGapPage() {
           </div>
           <div className="mt-6 bg-stone-50 border-l-2 border-amber-600 rounded-r-sm px-5 py-4 text-base text-stone-700">
             <div className="font-body text-xs tracking-wider uppercase text-amber-700 font-semibold mb-1">Read this carefully</div>
-            These are <strong>floors, not ceilings</strong> — they count translations we could find and verify. The Latin
+            These are <strong>floors, not ceilings</strong>: they count translations we could find and verify. The Latin
             figure (~2%) has been stress-tested across four matching methods and is robust; the smaller-language figures
             have had less validation and should be read as lower bounds.
           </div>
@@ -118,20 +118,20 @@ export default function TranslationGapPage() {
 
         <Section kicker="How it was built" title="Method">
           <p className="mb-4">
-            <strong>The denominator — USTC.</strong> The Universal Short Title Catalogue is the standard census of
+            <strong>The denominator: USTC.</strong> The Universal Short Title Catalogue is the standard census of
             early-modern European print; its expansion to 1700 brings the total to <strong>~1.4 million distinct
             works</strong> (USTC&rsquo;s own figure). The dataset used here comprises 1,391,970 distinct works across
             1,593,766 edition records, in 181 languages. Latin alone accounts for 444,120 works (32%).
           </p>
           <p className="mb-4">
-            <strong>The numerator — a federated catalogue.</strong> Rather than trust any single source (each mislabels
+            <strong>The numerator: a federated catalogue.</strong> Rather than trust any single source (each mislabels
             facsimiles, misses scholarly editions, or has coverage holes), we pooled <strong>26,855 translation records
             from 30+ sources</strong>: UNESCO Index Translationum, Library of Congress MARC, OpenLibrary, HathiTrust, the
             Loeb Classical Library, Harvard&rsquo;s I Tatti and DOML, Brill, OUP, CUP, Yale, Chicago, Penguin, and curated
             specialist series.
           </p>
           <p>
-            <strong>The hard part — reconciliation.</strong> A translation titled <em>&ldquo;Atalanta Fugiens: an edition
+            <strong>The hard part: reconciliation.</strong> A translation titled <em>&ldquo;Atalanta Fugiens: an edition
             of the fugues, emblems and epigrams&rdquo;</em> shares almost no words with the Latin original{' '}
             <em>&ldquo;Atalanta fugiens, hoc est, Emblemata nova&hellip;&rdquo;</em>. We match on Latin incipits and
             reconcile author names through 80,912 VIAF / Wikidata / GND / CERL authority clusters (so &ldquo;Geber&rdquo;,
@@ -166,7 +166,7 @@ export default function TranslationGapPage() {
           <p className="mt-5 text-stone-600">
             Each improvement adds less than the last. The figure converges in the <strong>2–2.3%</strong> range and cannot
             exceed ~3.8% even if every author-matched record linked perfectly. The gap is structural, not a search failure:
-            most untranslated works are minor — disputations, sermons, dissertations — never rendered into a living
+            most untranslated works are minor (disputations, sermons, dissertations), never rendered into a living
             language.
           </p>
         </Section>
@@ -175,21 +175,21 @@ export default function TranslationGapPage() {
           <ul className="list-disc pl-5 space-y-2.5">
             <li><strong>Lower bounds.</strong> Every figure counts only translations we could locate and verify; true rates are somewhat higher, especially for non-Latin languages.</li>
             <li><strong>&ldquo;Translation&rdquo; is graded, not binary.</strong> A few captions in English is not a complete scholarly edition; the headline counts lean toward substantial translations.</li>
-            <li><strong>USTC scope.</strong> The denominator is printed European books, c.1450–1700 — manuscripts, post-1700 editions, and non-European printing are out of frame.</li>
-            <li><strong>Residual name variants.</strong> Some pseudonymous and classical authors still resist reconciliation, nudging the true count up — but within the ~3.8% ceiling.</li>
+            <li><strong>USTC scope.</strong> The denominator is printed European books, c.1450–1700; manuscripts, post-1700 editions, and non-European printing are out of frame.</li>
+            <li><strong>Residual name variants.</strong> Some pseudonymous and classical authors still resist reconciliation, nudging the true count up, but within the ~3.8% ceiling.</li>
           </ul>
           <div className="mt-6 bg-stone-50 border-l-2 border-amber-600 rounded-r-sm px-5 py-4 text-base text-stone-700">
             <div className="font-body text-xs tracking-wider uppercase text-amber-700 font-semibold mb-1">The honest headline</div>
             The ~2% is approximately real. The vast majority of the early-modern Latin corpus is{' '}
-            <strong>genuinely untranslated</strong> — not a measurement failure, but the size of the opportunity.
+            <strong>genuinely untranslated</strong>: not a measurement failure, but the size of the opportunity.
           </div>
         </Section>
 
-        <Section kicker="The other side of the count" title="What has been translated — and by whom">
+        <Section kicker="The other side of the count" title="What has been translated, and by whom">
           <p className="mb-5">
             The same census that measures the gap also records the works that <em>have</em> been Englished, and credits the
             translators who did it. The companion <strong>Translation Registry</strong> is a searchable, work-level catalogue
-            of those translations — period, historical, and modern — linking to the original where Source Library holds it.
+            of those translations (period, historical, and modern), linking to the original where Source Library holds it.
           </p>
           <Link
             href="/research/translation-registry"
@@ -202,7 +202,7 @@ export default function TranslationGapPage() {
         <Section kicker="Help close it" title="Collaborate">
           <p className="mb-6">
             We&rsquo;re sharing the full per-language census and inviting catalogues, publishers, and scholars to add
-            sources and correct records. If you maintain translation data — or spot a work we&rsquo;ve miscounted — we want
+            sources and correct records. If you maintain translation data, or spot a work we&rsquo;ve miscounted, we want
             to hear from you.
           </p>
           <div className="flex flex-wrap gap-3">

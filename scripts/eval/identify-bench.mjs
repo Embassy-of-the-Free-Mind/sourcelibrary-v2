@@ -77,6 +77,7 @@ const DIR = path.join(REPO, 'scripts', 'output', 'identify-bench');
 const IMG_DIR = path.join(DIR, 'wall-photos');
 fs.mkdirSync(IMG_DIR, { recursive: true });
 
+import { embedAuthHeaders } from '../workers/lib/embed-auth.mjs';
 const CLIP = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 const GK = process.env.GEMINI_API_KEY;
 if (!GK || !process.env.MONGODB_URI) { console.error('missing GEMINI_API_KEY or MONGODB_URI'); process.exit(1); }
@@ -225,12 +226,12 @@ log('wall photos ready');
 const poolClip = new Map();
 for (let i = 0; i < pool.length; i += 25) {
   const batch = pool.slice(i, i + 25);
-  const resp = await fetchJson(`${CLIP}/embed-images`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ urls: batch.map(b => b.extracted_url) }) });
+  const resp = await fetchJson(`${CLIP}/embed-images`, { method: 'POST', headers: embedAuthHeaders(), body: JSON.stringify({ urls: batch.map(b => b.extracted_url) }) });
   resp.results.forEach((r, j) => { if (r.embedding) poolClip.set(batch[j].id, r.embedding); });
 }
 log(`clip pool: ${poolClip.size}`);
 for (const t of targets) {
-  const r = await fetchJson(`${CLIP}/embed-image`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ base64: t.wallB64, mime_type: 'image/jpeg' }) });
+  const r = await fetchJson(`${CLIP}/embed-image`, { method: 'POST', headers: embedAuthHeaders(), body: JSON.stringify({ base64: t.wallB64, mime_type: 'image/jpeg' }) });
   t.wallClip = r.embedding;
 }
 log('clip queries done');
@@ -314,7 +315,7 @@ for (let i = 0; i < targets.length; i++) {
   }
 }
 for (const t of targets) {
-  const r = await fetchJson(`${CLIP}/embed-image`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ base64: t.cropB64, mime_type: 'image/jpeg' }) });
+  const r = await fetchJson(`${CLIP}/embed-image`, { method: 'POST', headers: embedAuthHeaders(), body: JSON.stringify({ base64: t.cropB64, mime_type: 'image/jpeg' }) });
   t.cropClip = r.embedding;
   t.cropRanked = rankList(t.cropClip, poolClip);
   t.Bcrop = t.cropRanked.findIndex(s => s[0] === t.id) + 1 || null;

@@ -1,0 +1,56 @@
+[
+ {
+  "book_id": "6abeb4ad896ea18127c84725",
+  "slot": 15,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཀི (Derge Tengyur, vol. 110)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Tibetan Madhyamaka treatise from the Derge Tengyur volume ki (vol. 110), citing the Vimalakīrtinirdeśa.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 342,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "#",
+      "image": "(none)",
+      "problem": "extraneous hash marks inserted at several word boundaries",
+      "severity": "minor"
+     },
+     {
+      "ocr": "(omitted)",
+      "image": "༄༅། །",
+      "problem": "initial head ornament omitted from transcription",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "དེ་མ་ཡིན་པ་སྲོག་ཆགས་སྟོང་ཕྲག་མང་པོ་",
+      "english": "many thousands of living beings came from the great city, including kings...",
+      "problem": "misinterprets 'other than those' (de ma yin pa) as an encompassing category containing the listed dignitaries",
+      "severity": "minor"
+     },
+     {
+      "source": "ཅང་མི་བཟོད་པ་",
+      "english": "unbearable",
+      "problem": "translates as 'unbearable' rather than 'frail / unable to withstand anything' in the foam simile",
+      "severity": "minor"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly identifies the city of Vaiśālī, accurately renders the exclusionary phrasing for the visiting crowd, and translates the body similes with superior precision.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "An authentic folio from the Derge Tengyur Madhyamaka section citing the Vimalakīrtinirdeśa, accurately transcribed and translated without structural or copyright defects."
+ }
+]

@@ -20,20 +20,16 @@ async function run() {
 
   console.log(`[enrichment-snapshot] Starting at ${new Date().toISOString()}`);
 
-  // 1. Pipeline funnel (merge live + warehouse collections)
+  // 1. Pipeline funnel (the warehouse collections were retired 2026-10, #5470)
   const funnelLive = await db.collection('books').aggregate([
     { $match: { 'pipeline_auto.status': { $exists: true } } },
     { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
   ]).toArray();
-  const funnelWarehouse = await db.collection('books_warehouse').aggregate([
-    { $match: { 'pipeline_auto.status': { $exists: true } } },
-    { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-  ]).toArray();
   const funnelMap = {};
-  for (const f of [...funnelLive, ...funnelWarehouse]) {
+  for (const f of funnelLive) {
     funnelMap[f._id] = (funnelMap[f._id] || 0) + f.count;
   }
-  console.log(`  funnel: ${Object.keys(funnelMap).length} statuses (live + warehouse)`);
+  console.log(`  funnel: ${Object.keys(funnelMap).length} statuses`);
 
   // 2. Enrichment coverage (single aggregation)
   const [enrichment] = await db.collection('books').aggregate([

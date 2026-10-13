@@ -14,11 +14,22 @@
  *     --dry-run     Show what would be upgraded without writing
  *     --limit N     Process at most N artworks
  *     --source X    Only check one source: commons|rijks|met|nga|iiif
+ *     --review-out DIR   (dry run) write review.html — our image beside each
+ *                        museum candidate — and candidates.json to DIR
+ *     --approved FILE    (live) JSON array of {slug, objectUrl} pairs a human
+ *                        approved from the review sheet
+ *
+ * A museum match is found by title search, and title overlap picks a DIFFERENT
+ * work about 2 times in 7 (#5054). A live run therefore applies a museum match
+ * only when its exact {slug, objectUrl} pair is in --approved; everything else is
+ * skipped. Commons images listed on the SAME Wikidata entity (P18) need no review.
  */
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
 const MIN_UPGRADE_DIM = 800;
@@ -139,13 +150,33 @@ function cleanHtml(html) {
 
 // ─── Title matching ─────────────────────────────────────────────────────────
 
+const normalize = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .toLowerCase().replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+
+// "Unknown artist", "Anonymous (Egyptian)", "Mexica artist(s)", "Various",
+// "Unknown authorUnknown author" — the forms our queue actually carries
+// (measured 2026-10-11). These name nobody, so they cannot vouch for or veto a match.
+const UNNAMED_ARTIST = /unknown|anonym|unidentified|various|artist|maker|^\s*$/i;
+
+/** Surname-ish words of an artist, or null when the field names nobody. */
+function artistNameWords(artist) {
+  if (!artist || UNNAMED_ARTIST.test(artist)) return null;
+  const words = normalize(artist).split(' ').filter(w => w.length > 3 && !['after', 'workshop', 'circle', 'follower', 'school', 'attributed'].includes(w));
+  return words.length ? words : null;
+}
+
 /** Check if a museum result plausibly matches our artwork */
-function isPlausibleMatch(queryTitle, queryArtist, resultTitle, resultArtist) {
-  const normalize = s => (s || '').toLowerCase().replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+export function isPlausibleMatch(queryTitle, queryArtist, resultTitle, resultArtist) {
   const qTitle = normalize(queryTitle);
   const rTitle = normalize(resultTitle);
-  const qArtist = normalize(queryArtist);
-  const rArtist = normalize(resultArtist);
+
+  // Identity gate (#5054): when both sides name an artist, they must share a
+  // name word. Title overlap alone matched Goltzius's engraving "The Holy Family
+  // under the Cherry Tree" to a Met painting "The Holy Family" by another hand.
+  const qArtistWords = artistNameWords(queryArtist);
+  const rArtistWords = artistNameWords(resultArtist);
+  const artistMatch = !!(qArtistWords && rArtistWords && qArtistWords.some(w => rArtistWords.includes(w)));
+  if (qArtistWords && rArtistWords && !artistMatch) return false;
 
   // Must share significant words in title (exclude very common words)
   const stopWords = new Set(['the', 'and', 'with', 'from', 'for', 'saint', 'san', 'santa', 'detail', 'painting', 'portrait', 'madonna', 'virgin', 'child']);
@@ -153,11 +184,6 @@ function isPlausibleMatch(queryTitle, queryArtist, resultTitle, resultArtist) {
   const rWords = new Set(rTitle.split(' ').filter(w => w.length > 2 && !stopWords.has(w)));
   const shared = [...qWords].filter(w => rWords.has(w));
   const titleOverlap = qWords.size > 0 ? shared.length / qWords.size : 0;
-
-  // Artist surname match (last word of artist name, or any word > 4 chars)
-  const qArtistWords = qArtist.split(' ').filter(w => w.length > 3);
-  const rArtistWords = rArtist.split(' ').filter(w => w.length > 3);
-  const artistMatch = qArtistWords.some(w => rArtistWords.includes(w));
 
   // Strict: need strong title match, artist match is supporting evidence only
   if (titleOverlap >= 0.6 && shared.length >= 2) return true;
@@ -357,8 +383,18 @@ async function main() {
   const dryRun = args.includes('--dry-run');
   const limitIdx = args.indexOf('--limit');
   const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : Infinity;
+  const reviewIdx = args.indexOf('--review-out');
+  const reviewOut = reviewIdx >= 0 ? args[reviewIdx + 1] : null;
+  const approvedIdx = args.indexOf('--approved');
+  const approved = new Set();
+  if (approvedIdx >= 0) {
+    for (const { slug, objectUrl } of JSON.parse(fs.readFileSync(args[approvedIdx + 1], 'utf8'))) {
+      approved.add(`${slug}\t${objectUrl}`);
+    }
+  }
+  const candidates = [];
 
-  console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Limit: ${limit === Infinity ? 'none' : limit}`);
+  console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Limit: ${limit === Infinity ? 'none' : limit} | Approved museum matches: ${approved.size}`);
 
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
@@ -379,7 +415,7 @@ async function main() {
   // Get all low-res artworks
   const lowRes = await db.collection('books').find(
     { commons_full_url: { $exists: true }, hidden_reason: 'low_resolution' },
-    { projection: { slug: 1, title: 1, author: 1, commons_title: 1, commons_page_title: 1, source_ids: 1, commons_full_url: 1, commons_width: 1, commons_height: 1 } }
+    { projection: { slug: 1, title: 1, author: 1, thumbnail: 1, commons_title: 1, commons_page_title: 1, source_ids: 1, commons_full_url: 1, commons_width: 1, commons_height: 1 } }
   ).toArray();
 
   // The Commons page title lives under different names depending on which
@@ -476,8 +512,21 @@ async function main() {
         }
       }
 
+      if (bestImage.source !== 'commons') {
+        candidates.push({
+          slug: book.slug, title: book.title, author: book.author || '', ourImage: book.thumbnail || book.commons_full_url,
+          source: bestImage.source, objectUrl: bestImage.objectUrl, candidateTitle: bestImage.title,
+          candidateArtist: bestImage.artist || '', candidateMedium: bestImage.medium || '', candidateImage: bestImage.imageUrl?.replace('/full/3840,/', '/full/843,/'),
+        });
+        if (!dryRun && !approved.has(`${book.slug}\t${bestImage.objectUrl}`)) {
+          console.log(`  SKIP: museum match not approved (#5054) — ${bestImage.objectUrl}`);
+          noUpgrade++;
+          continue;
+        }
+      }
+
       if (dryRun) {
-        console.log(`  [DRY] Would upgrade from ${bestImage.source}: ${bestImage.imageUrl?.slice(0, 100)}`);
+        console.log(`  [DRY] Would upgrade from ${bestImage.source}${bestImage.source !== 'commons' ? ' (needs approval)' : ''}: ${bestImage.imageUrl?.slice(0, 100)}`);
         if (wikidataMetadata) {
           console.log(`  [DRY] Wikidata metadata: creator=${wikidataMetadata.creators.map(c => entityLabels[c] || c).join(', ')}, ` +
             `location=${wikidataMetadata.locations.map(l => entityLabels[l] || l).join(', ')}, ` +
@@ -576,7 +625,32 @@ async function main() {
   console.log(`Errors: ${errors}`);
   console.log(`Remaining hidden: ${lowRes.length - upgraded}`);
 
+  if (reviewOut) {
+    fs.mkdirSync(reviewOut, { recursive: true });
+    fs.writeFileSync(path.join(reviewOut, 'candidates.json'), JSON.stringify(candidates, null, 2));
+    fs.writeFileSync(path.join(reviewOut, 'review.html'), renderReviewSheet(candidates));
+    console.log(`Review sheet: ${path.join(reviewOut, 'review.html')} (${candidates.length} museum matches)`);
+    console.log(`Approve by copying the correct entries' {slug, objectUrl} into a JSON array for --approved.`);
+  }
+
   await client.close();
 }
 
-main().catch(err => { console.error('Fatal:', err); process.exit(1); });
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/** Side-by-side sheet: our low-res image beside each museum candidate. */
+export function renderReviewSheet(candidates) {
+  const rows = candidates.map((c, i) => `<tr>
+<td>${i + 1}</td>
+<td><img src="${esc(c.ourImage)}" loading="lazy"><br><b>${esc(c.title)}</b><br>${esc(c.author)}<br><code>${esc(c.slug)}</code></td>
+<td><img src="${esc(c.candidateImage)}" loading="lazy"><br><b>${esc(c.candidateTitle)}</b><br>${esc(c.candidateArtist)}<br>${esc(c.candidateMedium)}<br><a href="${esc(c.objectUrl)}">${esc(c.source)}</a></td>
+</tr>`).join('\n');
+  return `<!doctype html><meta charset="utf-8"><title>Low-res upgrade review (${candidates.length})</title>
+<style>body{font-family:sans-serif}td{vertical-align:top;padding:8px;border-bottom:1px solid #ccc;width:45%}img{max-width:420px;max-height:420px}</style>
+<p>Same work? Approve a row only if both images show the SAME object (another impression of the same print is fine). #5054</p>
+<table>${rows}</table>`;
+}
+
+if (process.argv[1] && process.argv[1].endsWith('upgrade-lowres-artworks.mjs')) {
+  main().catch(err => { console.error('Fatal:', err); process.exit(1); });
+}

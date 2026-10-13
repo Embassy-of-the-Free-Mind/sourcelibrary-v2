@@ -11,6 +11,7 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import type { Book, Page } from '@/lib/types';
 import { CapsLabel } from './ReaderV2Bits';
+import { formatPageTypeLabel } from '@/components/reader/NotesRenderer';
 
 // Restores the distinct empty states the old TranslationEditor pane had
 // (src/components/pipeline/TranslationEditor.tsx, ~L2104-2239) that the v2
@@ -70,6 +71,21 @@ export function GatedPane({ page }: { page: Page }) {
         {t.signIn}
       </a>
     </EmptyPane>
+  );
+}
+
+/**
+ * The translation pane of a page the pipeline marked "no translatable content"
+ * (#5903). The stored text is the marker — `[Blank page — no translatable content]`
+ * — which the renderer drew as a "Translator's addition" chip, as if the book said
+ * it. It is page information, so it reads like the blank-page line below.
+ */
+export function NoTextPageLine({ pageType }: { pageType: string }) {
+  const t = getReaderStrings(useLocale()).paneEmpty;
+  return (
+    <p className="font-sans text-[13px] italic" style={{ color: 'var(--text-faint)' }}>
+      {pageType === 'blank' ? t.blankPage : t.noTextPage(formatPageTypeLabel(pageType))}
+    </p>
   );
 }
 

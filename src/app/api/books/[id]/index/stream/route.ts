@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { spreadAcrossBook } from '../../../../../../../scripts/lib/spread-across-book.mjs';
 
 // Lazy: resolving an API key at module scope would turn a missing
 // GEMINI_API_KEY into an import-time throw, and route modules are imported
@@ -143,7 +144,7 @@ async function synthesizeSummary(
   });
 
   const allThemes = [...new Set(batches.flatMap(b => b.themes))];
-  const allQuotes = batches.flatMap(b => b.quotes).slice(0, 15);
+  const allQuotes = spreadAcrossBook(batches.flatMap(b => b.quotes), 15);
   const batchSummaries = batches.map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`).join('\n');
   const quotesText = allQuotes.map(q => `- "${q.text}" (p.${q.page})`).join('\n');
 

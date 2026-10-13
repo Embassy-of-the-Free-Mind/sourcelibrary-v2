@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'System Status — Source Library',
+  title: 'System Status | Source Library',
   description: 'Live health status for Source Library systems.',
 };
 
@@ -228,7 +228,7 @@ export default async function StatusPage() {
             Source Library Status
           </h1>
           <p style={{ margin: '8px 0 0', color: '#9ca3af', fontSize: 12 }}>
-            Live system health — refreshes every 30 seconds
+            Live system health, refreshes every 30 seconds
           </p>
         </div>
 
@@ -336,7 +336,7 @@ export default async function StatusPage() {
                 </div>
               </>
             ) : (
-              <div style={{ color: '#6b7280', fontSize: 12 }}>No cache probe data yet — run POST /api/admin/cache-probe</div>
+              <div style={{ color: '#6b7280', fontSize: 12 }}>No cache probe data yet. Run POST /api/admin/cache-probe</div>
             )}
           </Section>
 

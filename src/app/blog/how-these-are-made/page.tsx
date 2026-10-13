@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'How These Notes Are Made - Source Library',
   description:
-    'The research notes on Source Library are AI-assisted reports from an ongoing project to digitize and translate historical texts — directed, reviewed, and published by Derek Lomas. Here is how they are made, and why.',
+    'The research notes on Source Library are AI-assisted reports from an ongoing project to digitize and translate historical texts, directed, reviewed, and published by Derek Lomas. Here is how they are made, and why.',
   alternates: {
     canonical: '/blog/how-these-are-made',
   },
@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     title: 'How These Notes Are Made',
     description:
       'The research notes on Source Library are AI-assisted reports from an ongoing digitization project. How they are made, and why.',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
 };
 
@@ -52,28 +52,28 @@ export default function HowTheseAreMadePage() {
 
         <p>
           Source Library is a project to digitize, transcribe, and translate
-          historical texts &mdash; tens of thousands of books, most of which
+          historical texts: tens of thousands of books, most of which
           have never been available in English. AI does the reading at a scale
           no person could: it transcribes the pages, translates them, and
           searches across the whole corpus at once. When something interesting
-          turns up &mdash; a first translation, a forgotten diagram, a line of
-          influence between two books three centuries apart &mdash; I want to
+          turns up (a first translation, a forgotten diagram, a line of
+          influence between two books three centuries apart), I want to
           write it down while it&apos;s fresh. These notes are those write-ups.
         </p>
 
         <h2>The process</h2>
         <p>
           I direct the research: the question, the angle, what&apos;s worth
-          pursuing and what isn&apos;t. AI models do the digging &mdash;
-          searching the library, reading the sources, assembling the evidence
-          &mdash; and draft the note. I review and publish. Some notes get
+          pursuing and what isn&apos;t. AI models do the digging
+          (searching the library, reading the sources, assembling the evidence)
+          and draft the note. I review and publish. Some notes get
           heavy editing; some go out close to how the machine drafted them.
         </p>
         <p>
           The rule that makes this trustworthy is simple:{' '}
           <strong>every quotation is checked, by machine, against the scanned
           page it comes from, and linked to it.</strong> You can click any
-          quote in these notes and land on the original page image &mdash; the
+          quote in these notes and land on the original page image, the
           actual ink. That&apos;s a standard of verifiability most writing
           about historical sources doesn&apos;t attempt, and it&apos;s the
           discipline that separates a research report from AI slop. Claims
@@ -84,7 +84,7 @@ export default function HowTheseAreMadePage() {
         <p>
           Partly it&apos;s working in public: the library grows every week,
           and the notes are a record of what we&apos;re finding as we go.
-          Partly it&apos;s discovery for myself &mdash; writing these reports
+          Partly it&apos;s discovery for myself: writing these reports
           is how I learn what&apos;s actually in the collection. And partly
           it&apos;s an experiment in what AI-assisted scholarship can look
           like when it&apos;s done with sources showing. I&apos;d rather run
@@ -99,7 +99,7 @@ export default function HowTheseAreMadePage() {
 
         <h2>Living documents</h2>
         <p>
-          Because they&apos;re research reports, they get revised &mdash; when
+          Because they&apos;re research reports, they get revised when
           a reader catches an error, when the library acquires a better
           source, when a claim turns out to need tightening. Every note shows
           its last-revised date, and the full revision history is public: this
@@ -115,15 +115,15 @@ export default function HowTheseAreMadePage() {
         </p>
         <p>
           Which also means anyone can propose a correction. If you spot an
-          error &mdash; a wrong date, a misattributed quote, a claim you can
-          refute &mdash; use the &ldquo;suggest an edit&rdquo; link at the
+          error (a wrong date, a misattributed quote, a claim you can
+          refute), use the &ldquo;suggest an edit&rdquo; link at the
           bottom of any note, or the feedback link in the site footer.
           Corrections are the point of publishing this way, not an
           embarrassment to it.
         </p>
 
         <p className="text-muted text-sm mt-10">
-          &mdash; Derek Lomas
+          Derek Lomas
         </p>
       </article>
     </ContentPageLayout>

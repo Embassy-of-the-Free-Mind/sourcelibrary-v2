@@ -1,18 +1,18 @@
 'use client';
 
 /**
- * Charts for /admin/quality (#5474). Receive only the series they draw; every value and label
+ * Charts for /admin/quality (#5474, #6429). Receive only the series they draw; every value and label
  * comes from the ops_reports document. Colours are the dataviz reference palette's first three
  * categorical slots (validated all-pairs in both modes), set as CSS variables by the page.
  */
-import { useState } from 'react';
-import type { AuditRun, QualityData } from '@/lib/quality-report';
+import { useState, type PointerEvent } from 'react';
+import type { AuditRun, QualityData, TrendChart } from '@/lib/quality-report';
 
 type Metric = 'any_major' | 'ge4';
 const METRIC_LABEL: Record<Metric, string> = { any_major: 'Any major defect', ge4: 'Rated ≥ 4 of 5' };
 const pct = (v: number | null | undefined) => (v == null ? '–' : `${v.toFixed(1)}%`);
 const day = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-const hour = (iso: string) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'UTC' });
+const short = (iso: string) => new Date(`${iso.slice(0, 10)}T00:00:00Z`).toLocaleString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 
 const W = 720, H = 260, PL = 44, PR = 16, PT = 14, PB = 40;
 const IW = W - PL - PR, IH = H - PT - PB;
@@ -38,11 +38,13 @@ function Grid({ ticks, y }: { ticks: number[]; y: (v: number) => number }) {
   );
 }
 
-function Tip({ x, lines }: { x: number; lines: string[] }) {
+function Tip({ x, lines, w = W }: { x: number; lines: string[]; w?: number }) {
+  // Opens toward the side with more room and wraps there, so it never leaves the chart on a phone.
+  const f = x / w, side = f < 0.5 ? { left: `${f * 100}%`, maxWidth: `${(1 - f) * 100}%` } : { right: `${(1 - f) * 100}%`, maxWidth: `${f * 100}%` };
   return (
     <div
-      className="absolute top-0 pointer-events-none rounded px-2 py-1 text-xs shadow"
-      style={{ left: `${(x / W) * 100}%`, transform: 'translateX(-50%)', background: 'var(--q-surface)', color: 'var(--q-text)', border: '1px solid var(--q-border)', whiteSpace: 'nowrap' }}
+      className="absolute top-0 pointer-events-none rounded px-2 py-1 text-xs shadow z-10 w-max"
+      style={{ ...side, background: 'var(--q-surface)', color: 'var(--q-text)', border: '1px solid var(--q-border)' }}
     >
       {lines.map((l, i) => <div key={i} style={i ? { color: 'var(--q-muted)' } : { fontWeight: 600 }}>{l}</div>)}
     </div>
@@ -124,51 +126,116 @@ export function TranslationTrend({ runs, groupLabels }: { runs: AuditRun[]; grou
   );
 }
 
-/** Speed-test gate windows: major-defect share per window with its interval, against the chained-lane baseline. */
-export function LaneWindows({ lanes }: { lanes: QualityData['lanes'] }) {
-  const [hover, setHover] = useState<number | null>(null);
-  const ws = lanes.windows;
-  const base = lanes.baseline?.any_major.est ?? null;
-  const bound = lanes.trend_rule?.bound_pct ?? null;
-  const max = Math.max(base ?? 0, bound ?? 0, ...ws.map(w => w.ci?.[1] ?? w.major_pct ?? 0));
-  const { y, ticks } = yScale(max);
-  const slot = IW / Math.max(1, ws.length);
-  const x = (i: number) => PL + slot * (i + 0.5);
-  const w = hover != null ? ws[hover] : null;
+/** Small trend chart (#6429): one y axis, a line per series, open dots for a sparse re-run series. */
+const TW = 360, TH = 184, TPL = 50, TPT = 10, TPB = 26, TFS = 12;
+const TIH = TH - TPT - TPB;
+const SLOT = ['', 'var(--q-s1)', 'var(--q-s2)', 'var(--q-s3)'];
+const DAY = 864e5;
+
+function fmt(unit: TrendChart['unit'], v: number) {
+  if (unit === 'usd') return `$${v.toFixed(v < 10 ? 2 : 0)}`;
+  if (unit === 'pct') return `${v.toFixed(Math.abs(v) < 100 && v % 1 ? 1 : 0)}%`;
+  return Math.round(v).toLocaleString('en-US');
+}
+
+function niceTicks(lo: number, hi: number) {
+  const span = hi - lo || Math.abs(hi) || 1;
+  const raw = span / 3, mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= raw)!;
+  const start = Math.floor(lo / step) * step, end = Math.ceil(hi / step) * step;
+  const ticks: number[] = [];
+  for (let v = start; v <= end + step / 2; v += step) ticks.push(+v.toFixed(6));
+  return ticks;
+}
+
+export function TrendLines({ chart }: { chart: TrendChart }) {
+  const [hover, setHover] = useState<string | null>(null);
+  const series = chart.series.filter(s => s.points.length);
+  const all = series.flatMap(s => s.points);
+  const values = [...all.map(p => p.value), ...(chart.ref ? [chart.ref.value] : [])];
+  const lo = chart.unit === 'count' ? Math.min(...values) : 0, hi = Math.max(...values);
+  // Counts are zoomed (a zero baseline would flatten a week's growth) but never below half a percent of the value.
+  const pad = chart.unit === 'count' ? Math.max((hi - lo) / 10, hi / 200, 1) : 0;
+  const ticks = niceTicks(lo - pad, hi + pad);
+  const TPR = chart.unit === 'count' ? 58 : 44, TIW = TW - TPL - TPR;
+  const y0 = ticks[0], y1 = ticks.at(-1)!;
+  const y = (v: number) => TPT + TIH - ((v - y0) / (y1 - y0 || 1)) * TIH;
+  const times = all.map(p => Date.parse(p.date));
+  let t0 = Math.min(...times), t1 = Math.max(...times);
+  if (t1 - t0 < 6 * DAY) { const c = (t0 + t1) / 2; t0 = c - 3 * DAY; t1 = c + 3 * DAY; }
+  const x = (iso: string) => TPL + ((Date.parse(iso) - t0) / (t1 - t0)) * TIW;
+  const dates = [...new Set(all.map(p => p.date))].sort();
+
+  // A line breaks where a point is missing: a gap reads as a gap, never as a straight interpolation.
+  const segments = (s: TrendChart['series'][number]) => {
+    const out: (typeof s.points)[] = [];
+    for (const p of s.points) {
+      const last = out.at(-1)?.at(-1);
+      if (last && Date.parse(p.date) - Date.parse(last.date) <= s.cadence_days * 1.5 * DAY) out.at(-1)!.push(p); else out.push([p]);
+    }
+    return out;
+  };
+  // End labels: the newest value of each line series, nudged apart, in text ink.
+  const ends = series.filter(s => s.style === 'line').map(s => ({ s, p: s.points.at(-1)! }))
+    .map(e => ({ ...e, ly: y(e.p.value) })).sort((a, b) => a.ly - b.ly);
+  for (let i = 1; i < ends.length; i++) ends[i].ly = Math.max(ends[i].ly, ends[i - 1].ly + 13);
+
+  const onMove = (e: PointerEvent<SVGRectElement>) => {
+    const r = e.currentTarget.ownerSVGElement!.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * TW;
+    setHover(dates.reduce((b, d) => (Math.abs(x(d) - px) < Math.abs(x(b) - px) ? d : b), dates[0]));
+  };
+  const tipLines = hover ? [short(hover), ...series.flatMap(s => s.points.filter(p => p.date === hover).map(p => p.tip))] : [];
+  const legend = series.filter(s => s.legend !== false);
+
   return (
-    <div className="relative max-w-3xl">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block" role="img" aria-label="Major-defect share per speed-test window" onMouseLeave={() => setHover(null)}>
-        <Grid ticks={ticks} y={y} />
-        {base != null && (
-          <g>
-            <line x1={PL} x2={W - PR} y1={y(base)} y2={y(base)} stroke="var(--q-s2)" strokeWidth={2} strokeDasharray="6 4" />
-            <text x={PL + 4} y={y(base) + 14} textAnchor="start" fontSize={11} fill="var(--q-text)">{lanes.baseline!.label} {pct(base)}</text>
-          </g>
-        )}
-        {bound != null && (
-          <g>
-            <line x1={PL} x2={W - PR} y1={y(bound)} y2={y(bound)} stroke="var(--q-muted)" strokeWidth={1} strokeDasharray="2 3" />
-            <text x={W - PR} y={y(bound) - 4} textAnchor="end" fontSize={11} fill="var(--q-muted)">trend bound {pct(bound)}</text>
-          </g>
-        )}
-        {ws.map((win, i) => (
-          <g key={win.window} onMouseEnter={() => setHover(i)}>
-            <rect x={x(i) - slot / 2} y={PT} width={slot} height={IH} fill="transparent" />
-            {win.ci && <line x1={x(i)} x2={x(i)} y1={y(win.ci[0])} y2={y(win.ci[1])} stroke="var(--q-s1)" strokeWidth={2} />}
-            {win.major_pct != null && <circle cx={x(i)} cy={y(win.major_pct)} r={hover === i ? 6 : 5} fill="var(--q-s1)" stroke="var(--q-surface)" strokeWidth={2} />}
-            <text x={x(i)} y={H - PB + 16} textAnchor="middle" fontSize={11} fill="var(--q-text)">{hour(win.window.split('/')[1] ?? win.window)}</text>
-            <text x={x(i)} y={H - PB + 30} textAnchor="middle" fontSize={11} fill="var(--q-muted)">{win.verdict}{win.trend_warn ? ' · trend' : ''}</text>
-          </g>
-        ))}
-      </svg>
-      {w && (
-        <Tip x={x(hover!)} lines={[
-          `${w.verdict} · ${pct(w.major_pct)} major (${w.defective}/${w.n})`,
-          w.ci ? `Wilson 95%: ${pct(w.ci[0])} – ${pct(w.ci[1])}` : 'no interval',
-          `window ending ${hour(w.window.split('/')[1] ?? w.window)} UTC`,
-          w.trend_warn ? 'trend WARN: second window in a row above the bound' : 'no trend warning',
-        ]} />
+    <div className="grid gap-1.5">
+      {(legend.length > 1 || chart.extra_legend?.length) && (
+        <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-xs" style={{ color: 'var(--q-muted)' }}>
+          {legend.length > 1 && legend.map(s => (
+            <span key={s.key} className="inline-flex items-center gap-1.5"><i className="inline-block w-3 h-0.5" style={{ background: SLOT[s.slot] }} />{s.label}</span>
+          ))}
+          {chart.extra_legend?.map(l => (
+            <span key={l.label} className="inline-flex items-center gap-1.5">
+              <i className="inline-block w-2 h-2 rounded-full" style={{ border: '2px solid var(--q-muted)' }} />{l.label}
+            </span>
+          ))}
+        </div>
       )}
+      <div className="relative">
+        <svg viewBox={`0 0 ${TW} ${TH}`} className="w-full h-auto block touch-pan-y" role="img" aria-label={`${chart.title}: ${chart.y_label}`}>
+          {ticks.map(t => (
+            <g key={t}>
+              <line x1={TPL} x2={TW - TPR} y1={y(t)} y2={y(t)} stroke="var(--q-grid)" strokeWidth={1} />
+              <text x={TPL - 6} y={y(t) + 4} textAnchor="end" fontSize={TFS} fill="var(--q-muted)">{fmt(chart.unit, t)}</text>
+            </g>
+          ))}
+          {chart.ref && (
+            <g>
+              <line x1={TPL} x2={TW - TPR} y1={y(chart.ref.value)} y2={y(chart.ref.value)} stroke="var(--q-muted)" strokeWidth={1} strokeDasharray="4 3" />
+              <text x={TPL + 4} y={y(chart.ref.value) - 4} fontSize={TFS} fill="var(--q-muted)">{chart.ref.label}</text>
+            </g>
+          )}
+          <text x={TPL} y={TH - 6} fontSize={TFS} fill="var(--q-muted)">{short(dates[0])}</text>
+          {dates.length > 1 && <text x={TW - TPR} y={TH - 6} textAnchor="end" fontSize={TFS} fill="var(--q-muted)">{short(dates.at(-1)!)}</text>}
+          {hover && <line x1={x(hover)} x2={x(hover)} y1={TPT} y2={TPT + TIH} stroke="var(--q-muted)" strokeWidth={1} />}
+          {[...series].sort((a, b) => (a.style === b.style ? 0 : a.style === 'dots' ? -1 : 1)).map(s => (
+            <g key={s.key}>
+              {s.style === 'line' && segments(s).filter(g => g.length > 1).map((g, i) => (
+                <polyline key={i} points={g.map(p => `${x(p.date)},${y(p.value)}`).join(' ')} fill="none" stroke={SLOT[s.slot]} strokeWidth={2} strokeLinejoin="round" />
+              ))}
+              {s.points.map(p => s.style === 'line'
+                ? <circle key={p.date} cx={x(p.date)} cy={y(p.value)} r={hover === p.date ? 5 : 4} fill={SLOT[s.slot]} stroke="var(--q-surface)" strokeWidth={2} />
+                : <circle key={p.date} cx={x(p.date)} cy={y(p.value)} r={4.5} fill="var(--q-surface)" stroke={SLOT[s.slot]} strokeWidth={2} />)}
+            </g>
+          ))}
+          {ends.map(e => (
+            <text key={e.s.key} x={TW - TPR + 4} y={e.ly + 4} fontSize={TFS} fill="var(--q-text)">{fmt(chart.unit, e.p.value)}</text>
+          ))}
+          <rect x={TPL} y={TPT} width={TIW} height={TIH} fill="transparent" onPointerMove={onMove} onPointerLeave={() => setHover(null)} onPointerDown={onMove} />
+        </svg>
+        {hover && <Tip x={x(hover)} w={TW} lines={tipLines} />}
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Copyright & DMCA Policy — Source Library',
+  title: 'Copyright & DMCA Policy | Source Library',
   description: 'Copyright policy, DMCA takedown procedure, and designated agent information for Source Library.',
   alternates: { canonical: '/dmca' },
 };
@@ -19,7 +19,7 @@ export default function DmcaPage() {
 
         <h2>Our Content</h2>
         <p>
-          Source Library hosts digitized primary source texts — principally works published before
+          Source Library hosts digitized primary source texts, principally works published before
           1800, together with early 20th-century bilingual scholarly editions (such as the Loeb
           Classical Library) whose original publication dates place them in the public domain in
           the United States. All content is sourced from established institutional repositories
@@ -33,7 +33,7 @@ export default function DmcaPage() {
 
         <h2>DMCA Designated Agent</h2>
         <p>
-          Source Library is operated by Stichting Het Wereldhart — Embassy of the Free Mind
+          Source Library is operated by Stichting Het Wereldhart, Embassy of the Free Mind
           (Amsterdam, Netherlands). In compliance with the Digital Millennium Copyright Act
           (17 U.S.C. § 512), we have registered a Designated Agent with the United States
           Copyright Office.
@@ -43,7 +43,7 @@ export default function DmcaPage() {
           <tbody>
             <tr>
               <td className="font-medium pr-6 py-1">Service Provider</td>
-              <td>Stichting Het Wereldhart — Embassy of the Free Mind</td>
+              <td>Stichting Het Wereldhart · Embassy of the Free Mind</td>
             </tr>
             <tr>
               <td className="font-medium pr-6 py-1">Registration</td>

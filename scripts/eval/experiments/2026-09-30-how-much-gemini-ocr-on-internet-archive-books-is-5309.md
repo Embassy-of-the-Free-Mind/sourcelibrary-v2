@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 775
+n_pages: null
+verdict: "3.7% of decidable IA books (29 of 775, CI 2.6-5.3%) show a neighbouring leaf's Gemini OCR beside the page image; projected about 102K pages, repair about $240 (not run)."
+status: informational
+decision: "Detector shipped (scripts/audit/ia-model-ocr-off-leaf.mjs, PR #5398); repair not run"
+superseded_by: null
+issue: 5309
+---
 ## 2026-09-30 — How much Gemini OCR on Internet Archive books is a neighbouring leaf's text, as readers see it? (#5309)
 
 **Headline: 3.7% of decidable IA books (29 of 775, Wilson 95% CI 2.6–5.3%) show text of a neighbouring leaf beside the

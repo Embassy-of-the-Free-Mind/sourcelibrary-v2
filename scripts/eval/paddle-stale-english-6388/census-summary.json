@@ -1,0 +1,112 @@
+{
+ "computed_at": "2026-10-11T15:29:13.004Z",
+ "lane": "paddle-zh-2026-10",
+ "counts": {
+  "stale_pages": 75701,
+  "english_present": 75701,
+  "not_paddle_now": 0,
+  "no_revision": 0,
+  "table_or_diagram": 22,
+  "under_min_han": 28,
+  "eligible": 75651
+ },
+ "books": {
+  "with_stale_english": 751,
+  "eligible": 751
+ },
+ "revision_models": [
+  [
+   "gemini-3-flash-preview",
+   59207
+  ],
+  [
+   "gemini-3.1-flash-lite",
+   12634
+  ],
+  [
+   "gemini-3.1-flash-lite-preview",
+   3279
+  ],
+  [
+   "cbeta-xml-p5@dbdea41071",
+   371
+  ],
+  [
+   "gemini-3.8-flash-low",
+   160
+  ]
+ ],
+ "translation_models": [
+  [
+   "gemini-3-flash-preview",
+   42907
+  ],
+  [
+   "gemini-3.1-flash-lite-preview",
+   18511
+  ],
+  [
+   "gemini-3.1-flash-lite",
+   14068
+  ],
+  [
+   "gemini-3.8-flash-low",
+   165
+  ]
+ ],
+ "cer_deciles_eligible": {
+  "p10": 0.0117,
+  "p20": 0.021,
+  "p30": 0.0308,
+  "p40": 0.0417,
+  "p50": 0.0563,
+  "p60": 0.078,
+  "p70": 0.1121,
+  "p80": 0.1963,
+  "p90": 0.6933,
+  "p100": 1
+ },
+ "cer_deciles_all_with_revision": {
+  "p10": 0.0117,
+  "p20": 0.021,
+  "p30": 0.0308,
+  "p40": 0.0417,
+  "p50": 0.0564,
+  "p60": 0.0781,
+  "p70": 0.1122,
+  "p80": 0.197,
+  "p90": 0.6964,
+  "p100": 1
+ },
+ "top_decile_threshold": 0.6933,
+ "eligible_pages_cer_ge": {
+  "0.02": 61244,
+  "0.05": 40923,
+  "0.1": 24962,
+  "0.2": 15022,
+  "0.3": 11969,
+  "0.5": 9426
+ },
+ "bins": [
+  {
+   "bin": "0–0.05",
+   "eligible_pages": 34728
+  },
+  {
+   "bin": "0.05–0.1",
+   "eligible_pages": 15961
+  },
+  {
+   "bin": "0.1–0.2",
+   "eligible_pages": 9940
+  },
+  {
+   "bin": "0.2–0.5",
+   "eligible_pages": 5596
+  },
+  {
+   "bin": "0.5–1",
+   "eligible_pages": 9426
+  }
+ ]
+}

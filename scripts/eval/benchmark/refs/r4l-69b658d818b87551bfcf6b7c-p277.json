@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA cera/gesner1",
+  "edition": "Epistolarum Medicinalium Conradi Gesneri ... Libri III. His accesserunt eiusdem Aconiti primi Dioscoridis Asseveratio, et De Oxymelitis Elleborati utriusque descriptione et usu Libellus / Omnia nunc primum per Casparum Wolphium in lucem data. — Zürich: Christoph Frosch[ouer], 1577.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b658d818b87551bfcf6b7c",
+  "page_number": 277,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 576825,
+    "to_char": 579200,
+    "overlap": 0.401,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-3)",
+    "at": "2026-10-06T10:05:28.759Z",
+    "note": "full page matches; contains a short German phrase in Schwabacher; manuscript marginal annotation",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      277,
+      278,
+      279
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.545Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "a3ab088d9219975fabe1adcb55f892c98ebcdc6e7c9b208ee6a5fec4cfa04133",
+  "unit": {
+    "chars": 2375
+  }
+}

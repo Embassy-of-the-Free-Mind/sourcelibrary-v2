@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: [la, de]
+scripts: [Latn]
+canons: []
+n_books: 9
+n_pages: 63
+verdict: "With the source shown, production beats the gated batch lane on seam fidelity 25-18 (A/A 14-14); three in four mid-flow page breaks carry a defect in both lanes"
+status: rejected
+decision: "Batch + seam-repair lane not flipped (PR #5104); the page-break device fix followed (#5103)"
+superseded_by: null
+issue: 4681
+---
 ## 2026-09-25 (late) — Seam FIDELITY judge: source beside both translations, gated lane vs production (#4681) — production ahead on fidelity; the page break is a defect hotspot for BOTH
 
 Every earlier seam decision (#4912, #4968, #5020, #5053, the rejudge above) used a judge that saw only the

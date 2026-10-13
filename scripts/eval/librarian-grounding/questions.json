@@ -1,0 +1,27 @@
+{
+  "issue": 5904,
+  "frozen": "2026-10-06",
+  "note": "Fixed set. Do not edit a question once a run has been recorded against it; add a new id instead. 5 Drebbel (the #5811 thread that surfaced the defects) + 15 across traditions.",
+  "questions": [
+    { "id": "drebbel-monconys", "tradition": "drebbel", "q": "What did Monconys see at Kuffler's house in London in 1663?" },
+    { "id": "drebbel-oven", "tradition": "drebbel", "q": "How did Drebbel's self-regulating oven work, and who described it after his death?" },
+    { "id": "drebbel-ens", "tradition": "drebbel", "q": "What did Gaspar Ens write about Drebbel's perpetual motion instrument?" },
+    { "id": "drebbel-images", "tradition": "drebbel", "q": "Show me illustrations of Drebbel's furnace or thermostat." },
+    { "id": "drebbel-elements", "tradition": "drebbel", "q": "What does Drebbel's treatise on the nature of the elements say about heat and cold?" },
+    { "id": "emerald-tablet", "tradition": "hermetica", "q": "What does the Emerald Tablet say, and which editions of it do you have?" },
+    { "id": "poimandres-man", "tradition": "hermetica", "q": "How does the Poimandres describe the creation of man?" },
+    { "id": "agrippa-saturn", "tradition": "occult-philosophy", "q": "How does Agrippa describe the seal and magic square of Saturn?" },
+    { "id": "kabbalah-sefirot", "tradition": "kabbalah", "q": "How is the tree of the sefirot explained in the Kabbala Denudata?" },
+    { "id": "fama-tomb", "tradition": "rosicrucian", "q": "What does the Fama Fraternitatis say was found in Christian Rosenkreutz's tomb?" },
+    { "id": "paracelsus-tria", "tradition": "alchemy", "q": "How does Paracelsus describe the tria prima of salt, sulphur and mercury?" },
+    { "id": "green-lion", "tradition": "alchemy", "q": "What is the green lion in alchemical texts? Show me an image of it." },
+    { "id": "stone-colours", "tradition": "alchemy", "q": "What do alchemical texts say about the colours of the work — black, white and red?" },
+    { "id": "ficino-music", "tradition": "renaissance-platonism", "q": "What does Ficino say about music and the spirit?" },
+    { "id": "kircher-magnet", "tradition": "early-modern-science", "q": "What did Kircher write about magnetism?" },
+    { "id": "fludd-macrocosm", "tradition": "early-modern-science", "q": "What does Robert Fludd say about the macrocosm and microcosm? Show me one of his engravings." },
+    { "id": "dee-monas", "tradition": "hermetica", "q": "What did John Dee claim for the hieroglyphic monad in the Monas Hieroglyphica?" },
+    { "id": "picatrix-talismans", "tradition": "arabic-magic", "q": "What does the Picatrix say about making talismans?" },
+    { "id": "boehme-signature", "tradition": "theosophy", "q": "What did Jacob Boehme mean by the signature of things?" },
+    { "id": "rasa-mercury", "tradition": "indian-alchemy", "q": "What do the Sanskrit texts in the collection say about purifying mercury?" }
+  ]
+}

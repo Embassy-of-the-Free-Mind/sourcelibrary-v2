@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A52251",
+  "edition": "Philosophiæ naturalis principia mathematica autore Js. Newton ...; Principia — Wing N1048; ESTC R5707 (1687)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A52251",
+  "origin": "library",
+  "book_id": "69b6ba018566c8381462e8fa",
+  "page_number": 476,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 720395,
+    "to_char": 722484,
+    "overlap": 0.461,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.[477] Principia 1687 (TCP): ref matches whole page",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      476,
+      477,
+      478
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.694Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "8f60a56fd74e066328b50cfa753b7a410cfdc58209b6a74426dd08303b156d5e",
+  "unit": {
+    "chars": 2089
+  }
+}

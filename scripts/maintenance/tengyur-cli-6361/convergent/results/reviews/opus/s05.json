@@ -1,0 +1,74 @@
+[
+  {
+    "book_id": "6abeb286896ea18127c82fd7",
+    "slot": 5,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཞ (Derge Tengyur, vol. 100)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary (sub-commentary on MMK ch. 8, agent and action, quoting 'ཡིན་པར་གྱུར་ལ་བྱ་བ་མེད། །བྱེད་པ་པོ་ཡང་ལས་མེད་འགྱུར།'); belongs in the dbu ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 320,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "ཕྱེད་གོང་མ་ཤོས་ཀྱི་རྗེས་སུ་འབྲང་བས",
+            "english": "because this follows the other previous half-verse",
+            "problem": "'other' is a stray word; གོང་མ་ཤོས is the preceding (upper) half-verse; sense otherwise right and the lemma is correctly marked as a quoted statement",
+            "severity": "minor"
+          },
+          {
+            "source": "དཔེ་ཉིད་དུ་ཉེ་བར་གཞག་པའི་ཕྱིར་རོ",
+            "english": "in order to set it up as an example",
+            "problem": "ཕྱིར་རོ here gives the reason in a quoted syllogism ('because it is set up as the example'), rendered as purpose",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          {
+            "source": "ཞེས་བྱ་བ་ནི་ཕྱེད་གོང་མ་ཤོས་ཀྱི་རྗེས་སུ་འབྲང་བས་རྣམ་པར་བཤད་ཟིན་པའི་ཕྱིར་བཤད་མི་དགོས་སོ་ཞེས་བྱ་བ་ནི།",
+            "english": "This first half of the verse follows what was already explained, so it does not need further explanation.",
+            "problem": "The verse half just quoted is said to need no explanation because it follows (parallels) the preceding half-verse; B calls it 'this first half' and loses that it is a quoted lemma from the base commentary being explicated",
+            "severity": "moderate"
+          },
+          {
+            "source": "དཔེ་ཉིད་དུ་ཉེ་བར་གཞག་པའི་ཕྱིར་རོ་ཞེས་བྱ་བ་རྗེས་སུ་དཔག་པ་དང་། བརྒལ་བ་དང་ལན་དེ་དག",
+            "english": "To set this up as an example, there is an inference, a challenge, and a response.",
+            "problem": "The reason clause closes the quoted inference; B turns it into a purpose clause governing a new sentence, blurring the syllogism's structure",
+            "severity": "moderate"
+          },
+          {
+            "source": "གཏན་ཚིགས་དང་དཔེའི་ཚིག་ཏུ་བསྒྲུབས་ཏེ",
+            "english": "was used to prove the reason and the example",
+            "problem": "the thesis is established by statements of reason and example; the reason and example are not what is proved (recurs several times)",
+            "severity": "minor"
+          },
+          {
+            "source": "ཡིན་པར་གྱུར་ལ་བྱ་བ་མེད།",
+            "english": "If it is established, there is no action.",
+            "problem": "ཡིན་པར་གྱུར (sadbhūta, an existent/real one) rendered as a conditional 'if it is established'; recoverable but less exact",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "B's <summary> claims the page 'explains how established entities cannot undergo new actions because the action would be redundant or logically inconsistent' — no such argument is on this page, which only maps the verse lines onto parallel inferences",
+            "severity": "moderate",
+            "class": "E1"
+          }
+        ],
+        "prefer": "A",
+        "prefer_reason": "Both get the agent/action theses right, but A correctly treats the 'no need to explain' line as a quoted lemma about the preceding half-verse and keeps the syllogism structure, while B misreads that line and its summary invents an argument.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A genuine Derge Tengyur Madhyamaka folio with a clean transcription; both English versions are serviceable on the doctrinal theses, A more exact on the commentarial structure."
+  }
+]

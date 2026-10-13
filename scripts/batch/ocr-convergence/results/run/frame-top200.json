@@ -1,0 +1,1416 @@
+{
+"built_at": "2026-10-10T17:06:15.459Z",
+"window_days": 60,
+"instrument": "analytics_pageviews, distinct (ip, day) per book, human-filtered at write",
+"groups": [
+"latin",
+"greek",
+"german",
+"chinese",
+"arabic",
+"hebrew"
+],
+"books_ranked": 9839,
+"top200": [
+{
+"rank": 1,
+"book_id": "69804b901fb2ba7cf1d43a18",
+"slug": "kabbalah-unveiled-kabbala-denudata",
+"group": "latin",
+"views": 1382
+},
+{
+"rank": 2,
+"book_id": "69b51ea1cf111105c42a1a56",
+"slug": "raymvndi-lvllii-opera-ea-qvae-ad-adinventam-ab-ipso-artem-lullus",
+"group": "latin",
+"views": 567
+},
+{
+"rank": 3,
+"book_id": "6952dac677f38f6761bc683a",
+"slug": "history-of-both-worlds-macrocosm-fludd",
+"group": "latin",
+"views": 453
+},
+{
+"rank": 4,
+"book_id": "69b2f40b0e2f024dfbfba1b5",
+"slug": "thesaurus-graecae-linguae-vol-1-estienne",
+"group": "greek",
+"views": 367
+},
+{
+"rank": 5,
+"book_id": "699246babc722ec0ee8120e8",
+"slug": "the-holy-bible-wycliffe-vol-2-eds",
+"group": "hebrew",
+"views": 351
+},
+{
+"rank": 6,
+"book_id": "69c836d36c6f3cc53c84ecd6",
+"slug": "hertzens-theologie-poiret",
+"group": "german",
+"views": 328
+},
+{
+"rank": 7,
+"book_id": "695924fa1cac2ce31a4a8a33",
+"slug": "taoist-canon-daozang-masters",
+"group": "chinese",
+"views": 327
+},
+{
+"rank": 8,
+"book_id": "69b2f4110e2f024dfbfba9d3",
+"slug": "thesaurus-graecae-linguae-vol-3-estienne",
+"group": "greek",
+"views": 322
+},
+{
+"rank": 9,
+"book_id": "69c852796c6f3cc53c8533c7",
+"slug": "historisch-moralischer-vorrath-von-catechetischen-oetinger",
+"group": "german",
+"views": 281
+},
+{
+"rank": 10,
+"book_id": "69b6476a18b87551bfc4c2c2",
+"slug": "supplementum-summae-pisanellae-nikolaus",
+"group": "latin",
+"views": 275
+},
+{
+"rank": 11,
+"book_id": "6992f405c8c6ac61574e73ce",
+"slug": "illustrated-tang-dynasty-supernatural-tales-pub",
+"group": "chinese",
+"views": 268
+},
+{
+"rank": 12,
+"book_id": "6a909543ac1fcc717ba30057",
+"slug": "angeli-de-clavasio-summa-de-casibus-conscientiae-angelus",
+"group": "latin",
+"views": 263
+},
+{
+"rank": 13,
+"book_id": "69b303d95facc83a9a3db234",
+"slug": "de-jure-belli-bronkhorst",
+"group": "latin",
+"views": 263
+},
+{
+"rank": 14,
+"book_id": "697b0799a12a626fbfe93ae4",
+"slug": "preparation-for-the-gospel-caesariensis",
+"group": "greek",
+"views": 252
+},
+{
+"rank": 15,
+"book_id": "6a3a3bcc862ce9a5b4d7658d",
+"slug": "summa-confessorum-freiburg",
+"group": "latin",
+"views": 248
+},
+{
+"rank": 16,
+"book_id": "699ef9fb02f97b3168ee8228",
+"slug": "sitten-lehre-der-heiligen-schrift-mosheim",
+"group": "german",
+"views": 245
+},
+{
+"rank": 17,
+"book_id": "697b079711cc8928b55ea3a8",
+"slug": "ecclesiastical-history-caesariensis",
+"group": "greek",
+"views": 244
+},
+{
+"rank": 18,
+"book_id": "698255ef792a04eb812c4860",
+"slug": "the-reformed-and-enlarged-hermetic-museum-anonymous",
+"group": "latin",
+"views": 238
+},
+{
+"rank": 19,
+"book_id": "69c73a466a0f3d112faf7972",
+"slug": "versuch-einer-freiern-theologischen-lehrart-zur-bestatigung-semler",
+"group": "german",
+"views": 238
+},
+{
+"rank": 20,
+"book_id": "69c856c76c6f3cc53c853eed",
+"slug": "die-geistliche-bucher-und-schrifften-cruz",
+"group": "german",
+"views": 235
+},
+{
+"rank": 21,
+"book_id": "6a3a3bc2862ce9a5b4d76271",
+"slug": "summa-casuum-conscientiae-sive-de-instructione-sacerdotum-toletus",
+"group": "latin",
+"views": 227
+},
+{
+"rank": 22,
+"book_id": "69bd9d546120d54bd0375241",
+"slug": "erster-zehender-theil-der-bucher-und-schrifften-des-edlen-huser",
+"group": "german",
+"views": 222
+},
+{
+"rank": 23,
+"book_id": "6984e8498a2f054f912420bb",
+"slug": "280-paradoxes-franck",
+"group": "german",
+"views": 220
+},
+{
+"rank": 24,
+"book_id": "6991c5853074a1745a41199b",
+"slug": "alchemica-german-ms-1-anonymous",
+"group": "german",
+"views": 219
+},
+{
+"rank": 25,
+"book_id": "697b079611cc8928b55ea394",
+"slug": "the-opened-way-to-peace-with-god-and-all-creatures-dippel",
+"group": "german",
+"views": 219
+},
+{
+"rank": 26,
+"book_id": "69c83b7a6c6f3cc53c84f699",
+"slug": "posthuma-poiret",
+"group": "latin",
+"views": 218
+},
+{
+"rank": 27,
+"book_id": "69905d762fd6a0399389f715",
+"slug": "flagellum-haereticorum-fascinariorum-jacquier",
+"group": "latin",
+"views": 213
+},
+{
+"rank": 28,
+"book_id": "699209c4bed8f4b5ff5b2c6b",
+"slug": "biblia-polyglotta-complutensis-patron",
+"group": "latin",
+"views": 211
+},
+{
+"rank": 29,
+"book_id": "69c851e96c6f3cc53c85325c",
+"slug": "die-warheit-des-sensus-communis-oder-des-allgemeinen-sinnes-oetinger",
+"group": "german",
+"views": 207
+},
+{
+"rank": 30,
+"book_id": "697b07991ec34adb26378467",
+"slug": "on-solid-learning-poiret",
+"group": "latin",
+"views": 207
+},
+{
+"rank": 31,
+"book_id": "695361879c494f9f9f0424f4",
+"slug": "picatrix-ghayat-al-hakim-attrib",
+"group": "arabic",
+"views": 206
+},
+{
+"rank": 32,
+"book_id": "606a74d7-2ac1-420b-924d-de761439fb3f",
+"slug": "de-revolutionibus-1543-first-edition-copernicus",
+"group": "latin",
+"views": 205
+},
+{
+"rank": 33,
+"book_id": "69c836fb6c6f3cc53c84ed48",
+"slug": "versuch-eines-fruchtbaren-auszugs-der-kirchengeschichte-semler",
+"group": "german",
+"views": 201
+},
+{
+"rank": 34,
+"book_id": "6992c88d4f3a879124230200",
+"slug": "tiangong-kaiwu-exploitation-of-the-works-of-nature",
+"group": "chinese",
+"views": 198
+},
+{
+"rank": 35,
+"book_id": "adefe2d5-88a7-4595-9885-903a93abee51",
+"slug": "plato-complete-works-ficino-translation-ficino",
+"group": "greek",
+"views": 197
+},
+{
+"rank": 36,
+"book_id": "6992ce7f673ee1e40e320caa",
+"slug": "sancai-tuhui-juan-102",
+"group": "chinese",
+"views": 194
+},
+{
+"rank": 37,
+"book_id": "69a5d988a63a00aaae8ab16a",
+"slug": "commentarii-in-sex-libros-pedacii-dioscoridis-de-medica-mattioli",
+"group": "latin",
+"views": 192
+},
+{
+"rank": 38,
+"book_id": "6a08543649638a50931bf086",
+"slug": "in-librum-psalmorum-brevis-explanatio-flaminio-marco-antonio",
+"group": "latin",
+"views": 192
+},
+{
+"rank": 39,
+"book_id": "6953b56577f38f6761bd979d",
+"slug": "book-of-wonders-al-isfahani",
+"group": "arabic",
+"views": 188
+},
+{
+"rank": 40,
+"book_id": "69a99ce86c7545e2236e12de",
+"slug": "suidae-lexicon-suidas",
+"group": "greek",
+"views": 188
+},
+{
+"rank": 41,
+"book_id": "697b079a265ada318df401ce",
+"slug": "the-first-love-a-true-representation-of-the-early-christians-arnold",
+"group": "german",
+"views": 183
+},
+{
+"rank": 42,
+"book_id": "69905ded2fd6a039938a017c",
+"slug": "flagellum-daemonum-menghi",
+"group": "latin",
+"views": 179
+},
+{
+"rank": 43,
+"book_id": "6a1d81af5afc14a085e6d7e6",
+"slug": "xingming-guizhi-principles-of-joint-cultivation-of-nature-and-life",
+"group": "chinese",
+"views": 179
+},
+{
+"rank": 44,
+"book_id": "6a3a3b80862ce9a5b4d75782",
+"slug": "summa-casuum-conscientiae-summa-rosella-salis",
+"group": "latin",
+"views": 177
+},
+{
+"rank": 45,
+"book_id": "69c890196c6f3cc53c85b551",
+"slug": "die-wahrheit-des-sensus-communis-oetinger",
+"group": "german",
+"views": 176
+},
+{
+"rank": 46,
+"book_id": "697a604ba24fc91936a91757",
+"slug": "on-the-german-gods-schedius",
+"group": "latin",
+"views": 176
+},
+{
+"rank": 47,
+"book_id": "69a0279038ced073edf2f2bc",
+"slug": "thesaurinella-olympica-aurea-tripartita-das-ist-ein-figulus",
+"group": "german",
+"views": 174
+},
+{
+"rank": 48,
+"book_id": "69c7657f6a0f3d112faf8f43",
+"slug": "adversus-catharos-et-valdenses-libri-quinque-cremonensis",
+"group": "latin",
+"views": 172
+},
+{
+"rank": 49,
+"book_id": "699389640f04c37dcfa60ef7",
+"slug": "basel-universitatsbibliothek-an-iii-12-anonymous",
+"group": "greek",
+"views": 171
+},
+{
+"rank": 50,
+"book_id": "6a22c153a71b5f5ffb2e4dc5",
+"slug": "de-humani-corporis-fabrica-libri-decem-spigelius",
+"group": "latin",
+"views": 171
+},
+{
+"rank": 51,
+"book_id": "69c81aed6c6f3cc53c849851",
+"slug": "fides-et-ratio-collatae-poiret",
+"group": "latin",
+"views": 171
+},
+{
+"rank": 52,
+"book_id": "69906e708a353648e1ecfec8",
+"slug": "greek-astrological-and-divinatory-texts-cambridge-trinity-nicholas-of-otranto",
+"group": "greek",
+"views": 171
+},
+{
+"rank": 53,
+"book_id": "69c82bb66c6f3cc53c84cbe7",
+"slug": "critica-sacra-de-sacri-codicis-partitione-editionibus-pfeiffer",
+"group": "latin",
+"views": 170
+},
+{
+"rank": 54,
+"book_id": "69b51e8e47b06ecd5819340c",
+"slug": "bibliotheca-firmiana-sive-thesaurus-lirbrorum-quem-firmian",
+"group": "latin",
+"views": 169
+},
+{
+"rank": 55,
+"book_id": "69bd9cd86120d54bd037157c",
+"slug": "rosarium-philosophorum-secunda-pars-alchimiae-de-lapide-s-n-3",
+"group": "latin",
+"views": 169
+},
+{
+"rank": 56,
+"book_id": "69942a43045dfc482ad76202",
+"slug": "opera-graece-et-latine-heinsius-edition-alexandria",
+"group": "greek",
+"views": 168
+},
+{
+"rank": 57,
+"book_id": "69920bcde0a548a13d885a90",
+"slug": "al-kitab-al-muqaddas-arabic-bible-dyck",
+"group": "arabic",
+"views": 165
+},
+{
+"rank": 58,
+"book_id": "69bda116f6d63c919748e126",
+"slug": "jakob-lupius-grosses-und-sonderbares-traumbuch-darinnen-die-lupius",
+"group": "german",
+"views": 164
+},
+{
+"rank": 59,
+"book_id": "6990633def12272ffdc907b0",
+"slug": "the-zohar-sefer-ha-zohar-attributed-2",
+"group": "hebrew",
+"views": 164
+},
+{
+"rank": 60,
+"book_id": "6a3a3ba8862ce9a5b4d75da1",
+"slug": "enchiridion-sive-manuale-confessariorum-et-poenitentium-navarrus",
+"group": "latin",
+"views": 160
+},
+{
+"rank": 61,
+"book_id": "69af45f461b03be5fb7af39e",
+"slug": "m-vitruvii-pollionis-de-architectura-libri-decem-vitruvius",
+"group": "latin",
+"views": 160
+},
+{
+"rank": 62,
+"book_id": "69529036b184004c526a17f8",
+"slug": "on-famous-and-select-women-foresti",
+"group": "latin",
+"views": 160
+},
+{
+"rank": 63,
+"book_id": "69bd9f4bf6d63c91974800b0",
+"slug": "kabbala-denudata-seu-doctrina-hebraeorum-transcendentalis-knorr-von-rosenroth-2",
+"group": "latin",
+"views": 157
+},
+{
+"rank": 64,
+"book_id": "69c808636c6f3cc53c845d1a",
+"slug": "die-metaphysic-in-connexion-mit-der-chemie-oetinger",
+"group": "german",
+"views": 156
+},
+{
+"rank": 65,
+"book_id": "6a308ce6d57c4b7e016006c6",
+"slug": "nuremberg-celestial-phenomenon-1561-broadsheet",
+"group": "german",
+"views": 156
+},
+{
+"rank": 66,
+"book_id": "697a642bb981745f5fac1d74",
+"slug": "on-the-syrian-gods-selden",
+"group": "latin",
+"views": 156
+},
+{
+"rank": 67,
+"book_id": "697914f0f35c6bbfbfd252d2",
+"slug": "the-christian-citizen-andreae",
+"group": "latin",
+"views": 156
+},
+{
+"rank": 68,
+"book_id": "69b300de5545150b61b4e073",
+"slug": "concordantiae-maiores-bibliae-various",
+"group": "latin",
+"views": 155
+},
+{
+"rank": 69,
+"book_id": "695434dd1479a63c1108a1f9",
+"slug": "wissenschaft-der-logik-hegel",
+"group": "german",
+"views": 153
+},
+{
+"rank": 70,
+"book_id": "69b51e9f47b06ecd58194516",
+"slug": "avrevm-sane-opvs-in-qvo-ea-omnia-breviter-explicantvr-qvae-valeriis",
+"group": "latin",
+"views": 152
+},
+{
+"rank": 71,
+"book_id": "699060b5322e01b1349a3114",
+"slug": "de-judiciis-astrorum-al-rijal",
+"group": "latin",
+"views": 152
+},
+{
+"rank": 72,
+"book_id": "69b20f7baed0c6181c6c67b5",
+"slug": "miscellanea-philosophica-et-historica-metochites",
+"group": "greek",
+"views": 152
+},
+{
+"rank": 73,
+"book_id": "69b1ddee0ed0d328dc963f27",
+"slug": "almagestum-novum-riccioli",
+"group": "latin",
+"views": 151
+},
+{
+"rank": 74,
+"book_id": "6956eb52b5d89fc3ccb4817f",
+"slug": "recueil-de-traites-de-kabbale-isaac-ibn-latif-latif",
+"group": "hebrew",
+"views": 151
+},
+{
+"rank": 75,
+"book_id": "6aa94ea698dd95a3208039ab",
+"slug": "summa-confessorum-john-of-freiburg-augsburg-gunther-zainer-freiburg",
+"group": "latin",
+"views": 151
+},
+{
+"rank": 76,
+"book_id": "69c8716b6c6f3cc53c857589",
+"slug": "cosmographey-das-ist-beschreibung-aller-laender-munster",
+"group": "german",
+"views": 150
+},
+{
+"rank": 77,
+"book_id": "697934668e450bc779a9cad5",
+"slug": "on-recognizing-and-curing-diseases-from-the-position-of-the-virdung-von-hasfurt",
+"group": "latin",
+"views": 149
+},
+{
+"rank": 78,
+"book_id": "6a3f0220661123baf6fe9d4e",
+"slug": "die-fragmente-der-vorsokratiker-diels",
+"group": "greek",
+"views": 146
+},
+{
+"rank": 79,
+"book_id": "697d9c999788c62e1238c86c",
+"slug": "inscrutable-chemico-philosophical-harmonies-grasshoff",
+"group": "latin",
+"views": 145
+},
+{
+"rank": 80,
+"book_id": "69ae95b87f0f0e8879510aaf",
+"slug": "ioannis-stobaei-florilegium-meineke",
+"group": "latin",
+"views": 145
+},
+{
+"rank": 81,
+"book_id": "6aa94d3d98dd95a3208030cb",
+"slug": "summa-de-casibus-conscientiae-astesana-bsb-clm-3773-1461-ast",
+"group": "latin",
+"views": 145
+},
+{
+"rank": 82,
+"book_id": "6992ce8e673ee1e40e32103c",
+"slug": "sancai-tuhui-juan-106",
+"group": "chinese",
+"views": 144
+},
+{
+"rank": 83,
+"book_id": "6a357f022aadc65cf0908251",
+"slug": "clementis-alexandrini-opera-alexandria",
+"group": "greek",
+"views": 143
+},
+{
+"rank": 84,
+"book_id": "69c8278b6c6f3cc53c84c09a",
+"slug": "samlungen-von-briefen-und-aufsatzen-uber-die-gassnerischen-semler",
+"group": "german",
+"views": 143
+},
+{
+"rank": 85,
+"book_id": "697b079ae303c59b5d833abc",
+"slug": "spiritual-exercises-tauler",
+"group": "latin",
+"views": 143
+},
+{
+"rank": 86,
+"book_id": "69c7053eda9771c716315aae",
+"slug": "ausfuhrliche-untersuchung-der-grunde-fur-die-aechtheit-und-kleuker",
+"group": "german",
+"views": 139
+},
+{
+"rank": 87,
+"book_id": "69937ce0c970b9f8351dd434",
+"slug": "the-odyssey-i-books-1-12-loeb-l104-homer",
+"group": "greek",
+"views": 139
+},
+{
+"rank": 88,
+"book_id": "69ad76b765c3071e0169b4a1",
+"slug": "diogenes-laertius-lives-of-eminent-philosophers-vol-1-loeb-laertius",
+"group": "greek",
+"views": 138
+},
+{
+"rank": 89,
+"book_id": "6992cd7243713c66ea636785",
+"slug": "sancai-tuhui-juan-28",
+"group": "chinese",
+"views": 137
+},
+{
+"rank": 90,
+"book_id": "69b2f4675ef23d31023f6961",
+"slug": "adagiorum-opus-erasmus-adages-estienne",
+"group": "latin",
+"views": 136
+},
+{
+"rank": 91,
+"book_id": "6992cbd0018b80967354b30f",
+"slug": "on-the-physical-and-philosophical-atomic-theory-fechner",
+"group": "german",
+"views": 136
+},
+{
+"rank": 92,
+"book_id": "6a3a529eb271827abb182519",
+"slug": "summa-raymundi-de-peniafort-penyafort",
+"group": "latin",
+"views": 136
+},
+{
+"rank": 93,
+"book_id": "694bf8d2343422769f237558",
+"slug": "three-books-of-occult-philosophy-nettesheim",
+"group": "latin",
+"views": 136
+},
+{
+"rank": 94,
+"book_id": "69906e6d8a353648e1ecfd91",
+"slug": "john-dunstable-s-compilation-of-judicial-astrology-compiler",
+"group": "latin",
+"views": 135
+},
+{
+"rank": 95,
+"book_id": "6990689d249ce014347d6f65",
+"slug": "bodleian-library-ms-ashmole-399",
+"group": "latin",
+"views": 134
+},
+{
+"rank": 96,
+"book_id": "6984e8498a2f054f912420bd",
+"slug": "sacred-and-truly-christian-philosophy-fludd-2",
+"group": "latin",
+"views": 134
+},
+{
+"rank": 97,
+"book_id": "6970e37f9b09d309d780a2ca",
+"slug": "biblical-antiquities-diedericus",
+"group": "latin",
+"views": 133
+},
+{
+"rank": 98,
+"book_id": "694f397023a1d0c2ad1d8814",
+"slug": "complete-works-of-plato-translated-by-marsilio-ficino-1518-plato-ficino",
+"group": "latin",
+"views": 133
+},
+{
+"rank": 99,
+"book_id": "69c835a16c6f3cc53c84e993",
+"slug": "die-geistreiche-bucher-oder-schrifften-cruz",
+"group": "german",
+"views": 133
+},
+{
+"rank": 100,
+"book_id": "6991ec3e7cafcbc1b0209a73",
+"slug": "theatrum-chemicum-vol-iv-ed",
+"group": "latin",
+"views": 133
+},
+{
+"rank": 101,
+"book_id": "bb7bfc2d-b703-4c8e-8fdf-99040bf4db4b",
+"slug": "weyer-de-praestigiis-daemonum-1568-weyer",
+"group": "latin",
+"views": 132
+},
+{
+"rank": 102,
+"book_id": "6a100a2af71729295096e40f",
+"slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-5",
+"group": "german",
+"views": 131
+},
+{
+"rank": 103,
+"book_id": "6988a5a2301445517705927c",
+"slug": "book-of-rulers-lauterbeck",
+"group": "german",
+"views": 130
+},
+{
+"rank": 104,
+"book_id": "69b66a72b3f4fc04415788ba",
+"slug": "diogenis-laertii-de-vitis-dogmatis-et-apophthegmatis-eorum-laerce",
+"group": "latin",
+"views": 130
+},
+{
+"rank": 105,
+"book_id": "6992ce183ea667fbac8281b4",
+"slug": "sancai-tuhui-juan-74",
+"group": "chinese",
+"views": 130
+},
+{
+"rank": 106,
+"book_id": "6a49ba89107a5b4f32d3f706",
+"slug": "compemdium-et-commentarii-de-usuris-ad-commodiorem-usum-tum-azpilcueta",
+"group": "latin",
+"views": 129
+},
+{
+"rank": 107,
+"book_id": "69c843436c6f3cc53c850f39",
+"slug": "das-platonisch-hermetische-christenthum-colberg",
+"group": "german",
+"views": 129
+},
+{
+"rank": 108,
+"book_id": "69b1cb49a282e3475aab4b79",
+"slug": "die-bezauberte-welt-bekker",
+"group": "german",
+"views": 129
+},
+{
+"rank": 109,
+"book_id": "697e23c80991cfe5bac5529b",
+"slug": "ecclesiastical-history-caesariensis-2",
+"group": "latin",
+"views": 128
+},
+{
+"rank": 110,
+"book_id": "69c6462f5dec4c2fa41d36ab",
+"slug": "der-vorhof-am-tempel-des-herrn-felgenhauer",
+"group": "german",
+"views": 127
+},
+{
+"rank": 111,
+"book_id": "697a80bce680cef7cedae39d",
+"slug": "volume-of-dissertations-on-ecclesiastical-history-mosheim",
+"group": "latin",
+"views": 127
+},
+{
+"rank": 112,
+"book_id": "6952dac977f38f6761bc6cb0",
+"slug": "history-of-both-worlds-microcosm-fludd",
+"group": "latin",
+"views": 126
+},
+{
+"rank": 113,
+"book_id": "699ef9fd15618a982bb1ebd9",
+"slug": "hebrew-sefer-shnei-luchot-ha-brit-horowitz",
+"group": "hebrew",
+"views": 125
+},
+{
+"rank": 114,
+"book_id": "69a0278ff1ddb4629f5a3a8e",
+"slug": "tractatus-de-lapide-philosophico-oder-vom-stein-der-weisen-hollandus",
+"group": "german",
+"views": 124
+},
+{
+"rank": 115,
+"book_id": "69ade7005426286aa40cf10b",
+"slug": "vorlesungen-uber-die-philosophie-der-geschichte-hegel",
+"group": "german",
+"views": 124
+},
+{
+"rank": 116,
+"book_id": "69b43d4406b196d69f66fecb",
+"slug": "synesius-on-dreams-iamblichus-proclus-porphyry-ficino-translator",
+"group": "latin",
+"views": 123
+},
+{
+"rank": 117,
+"book_id": "69c1b7acfe4b8f25b9200ccf",
+"slug": "al-shifa-the-cure-philosophy-and-medicine-avicenna",
+"group": "arabic",
+"views": 122
+},
+{
+"rank": 118,
+"book_id": "6991ec1ee93551dd846a83a4",
+"slug": "artis-auriferae-quam-chemiam-vocant-various",
+"group": "latin",
+"views": 122
+},
+{
+"rank": 119,
+"book_id": "6970e35d9b09d309d780a25e",
+"slug": "the-quran-al-coranus",
+"group": "latin",
+"views": 122
+},
+{
+"rank": 120,
+"book_id": "6a435560f920db620cce208b",
+"slug": "de-poenitentia-restitutione-et-contractibus-pr-clarum-et-medina",
+"group": "latin",
+"views": 121
+},
+{
+"rank": 121,
+"book_id": "695685cbbe7c607c5f03ba0a",
+"slug": "opera-mathematica-wallis",
+"group": "latin",
+"views": 121
+},
+{
+"rank": 122,
+"book_id": "69937973b0a84a5763964d43",
+"slug": "aristotelis-opera-vol-2-aristotle",
+"group": "greek",
+"views": 120
+},
+{
+"rank": 123,
+"book_id": "69520c46ab34727b1f044141",
+"slug": "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+"group": "latin",
+"views": 120
+},
+{
+"rank": 124,
+"book_id": "6992c92869b777d72c763513",
+"slug": "yi-jing-64-hexagram-diagrams-anonymous",
+"group": "chinese",
+"views": 120
+},
+{
+"rank": 125,
+"book_id": "6974b642457dd8909910b9e5",
+"slug": "on-the-secrets-of-catholic-truth-and-the-kabbalistic-art-columna",
+"group": "latin",
+"views": 119
+},
+{
+"rank": 126,
+"book_id": "69a5e3d7006a4098422165d4",
+"slug": "philosophical-literary-miscellany-vat-gr-2181",
+"group": "greek",
+"views": 119
+},
+{
+"rank": 127,
+"book_id": "6992cdfe00f13b15f3ca3be9",
+"slug": "sancai-tuhui-juan-67",
+"group": "chinese",
+"views": 119
+},
+{
+"rank": 128,
+"book_id": "6952d0c777f38f6761bc59f6",
+"slug": "secrets-of-secrets-egyptian-greek-hieroglyphics-maier",
+"group": "latin",
+"views": 119
+},
+{
+"rank": 129,
+"book_id": "69ade7eeda7f32a00bedaa7c",
+"slug": "abhandlung-uber-den-ursprung-der-sprache-herder",
+"group": "german",
+"views": 118
+},
+{
+"rank": 130,
+"book_id": "6977af1e235fbd25a519477b",
+"slug": "critique-of-the-most-celebrated-authors-blount",
+"group": "latin",
+"views": 118
+},
+{
+"rank": 131,
+"book_id": "69b1c637edda7fb64e1a079f",
+"slug": "de-aeris-transmutationibus-porta",
+"group": "latin",
+"views": 118
+},
+{
+"rank": 132,
+"book_id": "6992cdee81c9d7efb84d0dee",
+"slug": "wubei-zhi-vol-34",
+"group": "chinese",
+"views": 118
+},
+{
+"rank": 133,
+"book_id": "6992ce6b77d26f9321776c7e",
+"slug": "wubei-zhi-vol-60",
+"group": "chinese",
+"views": 118
+},
+{
+"rank": 134,
+"book_id": "69aeb6a2bf00526d1d64c9a1",
+"slug": "de-vitis-et-moribus-philosophorum-trans-ambrogio-traversari-trans-2",
+"group": "latin",
+"views": 117
+},
+{
+"rank": 135,
+"book_id": "69c8839e6c6f3cc53c8597e3",
+"slug": "ein-philosophischer-und-chemischer-tractat-genannt-der-grasshoff",
+"group": "german",
+"views": 117
+},
+{
+"rank": 136,
+"book_id": "6a0a4ecb7cd8e1e3d0f49a3f",
+"slug": "huangji-jingshi-shu-juan-slice-10-of-24-shao-yong-neo-yong",
+"group": "chinese",
+"views": 117
+},
+{
+"rank": 137,
+"book_id": "694a8046458d70b8c6439c5f",
+"slug": "lives-and-opinions-of-eminent-philosophers-laertius",
+"group": "latin",
+"views": 117
+},
+{
+"rank": 138,
+"book_id": "69bd9f0ef6d63c919747ded2",
+"slug": "theatrum-chemicum-praecipuos-selectorum-auctorum-tractatus-s-n-6",
+"group": "latin",
+"views": 117
+},
+{
+"rank": 139,
+"book_id": "69c809d46c6f3cc53c84629a",
+"slug": "vitruvius-teutsch-vitruvius-pollio",
+"group": "german",
+"views": 117
+},
+{
+"rank": 140,
+"book_id": "69c7f231f08a1a5ab805c03c",
+"slug": "de-legibus-hebraeorum-ritualibus-et-earum-rationibus-libri-spencer",
+"group": "latin",
+"views": 116
+},
+{
+"rank": 141,
+"book_id": "69a5e3d8006a409842216887",
+"slug": "aristotle-parva-naturalia-maximus-confessor-ambigua-reg-gr-80",
+"group": "greek",
+"views": 115
+},
+{
+"rank": 142,
+"book_id": "6985ca72077b71ae19896a1c",
+"slug": "defense-of-the-terms-and-doctrine-of-ramon-lull-zepeda",
+"group": "latin",
+"views": 115
+},
+{
+"rank": 143,
+"book_id": "69c849176c6f3cc53c851dbf",
+"slug": "opera-oder-alle-bucher-und-schrifften-avila",
+"group": "german",
+"views": 115
+},
+{
+"rank": 144,
+"book_id": "69520f03ab34727b1f044317",
+"slug": "the-key-of-solomon-pseudo-solomon",
+"group": "latin",
+"views": 115
+},
+{
+"rank": 145,
+"book_id": "69b4cc3dd2bf9b45ea4796f8",
+"slug": "agrippa-de-occulta-philosophia-book-ii-1531-nettesheim",
+"group": "latin",
+"views": 114
+},
+{
+"rank": 146,
+"book_id": "69c809cd6c6f3cc53c84627f",
+"slug": "de-sexcentum-et-tredecim-mosaice-sanctionis-edictis-ricius",
+"group": "latin",
+"views": 114
+},
+{
+"rank": 147,
+"book_id": "699201787c226bdd25f98e27",
+"slug": "hypomnemata-physica-sennert",
+"group": "latin",
+"views": 114
+},
+{
+"rank": 148,
+"book_id": "6992cde281c9d7efb84d09ce",
+"slug": "bencao-gangmu-compendium-of-materia-medica-vols-41-42",
+"group": "chinese",
+"views": 113
+},
+{
+"rank": 149,
+"book_id": "6978ee3aa5bfdfb63c9a9f63",
+"slug": "the-chemical-winnowing-basket-chymica-vannus-anonymous",
+"group": "latin",
+"views": 113
+},
+{
+"rank": 150,
+"book_id": "69ad76c165c3071e0169b707",
+"slug": "diogenes-laertius-lives-of-eminent-philosophers-vol-2-loeb-laertius",
+"group": "greek",
+"views": 112
+},
+{
+"rank": 151,
+"book_id": "697e23c9eb423a42938f5f9e",
+"slug": "ecclesiastical-history-lange",
+"group": "latin",
+"views": 112
+},
+{
+"rank": 152,
+"book_id": "69a5e61ee751f06e74b89835",
+"slug": "euripidis-hecuba-orestes-phoenissae-barocci-120-euripides",
+"group": "greek",
+"views": 112
+},
+{
+"rank": 153,
+"book_id": "1a8485e5-5331-41df-bfc1-6efd65238f55",
+"slug": "magia-naturalis-libri-xx-1607-porta",
+"group": "latin",
+"views": 112
+},
+{
+"rank": 154,
+"book_id": "6992cdc043713c66ea638565",
+"slug": "sancai-tuhui-juan-50",
+"group": "chinese",
+"views": 112
+},
+{
+"rank": 155,
+"book_id": "6992ce502960dc4e5cea90bb",
+"slug": "sancai-tuhui-juan-89",
+"group": "chinese",
+"views": 111
+},
+{
+"rank": 156,
+"book_id": "694b3abfde93d1d4cec196fd",
+"slug": "the-complete-works-of-marsilio-ficino-ficino",
+"group": "latin",
+"views": 111
+},
+{
+"rank": 157,
+"book_id": "69a0278fdb6656a74eb33962",
+"slug": "theatrum-chemicum-anonymous",
+"group": "latin",
+"views": 111
+},
+{
+"rank": 158,
+"book_id": "69b2234e56715b0e32477031",
+"slug": "vitruvius-de-architectura-libri-decem-aldine-press-vitruvius",
+"group": "latin",
+"views": 111
+},
+{
+"rank": 159,
+"book_id": "69af13c519a5b72f3da4d4a9",
+"slug": "avicennae-canon-medicinae-vol-ii-1595-latin-sina",
+"group": "latin",
+"views": 110
+},
+{
+"rank": 160,
+"book_id": "69520176ab34727b1f04136b",
+"slug": "history-of-the-macrocosm-and-microcosm-fludd",
+"group": "latin",
+"views": 110
+},
+{
+"rank": 161,
+"book_id": "69b3001e5545150b61b4bfe2",
+"slug": "novum-testamentum-graece-elzevir-1633-textus-receptus-receptus",
+"group": "greek",
+"views": 110
+},
+{
+"rank": 162,
+"book_id": "69af0bfaf2e68add0cf21eec",
+"slug": "musaeum-metallicum-aldrovandi-2",
+"group": "latin",
+"views": 109
+},
+{
+"rank": 163,
+"book_id": "69aeb589e43bbf40ffe04937",
+"slug": "the-greek-doxographers-diels",
+"group": "greek",
+"views": 109
+},
+{
+"rank": 164,
+"book_id": "69dbcb141040d1d5e20b1a64",
+"slug": "cornucopiae-linguae-latinae-ed-pyrrhus-perottus-rev-ludovicu-perottus",
+"group": "latin",
+"views": 108
+},
+{
+"rank": 165,
+"book_id": "69dbcb7b1040d1d5e20b6b42",
+"slug": "ephemerides-1475-1506-regiomontanus",
+"group": "latin",
+"views": 108
+},
+{
+"rank": 166,
+"book_id": "69819207379d5ce6675ec02e",
+"slug": "magikon-or-the-secret-system-kleuker",
+"group": "greek",
+"views": 108
+},
+{
+"rank": 167,
+"book_id": "69b419382b0edf3eaa2df003",
+"slug": "marengus-secrets-of-chemical-pallas-revealed-ca-1700-marengus",
+"group": "latin",
+"views": 108
+},
+{
+"rank": 168,
+"book_id": "695285cdab34727b1f04c25a",
+"slug": "sepher-maphteah-shelomo-book-of-the-key-of-solomon-anonymous",
+"group": "hebrew",
+"views": 108
+},
+{
+"rank": 169,
+"book_id": "69908ad8285673ff8cb80bac",
+"slug": "wonders-of-the-lands-al-qazwini",
+"group": "arabic",
+"views": 108
+},
+{
+"rank": 170,
+"book_id": "69dbcb181040d1d5e20b1f8e",
+"slug": "cornucopiae-linguae-latinae-ed-aldus-manutius-add-commentari-perottus",
+"group": "latin",
+"views": 107
+},
+{
+"rank": 171,
+"book_id": "6992cd1bae978f7d4159844e",
+"slug": "sancai-tuhui-juan-5",
+"group": "chinese",
+"views": 107
+},
+{
+"rank": 172,
+"book_id": "69935b5f2afc33235052333b",
+"slug": "psychologische-typen-jung",
+"group": "german",
+"views": 106
+},
+{
+"rank": 173,
+"book_id": "6980941f0c6ccbd65c7e9c46",
+"slug": "sacred-and-profane-hieroglyphic-lexicon-koning",
+"group": "latin",
+"views": 106
+},
+{
+"rank": 174,
+"book_id": "6992cd18ae978f7d41598403",
+"slug": "sancai-tuhui-juan-4",
+"group": "chinese",
+"views": 106
+},
+{
+"rank": 175,
+"book_id": "6992cd2aae978f7d4159860a",
+"slug": "sancai-tuhui-juan-9",
+"group": "chinese",
+"views": 106
+},
+{
+"rank": 176,
+"book_id": "695434e41479a63c1108a5bc",
+"slug": "encyklopaedie-der-philosophischen-wissenschaften-hegel",
+"group": "german",
+"views": 105
+},
+{
+"rank": 177,
+"book_id": "69b30270224824a9f190698c",
+"slug": "adagia-elzevir-1650-erasmus",
+"group": "latin",
+"views": 104
+},
+{
+"rank": 178,
+"book_id": "6992f3e9c8c6ac61574e7225",
+"slug": "guang-yu-tu-enlarged-territorial-atlas",
+"group": "chinese",
+"views": 104
+},
+{
+"rank": 179,
+"book_id": "69ae9bcff3bd47924cacc93e",
+"slug": "historia-critica-philosophiae-brucker",
+"group": "latin",
+"views": 104
+},
+{
+"rank": 180,
+"book_id": "6a06cddfc749b698e5b2cb29",
+"slug": "nuzhat-al-albab-promenade-of-hearts",
+"group": "arabic",
+"views": 104
+},
+{
+"rank": 181,
+"book_id": "69b21cee429e087c6f865ff1",
+"slug": "omnia-divini-platonis-opera-ficino-translation-ficino",
+"group": "latin",
+"views": 104
+},
+{
+"rank": 182,
+"book_id": "69bda035f6d63c91974856ae",
+"slug": "speculum-imaginum-veritatis-occultae-exhibens-symbola-masen-2",
+"group": "latin",
+"views": 104
+},
+{
+"rank": 183,
+"book_id": "6aa927a329214a687db63f04",
+"slug": "summa-johannis-bruder-bertholds-deutsche-rechtssumme-freiburg",
+"group": "german",
+"views": 104
+},
+{
+"rank": 184,
+"book_id": "697d9c989788c62e1238c862",
+"slug": "the-hermetic-north-star-anonymous",
+"group": "german",
+"views": 104
+},
+{
+"rank": 185,
+"book_id": "6aa94ea998dd95a320803cca",
+"slug": "summa-angelica-de-casibus-conscientiae-nuremberg-anton-clavasio",
+"group": "latin",
+"views": 103
+},
+{
+"rank": 186,
+"book_id": "69751588a88d83c830d99e18",
+"slug": "the-cabalistic-art-vol-1-pistorius",
+"group": "latin",
+"views": 103
+},
+{
+"rank": 187,
+"book_id": "6992ce4f2960dc4e5cea9056",
+"slug": "treatise-on-armament-technology-wubei-zhi-vol-54",
+"group": "chinese",
+"views": 103
+},
+{
+"rank": 188,
+"book_id": "6a26c4abaad44c98627d0e6e",
+"slug": "anthropodemus-plutonicus-das-ist-eine-neue-welt-praetorius",
+"group": "german",
+"views": 102
+},
+{
+"rank": 189,
+"book_id": "69905d732fd6a0399389f5b7",
+"slug": "tractatus-de-sortilegiis-grillandus",
+"group": "latin",
+"views": 102
+},
+{
+"rank": 190,
+"book_id": "694f3d6cbe37f451a5324e10",
+"slug": "corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus",
+"group": "latin",
+"views": 101
+},
+{
+"rank": 191,
+"book_id": "697d9c999788c62e1238c872",
+"slug": "hierolexicon-sacred-dictionary-macromelitensis",
+"group": "latin",
+"views": 101
+},
+{
+"rank": 192,
+"book_id": "69c84cb16c6f3cc53c8524e5",
+"slug": "spiegel-der-misbrauche-beym-predig-amt-im-heutigen-hoburg",
+"group": "german",
+"views": 101
+},
+{
+"rank": 193,
+"book_id": "6a9f34249a132af385445e5a",
+"slug": "al-masudi",
+"group": "arabic",
+"views": 100
+},
+{
+"rank": 194,
+"book_id": "69b51dd147b06ecd58184c55",
+"slug": "geheime-bucher-oder-letztes-testament-basilius",
+"group": "german",
+"views": 100
+},
+{
+"rank": 195,
+"book_id": "6a4ecd2762c75f944baf166c",
+"slug": "instructio-confessariorum-sive-summa-casuum-conscientiae-medina",
+"group": "latin",
+"views": 100
+},
+{
+"rank": 196,
+"book_id": "69920bff01d3dcea63458842",
+"slug": "origenes-contra-celsum-greek-critical-edition-ed",
+"group": "greek",
+"views": 100
+},
+{
+"rank": 197,
+"book_id": "6992cdfe00f13b15f3ca3b1f",
+"slug": "supplement-to-the-compendium-of-materia-medica-volume-1",
+"group": "chinese",
+"views": 100
+},
+{
+"rank": 198,
+"book_id": "6985ca7194b042cd03912166",
+"slug": "the-book-of-the-angel-raziel",
+"group": "hebrew",
+"views": 100
+},
+{
+"rank": 199,
+"book_id": "69bd0ac6b01b17638a09803e",
+"slug": "chen-dao-weng-inner-alchemy-essays-chen-zhizun",
+"group": "chinese",
+"views": 99
+},
+{
+"rank": 200,
+"book_id": "69c72e586a0f3d112faf71e3",
+"slug": "greek-peri-bion-dogmaton-kai-apophthegmaton-ton-en-laertius",
+"group": "greek",
+"views": 99
+}
+]
+}

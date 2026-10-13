@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 import { mkdtempSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
 import path from 'path';
-import { judgeRestart, heldLocks, MIN_RESTART_INTERVAL_MS, BUSY_PAGE_AFTER_MS } from '../../scripts/maintenance/stale-worker-restart.mjs';
+import { judgeRestart, heldLocks, selectPageLines, MIN_RESTART_INTERVAL_MS, BUSY_PAGE_AFTER_MS, REPAGE_HELD_MS } from '../../scripts/maintenance/stale-worker-restart.mjs';
 
 /**
  * The drift alert said "check open batch runs and the lock it holds first" and paged a person
@@ -90,5 +90,46 @@ describe('heldLocks (live /proc)', () => {
       wrapped.kill(); bare.kill();
       rmSync(dir, { recursive: true, force: true });
     }
+  });
+});
+
+describe('selectPageLines', () => {
+  const held = (w: string, pid: number) => `${w} pid=${pid} — held: not the main process of cron.service (MainPID 939)`;
+  const A = held('embed-gemini', 2629492);
+  const B = held('mirror-changelog', 3891638);
+  const H = 3600 * 1000;
+
+  it('replays 2026-10-11: archive-bulk coming and going no longer re-pages the same two held pids', () => {
+    const t0 = Date.parse('2026-10-11T10:17:00Z');
+    const runs: [number, string[]][] = [
+      [0, [A, held('archive-bulk', 2669553), B]], [1, [A, B]], [2, [A, B]], [3, [A, B]], [4, [A, B]],
+      [5, [A, held('archive-bulk', 2825928), B]], [6, [A, B]], [7, [A, B]], [8, [A, B]],
+    ];
+    let sent: Record<string, number> = {};
+    const pages: string[][] = [];
+    for (const [h, lines] of runs) {
+      const r = selectPageLines(lines, sent, t0 + h * H);
+      if (r.fresh.length) { pages.push(r.fresh); for (const l of r.fresh) r.sent[l.split(' — ')[0]] = t0 + h * H; }
+      sent = r.sent;
+    }
+    // Before: four pages, each naming both pids. After: the first page, then only the new archive-bulk pid.
+    expect(pages).toEqual([[A, held('archive-bulk', 2669553), B], [held('archive-bulk', 2825928)]]);
+  });
+
+  it('a held pid pages again after a day; a new pid for the same worker pages at once', () => {
+    const t = Date.parse('2026-10-11T10:00:00Z');
+    const sent = { 'embed-gemini pid=2629492': t };
+    expect(selectPageLines([A], sent, t + REPAGE_HELD_MS - 1).fresh).toEqual([]);
+    expect(selectPageLines([A], sent, t + REPAGE_HELD_MS).fresh).toEqual([A]);
+    expect(selectPageLines([held('embed-gemini', 1)], sent, t + H).fresh).toHaveLength(1);
+  });
+
+  it('a failed restart re-pages after 6 h, and the old per-set state reads as nothing sent', () => {
+    const t = Date.parse('2026-10-11T10:00:00Z');
+    const F = 'clip-server (sl-clip-server.service) — restart FAILED: unit inactive';
+    const sent = { 'clip-server (sl-clip-server.service)': t };
+    expect(selectPageLines([F], sent, t + 5 * H).fresh).toEqual([]);
+    expect(selectPageLines([F], sent, t + 6 * H).fresh).toEqual([F]);
+    expect(selectPageLines([A, B], undefined, t).fresh).toEqual([A, B]);
   });
 });

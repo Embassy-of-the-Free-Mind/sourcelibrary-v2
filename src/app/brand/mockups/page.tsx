@@ -107,7 +107,7 @@ function AnalyticsBefore() {
       </div>
 
       <p className="text-xs text-stone-400 italic px-1">
-        Problem: #22c55e (raw hex), var(--accent-sage) (CSS token), var(--accent-rust) (CSS token), #8b5cf6 (raw hex) &mdash; four different conventions for four adjacent bars.
+        Problem: #22c55e (raw hex), var(--accent-sage) (CSS token), var(--accent-rust) (CSS token), #8b5cf6 (raw hex): four different conventions for four adjacent bars.
         Error states use raw hex (#fef2f2, #991b1b) instead of Tailwind or tokens.
       </p>
     </div>
@@ -351,7 +351,7 @@ function HeroAfter() {
 
       <p className="text-xs text-stone-400 italic px-1">
         Proposed: #1a1612 (--bg-dark). Warm brown-black matches the paper aesthetic.
-        Subtle but the warmth is visible — it feels like aged parchment in shadow
+        Subtle but the warmth is visible: it feels like aged parchment in shadow
         rather than a tech product.
       </p>
     </div>
@@ -384,7 +384,7 @@ function HomepageTextBefore() {
       <p className="text-xs text-stone-400 italic px-1">
         Problem: text-gray-900 and text-gray-600 in the paragraphs, but text-stone-500
         and text-stone-800 in the footer. Gray and stone are different Tailwind palettes.
-        Gray is cooler/bluer; stone is warmer — jarring side by side.
+        Gray is cooler/bluer; stone is warmer. They clash side by side.
       </p>
     </div>
   );
@@ -413,7 +413,7 @@ function HomepageTextAfter() {
 
       <p className="text-xs text-stone-400 italic px-1">
         Fix: text-gray-* replaced with text-stone-*. Same warmth throughout.
-        Stone is the correct neutral for this site — warm undertone matches
+        Stone is the correct neutral for this site; its warm undertone matches
         the cream/warm backgrounds.
       </p>
     </div>
@@ -482,7 +482,7 @@ function AnnotationsAfter() {
       <p className="text-xs text-stone-400 italic px-1">
         Mapped to design tokens: comment = muted (neutral), context = gold (decorative),
         reference = violet (intellectual), correction = rust (editorial), etymology = sage (knowledge),
-        question = amber (action). The palette feels cohesive — warm, scholarly, muted.
+        question = amber (action). The palette feels cohesive: warm, scholarly, muted.
       </p>
     </div>
   );
@@ -498,7 +498,7 @@ function NotesRendererBefore() {
 
         <div className="p-3 rounded-lg bg-teal-100 border-l-3 border-teal-400">
           <p className="text-xs uppercase tracking-wide text-teal-800 mb-1">Marginal Note</p>
-          <p className="text-sm text-teal-800">De natura rerum — a gloss on the primary text</p>
+          <p className="text-sm text-teal-800">De natura rerum: a gloss on the primary text</p>
         </div>
 
         <div className="p-3 rounded-lg bg-indigo-100">
@@ -533,7 +533,7 @@ function NotesRendererAfter() {
 
         <div className="p-3 rounded-lg border-l-3" style={{ backgroundColor: 'rgba(139, 154, 125, 0.1)', borderLeftColor: '#8b9a7d' }}>
           <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#8b9a7d' }}>Marginal Note</p>
-          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>De natura rerum — a gloss on the primary text</p>
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>De natura rerum: a gloss on the primary text</p>
         </div>
 
         <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(201, 168, 108, 0.08)' }}>
@@ -585,26 +585,26 @@ export default function MockupsPage() {
         <div className="mb-12 p-5 bg-white border border-stone-200 rounded-lg">
           <h2 className="text-sm font-semibold text-stone-800 mb-3">The Core Proposal</h2>
           <p className="text-sm text-stone-600 mb-3">
-            We already have 4 good accent tokens (rust, gold, sage, violet). The problem isn&apos;t missing colors &mdash;
-            it&apos;s that many components bypass the tokens and use raw Tailwind primaries (blue, green, purple, teal, indigo).
+            We already have 4 good accent tokens (rust, gold, sage, violet). The problem isn&apos;t missing colors.
+            It&apos;s that many components bypass the tokens and use raw Tailwind primaries (blue, green, purple, teal, indigo).
             These mockups show what it looks like when everything maps to the existing palette.
           </p>
           <div className="flex flex-wrap gap-4 text-xs">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded" style={{ backgroundColor: '#9e4a3a' }} />
-              <span className="text-stone-600">Rust &mdash; editorial, literary, people</span>
+              <span className="text-stone-600">Rust: editorial, literary, people</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded" style={{ backgroundColor: '#c9a86c' }} />
-              <span className="text-stone-600">Gold &mdash; structural, decorative, OCR</span>
+              <span className="text-stone-600">Gold: structural, decorative, OCR</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded" style={{ backgroundColor: '#8b9a7d' }} />
-              <span className="text-stone-600">Sage &mdash; natural, places, archival</span>
+              <span className="text-stone-600">Sage: natural, places, archival</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 rounded" style={{ backgroundColor: '#7c5db5' }} />
-              <span className="text-stone-600">Violet &mdash; intellectual, concepts, AI</span>
+              <span className="text-stone-600">Violet: intellectual, concepts, AI</span>
             </div>
           </div>
         </div>
@@ -671,7 +671,7 @@ export default function MockupsPage() {
 
         <MockupSection
           title="6. Reader Inline Elements"
-          description="NotesRenderer uses teal, indigo, and purple — each appearing exactly once in the entire codebase. Three unique color families for four inline elements."
+          description="NotesRenderer uses teal, indigo, and purple, each appearing exactly once in the entire codebase. Three unique color families for four inline elements."
         >
           <MockupPanel label="Teal, indigo, purple one-offs" variant="before">
             <NotesRendererBefore />

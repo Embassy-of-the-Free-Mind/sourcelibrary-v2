@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA cera/p2",
+  "edition": "Epistolarum Syntagmata Duo una cum Responsis. Praemissa Conringii Vita, Scriptorum Index, et de his Doctorum Virorum Judicia / [Hrsg.: Caspar Corberus] [...] — Helmstedt: Georg-Wolfgang Hamm, 1694.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a50ed6dc39423579e0cd6c6",
+  "page_number": 134,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 104352,
+    "to_char": 105609,
+    "overlap": 0.524,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "end of letter + P.S. + heading XXXV + italic opening; ref has ~1 line of prior page at start",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      134,
+      135,
+      136
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.560Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "f9cd172de68a95b271ae1ed527339842a8b139efcb7bdeed69bc06315670a3a6",
+  "unit": {
+    "chars": 1257
+  }
+}

@@ -242,7 +242,10 @@ async function run() {
 
     if (valid) {
       const bookLink = `/${config.tenantSlug}/book/${r.json.slug || r.json.id || bookKey}`;
-      logPass('Item lookup', `title="${r.json.title}", pages=${r.json.pages.length}, link=${bookLink}`);
+      // Anonymous callers get a capped window of pages (#6281); the true count
+      // is pages_window.total.
+      const pagesOf = r.json.pages_window ? `${r.json.pages.length}/${r.json.pages_window.total}` : r.json.pages.length;
+      logPass('Item lookup', `title="${r.json.title}", pages=${pagesOf}, link=${bookLink}`);
       pass += 1;
     } else {
       logFail('Item lookup', `Expected 200 + title/author/language/pages, got status=${r.status}`);

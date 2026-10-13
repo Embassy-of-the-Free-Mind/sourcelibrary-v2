@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Of 14 languages with a verdict, German, French and Dutch (routed lite) did not pass and Russian and Armenian (routed flash) did; Latin and Italian were never sampled."
+status: undecided
+decision: "Routing unchanged (ledger: UNJUDGED); editing the allowlist awaits Derek (#5090)"
+superseded_by: null
+issue: [4729, 4735]
+---
 ## 2026-09-11 (logged 2026-09-25) — Which languages can OCR on flash-lite? Per-language suitability vs the script-family allowlist (#4729, #4735)
 
 *Logged two weeks late.* The run finished on 2026-09-11 in a worktree whose session died

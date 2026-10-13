@@ -1,0 +1,464 @@
+{
+ "set": "gate",
+ "audited": 40,
+ "writes": 40,
+ "read": {
+  "opus": 40,
+  "gemini": 40
+ },
+ "writes_worse": {
+  "opus": 0,
+  "gemini": 3
+ },
+ "writes_better": {
+  "opus": 36,
+  "gemini": 34
+ },
+ "writes_same": {
+  "opus": 4,
+  "gemini": 3
+ },
+ "gate": "STOP",
+ "rows": [
+  {
+   "page_id": "69f761f3b2b698b3bb82f703",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf is a single column ending 'unter des Menschen Ge-' / catchword 'walt'; Y invents a second column ('in der Welt / und in den Dingen ... Gott hat uns in diese Welt gegossen ...') that is not on the page.",
+   "gemini_note": "Y posits a non-existent second column and invents two paragraphs ('in der Welt / und in den Dingen...')."
+  },
+  {
+   "page_id": "697b581d89027e953d154d22",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both have slips (X has 'αὐτόθι' where the print has 'ἀντιοχείᾳ'), but Y garbles whole clauses, e.g. 'ἵνα δὲ καὶ ἀγνοῶσιν ὧδεξασάμενον' for 'ἠναγκάσθημεν οὖν ἀλλαξάμενον', 'κείου' for 'κείσθω', and 'ἔτεσι τρισὶν ἐξαρχήσας' where the print has 'ἔτεσι γοῦν ἓξ κρατήσαντα' (wrong number).",
+   "gemini_note": "Y severely corrupts the text with garbled readings such as 'ἵνα δὲ καὶ ἀγνοῶσιν ὧδεξασάμενον αὐτὸν ἔφη θεῷ καὶ μὴ εἰκόνα'."
+  },
+  {
+   "page_id": "69b51ea1cf111105c42a1a60",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The two texts are very close; X keeps 'in concessum principum' and the final 'queat?', while Y has 'concessu' and stops at 'que-'.",
+   "gemini_note": "X correctly transcribes 'Lycæo' where Y misreads 'Ly-cao', and maintains proper spacing in 'deſit, adeſſe'."
+  },
+  {
+   "page_id": "69905d762fd6a0399389f73f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Both match the leaf word for word ('Quare illusistis mihi. 1. Regum, cap. 19' ... 'decepit me & commedi.'). They differ only in line breaks and long-s spelling.",
+   "gemini_note": "Both transcriptions share identical wording ('eius domo, & in lecto vbi iacuerat Dauid'), differing only in editorial conventions like lineation, long s, and abbreviation expansion ('Quandoque' vs. 'Quandoq;')."
+  },
+  {
+   "page_id": "69b6476a18b87551bfc4c2e4",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y invents its citations ('summa contra gentiles libro tertio capitulo centesimo decimo octavo' where the print has 'su. co. li. 3. ti. 13' and 'ti. 24. q. 9'). It also reads 'quadragesima' for 'qdriga' and 'cupiditas regni' for 'cupiditas utrum'. X is closer, though it misreads 'utrum sit' as 'rerum sive'.",
+   "gemini_note": "Y repeatedly invents citations to Aquinas's Summa contra Gentiles ('capitulo centesimo decimo octavo') and corrupts readings such as 'quadriga' into 'quadragesima'."
+  },
+  {
+   "page_id": "698051b57ba803694e9b3611",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both give the same entries and page numbers as the print; the only differences are trivial, like Y's 'Confeſſus' for 'Conſeſſus' and some punctuation.",
+   "gemini_note": "Y misreads long s as f, turning 'ſecundus' into 'fecundus' ('Conciliator primus & fecundus') and 'Conſeſſus' into 'Confeſſus'."
+  },
+  {
+   "page_id": "6a909543ac1fcc717ba3008d",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X gives a readable expansion that follows the leaf. Y is heavily garbled and drops text: in §21 'R. Pa. i. c. sic vide' omits 'pertinebat. de his q fi. a pla. Fed. csil. lj. tenet q', and in §16 it drops the 'de re. ec. no alie. z in c. tua de his q fi. a pla' citation.",
+   "gemini_note": "Y suffers from severe OCR errors throughout, omits key text in section 21 ('pertinebat. de his que fiunt a prelato. Federicus consilio.lj. tenet quod'), and alters the question in section 18 ('Quid si dicit' for 'Quid de proprietate')."
+  },
+  {
+   "page_id": "69f74b17790965e51ce028e2",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The texts are almost identical, but the print reads 'Mutter Mæcha' as Y has it. X normalizes this to 'Maacha' and splits 'daher' into 'das her'.",
+   "gemini_note": "X misreads 'daher' as 'das her'."
+  },
+  {
+   "page_id": "6992f405c8c6ac61574e7480",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf has the 湯媪 and two women poems ('先自吟曰 平生渾是熱心腸...'), which X transcribes. Y gives a completely different text ('陝西賈人胡以誠...') from another leaf.",
+   "gemini_note": "Y transcribes an entirely different leaf ('陝西賈人胡以誠因商販之金陵')."
+  },
+  {
+   "page_id": "69804e71732a829300ba6b45",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y misreads 'Abſchalom' as 'Abischalom' and 'Aër' as 'Ær', and it normalizes 'Alphabethum'. X's one slip is 'ſq.' for the printed 'ſqq.' at 'Adami primi peccatum 494'.",
+   "gemini_note": "X is more faithful to the leaf, correctly reading 'Aër' where Y has 'Ær', and preserving 'Abſchalom' and 'Alphabethum'."
+  },
+  {
+   "page_id": "69f749740ceb71cb052c9764",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both give the full page text; X keeps the printed abbreviations ('Clariss. D. Joach.') and Y expands them, which is a convention difference only.",
+   "gemini_note": "Y omits 'seqq.' from the marginal citation and erroneously appends the catchword 'Doctri-' to the running text."
+  },
+  {
+   "page_id": "69b303d95facc83a9a3db240",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Both are complete; X misreads 'hæc est prima utilitas' as 'hac est', a minor slip.",
+   "gemini_note": "Both transcriptions are complete and faithful to the leaf, and the minor difference between 'hac' in X and 'hæc' in Y does not affect the sense for a reader."
+  },
+  {
+   "page_id": "69b6476a18b87551bfc4c2d0",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops printed passages such as 'sextus si sit senex aut valitudinarius', the 'decimus quintus in monialibus … decimus sextus in hospitalariis sancti Johannis hierosolimitani' cases, and 'si tamen hoc fit ad defensionem non est excommunicatus'.",
+   "gemini_note": "X omits case six ('sextus si sit senex aut valitudinarius') and the defense clause ('si tamen hoc fit ad defensionem non est excommunicatus')."
+  },
+  {
+   "page_id": "6a909543ac1fcc717ba300b2",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y omits printed lines ('cessaria vocationes qua deo tenetur exhibere', 'subsistente … iurisdictionem habente episcopalem … sibi subiecta'), replaces 'vt capiat: qz licite merces accipitur' with repeated text, and misreads headwords as 'Celura'/'Celus' for Censura/Census.",
+   "gemini_note": "Y omits the passage 'cessaria vocationes qua deo tenetur exhibere: ut' and corrupts the heading 'Censura' to 'Celura'."
+  },
+  {
+   "page_id": "699f10ecbbbd5e12a9038f32",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "X has small misreadings ('daß lebhafteste' for 'das', 'Herz' for 'Hertz', 'GÖtt', 'vergeffen'); Y matches the print.",
+   "gemini_note": "X introduces OCR errors such as 'geffen' for 'gessen' and 'daß' for 'das', whereas Y faithfully transcribes the leaf."
+  },
+  {
+   "page_id": "6992f405c8c6ac61574e7437",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X describes illustrations and poems that are not on this leaf; the leaf is the text '孔惑景春 臨安徐景春…', which Y transcribes.",
+   "gemini_note": "X contains text from an entirely different leaf ('蒼黃老叟月明星朗共吟哦') and omits the actual text ('孔惑景春')."
+  },
+  {
+   "page_id": "69905d762fd6a0399389f73e",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Both are complete and accurate; the only difference is that X renders long s as 'ſ' and Y as 'f'.",
+   "gemini_note": "Both transcriptions have identical wording from 'QVONIAM igitur' to 'fenestram de', differing only in layout, line breaks, and long s conventions."
+  },
+  {
+   "page_id": "69f72541ddf0d859f80ac1c2",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y misreads 'widersetzen' as 'widersehen' and normalizes 'gefält'/'bestimten'/'JEsus'; X follows the print.",
+   "gemini_note": "Y misreads 'widersetzen' as 'widersehen'."
+  },
+  {
+   "page_id": "69f749840ceb71cb052c979a",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops the line 'que Medicinæ mentis insint, unum ab ipsomet prodi-' (giving 'libro-tum') and misreads 'Pseudorthodoxis' as 'Pseudodoxis'.",
+   "gemini_note": "Y omits a line between 'libro-' and '-tum' ('que Medicinæ mentis insint, unum ab ipsomet prodi-')."
+  },
+  {
+   "page_id": "699f5594684ffe948f93580e",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are complete; Y misreads 'was er siehet' as 'suchet' and 'gehäufet' as 'gehäuset', while X modernizes 'Besitzer'/'Schätze' to 'Besizer'/'Schäze'.",
+   "gemini_note": "Y misreads 'siehet' as 'suchet' and 'gehäufet' as 'gehäuset'."
+  },
+  {
+   "page_id": "69f74b26790965e51ce0290f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y collapses 'bettet über die Götzen Jerobeams, seinem Sidonischen Weib Isabel zu lieb' into 'bettet über die Göbel zu lieb', dropping Jeroboam and Jezebel, and garbles 'hierauf den Untergang' as 'hierses an Untergang'.",
+   "gemini_note": "Y omits 'Götzen Jerobeams, seinem Sidonischen Weib Isabel', corrupting the passage to 'Göbel zu lieb'."
+  },
+  {
+   "page_id": "6a3a3bc2862ce9a5b4d762ae",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the citations 'de excomm.Summistæ,verb.excomm.Sayr.lib.3.' from the Additiones, drops 'cap.1.' from 'Sayr.lib.3.cap.1.nu.18', and omits 'tamen' in 'voluit tamen hæc omnia'.",
+   "gemini_note": "X omits 'de excomm. Summistæ, verb. excomm. Sayr. lib. 3.' from the citations in the Additiones."
+  },
+  {
+   "page_id": "69f749c40ceb71cb052c9847",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The two are nearly identical; Y reads 'lectorum suorum' for the printed 'lectorumque suorum' and has long-s misreadings ('fextam infectatur', 'fique', 'cenfeat').",
+   "gemini_note": "Y repeatedly transcribes long s as 'f' ('fextam', 'infectatur', 'fique') and omits '-que' from 'lectorumque'."
+  },
+  {
+   "page_id": "69f724f1ddf0d859f80ac0d0",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y matches the print in 'Erzälung', 'ausgesezt', 'Synopsis scripturae' and 'gerümet', where X has 'Erzählung', 'ausgesetzt', 'Synopse' and 'gerühmet'; these are only spelling differences.",
+   "gemini_note": "Y faithfully preserves the original 18th-century spellings ('Erzälung', 'ausgesezt', 'gerümet') and title ('Synopsis scripturae'), while X modernizes them and misreads 'zig' as 'kig'."
+  },
+  {
+   "page_id": "69a5d988a63a00aaae8ab676",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'Theophrastus lib.XVII.cap.VIIII.', which X renders correctly, but Y gives the wrong book number 'lib. VII.' and also has 'Aezoon' for 'Aeizoon'.",
+   "gemini_note": "X gives the citation as 'lib. XVII.' instead of 'lib. VII.' and misspells 'Theoprhastus'."
+  },
+  {
+   "page_id": "699209c4bed8f4b5ff5b3483",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X omits the opening lines ('ροσολύμων, καὶ ἰουδαίας... ἰορδάνου' / 'rosolymis: et de iudea... iordanem') and adds a whole layer of Latin interlinear '<gloss>' words that are not printed on the leaf.",
+   "gemini_note": "X omits the opening lines of Matthew 4:25 at the top of the leaf ('ροσολύμων...' / 'rosolymis...')."
+  },
+  {
+   "page_id": "695361879c494f9f9f0424f7",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The print reads 'كتمها العلماء' ('the scholars concealed'), 'هذا العلم' and 'الدريجانات', which Y gives correctly; X has 'كتبها' ('wrote'), 'هذا العالم' and 'الدرجان'.",
+   "gemini_note": "X misreads 'الدريجانات' as 'الدرجان' in chapter 12 and 'كتمها' as 'كتبها' in chapter 7."
+  },
+  {
+   "page_id": "6a3a3bc2862ce9a5b4d762cb",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops summary entry 4 ('Quædam circa hanc excommunicationem contra incendiarios latam aduertenda. 5') and the '&' in '& quamdiu duret', which changes the sense of item 7.",
+   "gemini_note": "X omits the index entry for points 4 and 5 ('4 Quædam circa hanc excommunicationem contra incendiarios latam aduertenda. 5.')."
+  },
+  {
+   "page_id": "69f7621eb2b698b3bb82f77f",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X adds a column of fragments cut off from the facing page ('und / brau- / kon- / selb...') as if they were part of this leaf, and drops 'ad' from 'si ad imbecillitatem'.",
+   "gemini_note": "X invents a second column of text fragments ('und brau- kon- selb') from another leaf and omits 'ad' ('si ad imbecillitatem')."
+  },
+  {
+   "page_id": "6982be43298c369118f62800",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y keeps the printed spellings 'condematione', 'tamdem' and 'enimuero', which X normalises to 'condemnatione', 'tandem' and 'enimvero', and X also has long-s misreadings ('promisiffet'); none of this changes the meaning.",
+   "gemini_note": "Y is more faithful to the leaf, whereas X misreads long s as 'f' in 'promisiffet' and alters printed 'tamdem'."
+  },
+  {
+   "page_id": "69b6476a18b87551bfc4c2de",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X turns the printed 'Idem conceditur predicatoribus et minoribus: sine tamen preiudicio parochialis ecclesie' into 'Idem conceditur parochialibus ecclesie', which changes the sense, and also misreads 'Secus de mobilibus' as 'Sed de mobilibus'.",
+   "gemini_note": "X omits 'predicatoribus et minoribus : sine tamen preiudicio' under Altare, altering the meaning of the privilege."
+  },
+  {
+   "page_id": "6953b56577f38f6761bd97a7",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The heading reads 'القول على الوجه الاول من برج'; Y gives 'صورة' for 'الوجه' and counts nine orbs where the image shows eight.",
+   "gemini_note": "Y misreads 'الوجه' as 'صورة' in the heading."
+  },
+  {
+   "page_id": "69f749910ceb71cb052c97be",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops 'Mysticorum à Collectore Nobilissimo elegantiori stylo ornatorum' and shortens the title 'Praxis Theologiæ Mysticæ veræ' to 'Theologiæ Mysticæ veræ'.",
+   "gemini_note": "X omits 'Mysticorum à Collectore Nobilissimo elegantiori stylo ornatorum' in section 58."
+  },
+  {
+   "page_id": "6992f405c8c6ac61574e73fc",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X matches the leaf ('風號見者無不酸鼻…華尸獨浮於水面'), while Y transcribes a different story ('詩動秦邦… 秦邦字本固') that is not on this page.",
+   "gemini_note": "Y contains text from an entirely different leaf ('詩動秦邦', '大原秦邦字本固')."
+  },
+  {
+   "page_id": "6992f405c8c6ac61574e73cf",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf is the preface '萬選清談引 / 維昔 聖天子在御…', which Y gives; X describes an illustration with a couplet ('四妓解吟') from another leaf.",
+   "gemini_note": "X transcribes the text of an unrelated page ('四妓解吟') rather than the preface on this leaf ('萬選清談引')."
+  },
+  {
+   "page_id": "6992f405c8c6ac61574e748a",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf has the flower-spirit poems ('輕于燕燕逐風翔…衆花之妖云') that Y gives; X describes an illustrated spread ('淮水/斷魂') that is not this page.",
+   "gemini_note": "X transcribes text from an entirely different work ('清談萬選') rather than the leaf's actual text ('輕于燕燕逐風翔')."
+  },
+  {
+   "page_id": "6992c88d4f3a879124230204",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The image reads '周 喆' in the list of contributing translators; Y gives '周 洁', which gets the name wrong. Otherwise the two texts are the same.",
+   "gemini_note": "Y incorrectly transcribes the contributor name '周 喆' as '周 洁'."
+  },
+  {
+   "page_id": "6982b2ef0d2427493bdb68da",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "The image reads 'atque ni solum succum esset' and '& non cognoscit, quod cognoscitur'; Y has 'si solum', which changes the sense, and 'non cognoscitur'.",
+   "gemini_note": "X misreads 'si' as 'ni' in section VI ('atque ni solum succum') and has 'cognoscit' for 'cognoscitur' in section VIII."
+  },
+  {
+   "page_id": "6a909543ac1fcc717ba30089",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X is a garbled abbreviation-level reading that drops the line 'mulier deprehenduntur in latebris se osculantes' (§8) and mangles many citations; Y follows the leaf closely.",
+   "gemini_note": "X omits the passage defining notorious adultery ('quando vir et mulier deprehenduntur in latebris...') in section 8 and introduces numerous severe transcription errors."
+  },
+  {
+   "page_id": "6992f405c8c6ac61574e746e",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X matches the leaf ('妍媸面哭膽難知善惡情…硯中恠祟亦不復有矣'), while Y transcribes a different story ('尚質聯詩') that is not on this page.",
+   "gemini_note": "X transcribes text from a completely different leaf ('妍媸面哭膽難知...'), whereas Y accurately records the leaf ('尚質聯詩')."
+  }
+ ]
+}

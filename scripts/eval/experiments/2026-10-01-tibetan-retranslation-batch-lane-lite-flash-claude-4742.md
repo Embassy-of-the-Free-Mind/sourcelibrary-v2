@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-kangyur]
+n_books: 21
+n_pages: 21
+verdict: "Against 84000 on the Batch lane: Claude 4.71, flash 4.31, lite 4.02 mean fidelity; lite inverts on 9.5%; 190K pages cost ~$114 lite or ~$254 flash."
+status: undecided
+decision: "Kangyur retranslation spend PENDING Derek in DECISIONS.md (#4742); flash already the Tibetan engine for non-held books (PR #5094)"
+superseded_by: null
+issue: [4742, 4523]
+---
 ## 2026-10-01 · Tibetan retranslation on the Batch lane: lite vs flash vs a Claude arm, on the CURRENT Yigdzin read, blind vs 84000 (#4742, #4523; costs the 189K-page decision)
 
 **Question.** Derek, 2026-10-01: before the Kangyur English is bought, measure lite and flash on the lane the job would run on (the Batch API), on the OCR as it is now (Yigdzin with the #5264 leaf-break markers), and put a Claude translation beside them; cost it out per page from the meter, not the price list.

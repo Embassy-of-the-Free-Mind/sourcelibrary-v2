@@ -1,0 +1,43 @@
+[
+ {
+  "book_id": "6abeb4e5896ea18127c849f3",
+  "slot": 16,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Treatise from the Madhyamaka section (vol. 111 / Khi) of the Derge Tengyur citing Mahāyāna liturgical sources and the Daśabhūmika Sūtra bodhisattva aspirations.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 318,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "སུ་བཅད་པའམ",
+      "english": "...",
+      "problem": "Opening fragment 'in verse, or' omitted and replaced with ellipses",
+      "severity": "minor"
+     },
+     {
+      "source": "བསྐལ་པ་བགྲང་བར་སངས་རྒྱས་འབྱུང་བ་བགྲངས་པ་ཐམས་ཅད་ཀྱིས་",
+      "english": "[omitted]",
+      "problem": "Clause specifying the duration across counted eons of buddhas appearing is omitted from the second aspiration formula",
+      "severity": "moderate"
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B is fully complete and faithful to the source folio, preserving the opening clause fragment, precise technical terms, the full eon-formula in the second aspiration, and the natural folio-break continuation.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear scan of Derge Tengyur folio 319a with flawless transcription and an excellent, faithful translation in B."
+ }
+]

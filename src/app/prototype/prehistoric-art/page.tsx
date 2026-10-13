@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import data from './provenance.json';
 
 export const metadata: Metadata = {
-  title: 'Deep Time: The First Images — prototype · Source Library',
+  title: 'Deep Time: The First Images (prototype) | Source Library',
   description:
-    'A prototype gallery of Palaeolithic art — the oldest surviving images and sculptures made by human hands.',
+    'A prototype gallery of Palaeolithic art: the oldest surviving images and sculptures made by human hands.',
   robots: { index: false, follow: false },
 };
 
@@ -97,7 +97,7 @@ export default function PrehistoricArtPrototype() {
       <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         {/* Prototype banner */}
         <div className="mb-10 rounded-lg border border-amber-500/25 bg-amber-500/[0.06] px-4 py-3 text-xs text-amber-200/80">
-          <span className="font-semibold text-amber-200">Prototype</span> — not
+          <span className="font-semibold text-amber-200">Prototype</span>: not
           public, not indexed. Exploring whether Palaeolithic art belongs in
           Source Library. Images © Don Hitchcock,{' '}
           <a
@@ -120,7 +120,7 @@ export default function PrehistoricArtPrototype() {
             Deep Time: The First Images
           </h1>
           <p className="mt-5 text-base leading-relaxed text-stone-400">
-            Before writing, before the city, before the wheel — people carved
+            Before writing, before the city, before the wheel, people carved
             faces, bodies, and impossible beings from ivory and stone, and
             painted living animals across the walls of caves. These are among
             the oldest surviving works of human imagination, made across forty
@@ -136,7 +136,7 @@ export default function PrehistoricArtPrototype() {
             Carved figures
           </h2>
           <p className="mb-6 text-sm text-stone-500">
-            Ivory, stone and fired clay — the oldest sculptures in the world.
+            Ivory, stone and fired clay: the oldest sculptures in the world.
           </p>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {figurines.map((a) => (

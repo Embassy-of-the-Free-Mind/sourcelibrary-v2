@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
                     { $and: [
                       { $ne: ['$$page.translation', null] },
                       { $ne: ['$$page.translation.data', null] },
-                      { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
+                      { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$$page.translation.data' }, 'string'] }, '$$page.translation.data', ''] } }, 50] }
                     ]},
                     { $eq: [{ $ifNull: ['$$page.page_type', ''] }, 'blank'] }
                   ]

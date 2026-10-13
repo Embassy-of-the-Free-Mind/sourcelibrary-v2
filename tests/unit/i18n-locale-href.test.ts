@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { canonicalPath, localeHref, localeFromPathname, localePath, hasLocalizedTwin, withEnglishFallback, LOCALIZED_PATHS } from '@/lib/i18n';
+import { readsOriginal, type Locale } from '@/lib/locale-path';
 
 describe('canonicalPath', () => {
   it('drops the /es prefix', () => {
@@ -149,6 +150,24 @@ describe('the Latin locale has its own, smaller set of twins', () => {
 
   it('withEnglishFallback fills only the locales a surface has no copy for', () => {
     const d = withEnglishFallback({ en: 'Search', es: 'Buscar' });
-    expect(d).toEqual({ en: 'Search', es: 'Buscar', la: 'Search' });
+    expect(d).toEqual({ en: 'Search', es: 'Buscar', la: 'Search', nl: 'Search', zh: 'Search' });
+  });
+});
+
+describe('the Dutch and Chinese sites are original-text sites like Latin (#6382)', () => {
+  it('keeps the homepage, book page and reader on /nl and /zh, and nothing else', () => {
+    for (const l of ['nl', 'zh'] as const) {
+      expect(localeHref(l, '/')).toBe(`/${l}`);
+      expect(localeHref(l, '/book/x')).toBe(`/${l}/book/x`);
+      expect(localeHref(l, '/book/x/page/p1')).toBe(`/${l}/book/x/page/p1`);
+      expect(localeHref(l, '/support')).toBe(`/${l}`);
+      expect(localePath('/collections/alchemy', l)).toBe('/collections/alchemy');
+      expect(localeFromPathname(`/${l}/book/x`)).toBe(l);
+      expect(canonicalPath(`/${l}/book/x`)).toBe('/book/x');
+    }
+  });
+
+  it('reads the original on la, nl and zh, and not on en or es', () => {
+    expect(['en', 'es', 'la', 'nl', 'zh'].filter((l) => readsOriginal(l as Locale))).toEqual(['la', 'nl', 'zh']);
   });
 });

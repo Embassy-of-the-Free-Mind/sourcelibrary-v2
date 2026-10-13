@@ -1,0 +1,52 @@
+[
+ {
+  "book_id": "6abed698896ea18127c8e9f4",
+  "slot": 27,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཕེ (Derge Tengyur, vol. 183)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Derge Tengyur volume 183 (Phe) belongs to the Pramāṇa (Tshad ma) section of the canonical Tibetan Tengyur.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 543,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "དེ་ནི་ཞེས་བྱ་བ་",
+      "english": "[omitted]",
+      "problem": "Omitted the lemma citation marker 'As for the words \"that is...\"' (de ni zhes bya ba) introducing the root text phrase",
+      "severity": "minor"
+     }
+    ],
+    "tr_score_B": 3,
+    "tr_errors_B": [
+     {
+      "source": "རྗེས་སུ་དཔག་པ་ལས་ཚད་མར་རྟོག་པ་མེད་དོ་ཞེས་སྟོན་པ་ནི",
+      "english": "in order to show that valid cognition cannot be conceived apart from inference",
+      "problem": "Misinterprets the ablative 'las' (from / through inference) as an exceptive ('apart from inference'), reversing the epistemological claim that validity cannot be established by means of inference",
+      "severity": "serious",
+      "class": "T8",
+      "reversal": true
+     },
+     {
+      "source": "དེ་ལས་ཤེས་པའི་ཞེས་བྱ་བ་ནི",
+      "english": "Regarding the statement \"the knowledge of that...\":",
+      "problem": "Misconstrues the commentary citation formula 'de las' (from that [root verse], regarding the word 'of cognition') as 'knowledge of that'",
+      "severity": "moderate"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly renders the core epistemological argument that validity cannot be conceptualized from inference and accurately parses the commentary's lemma citations.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A clear, well-scanned woodblock folio from the Pramāṇa section of the Derge Tengyur with flawless OCR transcription; Translation A provides a significantly more faithful and philosophically coherent translation than Translation B."
+ }
+]

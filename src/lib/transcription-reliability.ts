@@ -121,7 +121,7 @@ export function transcriptionReliability(
     level: 'unreliable',
     message:
       'This transcription is machine-made and unreliable. Our OCR cannot read ' +
-      'cursive Tibetan, and where it fails it does not stop — it invents ' +
+      'cursive Tibetan, and where it fails it does not stop: it invents ' +
       'plausible text, sometimes in another script entirely. Read the scan as ' +
       'the source, and please do not quote the transcription or the English ' +
       'without checking the folio.',

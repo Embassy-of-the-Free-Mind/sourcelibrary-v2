@@ -5,6 +5,7 @@ import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
 import { getEffectiveByline } from '@/lib/byline';
+import { translationPercent } from '@/lib/translation-completeness';
 
 interface BookItem {
   id: string;
@@ -19,6 +20,7 @@ interface BookItem {
   pages_ocr?: number;
   pages_translated?: number;
   pages_blank?: number;
+  pages_translatable?: number | null;
   published?: string;
   read_count?: number;
   is_first_translation?: boolean;
@@ -51,11 +53,6 @@ function SortIcon({ column, currentSort }: { column: string; currentSort: string
     return <ArrowDown className="w-3 h-3 text-accent-rust" />;
   }
   return <ArrowUp className="w-3 h-3 text-accent-rust" />;
-}
-
-function translationPercent(book: BookItem): number {
-  const denom = Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1);
-  return book.pages_translated ? Math.round((book.pages_translated / denom) * 100) : 0;
 }
 
 export default function CollectionListView({

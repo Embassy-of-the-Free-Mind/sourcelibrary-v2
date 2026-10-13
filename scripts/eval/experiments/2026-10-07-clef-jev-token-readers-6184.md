@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [sa]
+scripts: [Deva]
+canons: []
+n_books: null
+n_pages: null
+verdict: "Neither Clef (61% on 36 disputed one-mark Sanskrit slots, 22% order flips) nor Jev (39%) meets the 80% bar as an independent tie-break reader."
+status: rejected
+decision: "Neither adopted as the #6203 tie-break; it stays a person or a transcribing reader (#6203)"
+superseded_by: null
+issue: [6184, 6203]
+---
 ## 2026-10-07 · Can Clef or Jev decide a one-mark Sanskrit reading, independently of Gemini? (#6184, #6203)
 
 PRIOR ART: `2026-10-07-reader-diversity-temperature-vs-family-6184.md` (same 63 by-eye slots, Gemini arms);

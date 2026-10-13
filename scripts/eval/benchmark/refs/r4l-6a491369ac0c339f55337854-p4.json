@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A21113",
+  "edition": "Elegia Dauidis Echlini Medici Reginæ. In funere charissimæ castissimæq[ue] coniugis Philibertæ Loubatæ, quæ nata Roanæ ad Ligerim obijt Londini, anno ætatos siæ 40. Domini 1629. die 8. Ianuarii. Ad Ca — STC 7478; ESTC S113965 (1629)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A21113",
+  "origin": "library",
+  "book_id": "6a491369ac0c339f55337854",
+  "page_number": 4,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1884,
+    "to_char": 2123,
+    "overlap": 0.364,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-1)",
+    "at": "2026-10-06T10:11:14+00:00",
+    "note": "Tetrastichon ad Regem between woodcut headpiece/tailpiece; heavy show-through; ref starts with signature tail 'moerens lugensque' from p3",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      3,
+      4,
+      5
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.609Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "4fd30aafbc38705bacb6518e8c2dfc6b243a0e4e011161745559cc12cc99397a",
+  "unit": {
+    "chars": 239
+  }
+}

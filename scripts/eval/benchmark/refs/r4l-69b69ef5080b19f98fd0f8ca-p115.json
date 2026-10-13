@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/Jonston_historia_naturalis_3",
+  "edition": "Historiae Naturalis De Avibus Libri VI. — Frankfurt (Main): Matthias Merian Erben, [1650].",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b69ef5080b19f98fd0f8ca",
+  "page_number": 115,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 216165,
+    "to_char": 220151,
+    "overlap": 0.519,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-2)",
+    "at": "2026-10-06T10:11:07+00:00",
+    "note": "Jonston p.60, two columns, roman+italic; marginal notes inline in ref; ends with 'Gallopavo. Mas' padding",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      115,
+      116,
+      117
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.679Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "bbe98fdaeabc8b9c777e6f6e5f2105a363d40965bd3ee42adbb919761687c6a3",
+  "unit": {
+    "chars": 3986
+  }
+}

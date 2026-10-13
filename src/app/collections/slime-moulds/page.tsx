@@ -18,6 +18,7 @@ import GalleryMasonry from '@/components/GalleryMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import LibrarianSearch from '@/components/LibrarianSearch';
+import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import CuratorLauncher from '@/components/collections/CuratorLauncher';
 import { applyCuration, curationId, surfaceCuration } from '@/lib/collection-image-curation';
@@ -48,7 +49,7 @@ const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
-const OG_TITLE = 'Slime Moulds — Source Library';
+const OG_TITLE = 'Slime Moulds | Source Library';
 const OG_DESC = 'One cell that creeps across rotting wood and then stands up as a crop of tiny stalked spore-heads. These are the books that first drew, named and puzzled over the slime moulds, from Panckow in 1654 to the first monograph of 1875.';
 // The book pinned as the featured work. Rendered only when it is actually in
 // the collection, so the authored copy below can never sit under another title.
@@ -373,7 +374,7 @@ export default async function SlimeMouldsCollectionPage() {
     featured && 'featured',
     gallery.length > 0 && 'gallery',
     'librarian', 'works', 'involved',
-  ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id] }));
+  ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id], hideOnTenantHost: id === 'librarian' }));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
   return (
@@ -593,6 +594,9 @@ export default async function SlimeMouldsCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
+      {/* The Librarian is refused on partner hosts (#4330) and this page is
+          served there, so the section goes too (the anchor bar drops its link). */}
+      <HideOnTenantHost>
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
@@ -612,6 +616,7 @@ export default async function SlimeMouldsCollectionPage() {
           </div>
         </div>
       </section>
+      </HideOnTenantHost>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">

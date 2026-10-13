@@ -1,0 +1,54 @@
+[
+ {
+  "book_id": "6abeb43e896ea18127c844b1",
+  "slot": 14,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཨ (Derge Tengyur, vol. 109)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical classical Tibetan Madhyamaka commentary folio matching the Derge Tengyur collection and volume metadata.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 195,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "བདུད་(ཀྱིང་,ཀྱང་)རྣམ་པ་བཞིའོ།",
+      "image": "བདུད་ཀྱང་རྣམ་པ་བཞིའོ།",
+      "problem": "OCR uncertainty parenthetical variant notation embedded into running text",
+      "severity": "minor",
+      "class": "O11"
+     },
+     {
+      "ocr": "འགྱོད་པའི་མི་ཉེ་བར་ཞི་བས་",
+      "image": "འགྱོད་པའི་མེ་ཉེ་བར་ཞི་བས་",
+      "problem": "Vowel misread: 'མི་' (mi) instead of 'མེ་' (me, fire/heat of remorse)",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score_A": 4,
+    "tr_errors_A": [
+     {
+      "source": "དངོས་པོ་ལ་གྷ་ཉའོ",
+      "english": "which is the actual executioner",
+      "problem": "Misinterprets phonetic transliteration of Sanskrit laṅghana (destruction/perishing of entities) as 'executioner'",
+      "severity": "moderate",
+      "class": "T3",
+      "reversal": false
+     }
+    ],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "B",
+    "prefer_reason": "Translation B is more rigorous and accurate, correctly identifying the Sanskrit transliteration 'la gha nya' (laṅghana) and preserving the technical nuance of Buddhist philosophical citations.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Authentic Derge Tengyur Madhyamaka folio with clear woodblock carving, highly accurate OCR, and an excellent, scholarly translation in Version B."
+ }
+]

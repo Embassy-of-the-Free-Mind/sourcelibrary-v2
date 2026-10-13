@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
   if (lang !== 'la') {
     return NextResponse.json(
-      { error: `Unsupported lang "${lang}" — only "la" (Latin) is available.` },
+      { error: `Unsupported lang "${lang}": only "la" (Latin) is available.` },
       { status: 400 }
     );
   }

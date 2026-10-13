@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 30
+verdict: "A pre-model illegible-source gate is right on 26 of 30 held-out fires (precision 0.87) with 0 false withholds on clean pages, but catches 1 of 29 judged garble pages; a prompt clause does nothing."
+status: adopted
+decision: "Gate shipped behind TRANSLATE_ILLEGIBLE_GATE (PR #5638), switched on for production 2026-10-03 (count audit #5685)"
+superseded_by: null
+issue: [5305, 4883]
+---
 ## 2026-10-02 — What should the translator output for a page nobody could read? A pre-model gate: right on 26 of 30 held-out fires (precision 0.87), 0 false withholds on clean audit pages. It does not reach garble (#5305, #4883)
 
 **Question.** The #5274 audit found fluent English over pages the OCR could not read. On Herculanensium 1871 p.328 the OCR said "almost entirely illegible" and wrote `[...]`, and the translation is a paragraph of Epicurean theology. Can the OCR's own signals, or a $0 text score, decide before the model call that a page gets `<warning>Illegible: …</warning>` instead of a translation? And what does that cost on clean pages?

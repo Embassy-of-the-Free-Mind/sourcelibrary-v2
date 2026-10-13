@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A67147",
+  "edition": "Increpatio Barjesu, sive, Polemicæ adsertiones locorum aliquot S. Scripturæ, ab imposturis perversionum in catechesi Racoviana collectæ hinc inde, per Matthæum Wren F. ; ex opere prægrandi meditationu — Wing W3676; ESTC R21103 (1660)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A67147",
+  "origin": "library",
+  "book_id": "6a42bbf75207af7c42f6f607",
+  "page_number": 725,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1305307,
+    "to_char": 1307263,
+    "overlap": 0.368,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-5)",
+    "at": "2026-10-06T10:11:24+00:00",
+    "note": "Ref matches 'Missionis Authoritate ... negationis' (catchword).",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      723,
+      724,
+      725
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.751Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "0e7068f0a7aa687e48edff0d52b247583fe39ad12767a2f6b1585b54a0bee9d0",
+  "unit": {
+    "chars": 1956
+  }
+}

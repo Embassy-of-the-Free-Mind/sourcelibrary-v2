@@ -8,7 +8,7 @@ import methods from '@/data/quality-methods.json';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'How We Measure Quality — Source Library',
+  title: 'How We Measure Quality | Source Library',
   description:
     'The rules Source Library holds its quality measurements to, every instrument we use (what it asks, what it cannot see, its latest result), and what we cannot yet measure.',
   alternates: { canonical: '/quality/methods' },

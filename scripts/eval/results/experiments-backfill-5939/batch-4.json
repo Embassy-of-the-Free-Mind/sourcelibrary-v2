@@ -1,0 +1,449 @@
+{
+ "2026-09-30-does-a-stop-where-the-page-stops-instruction-cut-5305.md": {
+  "header": {
+   "issue": 5305,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 71,
+   "n_pages": null,
+   "verdict": "## 2026-09-30 — Does a \"stop where the page stops\" instruction cut invention?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-does-disagreement-between-two-reads-of-one-page-find-5313.md": {
+  "header": {
+   "issue": [
+    5313,
+    5376
+   ],
+   "stage": "ocr",
+   "measure": [
+    "judged",
+    "agreement"
+   ],
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 23662,
+   "n_pages": 327,
+   "verdict": "Deferred to Derek: see DECISIONS.md (\"Second read as a detector\").",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-does-the-adopted-english-archive-cohort-1880-1930-number-5124.md": {
+  "header": {
+   "issue": [
+    5124,
+    5186
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "la",
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 1930,
+   "n_pages": 2307,
+   "verdict": "- Negative control: 1,241 of 2,307 pages carry an Archive number the lite read lacks; the gate admits 0 of them (81 pages admitted); --cohort-off admits all 1,241.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-09-30-duplicate-run-guard-grounded-in-the-source-the-57-5275.md": {
+  "header": {
+   "issue": [
+    5275,
+    5021
+   ],
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 1000,
+   "n_pages": 57,
+   "verdict": "## 2026-09-30 — Duplicate-run guard grounded in the source (#5275): the 57 refrain pages the per-leaf guard refused go 57 → 0, the narrative book and the #5021 fixtures are untouched, 10 of 229 page-level duplicate flags on a 1,000-book mir",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-how-much-gemini-ocr-on-internet-archive-books-is-5309.md": {
+  "header": {
+   "issue": 5309,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 81,
+   "n_pages": null,
+   "verdict": "## 2026-09-30 — How much Gemini OCR on Internet Archive books is a neighbouring leaf's text, as readers see it?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-later-post-hoc-the-same-mineru-rule-re-applied-5299.md": {
+  "header": {
+   "issue": [
+    5299,
+    5182
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 70,
+   "n_pages": 122,
+   "verdict": "## 2026-09-30 (later) — POST-HOC: the same MinerU rule, re-applied with PR #5299's footnote step (#5182)",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-leaf-identity-is-the-page-image-a-reader-sees-5274.md": {
+  "header": {
+   "issue": [
+    5274,
+    4790
+   ],
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 311,
+   "verdict": "## 2026-09-30 — Leaf identity: is the page image a reader sees the page that was translated?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (translation 1, image 1, ocr 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-lite-vs-flash-on-the-same-pages-5274.md": {
+  "header": {
+   "issue": 5274,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 304,
+   "n_pages": 39,
+   "verdict": "Deferred to Derek. Rule output: lite stays; flash's invention is a trade to weigh, not a reason",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-30-mineru-on-the-english-reference-pages-peer-engine-tier-5182.md": {
+  "header": {
+   "issue": [
+    5182,
+    3389
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 114,
+   "n_pages": 114,
+   "verdict": "## 2026-09-30 — MinerU on the English reference pages: peer engine, tier-3 fallback, or neither?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md": {
+  "header": {
+   "issue": [
+    4925,
+    4745
+   ],
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [
+    "ja"
+   ],
+   "scripts": [
+    "Jpan"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 150,
+   "verdict": "635 pages had no reading (first writes), 452 had one; 48 of those were loops (NDL 0).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-syriac-per-stratum-preprocessing-on-library-pages-5277.md": {
+  "header": {
+   "issue": [
+    5277,
+    5250
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "syc"
+   ],
+   "scripts": [
+    "Syrc"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 120,
+   "verdict": "Verdict: REJECTED for the lane.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-30-translation-corpus-audit-how-faithful-is-a-random-served-5274.md": {
+  "header": {
+   "issue": 5274,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 198,
+   "n_pages": 311,
+   "verdict": "## 2026-09-30 — Translation corpus audit: how faithful is a random SERVED translation, by language, model and period?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-30-were-the-bootstrap-intervals-in-this-file-the-right-5373.md": {
+  "header": {
+   "issue": 5373,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 23,
+   "verdict": "## 2026-09-30 — Were the bootstrap intervals in this file the right width?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-what-does-the-internet-archives-ocr-get-wrong-5186.md": {
+  "header": {
+   "issue": 5186,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 242,
+   "n_pages": 2132,
+   "verdict": "Words are fine (1–3‰ glyph misreads on prose, proper nouns 3–5× worse); numbers",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-30-where-does-translation-invention-live-5305.md": {
+  "header": {
+   "issue": 5305,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 930,
+   "n_pages": null,
+   "verdict": "## 2026-09-30 — Where does translation invention live, and can a reader see it?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, undecided)"
+  ]
+ },
+ "2026-09-30-which-engine-reads-printed-numbers-correctly-engine-disagreements-adjudicated-5224.md": {
+  "header": {
+   "issue": [
+    5224,
+    5124,
+    5186
+   ],
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 82,
+   "n_pages": 25,
+   "verdict": "(82 books, 178 pages, 5,212 printed numbers; directional):",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 3, image 2, translation 0, metadata 0, pipeline 0)",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (rejected, undecided)"
+  ]
+ },
+ "2026-09-30-why-is-gemini-ocr-off-leaf-on-ia-bulk-5309.md": {
+  "header": {
+   "issue": 5309,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 399,
+   "n_pages": 5309,
+   "verdict": "The cause is the #3368 image repair of 2026-07-29.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-can-a-re-read-fix-looping-ocr-pages-3878.md": {
+  "header": {
+   "issue": 3878,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 84,
+   "n_pages": 1863,
+   "verdict": "Still looping: lite 0.1 11/30, lite 0.7 5/30, flash 4/30.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ }
+}

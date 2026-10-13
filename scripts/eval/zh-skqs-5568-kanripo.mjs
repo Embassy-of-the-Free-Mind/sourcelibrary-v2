@@ -340,7 +340,7 @@ async function drift() {
 }
 
 const isMain = process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
-if (!isMain) { /* imported by the test-2 script for drawSample and the text helpers */ }
+if (!isMain) { /* imported by the test-2 script (drawSample, text helpers) and by the #5600 Paddle lane's Kanripo QA screen */ }
 else if (CMD === 'coverage') await coverage();
 else if (CMD === 'align') await align();
 else if (CMD === 'drift') await drift();

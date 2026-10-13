@@ -10,14 +10,17 @@
  * benchmark-refs.mjs — build page-level reference windows for the Chinese benchmark pages.
  *
  *   node scripts/eval/benchmark-refs.mjs --root=/path/bench-images --stratum=chinese \
- *        [--probe=gemini-3-flash-preview,gemini-3.1-flash-lite] [--only=slug] [--dry]
+ *        [--probe=gemini-3-flash-preview,gemini-3.1-flash-lite] [--only=slug] [--dry] [--retrim]
  *
  * For each sealed page: take the probe engines' outputs (Han chars only), (1) BUDDHIST sub-stratum:
  * search CBETA with several 8-char phrases, keep a work+juan that ≥2 phrases agree on, fetch the
  * juan; (2) OTHER: match the catalogue title to Kanripo (KR-Catalog), read the juan number(s)
  * from the title, fetch the juan file(s). Then vote 4-gram positions of the probe text against the
  * e-text, cut a window of ~1.3× the probe length around the densest region, and require ≥ 0.35
- * 4-gram overlap or the page gets NO reference (recorded with the reason). Writes
+ * 4-gram overlap or the page gets NO reference (recorded with the reason). The window is then cut
+ * to the union of the engine reads' aligned spans (lib/edition-window.mjs alignTrimWindow, #5584),
+ * so no engine is charged for the neighbouring leaf. --retrim applies that cut to the references
+ * already on disk, using the engine outputs under --root, without refetching anything. Writes
  * scripts/eval/benchmark/refs/<slug>.txt and <slug>.json {source, work, juan, url, overlap}.
  * Never writes to Mongo. CBETA is credited as the source and not re-hosted beyond the window.
  */
@@ -27,7 +30,7 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { foldGreekWord } from './build-greek-corpus.mjs';
-import { wordWindow } from './lib/edition-window.mjs';
+import { wordWindow, alignTrimWindow } from './lib/edition-window.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -44,6 +47,8 @@ const WIDE = process.argv.includes('--wide'); const RETRY = process.argv.include
 // the best probe available — a free Tesseract screen read in phase A, the Gemini read in phase B —
 // and the phase-B rebuild must replace the phase-A window, not skip it).
 const FORCE = process.argv.includes('--force');
+// --retrim: Chinese strata only — see the block above the Chinese main loop (#5584).
+const RETRIM = process.argv.includes('--retrim');
 const GH_HEADERS = process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {};
 const REFS = path.join(__dirname, 'benchmark', 'refs'); fs.mkdirSync(REFS, { recursive: true });
 const CATALOG = argOf('kanripo-catalog', '/Users/dereklomas/.claude/jobs/417569c5/tmp/refs/kanripo');
@@ -73,7 +78,9 @@ function bestWindow(etext, probe) {
   const W = grams(win); let hit = 0; for (const g of P.keys()) if (W.has(g)) hit++;
   return { window: win, start, end, overlap: P.size ? hit / P.size : 0 };
 }
-// Trim the window to the probe: drop e-text at either end that the probe never touches.
+const HAN_TRIM = { isLetter: c => /\p{Script=Han}/u.test(c), hypLetters: t => [...han(t)], minLetters: 40 };
+// Trim the window to the probe: drop e-text at either end that the probe never touches. The ±8 pad
+// keeps the cut from excusing the probe's omissions; alignTrimWindow then removes what no read printed.
 function trimWindow(win, probe) {
   const P = grams(probe); let first = -1, last = -1;
   for (let i = 0; i + 4 <= win.length; i++) if (P.has(win.slice(i, i + 4))) { if (first < 0) first = i; last = i + 4; }
@@ -303,41 +310,13 @@ async function wikisourceLookup(probeWords, log) {
 // CER contribute their span, and the window is cut to the UNION of the spans. No engine is charged
 // for text another engine read; a header no engine read is dropped for all of them alike. The
 // per-page before/after letter counts and the reads used are recorded on the row.
+// The trim itself is lib/edition-window.mjs alignTrimWindow, shared with the Chinese branch (#5584).
 const GREEK_RE = /\p{Script=Greek}/u;
-function alignSpan(hyp, ref) {   // arrays of letters; returns the best span of ref and the edits within it
-  const n = hyp.length, m = ref.length; if (!n || !m) return null;
-  let prev = new Int32Array(m + 1), cur = new Int32Array(m + 1), ps = new Int32Array(m + 1), cs = new Int32Array(m + 1);
-  for (let j = 0; j <= m; j++) { prev[j] = 0; ps[j] = j; }
-  for (let i = 1; i <= n; i++) {
-    cur[0] = i; cs[0] = 0;
-    for (let j = 1; j <= m; j++) {
-      const sub = prev[j - 1] + (hyp[i - 1] === ref[j - 1] ? 0 : 1), del = prev[j] + 1, ins = cur[j - 1] + 1;
-      if (sub <= del && sub <= ins) { cur[j] = sub; cs[j] = ps[j - 1]; } else if (del <= ins) { cur[j] = del; cs[j] = ps[j]; } else { cur[j] = ins; cs[j] = cs[j - 1]; }
-    }
-    [prev, cur] = [cur, prev]; [ps, cs] = [cs, ps];
-  }
-  let best = Infinity, end = 0; for (let j = 0; j <= m; j++) if (prev[j] < best) { best = prev[j]; end = j; }
-  const start = ps[end]; return { start, end, cer: best / Math.max(1, end - start) };
-}
-function greekReads(p) {   // every scored engine's read of the page (not the classifier, not the screen)
+const GREEK_TRIM = { isLetter: c => GREEK_RE.test(c), refFold: c => c.toLowerCase(), hypLetters: t => [...t.normalize('NFC').toLowerCase().replace(/[^\p{Script=Greek}]+/gu, '')], minLetters: 80 };
+function engineReads(p) {   // every scored engine's read of the page (not the classifier, not the screen)
   const outRoot = path.join(ROOT, STRATUM, 'out'); const reads = {};
   if (fs.existsSync(outRoot)) for (const e of fs.readdirSync(outRoot)) { if (e === 'script-class') continue; const f = path.join(outRoot, e, `${p.slug}.txt`); if (fs.existsSync(f)) reads[e] = fs.readFileSync(f, 'utf8'); }
   return reads;
-}
-function alignTrim(window, reads) {
-  const w = window.normalize('NFC'); const pos = [], letters = [];
-  for (let i = 0; i < w.length; i++) if (GREEK_RE.test(w[i])) { pos.push(i); letters.push(w[i].toLowerCase()); }
-  const CAP = 6000; const refL = letters.slice(0, CAP);
-  let lo = Infinity, hi = -Infinity; const used = [];
-  for (const [e, text] of Object.entries(reads)) {
-    const hypL = [...text.normalize('NFC').toLowerCase().replace(/[^\p{Script=Greek}]+/gu, '')].slice(0, CAP);
-    if (hypL.length < 80) continue;
-    const a = alignSpan(hypL, refL); if (!a || a.cer >= 0.5 || a.end - a.start < 80) continue;
-    lo = Math.min(lo, a.start); hi = Math.max(hi, a.end); used.push(`${e}:${a.cer.toFixed(2)}`);
-  }
-  const note = { letters_before: letters.length, reads_used: used };
-  if (!used.length || refL.length < letters.length) { note.letters_after = letters.length; note.kept = 'whole window (no aligning read, or window over the cap)'; return { window: w, note }; }
-  const out = w.slice(pos[lo], pos[hi - 1] + 1); note.letters_after = hi - lo; return { window: out, note };
 }
 // Probe order for a Greek page: the longer Gemini read (the #4744 convention), else any other
 // engine's, else the free Tesseract screen read the seal step cached (phase A only — noisy on
@@ -406,7 +385,7 @@ if (STRATUM.startsWith('greek')) {
     Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title, edition: src.edition, url: src.url, phrase_hits: src.phrase_hits, etext_chars: src.etext_chars, window_words: src.window_words, window_chars: src.window.length, overlap: +src.overlap.toFixed(3) });
     if (src.overlap < MIN_OVERLAP) { note.reason = `work identified but window overlap ${src.overlap.toFixed(2)} < ${MIN_OVERLAP} (probe too noisy, or the page is commentary/paratext around the work)`; tally.work_only++; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); console.log(`  ~ ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
     Object.assign(note, licenceOf(src.source));
-    const trimmed = alignTrim(src.window, greekReads(p)); note.align_trim = trimmed.note; src.window = trimmed.window; note.window_chars = src.window.length;
+    const trimmed = alignTrimWindow(src.window, engineReads(p), GREEK_TRIM); note.align_trim = trimmed.note; src.window = trimmed.window; note.window_chars = src.window.length;
     if (!DRY) { fs.writeFileSync(outTxt, src.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
     tally.built++; tally.by_source[src.source] = (tally.by_source[src.source] || 0) + 1; tally.by_sub[p.substratum] = (tally.by_sub[p.substratum] || 0) + 1;
     console.log(`  ✓ ${p.slug}: ${src.source} ${src.work} (${src.work_title}) overlap ${src.overlap.toFixed(2)} window ${src.window_words} words / probe ${words.length} via ${probe.engine}`);
@@ -416,6 +395,26 @@ if (STRATUM.startsWith('greek')) {
 }
 const pages = reg.pages.filter(p => (!p.spare || p.promoted) && !p.retired && (!ONLY || p.slug === ONLY));
 let built = 0, none = 0;
+// --retrim (#5584): re-cut every EXISTING Chinese reference by alignment against the engine reads in
+// --root, without refetching the e-text. Valid because a stored window is the 4-gram trim's cut, which
+// is the page plus its ±8-character pad, so the alignment trim only ever shortens it.
+if (RETRIM) {
+  const tally = { trimmed: 0, kept: 0, chars_removed: 0 };
+  for (const p of pages) {
+    const outTxt = path.join(REFS, `${p.slug}.txt`), outJson = path.join(REFS, `${p.slug}.json`);
+    if (!fs.existsSync(outTxt) || !fs.existsSync(outJson)) continue;
+    const note = JSON.parse(fs.readFileSync(outJson, 'utf8')); if (note.text_location === 'private') continue;
+    const before = fs.readFileSync(outTxt, 'utf8');
+    const t = alignTrimWindow(before, engineReads(p), HAN_TRIM);
+    const cut = t.note.letters_before - t.note.letters_after;
+    note.align_trim = { ...t.note, pad_era_window_chars: note.align_trim?.pad_era_window_chars ?? before.length }; note.window_chars = t.window.length;
+    if (t.trimmed) tally.trimmed++; else tally.kept++; tally.chars_removed += cut;
+    console.log(`  ${t.trimmed ? '✂' : '='} ${p.slug}: ${t.note.letters_before} → ${t.note.letters_after} Han chars via ${t.note.reads_used.join(', ') || t.note.kept}`);
+    if (!DRY) { fs.writeFileSync(outTxt, t.window); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }
+  }
+  console.log(`\n${STRATUM} --retrim: ${tally.trimmed} trimmed, ${tally.kept} kept whole, ${tally.chars_removed} reference characters removed${DRY ? ' (dry run, nothing written)' : ''}`);
+  process.exit(0);
+}
 for (const p of pages) {
   const outTxt = path.join(REFS, `${p.slug}.txt`), outJson = path.join(REFS, `${p.slug}.json`);
   if (fs.existsSync(outJson) && !ONLY && !(RETRY && !fs.existsSync(outTxt))) { if (fs.existsSync(outTxt)) built++; else none++; continue; }
@@ -437,7 +436,11 @@ for (const p of pages) {
     } catch (e) { note.error = (note.error ? note.error + '; ' : '') + e.message.slice(0, 80); }
   }
   if (!src) { note.reason = note.reason || 'no work identified (CBETA search / Kanripo catalogue)'; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} ${note.error || ''}`); continue; }
-  const win = trimWindow(w.window, probe);
+  // The 4-gram trim pads ±8 characters, which on a spaceless script is a column of the next leaf
+  // (#5584); the alignment trim against every engine's read takes those back off. It falls back to the
+  // padded cut only when no read aligns.
+  const padded = trimWindow(w.window, probe), aligned = alignTrimWindow(padded, engineReads(p), HAN_TRIM);
+  const win = aligned.window; note.align_trim = { ...aligned.note, pad_era_window_chars: padded.length };
   Object.assign(note, { source: src.source, work: src.work, work_title: src.work_title || null, juan: src.juan, url: src.url, etext_chars: src.etext.length, window_chars: win.length, overlap: +w.overlap.toFixed(3), ...licenceOf(src.source) });
   if (w.overlap < MIN_OVERLAP) { note.reason = `overlap ${w.overlap.toFixed(2)} < ${MIN_OVERLAP}: page is not (cleanly) in this e-text`; if (!DRY) fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); none++; console.log(`  – ${p.slug}: ${note.reason} (${src.source} ${src.work})`); continue; }
   if (!DRY) { fs.writeFileSync(outTxt, win); fs.writeFileSync(outJson, JSON.stringify(note, null, 2)); }

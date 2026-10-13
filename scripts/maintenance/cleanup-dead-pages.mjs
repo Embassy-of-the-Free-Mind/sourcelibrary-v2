@@ -19,23 +19,19 @@
  *
  * Index notes (as of 2026-05-17):
  *   pages             — sparse index on archive_metadata.last_failure_at (fast queries)
- *   pages_warehouse   — NO archive_metadata index (full scan times out; skip unless added)
+ *   (--include-warehouse was dropped when the warehouse was retired 2026-10, #5470.)
  *
  * Usage:
  *   node scripts/maintenance/cleanup-dead-pages.mjs          # dry-run (default)
  *   node scripts/maintenance/cleanup-dead-pages.mjs --dry-run
  *   node scripts/maintenance/cleanup-dead-pages.mjs --execute
  *   node scripts/maintenance/cleanup-dead-pages.mjs --execute --reconcile-counts
- *   node scripts/maintenance/cleanup-dead-pages.mjs --include-warehouse  # adds pages_warehouse
  *
  * Safety:
  *   - NEVER deletes pages or books — only sets metadata flags
  *   - --execute must be explicitly passed; dry-run is the default
  *   - --reconcile-counts adjusts pages_count down by the number of dead
  *     pages per book; gated separately so marking can be reviewed first
- *   - pages_warehouse is skipped by default (no index → full scan → timeout)
- *     Pass --include-warehouse only after creating the index:
- *       db.pages_warehouse.createIndex({"archive_metadata.last_failure_at":1},{sparse:true})
  *
  * Run from Hetzner:
  *   set -a; source .env.production.local; set +a
@@ -46,7 +42,6 @@ import { MongoClient } from 'mongodb';
 
 const DRY_RUN = !process.argv.includes('--execute');
 const RECONCILE_COUNTS = process.argv.includes('--reconcile-counts');
-const INCLUDE_WAREHOUSE = process.argv.includes('--include-warehouse');
 const FAILURE_THRESHOLD = 3; // Mark blocked after this many failures
 
 // NDL Japan HTTP 500s may be transient (server overload, not dead URLs).
@@ -233,7 +228,6 @@ async function main() {
   console.log('='.repeat(60));
   console.log(DRY_RUN ? 'MODE: DRY RUN (no writes)' : 'MODE: EXECUTE (writing to production)');
   if (RECONCILE_COUNTS) console.log('      + --reconcile-counts: will adjust pages_count');
-  if (INCLUDE_WAREHOUSE) console.log('      + --include-warehouse: will process pages_warehouse');
   console.log(`Failure threshold: ${FAILURE_THRESHOLD}`);
   console.log('='.repeat(60));
   console.log('');
@@ -244,13 +238,6 @@ async function main() {
   const collections = [
     { pages: 'pages', books: 'books', label: 'live' },
   ];
-  if (INCLUDE_WAREHOUSE) {
-    // Only attempt warehouse if explicitly requested AND index should exist
-    collections.push({ pages: 'pages_warehouse', books: 'books_warehouse', label: 'warehouse' });
-  } else {
-    console.log('Skipping pages_warehouse (no archive_metadata index — would timeout).');
-    console.log('Add --include-warehouse after creating the index on pages_warehouse.\n');
-  }
 
   let totalDeadPages = 0;
   let totalBlocked = 0;
@@ -285,9 +272,6 @@ async function main() {
     if (!RECONCILE_COUNTS) {
       console.log('Add --reconcile-counts to also adjust book.pages_count.');
     }
-    if (!INCLUDE_WAREHOUSE) {
-      console.log('Add --include-warehouse (after creating the index) for warehouse pages.');
-    }
   }
 
   if (!DRY_RUN) {
@@ -295,9 +279,7 @@ async function main() {
     console.log('NEXT STEPS:');
     console.log('  1. archive-ocr.mjs page-fetch query already includes');
     console.log('     archive_metadata.blocked: { $ne: true } (added 2026-05-17).');
-    console.log('  2. For pages_warehouse, create the sparse index then re-run');
-    console.log('     with --include-warehouse.');
-    console.log('  3. If --reconcile-counts was NOT used, run again with that flag');
+    console.log('  2. If --reconcile-counts was NOT used, run again with that flag');
     console.log('     after reviewing the book list above.');
   }
 

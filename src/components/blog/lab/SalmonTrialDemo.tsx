@@ -73,7 +73,7 @@ export default function SalmonTrialDemo() {
 
   return (
     <LabCard
-      title="Station IV — Salmon's trial, at your desk"
+      title="Station IV: Salmon's trial, at your desk"
       headerRight={
         <button
           onClick={start}
@@ -82,13 +82,13 @@ export default function SalmonTrialDemo() {
           {i === null ? 'Begin the trial' : 'Restart'}
         </button>
       }
-      caption="Five rounds. In each, A and B are the same interval in two tunings — one pure (just), one equal-tempered — in random order. Play both, pick the sweeter, and see whether your verdict matches the Royal Society's."
+      caption="Five rounds. In each, A and B are the same interval in two tunings, one pure (just), one equal-tempered, in random order. Play both, pick the sweeter, and see whether your verdict matches the Royal Society's."
       sourceHref="/book/an-essay-to-the-advancement-of-musick-salmon"
       sourceLabel="Thomas Salmon, An Essay to the Advancement of Musick (1672)"
     >
       {i === null && (
         <p className="text-sm text-secondary">
-          Fifths differ by only <span className="font-mono">2 ¢</span> between the tunings — thirds by{' '}
+          Fifths differ by only <span className="font-mono">2 ¢</span> between the tunings; thirds by{' '}
           <span className="font-mono">14 ¢</span>. That asymmetry is the whole history of temperament,
           and you can hear it in five rounds.
         </p>
@@ -96,7 +96,7 @@ export default function SalmonTrialDemo() {
 
       {i !== null && !done && (
         <div>
-          <p className="text-sm text-muted mb-3">Round {i + 1} of {TRIALS.length} — {TRIALS[i].name}</p>
+          <p className="text-sm text-muted mb-3">Round {i + 1} of {TRIALS.length}: {TRIALS[i].name}</p>
           <div className="flex gap-2 mb-3">
             {(['A', 'B'] as const).map((w) => (
               <button

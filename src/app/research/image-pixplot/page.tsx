@@ -5,7 +5,7 @@ import dataRaw from '@/data/image-constellation.json';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'Image PixPlot — Source Library',
+  title: 'Image PixPlot | Source Library',
   description: 'Browse thousands of illustrations from pre-modern texts arranged by visual similarity. Zoom in to see actual thumbnails.',
   alternates: { canonical: '/research/image-pixplot' },
 };

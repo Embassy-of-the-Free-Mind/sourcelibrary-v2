@@ -1,0 +1,203 @@
+{
+ "book_id": "69ac840ff37088db51918695",
+ "tcp": "A42444",
+ "pages": 20,
+ "pages_kept": 19,
+ "page_drop": {
+  "low-confidence": 1
+ },
+ "lines": 944,
+ "lines_kept": 582,
+ "line_drop": {
+  "short": 292,
+  "unaligned": 37,
+  "gap": 4,
+  "length": 3,
+  "cer>0.3": 10,
+  "page-low-confidence": 16
+ },
+ "per_page": [
+  {
+   "page": "103",
+   "match": 0.97,
+   "sides": [
+    104
+   ],
+   "kept": 32,
+   "lines": 56
+  },
+  {
+   "page": "111",
+   "match": 0.964,
+   "sides": [
+    112
+   ],
+   "kept": 30,
+   "lines": 36
+  },
+  {
+   "page": "124",
+   "match": 0.952,
+   "sides": [
+    125
+   ],
+   "kept": 31,
+   "lines": 34
+  },
+  {
+   "page": "140",
+   "match": 0.956,
+   "sides": [
+    141
+   ],
+   "kept": 33,
+   "lines": 48
+  },
+  {
+   "page": "144",
+   "match": 0.914,
+   "sides": [
+    145
+   ],
+   "kept": 33,
+   "lines": 65
+  },
+  {
+   "page": "146",
+   "match": 0.94,
+   "sides": [
+    147
+   ],
+   "kept": 32,
+   "lines": 62
+  },
+  {
+   "page": "155",
+   "match": 0.644,
+   "sides": [
+    156
+   ],
+   "kept": 27,
+   "lines": 36
+  },
+  {
+   "page": "165",
+   "match": 0.662,
+   "sides": [
+    166
+   ],
+   "kept": 28,
+   "lines": 35
+  },
+  {
+   "page": "21",
+   "match": 0.922,
+   "sides": [
+    22
+   ],
+   "kept": 32,
+   "lines": 54
+  },
+  {
+   "page": "3",
+   "match": 0.828,
+   "sides": [
+    4
+   ],
+   "kept": 22,
+   "lines": 41
+  },
+  {
+   "page": "37",
+   "match": 0.858,
+   "sides": [
+    38
+   ],
+   "kept": 31,
+   "lines": 57
+  },
+  {
+   "page": "4",
+   "match": 0.731,
+   "sides": [
+    5
+   ],
+   "kept": 16,
+   "lines": 37
+  },
+  {
+   "page": "47",
+   "match": 0.865,
+   "sides": [
+    48
+   ],
+   "kept": 31,
+   "lines": 47
+  },
+  {
+   "page": "63",
+   "match": 0.94,
+   "sides": [
+    64
+   ],
+   "kept": 32,
+   "lines": 52
+  },
+  {
+   "page": "69",
+   "match": 0.959,
+   "sides": [
+    70
+   ],
+   "kept": 33,
+   "lines": 53
+  },
+  {
+   "page": "74",
+   "match": 0.911,
+   "sides": [
+    75
+   ],
+   "kept": 32,
+   "lines": 48
+  },
+  {
+   "page": "79",
+   "match": 0.908,
+   "sides": [
+    80
+   ],
+   "kept": 32,
+   "lines": 36
+  },
+  {
+   "page": "80",
+   "match": 0.928,
+   "sides": [
+    81
+   ],
+   "kept": 31,
+   "lines": 55
+  },
+  {
+   "page": "87",
+   "match": 0.807,
+   "sides": [
+    88
+   ],
+   "kept": 32,
+   "lines": 38
+  },
+  {
+   "page": "93",
+   "match": 0.797,
+   "sides": [
+    94
+   ],
+   "kept": 28,
+   "lines": 54
+  }
+ ],
+ "kept_read_cer_median": 0.023,
+ "kept_read_cer_mean": 0.0448
+}

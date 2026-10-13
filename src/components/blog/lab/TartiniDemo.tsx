@@ -100,16 +100,16 @@ export default function TartiniDemo() {
   const simple = nearestSimpleRatio(F1, f2);
   const isFundamental = simple !== null && simple.m - simple.n === 1;
   const ratioLine = simple === null
-    ? 'Between his figures — the ghost wanders with the slider.'
+    ? 'Between his figures: the ghost wanders with the slider.'
     : isFundamental
-      ? `${simple.m}:${simple.n} — so ${F1} = ${simple.m} × ${ghost.toFixed(0)} and ${f2.toFixed(0)} = ${simple.n} × ${ghost.toFixed(0)}: the ghost is the fundamental both tones share, the bass the consonance implies. His figures notate exactly this.`
-      : `${simple.m}:${simple.n} — the ghost lands on a harmonic of the implied bass.`;
+      ? `${simple.m}:${simple.n}, so ${F1} = ${simple.m} × ${ghost.toFixed(0)} and ${f2.toFixed(0)} = ${simple.n} × ${ghost.toFixed(0)}: the ghost is the fundamental both tones share, the bass the consonance implies. His figures notate exactly this.`
+      : `${simple.m}:${simple.n}: the ghost lands on a harmonic of the implied bass.`;
 
   return (
     <LabCard
-      title="Station V — The tone nobody is playing"
+      title="Station V: The tone nobody is playing"
       headerRight={<PlayToggle playing={playing} onClick={toggle} label="Play the two tones" />}
-      caption="Turn the volume up a little and listen below the two tones for a third, buzzing bass note — the difference tone your ear manufactures. Slide the second tone and the ghost slides with it, at exactly f₁ − f₂."
+      caption="Turn the volume up a little and listen below the two tones for a third, buzzing bass note, the difference tone your ear manufactures. Slide the second tone and the ghost slides with it, at exactly f₁ − f₂."
       sourceHref="/book/trattato-di-musica-secondo-la-vera-scienza-dell-armonia-tartini"
       sourceLabel="Giuseppe Tartini, Trattato di musica (1754)"
     >
@@ -129,7 +129,7 @@ export default function TartiniDemo() {
       <div className="mt-4 grid grid-cols-3 gap-3">
         <Readout label="Tone 1" value={`${F1} Hz`} note={noteName(F1)} />
         <Readout label="Tone 2" value={`${f2.toFixed(0)} Hz`} note={noteName(f2)} />
-        <Readout label="The ghost" value={`${ghost.toFixed(0)} Hz`} note={`≈ ${noteName(ghost)} — made by your ear`} />
+        <Readout label="The ghost" value={`${ghost.toFixed(0)} Hz`} note={`≈ ${noteName(ghost)}, made by your ear`} />
       </div>
       <p className="mt-2 text-xs text-muted">{ratioLine}</p>
 
@@ -158,7 +158,7 @@ export default function TartiniDemo() {
           </Link>
           <div className="mt-3 md:mt-0">
             <p className="text-xs text-secondary mb-2">
-              Tartini engraves the ghost as a real note — <em>terzo suono</em> written under each
+              Tartini engraves the ghost as a real note: <em>terzo suono</em> written under each
               worked dyad on this page. These presets put the slider on simple consonances so you
               can hear the bass his theory predicts:
             </p>

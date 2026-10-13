@@ -1,0 +1,195 @@
+{
+ "book_id": "6a42f6143ad4d80da1236d1b",
+ "tcp": "A16325",
+ "pages": 20,
+ "pages_kept": 11,
+ "page_drop": {
+  "low-confidence": 6,
+  "no-page-match": 3
+ },
+ "lines": 403,
+ "lines_kept": 151,
+ "line_drop": {
+  "short": 60,
+  "cer>0.3": 47,
+  "length": 21,
+  "page-low-confidence": 38,
+  "unaligned": 27,
+  "page-dropped": 59
+ },
+ "per_page": [
+  {
+   "page": "1",
+   "match": 0.563,
+   "sides": [
+    2
+   ],
+   "kept": 5,
+   "lines": 13
+  },
+  {
+   "page": "100",
+   "match": 0.806,
+   "sides": [
+    91
+   ],
+   "kept": 14,
+   "lines": 19
+  },
+  {
+   "page": "117",
+   "match": 0.736,
+   "sides": [
+    107
+   ],
+   "kept": 13,
+   "lines": 19
+  },
+  {
+   "page": "118",
+   "match": 0.664,
+   "sides": [
+    108
+   ],
+   "kept": 12,
+   "lines": 19
+  },
+  {
+   "page": "119",
+   "match": 0.601,
+   "sides": [
+    109
+   ],
+   "kept": 0,
+   "lines": 19
+  },
+  {
+   "page": "131",
+   "match": 0.577,
+   "sides": [
+    119
+   ],
+   "kept": 0,
+   "lines": 20
+  },
+  {
+   "page": "143",
+   "match": 0.808,
+   "sides": [
+    130
+   ],
+   "kept": 15,
+   "lines": 20
+  },
+  {
+   "page": "147",
+   "match": 0.762,
+   "sides": [
+    134
+   ],
+   "kept": 11,
+   "lines": 23
+  },
+  {
+   "page": "150",
+   "match": 0.485,
+   "kept": 0,
+   "lines": 19
+  },
+  {
+   "page": "157",
+   "match": 0.871,
+   "sides": [
+    143
+   ],
+   "kept": 18,
+   "lines": 22
+  },
+  {
+   "page": "176",
+   "match": 0.708,
+   "sides": [
+    160
+   ],
+   "kept": 10,
+   "lines": 16
+  },
+  {
+   "page": "32",
+   "match": 0.53,
+   "kept": 0,
+   "lines": 19
+  },
+  {
+   "page": "38",
+   "match": 0.64,
+   "sides": [
+    37
+   ],
+   "kept": 10,
+   "lines": 21
+  },
+  {
+   "page": "43",
+   "match": 0.493,
+   "kept": 0,
+   "lines": 21
+  },
+  {
+   "page": "47",
+   "match": 0.824,
+   "sides": [
+    43
+   ],
+   "kept": 15,
+   "lines": 24
+  },
+  {
+   "page": "56",
+   "match": 0.728,
+   "sides": [
+    51
+   ],
+   "kept": 13,
+   "lines": 21
+  },
+  {
+   "page": "58",
+   "match": 0.822,
+   "sides": [
+    53
+   ],
+   "kept": 16,
+   "lines": 18
+  },
+  {
+   "page": "61",
+   "match": 0.656,
+   "sides": [
+    56
+   ],
+   "kept": 10,
+   "lines": 18
+  },
+  {
+   "page": "79",
+   "match": 0.739,
+   "sides": [
+    72
+   ],
+   "kept": 15,
+   "lines": 22
+  },
+  {
+   "page": "99",
+   "match": 0.717,
+   "sides": [
+    90
+   ],
+   "kept": 12,
+   "lines": 30
+  }
+ ],
+ "kept_read_cer_median": 0.0,
+ "kept_read_cer_mean": 0.0392
+}

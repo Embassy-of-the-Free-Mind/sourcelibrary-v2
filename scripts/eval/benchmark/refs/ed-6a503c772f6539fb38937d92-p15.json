@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A09349",
+  "edition": "EEBO-TCP A09349 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a503c772f6539fb38937d92",
+  "page_number": 15,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 9509,
+    "to_char": 10567,
+    "overlap": 0.625,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts hominem ad imaginem (few extra incl. marginal ref); ends Labor corporis",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:52:48.312Z",
+  "text_location": "repo",
+  "text_sha256": "e17a5e866fd3b8b508e9fee5d63ecc21e355cdb07ec9c8fb818675a89d55c2a0",
+  "unit": {
+    "chars": 1058
+  }
+}

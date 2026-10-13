@@ -1,0 +1,443 @@
+[
+  {
+    "book_id": "69e788144a6785cfd60cef05",
+    "slot": 5,
+    "title": "gsang ba snying thig gi kha byang nyi snying nang gsal ba ltar",
+    "tradition": "bl-other-drametse",
+    "shelf_fit": "fits",
+    "shelf_note": "Drametse (Bhutan) Nyingma manuscript bundle, EAP via BL: a commentary on a tantra 'worn for liberation' (btags grol), a thod rgal practice manual (vajra chains, gazes, signs), a rdzogs chen anatomy of mind and wisdom, and an empowerment rite. This is the Snying thig material the title names.",
+    "rights_flag": null,
+    "structure_note": "Each image is a board of four loose leaves (I5). On p.33 and p.89 the leaf texts do not run on from one leaf to the next (p.33 leaf 3 ends 'ལུས་ཀྱི་བྱ་བ་དང་', leaf 4 opens 'གསེར་གྱི་སྙིང་པོ'), so one site 'page' is four separate openings, not a reading order. The text carries <leaf-break/> and the English marks each seam with an ellipsis, so the translator invents no bridges. The bundle holds several distinct works: p.33 uses the ༔ gter-tsheg hand; p.89/135/203 are in a shad-punctuated hand with red rubrics. On p.203 the third leaf is a title leaf, which suggests a new text begins inside this record. Counts disagree: the book field says pages_ocr 95, while structure counts 246 pages with OCR; 89 of 246 are translated. One printed-number repeat, from 5 readable numbers: too few to judge.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 33,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཆོས་Iརྣམས་ཀྱིས་ནི་རེ་གནས་པ",
+            "image": "ཆོས་རྣམས་ཀྱིས་ནི་རེ་གནས་པ",
+            "problem": "stray Latin 'I' inside the Tibetan",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བར་དོར་རང་གིས་རིག་པའི་རང་གདངས་སུ་ཟིན་པར་བྱེད་པའི",
+            "english": "one is seized by the natural radiance of one's own awareness in the intermediate state",
+            "problem": "agent turned around: the source has the practitioner recognise (seize) their own radiance, not get seized by it",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 89,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "གསར་བྱུང་གི་ཤེས་རབ་བྱུང་གི་སྒྲོན་མ",
+            "image": "…ཤེས་རབ་རང་བྱུང་གི་སྒྲོན་མ (appears)",
+            "problem": "'rang' apparently dropped; the English restores 'self-arisen'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྲན་མའི་འབྲུ་གུ་ཙམ་དང་། འབེ་ཐེ་བོང་ཙམ",
+            "english": "first like a pea or a mustard seed, then like a thumb",
+            "problem": "'mustard seed' is not in the source",
+            "severity": "minor"
+          },
+          {
+            "source": "སྐྱེ་བ་གཅིག་གམ་གཉིས་མ་འགྱངས་པར་སངས་རྒྱས",
+            "english": "one will become a Buddha without delayed, in one or two lifetimes",
+            "problem": "grammatical slip ('without delayed')",
+            "severity": "minor"
+          },
+          {
+            "source": "ཨུ་བེམས",
+            "english": "\"U-bem\" <note>a specific meditative state or syllable</note>",
+            "problem": "guessed gloss presented as a note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 135,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཤིག་ལེ་ཁྲག་གི་མ་གང་པ",
+            "english": "not filled with drops or blood",
+            "problem": "acceptable reading of a garbled line; the red rubrics on the leaves are translated without being marked as headings",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 203,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "(no block: three <leaf-break/> segments for four leaves)",
+            "image": "third leaf on the board is a framed title leaf: numeral ༡ above a one-line title (…སྤྲོས་མེད…)",
+            "problem": "the title leaf of a new text is not transcribed, so the reader loses the work's title",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཁྱད་པར་དུ་རི་ནོས་ཡོན་ཏན་གྱིས་ཆོས་ཟད་མ་ཤེས་པ་ལ་སྤྱོད",
+            "english": "In particular, they enjoy the inexhaustible qualities of the Dharma through the offerings.",
+            "problem": "the instrument (probably the jewels of the mandala list) becomes a generic 'offerings'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      89,
+      135
+    ],
+    "book_verdict": "Leaf-by-leaf, the transcription matches the board photographs line for line, and the English is careful and close. But every page is a board of four non-consecutive leaves, and the bundle holds several works under one title, one of whose title leaves was skipped.",
+    "reader_summary": "This is a bundle of Snying thig manuscripts from Drametse: a btags-grol commentary, a thod rgal manual and an empowerment rite. The Tibetan on each leaf is the leaf's own text, and the English follows it closely, with seams marked. A reader must know that one 'page' here is four separate leaves photographed together, not a continuous passage."
+  },
+  {
+    "book_id": "69e787e74a6785cfd60ce2cc",
+    "slot": 6,
+    "title": "las 'brel rtsal gyi gter ma rta mgrin gnyen po lha gsum",
+    "tradition": "bl-other-drametse",
+    "shelf_fit": "fits",
+    "shelf_note": "A gter ma cycle of Hayagriva, Vajrapani and Garuda (the 'three deities'), for subduing nagas: empowerments, naga-illness diagnostics, vase treasures, and a mantra appendix spoken as Padmasambhava. Drametse manuscript.",
+    "rights_flag": null,
+    "structure_note": "Each image is a board of three loose leaves (I5). On p.18, leaf 1 ends mid-formula 'ཁྱོད་ཀྱིས་དབང་མཆོག་' and leaf 2 opens 'བྲན་དང་ཁོལ་པོ', so the leaves on one image are not consecutive. The text carries <leaf-break/> and the English leaves the seams open. printed_backsteps 4 out of 8 readable printed numbers: the margin numerals are small cursive leaf numbers, so these are probably misreads, not a scrambled scan. Counts disagree: the book field says pages_ocr 86, while structure counts 172 pages with OCR; 73 of 172 are translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཟུག་དུ་ཙམ་ཡང",
+            "image": "ཟུག་རྔུ་ཙམ་ཡང",
+            "problem": "small misreading in a repeated formula; the English is unaffected",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྲབ་པའི་དབང་ … བརྡེག་པའི་དབང",
+            "english": "empowerments of striking … empowerments of driving in",
+            "problem": "'scattering' (mustard seed) and 'striking' (dagger) are rendered loosely and the two are swapped",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 53,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "(མ་སྲིན་མོ་དང་བཙན་ཙོ་དང་༔)",
+            "image": "small interlinear insertion under the last line",
+            "problem": "the interlinear addition is merged into the main line in parentheses; the content is kept",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཁ་སོ་མིག་སླེ་མི་འགྱུར",
+            "english": "whose mouth, teeth, and eyes are not slanted or changed",
+            "problem": "a doubtful parse of an obscure line, given without any flag",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 103,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྤུ་མའི་རྩ་བ",
+            "english": "roots of <term>puma</term> <gloss>a specific medicinal plant</gloss>",
+            "problem": "invented gloss: spu ma is most naturally hair (roots of hair), not a named plant",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 155,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "སྲིད྾ / སྲིད༝ / སྲིདX",
+            "image": "the scribe's × abbreviation mark after each repeated phrase",
+            "problem": "one repeat mark rendered as three different characters, including a Latin X",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "མི་སྲིད་རྒྱལ་པོ་དེ༔ ཤུ་ནད་བྱང་ཞིང་གསོས",
+            "english": "That King of the Impossible <note>likely a title for a legendary ruler</note> was cured of his skin diseases",
+            "problem": "mi srid (human realm / human king) read as 'impossible', with an invented note propping it up",
+            "severity": "moderate"
+          },
+          {
+            "source": "བདག་ལ་སྲིད་དང་གཏེར་དུ་སྩོལ",
+            "english": "grant me offspring and treasure",
+            "problem": "srid ('prosperity / existence') rendered as 'offspring' throughout the litany: doubtful",
+            "severity": "moderate"
+          },
+          {
+            "source": "འབྲང་རྒྱས་འབྲས་ལུག་བཏང",
+            "english": "<note>Offer a butter-sculpture, rice, and a sheep.</note>",
+            "problem": "a rubric of the source is moved into an editorial note",
+            "severity": "minor",
+            "class": "T3"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      18,
+      103
+    ],
+    "book_verdict": "Leaf by leaf, the transcription is right and the English is a usable, close rendering of a naga-subjugation cycle. A few glosses are guessed and stated as fact, and the three-leaf boards break the reading order.",
+    "reader_summary": "This is a Hayagriva–Vajrapani–Garuda gter ma for taming nagas: empowerments, signs of naga illness, and treasure-vase rites. The Tibetan is the leaves' own text. The English is trustworthy for the ritual sequence, but not for the occasional glossed term, such as 'King of the Impossible'. Each page shows three separate leaves, not a continuous passage."
+  },
+  {
+    "book_id": "69e788e74a6785cfd60d21ca",
+    "slot": 7,
+    "title": "sbyin sreg gi skor",
+    "tradition": "bl-other-drametse",
+    "shelf_fit": "fits",
+    "shelf_note": "A fierce (drag po) fire-offering manual from a gter gzhung: hearth measurements, the twelve substances with their mantras, a praise of the fire god, then Vajrakilaya 'liberation' (bsgral) of an effigy. Drametse manuscript booklet.",
+    "rights_flag": null,
+    "structure_note": "A sewn booklet: each image shows two pages, top and bottom, and the text runs on from top to bottom (p.7: 'འབུལ་བ་དང' → 'མེ་ཉིད་ཡེ་ཤེས་ཀྱི་མེར'), so reading order holds. 38 pages: 25 have OCR, 13 are translated (the book field says pages_ocr 18), so most of the booklet is unread in English.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སོ་བ་གྲ་མ་མེད་པ་ནས",
+            "english": "barley without awns",
+            "problem": "the separate grain 'so ba' is folded into the barley",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཚོཊ་རིམ་པ་༣་ནས་ཐབ་ཏུ་འབུལ",
+            "english": "From the third stage of the feast, offer into the hearth",
+            "problem": "'offer the feast into the hearth in three stages' misread as 'from the third stage'",
+            "severity": "moderate"
+          },
+          {
+            "source": "སོ་བ ། ཨོཾ་བཛྲ་བི་ཛ་ཡེ་སྭཱཧཱ",
+            "english": "For the unhusked rice: Om vajra vijaye svaha",
+            "problem": "the substance 'so ba' is mislabelled as unhusked rice",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 20,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "གཡོན་པ་ཤེས་རབ་རང་བཞིན་ལ",
+            "english": "My right side is the nature of Wisdom",
+            "problem": "left translated as right, so both sides are 'right' and the method/wisdom (father/mother) iconography is broken",
+            "severity": "moderate"
+          },
+          {
+            "source": "དབུ་གསུམ་ཕྱག་དྲུག་རྡོ་རྗེའི་ཤོག",
+            "english": "three heads and six arms <note>unclear: \"Vajra paper/leaf\"</note>",
+            "problem": "Vajrakilaya's vajra wings are dropped and replaced by a puzzled note",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "unclosed tag: '<note>trikaya, he is empowered … is generated in the space.' never closes, so the rest of that sentence sits inside a note or shows a raw tag",
+            "severity": "moderate",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      3,
+      7,
+      18
+    ],
+    "book_verdict": "The transcription is clean and in order in a readable booklet hand. The English is good on the ritual inventory and liturgy, but p.20 swaps left for right in the Kilaya visualisation and leaves a broken note tag. Only about a third of the booklet is translated.",
+    "reader_summary": "This is a fierce homa manual (hearth, twelve substances, mantras, fire-god praise) followed by a Vajrakilaya effigy-liberation rite. The Tibetan is the page's own text. The English can be trusted for the sequence of the rite, but should be checked against the Tibetan for iconographic detail."
+  },
+  {
+    "book_id": "69e788cd4a6785cfd60d1ed1",
+    "slot": 8,
+    "title": "sde brgyad gser skyems (EAP105-1-3-195)",
+    "tradition": "bl-other-drametse",
+    "shelf_fit": "fits",
+    "shelf_note": "A golden libation (gser skyems) to the eight classes, with a Padma Heruka self-visualisation, a long dedication to the local and regional deities, and a torma offering to the nagas. Short Drametse manuscript booklet.",
+    "rights_flag": null,
+    "structure_note": "A small booklet: two pages per image, top and bottom, and the text runs on from top to bottom (p.10: '…སྒྲུབ' → 'པའི་གྲོགས་མཛོད་ཅིག'). 22 pages; all have OCR but only 9 are translated (the book field says pages_ocr 10). printed_backsteps 2 from only 3 readable numbers: probably misreads of the tiny leaf numerals.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "བི་མཱུ་མ་ར། །ཤུ་ལས་དཀར",
+            "image": "the five-nectar abbreviation bi mu ma ra shu runs on from the line before",
+            "problem": "a shad inserted before 'ཤུ' splits the abbreviation, and the English then reads 'From the syllable Shu arise the white and red'",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྷནྡྷ་ཁ་ཊྭཱཾ་སྡིག",
+            "english": "a skull cup, a khatvanga, and a scorpion gesture",
+            "problem": "sdig (threatening mudra) rendered as 'scorpion'",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྒྱལ་བཙུན་བསྐུལ་བའི་གནོད྾",
+            "english": "the harm of being provoked by the spirits of kings and nuns",
+            "problem": "rgyal btsun (gyalpo and btsun mo spirits) taken literally as 'kings and nuns'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "དག་ཅན་གྱི་བདག་ལ་བསྲུངས",
+            "image": "དམ་ཅན་… (as the English reads it)",
+            "problem": "minor misreading; the English is right",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ས་སྐྱོགས་ཡུལ་ཕྱོགས་འདི་ཉིད",
+            "english": "this region of Sakyog",
+            "problem": "a spelling read as a proper place name, without flagging it",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show",
+    "showcase_pages": [
+      10,
+      11,
+      15
+    ],
+    "book_verdict": "A short, sound record: the transcription matches the booklet pages, reading order holds, and the English is a faithful rendering of a standard gser skyems liturgy with only a few small slips.",
+    "reader_summary": "This is a golden libation to the eight classes of spirits and the local deities, as practised at Drametse. The Tibetan is the page's own text. The English can be trusted as a working translation, apart from an odd gloss such as 'scorpion gesture' for the threatening mudra."
+  }
+]

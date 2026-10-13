@@ -1,0 +1,2218 @@
+{
+ "at": "2026-10-11T02:58:40.871Z",
+ "set": "all",
+ "pages": 40,
+ "read_by_both": 40,
+ "readers": {
+  "opus": "Claude Opus (subscription subagent)",
+  "gemini": "gemini-3.7-flash-high via agy -p (plan mode)"
+ },
+ "per_reader": {
+  "opus": {
+   "n": 40,
+   "new": {
+    "serious_pages": {
+     "k": 3,
+     "n": 40,
+     "rate": 0.075,
+     "ci95": [
+      0.026,
+      0.199
+     ]
+    },
+    "reversal_pages": {
+     "k": 3,
+     "n": 40,
+     "rate": 0.075,
+     "ci95": [
+      0.026,
+      0.199
+     ]
+    },
+    "serious_errors": 3,
+    "reversals": 3,
+    "mean_score": 4.13
+   },
+   "old": {
+    "serious_pages": {
+     "k": 6,
+     "n": 40,
+     "rate": 0.15,
+     "ci95": [
+      0.071,
+      0.291
+     ]
+    },
+    "reversal_pages": {
+     "k": 6,
+     "n": 40,
+     "rate": 0.15,
+     "ci95": [
+      0.071,
+      0.291
+     ]
+    },
+    "serious_errors": 6,
+    "reversals": 6,
+    "mean_score": 3.58
+   },
+   "prefer": {
+    "new": {
+     "k": 31,
+     "n": 40,
+     "rate": 0.775,
+     "ci95": [
+      0.625,
+      0.877
+     ]
+    },
+    "old": {
+     "k": 6,
+     "n": 40,
+     "rate": 0.15,
+     "ci95": [
+      0.071,
+      0.291
+     ]
+    },
+    "same": {
+     "k": 3,
+     "n": 40,
+     "rate": 0.075,
+     "ci95": [
+      0.026,
+      0.199
+     ]
+    }
+   }
+  },
+  "gemini": {
+   "n": 40,
+   "new": {
+    "serious_pages": {
+     "k": 3,
+     "n": 40,
+     "rate": 0.075,
+     "ci95": [
+      0.026,
+      0.199
+     ]
+    },
+    "reversal_pages": {
+     "k": 1,
+     "n": 40,
+     "rate": 0.025,
+     "ci95": [
+      0.004,
+      0.129
+     ]
+    },
+    "serious_errors": 3,
+    "reversals": 1,
+    "mean_score": 4.75
+   },
+   "old": {
+    "serious_pages": {
+     "k": 11,
+     "n": 40,
+     "rate": 0.275,
+     "ci95": [
+      0.161,
+      0.428
+     ]
+    },
+    "reversal_pages": {
+     "k": 10,
+     "n": 40,
+     "rate": 0.25,
+     "ci95": [
+      0.142,
+      0.402
+     ]
+    },
+    "serious_errors": 14,
+    "reversals": 11,
+    "mean_score": 3.78
+   },
+   "prefer": {
+    "new": {
+     "k": 36,
+     "n": 40,
+     "rate": 0.9,
+     "ci95": [
+      0.769,
+      0.96
+     ]
+    },
+    "old": {
+     "k": 3,
+     "n": 40,
+     "rate": 0.075,
+     "ci95": [
+      0.026,
+      0.199
+     ]
+    },
+    "same": {
+     "k": 1,
+     "n": 40,
+     "rate": 0.025,
+     "ci95": [
+      0.004,
+      0.129
+     ]
+    }
+   }
+  }
+ },
+ "agreement": {
+  "prefer": {
+   "n": 40,
+   "observed": 0.8,
+   "kappa": 0.309
+  },
+  "serious_new": {
+   "n": 40,
+   "observed": 0.95,
+   "kappa": 0.64
+  },
+  "serious_old": {
+   "n": 40,
+   "observed": 0.775,
+   "kappa": 0.343
+  }
+ },
+ "final_prefer": {
+  "new": {
+   "k": 35,
+   "n": 40,
+   "rate": 0.875,
+   "ci95": [
+    0.739,
+    0.945
+   ]
+  },
+  "old": {
+   "k": 4,
+   "n": 40,
+   "rate": 0.1,
+   "ci95": [
+    0.04,
+    0.231
+   ]
+  },
+  "same": {
+   "k": 1,
+   "n": 40,
+   "rate": 0.025,
+   "ci95": [
+    0.004,
+    0.129
+   ]
+  }
+ },
+ "unresolved_splits": [],
+ "both_prefer_old": {
+  "k": 2,
+  "n": 40,
+  "rate": 0.05,
+  "ci95": [
+   0.014,
+   0.165
+  ],
+  "pages": [
+   {
+    "slot": "s27",
+    "vol": 183,
+    "page_number": 543,
+    "page_id": "6abed69b896ea18127c8ec15",
+    "set": "stage1",
+    "opus": "B reverses the key claim that inference cannot establish validity. A's slips are minor or moderate, though B is otherwise more precise (arthakriyā, the lemma glosses).",
+    "gemini": "Translation A correctly renders the core epistemological argument that validity cannot be conceptualized from inference and accurately parses the commentary's lemma citations."
+   },
+   {
+    "slot": "s38",
+    "vol": 185,
+    "page_number": 168,
+    "page_id": "6abed76e896ea18127c8eeea",
+    "set": "stage1",
+    "opus": "Both repeat the OCR's opening negation. A recovers 'this is upright' where B writes the nonsense 'determined to follow this', and B also turns 'one of the two is not seen' into 'neither is seen'. A's flattening of the conditional is the lesser fault.",
+    "gemini": "Translation A correctly reads the image's key epistemological predicate 'upright' (འགྲེང་བ་) where B translates an OCR error as 'follow this', and A properly identifies the misread 'sdong gru' as a post or tree trunk."
+   }
+  ]
+ },
+ "stop_rule": {
+  "threshold": 0.1,
+  "fired": false
+ },
+ "rows": [
+  {
+   "slot": "s01",
+   "vol": 96,
+   "section": "Madhyamaka",
+   "page_number": 386,
+   "page_id": "6abeb159896ea18127c82806",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "same",
+    "prefer_reason": "Both versions render every sentence and verse of the folio faithfully with only minor slips (an opaque page-initial fragment, a passivised verse line); neither has a serious or moderate error the other avoids.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A renders the Madhyamaka philosophical terminology more precisely and reads more naturally than Translation B.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error and both render every sentence and verse on the image; A is marginally better because B fills the page-initial fragment with an unsupported doctrinal claim ('no selfhood') where A stays neutral, a moderate-vs-minor difference only.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s02",
+   "vol": 97,
+   "section": "Madhyamaka",
+   "page_number": 255,
+   "page_id": "6abeb1dd896ea18127c829bd",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B renders ལྟ་བ correctly as seeing/sense faculties, keeps 'alternatively', and leaves the page-final 'རིམ་' sentence open as the block does, while A mistranslates ལྟ་བ as 'views' and closes the broken-off sentence into an assertion.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B correctly translates 'lta ba' (darśana) as sensory seeing rather than philosophical views, supplies accurate technical Sanskrit glosses, and faithfully preserves the trailing incomplete clause at the folio boundary.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s03",
+   "vol": 98,
+   "section": "Madhyamaka",
+   "page_number": 607,
+   "page_id": "6abeb20c896ea18127c82d62",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error, but B correctly identifies Manu, Daśapura, Dhṛtarāṣṭra, Vyāsa and Viśvāmitra and keeps the verse structure and causal links, while A misnames the authority and turns Dhṛtarāṣṭra into a vague phrase.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately identifies and restores classical Sanskrit proper names (Sage Manu, Daśapura, Dhṛtarāṣṭra) that Translation A misinterprets.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s04",
+   "vol": 99,
+   "section": "Madhyamaka",
+   "page_number": 148,
+   "page_id": "6abeb247896ea18127c82e2d",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful in the analysis of subject, probandum, reason and example; A's one slip (opening example clause) is corrected later on the page, while B misstates the opponent position as 'previously refuted' and closes the run-on final sentence wrongly.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A captures the folio continuation markers seamlessly, accurately translates grammatical aspects of the debate terminology, and fully conveys all formal syllogistic components.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s05",
+   "vol": 100,
+   "section": "Madhyamaka",
+   "page_number": 320,
+   "page_id": "6abeb289896ea18127c83119",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both get the agent/action theses right, but A correctly treats the 'no need to explain' line as a quoted lemma about the preceding half-verse and keeps the syllogism structure, while B misreads that line and its summary invents an argument.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A is philosophically precise and accurately identifies the four lines (pādas) of the root kārikā, whereas Translation B repeatedly mistakes each line for a separate root verse and conflates existence (sadbhūta) with establishment (siddha).",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s06",
+   "vol": 101,
+   "section": "Madhyamaka",
+   "page_number": 486,
+   "page_id": "6abeb2b4896ea18127c83465",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B renders the root verse's conditional faithfully as a quatrain and keeps the 'do you claim' and gloss formulas. A recasts the verse's protasis and pads the stanza.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Translation A correctly preserves the philosophical logic of the Four Noble Truths argument without being misled by the OCR error that corrupted 'suffering' (སྡུག་བསྔལ་) into 'fault' (སྐྱོན་).",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error. B renders the root verse's conditional faithfully as a quatrain and keeps 'do you claim', while A recasts the verse's protasis (moderate). B's added 'just as' is only minor.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s07",
+   "vol": 102,
+   "section": "Madhyamaka",
+   "page_number": 216,
+   "page_id": "6abe825259b86b7d32a65a54",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful and neither has a serious error, but A invents 'We do not deny' at the page break where B stops honestly at 'we...'.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B translates the verse quotation and folio boundary trail-off with greater fidelity, avoiding A's spurious h3 header and interpolated verb at the leaf cutoff.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s08",
+   "vol": 103,
+   "section": "Madhyamaka",
+   "page_number": 740,
+   "page_id": "6abeb2ee896ea18127c8380f",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 2,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "A reverses the passage's central claim: it presents the grasping of dependently arisen things as real, which the Teacher calls ignorance, as a true realization. B renders that definition correctly and has only moderate slips.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 2,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately captures the complex syntax and philosophy defining ignorance as the mistaken apprehension of illusory entities as real, whereas Translation A reverses this definition into a genuine realization.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s09",
+   "vol": 104,
+   "section": "Madhyamaka",
+   "page_number": 608,
+   "page_id": "6abeb331896ea18127c83a7b",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error. A follows the Tibetan lemma by lemma and adds nothing. B adds an interpretive gloss, a note that contradicts the commentary's own explanation of the three groups, and a generic meta.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A cleanly preserves the commentary's lemma-exegesis structure with distinct paragraph breaks, avoiding intrusive extraneous commentary notes.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s10",
+   "vol": 105,
+   "section": "Madhyamaka",
+   "page_number": 415,
+   "page_id": "6abeb361896ea18127c83c96",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error, but A misparses the opening word gloss, the quoted verse and the mind-only sentence, while B has a single moderate subject-predicate swap.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Version B correctly interprets the particle commentary, accurately parses the cited verse, and cleanly handles the leaf boundary fragments.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s11",
+   "vol": 106,
+   "section": "Madhyamaka",
+   "page_number": 301,
+   "page_id": "6abeb3a1896ea18127c83ee0",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Neither has a serious error, but A drops the opening line of the quoted verse and garbles 'by another', while B renders the whole page with only minor over-readings.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 1,
+     "reversal": 0
+    },
+    "old": {
+     "score": 2,
+     "serious": 2,
+     "reversal": 2
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A correctly preserves technical Madhyamaka terminology and dialectical debate structure, whereas Translation B reverses the speaker introducing the objection and distorts the Dharmasaṃgīti verse to invent 'the self'.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "same",
+    "prefer_reason": "Neither has a serious error. A drops the opening line of the quoted verse and B reads 'the self' into the same verse. Each is one moderate slip in the same passage, and the rest of both is faithful, so neither is clearly better.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "same"
+  },
+  {
+   "slot": "s12",
+   "vol": 107,
+   "section": "Madhyamaka",
+   "page_number": 515,
+   "page_id": "6abeb3d8896ea18127c841f2",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both share the non-apprehension misreading, but A also misparses the key line on the seeing of the ultimate as non-seeing, and it adds a negation in the pervader argument.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately renders technical Madhyamaka and Pramāṇa terminology and faithfully preserves Tibetan syntactic structures including relative clauses and instrumental agent constructions.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s13",
+   "vol": 108,
+   "section": "Madhyamaka",
+   "page_number": 167,
+   "page_id": "6abeb406896ea18127c842de",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error. B renders ཉམས ('ruined') and ངལ་བ ('toil') correctly and keeps the objection-reply structure explicit, while A twice turns ཉམས into 'discouraged' and adds a note about a textual variant that is not on the print.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately renders 'nyams' as the ruin and fruitlessness of the path's enterprise rather than psychological discouragement.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s14",
+   "vol": 109,
+   "section": "Madhyamaka",
+   "page_number": 195,
+   "page_id": "6abeb442896ea18127c84576",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error, but B keeps the pore image, the Daśabhūmika quotation structure and the two negations in the śīla definition, and flags its conjecture on ལ་གྷ་ཉ; A has four moderate distortions and imposes list formatting.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B is more rigorous and accurate, correctly identifying the Sanskrit transliteration 'la gha nya' (laṅghana) and preserving the technical nuance of Buddhist philosophical citations.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s15",
+   "vol": 110,
+   "section": "Madhyamaka",
+   "page_number": 342,
+   "page_id": "6abeb4ba896ea18127c8487d",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful and complete, but B drops the name Vaiśālī and renders ཅང་མི་བཟོད་པ as 'unbearable', while A has only a minor wording slip.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A correctly identifies the city of Vaiśālī, accurately renders the exclusionary phrasing for the visiting crowd, and translates the body similes with superior precision.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s16",
+   "vol": 111,
+   "section": "Madhyamaka",
+   "page_number": 318,
+   "page_id": "6abeb4e8896ea18127c84b33",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error, but B keeps 'in verse, or', the full qualifiers of each aspiration and the page-end break, while A compresses and drops a clause.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B is fully complete and faithful to the source folio, preserving the opening clause fragment, precise technical terms, the full eon-formula in the second aspiration, and the natural folio-break continuation.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s17",
+   "vol": 112,
+   "section": "Madhyamaka",
+   "page_number": 20,
+   "page_id": "6abeb51e896ea18127c84c7d",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "A reverses the opening sentence on the four means of gathering and gets the number 23,000 koṭis wrong; B keeps the negation, the number and the verse, and its only real slip is shortening the monk's name.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately parses the opening conditional statement on the four means of gathering disciples which Translation A distorts, correctly translates proper names and technical terminology, and formats the verse quotations with appropriate line breaks.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s18",
+   "vol": 174,
+   "section": "Pramana",
+   "page_number": 86,
+   "page_id": "6abed3fd896ea18127c8d2ca",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B frames the opponent's objection and the reply correctly (If one objects … If one says this, we reply), and it renders 'subject of the subject' and ངོ་སྲུང accurately; A blurs the objection's speaker and recasts the opponent's thesis.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 2,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B is complete and structurally faithful, accurately rendering dialectical arguments, technical terminology, and the incomplete final clause, whereas Translation A drops the first sentence, misconstrues an opponent's objection as a counterfactual conditional, and invents words at the bottom leaf break.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s19",
+   "vol": 175,
+   "section": "Pramana",
+   "page_number": 323,
+   "page_id": "6abed42d896ea18127c8d694",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "A turns the objector's rhetorical question into a statement that the subject 'would be unestablished', which reverses the objection; B's faults (an inserted interpretive note and an over-closed final sentence) are moderate.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A accurately captures the technical Pramāṇa terminology, preserves the dialectical structure and the trailing sentence fragment at the bottom of the folio, and avoids inserting invented commentary.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error; A has one self-contradictory line in the objection whose thrust survives, while B adds an invented interpretive note and finishes the folio's broken final sentence as a question that probably inverts it, so A is the safer text for a reader.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s20",
+   "vol": 176,
+   "section": "Pramana",
+   "page_number": 35,
+   "page_id": "6abed47c896ea18127c8d845",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "B drops the negation in the core example ('no horripilation in this person' becomes 'a person who exhibits goosebumps'), reversing the thesis, while A's slips are moderate and recoverable.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A accurately preserves the essential negation in the logical thesis and correctly handles Pramāṇa technical terminology, whereas Translation B reverses the negation and misinterprets the opening phrase.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s21",
+   "vol": 177,
+   "section": "Pramana",
+   "page_number": 288,
+   "page_id": "6abed4cf896ea18127c8dbd4",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B construes the opening svabhāvaviruddhopalabdhi argument and the closing 'basis of fruits such as form' correctly, where A garbles both and adds unsupported notes.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B provides a cleaner and more accurate technical rendering of Buddhist logic, correctly parsing the sense-bases count and lemma boundaries.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s22",
+   "vol": 178,
+   "section": "Pramana",
+   "page_number": 148,
+   "page_id": "6abed51b896ea18127c8dd7e",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error, but B gets the container/contained relation and the 'wisdom etc. are the mind itself' clause right, and it keeps the summary verses as verse; its own slips are smaller.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B formats the summary verses (saṃgraha-ślokas) as verse stanzas rather than prose paragraphs and explicitly indicates the continuation from the preceding folio.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s23",
+   "vol": 179,
+   "section": "Pramana",
+   "page_number": 95,
+   "page_id": "6abed582896ea18127c8dfb3",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B correctly renders rtogs byed as arbiters and keeps arbiters, proponent and respondent distinct, so the regress argument reads clearly, whereas A misidentifies the arbiters with the disputants (with a wrong gloss) and has more moderate slips.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 2,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B correctly identifies 'rtogs byed' as debate arbiters, maintains the structural distinction between judges and disputants, and preserves the page catchword, whereas Translation A misidentifies the arbiters and reverses an epistemological claim regarding valid cognition.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s24",
+   "vol": 180,
+   "section": "Pramana",
+   "page_number": 289,
+   "page_id": "6abed5e1896ea18127c8e2ab",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error. A is right on the logic of the opening (paksha or sapakṣa; karma as what is inferred; discernment as Īśvara's attribute), while B mis-parses all three; A's one OCR-driven slip ('reply') matters less.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A accurately preserves core Buddhist Pramāṇa logical terminology (pakṣa and sapakṣa), correctly identifies karma as the object of cognition, and properly structures the parallel arguments regarding Īśvara's attributes.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s25",
+   "vol": 181,
+   "section": "Pramana",
+   "page_number": 432,
+   "page_id": "6abed61a896ea18127c8e616",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B keeps the opponent's whole objection in the opponent's voice and parses the 'declines through the earlier cognitions' clause correctly. A misattributes the opponent's premise and garbles the fatigue refutation.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B is accurate, philosophically sound, and preserves the logical flow, whereas Translation A contains a serious reversal in the refutation based on causal incapacity.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s26",
+   "vol": 182,
+   "section": "Pramana",
+   "page_number": 352,
+   "page_id": "6abed661896ea18127c8e838",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error. B keeps the 'among us' vs 'others' doctrinal contrast and the 'even if … nevertheless' structure, and it leaves the final fragment open; A blurs the first, breaks the second and completes the fragment with a clause of its own.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately renders technical Pramāṇa terminology with appropriate glosses and correctly handles the syntax of folio boundary fragments.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s27",
+   "vol": 183,
+   "section": "Pramana",
+   "page_number": 543,
+   "page_id": "6abed69b896ea18127c8ec15",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "B reverses the key claim that inference cannot establish validity. A's slips are minor or moderate, though B is otherwise more precise (arthakriyā, the lemma glosses).",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Translation A correctly renders the core epistemological argument that validity cannot be conceptualized from inference and accurately parses the commentary's lemma citations.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "old"
+  },
+  {
+   "slot": "s28",
+   "vol": 184,
+   "section": "Pramana",
+   "page_number": 321,
+   "page_id": "6abed72a896ea18127c8ed77",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful in argument with no serious errors, but B adds two interpretive notes not on the page (one a wrong guess at the comparison term), while A's 'no distinction from error' matches what the image appears to say.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A captures the flow and technical terminology of the Buddhist epistemological argument more concisely and naturally without intrusive bracketed glosses.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s29",
+   "vol": 185,
+   "section": "Pramana",
+   "page_number": 653,
+   "page_id": "6abed76e896ea18127c8f0cf",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Both are faithful with no serious errors, but B renders the closing analogy of another person's experience coherently where A garbles it.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A provides precise Sanskrit technical vocabulary with standard diacritics (arthāpatti, pramāṇa, parokṣa) and preserves the formal structural commentary cues more accurately.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Neither version has a serious error; B renders the closing analogy of another person's experience coherently where A garbles it (moderate), and A's Sanskrit glossing is not a fidelity advantage.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "old"
+  },
+  {
+   "slot": "s30",
+   "vol": 186,
+   "section": "Pramana",
+   "page_number": 462,
+   "page_id": "6abed7ae896ea18127c8f2a2",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful with no serious errors; B is slightly more precise ('the spot of ground of that nature', 'non-confusion' rather than 'non-erroneous conclusion') and marks the objection/reply structure clearly.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately captures the scholastic Pramāṇa commentary structure (distinguishing lemmas, objections, and responses) and provides superior philosophical precision with helpful Sanskrit and Tibetan terminology glosses.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s31",
+   "vol": 187,
+   "section": "Pramana",
+   "page_number": 471,
+   "page_id": "6abed81b896ea18127c8f4a3",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "A keeps the 'kill one or the other' comparison and reads སེམས་པ correctly as 'considering', where B replaces the comparison with an invented 'meaningless' and adds a spurious 'consciousness'.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A is faithful to the Pramāṇa terminology and accurately renders the classical logical debate formulas, whereas Translation B garbles the stock example of 'killing one' (sod).",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s32",
+   "vol": 188,
+   "section": "Pramana",
+   "page_number": 352,
+   "page_id": "6abed87d896ea18127c8f67c",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error, but B has four moderate misreadings (the fire sentence, conceptual cognition as object instead of instrument, the 'single expression' reply, the opening clause) where A has two.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A correctly translates 'rtog pa dang ldan pa' as a thinking agent investigating through cognition rather than mistaking it for conceptual cognition as the object of inquiry, and handles the epistemological argument with superior precision.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s33",
+   "vol": 189,
+   "section": "Pramana",
+   "page_number": 600,
+   "page_id": "6abed8d1896ea18127c8f9b8",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "B keeps the ཞེ་ན objection and the siddhāntavādin's reply apart ('One might argue... To this, the proponent of tenets replies'); A gives the opponent's objection to the proponent of tenets and also adds a conditional the Tibetan does not have.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately preserves the dialectical structure (distinguishing the opponent's objection from the Siddhāntin's reply) and uses more precise philosophical terminology.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s34",
+   "vol": 190,
+   "section": "Pramana",
+   "page_number": 286,
+   "page_id": "6abed914896ea18127c8fb0e",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "same",
+    "prefer_reason": "A has the right Sāṃkhya terms (manifest, primordial matter) but misreads the siddhasādhana fault and the opponent's statement, and invents the end of the broken sentence. B gets the structure of the debate right but mistranslates vyakta as 'clarity' throughout. Neither has a serious error, and their moderate errors roughly balance.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A correctly translates the core Sāṃkhya technical category གསལ་བ་ as 'the manifest' (vyakta), whereas Translation B renders it throughout as 'clarity', distorting the philosophical argument.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error. B's mistranslation of the core term vyakta as 'clarity' runs through the whole page and hides what the argument is about. A's slips are local: siddhasādhana and one misparse. So A serves a reader better.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s35",
+   "vol": 191,
+   "section": "Pramana",
+   "page_number": 111,
+   "page_id": "6abed96d896ea18127c8fd43",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error, but A renders the inference-is-a-pramāṇa parallel and the cow/gavaya example correctly, where B garbles both and also gets the gavaya gloss wrong.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A exhibits superior philosophical accuracy and fluency in classical Buddhist epistemological terminology, correctly translating the double negative in the inference analogy and accurately resolving pronoun references.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s36",
+   "vol": 192,
+   "section": "Pramana",
+   "page_number": 537,
+   "page_id": "6abed9ad896ea18127c901c5",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "same",
+    "prefer_reason": "Neither has a serious error; A hides the first sentence in <meta> and misframes the root lemma, while B garbles the 'empty of that' gloss and drops 'near' in the last clause, so they come out roughly even.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A accurately renders Pramāṇa terminology and maintains logical coherence, whereas Translation B reverses the core epistemological conclusion by claiming that lacking knowledge makes one omniscient.",
+    "ocr_score": 3,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error (the 'omitted negation' is not in the print); A renders the 'empty of that' gloss and the opening reductio in their intended sense, while B's literal 'being empty of that means being an omniscient being' reads as the opposite of the argument, which outweighs A's invented 'Because' in the lemma and its meta-wrapped first sentence.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s37",
+   "vol": 193,
+   "section": "Pramana",
+   "page_number": 611,
+   "page_id": "6abed9ff896ea18127c904a7",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Both are faithful with no serious errors, but A renders the apakarṣa and avarṇya definitions literally while B adds 'intrinsic' and 'already established' that are not in the Tibetan.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "same",
+    "prefer_reason": "Both translations are exceptionally faithful and accurate, correctly rendering technical Pramāṇa debate terminology and the dialectical nuances of futile rejoinders.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Neither has a serious error; A renders the apakarṣa and avarṇya definitions literally while B adds 'intrinsic' and 'already established' that are not in the Tibetan, so A is marginally more faithful.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "old"
+  },
+  {
+   "slot": "s38",
+   "vol": 185,
+   "section": "Pramana",
+   "page_number": 168,
+   "page_id": "6abed76e896ea18127c8eeea",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "old",
+    "prefer_reason": "Both repeat the OCR's opening negation. A recovers 'this is upright' where B writes the nonsense 'determined to follow this', and B also turns 'one of the two is not seen' into 'neither is seen'. A's flattening of the conditional is the lesser fault.",
+    "ocr_score": 3,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "Translation A correctly reads the image's key epistemological predicate 'upright' (འགྲེང་བ་) where B translates an OCR error as 'follow this', and A properly identifies the misread 'sdong gru' as a post or tree trunk.",
+    "ocr_score": 3,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "old"
+  },
+  {
+   "slot": "s39",
+   "vol": 176,
+   "section": "Pramana",
+   "page_number": 252,
+   "page_id": "6abed47c896ea18127c8d91e",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error. B keeps the quoted lemmas and the key 'indirectly' (བརྒྱུད་པས) and reads the permanence argument plausibly; A has more moderate slips and an invented gloss.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately preserves the dialectical commentary structure, properly tags the sentence continuation from the preceding folio, and provides precise Sanskrit philosophical terminology.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s40",
+   "vol": 111,
+   "section": "Madhyamaka",
+   "page_number": 424,
+   "page_id": "6abeb4e8896ea18127c84b9d",
+   "set": "stage1",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "B inverts བརྙས་ (contempt) into 'respect' in the opening verse, while A's errors are a shared moderate slip on གསོང་པོ and minor interpretive wording.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A correctly translates བརྙས་ as contempt rather than reversing its meaning to respect as B does.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  }
+ ]
+}

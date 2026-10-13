@@ -57,6 +57,7 @@ const RATIO = Number(val('--ratio', 0.75));
  */
 export const REGENERATED_ON_MAIN = {
   'scripts/eval/EXPERIMENTS.md': ['node', 'scripts/eval/build-experiments.mjs', '--check'],
+  'scripts/eval/experiments/index.json': ['node', 'scripts/eval/build-experiments.mjs', '--check'],
   'scripts/eval/INDEX.md': ['node', 'scripts/eval/build-index.mjs', '--check'],
 };
 

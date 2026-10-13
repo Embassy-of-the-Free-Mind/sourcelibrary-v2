@@ -1,0 +1,1136 @@
+{
+ "seed": 5925,
+ "rule": "queue = Latin books with pipeline_next.step = ocr (catalogue stage); per stratum Mulberry32(5925 + index) shuffle, the first N with ≥ 3 pages in the pages collection; start uniform as in draw",
+ "strata": {
+  "1600s": {
+   "queue_books": 11928,
+   "drawn": [
+    {
+     "book_id": "6a9077a84e70467f3522ec84",
+     "year": 1627,
+     "title": "Delibata Iuris Teil: [1]: Continentia congeriem, succinctamque resolutionem praecipuarum Quaestionum",
+     "n_pages": 652,
+     "start_index": 376,
+     "pages": [
+      376,
+      377,
+      378
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a429f17831988adcb768976",
+     "year": 1638,
+     "title": "Chronographi regii dictionarium immo quadruplex eiusdem antiqui dictionarii suplementum",
+     "n_pages": 909,
+     "start_index": 489,
+     "pages": [
+      489,
+      490,
+      491
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6ab69080b19f98fd449c5",
+     "year": 1666,
+     "title": "Disputatio medica de tertiana intermittente exquisita",
+     "n_pages": 16,
+     "start_index": 12,
+     "pages": [
+      12,
+      13,
+      14
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b67597b3f4fc04415b6d40",
+     "year": 1604,
+     "title": "Assertionum ex aliquot in π. relatis pericopis extructarum semicenturia",
+     "n_pages": 12,
+     "start_index": 9,
+     "pages": [
+      9,
+      10,
+      11
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6b38d96dc15d4a16da2aa",
+     "year": 1677,
+     "title": "Dissertatio de Solomonis salute",
+     "n_pages": 40,
+     "start_index": 34,
+     "pages": [
+      34,
+      35,
+      36
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b690ca080b19f98fce093c",
+     "year": 1627,
+     "title": "Consilium chronologicum, qua ratione tempora ex fundamentis restitui et emendari possint",
+     "n_pages": 216,
+     "start_index": 181,
+     "pages": [
+      181,
+      182,
+      183
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6a96b080b19f98fd38cbd",
+     "year": 1663,
+     "title": "Disputatio theologica de mysterio trinitatis",
+     "n_pages": 40,
+     "start_index": 18,
+     "pages": [
+      18,
+      19,
+      20
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b68ae453f0f937bfd588a4",
+     "year": 1620,
+     "title": "Syncharmata kai prosphōnēmata triumphalia ... Dn. Henrici Wonstorpii, Bremensis : quum ipsi die 28 M",
+     "n_pages": 6,
+     "start_index": 2,
+     "pages": [
+      2,
+      3,
+      4
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4b8182c0fa233644e304ff",
+     "year": 1693,
+     "title": "Iustitia Belli Et Pacis In Statu Regni Portugallici Fundata, Sive Historia Portugalliae, In qua quae",
+     "n_pages": 93,
+     "start_index": 29,
+     "pages": [
+      29,
+      30,
+      31
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a42556edfbbb4d07aa506c7",
+     "year": 1627,
+     "title": "Opera Omnia Anatomica Et Medica : Ex postrema recognitione, accessione quorundam librorum, qui lucem",
+     "n_pages": 479,
+     "start_index": 312,
+     "pages": [
+      312,
+      313,
+      314
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4383af57a09c2c0fcbe0fd",
+     "year": 1647,
+     "title": "Opera Omnia Argumentis, Explicationibus, et Notis illustrata , A Joanne Ludovico de la Cerda Toletan",
+     "n_pages": 622,
+     "start_index": 617,
+     "pages": [
+      617,
+      618,
+      619
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4f0057b18250223e2f35d9",
+     "year": 1639,
+     "title": "Kalendae januariae ad serenissimum Franciae delphinum, virtutis augures et praenunciae felicitatis",
+     "n_pages": 48,
+     "start_index": 30,
+     "pages": [
+      30,
+      31,
+      32
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b699e5080b19f98fcfc022",
+     "year": 1643,
+     "title": "De divina unitate, ac trinitate ...",
+     "n_pages": 38,
+     "start_index": 36,
+     "pages": [
+      36,
+      37,
+      38
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a42720928e9db2e39c1241e",
+     "year": 1699,
+     "title": "De Motu Mercurii In tubo Torricilliano Epistola: Accessit Altera eiusdem argumenti Bernhardi Ramazzi",
+     "n_pages": 172,
+     "start_index": 110,
+     "pages": [
+      110,
+      111,
+      112
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a90abcca24fcaf1d5b93a02",
+     "year": 1652,
+     "title": "Christus Deus Homo sive de Deo Homine",
+     "n_pages": 696,
+     "start_index": 317,
+     "pages": [
+      317,
+      318,
+      319
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a90511dee2696c62355f97f",
+     "year": 1643,
+     "title": "Universa medicina",
+     "n_pages": 1634,
+     "start_index": 1192,
+     "pages": [
+      1192,
+      1193,
+      1194
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b51e48768235dc6598f1dd",
+     "year": 1612,
+     "title": "Index universalis alphabeticus materias omni facultate consulte pertractatas ...",
+     "n_pages": 764,
+     "start_index": 668,
+     "pages": [
+      668,
+      669,
+      670
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": "Bayerische Staatsbibliothek (BSB Munich)",
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a908bc3582ccd8b63f8ddcb",
+     "year": 1670,
+     "title": "Exercitatio Iuris Canonici De Electione Romani Pontificis, Quam Praeside Joh. Christophoro Wagenseil",
+     "n_pages": 70,
+     "start_index": 23,
+     "pages": [
+      23,
+      24,
+      25
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b67d5970c69d645a703f96",
+     "year": 1610,
+     "title": "Disputatio de successionibus ab intestato",
+     "n_pages": 16,
+     "start_index": 6,
+     "pages": [
+      6,
+      7,
+      8
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b68a202368e1fad3218e5f",
+     "year": 1620,
+     "title": "Propositio, quam S. Caes. Majestatis Legatus etc : ad Correspondentes etc. 24 Novembris (4 Decembris",
+     "n_pages": 20,
+     "start_index": 5,
+     "pages": [
+      5,
+      6,
+      7
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4f7b712a450f51978cf6cd",
+     "year": 1658,
+     "title": "Methodus Concionandi, Sive Rhetorica Ecclesiastica: In Gratam Memoriam Anni Iubilei Quem Postridie C",
+     "n_pages": 209,
+     "start_index": 162,
+     "pages": [
+      162,
+      163,
+      164
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b670dab3f4fc044159f4a5",
+     "year": 1600,
+     "title": "Conclusionum ex iure civili, canonico, feudali, ac sac. Rom. Imper. constitut. decades septem",
+     "n_pages": 12,
+     "start_index": 8,
+     "pages": [
+      8,
+      9,
+      10
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6a540080b19f98fd22fe3",
+     "year": 1658,
+     "title": "Themata isthaec miscella",
+     "n_pages": 12,
+     "start_index": 7,
+     "pages": [
+      7,
+      8,
+      9
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6853870c69d645a73971d",
+     "year": 1616,
+     "title": "Theses miscellaneae ex tribus prioribus digestorum libris conscriptae : continentes non tantum iuris",
+     "n_pages": 64,
+     "start_index": 16,
+     "pages": [
+      16,
+      17,
+      18
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6a42d080b19f98fd1e030",
+     "year": 1656,
+     "title": "Dissertatio hermeneutico-theologica de ecclesia Dei instituta secundùm filum quaestionis katēchēseōs",
+     "n_pages": 80,
+     "start_index": 53,
+     "pages": [
+      53,
+      54,
+      55
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    }
+   ]
+  },
+  "1500s": {
+   "queue_books": 7353,
+   "drawn": [
+    {
+     "book_id": "6a909b7ab7feee6e9c42a728",
+     "year": 1562,
+     "title": "Disputationes. In quibus primum ex professo monomachia <quam singulare certamen Latini, recentiores ",
+     "n_pages": 720,
+     "start_index": 227,
+     "pages": [
+      227,
+      228,
+      229
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b64b4e18b87551bfc6cc29",
+     "year": 1521,
+     "title": "Regule grammaticales antiquorum cum earundem declarationibus : &amp; multis argumentis positis circa",
+     "n_pages": 69,
+     "start_index": 44,
+     "pages": [
+      44,
+      45,
+      46
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b66aa0b3f4fc044157a834",
+     "year": 1595,
+     "title": "De causis salutis hominum, theses theologicae",
+     "n_pages": 12,
+     "start_index": 3,
+     "pages": [
+      3,
+      4,
+      5
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b64ea118b87551bfc8ae85",
+     "year": 1557,
+     "title": "Catechismus, hoc est brevis et pia explicatio Decalogi, Symboli Apostolici, Orationis Dominice ac Sa",
+     "n_pages": 65,
+     "start_index": 63,
+     "pages": [
+      63,
+      64,
+      65
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": "6a9060331da1ecc792bd3644",
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a26ba7461b3857ed05aff60",
+     "year": 1503,
+     "title": "Aureum plane[que] divinu[m] opusculu[m] Mercurij Trismegisti de potestate ac sapiencia dei",
+     "n_pages": 108,
+     "start_index": 51,
+     "pages": [
+      51,
+      52,
+      53
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a90e31743335ae0648762ff",
+     "year": 1579,
+     "title": "Articuli, qui nostrae partis nomine exhibendi fuerant in concilio mantuae, vel ubicunque illud futur",
+     "n_pages": 96,
+     "start_index": 28,
+     "pages": [
+      28,
+      29,
+      30
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b658a818b87551bfcf500d",
+     "year": 1576,
+     "title": "Hieron. Mercurialis variarum lectionum libri quatuor priores multo quam ante &amp; auctiores &amp; e",
+     "n_pages": 363,
+     "start_index": 239,
+     "pages": [
+      239,
+      240,
+      241
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a90638835fb94ebaecbc88b",
+     "year": 1541,
+     "title": "Historia plantarum et vires ex Dioscoride, Paulo aegineta, Theophrasto, Plinio, et recentioribus Gra",
+     "n_pages": 375,
+     "start_index": 283,
+     "pages": [
+      283,
+      284,
+      285
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b64a8918b87551bfc66cdc",
+     "year": 1517,
+     "title": "Platonis Opera",
+     "n_pages": 796,
+     "start_index": 89,
+     "pages": [
+      89,
+      90,
+      91
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a90b36053c5573b4bc2f553",
+     "year": 1556,
+     "title": "De duplici copia commentarii duo multa capitum et formularum accessione locupletati, et diligenter r",
+     "n_pages": 329,
+     "start_index": 81,
+     "pages": [
+      81,
+      82,
+      83
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b660aeb3f4fc0441533e16",
+     "year": 1586,
+     "title": "Sphaera Ioannis de Sacro Bosco emendata : Eliae Vineti Santonis scholia in eandem sphaeram ab ipso a",
+     "n_pages": 171,
+     "start_index": 66,
+     "pages": [
+      66,
+      67,
+      68
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": true
+    },
+    {
+     "book_id": "69b64a2e18b87551bfc63650",
+     "year": 1514,
+     "title": "Missale Ecclesie Basiliensis consuetudini q[uam] diligentissime applicatu[m]: et quantu[m] anniti ar",
+     "n_pages": 664,
+     "start_index": 450,
+     "pages": [
+      450,
+      451,
+      452
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b635f51c1c21a37382a1ca",
+     "year": 1510,
+     "title": "In hoc libro contenta Epitome compendiosaque introductio in libros arithmeticos diui Severini Boetij",
+     "n_pages": 232,
+     "start_index": 45,
+     "pages": [
+      45,
+      46,
+      47
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a9070a5336010794b0d468c",
+     "year": 1564,
+     "title": "De legibus XII tabularum tripartita commentatio",
+     "n_pages": 288,
+     "start_index": 162,
+     "pages": [
+      162,
+      163,
+      164
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a06f3c3f27801273413ebbb",
+     "year": 1558,
+     "title": "Ptolemaei Planisphaerium. Iordani Planisphaerium. Federici Commandini Vrbinatis in Ptolemaei Planisp",
+     "n_pages": 160,
+     "start_index": 47,
+     "pages": [
+      47,
+      48,
+      49
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6503418b87551bfc9c528",
+     "year": 1560,
+     "title": "In Exodum, qui secundus est liber Moisis, Hebr. Schenit Commentarii",
+     "n_pages": 279,
+     "start_index": 55,
+     "pages": [
+      55,
+      56,
+      57
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": "6a42e03c7ec1a96fc1a01e0f",
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b64b0e18b87551bfc6b6cb",
+     "year": 1519,
+     "title": "Descriptio de situ Helvetiae, &amp; vicinis gentibus",
+     "n_pages": 72,
+     "start_index": 56,
+     "pages": [
+      56,
+      57,
+      58
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b63abb1c1c21a37384783a",
+     "year": 1530,
+     "title": "De Vera Et Falsa Religione",
+     "n_pages": 459,
+     "start_index": 317,
+     "pages": [
+      317,
+      318,
+      319
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a06cdc4c749b698e5b2c58e",
+     "year": 1540,
+     "title": "Naturalis historiae [3]",
+     "n_pages": 608,
+     "start_index": 131,
+     "pages": [
+      131,
+      132,
+      133
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a90c0763822dc24e5402110",
+     "year": 1598,
+     "title": "De militia Romana libri quinque: commentarius ad Polybium",
+     "n_pages": 452,
+     "start_index": 344,
+     "pages": [
+      344,
+      345,
+      346
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    }
+   ]
+  },
+  "undated": {
+   "queue_books": 4719,
+   "drawn": [
+    {
+     "book_id": "6a4c44a422a2c197c6721c51",
+     "year": null,
+     "title": "Dissertatio De Vindice Sanguinis, Quae est De Redemptore Ebraeorum Secunda, Quam, Suffragantibus Sup",
+     "n_pages": 22,
+     "start_index": 6,
+     "pages": [
+      6,
+      7,
+      8
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4c205c6831c6094ae55d6f",
+     "year": null,
+     "title": "Dissertationem Inauguralem De Demonstratione Decreto Et Authoritate Iurisconsultorum Ordinis In Cele",
+     "n_pages": 32,
+     "start_index": 26,
+     "pages": [
+      26,
+      27,
+      28
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4b1d687622bb5aba12bd8e",
+     "year": null,
+     "title": "Oratio Joachimi raymari megapolensis, de duabus rebus, legibus nimirum et armis, sine quibus nec ben",
+     "n_pages": 50,
+     "start_index": 4,
+     "pages": [
+      4,
+      5,
+      6
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a495f2402fc7ff012c2664b",
+     "year": null,
+     "title": "Oratio De Nobili Illa Quaestione, Utrum cum aliis tum vero maxime literarum cultoribus prosit peregr",
+     "n_pages": 40,
+     "start_index": 32,
+     "pages": [
+      32,
+      33,
+      34
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4c5abd4f9f1be4c86c05c1",
+     "year": null,
+     "title": "Meletema Physicum, Quo Ratio Brutorum breviter examinata, Consensu Amplissimae Facult. Philos. Prior",
+     "n_pages": 24,
+     "start_index": 16,
+     "pages": [
+      16,
+      17,
+      18
+     ],
+     "visible": true,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a48e3321e36bf8015227d65",
+     "year": null,
+     "title": "Orbis imperans",
+     "n_pages": 378,
+     "start_index": 85,
+     "pages": [
+      85,
+      86,
+      87
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a49122da9e39181572df0f1",
+     "year": null,
+     "title": "Tractatus De Crisibus Et Diebus Criticis : In Quo cum de caeteris omnibus, quae ad horum pertinent c",
+     "n_pages": 190,
+     "start_index": 149,
+     "pages": [
+      149,
+      150,
+      151
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a27030d605ae229305984e1",
+     "year": null,
+     "title": "Danielis Ludovici, Archiatri Quondam Ducal. Saxo-Goth. Opera Omnia, Videlicet I. De Pharmacia modern",
+     "n_pages": 1211,
+     "start_index": 837,
+     "pages": [
+      837,
+      838,
+      839
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a4a54d00deff67032eaf01c",
+     "year": null,
+     "title": "Institutiones Theologicae, Ex Sacris Literis, Conciliis, Doctoribus Ecclesiasticis, Praecipue D. Tho",
+     "n_pages": 786,
+     "start_index": 664,
+     "pages": [
+      664,
+      665,
+      666
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a942010699d55d47eb71120",
+     "year": null,
+     "title": "Chronologia historiae herodoti et thucydidis recognita et additis ecclesiae Christi ac imperii Roman",
+     "n_pages": 170,
+     "start_index": 164,
+     "pages": [
+      164,
+      165,
+      166
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    }
+   ]
+  },
+  "1700s": {
+   "queue_books": 3827,
+   "drawn": [
+    {
+     "book_id": "69b6c4e58566c838146666cb",
+     "year": 1708,
+     "title": "Dissertatio medica inauguralis de valetudine plantarum secunda et adversa",
+     "n_pages": 28,
+     "start_index": 2,
+     "pages": [
+      2,
+      3,
+      4
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6ec7bb1a3146c0525b6fd",
+     "year": 1748,
+     "title": "Operarius Triplex : Apta, brevi, &amp; practica materia, ac methodo instructus juxtà triplex Operari",
+     "n_pages": 510,
+     "start_index": 416,
+     "pages": [
+      416,
+      417,
+      418
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6fc773c7947b468d84f45",
+     "year": 1782,
+     "title": "Dissertatio academica sistens hortum Gryphicum",
+     "n_pages": 36,
+     "start_index": 7,
+     "pages": [
+      7,
+      8,
+      9
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6c3e38566c83814662ed6",
+     "year": 1706,
+     "title": "Specvlvm Amoris &amp; Doloris In Sacratissimo ac Divinissimo Corde Jesu Incarnati, Evcharistici, &am",
+     "n_pages": 476,
+     "start_index": 403,
+     "pages": [
+      403,
+      404,
+      405
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a50e6f03c25d10492e227c2",
+     "year": 1774,
+     "title": "Opera cum notis Minellii",
+     "n_pages": 698,
+     "start_index": 132,
+     "pages": [
+      132,
+      133,
+      134
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    }
+   ]
+  },
+  "1400s": {
+   "queue_books": 923,
+   "drawn": [
+    {
+     "book_id": "6a9091d50f0bff48dccbce1f",
+     "year": 1486,
+     "title": "Oratio ad Fridericum III Imperatorem et Maximilianum I Regem Romanorum",
+     "n_pages": 15,
+     "start_index": 3,
+     "pages": [
+      3,
+      4,
+      5
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a9053e3dbce5358e41f69d3",
+     "year": 1497,
+     "title": "Opera medica, sive Practica cum textu noni ad Almansorem",
+     "n_pages": 502,
+     "start_index": 33,
+     "pages": [
+      33,
+      34,
+      35
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b634431c1c21a37381eba2",
+     "year": 1496,
+     "title": "Copulata tractatuum Petri Hispani etiam parvorum logicalium ac trium modernorum secundum doctrinam T",
+     "n_pages": 782,
+     "start_index": 687,
+     "pages": [
+      687,
+      688,
+      689
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": "6a4578d74409ce37745cb4eb",
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "6a909242582ccd8b63f90b2a",
+     "year": 1496,
+     "title": "Tenores novelli",
+     "n_pages": 127,
+     "start_index": 70,
+     "pages": [
+      70,
+      71,
+      72
+     ],
+     "visible": false,
+     "hidden_reason": null,
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    },
+    {
+     "book_id": "69b6468018b87551bfc44af0",
+     "year": 1479,
+     "title": "Laurencii valle in pogiu[m] elegans inuectiva",
+     "n_pages": 26,
+     "start_index": 8,
+     "pages": [
+      8,
+      9,
+      10
+     ],
+     "visible": false,
+     "hidden_reason": "launch_curation",
+     "duplicate_of": null,
+     "provider": null,
+     "in_reference_pool": false
+    }
+   ]
+  }
+ }
+}

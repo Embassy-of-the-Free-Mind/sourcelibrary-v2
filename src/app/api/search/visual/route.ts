@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { CLIP_URL } from '@/lib/clip';
-import { resolveSearchScope, matchClip, isScoped } from '@/lib/tenant-search-scope';
+import { CLIP_URL, clipHeaders } from '@/lib/clip';
+import { resolveSearchScope, closedScopeResponse, matchClip, isScoped } from '@/lib/tenant-search-scope';
 
 export const maxDuration = 15;
 
@@ -31,22 +30,21 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ results: [], query: '', total: 0 });
   }
 
-  // Tenant context — when present, only return images whose book is in this
+  // Tenant scope — when present, only return images whose book is in this
   // tenant. Required for tenant subdomain lockdown (e.g. bph.sourcelibrary.org).
-  const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
-  if (tenantSlug && !tenantId) {
-    return NextResponse.json({ results: [], query, total: 0 });
-  }
+  // A slug the proxy could not resolve is resolved here, not answered empty on
+  // sight; a scope that stays closed says so (#6426).
   const scope = await resolveSearchScope(request.headers);
   if (scope.kind === 'closed') {
-    return NextResponse.json({ results: [], query, total: 0 });
+    return closedScopeResponse(scope, { results: [], query, total: 0 }, 'search.visual');
   }
+  const tenantId = scope.kind === 'tenant' ? scope.tenantId : null;
 
   try {
     // Encode text query via CLIP text encoder on Hetzner
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: clipHeaders(),
       body: JSON.stringify({ text: query }),
       signal: AbortSignal.timeout(5000),
     });

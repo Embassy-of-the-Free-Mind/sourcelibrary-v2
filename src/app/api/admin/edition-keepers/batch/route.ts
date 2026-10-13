@@ -182,11 +182,11 @@ export const POST = withInnerCircleAuth(async (request, session) => {
   const reviewed = Number(sc.reviewed) || 0;
   const flagged = Number(sc.flagged) || 0;
   if (of === 0 || reviewed < of) {
-    return NextResponse.json({ error: 'spot check incomplete — review every sampled cluster before keeping' }, { status: 400 });
+    return NextResponse.json({ error: 'spot check incomplete: review every sampled cluster before keeping' }, { status: 400 });
   }
   if (flagged / of >= SPOT_CHECK_ABORT_RATIO) {
     return NextResponse.json({
-      error: `${flagged}/${of} sampled clusters were flagged — the MECHANICAL_KEEP classification is not holding; review these by hand`,
+      error: `${flagged}/${of} sampled clusters were flagged. The MECHANICAL_KEEP classification is not holding; review these by hand`,
     }, { status: 409 });
   }
 
@@ -228,7 +228,7 @@ export const POST = withInnerCircleAuth(async (request, session) => {
     const key = String(row._id);
     const members = ((row.members as { id: string }[]) || []).map((m) => m.id);
     if (members.some((m) => ftLive.has(m))) {
-      results.push({ editionKey: key, status: 'error', message: 'a member holds a live First Translation badge — review this cluster by hand' });
+      results.push({ editionKey: key, status: 'error', message: 'a member holds a live First Translation badge; review this cluster by hand' });
       continue;
     }
     const keeperId = (row.keeper_suggested as string) || '';

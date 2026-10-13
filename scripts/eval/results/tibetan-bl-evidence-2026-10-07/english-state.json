@@ -1,0 +1,59 @@
+{
+ "terma-bio": {
+  "books": 133,
+  "pages": 23560,
+  "en_from_current_ocr": 11713,
+  "en_from_older_ocr": 0,
+  "no_en": 11847,
+  "unreadable": 10323,
+  "no_en_readable": 1524,
+  "en_on_unreadable": 0,
+  "en_models": {
+   "gemini-3-flash-preview": 11712,
+   "unknown": 1
+  }
+ },
+ "kangyur": {
+  "books": 213,
+  "pages": 94576,
+  "en_from_current_ocr": 81647,
+  "en_from_older_ocr": 0,
+  "no_en": 12929,
+  "unreadable": 750,
+  "no_en_readable": 12179,
+  "en_on_unreadable": 0,
+  "en_models": {
+   "gemini-3-flash-preview": 81621,
+   "gemini-3.1-flash-lite": 26
+  }
+ },
+ "other": {
+  "books": 993,
+  "pages": 117643,
+  "en_from_current_ocr": 42359,
+  "en_from_older_ocr": 0,
+  "no_en": 75284,
+  "unreadable": 67809,
+  "no_en_readable": 7475,
+  "en_on_unreadable": 0,
+  "en_models": {
+   "gemini-3-flash-preview": 42355,
+   "gemini-3.1-flash-lite-preview": 2,
+   "gemini-3.1-flash-lite": 2
+  }
+ },
+ "nyingma": {
+  "books": 95,
+  "pages": 38974,
+  "en_from_current_ocr": 33096,
+  "en_from_older_ocr": 0,
+  "no_en": 5878,
+  "unreadable": 616,
+  "no_en_readable": 5262,
+  "en_on_unreadable": 0,
+  "en_models": {
+   "gemini-3-flash-preview": 33095,
+   "unknown": 1
+  }
+ }
+}

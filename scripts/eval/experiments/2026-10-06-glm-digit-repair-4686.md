@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 6
+n_pages: 20
+verdict: "GLM-OCR digits lift Kraken's digit strings from 78.5% to 89.2% (body text 95.6%) with no CER loss, one number under the 90% bar, so the gate stopped."
+status: undecided
+decision: "Nothing written and #5969 stays blocked; write with unverified running heads, re-gate on body text, or leave empty is Derek's call on #4686"
+superseded_by: null
+issue: [4686, 5969]
+---
 <!-- PRIOR ART: 2026-10-06-kraken-refused-english-4686.md (the same 20 pages, references, scorer and gate; it stopped on digits, 78.5 %); 2026-10-04 #5660 r3 (PR #5786: GLM-OCR the best open reader of English print) and #5830 (GLM drops page furniture). Nothing before this merged two engines' reads of one page. -->
 ## 2026-10-06 · Can GLM-OCR's numbers repair Kraken's read of the pages Gemini refuses? (#4686)
 

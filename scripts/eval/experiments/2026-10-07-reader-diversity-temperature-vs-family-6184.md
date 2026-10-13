@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [sa]
+scripts: [Deva]
+canons: []
+n_books: 2
+n_pages: 30
+verdict: "Temperature samples share errors (Flash vs Flash phi 0.55) where Flash vs Pro is 0.09; a 5x Flash T1.0 vote reads 65% of 63 Sanskrit mark slots, 3x Pro 94%."
+status: rejected
+decision: "Temperature sampling not used as a detector or voter; recipe proposed as Pro decides, Flash and lite nominate (#6184)"
+superseded_by: null
+issue: 6184
+---
 ## 2026-10-07 · Do temperature samples find Sanskrit OCR errors as well as a second model family? (#6184)
 
 PRIOR ART: the #6184 tie-break (majority of Flash + lite + Pro, 9/10 right when it added a mark and 6/12

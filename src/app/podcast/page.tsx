@@ -1,12 +1,18 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
+import { FEED_TYPES } from '@/lib/feed-links';
+import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 
 export const revalidate = 3600; // 1h ISR
 
 export const metadata = {
   title: 'Source Library Deep Dive: Podcast',
   description: 'AI-generated scholarly podcasts exploring rare books from the 15th-18th centuries. Alchemy, Hermetica, Kabbalah, and the Western esoteric tradition, grounded in primary sources.',
+  // Own canonical: without it the page inherited the root layout's '/' and
+  // read to search engines as a duplicate of the homepage. `types` restated
+  // because metadata merges shallowly per key.
+  alternates: { canonical: '/podcast', types: FEED_TYPES },
 };
 
 interface PodcastEpisode {
@@ -155,7 +161,9 @@ export default async function PodcastPage() {
           </div>
         )}
 
-        {/* CTA */}
+        {/* CTA. The Librarian is refused on partner hosts (#4330), and this
+            page is served there, so the link goes too. */}
+        <HideOnTenantHost>
         <div className="mt-12 pt-8 border-t border-[#e8e4dc] text-center">
           <p className="text-[#6b6560] text-sm font-body mb-3">
             Want to create your own episode?
@@ -167,6 +175,7 @@ export default async function PodcastPage() {
             Research a topic with the Librarian
           </Link>
         </div>
+        </HideOnTenantHost>
       </div>
     </div>
   );

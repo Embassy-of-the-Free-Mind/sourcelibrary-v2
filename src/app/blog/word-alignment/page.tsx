@@ -57,7 +57,7 @@ export default function WordAlignmentPage() {
           English word below, and the source word that produced it lights up on the other side.
           The alignment is computed on-demand by{' '}
           <a href="https://ai.google.dev/gemini-api/docs/embeddings" className="text-accent-gold-dark hover:underline">Gemini
-          embeddings</a> &mdash; the same model maps words from any language into a shared
+          embeddings</a>: the same model maps words from any language into a shared
           vector space, so it works across scripts, centuries, and languages without
           pre-computation.
         </p>
@@ -71,8 +71,8 @@ export default function WordAlignmentPage() {
         <p className="text-secondary leading-relaxed mb-5">
           Ficino&rsquo;s <em>De Voluptate</em> (1457) argues that Plato distinguished between
           two kinds of positive feeling. Click &ldquo;gladness&rdquo; and &ldquo;joy&rdquo;
-          in the English &mdash; they come from different Latin words.
-          Click &ldquo;pleasure&rdquo; &mdash; it&rsquo;s a third.
+          in the English; they come from different Latin words.
+          Click &ldquo;pleasure&rdquo;: it&rsquo;s a third.
         </p>
       </article>
 
@@ -114,7 +114,7 @@ export default function WordAlignmentPage() {
         </h2>
         <p className="text-secondary leading-relaxed mb-5">
           The same technique works across writing systems. Click &ldquo;Zeus&rdquo; in the
-          English and &ldquo;Διὸς&rdquo; lights up in the Greek &mdash; the model knows they
+          English and &ldquo;Διὸς&rdquo; lights up in the Greek. The model knows they
           mean the same thing even though the scripts share no visual similarity. Click
           &ldquo;sea&rdquo; to find &ldquo;θάλασσα.&rdquo;
         </p>
@@ -132,7 +132,7 @@ export default function WordAlignmentPage() {
       <article className="prose-content max-w-none">
         <p className="text-secondary leading-relaxed mb-12">
           This works on any page in the library. The embeddings are computed the moment you
-          click &mdash; no batch job, no pre-processing. Every English word becomes a window
+          click, with no batch job, no pre-processing. Every English word becomes a window
           into the source text. Not for the scholars who can already read the original,
           but for everyone else.
         </p>

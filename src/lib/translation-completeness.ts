@@ -88,6 +88,35 @@ export function translationPercent(book: TranslationCountsSource): number {
   return translationCompleteness(book).percent;
 }
 
+// ── The same formula over many books (Mongo $group) ─────────────────────────
+// Aggregate surfaces (analytics/canon, the admin dashboard) used to divide summed
+// `pages_translated` by summed `pages_count`, so blanks and plates counted against
+// the corpus too. Sum these two per-book expressions instead and divide with
+// aggregateTranslationPercent(): each book contributes exactly what
+// translationCompleteness() would — the same denominator, the same fallback, and
+// its translated count capped at that denominator so no book can push the total
+// over 100.
+
+/** Per-book denominator, as translationCompleteness() picks it. */
+export const TRANSLATABLE_PAGES_EXPR = {
+  $cond: [
+    { $and: [{ $isNumber: '$pages_translatable' }, { $gte: ['$pages_translatable', 0] }] },
+    '$pages_translatable',
+    { $max: [0, { $subtract: [{ $ifNull: ['$pages_count', 0] }, { $ifNull: ['$pages_blank', 0] }] }] },
+  ],
+} as const;
+
+/** Per-book numerator, capped at {@link TRANSLATABLE_PAGES_EXPR}. */
+export const TRANSLATED_PAGES_CAPPED_EXPR = {
+  $min: [{ $max: [0, { $ifNull: ['$pages_translated', 0] }] }, TRANSLATABLE_PAGES_EXPR],
+} as const;
+
+/** Percent (one decimal, 0–100) from the two sums above. An empty denominator is 0, not 100. */
+export function aggregateTranslationPercent(translated: number, translatable: number): number {
+  if (!(translatable > 0)) return 0;
+  return Math.min(100, +((Math.max(0, translated) / translatable) * 100).toFixed(1));
+}
+
 // ── The stored rung (#5287) ─────────────────────────────────────────────────
 // Book-level "is this translated" questions read `books.translation_state`, the
 // ladder stamped by sync-worker (#5284, `computeTranslationState()` in

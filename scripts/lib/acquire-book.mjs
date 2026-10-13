@@ -38,7 +38,8 @@ export const SKIP_COLLECTION = 'dedup_skips';
 export const CLAIM_COLLECTION = 'acquisition_claims';
 export const STALE_CLAIM_MS = 30 * 60 * 1000;
 
-const COLLECTIONS = ['books', 'books_warehouse'];
+// Only `books`: the warehouse collections were retired 2026-10 and merged into it (#5470).
+const COLLECTIONS = ['books'];
 const VIS_PROJ = { id: 1, title: 1, year: 1, published: 1, visible: 1, edition_key: 1 };
 
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

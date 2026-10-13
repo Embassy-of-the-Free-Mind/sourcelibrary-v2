@@ -21,6 +21,7 @@ import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
 import { countGalleryImages, galleryFilter, galleryHref, NO_PER_BOOK_CAP, type GalleryScope } from '@/lib/gallery-scope';
 import LibrarianSearch from '@/components/LibrarianSearch';
+import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 /*
@@ -39,8 +40,8 @@ const BTN_DARK = 'inline-flex items-center gap-2 bg-dark text-white text-sm font
 const RUST_LINK = 'inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity';
 const BTN_OUTLINE = 'inline-flex items-center gap-2 border border-border-medium text-primary text-sm font-medium px-5 py-2.5 rounded-lg hover:border-accent-rust hover:text-accent-rust transition-colors';
 
-const OG_TITLE = 'Fungi & Mycology — Source Library';
-const OG_DESC = 'Fungi built the soil that built our world. These are the books that first studied them — original source texts and first English translations on Source Library.';
+const OG_TITLE = 'Fungi & Mycology | Source Library';
+const OG_DESC = 'Fungi built the soil that built our world. These are the books that first studied them: original source texts and first English translations on Source Library.';
 
 export const metadata: Metadata = {
   title: OG_TITLE,
@@ -67,7 +68,7 @@ const SECTIONS = [
   { id: 'translations', label: 'First translations' },
   { id: 'featured', label: 'Featured' },
   { id: 'gallery', label: 'Gallery' },
-  { id: 'librarian', label: 'Librarian' },
+  { id: 'librarian', label: 'Librarian', hideOnTenantHost: true },
   { id: 'works', label: 'Works' },
   { id: 'involved', label: 'Get involved' },
 ];
@@ -354,10 +355,10 @@ export default async function MycologyCollectionPage() {
             {/* Intro plate — Tulasne frontispiece engraving (transparent ground, no frame). */}
             <figure className="w-full md:w-[min(33%,53.333vh)] shrink-0 m-0 mx-auto md:mx-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books — frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
+              <img src="/collections/mycology/intro-plate.webp" alt="A microscope amid fungi, plants, and books, frontispiece engraving" loading="lazy" decoding="async" className="w-full h-auto" />
               <figcaption className="mt-2 text-xs text-muted text-center">
                 <Link href="/gallery/image/69d8ca9ea09828f83ddcbbbe-0" className="hover:text-primary transition-colors">
-                  Selecta Fungorum Carpologia — L.-R. &amp; C. Tulasne, 1863
+                  Selecta Fungorum Carpologia, L.-R. &amp; C. Tulasne, 1863
                 </Link>
               </figcaption>
             </figure>
@@ -471,6 +472,9 @@ export default async function MycologyCollectionPage() {
       )}
 
       {/* ===== Ask the librarian ===== */}
+      {/* The Librarian is refused on partner hosts (#4330) and this page is
+          served there, so the section goes too (the anchor bar drops its link). */}
+      <HideOnTenantHost>
       <section id="librarian" className="bg-warm border-y border-border-light scroll-mt-16">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-8 md:py-16 flex flex-col md:flex-row md:items-center gap-10 lg:gap-16">
           {/* Video left, multiply-blended so its light backdrop melts into the section bg. */}
@@ -490,6 +494,7 @@ export default async function MycologyCollectionPage() {
           </div>
         </div>
       </section>
+      </HideOnTenantHost>
 
       {/* ===== Works in this collection — bounded grid + handoff ===== */}
       <section id="works" className="bg-cream border-b border-border-light scroll-mt-16">

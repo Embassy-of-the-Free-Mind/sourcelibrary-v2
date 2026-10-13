@@ -1,0 +1,202 @@
+[
+  {
+    "issue": 5075,
+    "title": "Build the tenant index so /embed/bhutan stops failing (ensure-indexes.mjs --apply after PR #6461)",
+    "why": "A partner reading room logged 515 render errors in 7 days and pages DOWN about hourly; Found cannot work on a page that does not render.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "/embed/bhutan render errors per 7 days (515 on 2026-10-11); high-priority DOWN pages per day (7 in 12 h)"
+  },
+  {
+    "issue": 4599,
+    "title": "Confirm PR #6467 stopped the Phase 1.6 loop: read the 10-11 and 10-12 spend-daily rows and report on the issue",
+    "why": "The 'other' lane was $35.96 of $43.79 on 10-10 and wrote no pages; money that buys no readable text.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "share of the Gemini bill outside dial and envelopes (64% on 2026-10-10)"
+  },
+  {
+    "issue": null,
+    "title": "Bot-merged PRs with 'Closes #n' leave the issue open (38 of 40 since 10-08): fix auto-merge and close the 38",
+    "why": "Every needs map and the lane picker read 'open'; finished work is re-offered and the backlog of 700 is overstated.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "open issues whose closing PR has merged (38 on 2026-10-11)"
+  },
+  {
+    "issue": 4599,
+    "title": "Review and merge PR #6499: per-project meter gap and repeat-ask checks in the daily ledger",
+    "why": "The soma loop ran ten days unseen; this check would have shown it in one.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "days from an unmetered stream starting to its first FAIL (10 for soma)"
+  },
+  {
+    "issue": 6323,
+    "title": "Apply the repo crontab on the main box, or stop saying it is auto-applied",
+    "why": "Merged checks for the other three areas (quality trends, page-vector truth, language-label guard, archive watchdog) do not run until a person installs a line.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "merged cron lines not in the live crontab; 'install this cron line' decision lines (5 open)"
+  },
+  {
+    "issue": 6276,
+    "title": "Collect or write off the 7 batch jobs the 10-10 ledger failed on (3 succeeded uncollected, 4 in no store)",
+    "why": "Paid OCR and translation that never reached a page is the purest waste; 143 pages on 10-10.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "paid-vs-got ledger FAIL lines per day (2 on 2026-10-10); measured waste % (24.3%)"
+  },
+  {
+    "issue": null,
+    "title": "Push the stranded cloudlayer worktrees to their own branches as they are (job-split-wave1-6114, job-embed-integrity-6175b, /root/wt-ia-5679)",
+    "why": "Work that exists only on one box disk is lost when the box is; split-wave1's HEAD is on no remote.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "worktrees with commits or files on no remote (3 on cloudlayer, 2026-10-11)"
+  },
+  {
+    "issue": 5354,
+    "title": "Triage the seven jobs that gave up on 10-07: which landed elsewhere, which are superseded, which to re-run",
+    "why": "They include embedding repair and Tengyur evidence work for Found and Trustworthy; nobody has looked since 10-08.",
+    "size": "M",
+    "lane_ok": true,
+    "measure": "given-up jobs with no recorded outcome (7)"
+  },
+  {
+    "issue": 4528,
+    "title": "Alarm from off the box when cron on the main box stops",
+    "why": "Every pipeline lane and every audit runs from that cron; a 25 h outage went unnoticed.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "hours from cron death to first page (25 last time; target under 1)"
+  },
+  {
+    "issue": 6360,
+    "title": "Stale-worker page: page once per process, and handle cron-started workers the restart script can never act on",
+    "why": "The same two pids paged 4 times in 12 h; a repeating page nobody can act on trains Derek to ignore the topic.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "repeat pages for the same pid per day (4 in 12 h on 2026-10-11)"
+  },
+  {
+    "issue": 6360,
+    "title": "Spare-lane jobs stop writing DECISION lines: comment the ask on the issue and label spare-skip (after PR #6507 lands)",
+    "why": "10 of 36 decision lines in two days came from a lane chartered to add none.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "DECISION lines from spare-* jobs per day (5); decisions per job (0.33)"
+  },
+  {
+    "issue": 6358,
+    "title": "Report one week of job endings against the landing measure (10-09 to 10-16) and close out the main-box backtest",
+    "why": "It is the stated gate for the dispatcher in #6359; 109 of 113 landed and 0 were at risk after three days.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "job endings landed (96%, n=113); work-at-risk pages per week (0)"
+  },
+  {
+    "issue": 5792,
+    "title": "pr-tier: homepage copy must be tier:hold",
+    "why": "Public copy Derek has not read reaches readers by machine merge.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "tier:auto PRs touching home-i18n.ts or HomeView.tsx (should be 0)"
+  },
+  {
+    "issue": 5492,
+    "title": "Brakes: one vocabulary for paused_phases, so pausing 'ocr' or 'images' pauses them",
+    "why": "A brake that does nothing is how a contained problem keeps spending and keeps writing.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "pause names that stop no worker (2 known)"
+  },
+  {
+    "issue": 4600,
+    "title": "Ship the OCR Lambda from CI when a fix merges",
+    "why": "An OCR fix merged to main does not reach the lane that reads pages; Readable waits on a hand deploy.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "days between a Lambda fix merging and running in production"
+  },
+  {
+    "issue": null,
+    "title": "Give the two Scaleway containers a lease or stop them, and set HCLOUD_TOKEN so the Hetzner machine check can read",
+    "why": "The machines check has failed every day since 10-02 for the same two names; a check that always fails stops being read.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "spend-daily machines check FAIL days (9 of 9); unleased machines (2, EUR 21/month)"
+  },
+  {
+    "issue": 5827,
+    "title": "Envelope expiry and one budget per lane",
+    "why": "$4,033.83 is authorised and unspent across 41 envelopes; a queue is stored spend, and it funds any lane.",
+    "size": "L",
+    "lane_ok": false,
+    "measure": "authorised and unspent dollars ($4,033.83 on 2026-10-10); idle or near-cap envelopes (27)"
+  },
+  {
+    "issue": 6205,
+    "title": "Paid pipeline steps take an allowlist of approved books",
+    "why": "Asked for directly; it turns spend from 'anything not held' into 'only what was chosen for readers'.",
+    "size": "L",
+    "lane_ok": false,
+    "measure": "dollars spent on books outside an approved list per day"
+  },
+  {
+    "issue": 5634,
+    "title": "Rebase the 5 open PRs labelled needs-rebase and report which are superseded",
+    "why": "16 tier:hold PRs wait on Derek; a conflicting one cannot be merged even when he says yes.",
+    "size": "M",
+    "lane_ok": true,
+    "measure": "open PRs labelled needs-rebase (5 on 2026-10-11); oldest tier:hold PR age (7 days)"
+  },
+  {
+    "issue": 5627,
+    "title": "claude-job.sh: check login and workspace trust before a job starts",
+    "why": "A 'Not logged in' job resumes eight times and lands nothing; the box looks busy and the work does not move.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "jobs that end without one model turn"
+  },
+  {
+    "issue": 6223,
+    "title": "Disk done-check: a week of root-free readings per box and what the steward moved",
+    "why": "A full root disk kills every job on the box without a word; main crossed 85% again on 10-11.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "root GB free on main (28 on 2026-10-11); disk alarms per week"
+  },
+  {
+    "issue": 5709,
+    "title": "claude-job.sh: memory admission and resume after an OOM death",
+    "why": "Seven jobs died silently on 10-02; the boxes share memory with the live public service.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "jobs killed for memory per week"
+  },
+  {
+    "issue": 5710,
+    "title": "auto-merge: rebase tier:auto PRs whose test failed before main went green",
+    "why": "Finished fixes for the other areas sit unmerged for hours behind a red that is not theirs.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "tier:auto PRs open more than 8 h with a stale red test"
+  },
+  {
+    "issue": 6345,
+    "title": "Gemini CLI jobs: plan mode and no auto-approved tools as root",
+    "why": "The $0 CLI lane now writes most translated pages; it should not hold root on a box that serves the site.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "CLI jobs run with auto-approved tools (should be 0)"
+  },
+  {
+    "issue": 3645,
+    "title": "Vercel spend: stop invalidating our own cache 106 times a month",
+    "why": "Half the Vercel bill buys nothing a reader sees; the saving funds pages.",
+    "size": "L",
+    "lane_ok": false,
+    "measure": "Vercel dollars per month; cache invalidations per month (106)"
+  }
+]

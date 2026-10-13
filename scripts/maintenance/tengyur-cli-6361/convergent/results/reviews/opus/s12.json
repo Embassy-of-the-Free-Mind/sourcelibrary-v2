@@ -1,0 +1,93 @@
+[
+  {
+    "book_id": "6abeb3d6896ea18127c83fed",
+    "slot": 12,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ས (Derge Tengyur, vol. 107)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Madhyamaka verse treatise on non-perception (anupalabdhi), direct perception and yogic gnosis as non-seeing. It belongs in the dbu ma section of the Derge Tengyur.",
+    "rights_flag": null,
+    "structure_note": "The facsimile page number printed in the margin is '516' and the record is page 515. That looks like a constant scan-index offset, not a wrong leaf: the OCR matches this image.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 515,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "འཇིག་རྟེན་འདས་པའི་འདས་པ་ཡི།",
+            "image": "the image line-end reads more like 'འཇིག་རྟེན་ ... འདས་པ ... ཡི' with no doubled 'འདས་པ'; the OCR's eight syllables break the seven-syllable meter",
+            "problem": "probable dittography of འདས་པ in a verse line (the image is hard to read at the line end)",
+            "severity": "minor"
+          },
+          {
+            "ocr": "{བརྫུན་,རྫུན་}པ་རྣམས་",
+            "image": "a single reading, རྫུན་པ / བརྫུན་པ",
+            "problem": "a variant-brace notation is left in the transcription text",
+            "severity": "minor"
+          },
+          {
+            "ocr": "#བྱ་བ་ལ ... ཀྱིས# ... ད་#ནི",
+            "image": "plain text",
+            "problem": "stray '#' markers in the transcription",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          {
+            "source": "དེ་དག་ཁོ་ན་དོན་དམ་པ། །མཐོང་བ་གང་ཡིན་མཐོང་མེད་ཡིན།",
+            "english": "That alone is the ultimate truth. Whatever seeing there is, is a non-seeing.",
+            "problem": "Misparsed. The verse says that the seeing OF the ultimate is a non-seeing. A turns it into two claims, 'that alone is ultimate truth' and a universal 'whatever seeing there is, is non-seeing'.",
+            "severity": "moderate"
+          },
+          {
+            "source": "རང་གི་དམིགས་པ་ལོག་པ་ཡང་། །མ་ངེས་ཕྱིར་ན་ཐམས་ཅད་ཀྱིས། །དམིགས་པ་ལོག་པར་ངེས་པ་མེད།",
+            "english": "even if your own perception were mistaken, because it is uncertain, it is not established that the perceptions of everyone else are mistaken",
+            "problem": "དམིགས་པ་ལོག་པ means non-apprehension (cessation of perception), not 'mistaken perception'. The argument is that one's own non-perception is inconclusive. The overall shape of the argument survives.",
+            "severity": "moderate"
+          },
+          {
+            "source": "ཆོས་རྣམས་ཀུན་གྱི་རང་བཞིན་ནི། །ཁྱབ་པར་བྱ་ལ་སོགས་གྲུབ་པར། །འགའ་དང་ལྷན་ཅིག་ཅི་སྟེ་ངེས།",
+            "english": "Since the nature of all phenomena is not established as being the pervaded or any such thing, how can it be certain that they are associated with anything?",
+            "problem": "ཅི་སྟེ ('if') is read as 'how', and a negation ('is not established') is added that is not in the source. The conditional that leads into 'then it would be with entity' is lost.",
+            "severity": "moderate"
+          },
+          {
+            "source": "སྒྲུབ་མི་བྱེད།",
+            "english": "One cannot establish a proof.",
+            "problem": "the tail of a sentence from the previous folio is presented as a standalone claim",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          {
+            "source": "རང་གི་དམིགས་པ་ལོག་པ་ཡང་། །མ་ངེས་ཕྱིར་ན་ཐམས་ཅད་ཀྱིས། །དམིགས་པ་ལོག་པར་ངེས་པ་མེད།",
+            "english": "even if one's own perception were mistaken, because that is not universally certain, it is not established that everyone's perception is mistaken",
+            "problem": "the same misreading of དམིགས་པ་ལོག་པ (non-apprehension) as 'mistaken perception'",
+            "severity": "moderate"
+          },
+          {
+            "source": "འགའ་དང་ལྷན་ཅིག་ཅི་སྟེ་ངེས།",
+            "english": "How could the intrinsic nature of all phenomena be established as the pervaded and so forth in certain relation to anything?",
+            "problem": "ཅི་སྟེ ('if') is rendered as a rhetorical 'how could', so the conditional is weakened",
+            "severity": "minor"
+          },
+          {
+            "source": "མ་འཁྲུལ་པ་ཡིས་བརྗོད་པ་ཡིན། །ཡང་དག་པ་ལས་ལྡོག་མེད་དོ།",
+            "english": "it is described by the non-deluded: there is no turning away from the genuine truth",
+            "problem": "the next verse is joined to this one as reported speech, which the syntax does not clearly support",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "Both share the non-apprehension misreading, but A also misparses the key line on the seeing of the ultimate as non-seeing, and it adds a negation in the pervader argument.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The page is a sound Madhyamaka folio with a good OCR (minor markup residue and one probable doubled word). Both translations are usable. B is more faithful on the central claim that seeing the ultimate is non-seeing."
+  }
+]

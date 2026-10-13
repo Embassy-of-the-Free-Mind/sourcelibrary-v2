@@ -30,6 +30,6 @@ export async function POST(request: NextRequest) {
     id: rotated.doc._id,
     prefix: rotated.doc.key_prefix,
     tier: rotated.doc.tier,
-    message: 'Old key revoked. Save this new key — it will not be shown again.',
+    message: 'Old key revoked. Save this new key. It will not be shown again.',
   }, { status: 201 });
 }

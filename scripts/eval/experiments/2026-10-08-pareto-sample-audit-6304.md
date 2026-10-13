@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "43 Pareto panel pages (21 translation, 22 OCR) do not suit the measure; without them order and frontier hold in 21/25 translation and 10/13 OCR panels; Chinese #6182 and print OCR unfit to rank."
+status: adopted
+decision: "The 43 pages are dropped from /quality/pareto with limit notes on each panel (PR #6309); T5 bar now holds for 3.8 Flash, not 3.7"
+superseded_by: null
+issue: [6304, 6309]
+---
 ## 2026-10-08 · Pareto charts: do the sampled pages suit the measure? (#6304)
 <!-- PRIOR ART: 2026-10-07-other-languages-pareto-6182.md and 2026-10-07-tengyur-pareto-replication-6182.md (the translation panels audited here), 2026-10-07-ocr-engines-full-sets-wave2-6011.md (the OCR most-pages sets), the #5695 track write-ups (each checked its own references by hand, page by page, never the panel as a sample). Script: scripts/eval/audit-pareto-samples.mjs (new; reads the panels through build-*-pareto.mjs --dump-sets and rebuilds them with --exclude). -->
 

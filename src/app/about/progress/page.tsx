@@ -12,7 +12,7 @@ import { LIBRARY_DASHBOARD_ID, RATES, type LibraryDashboard } from '@/lib/librar
 
 export const metadata: Metadata = {
   title: 'Progress | Source Library',
-  description: 'How much of Source Library can be read in English, by book, century and language — and how much of early modern European print has been scanned and translated.',
+  description: 'How much of Source Library can be read in English, by book, century and language, and how much of early modern European print has been scanned and translated.',
   alternates: { canonical: '/about/progress' },
 };
 

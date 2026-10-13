@@ -9,6 +9,7 @@ import {
   type BatchMarker,
   type WorkMergeResult,
 } from '@/lib/identity-review-apply';
+import { planQueuedPair, resolveWorkIds } from '@/lib/work-alias';
 
 export const maxDuration = 60;
 
@@ -110,10 +111,13 @@ export const GET = withInnerCircleAuth(async (request) => {
   const total = await queue.countDocuments(filter);
   const rows = await queue.find(filter).sort({ 'evidence.author': 1, _id: 1 }).limit(MANIFEST_MAX).toArray();
 
-  // Live book counts per side — the frozen `evidence` strings on the row are
-  // display-order-unstable and can go stale, and the winner depends on which
-  // side actually holds more books RIGHT NOW.
-  const workIds = [...new Set(rows.flatMap((r) => [r.a as string, r.b as string]))];
+  // Resolve every queued id to the id its books carry NOW, exactly as
+  // `applyWorkMerge` will (#4329), then count live books per resolved side —
+  // the frozen `evidence` strings on the row are display-order-unstable and
+  // can go stale, and the winner depends on which side holds more books RIGHT NOW.
+  const queuedIds = [...new Set(rows.flatMap((r) => [r.a as string, r.b as string]))];
+  const resolution = await resolveWorkIds(db, queuedIds);
+  const workIds = [...new Set([...resolution.values()].map((r) => r.current).filter((x): x is string => !!x))];
   const counts = new Map<string, number>();
   if (workIds.length) {
     const agg = await db.collection('books').aggregate([
@@ -124,10 +128,13 @@ export const GET = withInnerCircleAuth(async (request) => {
   }
 
   const manifest = rows.map((r) => {
-    const a = r.a as string;
-    const b = r.b as string;
-    const nA = counts.get(a) || 0;
-    const nB = counts.get(b) || 0;
+    const plan = planQueuedPair(r.a as string, r.b as string, resolution);
+    // A stale pair keeps its queued ids for display; a mergeable one shows the
+    // ids that will actually be written.
+    const a = plan.kind === 'merge' ? plan.a : (r.a as string);
+    const b = plan.kind === 'merge' ? plan.b : (r.b as string);
+    const nA = plan.kind === 'merge' ? counts.get(a) || 0 : 0;
+    const nB = plan.kind === 'merge' ? counts.get(b) || 0 : 0;
     const winner = pickWorkWinner(a, b, nA, nB);
     const loser = winner === a ? b : a;
     return {
@@ -138,11 +145,13 @@ export const GET = withInnerCircleAuth(async (request) => {
       a, b, nA, nB,
       winner,
       loser,
-      // Zero on either side means the pair is already resolved; approving it
-      // marks it `stale` rather than merging. Surfaced so the count the human
-      // sees ("N books will move") is honest.
-      booksToMove: winner === a ? nB : nA,
-      willBeStale: nA === 0 || nB === 0,
+      // A pair that cannot merge is marked `stale` on approval rather than
+      // merged. Surfaced, with the reason, so the count the human sees
+      // ("N books will move") is honest and a lost reference (`orphaned-id`)
+      // is not mistaken for finished work (`already-merged`).
+      booksToMove: plan.kind === 'merge' ? (winner === a ? nB : nA) : 0,
+      willBeStale: plan.kind === 'stale',
+      staleReason: plan.kind === 'stale' ? plan.reason : null,
       llmReason: (r.llm?.reason as string) || '',
     };
   });
@@ -155,6 +164,10 @@ export const GET = withInnerCircleAuth(async (request) => {
     manifest,
     booksAffected: actionable.reduce((s, m) => s + m.booksToMove, 0),
     staleCount: manifest.length - actionable.length,
+    staleReasons: manifest.reduce<Record<string, number>>((acc, m) => {
+      if (m.staleReason) acc[m.staleReason] = (acc[m.staleReason] || 0) + 1;
+      return acc;
+    }, {}),
     spotCheckIds: sample(manifest, SPOT_CHECK_SIZE, verdict).map((m) => m.id),
     spotCheckSize: Math.min(SPOT_CHECK_SIZE, manifest.length),
   });
@@ -206,11 +219,11 @@ export const POST = withInnerCircleAuth(async (request, session) => {
     const reviewed = Number(sc.reviewed) || 0;
     const flagged = Number(sc.flagged) || 0;
     if (of === 0 || reviewed < of) {
-      return NextResponse.json({ error: 'spot check incomplete — review every sampled pair before approving' }, { status: 400 });
+      return NextResponse.json({ error: 'spot check incomplete: review every sampled pair before approving' }, { status: 400 });
     }
     if (of > 0 && flagged / of >= SPOT_CHECK_ABORT_RATIO) {
       return NextResponse.json({
-        error: `${flagged}/${of} sampled pairs were flagged — the LLM screen is unreliable on this slice; review it by hand instead of batching`,
+        error: `${flagged}/${of} sampled pairs were flagged. The LLM screen is unreliable on this slice; review it by hand instead of batching`,
       }, { status: 409 });
     }
   }

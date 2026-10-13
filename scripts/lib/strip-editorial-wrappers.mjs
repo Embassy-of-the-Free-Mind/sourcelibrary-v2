@@ -11,6 +11,8 @@
 // markdown scaffolding flattened. See the TS file for the full rationale and
 // incident history (PR #2232, #3108, issue #2764).
 
+import { repairLeakedMarkup } from './leaked-markup.mjs';
+
 const EDITORIAL_WRAPPERS =
   // `lang` is the OCR-prompt alias of `language` (src/lib/types/prompt.ts emits
   // `<lang>`); without it, `<lang>Hindustani</lang>` survives into quotable text.
@@ -121,7 +123,8 @@ export function stripEditorialWrappers(text, opts) {
   return cleanOcrArtifacts(
     stripMarkdownMarkers(
       flattenTables(
-        text
+        // Leaked markup first (#5700) — see the TS twin.
+        repairLeakedMarkup(text, { plain: true })
           // `(?:\s[^>]*)?` allows ATTRIBUTES on the opening tag — the OCR prompt emits
           // `<image-desc size="..." type="..." significance="...">` on ~0.77% of
           // page-fields, and a bare `<tag>` pattern never matched them, leaking the

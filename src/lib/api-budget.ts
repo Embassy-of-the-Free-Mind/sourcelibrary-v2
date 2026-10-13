@@ -93,7 +93,7 @@ export async function checkPageBudget(input: {
 /** Friendly 429 body explaining what to do next. */
 export function bulkBudgetExceededBody(check: BudgetCheck) {
   const next = check.tier === 'apikey'
-    ? `Your free Explorer key is capped at ${check.limit} pages/day on /text. Upgrade for uncapped access — see https://sourcelibrary.org/licensing — or bulk-export at https://sourcelibrary.org/api/dataset/v1/pages.`
+    ? `Your free Explorer key is capped at ${check.limit} pages/day on /text. Upgrade for uncapped access (see https://sourcelibrary.org/licensing), or bulk-export at https://sourcelibrary.org/api/dataset/v1/pages.`
     : check.tier === 'session'
     ? 'Generate a free API key at https://sourcelibrary.org/developers (no daily cap on /text).'
     : 'Sign in (free) at https://sourcelibrary.org/auth/signin for a higher limit, or grab an API key at https://sourcelibrary.org/developers.';

@@ -15,6 +15,9 @@ import {
   type PageAttribution,
   type PagePrecision,
 } from '@/lib/entity-page-match';
+import { isHeldSurname } from '../../../../../../../scripts/lib/shared-surname-hold.mjs';
+import { declinedRegion } from '../../../../../../../scripts/lib/declined-region.mjs';
+import { spreadAcrossBook } from '../../../../../../../scripts/lib/spread-across-book.mjs';
 import { entityCounters, type EntityBookRef } from '@/lib/entity-books';
 import { getGeminiClient } from '@/lib/gemini-client';
 
@@ -716,7 +719,7 @@ async function generateBookSummary(
     .join('\n');
 
   // Build quotes section (limit to best 15)
-  const quotesText = allQuotes.slice(0, 15)
+  const quotesText = spreadAcrossBook(allQuotes, 15)
     .map(q => `- "${q.text}" (p. ${q.page})${q.context ? ` — ${q.context}` : ''}`)
     .join('\n');
 
@@ -1014,10 +1017,11 @@ function groundQuotes(
   pages: PageData[]
 ): Array<{ text: string; page: number; page_id: string; context?: string; significance?: string }> {
   // Build lookup of clean translation text by page number, preserving page_id
-  // Exclude non-content pages (index, TOC, etc.) to avoid quoting index entries
+  // Exclude non-content pages (index, TOC, etc.) to avoid quoting index entries, and pages whose
+  // OCR declined a region: their translation had no source for it (#4584, Urkunden IV p.24).
   const pageIndex = new Map<number, { text: string; page_id: string }>();
   for (const page of pages) {
-    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '')) {
+    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '') && !declinedRegion(page.ocr?.data)) {
       pageIndex.set(page.page_number, {
         text: cleanTranslationText(page.translation.data),
         page_id: page.id,
@@ -1101,6 +1105,8 @@ async function syncBookEntities(
   const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', entry: ConceptEntry) => {
     // Resolve to canonical name
     const canonicalName = aliasResolver.resolve(term, type);
+    // A surname several people share is attached to no person record (#5950).
+    if (isHeldSurname(canonicalName, type)) return;
 
     const bookEntry = {
       book_id: bookId,
@@ -1364,8 +1370,8 @@ export async function GET(
       updateData.reading_summary = {
         overview: bookSummary.abstract || bookSummary.brief,
         detailed: bookSummary.detailed || '',
-        themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
-        quotes: groundedBatchQuotes.slice(0, 15),
+        themes: spreadAcrossBook(batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i), 20),
+        quotes: spreadAcrossBook(groundedBatchQuotes, 15),
         generated_at: new Date(),
         model: 'gemini-3.1-flash-lite',
         prompt_version: INDEX_PROMPT_VERSION,

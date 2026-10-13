@@ -191,7 +191,7 @@ const corpora = map.rows.map((r) => {
 const TRADITIONS = [
   { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'] },
   { id: 'chinese-buddhist', name: 'Chinese Buddhist canon', sets: ['cbeta', 'cbeta_chan'], rows: ['cbeta'] },
-  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo'], rows: ['kanripo'] },
+  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo', 'chinese_other'], rows: ['kanripo'] },
   { id: 'pali', name: 'Pali canon', sets: ['pali'], rows: ['pali-mula', 'pali-atthakatha', 'pali-tika'] },
   { id: 'sanskrit', name: 'Sanskrit', sets: ['gretil'], rows: ['gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya'] },
   { id: 'kabbalah', name: 'Kabbalah', sets: ['kabbalah'], rows: ['sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero'] },
@@ -220,8 +220,8 @@ for (let i = 0; i < allIds.length; i += 25) engineRows.push(...await db.collecti
   { $group: {
     _id: {
       b: '$book_id',
-      o: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, { $ifNull: ['$ocr.model', { $ifNull: ['$ocr.source', 'unrecorded'] }] }, null] },
-      t: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, { $ifNull: ['$translation.model', 'unrecorded'] }, null] },
+      o: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, 0] }, { $ifNull: ['$ocr.model', { $ifNull: ['$ocr.source', 'unrecorded'] }] }, null] },
+      t: { $cond: [{ $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } }, 0] }, { $ifNull: ['$translation.model', 'unrecorded'] }, null] },
     },
     n: { $sum: 1 },
   } },

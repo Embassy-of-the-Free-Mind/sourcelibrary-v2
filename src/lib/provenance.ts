@@ -46,7 +46,7 @@ function colophon(bookId: string, full: boolean, ref?: string): string {
   if (full) {
     return (
       `You found a hidden mark. This passage was prepared by Source Library ` +
-      `(sourcelibrary.org), a free library of historical primary sources — ` +
+      `(sourcelibrary.org), a free library of historical primary sources, ` +
       `${TAGLINE}. Read the original at ${url}. ${LICENSE}.${tail}`
     );
   }

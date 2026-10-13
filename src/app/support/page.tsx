@@ -25,7 +25,7 @@ export const revalidate = 600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
-  title: 'Support — Source Library',
+  title: 'Support | Source Library',
   description: 'Support the digitization and translation of rare historical texts from the Bibliotheca Philosophica Hermetica.',
   alternates: { canonical: '/support', languages: { en: '/support', es: '/es/support' } },
 };

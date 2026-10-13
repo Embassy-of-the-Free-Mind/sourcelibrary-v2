@@ -1,0 +1,138 @@
+{
+ "lane": 1568108,
+ "streams": 2,
+ "secs": {
+  "opus-correct": {
+   "all": 20.186,
+   "A": 28.152,
+   "B": 17.427999999999997
+  },
+  "opus-redo": {
+   "all": 21.1665,
+   "A": 30.436500000000002,
+   "B": 17.9325
+  },
+  "pro-correct": {
+   "all": 102.35,
+   "A": 151.2,
+   "B": 84.4
+  },
+  "flashhigh-correct": {
+   "all": 135,
+   "A": 157.85,
+   "B": 118.94999999999999
+  },
+  "flashlow-second": {
+   "B": 13.95
+  }
+ },
+ "meter": {
+  "note": "Opus: the team@ account moved 70->74% weekly (all sessions) while this job made 170 Opus calls (01:49-02:56 UTC), so >= 4,250 Opus page-calls per account-week (lower bound: other sessions shared the window). Gemini thinking models: the shared agy account returned 429 on every model at 03:41 after 2,285 calls in the preceding 5 h and at 08:43 after 1,036 (both mixed models, all jobs); taken at the low figure, ~1,000 calls per 5 h = ~33,600 per week for the whole account. Flash-low sustained ~900 calls/h (agy meter, 10-09/10-10).",
+  "quota_pages_per_week": {
+   "opus-correct": 4250,
+   "opus-redo": 4250,
+   "pro-correct": 33600,
+   "flashhigh-correct": 33600,
+   "flashlow-second": 151200
+  },
+  "accounts": {
+   "opus-correct": 4,
+   "opus-redo": 4
+  },
+  "flashlow_sustained_per_hour": 900
+ },
+ "rules": {
+  "table detector (gate AND shape)": 4379,
+  "qa_screen dice < 0.80": 152062,
+  "qa_screen dice < 0.85": 236692,
+  "qa_screen dice < 0.90": 413952,
+  "qa_screen dice < 0.95": 878298,
+  "no trusted qa_screen (not screened)": 98106,
+  "whole lane": 1568108
+ },
+ "weeks": {
+  "opus-correct": {
+   "throughput": 69406,
+   "quota_bound": 4250,
+   "pages_per_week": 4250,
+   "binding": "quota",
+   "secs_per_page": 17.427999999999997,
+   "by_rule": {
+    "table detector (gate AND shape)": 1,
+    "qa_screen dice < 0.80": 35.8,
+    "qa_screen dice < 0.85": 55.7,
+    "qa_screen dice < 0.90": 97.4,
+    "qa_screen dice < 0.95": 206.7,
+    "no trusted qa_screen (not screened)": 23.1,
+    "whole lane": 369
+   },
+   "by_rule_all_accounts": {
+    "table detector (gate AND shape)": 0.3,
+    "qa_screen dice < 0.80": 8.9,
+    "qa_screen dice < 0.85": 13.9,
+    "qa_screen dice < 0.90": 24.4,
+    "qa_screen dice < 0.95": 51.7,
+    "no trusted qa_screen (not screened)": 5.8,
+    "whole lane": 92.2
+   }
+  },
+  "opus-redo": {
+   "throughput": 67453,
+   "quota_bound": 4250,
+   "pages_per_week": 4250,
+   "binding": "quota",
+   "secs_per_page": 17.9325,
+   "by_rule": {
+    "table detector (gate AND shape)": 1,
+    "qa_screen dice < 0.80": 35.8,
+    "qa_screen dice < 0.85": 55.7,
+    "qa_screen dice < 0.90": 97.4,
+    "qa_screen dice < 0.95": 206.7,
+    "no trusted qa_screen (not screened)": 23.1,
+    "whole lane": 369
+   },
+   "by_rule_all_accounts": {
+    "table detector (gate AND shape)": 0.3,
+    "qa_screen dice < 0.80": 8.9,
+    "qa_screen dice < 0.85": 13.9,
+    "qa_screen dice < 0.90": 24.4,
+    "qa_screen dice < 0.95": 51.7,
+    "no trusted qa_screen (not screened)": 5.8,
+    "whole lane": 92.2
+   }
+  },
+  "pro-correct": {
+   "throughput": 14332,
+   "quota_bound": 33600,
+   "pages_per_week": 14332,
+   "binding": "throughput",
+   "secs_per_page": 84.4,
+   "by_rule": {
+    "table detector (gate AND shape)": 0.3,
+    "qa_screen dice < 0.80": 10.6,
+    "qa_screen dice < 0.85": 16.5,
+    "qa_screen dice < 0.90": 28.9,
+    "qa_screen dice < 0.95": 61.3,
+    "no trusted qa_screen (not screened)": 6.8,
+    "whole lane": 109.4
+   }
+  },
+  "flashhigh-correct": {
+   "throughput": 10169,
+   "quota_bound": 33600,
+   "pages_per_week": 10169,
+   "binding": "throughput",
+   "secs_per_page": 118.94999999999999,
+   "by_rule": {
+    "table detector (gate AND shape)": 0.4,
+    "qa_screen dice < 0.80": 15,
+    "qa_screen dice < 0.85": 23.3,
+    "qa_screen dice < 0.90": 40.7,
+    "qa_screen dice < 0.95": 86.4,
+    "no trusted qa_screen (not screened)": 9.6,
+    "whole lane": 154.2
+   }
+  }
+ },
+ "second_read_whole_lane_weeks": 18.1
+}

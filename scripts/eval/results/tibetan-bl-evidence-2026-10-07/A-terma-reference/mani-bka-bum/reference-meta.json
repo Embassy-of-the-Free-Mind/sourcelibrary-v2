@@ -1,0 +1,37 @@
+{
+ "group": "mani-bka-bum",
+ "volumes": [
+  "UT00KG09730-I00KG09774",
+  "UT1PD90704-I1PD90706",
+  "UT7499-I1KG5745"
+ ],
+ "files": [
+  {
+   "vol": "v001",
+   "rid": "UT00KG09730-I00KG09774-0000",
+   "w": "W00KG09730",
+   "coll": "UCB-OCR",
+   "title": "pod 1 rgyal rabs gsal ba'i me long",
+   "licence": null,
+   "pages": 257
+  },
+  {
+   "vol": "v002",
+   "rid": "UT1PD90704-I1PD90706-0000",
+   "w": "W1PD90704",
+   "coll": "UCB-OCR",
+   "title": "pod 1 sa skya'i chos 'byung gces bsdus/",
+   "licence": null,
+   "pages": 362
+  },
+  {
+   "vol": "v003",
+   "rid": "UT7499-I1KG5745-0000",
+   "w": "W7499",
+   "coll": "UCB-OCR",
+   "title": "pod 1 chos 'byung mkhas pa'i dga' ston",
+   "licence": null,
+   "pages": 846
+  }
+ ]
+}

@@ -55,7 +55,7 @@ export function ForestPlot() {
     <figure className="my-8 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-4">
       <figcaption className="mb-3">
         <div className="text-xs font-mono uppercase tracking-wide text-stone-500 dark:text-stone-400">
-          Interactive — Six ways to estimate the same number
+          Interactive: Six ways to estimate the same number
         </div>
         <div className="mt-1 text-stone-700 dark:text-stone-300">
           Total project AI footprint, kg CO₂e. Each bar is one method&apos;s low–high range.

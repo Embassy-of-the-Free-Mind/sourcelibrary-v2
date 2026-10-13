@@ -39,19 +39,19 @@ function stringResponse(tune: number): { r: number; h: number; m: number } {
 
 const PRESETS = [
   { label: 'G · 196 Hz', freq: 196 },
-  { label: 'A · 220 Hz — unison', freq: 220 },
+  { label: 'A · 220 Hz, unison', freq: 220 },
   { label: 'B · 247 Hz', freq: 247 },
-  { label: 'E · 330 Hz — the fifth', freq: 330 },
-  { label: 'A · 440 Hz — octave', freq: 440 },
+  { label: 'E · 330 Hz, the fifth', freq: 330 },
+  { label: 'A · 440 Hz, octave', freq: 440 },
 ];
 
 const ordinal = (n: number) => (n === 1 ? '1st' : n === 2 ? '2nd' : n === 3 ? '3rd' : `${n}th`);
 
 function verdict(r: number, h: number, m: number): string {
-  if (r > 0.95) return 'unison — it sings back';
-  if (r > 0.4) return 'it stirs — through a shared partial';
-  if (r > 0.12) return `a whisper — his ${ordinal(h)} partial finds its ${ordinal(m)} mode`;
-  return 'mistuned — it stays silent';
+  if (r > 0.95) return 'unison: it sings back';
+  if (r > 0.4) return 'it stirs, through a shared partial';
+  if (r > 0.12) return `a whisper: his ${ordinal(h)} partial finds its ${ordinal(m)} mode`;
+  return 'mistuned: it stays silent';
 }
 
 /**
@@ -148,7 +148,7 @@ export default function KircherResonanceDemo() {
 
   return (
     <LabCard
-      title="Station VIII — The string that answers"
+      title="Station VIII: The string that answers"
       headerRight={
         <button
           onClick={pluck}
@@ -157,13 +157,13 @@ export default function KircherResonanceDemo() {
           Pluck the left string
         </button>
       }
-      caption="Two strings. The left is plucked, always at A · 220 Hz; the right is never touched. At unison the silent string sings back — the effect Kircher read as natural magic. And the physics of shared partials adds a prediction he would have relished: tuned a fifth up, it still answers, faintly. Find both."
+      caption="Two strings. The left is plucked, always at A · 220 Hz; the right is never touched. At unison the silent string sings back, the effect Kircher read as natural magic. And the physics of shared partials adds a prediction he would have relished: tuned a fifth up, it still answers, faintly. Find both."
       sourceHref="/book/kircher-musurgia-universalis-vol-ii-1650-kircher"
       sourceLabel="Kircher, Musurgia Universalis, Vol. II (1650)"
     >
       <div className="mb-4">
         <label className="text-[11px] uppercase tracking-wider text-muted block mb-1">
-          Tuning of the untouched string — {tune.toFixed(1)} Hz ({offCents === 0 ? 'unison' : `${offCents > 0 ? '+' : ''}${offCents} ¢ from the plucked string`})
+          Tuning of the untouched string: {tune.toFixed(1)} Hz ({offCents === 0 ? 'unison' : `${offCents > 0 ? '+' : ''}${offCents} ¢ from the plucked string`})
         </label>
         <input
           type="range"
@@ -225,15 +225,15 @@ export default function KircherResonanceDemo() {
         <Readout
           label="Last pluck"
           value={result ? `${resultOffCents === 0 ? 'unison' : `${resultOffCents > 0 ? '+' : ''}${resultOffCents} ¢`}` : '—'}
-          note={staleTuning ? 'tuning changed — pluck again' : result ? 'untouched string vs plucked' : ' '}
+          note={staleTuning ? 'tuning changed; pluck again' : result ? 'untouched string vs plucked' : ' '}
         />
       </div>
       <p className="mt-3 text-xs text-muted">
         The plucked string carries overtones at 440, 660 and 880 Hz; the untouched string listens
-        with modes of its own. Tuned to E · 330, its second mode sits at 660 — exactly the pluck&apos;s
-        third partial — so it answers without being touched. Kircher never wrote that sentence;
+        with modes of its own. Tuned to E · 330, its second mode sits at 660 (exactly the pluck&apos;s
+        third partial), so it answers without being touched. Kircher never wrote that sentence;
         his wind-harp chapter derives the fifth from the same string-divisions (<em>necessariò
-        quintam sonabit</em> — the plate above), and the shared-partial answer is where his
+        quintam sonabit</em>, the plate above), and the shared-partial answer is where his
         arithmetic leads once a string is allowed its overtones.
       </p>
     </LabCard>

@@ -21,13 +21,16 @@ const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as Gen
 import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 import { guardTranslationText } from '@/lib/translation-write-guard';
 import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
+import { getPageSource, type PageImageFields } from '@/lib/page-image-url';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
 
-// Helper to get image URL for a page
-function getImageUrl(page: { archived_photo?: string; cropped_photo?: string; photo?: string; photo_original?: string }): string {
-  return page.archived_photo || page.cropped_photo || page.photo || page.photo_original || '';
+// The image OCR reads. On a page split from a spread, archived_photo is still the WHOLE
+// spread (60,585 such pages, 2026-10-11) — reading it transcribes two pages onto one.
+// getPageSource() is the resolver every OCR lane uses.
+function getImageUrl(page: PageImageFields): string {
+  return getPageSource(page) || '';
 }
 
 interface ContributorAiResult {

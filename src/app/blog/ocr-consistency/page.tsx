@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'How Consistent Is AI OCR? - Research Notes - Source Library',
-  description: 'A library\'s digitization error gave us 1,448 natural experiments. Two photographs of the same page, OCR\'d independently by Gemini — character-level comparison reveals a 1.8% median disagreement rate across six languages and four centuries of printed text.',
+  description: 'A library\'s digitization error gave us 1,448 natural experiments. Two photographs of the same page, OCR\'d independently by Gemini: character-level comparison reveals a 1.8% median disagreement rate across six languages and four centuries of printed text.',
   openGraph: {
     title: 'How Consistent Is AI OCR?',
     description: '1,448 duplicate scans of the same physical pages, OCR\'d independently. The results quantify something nobody has measured before.',
@@ -50,11 +50,11 @@ export default function OcrConsistencyPage() {
 
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library uses Gemini to read 400-year-old printed books &mdash; Latin, German, Dutch, French, Hebrew, Greek. We process over 300,000 pages. But how consistent is the OCR? If you photograph the same physical page twice and run both images through the same model, do you get the same text?
+          Source Library uses Gemini to read 400-year-old printed books: Latin, German, Dutch, French, Hebrew, Greek. We process over 300,000 pages. But how consistent is the OCR? If you photograph the same physical page twice and run both images through the same model, do you get the same text?
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          A digitization error gave us a natural experiment. The <a href="https://www.earlymodernfiche.com/" className="text-accent-rust hover:underline">Early Modern Fiche</a> collection &mdash; one of our largest sources &mdash; accidentally photographed the same page spreads multiple times during scanning. After our split-detection pipeline divided spreads into individual pages, the duplicates produced separate page records: same physical text, different source photographs. Before cleaning them up, we compared the OCR output character by character.
+          A digitization error gave us a natural experiment. The <a href="https://www.earlymodernfiche.com/" className="text-accent-rust hover:underline">Early Modern Fiche</a> collection, one of our largest sources, accidentally photographed the same page spreads multiple times during scanning. After our split-detection pipeline divided spreads into individual pages, the duplicates produced separate page records: same physical text, different source photographs. Before cleaning them up, we compared the OCR output character by character.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -67,7 +67,7 @@ export default function OcrConsistencyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For each duplicate pair, both pages had been OCR&rsquo;d by the same model (Gemini 3 Flash) with the same prompt. The only difference was the source image &mdash; two separate photographs of the same physical page, taken at different moments during the BPH digitization process.
+          For each duplicate pair, both pages had been OCR&rsquo;d by the same model (Gemini 3 Flash) with the same prompt. The only difference was the source image: two separate photographs of the same physical page, taken at different moments during the BPH digitization process.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -75,13 +75,13 @@ export default function OcrConsistencyPage() {
         </p>
 
         <ul className="text-secondary leading-relaxed mb-8 space-y-2">
-          <li><strong>Character-level similarity</strong> &mdash; Levenshtein edit distance on the stripped text (XML tags removed, whitespace normalized), expressed as 1 &minus; (edits / max_length). This is equivalent to 1 &minus; CER, where CER is the standard Character Error Rate used in OCR evaluation.</li>
-          <li><strong>Word-level Jaccard index</strong> &mdash; intersection over union of word sets, measuring vocabulary overlap regardless of word order.</li>
-          <li><strong>Raw similarity</strong> &mdash; edit distance on the full OCR output including XML markup tags, to detect structural differences in how the model formatted its response.</li>
+          <li><strong>Character-level similarity</strong>: Levenshtein edit distance on the stripped text (XML tags removed, whitespace normalized), expressed as 1 &minus; (edits / max_length). This is equivalent to 1 &minus; CER, where CER is the standard Character Error Rate used in OCR evaluation.</li>
+          <li><strong>Word-level Jaccard index</strong>: intersection over union of word sets, measuring vocabulary overlap regardless of word order.</li>
+          <li><strong>Raw similarity</strong>: edit distance on the full OCR output including XML markup tags, to detect structural differences in how the model formatted its response.</li>
         </ul>
 
         <p className="text-secondary leading-relaxed mb-12">
-          Neither output is &ldquo;ground truth&rdquo; &mdash; both are AI-generated. So our metric is <em>inter-scan disagreement rate</em>, not error rate. Where the two outputs agree, we can&rsquo;t tell whether they&rsquo;re both right or both wrong in the same way. Where they disagree, at least one is wrong. This makes our disagreement rate a <strong>lower bound</strong> on the actual error rate: the true CER is at least as high as what we measure, and likely higher.
+          Neither output is &ldquo;ground truth&rdquo;; both are AI-generated. So our metric is <em>inter-scan disagreement rate</em>, not error rate. Where the two outputs agree, we can&rsquo;t tell whether they&rsquo;re both right or both wrong in the same way. Where they disagree, at least one is wrong. This makes our disagreement rate a <strong>lower bound</strong> on the actual error rate: the true CER is at least as high as what we measure, and likely higher.
         </p>
 
         {/* --- Results --- */}
@@ -127,7 +127,7 @@ export default function OcrConsistencyPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The gap between mean (91.9%) and median (98.2%) tells the story: most pages are highly consistent, but a long tail of outliers pulls the average down. The P5 value of 28.7% reflects pages where the model classified the content differently between scans &mdash; one scan producing &ldquo;blank&rdquo; and the other a description of the physical page.
+          The gap between mean (91.9%) and median (98.2%) tells the story: most pages are highly consistent, but a long tail of outliers pulls the average down. The P5 value of 28.7% reflects pages where the model classified the content differently between scans, one scan producing &ldquo;blank&rdquo; and the other a description of the physical page.
         </p>
 
         <h3 className="text-xl text-primary mt-12 mb-4">
@@ -174,7 +174,7 @@ export default function OcrConsistencyPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-12">
-          78.5% of pairs are above 95% character similarity. One in five pairs are exact character-for-character matches. The low-similarity tail (&le;80%) consists almost entirely of blank pages, endpapers, and binding photographs where the model&rsquo;s page-type classification varied between scans &mdash; one producing a terse &ldquo;blank&rdquo; tag, the other a physical description of the paper.
+          78.5% of pairs are above 95% character similarity. One in five pairs are exact character-for-character matches. The low-similarity tail (&le;80%) consists almost entirely of blank pages, endpapers, and binding photographs where the model&rsquo;s page-type classification varied between scans, one producing a terse &ldquo;blank&rdquo; tag, the other a physical description of the paper.
         </p>
 
         {/* --- By Language --- */}
@@ -263,11 +263,11 @@ export default function OcrConsistencyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The standard metric in OCR evaluation is the <strong>Character Error Rate</strong> (CER): the Levenshtein edit distance between OCR output and a human-transcribed ground truth, divided by the length of the ground truth. Our experiment doesn&rsquo;t measure CER in this sense &mdash; we have no ground truth, only two AI-generated outputs. What we measure is inter-scan character disagreement, which sets a lower bound on the true CER.
+          The standard metric in OCR evaluation is the <strong>Character Error Rate</strong> (CER): the Levenshtein edit distance between OCR output and a human-transcribed ground truth, divided by the length of the ground truth. Our experiment doesn&rsquo;t measure CER in this sense: we have no ground truth, only two AI-generated outputs. What we measure is inter-scan character disagreement, which sets a lower bound on the true CER.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The most directly comparable published result is Stoyanov et al. (2025), &ldquo;Evaluating LLMs for Historical Document OCR&rdquo; (<a href="https://arxiv.org/abs/2510.06743" className="text-accent-rust hover:underline">arXiv:2510.06743</a>), which tested Gemini 2.5 Pro on 18th-century Russian printed text and measured a CER of 3.36% with a coefficient of variation of 0.037 &mdash; the most stable of all LLMs tested. Our median inter-scan disagreement of 1.8% is <em>lower</em> than Stoyanov&rsquo;s CER, which makes sense: inter-scan disagreement is a lower bound on error, not the full error.
+          The most directly comparable published result is Stoyanov et al. (2025), &ldquo;Evaluating LLMs for Historical Document OCR&rdquo; (<a href="https://arxiv.org/abs/2510.06743" className="text-accent-rust hover:underline">arXiv:2510.06743</a>), which tested Gemini 2.5 Pro on 18th-century Russian printed text and measured a CER of 3.36% with a coefficient of variation of 0.037, the most stable of all LLMs tested. Our median inter-scan disagreement of 1.8% is <em>lower</em> than Stoyanov&rsquo;s CER, which makes sense: inter-scan disagreement is a lower bound on error, not the full error.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -288,7 +288,7 @@ export default function OcrConsistencyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Blank page classification.</strong> The largest category. When two scans of a blank or near-blank page (endpaper, binding, flyleaf) are OCR&rsquo;d, one scan might produce a minimal &ldquo;blank&rdquo; tag while the other produces a paragraph describing the physical characteristics of the paper. Both responses are arguably correct &mdash; but they have very low character overlap. This is a classification instability, not a reading error.
+          <strong>Blank page classification.</strong> The largest category. When two scans of a blank or near-blank page (endpaper, binding, flyleaf) are OCR&rsquo;d, one scan might produce a minimal &ldquo;blank&rdquo; tag while the other produces a paragraph describing the physical characteristics of the paper. Both responses are arguably correct, but they have very low character overlap. This is a classification instability, not a reading error.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -296,7 +296,7 @@ export default function OcrConsistencyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          <strong>True reading differences.</strong> A small number of pairs show genuine disagreement on printed characters &mdash; typically in damaged or faded sections where the type is barely legible. These are the most informative outliers: they mark the boundary of the model&rsquo;s visual capability on degraded historical printing.
+          <strong>True reading differences.</strong> A small number of pairs show genuine disagreement on printed characters, typically in damaged or faded sections where the type is barely legible. These are the most informative outliers: they mark the boundary of the model&rsquo;s visual capability on degraded historical printing.
         </p>
 
         {/* --- What We Did About It --- */}
@@ -305,7 +305,7 @@ export default function OcrConsistencyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The duplicate pages were a data quality problem as well as an experiment. Duplicate source scans meant duplicate page records &mdash; readers saw the same text twice, page counts were inflated, and wasted API cost on redundant OCR and translation.
+          The duplicate pages were a data quality problem as well as an experiment. Duplicate source scans meant duplicate page records: readers saw the same text twice, page counts were inflated, and wasted API cost on redundant OCR and translation.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -322,7 +322,7 @@ export default function OcrConsistencyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>No ground truth.</strong> We measure disagreement, not error. When two outputs agree, they could both be wrong identically &mdash; for instance, both misreading the same damaged character the same way. Our 1.8% median disagreement is a floor, not a ceiling, for actual OCR error.
+          <strong>No ground truth.</strong> We measure disagreement, not error. When two outputs agree, they could both be wrong identically: for instance, both misreading the same damaged character the same way. Our 1.8% median disagreement is a floor, not a ceiling, for actual OCR error.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -343,7 +343,7 @@ export default function OcrConsistencyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          For the core task &mdash; reading 16th&ndash;18th century Latin, German, Dutch, French, English, and Italian printed text &mdash; Gemini 3 Flash is highly consistent across different photographs of the same page. The median inter-scan disagreement of 1.8% means that if you photograph the same printed page twice under similar conditions, 98.2% of characters will be identical in the OCR output. One in five pages produces an exact character-for-character match.
+          For the core task (reading 16th&ndash;18th century Latin, German, Dutch, French, English, and Italian printed text), Gemini 3 Flash is highly consistent across different photographs of the same page. The median inter-scan disagreement of 1.8% means that if you photograph the same printed page twice under similar conditions, 98.2% of characters will be identical in the OCR output. One in five pages produces an exact character-for-character match.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -351,7 +351,7 @@ export default function OcrConsistencyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          For a library processing hundreds of thousands of pages of historical text, this level of consistency is sufficient. The pipeline produces stable, reproducible transcriptions. And the duplicate scans &mdash; an accident of digitization &mdash; gave us a way to verify that claim at scale.
+          For a library processing hundreds of thousands of pages of historical text, this level of consistency is sufficient. The pipeline produces stable, reproducible transcriptions. And the duplicate scans, an accident of digitization, gave us a way to verify that claim at scale.
         </p>
 
         <hr className="border-light my-12" />

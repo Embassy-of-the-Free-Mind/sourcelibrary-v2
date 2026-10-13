@@ -69,7 +69,7 @@ export function TokenSankey() {
   return (
     <figure className="my-8 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-6">
       <figcaption className="mb-1 text-xs font-mono uppercase tracking-wide text-stone-500 dark:text-stone-400">
-        Interactive — Claude Code token flow
+        Interactive: Claude Code token flow
       </figcaption>
       <div className="mb-4 text-stone-700 dark:text-stone-300 text-sm">
         Left: how many tokens of each type the development AI used.{' '}
@@ -144,8 +144,8 @@ export function TokenSankey() {
             {(claudeFlow.totals.cache_read_tokens / 1e9).toFixed(1)}B
           </div>
           <div className="text-xs text-stone-600 dark:text-stone-400 mt-1 leading-snug">
-            {(claudeFlow.totals.cache_read_tokens / totalTokens * 100).toFixed(1)}% of all prompt-side tokens
-            — about {fmtCount(claudeFlow.co2_contributions_kg.cache_read / totalCO2 * 100)}% of the energy.
+            {(claudeFlow.totals.cache_read_tokens / totalTokens * 100).toFixed(1)}% of all prompt-side tokens,
+            about {fmtCount(claudeFlow.co2_contributions_kg.cache_read / totalCO2 * 100)}% of the energy.
           </div>
         </div>
         <div className="rounded border border-stone-200 dark:border-stone-800 p-3">
@@ -156,7 +156,7 @@ export function TokenSankey() {
             {(claudeFlow.totals.output_tokens / 1e6).toFixed(0)}M
           </div>
           <div className="text-xs text-stone-600 dark:text-stone-400 mt-1 leading-snug">
-            {(claudeFlow.totals.output_tokens / totalTokens * 100).toFixed(2)}% of tokens —
+            {(claudeFlow.totals.output_tokens / totalTokens * 100).toFixed(2)}% of tokens,
             {' '}{Math.round(claudeFlow.co2_contributions_kg.output / totalCO2 * 100)}% of the energy.
           </div>
         </div>
@@ -167,7 +167,7 @@ export function TokenSankey() {
           Token totals from Anthropic <code className="font-mono">usage</code> blocks logged
           to JSONL session files. Per-token energy estimates from the v4 bottom-up model
           (Trainium2, FP8, batch=12, util=50%). Cache-read energy is ~10% of fresh input
-          per Li et al. 2024 (arXiv:2412.19442) — the KV cache skips the MLP forward pass entirely.
+          per Li et al. 2024 (arXiv:2412.19442): the KV cache skips the MLP forward pass entirely.
         </p>
         <table className="text-xs w-full mt-3">
           <thead className="text-stone-500 uppercase">

@@ -54,4 +54,5 @@ which. Rates are never pooled across methods: they sample different frames with 
 | [monthly-corpus-audit](monthly-corpus-audit.md) | Opus judge | no | random, 1 interior page |
 | [refusal-empty](refusal-empty.md) | detector | no | every page of a sampled book |
 | [reasoning-leak](reasoning-leak.md) | detector | no | every page record |
+| [retranslation-gate](retranslation-gate.md) | Opus reviewer, blind A/B | yes | 5 random + 2 extreme volumes of a run, 3 consecutive pages |
 | [hide-broken-text](hide-broken-text.md) | session acting on a check | inherits | the pages of the check that led to the hide |

@@ -41,7 +41,7 @@ const SPEC = {
     title: 'Source Library API',
     version: '1.0.0',
     description:
-      'Open API over the Source Library corpus of historical primary sources — search, browse, read, quote, and browse illustrations. No authentication required for read access; API keys lift rate limits and attribute your traffic (get one at https://sourcelibrary.org/developers). Text responses carry an invisible provenance colophon; keyed responses include your key reference — attribution, not tracking.',
+      'Open API over the Source Library corpus of historical primary sources: search, browse, read, quote, and browse illustrations. No authentication required for read access; API keys lift rate limits and attribute your traffic (get one at https://sourcelibrary.org/developers). Text responses carry an invisible provenance colophon; keyed responses include your key reference (attribution, not tracking).',
     contact: { url: 'https://sourcelibrary.org/developers' },
     license: { name: 'CC BY-SA 4.0 (content)', url: 'https://sourcelibrary.org/licensing' },
   },
@@ -73,7 +73,7 @@ const SPEC = {
         description:
           'Every row carries id, slug, title, author, author_id (canonical), work_id, edition_key + edition_key_quality, language, year (numeric, when known), published (free text), and translation progress. When author_id is passed the response echoes the canonicalized author; an unknown slug returns an empty page with author: null.',
         parameters: [
-          q('author_id', "Canonical author slug — exactly that person's books. Discover via /catalog/author-search", { example: 'jakob-bohme' }),
+          q('author_id', "Canonical author slug: exactly that person's books. Discover via /catalog/author-search", { example: 'jakob-bohme' }),
           q('edition_key', 'Other digitizations of one printing (full-quality keys only)'),
           q('year_from', 'Edition-year range start (numeric year only)', { type: 'integer' }),
           q('year_to', 'Edition-year range end (inclusive)', { type: 'integer' }),
@@ -85,7 +85,7 @@ const SPEC = {
           q('work_id', 'All editions of one work'),
           q('has_translation', 'Only translated books (true/false)'),
           q('first_translation', 'Only first translations (true/false)'),
-          q('has_edition', 'ISO code — only books readable in that language (e.g. es)'),
+          q('has_edition', 'ISO code: only books readable in that language (e.g. es)'),
           q('sort', 'recent-translation (default) | recent | title-asc | title-desc | date_asc | date_desc'),
           q('limit', 'Max results, ≤200 (default 100)', { type: 'integer' }),
           q('skip', 'Pagination offset', { type: 'integer' }),
@@ -111,7 +111,7 @@ const SPEC = {
           q('first_translation', 'true/false'),
           q('has_edition', 'ISO code'),
         ],
-        responses: jsonResponse('{ total, facets: { languages, categories, collections, libraries, decades }, author? } — each facet a [{value, count}] list'),
+        responses: jsonResponse('{ total, facets: { languages, categories, collections, libraries, decades }, author? }; each facet a [{value, count}] list'),
       },
     },
     '/works': {
@@ -142,7 +142,7 @@ const SPEC = {
         description:
           'The 6-facet Llullian vocabulary (tradition, domain, form, sphere, era, mode) behind /topics. `counts=true` returns the vocabulary plus per-value counts; otherwise returns paginated books matching the facet filters. Facets are AND-ed across facets, OR-ed within one. Global for ordinary callers; scoped automatically on a tenant subdomain.',
         parameters: [
-          q('counts', 'true — return vocabulary + value counts instead of books'),
+          q('counts', 'true: return vocabulary + value counts instead of books'),
           q('tradition', 'Comma-separated tradition tags (any-of), e.g. hermetic,alchemical'),
           q('domain', 'Comma-separated domain tags'),
           q('form', 'Comma-separated form tags'),
@@ -157,12 +157,12 @@ const SPEC = {
     },
     '/vectors/{store}': {
       get: {
-        summary: 'Embedding vectors — the coordinates behind semantic and visual search',
+        summary: 'Embedding vectors: the coordinates behind semantic and visual search',
         description:
-          'For running your own UMAP / clustering / nearest-neighbour work rather than being limited to our ranked results. Stores: `books` (768d, ~35.8k), `gallery` (768d, ~212k illustration descriptions), `clip` (512d, ~313k CLIP VISUAL vectors — use these for "looks alike"), `artworks` (3072d, ~21.9k). Each row carries label fields so points can be captioned without a join. KEYSET pagination: echo `next_cursor` back as `after` until it stops being returned. Page-level vectors (3.9M rows) are not served here — ask for a bulk dump.',
+          'For running your own UMAP / clustering / nearest-neighbour work rather than being limited to our ranked results. Stores: `books` (768d, ~35.8k), `gallery` (768d, ~212k illustration descriptions), `clip` (512d, ~313k CLIP VISUAL vectors; use these for "looks alike"), `artworks` (3072d, ~21.9k). Each row carries label fields so points can be captioned without a join. KEYSET pagination: echo `next_cursor` back as `after` until it stops being returned. Page-level vectors (3.9M rows) are not served here; ask for a bulk dump.',
         parameters: [
           { name: 'store', in: 'path', required: true, description: 'books | gallery | clip | artworks', schema: { type: 'string' } },
-          q('after', 'Keyset cursor — the last id from the previous page'),
+          q('after', 'Keyset cursor: the last id from the previous page'),
           q('limit', 'Rows per page (default 200, max 1000)', { type: 'integer' }),
           q('format', 'json (default, plain float arrays) or base64 (float32 little-endian, ~2.5x smaller)'),
         ],
@@ -173,7 +173,7 @@ const SPEC = {
       get: {
         summary: 'Book metadata, AI reading summary, chapters, editions, DOI',
         description:
-          'IMAGE URLS: every page returns `image_full` (our full-resolution master), `image_display` (~2000px viewer variant) and `image_thumb`, all on images.sourcelibrary.org. Use `image_full` for archival-quality work — it equals or exceeds what the originating library serves (measured page-for-page: Göttingen 3651x4652 on both sides, Morgan 8308x10576 for ours against 2000x2546 at the source, and one source URL returned HTTP 504 while ours served). The originating institution\'s own image URLs are deliberately NOT returned: we hold a copy of every page, and passing them on would turn this API into a fan-out onto partner libraries. Where a scan came from travels as `attribution` on the book instead. `image_unavailable: true` marks the rare page we hold no copy of.',
+          'IMAGE URLS: every page returns `image_full` (our full-resolution master), `image_display` (~2000px viewer variant) and `image_thumb`, all on images.sourcelibrary.org. Use `image_full` for archival-quality work. It equals or exceeds what the originating library serves (measured page-for-page: Göttingen 3651x4652 on both sides, Morgan 8308x10576 for ours against 2000x2546 at the source, and one source URL returned HTTP 504 while ours served). The originating institution\'s own image URLs are deliberately NOT returned: we hold a copy of every page, and passing them on would turn this API into a fan-out onto partner libraries. Where a scan came from travels as `attribution` on the book instead. `image_unavailable: true` marks the rare page we hold no copy of.',
         parameters: [pathId('Book id or slug')],
         responses: jsonResponse('Book record, including pages[] with both our image URLs and source provenance URLs'),
       },
@@ -232,23 +232,23 @@ const SPEC = {
           q('collection', 'Gallery collection slug'),
           q('library', 'Contributing library'),
           q('book', 'Restrict to one book id'),
-          q('semantic', 'true — semantic (meaning-based) matching'),
-          q('visual', 'true — CLIP visual similarity mode'),
+          q('semantic', 'true: semantic (meaning-based) matching'),
+          q('visual', 'true: CLIP visual similarity mode'),
           q('maxPerBook', 'Cap on illustrations per source book. Default uncapped (1000): every image is reachable. Pass e.g. 3 for one-per-book variety; the default order already spreads books out (each book\'s best image before any book\'s second).', { type: 'integer' }),
           q('sort', 'Order: quality (default; relevance for a search), oldest, newest, book (each book in page order), recent (most recently imported books first), random (a stable shuffle, see seed).', { type: 'string' }),
           q('seed', 'Which shuffle (0-63) for sort=random. Same seed, same order, so pagination is stable.', { type: 'integer' }),
           q('minQuality', 'Minimum gallery_quality, 0–1 (default 0.7). Lower it to include rougher extractions.', { type: 'number' }),
-          q('source', 'all (default) | artwork — the default browse interleaves book illustrations with standalone artworks'),
+          q('source', 'all (default) | artwork. The default browse interleaves book illustrations with standalone artworks'),
           q('limit', 'Max results (default 24, max 200)', { type: 'integer' }),
           q('offset', 'Pagination offset', { type: 'integer' }),
         ],
-        responses: jsonResponse('Illustration records with image URLs and source books. `total` counts the set your parameters actually select — raising maxPerBook raises it.'),
+        responses: jsonResponse('Illustration records with image URLs and source books. `total` counts the set your parameters actually select, so raising maxPerBook raises it.'),
       },
     },
     '/gallery/collections': {
       get: {
         summary: 'List curated image collections',
-        parameters: [q('featured', 'true — featured collections only'), q('type', 'visual | thematic')],
+        parameters: [q('featured', 'true: featured collections only'), q('type', 'visual | thematic')],
         responses: jsonResponse('{ collections: [{ slug, title, imageCount, coverImage, … }], total }'),
       },
     },
@@ -277,7 +277,7 @@ const SPEC = {
     '/dataset/v1/books': {
       get: {
         summary: 'Bulk book metadata (requires API key)',
-        description: 'Authorization: Bearer sl_data_… — get a key at https://sourcelibrary.org/developers.',
+        description: 'Authorization: Bearer sl_data_…; get a key at https://sourcelibrary.org/developers.',
         parameters: [q('language', 'Filter by language'), q('cluster', 'Taxonomy cluster'), q('from_year', 'Year range start', { type: 'integer' }), q('to_year', 'Year range end', { type: 'integer' }), q('offset', 'Offset', { type: 'integer' }), q('limit', 'Limit', { type: 'integer' })],
         responses: jsonResponse('{ total, books }'),
         security: [{ apiKey: [] }],
@@ -288,7 +288,7 @@ const SPEC = {
         summary: 'Bulk page text as streaming JSONL (requires API key)',
         description:
           'One JSON record per line. Text carries the invisible provenance colophon including your key reference. To walk the corpus use the `after` keyset cursor: echo the X-Next-Cursor response header back as `after` until it is no longer returned. Deep `offset` values are slow by construction and can exceed the request deadline.',
-        parameters: [q('language', 'Filter by book language'), q('cluster', 'Taxonomy cluster'), q('from_year', 'Year range start', { type: 'integer' }), q('to_year', 'Year range end', { type: 'integer' }), q('content', 'ocr | translation | both'), q('after', 'Keyset cursor "<book_id>:<page_number>" from the X-Next-Cursor header — preferred over offset'), q('offset', 'Offset (shallow reads only; ignored when `after` is given)', { type: 'integer' }), q('limit', 'Limit ≤10000 (default 1000)', { type: 'integer' })],
+        parameters: [q('language', 'Filter by book language'), q('cluster', 'Taxonomy cluster'), q('from_year', 'Year range start', { type: 'integer' }), q('to_year', 'Year range end', { type: 'integer' }), q('content', 'ocr | translation | both'), q('after', 'Keyset cursor "<book_id>:<page_number>" from the X-Next-Cursor header; preferred over offset'), q('offset', 'Offset (shallow reads only; ignored when `after` is given)', { type: 'integer' }), q('limit', 'Limit ≤10000 (default 1000)', { type: 'integer' })],
         responses: { '200': { description: 'JSONL stream', content: { 'application/x-ndjson': {} } } },
         security: [{ apiKey: [] }],
       },
@@ -303,14 +303,14 @@ const SPEC = {
       post: {
         summary: 'MCP server (JSON-RPC over HTTP)',
         description:
-          'The full research toolset — search_library, search_translations, search_concept, get_book, get_book_text, get_quote, list_books, list_editions, search_images and more — self-describing via the MCP initialize / tools-list handshake. Connect from Claude: `claude mcp add source-library https://sourcelibrary.org/api/mcp`.',
+          'The full research toolset (search_library, search_translations, search_concept, get_book, get_book_text, get_quote, list_books, list_editions, search_images and more), self-describing via the MCP initialize / tools-list handshake. Connect from Claude: `claude mcp add source-library https://sourcelibrary.org/api/mcp`.',
         responses: jsonResponse('JSON-RPC response'),
       },
     },
   },
   components: {
     securitySchemes: {
-      apiKey: { type: 'http', scheme: 'bearer', description: 'API key (sl_data_…) — https://sourcelibrary.org/developers' },
+      apiKey: { type: 'http', scheme: 'bearer', description: 'API key (sl_data_…): https://sourcelibrary.org/developers' },
     },
   },
 } as const;

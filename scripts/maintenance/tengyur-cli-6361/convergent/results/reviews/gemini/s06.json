@@ -1,0 +1,53 @@
+[
+ {
+  "book_id": "6abeb2b1896ea18127c8327d",
+  "slot": 6,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Canonical Derge Tengyur Madhyamaka section (དབུ་མ, volume ཟ, vol. 101), containing Candrakīrti's Prasannapadā commentary on Nāgārjuna's Mūlamadhyamakakārikā chapter 24.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 486,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "ན། །",
+      "image": "༄༅། །",
+      "problem": "opening page head ornament (yig mgo) misread as the syllable na",
+      "severity": "minor",
+      "class": "O13"
+     },
+     {
+      "ocr": "སྐྱོན་",
+      "image": "སྡུག་བསྔལ་",
+      "problem": "misread sdug bsngal ('suffering') as skyon ('fault/flaw')",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 4,
+    "tr_errors_B": [
+     {
+      "source": "སྐྱོན་ཡོངས་སུ་མ་ཤེས་པ་ (OCR) / སྡུག་བསྔལ་ཡོངས་སུ་མ་ཤེས་པ་ (image)",
+      "english": "then just as that fault is not fully known",
+      "problem": "followed the OCR error reading skyon ('fault') instead of the woodblock's sdug bsngal ('suffering'), introducing an ungrounded comparison about a fault not being known",
+      "severity": "moderate",
+      "class": "T14"
+     }
+    ],
+    "prefer": "A",
+    "prefer_reason": "Translation A correctly preserves the philosophical logic of the Four Noble Truths argument without being misled by the OCR error that corrupted 'suffering' (སྡུག་བསྔལ་) into 'fault' (སྐྱོན་).",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear, authentic Derge Tengyur woodblock page preserving classical Madhyamaka commentary on the Four Noble Truths, accurately transcribed except for one minor header slip and one word misreading."
+ }
+]

@@ -1,0 +1,89 @@
+{
+ "fold": "latin-norm@1",
+ "stats": {
+  "latin-r4-acc": {
+   "calamari-gt4histocr-bin": {
+    "pages": 291,
+    "guided_words": 327
+   },
+   "flash+cal": {
+    "pages": 291,
+    "guided_words": 419
+   },
+   "gemini-3-flash-preview": {
+    "pages": 291,
+    "guided_words": 323
+   },
+   "gemini-3.1-flash-lite": {
+    "pages": 291,
+    "guided_words": 187
+   },
+   "gemini-3.1-flash-lite-b": {
+    "pages": 291,
+    "guided_words": 187
+   },
+   "gemini-3.1-pro-preview": {
+    "pages": 96,
+    "guided_words": 299
+   },
+   "gemini-3.8-flash": {
+    "pages": 291,
+    "guided_words": 312
+   },
+   "glm+longs": {
+    "pages": 291,
+    "guided_words": 255
+   },
+   "glm-ocr": {
+    "pages": 291,
+    "guided_words": 250
+   },
+   "lite+longs": {
+    "pages": 291,
+    "guided_words": 210
+   }
+  },
+  "latin-r4-pop": {
+   "calamari-gt4histocr-bin": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "flash+cal": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "gemini-3-flash-preview": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "gemini-3.1-flash-lite": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "gemini-3.1-flash-lite-b": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "gemini-3.1-pro-preview": {
+    "pages": 15,
+    "guided_words": 0
+   },
+   "gemini-3.8-flash": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "glm+longs": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "glm-ocr": {
+    "pages": 193,
+    "guided_words": 0
+   },
+   "lite+longs": {
+    "pages": 193,
+    "guided_words": 0
+   }
+  }
+ }
+}

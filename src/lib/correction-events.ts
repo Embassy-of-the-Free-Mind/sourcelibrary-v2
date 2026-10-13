@@ -29,7 +29,9 @@ export interface CorrectionEvent {
   before_prompt_version?: string;
   /** Link to the page_revisions doc holding the same before-text. */
   revision_id?: string;
-  editor_role: 'editor' | 'reader';
+  /** 'volunteer': a review-shift correction applied by a second reader
+   *  (scripts/maintenance/apply-page-correction.mjs, #6418). */
+  editor_role: 'editor' | 'reader' | 'volunteer';
   /** Display name supplied by the editor UI. */
   edited_by?: string;
   /** Authenticated identity from the session. */

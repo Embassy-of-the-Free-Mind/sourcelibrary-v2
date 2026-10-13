@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA thesaurus/Beze_icones",
+  "edition": "Icones, id est Verae Imagines Virorum Doctrina Simul Et Pietate Illustrium... additis eorundem vitae et operae descriptionibus, quibus adiectae sunt nonnullae picturae quas emblemata vocant. — [Geneve]: Joannes Laonius, 1580.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b65bc918b87551bfd0f087",
+  "page_number": 133,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 62099,
+    "to_char": 62396,
+    "overlap": 0.5,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-3)",
+    "at": "2026-10-06T10:05:28.759Z",
+    "note": "10 italic verse lines; ref misses only the first 3 words ('Immo interire forsan')",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      131,
+      132,
+      133
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.533Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "d32400f71b84c9ec0065a26bd05546beaf6699c74735492660d607dda442feb6",
+  "unit": {
+    "chars": 297
+  }
+}

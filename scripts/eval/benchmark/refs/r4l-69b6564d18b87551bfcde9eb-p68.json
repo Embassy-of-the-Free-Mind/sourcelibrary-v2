@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/locher2",
+  "edition": "Stultifera navis mortalium. — Basel: (Seb. Henricpetri, 1572).",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6564d18b87551bfcde9eb",
+  "page_number": 68,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 53465,
+    "to_char": 54339,
+    "overlap": 0.567,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Locher Stultifera navis: woodcut (fool, devil, geese) then verses; ref matches all 18 lines; marginal citations not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      68,
+      69,
+      70
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.430Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "9e4be83c11d5e6e0ad9dfc8434c42badc64e9dc4aa432520fbc784451e49efdb",
+  "unit": {
+    "chars": 874
+  }
+}

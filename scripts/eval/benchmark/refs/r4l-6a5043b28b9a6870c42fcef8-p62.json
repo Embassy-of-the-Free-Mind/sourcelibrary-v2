@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A04023",
+  "edition": "De potestate Papæ an & quantenus in reges & principes seculares ius & imperium habeat: Guil. Barclaii I.C. liber posthumus. — STC 1408; ESTC S100847 (1609)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A04023",
+  "origin": "library",
+  "book_id": "6a5043b28b9a6870c42fcef8",
+  "page_number": 62,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 51812,
+    "to_char": 52865,
+    "overlap": 0.391,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-0)",
+    "at": "2026-10-06T10:11:09Z",
+    "note": "ref matches incl. Cap. V",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      60,
+      61,
+      62
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.593Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "75e073ef6b5de0407d77a49a7962747d3ad337c9ee0343e44631b9047cef8eb9",
+  "unit": {
+    "chars": 1053
+  }
+}

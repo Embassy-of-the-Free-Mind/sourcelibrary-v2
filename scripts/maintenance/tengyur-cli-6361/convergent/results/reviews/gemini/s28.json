@@ -1,0 +1,30 @@
+[
+ {
+  "book_id": "6abed724896ea18127c8ec34",
+  "slot": 28,
+  "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། བེ (Derge Tengyur, vol. 184)",
+  "tradition": "Tibetan Buddhist (Derge Tengyur)",
+  "shelf_fit": "fits",
+  "shelf_note": "Belongs to the Pramāṇa (epistemology/logic) section of the Derge Tengyur, volume 184 (བེ).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 321,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score_A": 5,
+    "tr_errors_A": [],
+    "tr_score_B": 5,
+    "tr_errors_B": [],
+    "prefer": "A",
+    "prefer_reason": "Translation A captures the flow and technical terminology of the Buddhist epistemological argument more concisely and naturally without intrusive bracketed glosses.",
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Clear woodblock print of a Pramāṇa commentary leaf with flawless OCR transcription and high-quality translations for both versions."
+ }
+]

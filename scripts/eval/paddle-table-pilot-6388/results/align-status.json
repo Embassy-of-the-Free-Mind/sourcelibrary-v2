@@ -1,0 +1,902 @@
+[
+{
+"key": "pil001",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_035-9a",
+"leaf": "own",
+"own_dice": 0.89
+},
+{
+"key": "pil002",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil003",
+"status": "unaligned",
+"repo": "KR1e0114",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil004",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_084-9a",
+"leaf": "own",
+"own_dice": 0.935
+},
+{
+"key": "pil005",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_139-6a",
+"leaf": "own",
+"own_dice": 0.889
+},
+{
+"key": "pil006",
+"status": "aligned",
+"repo": "KR1a0145",
+"witness": "WYG",
+"ref_pb": "KR1a0145_WYG_009-14a",
+"leaf": "one-neighbour",
+"own_dice": 0.123
+},
+{
+"key": "pil007",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_083-13b",
+"leaf": "own",
+"own_dice": 0.932
+},
+{
+"key": "pil008",
+"status": "unaligned",
+"repo": "KR1j0033",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil009",
+"status": "unaligned",
+"repo": "KR1e0114",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil010",
+"status": "aligned",
+"repo": "KR3e0067",
+"witness": "WYG",
+"ref_pb": "KR3e0067_WYG_184-5b",
+"leaf": "own",
+"own_dice": 0.856
+},
+{
+"key": "pil011",
+"status": "aligned",
+"repo": "KR3k0050",
+"witness": "WYG",
+"ref_pb": "KR3k0050_WYG_020-9a",
+"leaf": "own",
+"own_dice": 0.604
+},
+{
+"key": "pil012",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil013",
+"status": "aligned",
+"repo": "KR3f0019",
+"witness": "WYG",
+"ref_pb": "KR3f0019_WYG_008-4a",
+"leaf": "one-neighbour",
+"own_dice": 0.177
+},
+{
+"key": "pil014",
+"status": "aligned",
+"repo": "KR3h0089",
+"witness": "WYG",
+"ref_pb": "KR3h0089_WYG_043-45a",
+"leaf": "one-neighbour",
+"own_dice": 0.15
+},
+{
+"key": "pil015",
+"status": "aligned",
+"repo": "KR3k0059",
+"witness": "WYG",
+"ref_pb": "KR3k0059_WYG_726-25a",
+"leaf": "own",
+"own_dice": 0.914
+},
+{
+"key": "pil016",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_141-9a",
+"leaf": "own",
+"own_dice": 0.922
+},
+{
+"key": "pil017",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_020-17a",
+"leaf": "own",
+"own_dice": 0.895
+},
+{
+"key": "pil018",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil019",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil020",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_100-2a",
+"leaf": "own",
+"own_dice": 0.985
+},
+{
+"key": "pil021",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_138-11b",
+"leaf": "own",
+"own_dice": 0.902
+},
+{
+"key": "pil022",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil023",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil024",
+"status": "aligned",
+"repo": "KR3h0061",
+"witness": "WYG",
+"ref_pb": "KR3h0061_WYG_041-52b",
+"leaf": "own",
+"own_dice": 0.935
+},
+{
+"key": "pil025",
+"status": "unaligned",
+"repo": "KR3f0019",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil026",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_011-8b",
+"leaf": "own",
+"own_dice": 0.896
+},
+{
+"key": "pil027",
+"status": "aligned",
+"repo": "KR3e0067",
+"witness": "WYG",
+"ref_pb": "KR3e0067_WYG_271-47a",
+"leaf": "own",
+"own_dice": 0.701
+},
+{
+"key": "pil028",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil029",
+"status": "unaligned",
+"repo": "KR1j0033",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil030",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_002-4a",
+"leaf": "own",
+"own_dice": 0.987
+},
+{
+"key": "pil031",
+"status": "unaligned",
+"repo": "KR1g0006",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil032",
+"status": "unaligned",
+"repo": "KR1e0114",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil033",
+"status": "unaligned",
+"repo": "KR3a0078",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil034",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_121-5b",
+"leaf": "own",
+"own_dice": 0.845
+},
+{
+"key": "pil035",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_047-7a",
+"leaf": "own",
+"own_dice": 0.868
+},
+{
+"key": "pil036",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_062-27a",
+"leaf": "own",
+"own_dice": 0.911
+},
+{
+"key": "pil037",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil038",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_046-20a",
+"leaf": "own",
+"own_dice": 0.96
+},
+{
+"key": "pil039",
+"status": "aligned",
+"repo": "KR1j0037",
+"witness": "WYG",
+"ref_pb": "KR1j0037_WYG_001-16b",
+"leaf": "own",
+"own_dice": 0.76
+},
+{
+"key": "pil040",
+"status": "aligned",
+"repo": "KR3k0059",
+"witness": "WYG",
+"ref_pb": "KR3k0059_WYG_446-37b",
+"leaf": "own",
+"own_dice": 0.929
+},
+{
+"key": "pil041",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil042",
+"status": "unaligned",
+"repo": "KR3g0012",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil043",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_133-10b",
+"leaf": "own",
+"own_dice": 0.827
+},
+{
+"key": "pil044",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_019-13b",
+"leaf": "own",
+"own_dice": 0.878
+},
+{
+"key": "pil045",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil046",
+"status": "unaligned",
+"repo": "KR3f0026",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil047",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_127-5b",
+"leaf": "own",
+"own_dice": 0.941
+},
+{
+"key": "pil048",
+"status": "aligned",
+"repo": "KR3k0059",
+"witness": "WYG",
+"ref_pb": "KR3k0059_WYG_105-12a",
+"leaf": "own",
+"own_dice": 0.933
+},
+{
+"key": "pil049",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_032-25a",
+"leaf": "own",
+"own_dice": 0.952
+},
+{
+"key": "pil050",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil051",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_071-10a",
+"leaf": "own",
+"own_dice": 0.869
+},
+{
+"key": "pil052",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_135-21a",
+"leaf": "own",
+"own_dice": 0.915
+},
+{
+"key": "pil053",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_114-22a",
+"leaf": "own",
+"own_dice": 0.954
+},
+{
+"key": "pil054",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil055",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil056",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil057",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_032-25a",
+"leaf": "own",
+"own_dice": 0.949
+},
+{
+"key": "pil058",
+"status": "aligned",
+"repo": "KR3f0026",
+"witness": "WYG",
+"ref_pb": "KR3f0026_WYG_070-58b",
+"leaf": "own",
+"own_dice": 0.824
+},
+{
+"key": "pil059",
+"status": "aligned",
+"repo": "KR1i0007",
+"witness": "WYG",
+"ref_pb": "KR1i0007_WYG_005-19b",
+"leaf": "own",
+"own_dice": 0.929
+},
+{
+"key": "pil060",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_142-4b",
+"leaf": "own",
+"own_dice": 0.923
+},
+{
+"key": "pil061",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil062",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil063",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil064",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil065",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil066",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_028-6b",
+"leaf": "own",
+"own_dice": 0.941
+},
+{
+"key": "pil067",
+"status": "unaligned",
+"repo": "KR1d0051",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil068",
+"status": "unaligned",
+"repo": "KR3f0027",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil069",
+"status": "aligned",
+"repo": "KR3k0056",
+"witness": "WYG",
+"ref_pb": "KR3k0056_WYG_144-19b",
+"leaf": "own",
+"own_dice": 0.791
+},
+{
+"key": "pil070",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_078-2a",
+"leaf": "own",
+"own_dice": 0.875
+},
+{
+"key": "pil071",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_110-34b",
+"leaf": "own",
+"own_dice": 0.94
+},
+{
+"key": "pil072",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil073",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_103-2b",
+"leaf": "own",
+"own_dice": 0.948
+},
+{
+"key": "pil074",
+"status": "aligned",
+"repo": "KR3k0012",
+"witness": "WYG",
+"ref_pb": "KR3k0012_WYG_000-101a",
+"leaf": "neighbours",
+"own_dice": 0.177
+},
+{
+"key": "pil075",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_150-20b",
+"leaf": "own",
+"own_dice": 0.915
+},
+{
+"key": "pil076",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil077",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil078",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil079",
+"status": "aligned",
+"repo": "KR3k0060",
+"witness": "WYG",
+"ref_pb": "KR3k0060_WYG_022-19a",
+"leaf": "own",
+"own_dice": 0.796
+},
+{
+"key": "pil080",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil081",
+"status": "unaligned",
+"repo": "KR3g0041",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil082",
+"status": "unaligned",
+"repo": "KR1a0123",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil083",
+"status": "aligned",
+"repo": "KR3k0039",
+"witness": "WYG",
+"ref_pb": "KR3k0039_WYG_001-24a",
+"leaf": "own",
+"own_dice": 0.806
+},
+{
+"key": "pil084",
+"status": "unaligned",
+"repo": "KR1e0094",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil085",
+"status": "aligned",
+"repo": "KR3k0039",
+"witness": "WYG",
+"ref_pb": "KR3k0039_WYG_015-52b",
+"leaf": "own",
+"own_dice": 0.833
+},
+{
+"key": "pil086",
+"status": "aligned",
+"repo": "KR3k0039",
+"witness": "WYG",
+"ref_pb": "KR3k0039_WYG_005-36b",
+"leaf": "own",
+"own_dice": 0.86
+},
+{
+"key": "pil087",
+"status": "aligned",
+"repo": "KR3k0058",
+"witness": "WYG",
+"ref_pb": "KR3k0058_WYG_112-6a",
+"leaf": "own",
+"own_dice": 0.963
+},
+{
+"key": "pil088",
+"status": "aligned",
+"repo": "KR1j0077",
+"witness": "WYG",
+"ref_pb": "KR1j0077_WYG_005-25a",
+"leaf": "own",
+"own_dice": 0.849
+},
+{
+"key": "pil089",
+"status": "aligned",
+"repo": "KR3k0039",
+"witness": "WYG",
+"ref_pb": "KR3k0039_WYG_003-49a",
+"leaf": "own",
+"own_dice": 0.881
+},
+{
+"key": "pil090",
+"status": "aligned",
+"repo": "KR3g0031",
+"witness": "WYG",
+"ref_pb": "KR3g0031_WYG_012-30a",
+"leaf": "own",
+"own_dice": 0.887
+},
+{
+"key": "pil091",
+"status": "unaligned",
+"repo": "KR3f0006",
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil092",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil093",
+"status": "aligned",
+"repo": "KR1a0029",
+"witness": "WYG",
+"ref_pb": "KR1a0029_WYG_004-22a",
+"leaf": "own",
+"own_dice": 0.962
+},
+{
+"key": "pil094",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil095",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil096",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil097",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil098",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil099",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+},
+{
+"key": "pil100",
+"status": "no-kanripo-work",
+"repo": null,
+"witness": null,
+"ref_pb": null,
+"leaf": null,
+"own_dice": null
+}
+]

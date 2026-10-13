@@ -1,0 +1,33 @@
+{
+ "packet": 90,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "69c1ba558522835be845801d",
+  "6a4a98d0eacde548ca4ee1a2",
+  "6a94360d7680120fac24f75d",
+  "697d9c9fb401034cf463d2bb",
+  "decoy-19",
+  "69b632cf66ab51b501d94024",
+  "6a4ae25a9a3f4fa983d9aa48",
+  "6a4ee4175180d31301354417",
+  "69ef2f8272c1376fdf2af8f6",
+  "69c1ba028522835be84559cd",
+  "6a424f7380ec989e1e67e904",
+  "6a9417dc58e968ecd979cda7",
+  "6a9070b4336010794b0d47be",
+  "6ab6e10451fc56c101c4a34b",
+  "6a93fd5a2bb66652f9fcaa7c",
+  "6993891e0f04c37dcfa6084a",
+  "decoy-20",
+  "6a243eb50f0e4f405e634850",
+  "6a45f7d4f1f48eff2e794dcd",
+  "6a08fb139c1b82475e15b5ae",
+  "69aff09557adc49dbfc42621",
+  "69b221c408069e96e84310d0",
+  "69dbc9ec1040d1d5e20a7d5f",
+  "6a4a5a1f9050f0b434300bbc",
+  "69e78a774a6785cfd60d359e",
+  "6a4923eba45b99e46af95d34"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: Shāhnāmah | Author: Firdawsīفردوسي‏ | Year: 1570 | Language: Persian\n2. Title: Vrbs norlberga illustrata carmine heroico, per helium eobanu Hessum, anno M. D. XXXII. | Author: Hessus, Helius Eobanus | Language: Latin\n3. Title: Commentatio De Donationibus Propter Nuptias, Quam in Academia Tubingensi, Praeside Dn. Wolfgang-Adamo Lauterbach Pro Doctoralibus privilegiis & honoribus impetrandis, Ad proximum diem April. in Aula nova, Publicae censur | Author: Lauterbach, Wolfgang Adam | Year: 1653 | Language: Latin\n4. Title: De goude leeuw, of den asijn der wysen | Author: Vreeswyk, Goossen van | Year: 1671 | Language: Dutch\n5. Title: Περὶ τῆς ἱερᾶς τέχνης ὑπομνήματα | Author: Θεόδωρος ὁ Φιλαδελφεύς | Year: 1550 | Language: Greek\n6. Title: Pentateuchus Samaritanus | Author: Julius Heinrich Petermann (ed.) | Year: 1872 | Language: Hebrew\n7. Title: Hispanie consolatio | Author: Sauermann, Georg | Language: Latin\n8. Title: De Domini Nostri Jesu Christi Passione, Commentarius Eximius : In septem Considerationes distributus, non modo meditationis studiosis, verum etiam Concionatoribus copiosam materiam subministrans Cui praefixa es | Author: Piatti, Domizio | Language: Latin\n9. Title: Die Propaedeutik der Araber im zehnten Jahrhundert (Ikhwan al-Safa, Quadrivium incl. Music) | Author: Ikhwan al-Safa; Friedrich Dieterici (ed.) | Year: 1865 | Language: Arabic\n10. Title: Laṭāyif-i Ashrāfīلطايف اشرفی | Author: Niẓām al-Dīn Yamanī fl. 15th cent. نظام الدین یمنیNiẓām Ḥajī Gharīb Yamanī نظام حاجی غریب یمنی | Year: 1618 | Language: Persian\n11. Title: De febribus commentarius ex libris aliquot Hippocratis & Galeni, parte plurima selectus, a Iacobo Syluio rei medicae apud Parrhisios interprete regio. Indice copiosissimo nuperrime adiecto. Cui adiunximus Camilli Thomai  | Author: Dubois, Jacques | Language: Latin\n12. Title: De rebus in Hibernia gestis, libri quattuor. Accessit Hibernicarum rerum appendix | Author: Stanyhurst, Richard | Year: 1584 | Language: Latin\n13. Title: De demonstratione liber unus: qui dialecticarum partitionum est tertius. | Author: Sturm, Johannes | Year: 1543 | Language: Latin\n14. Title: Method of Aerial Transportation (US Patent 1,655,113, 1928-01-03) | Author: Nikola Tesla | Year: 1928 | Language: English\n15. Title: Praeservator sanitatis | Author: Caldogno, Francesco Bernardino | Year: 1529 | Language: Latin\n16. Title: Aristoxenus, Elements of Harmonics; Greek Mathematical Texts | Author: Aristoxenus | Year: 1500 | Language: Greek\n17. Title: Λόγος περὶ τῆς τῶν ἀστέρων φύσεως | Author: Νικηφόρος Καλλιόπης | Year: 1520 | Language: Greek\n18. Title: Calumniae nebulonis cujusdam, quibus odio &amp; invidia gravare conatus est doctrinam Joh. Calvini de occulta Dei providentia. Johannis Calvini ad easdem responsio | Author: Calvin, Jean (1509-1564). Auteur du texte | Year: 1558 | Language: Latin\n19. Title: Epistolarum latinarum libri V, annotationibusque adjectis in singulas fere epistolas, Graecarum item liber I. Epistola de vita solitudine agenda | Author: Budé, Guillaume | Language: Latin\n20. Title: Evliya Çelebi Seyahatnâmesi, Vol. VIII — Ottoman Turkish, Istanbul 1896 | Author: Evliya Çelebi | Year: 1896 | Language: Ottoman Turkish\n21. Title: A song of Inana and Dumuzid (Dumuzid-Inana W) | Author: Anonymous Sumerian | Year: -2000 | Language: Sumerian\n22. Title: Caesar, Commentarii — De Bello Gallico and De Bello Civili (Aldine Press) | Author: Julius Caesar | Year: 1513 | Language: Latin\n23. Title: Prognosticon for Leipzig, 1498 | Author: Faber de Budweis, Wenceslaus | Year: 1498 | Language: Latin\n24. Title: Nachdenckliche Prophecy- vnd Weissagung Theophrasti Paracelsi D.M. vor 85. Jahren beschrieben. Von dem Löwen auß Mitternacht | Author: Paracelsus | Language: Latin\n25. Title: bla ma thugs kyi snying po las/ me mchod 'phrin las myur 'grub | Author: Ogyen Choling Collection | Year: 1700 | Language: Tibetan\n26. Title: Kurtze Anleitung und Getreuer Rathschlag, Wie man sich bey itzo fast überal einschleichender anfälligen Seuche Der Rohten Ruhr, Vor derselben bewahren, die jenigen aber, so nach Gottes Willen damit heimgesucht und überfa | Author: Nester, Johann Matthias | Language: German\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

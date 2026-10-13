@@ -63,7 +63,7 @@ export async function GET() {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>${BASE_URL}/blog</id>
-  <title>Source Library — Research Notes</title>
+  <title>Source Library | Research Notes</title>
   <subtitle>AI-assisted research on the collection: OCR, translation, the history of science, and the texts behind it.</subtitle>
   <link href="${BASE_URL}/blog" rel="alternate" type="text/html"/>
   <link href="${BASE_URL}/api/feed/blog" rel="self" type="application/atom+xml"/>

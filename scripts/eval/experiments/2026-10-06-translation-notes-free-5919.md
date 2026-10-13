@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: []
+scripts: []
+canons: []
+n_books: 40
+n_pages: 40
+verdict: "Removing the notes instructions from v13 does not lower fidelity (+0.10 [-0.09, 0.29], 40 pages); reversals 1 vs 3 pages, omissions fall, 11% cheaper."
+status: undecided
+decision: "Default prompt unchanged; note-free translation plus a separate notes step recommended, not decided (#5919)"
+superseded_by: null
+issue: 5919
+---
 ## 2026-10-06 · Does the translation get worse when the prompt stops asking for notes? (v13 with the notes instructions removed, #5919)
 <!-- PRIOR ART: 2026-10-04-translation-prompt-v17-typed-notes-5698.md (PR #5764) typed the notes and tested a stance on the same 40 pages; its runner, mechanical scorer and v13-a/v13-b noise-floor design are reused here. The #5695 fidelity harness (translation-vs-reference/) is used unchanged. Nothing before this removed the notes instructions. -->
 

@@ -1,0 +1,25 @@
+{
+ "packet": 4,
+ "prompt_version": "ai-exposure-r2-6038-verify",
+ "ids": [
+  "decoy-25",
+  "6952d08677f38f6761bc5477",
+  "decoy-13",
+  "69520176ab34727b1f04136b",
+  "6a90a35c3a69baad5d30b205",
+  "6991bd2970254d38471e292d",
+  "25dfd63a-8080-4864-aa79-a0fcb1c76102",
+  "69cfb6fe709cb88a028365a4",
+  "69b2214608069e96e842f2a2",
+  "decoy-22",
+  "decoy-06",
+  "decoy-01",
+  "6953ce4d77f38f6761be36fb",
+  "69f331a6876dd827cbc4927d",
+  "decoy-27",
+  "decoy-28",
+  "6a26fdb67bf01744ebad5fe4",
+  "6953e55777f38f6761bf05cf"
+ ],
+ "prompt": "You are helping a library find out which of its historical works AI models know. Answer from your own memory only. Never invent a quotation.\n\nEach numbered work below is given by its title, the year of the edition we hold and its language. The author's name is withheld; where the title printed it, it is replaced by […].\n\nFor each work give:\n- \"known\": do you know this specific work? \"yes\", \"no\" or \"unsure\".\n- \"author\": who wrote it, in Latin script (romanised if necessary), or \"unknown\".\n- \"author_native\": the author's name in the work's own script if that is not the Latin script, else \"\".\n- \"author_is_guess\": true if the author is your best guess rather than something you know, else false.\n- \"date\": roughly when the work was written or first published, or \"unknown\".\n- \"about\": one line on what the work is about, or \"unknown\".\n\nWorks:\n1. Title: 金液還真論 | Year of this edition: 1610 | Language: Classical Chinese\n2. Title: Amphitheatrum sapientiae aeternae | Year of this edition: 1609 | Language: Latin\n3. Title: Discorso sopra la generazione delle comete | Year of this edition: 1619 | Language: Italian\n4. Title: Utriusque cosmi majoris scilicet et minoris metaphysica, physica atque technica historia | Year of this edition: 1617 | Language: Latin\n5. Title: Omnia quae extant opera Nunc demum praeter caeteras editiones correcta & aucta: deinde variis annotationibus locupletata Adiecta postremo varia eiusdem opuscula | Year of this edition: 1608 | Language: Latin\n6. Title: The Bhagavad Gita, or The Message of the Master | Year of this edition: 1907 | Language: English\n7. Title: Comento sopra la Commedia di Dante | Year of this edition: 1481 | Language: Italian\n8. Title: Orbis Sensualium Pictus (1698 Nuremberg edition) | Year of this edition: 1698 | Language: Latin\n9. Title: […], Metamorphoses (Aldine Press) | Year of this edition: 1502 | Language: Latin\n10. Title: 丹臺秘錄 | Year of this edition: 1638 | Language: Chinese\n11. Title: Commentarius in Psalmum centesimum decimum nonum | Year of this edition: 1671 | Language: Latin\n12. Title: De concordia elementorum libri tres | Year of this edition: 1583 | Language: Latin\n13. Title: Meditations of Marcus […] (Communings with Himself) | Year of this edition: 1916 | Language: Greek\n14. Title: De imitatione Christi et contemptu omnium vanitatum mundi | Year of this edition: 1430 | Language: Latin\n15. Title: كتاب الأنوار في علم الأحجار | Year of this edition: 1310 | Language: Arabic\n16. Title: رساله در خواص سنگ‌ها و فلزات | Year of this edition: 1650 | Language: Persian\n17. Title: Theses Inavgvrales, De Crimine Magiae | Year of this edition: 1701 | Language: Latin\n18. Title: De Humani Corporis Fabrica (1543 First Edition) | Year of this edition: 1543 | Language: Latin\n\nReturn ONLY a JSON array with one object per work, in order: [{\"i\":1,\"known\":\"...\",\"author\":\"...\",\"author_native\":\"...\",\"author_is_guess\":false,\"date\":\"...\",\"about\":\"...\"}, ...]"
+}

@@ -1,0 +1,1222 @@
+{
+ "method": "read-from-image (Claude subagents; instructions in by-eye-population-instructions.md)",
+ "runs": [
+  {
+   "book_id": "6a9077a84e70467f3522ec84",
+   "stratum": "1600s",
+   "pages": [
+    {
+     "slug": "r4p-6a9077a84e70467f3522ec84-p376",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a9077a84e70467f3522ec84-p377",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a9077a84e70467f3522ec84-p378",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many (inconsistent: 'fum', 'fibi', 'eft' beside 'miser', 'restitutionem')",
+     "Greek dropped: 'cent. 2. c. 99.' for the printed Greek abbreviation"
+    ],
+    "gemini-3-flash-preview": [
+     "long-s read as f: none (normalised to s)",
+     "minor: '§. 3.' where page prints '§. 5' (p376)"
+    ],
+    "gemini-3.8-flash": [
+     "long-s read as f: many on p378 only ('fit', 'funt', 'reftitutio') while p376/p377 keep ſ — inconsistent across the run"
+    ],
+    "glm-ocr": [
+     "omission of a block: running heads '354 Delibata juris,' (p376) and '356 Delibata Juris,' (p378) dropped",
+     "word substitutions: 'console' for 'consule', 'Maastrillum', 'competet' for 'compete-ret', 'Ex hisce reftitur' for 'Ex hisce sequitur', 'quum' for 'æquum'",
+     "truncation: catchword 'com-' dropped on p378",
+     "line breaks collapsed into paragraphs"
+    ],
+    "calamari-gt4histocr-bin": [
+     "digits dropped/mangled: 'Cicer. . of.' for 'Cicer. 3. off.', 'deciſ. z.' for 'decis. 13.', 'deciſ. 6t' for '68', '5. .. .' for '45.§.1.'",
+     "Greek dropped: 'cent. 2. vl. 99.'",
+     "catchword 'Yy 3' lost on p377"
+    ]
+   },
+   "note": "read-from-image: Clean roman+italic legal text with ſ throughout. flash-preview and 3.8-flash are both near-perfect; 3.8-flash switches to f-for-ſ on p378 ('an justa cauffa fit reftitutionis'). glm-ocr silently substitutes words ('Ex hisce reftitur' where the page prints 'Ex hisce ſequitur') and drops both running heads.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-0)"
+  },
+  {
+   "book_id": "69b6b38d96dc15d4a16da2aa",
+   "stratum": "1600s",
+   "pages": [
+    {
+     "slug": "r4p-69b6b38d96dc15d4a16da2aa-p34",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "mixed"
+    },
+    {
+     "slug": "r4p-69b6b38d96dc15d4a16da2aa-p35",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "mixed"
+    },
+    {
+     "slug": "r4p-69b6b38d96dc15d4a16da2aa-p36",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "mixed"
+    }
+   ],
+   "best": "gemini-3.8-flash",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "omission of a block: the line 'fol. 2. col. 4. ita loquuntur:' dropped (p34)",
+     "word dropped: 'Propheticus' missing after the Greek in line 1 (p34)",
+     "long-s read as f: many",
+     "wrong reading order / column splice: margin note 'Christiani quoque…' spliced into body lines (p35, p36)",
+     "misreadings: 'Dividi' for 'Davidi', 'Quid de Paire' for 'Patre'; Hebrew 'השאתך' for 'חטאתך'"
+    ],
+    "gemini-3-flash-preview": [
+     "wrong reading order / column splice: marginal notes interleaved mid-line (p34, p36)",
+     "invented text: spelling normalised 'Solomon' → 'Salomon' throughout p36 ('cum Deo esse Salomonem', 'pro Salomonis pœnitentia') where the page prints Solomon",
+     "signature 'E 2' where page prints 'E 3' (p36)"
+    ],
+    "gemini-3.8-flash": [
+     "minor: 'Cælorum' for 'Cœlorum'; marginalia placed as separate blocks (acceptable)"
+    ],
+    "glm-ocr": [
+     "loop/repetition: 'ישראל' repeated hundreds of times (p34) and 'שם' hundreds of times (p35)",
+     "invented text: Hebrew replaced with 'ישראל ישראל ישראל' (p36)",
+     "truncation: p34 ends at the loop (last ~4 lines lost); p35 loses everything after line 4",
+     "Greek replaced/mangled: 'θεφητηκὸς' for 'προφητικὸς'",
+     "omission of a block: all marginalia dropped"
+    ],
+    "calamari-gt4histocr-bin": [
+     "Greek/Hebrew replaced by garbage ('Onad', 'ean ni ·')",
+     "wrong reading order / column splice: margin fragments interleaved ('qai eum', 'rar is')",
+     "many letter-level errors in italic ('Aloa.' for 'Moa-', 'agnorit')"
+    ]
+   },
+   "note": "read-from-image: Roman+italic Latin with Greek, Hebrew and side-notes. glm-ocr collapses on Hebrew: p35 becomes 'ajunt Magistri: שם שם שם …' and loses the rest of the page. flash-preview rewrites 'Solomonem' as 'Salomonem' on p36, which is not on the page. 3.8-flash keeps the Hebrew ('בעיר דוד אביו') and Greek correct and keeps the margins separate.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-0)"
+  },
+  {
+   "book_id": "69b66aa0b3f4fc044157a834",
+   "stratum": "1500s",
+   "pages": [
+    {
+     "slug": "r4p-69b66aa0b3f4fc044157a834-p3",
+     "kind": "front-matter",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "other",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b66aa0b3f4fc044157a834-p4",
+     "kind": "body",
+     "typeface": "italic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b66aa0b3f4fc044157a834-p5",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3.8-flash",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "Greek mangled: 'προτίλεια' for 'προπύλαια' (p3)",
+     "long-s read as f: many on p3/p5 ('Caufas falutis'), none on p4 — inconsistent",
+     "'Hac veró' for 'Hæc veró' (p4)"
+    ],
+    "gemini-3-flash-preview": [
+     "Greek mangled: 'προτύλεια' (p3)",
+     "'Hac veró' for 'Hæc' (p4)",
+     "minor: 'Scriptura sancta' for 'Scripturæ sanctæ' (p5)"
+    ],
+    "gemini-3.8-flash": [
+     "minor: abbreviation expanded 'bonū' → 'bonum' (p4); 'Scriptura sancta' for 'Scripturæ sanctæ' (p5)"
+    ],
+    "glm-ocr": [
+     "omission of a block: page number '369' and signature 'A 2' dropped (p4)",
+     "drop-cap 'H' lost ('O m o initió')",
+     "Greek replaced/mangled: 'πέσόγνωσίς' for 'πρόγνωσις', 'exoïleia' (p3)",
+     "abbreviations mangled: 'totamg', 'atg' for 'totamq;', 'atq;'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "italic body heavily garbled: 'DE CAFIS SALTI', 'iieer,ſlſicat &reeneradonans' (p4)",
+     "Greek replaced by garbage ('aο τέAαα', 'πγγvσς')",
+     "digits mangled in references ('Rom. .v.29.3o.')"
+    ]
+   },
+   "note": "read-from-image: Basel 1595 theses, italic with ſ, Greek words and q; abbreviations. All Gemini arms are close; 3.8-flash alone reads the Greek 'προπύλαια' (others 'προτίλεια'/'προτύλεια') and 'Hæc veró' (others 'Hac'). Calamari breaks down on the italic, e.g. 'DE CAFIS SALTI HOMINM' for 'DE CAUSIS SALUTIS HOMINUM'.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-0)"
+  },
+  {
+   "book_id": "6a4c44a422a2c197c6721c51",
+   "stratum": "undated",
+   "pages": [
+    {
+     "slug": "r4p-6a4c44a422a2c197c6721c51-p6",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "fair",
+     "layout": "marginalia-heavy",
+     "leaf_language": "mixed"
+    },
+    {
+     "slug": "r4p-6a4c44a422a2c197c6721c51-p7",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "fair",
+     "layout": "marginalia-heavy",
+     "leaf_language": "mixed"
+    },
+    {
+     "slug": "r4p-6a4c44a422a2c197c6721c51-p8",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "fair",
+     "layout": "marginalia-heavy",
+     "leaf_language": "mixed"
+    }
+   ],
+   "best": "gemini-3.8-flash",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "wrong reading order / column splice: marginal footnotes spliced into the start of body lines on all three pages",
+     "invented text: Greek 'παιδευθέντα' where the page prints 'διαφέροντα' (p8)",
+     "long-s read as f: many on p6, none on p7/p8",
+     "Greek article 'τὸ' before Hebrew גואל dropped (p7)"
+    ],
+    "gemini-3-flash-preview": [
+     "invented text: 'Hebraeorum' where the page prints 'Ebraeorum' (p7)",
+     "'(a)' for the printed '(ω)' footnote mark (p7)",
+     "line breaks collapsed into paragraphs on p7/p8 (text complete)"
+    ],
+    "gemini-3.8-flash": [
+     "minor: 'CONCINNATUR' for 'CONCINNATOR' (p6), 'hodiérnum' for 'hodiénum' (p8)",
+     "abbreviation expanded: 'ibiq́ue' for 'ibiq;'"
+    ],
+    "glm-ocr": [
+     "omission of a block: all marginal footnotes dropped on p6, p7 and p8",
+     "Hebrew dropped: 'exprimit.' with גואל omitted (p7)",
+     "Greek replaced/mangled: 'κεῖτον ἐπίχώσεων ποιήδειαν'",
+     "misreadings: 'inventent', 'hand convenebat', 'suisse' for 'fuisse'",
+     "line breaks collapsed"
+    ],
+    "calamari-gt4histocr-bin": [
+     "Greek replaced by garbage on p8",
+     "marginal notes garbled and interleaved ('(ꝙLib. Il. . pſſit')",
+     "small errors ('auoklagen', 'inquam' for 'tanquam')"
+    ]
+   },
+   "note": "read-from-image: Latin dissertation with Fraktur German phrases, Greek quotations and a margin column of footnotes. flash-lite splices the margin into the body ('(τ) Lib.II.cap.87. ftium liberare') and swaps the printed Greek 'διαφέροντα' for 'παιδευθέντα'. glm-ocr drops every footnote and the Hebrew word. 3.8-flash keeps the margins separate and keeps 'τὸ גואל'.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-0)"
+  },
+  {
+   "book_id": "69b6ec7bb1a3146c0525b6fd",
+   "stratum": "1700s",
+   "pages": [
+    {
+     "slug": "r4p-69b6ec7bb1a3146c0525b6fd-p416",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "deu"
+    },
+    {
+     "slug": "r4p-69b6ec7bb1a3146c0525b6fd-p417",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "deu"
+    },
+    {
+     "slug": "r4p-69b6ec7bb1a3146c0525b6fd-p418",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "deu"
+    }
+   ],
+   "best": "tie: calamari-gt4histocr-bin, gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "invented text / modernisation: 'diesen … die-ser' where the page prints 'disen … di-ser', 'Barmherzigkeit/Herzen/Creuz' where it prints 'Barmhertzigkeit/Hertzen/Creutz', 'unglückselige' for 'unglückseelige', 'Büsserinnen' for 'Büsserinen'",
+     "'Neu' for 'Reu' (p417)",
+     "abbreviation mangled: 'ꝛc.' → '2c.'"
+    ],
+    "gemini-3-flash-preview": [
+     "modernisation: tz → z ('Barmherzigkeit', 'Herzen', 'Creuz', 'jezt')",
+     "'Neu' for 'Reu' (p417)"
+    ],
+    "gemini-3.8-flash": [
+     "wrong diacritics: 'verhàngest', 'Sùnderen', 'Gùte' (p416)",
+     "'Creuß' for 'Creutz'; 'Neu' for 'Reu' (p416)",
+     "abbreviation mangled: 'ꝛc.' → '2c.' (p416/p417)"
+    ],
+    "glm-ocr": [
+     "systematic misreading: 'O' read as 'D' ('Dewiger', 'DGDtt'), 'HErr' → 'HER2', 'Vatter' → 'Batter'",
+     "word substitutions: 'Höhn' for 'Höll', 'Sünder' for 'Sünden', 'kids' for 'leids'",
+     "running-head page numbers dropped (p416, p418)",
+     "line breaks collapsed (p418)"
+    ],
+    "calamari-gt4histocr-bin": [
+     "letter-level slips: 'Agenblick', 'ut' for 'Gut', 'naden' for 'Gnaden', 'z98' for '398'",
+     "'ꝛc.' → 're.'",
+     "drop-caps lost ('( Erechter', 'Eilen')"
+    ]
+   },
+   "note": "read-from-image: The book is a Latin title, but these leaves are 1748 German Fraktur prayers, so they are not Latin text. Calamari (GT4HistOCR) keeps the printed spelling ('Barmhertzigkeit', 'Reu', 'Creutz'). The Gemini arms quietly modernise it (tz→z, 'Neu' for 'Reu'; flash-lite also 'diesen' for 'disen'). glm-ocr reads every 'O' as 'D' ('DGDtt').",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-0)"
+  },
+  {
+   "book_id": "6a429f17831988adcb768976",
+   "stratum": "1600s",
+   "pages": [
+    {
+     "slug": "r4p-6a429f17831988adcb768976-p489",
+     "kind": "index",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "two-column",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a429f17831988adcb768976-p490",
+     "kind": "index",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "two-column",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a429f17831988adcb768976-p491",
+     "kind": "index",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "two-column",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3.8-flash",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many (Profa, fuftinentur, Pufillanimitas)",
+     "omission of a block: p491 drops the line 'Vnio, Concordia.'",
+     "abbreviations mangled: p491 'In vanum conduco' for printed 'In vnum'; 'Verificor' for 'Verſificor'"
+    ],
+    "gemini-3-flash-preview": [
+     "long-s normalized to s (not f); joins wrapped lines into one (no content loss)",
+     "minor misreads: 'Signo, Signo, insigno' for printed 'Signio, Signo, inſignio'"
+    ],
+    "gemini-3.8-flash": [
+     "minor misreads only: 'Sacietas' for printed 'Saciatus' (p489), 'Ganorum' for 'Canorum' (p490)"
+    ],
+    "glm-ocr": [
+     "drop-cap initials dropped: 'Va conscientia', 'Apinor', 'Abularius' (printed QVa, RApinor, TAbularius)",
+     "minor misreads: 'Prator', 'Sugillatías, Singulatíim'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "wrong reading order / column splice: left and right columns interleaved line-by-line on p489/p490 (e.g. 'Proſa ... auda dratio Rejici in Magiſtratus petitione')",
+     "omission of a block: p491 left column 'Tyrannicida ... Vecordia' (V section) missing; right column order scrambled",
+     "many character errors ('Protecor, Patronns', 'Puenaris')"
+    ]
+   },
+   "note": "Two-column 1638 Latin dictionary index pages. All Gemini arms and glm read the columns in order; 3.8-flash keeps ſ and line breaks and is the closest (it prints 'Reiuuaneſco' where the page prints 'Reiuueneſco'); flash-lite turns every ſ into f and drops 'Vnio, Concordia.' on p491. Calamari splices the two columns line by line, e.g. 'Proſa, Soluta oratio, ... Rejici in Magiſtratus petitione', which makes its output unusable.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-1)"
+  },
+  {
+   "book_id": "69b690ca080b19f98fce093c",
+   "stratum": "1600s",
+   "pages": [
+    {
+     "slug": "r4p-69b690ca080b19f98fce093c-p181",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "table",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b690ca080b19f98fce093c-p182",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b690ca080b19f98fce093c-p183",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "tie: gemini-3-flash-preview, gemini-3.8-flash",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many on p181 (noftro, Confilio, fcribe) and some on p183 ('Confilio', 'libera fit' for 'libera ſit'); inconsistent: p182 normalized to s, p183 mostly ſ",
+     "marginal note misread: 'Aha quæftio' for printed 'Alia quæſtio'"
+    ],
+    "gemini-3-flash-preview": [
+     "none significant; p183 normalizes ſ to s"
+    ],
+    "gemini-3.8-flash": [
+     "none significant; marginalia moved to separate blocks after the paragraph (acceptable); p181 arithmetic table reordered"
+    ],
+    "glm-ocr": [
+     "omission of a block: all marginal notes dropped (p182 'Lib.1.fol.16.', 'Occaſio & cauſa Appendicis'; p183 'Alia quæſtio de Eclipſib.'); page numbers 36/1/2 dropped; p181 table digit '31' and '25.' dropped",
+     "drop-cap dropped: 'IDAM' for 'QVIDAM'",
+     "misreads: 'Prosthaphæreis' for 'Proſthaphæreſis'; paragraph lines merged"
+    ],
+    "calamari-gt4histocr-bin": [
+     "italic numerals dropped/garbled: p181 'proi. diebus, repone . ſublato' for printed 'pro 149. diebus, repone 48.'; 'die o.' / 'die io.' for 'die 6.' / 'die 16.'",
+     "garbled title and drop-cap on p182 ('ONSILII', 'LICIC IN OVA', '1o A præclariſſimus')",
+     "marginalia interleaved mid-text"
+    ]
+   },
+   "note": "Errata page with a worked sum, the opening of an appendix with marginalia, and a body page. flash-preview and 3.8-flash are close to exact (both read 'pro 149. diebus, repone 48.'). Calamari loses the italic numerals ('proi. diebus, repone .'), and in an errata list the numbers are the content. glm drops every marginal note, and flash-lite's long-s handling switches between f, s and ſ from one page to the next.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-1)"
+  },
+  {
+   "book_id": "69b64ea118b87551bfc8ae85",
+   "stratum": "1500s",
+   "pages": [
+    {
+     "slug": "r4p-69b64ea118b87551bfc8ae85-p63",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b64ea118b87551bfc8ae85-p64",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b64ea118b87551bfc8ae85-p65",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "mixed"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many on p63/p64 (fumet, fpem, Chrifti, fanguine)",
+     "misread: 'fac=cramento' for 'ſa-cramento' (p64)",
+     "invented text (minor): fills the torn header line on p64 as 'ufus mortis' where the page shows a hole"
+    ],
+    "gemini-3-flash-preview": [
+     "invented text (minor): reconstructs the damaged running heads 'DE COENA' (page shows 'DE COE A') and fills the p64 hole as 'ufus mortis'",
+     "long-s read as f: few ('aut fumet', 'ufus')"
+    ],
+    "gemini-3.8-flash": [
+     "invented text: p65 'panis ſcilicet' where the page prints 'ſcili-' (line-end hyphen)",
+     "long-s read as f: few ('aut fumet')"
+    ],
+    "glm-ocr": [
+     "abbreviations dropped: macrons/tildes lost ('Sacrametu', 'tentu', 'no omnes', 'Sacrametu istud no')",
+     "question marks rendered as colons throughout ('sumere & Sacramentum:')",
+     "misreads: 'ubi mortis', 'essudisse', 'ipsq', 'elu corporis'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "Greek replaced/garbled: 'αoyiu·' for printed ἀναλογίαν (p65)",
+     "running heads garbled ('J1', 'dcC', 'PAROH.')"
+    ]
+   },
+   "note": "1557 catechism in roman type with abbreviation macrons and one Greek word. The Gemini arms keep the macrons and the Greek ἀναλογίαν. glm drops most macrons ('Sacrametu istud no' for 'Sacramẽtũ iſtud nõ') and prints ':' for every '?'. 3.8-flash invents 'ſcilicet' from the hyphenated 'ſcili-'. Calamari's body text is good but it garbles the Greek to 'αoyiu·'.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-1)"
+  },
+  {
+   "book_id": "6a4c205c6831c6094ae55d6f",
+   "stratum": "undated",
+   "pages": [
+    {
+     "slug": "r4p-6a4c205c6831c6094ae55d6f-p26",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a4c205c6831c6094ae55d6f-p27",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a4c205c6831c6094ae55d6f-p28",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "tie: gemini-3-flash-preview, gemini-3.8-flash",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "text pulled from a neighbouring page: p26 appends ~27 lines of the facing leaf's cut-off edge ('negat / parea / J.A.b. / judici / tor, f ...')",
+     "long-s read as f: many on p26 and p28 (Refcript, teftam, fuftinentur, Caftr)"
+    ],
+    "gemini-3-flash-preview": [
+     "none significant; joins wrapped lines on p26"
+    ],
+    "gemini-3.8-flash": [
+     "long-s read as f: few (p27 'nifi forte')",
+     "'add. l.72' for printed 'ad d. l.72'"
+    ],
+    "glm-ocr": [
+     "page numbers dropped",
+     "minor misreads: 'Ro-fate', 'l. s.' for 'l. 5.', 'de realiter' for 'de re aliter', 'legasfet', 'Gloff.'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "italic legal citations badly garbled: numerals and sigla lost ('arg.3.. de off.', 'Felin inc. .. uum17. &18.. .', 'Galgan p.2..2. .7.n..')",
+     "text pulled from a neighbouring page: trailing noise characters from the facing-leaf strip on p26/p28"
+    ]
+   },
+   "note": "Legal dissertation dense with italic citations. The Gemini flash arms and glm keep the citations intact. flash-lite p26 tacks on the facing page's cut-off edge as text ('negat / parea / J.A.b. / judici ...'). Calamari destroys the italic citations (e.g. 'Galgan p.2..2. .7.n..' for 'Galgan. p.2.c.2.q.7.n.8.'), and on this book the citations are the content.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-1)"
+  },
+  {
+   "book_id": "6a9091d50f0bff48dccbce1f",
+   "stratum": "1400s",
+   "pages": [
+    {
+     "slug": "r4p-6a9091d50f0bff48dccbce1f-p3",
+     "kind": "blank",
+     "typeface": "none",
+     "scan": "poor",
+     "layout": "other",
+     "leaf_language": "other:none"
+    },
+    {
+     "slug": "r4p-6a9091d50f0bff48dccbce1f-p4",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a9091d50f0bff48dccbce1f-p5",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "tie: gemini-3.1-pro-preview, gemini-3.8-flash",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "invented text on blank page: p3 returns '1900\\n1900' (also a repetition)",
+     "long-s read as f: many (Iocundiffimum, fuftinentur-type: 'confenfu', 'effe')",
+     "abbreviations mangled: tironian et ⁊ rendered as 'z' (p4) and 'r' (p5); 'Romanop' for 'Romanoꝝ'"
+    ],
+    "gemini-3-flash-preview": [
+     "invented text on blank page: p3 returns an English description ('The image provided is a highly degraded, low-contrast scan ...')",
+     "misread/invented: p5 'Sic gesserunt' for printed 'Ne gesserunt'",
+     "abbreviations silently expanded ('populorum', 'maiorũ tuorum' for 'populoꝝ', 'maioꝝ tuoꝝ')",
+     "p4 drops 'bi' of 'incredibi-'"
+    ],
+    "gemini-3.8-flash": [
+     "abbreviations mangled: p4 renders ⁊ as '&' and drops the ꝝ mark ('populor', 'Romanor'); p5 adds spurious macrons ('v̄no', 'reperiunt̄ur')"
+    ],
+    "gemini-3.1-pro-preview": [
+     "abbreviations approximated: p4 uses ꝯ for ꝝ; p5 falls back to ASCII 'z' for ⁊, '9' for ꝰ, 'Congratulat~', and normalizes ſ to s (inconsistent with p4)"
+    ],
+    "glm-ocr": [
+     "omission of a block: p4 three-line heading 'Oratio Hermolai Barbari ... principes inuictiſſimos' dropped entirely",
+     "invented text on blank page: p3 returns '1.'",
+     "many gothic misreads: 'Aostrę Aunchü' for 'Noſtrę Nunciũ', 'nibil', 'boc', 'Tefar'; ⁊ as Greek τ",
+     "line breaks collapsed into one paragraph on p4"
+    ],
+    "calamari-gt4histocr-bin": [
+     "garbled heading ('hege  onoi.' for 'Regem Romanorum')",
+     "invented text on blank page: p3 returns stray 'S r / e'",
+     "minor misreads ('Teſtatiſſunam', 'compieſſiſſes'); otherwise keeps ⁊, ꝝ, ſ correctly"
+    ]
+   },
+   "note": "1486 gothic incunable with a binarized blank leaf (p3). Only 3.8-flash and pro return nothing for the blank. flash-lite invents '1900 1900' and flash-preview writes an English description of the scan. On the gothic pages, pro and 3.8-flash best keep the abbreviations (ꝙ, ꝑ, ꝓ). glm drops the whole heading on p4 and misreads gothic N/h ('Aostrę Aunchü'). flash-preview invents 'Sic gesserunt' where the page prints 'Ne gesserunt'.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-1)"
+  },
+  {
+   "book_id": "69b6ab69080b19f98fd449c5",
+   "stratum": "1600s",
+   "pages": [
+    {
+     "slug": "r4p-69b6ab69080b19f98fd449c5-p12",
+     "page_kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat",
+     "note": "roman body, italic terms, two lines of Greek (Hippocrates aph.)"
+    },
+    {
+     "slug": "r4p-69b6ab69080b19f98fd449c5-p13",
+     "page_kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b6ab69080b19f98fd449c5-p14",
+     "page_kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "mixed",
+     "note": "Latin with two Greek quotations"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many (fuftinui, poffe, eft on all 3 pages)"
+    ],
+    "gemini-3-flash-preview": [
+     "long-s read as f: few (p13 only: acetof, fimpl, opus eft, afarum, ipfius, ficcum, fitis, infidiis)"
+    ],
+    "gemini-3.8-flash": [
+     "long-s read as f: many (p14 entirely: fem., affufione, fymptomata, poffunt)",
+     "misreading: p12 'Curatioriam' for printed 'Curatoriam'; p13 'Venaſectioni' for 'Venæſectioni'"
+    ],
+    "glm-ocr": [
+     "long-s normalised to s throughout (not f), with stray f/l confusions: 'sefellit', 'si hieri poslit', 'acetol.', 'superefle'",
+     "Greek mangled (p12 'δειὰ ἀγεννῶν, ὁκὸν μάλις φέρην'; p14 'δίαιπη καὶ τοίσια πυρετή-νεσια')",
+     "truncation: p14 drops the signature line 'B 3'",
+     "misreadings: p14 'Vičtus ... fibricitantibus', 'sebris'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "Greek replaced by garbage (p12 'A d æsν,  s  μ sæ  ẽen'; p14 'Ai  pioi p τοσ πυpετj-')",
+     "italic misreads: p13 'itnẽ hic enæſectioni' for 'Sitné hîc Venæſectioni'",
+     "initial-letter errors: 'turationem', 'lolliatur', 'Iippocr.', 'aph. 2i.'"
+    ]
+   },
+   "note": "Three engines read the Latin almost cleanly, so the difference comes down to long-s fidelity and the Greek. gemini-3-flash-preview keeps ſ on p12 and p14 and gives good Greek ('Ἃ δεῖ ἄγειν, ὅκη ἂν μάλιϛα ῥέπῃ'), but on p13 it slips into f. gemini-3.8-flash writes f all through p14. glm-ocr and calamari both wreck the Greek, and glm-ocr also drops 'B 3' and brings in letter errors ('sefellit', 'fibricitantibus').",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-2)"
+  },
+  {
+   "book_id": "6a909b7ab7feee6e9c42a728",
+   "stratum": "1500s",
+   "pages": [
+    {
+     "slug": "r4p-6a909b7ab7feee6e9c42a728-p227",
+     "page_kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "lat",
+     "note": "dense abbreviated roman with italics, outer-margin citations and quote marks; sliver of facing page at left edge"
+    },
+    {
+     "slug": "r4p-6a909b7ab7feee6e9c42a728-p228",
+     "page_kind": "body",
+     "typeface": "roman",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a909b7ab7feee6e9c42a728-p229",
+     "page_kind": "body",
+     "typeface": "roman",
+     "scan": "good",
+     "layout": "marginalia-heavy",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "tie: gemini-3.8-flash, gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many on p227-p228 (Afferit, fingulari, effe)",
+     "abbreviations dropped: 'pprijs' without ꝓ, 'no' for nō, 'Etem'/'uidet' with no macron, 'qp' for ꝙ",
+     "omission: p229 'demōſtrare, ſed' drops 'omnes'; 'quod eſt' for 'quod quid eſt'; 'particularum' for 'particularium'"
+    ],
+    "gemini-3-flash-preview": [
+     "long-s normalised to s on p227-p228 (kept on p229)",
+     "wrong reading order: p227 margin note '6. Meta. 1.' and quote marks spliced into the body ('confirmare 6. Meta. 1. nostram')",
+     "misreadings: p228 'rectun', 'lariun'; p229 'uideĩ' for uidet̃"
+    ],
+    "gemini-3.8-flash": [
+     "long-s normalised to s and æ to ae on p227",
+     "abbreviations dropped: p227 'etem', 'Ite', 'uidet' without macrons; 'qʒ'/'ꝗꝫ' used for q; and q̃",
+     "misreadings: p227 'intelligit mathematica' for 'mathematicas'; p229 'rjs' for 'ijs', spurious accents 'princípía'",
+     "omits the '“'/'>>' quotation marks in the outer margin (margin notes moved to end, not spliced)"
+    ],
+    "glm-ocr": [
+     "abbreviations mangled: macrons put on the wrong letters ('minusē', 'Āque', 'neqē', 'eē', 'čŒ' for q̃)",
+     "long-s normalised to s, with 'uerfantur'/'asferit' f-confusions",
+     "truncation: p228 drops the running head '204 EVERS. SING. CERTAM.' and the catchword 'ſtimabat'; p229 drops page number and catchword",
+     "misreadings: p228 'contēplareur', 'cōseterū' for cæterarũ; p229 'dicēt' for dictũ, 'suisse'",
+     "p229 paragraphs collapsed into one block"
+    ],
+    "calamari-gt4histocr-bin": [
+     "digits misread: '6' read as 's', '1' as 'i', some numbers dropped ('tex. .', 'in . Meta.')",
+     "wrong reading order: p229 margin quote marks fused onto line ends ('me-e', 'cir-ee')",
+     "truncation at left edge of the last lines: p227 'æ ſunt', 'ipſas detinitiones'; p229 'ihil', ' quid eſt' (missing 'ca'), 'ieta. tex. e5'"
+    ]
+   },
+   "note": "Calamari keeps the abbreviation glyphs best (ꝓ, ꝑ, ꝙ, em̃) but misreads every 6 and 1 and clips the left edge of lines near the foot of the page. gemini-3.8-flash and gemini-3-flash-preview are both near-clean on p228-p229, but both turn ſ into s on p227, and 3-flash-preview also splices the margin citation into the text ('confirmare 6. Meta. 1. nostram'). glm-ocr scatters macrons onto the wrong letters ('neqē', 'eē', 'čŒ') and drops headers and catchwords.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-2)"
+  },
+  {
+   "book_id": "6a26ba7461b3857ed05aff60",
+   "stratum": "1500s",
+   "pages": [
+    {
+     "slug": "r4p-6a26ba7461b3857ed05aff60-p51",
+     "page_kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat",
+     "note": "chapter heading plus body; rotunda"
+    },
+    {
+     "slug": "r4p-6a26ba7461b3857ed05aff60-p52",
+     "page_kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a26ba7461b3857ed05aff60-p53",
+     "page_kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat",
+     "note": "signature 'd i' at foot"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many on p51-p52 (folo, Efculapi, fenfu)",
+     "misreadings: p51 'homimib', 'ammantibq', 'dini mitate', 'vi homibz extermis' for 'viſionibꝫ externis'; p52 'ingulationes', 'Infamire'; p53 'At hi' for 'At ſi', 'ommum', 'einm'"
+    ],
+    "gemini-3-flash-preview": [
+     "long-s normalised to s on p51 (kept on p52-p53)",
+     "misreadings: p51 'vī homibꝫ externis' for 'viſionibꝫ externis'; p52 'ſemimibus', 'vrbūum', 'cognitiom'; p53 'miphj', signature 'b i' for 'd i'"
+    ],
+    "gemini-3.8-flash": [
+     "long-s read as f: many on p53 (effe, fenfu, fermonem)",
+     "abbreviations dropped (expanded): p51 'preſentiarum', 'potiſſimum', 'hominibus', 'animantibus' for the printed contractions",
+     "misreadings: p52 'ntellectio', 'recognocit'; p53 signature 'b i' for 'd i'"
+    ],
+    "glm-ocr": [
+     "misreadings throughout: p51 'ozatio', 'necellarium', 'Ramneque', 'vithomibo'; p52 'vmitur', 'Rulla', 'delituta', 'Imp20'; p53 'prawitatis', 'gemita', 'Iterilia'",
+     "long-s handled inconsistently (s and f mixed)"
+    ],
+    "calamari-gt4histocr-bin": [
+     "minim confusions: p51 'breniter', 'enmm', 'ab home ꝓuent', 'ee ſermonis'; p52 'vmtur', 'mtur', 'ſemna', 'omma', 'Jnſamre'; p53 'Kuaſdã', 'vum eſt', 'd1'"
+    ]
+   },
+   "note": "This is a 1503 rotunda with heavy abbreviation. gemini-3-flash-preview keeps the contractions (hominibꝫ, vtraqꝫ, neqꝫ), but it normalises ſ to s on p51 and misreads 'viſionibꝫ' as 'vī homibꝫ'. gemini-3.8-flash expands the contractions ('preſentiarum') and writes f for ſ all through p53. glm-ocr and flash-lite collapse the minims ('homimib', 'ammantibq', 'Ramneque').",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-2)"
+  },
+  {
+   "book_id": "6a4b1d687622bb5aba12bd8e",
+   "stratum": "undated",
+   "pages": [
+    {
+     "slug": "r4p-6a4b1d687622bb5aba12bd8e-p4",
+     "page_kind": "blank",
+     "typeface": "none",
+     "scan": "good",
+     "layout": "other",
+     "leaf_language": "other:none"
+    },
+    {
+     "slug": "r4p-6a4b1d687622bb5aba12bd8e-p5",
+     "page_kind": "title",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "other",
+     "leaf_language": "mixed",
+     "note": "title page (imprint Lipsiae M.D.LX), Greek Aristotle epigraph, italic verse, shelfmarks and handwritten dedication"
+    },
+    {
+     "slug": "r4p-6a4b1d687622bb5aba12bd8e-p6",
+     "page_kind": "other",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "other",
+     "leaf_language": "lat",
+     "note": "verso of title: only a red library stamp 'Ex Biblioth. Regia Berolinensi' over show-through of the title"
+    }
+   ],
+   "best": "gemini-3.8-flash",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many on p5 (fine quibus, conftitutæ, Ariftoteles)",
+     "shelfmark '1899' read as '1809'"
+    ],
+    "gemini-3-flash-preview": [
+     "invented text: p4 blank page output is meta-commentary 'The image provided is a blank page and does not contain any text to transcribe.'"
+    ],
+    "gemini-3.8-flash": [
+     "shelfmark '1899' read as '1809' (minor)"
+    ],
+    "glm-ocr": [
+     "invented text: p4 blank page output is meta-commentary 'The image provided is too blurry ... blank or empty page'",
+     "Greek mangled: 'δὲ μὲν οὐμ τὸμ νόμομ κελέυωμ αρχεμ'",
+     "handwritten dedication garbled: 'Ingrìj forliritam ... Lintobnigrum Amiro sinò'",
+     "long-s normalised; 'Clarifiis', 'Rhamba' (truncated)"
+    ],
+    "calamari-gt4histocr-bin": [
+     "omission: large title 'ORATIO' lost ('RAJ'), 'IOACHIMIRAXMARI'",
+     "Greek replaced by garbage ('oͤ /Mudũpdp vuοu iuopxap')",
+     "handwriting read as garbage lines",
+     "p6: stamp not read (empty output)"
+    ]
+   },
+   "note": "On the p4 blank, flash-lite, 3.8-flash and calamari correctly return nothing. gemini-3-flash-preview and glm-ocr instead write English meta-commentary, which counts as invented text. On the p5 title page all three larger Geminis give a correct Greek epigraph and a plausible reading of the hand ('Ingenij foelicitate, doctrina, ac virtute singulari praedito dno Johanni Tobingo Luneburgensi'). Calamari loses 'ORATIO' and turns the Greek into noise. On p6, every engine except calamari reads only the stamp and none reads the show-through.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-2)"
+  },
+  {
+   "book_id": "6a9053e3dbce5358e41f69d3",
+   "stratum": "1400s",
+   "pages": [
+    {
+     "slug": "r4p-6a9053e3dbce5358e41f69d3-p33",
+     "page_kind": "body",
+     "typeface": "gothic",
+     "scan": "fair",
+     "layout": "two-column",
+     "leaf_language": "lat",
+     "note": "very dense, heavily abbreviated incunable textura; small type for the resolution; sliver of facing page at left edge"
+    },
+    {
+     "slug": "r4p-6a9053e3dbce5358e41f69d3-p34",
+     "page_kind": "body",
+     "typeface": "gothic",
+     "scan": "fair",
+     "layout": "two-column",
+     "leaf_language": "lat",
+     "note": "sliver of next page at right edge"
+    },
+    {
+     "slug": "r4p-6a9053e3dbce5358e41f69d3-p35",
+     "page_kind": "body",
+     "typeface": "gothic",
+     "scan": "fair",
+     "layout": "two-column",
+     "leaf_language": "lat",
+     "note": "sliver of facing page at left edge"
+    }
+   ],
+   "best": "tie: gemini-3.1-pro-preview, gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "text pulled from a neighbouring page: p35 transcribes only the facing-page sliver at the left edge (mangled)",
+     "omission of a block: p35 omits both columns of the actual page",
+     "loop/repetition: p35 ends in 'ꝗdē' repeated ~2,500 times",
+     "long-s read as f: many (p33 'fequiť', 'eft', 'firfen')",
+     "abbreviations dropped/mangled: 'z' for ꝯ, '13' for lꝫ, 'pternāliter'"
+    ],
+    "gemini-3-flash-preview": [
+     "abbreviations simplified: ꝯ rendered as 'z', 'dirit' for dixit",
+     "minor reorder: p35 places the 'Iam ergo ... ' line before the 'Cura' initial line"
+    ],
+    "gemini-3.8-flash": [
+     "text pulled from a neighbouring page: p33 opens with ~93 lines read from the facing-page sliver",
+     "formatting artefact: p34 emitted with literal '\\n' and trailing '\\' escapes (6 physical lines)",
+     "long-s read as f: few-to-many (p33 'fanguie', 'fupza'; p35 'fal tem')",
+     "abbreviations simplified (z for ꝯ, 'zč' for ꝛc̃)"
+    ],
+    "glm-ocr": [
+     "loop/repetition: p33 repeats the 'Si ergo mâ fluens ... cerebâ:' passage ~20 times",
+     "loop/repetition: p34 repeats 'píte rífu píte fanguinis vna boa rífu qí fit' 83 times before the actual page text",
+     "truncation: p35 stops mid column 1 ('q pciipit vap'), omitting the rest of the page",
+     "abbreviations mangled ('cerebâ:', 'fî', 'Žbîe')",
+     "column 2 of p34 is a neighbouring-page sliver ('rífu ... fanguinis') read in a loop"
+    ],
+    "calamari-gt4histocr-bin": [
+     "text pulled from a neighbouring page: p33 and p35 open with ~16 lines of sliver garbage",
+     "many lines unreadable garbage at this resolution (p34 'liüäaegl ſn i · z aualſe ia', p35 'ieuiiimã ad pbeben inzmatinẽ')"
+    ],
+    "gemini-3.1-pro-preview": [
+     "text pulled from a neighbouring page: p35 opens with ~93 lines transcribed from the facing-page sliver ('riſu quaſi cõtinuo: tum / maligna ...') before the page's own text"
+    ]
+   },
+   "note": "This 1497 two-column textura is the hardest run. gemini-3.1-pro-preview has the most faithful abbreviations ('ꝯ eſt Cõciliatoris', 'ap̃a', 'p̃ternaliter'), but on p35 it transcribes ~93 lines of the facing-page sliver first. gemini-3-flash-preview is complete with no sliver text, at the cost of simplified sigla (z for ꝯ). The serious failures are flash-lite on p35, which reads only the facing-page sliver and then loops 'ꝗdē' about 2,500 times, and glm-ocr, which loops on p33 and p34 and truncates p35.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-2)"
+  },
+  {
+   "book_id": "69b67597b3f4fc04415b6d40",
+   "stratum": "1600s",
+   "pages": [
+    {
+     "slug": "r4p-69b67597b3f4fc04415b6d40-p9",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b67597b3f4fc04415b6d40-p10",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b67597b3f4fc04415b6d40-p11",
+     "kind": "body",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many (p11 'fenfum exiftimo hunc effe', p9 'five per contract.'); inconsistent - p9 keeps ſ, p10 modern s, p11 f",
+     "minor misreads: p10 'defunctor' for 'defuncto', 'satisfandi' for 'satisdandi'"
+    ],
+    "gemini-3-flash-preview": [
+     "p10 reflowed: line breaks dropped (paragraphs joined); otherwise near-exact"
+    ],
+    "gemini-3.8-flash": [
+     "long-s read as f: many on p9 ('epiftolam', 'neceffe', 'fenfum'); p10 keeps ſ, p11 modern s (inconsistent)"
+    ],
+    "glm-ocr": [
+     "heading numerals misread: p9 'XXIIX.' -> 'XXIX.', p10 'XXXIIX.' -> 'XXXIX.'",
+     "omission of a block: p10 catchword 'A 5 De in-' dropped",
+     "long-s/f confusion: p11 'persici' for 'perfici', 'infisentia'",
+     "abbreviations mangled: '§' read as '6' (p11 'l.3.6.6.')"
+    ],
+    "calamari-gt4histocr-bin": [
+     "legal citations mangled throughout (p10 'l.15.in fi.de imp.' -> 'i.ij. in fi.de imp', 'l.9.§.10' -> 'l..'; p11 'l.3.§.6.de adq.poß.' -> '. 6.de da. po.')",
+     "p10 last line garbled: 'lisavrrc' for 'litis avertatur'"
+    ]
+   },
+   "note": "Legal disputation in roman with italic citations. gemini-3-flash-preview is near-exact on all three pages; the production flash-lite renders ſ as f on p11 ('fenfum exiftimo hunc effe' for 'ſenſum exiſtimo hunc eſſe'), and 3.8-flash does the same on p9. glm misnumbers two thesis headings (XXIIX->XXIX, XXXIIX->XXXIX), and calamari destroys most italic law citations.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-3)"
+  },
+  {
+   "book_id": "69b64b4e18b87551bfc6cc29",
+   "stratum": "1500s",
+   "pages": [
+    {
+     "slug": "r4p-69b64b4e18b87551bfc6cc29-p44",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b64b4e18b87551bfc6cc29-p45",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b64b4e18b87551bfc6cc29-p46",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3.8-flash",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "misreads: p44 'Holo legere' for 'Volo', 'Blisco' for 'Glisco', 'infinitinus'; p46 'flurus' for 'fluxus'",
+     "abbreviations dropped or mangled: con-mark ↄ rendered 'z' ('ziunctione'), macrons dropped ('regula' for 'regulā')",
+     "omission of a block: p46 folio '171' dropped"
+    ],
+    "gemini-3-flash-preview": [
+     "abbreviations mangled: p46 'ꝓ ꝓma parte' for 'pro pma'; spelling normalised ('præ ceteris', 'præsta' where the page prints 'pre', 'pzesta')",
+     "p46 reflowed (line breaks dropped)",
+     "tironian et rendered 'r' on p44"
+    ],
+    "gemini-3.8-flash": [
+     "minor misreads: p45 'bii sit' for 'bñ fit'; p46 'ſigui'"
+    ],
+    "glm-ocr": [
+     "omission of a block: p45 drops most of a line ('...ibi subintelligi coniunctioni copulatiue' skips 'ꝯiunctio. Dicitur vel aliquo sibi equiualēte ... ibi illa ꝓpositio cum equiualet')",
+     "invented substitution: p46 'cofusum' for 'q̃tum' ('incertus cofusum ad suü modu'), 'inſtrum' for 'inq̃tum'",
+     "many misreads: p44 'substitius' for 'substātiua', 'auto' for 'auro'; p46 'Niaoz'",
+     "p46 signature 'D' and folio dropped"
+    ],
+    "calamari-gt4histocr-bin": [
+     "display-type initials garbled into the text: p44 'BtiMdlſcso' for 'Sciendum'; p45 'Clnlilll' for 'Conclusio', 'Argilll zaui' for 'Arguitur ... cõſtrui'; p46 'Argullill ans'"
+    ]
+   },
+   "note": "1521 Gothic grammar with heavy abbreviation. gemini-3.8-flash keeps the diplomatic forms (ſ, ꝛ, ⁊, macrons) with only a few slips. gemini-3-flash-preview is close but normalises spelling and expands 'pma' wrongly as 'ꝓma'. glm drops part of a line on p45 and substitutes 'cofusum' for 'q̃tum' on p46. Calamari reads the body well but turns every large display word (Sciendum, Conclusio, Arguitur) into garbage.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-3)"
+  },
+  {
+   "book_id": "6a90e31743335ae0648762ff",
+   "stratum": "1500s",
+   "pages": [
+    {
+     "slug": "r4p-6a90e31743335ae0648762ff-p28",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a90e31743335ae0648762ff-p29",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-6a90e31743335ae0648762ff-p30",
+     "kind": "body",
+     "typeface": "roman",
+     "scan": "fair",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: many on all three pages ('Hinc fequitur', 'falfam iftam', 'fuiffe', 'Ecclefia')",
+     "p30 'officn' for 'officij'"
+    ],
+    "gemini-3-flash-preview": [
+     "long-s read as f: few (p29 'prorfus'); p28 silently corrects the printed 'qantum' to 'quantum'"
+    ],
+    "gemini-3.8-flash": [
+     "long-s read as f: few (p30 'donauiffet'); inconsistent ſ on p28 vs modern s on p29-30"
+    ],
+    "glm-ocr": [
+     "omission: p28 '(exceptis ijs, quæ' -> '(exceptis) quæ'; p30 catchword 'aut' dropped",
+     "misreads: p28 'santæam' for 'sanctam', 'neqq'; p30 'side' for 'fide', 'secerunt', 'liquidem', '2. Thess. 2.' -> 'z. Thess. z.'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "minor misreads: p29 'meiius', 'ah' for 'ab', header 'LYT.'; p28 'cap. i2.'"
+    ]
+   },
+   "note": "Small-format Lutheran octavo (Smalcald Articles), in roman, on a toned leaf. flash-preview and calamari are both very close. The production flash-lite consistently prints ſ as f ('Hinc fequitur ... per falfam iftam'), and glm drops 'ijs' on p28, drops the 'aut' catchword on p30 and misreads 'fide' as 'side'.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-3)"
+  },
+  {
+   "book_id": "69b6c4e58566c838146666cb",
+   "stratum": "1700s",
+   "pages": [
+    {
+     "slug": "r4p-69b6c4e58566c838146666cb-p2",
+     "kind": "title",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "other",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b6c4e58566c838146666cb-p3",
+     "kind": "front-matter",
+     "typeface": "mixed",
+     "scan": "good",
+     "layout": "other",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b6c4e58566c838146666cb-p4",
+     "kind": "body",
+     "typeface": "italic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "calamari-gt4histocr-bin",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "long-s read as f: few on p2 ('Confervatoris', 'Basilienfi', 'impreffit'), none on p3-p4",
+     "p4 catchword 'pan-' for 'pau-'"
+    ],
+    "gemini-3-flash-preview": [
+     "minor: p3 'clarifiſſimis' for 'clariſſimis', 'Caſ.' for 'Cæſ.'; p4 'fuorum' (one ſ->f); p4 reflowed"
+    ],
+    "gemini-3.8-flash": [
+     "abbreviations mangled: p4 enclitic -q; rendered 'ǵ,' ('adcurateǵ,', 'hucusǵ,', 'atǵ,')",
+     "long-s read as f: few (p2 'impreffit'); p3 'nobilisſſ'"
+    ],
+    "glm-ocr": [
+     "Greek replaced: p4 'ἀκρίβειαν' -> 'aurés'",
+     "omission: p4 drop-cap 'M' ('Iram') and catchword 'pau-' dropped; p2 '14.' dropped",
+     "misreads: p2 'PHILIAATRUM', 'fisit'; p4 'bujus', 'prosecto', 'adbibucrit'"
+    ],
+    "calamari-gt4histocr-bin": [
+     "large title type destroyed: p2 'VALETUDINE PLANTARUM' -> 'ALETUDINE —1ARM', date line -> 'Ad D. li Amo  DCCVIII.'",
+     "Greek replaced: p4 'ἀκρίβειαν' -> 'usiSaa'",
+     "p3 many name misreads ('NMCOLAO', 'EMANMG', 'TÆSINO'); 'Dn.' -> 'D.'",
+     "p4 drop-cap 'M' dropped"
+    ]
+   },
+   "note": "1708 Basel dissertation: title page, dedication with a braced column, and the italic opening of the Prooemium with one Greek word. Show-through from the facing page is visible on p2 and p3, and no engine read it. All three Gemini flashes get 'ἀκρίβειαν'. glm prints it as 'aurés' and calamari as 'usiSaa'. Calamari also cannot read the large title type ('PLANTARUM' -> '—1ARM').",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-3)"
+  },
+  {
+   "book_id": "69b634431c1c21a37381eba2",
+   "stratum": "1400s",
+   "pages": [
+    {
+     "slug": "r4p-69b634431c1c21a37381eba2-p687",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b634431c1c21a37381eba2-p688",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    },
+    {
+     "slug": "r4p-69b634431c1c21a37381eba2-p689",
+     "kind": "body",
+     "typeface": "gothic",
+     "scan": "good",
+     "layout": "single",
+     "leaf_language": "lat"
+    }
+   ],
+   "best": "gemini-3-flash-preview",
+   "worst": "glm-ocr",
+   "failures": {
+    "gemini-3.1-flash-lite": [
+     "text pulled from a neighbouring page: p688 opens with ~37 lines of fragments from the facing leaf's edge strip ('tioni / tins grem / et tor flectit ...'); p689 appends ~40 such lines ('talogismus. / tisius.mgo b ...')",
+     "long-s read as f: many on p688 ('fm', 'fupius', 'figna', 'fcit', 'fortes')",
+     "misreads: p687 'ētitate' for 'q̄titate', 'dinultiplicatio', 'sopbilmate'"
+    ],
+    "gemini-3-flash-preview": [
+     "abbreviations dropped: p688 almost every macron/tilde lost ('accntiu', 'pntis', 'substatie', 'Udm' for 'Dōm')",
+     "p688 and p689 reflowed (line breaks dropped); p689 initial 'Ar' spliced into text as 'Arleipm'"
+    ],
+    "gemini-3.8-flash": [
+     "abbreviations silently expanded on p688: 'ipsum', 'secundum', 'consequentis', 'Petrus hyspanus', 'respondet' where the page prints 'ipm', 'fm', 'ꝯñtis', 'Petrus hyſ.', 'rñdet'",
+     "invented text: p688 'Arguitor.' as a heading for printed 'Arguif' and for the initial 'Ar'; p687 'Itẽ' for printed 'Ar'",
+     "omission: p688 'sit bona. qdlibet' -> 'sit quolibet'",
+     "long-s read as f: few on p687 ('fm', 'puerfionẽ fimplicẽ', 'fyncathegoꝛematice')"
+    ],
+    "gemini-3.1-pro-preview": [
+     "text pulled from a neighbouring page: p687 appends ~50 lines from the facing leaf's strip ('maticam de / ſuo ip̃am e ...'); p688 opens with ~38 strip lines; p689 appends ~30",
+     "truncation: p688 stops mid-line at 'arguendo ab infer' and loses the last ~15 lines (both 'Arguit' paragraphs and the signature 'm iij')"
+    ],
+    "glm-ocr": [
+     "systematic misreading: 'sortes' read as 'softe' throughout p687; heading 'Distributionū' -> 'Distributione'",
+     "many misreads: p688 'quir' for 'pñr', 'Duodlibet'; p689 'pimfātū', 'ētstitatis'",
+     "p688 signature 'm iij' dropped"
+    ],
+    "calamari-gt4histocr-bin": [
+     "omission: p687 drops 'si āt accipiat cathegorematice' from line 5",
+     "display initials dropped or garbled: p687 'Ar Bene' -> 'ene', p688 'Arguit' -> 'łllllin', p689 'Arguit' -> 'llll ãieiebet'",
+     "many character errors in abbreviations ('ſᷣm', 'ipᷣm')"
+    ]
+   },
+   "note": "1496 incunable of Peter of Spain, dense Gothic with heavy abbreviation. A strip of the facing leaf shows at the image edge, and both gemini-3.1-pro and the production flash-lite transcribe it as extra lines on two to three pages. Pro also truncates p688 at 'ab infer'. gemini-3.8-flash rewrites p688 into expanded classroom Latin ('secundum', 'consequentis', 'Arguitor'), which is not on the page. flash-preview stays on the page but drops most abbreviation marks on p688.",
+   "method": "read-from-image",
+   "checker": "claude-subagent (pop-3)"
+  }
+ ]
+}

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [bo]
+scripts: [Tibt]
+canons: [tibetan]
+n_books: 95
+n_pages: 245
+verdict: "Served Nyingma SERVE pages score median 0.833 identity vs the rKTs Gpb e-text (a lower bound, different witness); MARK_UNRELIABLE pages 0.249, so the split is real."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-10-01 · Can the Nyingma tantra manuscripts (BL EAP, non-Kangyur) get an accuracy number? (#4523)
 
 - PRIOR ART: the 2026-10-01 Tibetan re-draw (Derge index, Kangyur only) — this adds the non-Kangyur reference it lacked.

@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/avan1",
+  "edition": "POESIS LYRICA — Wien: i. Blaeu et A. Harttung, 1670",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a906153ce57ddf536207e42",
+  "page_number": 373,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 306144,
+    "to_char": 307017,
+    "overlap": 0.505,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-4)",
+    "at": "2026-10-06T10:11:18.118606+00:00",
+    "note": "p.340, Ode XVII end and Ode XVIII start; ref matches the whole page.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      372,
+      373,
+      374
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.730Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "c4fbd4012ac7781762b0be876cc9c342f86bf36905143e3a2f4876645e485510",
+  "unit": {
+    "chars": 873
+  }
+}

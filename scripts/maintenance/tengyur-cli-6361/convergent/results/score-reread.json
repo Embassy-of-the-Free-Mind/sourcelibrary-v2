@@ -1,0 +1,707 @@
+{
+ "at": "2026-10-11T02:58:40.697Z",
+ "set": "reread",
+ "pages": 10,
+ "read_by_both": 10,
+ "readers": {
+  "opus": "Claude Opus (subscription subagent)",
+  "gemini": "gemini-3.7-flash-high via agy -p (plan mode)"
+ },
+ "per_reader": {
+  "opus": {
+   "n": 10,
+   "new": {
+    "serious_pages": {
+     "k": 1,
+     "n": 10,
+     "rate": 0.1,
+     "ci95": [
+      0.018,
+      0.404
+     ]
+    },
+    "reversal_pages": {
+     "k": 1,
+     "n": 10,
+     "rate": 0.1,
+     "ci95": [
+      0.018,
+      0.404
+     ]
+    },
+    "serious_errors": 1,
+    "reversals": 1,
+    "mean_score": 4.2
+   },
+   "old": {
+    "serious_pages": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    },
+    "reversal_pages": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    },
+    "serious_errors": 0,
+    "reversals": 0,
+    "mean_score": 3.7
+   },
+   "prefer": {
+    "new": {
+     "k": 9,
+     "n": 10,
+     "rate": 0.9,
+     "ci95": [
+      0.596,
+      0.982
+     ]
+    },
+    "old": {
+     "k": 1,
+     "n": 10,
+     "rate": 0.1,
+     "ci95": [
+      0.018,
+      0.404
+     ]
+    },
+    "same": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    }
+   }
+  },
+  "gemini": {
+   "n": 10,
+   "new": {
+    "serious_pages": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    },
+    "reversal_pages": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    },
+    "serious_errors": 0,
+    "reversals": 0,
+    "mean_score": 4.8
+   },
+   "old": {
+    "serious_pages": {
+     "k": 3,
+     "n": 10,
+     "rate": 0.3,
+     "ci95": [
+      0.108,
+      0.603
+     ]
+    },
+    "reversal_pages": {
+     "k": 3,
+     "n": 10,
+     "rate": 0.3,
+     "ci95": [
+      0.108,
+      0.603
+     ]
+    },
+    "serious_errors": 5,
+    "reversals": 3,
+    "mean_score": 3.9
+   },
+   "prefer": {
+    "new": {
+     "k": 10,
+     "n": 10,
+     "rate": 1,
+     "ci95": [
+      0.722,
+      1
+     ]
+    },
+    "old": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    },
+    "same": {
+     "k": 0,
+     "n": 10,
+     "rate": 0,
+     "ci95": [
+      0,
+      0.278
+     ]
+    }
+   }
+  }
+ },
+ "agreement": {
+  "prefer": {
+   "n": 10,
+   "observed": 0.9,
+   "kappa": 0
+  },
+  "serious_new": {
+   "n": 10,
+   "observed": 0.9,
+   "kappa": 0
+  },
+  "serious_old": {
+   "n": 10,
+   "observed": 0.7,
+   "kappa": 0
+  }
+ },
+ "final_prefer": {
+  "new": {
+   "k": 10,
+   "n": 10,
+   "rate": 1,
+   "ci95": [
+    0.722,
+    1
+   ]
+  },
+  "old": {
+   "k": 0,
+   "n": 10,
+   "rate": 0,
+   "ci95": [
+    0,
+    0.278
+   ]
+  },
+  "same": {
+   "k": 0,
+   "n": 10,
+   "rate": 0,
+   "ci95": [
+    0,
+    0.278
+   ]
+  }
+ },
+ "unresolved_splits": [],
+ "both_prefer_old": {
+  "k": 0,
+  "n": 10,
+  "rate": 0,
+  "ci95": [
+   0,
+   0.278
+  ],
+  "pages": []
+ },
+ "stop_rule": {
+  "threshold": 0.1,
+  "fired": false
+ },
+ "rows": [
+  {
+   "slot": "s03",
+   "vol": 98,
+   "section": "Madhyamaka",
+   "page_number": 607,
+   "page_id": "6abeb20c896ea18127c82d62",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error, but B correctly identifies Manu, Daśapura, Dhṛtarāṣṭra, Vyāsa and Viśvāmitra and keeps the verse structure and causal links, while A misnames the authority and turns Dhṛtarāṣṭra into a vague phrase.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately identifies and restores classical Sanskrit proper names (Sage Manu, Daśapura, Dhṛtarāṣṭra) that Translation A misinterprets.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s07",
+   "vol": 102,
+   "section": "Madhyamaka",
+   "page_number": 216,
+   "page_id": "6abe825259b86b7d32a65a54",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful and neither has a serious error, but A invents 'We do not deny' at the page break where B stops honestly at 'we...'.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B translates the verse quotation and folio boundary trail-off with greater fidelity, avoiding A's spurious h3 header and interpolated verb at the leaf cutoff.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s13",
+   "vol": 108,
+   "section": "Madhyamaka",
+   "page_number": 167,
+   "page_id": "6abeb406896ea18127c842de",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error. B renders ཉམས ('ruined') and ངལ་བ ('toil') correctly and keeps the objection-reply structure explicit, while A twice turns ཉམས into 'discouraged' and adds a note about a textual variant that is not on the print.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately renders 'nyams' as the ruin and fruitlessness of the path's enterprise rather than psychological discouragement.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s15",
+   "vol": 110,
+   "section": "Madhyamaka",
+   "page_number": 342,
+   "page_id": "6abeb4ba896ea18127c8487d",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful and complete, but B drops the name Vaiśālī and renders ཅང་མི་བཟོད་པ as 'unbearable', while A has only a minor wording slip.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A correctly identifies the city of Vaiśālī, accurately renders the exclusionary phrasing for the visiting crowd, and translates the body similes with superior precision.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s18",
+   "vol": 174,
+   "section": "Pramana",
+   "page_number": 86,
+   "page_id": "6abed3fd896ea18127c8d2ca",
+   "set": "reread",
+   "nudged": true,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B frames the opponent's objection and the reply correctly (If one objects … If one says this, we reply), and it renders 'subject of the subject' and ངོ་སྲུང accurately; A blurs the objection's speaker and recasts the opponent's thesis.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 2,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B is complete and structurally faithful, accurately rendering dialectical arguments, technical terminology, and the incomplete final clause, whereas Translation A drops the first sentence, misconstrues an opponent's objection as a counterfactual conditional, and invents words at the bottom leaf break.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s19",
+   "vol": 175,
+   "section": "Pramana",
+   "page_number": 323,
+   "page_id": "6abed42d896ea18127c8d694",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "old",
+    "prefer_reason": "A turns the objector's rhetorical question into a statement that the subject 'would be unestablished', which reverses the objection; B's faults (an inserted interpretive note and an over-closed final sentence) are moderate.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 1,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A accurately captures the technical Pramāṇa terminology, preserves the dialectical structure and the trailing sentence fragment at the bottom of the folio, and avoids inserting invented commentary.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": true,
+   "adjudicated": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error; A has one self-contradictory line in the objection whose thrust survives, while B adds an invented interpretive note and finishes the folio's broken final sentence as a question that probably inverts it, so A is the safer text for a reader.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s22",
+   "vol": 178,
+   "section": "Pramana",
+   "page_number": 148,
+   "page_id": "6abed51b896ea18127c8dd7e",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither has a serious error, but B gets the container/contained relation and the 'wisdom etc. are the mind itself' clause right, and it keeps the summary verses as verse; its own slips are smaller.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B formats the summary verses (saṃgraha-ślokas) as verse stanzas rather than prose paragraphs and explicitly indicates the continuation from the preceding folio.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s23",
+   "vol": 179,
+   "section": "Pramana",
+   "page_number": 95,
+   "page_id": "6abed582896ea18127c8dfb3",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "B correctly renders rtogs byed as arbiters and keeps arbiters, proponent and respondent distinct, so the regress argument reads clearly, whereas A misidentifies the arbiters with the disputants (with a wrong gloss) and has more moderate slips.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 3,
+     "serious": 2,
+     "reversal": 1
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B correctly identifies 'rtogs byed' as debate arbiters, maintains the structural distinction between judges and disputants, and preserves the page catchword, whereas Translation A misidentifies the arbiters and reverses an epistemological claim regarding valid cognition.",
+    "ocr_score": 5,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s30",
+   "vol": 186,
+   "section": "Pramana",
+   "page_number": 462,
+   "page_id": "6abed7ae896ea18127c8f2a2",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Both are faithful with no serious errors; B is slightly more precise ('the spot of ground of that nature', 'non-confusion' rather than 'non-erroneous conclusion') and marks the objection/reply structure clearly.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation B accurately captures the scholastic Pramāṇa commentary structure (distinguishing lemmas, objections, and responses) and provides superior philosophical precision with helpful Sanskrit and Tibetan terminology glosses.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  },
+  {
+   "slot": "s35",
+   "vol": 191,
+   "section": "Pramana",
+   "page_number": 111,
+   "page_id": "6abed96d896ea18127c8fd43",
+   "set": "reread",
+   "nudged": false,
+   "opus": {
+    "new": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Neither version has a serious error, but A renders the inference-is-a-pramāṇa parallel and the cow/gavaya example correctly, where B garbles both and also gets the gavaya gloss wrong.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "medium"
+   },
+   "gemini": {
+    "new": {
+     "score": 5,
+     "serious": 0,
+     "reversal": 0
+    },
+    "old": {
+     "score": 4,
+     "serious": 0,
+     "reversal": 0
+    },
+    "prefer": "new",
+    "prefer_reason": "Translation A exhibits superior philosophical accuracy and fluency in classical Buddhist epistemological terminology, correctly translating the double negative in the inference analogy and accurately resolving pronoun references.",
+    "ocr_score": 4,
+    "right_page": "yes",
+    "confidence": "high"
+   },
+   "split": false,
+   "adjudicated": null,
+   "final_prefer": "new"
+  }
+ ]
+}

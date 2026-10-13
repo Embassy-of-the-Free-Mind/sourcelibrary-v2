@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: stability
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Inconclusive: the first-pass cut in fabrication was one draw; two k=5 runs put the runaway repetition loop on opposite arms."
+status: informational
+decision: null
+superseded_by: null
+issue: [4195, 4610]
+---
 ## 2026-09-02 — Does OCR prompt v17 reduce fabrication vs v15?
 
 - **Design.** Paired, k=5 runs per (page, arm), page as unit of analysis,

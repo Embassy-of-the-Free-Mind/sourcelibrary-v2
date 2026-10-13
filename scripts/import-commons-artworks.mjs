@@ -456,7 +456,6 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const books = db.collection('books');
-  const booksWarehouse = db.collection('books_warehouse');
 
   // Set up R2 client
   let s3 = null;
@@ -486,7 +485,7 @@ async function main() {
   const existingSlugs = new Set();
   const existingCommonsTitles = new Set();
   if (!force) {
-    for (const coll of [books, booksWarehouse]) {
+    for (const coll of [books]) {
       const cursor = coll.find(
         { slug: /^art-/ },
         { projection: { slug: 1, commons_title: 1 }, maxTimeMS: 120000 }

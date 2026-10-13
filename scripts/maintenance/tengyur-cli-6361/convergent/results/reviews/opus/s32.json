@@ -1,0 +1,45 @@
+[
+  {
+    "book_id": "6abed85e896ea18127c8f51a",
+    "slot": 32,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཛེ (Derge Tengyur, vol. 188)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio of a pramāṇa commentary (valid cognition, arthakriyā, svalakṣaṇa, 'rtog pa sngon du gtong ba'). It belongs in the Tshad ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 352,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཅི་ལྟར་བསྒྲུབ་པར་འདོད་ཅེ་ན། ཅི་ལྟར་འོས་པར་རོ།", "image": "the initial glyph looks like ཇི (ཇི་ལྟར)", "problem": "possible ཅི/ཇི confusion. It does not change the meaning; low confidence at this resolution", "severity": "minor" },
+          { "ocr": "དེ་ལ་དངོས་པོ་ནི་སྡུག་བསྔལ་གྱི་སྒྲུབ་པར་བྱེད་པ", "image": "line 7 seems to have one or two more syllables after དངོས་པོ than the OCR (maybe འགའ་ཞིག), but I cannot read them clearly", "problem": "possible small omission; unverified", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "ཚད་མ་ལ་སོགས་པ་དཔྱོད་པ་གང་ཡིན་པ་དེ་ནི་...ཡུལ་ཅན་ཏེ", "english": "Whatever analytical inquiry examines valid cognition and related topics possesses an object suitable...", "problem": "The source means 'any investigation, such as valid cognition'. A makes valid cognition the topic being examined, which does not fit A's own later 'valid cognition or other forms of investigation'", "severity": "moderate" },
+          { "source": "རྟོག་པ་དང་ལྡན་པས་ཤེས་པས་དཔྱད་པར་མི་བྱ་སྟེ། དེ་ནི་...", "english": "a thinker would not investigate things through cognition, because cognition itself is not what directly performs...", "problem": "'cognition endowed with conceptuality' is split into 'a thinker' plus plain 'cognition', so the objection loses its point, which is about CONCEPTUAL cognition", "severity": "moderate" },
+          { "source": "འཇུག་པའི་ཡུལ་རང་གི་མཚན་ཉིད་སྟོན་པར་བྱེད་པའི་མི་སླུ་བ", "english": "non-deceptive because it reveals the specifically characterized phenomenon", "problem": "'object of engagement' (འཇུག་པའི་ཡུལ) is dropped from the main text; it survives only in the gloss", "severity": "minor" },
+          { "source": "(keywords)", "english": "Pramanavarttika", "problem": "the keyword names the text without support; nothing on the page identifies it", "severity": "minor" }
+        ],
+        "tr_score_B": 3,
+        "tr_errors_B": [
+          { "source": "ཚད་མ་ལ་སོགས་པ་དཔྱོད་པ་གང་ཡིན་པ་དེ་ནི", "english": "Whatever investigation of valid cognition occurs", "problem": "The source means 'investigation such as valid cognition'; B renders it as an investigation OF valid cognition", "severity": "moderate" },
+          { "source": "འདི་ལ་དོན་བྱེད་པ་དོན་དུ་གཉེར་བས་མེ་ལ་སོགས་པ་དོན་དུ་གཉེར་བ་ཙམ་གྱིས་བསྒྲུབ་བྱ་ཡིན་པར་ནི་མ་མཐོང་སྟེ", "english": "we do not observe that the mere desire for an object like fire constitutes the goal of a seeker of causal efficacy", "problem": "The source says fire etc. is not seen to be obtained merely by wanting it. B says instead that the desire is not the goal", "severity": "moderate" },
+          { "source": "འོ་ན་ནི་རྟོག་པ་དང་ལྡན་པས་ཤེས་པས་དཔྱད་པར་མི་བྱ་སྟེ", "english": "then conceptual cognition should not be investigated", "problem": "conceptual cognition is the INSTRUMENT of investigation (instrumental ས), but B makes it the object being investigated", "severity": "moderate" },
+          { "source": "དེ་གཉི་ག་འཇུག་པ་གཅིག་གིས་བསྟན་པའི་ཕྱིར། རྟོག་པ་སྔོན་དུ་གཏོང་བ་ཞེས་སྨོས་སོ", "english": "how both factors become branches of causal efficacy through a single engagement, the text mentions \"preceded by conceptualization.\"", "problem": "The source says the one expression shows both points. B turns this into 'both factors become branches through a single engagement', which garbles why the root text says 'preceded by conceptualization'", "severity": "moderate" },
+          { "source": "དོན་བྱེད་ནུས་པ་ཡིན་ནོ།", "english": "It is the capacity for causal efficacy", "problem": "the page opens mid-sentence ('…is capable of'). B turns the fragment into a free-standing claim and does not mark the continuation", "severity": "minor" },
+          { "source": "(meta)", "english": "likely from the Pramanavarttika tradition", "problem": "an attribution that nothing on the page supports (it is hedged)", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Neither version has a serious error, but B has four moderate misreadings (the fire sentence, conceptual cognition as object instead of instrument, the 'single expression' reply, the opening clause) where A has two.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is a clean Derge pramāṇa folio and the transcription is close to the block print. Both English versions are serviceable, with no reversals. A is the more faithful, but both misconstrue 'ཚད་མ་ལ་སོགས་པ་དཔྱོད་པ' and the conceptual-cognition objection."
+  }
+]

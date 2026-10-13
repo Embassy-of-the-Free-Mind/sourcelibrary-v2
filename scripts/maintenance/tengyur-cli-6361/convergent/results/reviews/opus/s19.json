@@ -1,0 +1,41 @@
+[
+  {
+    "book_id": "6abed42c896ea18127c8d54f",
+    "slot": 19,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio of a pramāṇa commentary (perception, inference, svalakṣaṇa, memory-ascertainment), so it belongs in the Tshad ma section of the Tengyur.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 323,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "སྤྱི་དེ་ཉིད་ནི་གྲུབ་པ་ཡིན་དེའི་བདག་ཉིད་དུ", "image": "སྤྱི་དེ་ཉིད་ནི་གྲུབ་པ་ཡིན་ཏེ། དེའི་བདག་ཉིད་དུ (as far as I can read it)", "problem": "connective particle ཏེ and the shad look dropped", "severity": "minor" },
+          { "ocr": "ཆོས་ཅན་དེའི་རབ་ཏུ་གྲུབ་ཕྱིར", "image": "the cluster after ཆོས་ཅན looks like དེ་དེ་(ལྟར)… རབ་ཏུ་གྲུབ་(པའི་)ཕྱིར; detail not fully legible", "problem": "possible misread of a small connective cluster; the sense survives", "severity": "minor" }
+        ],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "དེ་ལྟར་ན་དེ་མ་གྲུབ་པ་ཡིན། གང་གིས་ན་དེ་དེ་ཤེས་པར་བྱ་བའི་ཕྱིར། རྗེས་སུ་དཔག་པ་ཡིན་ཞེ་ན།", "english": "If that is so, it would be unestablished. Why then would inference be employed to make it known?", "problem": "The objector's rhetorical question ('in that case, how is it unestablished, so that inference is needed to know it?') becomes a flat statement that the subject 'would be unestablished'. That is the opposite of the objector's point, which is that the subject is already grasped by seeing.", "severity": "serious", "class": "T8", "reversal": true },
+          { "source": "རང་བཞིན་ཅན་འབའ་ཞིག་བཟུང་དུ་ཟིན་ཀྱང་", "english": "Although one has apprehended only the distinct essence", "problem": "'only' over-weights the particle; small shift in emphasis", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "(none; inserted between paragraphs)", "english": "<note>This refers to the Buddhist logical theory where perceiving an object should theoretically mean perceiving all its qualities, yet conceptual thought must still work to eliminate false impositions.</note>", "problem": "Interpretive commentary the page does not contain, inserted mid-argument and placed before the passage it anticipates", "severity": "moderate", "class": "T10" },
+          { "source": "ཅིའི་ཕྱིར་ཇི་ལྟ་བ་བཞིན་དུ་ཉམས་སུ་མྱོང་བའི་རྣམ་པ་དག་ལ་ངེས་པ་ (sentence runs on to the next folio)", "english": "why is there certainty regarding the aspects experienced as they truly are?", "problem": "A sentence cut off at the end of the folio is finished as a complete question. The verb, probably a negative 'does not arise', is on the next page, so the closure may invert the question.", "severity": "moderate", "class": "T6" },
+          { "source": "རྣམ་པར་རྟོག་པའི་བློ་ཉེ་བར་གཞག་པའི་ཆོས་རྣམས", "english": "the phenomena established by the conceptual mind", "problem": "ཉེ་བར་གཞག་པ means superimposed or imputed; 'established' blurs this", "severity": "minor" },
+          { "source": "དེ་ལྟར་ན་དེ་མ་གྲུབ་པ་ཡིན། གང་གིས་ན", "english": "If so, why is it not established? By what means is inference used to know it?", "problem": "Awkward, but it keeps the rhetorical force ('how is it unestablished?')", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "A turns the objector's rhetorical question into a statement that the subject 'would be unestablished', which reverses the objection; B's faults (an inserted interpretive note and an over-closed final sentence) are moderate.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription of this Derge pramāṇa folio is close to the block print, with only small particle slips. Translation A reverses the objector's rhetorical question at the turn of the debate. Translation B is sounder, but it adds an interpretive note that is not on the page."
+  }
+]

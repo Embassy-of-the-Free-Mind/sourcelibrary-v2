@@ -107,7 +107,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const title = book.display_title || book.title || 'Book';
   return {
-    title: `${title} — read as one document - Source Library`,
+    title: `${title}: read as one document - Source Library`,
     description: `${title}, the whole book as one continuous text with the original beside each page.`,
     // The per-page reader is the indexed surface; this is a reading mode of it.
     robots: { index: false, follow: true },
@@ -279,7 +279,7 @@ export default async function LinearReadPage({ params, searchParams }: Props) {
                     {c.title}
                   </Link>
                   {c.original && <span className="text-muted" lang={originalLang}> · {c.original}</span>}
-                  <span className="text-muted"> — p. {c.pageNumber}</span>
+                  <span className="text-muted"> · p. {c.pageNumber}</span>
                 </li>
               ))}
             </ol>

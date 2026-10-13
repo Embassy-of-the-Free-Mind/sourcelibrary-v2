@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
       ok: true,
       id: result.insertedId.toString(),
       message:
-        'Thank you — your collection proposal was sent to the Source Library team for review. ' +
+        'Thank you. Your collection proposal was sent to the Source Library team for review. ' +
         'It is not published yet; a curator will review it.',
     });
   } catch (error) {

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [ja]
+scripts: [Jpan]
+canons: []
+n_books: 356
+n_pages: 1068
+verdict: "116 of 356 pre-1868 Japanese books are cursive (about 8,210 pages); the flash classifier agrees with eye labels on 57 of 60 fresh pages, catching all 28 cursive ones."
+status: adopted
+decision: "The census classifier is the NDL koten lane's per-book router (scripts/lib/ndl-koten-lane.mjs; 20-book pilot #4925)"
+superseded_by: null
+issue: [5100, 4925]
+---
 ## 2026-09-30 · Cursive census of pre-1868 Japanese + the router checked by eye (#5100, #4925)
 
 - **Question.** How many pre-1868 Japanese books are kuzushiji (the class NDL reads and Gemini does not, #4745), and is

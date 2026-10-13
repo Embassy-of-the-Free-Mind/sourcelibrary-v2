@@ -5,12 +5,12 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'Nine Models, Forty Pages - Research Notes - Source Library',
   description:
-    "We benchmarked every OCR-capable model we could reach — Google's newest releases, three open-weight challengers, one self-hosted — on the same forty historical pages. The newest budget model lost to its own predecessor.",
+    "We benchmarked every OCR-capable model we could reach (Google's newest releases, three open-weight challengers, one self-hosted) on the same forty historical pages. The newest budget model lost to its own predecessor.",
   openGraph: {
     images: [
       {
         url: 'https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg',
-        alt: "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing — the Armenian page most models in our benchmark could not read.",
+        alt: "Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing, the Armenian page most models in our benchmark could not read.",
       },
     ],
     title: 'Nine Models, Forty Pages',
@@ -64,9 +64,9 @@ export default function NineModelsFortyPagesPage() {
       header={
         <ContentHeader
           title="Nine Models, Forty Pages"
-          subtitle="Google's newest budget model lost to its own predecessor on historical documents — and an open-weight model reached parity on the pages it can read"
+          subtitle="Google's newest budget model lost to its own predecessor on historical documents, and an open-weight model reached parity on the pages it can read"
           image="https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg"
-          imageAlt="Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing — the Armenian page most models in our benchmark could not read."
+          imageAlt="Page 109 of Eznik of Kołb's Ełc ałandoc' in the 1826 Venice printing, the Armenian page most models in our benchmark could not read."
         >
           <p className="text-stone-400 text-sm mt-4">23 July 2026 &middot; 9 min read</p>
         </ContentHeader>
@@ -96,7 +96,7 @@ export default function NineModelsFortyPagesPage() {
           held 1,737 scored transcriptions across models from five labs, served three different
           ways. The most
           newsworthy result was the one we least expected: <em>on historical documents, Google&rsquo;s
-          newest budget model is slightly &mdash; but systematically &mdash; worse than the model it
+          newest budget model is slightly, but systematically, worse than the model it
           replaces.</em>
         </p>
 
@@ -109,7 +109,7 @@ export default function NineModelsFortyPagesPage() {
           </Link>
           : forty pinned pages from our own scans, each paired with an independent scholarly
           transcription of a passage printed on that page. The set has a property most OCR benchmarks
-          lack &mdash; a <strong>memorization control</strong>. Twelve pages carry canonical text
+          lack: a <strong>memorization control</strong>. Twelve pages carry canonical text
           (the <em>Iliad</em>&rsquo;s opening, Genesis 1, the <em>Daodejing</em>) that frontier models
           have plausibly memorized and can recite without reading; twenty-eight carry text almost
           certainly absent from training data (editors&rsquo; prefaces, biographical front matter,
@@ -122,8 +122,8 @@ export default function NineModelsFortyPagesPage() {
           the model&rsquo;s output, a guard decides whether the passage is genuinely present
           (&ldquo;aligned&rdquo;), and character accuracy is measured only on the reference span, with
           orthographic conventions of early printing (u/v, i/j, long-s, ligatures) folded away. All
-          comparisons below are <strong>paired per page</strong> &mdash; each model against the same
-          page&rsquo;s score for the reference model &mdash; with an exact sign test and a bootstrap
+          comparisons below are <strong>paired per page</strong> (each model against the same
+          page&rsquo;s score for the reference model), with an exact sign test and a bootstrap
           confidence interval. The full dataset, including every raw transcription, is published as{' '}
           <a
             href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval/dataset/v0.3"
@@ -140,12 +140,12 @@ export default function NineModelsFortyPagesPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The reference model is <code>gemini-3.5-flash-lite</code>, released the week of the test. Its
-          predecessor, <code>gemini-3.1-flash-lite</code> &mdash; the model that runs our production
-          pipeline &mdash; beat it on 19 of 38 shared pages and lost on 3 (mean +0.30 percentage
+          predecessor, <code>gemini-3.1-flash-lite</code>, the model that runs our production
+          pipeline, beat it on 19 of 38 shared pages and lost on 3 (mean +0.30 percentage
           points, exact sign test p&nbsp;=&nbsp;0.0009). The effect is small, but it is not noise: it
           survives multiple-comparison correction across all eleven contrasts we ran. Whatever got
-          better in the new generation &mdash; and the announcement emphasized coding, knowledge work,
-          and chart parsing &mdash; reading 16th-century print was not part of it.
+          better in the new generation (and the announcement emphasized coding, knowledge work,
+          and chart parsing), reading 16th-century print was not part of it.
         </p>
 
         <div className="overflow-x-auto mb-8">
@@ -176,12 +176,12 @@ export default function NineModelsFortyPagesPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Pricing makes the regression sharper. The new lite model costs roughly four times its
-          predecessor per output token. For a workload like ours &mdash; output-heavy transcription at
-          library scale &mdash; the July generation is a price increase for slightly worse reading.
+          predecessor per output token. For a workload like ours, output-heavy transcription at
+          library scale, the July generation is a price increase for slightly worse reading.
         </p>
 
         <h2 className="text-2xl font-serif text-primary mt-10 mb-4">
-          Finding 2: an open-weight model reached parity &mdash; with an asterisk the size of Armenia
+          Finding 2: an open-weight model reached parity, with an asterisk the size of Armenia
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -194,7 +194,7 @@ export default function NineModelsFortyPagesPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The asterisk: <em>&ldquo;the pages both can read&rdquo;</em> is doing enormous work in that
-          sentence. Qwen aligned on 24 of 41 pages. It read zero of the eight Armenian pages &mdash;
+          sentence. Qwen aligned on 24 of 41 pages. It read zero of the eight Armenian pages,
           and it did not fail honestly. It produced fluent, confidently formatted, entirely fabricated
           Armenian text, a failure mode we&rsquo;ve written about before as{' '}
           <Link href="/blog/confident-hallucinator" className="text-accent hover:underline">
@@ -212,12 +212,12 @@ export default function NineModelsFortyPagesPage() {
           Above the Gemma tier, every model&rsquo;s accuracy on pages it can align clusters within
           about one percentage point. What actually separates the field is <em>which scripts a model
           can read at all</em>: the Gemini family aligns 36&ndash;40 of 41 pages, Mistral-OCR 34,
-          Gemma-4 26, Qwen 24, DeepSeek-OCR 16. Armenian is the starkest column &mdash; our production
+          Gemma-4 26, Qwen 24, DeepSeek-OCR 16. Armenian is the starkest column: our production
           model reads all eight pages at 97.2%; among everything else only Mistral-OCR (4/8) and
           self-hosted Gemma-4 (3/8) read any. And each model fails differently: Qwen fabricates;
           DeepSeek-OCR silently skips lines (its skip-penalizing score drops 4.5 points, the widest
           gap in the table); and the new Gemini generation introduced a failure the incumbents never
-          showed &mdash; refusing pages of canonical text as suspected training-data recitation,
+          showed: refusing pages of canonical text as suspected training-data recitation,
           killing 2 of 3 runs on one Hero of Alexandria page. Three failure modes, three different
           operational risks: fabrication corrupts silently, skipping loses text, refusal blocks
           exactly the famous passages readers most want.
@@ -229,10 +229,10 @@ export default function NineModelsFortyPagesPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           We ran Gemma three ways, and the same weights behaved as three different systems.
-          Google&rsquo;s free API served Gemma-4 beautifully &mdash; when it answered at all; most
+          Google&rsquo;s free API served Gemma-4 beautifully, when it answered at all; most
           requests stalled for five minutes and died, a lottery that made systematic evaluation
           impossible. Scaleway&rsquo;s paid serverless API ran Gemma-3 flawlessly. And self-hosting
-          Gemma-4 on a rented GPU produced thousands of tokens of <em>empty</em> output &mdash; the
+          Gemma-4 on a rented GPU produced thousands of tokens of <em>empty</em> output: the
           runtime was routing the model&rsquo;s entire answer into a hidden reasoning channel and
           discarding it (a{' '}
           <a href="https://github.com/ollama/ollama/issues/16184" className="text-accent hover:underline">
@@ -240,15 +240,15 @@ export default function NineModelsFortyPagesPage() {
           </a>
           ; one configuration flag fixed it, after which 120 of 120 calls succeeded). None of this is
           visible in any leaderboard. If you evaluate a model without recording who served it and how,
-          you are not measuring what you think you are measuring &mdash; our dataset now tags serving
+          you are not measuring what you think you are measuring. Our dataset now tags serving
           provider on every row.
         </p>
 
         <h2 className="text-2xl font-serif text-primary mt-10 mb-4">What it cost, and what we&rsquo;re doing</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The entire campaign &mdash; nine models, three serving providers, 1,678 scored runs,
-          including renting and configuring a GPU server twice &mdash; cost about thirteen dollars and
+          The entire campaign (nine models, three serving providers, 1,678 scored runs,
+          including renting and configuring a GPU server twice) cost about thirteen dollars and
           two days of wall-clock time, most of it waiting. That is the real finding for anyone running
           an AI-dependent pipeline: <em>model churn is now cheap to answer empirically.</em> Every
           &ldquo;should we switch?&rdquo; that used to be a meeting is an afternoon and pocket change,
@@ -256,8 +256,8 @@ export default function NineModelsFortyPagesPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We are not switching anything. Our production pair &mdash; the year-old flash-lite for bulk
-          work, flash for premium material &mdash; survived a nine-model challenge with its position
+          We are not switching anything. Our production pair (the year-old flash-lite for bulk
+          work, flash for premium material) survived a nine-model challenge with its position
           strengthened: still the only stack that reads every script we hold, still the cheapest per
           page, still zero refusals. The eval&rsquo;s job was to prove that with numbers rather than
           inertia, and to tell us exactly where the field is moving: open-weight quality is arriving
@@ -265,9 +265,9 @@ export default function NineModelsFortyPagesPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Dataset v0.3 &mdash; forty-four pages (including four within-work canonicity pairs from
+          Dataset v0.3, with forty-four pages (including four within-work canonicity pairs from
           a parallel workstream), licensed-or-hashed references, 1,737 raw transcriptions with
-          re-derivable scores, and the statistics tooling &mdash; is{' '}
+          re-derivable scores, and the statistics tooling, is{' '}
           <a
             href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/scripts/eval/dataset/v0.3"
             className="text-accent hover:underline"

@@ -1,0 +1,522 @@
+[
+  {
+    "book_id": "69e783390fc6fc955e363107",
+    "slot": 9,
+    "title": "dBud rtsi tshad 'joms sogs",
+    "tradition": "bl-other-gangtey",
+    "shelf_fit": "fits",
+    "shelf_note": "A Sowa Rigpa (Tibetan medicine) bundle on heat and contagious fevers ('Thousand Doses of Jewels', 'Sunlight Garland', a text on 'the basis of confusion' by an ācārya). It belongs in a Gangtey Monastery holding; the tradition label is the collection stratum, not a subject.",
+    "rights_flag": null,
+    "structure_note": "Every image shows two loose leaves of khyug-yig (cursive dbu med) with dense interlinear notes. The OCR marks each seam with <leaf-break/> and the translator keeps the leaves apart. The book record says pages_ocr 31, but the structure counts give OCR on 115/115 page records; 27/115 are translated. Several works are bound under one title (new yig-mgo and invocations on pp.45 and 86), as the 'sogs' in the title allows.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "དང་ས་སྡིགས་ཕྱེ་ལ་བྱ་ལྟར་སྤུར་",
+            "image": "probably དྭངས་སྙིགས་ཕྱེ (cannot fully read at this resolution); the lower leaf of this page has it as དངས་(དང་)སྙིགས་དབྱེ",
+            "problem": "'separate the clear from the dregs' garbled into nonsense",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(upper leaf: interlinear notes almost entirely absent)",
+            "image": "about ten lines of small interlinear glosses under the upper leaf's lines",
+            "problem": "interlinear commentary dropped on the upper leaf, though partly kept in parentheses on the lower leaf",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "དང་ས་སྡིགས་ཕྱེ་ལ་བྱ་ལྟར་སྤུར་",
+            "english": "at the time of the \"Dust-Whirlwind,\" one must act like a bird taking flight",
+            "problem": "a named stage, 'Dust-Whirlwind', made up from a garbled line; the same instruction is translated correctly ('separate and disperse the essence and the dross') on the lower leaf",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "ཆར་བ་སྤྱད་བརྒྱུད་དགས་གལ་ཆེ",
+            "english": "In the unripened stage of \"Rainfall,\" the lineage instructions are very important",
+            "problem": "'lineage instructions' made up from a corrupt line, with no uncertainty marker",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "འཇམ་དཔལ་གླུད་གྲུབ་ཕ་གོལ་ལ",
+            "image": "likely འཇམ་དཔལ་ཀླུ་སྒྲུབ་… (cursive; read only in part)",
+            "problem": "invocation names misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཁོ་བོ་སྟོང་སྨན་རྟག་གུ་འདི་",
+            "english": "I, the physician Tong-men Tak-gu",
+            "problem": "a personal name invented from 'this thousand-medicine [text] of mine' (stong sman, i.e. the Rin chen stong thun named on p.42)",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "འཇམ་དཔལ་གླུད་གྲུབ་ཕ་གོལ་ལ",
+            "english": "To Manjushri, the Lord of Songs",
+            "problem": "'Lord of Songs' invented from the gLu/kLu syllable; Nāgārjuna (kLu sgrub) is lost from the homage",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 54,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "སྨན་ནས་སིལ་དྲག་པོ་བསྔགས་ སྨན་སིལ་སྨན་དང་པོ་སྨིན་བ་ཞི་ཚ་…",
+            "image": "an interlinear note line in small script between lines 4 and 5 of the lower leaf",
+            "problem": "an interlinear note merged into the body as a full line",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བཟང་དྲུག་ཅིག་བན་ཀ་རར་སྦྱར་",
+            "english": "<note>the <term>bzang-drug</term> are nutmeg, cloves, cubeb, cardamom, saffron, and sandalwood</note>",
+            "problem": "an invented gloss lists the wrong drugs for the Six Excellent Ones (the standard six are bamboo pith, saffron, clove, nutmeg, small and large cardamom; cubeb and sandalwood are not among them), so a reader gets a wrong formula",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "(the merged interlinear line)",
+            "english": "<note>Scholars note: When the medicine first ripens…</note>",
+            "problem": "'Scholars note' is an attribution that is not on the page",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 86,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བྱ་ཚ་དྲང་ཤེས་།།",
+            "english": "Know the heat or cold of the nature of the bird.",
+            "problem": "the leaf opens mid-word ('…bya' is the end of a word from the missing verso); 'bird' is invented from that fragment",
+            "severity": "minor",
+            "class": "T6"
+          },
+          {
+            "source": "(བདུད་བཀའ་ལྟར་)",
+            "english": "(omitted)",
+            "problem": "interlinear gloss dropped in translation",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      }
+    ],
+    "book_verdict": "The right leaves, transcribed coherently from difficult cursive with interlinear notes; the English reads well. It invents in places: a physician's name, an epithet, a named fever stage, and a wrong list of the 'Six Excellent' drugs in a gloss.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      86
+    ],
+    "reader_summary": "A bundle of Tibetan medical verse treatises on heat and contagious fevers, copied in cursive script with interlinear notes. The transcription is of the right leaves but cannot be checked word by word from the cursive, and it drops many of the notes. The English is a usable guide to the argument, but the drug glosses and some proper names are made up and should not be trusted for formulas."
+  },
+  {
+    "book_id": "69e77ad90fc6fc955e3629f0",
+    "slot": 10,
+    "title": "rTa mgrin dpa' bo gcig pa",
+    "tradition": "bl-other-gangtey",
+    "shelf_fit": "fits",
+    "shelf_note": "A Nyingma ritual compilation from a Gangtey holding. The pages read are a mandala-drawing manual, an empowerment liturgy with skull-cups, banners and phur pas, a Vajravidāraṇa sādhana, and a Guru Thod phreng rtsal feast liturgy. None of them is visibly the Hayagrīva text named in the title.",
+    "rights_flag": null,
+    "structure_note": "A composite volume: the title names one Hayagrīva practice, but the sampled pages are other works, so the title describes at most the first item. Each image holds two or three leaves; on p.94 a loose cursive slip sits above two leaves, with no <leaf-break/> between the slip and the first leaf. printed_backsteps 1 and printed_repeats 1 are on only 7 printed numbers in 270 records, most likely misread margin numerals, not a reordering. 86/270 translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 94,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "དགེ་བཙུན་བླ་མའི་ཞབས་ལ་ཕྱག་བཙལ་ནས་། བློ་དམན་དོན་དུ་",
+            "image": "(the last line of the cursive slip; small and faint)",
+            "problem": "the slip's closing line nearly repeats the homage that opens the leaf below it (རྗེ་བཙུན་བླ་མའི་ཞབས་ལ་ཕྱལ་བཙལ་ནས་། སློབ་མ་དམན་དོན་དུ་), which suggests it was borrowed rather than read; cannot confirm",
+            "severity": "moderate",
+            "class": "O1"
+          },
+          {
+            "ocr": "སློབ་དཔོན་འུབ་ཏུ་འདུག་",
+            "image": "སློབ་དཔོན་ནུབ་ཏུ་འདུག (the master sits in the west, the student in the east)",
+            "problem": "ནུབ 'west' misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ན༥༤༤་(ཐང་)",
+            "english": "94 (Front)",
+            "problem": "a page label invented from a misread string at the head of the slip, shown in the reader text",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "སློབ་དཔོན་འུབ་ཏུ་འདུག་",
+            "english": "the Master sits in the center",
+            "problem": "the master's position in the mandala line-laying is given as the centre instead of the west, which breaks the paired east/west placement",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "(དྲི་རྒྱུན་གྱི་རོལ་དི་ཡང་ཁལ་ས་འབ་ལོ་ཡོད་པ་ལྷུན་པོ་རང་དྲ་ལོ་རྒྱས་པར་བྱས་པ་འོ་།",
+            "english": "Regarding the continuity of the fragrance's melody, if it is to be done extensively like the self-resembling Mount Meru, do so.",
+            "problem": "fluent English over a garbled cursive note",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "the loose cursive slip and the mandala manual run together with no seam, so the slip's mantra notes read as the opening of the manual",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 132,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཐུཌ་དབང་ཡོངས་སུ་རྫོཌ་པའིདབང་ཐོབ་ཤོག (4th banner)",
+            "image": "not verified; the fourth (karma) banner probably names activity, not mind",
+            "problem": "'mind' empowerment repeated for the activity banner",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཐུཌ་དབང་ཡོངས་སུ་རྫོཌ་པའི",
+            "english": "may the empowerment of the fully perfected Mind be obtained (second time)",
+            "problem": "follows the OCR's repetition",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 188,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཕྱག་གྱ་ལྔ་དང་ཞིང་ལྤགས་ཀྱི་སྟོད་གཡོགས",
+            "english": "With eighty-five arms, wearing an upper garment of hide",
+            "problem": "phyag rgya lnga (the five bone ornaments/seals) rendered 'eighty-five arms', so the deities' iconography is invented",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "རྡོ་རྗེ་རྣམ་པར་འཇོམས་པ",
+            "english": "Vajra Vidarana <note>The Subduer of Vajras</note>",
+            "problem": "wrong gloss: the name means 'Vajra Destroyer', not 'subduer of vajras'",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 254,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "(leaf opens) …ཡེ་ཤེས་ / འདོད་ཡོན་སྤྲིན་ཕུང་",
+            "english": "Became a display. Recite:",
+            "problem": "seam fragment rendered as a sentence, and 'Recite' added",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean dbu can liturgical leaves (pp.132, 188, 254) are transcribed well and mostly translated well, though p.188 gives the deities 'eighty-five arms'. The cursive slip on p.94 is transcribed unreliably and translated into fluent nonsense, under an invented '94 (Front)' label.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      132,
+      254
+    ],
+    "reader_summary": "A Nyingma ritual compilation: empowerment and feast liturgies, a Vajravidāraṇa sādhana and a mandala-drawing manual, bound under a Hayagrīva title that does not describe the sampled pages. The block-letter leaves are transcribed accurately, and the English of the liturgies is faithful enough to follow. Loose cursive slips are not, and the iconographic details need checking against the Tibetan."
+  },
+  {
+    "book_id": "69e77a8f0fc6fc955e360958",
+    "slot": 11,
+    "title": "rTsa rgyud rdo rje gzhon nu (EAP039-1-4-226)",
+    "tradition": "bl-other-gangtey",
+    "shelf_fit": "fits",
+    "shelf_note": "Pema Lingpa's Vajrakīla (rDo rje gzhon nu) treasure cycle: a commentary on the root tantra, the Phur pa srog gi spu gri history and dances, and a Tsogyal–Padmasambhava dialogue on māras. It suits a Bhutanese monastic holding such as Gangtey.",
+    "rights_flag": null,
+    "structure_note": "Each image holds three leaves (rectos), each with a <leaf-break/> except where a leaf is a title leaf: on p.79 the third leaf is the title leaf of a new work (…phur ba'i sgrub thabs bzhugs so), and the OCR leaves it out. Several works are bound under the root-tantra title. 70/128 translated (book field pages_ocr 72, but OCR on all 128 records).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 2,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "༄༅༅༔ ༔།།།།།།།།།།།།།།།།།",
+            "image": "༄༅༅༔ followed by a blank space before ༔ཤྲཱི་བཛྲ་ཀུ་མཱ་ར་ལ་ན་མོ",
+            "problem": "the blank after the yig-mgo is rendered as a run of 17 shad",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ནམ་གྱི་ཚེ་མཉམ་པ",
+            "english": "regarding the timing of the equinox … at the midpoint of the night",
+            "problem": "'equinox' added alongside the correct 'midpoint of the night'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 79,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "(nothing)",
+            "image": "third leaf: a framed title leaf, ༔ སྙིང་ཐིག་ཡང་གསང་རྡོ་རྗེ་ཕུར་བའི་སྒྲུབ་ཐབས་བཞུགས་སོ ༔ (approx.)",
+            "problem": "the title leaf of the next work is not transcribed, so the reader is not told that a new work begins",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "(nothing)",
+            "image": "folio labels in the left margins of each leaf",
+            "problem": "margin folio labels not recorded",
+            "severity": "minor",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཞག་གསུཾ་བཅུ་ཕྲག་དྲུག",
+            "english": "for six periods of ten days",
+            "problem": "the retreat length is six periods of thirty days (gsum bcu = thirty); the English drops 'three' and gives sixty days instead of 180",
+            "severity": "serious",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 82,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ཆོས་སྐྱོང་ལ་ཤད་འཚཾས ༈ ཞི་བ་ལ་འགྲོས་འཚཾས",
+            "image": "ཆོས་སྐྱོང་ལ་ཞད་འཆམས ༔ ཞི་བ་ལ་འགྲོས་འཆམས",
+            "problem": "'chams (ritual dance) misread as 'tshams throughout the list of dances",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "ཞི་བ་ལ་འགྲོས་འཚཾས ༈ རྒྱས་པ་ལ་སྟང་སྟབས་ཀྱི་ཚེས",
+            "english": "The movement-boundary for the peaceful. The posture-boundary for the increasing.",
+            "problem": "the cham dances of the Phur pa cycle become 'boundaries' throughout (a misread carried into fluent English); 'Life-force Boundary' should be the life-force dance",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 121,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བདག་ལ་བསྡུལ་མི་བསྐྱེད་ན",
+            "english": "If they do not cause me to be subdued <note>by pride or distraction</note>",
+            "problem": "unclear sense padded with a speculative note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Careful dbu can leaves, very well transcribed apart from a consistent 'chams→'tshams misread. The translation is fluent and mostly faithful, but it states the retreat length wrongly (sixty days for 180), and the OCR skips a title leaf.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      2,
+      121
+    ],
+    "reader_summary": "Texts from Pema Lingpa's Vajrakīla treasure cycle: a commentary on the root tantra, the history and ritual dances of the 'Life-force Razor' Phurba, and Tsogyal's questions on obstacles. The transcription is of the right leaves and largely accurate. The English follows the argument well, but numbers and technical terms (dances read as 'boundaries') should be checked against the Tibetan."
+  },
+  {
+    "book_id": "69e782e4d93c1f6007505357",
+    "slot": 12,
+    "title": "bKa' 'khor bar pai dkar chag nong ston gsung",
+    "tradition": "bl-other-gangtey",
+    "shelf_fit": "fits",
+    "shelf_note": "A Gangtey Monastery manuscript bundle. The pages read are dhāraṇī sūtras for protection (Indra and the asuras, hail and nāga rites), the dedication verses of Bodhicaryāvatāra ch. 10, and a Dzogchen Nyingthig anthology of tantra quotations.",
+    "rights_flag": null,
+    "structure_note": "The title names a catalogue (dkar chag) by Nong ston, but none of the four sampled pages is a catalogue: this is a miscellany, and the title probably describes only the first item. On p.127 the third leaf is a title leaf of a new work with no <leaf-break/>, so its title is fused onto the end of the prayer leaf. printed_backsteps 3 and printed_repeats 3 (on 10 printed numbers) fit a bundle of several works, each restarting its foliation, rather than a misorder. 30/202 translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "ང་࿓࿔། །དབང་པོ་བརྒྱ་བྱིན་གྱིས་",
+            "image": "the third leaf opens with the continuation mark; 'ང་' is a stray from the margin label",
+            "problem": "margin label fragment fused into the body",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རིཌི༹ན་གྱི་བྲོ་ཚིག",
+            "english": "these words of the Vidyadhara's <note>Knowledge-holder's</note> oath",
+            "problem": "rig sngags (vidyā-mantra) taken as vidyādhara and glossed accordingly",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 25,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྦྱིན་བྱེད་མའི་བུ",
+            "english": "daughters of the Giver",
+            "problem": "'sons' rendered 'daughters'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 127,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "…སྟི་དང་། །བཅས་ཏེ་ཡུན་རིངས་གནས་ / གདམས་བཞེ་བར་འཕོ་བའི་རམས་བགྲངས་བཞུགས་སྷོ།།",
+            "image": "the last line is a separate framed title leaf (red-ruled), roughly གདམས་ངག་…འཕོ་བའི་…བཞུགས་སོ",
+            "problem": "title leaf fused to the prayer leaf with no seam",
+            "severity": "moderate",
+            "class": "I5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "གདམས་བཞེ་བར་འཕོ་བའི་རམས་བགྲངས་བཞུགས་སྷོ།།",
+            "english": "<note>The final sentence of this leaf appears to be a colophon or title marker: \"The count of the stages of transferring the instructions is complete.\"</note>",
+            "problem": "the title of a new ('pho ba) work, 'herein is contained', is presented as the colophon of the preceding prayer and rendered 'is complete'",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 181,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཡང་ཐལ་འགྱུར་ལས",
+            "english": "Again, from the *Consequent*",
+            "problem": "the Thal 'gyur tantra given an opaque literal title",
+            "severity": "minor"
+          },
+          {
+            "source": "རིག་གནད་ལུག་རྒྱུད་བརྩོན་དུ་བཟུང",
+            "english": "with the persistence of a string of pearls",
+            "problem": "lug rgyud ('in unbroken succession') becomes an image that is not there",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clear, accurate transcription of dbu med and dbu can leaves, and a faithful English of dhāraṇīs, the Bodhicaryāvatāra dedication and Dzogchen quotations. The title promises a catalogue that these pages are not, and one title leaf is read as a colophon.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      23,
+      25,
+      181
+    ],
+    "reader_summary": "A miscellany bound under the title of a Kangyur catalogue: protective dhāraṇī sūtras, the dedication chapter of the Bodhicaryāvatāra, and a Great Perfection anthology of tantra citations. The transcription is of the right leaves and reads accurately. The English can be trusted for the sense, with small slips in names, and the reader should know the title does not describe the contents."
+  }
+]

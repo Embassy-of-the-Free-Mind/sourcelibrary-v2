@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Quote, Copy, Check } from 'lucide-react';
 import { copyClause } from '@/lib/holding-library';
 import { trackEvent } from '@/lib/track-event';
+import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
 
 function getRuntimeOrigin(): string {
   if (typeof window !== 'undefined' && window.location?.origin) {
@@ -198,6 +199,7 @@ export default function CiteButton({
   iconOnly = false,
 }: CiteButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
+  const chrome = CHROME_STRINGS[useLocale()];
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const origin = getRuntimeOrigin();
 
@@ -215,10 +217,10 @@ export default function CiteButton({
       <button
         onClick={() => setShowMenu(!showMenu)}
         className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors ${className}`}
-        title="Cite this book"
+        title={chrome.citeTitle}
       >
         {copiedId ? <Check className="w-4 h-4 text-green-400" /> : <Quote className="w-4 h-4" />}
-        {!iconOnly && 'Cite'}
+        {!iconOnly && chrome.cite}
       </button>
 
       {showMenu && (
@@ -232,8 +234,8 @@ export default function CiteButton({
             <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto mt-2 mb-1" />
             {/* Header with close (mobile bottom sheet) */}
             <div className="sm:hidden flex items-center justify-between px-4 pb-2 mb-1 border-b border-stone-100">
-              <span className="text-[15px] font-semibold text-stone-900">Cite</span>
-              <button type="button" onClick={() => setShowMenu(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">Close</button>
+              <span className="text-[15px] font-semibold text-stone-900">{chrome.cite}</span>
+              <button type="button" onClick={() => setShowMenu(false)} className="text-sm font-medium text-stone-500 hover:text-stone-800 px-2 py-1 -mr-2">{chrome.close}</button>
             </div>
             {/* APA */}
             <button

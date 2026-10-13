@@ -17,7 +17,7 @@ export default function ForResearchersPage() {
       header={
         <ContentHeader
           title="For Researchers"
-          subtitle="Source Library is a free, open-access digital library of historical texts with AI-generated translations. We make primary sources readable to scholars who don't read the original languages — and machine-readable to those building on them."
+          subtitle="Source Library is a free, open-access digital library of historical texts with AI-generated translations. We make primary sources readable to scholars who don't read the original languages, and machine-readable to those building on them."
           image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
           imageAlt="Historical manuscript page"
         />
@@ -84,7 +84,7 @@ export default function ForResearchersPage() {
           />
           <OfferCard
             title="Bulk Data"
-            description="Request corpus exports for computational analysis — full OCR and translation text, metadata, and image annotations in structured formats."
+            description="Request corpus exports for computational analysis: full OCR and translation text, metadata, and image annotations in structured formats."
           />
           <OfferCard
             title="Transparent Methodology"
@@ -119,7 +119,7 @@ export default function ForResearchersPage() {
         </div>
 
         <p className="text-secondary text-[15px] leading-relaxed mb-16">
-          For DOI-backed editions, use the generated citation on the book page &mdash; it includes
+          For DOI-backed editions, use the generated citation on the book page. It includes
           a persistent identifier suitable for reference lists. We encourage researchers to
           verify passages against the original text, which is always available alongside the translation.
         </p>

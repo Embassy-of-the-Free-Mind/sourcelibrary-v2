@@ -1,0 +1,33 @@
+{
+ "packet": 24,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "69e788774a6785cfd60d1101",
+  "6992cdab43713c66ea637dca",
+  "69f33bf9876dd827cbc59733",
+  "6a3cb4593dce6cfad7481196",
+  "69c1b9c38522835be8454271",
+  "699998884310a6713945261c",
+  "694f3d6cbe37f451a5324e10",
+  "6a3c6b7db2dac66a51ca15ce",
+  "69c1b9c18522835be8454213",
+  "69c82bb66c6f3cc53c84cbe7",
+  "decoy-08",
+  "69f13428c8d07a6810653407",
+  "6a3c6728af3c49b59c5d0c34",
+  "69c7b0ec25ec2ba5ccd7f3f3",
+  "6a43079b4e06bc233ed02e61",
+  "69c1b9098522835be844d2bd",
+  "69c1b9e58522835be8454f27",
+  "69c1b9a18522835be845303b",
+  "6a3c6c0ac4e8626320db462c",
+  "decoy-07",
+  "69c644d6b463eebe7caaca07",
+  "69c7b18425ec2ba5ccd7f44e",
+  "69e78a824a6785cfd60d38ae",
+  "69c1ba0e8522835be8456327",
+  "6a3cba473dce6cfad749ae94",
+  "69e729a1a409200ea79f0ca5"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: smon lam dang bkra shis | Author: Drametse Monastery Collection | Year: 1700 | Language: Tibetan\n2. Title: 本草綱目·卷十八上~十八下 | Author: 李時珍 | Year: 1596 | Language: Chinese\n3. Title: Shinsen shōkai Kyū Keizan koji seigo hitsudoku seigokō | Author: Lu, Yuanchang, active 17th century | Year: 1682 | Language: Chinese\n4. Title: 周易輯聞·卷六 (vol 6) | Author: 趙汝楳 | Language: Chinese\n5. Title: Taẕkirah-'i Shaykh Muḥammad ʿAlī Ḥazīn | Author: Muḥammad ʻAlī Ḥazīn,‏ ca. ‎1691–1766شيخ محمّد على حزيں | Year: 1750 | Language: Persian\n6. Title: 搜神記 Soushen Ji (Vols. 11-20) | Author: Gan Bao | Year: 1782 | Language: Chinese\n7. Title: Mercurii Trismegisti Pimander (Ficino translation) | Author: Hermes Trismegistus; Ficino, Marsilio (translator) | Year: 1481 | Language: Latin\n8. Title: 大學證文 | Author: 毛奇齡 | Year: 1680 | Language: Chinese\n9. Title: Ansāb-i Afghānān | Language: Persian\n10. Title: Critica sacra, de sacri codicis partitione, editionibus variis, linguis originalibus & illibata puritate fontium | Author: Pfeiffer, August | Year: 1680 | Language: Latin\n11. Title: Theatrum chymicum minus | Author: Laurentius Eyssenhart | Year: 1652 | Language: Latin\n12. Title: Guanshiyin pu sa pu men pin jing | Author: Bayerische Staatsibliothek | Year: 2018 | Language: Chinese\n13. Title: 性理羣書句解·卷五~卷七 (vol 2) | Author: 熊節 | Language: Chinese\n14. Title: [Hebrew: Sefer asis rimmonim] | Author: Gallico, Samuel | Year: 1623 | Language: Hebrew\n15. Title: Lexicon rei herbariae trilingve, ex variis et optimis,qui de stirpium historia scripserunt, authoribus concinnatum per Davidem kyberum Argentinensem. Item tabulae collectionum in genere, et particulatim per XII menses, i | Author: Kyber, David | Language: Latin\n16. Title: دبستان مذاهب | Author: Mīr Ẕū-al-Fiqār ‘Alī al-Ḥusaynī Ardistānī, ca. 1615–1670; ذو الفقار الحسینی; Mūbad Shāh; مو بدشاه; Fānī, Muḥsin, d. 1671 | Year: 1801 | Language: Persian\n17. Title: Two works, both entitled Risālah-'i Tīrandāzī (Treatise on Archery), completed in 1090 AH (1679 CE). | Year: 1679 | Language: Persian\n18. Title: Tarjumah-'i Nād Purān | Year: 1820 | Language: Persian\n19. Title: 芥隱筆記 | Author: 龔頤正 | Language: Chinese\n20. Title: Oratio de laudibus geometriae habita Lipsiae | Author: Georgius Fabricius Pirnensis | Year: 1556 | Language: Latin\n21. Title: Vitulus aureus quem mundus adorat et orat oder: Ein sehr curiöses Tractätlein | Author: Helvetius, Johannes Fridericus | Year: 1767 | Language: German\n22. Title: [Hebrew: Sefer pardes rimmonim] | Author: Cordovero, Moses ben Jacob | Year: 1786 | Language: Hebrew\n23. Title: smon lam yongs rdzogs chab gcig tu bsgrigs pa | Author: Ogyen Choling Collection | Year: 1700 | Language: Tibetan\n24. Title: Bāznāmah | Year: 1818 | Language: Persian\n25. Title: 家範·卷六~卷十 (vol 2) | Author: 司馬光 | Language: Chinese\n26. Title: مثنوی معنوی (Masnavī-yi Maʻnavī), Books 3-4 | Author: Jalāl al-Dīn Rūmī | Year: 1851 | Language: Persian\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

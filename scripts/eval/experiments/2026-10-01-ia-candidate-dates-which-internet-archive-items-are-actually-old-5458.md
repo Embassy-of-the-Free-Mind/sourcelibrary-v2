@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: 68
+n_pages: null
+verdict: "Metadata-only date rules (v3) classify IA candidates old vs modern at 65/68 = 95.6% against title pages read by eye, clearing the 90% bar."
+status: adopted
+decision: "v3 rules write classification.date_check on 1.0M IA candidates (scripts/lib/ia-date-check.mjs, #5458)"
+superseded_by: null
+issue: 5458
+---
 ## 2026-10-01 · IA candidate dates: which Internet Archive items are actually old? (#5458)
 
 - **Question.** Can metadata rules alone, with no AI calls, tell whether an `ia_language` import candidate dated <1900 or undated was really produced before 1900?

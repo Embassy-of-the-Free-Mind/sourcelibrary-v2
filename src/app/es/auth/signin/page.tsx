@@ -5,7 +5,7 @@ import { siteOgImage } from '@/lib/og-locale';
 // Spanish twin of /auth/signin — the acquisition funnel reaches Instagram/
 // webview users who have no browser-translate button (#2763).
 
-const ES_SIGNIN_TITLE = 'Entrar — Source Library';
+const ES_SIGNIN_TITLE = 'Entrar | Source Library';
 const ES_SIGNIN_DESCRIPTION =
   'Entra en Source Library para leer, citar y guardar miles de fuentes primarias históricas, con ediciones en español.';
 

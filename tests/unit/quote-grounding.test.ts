@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — plain .mjs worker helper, no types
 import { groundQuotes, findBestMatch, pageCouldMatch, quoteSearchWords, buildPageIndex } from '../../scripts/workers/lib/quote-grounding.mjs';
+// @ts-expect-error — plain .mjs helper, no types
+import { declinedRegion } from '../../scripts/lib/declined-region.mjs';
 
 /**
  * groundQuotes() wedged the enrich-worker's event loop at 99% CPU on a 2,707-page book and killed
@@ -116,4 +118,45 @@ describe('groundQuotes', () => {
     // which is why the per-book timeout and seven other books' awaits all froze behind one book.
     expect(timerFired).toBe(true);
   });
+});
+
+describe('a page whose OCR declined a region is never a featured quote (#4584)', () => {
+  // Urkunden IV p.24: the OCR read the German prose and declined the glyphs; the translation rendered
+  // the twenty unread lines as English, and line x+3 became a featured quote of the volume.
+  const URK_OCR = 'Nur die letzten Zeilen sind erhalten\nx+1\n[Hieroglyphic text lines x+1 through 20]';
+  const INVENTED = 'x+3. ...I was one who spoke the truth before the Lord of the Two Lands, and my name shall endure upon this stone.';
+
+  it('does not ground a quote on the declined page, even when it matches its stated page', async () => {
+    const pages = [{ id: 'p24', page_number: 24, page_type: 'text', ocr: { data: URK_OCR }, translation: { data: `Only the last lines are preserved. ${INVENTED}` } }];
+    const { grounded } = await groundQuotes([{ text: INVENTED, page: 24 }], pages);
+    expect(grounded).toHaveLength(0);
+  });
+
+  it('still grounds against the book\'s other pages', async () => {
+    const pages = [
+      { id: 'p24', page_number: 24, page_type: 'text', ocr: { data: URK_OCR }, translation: { data: `${LOREM} on the declined page.` } },
+      { id: 'p25', page_number: 25, page_type: 'text', ocr: { data: 'Der Philosoph bemerkt …' }, translation: { data: `${LOREM} and more text follows here.` } },
+    ];
+    const { grounded } = await groundQuotes([{ text: LOREM, page: 24 }], pages);
+    expect(grounded).toHaveLength(1);
+    expect(grounded[0].page).toBe(25);
+  });
+
+  // Each string is a real OCR bracket from the 2026-10-11 measurement over reading_summary.quotes.
+  it.each([
+    '[Hieroglyphic text lines 1-14]',
+    '[Hieratic text, approximately 15 lines]',
+    '[Cuneiform inscription arranged in vertical columns]',
+    '[Column 2: Dense Hieratic text]',
+    '[<unclear>hieroglyphic text</unclear>]',
+    'Regest. <lacuna>three lines of glyphs</lacuna> Ende.',
+  ])('declined: %s', (ocr) => expect(declinedRegion(ocr)).toBe(true));
+
+  it.each([
+    'Quod ait [illegible] philosophus de caelo.',
+    '[The rest of the page contains faint bleed-through text from the reverse side, which is not transcribed]',
+    '[The remainder of the page contains significant show-through and faint, untranscribed text]',
+    'In principio erat verbum [sic].',
+    '',
+  ])('not declined: %s', (ocr) => expect(declinedRegion(ocr)).toBe(false));
 });

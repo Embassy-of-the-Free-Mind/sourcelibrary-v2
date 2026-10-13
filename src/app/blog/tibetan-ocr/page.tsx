@@ -50,7 +50,7 @@ export default function TibetanOcrPage() {
 
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Last month we imported 1,358 Bhutanese manuscripts &mdash; 232,800 pages &mdash; from the British Library&rsquo;s <a href="https://eap.bl.uk" className="text-accent-rust hover:underline">Endangered Archives Programme</a>. These are handwritten pecha manuscripts spanning the 14th through 20th centuries, written in both dbu can (formal headed script) and dbu med (cursive headless script), covering Buddhist philosophy, ritual practice, astrology, history, and more.
+          Last month we imported 1,358 Bhutanese manuscripts (232,800 pages) from the British Library&rsquo;s <a href="https://eap.bl.uk" className="text-accent-rust hover:underline">Endangered Archives Programme</a>. These are handwritten pecha manuscripts spanning the 14th through 20th centuries, written in both dbu can (formal headed script) and dbu med (cursive headless script), covering Buddhist philosophy, ritual practice, astrology, history, and more.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -65,7 +65,7 @@ export default function TibetanOcrPage() {
         <figure className="my-12">
           <img
             src="https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg"
-            alt="A painted ritual mandala from Gangtey Monastery, Bhutan — concentric circles with hexagram, lotus petals, and Buddhist seed syllables"
+            alt="A painted ritual mandala from Gangtey Monastery, Bhutan: concentric circles with hexagram, lotus petals, and Buddhist seed syllables"
             className="w-full rounded-lg"
           />
           <figcaption className="text-sm text-muted mt-2 text-center">
@@ -81,19 +81,19 @@ export default function TibetanOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          <strong>EAP039: <a href="https://eap.bl.uk/project/EAP039" className="text-accent-rust hover:underline">Gangtey Monastery</a></strong> &mdash; 284 manuscripts, roughly 34,500 pages. Gangtey was founded by Tenzin Legpai Dondrup, grandson of the great treasure-revealer Pema Lingpa. The collection includes revealed texts (terma), liturgical manuals, and astrological treatises.
+          <strong>EAP039: <a href="https://eap.bl.uk/project/EAP039" className="text-accent-rust hover:underline">Gangtey Monastery</a></strong>: 284 manuscripts, roughly 34,500 pages. Gangtey was founded by Tenzin Legpai Dondrup, grandson of the great treasure-revealer Pema Lingpa. The collection includes revealed texts (terma), liturgical manuals, and astrological treatises.
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          <strong>EAP105: <a href="https://eap.bl.uk/project/EAP105" className="text-accent-rust hover:underline">Drametse and Ogyen Choling</a></strong> &mdash; Over 720 manuscripts, roughly 62,500 pages. Drametse Monastery was founded in 1511 and is the origin of the Drametse Nga Cham (drum dance), a UNESCO Intangible Cultural Heritage.
+          <strong>EAP105: <a href="https://eap.bl.uk/project/EAP105" className="text-accent-rust hover:underline">Drametse and Ogyen Choling</a></strong>: Over 720 manuscripts, roughly 62,500 pages. Drametse Monastery was founded in 1511 and is the origin of the Drametse Nga Cham (drum dance), a UNESCO Intangible Cultural Heritage.
         </p>
 
         <p className="text-secondary leading-relaxed mb-4">
-          <strong>EAP310: <a href="https://eap.bl.uk/project/EAP310" className="text-accent-rust hover:underline">Thadrak, Neyphug, Phurdrup, and Tshamdrak Temples</a></strong> &mdash; 316 manuscripts, roughly 119,000 pages. These temple collections represent some of the largest single deposits in our corpus.
+          <strong>EAP310: <a href="https://eap.bl.uk/project/EAP310" className="text-accent-rust hover:underline">Thadrak, Neyphug, Phurdrup, and Tshamdrak Temples</a></strong>: 316 manuscripts, roughly 119,000 pages. These temple collections represent some of the largest single deposits in our corpus.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          <strong>Additional sources</strong> &mdash; 53 texts from the <a href="https://archive.org" className="text-accent-rust hover:underline">Internet Archive</a>, the <a href="https://library.bdrc.io" className="text-accent-rust hover:underline">Buddhist Digital Resource Center</a>, and <a href="https://gallica.bnf.fr" className="text-accent-rust hover:underline">Gallica</a>, including European accounts of Bhutan and Drukpa Kagyu lineage texts.
+          <strong>Additional sources</strong>: 53 texts from the <a href="https://archive.org" className="text-accent-rust hover:underline">Internet Archive</a>, the <a href="https://library.bdrc.io" className="text-accent-rust hover:underline">Buddhist Digital Resource Center</a>, and <a href="https://gallica.bnf.fr" className="text-accent-rust hover:underline">Gallica</a>, including European accounts of Bhutan and Drukpa Kagyu lineage texts.
         </p>
 
         {/* --- Sample manuscripts --- */}
@@ -112,7 +112,7 @@ export default function TibetanOcrPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The Experiment</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We tested OCR consistency on the same Gangtey dbu med manuscript page &mdash; an astrological text from the 60-year element-animal cycle &mdash; across three models. Rather than measuring against ground truth (which would require Tibetan paleographers), we measured something more immediately useful for pipeline work: how consistent is each model with itself, and how much do models agree with each other?
+          We tested OCR consistency on the same Gangtey dbu med manuscript page (an astrological text from the 60-year element-animal cycle) across three models. Rather than measuring against ground truth (which would require Tibetan paleographers), we measured something more immediately useful for pipeline work: how consistent is each model with itself, and how much do models agree with each other?
         </p>
 
         {/* --- Results table --- */}
@@ -171,11 +171,11 @@ export default function TibetanOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The <a href="https://www.bdrc.io" className="text-accent-rust hover:underline">Buddhist Digital Resource Center</a> has been the backbone of Tibetan digital preservation for decades. In March 2025, BDRC released the first <a href="https://github.com/buda-base/tibetan-ocr-app" className="text-accent-rust hover:underline">open-source desktop Tibetan OCR application</a>, built on Easter2 architecture trained on approximately 43,000 line samples. In February 2026, BDRC launched a major open datasets initiative with over 30 million scanned pages and 5 million etexts &mdash; an extraordinary resource for the entire field.
+          The <a href="https://www.bdrc.io" className="text-accent-rust hover:underline">Buddhist Digital Resource Center</a> has been the backbone of Tibetan digital preservation for decades. In March 2025, BDRC released the first <a href="https://github.com/buda-base/tibetan-ocr-app" className="text-accent-rust hover:underline">open-source desktop Tibetan OCR application</a>, built on Easter2 architecture trained on approximately 43,000 line samples. In February 2026, BDRC launched a major open datasets initiative with over 30 million scanned pages and 5 million etexts, an extraordinary resource for the entire field.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <a href="https://monlam.ai/model/ocr" className="text-accent-rust hover:underline">Monlam AI</a>, based in Dharamshala, claims state-of-the-art Tibetan comprehension with their Melong model, trained on approximately 24 billion Tibetan tokens. The exile Tibetan community building AI tools for their own language &mdash; on their own terms, for their own purposes &mdash; is one of the most inspiring developments in the space.
+          <a href="https://monlam.ai/model/ocr" className="text-accent-rust hover:underline">Monlam AI</a>, based in Dharamshala, claims state-of-the-art Tibetan comprehension with their Melong model, trained on approximately 24 billion Tibetan tokens. The exile Tibetan community building AI tools for their own language, on their own terms, for their own purposes, is one of the most inspiring developments in the space.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
@@ -194,11 +194,11 @@ export default function TibetanOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          &ldquo;<a href="https://arxiv.org/abs/2506.20168" className="text-accent-rust hover:underline">Seeing is Believing?</a>&rdquo; demonstrated that VLMs over-rely on linguistic priors when visual conditions degrade. We observed this directly: Gemini 3.1 Flash Lite &ldquo;read&rdquo; an astrological text as a ritual manual for weather control. The output was coherent Tibetan Buddhist terminology &mdash; it just had nothing to do with what was on the page. The model was writing, not reading.
+          &ldquo;<a href="https://arxiv.org/abs/2506.20168" className="text-accent-rust hover:underline">Seeing is Believing?</a>&rdquo; demonstrated that VLMs over-rely on linguistic priors when visual conditions degrade. We observed this directly: Gemini 3.1 Flash Lite &ldquo;read&rdquo; an astrological text as a ritual manual for weather control. The output was coherent Tibetan Buddhist terminology; it just had nothing to do with what was on the page. The model was writing, not reading.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          <a href="https://arxiv.org/html/2603.19790v3" className="text-accent-rust hover:underline">Conformal Risk Control for OCR</a> introduces accept/abstain decisions with statistical guarantees: VLMs are overconfident on hallucinated outputs, so internal confidence scores are unreliable. Cross-view consistency &mdash; what we measured as cross-run and cross-model agreement &mdash; serves as better evidence for trustworthiness.
+          <a href="https://arxiv.org/html/2603.19790v3" className="text-accent-rust hover:underline">Conformal Risk Control for OCR</a> introduces accept/abstain decisions with statistical guarantees: VLMs are overconfident on hallucinated outputs, so internal confidence scores are unreliable. Cross-view consistency (what we measured as cross-run and cross-model agreement) serves as better evidence for trustworthiness.
         </p>
 
         {/* --- MCR --- */}
@@ -209,9 +209,9 @@ export default function TibetanOcrPage() {
         </p>
 
         <ul className="text-secondary leading-relaxed mb-8 space-y-2">
-          <li><strong>MCR = 100%</strong> &mdash; High confidence. The model has a single, stable interpretation.</li>
-          <li><strong>MCR = 67%</strong> &mdash; Some ambiguity, but a consensus exists. Use the majority reading.</li>
-          <li><strong>MCR = 33%</strong> &mdash; Low confidence. The page is genuinely ambiguous. Flag for review.</li>
+          <li><strong>MCR = 100%</strong>: High confidence. The model has a single, stable interpretation.</li>
+          <li><strong>MCR = 67%</strong>: Some ambiguity, but a consensus exists. Use the majority reading.</li>
+          <li><strong>MCR = 33%</strong>: Low confidence. The page is genuinely ambiguous. Flag for review.</li>
         </ul>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -304,7 +304,7 @@ export default function TibetanOcrPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The Bigger Picture</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          These manuscripts were digitized by the British Library&rsquo;s Endangered Archives Programme because they were at risk of physical loss. The monasteries and temples that hold them &mdash; Gangtey, Drametse, Ogyen Choling, Thadrak, Neyphug, Phurdrup, Tshamdrak &mdash; preserve centuries of Bhutanese Buddhist scholarship, ritual practice, astrology, and history.
+          These manuscripts were digitized by the British Library&rsquo;s Endangered Archives Programme because they were at risk of physical loss. The monasteries and temples that hold them (Gangtey, Drametse, Ogyen Choling, Thadrak, Neyphug, Phurdrup, Tshamdrak) preserve centuries of Bhutanese Buddhist scholarship, ritual practice, astrology, and history.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -312,7 +312,7 @@ export default function TibetanOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          OCR and translation &mdash; even imperfect OCR and translation &mdash; begin to unlock that. When a model reads a page with 89% cross-model agreement, that is not a scholarly transcription. But it is a bridge. It makes a manuscript findable.
+          OCR and translation, even imperfect OCR and translation, begin to unlock that. When a model reads a page with 89% cross-model agreement, that is not a scholarly transcription. But it is a bridge. It makes a manuscript findable.
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">

@@ -85,8 +85,9 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 4686,
         title: 'Pages the transcription engine refuses to read',
-        detail: 'On famous English texts the engine returns nothing, so 712 pages of the Philosophical Transactions are blank. A free engine, Kraken, reads them at 0.9% character error but gets only 79% of printed numbers right, below the 90% bar set before the test. Nothing has been written yet.',
+        detail: 'On famous English texts the engine returns nothing, so 715 pages of the Philosophical Transactions and Birch’s History of the Royal Society are blank. A free engine, Kraken, reads them at 0.9% character error, but it reads old-style figures as letters (“66” as “cé”). Taking only the numbers from a second engine, GLM-OCR, raised the printed numbers read right from 79% to 89%, and to 96% in the body text, with no loss in the letters. That is one number short of the 90% bar set before the test, so nothing has been written yet.',
         status: 'defect',
+        example: { href: '/book/6ac2798d02c7f994f8506911?page=287', label: 'Birch 1756, vol. II, page 287' },
       },
       {
         n: 5575,

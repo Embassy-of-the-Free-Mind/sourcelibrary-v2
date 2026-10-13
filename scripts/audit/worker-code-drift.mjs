@@ -271,10 +271,12 @@ async function alert(result) {
     console.log('[worker-code-drift] alert suppressed (same stale set, sent within 6h)');
     return;
   }
+  // Silent tier (#6181): a stale worker needs a human restart decision, not a phone buzz; the
+  // morning digest and the daily health email carry it too.
   try {
     await fetch(NTFY_TOPIC, {
       method: 'POST',
-      headers: { Title: `Worker running code older than main (${result.stale.length + (result.checkoutBehind ? 1 : 0)})`, Priority: 'high', Tags: 'hourglass' },
+      headers: { Title: `Worker running code older than main (${result.stale.length + (result.checkoutBehind ? 1 : 0)})`, Priority: 'low', Tags: 'hourglass' },
       body: `${result.lines.join('\n')}\n\nMerged is not in effect for a long-lived loop. Restart is a human decision: check open batch runs and the lock it holds first.`,
     });
     writeFileSync(ALERT_STATE, JSON.stringify({ key, at: Date.now() }));

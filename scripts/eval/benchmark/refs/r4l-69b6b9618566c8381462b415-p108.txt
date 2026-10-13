@@ -1,0 +1,14 @@
+in K & L. Et ubi crura
+
+illa altera CK, BK concurrunt ad punctum istud K quod Regulae propius est, crura prima CP, BP parallela erunt axi majori; & contrarium eveniet si crura eadem concurrunt ad punctum remotius L. Unde si detur Trajectoriae centrum, dabuntur axes. Hisce autem datis, umbilici sunt in promptu.
+Axium vero quadrata sunt ad invicem ut KH ad LH, & inde facile est Trajectoriam specie datam per data quatuor puncta describere. Nam si duo ex punctis datis constituantur poli C, B, tertium dabit angulos mobiles PCK, PBK. Tum ob datam specie Trajectoriam, dabitur ratio OH ad OK, centro
+que
+O & intervallo OH describendo circulum, & per punctum quartum agendo rectam quae circulum illum tangat, dabitur regula MN cujus ope Trajectoria describetur. Unde etiam vicissim Trapezium specie datum (si casus quidam impossibiles excipiantur) in data quavis sectione Conica inscribi potest.
+Sunt & alia Lemmata quorum ope Trajectoriae specie datae datis punctis & tangentibus, describi possunt. Ejus generis est quod, si recta linea per punctum quodvis positione datum ducatur, quae datam Conisectionem in punctis duobus intersecet, & intersectionum intervallum bisecetur, punctum bisectionis tanget aliam Conisectionem ejusdem speciei cum priore, at
+que
+axes habentem prioris axibus parallelos. Sed propero ad magis utilia.
+Lemma XXVI.
+Trianguli specie & magnitudine dati tres angulos ad rectas totidem positione datas, quae non sunt omnes parallelae, singulos ad singulas ponere.
+Dantur positione tres rectae infinitae AB, AC, BC, & oportet triangulum DEF ita locare, ut angulus ejus D lineam AB,
+
+angulus

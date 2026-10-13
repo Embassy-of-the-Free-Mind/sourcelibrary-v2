@@ -1,0 +1,39 @@
+[
+  {
+    "book_id": "6abed619896ea18127c8e464",
+    "slot": 25,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ནེ (Derge Tengyur, vol. 181)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Derge woodblock folio from the Pramāṇa section: a word-by-word commentary on a pramāṇa root verse (\"སྔར་གྱི་བློ་ནི་ནུས་ཟད་ན།\") about cognition, ālayavijñāna and pravṛttivijñāna. It belongs on this shelf.",
+    "rights_flag": null,
+    "structure_note": "The scan's own margin number reads 433 and the record's page_number is 432. The text matches the image, so this is a sequence-offset label, not a wrong leaf.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 432,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 3,
+        "tr_errors_A": [
+          { "source": "སྔ་མའི་ཤེས་པ་ནི་རང་ཉིད་ཀྱི་ཤེས་པ་སྐྱེས་ནས་འཇིག་པ་ཡིན་ལ། དབང་པོ་དང་དོན་ཉེ་བ་ཙམ་ལས་དོན་ཤེས་པ་མ་ཡིན་ནམ་ཞེས་ཟེར་བ་ལ།", "english": "The previous cognition perishes after producing its own subsequent cognition. Regarding the objection, \"Is it not the case that cognition of an object arises merely from the proximity...\"", "problem": "The first clause (ཡིན་ལ) belongs inside the opponent's statement that ends at ཞེས་ཟེར་བ. A gives it in the author's voice as a standalone claim, so the opponent's premise is attributed to the commentator.", "severity": "moderate", "class": "T8" },
+          { "source": "འདོད་པ་དང་གཞན་དང་འདྲེས་པས་འཕོ་བ་བསལ་ནས་དུབ་པ་ལས་སེལ་བར་བྱེད་པ་ནི་གལ་ཏེ་བདག་ལ་ཞེས་བྱ་བ་སྟེ", "english": "the text removes the problem of exhaustion ... by stating, \"if to me,\"", "problem": "The source refutes a shift of cognition that is claimed to come from fatigue (the opponent's position). A says instead that the text 'removes the problem of exhaustion', which garbles the line of argument.", "severity": "moderate" },
+          { "source": "བློ་སྔ་མ་སྔ་མའི་མཐོང་བ་ལས་དེ་ཉམས་ན", "english": "if the vision of previous moments of intellect is impaired", "problem": "Misparse: the source says the capacity declines through the seeing done by each earlier cognition. A makes the 'vision' the thing that is impaired.", "severity": "minor" },
+          { "source": "དེ་ཡང་དོན་ཉེ་བ་ཡང་ཡོད་པའི་ཕྱིར", "english": "Because an object is nearby", "problem": "The connective དེ་ཡང and the emphatic ཡང ('also') are dropped.", "severity": "minor" },
+          { "source": "དེ་ཁོ་ན་བཞིན་དུ", "english": "reality <note>original: \"tattva\"</note>", "problem": "The note says 'original' for a Sanskrit term that is not on this Tibetan page. It is a back-reconstruction presented as if it were the source.", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "མི་ནུས་པ་ལས་མི་སྐྱེ་བ་ནི་སྐྱེ་བའི་ཕྱིར", "english": "what cannot arise from incapacity does not arise", "problem": "The final སྐྱེ་བ ('arises') is turned into 'does not arise', which produces a tautology. The Tibetan is itself awkward here.", "severity": "minor" },
+          { "source": "དུབ་པ་ལས་སེལ་བར་བྱེད་པ", "english": "the refutation based on cognitive fatigue is introduced", "problem": "Slightly loose: it is a refutation of shift-from-fatigue, not a refutation 'based on' fatigue.", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "B",
+        "prefer_reason": "B keeps the opponent's whole objection in the opponent's voice and parses the 'declines through the earlier cognitions' clause correctly. A misattributes the opponent's premise and garbles the fatigue refutation.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A clean Derge Pramāṇa commentary folio with an accurate transcription. Translation B is the better of the two; A has moderate errors of speaker attribution and argument structure, but neither has a serious error."
+  }
+]

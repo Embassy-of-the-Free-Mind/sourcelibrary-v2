@@ -197,7 +197,7 @@ export async function GET(request: NextRequest) {
 
       const html = `<!DOCTYPE html>\n<html lang="en">\n<head>\n`
         + `<meta charset="utf-8"/>\n`
-        + `<title>${escapeHtml(title)} — ${escapeHtml(author)}</title>\n`
+        + `<title>${escapeHtml(title)}, ${escapeHtml(author)}</title>\n`
         + `<link rel="alternate" type="application/ld+json" href="${BASE}/api/dts/collection?id=${bookId}"/>\n`
         + `</head>\n<body>\n`
         + `<header>\n<h1>${escapeHtml(title)}</h1>\n<h2>${escapeHtml(author)}</h2>\n</header>\n`

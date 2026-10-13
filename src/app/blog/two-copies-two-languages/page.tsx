@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'Two Copies, Two Languages - Research Notes - Source Library',
   description:
-    'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Fixing that meant measuring 21,481 books — and twice the largest finding turned out to be the measuring instrument.',
+    'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Fixing that meant measuring 21,481 books, and twice the largest finding turned out to be the measuring instrument.',
   openGraph: {
     images: [
       {
@@ -70,7 +70,7 @@ export default function TwoCopiesTwoLanguagesPage() {
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">A book with two halves</h2>
         <p className="text-secondary leading-relaxed mb-6">
           The book is Constantine Lascaris&rsquo; <em>Erotemata</em>, a Greek grammar, printed in
-          Venice in 1495 &mdash; among the first books Aldus Manutius put through his press, and
+          Venice in 1495, among the first books Aldus Manutius put through his press, and
           the beginning of the Aldine Greek programme. It is not only a Greek book. Facing every
           page of Greek is Johannes Crastonus&rsquo; Latin translation, because the point of the
           book was to teach Greek to readers who had Latin. Open it anywhere and you are looking
@@ -99,8 +99,8 @@ export default function TwoCopiesTwoLanguagesPage() {
         <p className="text-secondary leading-relaxed mb-6">
           It was also useless, in an instructive way. Of 17,857 published books carrying the
           field, exactly <strong>245</strong> held more than one language. Nothing in the site
-          read it. The search filter that appears to use it &mdash; the parameter is literally
-          named <code>languages</code> &mdash; queries the old single-value field instead.
+          read it. The search filter that appears to use it (the parameter is literally
+          named <code>languages</code>) queries the old single-value field instead.
         </p>
         <p className="text-secondary leading-relaxed mb-6">
           The reason the array was empty is the interesting part. The script that fills it works
@@ -160,7 +160,7 @@ export default function TwoCopiesTwoLanguagesPage() {
           Two different physical copies, scanned separately, read separately by a machine that
           was not told what to expect, agreeing to within one page. The catalogue gave two
           answers; the books gave one. So we wrote a detector that does this for the whole
-          library and ran it over every published book with readable pages &mdash; 21,481 of
+          library and ran it over every published book with readable pages: 21,481 of
           them.
         </p>
 
@@ -168,7 +168,7 @@ export default function TwoCopiesTwoLanguagesPage() {
         <p className="text-secondary leading-relaxed mb-6">
           The first run reported that a couple of percent of books flatly contradicted their own
           catalogue entry. Before believing it we looked at the actual list, and the top of it
-          was Comenius&rsquo; <em>Orbis Sensualium Pictus</em> &mdash; the famous illustrated
+          was Comenius&rsquo; <em>Orbis Sensualium Pictus</em>, the famous illustrated
           schoolbook, catalogued in our system as <code>Latin/English</code>, measured at 93%
           English and 91% Latin.
         </p>
@@ -177,7 +177,7 @@ export default function TwoCopiesTwoLanguagesPage() {
           <code>&ldquo;Latin/English&rdquo;</code> as one opaque token, matched it against
           neither Latin nor English, and concluded the record disagreed with the book. Every one
           of the contradictions in that first slice was this. It turns out 96 of our 229
-          distinct language values are already compound strings &mdash; cataloguers have been
+          distinct language values are already compound strings: cataloguers have been
           working around the single-value field by hand for years, writing{' '}
           <code>&ldquo;Hebrew and Aramaic&rdquo;</code> into a box that was only ever meant to
           hold one word.
@@ -190,8 +190,8 @@ export default function TwoCopiesTwoLanguagesPage() {
           would have been a good number to publish.
         </p>
         <p className="text-secondary leading-relaxed mb-6">
-          Sorted by frequency, the largest single group &mdash;{' '}
-          <strong>2,423 books, 38% of the entire finding</strong> &mdash; was
+          Sorted by frequency, the largest single group (
+          <strong>2,423 books, 38% of the entire finding</strong>) was
           &ldquo;Chinese&nbsp;+&nbsp;Classical Chinese.&rdquo;
         </p>
         <p className="text-secondary leading-relaxed mb-6">
@@ -202,9 +202,9 @@ export default function TwoCopiesTwoLanguagesPage() {
           finding was an artifact of the instrument, and it was more than a third of the result.
         </p>
         <p className="text-secondary leading-relaxed mb-6">
-          After teaching the comparison about language families &mdash; historical stages stay
+          After teaching the comparison about language families (historical stages stay
           distinct as catalogue values, collapse when asking &ldquo;is this book
-          bilingual?&rdquo; &mdash; the number fell to <strong>3,822</strong>. Still a great deal
+          bilingual?&rdquo;), the number fell to <strong>3,822</strong>. Still a great deal
           of unrecorded bilingualism. Just not the number we nearly published.
         </p>
 
@@ -213,8 +213,8 @@ export default function TwoCopiesTwoLanguagesPage() {
         </h2>
         <p className="text-secondary leading-relaxed mb-6">
           Twice in one afternoon, the headline finding was the measuring instrument. Both times
-          the output looked exactly like a data problem &mdash; a specific, plausible, countable
-          defect in the corpus &mdash; and both times the defect was in the comparison.
+          the output looked exactly like a data problem (a specific, plausible, countable
+          defect in the corpus), and both times the defect was in the comparison.
         </p>
         <p className="text-secondary leading-relaxed mb-6">
           What makes this catchable is that <strong>an artifact is systematic, so it clumps</strong>.
@@ -236,7 +236,7 @@ export default function TwoCopiesTwoLanguagesPage() {
           The corrected run still flags 1,014 books whose pages appear to be in a different
           language from their catalogue entry, and the largest group there deserves the same
           scepticism. It is <strong>196 books catalogued Korean whose pages are Classical
-          Chinese</strong> &mdash; royal protocols of the Joseon court, Buddhist ritual manuals.
+          Chinese</strong>: royal protocols of the Joseon court, Buddhist ritual manuals.
         </p>
         <p className="text-secondary leading-relaxed mb-6">
           Those records are not wrong either. Korean scholarly and official writing was done in
@@ -248,7 +248,7 @@ export default function TwoCopiesTwoLanguagesPage() {
         </p>
         <p className="text-secondary leading-relaxed mb-6">
           Which is the strongest argument for the list. Not that the old entries were mistakes
-          &mdash; almost none of them were &mdash; but that a single value forced a true thing
+          (almost none of them were), but that a single value forced a true thing
           and another true thing to compete for one slot.
         </p>
 
@@ -261,7 +261,7 @@ export default function TwoCopiesTwoLanguagesPage() {
         </p>
         <p className="text-secondary leading-relaxed mb-6">
           Inside the bilingual group there are two distinguishable kinds of book. About 1,643
-          have the second language on 40% of pages or more &mdash; facing-page editions, the
+          have the second language on 40% of pages or more: facing-page editions, the
           Lascaris shape. About 1,571 sit between 10% and 25%, which is the shape of a treatise
           in one language quoting steadily in another: German alchemical works quoting Latin,
           Latin theology quoting Greek and Hebrew. Those are genuinely different books and no
@@ -272,14 +272,14 @@ export default function TwoCopiesTwoLanguagesPage() {
           One more group is worth naming: 64 books catalogued as Greek whose pages are 99&ndash;100%
           Latin. Commandino&rsquo;s Hero of Alexandria, Vizzani&rsquo;s Ocellus Lucanus, a
           Hierocles. These are Renaissance Latin translations shelved under the language of the
-          original &mdash; a Latin book presenting itself as a Greek one. We had suspected the
+          original: a Latin book presenting itself as a Greek one. We had suspected the
           pattern for a month without being able to name a single instance. Now there is a list.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Nothing has been changed yet</h2>
         <p className="text-secondary leading-relaxed mb-6">
           The detector writes nothing. It produces a report, and the switch that would let it
-          edit the catalogue does not exist &mdash; running it with that flag exits with an
+          edit the catalogue does not exist; running it with that flag exits with an
           error, on purpose. Given that its first two versions were confidently wrong in ways
           that took a human eye to catch, letting the third version rewrite a hundred thousand
           records unattended would be an odd conclusion to draw.

@@ -1,0 +1,144 @@
+{
+  "2026-10-02-translation-prompt-v14-ab-5305.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 107,
+    "verdict": "v14 prompt fails its rule: judged invention 38.3% vs 47.7% (p 0.13, needs <0.10) and controls breach +12 pp; it halves page-boundary invention; Tibetan leaf lines unsupported.",
+    "status": "rejected",
+    "decision": "Not flipped: v14 failed its rule; its seam items re-tested alone also failed (2026-10-03-translation-seam-confirm-5305.md)",
+    "superseded_by": null, "issue": [5305, 4523]
+  },
+  "2026-10-02-what-the-judge-calls-invention-5274.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 45, "n_pages": 45,
+    "verdict": "Of 45 pages the audit judge flagged for invention, 21 are added notes (Flash 17 vs Lite 4), 14 page-boundary text and only 6 fabricated fill of unreadable source.",
+    "status": "informational", "decision": null,
+    "superseded_by": null, "issue": [5274, 5575, 5606]
+  },
+  "2026-10-03-folio-markers-5678.md": {
+    "stage": "translation", "measure": "judged", "languages": ["bo"], "scripts": ["Tibt"], "canons": ["derge-tengyur"],
+    "n_books": 3, "n_pages": 60,
+    "verdict": "Folio markers put Tengyur page turns where the source turns: median placement error 0.51% vs 1.02% served; 3 real misplacements in 26 turns read by eye.",
+    "status": "rejected",
+    "decision": "Not adopted: TRANSLATE_FOLIO_MARKERS stays off (#5682); the Tengyur draft runs one page per request instead (PR #5717)",
+    "superseded_by": null, "issue": [5678, 5497]
+  },
+  "2026-10-03-folio-positional-parse-5678.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": ["Latn"], "canons": [],
+    "n_books": 120, "n_pages": null,
+    "verdict": "Reading folio markers by position cuts parse failures 17 to 1 (Lite) and 11 to 0 (Flash); real seam defects per 100 breaks fall 28 to 15 and 18 to 8.",
+    "status": "informational",
+    "decision": "Positional parser merged into the lane code (#5719); TRANSLATE_FOLIO_MARKERS flag stays off",
+    "superseded_by": null, "issue": 5678
+  },
+  "2026-10-03-greek-served-english-vs-published-translations-5695-t2.md": {
+    "stage": "translation", "measure": "judged_vs_reference", "languages": ["grc"], "scripts": ["Grek"], "canons": [],
+    "n_books": 75, "n_pages": 75,
+    "verdict": "Served Greek English scores 3.64/5 against published translations (manuscripts 2.54); OCR misread causes 16 of 22 low pages; Flash beats Lite by +0.32.",
+    "status": "adopted",
+    "decision": "Greek translation routes to Flash (PR #5740); Greek MSS and 1450-1599 print gated on OCR trust (#5761)",
+    "superseded_by": null, "issue": [5695, 5722]
+  },
+  "2026-10-03-later-the-second-open-engine-olmocr-2-7b-fp8-5660.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["en", "la", "de", "grc"], "scripts": ["Latn", "Grek"], "canons": [],
+    "n_books": null, "n_pages": 383,
+    "verdict": "olmOCR-2-7B-FP8 beats flash-lite on English 1600-1699 (CER 0.036 vs 0.053, routes to box) but keeps lite elsewhere; Greek catastrophic on 55 of 114 pages.",
+    "status": "undecided", "decision": null,
+    "superseded_by": null, "issue": 5660
+  },
+  "2026-10-03-note-fact-check-lane-stage-3-5647.md": {
+    "stage": "translation", "measure": "agreement", "languages": ["bo"], "scripts": ["Tibt"], "canons": ["tibetan"],
+    "n_books": null, "n_pages": null,
+    "verdict": "Grounded Gemini verifier caught 48 of 49 planted seeds but only 4 of 15 known real note errors; 3 of its 11 'wrong' verdicts held; $22.62 for 3 repairs.",
+    "status": "rejected",
+    "decision": "Not scaled as a corpus lane; reseed from real error shapes if retried; 9 notes repaired (DECISIONS.md)",
+    "superseded_by": null, "issue": [5647, 5624]
+  },
+  "2026-10-03-ocr-trust-gate-strata-and-page-signal-5700.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["grc", "fa", "la"], "scripts": ["Grek", "Arab", "Latn"], "canons": [],
+    "n_books": null, "n_pages": 135,
+    "verdict": "10,005 untranslated pages in 703 books sit in the bad-OCR strata; no cheap page signal reaches precision 0.8 (best: Greek dictionary miss P 0.80, R 0.24).",
+    "status": "rejected",
+    "decision": "No page-level gate; the per-stratum OCR trust gate at every translation enrol was merged instead (#5761)",
+    "superseded_by": null, "issue": [5700, 5695]
+  },
+  "2026-10-03-ocr-v20-tags-4195.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 275,
+    "verdict": "v20 tag wording does not beat v19.1: page-number exact .865 in every arm, language match unchanged, show-through 9 better and 10 worse of 69.",
+    "status": "rejected",
+    "decision": "Not adopted; v19.1 stays the OCR prompt (PR #5681)",
+    "superseded_by": null, "issue": 4195
+  },
+  "2026-10-03-open-engine-print-5660.md": {
+    "stage": "ocr", "measure": "accuracy", "languages": ["la", "de", "en", "grc"], "scripts": ["Latn", "Grek"], "canons": [],
+    "n_books": null, "n_pages": 383,
+    "verdict": "PaddleOCR-VL-1.6 routes no print cell to the box: worse than flash-lite on Latin, German and early English, catastrophic on Greek print (58 of 114).",
+    "status": "rejected",
+    "decision": "Latin-script and Greek print backlog stays on flash-lite; no routing change (DECISIONS.md, #5660)",
+    "superseded_by": null, "issue": 5660
+  },
+  "2026-10-03-printed-page-fit-4291.md": {
+    "stage": "metadata", "measure": "judged", "languages": [], "scripts": [], "canons": [],
+    "n_books": 20, "n_pages": 20,
+    "verdict": "A per-book fit of OCR page numbers labels 51.5% of visible OCR pages (3.24M of 6.29M) with a printed page; 20 of 20 correct on an image-read control.",
+    "status": "adopted",
+    "decision": "pages.printed_page backfilled (PR #5687); citations cite the printed page (PR #5688)",
+    "superseded_by": null, "issue": 4291
+  },
+  "2026-10-03-quality-census-backfill-sizes-5700.md": {
+    "stage": "translation", "measure": "none", "languages": [], "scripts": [], "canons": [],
+    "n_books": 21411, "n_pages": 21411,
+    "verdict": "A deterministic $0 cleanup (A2) would touch about 479K served pages (9.8%); off-page original: notes about 173K; reader-visible markup leaks about 22K.",
+    "status": "informational",
+    "decision": "A2 cleanup approved by Derek 2026-10-04 and applied (2026-10-04-a2-cleanup-applied-5700.md)",
+    "superseded_by": null, "issue": 5700
+  },
+  "2026-10-03-reference-free-reversal-detectors-5695.md": {
+    "stage": "translation", "measure": "agreement", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 150,
+    "verdict": "No reference-free screen works: the best detector (D3, Flash-Lite contradiction check) finds 83% of judged reversals but flags half of all pages at 18% precision.",
+    "status": "rejected",
+    "decision": "Not used as a library screen; D3 as a QA sampler and a Latin negation hold-out were proposed, not implemented",
+    "superseded_by": null, "issue": 5695
+  },
+  "2026-10-03-seam-ab-markers-5678.md": {
+    "stage": "translation", "measure": "judged", "languages": [], "scripts": ["Latn"], "canons": [],
+    "n_books": 120, "n_pages": null,
+    "verdict": "Registered rule unresolved (literal marker parse failed); read positionally, seam defects per 100 breaks: Lite 21/26, Lite+markers 15, Flash+markers 8.",
+    "status": "superseded",
+    "decision": "Flag stays off; the confirmatory run found markers NO, attribution MODEL",
+    "superseded_by": "2026-10-04-seam-markers-confirm-5678.md", "issue": 5678
+  },
+  "2026-10-03-stray-script-scan-5734.md": {
+    "stage": "translation", "measure": "none", "languages": [], "scripts": [], "canons": [],
+    "n_books": null, "n_pages": 5395496,
+    "verdict": "4,913 of 5.4M English pages carry a stray script; Hangul (mostly a 그 for 'that') on 2,689, 2,677 of them from gemini-3-flash-preview, across all source languages.",
+    "status": "adopted",
+    "decision": "2,083 pages repaired; write-time stray-script guard added at every translation writer (Derek, 2026-10-03)",
+    "superseded_by": null, "issue": 5734
+  },
+  "2026-10-03-tengyur-84000-reference-ab-5497.md": {
+    "stage": "translation", "measure": "judged_vs_reference", "languages": ["bo"], "scripts": ["Tibt"], "canons": ["derge-tengyur"],
+    "n_books": null, "n_pages": 113,
+    "verdict": "Against 84000, one page per request matches the chained lane on fidelity (4.54 vs 4.48) and cuts wrong-span sides from 15 to 1 of 113; seams come from 8-page blocks.",
+    "status": "adopted",
+    "decision": "Full Tengyur draft runs one page per request, no context (PR #5717)",
+    "superseded_by": null, "issue": [5497, 5704, 5717]
+  },
+  "2026-10-03-tengyur-pilot-translation-quality-5497.md": {
+    "stage": "translation", "measure": "judged", "languages": ["bo"], "scripts": ["Tibt"], "canons": ["derge-tengyur"],
+    "n_books": 5, "n_pages": 40,
+    "verdict": "Tengyur pilot English is draft-grade: 33 of 40 sampled pages at fidelity 4+, 4 of 40 reversed, 16 of 40 seam shifts; no loops or truncation on 1,269 pages.",
+    "status": "informational",
+    "decision": "Full run approved, but on one page per request rather than the chained pilot lane (PR #5717)",
+    "superseded_by": null, "issue": [5497, 5676]
+  },
+  "2026-10-03-tengyur-quality-arms-5497.md": {
+    "stage": "translation", "measure": "judged_vs_reference", "languages": ["bo"], "scripts": ["Tibt"], "canons": ["derge-tengyur"],
+    "n_books": null, "n_pages": 113,
+    "verdict": "No lever beats the B-vs-B noise floor (+0.093): glossary raises both-judge reversals 2 to 7, thinking doubles omissions; only Opus gains (+0.5 fidelity on 40 pages).",
+    "status": "rejected",
+    "decision": "Adopt no lever; the full Tengyur runs arm B as is (PR #5713)",
+    "superseded_by": null, "issue": [5497, 5713]
+  }
+}

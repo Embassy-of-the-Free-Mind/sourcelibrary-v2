@@ -3,16 +3,16 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'The Deletion: How Claude Code accidentally deleted 4,758 books — Research Notes — Source Library',
-  description: 'A postmortem of the afternoon a Claude Code session in one of my ten open terminals hard-deleted nearly 5,000 books from production. With primary sources — the actual prompts and the actual postmortem.',
+  title: 'The Deletion: How Claude Code accidentally deleted 4,758 books | Research Notes | Source Library',
+  description: 'A postmortem of the afternoon a Claude Code session in one of my ten open terminals hard-deleted nearly 5,000 books from production. With primary sources: the actual prompts and the actual postmortem.',
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'The Deletion: How Claude Code accidentally deleted 4,758 books',
     description: 'A postmortem of the afternoon a Claude Code session in one of my ten open terminals hard-deleted nearly 5,000 books from production.',
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
   alternates: {
     canonical: '/blog/the-deletion',
@@ -55,7 +55,7 @@ export default function TheDeletionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Here is exactly how it happened, what the recovery looked like, and what we learned. I&rsquo;m writing this with primary sources &mdash; the actual prompts, the actual postmortem, the actual sessions still on disk &mdash; because I think the failure mode is going to be common, and it&rsquo;s worth seeing it close.
+          Here is exactly how it happened, what the recovery looked like, and what we learned. I&rsquo;m writing this with primary sources (the actual prompts, the actual postmortem, the actual sessions still on disk) because I think the failure mode is going to be common, and it&rsquo;s worth seeing it close.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -63,7 +63,7 @@ export default function TheDeletionPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library has about 26,000 visible books &mdash; early modern printed editions, manuscripts, historical scientific works, illustrated artworks. It&rsquo;s powered by MongoDB Atlas, a Hetzner pipeline that runs Gemini for OCR and translation, and a small set of bespoke importers for fourteen digital archives (Internet Archive, Gallica, MDZ Munich, Wellcome, Bodleian, Vatican, e-rara, and so on).
+          Source Library has about 26,000 visible books: early modern printed editions, manuscripts, historical scientific works, illustrated artworks. It&rsquo;s powered by MongoDB Atlas, a Hetzner pipeline that runs Gemini for OCR and translation, and a small set of bespoke importers for fourteen digital archives (Internet Archive, Gallica, MDZ Munich, Wellcome, Bodleian, Vatican, e-rara, and so on).
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -112,7 +112,7 @@ export default function TheDeletionPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          While the BSB import was running, I had <strong>another</strong> Claude Code session open in a different tab. The exact reconstruction of what that session was doing is fuzzier &mdash; there were nine candidates &mdash; but at some point that day, in some other terminal, Claude wrote a cleanup script.
+          While the BSB import was running, I had <strong>another</strong> Claude Code session open in a different tab. The exact reconstruction of what that session was doing is fuzzier (there were nine candidates), but at some point that day, in some other terminal, Claude wrote a cleanup script.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -133,7 +133,7 @@ export default function TheDeletionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The cleanup script didn&rsquo;t go through the soft-delete API. It called <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">deleteMany</code> directly. The books were gone &mdash; not in <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">deleted_books</code>, not in the warehouse, not recoverable through the normal restore endpoint.
+          The cleanup script didn&rsquo;t go through the soft-delete API. It called <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">deleteMany</code> directly. The books were gone: not in <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">deleted_books</code>, not in the warehouse, not recoverable through the normal restore endpoint.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -151,7 +151,7 @@ export default function TheDeletionPage() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6">
-          That prompt &mdash; &ldquo;check if supabase has the missing books&rdquo; &mdash; was the moment I realized something was wrong. We use Supabase as a denormalized read replica for fast catalog queries. If the live MongoDB count and the Supabase count didn&rsquo;t match, that was a real signal.
+          That prompt (&ldquo;check if supabase has the missing books&rdquo;) was the moment I realized something was wrong. We use Supabase as a denormalized read replica for fast catalog queries. If the live MongoDB count and the Supabase count didn&rsquo;t match, that was a real signal.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -165,7 +165,7 @@ Supabase books_catalog:  12,415
 Delta (published - supabase):  -5,594`}</code></pre>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Supabase had <strong>5,594 more published books</strong> than MongoDB. That&rsquo;s not possible unless something had recently been deleted from MongoDB without the corresponding Supabase deletion (which we don&rsquo;t do anyway &mdash; Supabase only mirrors live, not deletes).
+          Supabase had <strong>5,594 more published books</strong> than MongoDB. That&rsquo;s not possible unless something had recently been deleted from MongoDB without the corresponding Supabase deletion (which we don&rsquo;t do anyway; Supabase only mirrors live, not deletes).
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -182,7 +182,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The warehouse &mdash; our archive of older imports &mdash; had zero of them, because they were all <em>new</em> imports from the day. The pre-import drafts had been deleted before they could be promoted to published, and there was nothing to fall back to.
+          The warehouse (our archive of older imports) had zero of them, because they were all <em>new</em> imports from the day. The pre-import drafts had been deleted before they could be promoted to published, and there was nothing to fall back to.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -212,7 +212,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6">
-          This was the right call. <strong>Atlas Point-In-Time Recovery (PITR) would have given us the books back, but at the cost of rolling back six hours of other pipeline work</strong> &mdash; OCR completions, translation updates, page revisions across the rest of the active corpus. Re-import was surgical.
+          This was the right call. <strong>Atlas Point-In-Time Recovery (PITR) would have given us the books back, but at the cost of rolling back six hours of other pipeline work</strong>: OCR completions, translation updates, page revisions across the rest of the active corpus. Re-import was surgical.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -228,23 +228,23 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>The books were never original to us.</strong> Source Library is a catalog over public-domain scans hosted at Internet Archive, the Bavarian State Library, the Bibliothèque nationale de France, Wellcome, e-rara, the Vatican, and ten others. The work we&rsquo;d done on top of those scans &mdash; page splits, OCR, translations, cross-references, classifications, embeddings &mdash; that is original to us, and a lot of it was lost. But the underlying <em>books</em> were never going anywhere. They sit on someone else&rsquo;s server. We can always re-fetch. If we had been operating on documents that only existed in our database, this would have been a permanent loss.
+          <strong>The books were never original to us.</strong> Source Library is a catalog over public-domain scans hosted at Internet Archive, the Bavarian State Library, the Bibliothèque nationale de France, Wellcome, e-rara, the Vatican, and ten others. The work we&rsquo;d done on top of those scans (page splits, OCR, translations, cross-references, classifications, embeddings), that is original to us, and a lot of it was lost. But the underlying <em>books</em> were never going anywhere. They sit on someone else&rsquo;s server. We can always re-fetch. If we had been operating on documents that only existed in our database, this would have been a permanent loss.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>The <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">import_candidates</code> queue had survived.</strong> When we set up the BSB import the day before, the script logged every BSB identifier we <em>intended</em> to fetch into a separate collection called <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">import_candidates</code>, with <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">status: &lsquo;imported&rsquo;</code> once each was pulled. The cleanup that nuked the books didn&rsquo;t touch that queue. That collection was the recovery list &mdash; without it we would have had no record of <em>which</em> 924 books we&rsquo;d intended to import. The fact that intent was tracked separately from materialization is what made re-import surgical.
+          <strong>The <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">import_candidates</code> queue had survived.</strong> When we set up the BSB import the day before, the script logged every BSB identifier we <em>intended</em> to fetch into a separate collection called <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">import_candidates</code>, with <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">status: &lsquo;imported&rsquo;</code> once each was pulled. The cleanup that nuked the books didn&rsquo;t touch that queue. That collection was the recovery list; without it we would have had no record of <em>which</em> 924 books we&rsquo;d intended to import. The fact that intent was tracked separately from materialization is what made re-import surgical.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Atlas Point-In-Time Recovery was on as the last-resort backstop.</strong> We didn&rsquo;t end up using PITR (the blast radius of rolling back six hours of unrelated pipeline work was too high), but its presence meant &ldquo;all 4,758 gone forever, with no fallback&rdquo; was never on the table. PITR is the floor below the floor. Knowing it was there is what let us choose the cleaner recovery path with confidence &mdash; re-import &mdash; rather than panic-restoring the whole database.
+          <strong>Atlas Point-In-Time Recovery was on as the last-resort backstop.</strong> We didn&rsquo;t end up using PITR (the blast radius of rolling back six hours of unrelated pipeline work was too high), but its presence meant &ldquo;all 4,758 gone forever, with no fallback&rdquo; was never on the table. PITR is the floor below the floor. Knowing it was there is what let us choose the cleaner recovery path with confidence (re-import) rather than panic-restoring the whole database.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Of those three, <strong>only one was a decision we made</strong>: turning on PITR. The other two were luck &mdash; the books being public-domain originals, and the import queue happening to be in a separate collection. If we&rsquo;d been building a library of original scholarship instead of curating public materials, or if the import script had not bothered to log intent before fetch, we would have lost the work.
+          Of those three, <strong>only one was a decision we made</strong>: turning on PITR. The other two were luck: the books being public-domain originals, and the import queue happening to be in a separate collection. If we&rsquo;d been building a library of original scholarship instead of curating public materials, or if the import script had not bothered to log intent before fetch, we would have lost the work.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The lesson I take from this is: when running agents with write access to production, <strong>don&rsquo;t audit only your live data &mdash; audit your <em>recovery surface</em>.</strong> What do you fall back to? Is it in a different collection from the live data? Is it durable through a destructive operation? Is the floor below the floor turned on? Most teams I talk to have never inventoried this. Neither had I, until April 13. The fact that ours held up was a gift, not a system property.
+          The lesson I take from this is: when running agents with write access to production, <strong>don&rsquo;t audit only your live data; audit your <em>recovery surface</em>.</strong> What do you fall back to? Is it in a different collection from the live data? Is it durable through a destructive operation? Is the floor below the floor turned on? Most teams I talk to have never inventoried this. Neither had I, until April 13. The fact that ours held up was a gift, not a system property.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -252,7 +252,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          I want to push back on the temptation to call this a &ldquo;systemic&rdquo; failure. There are systemic contributing factors &mdash; I&rsquo;ll get to those &mdash; but the proximate cause is a behavior an attentive engineer would not have produced.
+          I want to push back on the temptation to call this a &ldquo;systemic&rdquo; failure. There are systemic contributing factors (I&rsquo;ll get to those), but the proximate cause is a behavior an attentive engineer would not have produced.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -272,11 +272,11 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          This is an AI-specific failure mode. Claude (and most LLMs trained the way Claude is) is fluent in the <em>form</em> of safety hygiene &mdash; it can write you a beautiful dry-run script &mdash; but is not reliably cautious in <em>its own work</em>. It models the operation it&rsquo;s about to run as roughly safe because it&rsquo;s syntactically similar to lots of safe operations it has seen. It does not feel the cost the way a human who has watched data disappear feels it.
+          This is an AI-specific failure mode. Claude (and most LLMs trained the way Claude is) is fluent in the <em>form</em> of safety hygiene (it can write you a beautiful dry-run script) but is not reliably cautious in <em>its own work</em>. It models the operation it&rsquo;s about to run as roughly safe because it&rsquo;s syntactically similar to lots of safe operations it has seen. It does not feel the cost the way a human who has watched data disappear feels it.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          I am not making the agent the villain here &mdash; I gave it autonomy on a destructive surface without forcing the safety scaffolding. That&rsquo;s on me. But &ldquo;an engineer would have done the same&rdquo; is not true, and pretending it is true is how this happens again.
+          I am not making the agent the villain here: I gave it autonomy on a destructive surface without forcing the safety scaffolding. That&rsquo;s on me. But &ldquo;an engineer would have done the same&rdquo; is not true, and pretending it is true is how this happens again.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -288,7 +288,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>1. Parallel sessions sharing one database.</strong> Ten Claude Code terminals can all write to the same MongoDB simultaneously. No agent can see what another agent is about to do. The CLAUDE.md document warns about this &mdash; &ldquo;branch switches in one terminal silently break all others&rdquo; &mdash; but the warning is framed around git branches, not data. There is no equivalent guard against parallel destructive writes.
+          <strong>1. Parallel sessions sharing one database.</strong> Ten Claude Code terminals can all write to the same MongoDB simultaneously. No agent can see what another agent is about to do. The CLAUDE.md document warns about this (&ldquo;branch switches in one terminal silently break all others&rdquo;), but the warning is framed around git branches, not data. There is no equivalent guard against parallel destructive writes.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -300,7 +300,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong>4. The cron that would have caught it was never installed.</strong> Inside the repo, in <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">scripts/maintenance/</code>, there is a script called <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">sync-books-catalog.mjs</code> whose job is to compare MongoDB against Supabase every hour and surface count divergences. If that cron had been running, it would have caught the deletion within 60 minutes &mdash; probably before all 4,758 books were lost. The cron sat in version-controlled <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">crontab.conf</code> but was never installed on the live Hetzner server. We had written the safety net, committed the safety net, reviewed the safety net, and not turned the safety net on.
+          <strong>4. The cron that would have caught it was never installed.</strong> Inside the repo, in <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">scripts/maintenance/</code>, there is a script called <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">sync-books-catalog.mjs</code> whose job is to compare MongoDB against Supabase every hour and surface count divergences. If that cron had been running, it would have caught the deletion within 60 minutes, probably before all 4,758 books were lost. The cron sat in version-controlled <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">crontab.conf</code> but was never installed on the live Hetzner server. We had written the safety net, committed the safety net, reviewed the safety net, and not turned the safety net on.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -338,11 +338,11 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>One: agents are not careful by default about their own destructive actions.</strong> This is the lesson I most want people to take from this. The agent will <em>write</em> you a careful script &mdash; full of dry-runs and sample-prints and confirmations &mdash; when you ask it to. It does not reliably <em>apply that carefulness to its own work</em> when it judges the operation routine. There is an asymmetry between &ldquo;what an agent recommends&rdquo; and &ldquo;what an agent does,&rdquo; and the asymmetry is in the wrong direction. An engineer who had recently watched data evaporate from their own database would have done a count, a sample, and a dry-run on instinct. The agent did not, because the agent has never watched data evaporate. The remediation is procedural, not motivational: destructive operations on production data have to be physically gated. You cannot rely on the agent to gate them.
+          <strong>One: agents are not careful by default about their own destructive actions.</strong> This is the lesson I most want people to take from this. The agent will <em>write</em> you a careful script (full of dry-runs and sample-prints and confirmations) when you ask it to. It does not reliably <em>apply that carefulness to its own work</em> when it judges the operation routine. There is an asymmetry between &ldquo;what an agent recommends&rdquo; and &ldquo;what an agent does,&rdquo; and the asymmetry is in the wrong direction. An engineer who had recently watched data evaporate from their own database would have done a count, a sample, and a dry-run on instinct. The agent did not, because the agent has never watched data evaporate. The remediation is procedural, not motivational: destructive operations on production data have to be physically gated. You cannot rely on the agent to gate them.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>Two: parallel agents share state, and that state can be destroyed faster than any individual agent can think.</strong> The mental model where each Claude Code session is a &ldquo;person at a workstation&rdquo; is wrong. It&rsquo;s more like ten interns simultaneously editing the same Google Sheet, except they can also drop the whole sheet. Sessions need shared coordination primitives &mdash; not just CLAUDE.md text but actual locks, queues, and guard endpoints that the database itself enforces.
+          <strong>Two: parallel agents share state, and that state can be destroyed faster than any individual agent can think.</strong> The mental model where each Claude Code session is a &ldquo;person at a workstation&rdquo; is wrong. It&rsquo;s more like ten interns simultaneously editing the same Google Sheet, except they can also drop the whole sheet. Sessions need shared coordination primitives: not just CLAUDE.md text but actual locks, queues, and guard endpoints that the database itself enforces.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -358,7 +358,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We lost about four hours of pipeline work to recovery and roughly $200 of re-imported OCR / translation work (most of that was Gemini calls re-running on the books that came back). No user-visible content was lost &mdash; the books were not yet published. There was no SLA breach.
+          We lost about four hours of pipeline work to recovery and roughly $200 of re-imported OCR / translation work (most of that was Gemini calls re-running on the books that came back). No user-visible content was lost; the books were not yet published. There was no SLA breach.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -370,7 +370,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A growing number of people are doing what I&rsquo;m doing &mdash; running multiple AI coding agents in parallel against production data. Most of the public discourse about this is about either the spectacular wins (&ldquo;look how much I shipped&rdquo;) or the catastrophic moralizing (&ldquo;AI cannot be trusted&rdquo;). The middle ground &mdash; actual operational failure modes you have to design against &mdash; is mostly conversation between practitioners.
+          A growing number of people are doing what I&rsquo;m doing: running multiple AI coding agents in parallel against production data. Most of the public discourse about this is about either the spectacular wins (&ldquo;look how much I shipped&rdquo;) or the catastrophic moralizing (&ldquo;AI cannot be trusted&rdquo;). The middle ground (actual operational failure modes you have to design against) is mostly conversation between practitioners.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -388,7 +388,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
           <li><strong>A divergence monitor between source-of-truth and replicas</strong>, running on a cron that you have actually installed.</li>
           <li><strong>A rule against destructive operations on status fields alone</strong>, baked into the agent&rsquo;s standing instructions.</li>
           <li><strong>An awareness that &ldquo;draft hidden&rdquo; is sometimes a transient state of an <em>active</em> operation</strong>, not garbage to clean up.</li>
-          <li><strong>Memory entries written with the precise, audited number</strong>, not the rounded-for-the-PR-title number &mdash; because the next agent will read them as ground truth.</li>
+          <li><strong>Memory entries written with the precise, audited number</strong>, not the rounded-for-the-PR-title number, because the next agent will read them as ground truth.</li>
         </ol>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -400,7 +400,7 @@ Delta (published - supabase):  -5,594`}</code></pre>
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <em>&mdash; Derek</em>
+          <em>Derek</em>
         </p>
 
       </article>

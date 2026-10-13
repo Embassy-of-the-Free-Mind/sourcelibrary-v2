@@ -139,8 +139,8 @@ export default async function EsCollectionsPage() {
           <span className="text-sm text-muted whitespace-nowrap">{nf(englishOnly.length)}</span>
         </div>
         <p className="text-sm text-muted mb-4 max-w-2xl">
-          Estas colecciones todavía no tienen ninguna edición en español. Sus libros están en su lengua original —
-          latín, griego, alemán, francés… — con traducción al inglés en muchos casos.
+          Estas colecciones todavía no tienen ninguna edición en español. Sus libros están en su lengua original
+          (latín, griego, alemán, francés…), con traducción al inglés en muchos casos.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {englishOnly.map((col) => <Card key={col.slug} col={col} />)}

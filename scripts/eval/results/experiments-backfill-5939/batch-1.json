@@ -1,0 +1,425 @@
+{
+ "2026-09-02-does-4195-s-blank-page-narrowing-work-4195.md": {
+  "header": {
+   "issue": 4195,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "Yes, on the faint-mark page — v17 classifies Kitāb al-Bulhān",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-02-does-ocr-prompt-v17-reduce-fabrication-vs-v15.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "INCONCLUSIVE, and the first-pass finding was retracted.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-02-is-a-similarity-gate-a-workable-way-to-stop.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "No. Four rounds of tuning could not get the firing rate below",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 2,
+   "verdict": "## 2026-09-03 — Bench 2 (complete): can self-hosted OCR replace Gemini on print?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (adopted, undecided)"
+  ]
+ },
+ "2026-09-03-bench-2-first-arms-superseded-by-the-entry-above.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-03 — Bench 2 first arms (superseded by the entry above)",
+   "status": "superseded",
+   "superseded_by": null,
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "superseded_by must be found by reading"
+  ]
+ },
+ "2026-09-05-a-fabrication-detector-that-needs-no-reference-track-c-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 349,
+   "verdict": "## 2026-09-05 — A fabrication detector that needs no reference (Track C, #4523)",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-05-how-wrong-is-the-ground-truth-track-b-item-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 69,
+   "verdict": "## 2026-09-05 — How wrong is the ground truth?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-11-google-cloud-vision-as-a-cheaper-ocr-lane.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 20,
+   "verdict": "No routing change. Vision is not a lane for any language here.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 1, pipeline 1, translation 0, image 0, metadata 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-11-music-can-a-vlm-read-shaker-letteral-notation-first.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "## 2026-09-11 — Music: can a VLM read Shaker letteral notation?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-11-which-languages-can-ocr-on-flash-lite-per-language-4729.md": {
+  "header": {
+   "issue": [
+    4729,
+    4735
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 20,
+   "n_pages": 20,
+   "verdict": "## 2026-09-11 (logged 2026-09-25) — Which languages can OCR on flash-lite?",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-09-12-can-flash-lite-text-only-cleanup-rescue-rejected-internet.md": {
+  "header": {
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 741,
+   "n_pages": 6,
+   "verdict": "Median agreement before → after: ≥0.90 band 0.916 → 0.939; 0.85–0.90 band",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-12-does-translation-prompt-v15-make-original-notes-real-3825.md": {
+  "header": {
+   "issue": 3825,
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 320,
+   "verdict": "Criteria 1–3, 5 pass: Δ +28.9 pp (CI [+14.2, +44.5]; recomputed",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-09-13-how-good-is-the-ia-ocr-text-we-actually-4780.md": {
+  "header": {
+   "issue": [
+    4780,
+    4763
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 742,
+   "n_pages": 1800,
+   "verdict": "Decision: per-language cutoffs (English/French 0.80; Latin/German/Italian 0.85;",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-09-13-which-model-should-translate-classical-chinese-preview-pages-n.md": {
+  "header": {
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "lzh"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [],
+   "n_books": 60,
+   "n_pages": 60,
+   "verdict": "Decision rule (fixed now).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (rejected, undecided)"
+  ]
+ },
+ "2026-09-13-which-model-should-translate-classical-chinese-preview-pages-result.md": {
+  "header": {
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "lzh"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 60,
+   "verdict": "## 2026-09-13 — Which model should translate classical Chinese?",
+   "status": "superseded",
+   "superseded_by": null,
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "superseded_by must be found by reading"
+  ]
+ },
+ "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md": {
+  "header": {
+   "stage": "translation",
+   "measure": "judged",
+   "languages": [
+    "lzh"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [],
+   "n_books": 60,
+   "n_pages": 60,
+   "verdict": "## 2026-09-14 — Which model should translate classical Chinese?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no issue number",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-15-does-any-current-specialist-ocr-engine-beat-flash-lite-4743.md": {
+  "header": {
+   "issue": [
+    4743,
+    4744,
+    4745,
+    4746
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 45,
+   "verdict": "Route cursive pre-1868 Japanese (classify first: ≈ 29 % of books) to NDL v3",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-09-15-does-gemini-3-1-flash-lite-read-early-modern-4541.md": {
+  "header": {
+   "issue": 4541,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 18,
+   "n_pages": 3766,
+   "verdict": "## 2026-09-15 — Does gemini-3.1-flash-lite read early-modern manuscripts and incunables?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ }
+}

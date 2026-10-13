@@ -1,0 +1,2392 @@
+{
+ "generated": "2026-10-06T10:26:39.716Z",
+ "issue": 5942,
+ "n_main": 40,
+ "n_scored": 40,
+ "measure": "fidelity: judged against a human reference, two blind Opus judges (#5695 harness, unchanged); mechanical: exact string counts",
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "698fb77b6b95eeda7d2d1eaf_00187",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69b21d1a429e087c6f866ee7_00452",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69a6849d7ab725b59be41319_00173",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "699062f5ef12272ffdc8e9d5_00505",
+      "op": "drop-negation",
+      "from": "is not",
+      "to": "is",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69de989b1b234a773e438e19_00234",
+      "op": "drop-negation",
+      "from": "should not",
+      "to": "should",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69905e262fd6a039938a154f_00067",
+      "op": "add-negation",
+      "from": "is ",
+      "to": "is not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "6952603cab34727b1f04647b_00194",
+      "arm": "v13-a",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69ea0f5413a685002bb8dc8a_00107",
+      "arm": "v13-plain",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69dbcc3e0f8c5edf20f484a0_00330",
+      "arm": "v13-plain",
+      "fidelity": [
+       2,
+       2
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "698fb77b6b95eeda7d2d1eaf_00187",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69b21d1a429e087c6f866ee7_00452",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69a6849d7ab725b59be41319_00173",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "699062f5ef12272ffdc8e9d5_00505",
+      "op": "drop-negation",
+      "from": "is not",
+      "to": "is",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69de989b1b234a773e438e19_00234",
+      "op": "drop-negation",
+      "from": "should not",
+      "to": "should",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69905e262fd6a039938a154f_00067",
+      "op": "add-negation",
+      "from": "is ",
+      "to": "is not ",
+      "planted_fidelity": 3,
+      "base_fidelity": 5,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "6952603cab34727b1f04647b_00194",
+      "arm": "v13-a",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69ea0f5413a685002bb8dc8a_00107",
+      "arm": "v13-plain",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69dbcc3e0f8c5edf20f484a0_00330",
+      "arm": "v13-plain",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 120,
+  "fidelity_exact": 0.85,
+  "within_1": 1,
+  "weighted_kappa": 0.847
+ },
+ "P1_fidelity": {
+  "mean": {
+   "v13-a": 4.2375,
+   "v13-b": 4.2625,
+   "v13-plain": 4.375
+  },
+  "ci": {
+   "v13-a": [
+    4.025,
+    4.45
+   ],
+   "v13-b": [
+    4.0625,
+    4.45
+   ],
+   "v13-plain": [
+    4.1625,
+    4.5875
+   ]
+  },
+  "plain_minus_v13a": {
+   "n": 40,
+   "delta": 0.1375,
+   "ci": [
+    -0.0125,
+    0.3
+   ]
+  },
+  "v13b_minus_v13a": {
+   "n": 40,
+   "delta": 0.025,
+   "ci": [
+    -0.1375,
+    0.2
+   ]
+  },
+  "margin": 0.15,
+  "ci_lower_bound_needed": -0.3,
+  "pass_mean": true,
+  "pass_ci": true,
+  "pass": true
+ },
+ "P2_reversals": {
+  "reversal_pages_either_judge": {
+   "v13-a": 6,
+   "v13-b": 3,
+   "v13-plain": 3
+  },
+  "reversal_pages_both_judges": {
+   "v13-a": 5,
+   "v13-b": 3,
+   "v13-plain": 3
+  },
+  "allowed": 7,
+  "pass": true,
+  "pages": [
+   {
+    "id": "69a6849d7ab725b59be41319_00173",
+    "lang": "Italian",
+    "v13-a": [
+     {
+      "candidate": "it can reach a state of rest before passing through all the degrees of slowness",
+      "source_or_reference": "must before coming to rest pass through every possible degree of slowness"
+     },
+     {
+      "candidate": "it can reach a state of rest before passing through all the degrees",
+      "source_or_reference": "reference: must before coming to rest pass through every possible degree of slowness"
+     }
+    ],
+    "v13-b": [],
+    "v13-plain": [
+     {
+      "candidate": "it can arrive at the state of rest before passing through all the degrees of slowness",
+      "source_or_reference": "must before coming to rest pass through every possible degree of slowness"
+     },
+     {
+      "candidate": "it can arrive at the state of rest before passing through all the degrees",
+      "source_or_reference": "reference: must before coming to rest pass through every possible degree of slowness"
+     }
+    ]
+   },
+   {
+    "id": "699062f5ef12272ffdc8e9d5_00505",
+    "lang": "Latin",
+    "v13-a": [
+     {
+      "candidate": "lest anyone think it was permitted to sacrifice to the worst demons and earthly spirits",
+      "source_or_reference": "ne quisq̈ putaret demonibus pessimis terrenisqʒ spiritibus ... ne sacrificer' eē preceptū"
+     },
+     {
+      "candidate": "lest anyone think it was permitted to sacrifice to the worst demons",
+      "source_or_reference": "ne quisq̈ putaret demonibus pessimis terrenisqʒ spiritibus ... ne sacrificer’ eē preceptū"
+     }
+    ],
+    "v13-b": [],
+    "v13-plain": []
+   },
+   {
+    "id": "69dbcc3e0f8c5edf20f484a0_00330",
+    "lang": "Latin",
+    "v13-a": [
+     {
+      "candidate": "and in this consideration he is wrong, because particulars are nothing except",
+      "source_or_reference": "in hanc confide rationem uerem est: plus quia particularia"
+     }
+    ],
+    "v13-b": [
+     {
+      "candidate": "in this way, the less universal is prior in nature, as appears manifestly in the generation",
+      "source_or_reference": "hoc modo magis et est pus et in nam quod apparet manifeste in generatione"
+     },
+     {
+      "candidate": "And in this way, the less universal is prior in nature, as appears manifestly",
+      "source_or_reference": "et hoc modo magis et est pus et in nam quod apparet manifeste in generatione"
+     }
+    ],
+    "v13-plain": []
+   },
+   {
+    "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+    "lang": "Latin",
+    "v13-a": [
+     {
+      "candidate": "Thus they even correct gentian with theriac",
+      "source_or_reference": "Sic gentianā etiā corrigūt theriacam"
+     },
+     {
+      "candidate": "they correct Quince with Scammony, or later with Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt"
+     }
+    ],
+    "v13-b": [
+     {
+      "candidate": "just as they correct Quince with Scammony, or later with Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigūt"
+     },
+     {
+      "candidate": "they correct Quince with Scammony, or later with Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt"
+     }
+    ],
+    "v13-plain": [
+     {
+      "candidate": "Thus they also \"correct\" Gentian with theriac",
+      "source_or_reference": "Sic gentianā etiā corrigūt theriacam"
+     },
+     {
+      "candidate": "they correct Quince with Scammony, or later, Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt"
+     }
+    ]
+   },
+   {
+    "id": "69aebfa4c337b1e6a4d582f3_00161",
+    "lang": "Italian",
+    "v13-a": [
+     {
+      "candidate": "namely that nature and wit do not hold the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     },
+     {
+      "candidate": "that nature and wit do not hold the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     }
+    ],
+    "v13-b": [
+     {
+      "candidate": "namely that nature and wit do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     },
+     {
+      "candidate": "that nature and wit do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     }
+    ],
+    "v13-plain": [
+     {
+      "candidate": "namely that nature and talent do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     },
+     {
+      "candidate": "that nature and talent do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     }
+    ]
+   },
+   {
+    "id": "695910f2ecb01322b3068302_00444",
+    "lang": "Spanish",
+    "v13-a": [
+     {
+      "candidate": "say that they were treated very well by the Spaniards",
+      "source_or_reference": "dize lo passã. m. co. l.s Españols. 1 era regalo p.a ell.s pregũto yo"
+     },
+     {
+      "candidate": "say that they were treated very well by the Spaniards",
+      "source_or_reference": "dize lo passã. m. co. l.s Españols (lo pasan mal: fare badly)"
+     }
+    ],
+    "v13-b": [],
+    "v13-plain": []
+   }
+  ]
+ },
+ "omission_rate": {
+  "v13-a": 0.1125,
+  "v13-b": 0.1125,
+  "v13-plain": 0.075,
+  "plain_minus_v13a": {
+   "n": 40,
+   "delta": -0.0375,
+   "ci": [
+    -0.1125,
+    0.025
+   ]
+  },
+  "v13b_minus_v13a": {
+   "n": 40,
+   "delta": 0,
+   "ci": [
+    -0.1,
+    0.1
+   ]
+  }
+ },
+ "P3_cost": {
+  "v13-a": {
+   "usd_per_page": 0.0015273250000000002,
+   "output_tokens_per_page": 603.075,
+   "output_tokens_ratio_vs_v13a": 1,
+   "cost_ratio_vs_v13a": 1,
+   "by_model": {
+    "gemini-3.1-flash-lite": {
+     "n": 40,
+     "cost_usd": 0.0015273250000000002,
+     "outputTokens": 603.075
+    }
+   }
+  },
+  "v13-b": {
+   "usd_per_page": 0.0015309249999999994,
+   "output_tokens_per_page": 605.475,
+   "output_tokens_ratio_vs_v13a": 1.0039796045268001,
+   "cost_ratio_vs_v13a": 1.002357062183883,
+   "by_model": {
+    "gemini-3.1-flash-lite": {
+     "n": 40,
+     "cost_usd": 0.0015309249999999994,
+     "outputTokens": 605.475
+    }
+   }
+  },
+  "v13-plain": {
+   "usd_per_page": 0.0014159874999999998,
+   "output_tokens_per_page": 581.35,
+   "output_tokens_ratio_vs_v13a": 0.9639762881896945,
+   "cost_ratio_vs_v13a": 0.9271029414171833,
+   "by_model": {
+    "gemini-3.1-flash-lite": {
+     "n": 40,
+     "cost_usd": 0.0014159874999999998,
+     "outputTokens": 581.35
+    }
+   }
+  }
+ },
+ "P4_leakage": {
+  "note_or_gloss_left_in_plain": {
+   "notes": 0,
+   "gloss": 0,
+   "source_printed_gloss": 1,
+   "source_printed_note": 0
+  },
+  "loops": {
+   "v13-a": 0,
+   "v13-b": 0,
+   "v13-plain": 0
+  },
+  "body_length_as_preregistered": {
+   "v13b_gap": -0.006257592775116283,
+   "plain_gap": -0.0002635982304536322,
+   "allowed_shortfall": 0.006257592775116283,
+   "pass": true
+  },
+  "body_length_translation_only": {
+   "v13b_gap": -0.004425652522389578,
+   "plain_gap": 0.006226114834647856,
+   "allowed_shortfall": 0.004425652522389578,
+   "pass": true
+  },
+  "note": "body_chars (the #5698 bodyNoNotes) drops <note> spans but keeps <gloss> definitions and, in plain, the <image-desc> text that v13 puts inside a <note>; translation_chars drops notes, glosses and image descriptions from every arm alike."
+ },
+ "brackets": {
+  "v13-a": {
+   "total": 3,
+   "with_words": 3,
+   "definition_after_term": 0,
+   "pages": 1
+  },
+  "v13-b": {
+   "total": 5,
+   "with_words": 5,
+   "definition_after_term": 0,
+   "pages": 4
+  },
+  "v13-plain": {
+   "total": 11,
+   "with_words": 10,
+   "definition_after_term": 2,
+   "pages": 6
+  }
+ },
+ "by_judge": {
+  "j1": {
+   "v13-a": 4.225,
+   "v13-b": 4.25,
+   "v13-plain": 4.35,
+   "plain_minus_v13a": {
+    "n": 40,
+    "delta": 0.125,
+    "ci": [
+     -0.05,
+     0.3
+    ]
+   }
+  },
+  "j2": {
+   "v13-a": 4.25,
+   "v13-b": 4.275,
+   "v13-plain": 4.4,
+   "plain_minus_v13a": {
+    "n": 40,
+    "delta": 0.15,
+    "ci": [
+     -0.025,
+     0.325
+    ]
+   }
+  }
+ },
+ "by_model": {
+  "gemini-3.1-flash-lite": {
+   "n": 40,
+   "v13-a": 4.2375,
+   "v13-b": 4.2625,
+   "v13-plain": 4.375,
+   "plain_minus_v13a": {
+    "n": 40,
+    "delta": 0.1375,
+    "ci": [
+     -0.0125,
+     0.3
+    ]
+   }
+  }
+ },
+ "by_lang": {
+  "Latin": {
+   "n": 16,
+   "v13-a": 4.09375,
+   "v13-b": 4.0625,
+   "v13-plain": 4.3125
+  },
+  "Greek": {
+   "n": 0,
+   "v13-a": null,
+   "v13-b": null,
+   "v13-plain": null
+  },
+  "vernaculars": {
+   "n": 21,
+   "v13-a": 4.380952380952381,
+   "v13-b": 4.380952380952381,
+   "v13-plain": 4.428571428571429
+  },
+  "Hebrew/Aramaic": {
+   "n": 0,
+   "v13-a": null,
+   "v13-b": null,
+   "v13-plain": null
+  },
+  "Arabic/Persian": {
+   "n": 0,
+   "v13-a": null,
+   "v13-b": null,
+   "v13-plain": null
+  },
+  "Sanskrit/Pali": {
+   "n": 0,
+   "v13-a": null,
+   "v13-b": null,
+   "v13-plain": null
+  },
+  "Chinese": {
+   "n": 0,
+   "v13-a": null,
+   "v13-b": null,
+   "v13-plain": null
+  },
+  "Spanish": {
+   "n": 3,
+   "v13-a": 4,
+   "v13-b": 4.5,
+   "v13-plain": 4.333333333333333
+  }
+ },
+ "decision": {
+  "P1": true,
+  "P2": true,
+  "rule": "P1 and P2 pass: recommend note-free translation plus a separate, on-demand notes step"
+ },
+ "per_page": [
+  {
+   "id": "698fb77b6b95eeda7d2d1eaf_00187",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b21d1a429e087c6f866ee7_00452",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69a6849d7ab725b59be41319_00173",
+   "lang": "Italian",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "it can reach a state of rest before passing through all the degrees of slowness",
+      "source_or_reference": "must before coming to rest pass through every possible degree of slowness"
+     },
+     {
+      "candidate": "it can reach a state of rest before passing through all the degrees",
+      "source_or_reference": "reference: must before coming to rest pass through every possible degree of slowness"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "it can arrive at the state of rest before passing through all the degrees of slowness",
+      "source_or_reference": "must before coming to rest pass through every possible degree of slowness"
+     },
+     {
+      "candidate": "it can arrive at the state of rest before passing through all the degrees",
+      "source_or_reference": "reference: must before coming to rest pass through every possible degree of slowness"
+     }
+    ]
+   }
+  },
+  {
+   "id": "699062f5ef12272ffdc8e9d5_00505",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0.5,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "lest anyone think it was permitted to sacrifice to the worst demons and earthly spirits",
+      "source_or_reference": "ne quisq̈ putaret demonibus pessimis terrenisqʒ spiritibus ... ne sacrificer' eē preceptū"
+     },
+     {
+      "candidate": "lest anyone think it was permitted to sacrifice to the worst demons",
+      "source_or_reference": "ne quisq̈ putaret demonibus pessimis terrenisqʒ spiritibus ... ne sacrificer’ eē preceptū"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 3.5,
+    "by_judge": {
+     "j1": 3,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69de989b1b234a773e438e19_00234",
+   "lang": "Italian",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69905e262fd6a039938a154f_00067",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6952603cab34727b1f04647b_00194",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69ea0f5413a685002bb8dc8a_00107",
+   "lang": "Spanish",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69dbcc3e0f8c5edf20f484a0_00330",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 1,
+    "reversal_any": 1,
+    "reversal_both": 0,
+    "reversal_quotes": [
+     {
+      "candidate": "and in this consideration he is wrong, because particulars are nothing except",
+      "source_or_reference": "in hanc confide rationem uerem est: plus quia particularia"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 2,
+    "by_judge": {
+     "j1": 2,
+     "j2": 2
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "in this way, the less universal is prior in nature, as appears manifestly in the generation",
+      "source_or_reference": "hoc modo magis et est pus et in nam quod apparet manifeste in generatione"
+     },
+     {
+      "candidate": "And in this way, the less universal is prior in nature, as appears manifestly",
+      "source_or_reference": "et hoc modo magis et est pus et in nam quod apparet manifeste in generatione"
+     }
+    ]
+   },
+   "v13-plain": {
+    "fidelity": 2.5,
+    "by_judge": {
+     "j1": 2,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b6fb4a3c7947b468d7aa52_00309",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b6e791f8a84d859cde1de2_00473",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69529509b184004c526a2793_00237",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "Thus they even correct gentian with theriac",
+      "source_or_reference": "Sic gentianā etiā corrigūt theriacam"
+     },
+     {
+      "candidate": "they correct Quince with Scammony, or later with Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "just as they correct Quince with Scammony, or later with Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigūt"
+     },
+     {
+      "candidate": "they correct Quince with Scammony, or later with Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt"
+     }
+    ]
+   },
+   "v13-plain": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "Thus they also \"correct\" Gentian with theriac",
+      "source_or_reference": "Sic gentianā etiā corrigūt theriacam"
+     },
+     {
+      "candidate": "they correct Quince with Scammony, or later, Diagridium",
+      "source_or_reference": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt"
+     }
+    ]
+   }
+  },
+  {
+   "id": "69b21c6c429e087c6f8646f6_00223",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 3.5,
+    "by_judge": {
+     "j1": 3,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "695262d8ab34727b1f046ade_00167",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69ac7ee520878c5c9ba51e75_00098",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "695594f97bd6d2cd1d61e685_00331",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6a2198155ce215cb9ac70f53_00209",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "694bf8d2343422769f237558_00277",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b4d643853c26e0d15603c8_00136",
+   "lang": "Latin",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 1,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6954347b1479a63c11089b35_00091",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6a22d6e168f6a1498e2ffe6a_00160",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69ade6cc2fcf4ffa86cec233_00093",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b51dc947b06ecd581849ee_00128",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69ade7946a6b945bbdfa2d0a_00091",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b51dcc47b06ecd58184b91_00073",
+   "lang": "German",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69593274b91a6184ea943873_00315",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "699068a7249ce014347d715a_00159",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69593291b91a6184ea943bbe_00122",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69906485ef12272ffdc93acc_00116",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6953e58d77f38f6761bf0cfc_00123",
+   "lang": "French",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6991eac02f801130a473e424_00074",
+   "lang": "Italian",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "6a06d39b9a48d5139996355a_00151",
+   "lang": "Italian",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69aebfa4c337b1e6a4d582f3_00161",
+   "lang": "Italian",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "namely that nature and wit do not hold the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     },
+     {
+      "candidate": "that nature and wit do not hold the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "namely that nature and wit do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     },
+     {
+      "candidate": "that nature and wit do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     }
+    ]
+   },
+   "v13-plain": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "namely that nature and talent do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     },
+     {
+      "candidate": "that nature and talent do not have the primary roles",
+      "source_or_reference": "non vi nega ... che la natura, & lo ingegno non habbiano le prime parti"
+     }
+    ]
+   }
+  },
+  {
+   "id": "69b1de4ea205bd982d8285bd_00396",
+   "lang": "Dutch",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69b525ba6be60460830310a9_00065",
+   "lang": "Dutch",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0.5,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69a5d924a63a00aaae8aae3b_00105",
+   "lang": "Dutch",
+   "reference_fit": {
+    "j1": "offset",
+    "j2": "offset"
+   },
+   "v13-a": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "69e7518010ee9075bcdcdaf0_00223",
+   "lang": "Spanish",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-b": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 4,
+    "by_judge": {
+     "j1": 4,
+     "j2": 4
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  },
+  {
+   "id": "695910f2ecb01322b3068302_00444",
+   "lang": "Spanish",
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "v13-a": {
+    "fidelity": 3,
+    "by_judge": {
+     "j1": 3,
+     "j2": 3
+    },
+    "omission": 0,
+    "reversal_any": 1,
+    "reversal_both": 1,
+    "reversal_quotes": [
+     {
+      "candidate": "say that they were treated very well by the Spaniards",
+      "source_or_reference": "dize lo passã. m. co. l.s Españols. 1 era regalo p.a ell.s pregũto yo"
+     },
+     {
+      "candidate": "say that they were treated very well by the Spaniards",
+      "source_or_reference": "dize lo passã. m. co. l.s Españols (lo pasan mal: fare badly)"
+     }
+    ]
+   },
+   "v13-b": {
+    "fidelity": 4.5,
+    "by_judge": {
+     "j1": 4,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   },
+   "v13-plain": {
+    "fidelity": 5,
+    "by_judge": {
+     "j1": 5,
+     "j2": 5
+    },
+    "omission": 0,
+    "reversal_any": 0,
+    "reversal_both": 0,
+    "reversal_quotes": []
+   }
+  }
+ ]
+}

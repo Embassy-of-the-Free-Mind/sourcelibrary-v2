@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg6",
+  "edition": "Tragoedia alia nova mercator seu iudicium. — s.l.: 1590.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a906bf4336010794b0d2ab0",
+  "page_number": 56,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 59361,
+    "to_char": 60518,
+    "overlap": 0.444,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-3)",
+    "at": "2026-10-06T10:05:28.759Z",
+    "note": "verse drama; ref misses only the first line ('CON. At tua opera immersus... MER. Heu me'); spelling normalised",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      56,
+      57,
+      58
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.530Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "1a234cd0705e19d38fd8c919454db5f63d49c68a161f22e2bae360bc45b053a0",
+  "unit": {
+    "chars": 1157
+  }
+}

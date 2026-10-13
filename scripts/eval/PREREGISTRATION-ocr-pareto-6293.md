@@ -167,3 +167,50 @@ and the experiment file says where nudged rows score differently relative to lit
 **Scoring.** Amendment 1's instruments and its one added rule (an unalignable reference-tier page from a CLI arm is a
 failed read at CER 1.0). Cost axis: `cli-cost.mjs` with the arm's model price from `model-pricing.mjs` (3.7 and 3.6
 Flash are priced as 3.8, $0.75 / $3.75 per 1M), r_out per chart on the capped pages. $0 billed.
+
+## Amendment 3 (2026-10-09, job `cli-effort-6293`): is the CLI gap on Latin and Early English the model, or the route and its effort level?
+
+Committed and pushed 2026-10-09 before any call of these arms. Everything in Amendments 1 and 2 holds except what this
+section changes.
+
+**Question (Derek, 2026-10-09).** Through the CLI at "low", 3.8 Flash reads below 3 Flash (API) on Latin print (median
+CER 0.083 against 0.056) and far below it on Early English (0.177 against 0.035), and 3.7 CLI is 0.043 on Early English.
+#5924 had 3.8 Flash on the API tied best on Latin. Is the gap the model, or the CLI route and its effort level?
+
+**Arms.** Both through `agy -p --mode plan --print-timeout 180s --output-format json`, never auto-approve, one page
+per call, at most 2 attempts with the one-turn "no commands" nudge as before (`scripts/eval/run-cli-arm.py
+--print-timeout 180`), up to 4 image calls in parallel, the two arms interleaved in time (each at 2 parallel, started
+together) so neither arm owns a quieter hour.
+- **C38H:** `gemini-3.8-flash-high`, engine id `gemini-3.8-flash-high+antigravity-cli`. New.
+- **C38L-rep:** `gemini-3.8-flash-low`, engine id `gemini-3.8-flash+antigravity-cli-rep`. A fresh repeat of the stored
+  C38 read (A-vs-A noise floor of the route). The only protocol difference from the stored read is the print timeout
+  (180 s, was 120 s); the stored median call was 9 s, so it should rarely bind.
+
+**Pages.** The Latin (147 frozen, 143 after #6304's drops) and Early English (44) most-pages sets in `pages.json`, 191
+requests, the same sealed JPEGs and the same request per stratum, byte for byte (`requests.jsonl` of `cli-queue-6293`,
+filtered to those uids). No other chart.
+
+**Scoring.** Unchanged instruments: `import-cli-arm.py` into a copy of the bench, `benchmark-score.mjs`, rows from
+`build-ocr-pareto.mjs --dump-rows`, so every row rule (#6304 drops, a CLI failed read = CER 1.0) is the chart's own.
+Replies are scored **as returned**; the plan note stripped is a sensitivity only, as in Amendment 2.
+
+**Reported per panel.** Median CER per arm with page-bootstrap 95 % CI. Paired, on the pages both answered: median Δ CER
+(arm − other) with by-page bootstrap 95 % CI (2,000 resamples, seeded as `analyze-cli-tiers.py`), W/L/T and sign-test p,
+for C38H vs stored C38, C38H vs 3 Flash, C38H vs lite, C38L-rep vs stored C38. Mean Δ with its bootstrap CI as a
+secondary line (Early English failures are heavy-tailed). Per arm: nudged share, plan-note share, refusals (empty
+safety-filter reads), empties after 2 attempts. For Early English, three pages where stored C38 scores badly, read
+against the page image and labelled read-from-image, naming the cause (preamble, modernised spelling, truncation, other).
+
+**Decision rule, per panel.**
+- **Route/effort, not the model:** C38L-rep reproduces C38 (its paired median Δ CI against stored C38 contains 0) **and**
+  C38H closes the gap (its paired median Δ CI against 3 Flash contains 0, or is below 0).
+- **The model (at either effort):** C38L-rep reproduces C38 **and** C38H's CI against 3 Flash lies wholly above 0.
+- **Run-to-run noise of the route:** C38L-rep does not reproduce C38 (CI excludes 0). Then the stored C38 point is
+  itself not a stable measure, and the effort question is answered only by C38H vs C38L-rep, reported as such.
+The verdict line names which branch each panel landed in. It is a statement about this route, these pages, this date.
+
+**Chart.** C38H is added to the Latin and Early English charts only if it read each whole set (shared-page rule, a
+refused or empty page counts as read). C38L-rep is a noise floor and is not charted as an engine.
+
+**Not run.** 3.8 Flash on the API (paid; ruled out 2026-10-08), so route and effort cannot be fully separated: a C38H
+that closes the gap shows effort is enough through this route, not that the API at low effort would also close it.

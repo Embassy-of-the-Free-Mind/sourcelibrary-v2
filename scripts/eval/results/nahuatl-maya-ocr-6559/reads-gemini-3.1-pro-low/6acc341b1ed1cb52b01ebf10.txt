@@ -1,0 +1,29 @@
+<scan-quality>good</scan-quality>
+<language>Nahuatl</language>
+<script>printed</script>
+<page-type>text</page-type>
+¶ Auh yyehuanti inqualti yn yecti yye/
+quic neltiloni. Quinmopaccano chiliz an,
+molhuiliz ynamo huantin ynan notlaçopil
+hua ynan notlaço tetlayecolticahua i huel
+annechmo tlaçoca machitique ynipampa i
+tlalticpac nin onemitico ynic namech no
+maquixtilico yn huelannechmo tlatocatique
+an nech moteotique huel pachiuh inamo
+yollo innamo teuh innamotlatocauh/
+huel annechmoneltoquitique yniniteotl
+yhuan noquichtli çan nocel çanniyo. Auh
+nopampa anquinmotlaocolilique yniz,
+qui tlamantli oniquin notenehuili. Auh
+ynaxcan nochantzinco an motlecahuizque/
+ynic ompa cemicac ammopapaquiltizque
+an tlatocatizque ynayc tzonquicaz ynamo
+papaquiliz. Ocayehuatl. Ynquitoznequi
+ompa hualmohuicaz in quintlatzontequili
+quiuh y yolque yhuan i mimicque auh ynin
+cuix pachihui in moyollo.
+¶ Auh niccauhtzine. Yniquac tiquitohua
+nic noneltoquitia i dios spiritu sancto. Quenca.
+¶ Nopiltzine tlaxicce an caonimitznohui
+li cacen teotl yyehuatl yyei perſonas quitoz/
+<vocab>Nahuatl, Dios, Spiritu Sancto, teotl, tlalticpac, personas</vocab>

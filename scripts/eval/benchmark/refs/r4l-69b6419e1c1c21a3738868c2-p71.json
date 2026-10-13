@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/gwalt2",
+  "edition": "Nabal : comoedia sacra ... desumpta ex I. Samuelis XXV. cap. - Nunc primum conscripta et aedita. — [Zuerich: Christof. Froschover, 1550?]",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6419e1c1c21a3738868c2",
+  "page_number": 71,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 66900,
+    "to_char": 68025,
+    "overlap": 0.371,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Ref matches from 'DA. Sunt salua' to 'quid sibi uelint'; catchword 'Intelliga-' only in pad.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      70,
+      71,
+      72
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.379Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "ef8a609848007c02bfc1aee82fe9651a06bf56b780b892fde165b4db5cbc12ea",
+  "unit": {
+    "chars": 1125
+  }
+}

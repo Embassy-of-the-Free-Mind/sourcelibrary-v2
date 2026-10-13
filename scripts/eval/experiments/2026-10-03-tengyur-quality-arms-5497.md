@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 113
+verdict: "No lever beats the B-vs-B noise floor (+0.093): glossary raises both-judge reversals 2 to 7, thinking doubles omissions; only Opus gains (+0.5 fidelity on 40 pages)."
+status: rejected
+decision: "Adopt no lever; the full Tengyur runs arm B as is (PR #5713)"
+superseded_by: null
+issue: [5497, 5713]
+---
 ## 2026-10-03 · Tengyur quality levers on the 84000-referenced pages: a Sanskrit parallel, a glossary, a negation check with a Pro second pass, Flash thinking, and an Opus ceiling (#5497)
 <!-- PRIOR ART: 2026-10-03-tengyur-84000-reference-ab-5497.md (PR #5704) picked arm B, one page per request with no context, and built the instrument reused here unchanged: the 113-side sample, the 84000 folio cuts, the judge rubric and the control shapes. scripts/eval/tibetan-mt-ab/ judges several candidates per item, which is the shape the packets take here. Neither tested a lever on top of B. -->
 

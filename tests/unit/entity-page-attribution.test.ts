@@ -346,6 +346,18 @@ describe('entities.books[] writer set', () => {
     expect(verifies || carriesPrecision).toBe(true);
   });
 
+  it.each(WRITERS)('%s holds a shared surname back from the bare person record', (rel) => {
+    // "Bacon" names two men; the record of that name claims one of them. A writer that does not
+    // ask puts every new bare mention back on it (#5950). Asked on the name the write is keyed
+    // on, and before the first write in the function.
+    const src = read(rel);
+    const sync = src.slice(src.search(/syncEntity = async|async function syncEntity|const addToEntityMap/));
+    const held = sync.search(/if \(isHeldSurname\((canonicalName|term), type\)\) return;/);
+    const firstWrite = sync.search(/updateOne\(|entityMap\.set\(/);
+    expect(held).toBeGreaterThan(-1);
+    expect(held).toBeLessThan(firstWrite);
+  });
+
   it.each(WRITERS.filter(w => !w.includes('batch-generate')))(
     '%s derives counters from the deduped array',
     (rel) => {

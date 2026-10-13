@@ -1,6 +1,7 @@
 import type { Db } from 'mongodb';
 import { supabaseAdmin } from '@/lib/supabase';
 import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
+import { TRANSLATABLE_PAGES_EXPR, TRANSLATED_PAGES_CAPPED_EXPR, aggregateTranslationPercent } from '@/lib/translation-completeness';
 
 /**
  * The `/admin` dashboard rollup: `system_config.dashboard_snapshot`.
@@ -65,7 +66,6 @@ export interface DashboardSnapshot {
     truncated: boolean;
   };
   invisible?: CollectionStats;
-  warehouse?: CollectionStats;
 }
 
 /** supabase-js silently caps a response at 1,000 rows regardless of `.limit()`. */
@@ -139,7 +139,6 @@ async function fetchThirtyDayCost(db: Db): Promise<{ total_cost: number; pages: 
 
 export async function computeDashboardSnapshot(db: Db): Promise<DashboardSnapshot> {
   const books = db.collection('books');
-  const warehouse = db.collection('books_warehouse');
   const notHidden = { visible: true, pages_count: { $gt: 0 } };
   const invisible = { visible: { $ne: true } };
   const groupStage = {
@@ -148,6 +147,9 @@ export async function computeDashboardSnapshot(db: Db): Promise<DashboardSnapsho
       pages: { $sum: { $ifNull: ['$pages_count', 0] } },
       pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
       pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+      // The denominator translated_percent is taken over (#4505).
+      pages_translatable: { $sum: TRANSLATABLE_PAGES_EXPR },
+      pages_translated_capped: { $sum: TRANSLATED_PAGES_CAPPED_EXPR },
     },
   };
 
@@ -186,39 +188,30 @@ export async function computeDashboardSnapshot(db: Db): Promise<DashboardSnapsho
     fetchThirtyDayCost(db),
   ]);
 
-  const t = (totals[0] as { pages: number; pages_ocr: number; pages_translated: number } | undefined)
-    ?? { pages: 0, pages_ocr: 0, pages_translated: 0 };
+  const t = (totals[0] as {
+    pages: number; pages_ocr: number; pages_translated: number;
+    pages_translatable: number; pages_translated_capped: number;
+  } | undefined)
+    ?? { pages: 0, pages_ocr: 0, pages_translated: 0, pages_translatable: 0, pages_translated_capped: 0 };
   const jobMap = Object.fromEntries(
     (jobsActive as Array<{ _id: string; count: number }>).map(j => [j._id, j.count]),
   );
 
-  // Phase 2: invisible + warehouse. Optional — Atlas under pipeline load will
-  // time these out, and a dashboard missing two rows beats no dashboard.
+  // Phase 2: invisible. Optional — Atlas under pipeline load will time it
+  // out, and a dashboard missing a row beats no dashboard. (The warehouse
+  // row went with the warehouse collections, retired 2026-10, #5470.)
   let invisibleStats: CollectionStats | null = null;
-  let warehouseStats: CollectionStats | null = null;
   try {
-    const [
-      invisibleCount, invisibleTotals, invisibleFT,
-      warehouseCount, warehouseTotals, warehouseFT,
-    ] = await Promise.all([
+    const [invisibleCount, invisibleTotals, invisibleFT] = await Promise.all([
       books.countDocuments(invisible),
       books.aggregate([{ $match: invisible }, groupStage], { maxTimeMS: 10000 }).toArray(),
       books.countDocuments({ ...invisible, is_first_translation: true }),
-      warehouse.countDocuments({}),
-      warehouse.aggregate([groupStage], { maxTimeMS: 10000 }).toArray(),
-      warehouse.countDocuments({ is_first_translation: true }),
     ]);
-    const it = (invisibleTotals[0] as typeof t | undefined) ?? { pages: 0, pages_ocr: 0, pages_translated: 0 };
-    const wt = (warehouseTotals[0] as typeof t | undefined) ?? { pages: 0, pages_ocr: 0, pages_translated: 0 };
+    const it = (invisibleTotals[0] as typeof t | undefined) ?? { pages: 0, pages_ocr: 0, pages_translated: 0, pages_translatable: 0, pages_translated_capped: 0 };
     invisibleStats = {
       total_books: invisibleCount, total_pages: it.pages,
       pages_ocr: it.pages_ocr, pages_translated: it.pages_translated,
       first_translations: invisibleFT,
-    };
-    warehouseStats = {
-      total_books: warehouseCount, total_pages: wt.pages,
-      pages_ocr: wt.pages_ocr, pages_translated: wt.pages_translated,
-      first_translations: warehouseFT,
     };
   } catch { /* Atlas overloaded — skip extended stats */ }
 
@@ -235,7 +228,8 @@ export async function computeDashboardSnapshot(db: Db): Promise<DashboardSnapsho
       ocr_pages: t.pages_ocr,
       ocr_percent: t.pages > 0 ? +(t.pages_ocr / t.pages * 100).toFixed(1) : 0,
       translated_pages: t.pages_translated,
-      translated_percent: t.pages > 0 ? +(t.pages_translated / t.pages * 100).toFixed(1) : 0,
+      // Of translatable pages, not of all pages: blanks and plates never count against it (#4505).
+      translated_percent: aggregateTranslationPercent(t.pages_translated_capped, t.pages_translatable),
     },
     enrichment: {
       with_summary: withSummary,
@@ -254,7 +248,6 @@ export async function computeDashboardSnapshot(db: Db): Promise<DashboardSnapsho
       truncated: cost.truncated,
     },
     ...(invisibleStats && { invisible: invisibleStats }),
-    ...(warehouseStats && { warehouse: warehouseStats }),
   };
 }
 

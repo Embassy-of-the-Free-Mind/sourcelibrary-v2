@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/naogeorg4",
+  "edition": "Iudas Iscariotes: tragoedia nova et sacra. Adiunctae sunt quoque duae Sophoclis tragoediae, Aiax flagellifer et Philoctetes: ab eodem auctore carmine versae. — Basel [?] or Leipzig [?]: 1552 [?].",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b64da218b87551bfc7fe19",
+  "page_number": 167,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 159261,
+    "to_char": 160013,
+    "overlap": 0.408,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "ref matches 'Nunc ultimo' to 'Quod viderim. SE'; ends about one line early ('Ne mihi quidem / Orientis aliquis in uia' missing).",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      165,
+      166,
+      167
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.511Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "49550a235b1c8b6b06c45a2e29d9a5054d92fd8f3171a94cf72e15e0e5cd1453",
+  "unit": {
+    "chars": 752
+  }
+}

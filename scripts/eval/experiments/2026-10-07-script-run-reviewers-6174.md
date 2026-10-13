@@ -1,3 +1,17 @@
+---
+stage: pipeline
+measure: [agreement, stability]
+languages: []
+scripts: []
+canons: []
+n_books: 24
+n_pages: 96
+verdict: "Script-launched reviewers agree with the interactive run (serious-flag kappa 0.85-0.90) about as well as with themselves (0.92) at $0.15-0.20 a page; both preregistered conditions pass."
+status: adopted
+decision: "run-reviewers.sh adopted; shelf-overview skill step 3 now uses the runner (#6174)"
+superseded_by: null
+issue: 6174
+---
 ## 2026-10-07 · Can a script run the shelf-overview reviewers instead of an interactive session, and how consistent are the reviewers when run again? (#6174)
 
 PRIOR ART: `overview-2026-10-07-eternity2` (#6090), the run being repeated. `.claude/skills/shelf-overview/SKILL.md` step 3

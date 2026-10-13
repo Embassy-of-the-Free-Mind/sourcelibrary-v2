@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA poemata/Weitenauer_carmina",
+  "edition": "Carmina selecta, quorum liber I Heroica, liber II Lyrica, appendix elegias aliquot complectitur. — Augsburg; Freiburg [Breisgau]: Ignaz Wagner; Anton Wagner, 1757.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "69b6f0d9b1a3146c05270a07",
+  "page_number": 166,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 140808,
+    "to_char": 142112,
+    "overlap": 0.508,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-4)",
+    "at": "2026-10-06T10:11:18.118606+00:00",
+    "note": "p.153; the body window matches the whole page and stops at 'rapuit', one word short ('mihi Thaborem'). Footnotes (e),(f) are set inline.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1700s",
+    "pages": [
+      164,
+      165,
+      166
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.737Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "df9ca6f642d1c85aa8b12b0aeabaac1efb9c5650d174f4f75c23fe6b0619d971",
+  "unit": {
+    "chars": 1304
+  }
+}

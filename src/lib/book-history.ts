@@ -204,6 +204,9 @@ const ACTION_LABELS: Record<string, string> = {
   images_brightness_adjusted: 'Image brightness adjusted',
 };
 
+/** audit_log actions written by the pipeline orchestrator and its guards (#4635). */
+const PIPELINE_STATUS_ACTION = /^pipeline_status_/;
+
 const SOURCE_LABELS: Record<string, string> = {
   ai_enrichment: 'AI enrichment',
   catalog_verification: 'Catalog verification',
@@ -335,7 +338,11 @@ export async function assembleBookHistory(
       db
         .collection('audit_log')
         .find(
-          { book_id: resolvedBookId },
+          // `pipeline_status_*` rows are operational telemetry, not provenance:
+          // ~98% of audit_log, hundreds per book, one per orchestrator
+          // transition. They stay in audit_log; the timeline shows the stages
+          // themselves via jobs/usage/page events (#4635).
+          { book_id: resolvedBookId, action: { $not: PIPELINE_STATUS_ACTION } },
           {
             projection: {
               timestamp: 1,
@@ -551,7 +558,7 @@ export async function assembleBookHistory(
   for (const entry of auditRecords) {
     const label = ACTION_LABELS[entry.action] || entry.action;
     const pagesStr = entry.pages_affected ? ` (${entry.pages_affected} pages)` : '';
-    const actorStr = entry.actor ? ` — ${entry.actor}` : '';
+    const actorStr = entry.actor ? ` · ${entry.actor}` : '';
     events.push({
       type: 'admin_action',
       timestamp: new Date(entry.timestamp).toISOString(),

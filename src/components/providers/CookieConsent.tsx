@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getConsent, setConsent, type ConsentState } from '@/lib/consent';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
 
 /**
  * Minimal cookie consent banner — thin bar at the bottom of the screen.
@@ -14,6 +15,7 @@ import { useIsEmbedded } from '@/hooks/useEmbedContext';
  */
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const chrome = CHROME_STRINGS[useLocale()];
   const isEmbedded = useIsEmbedded();
 
   useEffect(() => {
@@ -66,9 +68,9 @@ export default function CookieConsent() {
       <div className="bg-stone-900/95 backdrop-blur-sm border-t border-white/10 text-white/80">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
           <p className="text-sm text-center sm:text-left flex-1">
-            We use cookies for analytics to understand how the library is used.{' '}
+            {chrome.cookieText}{' '}
             <Link href="/privacy" className="underline text-white/60 hover:text-white/90 transition-colors">
-              Privacy policy
+              {chrome.privacyPolicy}
             </Link>
           </p>
           <div className="flex items-center gap-2 shrink-0">
@@ -76,13 +78,13 @@ export default function CookieConsent() {
               onClick={decline}
               className="px-4 py-1.5 text-sm text-white/50 hover:text-white/80 transition-colors rounded"
             >
-              Decline
+              {chrome.decline}
             </button>
             <button
               onClick={accept}
               className="px-4 py-1.5 text-sm bg-white/15 hover:bg-white/25 text-white rounded transition-colors"
             >
-              Accept
+              {chrome.accept}
             </button>
           </div>
         </div>

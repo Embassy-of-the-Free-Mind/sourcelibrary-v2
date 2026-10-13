@@ -30,8 +30,8 @@ export async function sendApiKeyEmail(
         <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
           <p>Hi ${firstName},</p>
           <p>
-            Your API key request has been approved. Here is your key &mdash;
-            save it somewhere safe, as it cannot be retrieved again.
+            Your API key request has been approved. Here is your key.
+            Save it somewhere safe, as it cannot be retrieved again.
           </p>
         </div>
 
@@ -92,13 +92,13 @@ export async function sendSocietyWelcomeEmail(email: string, name?: string): Pro
         </div>
 
         <div style="background: #f5f0e8; border-radius: 8px; padding: 20px 24px; margin: 20px 0 28px; line-height: 1.8; font-size: 14px; color: #1a1612;">
-          <strong><a href="https://sourcelibrary.org/ficino-society/discussions" style="color: #9e4a3a; text-decoration: none;">The Correspondence</a></strong>
-          &mdash; introduce yourself and join the discussion.<br>
-          <strong><a href="https://sourcelibrary.org/ficino-society/members" style="color: #9e4a3a; text-decoration: none;">Members page</a></strong>
-          &mdash; set your name and bio from your
+          <strong><a href="https://sourcelibrary.org/ficino-society/discussions" style="color: #9e4a3a; text-decoration: none;">The Correspondence</a></strong>:
+          introduce yourself and join the discussion.<br>
+          <strong><a href="https://sourcelibrary.org/ficino-society/members" style="color: #9e4a3a; text-decoration: none;">Members page</a></strong>:
+          set your name and bio from your
           <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account</a>.<br>
-          <strong><a href="https://sourcelibrary.org" style="color: #9e4a3a; text-decoration: none;">The library</a></strong>
-          &mdash; browse over 10,000 digitized texts, many newly translated.
+          <strong><a href="https://sourcelibrary.org" style="color: #9e4a3a; text-decoration: none;">The library</a></strong>:
+          browse over 10,000 digitized texts, many newly translated.
         </div>
 
         <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
@@ -149,7 +149,7 @@ export async function sendMembershipWelcomeEmail(email: string, name?: string): 
           <p>${greeting}</p>
           <p>
             Welcome. You have joined a small group of people who believe that these texts
-            matter &mdash; that the ideas of Ficino, Paracelsus, Agrippa, and thousands of
+            matter: that the ideas of Ficino, Paracelsus, Agrippa, and thousands of
             other thinkers deserve to be read, not just preserved.
           </p>
           <p>
@@ -165,13 +165,13 @@ export async function sendMembershipWelcomeEmail(email: string, name?: string): 
           You can download any book or gallery image without limit.
           New translations are yours a month before they go public.
           Your name appears on the <a href="https://sourcelibrary.org/ficino-society/members" style="color: #9e4a3a; text-decoration: none;">members page</a>,
-          if you choose &mdash; you can set your display name from your
+          if you choose. You can set your display name from your
           <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account</a>.
         </div>
 
         <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
           <p>
-            We will write to you from time to time &mdash; when we finish
+            We will write to you from time to time, when we finish
             a translation we think you should know about, or when something
             interesting turns up in the archive. Not often. Only when it matters.
           </p>

@@ -13,9 +13,26 @@
 // fill in the dictionaries (NAV_STRINGS in i18n.ts, HOME_STRINGS in
 // home-i18n.ts). Keep the prefixes disjoint from tenant slugs.
 
-export type Locale = 'en' | 'es' | 'la';
+export type Locale = 'en' | 'es' | 'la' | 'nl' | 'zh';
 
-export const SUPPORTED_LOCALES: Locale[] = ['en', 'es', 'la'];
+export const SUPPORTED_LOCALES: Locale[] = ['en', 'es', 'la', 'nl', 'zh'];
+
+/** Each language's name for itself, for language menus. Never translated. */
+export const LOCALE_NATIVE_NAME: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine', nl: 'Nederlands', zh: '中文' };
+
+/**
+ * Locales whose site is for reading books WRITTEN in that language, in the
+ * original: Latin (#6254), Dutch and Chinese (#6382). Spanish is the other
+ * kind, a language we translate INTO. On these sites the reader opens on the
+ * scan and the original text with the English pane off, the homepage leads
+ * with a shelf of books in the language, and a collection's count is read
+ * against all its members rather than the English-readable ones.
+ */
+export const ORIGINAL_TEXT_LOCALE_LIST: Locale[] = ['la', 'nl', 'zh'];
+export const ORIGINAL_TEXT_LOCALES: ReadonlySet<Locale> = new Set<Locale>(ORIGINAL_TEXT_LOCALE_LIST);
+export function readsOriginal(lang: Locale): boolean {
+  return ORIGINAL_TEXT_LOCALES.has(lang);
+}
 
 /**
  * The locales that own a URL prefix. English is the ROOT — `/book/x`, not
@@ -70,6 +87,8 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 export const LOCALIZED_PATHS: Record<PrefixedLocale, Set<string>> = {
   es: new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search']),
   la: new Set<string>(['/']),
+  nl: new Set<string>(['/']),
+  zh: new Set<string>(['/']),
 };
 
 // Path SHAPES with a twin, per locale. One pattern per route under
@@ -88,6 +107,8 @@ const LOCALIZED_PATTERNS: Record<PrefixedLocale, RegExp[]> = {
   // No Latin collection pages: collection names and intros are English copy,
   // and nothing is translated INTO Latin (#6254).
   la: BOOK_PATTERNS,
+  nl: BOOK_PATTERNS,
+  zh: BOOK_PATTERNS,
 };
 
 function hasLocalizedPath(canonical: string, lang: PrefixedLocale): boolean {

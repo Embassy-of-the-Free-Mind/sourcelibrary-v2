@@ -22,6 +22,7 @@ import { resolveImprintPlace } from '@/lib/imprint';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { API_LIMITS } from '@/lib/api-limits';
 import { extractImageService } from '@/lib/iiif-image-service';
+import { iiifCanvasId } from '@/lib/iiif-refs';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 
 /** The manifest's `summary` reads `index.bookSummary.brief` and nothing else off the index (#5184). */
@@ -170,7 +171,7 @@ function buildProviders(
       {
         id: BASE,
         type: 'Text',
-        label: { en: ['Source Library — re-hosted edition with AI OCR & translation'] },
+        label: { en: ['Source Library: re-hosted edition with AI OCR & translation'] },
         format: 'text/html',
       },
     ],
@@ -363,7 +364,7 @@ export async function GET(
       label: { en: ['AI Training / TDM'] },
       value: {
         en: [
-          'Reserved (EU Directive 2019/790 Art. 4). A standard license is available — see <a href="https://sourcelibrary.org/licensing">sourcelibrary.org/licensing</a>.',
+          'Reserved (EU Directive 2019/790 Art. 4). A standard license is available; see <a href="https://sourcelibrary.org/licensing">sourcelibrary.org/licensing</a>.',
         ],
       },
     });
@@ -398,7 +399,7 @@ export async function GET(
     // Build canvases
     const canvases = pagesLight.map((page) => {
       const pageNum = page.page_number;
-      const canvasId = `${BASE}/api/iiif/${id}/canvas/p${pageNum}`;
+      const canvasId = iiifCanvasId(id, pageNum);
       // The ORIGINAL, unmarked master (or the partner's IIIF URL on
       // derivative-only pages). Still offered — as an explicit `rendering`
       // below — but no longer the default body. See #4406.

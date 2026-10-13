@@ -15,6 +15,8 @@ export const metadata: Metadata = {
       en: '/',
       es: '/es',
       la: '/la',
+      nl: '/nl',
+      zh: '/zh',
       'x-default': '/',
     },
     // Next.js replaces the layout's whole `alternates` object rather than

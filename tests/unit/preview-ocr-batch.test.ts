@@ -93,7 +93,8 @@ describe('preview honours the script routing rule', () => {
 
 describe('the pooler honours those options', () => {
   it('accepts them, defaulting to the full-pass behaviour', () => {
-    const fn = orch.slice(orch.indexOf('async function submitCrossBookOcrBatches'));
+    // The options are read under the #5498 submit lease, in the inner function.
+    const fn = orch.slice(orch.indexOf('async function submitCrossBookOcrBatchesUnderLease('));
     const head = fn.slice(0, 900);
     expect(head).toMatch(/maxPagesPerBook\s*=\s*null/);
     expect(head).toMatch(/advanceStatus\s*=\s*true/);

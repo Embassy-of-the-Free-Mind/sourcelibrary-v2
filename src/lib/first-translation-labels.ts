@@ -61,7 +61,7 @@ export function firstTranslationBadge(
  */
 export function translationProgressNote(coverage: number): string {
   const pct = coverage < 0.01 ? '<1' : String(Math.round(coverage * 100));
-  return `Translation in progress — about ${pct}% of this book is available in English so far.`;
+  return `Translation in progress: about ${pct}% of this book is available in English so far.`;
 }
 
 /**

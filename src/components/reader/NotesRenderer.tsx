@@ -15,6 +15,7 @@ import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { applyNotesOff } from '@/lib/notes-off';
 import { separateTermDefinitions } from '@/lib/term-definitions';
+import { repairLeakedMarkup } from '../../../scripts/lib/leaked-markup.mjs';
 import AiBadge from '@/components/ui/AiBadge';
 
 /**
@@ -40,6 +41,13 @@ interface NotesRendererProps {
   language?: string; // Optional language for RTL detection
   columns?: number; // Number of text columns (from page.columns metadata). Used as fallback when no <column-break/> marker exists.
   pageType?: string; // Page type from OCR (frontispiece, illustration, etc.). When non-text type, all content is treated as notes.
+  /**
+   * The page has no source text and this is the model's description of it
+   * (#5903, `isUngroundedTranslation`). Rendered like a description-only page —
+   * one marked frame, hidden with Notes off — under its own heading, whatever the
+   * page type says (most such pages are typed `text` or not typed at all).
+   */
+  ungrounded?: boolean;
 }
 
 // The `lang` attribute comes from @/lib/language-code. This file used to keep
@@ -291,6 +299,44 @@ export const NOTES_ALLOWED_ELEMENTS = [
   'lacuna',
 ];
 
+// A paragraph that is nothing but one single-bracket run: blank line (or start)
+// before, blank line (or end) after, no nesting, single line.
+const BRACKETED_PARAGRAPH = /(^|\n[ \t]*\n)[ \t]*\[([^\[\]\n]{3,})\][ \t]*(?=\n[ \t]*\n|\n?$)/g;
+
+// The noun that makes a bracketed paragraph a picture, not a stage direction.
+const PICTORIAL_NOUN = /^(?:woodcuts?|wood-?blocks?|engravings?|etchings?|illustrations?|images?|pictures?|diagrams?|figures?|emblems?|head-?pieces?|tail-?pieces?|vignettes?|ornaments?|fleurons?|initials?|frontispieces?|portraits?|plates?|drawings?|sketch(?:es)?|maps?|charts?|borders?|cartouches?|seals?|miniatures?|illuminations?)$/i;
+
+// What may follow the noun: the start of a description, or nothing at all.
+// A bare number is a reference ("[Figure 3]") and stays an interpolation; a
+// numbered caption ("Illustration 35: …", "Plate III and VI.") is a picture.
+const DESCRIPTION_TAIL = /^(?:$|[:,.;—–-]|\s+[0-9IVXLC]+[a-z]?(?:[:.]|\s+and\b)|\s+(?:of|with|showing|shows|depicting|depicts|containing|contains|featuring|illustrating|representing|labell?ed|in|on|at|from|after|and|centred|centered|printed|framed|surrounded|spanning|occupying|description|omitted|caption)\b)/i;
+
+// Words that open a sentence rather than modify a noun: "[Therefore the figure of
+// the Sun …]" is the author speaking, whatever noun follows.
+const NOT_A_MODIFIER = new Set(['in', 'that', 'this', 'these', 'those', 'when', 'therefore', 'it', 'he', 'she', 'they', 'we', 'i', 'is', 'was', 'are', 'were', 'for', 'and', 'but', 'if', 'as', 'so', 'which', 'who', 'then', 'thus', 'here', 'there', 'now', 'not', 'no', 'to', 'from', 'by', 'at', 'on', 'see', 'cf', 'note']);
+
+/**
+ * True when a bracketed paragraph opens with a picture's noun phrase:
+ * an optional article, up to three modifiers, a pictorial noun, then a
+ * description or the end ("Ornate woodcut headpiece with floral motifs",
+ * "Engraving of a man's head", "Diagram: A vertical section").
+ */
+export function looksLikeImageDescription(inner: string): boolean {
+  const words = inner.trim().split(/\s+/);
+  let i = /^(?:an?|the)$/i.test(words[0] ?? '') ? 1 : 0;
+  for (let mods = 0; i < words.length && mods <= 3; i++, mods++) {
+    const word = words[i].replace(/[:,.;]$/, '');
+    if (NOT_A_MODIFIER.has(word.toLowerCase())) return false;
+    // Whatever follows the bare noun, its own trailing punctuation included. A
+    // noun followed by another word is a modifier ("woodcut headpiece"): go on.
+    if (PICTORIAL_NOUN.test(word) && DESCRIPTION_TAIL.test(words.slice(i).join(' ').slice(word.length))) {
+      return true;
+    }
+    if (!/^[A-Za-z'’-]+,?$/.test(word)) return false;
+  }
+  return false;
+}
+
 // Pre-process bracket note tags to XML tags before ReactMarkdown sees them
 // Converts [[tag: content]] to <tag>content</tag> which rehype-raw handles
 function preprocessBracketTags(text: string, showNotes: boolean): string {
@@ -320,6 +366,14 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
 
   // Terms always shown
   result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, '<term>$1</term>');
+
+  // Older translations describe a plate as a bare bracketed paragraph instead of
+  // an <image-desc> ("[Engraving of a man's head in profile. …]"). Those are the
+  // AI's voice, but a long one overran the interpolation cap below and read as
+  // the author's text, with nothing for the notes toggle to hide (#4298). Retag
+  // them so they render, and hide, like any other image description.
+  result = result.replace(BRACKETED_PARAGRAPH, (m, lead: string, inner: string) =>
+    looksLikeImageDescription(inner) ? `${lead}<image-desc>${inner.trim()}</image-desc>` : m);
 
   // Single-bracket runs are the translator speaking — supplied words and
   // stage directions ("[that is, Mercury]", "[The remainder is blank]").
@@ -361,7 +415,7 @@ function unwrapDescriptionNotes(text: string): string {
 }
 
 /** "diagram" → "Diagram", "musical-score" → "Musical Score". */
-function formatPageTypeLabel(pageType: string): string {
+export function formatPageTypeLabel(pageType: string): string {
   return pageType.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 }
 
@@ -923,12 +977,12 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
  * hairline accent-gold border, plus the shared AiBadge provenance chip. No new
  * design primitives.
  */
-function AiDescriptionFrame({ pageTypeLabel, children }: { pageTypeLabel: string; children: ReactNode }) {
+function AiDescriptionFrame({ pageTypeLabel, heading, children }: { pageTypeLabel: string; heading?: string; children: ReactNode }) {
   return (
     <div className="rounded-lg border border-accent-gold/20 bg-accent-gold/8 px-4 py-3">
       <div className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-accent-gold-dark">
         <AiBadge title="AI-generated description of the page image, not text from the book" />
-        <span>{pageTypeLabel} · description</span>
+        <span>{heading ?? `${pageTypeLabel} · description`}</span>
       </div>
       {/* The body keeps the normal reading colour — a long description tinted
           gold is hard to read, and the badge + tinted frame already mark it. */}
@@ -945,9 +999,13 @@ function AiDescriptionFrame({ pageTypeLabel, children }: { pageTypeLabel: string
  */
 export function prepareNotesMarkdown(
   text: string,
-  { showNotes, pageType }: { showNotes: boolean; pageType?: string }
+  { showNotes, pageType, ungrounded = false }: { showNotes: boolean; pageType?: string; ungrounded?: boolean }
 ): { processedText: string; metadata: ExtractedMetadata; isDescriptionOnly: boolean } {
-  const { cleanText, metadata } = extractMetadata(text);
+  // Leaked markup (#5700) goes before anything pairs a tag: `</leaf-break/>` printed
+  // as literal text, an unclosed `<meta>continues from previous page:` put its label
+  // (and nothing else) in the body, `the Vedas <term>Vedas</term>` read the word twice.
+  // Shared with every plain-text surface and export — scripts/lib/leaked-markup.mjs.
+  const { cleanText, metadata } = extractMetadata(repairLeakedMarkup(text));
 
   // Read-time OCR safety net (#2764): collapse runaway dot/dash/underscore
   // lacuna walls to […] and convert leaked LaTeX (\frac, \sqrt, operators) to
@@ -973,10 +1031,12 @@ export function prepareNotesMarkdown(
   // AI's commentary (title pages keep their real title/author/imprint text; maps keep their
   // labels). Runs on the NORMALIZED spans so multi-paragraph/nested note content isn't
   // miscounted as body text.
-  const isDescriptionOnly =
-    (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
+  // An ungrounded translation (#5903) is description by measurement, not by type: the
+  // transcription under it has no text, so every word here is the model's.
+  const isDescriptionOnly = ungrounded ||
+    ((DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
       DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
-    !hasBodyTextOutsideNotes(withTermNotes);
+    !hasBodyTextOutsideNotes(withTermNotes));
   // Notes off: drop dangling vocabulary chips, keep transcribed page marks, drop
   // only the AI's commentary. One shared definition — see @/lib/notes-off.
   const withPageMarks = showNotes ? withTermNotes : applyNotesOff(withNormalizedSpans);
@@ -1007,10 +1067,10 @@ export function prepareNotesMarkdown(
 /** localStorage key for the folded/unfolded state of the OCR condition note. */
 const CONDITION_NOTE_PREF_KEY = 'sl:reader:condition-note';
 
-export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType }: NotesRendererProps) {
+export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns, pageType, ungrounded = false }: NotesRendererProps) {
   const { processedText, metadata, isDescriptionOnly } = useMemo(
-    () => prepareNotesMarkdown(text, { showNotes, pageType }),
-    [text, showNotes, pageType]
+    () => prepareNotesMarkdown(text, { showNotes, pageType, ungrounded }),
+    [text, showNotes, pageType, ungrounded]
   );
 
   // Split on <column-break/> for multi-column rendering, with paragraph-midpoint fallback
@@ -1053,7 +1113,9 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   if (isDescriptionOnly && !showNotes) {
     return (
       <div className={`text-[var(--text-muted)] italic text-sm ${className}`}>
-        {readerStrings.descriptionHidden(formatPageTypeLabel(metadata.pageType || pageType || 'Image'))}
+        {ungrounded
+          ? readerStrings.ungroundedHidden
+          : readerStrings.descriptionHidden(formatPageTypeLabel(metadata.pageType || pageType || 'Image'))}
       </div>
     );
   }
@@ -1119,7 +1181,10 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           highlight chips — so the whole body goes inside one marked frame
           (#4069). Ordinary pages are untouched: their notes keep their chips. */}
       {isDescriptionOnly ? (
-        <AiDescriptionFrame pageTypeLabel={formatPageTypeLabel(metadata.pageType || pageType || 'Image')}>
+        <AiDescriptionFrame
+          pageTypeLabel={formatPageTypeLabel(metadata.pageType || pageType || 'Image')}
+          heading={ungrounded ? readerStrings.ungroundedLabel : undefined}
+        >
           <ColumnMarkdown text={processedText} showNotes={showNotes} withNotes={withNotes} />
         </AiDescriptionFrame>
       ) : columnSegments ? (

@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
+import { isHeldSurname } from '../../../../scripts/lib/shared-surname-hold.mjs';
 import { buildEntityListJsonLd } from '@/lib/jsonld';
 import {
   dedupeEntityBooks,
@@ -186,6 +187,9 @@ export const POST = withAuth(async (request, session) => {
     ) => {
       // Resolve alias to canonical name
       const canonicalName = aliasResolver.resolve(term, type);
+      // A surname several people share is attached to no person record (#5950). The bare
+      // record is then absent from the map, so this rebuild leaves it as it is.
+      if (isHeldSurname(canonicalName, type)) return;
       const key = `${type}:${canonicalName.toLowerCase()}`;
 
       if (!entityMap.has(key)) {

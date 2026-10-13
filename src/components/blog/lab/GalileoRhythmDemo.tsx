@@ -147,7 +147,7 @@ export default function GalileoRhythmDemo() {
 
   return (
     <LabCard
-      title="Station VI — Speed up the rhythm"
+      title="Station VI: Speed up the rhythm"
       headerRight={<PlayToggle playing={playing} onClick={toggle} label="Play both pulses" />}
       caption="Two click trains in a fixed whole-number ratio, one speed knob. Start slow enough to count the cross-rhythm, then drag right: nothing changes but the rate, and the pattern becomes an interval. Both voices are one and the same instrument throughout."
       sourceHref="/book/discorsi-e-dimostrazioni-matematiche-intorno-a-due-nuove-galilei"
@@ -156,14 +156,14 @@ export default function GalileoRhythmDemo() {
       <div className="flex gap-1.5 mb-4 flex-wrap">
         {RATIOS.map((r, i) => (
           <Chip key={r.name} active={ratioIdx === i} onClick={() => setRatioIdx(i)}>
-            {r.a}:{r.b} — {r.name}
+            {r.a}:{r.b} ({r.name})
           </Chip>
         ))}
       </div>
 
       <div className="mb-4">
         <label className="text-[11px] uppercase tracking-wider text-muted block mb-1">
-          Speed — the only thing this slider changes
+          Speed: the only thing this slider changes
         </label>
         <input
           type="range"
@@ -192,7 +192,7 @@ export default function GalileoRhythmDemo() {
         />
       </div>
       <p className="text-[11px] text-muted mb-4">
-        The pulses as Euler would later draw them (Station X) — coincidences marked in rust. When
+        The pulses as Euler would later draw them (Station X), coincidences marked in rust. When
         the dots pack into a solid band, the eye has lost count at the same moment the ear does.
       </p>
 

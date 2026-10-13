@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 107
+n_pages: 214
+verdict: "Of 107 hand-picked books across nine traditions, two pages each: 43 show, 30 show with care, 34 fix first; a curation worklist, not a rate."
+status: informational
+decision: "3 books hidden, 4 records relabelled, translationReasoningLeak detector added (#6056)"
+superseded_by: null
+issue: [5918, 6056]
+---
 ## 2026-10-06 · Which books in Eternity's traditions can we show a scholar today? A hand-picked curation check, not a rate (#5918, #6056)
 <!-- PRIOR ART: 2026-10-06-random-book-spot-check-canon-shelves-5914.md (30 books drawn at random from the canon shelves) and the shelf overviews in scripts/eval/results/spot-check/overview-2026-10-07*/ (PR #6079, #6090: stratified random draws with rates) answer "how often is a page wrong". This entry is the hand-picked complement: a worklist of named books, which those draws cannot give and which cannot give their rates. -->
 

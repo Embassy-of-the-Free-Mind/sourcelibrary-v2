@@ -1,0 +1,39 @@
+{
+ "issue": 5660,
+ "lane": "zh",
+ "tag": "gate0",
+ "at": "2026-10-06T11:18:07.829Z",
+ "screen": {
+  "measure": "agreement (screen)",
+  "books": 121,
+  "written": 16691,
+  "screened": 13891,
+  "flagged": 757,
+  "rate": 0.0545,
+  "wilson95": [
+   0.051,
+   0.058
+  ],
+  "book_cluster95": [
+   0.0302,
+   0.0841
+  ],
+  "baseline": {
+   "flagged": 65011,
+   "screened": 992881,
+   "rate": 0.0655,
+   "src": "#5600 fleet final (Kanripo WYG, Dice < 0.6)"
+  },
+  "worse_than_baseline": false
+ },
+ "accuracy": {
+  "measure": "accuracy",
+  "ref": "Kanripo WYG <pb> page matched by the screen",
+  "n_books": 40,
+  "median_cer": 0.0572,
+  "unflagged_median_cer": 0.0572,
+  "flagged_in_sample": [],
+  "catastrophic": 0
+ },
+ "eye_packet": 10
+}

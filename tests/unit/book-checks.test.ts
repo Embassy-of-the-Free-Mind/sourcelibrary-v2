@@ -25,6 +25,7 @@ const good = () => ({
   reader: { kind: 'model', model: 'opus', image_opened: true },
   verdict: 'fix',
   evidence_path: 'scripts/eval/results/spot-check/overview-2026-10-07-eternity2/reviews/korean.json',
+  exposure: [{ page_number: 7, exposure: 'served' }, { page_number: 18, exposure: 'no_english' }],
   text_provenance: [
     { page_number: 7, ocr_model: 'gemini-3.1-flash-lite', translation_model: 'gemini-3-flash-preview' },
     { page_number: 18, ocr_model: 'source:esukhia-derge-tengyur', translation_model: null, unknown_reason: 'not translated' },
@@ -32,6 +33,19 @@ const good = () => ({
 });
 
 describe('buildBookCheck', () => {
+  // #6203: a verdict says who could see the text it judged, and names kinds from the shared vocabulary.
+  it('refuses a row with no exposure, a page without one, or an exposure outside the vocabulary', () => {
+    expect(() => buildBookCheck({ ...good(), exposure: undefined })).toThrow(/exposure must be a list/);
+    expect(() => buildBookCheck({ ...good(), exposure: [{ page_number: 7, exposure: 'served' }] })).toThrow(/exposure for page 18/);
+    expect(() => buildBookCheck({ ...good(), exposure: [{ page_number: 7, exposure: 'public' }, { page_number: 18, exposure: 'hidden' }] })).toThrow(/served \| withheld \| no_english \| hidden/);
+    expect(buildBookCheck({ ...good(), exposure: [7, 18].map((n) => ({ page_number: n, exposure: 'unrecorded' })) }).exposure).toHaveLength(2);
+  });
+  it('keeps a finding kind from the vocabulary and refuses one that is not', () => {
+    const f = (kind: string) => [{ page_number: 7, errors: [{ stage: 'ocr', class: 'O3', kind }] }];
+    expect(buildBookCheck({ ...good(), page_findings: f('recitation') }).page_findings[0].errors[0].kind).toBe('recitation');
+    expect(() => buildBookCheck({ ...good(), page_findings: f('invented') })).toThrow(/'invented' is not a kind/);
+  });
+
   it('accepts a complete row and stamps recorded_at / recorded_by', () => {
     const row = buildBookCheck(good());
     expect(row.checked_at).toBeInstanceOf(Date);

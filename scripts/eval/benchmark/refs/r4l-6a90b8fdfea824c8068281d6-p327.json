@@ -1,0 +1,54 @@
+{
+  "source": "la.wikisource Liber:PRAETORIUS, Michael - Syntagma musicum 1.djvu",
+  "edition": "Liber:PRAETORIUS, Michael - Syntagma musicum 1.djvu — {{IA",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3APRAETORIUS%2C_Michael_-_Syntagma_musicum_1.djvu",
+  "origin": "library",
+  "book_id": "6a90b8fdfea824c8068281d6",
+  "page_number": 327,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 601872,
+    "to_char": 604050,
+    "overlap": null,
+    "located_by": "pb-neighbour",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-2)",
+    "at": "2026-10-06T10:11:07+00:00",
+    "note": "printed p.299 Praetorius; roman with italic and Greek; ref matches first to last line",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      327,
+      328,
+      329
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.661Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "1b7f90b870a83b855ba1439f16cfeb78eb27d19ec1f6900e9edc1310f1cb7c2d",
+  "unit": {
+    "chars": 2177
+  }
+}

@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       ok: true,
       id: result.insertedId.toString(),
-      message: 'Thank you — your findings were shared with the Source Library team.',
+      message: 'Thank you. Your findings were shared with the Source Library team.',
     });
   } catch (error) {
     console.error('Share-findings error:', error);

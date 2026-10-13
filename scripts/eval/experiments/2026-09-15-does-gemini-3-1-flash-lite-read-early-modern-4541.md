@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 11
+n_pages: 11
+verdict: "No: flash-preview beats lite on 11/11 items; lite loops on 5 of 7 manuscripts and a 1472 incunable and renders long s as f on roman print."
+status: adopted
+decision: "18 books held and re-run on gemini-3-flash-preview; global OCR_LITE_ONLY left alone (#4541)"
+superseded_by: null
+issue: 4541
+---
 ## 2026-09-15 — Does `gemini-3.1-flash-lite` read early-modern manuscripts and incunables? (#4541) — RESULT
 
 **Headline: no. Flash-preview is better on 11/11 items read. Lite fails catastrophically

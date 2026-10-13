@@ -9,7 +9,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'The Reading Plan — Source Library Research',
+  title: 'The Reading Plan | Source Library Research',
   description:
     'What it costs to transcribe and translate every book Source Library holds, at three levels of quality, how each kind of page gets its engine, and the questions still open.',
   alternates: { canonical: '/research/reading-plan' },

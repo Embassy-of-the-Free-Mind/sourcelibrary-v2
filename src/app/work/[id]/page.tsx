@@ -87,16 +87,40 @@ async function getCollectedEditions(canon: CanonWork) {
 // "De occulta philosophia libri tres"); fall back to prettifying a legacy
 // clean-slug work_id. The new `local:{author_id}:{slug}` ids are NOT readable as
 // slugs, so the curated title is what makes the page presentable.
-function workTitleFromEditions(editions: { work_title?: string | null }[], workId: string): string {
+function mostCommon(values: (string | null | undefined)[]): string | null {
   const counts = new Map<string, number>();
-  for (const e of editions) {
-    const t = (e.work_title || '').trim();
+  for (const v of values) {
+    const t = (v || '').trim();
     if (t) counts.set(t, (counts.get(t) || 0) + 1);
   }
-  if (counts.size) return [...counts.entries()].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length)[0][0];
-  // legacy clean-slug fallback (e.g. "turba-philosophorum"); never prettify a "local:…" id
+  if (!counts.size) return null;
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || b[0].length - a[0].length)[0][0];
+}
+
+type TitledEdition = { work_title?: string | null; display_title?: string | null; title?: string | null };
+
+function workTitleFromEditions(editions: TitledEdition[], workId: string): string {
+  const curated = mostCommon(editions.map(e => e.work_title));
+  if (curated) return curated;
+  // legacy clean-slug fallback (e.g. "turba-philosophorum"); never prettify a
+  // "local:…" id, and never a bare number: /work/2 rendered as the title "2".
   const tail = workId.includes(':') ? workId.split(':').pop()! : workId;
-  return tail.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  if (/[a-z]/i.test(tail) && !workId.startsWith('local:')) {
+    return tail.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+  return mostCommon(editions.map(e => e.display_title || e.title)) || tail;
+}
+
+// An author for the title and JSON-LD, only when every edition that names one
+// names the same one. "Most common" was wrong: an anthology's contributor list
+// ("Hollandus; Llull; Ashmole; Ripley") outvoted the editions of the Corpus
+// Hermeticum and would have published a false attribution. Lists, "et al." and
+// "Unknown"/"Anonymous" never qualify.
+function workAuthorFromEditions(editions: { author?: string | null }[]): string | null {
+  const named = new Set(editions.map(e => (e.author || '').trim()).filter(Boolean));
+  if (named.size !== 1) return null;
+  const [a] = named;
+  return /;|\bet al\b|^(unknown|anonymous)$/i.test(a) ? null : a;
 }
 
 // Catalogue no-date markers. These are real values in `published` and must not
@@ -197,12 +221,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const title = workTitleFromEditions(editions as { work_title?: string | null }[], id);
+  const title = workTitleFromEditions(editions as TitledEdition[], id);
+  const author = workAuthorFromEditions(editions);
   const libraries = new Set(editions.map(e => e.image_source?.provider_name).filter(Boolean));
+  const editionWord = editions.length === 1 ? 'edition' : 'editions';
 
   return {
-    title: `${title}: ${editions.length} Editions | Source Library`,
-    description: `${editions.length} editions and manuscripts of ${title} across ${libraries.size} libraries. Browse, compare, and read translations.`,
+    title: `${title}${author ? `, ${author}` : ''}: ${editions.length} ${editionWord} | Source Library`,
+    description: `${editions.length} ${editionWord} of ${title}${author ? ` by ${author}` : ''} across ${libraries.size} ${libraries.size === 1 ? 'library' : 'libraries'}. Read the scans with page-level translations.`,
     alternates: { canonical: `/work/${editions.find(e => e.work_slug)?.work_slug || id}` },
   };
 }
@@ -288,7 +314,8 @@ export default async function WorkPage({ params }: PageProps) {
   if (editions.length === 0) notFound();
   const collected = canon ? await getCollectedEditions(canon) : [];
 
-  const title = canon ? canon.title : workTitleFromEditions(editions as { work_title?: string | null }[], id);
+  const title = canon ? canon.title : workTitleFromEditions(editions as TitledEdition[], id);
+  const author = canon ? canon.author : workAuthorFromEditions(editions);
   const workSlug = canon ? canon.slug : (editions.find(e => e.work_slug)?.work_slug || id);
   const libraries = [...new Set(
     [...editions, ...collected].map(e => e.image_source?.provider_name).filter(Boolean)
@@ -320,27 +347,27 @@ export default async function WorkPage({ params }: PageProps) {
       }
       bg="bg-cream"
     >
-      {canon && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: jsonLdHtml({
-              '@context': 'https://schema.org',
-              '@type': 'CreativeWork',
-              name: canon.title,
-              alternateName: canon.originalTitle,
-              author: { '@type': 'Person', name: canon.author },
-              inLanguage: canon.originalLanguage,
-              workExample: editions.slice(0, 10).map(b => ({
-                '@type': 'Book',
-                name: b.display_title || b.title,
-                datePublished: b.published !== 'Unknown' ? b.published : undefined,
-                url: `https://sourcelibrary.org${bookUrl(b)}`,
-              })),
-            }),
-          }}
-        />
-      )}
+      {/* Every work, canon or not, describes itself to search engines: a
+          CreativeWork with its editions as workExample. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdHtml({
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            name: title,
+            url: `https://sourcelibrary.org/work/${workSlug}`,
+            ...(canon ? { alternateName: canon.originalTitle, inLanguage: canon.originalLanguage } : {}),
+            ...(author ? { author: { '@type': 'Person', name: author } } : {}),
+            workExample: editions.slice(0, 10).map(b => ({
+              '@type': 'Book',
+              name: b.display_title || b.title,
+              datePublished: b.published !== 'Unknown' ? b.published : undefined,
+              url: `https://sourcelibrary.org${bookUrl(b)}`,
+            })),
+          }),
+        }}
+      />
       <div className="prose-content max-w-none">
         {/* Stats bar */}
         <div className="flex flex-wrap items-center gap-6 text-sm text-stone-500 mb-10">

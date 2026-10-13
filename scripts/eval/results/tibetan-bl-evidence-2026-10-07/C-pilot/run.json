@@ -1,0 +1,114 @@
+{
+ "spent_usd": 0.16035,
+ "estimate": {
+  "A": 0.26,
+  "B": 0.276
+ },
+ "rounds": [
+  {
+   "n": 1,
+   "submitted_at": "2026-10-07T15:41:06.199Z",
+   "units": 10,
+   "A": 10,
+   "B": 0,
+   "est_usd": 0.0416
+  },
+  {
+   "n": 2,
+   "submitted_at": "2026-10-07T15:44:21.267Z",
+   "units": 10,
+   "A": 10,
+   "B": 0,
+   "est_usd": 0.0451
+  },
+  {
+   "n": 3,
+   "submitted_at": "2026-10-07T15:56:34.704Z",
+   "units": 10,
+   "A": 10,
+   "B": 0,
+   "est_usd": 0.0328
+  },
+  {
+   "n": 4,
+   "submitted_at": "2026-10-07T16:07:48.057Z",
+   "units": 8,
+   "A": 8,
+   "B": 0,
+   "est_usd": 0.1447
+  },
+  {
+   "n": 5,
+   "submitted_at": "2026-10-07T16:11:59.316Z",
+   "units": 9,
+   "A": 9,
+   "B": 0,
+   "est_usd": 0.0413
+  },
+  {
+   "n": 6,
+   "submitted_at": "2026-10-07T16:17:10.431Z",
+   "units": 1,
+   "A": 1,
+   "B": 0,
+   "est_usd": 0.0057
+  }
+ ],
+ "model": "gemini-3-flash-preview",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "jobs": [
+  {
+   "job_name": "batches/p0aeuehzm8hlnvgi6d0ie4xn3d4qa8mki9yi",
+   "round": 1,
+   "est_usd": 0.0416,
+   "cost_usd": 0.01013,
+   "submitted_at": "2026-10-07T15:41:06.199Z",
+   "collected_at": "2026-10-07T15:44:12.080Z"
+  },
+  {
+   "job_name": "batches/y094n0l362c7r3wokq3e5gov4rw5xv5d9t55",
+   "round": 2,
+   "est_usd": 0.0451,
+   "cost_usd": 0.00907,
+   "submitted_at": "2026-10-07T15:44:21.267Z",
+   "collected_at": "2026-10-07T15:56:26.165Z"
+  },
+  {
+   "job_name": "batches/pjm49a5vzy2o95qtr7f68yzlzrflnqn2e1pa",
+   "round": 3,
+   "est_usd": 0.0328,
+   "cost_usd": 0.022,
+   "submitted_at": "2026-10-07T15:56:34.704Z",
+   "collected_at": "2026-10-07T16:07:39.133Z"
+  },
+  {
+   "job_name": "batches/tcpasq4wbgyzcmk64j2mmtpo4k4ocxhkg27s",
+   "round": 4,
+   "est_usd": 0.1447,
+   "cost_usd": 0.08776,
+   "submitted_at": "2026-10-07T16:07:48.057Z",
+   "collected_at": "2026-10-07T16:11:50.439Z"
+  },
+  {
+   "job_name": "batches/366p6hdw3jtj3k11yqmpy0jesoej2otj7dut",
+   "round": 5,
+   "est_usd": 0.0413,
+   "cost_usd": 0.02792,
+   "submitted_at": "2026-10-07T16:11:59.316Z",
+   "collected_at": "2026-10-07T16:17:01.871Z"
+  },
+  {
+   "job_name": "batches/s7hmzlmen9e3t88pt2zjzoxxm9btum9fups2",
+   "round": 6,
+   "est_usd": 0.0057,
+   "cost_usd": 0.00347,
+   "submitted_at": "2026-10-07T16:17:10.431Z",
+   "collected_at": "2026-10-07T16:20:11.968Z"
+  }
+ ]
+}

@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     if (isMongoTimeout(err)) {
       return NextResponse.json(
-        { error: 'Corpus stats are temporarily unavailable — the database is under load. Try again shortly.' },
+        { error: 'Corpus stats are temporarily unavailable because the database is under load. Try again shortly.' },
         { status: 503, headers: { 'Cache-Control': 'no-store' } },
       );
     }

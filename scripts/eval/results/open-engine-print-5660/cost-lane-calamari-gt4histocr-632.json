@@ -1,0 +1,671 @@
+{
+  "engine": "calamari-gt4histocr",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "eebo-tcp-5488",
+      "file": "eebo-tcp-5488-2026-10-04.json",
+      "n_pages": 73,
+      "n_with_ref": 73
+    },
+    {
+      "stratum": "eebo-tcp-latin-5660",
+      "file": "eebo-tcp-latin-5660-2026-10-04.json",
+      "n_pages": 25,
+      "n_with_ref": 24
+    },
+    {
+      "stratum": "english-ia-5124",
+      "file": "english-ia-5124-2026-10-04.json",
+      "n_pages": 122,
+      "n_with_ref": 109
+    },
+    {
+      "stratum": "ref-ws",
+      "file": "ref-ws-2026-10-04.json",
+      "n_pages": 120
+    },
+    {
+      "stratum": "greek",
+      "file": "greek-2026-10-04.json",
+      "n_pages": 14,
+      "n_with_ref": 11
+    },
+    {
+      "stratum": "greek-ext",
+      "file": "greek-ext-2026-10-04.json",
+      "n_pages": 170,
+      "n_with_ref": 117
+    },
+    {
+      "stratum": "greek-ext2",
+      "file": "greek-ext2-2026-10-04.json",
+      "n_pages": 10,
+      "n_with_ref": 8
+    }
+  ],
+  "classes": {
+    "english-1600-1699": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.051,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 56,
+          "n": 59,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "calamari-gt4histocr": 0.823,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "calamari-gt4histocr": 0.823,
+          "gemini-3.1-flash-lite": 0.166
+        },
+        "invention_ref": {
+          "calamari-gt4histocr": 0.823,
+          "gemini-3.1-flash-lite": 0.171
+        }
+      },
+      "n_pages": 59,
+      "n_referenced": 59,
+      "n_paired": 59,
+      "n_gate": 59,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 53,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 6,
+        "ref-ws": 0,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "calamari-gt4histocr": 0.414,
+        "gemini-3.1-flash-lite": 0.053,
+        "gemini-3.1-flash-lite-b": 0.052
+      },
+      "ref_median_cer_ci95": [
+        0.045,
+        0.059
+      ],
+      "delta": {
+        "median": 0.321,
+        "ci95": [
+          0.234,
+          0.498
+        ],
+        "wins": 3,
+        "losses": 56,
+        "ties": 0,
+        "untied": 59,
+        "p_sign": 0,
+        "share_le_minus_005": 0.051
+      },
+      "noise_floor": {
+        "n": 59,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "calamari-gt4histocr": 27,
+        "gemini-3.1-flash-lite": 3
+      },
+      "invention_median": {
+        "calamari-gt4histocr": 0.823,
+        "gemini-3.1-flash-lite": 0.171
+      },
+      "loops": {
+        "calamari-gt4histocr": 1,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": false
+      },
+      "better_reader": false,
+      "verdict": "REJECTED"
+    },
+    "english-1700+": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.096,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 85,
+          "n": 94,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "calamari-gt4histocr": 0.902,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "calamari-gt4histocr": 0.902,
+          "gemini-3.1-flash-lite": 0.015
+        },
+        "invention_ref": {
+          "calamari-gt4histocr": 0.92,
+          "gemini-3.1-flash-lite": 0.018
+        }
+      },
+      "n_pages": 106,
+      "n_referenced": 94,
+      "n_paired": 94,
+      "n_gate": 94,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 94,
+        "ref-ws": 0,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "calamari-gt4histocr": 0.716,
+        "gemini-3.1-flash-lite": 0.019,
+        "gemini-3.1-flash-lite-b": 0.02
+      },
+      "ref_median_cer_ci95": [
+        0.016,
+        0.027
+      ],
+      "delta": {
+        "median": 0.63,
+        "ci95": [
+          0.369,
+          0.756
+        ],
+        "wins": 11,
+        "losses": 83,
+        "ties": 0,
+        "untied": 94,
+        "p_sign": 0,
+        "share_le_minus_005": 0.096
+      },
+      "noise_floor": {
+        "n": 94,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "calamari-gt4histocr": 57,
+        "gemini-3.1-flash-lite": 9
+      },
+      "invention_median": {
+        "calamari-gt4histocr": 0.92,
+        "gemini-3.1-flash-lite": 0.018
+      },
+      "loops": {
+        "calamari-gt4histocr": 0,
+        "gemini-3.1-flash-lite": 2
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "REJECTED"
+    },
+    "german": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=29 < 50) — rule (e): no routing decision",
+        "a_lite": "adequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 23,
+          "n": 23,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_indep": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_ref": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        }
+      },
+      "n_pages": 30,
+      "n_referenced": 30,
+      "n_paired": 29,
+      "n_gate": 0,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 29,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "calamari-gt4histocr": 0.234,
+        "gemini-3.1-flash-lite": 0.005,
+        "gemini-3.1-flash-lite-b": 0.005
+      },
+      "ref_median_cer_ci95": [
+        0.003,
+        0.008
+      ],
+      "delta": {
+        "median": 0.222,
+        "ci95": [
+          0.131,
+          0.775
+        ],
+        "wins": 1,
+        "losses": 28,
+        "ties": 0,
+        "untied": 29,
+        "p_sign": 0,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 23,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "calamari-gt4histocr": 10,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "calamari-gt4histocr": null,
+        "gemini-3.1-flash-lite": null
+      },
+      "loops": {
+        "calamari-gt4histocr": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=0 library < 50) — no lane decision"
+    },
+    "greek-print": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=0 < 50) — rule (e): no routing decision",
+        "a_lite": null,
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": null,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_indep": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_ref": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        }
+      },
+      "n_pages": 114,
+      "n_referenced": 114,
+      "n_paired": 0,
+      "n_gate": 0,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 0,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "calamari-gt4histocr": null,
+        "gemini-3.1-flash-lite": null,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": null,
+      "delta": {
+        "median": null,
+        "ci95": null,
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "untied": 0,
+        "p_sign": null,
+        "share_le_minus_005": null
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "calamari-gt4histocr": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "calamari-gt4histocr": null,
+        "gemini-3.1-flash-lite": null
+      },
+      "loops": {
+        "calamari-gt4histocr": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=0 library < 50) — no lane decision"
+    },
+    "latin-1500-1699": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=36 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.028,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 36,
+          "n": 36,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "calamari-gt4histocr": 0.707,
+          "gemini-3.1-flash-lite": 0
+        },
+        "invention_indep": {
+          "calamari-gt4histocr": 0.707,
+          "gemini-3.1-flash-lite": 0.192
+        },
+        "invention_ref": {
+          "calamari-gt4histocr": 0.738,
+          "gemini-3.1-flash-lite": 0.231
+        }
+      },
+      "n_pages": 36,
+      "n_referenced": 36,
+      "n_paired": 36,
+      "n_gate": 15,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 15,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 21,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "calamari-gt4histocr": 0.285,
+        "gemini-3.1-flash-lite": 0.067,
+        "gemini-3.1-flash-lite-b": 0.067
+      },
+      "ref_median_cer_ci95": [
+        0.057,
+        0.082
+      ],
+      "delta": {
+        "median": 0.188,
+        "ci95": [
+          0.131,
+          0.476
+        ],
+        "wins": 3,
+        "losses": 33,
+        "ties": 0,
+        "untied": 36,
+        "p_sign": 0,
+        "share_le_minus_005": 0.028
+      },
+      "noise_floor": {
+        "n": 36,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "calamari-gt4histocr": 14,
+        "gemini-3.1-flash-lite": 2
+      },
+      "invention_median": {
+        "calamari-gt4histocr": 0.738,
+        "gemini-3.1-flash-lite": 0.231
+      },
+      "loops": {
+        "calamari-gt4histocr": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=15 library < 50) — no lane decision"
+    },
+    "latin-1700+": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=39 < 50) — rule (e): no routing decision",
+        "a_lite": "degraded",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.026,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": 0,
+          "repeat_pages_identical": 37,
+          "n": 37,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_indep": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_ref": {
+          "calamari-gt4histocr": null,
+          "gemini-3.1-flash-lite": null
+        }
+      },
+      "n_pages": 42,
+      "n_referenced": 42,
+      "n_paired": 39,
+      "n_gate": 0,
+      "n_by_stratum": {
+        "eebo-tcp-5488": 0,
+        "eebo-tcp-latin-5660": 0,
+        "english-ia-5124": 0,
+        "ref-ws": 39,
+        "greek": 0,
+        "greek-ext": 0,
+        "greek-ext2": 0
+      },
+      "median_cer": {
+        "calamari-gt4histocr": 0.181,
+        "gemini-3.1-flash-lite": 0.007,
+        "gemini-3.1-flash-lite-b": 0.008
+      },
+      "ref_median_cer_ci95": [
+        0.003,
+        0.019
+      ],
+      "delta": {
+        "median": 0.154,
+        "ci95": [
+          0.041,
+          0.283
+        ],
+        "wins": 2,
+        "losses": 36,
+        "ties": 1,
+        "untied": 38,
+        "p_sign": 0,
+        "share_le_minus_005": 0.026
+      },
+      "noise_floor": {
+        "n": 37,
+        "median_delta0": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "catastrophic": {
+        "calamari-gt4histocr": 11,
+        "gemini-3.1-flash-lite": 2
+      },
+      "invention_median": {
+        "calamari-gt4histocr": null,
+        "gemini-3.1-flash-lite": null
+      },
+      "loops": {
+        "calamari-gt4histocr": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": true,
+        "catastrophic_le_ref_plus_1": false,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=0 library < 50) — no lane decision"
+    }
+  }
+}

@@ -23,6 +23,8 @@ const state = {
   books: [] as Book[],
   tenants: [{ slug: 'bhutan', id: TENANT, status: 'active' }] as Array<{ slug: string; id: string; status: string }>,
   mongoDown: false,
+  /** Book-set reads that fail before Mongo answers again (a hiccup, #6426). */
+  bookReadFailures: 0,
   bookQueries: [] as Array<Record<string, unknown>>,
 };
 
@@ -45,6 +47,7 @@ const fakeDb = {
         project: () => ({ toArray: async () => state.books.filter(b => matches(b, q)) }),
         toArray: async () => {
           if (state.mongoDown) throw new Error('mongo down');
+          if (name === 'books' && state.bookReadFailures > 0) { state.bookReadFailures--; throw new Error('connection reset'); }
           return name === 'books' ? state.books.filter(b => matches(b, q)) : [];
         },
       };
@@ -69,6 +72,7 @@ beforeEach(async () => {
   rpc.mockReset();
   vi.resetModules();
   state.mongoDown = false;
+  state.bookReadFailures = 0;
   state.bookQueries = [];
   state.books = [
     ...OWN.map(id => ({ id, tenantId: TENANT, visible: true, slug: id })),
@@ -114,9 +118,29 @@ describe('resolveSearchScope', () => {
   it('is CLOSED when Mongo cannot produce the book set, and does not cache the failure', async () => {
     const { resolveSearchScope } = await import('@/lib/tenant-search-scope');
     state.mongoDown = true;
-    expect((await resolveSearchScope(headers({ 'x-tenant-id': TENANT }))).kind).toBe('closed');
+    expect(await resolveSearchScope(headers({ 'x-tenant-id': TENANT }))).toMatchObject({ kind: 'closed', transient: true });
     state.mongoDown = false;
     expect((await resolveSearchScope(headers({ 'x-tenant-id': TENANT }))).kind).toBe('tenant');
+  });
+
+  it('survives ONE failed book-set read — a hiccup does not close the reading room (#6426)', async () => {
+    const { resolveSearchScope } = await import('@/lib/tenant-search-scope');
+    state.bookReadFailures = 1;
+    const scope = await resolveSearchScope(headers({ 'x-tenant-id': TENANT }));
+    expect(scope.kind).toBe('tenant');
+    expect(state.bookQueries).toHaveLength(2);
+    // Two failures in a row still close it; it never opens to global.
+    vi.resetModules();
+    const fresh = await import('@/lib/tenant-search-scope');
+    state.bookReadFailures = 2;
+    expect((await fresh.resolveSearchScope(headers({ 'x-tenant-id': TENANT }))).kind).toBe('closed');
+  });
+
+  it('an unknown tenant is closed but NOT transient; a failed tenant lookup is transient', async () => {
+    const { resolveSearchScope } = await import('@/lib/tenant-search-scope');
+    expect(await resolveSearchScope(headers({ 'x-tenant-slug': 'no-such-tenant' }))).toMatchObject({ kind: 'closed', transient: false });
+    state.mongoDown = true;
+    expect(await resolveSearchScope(headers({ 'x-tenant-slug': 'bhutan' }))).toMatchObject({ kind: 'closed', transient: true });
   });
 });
 
@@ -211,7 +235,7 @@ describe('GET /api/search/semantic on a tenant host', () => {
     const { GET } = await import('@/app/api/search/semantic/route');
     const { NextRequest } = await import('next/server');
     const res = await GET(new NextRequest(url, { headers: h }));
-    return { body: await res.json(), cache: res.headers.get('Cache-Control') };
+    return { status: res.status, body: await res.json(), cache: res.headers.get('Cache-Control'), retryAfter: res.headers.get('Retry-After') };
   };
   // The scoped functions are "not deployed" here, so the route is exercised on
   // its fallback path — the one production runs until the migration is applied.
@@ -249,7 +273,27 @@ describe('GET /api/search/semantic on a tenant host', () => {
     rpc.mockImplementation(() => { throw new Error('the query layer must not be called'); });
     const out = await call('http://nope.sourcelibrary.org/api/search/semantic?q=alchemy', { 'x-tenant-slug': 'no-such-tenant' });
     expect(out.body.results).toEqual([]);
+    expect(out.body.scope).toBe('closed');
+    expect(out.status).toBe(404);
     expect(out.cache).toBe('private, no-store');
     expect(rpc).not.toHaveBeenCalled();
+  });
+
+  it('a book set that cannot be read answers 503 scope:closed — not a 200 "no matches" (#6426)', async () => {
+    rpc.mockImplementation(() => { throw new Error('the query layer must not be called'); });
+    state.mongoDown = true;
+    const out = await call('http://bph.sourcelibrary.org/api/search/semantic?q=alchemy', { 'x-tenant-id': TENANT, 'x-tenant-slug': 'bhutan' });
+    expect(out.status).toBe(503);
+    expect(out.retryAfter).toBe('5');
+    expect(out.body).toMatchObject({ results: [], total: 0, scope: 'closed' });
+    expect(out.cache).toBe('private, no-store');
+    expect(rpc).not.toHaveBeenCalled();
+    // Positive control: the same request with Mongo back is a 200 with the shelf.
+    state.mongoDown = false;
+    rpc.mockImplementation(undeployed);
+    const ok = await call('http://bph.sourcelibrary.org/api/search/semantic?q=alchemy', { 'x-tenant-id': TENANT, 'x-tenant-slug': 'bhutan' });
+    expect(ok.status).toBe(200);
+    expect(ok.body.scope).toBeUndefined();
+    expect(ok.body.results.map((r: any) => r.book_id).sort()).toEqual(OWN);
   });
 });

@@ -8,12 +8,12 @@ import registryData from './registry-data.json';
 export const revalidate = false;
 
 export const metadata: Metadata = {
-  title: 'The Translation Registry — Source Library Research',
+  title: 'The Translation Registry | Source Library Research',
   description:
-    'Which early-modern Latin works have already been translated into English — and who translated them? A work-level registry that credits the translators and links to the translations, the companion to the Translation Gap.',
+    'Which early-modern Latin works have already been translated into English, and who translated them? A work-level registry that credits the translators and links to the translations, the companion to the Translation Gap.',
   alternates: { canonical: '/research/translation-registry' },
   openGraph: {
-    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+    images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
     title: 'The Translation Registry',
     description:
       'The early-modern Latin works that have been Englished, and the translators who did it. The companion to the Translation Gap.',
@@ -63,7 +63,7 @@ export default function TranslationRegistryPage() {
       header={
         <ContentHeader
           title="The Translation Registry"
-          subtitle="The flip side of the Translation Gap. As we check whether each early-modern Latin work has ever been Englished, we are building a registry of the ones that have — crediting the translators who did the work, and linking to the translations that exist. The works that never appear here are the gap."
+          subtitle="The flip side of the Translation Gap. As we check whether each early-modern Latin work has ever been Englished, we are building a registry of the ones that have, crediting the translators who did the work, and linking to the translations that exist. The works that never appear here are the gap."
         />
       }
     >
@@ -75,8 +75,8 @@ export default function TranslationRegistryPage() {
           <Stat n={workHeld.toLocaleString()} label="whose original we hold on Source Library" />
         </div>
         <p className="-mt-4 mb-6 text-base text-stone-500">
-          {totalRecords.toLocaleString()} published-translation records — across the UNESCO Index Translationum, the Library
-          of Congress, scholarly series, and more — collapse to <strong className="text-stone-700">{works.length.toLocaleString()} distinct
+          {totalRecords.toLocaleString()} published-translation records (from the UNESCO Index Translationum, the Library
+          of Congress, scholarly series, and more) collapse to <strong className="text-stone-700">{works.length.toLocaleString()} distinct
           works</strong> once reprints and re-catalogued editions of the same translation are merged. {renCount.toLocaleString()} are
           Renaissance Latin.
         </p>
@@ -84,19 +84,19 @@ export default function TranslationRegistryPage() {
         <p>
           The <Link href="/research/translation-gap" className="text-amber-800 hover:underline">Translation Gap</Link> measures
           what has <em>not</em> been translated: of roughly 366,000 distinct Latin works printed in Europe between 1400
-          and 1700, fewer than 3% have a known English translation. This page is the other half of that same count — the
+          and 1700, fewer than 3% have a known English translation. This page is the other half of that same count: the
           works that <em>have</em> been translated, and the people who translated them.
         </p>
         <p className="mt-4">
-          Every entry was found in an external source — a scholarly series like the I Tatti Renaissance Library or Brill,
-          or a bibliographic catalogue like the UNESCO Index Translationum and the Library of Congress — and matched to its
+          Every entry was found in an external source (a scholarly series like the I Tatti Renaissance Library or Brill,
+          or a bibliographic catalogue like the UNESCO Index Translationum and the Library of Congress) and matched to its
           original in the Universal Short Title Catalogue at the level of the <em>work</em>, not the edition. We only count
           translations made <em>independently</em> of Source Library, so this is a record of the field&rsquo;s collective
           effort, not our own.
         </p>
         <p className="mt-4 text-base text-stone-600">
           <strong className="text-stone-800">A note on &ldquo;in our library.&rdquo;</strong> These published translations
-          are mostly in copyright (Harvard, Brill, Loeb) and are <em>not</em> hosted here — follow the credit to find them.
+          are mostly in copyright (Harvard, Brill, Loeb) and are <em>not</em> hosted here; follow the credit to find them.
           What Source Library holds is the <em>original</em>: we own the source text for {workHeld.toLocaleString()} of
           these works ({workLinkable.toLocaleString()} of them publicly readable now via the <em>Read original</em> link; the
           rest are held but still processing), and other writings by the author for {authorHeld.toLocaleString()} more.
@@ -113,7 +113,7 @@ export default function TranslationRegistryPage() {
             The registry is generated by matching known translations to USTC work-clusters using author identity plus
             rare-token title overlap, with a confidence gate so the credits shown here are trustworthy. It is deliberately
             conservative: a small number of works are still listed under variant spellings, and the obscure long tail of
-            translations is never fully captured — so treat this as a floor on what has been translated, and the gap as a
+            translations is never fully captured, so treat this as a floor on what has been translated, and the gap as a
             floor on what has not.
           </p>
           <p className="mt-4">

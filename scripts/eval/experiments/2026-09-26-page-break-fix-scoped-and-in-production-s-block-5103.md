@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "In production's 8-page block shape the scoped fix wins device breaks 11-3-10 (defective 29% vs 50%, duplication 6 to 1); plain breaks unchanged; A/A floor 18-19."
+status: adopted
+decision: "PAGE_BREAK_SCOPED with adjacent-page OCR flipped ON in translateBatch and translatePage (PR #5170)"
+superseded_by: null
+issue: 5103
+---
 ## 2026-09-26 — Page-break fix, SCOPED and in production's BLOCK shape (#5103, Derek's go): device breaks 11–3–10 with defects 7/24 vs 12/24, plain breaks unchanged, floor dead even
 
 The flip candidate made concrete and measured the way production runs it. **Scope:** `PAGE_BREAK_SCOPED`

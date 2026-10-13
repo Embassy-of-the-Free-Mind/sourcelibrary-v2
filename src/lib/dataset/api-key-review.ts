@@ -61,7 +61,7 @@ export async function reviewKeyRequest(
   const claim = await col.updateOne({ _id, status: 'pending' }, { $set: { status: 'approving' } });
   if (!claim.modifiedCount) return { ok: false, code: 404, error: 'Request not found or already reviewed' };
 
-  const name = pending.organization ? `${pending.name} — ${pending.organization}` : pending.name;
+  const name = pending.organization ? `${pending.name} · ${pending.organization}` : pending.name;
   let minted;
   try {
     minted = await generateApiKey(pending.email, tier, name);

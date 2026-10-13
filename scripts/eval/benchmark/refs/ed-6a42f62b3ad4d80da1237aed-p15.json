@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A16626",
+  "edition": "EEBO-TCP A16626 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a42f62b3ad4d80da1237aed",
+  "page_number": 15,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 20599,
+    "to_char": 23174,
+    "overlap": 0.89,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts sinistra mea consertisque (few extra); ends Quot namque voluminibus Sancti",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:53:01.128Z",
+  "text_location": "repo",
+  "text_sha256": "67adc8d4615f55f76e3fc7c5814cf5b3c9c79c5a9283ef95db45b05a49acc935",
+  "unit": {
+    "chars": 2575
+  }
+}

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 45
+n_pages: 45
+verdict: "Of 45 pages the audit judge flagged for invention, 21 are added notes (Flash 17 vs Lite 4), 14 page-boundary text and only 6 fabricated fill of unreadable source."
+status: informational
+decision: null
+superseded_by: null
+issue: [5274, 5575, 5606]
+---
 <!-- PRIOR ART: scripts/eval/results/translation-corpus-audit-2026-09-30/ (the verdicts this re-reads); eye-notes.md (the earlier by-eye pass, which checked confirmation of flags but did not type the invention flags) — neither separates boundary text from fabrication. -->
 ## 2026-10-02 — What the audit judge calls "invention" (#5274 follow-up, #5575, #5606)
 

@@ -1,0 +1,54 @@
+[
+  {
+    "book_id": "6abeb158896ea18127c82682",
+    "slot": 1,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a Madhyamaka commentary on Mulamadhyamakakarika ch. 7 (refutation of abiding, sthiti), shelved in the dbu ma section where it belongs.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 386,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "སྐྱེ་#ན་ཅི་ཞིག་སྐྱེད་#དུ་ཡོད", "image": "སྐྱེས་ན་ཅི་ཞིག་སྐྱེད་དུ་ཡོད", "problem": "final ས of སྐྱེས dropped; '#' uncertainty markers left in the text", "severity": "minor" },
+          { "ocr": "གནས་པ་ཡང་མི་#གནས་པས", "image": "negation reads as མ/མི at this resolution; the argument requires མ་གནས་པ 'not (yet) abiding'", "problem": "negation particle doubtful, flagged by the engine; both translations take the required sense", "severity": "minor" },
+          { "ocr": "གནས་པ་#རང་གི་བདག་ཉིད་གནས་པར་བྱེད་གྲང་ན", "image": "sense requires གནས་པ་གནས་པས་རང་གི…; the word is not cleanly legible in c2/c3", "problem": "probable dropped instrumental 'by abiding'; both translations restore it", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "ཉིད་མེད་པའི་ཕྱིར་རོ།", "english": "because of not being itself.", "problem": "page-initial fragment (the head noun, likely 'destruction-ness' given the next sentence, is on the previous leaf) rendered as an opaque phrase", "severity": "minor" },
+          { "source": "དེའི་ཚེ་གང་དག་ལ་ལྟོས་ནས་གནས་པ་ཡོད་པར་བརྗོད་པ་གང་དག་…", "english": "At that time, in dependence upon what could one claim endurance exists?", "problem": "relative clause 'those in reference to which abiding is asserted' recast as a separate question; argument intact", "severity": "minor" },
+          { "source": "ཅི་སྟེ་སྐྱེས་པས་སྐྱེད་བྱེད་ན།", "english": "If it is produced after having arisen,", "problem": "'if the already-born produces' made passive; recoverable from the next line", "severity": "minor" },
+          { "source": "གང་མེད་པ་དེས་རང་གི་བདག་ཉིད་གང་ཞིག་ཇི་ལྟར་གནས་པར་བྱེད།", "english": "cause anything, let alone itself, to endure?", "problem": "'anything, let alone' embellishes the source", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཉིད་མེད་པའི་ཕྱིར་རོ།", "english": "because there is no selfhood.", "problem": "page-initial fragment filled with a doctrinally loaded guess ('no selfhood', i.e. absence of self-nature); the context (next sentence: destruction as the mark of a thing, 'if that is absent') points to the absence of destruction, so a reader is told a claim the page does not make", "severity": "moderate" },
+          { "source": "དེའི་ཚེ་གང་དག་ལ་ལྟོས་ནས་གནས་པ་ཡོད་པར་བརྗོད་པ་…", "english": "when we speak of abiding in relation to anything", "problem": "relative clause loosened; argument intact", "severity": "minor" },
+          { "source": "ཅི་སྟེ་སྐྱེས་པས་སྐྱེད་བྱེད་ན།", "english": "If it is produced by what is already born,", "problem": "active rendered passively; meaning kept", "severity": "minor" },
+          { "source": "མ་གནས་པ / གནས་པ", "english": "has not yet stayed / already stayed … abiding", "problem": "one term rendered alternately 'abiding' and 'stayed'", "severity": "minor" }
+        ],
+        "other": [
+          { "note": "OCR uncertainty markers '#' appear in the transcription pane", "severity": "minor", "class": "D1" }
+        ],
+        "prefer": "A",
+        "prefer_reason": "Neither version has a serious error and both render every sentence and verse on the image; A is marginally better because B fills the page-initial fragment with an unsupported doctrinal claim ('no selfhood') where A stays neutral, a moderate-vs-minor difference only.",
+        "confidence": "medium",
+        "adjudication": [
+          { "raised_by": "reviewer1", "version": "A", "claim": "ཅི་སྟེ་སྐྱེས་པས་སྐྱེད་བྱེད་ན passivised as 'produced after having arisen'", "verdict": "confirmed", "why": "Image reads སྐྱེས་པས་སྐྱེད་བྱེད་ན (agentive, active); A's passive is a minor slip, sense recoverable." },
+          { "raised_by": "reviewer1", "version": "B", "claim": "same verse line passivised", "verdict": "confirmed", "why": "Same reading on the image; minor in both." },
+          { "raised_by": "reviewer1", "version": "A", "claim": "'anything, let alone itself' embellishes", "verdict": "confirmed", "why": "Source has only རང་གི་བདག་ཉིད་གང་ཞིག་ཇི་ལྟར; minor." },
+          { "raised_by": "reviewer1", "version": "B", "claim": "page-initial fragment guessed as 'selfhood'", "verdict": "confirmed", "why": "Image line 1 begins ཉིད་མེད་པའི་ཕྱིར་རོ with no head noun; 'selfhood' is supplied, and the next sentence about destruction points elsewhere; I rate it moderate, not minor." },
+          { "raised_by": "reviewer2", "version": "A", "claim": "A renders terminology more precisely and reads more naturally (prefer A)", "verdict": "rejected", "why": "Stylistic preference is not a ground; both are faithful line by line against the image. My preference for A rests on B's supplied 'selfhood' claim instead." },
+          { "raised_by": "reviewer2", "version": "A", "claim": "OCR is error-free (score 5)", "verdict": "rejected", "why": "Image shows སྐྱེས where OCR has སྐྱེ#, and '#' markers remain in the text; minor slips only, score 4." }
+        ]
+      }
+    ],
+    "book_verdict": "A clean Derge folio with near-complete OCR and two faithful English versions of the MMK ch. 7 commentary on abiding; nothing an expert would flag on sight beyond stray '#' uncertainty markers."
+  }
+]

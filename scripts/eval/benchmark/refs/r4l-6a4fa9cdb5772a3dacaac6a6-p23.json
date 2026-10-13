@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A17090",
+  "edition": "Baptistes, siue calumnia tragoedia, auctore Georgio Buchanano Scoto. — STC 3969; ESTC S109468 (1577)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A17090",
+  "origin": "library",
+  "book_id": "6a4fa9cdb5772a3dacaac6a6",
+  "page_number": 23,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 15881,
+    "to_char": 16931,
+    "overlap": 0.522,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "ref matches 'Vtrumque durum' to 'prouocas.'; ref has 'nil' where print reads 'nihil'; microfilm.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      22,
+      23,
+      24
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.489Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "42ce34072cdf520ea6bd2c14a4919c745cd5e88fd1530ad6d6b6f3838da409ed",
+  "unit": {
+    "chars": 1050
+  }
+}

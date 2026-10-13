@@ -8,7 +8,7 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
-import { resolveLanguage, resolveDate, publishedToYear, type LanguageSignal } from '@/lib/resolve-language';
+import { resolveLanguage, resolveDate, publishedToYear, assessIaOcrLanguage, type LanguageSignal } from '@/lib/resolve-language';
 
 export const maxDuration = 300;
 
@@ -292,9 +292,21 @@ export const POST = withCuratorAuth(async (request, session) => {
     const iaLangCollection = (Array.isArray(iaCatalog.collections) ? iaCatalog.collections : [])
       .map((c) => /^booksbylanguage_(.+)$/i.exec(String(c))?.[1])
       .find(Boolean) || null;
+    // #4582: the OCR reading leads only when it is coherent — it is derived
+    // from IA's OCR, so it is noise on the scripts that OCR cannot read.
+    const iaCatalogLang = Array.isArray(iaMetadataRaw.language) ? iaMetadataRaw.language[0] : iaMetadataRaw.language;
     const sourceSignals: LanguageSignal[] = [
-      { value: iaCatalog.ocr_detected_lang as string, source: 'ia_ocr_detected' },
-      { value: Array.isArray(iaMetadataRaw.language) ? iaMetadataRaw.language[0] : iaMetadataRaw.language, source: 'ia_metadata' },
+      {
+        value: iaCatalog.ocr_detected_lang as string,
+        source: 'ia_ocr_detected',
+        discounted: assessIaOcrLanguage({
+          ocrLang: iaCatalog.ocr_detected_lang as string,
+          ocrScripts: iaMetadataRaw.ocr_detected_script,
+          catalogLang: iaCatalogLang || iaLangCollection,
+          callerLang: language,
+        }),
+      },
+      { value: iaCatalogLang, source: 'ia_metadata' },
       { value: iaLangCollection, source: 'ia_collection' },
     ];
     const lang = resolveLanguage({
@@ -328,6 +340,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       ...(work_id ? { work_id } : {}),
       ia_identifier,
       thumbnail: getThumbnailUrl(0),
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
       pages_count: pageCount,
       pages_ocr: 0,
       pages_translated: 0,

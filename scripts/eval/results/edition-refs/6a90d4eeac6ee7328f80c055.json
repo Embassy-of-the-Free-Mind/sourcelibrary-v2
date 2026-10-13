@@ -1,0 +1,99 @@
+{
+  "summary": {
+    "book_id": "6a90d4eeac6ee7328f80c055",
+    "title": "donatus minor una cum Remigio ad usum scholarum anglicanarum pusillorum (Ars minor)",
+    "published": "1510",
+    "source": "EEBO-TCP A73846",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 0,
+    "skips": {
+      "no-window": 4,
+      "guard-refused": 4
+    },
+    "median_char_acc": null,
+    "median_char_acc_windowed": null,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p7",
+      "page": 7,
+      "skipped": "no-window",
+      "overlap": 0.066
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p8",
+      "page": 8,
+      "skipped": "no-window",
+      "overlap": 0.104
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p9",
+      "page": 9,
+      "skipped": "no-window",
+      "overlap": 0.055
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p10",
+      "page": 10,
+      "skipped": "no-window",
+      "overlap": 0.087
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p15",
+      "page": 15,
+      "overlap": 0.435,
+      "probe_words": 253,
+      "ref_chars": 2821,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.665,
+      "char_acc": 0.5949,
+      "char_acc_windowed": 0.4626,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p16",
+      "page": 16,
+      "overlap": 0.387,
+      "probe_words": 259,
+      "ref_chars": 2091,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.693,
+      "char_acc": 0.5633,
+      "char_acc_windowed": 0.6127,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p24",
+      "page": 24,
+      "overlap": 0.387,
+      "probe_words": 277,
+      "ref_chars": 2075,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.574,
+      "char_acc": 0.7282,
+      "char_acc_windowed": 0.5863,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a90d4eeac6ee7328f80c055-p25",
+      "page": 25,
+      "overlap": 0.371,
+      "probe_words": 266,
+      "ref_chars": 2006,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.399,
+      "char_acc": 0.9221,
+      "char_acc_windowed": 0.3518,
+      "skipped": "guard-refused"
+    }
+  ]
+}

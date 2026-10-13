@@ -1,0 +1,51 @@
+[
+  {
+    "book_id": "6abed9a6896ea18127c8ffaa",
+    "slot": 36,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge woodblock folio of a pramāṇa commentary on the unknowability of an omniscient being (staff/staff-bearer argument, non-perception of the pervader); belongs in the Tshad ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 537,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ཐམས་ཅད་མཁྱེན་པའི་ཤེས་པའི་ཞེས་བྱ་ཁྱད་པར་ཅན་", "image": "ཐམས་ཅད་མཁྱེན་པའི་ཤེས་པའི་ཤེས་བྱ་ཁྱད་པར་ཅན་ (as far as the print can be read)", "problem": "ཤེས་བྱ 'knowable' written as the homophone ཞེས་བྱ 'called'; A follows the OCR ('called the cognition')", "severity": "minor" }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "སྐྱེ་བ་མི་སྲིད་པའི་ཕྱིར་ཐམས་ཅད་མཁྱེན་པ་ཉིད་དུ་བརྟག་པར་བྱ་བར་ཐལ་བར་འགྱུར་རོ།", "english": "<meta>continues from previous page: since birth is impossible, it would absurdly follow that one must investigate them as omniscient.</meta>", "problem": "the page's first sentence is put inside the <meta> wrapper instead of the reader text", "severity": "moderate", "class": "T3" },
+          { "source": "འདི་ནི་ཀུན་མཁྱེན་ཞེས་བྱ་བ་ལ་སོགས་པ་སྨོས་ཏེ", "english": "it is said: \"Because this is omniscient,\" and so forth", "problem": "the quoted lemma is 'This one is omniscient'; 'Because' is invented", "severity": "moderate" },
+          { "source": "དངོས་པོ་མཐའ་དག་གི་ཡུལ་ཅན་དེ་ཡང་...ངེས་པར་མི་ནུས་ཏེ", "english": "an observer who has all phenomena as their object cannot ascertain it", "problem": "the subject is the cognition that has all things as object, which cannot be ascertained, not an observer who ascertains", "severity": "minor" },
+          { "source": "ཁྱད་པར་འཛིན་པས་ཁྱད་པར་ཅན་ཡིན་པ་ལ་ཁྱབ་པའི་ཕྱིར་དེ་ཡང་འདི་ལ་མེད་དོ", "english": "that qualifier is also absent in this case", "problem": "what is absent is the apprehension of the qualifier (the pervader), not the qualifier", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཐམས་ཅད་མཁྱེན་པ་ཉིད་དུ་བརྟག་པར་བྱ་བར་ཐལ", "english": "it would follow that everything must be examined as being omniscience itself", "problem": "ཐམས་ཅད་ belongs to ཐམས་ཅད་མཁྱེན་པ་ཉིད 'omniscience' and is also rendered as a separate 'everything', garbling the opening reductio", "severity": "moderate" },
+          { "source": "དེས་སྟོང་པ་ནི་ཐམས་ཅད་མཁྱེན་པ་ཡིན་པ་ཞེས་བྱ་བའི་དོན་ཏོ", "english": "being empty of that means being an omniscient being", "problem": "the elliptical gloss (those empty of knowledge of the omniscient's knowables) is rendered so it reads as 'lacking that knowledge makes one omniscient', which a reader takes as the opposite of the argument; the print itself has no negation", "severity": "moderate" },
+          { "source": "ད་ལྟ་ཉེ་བའི་ཐམས་ཅད་རིག་པ་མ་ཡིན་པ་གང་གིས་ཐམས་ཅད་མཁྱེན་པ་མ་ངེས་པ", "english": "for anyone who does not determine the omniscient one because they do not presently perceive everything", "problem": "drops ཉེ་བ 'near' (the person in the omniscient's presence) and adds a causal link", "severity": "minor" },
+          { "source": "དེ་ནི་དེ་ཡང་ཡིན་ལ་ཤེས་པ་ཡང་ཡིན་པས", "english": "Since that individual is both that very person and that very knowledge", "problem": "misparses the karmadhāraya gloss; still recoverable", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Neither has a serious error (the 'omitted negation' is not in the print); A renders the 'empty of that' gloss and the opening reductio in their intended sense, while B's literal 'being empty of that means being an omniscient being' reads as the opposite of the argument, which outweighs A's invented 'Because' in the lemma and its meta-wrapped first sentence.",
+        "confidence": "medium",
+        "adjudication": [
+          { "raised_by": "reviewer2", "version": "B", "claim": "OCR omits a negative མ་ before ཡིན་པ in 'དེས་སྟོང་པ་ནི་ཐམས་ཅད་མཁྱེན་པ་ཡིན་པ', and B therefore reverses the thesis (serious, T4)", "verdict": "rejected", "why": "Line 3 of the print (c3) reads ཐམས་ཅད་མཁྱེན་པ་ཡིན་པ་ཞེས་བྱ་བའི་དོན་ཏོ with no མ; compare line 1 where རིགས་པ་མ་ཡིན་པས shows the མ clearly. B's rendering is a confusing literal reading of an elliptical gloss (moderate), not a reversal of the text." },
+          { "raised_by": "reviewer2", "version": "A", "claim": "OCR 'མི་ཉེ་བ་ནི་' should be 'མི་ཉེ་བ་དེ་' in line 1", "verdict": "rejected", "why": "The print in c2 is consistent with ནི; meaning unaffected either way." },
+          { "raised_by": "both", "version": "B", "claim": "B splits ཐམས་ཅད་ off the compound in the opening sentence ('everything must be examined as omniscience')", "verdict": "confirmed", "why": "Print reads ཐམས་ཅད་མཁྱེན་པ་ཉིད་དུ་བརྟག་པར་བྱ་བར་ཐལ; ཐམས་ཅད་ is part of the compound. Moderate." },
+          { "raised_by": "reviewer1", "version": "A", "claim": "A frames the lemma as 'Because this is omniscient'", "verdict": "confirmed", "why": "Print: འདི་ནི་ཀུན་མཁྱེན་ཞེས་བྱ་བ — no causal particle. Moderate." },
+          { "raised_by": "reviewer1", "version": "A", "claim": "A puts the first sentence only inside <meta>", "verdict": "confirmed", "why": "The sentence སྐྱེ་བ་མི་སྲིད་པའི་ཕྱིར... is the first line of this page, not the previous one. Moderate." },
+          { "raised_by": "reviewer1", "version": "B", "claim": "B drops ཉེ་བ 'near' in the final clause", "verdict": "confirmed", "why": "Print line 7: ད་ལྟ་ཉེ་བའི་ཐམས་ཅད་རིག་པ་མ་ཡིན་པ. Minor." },
+          { "raised_by": "reviewer1", "version": "A", "claim": "OCR ཞེས་བྱ for ཤེས་བྱ in line 6", "verdict": "confirmed", "why": "Print appears to read ཤེས་པའི་ཤེས་བྱ་ཁྱད་པར་ཅན; minor." }
+        ]
+      }
+    ],
+    "book_verdict": "A correct Derge Tengyur pramāṇa folio with a close OCR. Both English versions follow the argument with only moderate and minor slips; A is slightly better, as B's rendering of the 'empty of that' gloss reads as the opposite of the argument."
+  }
+]

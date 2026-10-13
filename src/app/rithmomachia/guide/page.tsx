@@ -6,7 +6,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Rithmomachia Visual Guide | Source Library',
-  description: 'Learn to play Rithmomachia with illustrated board diagrams — movement, captures, and strategy explained visually.',
+  description: 'Learn to play Rithmomachia with illustrated board diagrams: movement, captures, and strategy explained visually.',
 };
 
 // --- Example board setups ---
@@ -137,10 +137,10 @@ export default function RithmomachiaGuidePage() {
                 />
               }
             >
-              <h3 className="font-serif text-lg text-secondary">Circles &mdash; 1 diagonal</h3>
+              <h3 className="font-serif text-lg text-secondary">Circles: 1 diagonal</h3>
               <p className="text-muted text-sm leading-relaxed">
                 Circles are the simplest piece. They move <strong>one space diagonally</strong> in
-                any direction &mdash; like a bishop taking a single step. In the original sources,
+                any direction, like a bishop taking a single step. In the original sources,
                 Lever &amp; Fulke (1563) describe them as moving &ldquo;like pawns in chess.&rdquo;
               </p>
               <p className="text-muted text-sm leading-relaxed">
@@ -163,9 +163,9 @@ export default function RithmomachiaGuidePage() {
                 />
               }
             >
-              <h3 className="font-serif text-lg text-secondary">Triangles &mdash; 2 orthogonal</h3>
+              <h3 className="font-serif text-lg text-secondary">Triangles: 2 orthogonal</h3>
               <p className="text-muted text-sm leading-relaxed">
-                Triangles leap <strong>exactly 2 squares</strong> in a straight line &mdash; up, down,
+                Triangles leap <strong>exactly 2 squares</strong> in a straight line: up, down,
                 left, or right. They skip over any piece in the way (like a knight&rsquo;s range, but
                 straight).
               </p>
@@ -188,7 +188,7 @@ export default function RithmomachiaGuidePage() {
                 />
               }
             >
-              <h3 className="font-serif text-lg text-secondary">Squares &mdash; 3 orthogonal</h3>
+              <h3 className="font-serif text-lg text-secondary">Squares: 3 orthogonal</h3>
               <p className="text-muted text-sm leading-relaxed">
                 Squares leap <strong>exactly 3 squares</strong> in a straight line. With 4 vertices,
                 they move 4 &minus; 1 = 3 spaces. These are your long-range pieces.
@@ -233,7 +233,7 @@ export default function RithmomachiaGuidePage() {
               </p>
               <p className="text-muted text-sm leading-relaxed">
                 &ldquo;Adjacent&rdquo; means the target is within one move&rsquo;s reach of the
-                attacking piece &mdash; one diagonal for circles, two orthogonal for triangles, etc.
+                attacking piece: one diagonal for circles, two orthogonal for triangles, etc.
               </p>
             </GuideSection>
 
@@ -281,7 +281,7 @@ export default function RithmomachiaGuidePage() {
               <h3 className="font-serif text-lg text-secondary">Siege</h3>
               <p className="text-muted text-sm leading-relaxed">
                 If an enemy piece is <strong>surrounded on all four orthogonal sides</strong> by your
-                pieces (regardless of values), it&rsquo;s captured by siege. No arithmetic needed &mdash;
+                pieces (regardless of values), it&rsquo;s captured by siege. No arithmetic needed;
                 just close the trap.
               </p>
               <p className="text-muted text-sm leading-relaxed">
@@ -310,7 +310,7 @@ export default function RithmomachiaGuidePage() {
                 The highest form of victory: arrange 3 or more of your pieces on the enemy&rsquo;s
                 half of the board in an <strong>arithmetic</strong>, <strong>geometric</strong>, or{' '}
                 <strong>harmonic</strong> progression. These &ldquo;proper victories&rdquo; reflect
-                the game&rsquo;s Boethian roots &mdash; victory through mathematical harmony.
+                the game&rsquo;s Boethian roots: victory through mathematical harmony.
               </p>
             </div>
           </div>

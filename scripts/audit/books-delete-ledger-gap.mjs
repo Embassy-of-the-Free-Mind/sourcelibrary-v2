@@ -7,8 +7,8 @@
  *   1. LEDGER — a book removed from `books` is archived to `deleted_books`
  *      first. That collection *is* the recovery path (`POST /api/books/restore/[id]`),
  *      so a delete that skips it is unrecoverable by design and silent.
- *      Route every removal through `deleteBookArchived()` (src/lib/warehouse.ts
- *      `softDeleteBook`, or scripts/lib/delete-book.mjs) — never a raw
+ *      Route every removal through `deleteBookArchived()` (src/lib/delete-book.ts
+ *      or scripts/lib/delete-book.mjs) — never a raw
  *      `books.deleteOne` / `deleteMany`.
  *   2. IDENTITY — a book's Mongo `_id` is minted once and never changes.
  *      Importers write `{ _id: oid, id: oid.toHexString() }`, so `id` and `_id`
@@ -90,21 +90,16 @@ async function main() {
 
   // ── The resolvable key space ────────────────────────────────────────────
   // A reference resolves if it names a live book by ANY of its public keys.
-  // Warehoused books are live-but-parked, not deleted; deleted_books rows are
-  // recoverable. Both count as "accounted for", and are tracked separately so
-  // the report can say WHICH.
+  // deleted_books rows are recoverable, so they count as "accounted for" and
+  // are tracked separately so the report can say WHICH. (A third bucket,
+  // warehoused, went with the warehouse collections, retired 2026-10, #5470.)
   const live = { id: new Set(), _id: new Set(), slug: new Set() };
-  const warehouse = new Set();
   const ledger = new Set();
 
   for await (const b of db.collection('books').find({}, { projection: { id: 1, slug: 1 } })) {
     if (b.id) live.id.add(String(b.id));
     live._id.add(String(b._id));
     if (b.slug) live.slug.add(String(b.slug));
-  }
-  for await (const b of db.collection('books_warehouse').find({}, { projection: { id: 1 } })) {
-    warehouse.add(String(b._id));
-    if (b.id) warehouse.add(String(b.id));
   }
   for await (const b of db.collection('deleted_books').find({}, { projection: { id: 1, original_id: 1 } })) {
     ledger.add(String(b._id));
@@ -116,7 +111,6 @@ async function main() {
     const r = String(ref);
     if (live.id.has(r) || live.slug.has(r)) return live._id.has(r) ? 'live' : 'live_id_only';
     if (live._id.has(r)) return 'live';
-    if (warehouse.has(r)) return 'warehoused';
     if (ledger.has(r)) return 'in_ledger';
     return 'unresolved';
   };
@@ -124,7 +118,7 @@ async function main() {
   const sources = {};
   const addRef = (source, ref, evidence) => {
     if (!ref) return;
-    const s = (sources[source] ||= { total: 0, live: 0, live_id_only: 0, warehoused: 0, in_ledger: 0, unresolved: 0, unresolved_refs: new Map(), churn_refs: new Set() });
+    const s = (sources[source] ||= { total: 0, live: 0, live_id_only: 0, in_ledger: 0, unresolved: 0, unresolved_refs: new Map(), churn_refs: new Set() });
     s.total++;
     const verdict = classify(ref);
     s[verdict]++;
@@ -225,7 +219,6 @@ async function main() {
       if (HEX24.test(ref)) or.push({ _id: new ObjectId(ref) });
       const found =
         (await db.collection('books').findOne({ $or: or }, { projection: { _id: 1 } })) ||
-        (await db.collection('books_warehouse').findOne({ id: ref }, { projection: { _id: 1 } })) ||
         (await db.collection('deleted_books').findOne({ id: ref }, { projection: { _id: 1 } }));
       if (found) {
         raced.add(ref);
@@ -239,7 +232,6 @@ async function main() {
   const report = {
     generated_at: new Date().toISOString(),
     books_live: live.id.size,
-    books_warehoused: warehouse.size,
     deleted_books_rows: ledgerRows,
     deleted_books_newest: newest?.deleted_at?.toISOString?.() || null,
     identity_churn: churn,
@@ -249,7 +241,6 @@ async function main() {
 
   console.log('=== books delete-ledger + identity gap (#4450) ===\n');
   console.log(`books (live):        ${live.id.size}`);
-  console.log(`books_warehouse:     ${warehouse.size / 2 | 0} (approx, keyed twice)`);
   console.log(`deleted_books rows:  ${ledgerRows}  newest deleted_at: ${report.deleted_books_newest}`);
   console.log(`\nidentity churn (books whose _id was re-minted): ${churn.total}`);
   for (const [day, n] of churn.topRemintDays) console.log(`   ${day}  ${n}`);
@@ -259,14 +250,13 @@ async function main() {
     console.log(`    references:            ${s.total}`);
     console.log(`    live:                  ${s.live}`);
     console.log(`    live but _id-churned:  ${s.live_id_only}   (resolve by \`id\`, dead by \`_id\`)`);
-    console.log(`    warehoused:            ${s.warehoused}`);
     console.log(`    in deleted_books:      ${s.in_ledger}   (recoverable)`);
     console.log(`    UNRESOLVED:            ${s.unresolved}`);
     const sample = [...s.unresolved_refs.entries()].slice(0, 5);
     for (const [ref, ev] of sample) console.log(`       e.g. ${ref} ${ev ? JSON.stringify(ev).slice(0, 160) : ''}`);
     report.sources[name] = {
       total: s.total, live: s.live, live_id_only: s.live_id_only,
-      warehoused: s.warehoused, in_ledger: s.in_ledger, unresolved: s.unresolved,
+      in_ledger: s.in_ledger, unresolved: s.unresolved,
       unresolved_sample: sample.map(([ref, ev]) => ({ ref, evidence: ev })),
       churn_sample: [...s.churn_refs].slice(0, 20),
     };
@@ -285,7 +275,7 @@ async function main() {
   console.log(`\nUNIQUE unresolved book references across all sources: ${allUnresolved.size}`);
   console.log(
     allUnresolved.size === 0
-      ? '\nOK — every stored reference resolves to a live, warehoused, or ledgered book.'
+      ? '\nOK — every stored reference resolves to a live or ledgered book.'
       : '\nFAIL — the ids above name no book under either key and no ledger row. Investigate before re-import.'
   );
 

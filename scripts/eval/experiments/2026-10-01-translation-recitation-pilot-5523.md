@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: agreement
+languages: [la, grc, it, fr]
+scripts: [Latn, Grek]
+canons: []
+n_books: 36
+n_pages: 36
+verdict: "Recitation of public-domain translations not detected: 4/36 served pages share a 12+ word run, below the 20% two-human-translator baseline; 0/5 recited by eye."
+status: informational
+decision: "None needed; no routing or prompt change proposed (#5523)"
+superseded_by: null
+issue: 5523
+---
 ## 2026-10-01 · Translation recitation pilot: does a served English page reproduce a published translation instead of translating the page? (#5523)
 
 **Question.** For a famous work, a translator model may emit a remembered published English translation instead of translating our transcription. That costs fidelity (a different edition or reading) and, for a modern translation, rights. Unmeasured until now (#5495 limitations).

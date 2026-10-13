@@ -68,7 +68,7 @@ export function Equivalents({ kg, lowKg, highKg }: EquivalentsProps) {
   return (
     <figure className="my-8 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-6">
       <figcaption className="mb-1 text-xs font-mono uppercase tracking-wide text-stone-500 dark:text-stone-400">
-        Equivalents — at our central estimate of {fmtCO2(kg)}
+        Equivalents: at our central estimate of {fmtCO2(kg)}
       </figcaption>
       <div className="mb-6 text-stone-700 dark:text-stone-300 text-sm">
         Same amount of CO₂ as:

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [la]
+scripts: [Latn]
+canons: []
+n_books: 71
+n_pages: 71
+verdict: "A Qwen3-8B LoRA student trained on our Latin translations scores 0.83 below flash-lite [-1.06, -0.59] on 71 referenced pages and reverses meaning on 27% of pages vs 6%."
+status: rejected
+decision: "Preregistered stop: no GEX45 run, no routing change (#5793)"
+superseded_by: null
+issue: 5793
+---
 ## 2026-10-04 · Can an open 8B model trained on our own Latin translations translate as well as flash-lite? (#5793)
 <!-- PRIOR ART: PREREGISTRATION-translation-student-5793.md (written and pushed before training); 2026-10-03-xlref-t1-latin-vs-reference-5695.md (the 71 test pages, their references, the lite arm and its noise floor, reused unchanged); 2026-10-03-open-engine-print-5660.md (the RunPod pattern); #4320 (the August Vertex tune of flash-lite on Greek, scored by chrF against Gemini text, not against human references). -->
 

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: [agreement, judged]
+languages: []
+scripts: []
+canons: []
+n_books: 327
+n_pages: 327
+verdict: "A fresh second read finds most garbled pages but imprecisely (P 0.3-0.45 vs the judge, gate 0.8 not met); the same reads separate wrong-leaf pages cleanly, 7 of 7."
+status: undecided
+decision: null
+superseded_by: null
+issue: [5313, 5376]
+---
 ## 2026-09-30 — Does disagreement between two reads of one page find garbled OCR? (#5313, #5376)
 
 **Headline: a fresh second read finds most garbled pages but not precisely (precision 0.3–0.45 against the judge; the 0.8

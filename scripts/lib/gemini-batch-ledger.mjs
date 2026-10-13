@@ -24,6 +24,21 @@
  *                              nothing will collect it when it finishes.
  * A key that cannot be listed (or a window whose order breaks) makes the section UNKNOWN —
  * never clear (measurement-instruments.md).
+ *
+ * Three rules added 2026-10-09 (#6333), each from a finding that misled or went quiet:
+ *   - A finding does not age out. It was demoted to WARN 48 h after Gemini ended the job, and it
+ *     left the hourly listing window at 72 h, so an unfixed loss stopped paging without anyone
+ *     having collected or discarded it. Now every finding is a FAIL until a store says the job
+ *     was collected or discarded on purpose, and the hourly run carries forward the findings of
+ *     its previous run that have left the window (carryForwardFindings).
+ *   - "SUCCEEDED" is the job's state, not its requests'. Gemini ends a job SUCCEEDED when every
+ *     request in it was cancelled (`batchStats.failedRequestCount == requestCount`, nothing
+ *     billed, nothing to collect): 14 of the 55 findings of 2026-10-09 were that, 30,000
+ *     requests in two `ep-*` jobs among them. settleFindings() reads Gemini's own tally and
+ *     counts those as `empty`, not as paid work lost.
+ *   - A discard is a record: discardBatchJob() (scripts/lib/end-batch-job.mjs) writes batch_jobs
+ *     status `superseded` with a reason and the saved result's hash, on the job's own row or on
+ *     a new one when no batch_jobs row names the job.
  */
 
 import { keyFingerprint } from '../workers/lib/batch-reconcile.mjs';
@@ -34,14 +49,12 @@ export const LIST_PAGE_SIZE = 100;
 /** A finished job whose record is still open is fine for this long after Gemini ended it. */
 export const IN_FLIGHT_GRACE_H = 3;
 /**
- * Findings older than this (since Gemini ended the job) are reported as WARN, not FAIL: the FAIL
- * is for work the pipeline is losing NOW. Older ones are NOT necessarily gone — the 48 h
- * expiry applies to unfinished jobs, not to results: on 2026-10-08 scripts/audit/
- * batch-recovery-count.mjs found 283 SUCCEEDED jobs from 2026-09-15 (23 days old) with their
- * output still retrievable (27 result files ACTIVE, 256 inline). Re-collecting them is a
- * separate, human decision (#6276).
+ * How long a finding carried forward from an earlier run is still asked about at Gemini. Past
+ * this the hourly run stops re-reading it and the daily full walk owns it. Results outlive the
+ * 48 h job expiry by weeks (2026-10-08: 283 SUCCEEDED jobs from 2026-09-15 still downloadable),
+ * so this is a bound on work per run, not a claim that the output is gone.
  */
-export const ACTIONABLE_H = 48;
+export const CARRY_FORWARD_DAYS = 45;
 /** Hourly window: jobs Gemini CREATED within this many hours. Covers the 48 h expiry plus slack. */
 export const HOURLY_WINDOW_H = 72;
 
@@ -227,10 +240,10 @@ export function jobForUsageId(batchJobId, byKey) {
  * Classify every listed job against what our stores say about it.
  * `records`: Map<geminiName, record[]>. Returns { findings, counts, ok_counts }.
  */
-export function classifyLedger({ jobs, records, now = new Date(), graceH = IN_FLIGHT_GRACE_H, actionableH = ACTIONABLE_H }) {
+export function classifyLedger({ jobs, records, now = new Date(), graceH = IN_FLIGHT_GRACE_H }) {
   const t = ms(now);
   const findings = [];
-  const ok = { collected: 0, in_flight: 0, discarded: 0, twin_collected: 0, alive_tracked: 0, dead: 0 };
+  const ok = { collected: 0, in_flight: 0, discarded: 0, twin_collected: 0, alive_tracked: 0, dead: 0, empty: 0 };
   for (const job of jobs.values()) {
     const recs = records.get(job.name) || [];
     const ended = ms(job.endTime || job.updateTime || job.createTime);
@@ -238,7 +251,8 @@ export function classifyLedger({ jobs, records, now = new Date(), graceH = IN_FL
     const pages = Math.max(0, ...recs.map((r) => r.pages || 0)) || job.request_count || 0;
     const base = { name: job.name, display_name: job.displayName || null, state: job.state, created: job.createTime || null,
       ended: job.endTime || null, since_end_h: r1(sinceEndH), pages, key_index: job.key_index ?? null,
-      records: recs.map((r) => `${r.store}:${r.status}`).slice(0, 4) };
+      records: recs.map((r) => `${r.store}:${r.status}`).slice(0, 4),
+      ...(job.carried ? { carried: true } : {}), ...(job.output_gone ? { output_gone: true } : {}) };
     if (SUCCEEDED.has(job.state)) {
       if (recs.some((r) => r.collected)) { ok.collected++; continue; }
       if (recs.some((r) => r.discarded)) { ok.discarded++; continue; }
@@ -247,7 +261,8 @@ export function classifyLedger({ jobs, records, now = new Date(), graceH = IN_FL
       if (recs.length && recs.every((r) => r.twin) && recs.some((r) => r.twin_collected)) { ok.twin_collected++; continue; }
       if (recs.some((r) => r.open) && sinceEndH < graceH) { ok.in_flight++; continue; }
       const cls = recs.length ? 'succeeded_uncollected' : 'unknown_to_db';
-      findings.push({ ...base, class: cls, actionable: sinceEndH < actionableH });
+      // `actionable` is always true: a finding stands until collected or discarded (#6333).
+      findings.push({ ...base, class: cls, actionable: true });
     } else if (ALIVE.has(job.state)) {
       if (recs.length && !recs.some((r) => r.open || r.collected)) {
         findings.push({ ...base, class: 'terminal_while_alive', actionable: true, since_end_h: null });
@@ -256,7 +271,7 @@ export function classifyLedger({ jobs, records, now = new Date(), graceH = IN_FL
       ok.dead++;
     }
   }
-  findings.sort((a, b) => Number(b.actionable) - Number(a.actionable) || (a.since_end_h ?? -1) - (b.since_end_h ?? -1));
+  findings.sort((a, b) => (a.since_end_h ?? -1) - (b.since_end_h ?? -1));
   return { findings, counts: countFindings(findings), ok_counts: ok, listed: jobs.size };
 }
 
@@ -331,6 +346,17 @@ export async function readLedgerRecords(db, jobs, { supabaseUsage = null, log = 
       const lane = await db.collection(store).find({ gemini_name: { $in: ch } },
         { projection: { gemini_name: 1, status: 1, submitted_at: 1, created_at: 1 } }).toArray();
       for (const r of lane) add(records, r.gemini_name, recordFromLaneJob(store, r));
+    }
+  }
+  // A lane row written BEFORE the job was created at Gemini carries no gemini_name if the
+  // submitter died in between; it is keyed by the display name it gave the job (#6333).
+  const byDisplay = new Map();
+  for (const j of jobs.values()) if (j.displayName && !records.has(j.name)) byDisplay.set(j.displayName, j.name);
+  for (const ch of chunk([...byDisplay.keys()], 2000)) {
+    for (const store of LANE_STORES) {
+      const lane = await db.collection(store).find({ _id: { $in: ch } },
+        { projection: { gemini_name: 1, status: 1, submitted_at: 1, created_at: 1 } }).toArray();
+      for (const r of lane) if (!r.gemini_name) add(records, byDisplay.get(r._id), recordFromLaneJob(store, r));
     }
   }
   // Usage rows, only where no Mongo store says the job was read.
@@ -440,25 +466,84 @@ export function makeSupabaseUsageReader({ url, key, fetchImpl = fetch }) {
   };
 }
 
+/** REST and SDK name the same states BATCH_STATE_* and JOB_STATE_*. */
+const normState = (st) => String(st || 'UNKNOWN').replace(/^BATCH_STATE_/, 'JOB_STATE_');
+
 /**
- * Request counts for actionable findings with no page count of their own (batches.get is free);
- * bounded so a big backlog cannot stall the run. Raw REST, because the SDK's Job drops
- * `metadata.batchStats` (measured 2026-10-08, @google/genai batches.get).
+ * Gemini's own tally for one job: { state, requests, ok, failed, displayName, createTime, endTime },
+ * or { missing: true } on a 404, or null when it could not be read. Raw REST, because the SDK's
+ * Job drops `metadata.batchStats` (measured 2026-10-08, @google/genai batches.get).
  */
-export async function fillRequestCounts(findings, keys, { budget = 300, fetchImpl = fetch } = {}) {
+export async function readBatchStats(name, key, { fetchImpl = fetch } = {}) {
+  try {
+    const r = await fetchImpl(`https://generativelanguage.googleapis.com/v1beta/${name}`, {
+      headers: { 'x-goog-api-key': key }, signal: AbortSignal.timeout(20_000) });
+    if (r.status === 404) return { missing: true };
+    if (!r.ok) return null;
+    const md = (await r.json())?.metadata || {};
+    const st = md.batchStats || null;
+    return {
+      state: normState(md.state), displayName: md.displayName || null, createTime: md.createTime || null, endTime: md.endTime || null,
+      has_stats: Boolean(st), requests: Number(st?.requestCount || 0), ok: Number(st?.successfulRequestCount || 0), failed: Number(st?.failedRequestCount || 0),
+    };
+  } catch { return null; }
+}
+
+/** Every request failed or was cancelled: Gemini billed nothing and there is nothing to collect. */
+export function isEmptyJob(stats) {
+  return Boolean(stats && stats.has_stats && stats.state === 'JOB_STATE_SUCCEEDED' && stats.requests > 0 && stats.ok === 0 && stats.failed === stats.requests);
+}
+
+/**
+ * Read Gemini's tally for every finished finding (batches.get is free), fill in the request
+ * count where our stores gave no page count, and take out of the findings every job whose
+ * requests ALL failed: it is counted in `ok.empty`. A job whose tally cannot be read stays a
+ * finding. Bounded so a big backlog cannot stall the run; past the budget, findings stay.
+ * Mutates `res` ({ findings, ok_counts }) and returns { asked, empty }.
+ */
+export async function settleFindings(res, keys, { budget = 400, fetchImpl = fetch } = {}) {
   let asked = 0;
-  for (const f of findings) {
-    if (f.pages || !f.actionable || asked >= budget) continue;
+  const kept = [];
+  const empty = [];
+  for (const f of res.findings) {
     const key = keys[f.key_index ?? 0];
-    if (!key) continue;
+    if (f.class === 'terminal_while_alive' || f.output_gone || !key || asked >= budget) { kept.push(f); continue; }
     asked++;
-    try {
-      const r = await fetchImpl(`https://generativelanguage.googleapis.com/v1beta/${f.name}`, {
-        headers: { 'x-goog-api-key': key }, signal: AbortSignal.timeout(20_000) });
-      if (!r.ok) continue;
-      const n = Number((await r.json())?.metadata?.batchStats?.requestCount || 0);
-      if (n) { f.pages = n; f.pages_from = 'gemini requestCount'; }
-    } catch { /* leave 0 */ }
+    const stats = await readBatchStats(f.name, key, { fetchImpl });
+    if (stats && !stats.missing) {
+      f.requests = stats.requests; f.requests_ok = stats.ok;
+      if (!f.pages && stats.requests) { f.pages = stats.requests; f.pages_from = 'gemini requestCount'; }
+    }
+    if (isEmptyJob(stats)) empty.push(f); else kept.push(f);
   }
-  return asked;
+  res.findings = kept;
+  res.ok_counts.empty = (res.ok_counts.empty || 0) + empty.length;
+  return { asked, empty: empty.map((f) => ({ name: f.name, display_name: f.display_name, requests: f.requests })) };
+}
+
+/**
+ * Findings of an earlier run whose jobs are no longer in this run's listing (the hourly walk
+ * stops at 72 h): each is asked about by name and put back among the jobs, so the stores are
+ * read for it again and it stays a finding until one of them says collected or discarded.
+ *   - Gemini still holds it      → the job as Gemini describes it now, `carried`
+ *   - Gemini answers 404         → kept as it was last seen, `carried` + `output_gone`: the
+ *                                  result can no longer be collected, only discarded on purpose
+ *   - Gemini could not be asked  → kept as it was last seen, `carried`
+ * Mutates `jobs` (Map<name, job>); returns the number carried.
+ */
+export async function carryForwardFindings(prevFindings, jobs, keys, { now = new Date(), maxDays = CARRY_FORWARD_DAYS, fetchImpl = fetch } = {}) {
+  let carried = 0;
+  for (const f of prevFindings || []) {
+    if (!f?.name || jobs.has(f.name) || f.class === 'terminal_while_alive') continue;
+    const last = ms(f.ended || f.created);
+    if (Number.isFinite(last) && ms(now) - last > maxDays * 24 * HOUR) continue;
+    const key = keys[f.key_index ?? 0];
+    const stats = key ? await readBatchStats(f.name, key, { fetchImpl }) : null;
+    const seen = { name: f.name, displayName: f.display_name || '', state: 'JOB_STATE_SUCCEEDED', createTime: f.created, endTime: f.ended, key_index: f.key_index ?? null, carried: true };
+    if (stats?.missing) jobs.set(f.name, { ...seen, output_gone: true });
+    else if (stats) jobs.set(f.name, { ...seen, displayName: stats.displayName || seen.displayName, state: stats.state, createTime: stats.createTime || seen.createTime, endTime: stats.endTime || seen.endTime });
+    else jobs.set(f.name, seen);
+    carried++;
+  }
+  return carried;
 }

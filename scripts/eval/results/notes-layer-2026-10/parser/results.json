@@ -1,0 +1,156 @@
+{
+ "generated": "2026-10-06T10:45:47.158Z",
+ "issue": 5942,
+ "measure": "exact string comparison of the reader pipeline output (prepareNotesMarkdown.processedText), today against text + annotations",
+ "n": 800,
+ "exact": 800,
+ "inexact": {},
+ "on": {
+  "identical": 783,
+  "blank-line-run": 13,
+  "edge-whitespace": 3,
+  "content": 1
+ },
+ "off": {
+  "identical": 676,
+  "edge-whitespace": 112,
+  "spacing-only": 4,
+  "content": 1,
+  "line-kept-that-notes-off-deletes": 7
+ },
+ "metadata_on_equal": 799,
+ "description_only_flag_differs": {
+  "on": 0,
+  "off": 0
+ },
+ "annotations": 2870,
+ "pages_with_annotations": 551,
+ "by_type": {
+  "gloss-model": 827,
+  "note": 1222,
+  "definition": 105,
+  "image": 18,
+  "original": 698
+ },
+ "anchors": {
+  "gloss-model": {
+   "more than once": 190,
+   "once": 637
+  },
+  "all": {
+   "more than once": 292,
+   "once": 2289,
+   "stands alone (no phrase)": 289
+  },
+  "note": {
+   "once": 944,
+   "stands alone (no phrase)": 250,
+   "more than once": 28
+  },
+  "definition": {
+   "more than once": 34,
+   "once": 71
+  },
+  "image": {
+   "stands alone (no phrase)": 18
+  },
+  "original": {
+   "more than once": 40,
+   "once": 637,
+   "stands alone (no phrase)": 21
+  }
+ },
+ "page_level": {
+  "summary": 412,
+  "keywords": 413,
+  "meta": 314
+ },
+ "pages_with_single_brackets": 172,
+ "pages_with_legacy_brackets": 0,
+ "by_prompt_version": {
+  "1": {
+   "pages": 2,
+   "annotations": 1,
+   "on_identical": 2,
+   "off_identical": 1
+  },
+  "2": {
+   "pages": 3,
+   "annotations": 0,
+   "on_identical": 3,
+   "off_identical": 3
+  },
+  "11": {
+   "pages": 175,
+   "annotations": 605,
+   "on_identical": 172,
+   "off_identical": 145
+  },
+  "12": {
+   "pages": 4,
+   "annotations": 14,
+   "on_identical": 4,
+   "off_identical": 1
+  },
+  "13": {
+   "pages": 216,
+   "annotations": 818,
+   "on_identical": 214,
+   "off_identical": 185
+  },
+  "v1": {
+   "pages": 48,
+   "annotations": 52,
+   "on_identical": 46,
+   "off_identical": 46
+  },
+  "v2": {
+   "pages": 99,
+   "annotations": 627,
+   "on_identical": 99,
+   "off_identical": 83
+  },
+  "v10": {
+   "pages": 181,
+   "annotations": 486,
+   "on_identical": 171,
+   "off_identical": 146
+  },
+  "v5.2026-02": {
+   "pages": 17,
+   "annotations": 193,
+   "on_identical": 17,
+   "off_identical": 15
+  },
+  "none": {
+   "pages": 34,
+   "annotations": 12,
+   "on_identical": 34,
+   "off_identical": 34
+  },
+  "v5.1.2026-03b": {
+   "pages": 12,
+   "annotations": 60,
+   "on_identical": 12,
+   "off_identical": 8
+  },
+  "v6": {
+   "pages": 8,
+   "annotations": 0,
+   "on_identical": 8,
+   "off_identical": 8
+  },
+  "v5.1.2026-03c": {
+   "pages": 1,
+   "annotations": 2,
+   "on_identical": 1,
+   "off_identical": 1
+  }
+ },
+ "pct": {
+  "exact": 100,
+  "on_identical": 97.9,
+  "off_identical": 84.5,
+  "off_identical_or_edge_ws": 98.5
+ }
+}

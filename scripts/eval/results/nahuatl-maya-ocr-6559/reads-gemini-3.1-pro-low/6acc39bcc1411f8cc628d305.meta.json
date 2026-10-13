@@ -1,0 +1,23 @@
+{
+ "page_id": "6acc39bcc1411f8cc628d305",
+ "book_id": "6acc39bac1411f8cc628d21f",
+ "page_number": 230,
+ "cli": "agy",
+ "cli_version": "1.3.3",
+ "model": "gemini-3.1-pro-low",
+ "started_at": "2026-10-12T02:57:15.797Z",
+ "finished_at": "2026-10-12T02:58:13.793Z",
+ "exit": 0,
+ "error_class": null,
+ "chars": 964,
+ "nudged": false,
+ "rereads": 0,
+ "calls": 1,
+ "chatter": null,
+ "image_url": "https://archive.org/download/ayer_ms_1467/page/n229/full/full/0/default.jpg",
+ "image_bytes": 951126,
+ "image_sha256": "8cde377a8a95728a283a528b3c1b13a045345572c242e161ceb67ce3a2673c01",
+ "prompt_sent_chars": 12939,
+ "prompt_sent_hash": "7d966656eff7d7e2",
+ "stderr_tail": ""
+}

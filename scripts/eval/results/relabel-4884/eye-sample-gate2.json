@@ -1,0 +1,654 @@
+{
+  "seed": 4884,
+  "n": 40,
+  "drawn_from": 1056,
+  "per_pattern": {
+    "Greek → Latin": 26,
+    "Greek → Latin-script vernacular": 6,
+    "Latin → Greek": 3,
+    "Sanskrit → English": 3,
+    "Sanskrit → Hindi": 2
+  },
+  "rows": [
+    {
+      "n": 1,
+      "book_id": "6a5088c378825bd7fde8a2ca",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        16,
+        31,
+        9,
+        24
+      ],
+      "title": "De vita et morte Aristotelis :mit Glosse und Kommentar"
+    },
+    {
+      "n": 2,
+      "book_id": "6a26e73265df759218cd810f",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        198,
+        357,
+        109,
+        278
+      ],
+      "title": "The Science Of The Sacred Word Pranava Vada Of Gargayana Vol 1 By Bhagavan Das Theosophical Society"
+    },
+    {
+      "n": 3,
+      "book_id": "6a505b1d78825bd7fddccb1e",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        225,
+        406,
+        125,
+        316
+      ],
+      "title": "Commentarii Jac. Zabarellae Patavini, In III. Aristot. Libros de Anima : Nvnc Demvm a Mendis Qvamplvrimis Typographicis, quae priore editione irrepserant, summo labore purgati, & in Germania commodioribus & distinctioribus typis in Studiosorum vtilitatem editi. Cvm Indice Qvaestionvm Dvbiarvm, Propositionum, Rerum & Verborum locupletissimo, apprimeque necessario"
+    },
+    {
+      "n": 4,
+      "book_id": "6a5080e478825bd7fde46201",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        14,
+        27,
+        9,
+        22
+      ],
+      "title": "De Clepsydrarum Tum vulgatioribus, tum rarioribus quibusdam, itemq[ue] nonnullis aliis horum similibus, Phaenomenis & effectibus, Horumq[ue] omnium genuinis causis, Exercitatio Physica, Quae possit esse instar Commentarii ad Aristotelis Problema VIII. Sectionis XVI. Eam adiutus ... Sub Praesidio ... Dn. M. Joh. Christophori Sturmii ... publice defendendam suscipiet Hieronymus Müller/ Norimb. Ad d. 29. Augusti, A. MDCLXXIV."
+    },
+    {
+      "n": 5,
+      "book_id": "6a50826078825bd7fde54eca",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        7,
+        14,
+        5,
+        10
+      ],
+      "title": "Theses Generales Ex Vniversa Aristotelis Logica Desvmptae Et Consentientibvs"
+    },
+    {
+      "n": 6,
+      "book_id": "6a26e5f065df759218cd7fac",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        124,
+        223,
+        69,
+        174
+      ],
+      "title": "Science Of Social Organisation Of The Laws Of Manu In The Light Of Theosophy Bhagavan Das Volume 2"
+    },
+    {
+      "n": 7,
+      "book_id": "6a50885178825bd7fde87005",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        34,
+        61,
+        19,
+        48
+      ],
+      "title": "Philosophorum hac nostra tempestate Monarchae Augustini Niphi Suessani In duo decimum meta ta physika seu metaphysices Aristotelis et Averrois volumen ad aetatis nostrae decus Antonius Iustinianum patritium Venetum Commentarii in lucem castigatissimi nuperrime prodeuntes"
+    },
+    {
+      "n": 8,
+      "book_id": "6a50868478825bd7fde70426",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → Italian",
+      "from": "Greek",
+      "to": "Italian",
+      "visible": false,
+      "pages": [
+        243,
+        438,
+        135,
+        340
+      ],
+      "title": "Copiosissima parafrase ... nel primo libro della retorica d'Aristotele :come nei sequenti Tomi nel 2 et 3 libro della ret.. 3"
+    },
+    {
+      "n": 9,
+      "book_id": "6a4a313387ace2493ebd8465",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        272,
+        491,
+        151,
+        382
+      ],
+      "title": "Patrologia Graeca, Vol. 124 (ed. Migne)"
+    },
+    {
+      "n": 10,
+      "book_id": "6a50844a78825bd7fde6769f",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        99,
+        180,
+        55,
+        140
+      ],
+      "title": "In Aristotelis Physica Explanatio"
+    },
+    {
+      "n": 11,
+      "book_id": "69aebcb00d3d5e01e132cbf4",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → English",
+      "from": "Greek",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        215,
+        388,
+        119,
+        302
+      ],
+      "title": "Works of Philo Judaeus (Loeb Greek-English) - Vol. 1"
+    },
+    {
+      "n": 12,
+      "book_id": "6a50833778825bd7fde5da58",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → German",
+      "from": "Greek",
+      "to": "German",
+      "visible": false,
+      "pages": [
+        121,
+        218,
+        67,
+        170
+      ],
+      "title": "Über die Seele"
+    },
+    {
+      "n": 13,
+      "book_id": "6a51ebed689f6d0dbe2e198d",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        13,
+        24,
+        7,
+        18
+      ],
+      "title": "Tabulæ ad grammatica Græca introductoriæ in quibus succinctè compingitur, brevissima, sed tamen expedita, singularum partium orationis declinabilium, variandi ratio : accessit vestibuli vice, ad eandem linguam ..."
+    },
+    {
+      "n": 14,
+      "book_id": "6a4aac8a14a573f4677179b2",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": false,
+      "pages": [
+        27,
+        48,
+        15,
+        38
+      ],
+      "title": "[De educatione puerorum.] Plutarchi Chêronei opusculum de liberorum institutione. ... Edition [Anr. ed.]"
+    },
+    {
+      "n": 15,
+      "book_id": "69c807766c6f3cc53c84589c",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": true,
+      "pages": [
+        15,
+        28,
+        9,
+        22
+      ],
+      "title": "[Greek] Tractatus in terraemotum"
+    },
+    {
+      "n": 16,
+      "book_id": "6a50883e78825bd7fde85fa1",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        125,
+        226,
+        69,
+        176
+      ],
+      "title": "Quaestiones disputatae in Physicam Aristotelis :cum mantissa de modis iuxta angelicam mentem et interpretationem S. Thomae Aquinatis"
+    },
+    {
+      "n": 17,
+      "book_id": "6a50754d78825bd7fde17100",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        24,
+        43,
+        13,
+        34
+      ],
+      "title": "Aristotelis Stagiritae, Pepli Fragmentvm, Sive Heroum Homericorum Epitaphia : Nunc primum autori suo restituta, Latine versa, et annotationibus illustrata, per Gvlielmvm Cantervm. His adiecta sunt propter argumenti similitudinem Ausonij Epitaphia Heroum, qui bello Troiano interfuerunt, ... emendata"
+    },
+    {
+      "n": 18,
+      "book_id": "6a50573478825bd7fddb5618",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        62,
+        111,
+        35,
+        86
+      ],
+      "title": "Aristotelis Stagiritae, De Sensu & Sensili"
+    },
+    {
+      "n": 19,
+      "book_id": "6990664f2ec9f7db57179fb3",
+      "gate_pattern": "Sanskrit → Hindi",
+      "pattern": "Sanskrit → Hindi",
+      "from": "Sanskrit",
+      "to": "Hindi",
+      "visible": true,
+      "pages": [
+        37,
+        68,
+        21,
+        52
+      ],
+      "title": "Uttara Kalamrita"
+    },
+    {
+      "n": 20,
+      "book_id": "6a50740b78825bd7fde075bc",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        70,
+        127,
+        39,
+        100
+      ],
+      "title": "Commentarius Tertius In Libros De Coelo; De Generatione Et Corruptione; De Anima; Et Metaphysicam Aristotelis"
+    },
+    {
+      "n": 21,
+      "book_id": "6a5080a478825bd7fde44d6c",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        41,
+        74,
+        23,
+        58
+      ],
+      "title": "Dilucida expositio in Prologum Aver. in Post. Aristotelis"
+    },
+    {
+      "n": 22,
+      "book_id": "6a507e3578825bd7fde361d9",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        3,
+        6,
+        1,
+        8
+      ],
+      "title": "Theses philosophicae ex octo libris Physicorum Aristotelis depromptae ..."
+    },
+    {
+      "n": 23,
+      "book_id": "6a5065bb78825bd7fdde1a02",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → French",
+      "from": "Greek",
+      "to": "French",
+      "visible": false,
+      "pages": [
+        40,
+        73,
+        25,
+        56
+      ],
+      "title": "Manuel des époux, ou maximes de conduite dans le mariage : Traité de Plutarque"
+    },
+    {
+      "n": 24,
+      "book_id": "6a50885e78825bd7fde87716",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        34,
+        61,
+        19,
+        48
+      ],
+      "title": "Commentaria in libros Posteriorum Aristotelis"
+    },
+    {
+      "n": 25,
+      "book_id": "6a508ae578825bd7fdea47b2",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        5,
+        10,
+        3,
+        8
+      ],
+      "title": "Theses Ethicae. De Magnificentia : Ex Libro Qvarto Ethicorvm Aristotelis Nicomachiorum desumptae ..."
+    },
+    {
+      "n": 26,
+      "book_id": "699068c790f6a221d3a9a90f",
+      "gate_pattern": "Sanskrit → Hindi",
+      "pattern": "Sanskrit → Hindi",
+      "from": "Sanskrit",
+      "to": "Hindi",
+      "visible": true,
+      "pages": [
+        20,
+        37,
+        11,
+        30
+      ],
+      "title": "Rama Ajna Prasna"
+    },
+    {
+      "n": 27,
+      "book_id": "6a50660278825bd7fdde475a",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        17,
+        28,
+        9,
+        22
+      ],
+      "title": "Jacobi Stapulensis introductio in Ethicen Aristotelis : ad studiosum viru[m] Germanu[m] de Ganay, decanu[m] Bellouacensem ..."
+    },
+    {
+      "n": 28,
+      "book_id": "6a508bc878825bd7fdeac724",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        33,
+        60,
+        19,
+        46
+      ],
+      "title": "Dialogus, De animae principatu"
+    },
+    {
+      "n": 29,
+      "book_id": "6a4a3a10b6ee5dd19d98b51c",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        220,
+        397,
+        121,
+        310
+      ],
+      "title": "Corpus Scriptorum Historiae Byzantinae, Vol. 18 (Bonn ed., Niebuhr)"
+    },
+    {
+      "n": 30,
+      "book_id": "6a5049a578825bd7fdd86728",
+      "gate_pattern": "Latin → Greek",
+      "pattern": "Latin → Greek",
+      "from": "Latin",
+      "to": "Greek",
+      "visible": false,
+      "pages": [
+        230,
+        415,
+        127,
+        324
+      ],
+      "title": "Aristotelus Organon : = Aristotelis Organon"
+    },
+    {
+      "n": 31,
+      "book_id": "6a50895578825bd7fde91595",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        11,
+        22,
+        7,
+        16
+      ],
+      "title": "Parallela minora"
+    },
+    {
+      "n": 32,
+      "book_id": "6a508ae978825bd7fdea4805",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → German",
+      "from": "Greek",
+      "to": "German",
+      "visible": false,
+      "pages": [
+        45,
+        82,
+        25,
+        64
+      ],
+      "title": "Speculum Servorum Dei oder Prediger Spiegel : in zwo Christliche Erinnerungs Predigten ; die Erste aus ... 2 Tim. 4 ... bey bestattung ... Michaelis Platonis Weilands Pfarrhers zu Görtzigk, die Ander aus dem 134. Psalm ... bey der Introduction ... Pfarrern zu Görtzig Thomae Teucheri ..."
+    },
+    {
+      "n": 33,
+      "book_id": "6a5082ba78825bd7fde57e56",
+      "gate_pattern": "Greek → Latin-script vernacular",
+      "pattern": "Greek → German",
+      "from": "Greek",
+      "to": "German",
+      "visible": false,
+      "pages": [
+        118,
+        213,
+        65,
+        166
+      ],
+      "title": "Biographien des Plutarchs. Th. 5"
+    },
+    {
+      "n": 34,
+      "book_id": "6a5083b078825bd7fde6060a",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        208,
+        375,
+        115,
+        292
+      ],
+      "title": "Politica"
+    },
+    {
+      "n": 35,
+      "book_id": "6a50558778825bd7fddaabbe",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        56,
+        101,
+        31,
+        78
+      ],
+      "title": "Meteorologicorum libri IV"
+    },
+    {
+      "n": 36,
+      "book_id": "6a50833778825bd7fde5da57",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        110,
+        199,
+        61,
+        156
+      ],
+      "title": "Ad Nicomachum de moribus libri X"
+    },
+    {
+      "n": 37,
+      "book_id": "6952ca6e77f38f6761bc3fb2",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": true,
+      "pages": [
+        86,
+        157,
+        49,
+        122
+      ],
+      "title": "Marini vita Procli"
+    },
+    {
+      "n": 38,
+      "book_id": "6a50560d78825bd7fddadc41",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        13,
+        24,
+        7,
+        20
+      ],
+      "title": "Theoremata Physica Ad Octo Libros Physicos Aristotelis"
+    },
+    {
+      "n": 39,
+      "book_id": "6a5059c578825bd7fddc6c10",
+      "gate_pattern": "Greek → Latin",
+      "pattern": "Greek → Latin",
+      "from": "Greek",
+      "to": "Latin",
+      "visible": false,
+      "pages": [
+        113,
+        204,
+        63,
+        158
+      ],
+      "title": "Explicatio primi et secundi libri Posteriorum Aristotelis : lectionibus Quadragintaquinque compendiosè, et artificiosè comprehensa"
+    },
+    {
+      "n": 40,
+      "book_id": "6a26df9f65df759218cd6ea3",
+      "gate_pattern": "Sanskrit → English",
+      "pattern": "Sanskrit → English",
+      "from": "Sanskrit",
+      "to": "English",
+      "visible": false,
+      "pages": [
+        66,
+        119,
+        37,
+        92
+      ],
+      "title": "Bhrigu Prashna Nadi Rao R. G. ( Astrology)"
+    }
+  ]
+}

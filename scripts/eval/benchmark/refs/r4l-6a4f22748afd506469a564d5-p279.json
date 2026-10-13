@@ -1,0 +1,54 @@
+{
+  "source": "CAMENA historicapolitica/knipschild1",
+  "edition": "Tractatus Politico-Historico-Iuridicus De Iuribus Et Privilegiis Civitatum Imperialium, Tam Generalibus, Quam Specialibus, Et De Earundem Magistratuum Officio : In Sex Libros Divisus. Editio Tertia Prioribus Multo Auctior. Scilicet Accedunt in hac Editione Dn. Ioh. Iacobi Schmaussii [...] Notae insi",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit",
+  "origin": "library",
+  "book_id": "6a4f22748afd506469a564d5",
+  "page_number": 279,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1449580,
+    "to_char": 1455747,
+    "overlap": 0.463,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.255 two-column: ref matches 'mino jussus fuerit' to 'Augustanae confessionis' (catchword addictis)",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "mixed",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1700s",
+    "pages": [
+      277,
+      278,
+      279
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.717Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "55b18b084952c27ec48931b902f133fad574a5be2226b86545f09bff1612d7f6",
+  "unit": {
+    "chars": 6167
+  }
+}

@@ -19,9 +19,11 @@ const SITE = 'https://sourcelibrary.org';
 
 /** Alt text for the share card, in the card's own language. */
 const OG_ALT: Record<Locale, string> = {
-  en: 'Source Library — Digitizing and translating ancient texts',
-  es: 'Source Library — Digitalización y traducción de textos antiguos',
+  en: 'Source Library: Digitizing and translating ancient texts',
+  es: 'Source Library: Digitalización y traducción de textos antiguos',
   la: 'Source Library: textus antiqui photographice descripti et conversi',
+  nl: 'Source Library: oude teksten gedigitaliseerd en vertaald',
+  zh: 'Source Library：古籍数字化与翻译',
 };
 
 /** Prefixed locales whose share-card art exists under `public/` (`og-image-<iso>-*.jpg`). */
@@ -32,6 +34,8 @@ export const OG_LOCALE: Record<Locale, string> = {
   en: 'en_US',
   es: 'es_ES',
   la: 'la_VA',
+  nl: 'nl_NL',
+  zh: 'zh_CN',
 };
 
 /**

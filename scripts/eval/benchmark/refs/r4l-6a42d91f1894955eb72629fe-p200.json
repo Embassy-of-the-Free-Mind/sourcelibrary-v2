@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A33731",
+  "edition": "De secretione animali cogitata authore Gulielmo Cole, M.D. — Wing C5041; ESTC R12693 (1674)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A33731",
+  "origin": "library",
+  "book_id": "6a42d91f1894955eb72629fe",
+  "page_number": 200,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 153538,
+    "to_char": 154436,
+    "overlap": 0.444,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-1)",
+    "at": "2026-10-06T10:13:11.615684+00:00",
+    "note": "Microfilm; '(aëre sive admisso' to 'conficiendis' matches; padding at both ends.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      198,
+      199,
+      200
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.777Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "577c825a3b599d565d73b70956b7c07b0ba138895b13890a6b418cfffe009cd6",
+  "unit": {
+    "chars": 898
+  }
+}

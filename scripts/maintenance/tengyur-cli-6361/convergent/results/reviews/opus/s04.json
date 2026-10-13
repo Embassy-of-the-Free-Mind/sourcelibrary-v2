@@ -1,0 +1,36 @@
+[
+  {
+    "book_id": "6abeb246896ea18127c82d97", "slot": 4,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཝ (Derge Tengyur, vol. 99)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "Madhyamaka commentary (subcommentary on a Madhyamaka syllogism against arising from self, with Sāṃkhya objection) in a Derge woodblock folio: belongs in the Derge Tengyur dbu ma section.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          { "source": "བོང་གི་རྭ་ལས་འཇིག་རྟེན་གསུམ་སྐྱེ་བ་སེལ་བ་བཞིན་ནོ་ཞེས་ཟེར་རོ", "english": "the horn of a rabbit eliminates the arising of the three worlds,\" they say", "problem": "the example clause is construed with the rabbit's horn as agent; the source is 'just as refuting the arising of the three worlds from a rabbit's horn' (A renders it correctly two paragraphs later)", "severity": "moderate" },
+          { "source": "རང་དགར་ཞེས་བྱ་བ་ནི་བདག་ཉིད་ཀྱི་བསམ་པ་སྟེ་ངེས་སོ", "english": "\"Arbitrarily\" means according to one's own preconceptions.", "problem": "'ངེས་སོ' left untranslated; 'preconceptions' slightly loaded for བསམ་པ", "severity": "minor" }
+        ],
+        "tr_score_B": 4,
+        "tr_errors_B": [
+          { "source": "ཕྱོགས་སྔ་མ་ཞེས་བྱ་བ་ནི་དབུ་མ་པས་སུན་དབྱུང་བའི་ཕྱོགས་སྔ་མ", "english": "refers to the position previously refuted by the Madhyamaka", "problem": "སུན་དབྱུང་བའི is 'to be refuted'; B says the Mādhyamika already refuted it, confusing which statement was earlier (the statement, not the refutation)", "severity": "moderate" },
+          { "source": "ཅིའི་ཕྱིར་ཞེ་ན་དབུ་མ་པས་སུན་དབྱུང་བའི་ཕྱོགས་སྔ་མ་འདི་ལྟར་སྐྱེ་བར་སྨྲ་བ་དག་ལས།", "english": "Why? Because of this prior position to be refuted by the Madhyamaka regarding those who assert arising.", "problem": "the sentence runs on to the next folio ('among those who assert arising, [some ...]'); B closes it as a complete, garbled reason instead of marking the continuation", "severity": "moderate", "class": "T6" },
+          { "source": "ཕྱོགས་སྔ་མ", "english": "\"prior position\" <note>original: \"purvapaksa\"</note>", "problem": "note calls a Sanskrit reconstruction the 'original'; the page is Tibetan", "severity": "minor" }
+        ],
+        "other": [],
+        "prefer": "A",
+        "prefer_reason": "Both are faithful in the analysis of subject, probandum, reason and example; A's one slip (opening example clause) is corrected later on the page, while B misstates the opponent position as 'previously refuted' and closes the run-on final sentence wrongly.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean Derge folio with an accurate transcription as far as I can read it at this resolution; both English versions are serviceable with only moderate slips, A slightly better."
+  }
+]

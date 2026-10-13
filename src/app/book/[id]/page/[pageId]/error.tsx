@@ -36,7 +36,7 @@ export default function PageEditorError({
           This page didn&apos;t load
         </h2>
         <p className="text-stone-600 mb-6">
-          Something went wrong while opening this page of the book. Try again — nothing is lost.
+          Something went wrong while opening this page of the book. Try again; nothing is lost.
         </p>
         {process.env.NODE_ENV === 'development' && (
           <pre className="text-left text-xs bg-stone-100 p-4 rounded-lg mb-6 overflow-auto max-h-32 text-red-700">

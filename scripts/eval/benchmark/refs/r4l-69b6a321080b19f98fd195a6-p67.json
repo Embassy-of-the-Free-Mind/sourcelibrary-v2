@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A67566",
+  "edition": "De cometis ubi de cometarum natura differitur : nova cometarum theoria, novissimi cometæ historia, proponitur / prælectio, Oxonii habita à Setho Wardo, in celeberrima academia, astronomiæ professore S — Wing W820; ESTC R35233 (1653)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A67566",
+  "origin": "library",
+  "book_id": "69b6a321080b19f98fd195a6",
+  "page_number": 67,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 49182,
+    "to_char": 51120,
+    "overlap": 0.586,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (c-2)",
+    "at": "2026-10-06T10:13:04+00:00",
+    "note": "Cometarum Natura p.26; ref matches 'explicare deinceps decrevi' to 'Saxum sudat nitendo ne(q;)'; TCP splits atq; into at/que.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      67,
+      68,
+      69
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.787Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "46b1037eb9a729f4ef895bf81e88d8c8f8b317af8680986c5c65fc341a4611ec",
+  "unit": {
+    "chars": 1938
+  }
+}

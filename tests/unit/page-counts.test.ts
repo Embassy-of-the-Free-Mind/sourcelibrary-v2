@@ -39,6 +39,7 @@ import {
   READABLE_IN_ENGLISH_FILTER as READABLE_IN_ENGLISH_FILTER_MJS,
   READABLE_IN_ENGLISH_EXPR as READABLE_IN_ENGLISH_EXPR_MJS,
   isReadableInEnglish as isReadableInEnglishMjs,
+  catalogTranslationColumns,
 } from '../../scripts/lib/page-counts.mjs';
 import {
   NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_TS,
@@ -51,6 +52,7 @@ import {
   READABLE_IN_ENGLISH_EXPR as READABLE_IN_ENGLISH_EXPR_TS,
   isReadableInEnglish as isReadableInEnglishTs,
 } from '../../src/lib/page-counts';
+import { READABLE_IN_ENGLISH_OR } from '../../src/lib/books-catalog';
 
 describe('page-counts convention (#3293)', () => {
   it('VISIBLE_PAGE_MATCH selects only page_number > 0', () => {
@@ -596,5 +598,49 @@ describe('readable_in_english: the named headline view (#5286)', () => {
   it('the Mongo filter and aggregation forms are identical across twins', () => {
     expect(READABLE_IN_ENGLISH_FILTER_TS).toEqual(READABLE_IN_ENGLISH_FILTER_MJS);
     expect(READABLE_IN_ENGLISH_EXPR_TS).toEqual(READABLE_IN_ENGLISH_EXPR_MJS);
+  });
+});
+
+describe('readable_in_english view (#5288)', () => {
+  const cases: Array<[string, boolean, boolean]> = [
+    // [rung, english_original, readable_in_english]
+    ['no_pages', false, false], ['no_pages', true, false],
+    ['no_text', false, false], ['no_text', true, false],
+    ['transcribing', false, false], ['transcribing', true, false],
+    ['transcribed', false, false], ['transcribed', true, true],
+    ['translating', false, false], ['translating', true, true],
+    ['readable', false, true], ['readable', true, true],
+    ['complete', false, true], ['complete', true, true],
+  ];
+
+  it('is the design table, in both copies', () => {
+    for (const [rung, english_original, want] of cases) {
+      expect(isReadableInEnglishMjs({ rung, english_original }), `${rung}/${english_original}`).toBe(want);
+      expect(isReadableInEnglishTs({ rung, english_original }), `${rung}/${english_original}`).toBe(want);
+    }
+    expect(isReadableInEnglishMjs(null)).toBe(false);
+    expect(isReadableInEnglishTs(undefined)).toBe(false);
+  });
+
+  it('the PostgREST expression names the same rungs as the predicate', () => {
+    expect(READABLE_IN_ENGLISH_OR).toBe(
+      'translation_rung.in.(readable,complete),and(english_original.is.true,translation_rung.in.(transcribed,translating))',
+    );
+  });
+
+  it('a 25-page preview of a 694-page book is not readable; an English original transcribed is', () => {
+    const preview = catalogTranslationColumns({ pages_count: 694, pages_ocr: 25, pages_translated: 25, pages_blank: 0, language: 'Latin' });
+    expect(preview).toEqual({ translation_rung: 'transcribing', english_original: false });
+    const english = catalogTranslationColumns({ pages_count: 200, pages_ocr: 200, pages_translated: 0, pages_blank: 0, language: 'English' });
+    expect(isReadableInEnglishMjs({ rung: english.translation_rung, english_original: english.english_original })).toBe(true);
+  });
+
+  it('catalogTranslationColumns prefers a current stamp, recomputes a stale or missing one', () => {
+    const counts = { pages_count: 100, pages_ocr: 100, pages_translated: 100, pages_blank: 0, language: 'Latin' };
+    const current = { ...counts, translation_state: { rung: 'readable', english_original: false, version: TRANSLATION_STATE_VERSION_MJS } };
+    expect(catalogTranslationColumns(current).translation_rung).toBe('readable');
+    const stale = { ...counts, translation_state: { rung: 'readable', english_original: false, version: TRANSLATION_STATE_VERSION_MJS - 1 } };
+    expect(catalogTranslationColumns(stale).translation_rung).toBe('complete');
+    expect(catalogTranslationColumns(counts).translation_rung).toBe('complete');
   });
 });

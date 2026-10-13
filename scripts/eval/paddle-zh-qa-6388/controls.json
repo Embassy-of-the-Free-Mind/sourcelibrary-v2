@@ -1,0 +1,606 @@
+{
+ "rule": "see header of prepare.mjs",
+ "bases_tried": [
+  {
+   "book_id": "6a3cbe96f9474f825c163b7e",
+   "page_number": 123,
+   "kept": false,
+   "why": "kanripo scored 0.0568"
+  },
+  {
+   "book_id": "6a3cc05bec254ff6cae05e86",
+   "page_number": 86,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3cefd38642f0445b1613ae",
+   "page_number": 142,
+   "kept": false,
+   "why": "kanripo scored 0.0397"
+  },
+  {
+   "book_id": "6a3cc239f9474f825c175c31",
+   "page_number": 34,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3c6da001fe4f593c1bd1ab",
+   "page_number": 269,
+   "kept": false,
+   "why": "kanripo scored 0.0215"
+  },
+  {
+   "book_id": "6a3ceeab4701a906f10eb73c",
+   "page_number": 182,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3c615940c88a541d8f0170",
+   "page_number": 35,
+   "kept": false,
+   "why": "kanripo scored 0.0972"
+  },
+  {
+   "book_id": "6a3cf08a8642f0445b165512",
+   "page_number": 32,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3c6e9c01fe4f593c1c4507",
+   "page_number": 121,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3cef0f8642f0445b160518",
+   "page_number": 146,
+   "kept": false,
+   "why": "kanripo scored 0.0676"
+  },
+  {
+   "book_id": "6a3c7a6301fe4f593c216e75",
+   "page_number": 85,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3cb77657c1f37219c4ffeb",
+   "page_number": 55,
+   "kept": false,
+   "why": "dice 0.781"
+  },
+  {
+   "book_id": "6a3cbc28ec254ff6cadee1df",
+   "page_number": 74,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3cc2a5af74b230c69082a8",
+   "page_number": 45,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3c7b2001fe4f593c21c5e7",
+   "page_number": 49,
+   "kept": false,
+   "why": "dice 0.296"
+  },
+  {
+   "book_id": "6a3cb99b3dce6cfad7495182",
+   "page_number": 30,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3cbea5ec254ff6cae01bd9",
+   "page_number": 41,
+   "kept": false,
+   "why": "kanripo scored 0.027"
+  },
+  {
+   "book_id": "6a3ceb3695fcd4556305480e",
+   "page_number": 132,
+   "kept": false,
+   "why": "dice not_screened"
+  },
+  {
+   "book_id": "6a3c6ac1af3c49b59c5e9d03",
+   "page_number": 117,
+   "kept": false,
+   "why": "kanripo scored 0.0559"
+  },
+  {
+   "book_id": "6a3c6ca401fe4f593c1b3538",
+   "page_number": 91,
+   "kept": false,
+   "why": "dice 0.715"
+  },
+  {
+   "book_id": "6a3cc029f9474f825c16e7fb",
+   "page_number": 51,
+   "kept": false,
+   "why": "kanripo scored 0.0479"
+  },
+  {
+   "book_id": "6a3cb5773dce6cfad74834d3",
+   "page_number": 57,
+   "kept": false,
+   "why": "kanripo scored 0.0313"
+  },
+  {
+   "book_id": "6a3c79ae01fe4f593c2118d3",
+   "page_number": 129,
+   "kept": true,
+   "why": null
+  },
+  {
+   "book_id": "6a3cba723dce6cfad749bb79",
+   "page_number": 51,
+   "kept": false,
+   "why": "kanripo scored 0.0242"
+  },
+  {
+   "book_id": "6a3c647639b4508b04e2740c",
+   "page_number": 96,
+   "kept": false,
+   "why": "dice 0.793"
+  },
+  {
+   "book_id": "6a3c66deaf3c49b59c5ce196",
+   "page_number": 178,
+   "kept": false,
+   "why": "dice 0.692"
+  },
+  {
+   "book_id": "6a3c6e3f01fe4f593c1c0e3a",
+   "page_number": 36,
+   "kept": true,
+   "why": null
+  }
+ ],
+ "plants": [
+  {
+   "uid": "plant|6a3cc05bec254ff6cae05e86|86",
+   "book_id": "6a3cc05bec254ff6cae05e86",
+   "title": "易經存疑·卷一 (vol 1)",
+   "page_id": "6a3cc05bec254ff6cae05edc",
+   "page_number": 86,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc05bec254ff6cae05e86/86.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n仁意\n朱子小註亦有兩說一說體仁如體物相似人在那\n仁裏做骨子仁是箇道理須是有這箇人言語甘說臨之方體得他\n做箇骨子一說體仁不是將仁來為我之體我之體\n便都是仁曰以仁為體者猶言自家\n都是仁今按前一說不是當以後一說為主曰不是\n將仁來為我之體者葢若將仁來為我之體猶與仁\n為无實德而便都是仁則我即仁仁與我為一矣畢",
+   "kanripo_cer": 0,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n仁意\n朱子小註亦有兩說一說體仁如體物相似人在那\n仁裏做骨子仁是箇道理須是有這箇人方體得他\n做箇骨子一說體仁不是將仁來為我之體我之體\n便都是仁曰以仁為體者猶言自家一箇身體元來\n都是仁今按前一說不是當以後一說為主曰不是\n將仁來為我之體者葢若將仁來為我之體猶與仁\n為二我之體便都是仁則我即仁仁與我為一矣畢",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 5,
+     "col": 16,
+     "planted": "言語甘說臨之",
+     "original": "",
+     "before": "須是有這箇人"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 14,
+     "planted": "",
+     "original": "一箇身體元來",
+     "before": "體者猶言自家"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 10,
+     "col": 1,
+     "planted": "无實德而",
+     "original": "二我之體",
+     "before": "為"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3cc239f9474f825c175c31|34",
+   "book_id": "6a3cc239f9474f825c175c31",
+   "title": "豐川易說·卷四 (vol 3)",
+   "page_id": "6a3cc239f9474f825c175d10",
+   "page_number": 34,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc239f9474f825c175c31/34.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n也說人无實德而徒以言語甘說臨之其能大亨以\n正乎雖往无利矣然三以柔處剛亦有知憂之無用之用也今象知\n憂則窮而能變亦自可以无咎也盖能知口舌之不\n可感人而實感以德自是无咎之道耳\n象曰甘臨位咎不長也\n孔子之傳臨六三云云何也曰言甘臨无攸利者以\n其位不當故行不中而无利耳若有用之用則過而\n知改自處以誠咎自可免不終長也",
+   "kanripo_cer": 0,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n也說人无實德而徒以言語甘說臨之其能大亨以\n正乎雖往无利矣然三以柔處剛亦有知憂之象知\n憂則窮而能變亦自可以无咎也盖能知口舌之不\n可感人而實感以德自是无咎之道耳\n象曰甘臨位不當也旣憂之咎不長也\n孔子之傳臨六三云云何也曰言甘臨无攸利者以\n其位不當故行不中而无利耳若能旣憂之則過而\n知改自處以誠咎自可免不終長也",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 4,
+     "col": 18,
+     "planted": "無用之用也今",
+     "original": "",
+     "before": "剛亦有知憂之"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 5,
+     "planted": "",
+     "original": "不當也旣憂之",
+     "before": "象曰甘臨位"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 9,
+     "col": 13,
+     "planted": "有用之用",
+     "original": "能旣憂之",
+     "before": "中而无利耳若"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3ceeab4701a906f10eb73c|182",
+   "book_id": "6a3ceeab4701a906f10eb73c",
+   "title": "御定淵鑑類函·卷四百十八~卷四百二十 (vol 229)",
+   "page_id": "6a3ceeab4701a906f10eb7f2",
+   "page_number": 182,
+   "image": "https://images.sourcelibrary.org/archived/6a3ceeab4701a906f10eb73c/182.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n遊欲加刑焉遊曰大王知有用之用未寤無用之用也\n今臣請為大王翔之乃取而騎焉遂翻然飛去莫知所\n為之倡主於治之 戰國䇿曰莊辛謂楚襄王曰黃鵠遊於江海俯啄\n鰋鯉仰嚙菱藕奮其六翮自以為無患與人無爭不知\n夫射者大脩弧矢治矰繳上故晝遊江\n湖夕調鼎俎 古今注曰漢惠帝五年七月黃鵠二集\n蕭池 漢書曰黃鵠下建章宮太液池中公今四國之\n諸侯王列侯宗室金錢 東觀漢記曰章帝至岱宗柴",
+   "kanripo_cer": 0.0183,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n遊欲加刑焉遊曰大王知有用之用未寤無用之用也\n今臣請為大王翔之乃取而騎焉遂翻然飛去莫知所\n之 戰國䇿曰莊辛謂楚襄王曰黃鵠遊於江海俯啄\n鰋鯉仰嚙菱藕奮其六翮自以為無患與人無爭不知\n夫射者大脩弧矢治矰繳將加已百仞之上故晝遊江\n湖夕調鼎俎 古今注曰漢惠帝五年七月黃鵠二集\n蕭池 漢書曰黃鵠下建章宮太液池中公卿上壽賜\n諸侯王列侯宗室金錢 東觀漢記曰章帝至岱宗柴",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 5,
+     "col": 0,
+     "planted": "為之倡主於治",
+     "original": "",
+     "before": ""
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 10,
+     "planted": "",
+     "original": "將加已百仞之",
+     "before": "脩弧矢治矰繳"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 9,
+     "col": 17,
+     "planted": "今四國之",
+     "original": "卿上壽賜",
+     "before": "宮太液池中公"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3cf08a8642f0445b165512|32",
+   "book_id": "6a3cf08a8642f0445b165512",
+   "title": "春秋集傳詳說·卷四~卷五 (vol 3)",
+   "page_id": "6a3cf08a8642f0445b165533",
+   "page_number": 32,
+   "image": "https://images.sourcelibrary.org/archived/6a3cf08a8642f0445b165512/32.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n其君也又書齊師宋師衛師燕師敗績哀其民也齊\n以侯序宋公上坐兵首也或曰前日三國伐魯以乃絕朔而立公有\n郎之戰而春秋與之今四國伐魯而春秋不與何哉\n曰前日三國之來衛為之倡主於討亂故春秋與之\n今四倡主於治其私非義戰也是以\n不為春秋所與春秋有事同而襃貶異者此類是也\n三月葬衛宣公\n欲納之然葬而嗣子朔從諸侯及魯紀鄭戰敗績而",
+   "kanripo_cer": 0.0135,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n其君也又書齊師宋師衛師燕師敗績哀其民也齊\n以侯序宋公上坐兵首也或曰前日三國伐魯以有\n郎之戰而春秋與之今四國伐魯而春秋不與何哉\n曰前日三國之來衛為之倡主於討亂故春秋與之\n今四國之來齊為之倡主於治其私非義戰也是以\n不為春秋所與春秋有事同而襃貶異者此類是也\n三月葬衛宣公\n衛宣死未葬而嗣子朔從諸侯及魯紀鄭戰敗績而",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 4,
+     "col": 19,
+     "planted": "乃絕朔而立公",
+     "original": "",
+     "before": "日三國伐魯以"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 2,
+     "planted": "",
+     "original": "國之來齊為之",
+     "before": "今四"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 10,
+     "col": 0,
+     "planted": "欲納之然",
+     "original": "衛宣死未",
+     "before": ""
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3c6e9c01fe4f593c1c4507|121",
+   "book_id": "6a3c6e9c01fe4f593c1c4507",
+   "title": "春秋胡傳附錄纂疏·卷六~卷七 (vol 4)",
+   "page_id": "6a3c6e9c01fe4f593c1c4580",
+   "page_number": 121,
+   "image": "https://images.sourcelibrary.org/archived/6a3c6e9c01fe4f593c1c4507/121.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>卷七</header>\n穀梁子曰此公子溺也其不稱公子何也惡\n去\n聲\n其㑹\n仇讐伐同姓故貶而名之也\n范氏曰齊受天子罪人\n為之興師而魯與同故\n貶\n有父之讎而釋怨其罪病當以十八日大矣况與合黨興師伐人\n國乎\n髙氏曰衛朔奔齊齊欲納之然天王乃絕朔而\n立公子黔牟為衛侯魯輒興兵㑹仇讐之人抗\n天子之命納不義之君其罪大矣薛氏曰大讐不報\n而又與之出人之田莊公之謂矣溺\n不書帥師所將之兵少也家氏曰或謂衛朔在齊此\n㑹齊納朔非成父志乎夫納朔者父惡也不能復父\n之讎而成父之惡滋不孝也資中黃氏曰哉黃疸黃\n族非未賜氏之比蜀杜氏曰慶父專兵不待貶而惡\n自見溺去族明\n其惡甚於慶父",
+   "kanripo_cer": 0.0125,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>卷七</header>\n穀梁子曰此公子溺也其不稱公子何也惡\n去\n聲\n其㑹\n仇讐伐同姓故貶而名之也\n范氏曰齊受天子罪人\n為之興師而魯與同故\n貶\n有父之讎而釋怨其罪大矣况與合黨興師伐人\n國乎\n髙氏曰衛朔奔齊齊欲納之然天王乃絕朔而\n立公子黔牟為衛侯魯輒興兵㑹仇讐之人抗\n天子之命納不義之君其罪大矣薛氏曰大讐不報\n而又與之出師舍其田而芸人之田莊公之謂矣溺\n不書帥師所將之兵少也家氏曰或謂衛朔在齊此\n㑹齊納朔非成父志乎夫納朔者父惡也不能復父\n之讎而成父之惡滋不孝也資中黃氏曰溺貶而去\n族非未賜氏之比蜀杜氏曰慶父專兵不待貶而惡\n自見溺去族明\n其惡甚於慶父",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 12,
+     "col": 9,
+     "planted": "病當以十八日",
+     "original": "",
+     "before": "讎而釋怨其罪"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 17,
+     "col": 5,
+     "planted": "",
+     "original": "師舍其田而芸",
+     "before": "而又與之出"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 20,
+     "col": 16,
+     "planted": "哉黃疸黃",
+     "original": "溺貶而去",
+     "before": "也資中黃氏曰"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3c7a6301fe4f593c216e75|85",
+   "book_id": "6a3c7a6301fe4f593c216e75",
+   "title": "續名醫類案·卷十二~卷十三 (vol 7)",
+   "page_id": "6a3c7a6301fe4f593c216ecb",
+   "page_number": 85,
+   "image": "https://images.sourcelibrary.org/archived/6a3c7a6301fe4f593c216e75/85.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n但有春夏而無秋冬非兼清肅之治不可乃與生熟\n地杞子麥冬沙參地骨知母黃柏黃連石膏出入増\n減十餘夫屋及其衆寡劑諸症漸平唯齒痛轉甚自製玉帶膏貼之\n而愈次年因診其媳産病告以前方出入常服計用\n石膏不下四五斤矣此則初中之變\n症也然初之桂附未為癰疽豈非天幸乎哉\n黃疸\n黃疸之病當以十八日為期治\n十日已上宜瘥反教治正政\n竇材治一人遍身皆黃小便赤色而濇炙食竇穴五十",
+   "kanripo_cer": 0.0061,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n但有春夏而無秋冬非兼清肅之治不可乃與生熟\n地杞子麥冬沙參地骨知母黃柏黃連石膏出入増\n減十餘劑諸症漸平唯齒痛轉甚自製玉帶膏貼之\n而愈次年因診其媳産病告以前方出入常服計用\n石膏不下四五斤矣此則初為寒中後為熱中之變\n症也然初之桂附未為癰疽豈非天幸乎哉\n黃疸\n黃疸之病當以十八日為期治\n十日已上宜瘥反劇為難治\n竇材治一人遍身皆黃小便赤色而濇炙食竇穴五十",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 5,
+     "col": 3,
+     "planted": "夫屋及其衆寡",
+     "original": "",
+     "before": "減十餘"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 11,
+     "planted": "",
+     "original": "為寒中後為熱",
+     "before": "五斤矣此則初"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 11,
+     "col": 7,
+     "planted": "教治正政",
+     "original": "劇為難治",
+     "before": "日已上宜瘥反"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3cbc28ec254ff6cadee1df|74",
+   "book_id": "6a3cbc28ec254ff6cadee1df",
+   "title": "周禮訂義·卷十七~卷十八 (vol 8)",
+   "page_id": "6a3cbc28ec254ff6cadee229",
+   "page_number": 74,
+   "image": "https://images.sourcelibrary.org/archived/6a3cbc28ec254ff6cadee1df/74.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n於冢宰\n正歲則帥其屬而觀教象之灋徇以木鐸曰不用灋者\n國有常刑令羣吏其後歲歲循習憲禁令脩灋糾職以待邦治\n王昭禹曰禁令將使民避行之宜表揭之使知故憲之\n脩法則使各脩虧廢也糾職則使各\n糾其所治之人防緩散也\n及大比六鄉四郊之吏平教治陽亦作萬夫屋及其衆\n寡六畜兵器以待政令\n<header>周禮訂義</header>\n<header>次定四庫全書</header>\n<page-num>三十七</page-num>",
+   "kanripo_cer": 0.0081,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n於冢宰\n正歲則帥其屬而觀教象之灋徇以木鐸曰不用灋者\n國有常刑令羣吏憲禁令脩灋糾職以待邦治\n王昭禹曰禁令將使民避行之宜表揭之使知故憲之\n脩法則使各脩其所守之法防虧廢也糾職則使各\n糾其所治之人防緩散也\n及大比六鄉四郊之吏平教治正政事攷夫屋及其衆\n寡六畜兵器以待政令\n<header>周禮訂義</header>\n<header>次定四庫全書</header>\n<page-num>三十七</page-num>",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 5,
+     "col": 7,
+     "planted": "其後歲歲循習",
+     "original": "",
+     "before": "有常刑令羣吏"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 6,
+     "planted": "",
+     "original": "其所守之法防",
+     "before": "脩法則使各脩"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 9,
+     "col": 12,
+     "planted": "陽亦作萬",
+     "original": "正政事攷",
+     "before": "郊之吏平教治"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3cc2a5af74b230c69082a8|45",
+   "book_id": "6a3cc2a5af74b230c69082a8",
+   "title": "墨莊漫錄·卷八~卷十 (vol 4)",
+   "page_id": "6a3cc2a5af74b230c6908357",
+   "page_number": 45,
+   "image": "https://images.sourcelibrary.org/archived/6a3cc2a5af74b230c69082a8/45.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n以花為屏帳至於梁棟柱拱悉以竹筒貯水簪花釘\n挂舉目皆花也揚州産芍藥其妙者不減於姚黃物蓋相須為命魏\n紫蔡元長知淮揚日亦效洛陽亦作萬花㑹其後歲\n歲循習而為人頗病之元祐七年東坡來知揚州正\n遇花時吏之人皆鼓舞欣悅作書報\n王定國云花㑹檢舊案用花千萬朶吏縁為姦乃揚\n州大害巳罷之矣雖殺風其配可知也公為政之惠\n利於民率皆類此民到於今稱之",
+   "kanripo_cer": 0.0196,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n以花為屏帳至於梁棟柱拱悉以竹筒貯水簪花釘\n挂舉目皆花也揚州産芍藥其妙者不減於姚黃魏\n紫蔡元長知淮揚日亦效洛陽亦作萬花㑹其後歲\n歲循習而為人頗病之元祐七年東坡來知揚州正\n遇花時吏白舊例公判罷之人皆鼓舞欣悅作書報\n王定國云花㑹檢舊案用花千萬朶吏縁為姦乃揚\n州大害巳罷之矣雖殺風景免造業也公為政之惠\n利於民率皆類此民到於今稱之",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 4,
+     "col": 19,
+     "planted": "物蓋相須為命",
+     "original": "",
+     "before": "者不減於姚黃"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 4,
+     "planted": "",
+     "original": "白舊例公判罷",
+     "before": "遇花時吏"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 9,
+     "col": 10,
+     "planted": "其配可知",
+     "original": "景免造業",
+     "before": "罷之矣雖殺風"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3cb99b3dce6cfad7495182|30",
+   "book_id": "6a3cb99b3dce6cfad7495182",
+   "title": "爾雅翼·卷十七~卷二十 (vol 5)",
+   "page_id": "6a3cb99b3dce6cfad74951a1",
+   "page_number": 30,
+   "image": "https://images.sourcelibrary.org/archived/6a3cb99b3dce6cfad7495182/30.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n死古者明王交於萬物有道則詩人以此託興其首章\n曰鴛鴦于飛畢之羅之二章曰鴛鴦在梁戢其左翼蓋\n畢知為船以濟水羅此鳥必於其飛之時至其在梁也不掩其不備所\n謂戢其左翼者凡鳥翼左掩右為雄右掩左為雌雌視\n雄以為進止今是雄者戢翼則其配可\n知矣此物蓋相須為命尤在於交之有道也崔豹古今\n注曰謂之匹鳥禮記曰庶人之摯匹解者以知篇木而\n以鳧鷖水鳥之類多相匹爾凡鳥多好以頸相勾如張",
+   "kanripo_cer": 0.006,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n死古者明王交於萬物有道則詩人以此託興其首章\n曰鴛鴦于飛畢之羅之二章曰鴛鴦在梁戢其左翼蓋\n畢羅此鳥必於其飛之時至其在梁也不掩其不備所\n謂戢其左翼者凡鳥翼左掩右為雄右掩左為雌雌視\n雄以為進止今是雄者戢翼而無驚遽之虞則其配可\n知矣此物蓋相須為命尤在於交之有道也崔豹古今\n注曰謂之匹鳥禮記曰庶人之摯匹解者以匹為鶩正\n以鳧鷖水鳥之類多相匹爾凡鳥多好以頸相勾如張",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 5,
+     "col": 1,
+     "planted": "知為船以濟水",
+     "original": "",
+     "before": "畢"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 7,
+     "col": 11,
+     "planted": "",
+     "original": "而無驚遽之虞",
+     "before": "今是雄者戢翼"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 9,
+     "col": 17,
+     "planted": "知篇木而",
+     "original": "匹為鶩正",
+     "before": "之摯匹解者以"
+    }
+   ]
+  },
+  {
+   "uid": "plant|6a3c79ae01fe4f593c2118d3|129",
+   "book_id": "6a3c79ae01fe4f593c2118d3",
+   "title": "喻林·卷七十五~卷七十七 (vol 27)",
+   "page_id": "6a3c79ae01fe4f593c211954",
+   "page_number": 129,
+   "image": "https://images.sourcelibrary.org/archived/6a3c79ae01fe4f593c2118d3/129.jpg",
+   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n思天下之民匹夫匹婦有不被堯舜之澤者若巳推而\n内之溝中\n孟子萬\n章上\n醫無方術云吾能治病問之士祭服謂之弁曰何用治病曰用心意病\n者必不信也吏無經學曰吾能治民問之曰何用治民\n曰以材能是醫無方術以心意治病也\n而人君任用使之乎\n王充論衡\n量知篇\n木而進淵知為船以濟水猶君子之濟民也\n太玄經第\n二進解\n上祭服謂根荄見育猶君子以義化人人得以如草木\n翁林",
+   "kanripo_cer": 0.0196,
+   "original_text": "<language>Chinese</language>\n<script>handwritten</script>\n\n思天下之民匹夫匹婦有不被堯舜之澤者若巳推而\n内之溝中\n孟子萬\n章上\n醫無方術云吾能治病問之曰何用治病曰用心意病\n者必不信也吏無經學曰吾能治民問之曰何用治民\n曰以材能是醫無方術以心意治病也百姓安肯信嚮\n而人君任用使之乎\n王充論衡\n量知篇\n木而進淵知為船以濟水猶君子之濟民也\n太玄經第\n二進解\n木生肥丘根荄見育猶君子以義化人人得以如草木\n翁林",
+   "spans": [
+    {
+     "id": "P1",
+     "type": "invented",
+     "kind": "inserted",
+     "line": 7,
+     "col": 11,
+     "planted": "士祭服謂之弁",
+     "original": "",
+     "before": "吾能治病問之"
+    },
+    {
+     "id": "P2",
+     "type": "omitted",
+     "kind": "deleted",
+     "line": 9,
+     "col": 15,
+     "planted": "",
+     "original": "百姓安肯信嚮",
+     "before": "以心意治病也"
+    },
+    {
+     "id": "P3",
+     "type": "invented",
+     "kind": "substituted",
+     "line": 16,
+     "col": 0,
+     "planted": "上祭服謂",
+     "original": "木生肥丘",
+     "before": ""
+    }
+   ]
+  }
+ ],
+ "repeats": [
+  "all|6a3cbdc0ec254ff6cadf9fe2|89",
+  "all|6a3c625040c88a541d8f3586|62",
+  "all|6a3c6bf939b4508b04e46f2a|72",
+  "all|6a3c7a0239b4508b04e62189|62",
+  "stale|6a3c5e6c40c88a541d8e1ec8|188"
+ ]
+}

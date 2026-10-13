@@ -22,6 +22,12 @@
  *          `ocr` with a gemini-engine/1 block (api: 'cli', the CLI's name and version, the prompt sent, the image
  *          read); leaves a sweep_log row per page and one book_events row per book.
  *
+ * THE CALL (#6523, tuned on a fixed dev set of Latin and Early English pages): the prompt asks for the transcription
+ * between <<<BEGIN>>> / <<<END>>> markers and nothing outside them, and a PreToolUse hook in the page's workspace
+ * (scripts/lib/agy-tool-gate.py) denies every tool but view_file on the image, with a reason, so the turn goes on to
+ * the transcription instead of ending empty. The raw reply is kept as <page_id>.raw.txt; .txt holds the text between
+ * the markers. A reply with text outside the markers or cut before <<<END>>> is read once more, then never written.
+ *
  * HOW IT FAILS: a CLI that is not signed in, or a refusal, leaves an empty .txt and a non-zero `exit` in the meta;
  * `apply` skips those and says so. Nothing is retried silently.
  */
@@ -37,9 +43,12 @@ import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { ocrReadProblem, OCR_SENTINEL_INSTRUCTION } from '../lib/cli-chatter.mjs';
+import { CLI, CLI_SAFE_ARGS, agyCall, installToolGate, gateCalls, unwrapRead } from '../lib/agy-cli.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
+import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
-const CLI = 'agy';
 const STAGE = process.argv[2];
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
 const OUT = arg('out') && path.resolve(arg('out'));
@@ -50,12 +59,28 @@ if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.
 const LANGUAGE_INSTRUCTION = '**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).';
 // The sentence that points the CLI at the image. It is part of the prompt SENT, so it is part of what is hashed.
 // The image is ATTACHED with the CLI's `@file` syntax (relative to cwd), so the model needs no tool to open it.
-const imageInstruction = (imagePath) => `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`;
+// #6523: the reply is asked for between <<<BEGIN>>> / <<<END>>> markers (the dev rounds' winning config). A read made
+// before that records no `prompt_variant` and is rebuilt with the legacy sentence, so its hash still matches at apply.
+const PROMPT_VARIANT = 'sentinels-6523';
+const imageInstruction = (imagePath, variant = PROMPT_VARIANT) => (variant === PROMPT_VARIANT
+  ? `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it in the format above. ${OCR_SENTINEL_INSTRUCTION}\n`
+  : `\n\nThe page image to transcribe is attached: @./${path.basename(imagePath)} Transcribe it. Output only the transcription in the format above, with no preamble and no commentary.\n`);
+// #6523: a PreToolUse hook in the page's workspace (scripts/lib/agy-tool-gate.py) lets the model open the image with
+// view_file and denies every other tool WITH A REASON, so the turn goes on to the transcription instead of ending empty
+// on a denied shell or web request. It approves nothing plan mode would not; it never auto-approves a command (#6345).
 // The CLI is an AGENT. Plan mode stops it running tools; without it the model sometimes tries a shell command
 // (seen: cropping a Chinese page into columns in /tmp), and the auto-approve flag this script used to pass let it
 // run as root on the box. Never auto-approve; tests/unit/no-cli-auto-approve.test.ts sweeps for the flag.
-const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '120s'];
+// The call, the gate and the marker unwrap live in scripts/lib/agy-cli.mjs, shared with cli-translate.mjs.
 const workspaceImage = (key) => path.join(OUT, `ws-${key}`, `${key}.jpg`);
+// Even in plan mode the model sometimes asks for a shell command (to crop the image); headless mode denies it and the
+// turn ends empty with `denied_actions` set. The #6331 fix: continue THAT conversation once with this nudge
+// (scripts/eval/run-cli-arm.py, same words).
+const NUDGE = 'Running commands is not available here. Answer directly from the attached file now, following the instructions above exactly.';
+// The account's shared call meter (run-cli-arm.py writes the same rows): every job's calls, one line each.
+const CALL_LOG = '/var/log/sourcelibrary/agy-calls.jsonl';
+const JOB = arg('job') || 'cli-ocr';
+const logCall = (row) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, kind: 'ocr', ...row }) + '\n'); } catch { /* the meter is advisory */ } };
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
 await client.connect();
@@ -71,30 +96,61 @@ if (STAGE === 'read') {
   fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify({ id: prompt._id?.toString(), name: prompt.name, version: String(prompt.version ?? ''), hash: prompt.content_hash ?? null }));
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
-  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1 } }).toArray();
-  console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}`);
-  for (const p of pages) {
+  const pages = await db.collection('pages').find({ id: { $in: ids } }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, enhanced_photo: 1, photo_original: 1 } }).toArray();
+  const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 1)));
+  const QUOTA_SLEEP_S = Number(arg('quota-sleep') || 1800);
+  console.log(`${pages.length} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} at a time`);
+  let quotaUntil = 0;
+  const readOne = async (p) => {
     const key = p.id;
-    if (fs.existsSync(path.join(OUT, `${key}.meta.json`)) && fs.readFileSync(path.join(OUT, `${key}.txt`), 'utf8').length > 5) { console.log(`  ${p.page_number} already read`); continue; }
-    if (!p.archived_photo) { console.log(`  ${p.page_number} has no archived_photo; skipped`); continue; }
-    const buf = Buffer.from(await (await fetch(p.archived_photo)).arrayBuffer());
+    if (fs.existsSync(path.join(OUT, `${key}.meta.json`)) && fs.readFileSync(path.join(OUT, `${key}.txt`), 'utf8').length > 5) { console.log(`  ${p.page_number} already read`); return; }
+    // The page's own image, split-aware (#6420): on a page split from a spread `archived_photo` is the WHOLE spread,
+    // and a read of it transcribes both pages onto one. getPageSource() is the resolver the OCR lanes use.
+    const src = getPageSource(p);
+    if (!src) { console.log(`  ${p.page_number} has no usable image; skipped`); return; }
+    const res = await fetch(src);
+    if (!res.ok) { console.log(`  ${p.page_number} image HTTP ${res.status}; skipped`); return; }
+    const buf = Buffer.from(await res.arrayBuffer());
     // One directory per page, so the CLI's workspace holds exactly the one image it is asked to read.
     const img = workspaceImage(key);
     fs.mkdirSync(path.dirname(img), { recursive: true });
     fs.writeFileSync(img, buf);
     const sent = base + imageInstruction(img);
+    const gateLog = installToolGate(path.dirname(img));
     const t0 = new Date();
-    const r = spawnSync(CLI, ['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], { encoding: 'utf8', cwd: path.dirname(img), maxBuffer: 64 * 1024 * 1024, timeout: 180_000 });
-    const text = (r.stdout || '').trim();
+    // Attempt 1; a denied tool continues that conversation once with the nudge; a reply that fails the chatter guard
+    // (plan note, refusal, restarted or duplicated read) is read once more from scratch (#6420 rule 4). A quota error
+    // sleeps until the window resets and tries the same page again: it is the account's limit, not the page's.
+    let r, nudged = false, rereads = 0, calls = 0;
+    for (;;) {
+      while (Date.now() < quotaUntil) await new Promise((s) => setTimeout(s, 30_000));
+      r = await agyCall(['-p', sent, '--model', MODEL, ...CLI_SAFE_ARGS], path.dirname(img)); calls++;
+      logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
+      if (r.cls === 'quota') { quotaUntil = Date.now() + QUOTA_SLEEP_S * 1000; console.log(`  QUOTA at p.${p.page_number}: sleeping ${QUOTA_SLEEP_S}s`); continue; }
+      if (r.cls === 'denied_tool' && r.conversation && !nudged) {
+        nudged = true;
+        r = await agyCall(['-p', NUDGE, '--model', MODEL, ...CLI_SAFE_ARGS, '--conversation', r.conversation], path.dirname(img)); calls++;
+        logCall({ model: MODEL, seconds: Math.round(r.secs * 10) / 10, ok: !r.cls, error_class: r.cls });
+      }
+      if (!r.cls && (unwrapRead(r.text).problem || ocrReadProblem(unwrapRead(r.text).text)) && rereads === 0) { rereads++; continue; }
+      break;
+    }
+    // The raw reply is kept beside the transcription; `.txt` holds only what was between the markers.
+    const { text, problem: wrapper } = unwrapRead(r.text);
+    fs.writeFileSync(path.join(OUT, `${key}.raw.txt`), r.text);
     fs.writeFileSync(path.join(OUT, `${key}.txt`), text);
     fs.writeFileSync(path.join(OUT, `${key}.meta.json`), JSON.stringify({
       page_id: p.id, book_id: p.book_id, page_number: p.page_number, cli: CLI, cli_version: version, model: MODEL,
-      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.status, chars: text.length,
-      image_url: p.archived_photo, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
-      prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: (r.stderr || '').slice(-300),
+      started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls,
+      chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text) : null,
+      prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
+      image_url: src, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
+      prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err,
     }, null, 1));
-    console.log(`  ${p.page_number} exit ${r.status} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
-  }
+    console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
+  };
+  const queue = [...pages];
+  await Promise.all(Array.from({ length: CONCURRENCY }, async () => { while (queue.length) await readOne(queue.shift()); }));
   await client.close();
   process.exit(0);
 }
@@ -104,7 +160,14 @@ const REASON = arg('reason');
 if (!REASON) { console.error('--reason is required: say why these pages are being re-read'); process.exit(2); }
 const base = fs.readFileSync(path.join(OUT, 'prompt-base.txt'), 'utf8');
 const ref = JSON.parse(fs.readFileSync(path.join(OUT, 'prompt-ref.json'), 'utf8'));
-const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }));
+// --only=FILE: apply just these page ids (a JSON array, as --page-ids-file) out of a read directory, e.g. the pages an
+// adjudicator picked (scripts/batch/ocr-convergence/driver.mjs). Without it every read in OUT is a candidate.
+const ONLY = arg('only') ? new Set(readPageIdsFile(arg('only'))) : null;
+// --mark-stale=<lane>: stamp `translation_stale` (#4927) on written pages that carry a translation, with this lane
+// id, so the re-translation of exactly these pages can be planned and found (#6420 lane C) rather than discovered.
+const MARK_STALE = arg('mark-stale');
+const metas = fs.readdirSync(OUT).filter((f) => f.endsWith('.meta.json')).map((f) => ({ key: f.replace(/\.meta\.json$/, ''), ...JSON.parse(fs.readFileSync(path.join(OUT, f), 'utf8')) }))
+  .filter((m) => !ONLY || ONLY.has(m.page_id ?? m.key));
 const CODE_VERSION = await codeVersion();
 const runId = `cli-ocr-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
 const REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reproduce)|content restrictions|safety filters|^#{2,3} Summary\b|overview and summary of the text/im;
@@ -118,6 +181,9 @@ const books = {};
 for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   const text = fs.readFileSync(path.join(OUT, `${m.key}.txt`), 'utf8').trim();
   if (m.exit !== 0) { skip(m, `cli exit ${m.exit}`); continue; }
+  // #6523: a reply with chatter outside the markers, or cut before <<<END>>> (often a recitation-filter cut), is not
+  // written even when the text inside looks like a transcription: it is usually a partial page.
+  if (m.wrapper) { skip(m, `reply wrapper: ${m.wrapper}`); continue; }
   if (text.length < 5) { skip(m, 'empty read (refusal or blank)'); continue; }
   if (text.length > 25000) { skip(m, 'over 25k chars'); continue; }
   if (!/<page-type>/.test(text)) { skip(m, 'no <page-type> tag: not a transcription in the prompt format'); continue; }
@@ -125,6 +191,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   // false starts and then "I cannot provide a verbatim transcription ... Summary of the Page Content" (2026-10-08).
   if ((text.match(/<page-type>/g) || []).length !== 1 || (text.match(/<scan-quality>/g) || []).length > 1) { skip(m, 'more than one transcription header: restarted or refused read'); continue; }
   if (REFUSAL.test(text)) { skip(m, 'refusal or summary in place of a transcription'); continue; }
+  const chatter = ocrReadProblem(text);
+  if (chatter) { skip(m, `chatter guard: ${chatter}`); continue; }
   const loop = loopVerdict(text);
   if (loop.refuse) { skip(m, 'repetition loop'); continue; }
   const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1 } });
@@ -139,9 +207,9 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   }
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
-  const sent = base + imageInstruction(workspaceImage(m.key));
+  const sent = base + imageInstruction(workspaceImage(m.key), m.prompt_variant || 'legacy');
   if (contentHash(sent) !== m.prompt_sent_hash) { skip(m, 'prompt sent cannot be reconstructed (hash mismatch)'); continue; }
-  const imageUrl = m.image_url || page.archived_photo;
+  const imageUrl = m.image_url || getPageSource(page);
   const engine = geminiEngine({
     call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { ...ref, text: sent },
@@ -166,6 +234,7 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   );
   if (r.modifiedCount !== 1) { skip(m, 'page changed between read and write'); continue; }
   await recordSweepAction(db, { sweep: 'cli-ocr', book_id: page.book_id, action: 'ocr-reread-through-cli', detail: { page_id: page.id, page_number: page.page_number, from_model: page.ocr?.model ?? null, to_model: m.model, cli: `${m.cli} ${m.cli_version}`, run: runId, reason: REASON } });
+  if (MARK_STALE) await markTranslationsStale(db, [{ id: page.id, text }], new Date(), MARK_STALE);
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);
   books[page.book_id].models.add(m.model);
   tally.written++;

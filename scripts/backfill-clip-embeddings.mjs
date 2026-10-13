@@ -19,6 +19,11 @@
  *   --limit N          Process at most N items
  *   --dry-run          Count what would be embedded, don't embed
  *   --clip-url URL     CLIP server URL (default: http://localhost:3457)
+ *
+ * Spend: none to record. Unlike its neighbours (backfill-book-, -artwork- and
+ * -gallery-text-embeddings, which embed through Gemini and write `gemini_usage`
+ * rows via scripts/lib/embedding-usage.mjs), this calls our own CLIP server
+ * running Xenova/clip-vit-base-patch32 locally — nothing is billed per call (#4902).
  */
 
 import { MongoClient } from 'mongodb';
@@ -26,6 +31,7 @@ import pg from 'pg';
 
 const { Client: PgClient } = pg;
 
+import { embedAuthHeaders } from './workers/lib/embed-auth.mjs';
 const CLIP_URL = process.env.CLIP_URL || process.argv.find(a => a.startsWith('--clip-url='))?.split('=')[1] || 'http://localhost:3457';
 const ARTWORKS_ONLY = process.argv.includes('--artworks-only');
 const COVERS_ONLY = process.argv.includes('--covers-only');
@@ -43,7 +49,8 @@ const PG_BATCH = 50;   // Rows per INSERT
 async function main() {
   // Check CLIP server health
   try {
-    const health = await fetch(`${CLIP_URL}/health`).then(r => r.json());
+    // /clip/health is NOT an open path on a keyed server (only bare /health is), so send the key (#6206).
+    const health = await fetch(`${CLIP_URL}/health`, { headers: embedAuthHeaders() }).then(r => r.json());
     // Stamp every row with the space it was embedded in: v2 and v4 runtimes
     // give different vectors for the same image (#5099). A server predating the
     // runtime switch reports no embedding_model and is v2.
@@ -243,7 +250,7 @@ async function main() {
     try {
       const resp = await fetch(`${CLIP_URL}/embed-images`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: embedAuthHeaders(),
         body: JSON.stringify({ urls }),
       });
 

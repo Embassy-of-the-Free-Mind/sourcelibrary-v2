@@ -52,7 +52,7 @@ export default function AutonomousAgentsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This post describes both halves of that weekend: the human-driven acquisition sessions that produced the bulk of the imports, and the agent experiment that tested whether autonomous AI curation can work at all. The answer is yes &mdash; with caveats.
+          This post describes both halves of that weekend: the human-driven acquisition sessions that produced the bulk of the imports, and the agent experiment that tested whether autonomous AI curation can work at all. The answer is yes, with caveats.
         </p>
 
         {/* --- The Problem --- */}
@@ -61,15 +61,15 @@ export default function AutonomousAgentsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library digitizes and translates rare historical texts &mdash; books published between the 15th and 19th centuries, mostly in Latin, Greek, German, and Arabic. As of this writing, it holds over 6,100 books and 2.4 million page images from fourteen digital library sources. Every book passes through an automated pipeline: archival image download, AI-powered OCR, translation to English, metadata enrichment, illustration extraction, and scholarly indexing.
+          Source Library digitizes and translates rare historical texts: books published between the 15th and 19th centuries, mostly in Latin, Greek, German, and Arabic. As of this writing, it holds over 6,100 books and 2.4 million page images from fourteen digital library sources. Every book passes through an automated pipeline: archival image download, AI-powered OCR, translation to English, metadata enrichment, illustration extraction, and scholarly indexing.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The bottleneck is not processing &mdash; it is <em>finding the right books to process</em>. A human curator searching Archive.org for importable texts can evaluate perhaps 20&ndash;30 candidates per hour, rejecting modern editions, checking for duplicates, verifying that scans are readable, and writing import commands. At that rate, building a collection of thousands of books takes months. The processing pipeline can consume books far faster than a human can feed it.
+          The bottleneck is not processing; it is <em>finding the right books to process</em>. A human curator searching Archive.org for importable texts can evaluate perhaps 20&ndash;30 candidates per hour, rejecting modern editions, checking for duplicates, verifying that scans are readable, and writing import commands. At that rate, building a collection of thousands of books takes months. The processing pipeline can consume books far faster than a human can feed it.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We had been running curator sessions manually for months &mdash; 35 sessions documented in our curator reports, ranging from thematic batches (Rosicrucian manifestos, Pythagorean music theory, Syriac Christianity) to broad sweeps (world sacred texts, Greek manuscripts). Each session required a human to direct an AI assistant through searches, evaluation, and import. We wanted to know two things: how much could one curator accomplish in a focused weekend, and whether autonomous agents could handle parts of the work independently.
+          We had been running curator sessions manually for months: 35 sessions documented in our curator reports, ranging from thematic batches (Rosicrucian manifestos, Pythagorean music theory, Syriac Christianity) to broad sweeps (world sacred texts, Greek manuscripts). Each session required a human to direct an AI assistant through searches, evaluation, and import. We wanted to know two things: how much could one curator accomplish in a focused weekend, and whether autonomous agents could handle parts of the work independently.
         </p>
 
         {/* --- The weekend --- */}
@@ -95,7 +95,7 @@ export default function AutonomousAgentsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Claude Code&apos;s team system allows a lead agent to spawn autonomous sub-agents that share a task list and can communicate via messages. Each agent runs as an independent process with access to the same tools: web search, shell commands, file reading, and &mdash; critically &mdash; the ability to call Source Library&apos;s import APIs.
+          Claude Code&apos;s team system allows a lead agent to spawn autonomous sub-agents that share a task list and can communicate via messages. Each agent runs as an independent process with access to the same tools: web search, shell commands, file reading, and (critically) the ability to call Source Library&apos;s import APIs.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -154,7 +154,7 @@ export default function AutonomousAgentsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">arabic-science</code> agent imported 13 books: 5 in Arabic or Persian (Al-Khwarizmi, Ibn al-Haytham, al-Battani) and 8 Latin editions of Arabic authors &mdash; Avicenna&apos;s <em>Canon</em>, Averroes&apos; commentaries on Aristotle, al-Kindi&apos;s optics. The agent correctly identified that many Arabic scientific works survive primarily in Latin translation, and prioritized those early printed editions.
+          The <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">arabic-science</code> agent imported 13 books: 5 in Arabic or Persian (Al-Khwarizmi, Ibn al-Haytham, al-Battani) and 8 Latin editions of Arabic authors: Avicenna&apos;s <em>Canon</em>, Averroes&apos; commentaries on Aristotle, al-Kindi&apos;s optics. The agent correctly identified that many Arabic scientific works survive primarily in Latin translation, and prioritized those early printed editions.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -166,7 +166,7 @@ export default function AutonomousAgentsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Notably, the agents stayed close to their mandates. Unlike what we expected, they did not spiral outward into unrelated subjects. The <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">arabic-science</code> agent imported Latin editions of Arabic authors &mdash; which is scholarly good judgment, since that is how those texts circulated in Europe &mdash; but did not wander into Copernicus or Kepler. The 69 books are a focused, coherent set of non-European scientific texts.
+          Notably, the agents stayed close to their mandates. Unlike what we expected, they did not spiral outward into unrelated subjects. The <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">arabic-science</code> agent imported Latin editions of Arabic authors (which is scholarly good judgment, since that is how those texts circulated in Europe) but did not wander into Copernicus or Kepler. The 69 books are a focused, coherent set of non-European scientific texts.
         </p>
 
         {/* --- What an agent does --- */}
@@ -227,7 +227,7 @@ export default function AutonomousAgentsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This rule set is what makes autonomous acquisition possible. Without it, the agents would import everything they found &mdash; modern paperbacks, dissertation abstracts, scanned catalogs. The rules act as a filter, and the agents follow them with reasonable fidelity.
+          This rule set is what makes autonomous acquisition possible. Without it, the agents would import everything they found: modern paperbacks, dissertation abstracts, scanned catalogs. The rules act as a filter, and the agents follow them with reasonable fidelity.
         </p>
 
         {/* --- Human sessions --- */}
@@ -289,7 +289,7 @@ export default function AutonomousAgentsPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The human sessions followed a different pattern than the agents. Where the agents executed systematic searches within narrow parameters, the human curator followed scholarly connections freely &mdash; Arabic optics leading to Copernicus, leading to Kepler, leading to the entire tradition of early modern natural philosophy. The result was broader and less predictable: the complete works of Hegel, thirteen Dostoevsky novels, Aldrovandi&apos;s illustrated natural history, and Montaigne&apos;s <em>Essais</em> all entered the collection alongside the Latin scientific corpus.
+          The human sessions followed a different pattern than the agents. Where the agents executed systematic searches within narrow parameters, the human curator followed scholarly connections freely: Arabic optics leading to Copernicus, leading to Kepler, leading to the entire tradition of early modern natural philosophy. The result was broader and less predictable: the complete works of Hegel, thirteen Dostoevsky novels, Aldrovandi&apos;s illustrated natural history, and Montaigne&apos;s <em>Essais</em> all entered the collection alongside the Latin scientific corpus.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -302,7 +302,7 @@ export default function AutonomousAgentsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Importing at this pace &mdash; whether by human or agent &mdash; creates predictable categories of errors:
+          Importing at this pace, whether by human or agent, creates predictable categories of errors:
         </p>
 
         <div className="overflow-x-auto mb-8">
@@ -339,7 +339,7 @@ export default function AutonomousAgentsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The <strong>language detection</strong> problem affected both tracks. The import API accepts a <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">language</code> field, but 280 books were imported as <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">&quot;Unknown&quot;</code>. We fixed this with a heuristic: Cyrillic characters mean Russian, Greek characters mean Greek, German articles (<em>die</em>, <em>der</em>, <em>und</em>) suggest German, French articles (<em>des</em>, <em>les</em>, <em>du</em>) suggest French. Everything else defaults to Latin &mdash; a reasonable prior for a collection dominated by early modern scholarly texts. The pipeline&apos;s metadata enrichment step later confirms or corrects these via AI analysis of the OCR text.
+          The <strong>language detection</strong> problem affected both tracks. The import API accepts a <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">language</code> field, but 280 books were imported as <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm">&quot;Unknown&quot;</code>. We fixed this with a heuristic: Cyrillic characters mean Russian, Greek characters mean Greek, German articles (<em>die</em>, <em>der</em>, <em>und</em>) suggest German, French articles (<em>des</em>, <em>les</em>, <em>du</em>) suggest French. Everything else defaults to Latin, a reasonable prior for a collection dominated by early modern scholarly texts. The pipeline&apos;s metadata enrichment step later confirms or corrects these via AI analysis of the OCR text.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -419,7 +419,7 @@ export default function AutonomousAgentsPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The unit economics work out to roughly $2 per fully processed book &mdash; discovered, imported, archived, transcribed, translated, indexed, and searchable. The AI processing cost dominates the budget; acquisition itself is almost free. The agent runtime for 69 books cost less than the human-directed sessions for 880, but both are negligible compared to the downstream processing.
+          The unit economics work out to roughly $2 per fully processed book: discovered, imported, archived, transcribed, translated, indexed, and searchable. The AI processing cost dominates the budget; acquisition itself is almost free. The agent runtime for 69 books cost less than the human-directed sessions for 880, but both are negligible compared to the downstream processing.
         </p>
 
         {/* --- Lessons --- */}
@@ -428,11 +428,11 @@ export default function AutonomousAgentsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>1. Agents stayed on task better than expected.</strong> We anticipated scope creep &mdash; agents wandering from Arabic science into general European philosophy. It did not happen. The 69 agent imports are a focused, coherent set of Arabic, Sanskrit, and Chinese scientific texts. The agents followed citation trails within their domains (Arabic optics &rarr; Latin editions of Arabic authors) but did not spiral into unrelated subjects. Selection rules and clear mandates were sufficient guardrails.
+          <strong>1. Agents stayed on task better than expected.</strong> We anticipated scope creep: agents wandering from Arabic science into general European philosophy. It did not happen. The 69 agent imports are a focused, coherent set of Arabic, Sanskrit, and Chinese scientific texts. The agents followed citation trails within their domains (Arabic optics &rarr; Latin editions of Arabic authors) but did not spiral into unrelated subjects. Selection rules and clear mandates were sufficient guardrails.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>2. Humans are better at following citation trails across domains.</strong> The breadth of the weekend&apos;s imports &mdash; from Copernicus to Kierkegaard to Dostoevsky &mdash; came from the human curator, not the agents. A human researcher naturally follows scholarly connections across language and subject boundaries. The agents stayed disciplined; the human explored.
+          <strong>2. Humans are better at following citation trails across domains.</strong> The breadth of the weekend&apos;s imports (from Copernicus to Kierkegaard to Dostoevsky) came from the human curator, not the agents. A human researcher naturally follows scholarly connections across language and subject boundaries. The agents stayed disciplined; the human explored.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -444,7 +444,7 @@ export default function AutonomousAgentsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong>5. Cleanup is a first-class concern.</strong> Any system that creates data at this pace &mdash; human or autonomous &mdash; needs equally robust validation. The language detection heuristic, duplicate finder, and modern-book filter are not afterthoughts; they are integral to the acquisition pipeline. Plan for cleanup before you start importing.
+          <strong>5. Cleanup is a first-class concern.</strong> Any system that creates data at this pace, human or autonomous, needs equally robust validation. The language detection heuristic, duplicate finder, and modern-book filter are not afterthoughts; they are integral to the acquisition pipeline. Plan for cleanup before you start importing.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -457,16 +457,16 @@ export default function AutonomousAgentsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          As of March 9, 2026, Source Library holds over 6,100 books and 2.4 million page images. The weekend&apos;s 950 books represent about 17% of the total page count. All imports are enrolled in the auto pipeline and will be fully processed &mdash; archived, OCR&apos;d, translated, indexed &mdash; within roughly eight days.
+          As of March 9, 2026, Source Library holds over 6,100 books and 2.4 million page images. The weekend&apos;s 950 books represent about 17% of the total page count. All imports are enrolled in the auto pipeline and will be fully processed (archived, OCR&apos;d, translated, indexed) within roughly eight days.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Of the full collection, nearly 1,000 books are fully translated and readable in English. 2,442 books are classified as first known English translations &mdash; texts that have never before been available in English. The {' '}
+          Of the full collection, nearly 1,000 books are fully translated and readable in English. 2,442 books are classified as first known English translations: texts that have never before been available in English. The {' '}
           <Link href="/gallery" className="text-accent-rust hover:underline">gallery</Link> contains over 73,000 extracted illustrations.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We will run the agent experiment again &mdash; next time with more agents, different themes, and better coordination between agents and human sessions. The processing pipeline has no bottleneck at this scale; the limit is how fast the source libraries can serve images. The goal is a collection of 10,000 books by mid-2026, covering the full breadth of pre-modern intellectual history in original languages with AI translations. The weekend got us nearly a thousand books closer.
+          We will run the agent experiment again, next time with more agents, different themes, and better coordination between agents and human sessions. The processing pipeline has no bottleneck at this scale; the limit is how fast the source libraries can serve images. The goal is a collection of 10,000 books by mid-2026, covering the full breadth of pre-modern intellectual history in original languages with AI translations. The weekend got us nearly a thousand books closer.
         </p>
 
         {/* --- Method reproducibility --- */}

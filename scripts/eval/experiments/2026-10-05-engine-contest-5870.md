@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged_vs_reference
+languages: [grc, fa, ar]
+scripts: [Grek, Arab]
+canons: []
+n_books: 26
+n_pages: 26
+verdict: "No script moves off the Flash re-read: Kraken on Greek print is undecided (+0.23 [-0.32, 0.73], n 11) and too slow; OpenITI models lose on Persian/Arabic print (-1.33)."
+status: rejected
+decision: "Kraken and OpenITI base models not adopted; Flash re-read stays in the A5 plan; Sanskrit Vision arm needs a key (pending Derek, #5870)"
+superseded_by: null
+issue: [5870, 5700]
+---
 <!-- PRIOR ART: 2026-10-04-reocr-lift-5700.md (#5700 A5) measured the Flash re-read on the English and priced the plan, but never tried a non-Gemini engine. 2026-09-21-which-engine-should-read-greek-print-per-period-4925.md scored Kraken greek-cllg on the transcription (CER vs Perseus/First1K), not on the English. No earlier run scored an open OCR engine by the translation its read produces. -->
 ## 2026-10-05 · Can an open OCR engine replace the Flash re-read, judged on the English? (#5870)
 

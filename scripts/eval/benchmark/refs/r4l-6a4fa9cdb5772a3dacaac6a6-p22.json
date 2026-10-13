@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A17090",
+  "edition": "Baptistes, siue calumnia tragoedia, auctore Georgio Buchanano Scoto. — STC 3969; ESTC S109468 (1577)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A17090",
+  "origin": "library",
+  "book_id": "6a4fa9cdb5772a3dacaac6a6",
+  "page_number": 22,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 15175,
+    "to_char": 15929,
+    "overlap": 0.373,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-2)",
+    "at": "2026-10-06T10:05:00Z",
+    "note": "Buchanan, Baptistes dialogue; ref matches the page from 'Crimen refellit' to 'Regina.'; microfilm, with a small ink blot mid-page.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "italic",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      22,
+      23,
+      24
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.487Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "58ebb61ae8ea7c8705de97317c66b426eab7fbc1d8157b6f908122d6594cf8a8",
+  "unit": {
+    "chars": 754
+  }
+}

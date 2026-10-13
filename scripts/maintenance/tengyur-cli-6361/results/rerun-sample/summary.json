@@ -1,0 +1,65 @@
+{
+ "at": "2026-10-10T16:41:32.297Z",
+ "n": 100,
+ "strata": {
+  "plan-mode": 82,
+  "stage1-failed": 18
+ },
+ "quota_hit": false,
+ "summary": {
+  "A": {
+   "n": 100,
+   "ok": 47,
+   "plan_mode": 13,
+   "classes": {
+    "denied_tool": 40,
+    "plan_mode": 13,
+    "ok": 47
+   },
+   "by_stratum": {
+    "plan-mode": {
+     "denied_tool": 34,
+     "plan_mode": 11,
+     "ok": 37
+    },
+    "stage1-failed": {
+     "plan_mode": 2,
+     "ok": 10,
+     "denied_tool": 6
+    }
+   }
+  },
+  "B": {
+   "n": 100,
+   "ok": 100,
+   "plan_mode": 0,
+   "classes": {
+    "ok": 100
+   },
+   "by_stratum": {
+    "plan-mode": {
+     "ok": 82
+    },
+    "stage1-failed": {
+     "ok": 18
+    }
+   }
+  },
+  "C": {
+   "n": 100,
+   "ok": 100,
+   "plan_mode": 0,
+   "classes": {
+    "ok": 100
+   },
+   "by_stratum": {
+    "plan-mode": {
+     "ok": 82
+    },
+    "stage1-failed": {
+     "ok": 18
+    }
+   }
+  }
+ }
+}

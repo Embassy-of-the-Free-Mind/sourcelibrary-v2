@@ -470,10 +470,10 @@ export async function checkHoldings(
           const sameYear = candYear != null && y === candYear;
           add(toCandidate(doc, 'books', sameYear ? 'title_author_near_same_year' : 'title_author_near',
             sameYear
-              ? `Same author and year (${y}); the title is catalogued differently — possibly this edition.`
-              : `Same author; the title is catalogued differently${y != null ? ` (year ${y})` : ''} — another edition, or this one under a different title form.`));
+              ? `Same author and year (${y}); the title is catalogued differently. Possibly this edition.`
+              : `Same author; the title is catalogued differently${y != null ? ` (year ${y})` : ''}: another edition, or this one under a different title form.`));
         } else {
-          add(toCandidate(doc, 'books', 'near_title', 'Similar title in the catalogue search — check by eye.'));
+          add(toCandidate(doc, 'books', 'near_title', 'Similar title in the catalogue search. Check by eye.'));
         }
       }
     } catch {

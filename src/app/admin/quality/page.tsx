@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { getQualityReport, type QualityData, type Rate, type Interval } from '@/lib/quality-report';
-import { LaneWindows, TranslationTrend } from './QualityCharts';
+import { getQualityReport, type QualityData, type Rate, type Interval, type TrendChart } from '@/lib/quality-report';
+import { TranslationTrend, TrendLines } from './QualityCharts';
 
 /**
  * /admin/quality — is the text we serve good, and is it getting better? (#5474)
@@ -25,11 +25,11 @@ const ci = (c: Interval) => (c ? `${c[0].toFixed(1)}–${c[1].toFixed(1)}` : 'no
 const day = (iso: string | null | undefined) =>
   iso ? new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) : '–';
 
-/** Palette: dataviz reference slots 1–2 (blue, orange) and neutrals, stepped separately for dark. */
+/** Palette: dataviz reference slots 1–3 (blue, orange, aqua) and neutrals, stepped separately for dark. */
 const THEME = `
-.q-root{color-scheme:light;--q-bg:#f7f6f3;--q-surface:#fcfcfb;--q-text:#1c1b19;--q-muted:#6b6a65;--q-border:#e4e2dc;--q-grid:#ecebe6;--q-link:#a4472a;--q-s1:#2a78d6;--q-s2:#eb6834;--q-warn:#9a6700;--q-bad:#b42318;--q-good:#1a7f37}
-@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .q-root{color-scheme:dark;--q-bg:#141413;--q-surface:#1a1a19;--q-text:#f2f1ec;--q-muted:#a9a89f;--q-border:#34332f;--q-grid:#2a2926;--q-link:#f0a07f;--q-s1:#3987e5;--q-s2:#d95926;--q-warn:#e3b341;--q-bad:#f47067;--q-good:#57ab5a}}
-:root[data-theme="dark"] .q-root{color-scheme:dark;--q-bg:#141413;--q-surface:#1a1a19;--q-text:#f2f1ec;--q-muted:#a9a89f;--q-border:#34332f;--q-grid:#2a2926;--q-link:#f0a07f;--q-s1:#3987e5;--q-s2:#d95926;--q-warn:#e3b341;--q-bad:#f47067;--q-good:#57ab5a}
+.q-root{color-scheme:light;--q-bg:#f7f6f3;--q-surface:#fcfcfb;--q-text:#1c1b19;--q-muted:#6b6a65;--q-border:#e4e2dc;--q-grid:#ecebe6;--q-link:#a4472a;--q-s1:#2a78d6;--q-s2:#eb6834;--q-s3:#1baf7a;--q-warn:#9a6700;--q-bad:#b42318;--q-good:#1a7f37}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .q-root{color-scheme:dark;--q-bg:#141413;--q-surface:#1a1a19;--q-text:#f2f1ec;--q-muted:#a9a89f;--q-border:#34332f;--q-grid:#2a2926;--q-link:#f0a07f;--q-s1:#3987e5;--q-s2:#d95926;--q-s3:#199e70;--q-warn:#e3b341;--q-bad:#f47067;--q-good:#57ab5a}}
+:root[data-theme="dark"] .q-root{color-scheme:dark;--q-bg:#141413;--q-surface:#1a1a19;--q-text:#f2f1ec;--q-muted:#a9a89f;--q-border:#34332f;--q-grid:#2a2926;--q-link:#f0a07f;--q-s1:#3987e5;--q-s2:#d95926;--q-s3:#199e70;--q-warn:#e3b341;--q-bad:#f47067;--q-good:#57ab5a}
 .q-root a{color:var(--q-link)} .q-root a:hover{text-decoration:underline}
 .q-card{background:var(--q-surface);border:1px solid var(--q-border);border-radius:6px}
 .q-muted{color:var(--q-muted)}
@@ -99,7 +99,23 @@ function Headline({ label, rate, prev, n, instrument, date, href, prevLabel, low
   );
 }
 
-const VERDICT_COLOR: Record<string, string> = { OK: 'var(--q-good)', WARN: 'var(--q-warn)', ABORT: 'var(--q-bad)' };
+/** One trend line (#6429): title, newest date, one plain statement, the chart, then what it measures. */
+function TrendCard({ c }: { c: TrendChart }) {
+  return (
+    <div className="q-card px-4 py-3 grid gap-2 content-start min-w-0">
+      <div className="flex items-baseline justify-between gap-3">
+        <h3 className="text-sm font-semibold">{c.title}</h3>
+        <span className="text-xs q-muted tabular-nums whitespace-nowrap">{c.newest ? day(c.newest) : 'no measurement'}</span>
+      </div>
+      {c.newest ? <p className="text-sm leading-snug">{c.statement}</p> : <p className="text-sm q-muted">No measurement.</p>}
+      {c.stale && <p className="text-xs font-medium" style={{ color: 'var(--q-warn)' }}>{c.stale}</p>}
+      {c.newest && <TrendLines chart={c} />}
+      <p className="text-xs q-muted leading-snug">
+        {c.y_label}.{c.key_type && <> Key: <b>{c.key_type}</b> ({c.key_note}).</>}{c.panel_note && <> {c.panel_note}</>} <a href={c.source}>Source</a>
+      </p>
+    </div>
+  );
+}
 
 export default async function QualityPage() {
   const doc = await getQualityReport();
@@ -135,8 +151,17 @@ export default async function QualityPage() {
           </p>
         </header>
 
-        {/* 1 — Headline */}
-        <Section n={1} title="Headline">
+        {/* 1 — Over time (#6429) */}
+        <Section n={1} title="Over time" sub="Better or worse since last week, and did anything break yesterday. Rebuilt daily; the date beside each title is its newest point.">
+          {D.trends?.length ? (
+            <div className="grid gap-3 md:grid-cols-2">
+              {D.trends.map(c => <TrendCard key={c.id} c={c} />)}
+            </div>
+          ) : <NoMeasurement what="this report was built before the trend history existed, or without the history store" />}
+        </Section>
+
+        {/* 2 — Headline */}
+        <Section n={2} title="Headline">
           {T.latest ? (
             <div className="grid gap-3 md:grid-cols-2">
               <Headline label="Served translated pages judged ≥ 4 of 5" rate={T.latest.ge4} prev={T.previous?.ge4 ?? null}
@@ -192,8 +217,8 @@ export default async function QualityPage() {
           )}
         </Section>
 
-        {/* 2 — Translation over time */}
-        <Section n={2} title="Translation over time" sub={<>{T.instrument}. Served-corpus runs are post-stratified by language with a bootstrap interval;
+        {/* 3 — Translation over time */}
+        <Section n={3} title="Translation over time" sub={<>{T.instrument}. Served-corpus runs are post-stratified by language with a bootstrap interval;
           script groups are unweighted with a Wilson interval. The chained-lane sample is a different population (pages the new lane wrote), shown beside the line, not on it.
           {' '}<a href={T.instrument_source}>How the monthly audit runs</a>.</>}>
           {T.runs.length ? (
@@ -217,56 +242,8 @@ export default async function QualityPage() {
           ) : <NoMeasurement what="no corpus audit runs found" />}
         </Section>
 
-        {/* 3 — Lanes under test */}
-        <Section n={3} title="Lanes under test" sub={<>Speed-test gate windows from the {D.lanes.ledger}. Each window judges a fresh one-page-per-book
-          draw of what the lane wrote, with swap/drop/repeat controls.{D.lanes.trend_rule && <> Trend warning when two windows in a row exceed the
-          chained-lane baseline plus the judge&apos;s {D.lanes.trend_rule.floor_pp} pp noise floor ({pct(D.lanes.trend_rule.bound_pct)}); a warning is not an abort.</>}
-          {' '}<a href={D.lanes.issue}>Issue</a>.</>}>
-          {D.lanes.windows.length ? (
-            <div className="q-card p-3 grid gap-3">
-              <LaneWindows lanes={D.lanes} />
-              <Table head={['Window (UTC)', 'Verdict', 'Major', 'Wilson 95%', 'Seeded / seam', 'Controls', 'Trend', 'Scope warnings']}>
-                {[...D.lanes.windows].reverse().map(w => (
-                  <tr key={w.window}>
-                    <td className="whitespace-nowrap">{w.window.replace('T', ' ').replace(/:00(\.000)?Z/g, '').replace('/', ' → ')}</td>
-                    <td style={{ color: VERDICT_COLOR[w.verdict] ?? 'inherit', fontWeight: 600 }}>{w.verdict}</td>
-                    <td>{pct(w.major_pct)} <span className="q-muted">({w.defective}/{w.n})</span></td>
-                    <td className="q-muted">{ci(w.ci)}</td>
-                    <td>{w.seeded ? `${w.seeded.major}/${w.seeded.n}` : '–'} · {w.seam ? `${w.seam.major}/${w.seam.n}` : '–'}</td>
-                    <td className="q-muted">{w.controls ? Object.entries(w.controls).map(([k, v]) => `${k} ${v}`).join(' · ') : '–'}</td>
-                    <td style={{ color: w.trend_warn ? 'var(--q-warn)' : 'var(--q-muted)' }}>{w.trend_warn ? 'WARN' : '–'}</td>
-                    <td>{w.warn_count || '–'}</td>
-                  </tr>
-                ))}
-              </Table>
-              {D.lanes.baseline && (
-                <p className="text-xs q-muted">
-                  Reference line: {D.lanes.baseline.label}, {pct(D.lanes.baseline.any_major.est)} any major defect
-                  ({D.lanes.baseline.any_major.ci_kind} {ci(D.lanes.baseline.any_major.ci)}), n = {D.lanes.baseline.n}, drawn {day(D.lanes.baseline.drawn_at)} · <a href={D.lanes.baseline.source}>report</a>.
-                  Window rates are unweighted and include seam pages; the baseline is post-stratified.
-                </p>
-              )}
-            </div>
-          ) : <NoMeasurement what={D.lanes.missing ? `ledger not found when the report was built (${D.lanes.ledger})` : 'no judged windows in the ledger'} />}
-        </Section>
-
-        {/* 4 — Quality round 1 */}
-        <Section n={4} title="Quality round 1" sub={<>Per-stratum cost, time and quality of the full pipeline on freshly drawn books. <a href={D.round1.issue}>Issue</a> · <a href={D.round1.preregistration}>preregistration</a>.</>}>
-          {D.round1.status === 'done' && D.round1.rows.length ? (
-            <Table head={['Stratum', 'n', 'Cost / book', 'Days', 'OCR score', 'Translation major', 'Verdict']}>
-              {D.round1.rows.map(r => (
-                <tr key={r.stratum}>
-                  <td>{r.stratum}</td><td>{r.n ?? '–'}</td>
-                  <td>{r.cost_per_book_usd == null ? '–' : `$${r.cost_per_book_usd.toFixed(2)}`}</td>
-                  <td>{r.days ?? '–'}</td><td>{r.ocr_score ?? '–'}</td><td>{pct(r.translation_major_pct)}</td><td>{r.verdict ?? '–'}</td>
-                </tr>
-              ))}
-            </Table>
-          ) : <NoMeasurement what="not yet run (no results file on main)" last={D.round1.drawn ? <>books drawn {day(D.round1.drawn)}</> : undefined} />}
-        </Section>
-
-        {/* 5 — Defect classes */}
-        <Section n={5} title="Defect classes" sub={D.defects ? <>From the latest served-corpus audit ({latestRun?.label ?? D.defects.run}, n = {D.defects.n}, drawn {day(D.defects.drawn_at)}).
+        {/* 4 — Defect classes */}
+        <Section n={4} title="Defect classes" sub={D.defects ? <>From the latest served-corpus audit ({latestRun?.label ?? D.defects.run}, n = {D.defects.n}, drawn {day(D.defects.drawn_at)}).
           Each judge flag is mapped to its nearest <a href={D.defects.taxonomy}>page-error taxonomy</a> class; the link is that class&apos;s issue. <a href={D.defects.source}>Report</a>.</> : undefined}>
           {D.defects ? (
             <Table head={['Judge flag', 'Corpus estimate', '95% CI', 'Pages flagged', 'Taxonomy class · issue']}>
@@ -291,8 +268,8 @@ export default async function QualityPage() {
           ) : <NoMeasurement what="no served-corpus audit with passing controls" />}
         </Section>
 
-        {/* 6 — Reader signals */}
-        <Section n={6} title="Reader signals" sub={D.reader ? <>Last {D.reader.window_days} days ({day(D.reader.from)} – {day(D.reader.to)}). Untrusted input: a count of reports, not a defect rate.</> : undefined}>
+        {/* 5 — Reader signals */}
+        <Section n={5} title="Reader signals" sub={D.reader ? <>Last {D.reader.window_days} days ({day(D.reader.from)} – {day(D.reader.to)}). Untrusted input: a count of reports, not a defect rate.</> : undefined}>
           {D.reader ? (
             <div className="grid gap-3 md:grid-cols-3">
               <div className="q-card px-4 py-3 grid gap-1 content-start">
@@ -320,7 +297,7 @@ export default async function QualityPage() {
         </Section>
 
         <footer className="text-xs q-muted">
-          Refresh: <code>node --env-file=.env.production.local scripts/eval/quality-dashboard/build.mjs --push</code> (no deploy). See the README beside it.
+          Rebuilt daily on Hetzner; by hand: <code>node --env-file=.env.production.local scripts/eval/quality-dashboard/build.mjs --push</code> (no deploy). See the README beside it.
         </footer>
       </div>
     </main>

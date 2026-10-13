@@ -4,13 +4,13 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 
 export const metadata: Metadata = {
-  title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts — Source Library',
+  title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts | Source Library',
   description:
-    'With 4,200+ translated books and 800,000+ translated pages, Source Library is the world\'s largest collection of ancient and early modern texts translated into English — including 2,400+ first-ever English translations.',
+    'With 4,200+ translated books and 800,000+ translated pages, Source Library is the world\'s largest collection of ancient and early modern texts translated into English, including 2,400+ first-ever English translations.',
   openGraph: {
     title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts',
     description:
-      'With 4,200+ translated books — 2,400+ for the first time ever — Source Library surpasses every comparable collection. And it\'s free.',
+      'With 4,200+ translated books (2,400+ for the first time ever), Source Library surpasses every comparable collection. And it\'s free.',
     images: [
       {
         url: 'https://sourcelibrary.org/og-image.jpg',
@@ -41,7 +41,7 @@ const MAX_COUNT = 4284;
 // Comparison data — digital libraries
 const DIGITAL_LIBRARIES = [
   { name: 'Source Library', translations: 4284, newTranslations: true, scope: '100+ languages, antiquity–1900', note: 'AI-generated, 2,400+ are first-ever English translations' },
-  { name: 'Internet Archive', translations: null, newTranslations: false, scope: '40M+ texts total', note: 'General archive — hosts existing translations, does not produce new ones' },
+  { name: 'Internet Archive', translations: null, newTranslations: false, scope: '40M+ texts total', note: 'General archive: hosts existing translations, does not produce new ones' },
   { name: 'Perseus Digital Library', translations: 1000, newTranslations: false, scope: 'Greek & Latin classics', note: 'Public domain Victorian-era translations (Loeb, etc.)' },
   { name: 'Sacred Texts Archive', translations: 1700, newTranslations: false, scope: 'Religious & mythological texts', note: 'Reprints of existing public domain translations' },
   { name: 'Chinese Text Project', translations: 400, newTranslations: true, scope: 'Pre-modern Chinese', note: 'Mix of published translations + AI-generated (2026)' },
@@ -92,7 +92,7 @@ export default function WorldsLargestCollectionPage() {
       header={
         <ContentHeader
           title="The World&rsquo;s Largest Collection of Translated Ancient and Early Modern Texts"
-          subtitle="4,200+ books translated, 800,000+ pages, 100+ languages &mdash; free and open to everyone"
+          subtitle="4,200+ books translated, 800,000+ pages, 100+ languages, free and open to everyone"
         >
           <p className="text-stone-400 text-sm mt-4">12 March 2026 &middot; 8 min read</p>
         </ContentHeader>
@@ -114,20 +114,20 @@ export default function WorldsLargestCollectionPage() {
       <article className="prose-content max-w-none">
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          Source Library now holds over 4,200 books translated into English &mdash; 1,300+ fully
-          translated, with the remainder in progress &mdash; spanning Latin, German, Chinese,
+          Source Library now holds over 4,200 books translated into English (1,300+ fully
+          translated, with the remainder in progress), spanning Latin, German, Chinese,
           Sumerian, Sanskrit, Greek, French, and dozens of other languages across 100+ in total.
           With more than 800,000 translated pages, it is the world&rsquo;s largest collection
           of ancient and early modern texts made available in English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          No comparable project &mdash; print or digital &mdash; comes close to this scale.
+          No comparable project, print or digital, comes close to this scale.
           The Loeb Classical Library, founded in 1911, has published roughly 540 volumes. The I Tatti
           Renaissance Library reached its 100th volume in 2025 after 24 years. Perseus hosts about
           1,000 public domain translations of Greek and Latin classics. Source Library has more
-          translated books than all of them combined &mdash; and every page is free. Of these,
-          2,400+ are <em>first-ever</em> English translations &mdash; texts that have never
+          translated books than all of them combined, and every page is free. Of these,
+          2,400+ are <em>first-ever</em> English translations: texts that have never
           appeared in English before in any form.
         </p>
 
@@ -195,7 +195,7 @@ export default function WorldsLargestCollectionPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Source Library&rsquo;s translations are produced by AI &mdash; specifically, Google&rsquo;s
+            Source Library&rsquo;s translations are produced by AI: specifically, Google&rsquo;s
             Gemini vision models reading directly from digitized page images. The original text is
             always preserved alongside the translation for verification. These are working translations:
             the first time a modern English reader can sit down and read these texts from beginning
@@ -224,7 +224,7 @@ export default function WorldsLargestCollectionPage() {
           <p className="text-secondary leading-relaxed font-body">
             A Latin alchemical treatise from 1617 that has never been rendered into English is
             invisible to anyone who cannot read 17th-century Latin. An imperfect translation that
-            makes the text legible for the first time is, we believe, a genuine contribution &mdash;
+            makes the text legible for the first time is, we believe, a genuine contribution,
             one that complements rather than competes with traditional scholarship.
           </p>
         </section>
@@ -240,7 +240,7 @@ export default function WorldsLargestCollectionPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Print series like Loeb are one kind of comparator. The more natural question is:
             what about the major digital text projects? The Internet Archive, Perseus, the Chinese
-            Text Project, Project Gutenberg, Sacred Texts &mdash; between them, they make millions
+            Text Project, Project Gutenberg, Sacred Texts: between them, they make millions
             of pages available online. How can Source Library be larger?
           </p>
 
@@ -255,7 +255,7 @@ export default function WorldsLargestCollectionPage() {
               The Internet Archive
             </a>{' '}
             holds over 40 million digitized texts, including thousands of English translations of
-            classical, medieval, and early modern works &mdash; every old Bohn&rsquo;s Classical Library
+            classical, medieval, and early modern works: every old Bohn&rsquo;s Classical Library
             volume, the Sacred Books of the East, countless 19th-century renderings of Greek, Latin, and
             Sanskrit texts. It is, in fact, Source Library&rsquo;s primary upstream source: over 5,600 of
             our books come from IA&rsquo;s digitized collections. But the Internet Archive is a general-purpose
@@ -271,7 +271,7 @@ export default function WorldsLargestCollectionPage() {
             </a>{' '}
             is the definitive digital repository for Greek and Latin texts. Its catalog contains roughly
             1,000 English translations of classical works. But these are all pre-existing public domain
-            translations &mdash; Victorian-era Loeb editions, 19th-century scholarly renderings, works
+            translations: Victorian-era Loeb editions, 19th-century scholarly renderings, works
             that were already available in university libraries. Perseus digitized them superbly and made
             them searchable. It did not translate anything new.
           </p>
@@ -286,7 +286,7 @@ export default function WorldsLargestCollectionPage() {
               Project Gutenberg
             </a>{' '}
             (thousands of translated works, but all pre-1928 and heavily skewed toward modern-language
-            novels &mdash; Tolstoy, Dumas, Verne &mdash; not pre-modern scholarly texts), and{' '}
+            novels (Tolstoy, Dumas, Verne), not pre-modern scholarly texts), and{' '}
             <a href="https://penelope.uchicago.edu/Thayer/E/Roman/home.html" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               LacusCurtius
             </a>{' '}
@@ -313,7 +313,7 @@ export default function WorldsLargestCollectionPage() {
               Global Medieval Sourcebook
             </a>{' '}
             deserves mention as one of the few projects producing genuinely new scholarly translations
-            of pre-modern texts, with about 200 works &mdash; each translated by specialists.
+            of pre-modern texts, with about 200 works, each translated by specialists.
           </p>
 
           {/* Digital libraries comparison table */}
@@ -356,7 +356,7 @@ export default function WorldsLargestCollectionPage() {
 
           <p className="text-secondary leading-relaxed mt-6 font-body">
             EEBO-TCP (60,000+ early English printed books) and HathiTrust (18 million digitized volumes)
-            are sometimes mentioned in this context, but neither is a translation project &mdash; they
+            are sometimes mentioned in this context, but neither is a translation project; they
             provide access to texts in their original languages. The Internet Archive is the largest
             digital library in the world, but it is an archive, not a translator. Source Library uses
             IA as its primary source of page images and then does something IA does not: translates them.
@@ -375,8 +375,8 @@ export default function WorldsLargestCollectionPage() {
             The collection spans far more than the Latin and Greek of the classical tradition.
             German Fraktur manuscripts, Sumerian cuneiform tablets, Chinese rare books from the
             Library of Congress, Sanskrit astrological treatises, Hebrew Kabbalistic texts, Greek
-            Church Fathers, Dutch pamphlets, and Italian humanist texts &mdash; across 104
-            languages in total &mdash; all flow through the same pipeline.
+            Church Fathers, Dutch pamphlets, and Italian humanist texts (across 104
+            languages in total) all flow through the same pipeline.
           </p>
 
           <div className="bg-warm rounded-lg border border-border-light p-6 md:p-8">
@@ -408,13 +408,13 @@ export default function WorldsLargestCollectionPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Source Library draws on books from over 160 libraries and institutions worldwide.
-            Some &mdash; the Bavarian State Library, the Biblioth&egrave;que nationale de France,
-            the Bodleian, the Vatican &mdash; expose their collections directly through the{' '}
+            Some (the Bavarian State Library, the Biblioth&egrave;que nationale de France,
+            the Bodleian, the Vatican) expose their collections directly through the{' '}
             <a href="https://iiif.io/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               International Image Interoperability Framework
             </a>{' '}
             (IIIF). Others are accessible through the Internet Archive, which hosts digitized
-            books from hundreds of contributing libraries &mdash; the Getty Research Institute,
+            books from hundreds of contributing libraries: the Getty Research Institute,
             the Koninklijke Bibliotheek, the Biblioteca Nazionale in Florence, Harvard, and
             many more.
           </p>
@@ -423,8 +423,8 @@ export default function WorldsLargestCollectionPage() {
             IIIF is the infrastructural key. Because these institutions expose their digitized
             pages through a standard protocol, Source Library can consume images from any of them
             through a single, uniform input layer. Adding a new institutional source requires only
-            a manifest parser. The entire downstream pipeline &mdash; OCR, translation, illustration
-            detection, metadata enrichment, scholarly edition publishing &mdash; works unchanged
+            a manifest parser. The entire downstream pipeline (OCR, translation, illustration
+            detection, metadata enrichment, scholarly edition publishing) works unchanged
             regardless of origin.
           </p>
 
@@ -432,8 +432,8 @@ export default function WorldsLargestCollectionPage() {
             IIIF was designed to make images interoperable for human viewers. It turns out to be
             even more transformative when the consumer is an AI model. A standardized way to access
             page images at arbitrary resolution from any institution is exactly what an automated
-            translation pipeline needs. The interoperability promise of IIIF &mdash; write once,
-            access anywhere &mdash; becomes a force multiplier for AI-powered scholarship.
+            translation pipeline needs. The interoperability promise of IIIF (write once,
+            access anywhere) becomes a force multiplier for AI-powered scholarship.
           </p>
 
           {/* Institutional sources table */}
@@ -492,7 +492,7 @@ export default function WorldsLargestCollectionPage() {
 
           <p className="text-secondary leading-relaxed font-body">
             The entire pipeline is automated. A newly imported book typically reaches full translation
-            within hours. The cost averages roughly $2 per book for a 300-page volume &mdash; about
+            within hours. The cost averages roughly $2 per book for a 300-page volume, about
             what a single page of professional human translation costs.
           </p>
         </section>
@@ -510,7 +510,7 @@ export default function WorldsLargestCollectionPage() {
             <a href="https://embassyofthefreemind.com/" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">
               Embassy of the Free Mind
             </a>{' '}
-            in Amsterdam, home to the Bibliotheca Philosophica Hermetica &mdash; a collection
+            in Amsterdam, home to the Bibliotheca Philosophica Hermetica, a collection
             of over 25,000 volumes in Hermeticism, alchemy, mysticism, and the history of ideas,
             awarded UNESCO Memory of the World status in 2022.
           </p>
@@ -519,20 +519,20 @@ export default function WorldsLargestCollectionPage() {
             The physical collection is extraordinary. But the ambition of Source Library goes beyond
             any single set of shelves. By using IIIF to curate texts from institutions across Europe
             and beyond, we are assembling the broadest possible view of early modern intellectual
-            life &mdash; theology, natural philosophy, medicine, mathematics, mysticism, alchemy,
-            astrology, and literature &mdash; and making all of it readable in English for the first time.
+            life (theology, natural philosophy, medicine, mathematics, mysticism, alchemy,
+            astrology, and literature) and making all of it readable in English for the first time.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The premise is simple: the ideas that drove the Renaissance &mdash; the conviction
+            The premise is simple: the ideas that drove the Renaissance (the conviction
             that ancient wisdom could be recovered, that nature could be understood through
-            observation and experiment, that human knowledge was cumulative and improvable &mdash;
+            observation and experiment, that human knowledge was cumulative and improvable)
             are not only of historical interest. They are ideas the world needs now. But they have
             been locked behind languages that fewer and fewer people can read.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            Over 4,200 books are now unlocked &mdash; 2,400+ of them for the first time in English.
+            Over 4,200 books are now unlocked, 2,400+ of them for the first time in English.
             The collection is growing every day. And every page is free.
           </p>
         </section>

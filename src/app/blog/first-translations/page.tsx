@@ -5,10 +5,10 @@ import BlogPostSchema from '@/components/seo/BlogPostSchema';
 
 export const metadata: Metadata = {
   title: 'First English Translations - Research Notes - Source Library',
-  description: 'Nearly 2,000 books in Source Library are first-ever English translations — over 900 now fully translated. Alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
+  description: 'Nearly 2,000 books in Source Library are first-ever English translations, over 900 now fully translated. Alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
   openGraph: {
-    title: 'Nearly 2,000 First English Translations — Over 900 Now Complete',
-    description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — over 900 now fully translated into English for the first time.',
+    title: 'Nearly 2,000 First English Translations, Over 900 Now Complete',
+    description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism: over 900 now fully translated into English for the first time.',
     images: [{ url: 'https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
   },
   twitter: {
@@ -26,7 +26,7 @@ export default function FirstTranslationsPage() {
       <BlogPostSchema
         slug="first-translations"
         title="First English Translations"
-        description="Nearly 2,000 books in Source Library are first-ever English translations — over 900 now fully translated."
+        description="Nearly 2,000 books in Source Library are first-ever English translations, over 900 now fully translated."
         datePublished="2026-02-20"
         dateModified="2026-03-08"
         image="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
@@ -35,7 +35,7 @@ export default function FirstTranslationsPage() {
       header={
         <ContentHeader
           title="First English Translations"
-          subtitle="Nearly 2,000 books in Source Library have never been read in English before — over 900 are now fully translated"
+          subtitle="Nearly 2,000 books in Source Library have never been read in English before; over 900 are now fully translated"
           image="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
           imageAlt="Frontispiece of Kircher's Oedipus Aegyptiacus, 1653"
         >
@@ -63,7 +63,7 @@ export default function FirstTranslationsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
-          As the library has grown to over 5,100 books, systematic AI classification and bibliographic verification have identified nearly 2,000 that appear to be first-ever English translations, with another 388 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts. Over 900 of these are now fully translated &mdash; readable from the first page to the last.
+          As the library has grown to over 5,100 books, systematic AI classification and bibliographic verification have identified nearly 2,000 that appear to be first-ever English translations, with another 388 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts. Over 900 of these are now fully translated, readable from the first page to the last.
         </p>
 
         {/* === Stat block === */}
@@ -101,11 +101,11 @@ export default function FirstTranslationsPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            To be clear about what we are claiming and what we are not: these are AI translations produced by Google&apos;s Gemini models, with the original language always preserved alongside for verification. They are working translations &mdash; the first time a modern English reader can sit down and read these texts from beginning to end. They are not critical scholarly editions. They have not been reviewed line-by-line by a specialist in Early Modern German or Neo-Latin.
+            To be clear about what we are claiming and what we are not: these are AI translations produced by Google&apos;s Gemini models, with the original language always preserved alongside for verification. They are working translations: the first time a modern English reader can sit down and read these texts from beginning to end. They are not critical scholarly editions. They have not been reviewed line-by-line by a specialist in Early Modern German or Neo-Latin.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            But for the vast majority of these books, the alternative is not a better translation. The alternative is no translation at all. A German sermon from 1618 that has never been rendered into English is simply invisible to anglophone readers &mdash; invisible to students, to researchers working outside German studies, to anyone who cannot read 17th-century Fraktur. An imperfect translation that makes the text legible for the first time is, we believe, a genuine scholarly contribution.
+            But for the vast majority of these books, the alternative is not a better translation. The alternative is no translation at all. A German sermon from 1618 that has never been rendered into English is simply invisible to anglophone readers: invisible to students, to researchers working outside German studies, to anyone who cannot read 17th-century Fraktur. An imperfect translation that makes the text legible for the first time is, we believe, a genuine scholarly contribution.
           </p>
         </section>
 
@@ -127,7 +127,7 @@ export default function FirstTranslationsPage() {
           </h3>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Nearly 290 of the first translations are alchemical texts &mdash; practical laboratory manuals, transmutation treatises, commentaries on Basilius Valentinus, and the Paracelsian medical chemistry that formed the bridge between medieval alchemy and modern chemistry. English-language history of science has long relied on a handful of translated alchemical works (the <em>Turba Philosophorum</em>, the Emerald Tablet, selections from Paracelsus). The vast German-language alchemical literature &mdash; hundreds of books published between 1600 and 1750 &mdash; has remained almost entirely untouched.
+            Nearly 290 of the first translations are alchemical texts: practical laboratory manuals, transmutation treatises, commentaries on Basilius Valentinus, and the Paracelsian medical chemistry that formed the bridge between medieval alchemy and modern chemistry. English-language history of science has long relied on a handful of translated alchemical works (the <em>Turba Philosophorum</em>, the Emerald Tablet, selections from Paracelsus). The vast German-language alchemical literature (hundreds of books published between 1600 and 1750) has remained almost entirely untouched.
           </p>
 
           {/* Featured book card: Walchin */}
@@ -143,11 +143,11 @@ export default function FirstTranslationsPage() {
             <div className="flex-1">
               <p className="text-secondary leading-relaxed font-body">
                 Among these is the work of{' '}
-                <Link href="https://sourcelibrary.org/book/698255f12f8186e7ada0c92c" className="text-accent-rust hover:text-accent-rust underline font-medium">Dorothea Juliana Walchin</Link>, a woman alchemist active in the early 18th century. Her three books &mdash;{' '}
+                <Link href="https://sourcelibrary.org/book/698255f12f8186e7ada0c92c" className="text-accent-rust hover:text-accent-rust underline font-medium">Dorothea Juliana Walchin</Link>, a woman alchemist active in the early 18th century. Her three books (
                 <Link href="https://sourcelibrary.org/book/698255f12f8186e7ada0c92c" className="text-accent-rust hover:text-accent-rust underline"><em>Das mineralische Gluten</em></Link>,{' '}
                 <Link href="https://sourcelibrary.org/book/6984e84ebcfafeceb11019c1" className="text-accent-rust hover:text-accent-rust underline"><em>Der philosophische Perl-Baum</em></Link>, and{' '}
-                <Link href="https://sourcelibrary.org/book/6988a5a1f3319e17203eb918" className="text-accent-rust hover:text-accent-rust underline"><em>Schl&uuml;ssel zu dem Cabinet</em></Link>{' '}
-                &mdash; have never appeared in English. They are practical alchemical treatises written by a woman in a field overwhelmingly dominated by men, and their existence is barely noted in the standard histories.
+                <Link href="https://sourcelibrary.org/book/6988a5a1f3319e17203eb918" className="text-accent-rust hover:text-accent-rust underline"><em>Schl&uuml;ssel zu dem Cabinet</em></Link>
+                ) have never appeared in English. They are practical alchemical treatises written by a woman in a field overwhelmingly dominated by men, and their existence is barely noted in the standard histories.
               </p>
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function FirstTranslationsPage() {
           {/* Pull quote: Semler */}
           <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
             <p className="text-secondary italic font-body leading-relaxed mb-3">
-              Johann Salomo Semler&apos;s <em>Free Investigation of the Canon</em> (1771) is widely recognized as a founding text of modern biblical criticism. Semler argued that the biblical canon was a historical product, assembled by human beings with human motivations. Every course on the history of biblical studies mentions Semler. Yet this specific work &mdash; the one that started it all &mdash; has never been translated into English.
+              Johann Salomo Semler&apos;s <em>Free Investigation of the Canon</em> (1771) is widely recognized as a founding text of modern biblical criticism. Semler argued that the biblical canon was a historical product, assembled by human beings with human motivations. Every course on the history of biblical studies mentions Semler. Yet this specific work, the one that started it all, has never been translated into English.
             </p>
             <p className="text-sm text-muted">
               Students have read <em>about</em> it for 250 years. Now they can{' '}
@@ -186,7 +186,7 @@ export default function FirstTranslationsPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Among the most striking is the{' '}
             <Link href="https://sourcelibrary.org/book/697c8e0f6000fdec2f130606" className="text-accent-rust hover:text-accent-rust underline"><em>Frawen Zimmer des Gottseligen Hocherleuchten Gottesgelehrten</em></Link>{' '}
-            (1620) &mdash; the &ldquo;Women&apos;s Chamber of the Rosy Cross.&rdquo; Published just six years after the <em>Fama Fraternitatis</em>, this text addresses women&apos;s participation in the Rosicrucian movement at a time when the standard narrative assumes the movement was entirely male. It has never appeared in English.
+            (1620), the &ldquo;Women&apos;s Chamber of the Rosy Cross.&rdquo; Published just six years after the <em>Fama Fraternitatis</em>, this text addresses women&apos;s participation in the Rosicrucian movement at a time when the standard narrative assumes the movement was entirely male. It has never appeared in English.
           </p>
 
           {/* -- Other clusters -- */}
@@ -210,7 +210,7 @@ export default function FirstTranslationsPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             A deep classification of the library&apos;s{' '}
             <Link href="https://sourcelibrary.org/collections/astrology" className="text-accent-rust hover:text-accent-rust underline">Astrology &amp; Divination</Link>{' '}
-            collection revealed 215 works that have never been translated into English &mdash; one of the largest single-subject clusters in the library.
+            collection revealed 215 works that have never been translated into English, one of the largest single-subject clusters in the library.
           </p>
 
           {/* Sanskrit astrology manuscript image */}
@@ -245,7 +245,7 @@ export default function FirstTranslationsPage() {
           </div>
 
           <p className="text-secondary leading-relaxed font-body">
-            Of the library&apos;s nearly 2,000 first translations, over 1,000 are already 80% or more complete, with 912 fully translated. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
+            Of the library&apos;s nearly 2,000 first translations, over 1,000 are already 80% or more complete, with 912 fully translated. Many of the Sanskrit manuscripts are fully translated: texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
           </p>
         </section>
 
@@ -332,7 +332,7 @@ export default function FirstTranslationsPage() {
           </div>
 
           <p className="text-secondary leading-relaxed font-body">
-            The library holds dozens of books by and about women &mdash; from Madame Guyon and Antoinette Bourignon to Jane Lead, Catherine of Siena, Teresa of &Aacute;vila, and Marguerite Porete. Many of these are among the first translations in the library.
+            The library holds dozens of books by and about women, from Madame Guyon and Antoinette Bourignon to Jane Lead, Catherine of Siena, Teresa of &Aacute;vila, and Marguerite Porete. Many of these are among the first translations in the library.
           </p>
         </section>
 
@@ -345,7 +345,7 @@ export default function FirstTranslationsPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
-            Some of the first translations are genuinely surprising &mdash; books that are famous, widely discussed in secondary literature, and yet have never been rendered into English.
+            Some of the first translations are genuinely surprising: books that are famous, widely discussed in secondary literature, and yet have never been rendered into English.
           </p>
 
           {/* Kircher with image */}
@@ -387,7 +387,7 @@ export default function FirstTranslationsPage() {
                 </Link>
                 <p className="text-sm text-muted mt-1 mb-3">Helmstedt, 1649 &middot; 433 pages</p>
                 <p className="text-secondary leading-relaxed font-body">
-                  A critical history of ancient Hermetic medicine &mdash; one of the earliest attempts to sort myth from evidence in the history of alchemy and early chemistry. Conring is a significant figure in the history of science, but this work has remained locked in Latin for nearly four centuries.
+                  A critical history of ancient Hermetic medicine, one of the earliest attempts to sort myth from evidence in the history of alchemy and early chemistry. Conring is a significant figure in the history of science, but this work has remained locked in Latin for nearly four centuries.
                 </p>
               </div>
             </div>
@@ -403,11 +403,11 @@ export default function FirstTranslationsPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate over 4,200 non-English books, you discover that a large fraction of them simply fell through the cracks.
+            The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection, approaching the historical record without the filter of what previous generations decided was worth translating. When you translate over 4,200 non-English books, you discover that a large fraction of them simply fell through the cracks.
           </p>
 
           <p className="text-secondary leading-relaxed mb-8 font-body">
-            The reasons differ. Some texts were too long (Kircher&apos;s 581 pages of dense Latin). Some were in the wrong language (the entire German alchemical tradition, the Sanskrit jyotish corpus). Some were by the wrong people (women, heterodox theologians, anonymous pamphleteers). Some were in the wrong field &mdash; too religious for historians of science, too scientific for historians of religion, too esoteric for both. And some were simply never prioritized by the small number of scholars who could have translated them.
+            The reasons differ. Some texts were too long (Kircher&apos;s 581 pages of dense Latin). Some were in the wrong language (the entire German alchemical tradition, the Sanskrit jyotish corpus). Some were by the wrong people (women, heterodox theologians, anonymous pamphleteers). Some were in the wrong field: too religious for historians of science, too scientific for historians of religion, too esoteric for both. And some were simply never prioritized by the small number of scholars who could have translated them.
           </p>
 
           {/* Pull quote */}
@@ -418,11 +418,11 @@ export default function FirstTranslationsPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The history of translation has always been a history of selection &mdash; someone deciding what is worth the effort. AI removes that bottleneck. The texts can speak for themselves.
+            The history of translation has always been a history of selection: someone deciding what is worth the effort. AI removes that bottleneck. The texts can speak for themselves.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            Classification uses a multi-stage verification pipeline: an initial AI assessment from OCR text, followed by a deep verification step that searches real bibliographic databases &mdash; UNESCO&apos;s Index Translationum, Open Library, Google Books, and the Universal Short Title Catalogue &mdash; using Gemini function calling. The verification pipeline has now processed virtually all non-English books in the collection. Of the 1,971 first translations, 1,466 are confirmed with no English translation found in any catalog searched, 388 are first <em>complete</em> translations where only excerpts existed, and 109 are first modern translations of texts last rendered into English before 1800. The{' '}
+            Classification uses a multi-stage verification pipeline: an initial AI assessment from OCR text, followed by a deep verification step that searches real bibliographic databases (UNESCO&apos;s Index Translationum, Open Library, Google Books, and the Universal Short Title Catalogue) using Gemini function calling. The verification pipeline has now processed virtually all non-English books in the collection. Of the 1,971 first translations, 1,466 are confirmed with no English translation found in any catalog searched, 388 are first <em>complete</em> translations where only excerpts existed, and 109 are first modern translations of texts last rendered into English before 1800. The{' '}
             <Link href="https://sourcelibrary.org/blog/first-translation-methodology" className="text-accent-rust hover:text-accent-rust underline">full methodology</Link>{' '}
             is documented separately. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
           </p>
@@ -453,7 +453,7 @@ export default function FirstTranslationsPage() {
         {/* === Footer === */}
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
-            Source Library is a project of the Embassy of the Free Mind. If you are a scholar who can improve any of these translations, or if you know of a prior English translation we missed, please reach out &mdash;{' '}
+            Source Library is a project of the Embassy of the Free Mind. If you are a scholar who can improve any of these translations, or if you know of a prior English translation we missed, please reach out:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

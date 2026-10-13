@@ -49,7 +49,7 @@ try {
       k++;
       const cf = path.join(OUT, 'cands', lang + SUB, `${String(k).padStart(2, '0')}_${b.id}.json`);
       if (fs.existsSync(cf)) { const d = JSON.parse(fs.readFileSync(cf, 'utf8')); sealed.books[lang].push({ order: k, book_id: b.id, eligible_pages: d.eligible_pages, candidates: d.candidates.map((x) => x.page_number) }); continue; } // resumable
-      const lens = await db.collection('pages').aggregate([{ $match: { book_id: b.id } }, { $project: { page_number: 1, o: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, t: { $strLenCP: { $ifNull: ['$translation.data', ''] } } } }, { $sort: { page_number: 1 } }]).toArray();
+      const lens = await db.collection('pages').aggregate([{ $match: { book_id: b.id } }, { $project: { page_number: 1, o: { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] } }, t: { $strLenCP: { $cond: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, '$translation.data', ''] } } } }, { $sort: { page_number: 1 } }]).toArray();
       const max = lens.length ? lens[lens.length - 1].page_number : 0;
       const ok = lens.filter((p) => p.o > 300 && p.t > 300 && p.page_number > 0.1 * max && p.page_number < 0.9 * max).map((p) => p.page_number);
       const picks = shuffle(ok, makeRng(SEED + [...b.id].reduce((s, ch) => s + ch.charCodeAt(0), 0))).slice(0, NPAGES);

@@ -1,0 +1,271 @@
+{
+ "engines": {
+  "mineru25-pro": {
+   "english-1600-1699": {
+    "n_pages": 59,
+    "n_library": 59,
+    "lite_cer": 0.053,
+    "engine_cer": 0.057,
+    "delta": 0.004,
+    "delta_ci95": [
+     -0.003,
+     0.017
+    ],
+    "wlt": "23/33/3",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 3
+    },
+    "lite_refused": 3,
+    "answered_only": {
+     "n": 56,
+     "lite_cer": 0.053,
+     "engine_cer": 0.06,
+     "delta": 0.008,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "mineru25-pro": 0.189,
+     "gemini-3.1-flash-lite": 0.171
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": false
+    },
+    "verdict": "REJECTED"
+   },
+   "latin-1500-1699": {
+    "n_pages": 36,
+    "n_library": 15,
+    "lite_cer": 0.067,
+    "engine_cer": 0.078,
+    "delta": 0.008,
+    "delta_ci95": [
+     0.004,
+     0.014
+    ],
+    "wlt": "6/29/1",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 36,
+     "lite_cer": 0.067,
+     "engine_cer": 0.078,
+     "delta": 0.008,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "mineru25-pro": 0.268,
+     "gemini-3.1-flash-lite": 0.231
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=15 library < 50) — no lane decision"
+   },
+   "english-1700+": {
+    "n_pages": 106,
+    "n_library": 106,
+    "lite_cer": 0.022,
+    "engine_cer": 0.017,
+    "delta": 0,
+    "delta_ci95": [
+     0,
+     0
+    ],
+    "wlt": "30/21/55",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 21
+    },
+    "lite_refused": 21,
+    "answered_only": {
+     "n": 85,
+     "lite_cer": 0.017,
+     "engine_cer": 0.019,
+     "delta": 0,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "mineru25-pro": 0.019,
+     "gemini-3.1-flash-lite": 0.018
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "REJECTED"
+   },
+   "german": {
+    "n_pages": 29,
+    "n_library": 0,
+    "lite_cer": 0.005,
+    "engine_cer": 0.025,
+    "delta": 0.021,
+    "delta_ci95": [
+     0.015,
+     0.028
+    ],
+    "wlt": "1/27/1",
+    "catastrophic": {
+     "engine": 1,
+     "lite": 0
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 29,
+     "lite_cer": 0.005,
+     "engine_cer": 0.025,
+     "delta": 0.021,
+     "catastrophic_engine": 1,
+     "catastrophic_lite": 0
+    },
+    "invention": {
+     "mineru25-pro": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "latin-1700+": {
+    "n_pages": 39,
+    "n_library": 0,
+    "lite_cer": 0.007,
+    "engine_cer": 0.019,
+    "delta": 0.002,
+    "delta_ci95": [
+     0.001,
+     0.008
+    ],
+    "wlt": "5/26/8",
+    "catastrophic": {
+     "engine": 0,
+     "lite": 2
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 39,
+     "lite_cer": 0.007,
+     "engine_cer": 0.019,
+     "delta": 0.002,
+     "catastrophic_engine": 0,
+     "catastrophic_lite": 2
+    },
+    "invention": {
+     "mineru25-pro": null,
+     "gemini-3.1-flash-lite": null
+    },
+    "checks": {
+     "median_delta_le_margin": true,
+     "ci_upper_le_max": true,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": true,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "directional (n=0 library < 50) — no lane decision"
+   },
+   "greek-print": {
+    "n_pages": 114,
+    "n_library": 114,
+    "lite_cer": 0.145,
+    "engine_cer": 0.374,
+    "delta": 0.183,
+    "delta_ci95": [
+     0.128,
+     0.204
+    ],
+    "wlt": "1/113/0",
+    "catastrophic": {
+     "engine": 15,
+     "lite": 1
+    },
+    "lite_refused": 0,
+    "answered_only": {
+     "n": 114,
+     "lite_cer": 0.145,
+     "engine_cer": 0.374,
+     "delta": 0.183,
+     "catastrophic_engine": 15,
+     "catastrophic_lite": 1
+    },
+    "invention": {
+     "mineru25-pro": 0.8,
+     "gemini-3.1-flash-lite": 0.244
+    },
+    "checks": {
+     "median_delta_le_margin": false,
+     "ci_upper_le_max": false,
+     "noise_floor_below_margin": true,
+     "catastrophic_le_ref_plus_1": false,
+     "invention_le_ref": false,
+     "loops_le_ref": true
+    },
+    "verdict": "REJECTED"
+   }
+  }
+ },
+ "agreement": {
+  "latin-pre1700": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.955,
+   "mineru25-pro_vs_lite": 0.956
+  },
+  "latin-1700s": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.977,
+   "mineru25-pro_vs_lite": 0.979
+  },
+  "german-fraktur": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.985,
+   "mineru25-pro_vs_lite": 0.958
+  },
+  "longs-en-fr": {
+   "n": 20,
+   "gemini-3-flash-preview_vs_lite": 0.962,
+   "mineru25-pro_vs_lite": 0.961
+  }
+ },
+ "cost": {
+  "mineru25-pro": {
+   "pages": 657,
+   "errors": null,
+   "wall_secs": 1097.9,
+   "s_per_page": 1.671,
+   "usd_per_page_gex45": 0.000158
+  },
+  "gemini-3.1-flash-lite": {
+   "pages": 195,
+   "usd_per_page_realtime": 0.000902,
+   "usd_per_page_batch": 0.000451,
+   "note": "generic transcription prompt, thinking 0; production prompt output is longer"
+  }
+ }
+}

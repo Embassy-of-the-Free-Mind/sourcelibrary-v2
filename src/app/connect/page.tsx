@@ -35,7 +35,7 @@ const VIDEO = {
     'Screen recording: adding the Source Library connector from the Claude directory, then asking Claude for alchemical emblems of the ouroboros and getting images from the original books with page-level citations.',
 };
 
-const TITLE = 'Connect Source Library to Claude or ChatGPT — Free, Five Clicks';
+const TITLE = 'Connect Source Library to Claude or ChatGPT: Free, Five Clicks';
 const DESCRIPTION =
   `Let Claude or ChatGPT read 15,000+ rare historical books and ${IMAGE_CORPUS_STATS.illustrations} illustrations for you. Free, no account, about a minute. Step-by-step pictures and a two-minute video for beginners; connection details for Claude Code, Cursor and other tools at the bottom.`;
 
@@ -227,7 +227,7 @@ export default function ConnectPage() {
           <div>
             <p className="text-xl text-secondary leading-relaxed">
               Once connected, Claude can search the library, read whole chapters in English, quote the exact lines,
-              and show you the engravings &mdash; and every answer links back to the scanned page of the original
+              and show you the engravings, and every answer links back to the scanned page of the original
               book, so you can check it yourself.
             </p>
             <ul className="mt-6 space-y-3">
@@ -264,7 +264,7 @@ export default function ConnectPage() {
           id="claude"
           lede={
             <>
-              You need a Claude account &mdash; the free one at{' '}
+              You need a Claude account. The free one at{' '}
               <a href="https://claude.ai" className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">claude.ai</a>{' '}
               is enough. Do this once on the web; the connection follows your account into the desktop and phone apps.
               The two clicks people miss are circled in red.
@@ -373,7 +373,7 @@ export default function ConnectPage() {
               ['0:52', 'Open the original', 'One click through to the plate on sourcelibrary.org, with its book and page. From 1:48 the same thing again from scratch, this time for the ouroboros.'],
             ].map(([t, title, text]) => (
               <li key={t} className="bg-white rounded-2xl border border-border-light p-4">
-                <span className="font-semibold text-primary">{t} &mdash; {title}.</span> {text}
+                <span className="font-semibold text-primary">{t} · {title}.</span> {text}
               </li>
             ))}
           </ol>
@@ -450,7 +450,7 @@ export default function ConnectPage() {
         <div className="space-y-3">
           <details className="group bg-white rounded-2xl border border-border-light overflow-hidden">
             <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
-              <strong>Claude Code</strong> <span className="text-muted">&mdash; one command</span>
+              <strong>Claude Code</strong> <span className="text-muted">· one command</span>
             </summary>
             <pre className="mx-6 mb-5 text-sm overflow-x-auto bg-stone-900 text-stone-100 rounded-lg p-4">
 {`claude mcp add --transport http source-library ${MCP_URL}`}
@@ -458,7 +458,7 @@ export default function ConnectPage() {
           </details>
           <details className="group bg-white rounded-2xl border border-border-light overflow-hidden">
             <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
-              <strong>Cursor, Windsurf, VS Code, Claude Desktop config</strong> <span className="text-muted">&mdash; JSON</span>
+              <strong>Cursor, Windsurf, VS Code, Claude Desktop config</strong> <span className="text-muted">· JSON</span>
             </summary>
             <div className="px-6 pb-5">
               <p className="text-xs text-muted mb-2">
@@ -478,7 +478,7 @@ export default function ConnectPage() {
           </details>
           <details className="group bg-white rounded-2xl border border-border-light overflow-hidden">
             <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
-              <strong>Clients that only speak stdio</strong> <span className="text-muted">&mdash; bridge with mcp-remote</span>
+              <strong>Clients that only speak stdio</strong> <span className="text-muted">· bridge with mcp-remote</span>
             </summary>
             <pre className="mx-6 mb-5 text-sm overflow-x-auto bg-stone-900 text-stone-100 rounded-lg p-4">
 {`{
@@ -493,7 +493,7 @@ export default function ConnectPage() {
           </details>
           <details className="group bg-white rounded-2xl border border-border-light overflow-hidden">
             <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
-              <strong>No MCP library at all</strong> <span className="text-muted">&mdash; plain JSON-RPC over HTTPS</span>
+              <strong>No MCP library at all</strong> <span className="text-muted">· plain JSON-RPC over HTTPS</span>
             </summary>
             <pre className="mx-6 mb-5 text-sm overflow-x-auto bg-stone-900 text-stone-100 rounded-lg p-4">
 {`curl -X POST ${MCP_URL} \\

@@ -154,7 +154,7 @@ export default async function AllEditorialPage() {
             &larr; Back to design options
           </Link>
           <h1 className="text-3xl md:text-4xl font-display text-primary mt-4">
-            Editorial Spread — All Collections
+            Editorial Spread: All Collections
           </h1>
           <p className="text-muted mt-2 max-w-2xl">
             Every collection rendered in the Editorial Spread format. Check which hero images work at full-bleed

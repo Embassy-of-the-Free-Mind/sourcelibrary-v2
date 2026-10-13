@@ -558,7 +558,7 @@ async function main() {
             { $cond: [{ $gt: [{ $size: { $ifNull: ['$metadata.subjects', []] } }, 0] }, 5, 0] },
             { $cond: [{ $and: [
               { $ne: ['$museum_description', null] },
-              { $gt: [{ $strLenCP: { $ifNull: ['$museum_description', ''] } }, 50] },
+              { $gt: [{ $strLenCP: { $cond: [{ $eq: [{ $type: '$museum_description' }, 'string'] }, '$museum_description', ''] } }, 50] },
             ]}, 10, 0] },
             { $cond: [{ $in: ['$type', ['emblem', 'engraving', 'frontispiece', 'diagram', 'portrait']] }, 10, 0] },
           ]},

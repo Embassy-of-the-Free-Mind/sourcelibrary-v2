@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 710
+n_pages: null
+verdict: "Off-leaf IA OCR is text stranded by the #3368 image repair: 399 books, 105,316 translated pages flagged needs_reocr that nothing reads; matches 27 of 29 detector books."
+status: informational
+decision: "Exact list and guard shipped (PR #5401); repair (about $255 on batch) not run"
+superseded_by: null
+issue: 5309
+---
 ## 2026-09-30 — Why is Gemini OCR off-leaf on IA bulk_jp2 books, and which pages exactly? (#5309)
 
 - **Design.** Four #5309 control pages were read in Mongo: repair timestamps, `needs_reocr` flags, and OCR dates set against `archived_at`. From that, a timestamp classifier (`strandedByImageRepair`) was run over all 710 image-repaired books and checked against the #5398 detector's 2,639-book sample.

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [la, grc, de]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: 36
+verdict: "Kraken, Surya and CHURRO-3B are statistically indistinguishable from Gemini on pages they read; coverage (25-28 of 56 aligned) is the limit and per-segment n is a pilot."
+status: informational
+decision: null
+superseded_by: null
+issue: 4523
+---
 ## 2026-09-03 — Bench 2 (complete): can self-hosted OCR replace Gemini on print?
 
 **Headline: yes on quality, no decision yet on scope — n is too small.** Three

@@ -14,7 +14,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { evaluatePrior, type BookInput, type CitedPriorInput } from '@/lib/ft-prior-guard';
+import { evaluatePrior, withoutStudyPriors, isUnanchoredAuditAlternative, displayablePriorPicks, type BookInput, type CitedPriorInput } from '@/lib/ft-prior-guard';
 
 // ── Shared expectation helpers ────────────────────────────────────────────────
 
@@ -414,5 +414,128 @@ describe('Edge cases', () => {
     const result = evaluatePrior(book, prior);
     // ANTHOLOGY should NOT fire because title overlap is high
     expect(result.failedGuards).not.toContain('ANTHOLOGY');
+  });
+});
+
+// ── STUDY guard (#4639) ───────────────────────────────────────────────────────
+// Priors as stored on live books (bookstore, read 2026-10-11).
+
+describe('STUDY guard — a monograph that quotes the work is not a translation of it', () => {
+  const kircher: BookInput = { title: 'Musurgia universalis Tomus I', author: 'Athanasius Kircher' };
+  // 6952050fab34727b1f04216b — the notes call it an anthology; only the title shape tells.
+  const godwinKircher: CitedPriorInput = {
+    english_title: 'Athanasius Kircher: A Renaissance Man and the Quest for Lost Knowledge',
+    translator: 'Joscelyn Godwin',
+    pub_year: '1979',
+    completeness: 'excerpts',
+    notes: "An anthology containing translated selections of Kircher's primary texts, including portions of the Musurgia.",
+  };
+
+  it('fires on Godwin\'s Kircher monograph (title shape)', () => {
+    expectGuardFired(evaluatePrior(kircher, godwinKircher), 'STUDY');
+  });
+
+  it('fires on Godwin\'s Fludd monograph (role noun after the colon)', () => {
+    const r = evaluatePrior(
+      { title: 'Utriusque Cosmi Historia', author: 'Robert Fludd' },
+      { english_title: 'Robert Fludd: Hermetic Philosopher and Surveyor of Two Worlds', completeness: 'excerpts' },
+    );
+    expectGuardFired(r, 'STUDY');
+  });
+
+  it('fires when the notes admit a monograph', () => {
+    const r = evaluatePrior(
+      { title: '海國圖志(4)', author: '魏源' },
+      {
+        english_title: "Wei Yuan and China's Rediscovery of the Maritime World",
+        completeness: 'excerpts',
+        notes: 'Scholarly monograph containing extensive translated excerpts and analysis of the Haiguo Tuzhi.',
+      },
+    );
+    expectGuardFired(r, 'STUDY');
+  });
+
+  it('does not fire on a COMPLETE translation printed inside a monograph', () => {
+    const r = evaluatePrior(
+      { title: 'Libellus de epidemia', author: 'Niccolò Leoniceno' },
+      {
+        english_title: 'The Great Pox: The French Disease in Renaissance Europe',
+        completeness: 'complete',
+        notes: "This scholarly monograph includes a full English translation of Leoniceno's 'Libellus de epidemia'.",
+      },
+    );
+    expect(r.failedGuards).not.toContain('STUDY');
+  });
+
+  it('does not fire on "<Author>: <work>" translations', () => {
+    const r = evaluatePrior(
+      { title: 'Christosophia', author: 'Jacob Böhme' },
+      { english_title: 'Jacob Boehme: The Way to Christ', translator: 'Peter Erb', completeness: 'partial' },
+    );
+    expect(r.failedGuards).not.toContain('STUDY');
+  });
+
+  it('does not fire on bare "biographical": a translation OF a biographical section', () => {
+    const r = evaluatePrior(
+      { title: 'Theosophia Practica - Volume I', author: 'Johann Georg Gichtel' },
+      {
+        english_title: 'The Life of Jacob Behmen',
+        completeness: 'partial',
+        notes: 'section: The biographical account of Jakob Böhme, which Gichtel authored and included in his Theosophia Practica.',
+      },
+    );
+    expect(r.failedGuards).not.toContain('STUDY');
+  });
+
+  it('does not fire on real translation anthologies (#4639 legitimate set)', () => {
+    for (const english_title of [
+      'The Literature of Ancient Sumer',
+      'Ante-Nicene Fathers',
+      'Proverbs of Ancient Sumer',
+      'The Works of Jacob Behmen',
+    ]) {
+      const r = evaluatePrior({ title: 'Opera', author: 'X' }, { english_title, completeness: 'partial' });
+      expect(r.failedGuards).not.toContain('STUDY');
+    }
+  });
+
+  it('withoutStudyPriors drops the study and keeps the rest in order (untyped Mongo shape)', () => {
+    const picks = [
+      { english_title: 'Egyptian Oedipus: Athanasius Kircher and the Secrets of Antiquity', completeness: 'excerpts' },
+      { english_title: 'Musurgia Universalis, Book I', translator: 'Someone', completeness: 'partial' },
+      godwinKircher,
+    ];
+    expect(withoutStudyPriors(kircher, picks)).toEqual([picks[1]]);
+    expect(withoutStudyPriors(kircher, undefined)).toEqual([]);
+  });
+});
+
+describe('Unanchored audit alternatives (#4634)', () => {
+  const nynauld = { title: 'De la Lycanthropie, Transformation et Extase des Sorciers', author: 'Jean de Nynauld' };
+  // Live shape on /book/699067e2249ce014347d46a9 (2026-10-11): the audit
+  // contradicted a claim and substituted this credit with an empty evidence array.
+  const hexen = {
+    english_title: 'On Lycanthropy, Transformation & Ecstasy of Sorcerers',
+    translator: 'Marina Rivas García',
+    pub_year: 'unknown',
+    publisher: 'Hexen Press',
+    completeness: 'complete',
+    evidence_source: 'gemini_grounding_audit_alternative',
+  };
+
+  it('drops an audit substitute with no year, url or catalogue id', () => {
+    expect(isUnanchoredAuditAlternative(hexen)).toBe(true);
+    expect(displayablePriorPicks(nynauld, [hexen])).toEqual([]);
+  });
+
+  it('keeps an audit substitute that carries a year, url or catalogue id', () => {
+    expect(isUnanchoredAuditAlternative({ ...hexen, pub_year: '1570' })).toBe(false);
+    expect(isUnanchoredAuditAlternative({ ...hexen, url: 'https://example.org/x' })).toBe(false);
+    expect(isUnanchoredAuditAlternative({ ...hexen, catalog_id: 'OL1W' })).toBe(false);
+  });
+
+  it('never drops an undated pick from any other evidence source', () => {
+    const discovery = { ...hexen, evidence_source: 'gemini_grounding_discovery' };
+    expect(displayablePriorPicks(nynauld, [discovery, hexen])).toEqual([discovery]);
   });
 });

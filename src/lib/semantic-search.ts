@@ -1,4 +1,5 @@
 import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 
@@ -194,6 +195,50 @@ export async function semanticSiteSearch(query: string, limit: number = 3): Prom
   }));
 }
 
+// ── Site pages by NAME (issue #5945) ──────────────────────────────
+
+export interface NavSiteResult {
+  url: string;
+  page_type: NavPageType;
+  title: string;
+  snippet: string;
+  /** Marks a result found by its name, so the page can show it first. */
+  match: 'name';
+  /** Share of the matched name the query covers (1 = the query is the name). */
+  coverage: number;
+}
+
+/**
+ * Pages, tools, essays and author pages whose name the query spells. Main site
+ * only. Collections are left to the collections lane, which holds the card
+ * fields and applies the same rule to its own list.
+ */
+export async function navSiteSearch(query: string, limit = 3): Promise<NavSiteResult[]> {
+  const q = parseNavQuery(query);
+  if (!q) return [];
+  // The bare tokens are a subset of the full ones, so they fetch a superset.
+  const { data, error } = await supabase.rpc('match_site_pages_by_name', {
+    query_tokens: q.bare.length > 0 ? q.bare : q.tokens,
+    match_count: 80,
+    filter_tenant: null,
+  });
+  if (error) throw new SemanticSearchError('match_site_pages_by_name', error.message);
+  const candidates: NavCandidate[] = (data || [])
+    .filter((row: any) => row.page_type !== 'collection')
+    .map((row: any) => ({
+      url: row.url, page_type: row.page_type, title: row.title,
+      names: row.names || [], weight: row.weight || 0, text: row.text || '',
+    }));
+  return rankNavMatches(query, candidates, limit).map(({ candidate: c, coverage }) => ({
+    url: c.url,
+    page_type: c.page_type,
+    title: c.title,
+    snippet: String(c.text || '').replace(/\s+/g, ' ').slice(0, 220),
+    match: 'name' as const,
+    coverage,
+  }));
+}
+
 // ── Artwork semantic search (separate table, 3072 dims) ──────────────
 
 export interface SemanticArtworkResult {
@@ -307,6 +352,40 @@ export async function semanticArtworkSearch(
 
 // ── Global page-level semantic search ────────────────────────────────
 
+/** Snippet window for the page lanes, in UTF-16 units. */
+const SNIPPET_CHARS = 300;
+
+/**
+ * The first `max` characters of `text`, ended where the text itself pauses
+ * (#3083). A bare slice stopped inside a word on 445 of 656 sampled
+ * `page_translations` rows longer than the window (2026-10-12, 1,000 rows at
+ * five offsets), and a caller reads "…the celestial influ" as a damaged page.
+ *
+ * Only ever SHORTENS: the result is a verbatim prefix of `text`, with nothing
+ * appended (no ellipsis — a snippet is page text and gets string-matched
+ * against the page). Prefers the last sentence end in the final 40% of the
+ * window, then the last space there; text with no space in that stretch
+ * (Chinese, Japanese, a long URL) keeps the plain cut.
+ */
+export function snapSnippet(text: string, max = SNIPPET_CHARS): string {
+  if (text.length <= max) return text;
+  let cut = text.slice(0, max);
+  // The window already ends between words.
+  if (/\s/.test(text[max]) || /\s$/.test(cut)) return cut.trimEnd();
+  const floor = Math.floor(max * 0.6);
+  let sentenceEnd = -1;
+  for (const m of cut.matchAll(/[.!?;:]["'”’)\]]*\s/g)) {
+    const end = m.index + m[0].length - 1;
+    if (end >= floor) sentenceEnd = end;
+  }
+  if (sentenceEnd !== -1) return cut.slice(0, sentenceEnd);
+  const space = cut.search(/\s\S*$/);
+  if (space >= floor) return cut.slice(0, space).trimEnd();
+  // No break to snap to: keep the cut, but never half of a surrogate pair.
+  if (/[\uD800-\uDBFF]$/.test(cut)) cut = cut.slice(0, -1);
+  return cut;
+}
+
 /**
  * Translations from books processed through the multi-page pipeline can begin
  * with an AI-written "Continuity:" preamble — a 1-3 sentence summary of what
@@ -320,9 +399,9 @@ export async function semanticArtworkSearch(
  * still verbatim translation. When not detected we keep the original text but
  * tag the snippet as 'summary' so consumers don't quote AI prose as source.
  */
-function stripContinuityPrefix(text: string): { snippet: string; type: 'translation' | 'summary' } {
+export function stripContinuityPrefix(text: string): { snippet: string; type: 'translation' | 'summary' } {
   if (!text) return { snippet: '', type: 'translation' };
-  if (!/^Continuity:\s/i.test(text)) return { snippet: text.slice(0, 300), type: 'translation' };
+  if (!/^Continuity:\s/i.test(text)) return { snippet: snapSnippet(text), type: 'translation' };
 
   const head = text.slice(0, 1000);
   // Heading markers, in order of specificity:
@@ -333,9 +412,9 @@ function stripContinuityPrefix(text: string): { snippet: string; type: 'translat
   const headingMatch = head.match(/\.\s+(?:->#{1,4}\s|#{1,4}\s|[A-Z][A-Z\s']{3,}\.\s|\d+\.\s)/);
   if (headingMatch && headingMatch.index !== undefined) {
     const stripped = text.slice(headingMatch.index + 1).trimStart();
-    return { snippet: stripped.slice(0, 300), type: 'translation' };
+    return { snippet: snapSnippet(stripped), type: 'translation' };
   }
-  return { snippet: text.slice(0, 300), type: 'summary' };
+  return { snippet: snapSnippet(text), type: 'summary' };
 }
 
 export interface SemanticPageSearchOptions {

@@ -1,0 +1,36 @@
+{
+  "source": "EEBO-TCP A19865",
+  "edition": "EEBO-TCP A19865 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "github.com/textcreationpartnership (CC0), 2026-10-04, job ocr-bakeoff-5660c",
+  "origin": "library",
+  "book_id": "6a4f7c25a13ff00e22df18f1",
+  "page_number": 10,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 9161,
+    "to_char": 10478,
+    "overlap": 0.975,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-04",
+    "note": "Starts constabit nihil tale (few extra); ends Protestan-",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T00:53:06.514Z",
+  "text_location": "repo",
+  "text_sha256": "9af94858995b765613879b53fc0e4f8bc6337159ba31d9da06b0e623ccbbb5ed",
+  "unit": {
+    "chars": 1317
+  }
+}

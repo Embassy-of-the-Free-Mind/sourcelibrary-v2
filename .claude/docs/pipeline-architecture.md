@@ -154,7 +154,7 @@ failure: `process-batches` was archived with no replacement; 22 zombie jobs lost
 | Archiving + acquisition crons, archiving-watchdog, daily health alert | various | **LIVE** — books keep piling at `archive_complete`; looks like an outage, isn't |
 
 **Local Mac (launchd):** `archive-{erara,harvard,gallica}.mjs` every 30 min — those
-hosts block datacenter IPs. The e-rara warehouse backlog is Mac-only.
+hosts block datacenter IPs. The e-rara backlog is Mac-only.
 
 **Lambda (eu-central-1):** preview + manual translation (SQS FIFO), image extraction
 (SQS standard). Deprecated for bulk translation.

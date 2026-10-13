@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 122
+n_pages: 122
+verdict: "Against English references lite beats the Archive's OCR on the same page 57-5 (43 ties); the Archive silently misreads about 1.5% of printed numbers, lite 0 of 750."
+status: adopted
+decision: "Archive text admitted only for number-free 1880-1930 Latin-script pages (ia-ocr-cohort.mjs) and as refusal fallback; lite stays default (#5186)"
+superseded_by: null
+issue: [5124, 5186, 5180, 5014]
+---
 ## 2026-09-28 — For which English IA books may the Archive's own OCR replace flash-lite? First English reference pages, both engines scored against them (#5124, scoped; #5180, #5186, #5014)
 
 - **Question.** Every English OCR number so far was two engines agreeing (eval-design §11: zero English

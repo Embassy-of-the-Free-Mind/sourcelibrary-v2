@@ -40,7 +40,9 @@ import { rateLimitedFetch, capDomainLimit, repairIiifV3Size } from '../lib/iiif-
 import { priceFor, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 
-const DIR = path.resolve('scripts/eval/results/langid-5777');
+// LANGID_RESULTS_DIR / LANGID_WORK_DIR / LANGID_TAG let another job reuse this reader on its own picks.jsonl (#4884).
+const DIR = path.resolve(process.env.LANGID_RESULTS_DIR || 'scripts/eval/results/langid-5777');
+const TAG = process.env.LANGID_TAG || 'langid-5777';
 const WORK = process.env.LANGID_WORK_DIR || '/data/scratch/sl/langid-5777';
 const IMG = path.join(WORK, 'img');
 const MODEL = 'gemini-3.1-flash-lite';
@@ -263,7 +265,7 @@ async function phaseSubmit() {
     const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' },
-      body: JSON.stringify({ file: { display_name: `langid-5777-r${ROUND}a${attempt}-${c}` } }),
+      body: JSON.stringify({ file: { display_name: `${TAG}-r${ROUND}a${attempt}-${c}` } }),
     });
     if (!start.ok) throw new Error(`upload start ${start.status} ${(await start.text()).slice(0, 300)}`);
     const up = await fetch(start.headers.get('X-Goog-Upload-URL'), { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body: jsonl });
@@ -275,7 +277,7 @@ async function phaseSubmit() {
       create: async () => {
         const r = await fetch(`${API}/v1beta/models/${MODEL}:batchGenerateContent?key=${key}`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ batch: { display_name: `langid-5777-r${ROUND}a${attempt}-${c}`, input_config: { file_name: fileName } } }),
+          body: JSON.stringify({ batch: { display_name: `${TAG}-r${ROUND}a${attempt}-${c}`, input_config: { file_name: fileName } } }),
         });
         if (!r.ok) throw new Error(`batch create ${r.status} ${(await r.text()).slice(0, 500)}`);
         return r.json();
@@ -331,7 +333,7 @@ async function phaseCollect() {
       console.log(`collected ${n} (${errors} errors) $${j.cost_usd}`);
       try {
         const { logUsage } = await import('../workers/lib/supabase-usage-logger.mjs');
-        await logUsage({ type: 'eval', mode: 'batch', model: MODEL, page_count: n - errors, input_tokens: inTok, output_tokens: outTok, batch_job_id: j.job_name, endpoint: 'eval/langid-5777', triggered_by: 'manual', prompt_version: 'eval-5777-langid' });
+        await logUsage({ type: 'eval', mode: 'batch', model: MODEL, page_count: n - errors, input_tokens: inTok, output_tokens: outTok, batch_job_id: j.job_name, endpoint: `eval/${TAG}`, triggered_by: 'manual', prompt_version: 'eval-5777-langid' });
       } catch (e) { console.warn(`logUsage failed: ${e.message}`); }
       writeJson('batch.json', rec);
     }

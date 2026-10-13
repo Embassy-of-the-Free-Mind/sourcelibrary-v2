@@ -31,7 +31,7 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 | Service | Purpose | Key Config |
 |---------|---------|------------|
 | **Vercel** | Next.js hosting, 7 crons | Project: `sourcelibrary-v2` |
-| **MongoDB Atlas** | Primary database | DB: `bookstore`, `books` holds live + hidden books; `books_warehouse` is almost entirely a duplicate of rows also in `books` (see Collections) |
+| **MongoDB Atlas** | Primary database | DB: `bookstore` (the warehouse collections were merged into `books`/`pages` 2026-10, #5470) |
 | **Supabase Postgres** | Analytics, browse cache, catalog, search | pgvector, pg_trgm, pg_cron |
 | **AWS Lambda** (eu-central-1) | AI processing workers | 4 functions, SQS-triggered |
 | **AWS SQS** (eu-central-1) | Job queues (FIFO) | 4 queues: OCR, translation, images, write |
@@ -127,9 +127,8 @@ Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections suppor
 | Collection | Purpose | Key Fields |
 |------------|---------|------------|
 | `books` | Book metadata (~17K live) | `id`, `title`, `author`, `slug`, `pages_count`, `pages_ocr`, `pages_translated` |
-| `books_warehouse` | Archived book records (22,543 on 2026-10-05) | Same schema. **Not extra holdings:** 22,539 of them also exist in `books` under the same `id` (restored or re-imported), so counting `books` (live + hidden) already covers them; only 4 are warehouse-only. Never add the two collections together. |
 | `pages` | Individual pages (~3.1M live) | `book_id`, `ocr.data`, `translation.data`, `detected_images`, `page_type` |
-| `pages_warehouse` | Archived pages (~6.4M) | Same schema |
+| `books_warehouse_retired_2026_10`, `pages_warehouse_retired_2026_10` | Retired warehouse (#5470): content merged into `books`/`pages`; kept read-only for history, no code reads them | — |
 | `deleted_books` | Soft-deleted books | Same as books, recoverable |
 | `collections` | Book groupings | `slug`, `name`, `hidden`, `collection_type` |
 | `entities` | Legacy per-string author/encyclopedia layer (people, places, concepts). **Being retired for authorship** — superseded by `authors`. | linked via `books.author_entity_id` |

@@ -6,7 +6,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'For Libraries & Cultural Institutions | Source Library',
   description:
-    'Put your archive online in a day. Source Library offers libraries, museums, and cultural institutions a turnkey platform for searchable, AI-translated, citable, embeddable digital collections — used by the Embassy of the Free Mind for the Bibliotheca Philosophica Hermetica.',
+    'Put your archive online in a day. Source Library offers libraries, museums, and cultural institutions a turnkey platform for searchable, AI-translated, citable, embeddable digital collections, used by the Embassy of the Free Mind for the Bibliotheca Philosophica Hermetica.',
   alternates: {
     canonical: '/for-libraries',
   },
@@ -20,7 +20,7 @@ export default function ForLibrariesPage() {
       header={
         <ContentHeader
           title="For Libraries & Cultural Institutions"
-          subtitle="Put your archive online in a day. Searchable, AI-translated, citable, and embeddable — under your brand, on your domain. Trusted by the Embassy of the Free Mind."
+          subtitle="Put your archive online in a day. Searchable, AI-translated, citable, and embeddable, under your brand, on your domain. Trusted by the Embassy of the Free Mind."
         />
       }
     >
@@ -30,7 +30,7 @@ export default function ForLibrariesPage() {
           <p className="text-lg text-secondary leading-relaxed mb-4">
             Source Library hosts and powers digital collections for heritage libraries, museums, and
             academic archives. Your books are scanned, OCR&apos;d, translated into English by AI, and
-            made searchable across the full text &mdash; with stable citation URLs for every page.
+            made searchable across the full text, with stable citation URLs for every page.
             You keep your brand, your domain, and full control over what&apos;s public.
           </p>
           <p className="text-secondary leading-relaxed">
@@ -51,8 +51,8 @@ export default function ForLibrariesPage() {
               className="text-accent-rust hover:underline"
             >
               Bibliotheca Philosophica Hermetica
-            </a>{' '}
-            &mdash; thousands of early-modern Hermetic, alchemical, and Rosicrucian works, now
+            </a>
+            : thousands of early-modern Hermetic, alchemical, and Rosicrucian works, now
             readable and quotable in English by anyone in the world.
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function ForLibrariesPage() {
         <h2 className="text-2xl md:text-3xl text-primary mb-3">Two ways to integrate</h2>
         <p className="text-secondary mb-8 max-w-2xl">
           Start with the drop-in embed and your collection is live on your site this afternoon.
-          Move to the API later if you want a custom UI &mdash; the data, search, and citations are
+          Move to the API later if you want a custom UI; the data, search, and citations are
           the same.
         </p>
 
@@ -77,8 +77,8 @@ export default function ForLibrariesPage() {
               <h3 className="text-xl font-semibold text-primary">Drop-in embed</h3>
             </div>
             <p className="text-secondary text-[15px] leading-relaxed mb-5">
-              One line of HTML. We host the entire reading interface &mdash; search, page viewer,
-              translations, citations &mdash; inside an iframe on your site. Your CSS, your nav, your
+              One line of HTML. We host the entire reading interface (search, page viewer,
+              translations, citations) inside an iframe on your site. Your CSS, your nav, your
               branding around it. No code to maintain.
             </p>
 
@@ -115,7 +115,7 @@ export default function ForLibrariesPage() {
             <p className="text-secondary text-[15px] leading-relaxed mb-5">
               Build your own search UI, plug the collection into your AI assistant, or feed it into
               digital-humanities tools. A tenant-scoped API key locks every request to your
-              collection &mdash; no cross-institution leakage by design.
+              collection, so there is no cross-institution leakage by design.
             </p>
 
             <div className="bg-white rounded-lg border border-border-light overflow-hidden mb-3">
@@ -153,7 +153,7 @@ export default function ForLibrariesPage() {
         <h2 className="text-2xl md:text-3xl text-primary mb-3">A live partner library</h2>
         <p className="text-secondary mb-8 max-w-2xl">
           The collection below is live, embedded right here using the same one-line script
-          shown above &mdash; a complete reading room running on the platform.
+          shown above: a complete reading room running on the platform.
         </p>
 
         {/* BPH demo */}
@@ -161,7 +161,7 @@ export default function ForLibrariesPage() {
           <div className="bg-stone-100 px-4 py-2.5 border-b border-border-light flex items-center justify-between">
             <div>
               <span className="text-sm font-medium text-stone-700">
-                Bibliotheca Philosophica Hermetica &mdash; Embassy of the Free Mind
+                Bibliotheca Philosophica Hermetica · Embassy of the Free Mind
               </span>
               <span className="hidden md:inline text-xs text-muted ml-2">
                 Hermetic, alchemical &amp; Rosicrucian works
@@ -212,7 +212,7 @@ export default function ForLibrariesPage() {
           />
           <FeatureCard
             title="Illustration catalog"
-            description="Every illustration extracted, classified, and described with AI vision — subjects, figures, technique, symbolism. Browse as a visual gallery."
+            description="Every illustration extracted, classified, and described with AI vision: subjects, figures, technique, symbolism. Browse as a visual gallery."
           />
           <FeatureCard
             title="Analytics dashboard"
@@ -224,7 +224,7 @@ export default function ForLibrariesPage() {
           />
           <FeatureCard
             title="Closed-system isolation"
-            description="Your subdomain is a sealed environment — readers cannot navigate, follow links, or be redirected to other institutions' books. Verified by automated leak audits."
+            description="Your subdomain is a sealed environment. Readers cannot navigate, follow links, or be redirected to other institutions' books. Verified by automated leak audits."
           />
         </div>
       </section>
@@ -237,7 +237,7 @@ export default function ForLibrariesPage() {
             <li>
               <strong>Tenant subdomain lockdown.</strong> Every partner gets a dedicated subdomain.
               Internal links, search results, related-books, and redirects are filtered to your
-              collection only &mdash; enforced at the proxy, the API, and the UI layer.
+              collection only, enforced at the proxy, the API, and the UI layer.
             </li>
             <li>
               <strong>Tenant-bound API keys.</strong> A partner key can only see and act on its own
@@ -262,7 +262,7 @@ export default function ForLibrariesPage() {
         <div className="grid md:grid-cols-2 gap-6">
           <FeatureCard
             title="Heritage libraries &amp; foundations"
-            description="Like the Embassy of the Free Mind / Bibliotheca Philosophica Hermetica — specialized historical collections that deserve a global readership but lack the engineering team to build a modern digital platform."
+            description="Like the Embassy of the Free Mind / Bibliotheca Philosophica Hermetica: specialized historical collections that deserve a global readership but lack the engineering team to build a modern digital platform."
           />
           <FeatureCard
             title="Academic & university libraries"
@@ -300,7 +300,7 @@ export default function ForLibrariesPage() {
         <div className="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-2xl p-8 md:p-10">
           <h2 className="text-2xl md:text-3xl mb-3">Talk to us</h2>
           <p className="text-stone-300 mb-6 max-w-2xl leading-relaxed">
-            Tell us about your collection &mdash; what you have, who reads it, where it lives today.
+            Tell us about your collection: what you have, who reads it, where it lives today.
             We&apos;ll get back within a few days with concrete next steps and an honest assessment
             of whether Source Library is the right fit.
           </p>
@@ -341,7 +341,7 @@ export default function ForLibrariesPage() {
           <RelatedCard
             href="/developers"
             title="For Developers"
-            desc="MCP server, REST API, CLI — get an API key and start building."
+            desc="MCP server, REST API, CLI. Get an API key and start building."
           />
           <RelatedCard
             href="/about"

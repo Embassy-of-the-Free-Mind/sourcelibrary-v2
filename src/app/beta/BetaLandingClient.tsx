@@ -161,7 +161,7 @@ export default function BetaLandingClient({ stats }: { stats: BetaStats }) {
       setStatus('success');
       setEmail('');
     } catch {
-      setErrorMsg('Network error — please try again');
+      setErrorMsg('Network error. Please try again');
       setStatus('error');
     }
   };
@@ -306,7 +306,7 @@ export default function BetaLandingClient({ stats }: { stats: BetaStats }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/reader-screenshot.png"
-                alt="Source Library reader showing Robert Fludd's Utriusque Cosmi Historia (1617) — Latin manuscript on the left, AI-generated English translation on the right"
+                alt="Source Library reader showing Robert Fludd's Utriusque Cosmi Historia (1617): Latin manuscript on the left, AI-generated English translation on the right"
                 className="w-full"
                 loading="lazy"
               />

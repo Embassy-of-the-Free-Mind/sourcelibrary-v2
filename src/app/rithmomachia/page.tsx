@@ -4,10 +4,10 @@ import RithmomachiaGame from '@/components/rithmomachia/RithmomachiaGame';
 import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
-  title: 'Rithmomachia — Play the Battle of Numbers - Source Library',
-  description: 'Play Rithmomachia, the medieval mathematical board game. Capture opponents through arithmetic — addition, subtraction, multiplication, and division. Win by creating Pythagorean harmonies.',
+  title: 'Rithmomachia: Play the Battle of Numbers - Source Library',
+  description: 'Play Rithmomachia, the medieval mathematical board game. Capture opponents through arithmetic: addition, subtraction, multiplication, and division. Win by creating Pythagorean harmonies.',
   openGraph: {
-    title: 'Rithmomachia — Play the Battle of Numbers',
+    title: 'Rithmomachia: Play the Battle of Numbers',
     description: 'A mathematical board game played across Europe for six centuries. Now playable online, grounded in five Renaissance primary sources.',
     images: [
       {

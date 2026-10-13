@@ -1,0 +1,54 @@
+{
+  "source": "la.wikisource Liber:Sphaera Ioannis de Sacrobosco emendata. Elia Vineti Santonis scholia in eandem Sphaeram, ab ipso authore restituta. Adiunximus huic libro compendium in Sphaeram (IA bub gb hZh9BYVGr7wC 3).pdf",
+  "edition": "Sphaera Ioannis de Sacrobosco Emendata — Elias Vinetus 1586",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3ASphaera_Ioannis_de_Sacrobosco_emendata._Elia_Vineti_Santonis_scholia_in_eandem_Sphaeram%2C_ab_ipso_authore_restituta._Adiunximus_huic_libro_compendium_in_Sphaeram_(IA_bub_gb_hZh9BYVGr7wC_3).pdf",
+  "origin": "library",
+  "book_id": "69b660aeb3f4fc0441533e16",
+  "page_number": 67,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 67406,
+    "to_char": 68686,
+    "overlap": 0.368,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-0)",
+    "at": "2026-10-06T10:04:59Z",
+    "note": "Ref matches 'Illis siquidem' to 'maiorem sui partem' + catchword 'tamen'; sphere woodcut, wiki markup in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      66,
+      67,
+      68
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.428Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "d624cafcb0e64257b3b38db3b1c371d6a69096af530d6cc5e1b9cd1c71d6dd94",
+  "unit": {
+    "chars": 1280
+  }
+}

@@ -256,8 +256,8 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
   if (current && changeType === 'create') {
     throw new BphCatalogError(
       isUuidKeyed
-        ? `A catalogue entry with uuid "${ubn}" already exists — edit it instead`
-        : `A catalogue entry with UBN "${ubn}" already exists — edit it instead`,
+        ? `A catalogue entry with uuid "${ubn}" already exists. Edit it instead.`
+        : `A catalogue entry with UBN "${ubn}" already exists. Edit it instead.`,
     );
   }
 

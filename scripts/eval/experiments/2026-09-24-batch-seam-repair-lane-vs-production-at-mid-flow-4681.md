@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: preference
+languages: [la, de]
+scripts: [Latn]
+canons: []
+n_books: 9
+n_pages: 62
+verdict: "Tie at 62 mid-flow seams: production 19, lane 14, tie 29 (share 0.58, CI 0.41-0.73); Jev's continuity screen does not replicate (AUC 0.49)"
+status: superseded
+decision: null
+superseded_by: "2026-09-25-retraction-of-the-arm-label-on-both-4681-seam-4681.md"
+issue: 4681
+---
 ## 2026-09-24 — Batch + seam-repair lane vs production at MID-FLOW seams: the decisive draw (#4681)
 
 **Question.** Does the Batch API lane with seam repair (arm Et, PR #5000) read as production at page

@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A20623",
+  "edition": "Conclaue Ignati: siue Eius in nuperis inferni comitiis in thronisatio Vbi varia De Iesuitarum indole, de nouo inferno creando, de ecclesia lunatica institue[n]da, per satyram congesta sunt. Accessit e — STC 7026; ESTC S126464 (1611)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A20623",
+  "origin": "library",
+  "book_id": "6a42d56d1894955eb725e97f",
+  "page_number": 49,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 16709,
+    "to_char": 17520,
+    "overlap": 0.367,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (b-3)",
+    "at": "2026-10-06T10:11:08+00:00",
+    "note": "p.34: ref matches 'lentus huius liberalitatis' to 'impertit' (final 'concessas &' and catchword missing); Leo 10. given as Leo X.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1600s",
+    "pages": [
+      47,
+      48,
+      49
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.714Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "3ebd8169b3ddec464baffb3e6102be7b80f749ec51731a89ec32e0a19b18de52",
+  "unit": {
+    "chars": 811
+  }
+}

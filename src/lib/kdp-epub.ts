@@ -550,7 +550,7 @@ ${entries}
       if (hasGlossary) {
         const terms = [...idx!.vocabulary!]
           .sort((a, b) => a.term.localeCompare(b.term))
-          .map(e => `    <div class="glossary-term"><strong>${escapeXml(e.term)}</strong>${e.definition ? `<span class="definition"> — ${escapeXml(e.definition)}</span>` : ''}${e.pages?.length ? `<span class="pages"> (pp. ${e.pages.join(', ')})</span>` : ''}</div>`)
+          .map(e => `    <div class="glossary-term"><strong>${escapeXml(e.term)}</strong>${e.definition ? `<span class="definition">: ${escapeXml(e.definition)}</span>` : ''}${e.pages?.length ? `<span class="pages"> (pp. ${e.pages.join(', ')})</span>` : ''}</div>`)
           .join('\n');
         const body = `  <div class="glossary">
     <h1>Glossary</h1>

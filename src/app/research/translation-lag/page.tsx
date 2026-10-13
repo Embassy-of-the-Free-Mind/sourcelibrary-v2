@@ -7,7 +7,7 @@ import { isPublishedFirstTranslation } from '@/lib/book';
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: 'Translation Lag — Source Library Research',
+  title: 'Translation Lag | Source Library Research',
   description:
     'How long did it take for key works to reach English readers? Visualizing the gap between composition and publication across 1,700 years of knowledge transmission.',
   alternates: { canonical: '/research/translation-lag' },
@@ -225,7 +225,7 @@ export default async function TranslationLagPage() {
         </p>
         <p>
           For translations and later editions, the &ldquo;lag&rdquo; represents how long it took for the text to reach
-          this particular linguistic community — not necessarily the total time before any printed edition existed.
+          this particular linguistic community, not necessarily the total time before any printed edition existed.
           Works with estimated composition dates (e.g., &ldquo;c. 3rd century CE&rdquo;) use the midpoint of the estimated range.
           {data.length.toLocaleString('en-US')} of {'>'}2,400 visible books have computable composition dates.
         </p>

@@ -1,0 +1,378 @@
+{
+ "issue": 6361,
+ "built_at": "2026-10-09T06:18:09.934Z",
+ "repo_commit": "2cdafceafd39063758cb0db5354c886373c3f6c8",
+ "prompt": {
+  "pinned": {
+   "id": "6a98b8a175660c6a8b09a8f9",
+   "name": "Standard Translation",
+   "version": 13,
+   "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+  },
+  "pinned_translation_sha256": "02272eeeeb721b22d1080e7264da75b037104a00056357dc3412de7fb940fd41",
+  "live_default": {
+   "id": "6a98b8a175660c6a8b09a8f9",
+   "name": "Standard Translation",
+   "version": 13,
+   "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+  },
+  "live_translation_sha256": "02272eeeeb721b22d1080e7264da75b037104a00056357dc3412de7fb940fd41",
+  "live_equals_pinned": true
+ },
+ "builder": {
+  "fn": "buildTranslationPrompt",
+  "pageBreak": "PAGE_BREAK_SCOPED",
+  "context": "one page, no previous translation, no neighbours (as C38)",
+  "translate_core_sha256": "5fb4e13a5106b50b58d7561d9fcf73611d5c70d7981f0d1e7d3bc5748df86e6b",
+  "state_json_sha256": "0821bc2480005c4fdb9f2c5d4db32f79c6964715571b72804c889975620cafef"
+ },
+ "sections": "books held tengyur-import-5497 whose title carries སྡེ་དགེ། དབུ་མ། (Madhyamaka) or སྡེ་དགེ། ཚད་མ། (Pramāṇa); equals #6145 l2-excluded-ids.txt",
+ "volumes": [
+  {
+   "vol": 96,
+   "section": "Madhyamaka",
+   "book_id": "6abeb158896ea18127c82682",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
+   "pages_count": 567,
+   "pages_in_db": 567,
+   "in_scope": 565
+  },
+  {
+   "vol": 97,
+   "section": "Madhyamaka",
+   "book_id": "6abeb1dc896ea18127c828bc",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཚ (Derge Tengyur, vol. 97)",
+   "pages_count": 578,
+   "pages_in_db": 578,
+   "in_scope": 575
+  },
+  {
+   "vol": 98,
+   "section": "Madhyamaka",
+   "book_id": "6abeb20a896ea18127c82b01",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
+   "pages_count": 659,
+   "pages_in_db": 659,
+   "in_scope": 658
+  },
+  {
+   "vol": 99,
+   "section": "Madhyamaka",
+   "book_id": "6abeb246896ea18127c82d97",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཝ (Derge Tengyur, vol. 99)",
+   "pages_count": 573,
+   "pages_in_db": 573,
+   "in_scope": 572
+  },
+  {
+   "vol": 100,
+   "section": "Madhyamaka",
+   "book_id": "6abeb286896ea18127c82fd7",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཞ (Derge Tengyur, vol. 100)",
+   "pages_count": 675,
+   "pages_in_db": 675,
+   "in_scope": 674
+  },
+  {
+   "vol": 101,
+   "section": "Madhyamaka",
+   "book_id": "6abeb2b1896ea18127c8327d",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
+   "pages_count": 681,
+   "pages_in_db": 681,
+   "in_scope": 680
+  },
+  {
+   "vol": 102,
+   "section": "Madhyamaka",
+   "book_id": "6abe825059b86b7d32a6597a",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། འ (Derge Tengyur, vol. 102)",
+   "pages_count": 695,
+   "pages_in_db": 695,
+   "in_scope": 692
+  },
+  {
+   "vol": 103,
+   "section": "Madhyamaka",
+   "book_id": "6abeb2ec896ea18127c83529",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཡ (Derge Tengyur, vol. 103)",
+   "pages_count": 749,
+   "pages_in_db": 749,
+   "in_scope": 748
+  },
+  {
+   "vol": 104,
+   "section": "Madhyamaka",
+   "book_id": "6abeb325896ea18127c83819",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ར (Derge Tengyur, vol. 104)",
+   "pages_count": 729,
+   "pages_in_db": 729,
+   "in_scope": 728
+  },
+  {
+   "vol": 105,
+   "section": "Madhyamaka",
+   "book_id": "6abeb35b896ea18127c83af5",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ལ (Derge Tengyur, vol. 105)",
+   "pages_count": 697,
+   "pages_in_db": 697,
+   "in_scope": 695
+  },
+  {
+   "vol": 106,
+   "section": "Madhyamaka",
+   "book_id": "6abeb39f896ea18127c83db1",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཤ (Derge Tengyur, vol. 106)",
+   "pages_count": 569,
+   "pages_in_db": 569,
+   "in_scope": 568
+  },
+  {
+   "vol": 107,
+   "section": "Madhyamaka",
+   "book_id": "6abeb3d6896ea18127c83fed",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ས (Derge Tengyur, vol. 107)",
+   "pages_count": 581,
+   "pages_in_db": 581,
+   "in_scope": 580
+  },
+  {
+   "vol": 108,
+   "section": "Madhyamaka",
+   "book_id": "6abeb404896ea18127c84235",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཧ (Derge Tengyur, vol. 108)",
+   "pages_count": 633,
+   "pages_in_db": 633,
+   "in_scope": 632
+  },
+  {
+   "vol": 109,
+   "section": "Madhyamaka",
+   "book_id": "6abeb43e896ea18127c844b1",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཨ (Derge Tengyur, vol. 109)",
+   "pages_count": 625,
+   "pages_in_db": 625,
+   "in_scope": 624
+  },
+  {
+   "vol": 110,
+   "section": "Madhyamaka",
+   "book_id": "6abeb4ad896ea18127c84725",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཀི (Derge Tengyur, vol. 110)",
+   "pages_count": 715,
+   "pages_in_db": 715,
+   "in_scope": 714
+  },
+  {
+   "vol": 111,
+   "section": "Madhyamaka",
+   "book_id": "6abeb4e5896ea18127c849f3",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+   "pages_count": 625,
+   "pages_in_db": 625,
+   "in_scope": 624
+  },
+  {
+   "vol": 112,
+   "section": "Madhyamaka",
+   "book_id": "6abeb51b896ea18127c84c67",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། གི (Derge Tengyur, vol. 112)",
+   "pages_count": 517,
+   "pages_in_db": 517,
+   "in_scope": 516
+  },
+  {
+   "vol": 174,
+   "section": "Pramana",
+   "book_id": "6abed3fc896ea18127c8d272",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
+   "pages_count": 730,
+   "pages_in_db": 730,
+   "in_scope": 723
+  },
+  {
+   "vol": 175,
+   "section": "Pramana",
+   "book_id": "6abed42c896ea18127c8d54f",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
+   "pages_count": 718,
+   "pages_in_db": 718,
+   "in_scope": 717
+  },
+  {
+   "vol": 176,
+   "section": "Pramana",
+   "book_id": "6abed47a896ea18127c8d820",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
+   "pages_count": 655,
+   "pages_in_db": 655,
+   "in_scope": 654
+  },
+  {
+   "vol": 177,
+   "section": "Pramana",
+   "book_id": "6abed4cd896ea18127c8dab2",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཉེ (Derge Tengyur, vol. 177)",
+   "pages_count": 563,
+   "pages_in_db": 563,
+   "in_scope": 562
+  },
+  {
+   "vol": 178,
+   "section": "Pramana",
+   "book_id": "6abed518896ea18127c8dce8",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཏེ (Derge Tengyur, vol. 178)",
+   "pages_count": 615,
+   "pages_in_db": 615,
+   "in_scope": 614
+  },
+  {
+   "vol": 179,
+   "section": "Pramana",
+   "book_id": "6abed57e896ea18127c8df52",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཐེ (Derge Tengyur, vol. 179)",
+   "pages_count": 563,
+   "pages_in_db": 563,
+   "in_scope": 562
+  },
+  {
+   "vol": 180,
+   "section": "Pramana",
+   "book_id": "6abed5db896ea18127c8e188",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། དེ (Derge Tengyur, vol. 180)",
+   "pages_count": 729,
+   "pages_in_db": 729,
+   "in_scope": 728
+  },
+  {
+   "vol": 181,
+   "section": "Pramana",
+   "book_id": "6abed619896ea18127c8e464",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ནེ (Derge Tengyur, vol. 181)",
+   "pages_count": 623,
+   "pages_in_db": 623,
+   "in_scope": 622
+  },
+  {
+   "vol": 182,
+   "section": "Pramana",
+   "book_id": "6abed65f896ea18127c8e6d6",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། པེ (Derge Tengyur, vol. 182)",
+   "pages_count": 795,
+   "pages_in_db": 795,
+   "in_scope": 794
+  },
+  {
+   "vol": 183,
+   "section": "Pramana",
+   "book_id": "6abed698896ea18127c8e9f4",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཕེ (Derge Tengyur, vol. 183)",
+   "pages_count": 573,
+   "pages_in_db": 573,
+   "in_scope": 572
+  },
+  {
+   "vol": 184,
+   "section": "Pramana",
+   "book_id": "6abed724896ea18127c8ec34",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། བེ (Derge Tengyur, vol. 184)",
+   "pages_count": 521,
+   "pages_in_db": 521,
+   "in_scope": 520
+  },
+  {
+   "vol": 185,
+   "section": "Pramana",
+   "book_id": "6abed76c896ea18127c8ee40",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+   "pages_count": 655,
+   "pages_in_db": 655,
+   "in_scope": 654
+  },
+  {
+   "vol": 186,
+   "section": "Pramana",
+   "book_id": "6abed7ad896ea18127c8f0d2",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཙེ (Derge Tengyur, vol. 186)",
+   "pages_count": 501,
+   "pages_in_db": 501,
+   "in_scope": 500
+  },
+  {
+   "vol": 187,
+   "section": "Pramana",
+   "book_id": "6abed7f8896ea18127c8f2ca",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཚེ (Derge Tengyur, vol. 187)",
+   "pages_count": 589,
+   "pages_in_db": 589,
+   "in_scope": 588
+  },
+  {
+   "vol": 188,
+   "section": "Pramana",
+   "book_id": "6abed85e896ea18127c8f51a",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཛེ (Derge Tengyur, vol. 188)",
+   "pages_count": 577,
+   "pages_in_db": 577,
+   "in_scope": 576
+  },
+  {
+   "vol": 189,
+   "section": "Pramana",
+   "book_id": "6abed8c2896ea18127c8f75e",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཝེ (Derge Tengyur, vol. 189)",
+   "pages_count": 653,
+   "pages_in_db": 653,
+   "in_scope": 652
+  },
+  {
+   "vol": 190,
+   "section": "Pramana",
+   "book_id": "6abed90a896ea18127c8f9ee",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
+   "pages_count": 737,
+   "pages_in_db": 737,
+   "in_scope": 736
+  },
+  {
+   "vol": 191,
+   "section": "Pramana",
+   "book_id": "6abed95d896ea18127c8fcd2",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཟེ (Derge Tengyur, vol. 191)",
+   "pages_count": 725,
+   "pages_in_db": 725,
+   "in_scope": 724
+  },
+  {
+   "vol": 192,
+   "section": "Pramana",
+   "book_id": "6abed9a6896ea18127c8ffaa",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
+   "pages_count": 661,
+   "pages_in_db": 661,
+   "in_scope": 660
+  },
+  {
+   "vol": 193,
+   "section": "Pramana",
+   "book_id": "6abed9f5896ea18127c90242",
+   "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཡེ (Derge Tengyur, vol. 193)",
+   "pages_count": 627,
+   "pages_in_db": 627,
+   "in_scope": 626
+  }
+ ],
+ "pages_total": 23678,
+ "in_scope": 23629,
+ "in_scope_with_stored_english": 23625,
+ "excluded_by_reason": {
+  "no-ocr": 49
+ },
+ "human_edited_in_scope": 0,
+ "builder_inputs_sha256": "11394c711e84c44f59aa8dd454fb36962ba4721b3c93d209daee576e022aaa52",
+ "human_edited_page_ids": [],
+ "c38_units_check": {
+  "shared_pages": 128,
+  "identical_prompt": 128
+ }
+}

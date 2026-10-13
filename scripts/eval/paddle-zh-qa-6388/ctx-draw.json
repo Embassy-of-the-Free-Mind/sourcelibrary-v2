@@ -1,0 +1,18 @@
+{
+ "issue": 6388,
+ "seed": 6397,
+ "drawn_at": "2026-10-10T17:52:45.229Z",
+ "rule": "exact Fisher–Yates (makeRng 6397) over the sorted uids of the sample pages with kanripo.jsonl status \"scored\"; first 10, in drawn order. k=5 sends pages 1–5 and 6–10; k=10 sends all ten. k=1 is arms TO/TG.",
+ "pages": [
+  "all|6a3c6bf939b4508b04e46f2a|72",
+  "all|6a3cc158ec254ff6cae0b749|93",
+  "all|6a3ce7d30a0011cb4bc0b2dd|77",
+  "all|6a3c7a0239b4508b04e62189|62",
+  "all|6a3cbfedf9474f825c16c745|83",
+  "all|6a3c64a339b4508b04e28b59|102",
+  "all|6a3c5fb2879008ba7e156f22|111",
+  "all|6a3cc0a9f9474f825c17106b|73",
+  "all|6a3cb6a957c1f37219c4bb86|96",
+  "stale|6a3c5eb740c88a541d8e51e3|56"
+ ]
+}

@@ -17,7 +17,7 @@ import CatalogTeamClient from '@/components/catalog/CatalogTeamClient';
  */
 
 export const metadata: Metadata = {
-  title: 'Catalogue team — BPH',
+  title: 'Catalogue team | BPH',
   robots: { index: false, follow: false },
 };
 

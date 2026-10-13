@@ -1,3 +1,17 @@
+---
+stage: image
+measure: accuracy
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 63
+verdict: "The CLIP index at probes=1 hid matches (top-1 21 to 30 of 63 at probes 10); SigLIP2 fp32 beats CLIP on top-1, 59 vs 49 (random pool) and 47 vs 34 (hard negatives)."
+status: undecided
+decision: "probes=10 shipped (PR #5256); SigLIP2 as the /identify recall model awaits Derek (#3193)"
+superseded_by: null
+issue: 3193
+---
 ## 2026-09-29 — Does a stronger image matcher (DINOv2-small, SigLIP2) beat CLIP ViT-B/32 for /identify, and where does CLIP actually lose? (#3193 Phase 2)
 
 - **Question.** The Embassy visitor photographs a plate and `/identify` should land on that page. After Phase 1

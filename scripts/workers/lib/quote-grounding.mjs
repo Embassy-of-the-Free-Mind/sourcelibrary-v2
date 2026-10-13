@@ -20,6 +20,8 @@
  *   3. Yields between pages, so timers — including the per-book timeout — can actually fire.
  */
 
+import { declinedRegion } from '../../lib/declined-region.mjs';
+
 const MIN_SCORE = 0.8;
 const YIELD_EVERY_PAGES = 64;
 
@@ -154,11 +156,17 @@ export function findBestMatch(quoteText, sourceText, prepared = null) {
   return { score: bestScore, extractedText };
 }
 
-/** Page number → { text, page_id, words, normalizedLower }, built once per book. */
+/**
+ * Page number → { text, page_id, words, normalizedLower }, built once per book.
+ *
+ * A page whose OCR declined a region (`declinedRegion`, #4584) is left out: its translation had no
+ * source for that region, and a featured quote is the last place an invented line should surface.
+ * The caller's page projection must carry `ocr.data` for this to hold.
+ */
 export function buildPageIndex(pages) {
   const pageIndex = new Map();
   for (const page of pages) {
-    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '')) {
+    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '') && !declinedRegion(page.ocr?.data)) {
       const text = cleanTranslationText(page.translation.data);
       const words = text.split(/\s+/);
       pageIndex.set(page.page_number, {

@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { aldineVariables, aldineStack, cardoStack } from '@/lib/fonts/aldine';
 
 export const metadata: Metadata = {
-  title: 'The Aldine Roman — a facsimile type from De Aetna (1496) - Source Library',
+  title: 'The Aldine Roman: a facsimile type from De Aetna (1496) - Source Library',
   description:
     'Francesco Griffo’s roman for Aldus Manutius, traced letter by letter from the 1496 De Aetna in the Source Library collection, shown beside the open-licence revival Cardo.',
   alternates: { canonical: '/specimen/aldine' },
@@ -53,12 +53,12 @@ export default function AldineSpecimenPage() {
         </p>
 
         {/* The facsimile */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-2">Aldine Aetna — the facsimile</h2>
+        <h2 className="text-2xl md:text-3xl text-primary mt-12 mb-2">Aldine Aetna: the facsimile</h2>
         <p className="text-secondary mb-6 leading-relaxed">
           Each glyph is a real impression from the book, chosen as the most typical of its kind among
           some 70,000 printed letters on sixty pages of De Aetna and the Aldines of 1495&ndash;99 set in the
           same fount, then vectorised. Ink spread, worn corners and the slight unevenness of hand-set metal
-          are kept on purpose &mdash; and the common letters carry three different impressions each, rotated
+          are kept on purpose, and the common letters carry three different impressions each, rotated
           as you read so that no two neighbouring sorts are the same cast, which is what a hand-set page
           actually looks like. This is what the 1496 reader saw.
         </p>
@@ -74,8 +74,8 @@ export default function AldineSpecimenPage() {
           <p className="text-xs text-muted mt-6">
             <Link href={`/book/${BOOK_ID}?page=20`} className="text-accent-rust hover:underline">
               De Aetna, sig. A iii
-            </Link>{' '}
-            — the page in the header, set in the type traced from it.
+            </Link>
+            : the page in the header, set in the type traced from it.
           </p>
         </div>
 
@@ -86,7 +86,7 @@ export default function AldineSpecimenPage() {
             ['Ligatures', LIGS],
             ['Accents and abbreviation marks', ACCENTS],
             ['Figures (from the smaller roman, 1499)', FIGURES],
-            ['Reconstructed — never cast in 1496', RECON],
+            ['Reconstructed: never cast in 1496', RECON],
           ].map(([label, text]) => (
             <div key={label} className="rounded-xl border border-border-light bg-white p-5">
               <div className="text-xs uppercase tracking-wider text-muted mb-3">{label}</div>
@@ -106,14 +106,14 @@ export default function AldineSpecimenPage() {
           The type was cut for Latin, but here it is carrying every letter of the English alphabet,
           including the seven sorts that had to be reconstructed. Below, the same line twice: first with
           the three impressions of each common letter rotated as the compositor&apos;s case would have
-          mixed them, then locked to a single impression per letter &mdash; the difference between a
+          mixed them, then locked to a single impression per letter. That is the difference between a
           hand-set page and a typewriter.
         </p>
         <div className="rounded-xl border border-border-light bg-white p-6 md:p-10 mb-4 overflow-x-auto">
           <div className="text-primary leading-[1.4]" style={{ fontFamily: aldineStack, fontSize: 'clamp(1.35rem, 2.6vw, 2rem)', fontFeatureSettings: '"liga" 1, "calt" 1' }}>
             <div>The quick brown fox jumps over the lazy dog.</div>
             <div>Sphinx of black quartz, judge my vow. Jackdaws love my big sphinx of quartz.</div>
-            <div>Pack my box with five dozen liquor jugs &mdash; 1496, 1501, 2026.</div>
+            <div>Pack my box with five dozen liquor jugs: 1496, 1501, 2026.</div>
             <div>Wherever we went, we found the Aldine anchor and dolphin waiting for us.</div>
           </div>
         </div>
@@ -161,8 +161,8 @@ export default function AldineSpecimenPage() {
           Only what the 1496 text uses. The lowercase is complete for Latin as Aldus set it
           (<span style={{ fontFamily: aldineStack }}>u</span> serves for v, long <span style={{ fontFamily: aldineStack }}>ſ</span> inside
           words), with the ligatures <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>ct ſt ſi ſſ fi ff</span>, æ and
-          the ampersand, and ę. The acute, grave and tilde — the tilde is the printer&apos;s nasal
-          abbreviation, <span style={{ fontFamily: aldineStack }}>animũ</span> for <em>animum</em> — are
+          the ampersand, and ę. The acute, grave and tilde (the tilde is the printer&apos;s nasal
+          abbreviation, <span style={{ fontFamily: aldineStack }}>animũ</span> for <em>animum</em>) are
           taken from real impressions and set over each vowel at the offset measured on the page, as
           the compositor did with separate accent sorts. Nineteen capitals, including a lone Q and the fused{' '}
           <span style={{ fontFamily: aldineStack, fontFeatureSettings: '"liga" 1' }}>Qu</span> sort Griffo
@@ -170,7 +170,7 @@ export default function AldineSpecimenPage() {
           the Greek alphabet tables of Lascaris&apos; grammar, where Aldus set the Greek majuscules from
           the roman case. The figures are old-style arabic numerals from the index of Perotti&apos;s{' '}
           <Link href="/book/69b220f356715b0e32473bd0" className="text-accent-rust hover:underline">Cornucopiae</Link>{' '}
-          (1499) &mdash; the same shop, set in its smaller roman and scaled to this body, since the 1496
+          (1499), printed by the same shop, set in its smaller roman and scaled to this body, since the 1496
           text itself counts only in roman numerals. J, U and W did not exist in 1490s roman type (I and V
           did their work), so those three are <em>reconstructed</em> and marked as such: W is VV, exactly
           as the compositors set it; U is the lowercase u raised to the cap line, as Monotype did for Bembo;
@@ -189,7 +189,7 @@ export default function AldineSpecimenPage() {
           <li>
             <a href="/fonts/aldine-aetna/AldineAetna-Regular.ttf" className="text-accent-rust hover:underline">AldineAetna-Regular.ttf</a>{' '}
             · <a href="/fonts/aldine-aetna/AldineAetna-Regular.woff2" className="text-accent-rust hover:underline">woff2</a>{' '}
-            — public domain, <a href="/fonts/aldine-aetna/LICENSE.txt" className="text-accent-rust hover:underline">CC0</a>. Griffo cut these letters in 1496; we only traced them.
+            · public domain, <a href="/fonts/aldine-aetna/LICENSE.txt" className="text-accent-rust hover:underline">CC0</a>. Griffo cut these letters in 1496; we only traced them.
           </li>
           <li>
             Source:{' '}

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [bo]
+scripts: [Tibt]
+canons: [derge-tengyur]
+n_books: null
+n_pages: 113
+verdict: "Against 84000, one page per request matches the chained lane on fidelity (4.54 vs 4.48) and cuts wrong-span sides from 15 to 1 of 113; seams come from 8-page blocks."
+status: adopted
+decision: "Full Tengyur draft runs one page per request, no context (PR #5717)"
+superseded_by: null
+issue: [5497, 5704, 5717]
+---
 ## 2026-10-03 · Tengyur draft English against 84000's published translations: the chained lane (neighbour context, 8-page blocks) vs one page per request with no context (#5497)
 <!-- PRIOR ART: 2026-10-03-tengyur-pilot-translation-quality-5497.md (PR #5676: same pilot lane, but only n = 2 pages had an 84000 reference; it found seams on 16/40 and reversals on 4/40, by source-only judges); scripts/eval/tibetan-mt-ab/ (the 84000-referenced blind judge, reused here as a two-candidate packet). Neither compared lane SHAPES against a human reference. -->
 

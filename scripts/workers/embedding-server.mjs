@@ -19,12 +19,19 @@
 import http from 'http';
 import { pipeline } from '@xenova/transformers';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { checkEmbedAuth, EMBED_KEY_HEADER } from './lib/embed-auth.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
 
 const PORT = parseInt(process.env.EMBED_PORT || '3456');
 const MODEL = 'Xenova/multilingual-e5-base';
+
+// Shared-secret gate (#6206). Unset = rollout mode: allow everything, warn once. Never log the key.
+const EMBED_SERVER_KEY = process.env.EMBED_SERVER_KEY;
+if (!EMBED_SERVER_KEY) {
+  console.warn('WARNING: EMBED_SERVER_KEY is not set — embedding server is accepting unauthenticated requests (rollout mode).');
+}
 
 console.log('Loading model...');
 const t = Date.now();
@@ -35,9 +42,16 @@ const server = http.createServer(async (req, res) => {
   // CORS for Vercel
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', `Content-Type, Authorization, ${EMBED_KEY_HEADER}`);
 
   if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
+
+  const auth = checkEmbedAuth({ key: EMBED_SERVER_KEY, headerValue: req.headers[EMBED_KEY_HEADER], path: req.url });
+  if (!auth.ok) {
+    res.writeHead(401, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'unauthorized' }));
+    return;
+  }
 
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });

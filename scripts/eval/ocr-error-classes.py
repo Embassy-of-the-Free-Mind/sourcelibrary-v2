@@ -21,19 +21,14 @@ non-equal span is classified. Each class has a KIND:
   reference — a defect of the reference (TCP illegible-letter marks leave split words; the engine is right)
   alignment — an artefact of the window or the aligner (padding words, running heads, catchwords)
 Weights are characters of the affected words (word-weighted, so a ranking of classes, NOT a CER).
+  --pages=<jsonl>  per-page mode for ocr-cer-three-ways.mjs (#5939): classes follow the live OCR prompt's
+                   rules (classify_pair prompt_rules=True), output one JSON line per page.
 How it fails: a class is a heuristic. Examples are written out for reading by eye; quote a class only
 after reading its examples (the 2026-10-01 run found tag residue and page numbers inside 'other misread').
 """
 import argparse, collections, datetime, difflib, json, os, re, unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ap = argparse.ArgumentParser()
-ap.add_argument('--root', required=True)
-ap.add_argument('--stratum', required=True)
-ap.add_argument('--engines', default='gemini-3.1-flash-lite,gemini-3-flash-preview')
-ap.add_argument('--out', default=os.path.join(HERE, 'results', 'ocr-error-classes'))
-ap.add_argument('--examples', type=int, default=12)
-args = ap.parse_args()
 PRIV = os.environ.get('SL_PRIVATE_REFS_DIR') or os.path.expanduser('~/sourcelibrary-ops/evals/refs-private')
 EDGE = 15
 
@@ -46,6 +41,9 @@ KIND = {
     'u/v i/j convention': 'convention', 'diacritics convention': 'convention', 'case only': 'convention',
     'reference illegible-letter gap (engine right)': 'reference',
     'edge: reference padding not on page': 'alignment', 'edge: running head / page no. / catchword added': 'alignment',
+    # prompt_rules=True only (see classify_pair)
+    'abbreviation expanded as the prompt asks': 'convention', 'abbreviation kept or contracted': 'ocr',
+    'u/v i/j modernised by the engine': 'ocr', 'u/v i/j regularised in the reference': 'reference', 'accent or mark differs': 'ocr',
 }
 
 TAG = re.compile(r'<(warning|meta|image-desc|figure|note|scan-quality|language|page-type|columns|detected-images|vocab|header|catchword|sig|page-num)\b[^>]*>[\s\S]*?</\1>|<[^>]+>|```\w*', re.I)
@@ -73,16 +71,34 @@ def modern(w):
     w = re.sub(r'(.)\1', r'\1', w).replace('y', 'i').replace('ie', 'i').replace('ck', 'c').replace('ph', 'f')
     return re.sub(r'e$', '', w)
 
-def classify_pair(r, h):
+# The live OCR prompt (v12 → v19.1) asks for exactly two things a reference may not share: "ALWAYS expand
+# abbreviations" and "normalize [punctuation] to standard Unicode". It says to PRESERVE u/v ("Do NOT
+# modernize"), spelling and capitalisation. With prompt_rules=True three classes are split by direction so
+# the fold follows the prompt (ocr-cer-three-ways.mjs, #5939): an expansion of an abbreviation the reference
+# keeps is the prompt's convention, a kept or invented abbreviation is an error; a u/v or i/j swap towards the
+# modern form is the engine modernising, towards the old form the reference regularising.
+U_V_OLD = re.compile(r'^v[^aeiouy]|[aeiou]u[aeiou]|^j|[^aeiou]j')
+def abbr_direction(r, h):
+    rn, hn = unicodedata.normalize('NFD', r), unicodedata.normalize('NFD', h)
+    r_abbr = any(c in ABBR_CH for c in rn) or '&' in r or key(r) in ABBR_W
+    h_abbr = any(c in ABBR_CH for c in hn) or '&' in h or key(h) in ABBR_W
+    return 'abbreviation expanded as the prompt asks' if r_abbr and not h_abbr else 'abbreviation kept or contracted'
+def uv_direction(rk, hk):
+    ro, ho = bool(U_V_OLD.search(rk)), bool(U_V_OLD.search(hk))
+    if ro and not ho: return 'u/v i/j modernised by the engine'
+    if ho and not ro: return 'u/v i/j regularised in the reference'
+    return 'u/v i/j convention'
+def classify_pair(r, h, prompt_rules=False):
     rk, hk = key(r), key(h)
-    if rk != hk and deacc(rk) == deacc(hk): return 'diacritics convention'
+    if rk != hk and deacc(rk) == deacc(hk): return 'accent or mark differs' if prompt_rules else 'diacritics convention'
     if any(c.isdigit() for c in r + h): return 'numerals'
     nfd = unicodedata.normalize('NFD', r + h)
-    if any(c in ABBR_CH for c in nfd) or '&' in r + h or rk in ABBR_W or hk in ABBR_W: return 'abbreviation expanded or contracted'
+    if any(c in ABBR_CH for c in nfd) or '&' in r + h or rk in ABBR_W or hk in ABBR_W:
+        return abbr_direction(r, h) if prompt_rules else 'abbreviation expanded or contracted'
     if len(rk) == len(hk):
         d = [(a, b) for a, b in zip(rk, hk) if a != b]
         if d and all(x == ('s', 'f') for x in d): return 'long-s read as f'
-        if d and all({a, b} in ({'u', 'v'}, {'i', 'j'}) for a, b in d): return 'u/v i/j convention'
+        if d and all({a, b} in ({'u', 'v'}, {'i', 'j'}) for a, b in d): return uv_direction(rk, hk) if prompt_rules else 'u/v i/j convention'
         if d and all(x == ('f', 's') for x in d): return 'f read as s'
     if modern(rk) == modern(hk): return 'spelling normalised'
     return 'other misread'
@@ -112,25 +128,19 @@ def page_meta(stratum, slug):
 
 def ctx(words, i1, i2, n=5): return ' '.join(words[max(0, i1 - n):i1]), ' '.join(words[i1:i2]), ' '.join(words[i2:i2 + n])
 
-def run(stratum, engine):
-    outd = os.path.join(args.root, stratum, 'out', engine)
-    chars, pages, ex = collections.Counter(), collections.defaultdict(set), collections.defaultdict(list)
-    total, n_pages = 0, 0
-    for f in sorted(os.listdir(outd)):
-        if not f.endswith('.txt') or f.startswith('_'): continue
-        slug = f[:-4]; ref = load_ref(stratum, slug)
-        if not ref: continue
-        hyp = open(os.path.join(outd, f)).read()
-        R, H = toks(ref), toks(hyp); n_pages += 1
-        total += sum(map(len, R))
-        def add(c, n, i1=None, i2=None, j1=None, j2=None):
-            chars[c] += n; pages[c].add(slug)
-            if i1 is not None:
-                a, rm, b = ctx(R, i1, i2); ex[c].append({'slug': slug, 'ref_before': a, 'ref': rm, 'ref_after': b, 'engine': ' '.join(H[j1:j2])})
-        leaks = sum(len(m.group(0)) for m in LEAK.finditer(TAG.sub(' ', re.sub(r'->|<-', ' ', hyp))))
-        if leaks: add('markup leaked (html entity / latex)', leaks)
-        if sum(len(key(w)) for w in H) < 30:
-            add('refusal (empty output)', sum(map(len, R))); ex['refusal (empty output)'].append({'slug': slug, 'ref': ' '.join(R[:25]), 'engine': hyp.strip()[:80]}); continue
+def classify_page(slug, ref, hyp, chars, pages, ex, prompt_rules=False):
+    """Sort one page's differences into classes; adds to chars/pages/ex in place, returns reference chars."""
+    R, H = toks(ref), toks(hyp)
+    total = sum(map(len, R))
+    def add(c, n, i1=None, i2=None, j1=None, j2=None):
+        chars[c] += n; pages[c].add(slug)
+        if i1 is not None:
+            a, rm, b = ctx(R, i1, i2); ex[c].append({'slug': slug, 'ref_before': a, 'ref': rm, 'ref_after': b, 'engine': ' '.join(H[j1:j2])})
+    leaks = sum(len(m.group(0)) for m in LEAK.finditer(TAG.sub(' ', re.sub(r'->|<-', ' ', hyp))))
+    if leaks: add('markup leaked (html entity / latex)', leaks)
+    if sum(len(key(w)) for w in H) < 30:
+        add('refusal (empty output)', total); ex['refusal (empty output)'].append({'slug': slug, 'ref': ' '.join(R[:25]), 'engine': hyp.strip()[:80]}); return total
+    if True:
         rk, hk = list(map(key, R)), list(map(key, H))
         for op, i1, i2, j1, j2 in difflib.SequenceMatcher(None, rk, hk, autojunk=False).get_opcodes():
             edge = i1 < EDGE or i2 > len(R) - EDGE
@@ -141,12 +151,24 @@ def run(stratum, engine):
             rs, hs = R[i1:i2], H[j1:j2]
             if op == 'replace' and ''.join(rk[i1:i2]) == ''.join(hk[j1:j2]): add('word split / joined', sum(map(len, rs)), i1, i2, j1, j2); continue
             if op == 'replace' and len(rs) == len(hs):
-                for k in range(len(rs)): add(classify_pair(rs[k], hs[k]), max(len(rs[k]), len(hs[k])), i1 + k, i1 + k + 1, j1 + k, j1 + k + 1)
+                for k in range(len(rs)): add(classify_pair(rs[k], hs[k], prompt_rules), max(len(rs[k]), len(hs[k])), i1 + k, i1 + k + 1, j1 + k, j1 + k + 1)
                 continue
             if op == 'replace' and abs(len(rs) - len(hs)) <= 2 and rs and hs:
                 add(classify_phrase(rs, hs), max(sum(map(len, rs)), sum(map(len, hs))), i1, i2, j1, j2); continue
             if rs: add('edge: reference padding not on page' if edge else ('omitted run (≥6 words)' if len(rs) >= 6 else 'omitted word(s)'), sum(map(len, rs)), i1, i2, j1, j1)
             if hs: add('edge: running head / page no. / catchword added' if edge else ('inserted run (≥6 words)' if len(hs) >= 6 else 'inserted word(s)'), sum(map(len, hs)), i2, i2, j1, j2)
+    return total
+
+def run(stratum, engine):
+    outd = os.path.join(args.root, stratum, 'out', engine)
+    chars, pages, ex = collections.Counter(), collections.defaultdict(set), collections.defaultdict(list)
+    total, n_pages = 0, 0
+    for f in sorted(os.listdir(outd)):
+        if not f.endswith('.txt') or f.startswith('_'): continue
+        slug = f[:-4]; ref = load_ref(stratum, slug)
+        if not ref: continue
+        n_pages += 1
+        total += classify_page(slug, ref, open(os.path.join(outd, f)).read(), chars, pages, ex)
     return total, n_pages, chars, pages, ex
 
 def pick(examples, n):
@@ -155,24 +177,49 @@ def pick(examples, n):
     for e in examples: (rest if e['slug'] in seen else first).append(e); seen.add(e['slug'])
     return (first + rest)[:n]
 
-os.makedirs(args.out, exist_ok=True)
-date = datetime.date.today().isoformat()
-for stratum in args.stratum.split(','):
-    res = {'stratum': stratum, 'date': date, 'issue': 5488, 'weights': 'characters of affected words (word-weighted ranking, not CER)', 'kinds': KIND, 'engines': {}}
-    for engine in args.engines.split(','):
-        if not os.path.isdir(os.path.join(args.root, stratum, 'out', engine)): continue
-        total, n, chars, pages, ex = run(stratum, engine)
-        ocr_total = sum(v for c, v in chars.items() if KIND.get(c) == 'ocr')
-        res['engines'][engine] = {'pages': n, 'ref_chars': total, 'ocr_error_chars': ocr_total,
-            'classes': [{'class': c, 'kind': KIND.get(c), 'chars': v, 'share_of_ref': round(v / total, 4) if total else None,
-                         'share_of_ocr_errors': round(v / ocr_total, 4) if ocr_total and KIND.get(c) == 'ocr' else None,
-                         'pages': len(pages[c]), 'examples': pick(ex[c], args.examples)} for c, v in chars.most_common()]}
-        print(f'\n## {stratum} · {engine}: {n} pages, OCR-error chars {ocr_total / total:.1%} of reference (word-weighted)')
-        for c, v in chars.most_common():
-            k = KIND.get(c)
-            if k == 'alignment': continue
-            print(f'  {k:10s} {c:48s} {v / total:6.2%} of ref  {(v / ocr_total if k == "ocr" else 0):5.1%} of OCR errors  pages {len(pages[c])}')
-    for p in res['engines'].values():
-        for c in p['classes']:
-            for e in c['examples']: e.update({k: v for k, v in page_meta(stratum, e['slug']).items() if v is not None})
-    json.dump(res, open(os.path.join(args.out, f'{stratum}-{date}.json'), 'w'), ensure_ascii=False, indent=1)
+def pages_mode(path):
+    """--pages=<jsonl>: one {id, ref, hyp} per line in, one {id, ref_chars, classes, abbr_pairs, examples} per line
+    out (stdout), classified with prompt_rules=True. Used by ocr-cer-three-ways.mjs (#5939)."""
+    for line in open(path):
+        if not line.strip(): continue
+        p = json.loads(line)
+        chars, pages, ex = collections.Counter(), collections.defaultdict(set), collections.defaultdict(list)
+        total = classify_page(p['id'], p['ref'], p['hyp'], chars, pages, ex, prompt_rules=True)
+        pairs = [[e['ref'], e['engine']] for e in ex.get('abbreviation expanded as the prompt asks', [])]
+        print(json.dumps({'id': p['id'], 'ref_chars': total, 'classes': dict(chars), 'abbr_pairs': pairs,
+                          'examples': {c: v[:6] for c, v in ex.items()}}, ensure_ascii=False))
+
+def main():
+  global args
+  if len(os.sys.argv) == 2 and os.sys.argv[1].startswith('--pages='): return pages_mode(os.sys.argv[1][8:])
+  ap = argparse.ArgumentParser()
+  ap.add_argument('--root', required=True)
+  ap.add_argument('--stratum', required=True)
+  ap.add_argument('--engines', default='gemini-3.1-flash-lite,gemini-3-flash-preview')
+  ap.add_argument('--out', default=os.path.join(HERE, 'results', 'ocr-error-classes'))
+  ap.add_argument('--examples', type=int, default=12)
+  args = ap.parse_args()
+  os.makedirs(args.out, exist_ok=True)
+  date = datetime.date.today().isoformat()
+  for stratum in args.stratum.split(','):
+      res = {'stratum': stratum, 'date': date, 'issue': 5488, 'weights': 'characters of affected words (word-weighted ranking, not CER)', 'kinds': KIND, 'engines': {}}
+      for engine in args.engines.split(','):
+          if not os.path.isdir(os.path.join(args.root, stratum, 'out', engine)): continue
+          total, n, chars, pages, ex = run(stratum, engine)
+          ocr_total = sum(v for c, v in chars.items() if KIND.get(c) == 'ocr')
+          res['engines'][engine] = {'pages': n, 'ref_chars': total, 'ocr_error_chars': ocr_total,
+              'classes': [{'class': c, 'kind': KIND.get(c), 'chars': v, 'share_of_ref': round(v / total, 4) if total else None,
+                           'share_of_ocr_errors': round(v / ocr_total, 4) if ocr_total and KIND.get(c) == 'ocr' else None,
+                           'pages': len(pages[c]), 'examples': pick(ex[c], args.examples)} for c, v in chars.most_common()]}
+          print(f'\n## {stratum} · {engine}: {n} pages, OCR-error chars {ocr_total / total:.1%} of reference (word-weighted)')
+          for c, v in chars.most_common():
+              k = KIND.get(c)
+              if k == 'alignment': continue
+              print(f'  {k:10s} {c:48s} {v / total:6.2%} of ref  {(v / ocr_total if k == "ocr" else 0):5.1%} of OCR errors  pages {len(pages[c])}')
+      for p in res['engines'].values():
+          for c in p['classes']:
+              for e in c['examples']: e.update({k: v for k, v in page_meta(stratum, e['slug']).items() if v is not None})
+      json.dump(res, open(os.path.join(args.out, f'{stratum}-{date}.json'), 'w'), ensure_ascii=False, indent=1)
+
+if __name__ == '__main__':
+    main()

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 1000
+n_pages: 225583
+verdict: "Echo gate flags 166 of 225,583 judged pages (0.07%) after three exemptions, 8 of 11 hand-read real; about 5% of production blocks return short and now go single-page."
+status: adopted
+decision: "Echo gate and block-shift guard shipped before the page-break flip (PR #5176)"
+superseded_by: null
+issue: 5103
+---
 ## 2026-09-25 (round 4, guards) — Echo gate sized on the local mirror before shipping: 229 whole-page flags in 225,583 judged pages (0.10%), 8 of 20 hand-read real; three exemptions take it to 166 flags and 8 of 11 real (#5103)
 
 **Why:** round 4 found two production hazards the flip (#5170) would otherwise ride on: a page whose

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [sa, pi, lzh]
+scripts: [Deva, Hani]
+canons: [sanskrit, pali, chinese-buddhist, chinese-classics]
+n_books: 68
+n_pages: 68
+verdict: "Served English scores 3.63/5; Flash beats Lite by +0.40 [0.22, 0.58], reversals 15.4 to 5.9 per 100 pages; OCR is the primary cause on 30% of low pages."
+status: adopted
+decision: "Flash routes Sanskrit, Pali and Chinese translation (PR #5740)"
+superseded_by: null
+issue: [5695, 5740]
+---
 ## 2026-10-03 · How faithful is the served English for Sanskrit, Pali and classical Chinese against published human translations, what causes the bad pages, and which lever helps? (#5695 track T5)
 
 **Question.** Against a published English translation of the same passage: how faithful is what readers see now, is a bad page an OCR error or a translation error, and which cheap lever moves it beyond run-to-run noise? Absorbs #5606 (Flash vs Lite), whose 57 pages, references and three arms are reused here.

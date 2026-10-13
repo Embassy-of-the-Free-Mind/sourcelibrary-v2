@@ -25,7 +25,7 @@ import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
  */
 
 export const metadata: Metadata = {
-  title: 'Edit catalogue entry — BPH',
+  title: 'Edit catalogue entry | BPH',
   robots: { index: false, follow: false },
 };
 
@@ -122,7 +122,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
           {/* Manuscripts and photographs have no UBN — naming one would be a
               lie, and the shelf mark is what a librarian actually uses to find
               the object on the shelf. */}
-          {work.ubn ? `UBN ${work.ubn}` : `Shelf mark ${work.shelf_mark || '—'} · no UBN`} · Signed in as {session.user.email}
+          {work.ubn ? `UBN ${work.ubn}` : `Shelf mark ${work.shelf_mark || '–'} · no UBN`} · Signed in as {session.user.email}
         </p>
 
         <BphWorkEditForm

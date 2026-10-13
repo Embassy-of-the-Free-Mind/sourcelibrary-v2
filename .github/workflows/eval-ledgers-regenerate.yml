@@ -1,7 +1,7 @@
 name: Regenerate eval ledgers on main
 
-# scripts/eval/EXPERIMENTS.md and scripts/eval/INDEX.md are GENERATED files that
-# PRs must not touch (#5436). Their sources are scripts/eval/experiments/*.md (one
+# scripts/eval/EXPERIMENTS.md, scripts/eval/experiments/index.json (#5939) and
+# scripts/eval/INDEX.md are GENERATED files that PRs must not touch (#5436). Their sources are scripts/eval/experiments/*.md (one
 # file per experiment) and the eval scripts' docstrings. After every push to main
 # that changes a source, this job rebuilds both and commits the result to main as
 # the actions bot. PRs therefore add files and never conflict on the ledger.
@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Rebuild EXPERIMENTS.md and INDEX.md
+      - name: Rebuild EXPERIMENTS.md, experiments/index.json and INDEX.md
         run: |
           node scripts/eval/build-experiments.mjs
           node scripts/eval/build-index.mjs

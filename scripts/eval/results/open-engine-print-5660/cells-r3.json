@@ -1,0 +1,4153 @@
+{
+ "prereg": "PREREGISTRATION-open-engine-print-5660.md",
+ "written_at": "2026-10-03T08:20:03.233Z",
+ "counts": {
+  "english-1600-1699": {
+   "pages": 59,
+   "library": 59,
+   "external": 0
+  },
+  "latin-1500-1699": {
+   "pages": 61,
+   "library": 40,
+   "external": 21
+  },
+  "english-1700+": {
+   "pages": 106,
+   "library": 106,
+   "external": 0
+  },
+  "german": {
+   "pages": 30,
+   "library": 0,
+   "external": 30
+  },
+  "latin-1700+": {
+   "pages": 42,
+   "library": 0,
+   "external": 42
+  },
+  "greek-print": {
+   "pages": 114,
+   "library": 114,
+   "external": 0
+  }
+ },
+ "agreement_strata": [
+  "latin-pre1700",
+  "latin-1700s",
+  "german-fraktur",
+  "longs-en-fr"
+ ],
+ "pages": [
+  {
+   "slug": "ed-0425b5da276941ae93dd76624ba8236a-p86",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "0425b5da-2769-41ae-93dd-76624ba8236a",
+   "year": 1670,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69526046ab34727b1f04660c-p342",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69526046ab34727b1f04660c",
+   "year": 1656,
+   "language": "English"
+  },
+  {
+   "slug": "ed-695595ec7bd6d2cd1d620aba-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "695595ec7bd6d2cd1d620aba",
+   "year": 1678,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6955d3d828a09ca65927ed03-p93",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6955d3d828a09ca65927ed03",
+   "year": 1688,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69568595be7c607c5f03b9e4-p22",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69568595be7c607c5f03b9e4",
+   "year": 1677,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6958e07cd34d35c8156624c8-p86",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6958e07cd34d35c8156624c8",
+   "year": 1666,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6970e37d9b09d309d780a2c2-p61",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6970e37d9b09d309d780a2c2",
+   "year": 1650,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69905cfcaaa7f10ed4cfd289-p588",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69905cfcaaa7f10ed4cfd289",
+   "year": 1666,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69905e152fd6a039938a0ebe-p46",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69905e152fd6a039938a0ebe",
+   "year": 1693,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69906056ef12272ffdc8cdee-p43",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69906056ef12272ffdc8cdee",
+   "year": 1674,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69906059ef12272ffdc8cef1-p22",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69906059ef12272ffdc8cef1",
+   "year": 1676,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6990618a322e01b1349a5136-p49",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6990618a322e01b1349a5136",
+   "year": 1648,
+   "language": "English"
+  },
+  {
+   "slug": "ed-699061933d9181cce82fb5aa-p55",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "699061933d9181cce82fb5aa",
+   "year": 1613,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6990619a3d9181cce82fb669-p17",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6990619a3d9181cce82fb669",
+   "year": 1612,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6990619d3d9181cce82fb688-p9",
+   "stratum": "eebo-tcp-5488",
+   "cell": null,
+   "origin": "library",
+   "book_id": "6990619d3d9181cce82fb688",
+   "year": 1566,
+   "language": "English",
+   "excluded": "EEBO English 1500s — reported apart"
+  },
+  {
+   "slug": "ed-69906319ef12272ffdc8f380-p107",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69906319ef12272ffdc8f380",
+   "year": 1685,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69906537726f64800c10a08c-p8",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69906537726f64800c10a08c",
+   "year": 1646,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6990668a2ec9f7db5717ab11-p28",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6990668a2ec9f7db5717ab11",
+   "year": 1696,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991d6508c1030b12444acd8-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991d6508c1030b12444acd8",
+   "year": 1683,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991d65e8c1030b12444ae97-p118",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991d65e8c1030b12444ae97",
+   "year": 1696,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991d6648c1030b12444b0ec-p351",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991d6648c1030b12444b0ec",
+   "year": 1697,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991d66e8c1030b12444b4a3-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991d66e8c1030b12444b4a3",
+   "year": 1694,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991d6778c1030b12444b4d4-p43",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991d6778c1030b12444b4d4",
+   "year": 1695,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991d67a8c1030b12444b537-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991d67a8c1030b12444b537",
+   "year": 1699,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991e175b53cae6bb602470e-p28",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991e175b53cae6bb602470e",
+   "year": 1690,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991e194339ebc850994a230-p98",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991e194339ebc850994a230",
+   "year": 1690,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6991e7dec91ce7d733e50228-p17",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6991e7dec91ce7d733e50228",
+   "year": 1696,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6992017d7c226bdd25f99444-p9",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6992017d7c226bdd25f99444",
+   "year": 1640,
+   "language": "English"
+  },
+  {
+   "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+   "stratum": "eebo-tcp-5488",
+   "cell": null,
+   "origin": "library",
+   "book_id": "699fcd429ff0f1d2c4517fff",
+   "year": 1563,
+   "language": "English",
+   "excluded": "EEBO English 1500s — reported apart"
+  },
+  {
+   "slug": "ed-69ac7f0f20878c5c9ba524b5-p366",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69ac7f0f20878c5c9ba524b5",
+   "year": 1657,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69aebe60c0472fef6455a8f2-p14",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69aebe60c0472fef6455a8f2",
+   "year": 1671,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69aebfdea41a7e10e5a71d19-p27",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69aebfdea41a7e10e5a71d19",
+   "year": 1661,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69aebfdee997cc01b0cab897-p27",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69aebfdee997cc01b0cab897",
+   "year": 1674,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69aebfeb36a4ffb2dcfb62e3",
+   "year": 1678,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69b18619c4be2cdd0edc524e-p6",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69b18619c4be2cdd0edc524e",
+   "year": 1685,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69b18625c4be2cdd0edc549e-p137",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69b18625c4be2cdd0edc549e",
+   "year": 1694,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69bf60fd065df5d87d778bb3-p153",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69bf60fd065df5d87d778bb3",
+   "year": 1692,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69cfa93f80eb0ccd3e739280-p101",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69cfa93f80eb0ccd3e739280",
+   "year": 1665,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69de0cf180210ba13d79fa39-p98",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69de0cf180210ba13d79fa39",
+   "year": 1680,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69de1c99d10d4b0d3f6f3175-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69de1c99d10d4b0d3f6f3175",
+   "year": 1620,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69e748a685f786e884a4c8c5-p68",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69e748a685f786e884a4c8c5",
+   "year": 1667,
+   "language": "English"
+  },
+  {
+   "slug": "ed-69e7833a0fc6fc955e36317c-p94",
+   "stratum": "eebo-tcp-5488",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69e7833a0fc6fc955e36317c",
+   "year": 1573,
+   "language": "English",
+   "excluded": "EEBO English 1500s — reported apart"
+  },
+  {
+   "slug": "ed-69ee46ef6dd925d126f40e22-p581",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69ee46ef6dd925d126f40e22",
+   "year": 1676,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a08fd2e25e3a402b23b3bca-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a08fd2e25e3a402b23b3bca",
+   "year": 1611,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a08fd6325e3a402b23b3e15-p27",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a08fd6325e3a402b23b3e15",
+   "year": 1633,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a3d29e1af872ba37a51ab17-p22",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a3d29e1af872ba37a51ab17",
+   "year": 1670,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a425310343d756d34e34ea7-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a425310343d756d34e34ea7",
+   "year": 1630,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a425634dfbbb4d07aa5382e-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a425634dfbbb4d07aa5382e",
+   "year": 1620,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a426869aedf4c943f91eac4-p14",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a426869aedf4c943f91eac4",
+   "year": 1679,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a4270ed62d175ca9e4e1aa5-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4270ed62d175ca9e4e1aa5",
+   "year": 1684,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42aecb5207af7c42f5333c",
+   "year": 1648,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a42d56d1894955eb725e97f-p22",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42d56d1894955eb725e97f",
+   "year": 1611,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a42ec4006e6ead3ac544b8f-p14",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42ec4006e6ead3ac544b8f",
+   "year": 1678,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a42eff906e6ead3ac54bab4-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": null,
+   "origin": "library",
+   "book_id": "6a42eff906e6ead3ac54bab4",
+   "year": 1595,
+   "language": "English",
+   "excluded": "EEBO English 1500s — reported apart"
+  },
+  {
+   "slug": "ed-6a43001a4e06bc233ecf5ef6-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a43001a4e06bc233ecf5ef6",
+   "year": 1686,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a4300764e06bc233ecf660a-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4300764e06bc233ecf660a",
+   "year": 1645,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a4308144e06bc233ed03513-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": null,
+   "origin": "library",
+   "book_id": "6a4308144e06bc233ed03513",
+   "year": 1590,
+   "language": "English",
+   "excluded": "EEBO English 1500s — reported apart"
+  },
+  {
+   "slug": "ed-6a430a2a22c0c8edb0f8c8d4-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "year": 1685,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a4376a3e296c55144956689-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4376a3e296c55144956689",
+   "year": 1691,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a43851557a09c2c0fcc0005-p17",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a43851557a09c2c0fcc0005",
+   "year": 1695,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a48d985df05f7ea342b77fb-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a48d985df05f7ea342b77fb",
+   "year": 1662,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a4a26ba9dda7124b26753a5-p38",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a4a26ba9dda7124b26753a5",
+   "year": 1689,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a4a4551c0f3ec200c7de18c-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a4a4551c0f3ec200c7de18c",
+   "year": 1670,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a4ad920d6371d99e766879c-p83",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a4ad920d6371d99e766879c",
+   "year": 1680,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4f71ca1cba01ec54e763c3",
+   "year": 1665,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a506fd980b7658fae261d6e-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a506fd980b7658fae261d6e",
+   "year": 1630,
+   "language": "Latin"
+  },
+  {
+   "slug": "ed-6a58ec9ac6cd8f987106886f-p6",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a58ec9ac6cd8f987106886f",
+   "year": 1666,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a58ecbfc6cd8f98710688e0-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a58ecbfc6cd8f98710688e0",
+   "year": 1652,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a58ecd0c6cd8f987106893f-p9",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a58ecd0c6cd8f987106893f",
+   "year": 1666,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a8f6229ddd2f57fe0f810c4-p16",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a8f6229ddd2f57fe0f810c4",
+   "year": 1664,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6a8f6267e408ab73f484d28b-p15",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a8f6267e408ab73f484d28b",
+   "year": 1601,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6ab5a4019e89e2a1f4139282-p94",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6ab5a4019e89e2a1f4139282",
+   "year": 1655,
+   "language": "English"
+  },
+  {
+   "slug": "ed-6ab5a4089e89e2a1f4139348-p26",
+   "stratum": "eebo-tcp-5488",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6ab5a4089e89e2a1f4139348",
+   "year": 1655,
+   "language": "English"
+  },
+  {
+   "slug": "en-6aa1d4-ws78",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa1d46077169abff161f4d7",
+   "year": 1894,
+   "language": "English"
+  },
+  {
+   "slug": "en-69b99f-ws176",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69b99fb06ed9e0490990af9e",
+   "year": 1907,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e41e-ws298",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e41ef4d0364cb0bcf79b7b",
+   "year": 1866,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e806-ws11",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e806bcfdad300064da0065",
+   "year": 1884,
+   "language": "English"
+  },
+  {
+   "slug": "en-69b63f-ws179",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69b63f04535439aaa489252a",
+   "year": 1830,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ae66-ws159",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ae66b74b74f168e0c14f12",
+   "year": 1920,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ae90-ws101",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ae907d14cd71fa8cd882f2",
+   "year": 1884,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab22e-ws55",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab22e0d4ac37d55a212e9e8",
+   "year": 1888,
+   "language": "English"
+  },
+  {
+   "slug": "en-69de0c-ws74",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69de0cca80210ba13d79f63a",
+   "year": 1886,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a0e56-ws18",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a0e5681b8ad266ebed235d3",
+   "year": 1905,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a98bb-ws214",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a98bbddec48f9ad103e3f75",
+   "year": 1867,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab6d1-ws76",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab6d119b393fe0e2d4701b2",
+   "year": 1894,
+   "language": "English"
+  },
+  {
+   "slug": "en-69d149-ws303",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69d149ce1c2a66dc094b30c3",
+   "year": 1895,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a4a3f-ws54",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a4a3f10f0f4a3b75e91055b",
+   "year": 1771,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab22a-ws62",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab22ae3277b509c83e9179a",
+   "year": 1896,
+   "language": "English"
+  },
+  {
+   "slug": "en-699069-ws141",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699069572f82e0fda48071b4",
+   "year": 1888,
+   "language": "English"
+  },
+  {
+   "slug": "en-69d14b-ws199",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69d14b0b1c2a66dc094b4a1d",
+   "year": 1804,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab244-ws38",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2441b87d2180b7f5e508d",
+   "year": 1907,
+   "language": "English"
+  },
+  {
+   "slug": "en-6952d1-ws139",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6952d13377f38f6761bc5e29",
+   "year": 1893,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab6db-ws253",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab6db36b393fe0e2d473b7e",
+   "year": 1910,
+   "language": "English"
+  },
+  {
+   "slug": "en-69905c-ws309",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69905c87aaa7f10ed4cfbefb",
+   "year": 1921,
+   "language": "English"
+  },
+  {
+   "slug": "en-699249-ws259",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699249a8a2d53df4853be2b3",
+   "year": 1923,
+   "language": "English"
+  },
+  {
+   "slug": "en-695434-ws122",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "695434421479a63c11088c27",
+   "year": 1883,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab247-ws49",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2470687d2180b7f5e95f1",
+   "year": 1924,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e729-ws86",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e729e2a409200ea79f197a",
+   "year": 1917,
+   "language": "English"
+  },
+  {
+   "slug": "en-6991eb-ws75",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6991eb102f801130a473f7be",
+   "year": 1900,
+   "language": "English"
+  },
+  {
+   "slug": "en-69906a-ws249",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69906aaf1cf6ed5fbc8f7e01",
+   "year": 1871,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e749-ws70",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e7494d85f786e884a4e5c1",
+   "year": 1923,
+   "language": "English"
+  },
+  {
+   "slug": "en-6aa1d5-ws52",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa1d52577169abff162258b",
+   "year": 1912,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e748-ws60",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e748c949abba5e982817d2",
+   "year": 1890,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab1a6-ws23",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab1a683c2761690f8b0a2af",
+   "year": 1923,
+   "language": "English"
+  },
+  {
+   "slug": "en-69dea2-ws88",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69dea20a4d19ec2e9ba75cf1",
+   "year": 1905,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a08f9-ws194",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a08f9349c1b82475e159a8d",
+   "year": 1906,
+   "language": "English"
+  },
+  {
+   "slug": "en-69b633-ws166",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69b633be2831a80d67f3a4ea",
+   "year": 1909,
+   "language": "English"
+  },
+  {
+   "slug": "en-6aa35e-ws29",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa35e14e213def30d6cabe8",
+   "year": 1874,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ad66-ws43",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ad66130b6018c6ed17a683",
+   "year": 1920,
+   "language": "English"
+  },
+  {
+   "slug": "en-69afd2-ws125",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69afd2019a8092f06abf0c54",
+   "year": 1912,
+   "language": "English"
+  },
+  {
+   "slug": "en-69aebf-ws469",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69aebfdcbd67a8dbe182a6cf",
+   "year": 1925,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab6d1-ws63",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "6ab6d1bb8a91de9cd82fc7fc",
+   "year": 1892,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): image markup leaked into the reference (\"center|200px"
+  },
+  {
+   "slug": "en-69aea6-ws321",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69aea6e729b07b134d10e7c9",
+   "year": 1854,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a499d-ws169",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a499d15d702014d1ddf80dc",
+   "year": 1792,
+   "language": "English"
+  },
+  {
+   "slug": "en-69b9a2-ws132",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69b9a2d46ed9e0490990b9f9",
+   "year": 1902,
+   "language": "English"
+  },
+  {
+   "slug": "en-69a565-ws83",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69a565d15a8a09c1b325e728",
+   "year": 1917,
+   "language": "English"
+  },
+  {
+   "slug": "en-69c666-ws88",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69c666895ee2cfa2f502ce90",
+   "year": 300,
+   "language": "English",
+   "excluded": "catalogue year 300"
+  },
+  {
+   "slug": "en-69e419-ws163",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e419cb8a8dae1074c518e6",
+   "year": 1925,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ee64-ws183",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ee64617b983848aff570b0",
+   "year": 1797,
+   "language": "English"
+  },
+  {
+   "slug": "en-69d8ca-ws596",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69d8ca3fa09828f83ddca25f",
+   "year": 1797,
+   "language": "English"
+  },
+  {
+   "slug": "en-69bd9b-ws128",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69bd9b3d46b01553e33be15f",
+   "year": 1909,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): the leader-dot template leaked as \"pr.5\" and replaced"
+  },
+  {
+   "slug": "en-6a31b2-ws117",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a31b2d88f67820f4a11d2ab",
+   "year": 1883,
+   "language": "English"
+  },
+  {
+   "slug": "en-699200-ws404",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699200c37c226bdd25f97afd",
+   "year": 1876,
+   "language": "English"
+  },
+  {
+   "slug": "en-695910-ws125",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69591077ecb01322b30679d5",
+   "year": 1727,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab233-ws84",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab233994ac37d55a213923f",
+   "year": 1917,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a58ed-ws52",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a58ed15c6cd8f9871068c9e",
+   "year": 1918,
+   "language": "English"
+  },
+  {
+   "slug": "en-69af0b-ws324",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69af0bc5be1c789306eb8ede",
+   "year": 1916,
+   "language": "English"
+  },
+  {
+   "slug": "en-699066-ws261",
+   "stratum": "english-ia-5124",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69906623ef12272ffdc952c7",
+   "year": 1651,
+   "language": "English"
+  },
+  {
+   "slug": "en-6955d3-pg14504p344",
+   "stratum": "english-ia-5124",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6955d3d528a09ca65927eb28",
+   "year": 1665,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a5837-pg44895p100",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a5837eb6701425b993055d0",
+   "year": 1842,
+   "language": "English"
+  },
+  {
+   "slug": "en-6aa1d5-pg78248p612",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa1d54c77169abff1622a16",
+   "year": 1903,
+   "language": "English"
+  },
+  {
+   "slug": "en-699069-pg31511p363",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699069ec1cf6ed5fbc8f43b5",
+   "year": 1911,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab6d5-pg35460p78",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab6d532b393fe0e2d471b55",
+   "year": 1901,
+   "language": "English"
+  },
+  {
+   "slug": "en-69bd9b-pg48225p119",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69bd9b5446b01553e33be460",
+   "year": 1916,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): Gutenberg cut carries the caption of the plate facing"
+  },
+  {
+   "slug": "en-6aa734-pg70461p44",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa7349b38e15c149514cd4e",
+   "year": 1909,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a477c-pg53023p193",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a477cdd1874da9b1a9a5140",
+   "year": 1835,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab236-pg50170p76",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2363361b5fd3232b7f6b1",
+   "year": 1848,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e72c-pg48511p144",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e72c97a409200ea79f50e9",
+   "year": 1870,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a0b25-pg77434p155",
+   "stratum": "english-ia-5124",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a0b251a620b66ad8f233312",
+   "year": 1682,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a58a3-pg35687p276",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a58a3da08c84bb29c91cbcd",
+   "year": 1870,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab237-pg67996p297",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2371161b5fd3232b81187",
+   "year": 1858,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab245-pg35895p272",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2456387d2180b7f5e6e86",
+   "year": 1915,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a08f8-pg53597p115",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a08f8bf9c1b82475e15802a",
+   "year": 1834,
+   "language": "English"
+  },
+  {
+   "slug": "en-69a552-pg38870p391",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69a552e542054c7ce7176515",
+   "year": 1899,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): Gutenberg cut appends the chapter endnotes [74]-[76];"
+  },
+  {
+   "slug": "en-699079-pg74335p860",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699079c0db8b55d19ec67ceb",
+   "year": 1896,
+   "language": "English"
+  },
+  {
+   "slug": "en-69dc24-pg57292p38",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69dc244b39623978967d8596",
+   "year": 1890,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ad65-pg64037p436",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69ad65e775811c30866e252a",
+   "year": 1892,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): Gutenberg renumbers the footnotes 90–94 where the pag"
+  },
+  {
+   "slug": "en-6a09ff-pg43519p227",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a09ff94fa20006dbaba9ecb",
+   "year": 1906,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab241-pg51880p24",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2412c87d2180b7f5de4ff",
+   "year": 1878,
+   "language": "English"
+  },
+  {
+   "slug": "en-69af0a-pg77434p252",
+   "stratum": "english-ia-5124",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "69af0a90a130fd1a82e1feb6",
+   "year": 1682,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a0b25-pg77434p282",
+   "stratum": "english-ia-5124",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6a0b252e620b66ad8f233555",
+   "year": 1682,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ee4f-pg54620p285",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ee4f376dd925d126f4338c",
+   "year": 1872,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a98b9-pg48770p349",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a98b999ec48f9ad103e2118",
+   "year": 1864,
+   "language": "English"
+  },
+  {
+   "slug": "en-6aa734-pg72452p172",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa7347638e15c149514c451",
+   "year": 1799,
+   "language": "English"
+  },
+  {
+   "slug": "en-6991be-ws97",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6991be07df9a711e30db88ce",
+   "year": 1784,
+   "language": "English"
+  },
+  {
+   "slug": "en-699063-ws82",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6990630de7b7642c081de2b2",
+   "year": 1888,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e41f-ws98",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e41f31d0364cb0bcf7a80f",
+   "year": 1888,
+   "language": "English"
+  },
+  {
+   "slug": "en-699249-ws289",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699249b1a2d53df4853be918",
+   "year": 1916,
+   "language": "English"
+  },
+  {
+   "slug": "en-69b63f-ws390",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69b63f17a85a63b8ab1954d5",
+   "year": 1871,
+   "language": "English"
+  },
+  {
+   "slug": "en-699259-ws306",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699259178812793469fe2127",
+   "year": 1905,
+   "language": "English"
+  },
+  {
+   "slug": "en-69924f-ws365",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69924f2909c5da0cf50d6e51",
+   "year": 1916,
+   "language": "English"
+  },
+  {
+   "slug": "en-69afe5-ws137",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69afe509da5fa12b664a70f2",
+   "year": 1897,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab243-ws214",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab2437787d2180b7f5e379c",
+   "year": 1901,
+   "language": "English"
+  },
+  {
+   "slug": "en-6aa1d2-ws352",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6aa1d28877169abff161c815",
+   "year": 1857,
+   "language": "English"
+  },
+  {
+   "slug": "en-69aec1-ws406",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "69aec1f00767ad23dd0affb0",
+   "year": 1668,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): long s is deleted in the reference, not transcribed ("
+  },
+  {
+   "slug": "en-69ae66-ws266",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ae6681b3b0e7bf712d6201",
+   "year": 1930,
+   "language": "English"
+  },
+  {
+   "slug": "en-69a553-ws153",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69a553210aade5c1d01ff134",
+   "year": 1913,
+   "language": "English"
+  },
+  {
+   "slug": "en-699063-ws324",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "6990631aef12272ffdc8f4aa",
+   "year": 1879,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): reference omits the four-line verse quotation (\"When "
+  },
+  {
+   "slug": "en-699079-ws170",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6990798f59c453700d93c1c4",
+   "year": 1887,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e63b-ws487",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e63bfcd932f2d58adbdf0f",
+   "year": 1898,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab6da-ws107",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab6dad1b393fe0e2d47377d",
+   "year": 1909,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a3e6c-ws523",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a3e6cf26493e2d211290dfd",
+   "year": 1871,
+   "language": "English"
+  },
+  {
+   "slug": "en-69b99f-ws91",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69b99fd876b9bab2de21ad5d",
+   "year": 1909,
+   "language": "English"
+  },
+  {
+   "slug": "en-69de0c-ws58",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69de0cdb80210ba13d79f741",
+   "year": 1885,
+   "language": "English"
+  },
+  {
+   "slug": "en-69bd9b-ws28",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69bd9b4246b01553e33be21a",
+   "year": 1915,
+   "language": "English"
+  },
+  {
+   "slug": "en-699258-ws83",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699258bd8812793469fdd0e1",
+   "year": 1912,
+   "language": "English"
+  },
+  {
+   "slug": "en-6952db-ws150",
+   "stratum": "english-ia-5124",
+   "cell": "english-1600-1699",
+   "origin": "library",
+   "book_id": "6952db2477f38f6761bc70c4",
+   "year": 1681,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab22a-ws164",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab22ade277b509c83e915f3",
+   "year": 1894,
+   "language": "English"
+  },
+  {
+   "slug": "en-69ad74-ws199",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69ad747b059a2da73405f323",
+   "year": 1823,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e009-ws100",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e00947846d79f28d566692",
+   "year": 1915,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab242-ws205",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab242e387d2180b7f5e240f",
+   "year": 1896,
+   "language": "English"
+  },
+  {
+   "slug": "en-695434-ws146",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "6954344c1479a63c110890f8",
+   "year": 1852,
+   "language": "English",
+   "excluded": "reference_error: by eye 2026-09-28 (#5182): wikilink targets leaked into the reference (\"Short Tr"
+  },
+  {
+   "slug": "en-6991be-ws200",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6991be01df9a711e30db7f24",
+   "year": 1769,
+   "language": "English"
+  },
+  {
+   "slug": "en-6ab243-ws476",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6ab243e287d2180b7f5e46b9",
+   "year": 1906,
+   "language": "English"
+  },
+  {
+   "slug": "en-699356-ws310",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6993569a83378b7aed7ce5b7",
+   "year": 1889,
+   "language": "English"
+  },
+  {
+   "slug": "en-699063-ws165",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6990636bef12272ffdc914a5",
+   "year": 1852,
+   "language": "English"
+  },
+  {
+   "slug": "en-695926-pg60766p151",
+   "stratum": "english-ia-5124",
+   "cell": null,
+   "origin": "library",
+   "book_id": "695926cc15b4070cb1e80050",
+   "year": 1584,
+   "language": "English",
+   "excluded": "catalogue year 1584"
+  },
+  {
+   "slug": "en-6a4a33-pg47110p397",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a4a338e9ae8c432ae163dcc",
+   "year": 1888,
+   "language": "English"
+  },
+  {
+   "slug": "en-699079-pg41110p268",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "699079eadb8b55d19ec685b8",
+   "year": 1883,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e413-pg37386p101",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e413352d8eeae8614a0309",
+   "year": 1890,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a9f34-pg71129p258",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a9f346b9a132af3854466d6",
+   "year": 1819,
+   "language": "English"
+  },
+  {
+   "slug": "en-69920a-pg70338p112",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69920a28edefb8c8e756f325",
+   "year": 1855,
+   "language": "English"
+  },
+  {
+   "slug": "en-6a53dc-pg46743p225",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "6a53dc31ee75bc113c8c9e40",
+   "year": 1874,
+   "language": "English"
+  },
+  {
+   "slug": "en-69e783-pg74741p305",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69e7834dd93c1f60075067bf",
+   "year": 1751,
+   "language": "English"
+  },
+  {
+   "slug": "en-69d14b-pg75184p74",
+   "stratum": "english-ia-5124",
+   "cell": "english-1700+",
+   "origin": "library",
+   "book_id": "69d14b331c2a66dc094b4c37",
+   "year": 1822,
+   "language": "English"
+  },
+  {
+   "slug": "ws-de-95-thesen-pdf-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-95-thesen-pdf",
+   "year": 1557,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-abschied-der-casselaner-vom-koenig-von-westphale-p6",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-abschied-der-casselaner-vom-koenig-von-westphale",
+   "year": 1813,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang",
+   "year": 1842,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu",
+   "year": 1815,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu",
+   "year": 1847,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-agrumi-august-kopisch-1838-pdf-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-agrumi-august-kopisch-1838-pdf",
+   "year": 1838,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-ah-ca-ira-pdf-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-ah-ca-ira-pdf",
+   "year": 1790,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allemannischegedichte-hebel-pdf-p179",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allemannischegedichte-hebel-pdf",
+   "year": 1803,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159",
+   "year": 1811,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf",
+   "year": 1823,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme",
+   "year": 1755,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi",
+   "year": 1787,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss",
+   "year": 1799,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he",
+   "year": 1836,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse",
+   "year": 1770,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten",
+   "year": 1786,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni",
+   "year": 1844,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-anmerkungen-bers-theater-pdf-p15",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-anmerkungen-bers-theater-pdf",
+   "year": 1774,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf",
+   "year": 1844,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-ansichten-l-beck-marienkirche-pdf-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-ansichten-l-beck-marienkirche-pdf",
+   "year": 1822,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi",
+   "year": 1813,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-apolls-gericht-1769-pdf-p3",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-apolls-gericht-1769-pdf",
+   "year": 1769,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101",
+   "year": 1805,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-artistisches-notizenblatt-1824-kunstausstellung",
+   "year": 1824,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus",
+   "year": 1834,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p",
+   "year": 1832,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi",
+   "year": 1826,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-bartolom-de-las-casas-die-verheerung-westindiens",
+   "year": 1790,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf",
+   "year": 1823,
+   "language": "German"
+  },
+  {
+   "slug": "ws-de-beethoven-s-neunte-symphonie-pdf-p2",
+   "stratum": "ref-ws",
+   "cell": "german",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-de-beethoven-s-neunte-symphonie-pdf",
+   "year": 1838,
+   "language": "German"
+  },
+  {
+   "slug": "ws-la-28233-pdf-pdf-p4",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-28233-pdf-pdf",
+   "year": 1686,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-agricola-de-re-metallica-djvu-p406",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-agricola-de-re-metallica-djvu",
+   "year": 1556,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-alegrii-opera-minora-castellana-et-latina-pdf-p232",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-alegrii-opera-minora-castellana-et-latina-pdf",
+   "year": 1889,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-allorquando-vi-annunziammo-djvu-p2",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-allorquando-vi-annunziammo-djvu",
+   "year": 1804,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-anaplous-bosporou-1874-pdf-p47",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-anaplous-bosporou-1874-pdf",
+   "year": 1847,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-annales-monastici-vol-iv-djvu-p563",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-annales-monastici-vol-iv-djvu",
+   "year": 1864,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-anniversaria-in-memoriam-reipublic-sacr-et-liter-p15",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-anniversaria-in-memoriam-reipublic-sacr-et-liter",
+   "year": 1832,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-apocalypsis-revelata-djvu-p3",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-apocalypsis-revelata-djvu",
+   "year": 1766,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-arcana-coelestia-vol-i-djvu-p16",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-arcana-coelestia-vol-i-djvu",
+   "year": 1749,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-ars-memorativa-leporeus-djvu-p33",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-ars-memorativa-leporeus-djvu",
+   "year": 1523,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-athanasius-kircher-turris-babel-1679-djvu-p20",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-athanasius-kircher-turris-babel-1679-djvu",
+   "year": 1679,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-bodleian-library-byw-k-4-6-pdf-p17",
+   "stratum": "ref-ws",
+   "cell": null,
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-bodleian-library-byw-k-4-6-pdf",
+   "year": 1472,
+   "language": "Latin",
+   "excluded": "year 1472"
+  },
+  {
+   "slug": "ws-la-cabaret-dupaty-poetae-minores-1842-djvu-p416",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cabaret-dupaty-poetae-minores-1842-djvu",
+   "year": 1842,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv-p26",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cic-ron-uvres-compl-tes-lef-vre-1821-tome-28-djv",
+   "year": 1821,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cic-ron-uvres-compl-tes-panckoucke-1830-t-7-djvu-p470",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cic-ron-uvres-compl-tes-panckoucke-1830-t-7-djvu",
+   "year": 1830,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cl-ver-germania-antiqua-1616-pdf-p23",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cl-ver-germania-antiqua-1616-pdf",
+   "year": 1616,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-columbus-carmen-epicum-pdf-p7",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-columbus-carmen-epicum-pdf",
+   "year": 1715,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-columellae-opera-djvu-p26",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-columellae-opera-djvu",
+   "year": 1787,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis-p15",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-congestorium-artificiose-memorie-v-p-f-joa-n-nis",
+   "year": 1533,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-coppernicus-monete-djvu-p4",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-coppernicus-monete-djvu",
+   "year": 1526,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cornelii-taciti-agricola-djvu-p19",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cornelii-taciti-agricola-djvu",
+   "year": 1876,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-costituzione-dogmatica-sulla-fede-cattolica-18-l-p2",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-costituzione-dogmatica-sulla-fede-cattolica-18-l",
+   "year": 1870,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cshb42-corpusscriptorum45niebuoft-pdf-p284",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cshb42-corpusscriptorum45niebuoft-pdf",
+   "year": 1838,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cshb48-corpusscriptorum30niebuoft-pdf-p182",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cshb48-corpusscriptorum30niebuoft-pdf",
+   "year": 1844,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-cuerpo-del-derecho-civil-romano-a-doble-texto-ia-p216",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-cuerpo-del-derecho-civil-romano-a-doble-texto-ia",
+   "year": 1889,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-dal-giorno-in-cui-pervenne-djvu-p3",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-dal-giorno-in-cui-pervenne-djvu",
+   "year": 1821,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-de-bello-rustico-valentino-pdf-p24",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-de-bello-rustico-valentino-pdf",
+   "year": 1752,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis-p347",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-de-spectris-lemuribus-et-magnis-atque-insolitis",
+   "year": 1687,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge-p17",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-de-sternutatione-tractatus-copiosus-vanden-berge",
+   "year": 1664,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu-p2",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-delitiae-sapientiae-de-amore-conjugiali-djvu",
+   "year": 1768,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-descriptiones-et-icones-plantarum-rariorum-hunga-p105",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-descriptiones-et-icones-plantarum-rariorum-hunga",
+   "year": 1805,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins-p17",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-dictionarium-latinogallicum-estienne-1552-a-ins",
+   "year": 1552,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z-p721",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-dictionarium-latinogallicum-estienne-1552-ins-z",
+   "year": 1552,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-dimitrie-cantemir-operele-principelui-demetriu-c-p16",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-dimitrie-cantemir-operele-principelui-demetriu-c",
+   "year": 1872,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-disputatio-medica-inauguralis-de-merocele-vel-he-p21",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-disputatio-medica-inauguralis-de-merocele-vel-he",
+   "year": 1812,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu-p369",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-divini-platonis-opera-omnia-qu-exstant-djvu",
+   "year": 1590,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-easy-latin-stories-djvu-p16",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-easy-latin-stories-djvu",
+   "year": 1878,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-ecclesiam-a-iesu-christo-djvu-p3",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-ecclesiam-a-iesu-christo-djvu",
+   "year": 1821,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d-p26",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-erasmi-colloquia-familiaria-et-encomium-moriae-d",
+   "year": 1892,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo-p22",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-erycius-puteanus-bruxella-incomparabili-exemplo",
+   "year": 1646,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia-p38",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-euripus-seu-de-fluxu-et-refluxu-maris-sententia",
+   "year": 1624,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra-p107",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-exercises-on-latin-syntax-adapted-to-zumpt-s-gra",
+   "year": 1830,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri-p19",
+   "stratum": "ref-ws",
+   "cell": null,
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-foenix-domini-petri-ravennatis-memoriae-magistri",
+   "year": 1491,
+   "language": "Latin",
+   "excluded": "year 1491"
+  },
+  {
+   "slug": "ws-la-foliot-canticum-pdf-p32",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-foliot-canticum-pdf",
+   "year": 1638,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf-p25",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-francisci-xaverii-alegre-homeri-ilias-latina-pdf",
+   "year": 1788,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de-p26",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-frontin-les-stratag-mes-aqueducs-de-la-ville-de",
+   "year": 1848,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int-p204",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-galilei-discorsi-e-dimostrazioni-matematiche-int",
+   "year": 1638,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-gallia-christiana-1715-t1-djvu-p29",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-gallia-christiana-1715-t1-djvu",
+   "year": 1715,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-gallia-christiana-1720-t2-djvu-p2",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-gallia-christiana-1720-t2-djvu",
+   "year": 1720,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-gauss-carl-friedrich-werke-1870-djvu-p21",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-gauss-carl-friedrich-werke-1870-djvu",
+   "year": 1801,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-gesta-abbatum-monsterii-sancti-albani-vol-2-1290-p27",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-gesta-abbatum-monsterii-sancti-albani-vol-2-1290",
+   "year": 1867,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-grammatica-fennica-pdf-p48",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-grammatica-fennica-pdf",
+   "year": 1733,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-hermeneumata-pseudodositheana-pdf-p680",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-hermeneumata-pseudodositheana-pdf",
+   "year": 1895,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-hermetis-trismegisti-poemander-1854-djvu-p26",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-hermetis-trismegisti-poemander-1854-djvu",
+   "year": 1854,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-historia-naturalis-brasiliae-1648-pdf-p198",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-historia-naturalis-brasiliae-1648-pdf",
+   "year": 1648,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-hortus-malabaricus-volume-1-pdf-p4",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-hortus-malabaricus-volume-1-pdf",
+   "year": 1678,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-houghtonianus-latinus-224-pdf-p33",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-houghtonianus-latinus-224-pdf",
+   "year": 1716,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-illustrationes-florae-novae-hollandiae-djvu-p3",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-illustrationes-florae-novae-hollandiae-djvu",
+   "year": 1806,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-joseph-piechowski-de-ironia-iliadis-pdf-p16",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-joseph-piechowski-de-ironia-iliadis-pdf",
+   "year": 1856,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae-p189",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-josephi-rodrigues-de-mello-de-rusticis-brasiliae",
+   "year": 1781,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-le-ons-latines-modernes-de-litt-rature-et-de-mor-p46",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-le-ons-latines-modernes-de-litt-rature-et-de-mor",
+   "year": 1836,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes-p77",
+   "stratum": "ref-ws",
+   "cell": "latin-1700+",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-les-cinquante-livres-du-digeste-ou-des-pandectes",
+   "year": 1805,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-machumetis-saracenorum-principis-eiusque-success-p259",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-machumetis-saracenorum-principis-eiusque-success",
+   "year": 1550,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf-p20",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-mercurius-gallobelgicus-cologne-1592-pdf",
+   "year": 1592,
+   "language": "Latin"
+  },
+  {
+   "slug": "ws-la-nicolaus-machiavellus-de-principe-pdf-p17",
+   "stratum": "ref-ws",
+   "cell": "latin-1500-1699",
+   "origin": "external",
+   "book_id": null,
+   "work": "ws-la-nicolaus-machiavellus-de-principe-pdf",
+   "year": 1560,
+   "language": "Latin"
+  },
+  {
+   "slug": "greek-3bd843-p97",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1875,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-458842-p434",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1899,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-49b813-p569",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1821,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-4b2249-p54",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1891,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-4fd5df-p390",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1821,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-c80c9d-p16",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1554,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-da99cc-p426",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1533,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-db6c8d-p219",
+   "stratum": "greek",
+   "cell": null,
+   "origin": "library",
+   "year": 1576,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.3"
+  },
+  {
+   "slug": "greek-e28801-p756",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1592,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-e75fda-p53",
+   "stratum": "greek",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1531,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-f8ec82-p43",
+   "stratum": "greek",
+   "cell": null,
+   "origin": "library",
+   "year": 1838,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.35"
+  },
+  {
+   "slug": "greek-ext-038d86-p345",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1552,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-27fcd0-p142",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1491,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-371648-p99",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1554,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-413eb8-p30",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1544,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-42d3fa-p297",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1515,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-5b4a88-p227",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1578,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-5ea3a8-p167",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1544,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-665d2e-p83",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1708,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-6a6c6e-p127",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1791,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-6b0167-p198",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1790,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0"
+  },
+  {
+   "slug": "greek-ext-6cede1-p256",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1569,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-6cee47-p1098",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1610,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-826fb9-p59",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1503,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-8324e3-p27",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1518,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-85c00e-p285",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1538,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-862ab8-p105",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1495,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-8632bc-p404",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1497,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-87583c-p174",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1544,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-87a10a-p280",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1545,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-94c2f3-p130",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1660,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.4"
+  },
+  {
+   "slug": "greek-ext-954cc6-p58",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1515,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-a487d4-p311",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1524,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-b166c3-p161",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-b84e84-p130",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1545,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-c52565-p253",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1776,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-c52a29-p152",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.35"
+  },
+  {
+   "slug": "greek-ext-c79349-p200",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1540,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ce197e-p70",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1627,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-d34294-p221",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1749,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.3"
+  },
+  {
+   "slug": "greek-ext-d5e5e7-p127",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1769,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-d84df2-p32",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1571,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-d864dc-p139",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1782,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-d8ca50-p62",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1785,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-d9e2d7-p186",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1784,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-da9d71-p126",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1772,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-dad49c-p105",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1794,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.4"
+  },
+  {
+   "slug": "greek-ext-db1b80-p411",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1509,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-dd1721-p227",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1571,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-ddae34-p38",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1775,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ddeaed-p48",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1549,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ddfe56-p17",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1530,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-de120e-p139",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1547,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-df3afe-p116",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1672,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-dfd56e-p175",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1544,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-dffea2-p46",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1745,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e125e6-p102",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1562,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e17023-p123",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1741,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.4"
+  },
+  {
+   "slug": "greek-ext-e1abe6-p149",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1714,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e1b2cf-p14",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1552,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e25c4c-p3",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1577,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e2aded-p207",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1521,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e30c63-p119",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1605,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e3dbaa-p165",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1607,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e46b65-p387",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1793,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e46da1-p237",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1788,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e47977-p130",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1780,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e4881f-p230",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1739,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e497e3-p107",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1774,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e499cb-p281",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1793,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e4a112-p150",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1776,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e4af6f-p196",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1770,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e4b987-p307",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1796,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e4cc31-p88",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1772,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e4ec9f-p138",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1796,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e50e71-p506",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1797,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e53254-p257",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e5597a-p204",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1793,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e5674a-p163",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1789,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.35"
+  },
+  {
+   "slug": "greek-ext-e56930-p24",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1739,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e575ce-p225",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1796,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e58724-p198",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1783,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e59c23-p406",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.35"
+  },
+  {
+   "slug": "greek-ext-e5b1c8-p140",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1587,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e5b349-p530",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1797,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e5c2f9-p413",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1791,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e5ff80-p702",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1759,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e6097a-p53",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1795,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e6180d-p319",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1739,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e63be5-p161",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e67be6-p687",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1776,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e68709-p375",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1778,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e6b51b-p96",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1794,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.05"
+  },
+  {
+   "slug": "greek-ext-e6c7c5-p240",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1788,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e6d5b3-p472",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e6e49d-p166",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1775,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e70244-p140",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1798,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e73e88-p77",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1791,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e765f5-p220",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1534,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e76a61-p671",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1799,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.3"
+  },
+  {
+   "slug": "greek-ext-e788f9-p59",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1791,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e80581-p204",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e816e6-p15",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1760,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e82d0d-p106",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1793,
+   "language": "Greek",
+   "excluded": "script_class typeset-print, greek_share 0.05"
+  },
+  {
+   "slug": "greek-ext-e852df-p31",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1775,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e85ae5-p480",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1777,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e8aa88-p341",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1503,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-e8c7b2-p174",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1771,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e92d56-p307",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1546,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e936d7-p185",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1772,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e96290-p47",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1542,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e982f4-p426",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1796,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-e98549-p84",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1554,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ea4cec-p10",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1561,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-eab76d-p434",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1526,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-eb0eaf-p344",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1531,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-eb49dc-p56",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1778,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-eba9ff-p123",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1787,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ec4c95-p135",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1577,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ed2769-p159",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1518,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ed76d4-p94",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1517,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-edc7da-p226",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1792,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-ee8eaf-p47",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1495,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 1"
+  },
+  {
+   "slug": "greek-ext-ef3db1-p14",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1497,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 0.4"
+  },
+  {
+   "slug": "greek-ext-f402a2-p253",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1505,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-f49610-p161",
+   "stratum": "greek-ext",
+   "cell": null,
+   "origin": "library",
+   "year": 1517,
+   "language": "Greek",
+   "excluded": "script_class manuscript, greek_share 0.95"
+  },
+  {
+   "slug": "greek-ext-f5190c-p137",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1546,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext-f59986-p157",
+   "stratum": "greek-ext",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1513,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-54d559-p126",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1589,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-835422-p79",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1520,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-925253-p299",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1519,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-e0caa7-p61",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1552,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-e2bfa2-p180",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1535,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-e51278-p628",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1542,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-ebeffe-p100",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1513,
+   "language": "Greek"
+  },
+  {
+   "slug": "greek-ext2-ec8fdb-p90",
+   "stratum": "greek-ext2",
+   "cell": "greek-print",
+   "origin": "library",
+   "year": 1503,
+   "language": "Greek"
+  },
+  {
+   "slug": "ed-6a46062f896a4826cccdf873-p7",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a46062f896a4826cccdf873",
+   "year": 1529,
+   "language": "Latin",
+   "tcp": "A19129",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4710ef9e05dee59fe3cae8-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4710ef9e05dee59fe3cae8",
+   "year": 1589,
+   "language": "Latin",
+   "tcp": "A05302",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4fa9cdb5772a3dacaac6a6-p9",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4fa9cdb5772a3dacaac6a6",
+   "year": 1578,
+   "language": "Latin",
+   "tcp": "A17090",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a503c772f6539fb38937d92-p15",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a503c772f6539fb38937d92",
+   "year": 1590,
+   "language": "Latin",
+   "tcp": "A09349",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4252e5343d756d34e33e36-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4252e5343d756d34e33e36",
+   "year": 1669,
+   "language": "Latin",
+   "tcp": "A27552",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4263b1744db9e3105b1125-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4263b1744db9e3105b1125",
+   "year": 1659,
+   "language": "Latin",
+   "tcp": "A32705",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42acc65207af7c42f4db34-p14",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42acc65207af7c42f4db34",
+   "year": 1627,
+   "language": "Latin",
+   "tcp": "A07382",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42c73497284560a2b10fee-p1",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42c73497284560a2b10fee",
+   "year": 1637,
+   "language": "Latin",
+   "tcp": "A20710",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42ce3be76baa13aa851af5-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42ce3be76baa13aa851af5",
+   "year": 1608,
+   "language": "Latin",
+   "tcp": "A14631",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42d8f7e76baa13aa85e9b9-p9",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42d8f7e76baa13aa85e9b9",
+   "year": 1638,
+   "language": "Latin",
+   "tcp": "A12223",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42d8f8e76baa13aa85e9d0-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42d8f8e76baa13aa85e9d0",
+   "year": 1674,
+   "language": "Latin",
+   "tcp": "A28509",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42d91f1894955eb72629fe-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42d91f1894955eb72629fe",
+   "year": 1674,
+   "language": "Latin",
+   "tcp": "A33731",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42f62b3ad4d80da1237aed-p15",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42f62b3ad4d80da1237aed",
+   "year": 1618,
+   "language": "Latin",
+   "tcp": "A16626",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a432b29e797132cc665b266-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a432b29e797132cc665b266",
+   "year": 1629,
+   "language": "Latin",
+   "tcp": "A01809",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a434778201f98f53c3efe9d-p16",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a434778201f98f53c3efe9d",
+   "year": 1688,
+   "language": "Latin",
+   "tcp": "A53895",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a437b6257a09c2c0fcb48d7-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a437b6257a09c2c0fcb48d7",
+   "year": 1636,
+   "language": "Latin",
+   "tcp": "A16649",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a48279d2dd0016448f12f0f-p27",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a48279d2dd0016448f12f0f",
+   "year": 1633,
+   "language": "Latin",
+   "tcp": "A03054",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a4f7c25a13ff00e22df18f1-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a4f7c25a13ff00e22df18f1",
+   "year": 1640,
+   "language": "Latin",
+   "tcp": "A19865",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a51d78d612243b274118e89-p9",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a51d78d612243b274118e89",
+   "year": 1612,
+   "language": "Latin",
+   "tcp": "A04717",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a90e7e5544007b776b3806a-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a90e7e5544007b776b3806a",
+   "year": 1633,
+   "language": "Latin",
+   "tcp": "A04814",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a94341a7680120fac24d808-p15",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a94341a7680120fac24d808",
+   "year": 1618,
+   "language": "Latin",
+   "tcp": "A21194",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a9437f67e41ac276318823e-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a9437f67e41ac276318823e",
+   "year": 1656,
+   "language": "Latin",
+   "tcp": "A66675",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a94390b45a4780cb83dba46-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a94390b45a4780cb83dba46",
+   "year": 1661,
+   "language": "Latin",
+   "tcp": "A69934",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a42a33fdec0f9e2ecca5a38-p11",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a42a33fdec0f9e2ecca5a38",
+   "year": 1650,
+   "language": "Latin",
+   "tcp": "A30431",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  },
+  {
+   "slug": "ed-6a9057a0ab26ecd307a0cd7c-p10",
+   "stratum": "eebo-tcp-latin-5660",
+   "cell": "latin-1500-1699",
+   "origin": "library",
+   "book_id": "6a9057a0ab26ecd307a0cd7c",
+   "year": 1662,
+   "language": "Latin",
+   "tcp": "A44008",
+   "added": "round 3 (#5660, Amendment 2): EEBO-TCP Latin, leaf-checked 2026-10-04"
+  }
+ ],
+ "amendment": "PREREGISTRATION-open-engine-print-5660.md Amendment 2: + 25 EEBO-TCP Latin library pages in latin-1500-1699 (stratum eebo-tcp-latin-5660)",
+ "written_at_r3": "2026-10-04T01:18:48.225219+00:00"
+}

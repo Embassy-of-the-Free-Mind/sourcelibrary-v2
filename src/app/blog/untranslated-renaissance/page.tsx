@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Research Notes - Source Library',
-  description: 'We built the first draft of a translation census — matching 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
+  description: 'We built the first draft of a translation census, matching 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
   openGraph: {
     images: [{ url: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg', alt: 'Human head as microcosm mapping mental faculties, from Fludd\'s History of the Microcosm, 1619' }],
     title: 'How Much of the Renaissance Has Been Translated? We Tried to Count.',
@@ -53,7 +53,7 @@ export default function UntranslatedRenaissancePage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          What follows is the first draft of a translation census &mdash; an attempt to match the known record of early modern European book production against every English translation catalog we could assemble. The results are provisional. The catalog is incomplete. The methodology has known limitations, and we will describe them honestly. But even in this rough form, the data tells a story that we think is important enough to share before it is perfect.
+          What follows is the first draft of a translation census: an attempt to match the known record of early modern European book production against every English translation catalog we could assemble. The results are provisional. The catalog is incomplete. The methodology has known limitations, and we will describe them honestly. But even in this rough form, the data tells a story that we think is important enough to share before it is perfect.
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
@@ -69,15 +69,15 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We started with the Universal Short Title Catalogue at the University of St Andrews &mdash; the most comprehensive record of European printed books from the hand-press era. Our copy of the USTC contains 1,628,578 editions spanning roughly 1450 to 1700, across all languages. Of these, 1,464,217 are in languages other than English.
+            We started with the Universal Short Title Catalogue at the University of St Andrews, the most comprehensive record of European printed books from the hand-press era. Our copy of the USTC contains 1,628,578 editions spanning roughly 1450 to 1700, across all languages. Of these, 1,464,217 are in languages other than English.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We then assembled a catalog of known English translations from every source we could find: the UNESCO Index Translationum (3,191 records), Open Library (2,524), Internet Archive (472), Harvard&apos;s three major bilingual series &mdash; the Loeb Classical Library, the I Tatti Renaissance Library, and the Dumbarton Oaks Medieval Library &mdash; plus Penguin Classics, Brill, Cambridge University Press, Oxford University Press, Routledge, De Gruyter, and 30 other publishers and specialized presses. In total, 7,542 records from 46 sources, covering English translations of pre-modern works published between 1800 and 2025.
+            We then assembled a catalog of known English translations from every source we could find: the UNESCO Index Translationum (3,191 records), Open Library (2,524), Internet Archive (472), Harvard&apos;s three major bilingual series (the Loeb Classical Library, the I Tatti Renaissance Library, and the Dumbarton Oaks Medieval Library), plus Penguin Classics, Brill, Cambridge University Press, Oxford University Press, Routledge, De Gruyter, and 30 other publishers and specialized presses. In total, 7,542 records from 46 sources, covering English translations of pre-modern works published between 1800 and 2025.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We matched them. For each of the seven major languages in the USTC &mdash; Latin, German, French, Italian, Dutch, Spanish, and Portuguese &mdash; we extracted every distinct author surname, then checked whether that author appeared in our translation catalog. For Latin, where USTC names are in their Latin form (&ldquo;Ovidius Naso&rdquo;) and the catalog uses English forms (&ldquo;Ovid&rdquo;), we built 120 hand-checked name aliases.
+            We matched them. For each of the seven major languages in the USTC (Latin, German, French, Italian, Dutch, Spanish, and Portuguese), we extracted every distinct author surname, then checked whether that author appeared in our translation catalog. For Latin, where USTC names are in their Latin form (&ldquo;Ovidius Naso&rdquo;) and the catalog uses English forms (&ldquo;Ovid&rdquo;), we built 120 hand-checked name aliases.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
@@ -145,7 +145,7 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            At the author level: of 49,306 distinct Latin author surnames in the USTC, 1,076 &mdash; about 2% &mdash; have any known English translation at all. The remaining 48,230 authors wrote in Latin, published their work between 1450 and 1700, and have never had a single word translated into English.
+            At the author level: of 49,306 distinct Latin author surnames in the USTC, 1,076 (about 2%) have any known English translation at all. The remaining 48,230 authors wrote in Latin, published their work between 1450 and 1700, and have never had a single word translated into English.
           </p>
         </section>
 
@@ -166,7 +166,7 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The second error is worse. Machiavelli &mdash; one of the most widely translated authors in European history &mdash; appears exactly once in our catalog. One record. <em>The Prince</em> has had dozens of English editions since the 16th century. The <em>Discourses</em>, the <em>Art of War</em>, the <em>Florentine Histories</em>, the plays &mdash; none of them are in our data. This is not a marginal gap. It means the catalog is missing major, well-known translations.
+            The second error is worse. Machiavelli, one of the most widely translated authors in European history, appears exactly once in our catalog. One record. <em>The Prince</em> has had dozens of English editions since the 16th century. The <em>Discourses</em>, the <em>Art of War</em>, the <em>Florentine Histories</em>, the plays: none of them are in our data. This is not a marginal gap. It means the catalog is missing major, well-known translations.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -174,7 +174,7 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            If the catalog captures something like a third of actual translations &mdash; and the Machiavelli gap suggests it could be that incomplete &mdash; then the true number might be 15,000 to 20,000 translated works rather than 7,400. Against 693,000 USTC works, that would put the figure at 2 to 3%.
+            If the catalog captures something like a third of actual translations (and the Machiavelli gap suggests it could be that incomplete), then the true number might be 15,000 to 20,000 translated works rather than 7,400. Against 693,000 USTC works, that would put the figure at 2 to 3%.
           </p>
 
           <div className="bg-warm rounded-xl p-6 border border-border-light my-10">
@@ -197,7 +197,7 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The authors who have been translated are barely translated. The USTC records not just the famous works but the full published output &mdash; every edition of every text. When you compare an author&apos;s total output against what has been rendered into English, even the most canonical figures look thin.
+            The authors who have been translated are barely translated. The USTC records not just the famous works but the full published output: every edition of every text. When you compare an author&apos;s total output against what has been rendered into English, even the most canonical figures look thin.
           </p>
 
           <div className="overflow-x-auto my-10">
@@ -241,7 +241,7 @@ export default function UntranslatedRenaissancePage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Thomas Aquinas has the highest coverage at roughly 31%, reflecting centuries of sustained theological interest. Cicero, the most published Latin author in the USTC, is at about 8%. Melanchthon &mdash; the intellectual architect of the Protestant Reformation, the most influential educator in early modern Europe, an author of 1,222 distinct works &mdash; has five English translations.
+            Thomas Aquinas has the highest coverage at roughly 31%, reflecting centuries of sustained theological interest. Cicero, the most published Latin author in the USTC, is at about 8%. Melanchthon (the intellectual architect of the Protestant Reformation, the most influential educator in early modern Europe, an author of 1,222 distinct works) has five English translations.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -249,7 +249,7 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            These are the best-case numbers &mdash; the most famous, most studied, most canonical authors in the Western tradition. The USTC coverage figures overcount slightly (because &ldquo;distinct works&rdquo; includes title variants of the same text) and our translation counts may undercount (because of catalog gaps like the Machiavelli problem). But even with generous adjustments, the picture is clear: even the most translated authors are mostly untranslated.
+            These are the best-case numbers: the most famous, most studied, most canonical authors in the Western tradition. The USTC coverage figures overcount slightly (because &ldquo;distinct works&rdquo; includes title variants of the same text) and our translation counts may undercount (because of catalog gaps like the Machiavelli problem). But even with generous adjustments, the picture is clear: even the most translated authors are mostly untranslated.
           </p>
         </section>
 
@@ -262,7 +262,7 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Some gaps are genuinely shocking &mdash; books that are famous, widely cited, central to their fields, and simply never translated.
+            Some gaps are genuinely shocking: books that are famous, widely cited, central to their fields, and simply never translated.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -270,7 +270,7 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Servius&apos;s commentary on the <em>Aeneid</em> &mdash; the foundational work of classical literary criticism, read continuously for sixteen centuries &mdash; has no English translation.<sup><a href="#fn3" className="text-accent-rust">[3]</a></sup>
+            Servius&apos;s commentary on the <em>Aeneid</em>, the foundational work of classical literary criticism, read continuously for sixteen centuries, has no English translation.<sup><a href="#fn3" className="text-accent-rust">[3]</a></sup>
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -278,7 +278,7 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            These are not obscure texts. They are central works of Western intellectual history &mdash; books that sit at the root of entire disciplines &mdash; and they have never been available in English.
+            These are not obscure texts. They are central works of Western intellectual history (books that sit at the root of entire disciplines), and they have never been available in English.
           </p>
         </section>
 
@@ -291,11 +291,11 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            If you talk to Latin scholars, the scale of what hasn&apos;t been translated is so enormous that it is hardly discussed. It is simply the ambient condition of the field &mdash; like the depth of the ocean, known but not often remarked upon, because remarking on it changes nothing. The gap has always been there. It has always been too large for any institutional effort to close.
+            If you talk to Latin scholars, the scale of what hasn&apos;t been translated is so enormous that it is hardly discussed. It is simply the ambient condition of the field, like the depth of the ocean, known but not often remarked upon, because remarking on it changes nothing. The gap has always been there. It has always been too large for any institutional effort to close.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The reasons are structural. Translating a 16th-century Latin text into English requires not just Latin but subject-matter expertise &mdash; the ability to make sense of alchemical terminology, theological distinctions, astrological tables, legal formulae, or medical recipes in a dead language. The number of people alive at any given moment who can translate a specific text is very small.
+            The reasons are structural. Translating a 16th-century Latin text into English requires not just Latin but subject-matter expertise: the ability to make sense of alchemical terminology, theological distinctions, astrological tables, legal formulae, or medical recipes in a dead language. The number of people alive at any given moment who can translate a specific text is very small.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -303,15 +303,15 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            And there is selection. The three major English-language translation series for pre-modern Latin &mdash; the Loeb Classical Library (~550 volumes since 1911), the I Tatti Renaissance Library (100 volumes since 2001), and the Dumbarton Oaks Medieval Library (~90 volumes since 2010) &mdash; together represent the institutional infrastructure of Latin-to-English translation. Roughly 740 volumes in a combined 115 years. The selection necessarily reflects what scholars in each generation deemed important, fashionable, or commercially viable. Everything else waits.
+            And there is selection. The three major English-language translation series for pre-modern Latin, the Loeb Classical Library (~550 volumes since 1911), the I Tatti Renaissance Library (100 volumes since 2001), and the Dumbarton Oaks Medieval Library (~90 volumes since 2010), together represent the institutional infrastructure of Latin-to-English translation. Roughly 740 volumes in a combined 115 years. The selection necessarily reflects what scholars in each generation deemed important, fashionable, or commercially viable. Everything else waits.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Put it in dollars and years. The USTC records approximately 362,000 distinct Latin works printed before 1700. Roughly 355,000 have no English translation. If you hired dedicated translators at $80,000 a year, each producing five books &mdash; a generous pace for texts requiring expertise in alchemical terminology, theological distinctions, or Renaissance medical Latin &mdash; the project would cost $5.7 billion and require 71,000 translator-years. A hundred translators working simultaneously would need 700 years. A thousand &mdash; a workforce that does not exist and cannot be trained, because the required specializations number in the hundreds &mdash; would still need 71 years. And that is Latin alone, one of seven major languages in the USTC.
+            Put it in dollars and years. The USTC records approximately 362,000 distinct Latin works printed before 1700. Roughly 355,000 have no English translation. If you hired dedicated translators at $80,000 a year, each producing five books (a generous pace for texts requiring expertise in alchemical terminology, theological distinctions, or Renaissance medical Latin), the project would cost $5.7 billion and require 71,000 translator-years. A hundred translators working simultaneously would need 700 years. A thousand (a workforce that does not exist and cannot be trained, because the required specializations number in the hundreds) would still need 71 years. And that is Latin alone, one of seven major languages in the USTC.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            The result is a literature filtered twice &mdash; once by the accident of what survived, and again by the accident of what scholars happened to translate. We read the fraction of the fraction, and mistake it for the whole.
+            The result is a literature filtered twice: once by the accident of what survived, and again by the accident of what scholars happened to translate. We read the fraction of the fraction, and mistake it for the whole.
           </p>
         </section>
 
@@ -324,11 +324,11 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We are building this census as a public resource &mdash; a searchable, correctable, living record of which pre-modern works have been translated into English and which have not. The data we have published here is the first draft. It is wrong in known ways and probably wrong in ways we have not yet discovered. That is the point: to make the data visible so it can be improved.
+            We are building this census as a public resource: a searchable, correctable, living record of which pre-modern works have been translated into English and which have not. The data we have published here is the first draft. It is wrong in known ways and probably wrong in ways we have not yet discovered. That is the point: to make the data visible so it can be improved.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The most valuable thing a scholar can do with this post is tell us where we are wrong. If you know of a translation we missed &mdash; a dissertation, a journal appendix, an out-of-print 19th-century edition, a small-press publication from a specialist house &mdash; we want to add it. Every correction makes the census more accurate. Every missing translation we learn about narrows the gap between what we count and what actually exists.
+            The most valuable thing a scholar can do with this post is tell us where we are wrong. If you know of a translation we missed (a dissertation, a journal appendix, an out-of-print 19th-century edition, a small-press publication from a specialist house), we want to add it. Every correction makes the census more accurate. Every missing translation we learn about narrows the gap between what we count and what actually exists.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -338,11 +338,11 @@ export default function UntranslatedRenaissancePage() {
             <Link href="https://sourcelibrary.org/blog/first-translations" className="text-accent-rust hover:text-accent-rust underline">2,000 first English translations</Link>.{' '}
             The broader project,{' '}
             <a href="https://secondrenaissance.ai" className="text-accent-rust hover:text-accent-rust underline">Second Renaissance</a>,{' '}
-            is dedicated to making this work systematic. Every translation preserves the original text alongside the English for verification. Every page can be checked against the source. The original is never replaced &mdash; it is made accessible.
+            is dedicated to making this work systematic. Every translation preserves the original text alongside the English for verification. Every page can be checked against the source. The original is never replaced; it is made accessible.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            AI translation does not replace scholarly editing. It cannot produce a critical apparatus, identify textual variants, or situate a passage in its full intellectual context. But for the vast majority of these texts &mdash; for the 97% or 99% that have no English translation at all &mdash; the alternative is not a better translation. The alternative is no translation. A readable first draft that invites correction is, we believe, better than five more centuries of silence.
+            AI translation does not replace scholarly editing. It cannot produce a critical apparatus, identify textual variants, or situate a passage in its full intellectual context. But for the vast majority of these texts (the 97% or 99% that have no English translation at all), the alternative is not a better translation. The alternative is no translation. A readable first draft that invites correction is, we believe, better than five more centuries of silence.
           </p>
         </section>
 
@@ -355,11 +355,11 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-4 font-body">
-            <strong className="text-stone-800">If you are a scholar:</strong> Tell us what we&apos;re missing. If you know of a translation not in our catalog &mdash; especially from specialist publishers, foreign presses, dissertations, or pre-1900 editions &mdash; email us. We would rather have your corrections than your silence.
+            <strong className="text-stone-800">If you are a scholar:</strong> Tell us what we&apos;re missing. If you know of a translation not in our catalog (especially from specialist publishers, foreign presses, dissertations, or pre-1900 editions), email us. We would rather have your corrections than your silence.
           </p>
 
           <p className="text-secondary leading-relaxed mb-4 font-body">
-            <strong className="text-stone-800">If you read Latin, German, French, Italian, Dutch, or Spanish:</strong> Our AI translations are first drafts. They are checkable &mdash; the original text is always on the same page. If you spot an error, you can improve a text that may never have been in English before.
+            <strong className="text-stone-800">If you read Latin, German, French, Italian, Dutch, or Spanish:</strong> Our AI translations are first drafts. They are checkable: the original text is always on the same page. If you spot an error, you can improve a text that may never have been in English before.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
@@ -376,7 +376,7 @@ export default function UntranslatedRenaissancePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            <strong className="text-stone-800">Corpus:</strong> 1,388,051 non-English editions from the Universal Short Title Catalogue (University of St Andrews), covering printed works from 1450 to 1700. The USTC is the most comprehensive catalog of European hand-press-era printing. Our copy contains 1,628,578 total editions; 164,361 are in English and excluded. &ldquo;Distinct works&rdquo; are counted as unique titles per author &mdash; title variants inflate the count, so 693,135 is an upper bound on the true number of distinct works.
+            <strong className="text-stone-800">Corpus:</strong> 1,388,051 non-English editions from the Universal Short Title Catalogue (University of St Andrews), covering printed works from 1450 to 1700. The USTC is the most comprehensive catalog of European hand-press-era printing. Our copy contains 1,628,578 total editions; 164,361 are in English and excluded. &ldquo;Distinct works&rdquo; are counted as unique titles per author; title variants inflate the count, so 693,135 is an upper bound on the true number of distinct works.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -442,7 +442,7 @@ export default function UntranslatedRenaissancePage() {
         {/* === Footer === */}
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
-            Source Library is a project of the Embassy of the Free Mind. If you know of a translation we missed, or if you can improve one of ours, please reach out &mdash;{' '}
+            Source Library is a project of the Embassy of the Free Mind. If you know of a translation we missed, or if you can improve one of ours, please reach out:{' '}
             <a href="mailto:team@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">team@sourcelibrary.org</a>.
           </p>
         </div>

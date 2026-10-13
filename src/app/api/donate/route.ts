@@ -67,8 +67,8 @@ function buildDonorEmail(firstName: string, route: string): string {
         <p>
           Source Library is an initiative of the Embassy of the Free Mind in Amsterdam,
           home to one of the world's most important collections of Hermetic, alchemical,
-          and esoteric manuscripts. We are digitizing and translating these texts &mdash;
-          many for the first time &mdash; and publishing them freely online.
+          and esoteric manuscripts. We are digitizing and translating these texts
+          (many for the first time) and publishing them freely online.
         </p>
         <p>
           We'll be in touch soon. In the meantime, feel free to explore the library at

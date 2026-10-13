@@ -1,3 +1,17 @@
+---
+stage: metadata
+measure: none
+languages: []
+scripts: []
+canons: []
+n_books: 41555
+n_pages: 41555
+verdict: "One page per visible book: 7.6% of 41,555 books handwritten plus 2.6% mixed, 86% printed; typeface known on only 17% (blackletter 17.1% there, non-random subset)."
+status: informational
+decision: "Derek approved the typeface pass for every book the same day (#5643)"
+superseded_by: null
+issue: 5643
+---
 ## 2026-10-02 · What does the collection look like, page by page: printed or handwritten, which typeface, which page type? (#5643)
 <!-- PRIOR ART: scripts/eval/quality-covariates.mjs (#5623: the inline-tag + descriptor rule, run there on audit and benchmark pages only; this extends it with --corpus-profile rather than a new script); scripts/eval/lib/page-descriptor.mjs (the descriptor, unchanged); scripts/maintenance/backfill-script-type-4195.mjs (#5629, the pages.script_type values this reads). -->
 

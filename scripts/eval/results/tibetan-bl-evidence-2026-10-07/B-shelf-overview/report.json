@@ -1,0 +1,397 @@
+{
+  "issue": 6056,
+  "dir": "scripts/eval/results/tibetan-bl-evidence-2026-10-07/B-shelf-overview",
+  "weighted_serious_page_rate": 0.09183031218529708,
+  "weight_basis": "frame_size (books in stratum frame)",
+  "strata": [
+    {
+      "name": "bl-other-ogyen-choling",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection ogyen-choling",
+      "frame_size": 411,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.0625,
+      "serious_ci": [
+        0,
+        0.1875
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.94,
+      "mean_tr": 3.88,
+      "on_sight_books": 3,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e78a4b4a6785cfd60d31ba?page=8",
+        "https://sourcelibrary.org/book/69e78a4b4a6785cfd60d31ba?page=19",
+        "https://sourcelibrary.org/book/69e78b5c4a6785cfd60d5329?page=129",
+        "https://sourcelibrary.org/book/69e78b5c4a6785cfd60d5329?page=199",
+        "https://sourcelibrary.org/book/69e78b0f4a6785cfd60d4f68?page=24",
+        "https://sourcelibrary.org/book/69e78b804a6785cfd60d588f?page=5",
+        "https://sourcelibrary.org/book/69e78b804a6785cfd60d588f?page=6"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e78a4b4a6785cfd60d31ba",
+          "title": "rab gnas dpe cha",
+          "fit": "show_with_caveat",
+          "summary": "A short manuscript consecration (rab gnas) liturgy: dhāraṇīs, consecration formulas and verses of auspiciousness. The body transcription is of the right text and the English follows it closely. The title page is misread and mistranslated, and only about a third of the leaves are translated."
+        },
+        {
+          "book_id": "69e78b5c4a6785cfd60d5329",
+          "title": "dpal ldan sa skya ba'i mchog sgrub pa'i gser chos mkha' spyod bskor gsum",
+          "fit": "show_with_caveat",
+          "summary": "A Sakya collection of 'golden dharma' instructions on Nāro Khecarī (Vajrayoginī): the eleven yogas, feast rite, sindhura practice and transference. The Tibetan is the right text, leaf by leaf, and the English can be followed with confidence for content, if not for every name and number. Each 'page' is four separate leaves, which may not be in reading order, and two thirds of the book is not yet translated."
+        },
+        {
+          "book_id": "69e78b0f4a6785cfd60d4f68",
+          "title": "byang chub bka’ ‘bum las/ g.yo ba rlung gi rnam bshad n’a da’i sgra dbyangs",
+          "fit": "show_with_caveat",
+          "summary": "A manual of meditation from the 'byang chub bka' 'bum' cycle, running from renunciation and empowerment through śamatha obstacles to the stages of Mahāmudrā. The cursive transcription appears to be of the right leaves, and the English conveys the argument and the quoted verses well. Individual names and images are sometimes wrong, and half the book is untranslated."
+        },
+        {
+          "book_id": "69e78b804a6785cfd60d588f",
+          "title": "bde chog bong zhal snyan brgyud kyi sngon ‘gro’i khrid yig sku gsum rgyal ba’i gzhal med khang",
+          "fit": "show_with_caveat",
+          "summary": "A preliminary-practice manual of the donkey-faced Cakrasaṃvara oral lineage: speech blessing with the AH syllable, the precious human birth, offerings and the Heruka visualisation. The transcription is of the right leaves and the English is trustworthy for the practice, with occasional iconographic slips. Only 8 of 22 pages are translated, and each page is a board of loose leaves."
+        }
+      ]
+    },
+    {
+      "name": "bl-other-drametse",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection drametse",
+      "frame_size": 207,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0,
+      "serious_ci": [
+        0,
+        0
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.38,
+      "mean_tr": 4,
+      "on_sight_books": 3,
+      "fit_to_show": {
+        "show_with_caveat": 3,
+        "show": 1
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e788144a6785cfd60cef05?page=89",
+        "https://sourcelibrary.org/book/69e788144a6785cfd60cef05?page=135",
+        "https://sourcelibrary.org/book/69e787e74a6785cfd60ce2cc?page=18",
+        "https://sourcelibrary.org/book/69e787e74a6785cfd60ce2cc?page=103",
+        "https://sourcelibrary.org/book/69e788e74a6785cfd60d21ca?page=3",
+        "https://sourcelibrary.org/book/69e788e74a6785cfd60d21ca?page=7",
+        "https://sourcelibrary.org/book/69e788e74a6785cfd60d21ca?page=18",
+        "https://sourcelibrary.org/book/69e788cd4a6785cfd60d1ed1?page=10",
+        "https://sourcelibrary.org/book/69e788cd4a6785cfd60d1ed1?page=11",
+        "https://sourcelibrary.org/book/69e788cd4a6785cfd60d1ed1?page=15"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e788144a6785cfd60cef05",
+          "title": "gsang ba snying thig gi kha byang nyi snying nang gsal ba ltar",
+          "fit": "show_with_caveat",
+          "summary": "This is a bundle of Snying thig manuscripts from Drametse: a btags-grol commentary, a thod rgal manual and an empowerment rite. The Tibetan on each leaf is the leaf's own text, and the English follows it closely, with seams marked. A reader must know that one 'page' here is four separate leaves photographed together, not a continuous passage."
+        },
+        {
+          "book_id": "69e787e74a6785cfd60ce2cc",
+          "title": "las 'brel rtsal gyi gter ma rta mgrin gnyen po lha gsum",
+          "fit": "show_with_caveat",
+          "summary": "This is a Hayagriva–Vajrapani–Garuda gter ma for taming nagas: empowerments, signs of naga illness, and treasure-vase rites. The Tibetan is the leaves' own text. The English is trustworthy for the ritual sequence, but not for the occasional glossed term, such as 'King of the Impossible'. Each page shows three separate leaves, not a continuous passage."
+        },
+        {
+          "book_id": "69e788e74a6785cfd60d21ca",
+          "title": "sbyin sreg gi skor",
+          "fit": "show_with_caveat",
+          "summary": "This is a fierce homa manual (hearth, twelve substances, mantras, fire-god praise) followed by a Vajrakilaya effigy-liberation rite. The Tibetan is the page's own text. The English can be trusted for the sequence of the rite, but should be checked against the Tibetan for iconographic detail."
+        },
+        {
+          "book_id": "69e788cd4a6785cfd60d1ed1",
+          "title": "sde brgyad gser skyems (EAP105-1-3-195)",
+          "fit": "show",
+          "summary": "This is a golden libation to the eight classes of spirits and the local deities, as practised at Drametse. The Tibetan is the page's own text. The English can be trusted as a working translation, apart from an odd gloss such as 'scorpion gesture' for the threatening mudra."
+        }
+      ]
+    },
+    {
+      "name": "bl-other-gangtey",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection gangtey",
+      "frame_size": 243,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.1875,
+      "serious_ci": [
+        0.0625,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.63,
+      "mean_tr": 3.5,
+      "on_sight_books": 3,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e783390fc6fc955e363107?page=86",
+        "https://sourcelibrary.org/book/69e77ad90fc6fc955e3629f0?page=132",
+        "https://sourcelibrary.org/book/69e77ad90fc6fc955e3629f0?page=254",
+        "https://sourcelibrary.org/book/69e77a8f0fc6fc955e360958?page=2",
+        "https://sourcelibrary.org/book/69e77a8f0fc6fc955e360958?page=121",
+        "https://sourcelibrary.org/book/69e782e4d93c1f6007505357?page=23",
+        "https://sourcelibrary.org/book/69e782e4d93c1f6007505357?page=25",
+        "https://sourcelibrary.org/book/69e782e4d93c1f6007505357?page=181"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e783390fc6fc955e363107",
+          "title": "dBud rtsi tshad 'joms sogs",
+          "fit": "show_with_caveat",
+          "summary": "A bundle of Tibetan medical verse treatises on heat and contagious fevers, copied in cursive script with interlinear notes. The transcription is of the right leaves but cannot be checked word by word from the cursive, and it drops many of the notes. The English is a usable guide to the argument, but the drug glosses and some proper names are made up and should not be trusted for formulas."
+        },
+        {
+          "book_id": "69e77ad90fc6fc955e3629f0",
+          "title": "rTa mgrin dpa' bo gcig pa",
+          "fit": "show_with_caveat",
+          "summary": "A Nyingma ritual compilation: empowerment and feast liturgies, a Vajravidāraṇa sādhana and a mandala-drawing manual, bound under a Hayagrīva title that does not describe the sampled pages. The block-letter leaves are transcribed accurately, and the English of the liturgies is faithful enough to follow. Loose cursive slips are not, and the iconographic details need checking against the Tibetan."
+        },
+        {
+          "book_id": "69e77a8f0fc6fc955e360958",
+          "title": "rTsa rgyud rdo rje gzhon nu (EAP039-1-4-226)",
+          "fit": "show_with_caveat",
+          "summary": "Texts from Pema Lingpa's Vajrakīla treasure cycle: a commentary on the root tantra, the history and ritual dances of the 'Life-force Razor' Phurba, and Tsogyal's questions on obstacles. The transcription is of the right leaves and largely accurate. The English follows the argument well, but numbers and technical terms (dances read as 'boundaries') should be checked against the Tibetan."
+        },
+        {
+          "book_id": "69e782e4d93c1f6007505357",
+          "title": "bKa' 'khor bar pai dkar chag nong ston gsung",
+          "fit": "show_with_caveat",
+          "summary": "A miscellany bound under the title of a Kangyur catalogue: protective dhāraṇī sūtras, the dedication chapter of the Bodhicaryāvatāra, and a Great Perfection anthology of tantra citations. The transcription is of the right leaves and reads accurately. The English can be trusted for the sense, with small slips in names, and the reader should know the title does not describe the contents."
+        }
+      ]
+    },
+    {
+      "name": "bl-other-thadrak",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection thadrak",
+      "frame_size": 27,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4,
+      "mean_tr": 3.75,
+      "on_sight_books": 2,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e7ab895f1a22ab19a99cb5?page=150",
+        "https://sourcelibrary.org/book/69e7ab895f1a22ab19a99cb5?page=167",
+        "https://sourcelibrary.org/book/69e7ab955f1a22ab19a9a79c?page=9",
+        "https://sourcelibrary.org/book/69e7ab955f1a22ab19a9a79c?page=113",
+        "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=17",
+        "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=181",
+        "https://sourcelibrary.org/book/69e7ab855f1a22ab19a99a6b?page=26",
+        "https://sourcelibrary.org/book/69e7ab855f1a22ab19a99a6b?page=39"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e7ab895f1a22ab19a99cb5",
+          "title": "Thadrak Thor bu 024 Phreng lung rgya mtsho sogs",
+          "fit": "show_with_caveat",
+          "summary": "This is a temple miscellany of Tibetan manuscripts: an Abhidharma commentary, a Kalacakra six-yoga manual and completion-stage text, and a gter-ma geomancy and protection rite, each photographed as three leaves per image. The transcription is of the right leaves and mostly sound, but the cursive 'byed/med' confusion reverses the thesis of the Abhidharma page in the English, and one leaf seam is unmarked, so two leaves are fused into one sentence. Read the English as a guide, and check it against the Tibetan wherever the argument turns on 'has / has not'."
+        },
+        {
+          "book_id": "69e7ab955f1a22ab19a9a79c",
+          "title": "Thadrak Thor bu 033 Yang mgon bka' 'bum sogs",
+          "fit": "show_with_caveat",
+          "summary": "These are songs, exhortations and practice instructions of Yang dgon pa, with his colophon on page 9. The transcriptions are of the right leaves and the English reads faithfully on most pages. But page 51 ends in a paragraph of looped 'mindfulness and self' nonsense that is on no leaf, and leaf-opening fragments are sometimes misconstrued ('the late Lord')."
+        },
+        {
+          "book_id": "69e7ab915f1a22ab19a9a3be",
+          "title": "Thadrak Thor bu 030 sNyan ngag 'grel pa",
+          "fit": "show_with_caveat",
+          "summary": "This is a Tibetan commentary on Dandin's Mirror of Poetry, with verse examples of the ornaments and a discussion that cites Padma dkar po. The transcription matches the leaves closely and the English follows it well, including the verse. Expect stray <meta>/<summary> wrappers on some pages and translator-supplied Sanskrit terms labelled 'original'."
+        },
+        {
+          "book_id": "69e7ab855f1a22ab19a99a6b",
+          "title": "Thadrak Thor bu 021 Phag-gru'I zhus lan sogs",
+          "fit": "show_with_caveat",
+          "summary": "This miscellany holds verses of Asanga's Ornament of the Mahayana Sutras and a guru-sadhana by Padma dkar po. The transcription matches the leaves. The English is serviceable for the verse, but the colophon page misnames the lineage and attaches an invented identification in a note. A reader who wants the Phag mo gru pa answers named in the title did not meet them in these four pages."
+        }
+      ]
+    },
+    {
+      "name": "bl-other-neyphug",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection neyphug",
+      "frame_size": 26,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.94,
+      "mean_tr": 3.38,
+      "on_sight_books": 2,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e7ac5c5f1a22ab19aa6c50?page=6",
+        "https://sourcelibrary.org/book/69e7ac5c5f1a22ab19aa6c50?page=22",
+        "https://sourcelibrary.org/book/69e7ac455f1a22ab19aa618e?page=29",
+        "https://sourcelibrary.org/book/69e7ac455f1a22ab19aa618e?page=57",
+        "https://sourcelibrary.org/book/69e7ac425f1a22ab19aa607c?page=113",
+        "https://sourcelibrary.org/book/69e7ac4d5f1a22ab19aa6607?page=86"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e7ac5c5f1a22ab19aa6c50",
+          "title": "Neyphug Thor bu gTor ma rgya rtsa'i phyag len sogs",
+          "fit": "show_with_caveat",
+          "summary": "A Sakya liturgy for offering the hundred tormas, by Ngagchang Kunga Rinchen, in a Neyphug bundle that has the text twice. Apart from the title page, the transcription matches the leaves line for line, and the English follows the Tibetan closely enough to perform the rite. The title page shows an invented block of repeated 'merit' lines, and a few names (Nanda/Upananda) are wrong."
+        },
+        {
+          "book_id": "69e7ac455f1a22ab19aa618e",
+          "title": "Neyphug Thor bu Tshe khrid sogs",
+          "fit": "show_with_caveat",
+          "summary": "Empowerment and sadhana manuals from Neyphug: the long-life rite 'Bestowing the Splendor of Deathlessness', the Twelve Tenma life-entrustment, Rahula, and Four-Armed Mahakala. The transcription is of the right leaves, and the English follows it well enough for ritual study. Warn the reader that headings like '# Glorious Sonam Chokden!' are not in the source, and that some retinue names are calqued."
+        },
+        {
+          "book_id": "69e7ac425f1a22ab19aa607c",
+          "title": "Neyphug Thor bu Pad gling bka' 'bum",
+          "fit": "show_with_caveat",
+          "summary": "Pema Lingpa's collected writings: visionary narratives, supplications to Longchenpa, an alphabet acrostic on Mahamudra-style view, and aspiration prayers. The Tibetan is the right text and largely accurate. The English is a usable reading aid, but not citable without checking: it gets a finger wrong, reverses a speaker, invents one lineage name, and in one prayer asks to abandon the ten virtues."
+        },
+        {
+          "book_id": "69e7ac4d5f1a22ab19aa6607",
+          "title": "Neyphug Thor bu Phyag chen chos skor",
+          "fit": "show_with_caveat",
+          "summary": "Kagyu Mahamudra instructions and songs (Lingrepa, Saraha, a stage-by-stage 'innate' guide), copied in cursive dbu med. The transcription is of the right leaves and keeps the scribe's contractions. Most of the English can be trusted for the sense, but it mistranslates at least one canonical verse and one Saraha line, and only about a third of the book is translated."
+        }
+      ]
+    },
+    {
+      "name": "bl-other-tshamdrak",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection tshamdrak",
+      "frame_size": 55,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.1875,
+      "serious_ci": [
+        0,
+        0.375
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 4.13,
+      "mean_tr": 3.94,
+      "on_sight_books": 2,
+      "fit_to_show": {
+        "show_with_caveat": 4
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/6a14e17a311a9edd4622193f?page=178",
+        "https://sourcelibrary.org/book/6a14e17a311a9edd4622193f?page=95",
+        "https://sourcelibrary.org/book/6a14e1cf311a9edd46224259?page=95",
+        "https://sourcelibrary.org/book/6a14e1cf311a9edd46224259?page=104",
+        "https://sourcelibrary.org/book/6a14e1c1311a9edd46223bcd?page=95",
+        "https://sourcelibrary.org/book/6a14e1c1311a9edd46223bcd?page=37",
+        "https://sourcelibrary.org/book/6a14e199311a9edd46222858?page=15",
+        "https://sourcelibrary.org/book/6a14e199311a9edd46222858?page=17"
+      ],
+      "verdicts": [
+        {
+          "book_id": "6a14e17a311a9edd4622193f",
+          "title": "Thor bu Bla ma nor rgyam chos skor (EAP310-4-2-12)",
+          "fit": "show_with_caveat",
+          "summary": "A Nyingma treasure cycle attributed to Padmasambhava: prophecies of treasure-revealers, Great Perfection instruction and guidance on students and prostration. The transcription is of the leaves shown and is close to word-perfect in this clear dbu can hand. The English is mostly reliable but has slips on names and roles, such as Orgyen turned into 'the king' and Yoga tantra into Madhyamaka, plus some speculative notes."
+        },
+        {
+          "book_id": "6a14e1cf311a9edd46224259",
+          "title": "Thor bu Dus bstan pa'I me long sogs",
+          "fit": "show_with_caveat",
+          "summary": "A bundle of separate texts: an Indian-derived astrological omen manual in dbu med, a Cakrasaṃvara empowerment ritual and a scholastic commentary on the Abhisamayālaṃkāra. The transcriptions match the leaves. The doctrinal English can be trusted, but in the astrological chapter the English assigns several lunar mansions to the wrong Sanskrit names, so its omens cannot be relied on."
+        },
+        {
+          "book_id": "6a14e1c1311a9edd46223bcd",
+          "title": "Thor bu rTa mgrin dpa' bo gcig pa'i sgrub thabs sogs",
+          "fit": "show_with_caveat",
+          "summary": "A bundle of practice texts: a guru-yoga and refuge liturgy, verse instructions on resting the mind, a Sixteen Arhats offering rite and a vivid first-person memoir of a childhood longing for absent parents. The transcriptions follow the leaves, though two of the four pages are in a cursive hand I could only partly check. The English is readable and mostly faithful, with some misattributed iconography in the ritual pages."
+        },
+        {
+          "book_id": "6a14e199311a9edd46222858",
+          "title": "Thor bu mNgon rtogs rgyan 'grel don gsal rnam bshad",
+          "fit": "show_with_caveat",
+          "summary": "Under an Abhisamayālaṃkāra-commentary title, the reader actually finds the Ratnagotravibhāga with Asaṅga's commentary on buddha-nature: the nine similes, the four perfections and the three bodies. The transcription is of the right leaves, but two pages join leaves without marking the seam. The English of pp.15 and 17 is careful and can be trusted. On p.22 the English stops at the chapter 3 colophon, leaving the opening of chapter 4 untranslated, and fills garbled verse with fluent invention."
+        }
+      ]
+    },
+    {
+      "name": "bl-other-phurdrup",
+      "desc": "held #4523 BL Tibetan books, stratum other (not Kangyur/Nyingma-tantra/terma-biography by title), collection phurdrup",
+      "frame_size": 24,
+      "books": 4,
+      "pages": 16,
+      "serious_page_rate": 0.125,
+      "serious_ci": [
+        0,
+        0.25
+      ],
+      "wrong_leaf_rate": 0,
+      "mean_ocr": 3.94,
+      "mean_tr": 3.81,
+      "on_sight_books": 2,
+      "fit_to_show": {
+        "show_with_caveat": 2,
+        "show": 2
+      },
+      "showcase": [
+        "https://sourcelibrary.org/book/69e7ac685f1a22ab19aa72f0?page=45",
+        "https://sourcelibrary.org/book/69e7ac685f1a22ab19aa72f0?page=97",
+        "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=44",
+        "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=104",
+        "https://sourcelibrary.org/book/69e7ac655f1a22ab19aa70de?page=188",
+        "https://sourcelibrary.org/book/69e7ac655f1a22ab19aa70de?page=238",
+        "https://sourcelibrary.org/book/69e7ac655f1a22ab19aa70de?page=267",
+        "https://sourcelibrary.org/book/69e7ac925f1a22ab19aa935f?page=13",
+        "https://sourcelibrary.org/book/69e7ac925f1a22ab19aa935f?page=71",
+        "https://sourcelibrary.org/book/69e7ac925f1a22ab19aa935f?page=114",
+        "https://sourcelibrary.org/book/69e7ac925f1a22ab19aa935f?page=190"
+      ],
+      "verdicts": [
+        {
+          "book_id": "69e7ac685f1a22ab19aa72f0",
+          "title": "Phurdrup Gonpa bKa' brgyad Ca",
+          "fit": "show_with_caveat",
+          "summary": "A Nyingma ritual collection: empowerment, fire offering, stupa consecration and rites for the dead, copied as loose pecha leaves photographed three to a frame. The Tibetan transcription is of the right leaves and largely accurate apart from ĀḤ/OM confusions in mantra passages. The English is usable but not safe page by page: at least one page carries a passage from the following leaf, and some pages show notes addressed to the pipeline."
+        },
+        {
+          "book_id": "69e7ac955f1a22ab19aa9713",
+          "title": "Phurdrup Gonpa Thor bu dPag bsam khri shing",
+          "fit": "show_with_caveat",
+          "summary": "Kṣemendra's Avadānakalpalatā, the verse avadāna cycle, in a Tibetan dbu-med manuscript, here the stories of Mallikā and Virūḍhaka, Pūrṇa, Ekaśṛṅga and Dharmaruci. The transcription is of the right leaves and mostly accurate. The English follows the verse closely, but it can carry an OCR repetition as if it were text, and its notes speak to the editor."
+        },
+        {
+          "book_id": "69e7ac655f1a22ab19aa70de",
+          "title": "Phurdrup Gonpa bKa' brgyad Ga",
+          "fit": "show",
+          "summary": "A volume of the Eight Herukas (bKa' brgyad) and Ma mo terma cycle: tantra colophons attributed to Padmasambhava and Vairocana, praises of the worldly chieftains, and Great Perfection view texts. The Tibetan is of the right leaves and reads accurately. The English is faithful where it exists, but about two thirds of the volume is untranslated."
+        },
+        {
+          "book_id": "69e7ac925f1a22ab19aa935f",
+          "title": "Phurdrup Gonpa Thor bu Nor rgyam chos skor (EAP310-3-3-12)",
+          "fit": "show",
+          "summary": "A miscellany of Padmasambhava texts: dialogues with Prince Mutig Tsenpo on deviations in meditation, the story of the Guru's invitation to Tibet with his daily-practice advice, an eight-manifestations empowerment, and a consecration rite. The transcription is of the right leaves and reliable. The English can be trusted for sense, with mantra glosses to be taken lightly."
+        }
+      ]
+    }
+  ]
+}

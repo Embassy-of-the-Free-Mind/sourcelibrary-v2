@@ -5,6 +5,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 import { READABLE_IN_ENGLISH_EXPR, READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
+import { TRANSLATABLE_PAGES_EXPR, TRANSLATED_PAGES_CAPPED_EXPR, aggregateTranslationPercent } from '@/lib/translation-completeness';
 
 export const maxDuration = 60;
 
@@ -59,6 +60,9 @@ export const GET = withAuth(async (request: NextRequest) => {
             pages: { $sum: { $ifNull: ['$pages_count', 0] } },
             pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
             pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+            // The denominator translated_percent is taken over (#4505).
+            pages_translatable: { $sum: TRANSLATABLE_PAGES_EXPR },
+            pages_translated_capped: { $sum: TRANSLATED_PAGES_CAPPED_EXPR },
           },
         },
       ]).toArray(),
@@ -106,6 +110,8 @@ export const GET = withAuth(async (request: NextRequest) => {
             pages: { $sum: { $ifNull: ['$pages_count', 0] } },
             ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
             translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+            translatable: { $sum: TRANSLATABLE_PAGES_EXPR },
+            translated_capped: { $sum: TRANSLATED_PAGES_CAPPED_EXPR },
             readable: {
               $sum: {
                 $cond: [READABLE_IN_ENGLISH_EXPR, 1, 0],
@@ -183,7 +189,7 @@ export const GET = withAuth(async (request: NextRequest) => {
       ]).toArray(),
     ]);
 
-    const t = totals[0] || { books: 0, pages: 0, pages_ocr: 0, pages_translated: 0 };
+    const t = totals[0] || { books: 0, pages: 0, pages_ocr: 0, pages_translated: 0, pages_translatable: 0, pages_translated_capped: 0 };
     const ft = firstTranslations[0] || { count: 0, complete: 0, pages: 0 };
     const cost = costData[0] || { total_cost: 0, pages: 0 };
     const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
@@ -205,7 +211,8 @@ export const GET = withAuth(async (request: NextRequest) => {
         ocr_pages: t.pages_ocr,
         ocr_percent: t.pages > 0 ? +(t.pages_ocr / t.pages * 100).toFixed(1) : 0,
         translated_pages: t.pages_translated,
-        translated_percent: t.pages > 0 ? +(t.pages_translated / t.pages * 100).toFixed(1) : 0,
+        // Of translatable pages, not of all pages: blanks and plates never count against it (#4505).
+        translated_percent: aggregateTranslationPercent(t.pages_translated_capped, t.pages_translatable),
       },
 
       // By language
@@ -216,7 +223,7 @@ export const GET = withAuth(async (request: NextRequest) => {
         ocr: l.ocr,
         translated: l.translated,
         readable: l.readable,
-        coverage: l.pages > 0 ? +(l.translated / l.pages * 100).toFixed(1) : 0,
+        coverage: aggregateTranslationPercent(l.translated_capped, l.translatable),
       })),
 
       // By collection/tradition

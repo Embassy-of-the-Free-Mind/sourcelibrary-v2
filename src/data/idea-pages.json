@@ -1,0 +1,2602 @@
+{
+ "source": "scripts/eval/embed-granularity/gold.json",
+ "issue": 6173,
+ "ideas": [
+  {
+   "id": "c01",
+   "slug": "the-soul-s-ascent-through-the-heavens-to-the-divine",
+   "title": "the soul's ascent through the heavens to the divine",
+   "passages": [
+    {
+     "tradition": "islamic-sufi",
+     "quote": "the gates of heaven are opened for them, and angels from every heaven accompany it until they reach the seventh heaven",
+     "page_number": 23,
+     "book_slug": "daqaiq-al-haqaiq-or-7008",
+     "book_title": "Daqāʾiq al-Ḥaqāʾiq Or. 7008",
+     "book_author": "Rāzī, Fakhr al-Dīn al-",
+     "book_year": 1850,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "the soul ascends to the Nine Heavens and merges with the Truth of the Dao",
+     "page_number": 189,
+     "book_slug": "taoist-canon-daozang-masters",
+     "book_title": "The Taoist Canon",
+     "book_author": "Various Taoist Masters",
+     "book_year": 1445,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "describes how the prophet was taken by an angel through the seven heavens, and what he saw there",
+     "page_number": 114,
+     "book_slug": "the-apocalypse-of-abraham-trans",
+     "book_title": "The Apocalypse of Abraham",
+     "book_author": "G. H. Box (trans.)",
+     "book_year": 1918,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "unless one ascends by degrees and ladders, which indeed, as you are accustomed to speak, [are] like the Homeric chain",
+     "page_number": 124,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "He was so worthy that his soul ascended every night to the High School",
+     "page_number": 56,
+     "book_slug": "elijah-with-the-teachings-of-the-talmud-and-the-rabbis-muller",
+     "book_title": "Elijah with the Teachings of the Talmud and the Rabbis",
+     "book_author": "[Müller, Johann Daniel]",
+     "book_year": 1772,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "they commanded the just to Socrates, Glaucon. proceed to the right and upward through the heaven",
+     "page_number": 479,
+     "book_slug": "platos-republic-greek-text-plato",
+     "book_title": "The Republic",
+     "book_author": "Plato",
+     "book_year": 1894,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "Is it a matter of doubt that a god dwells within our breast? And that our souls return to heaven and come from heaven?",
+     "page_number": 150,
+     "book_slug": "astronomicon-manilius",
+     "book_title": "Astronomicon",
+     "book_author": "Marcus Manilius",
+     "book_year": 1473,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "so are such people already beforehand caught up and captivated into that world, and they behold everything that is glorious and wondrous there",
+     "page_number": 304,
+     "book_slug": "monument-of-ancient-christianity-arnold",
+     "book_title": "Monument of Ancient Christianity",
+     "book_author": "Arnold, Gottfried",
+     "book_year": 1716,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "ascends to the SUPREME to consider there the HIGHEST MYSTERIES OF THE THEOLOGICAL, or DIVINE WORLD",
+     "page_number": 72,
+     "book_slug": "the-ideal-shadow-of-universal-wisdom-sabbathier",
+     "book_title": "The Ideal Shadow of Universal Wisdom",
+     "book_author": "[Sabbathier, le R.P Esprit]",
+     "book_year": 1679,
+     "book_language": "French",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c02",
+   "slug": "prima-materia",
+   "title": "prima materia: the first matter from which all things are made",
+   "passages": [
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "entering into the Hyleal, that is, Pri-material watery CHAOS created at the first beginning of the World, sanctifying and also impregnating it",
+     "page_number": 95,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "From one confused mass were created all things that now exist. This one principle can serve to declare the matter of our blessed stone.",
+     "page_number": 135,
+     "book_slug": "theatrum-chemicum-volumen-secundum-ed",
+     "book_title": "Theatrum Chemicum Volumen Secundum",
+     "book_author": "Lazarus Zetzner (ed.)",
+     "book_year": 1602,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "is a universal thing, enclosing within itself everything we work upon; from its belly the ingenious craftsman must draw out his matter, form, Heaven, and the Elements",
+     "page_number": 149,
+     "book_slug": "theatrum-chemicum-volumen-secundum-ed",
+     "book_title": "Theatrum Chemicum Volumen Secundum",
+     "book_author": "Lazarus Zetzner (ed.)",
+     "book_year": 1602,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "he himself created the primary matter, which he defines as the \"receiver\" and \"nurse\" of becoming",
+     "page_number": 174,
+     "book_slug": "libri-duo-adversus-procli-rationes-de-mundi-aeternitate-philoponus",
+     "book_title": "Two Books Against Proclus on the Eternity of the World",
+     "book_author": "John Philoponus",
+     "book_year": 1551,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "it must necessarily be the ultimate substrate of natural things and the primary matter",
+     "page_number": 146,
+     "book_slug": "libri-duo-adversus-procli-rationes-de-mundi-aeternitate-philoponus",
+     "book_title": "Two Books Against Proclus on the Eternity of the World",
+     "book_author": "John Philoponus",
+     "book_year": 1551,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "that the rational soul forms the first matter because of the power sent into it by the marvelous intellect",
+     "page_number": 92,
+     "book_slug": "theologia-aristotelis-theology-of-aristotle-pseudo-aristotle",
+     "book_title": "Theology of Aristotle",
+     "book_author": "Pseudo-Aristotle",
+     "book_year": 1519,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "is made from the same primordial Air as Heaven or Shang-te and Man, and the same inherent Principle",
+     "page_number": 157,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "original"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "the Infinite Primordial Air in which this Principle is inherent, is the material portion of Unity",
+     "page_number": 151,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "In it I place my seed original: \"fœtus\" , and from it comes the production of all nature. The great Brahm is the womb of all those various forms",
+     "page_number": 37,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c03",
+   "slug": "emptiness",
+   "title": "emptiness: things have no fixed nature of their own",
+   "passages": [
+    {
+     "tradition": "buddhist",
+     "quote": "if all phenomena are flowing and changing, there could be no constant reality underlying them. It therefore follows that all things in the universe are empty and unreal.",
+     "page_number": 112,
+     "book_slug": "the-religion-of-the-samurai-a-study-of-zen-philosophy-nukariya",
+     "book_title": "The Religion of the Samurai: A Study of Zen Philosophy",
+     "book_author": "Kaiten Nukariya",
+     "book_year": 1913,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Therefore, these material things do not truly exist; only the great and glorious One that illuminates them exists.",
+     "page_number": 19,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Something that is merely imaginary has no real existence, while that which is true can never cease to exist.",
+     "page_number": 8,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "but not the creatures / who are not in themselves / but in God / for he is the life / the essence / and the working of all creatures / but we are nothing / except only in him",
+     "page_number": 125,
+     "book_slug": "books-and-writings-together-with-his-holy-miraculous-life-seuse",
+     "book_title": "Books and Writings, Together with His Holy Miraculous Life",
+     "book_author": "Seuse, Heinrich",
+     "book_year": 1661,
+     "book_language": "German",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c04",
+   "slug": "what-makes-a-human-life-go-well",
+   "title": "what makes a human life go well; the highest good and true flourishing for a person",
+   "passages": [
+    {
+     "tradition": "greek-roman",
+     "quote": "Those who place the highest good in virtue do well, but this very virtue produces and maintains friendship, and friendship cannot exist in any way without virtue.",
+     "page_number": 148,
+     "book_slug": "de-officiis-add-paradoxa-stoicorum-laelius-sive-de-amicitia-cicero",
+     "book_title": "On Duties",
+     "book_author": "Cicero, Marcus Tullius",
+     "book_year": 1469,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "to which justice is conjoined, and the remaining virtues from which a happy life exists, equal and similar to the gods",
+     "page_number": 39,
+     "book_slug": "de-natura-deorum-add-de-divinatione-de-legibus-academica-de-cicero-1",
+     "book_title": "On the Nature of the Gods and Other Philosophical Works",
+     "book_author": "Cicero, Marcus Tullius",
+     "book_year": 1496,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "I suppose in him who has such a possession that he is easily content for living liberally. Who seeks nothing, desires nothing",
+     "page_number": 137,
+     "book_slug": "de-officiis-add-paradoxa-stoicorum-laelius-sive-de-amicitia-cicero",
+     "book_title": "On Duties",
+     "book_author": "Cicero, Marcus Tullius",
+     "book_year": 1469,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "the entire intention of the human will, which is driven by various pursuits, hastens toward happiness",
+     "page_number": 220,
+     "book_slug": "boethius-de-consolatione-1486-waleys",
+     "book_title": "The Consolation of Philosophy",
+     "book_author": "Boethius; comm. Thomas Waleys",
+     "book_year": 1340,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "Now, the first element of happiness is perfection. Since happiness is the perfect good, it includes excellence or brilliance",
+     "page_number": 282,
+     "book_slug": "aquinas-ethicus-or-the-moral-teaching-of-st-thomas-aquinas",
+     "book_title": "Aquinas Ethicus: Or, The Moral Teaching of St. Thomas",
+     "book_author": "Thomas Aquinas",
+     "book_year": 1892,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "he then learns the highest perfection that man acquired from the First. That perfection is happiness.",
+     "page_number": 29,
+     "book_slug": "al-fusul-al-hikmiyya-philosophical-aphorisms-al-farabi",
+     "book_title": "al-Fuṣūl al-ḥikmīya, by al-Fārābī (d. 950)",
+     "book_author": "al-Farabi",
+     "book_year": 1362,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "becomes stronger, better, and more complete, until it reaches a threshold of perfection where it becomes independent of matter",
+     "page_number": 39,
+     "book_slug": "kitab-ara-ahl-al-madina-al-fadila-on-the-perfect-state-al-farabi",
+     "book_title": "On the Perfect State (Kitab Ara' Ahl al-Madina al-Fadila)",
+     "book_author": "Al-Farabi",
+     "book_year": 1906,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Thus, he does not regard physical comfort as true happiness, nor penury as pitiable, nor an honourable position as one of tranquillity",
+     "page_number": 112,
+     "book_slug": "taoist-texts-ethical-political-and-speculative-balfour",
+     "book_title": "Taoist Texts: Ethical, Political, and Speculative",
+     "book_author": "Frederic Henry Balfour",
+     "book_year": 1884,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "\"There is no greater delight than to be conscious of sincerity original: \"誠\" on self-examination.",
+     "page_number": 942,
+     "book_slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+     "book_title": "Four Books of Confucius - Analects, Great Learning, Doctrine of Mean, Mencius",
+     "book_author": "James Legge",
+     "book_year": 1882,
+     "book_language": "Chinese-English",
+     "source": "machine"
+    },
+    {
+     "tradition": "buddhist",
+     "quote": "When there is contentment, friend, this happiness is to be expected: whether walking, one finds happiness and ease",
+     "page_number": 141,
+     "book_slug": "anguttara-nikaya-pali-text-eds",
+     "book_title": "Aṅguttara-Nikāya (Pali Text)",
+     "book_author": "Richard Morris & Edmund Hardy (eds.)",
+     "book_year": 1885,
+     "book_language": "Pali",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Which frees souls from the pain and misery of embodied existence and installs them in supreme bliss, that excellent karma -destroying dharma",
+     "page_number": 55,
+     "book_slug": "ratnakaranda-sravakachara-the-householders-dharma-jain",
+     "book_title": "The Householder's Dharma (Ratnakaranda-Sravakachara)",
+     "book_author": "Samantabhadra (trans. Champat Rai Jain)",
+     "book_year": 1917,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "But the beatitude of the future is the apprehension of the highest good, above which there is no good, and from which is all goodness",
+     "page_number": 124,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c05",
+   "slug": "the-annihilation-of-the-self-in-union-with-the-divine",
+   "title": "the annihilation of the self in union with the divine",
+   "passages": [
+    {
+     "tradition": "islamic-sufi",
+     "quote": "Love is not valid until one departs from seeing the love itself to seeing the Beloved, through the annihilation of the knowledge of love",
+     "page_number": 279,
+     "book_slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+     "book_title": "Iḥyāʾ ʿUlūm al-Dīn (Revival of the Religious Sciences)",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1888,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "occurs in the station of persistence after passing through the threshold of annihilation",
+     "page_number": 301,
+     "book_slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+     "book_title": "Iḥyāʾ ʿUlūm al-Dīn (Revival of the Religious Sciences)",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1888,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "that we may thus arrive at the knowledge of our nothingness / so that we may be sunk / and swallowed up into the Divine Essence",
+     "page_number": 114,
+     "book_slug": "books-and-writings-together-with-his-holy-miraculous-life-seuse",
+     "book_title": "Books and Writings, Together with His Holy Miraculous Life",
+     "book_author": "Seuse, Heinrich",
+     "book_year": 1661,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "Grant, LORD, that I may let go of myself, lose myself to myself, and become nothing; so that You remain everything in me",
+     "page_number": 107,
+     "book_slug": "informatorium-or-short-instruction-weigel",
+     "book_title": "Handbook, or Short Instruction",
+     "book_author": "Weigel, Valentin",
+     "book_year": 1695,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "when its natural subsistence—that is, the primary notion—is absorbed by a greater abyss of light; it is no longer guided by its own light",
+     "page_number": 197,
+     "book_slug": "principia-philosophiae-antiquissimae-et-recentissimae-helmont",
+     "book_title": "The Principles of the Most Ancient and Modern Philosophy",
+     "book_author": "Francis Mercury van Helmont",
+     "book_year": 1690,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "This transformation occurs through a departure of the mind and a certain ecstasy, Hebrews which the Hebrews call the death of the kiss",
+     "page_number": 835,
+     "book_slug": "de-harmonia-mundi-totius-zorzi",
+     "book_title": "On the Harmony of the World",
+     "book_author": "Francesco Giorgi (Zorzi)",
+     "book_year": 1525,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "My existence is annihilation, and in my annihilation, you exist.",
+     "page_number": 75,
+     "book_slug": "composite-manuscript-fragments-of-commentaries-on-the-torah-anonymous",
+     "book_title": "Composite manuscript: fragments of commentaries on the Torah and on the Song of Songs (Gaster Hebrew MS 1380)",
+     "book_author": "Anonymous",
+     "book_year": 1450,
+     "book_language": "Judeo-Arabic and Hebrew",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "it becomes one with the perceiver. This is the secret of true devekut cleaving/attachment to the Divine which the prophets and the pious achieve",
+     "page_number": 85,
+     "book_slug": "essence-of-pomegranates-gallico",
+     "book_title": "Essence of Pomegranates",
+     "book_author": "Gallico, Samuel",
+     "book_year": 1575,
+     "book_language": "Hebrew",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "After this, the self that has become Brahman is no longer perceived; having emerged from all states of being, it has no remaining sign.",
+     "page_number": 237,
+     "book_slug": "a-history-of-indian-philosophy-volume-1-dasgupta",
+     "book_title": "A History of Indian Philosophy, Volume 1",
+     "book_author": "Surendranath Dasgupta",
+     "book_year": 1922,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "It would have known that instead of being a tiny, insignificant dewdrop, it was a part of the Mighty Ocean—in fact, that its Real Self was that Ocean itself.",
+     "page_number": 89,
+     "book_slug": "a-series-of-lessons-in-gnani-yoga-atkinson",
+     "book_title": "A Series of Lessons in Gnani Yoga",
+     "book_author": "Yogi Ramacharaka (William Walker Atkinson)",
+     "book_year": 1907,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "The individual soul is absorbed back into the source when the experience of its actions comes to an end.",
+     "page_number": 21,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c06",
+   "slug": "spirits-that-stand-between-gods-and-humans",
+   "title": "spirits that stand between gods and humans",
+   "passages": [
+    {
+     "tradition": "greek-roman",
+     "quote": "which they had chosen, to be the watcher over his life and the fulfiller E of his choices",
+     "page_number": 488,
+     "book_slug": "platos-republic-greek-text-plato",
+     "book_title": "The Republic",
+     "book_author": "Plato",
+     "book_year": 1894,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "But angels are intermediate between God and humans, as they participate more in the perfection of divine goodness than humans do.",
+     "page_number": 475,
+     "book_slug": "summa-theologica-aquinas",
+     "book_title": "Summa Theologica",
+     "book_author": "Thomas Aquinas",
+     "book_year": 1926,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "if we have applied our study to the angels, that we may be joined to God also through the angels by the ineffable Tetragrammaton",
+     "page_number": 140,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "which they rejoice in by the name of angels when they descend to these lowest things, since they are the messengers of the King of kings",
+     "page_number": 107,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "certain natures were to be found midway between those Gods and men, which they called Angels, Demons, or Genii",
+     "page_number": 56,
+     "book_slug": "sphinx-mystagoga-kircher",
+     "book_title": "Sphinx Mystagoga",
+     "book_author": "Athanasius Kircher",
+     "book_year": 1676,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "thou goest for us today as a messenger, thou who art born between the two races between humans and gods",
+     "page_number": 332,
+     "book_slug": "vedic-hymns-part-ii-sacred-books-of-the-east-vol-46-trans",
+     "book_title": "Vedic Hymns Part Two",
+     "book_author": "Hermann Oldenberg (trans.)",
+     "book_year": 1897,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "And that He illuminates the Intelligences, and through them as mediums, the Intellect; and through the Intellect indeed as a medium, the universal and celestial Soul.",
+     "page_number": 85,
+     "book_slug": "theologia-aristotelis-theology-of-aristotle-pseudo-aristotle",
+     "book_title": "Theology of Aristotle",
+     "book_author": "Pseudo-Aristotle",
+     "book_year": 1519,
+     "book_language": "Latin",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c07",
+   "slug": "the-human-being-as-a-small-copy-of-the-whole-universe",
+   "title": "the human being as a small copy of the whole universe",
+   "passages": [
+    {
+     "tradition": "christian",
+     "quote": "that creature was usually most fitly called the Microcosm, that is, the little or lesser world",
+     "page_number": 28,
+     "book_slug": "astrologie-theologized-weigel",
+     "book_title": "Astrologie theologized",
+     "book_author": "Weigel, Valentin",
+     "book_year": 1649,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "the microcosm, that is, the little world / because he carries the great world within him / and is carried and fed by the great one",
+     "page_number": 74,
+     "book_slug": "informatorium-or-short-instruction-weigel",
+     "book_title": "Handbook, or Short Instruction",
+     "book_author": "Weigel, Valentin",
+     "book_year": 1695,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "And since man is made as a certain image of this world, whence he is called a microcosmos small world , he receives in many respects worldly names",
+     "page_number": 108,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Within this body exists Mount Meru, surrounded by the seven islands; there are rivers, oceans, mountains, fields, and the guardians of those fields.",
+     "page_number": 22,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "These two souls are precisely the same in the Kosmos and in Man, and hence the former is styled a Great Man, and the latter a microcosm",
+     "page_number": 177,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "original"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "The Brahma-Qi original: \"Fanqi\"; primordial, pure celestial energy. becomes the body, and through the transformation of Spirit and Qi, the Three Realms are naturally formed.",
+     "page_number": 203,
+     "book_slug": "taoist-canon-daozang-masters",
+     "book_title": "The Taoist Canon",
+     "book_author": "Various Taoist Masters",
+     "book_year": 1445,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "If humans can possess the world itself within them? Each person is a miniature example of God, an image in small proportions.",
+     "page_number": 151,
+     "book_slug": "astronomicon-manilius",
+     "book_title": "Astronomicon",
+     "book_author": "Marcus Manilius",
+     "book_year": 1473,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "or man, the entire \"fleshy earth\" is affected by stupor, the loss of sensation and motion, and by chilling",
+     "page_number": 73,
+     "book_slug": "sacred-and-truly-christian-philosophy-fludd-2",
+     "book_title": "Sacred and Truly Christian Philosophy, or Cosmic Meteorology",
+     "book_author": "Fludd, Robert",
+     "book_year": 1626,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "buddhist",
+     "quote": "This life or living principle in the microcosmos is identical with that of the macrocosmos, and the Universal Life of the macrocosmos is the common source of all lives.",
+     "page_number": 107,
+     "book_slug": "the-religion-of-the-samurai-a-study-of-zen-philosophy-nukariya",
+     "book_title": "The Religion of the Samurai: A Study of Zen Philosophy",
+     "book_author": "Kaiten Nukariya",
+     "book_year": 1913,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c08",
+   "slug": "the-divine-is-beyond-every-name-and-description",
+   "title": "the divine is beyond every name and description",
+   "passages": [
+    {
+     "tradition": "christian",
+     "quote": "concerning Him, nor name, nor knowledge. He is neither darkness nor light, neither error nor truth.",
+     "page_number": 367,
+     "book_slug": "commentaries-on-the-mystical-theology-of-st-dionysius-the-eck",
+     "book_title": "Commentaries on the Mystical Theology of Saint Dionysius the Areopagite",
+     "book_author": "Eck, Johann",
+     "book_year": 1610,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "God is nothing of that which man can see, feel, imagine, think, or sense. His concept is an eternal negation and privation",
+     "page_number": 356,
+     "book_slug": "pseudo-dionysius-areopagita-schriften-german-1823-pseudo-dionysius",
+     "book_title": "Pseudo-Dionysius Areopagita Schriften (German 1823)",
+     "book_author": "Pseudo-Dionysius",
+     "book_year": 1823,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "Lastly, he concludes that there is no word or knowledge of GOD: because He is above every affirmation",
+     "page_number": 371,
+     "book_slug": "commentaries-on-the-mystical-theology-of-st-dionysius-the-eck",
+     "book_title": "Commentaries on the Mystical Theology of Saint Dionysius the Areopagite",
+     "book_author": "Eck, Johann",
+     "book_year": 1610,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "For we express God by nothing more certainly than by a privative particle or a negative word",
+     "page_number": 95,
+     "book_slug": "on-the-wonder-working-word-reuchlin",
+     "book_title": "On the Wonder-Working Word",
+     "book_author": "Johannes Reuchlin",
+     "book_year": 1494,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "let no one think that when we name gods, they are equal to the supreme and ineffable God who has no name",
+     "page_number": 102,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "He is beyond all speech, beyond every position and abstraction, beyond every affirmation and negation",
+     "page_number": 103,
+     "book_slug": "henrici-cornelii-agrippae-de-nobilitate-praecellentia-agrippa-von-2",
+     "book_title": "Henrici Cornelii Agrippae de nobilitate & praecellentia foeminei, sexus, ad Margaretam Augustam Austriaco. & Burgundionus principes",
+     "book_author": "Agrippa von Nettesheim, Heinrich Cornelius",
+     "book_year": 1529,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "though it has no name, it produces the growth and nurture of all things. As I do not know its name, I am compelled to call it simply Tao",
+     "page_number": 91,
+     "book_slug": "taoist-texts-ethical-political-and-speculative-balfour",
+     "book_title": "Taoist Texts: Ethical, Political, and Speculative",
+     "book_author": "Frederic Henry Balfour",
+     "book_year": 1884,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "buddhist",
+     "quote": "Thus, Buddha is unnamable, indescribable, and indefinable, but we provisionally call Him Buddha.",
+     "page_number": 106,
+     "book_slug": "the-religion-of-the-samurai-a-study-of-zen-philosophy-nukariya",
+     "book_title": "The Religion of the Samurai: A Study of Zen Philosophy",
+     "book_author": "Kaiten Nukariya",
+     "book_year": 1913,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "and invisible form—which is omnipresent, incomprehensible, exalted, fixed, and immovable",
+     "page_number": 34,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "and that He is not a body, nor is He like other bodies. As for establishing an existent in one's belief based on what we mentioned regarding the extreme exaggeration of sanctification",
+     "page_number": 27,
+     "book_slug": "three-theological-treatises-al-ghazali",
+     "book_title": "Three Theological Treatises",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1115,
+     "book_language": "Arabic",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c09",
+   "slug": "light-as-the-nature-of-the-divine-or-of-the-mind",
+   "title": "light as the nature of the divine or of the mind",
+   "passages": [
+    {
+     "tradition": "hindu-indic",
+     "quote": "It is the light of lights, and it is declared to be free from darkness. It is wisdom itself, the object of wisdom",
+     "page_number": 36,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "it was said that the light of Consciousness, having accepted limitation, becomes the worldly being",
+     "page_number": 43,
+     "book_slug": "pratyabhij-hdayam",
+     "book_title": "Pratyabhijñā-Hṛdayam",
+     "book_author": "Kṣemarāja",
+     "book_year": 1911,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "The Kingdom of Nature is in itself the great eternal darkness, and the Kingdom of God (or Glory) is the light.",
+     "page_number": 83,
+     "book_slug": "theosophical-questions-quaestiones-theosophicae-bohme",
+     "book_title": "Theosophical Questions",
+     "book_author": "Boehme, Jacob",
+     "book_year": 1730,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "so when the mind is perfectly purified, it always beholds the glory of the light of Christ, and is with the Lord day and night",
+     "page_number": 304,
+     "book_slug": "monument-of-ancient-christianity-arnold",
+     "book_title": "Monument of Ancient Christianity",
+     "book_author": "Arnold, Gottfried",
+     "book_year": 1716,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "Each is the creator of all, each is God, each is light—the Father in the Son, and the Son from the Father, as light from light and the brightness of eternal light.",
+     "page_number": 97,
+     "book_slug": "on-the-wonder-working-word-reuchlin",
+     "book_title": "On the Wonder-Working Word",
+     "book_author": "Johannes Reuchlin",
+     "book_year": 1494,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "NATURE is a most wise, self-moving, life-making, exceedingly powerful and wonder-working LIGHT and FIRE",
+     "page_number": 95,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "and having attained eternal life under a great, ineffable, inaudible, and inconceivable light",
+     "page_number": 89,
+     "book_slug": "theologia-aristotelis-theology-of-aristotle-pseudo-aristotle",
+     "book_title": "Theology of Aristotle",
+     "book_author": "Pseudo-Aristotle",
+     "book_year": 1519,
+     "book_language": "Latin",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c10",
+   "slug": "how-the-many-things-come-forth-from-the-one",
+   "title": "how the many things come forth from the One",
+   "passages": [
+    {
+     "tradition": "greek-roman",
+     "quote": "If beings are many, and all come from the One, it is necessary that they arise through the diverse participation in that One.",
+     "page_number": 95,
+     "book_slug": "quaestionum-peripateticarum-libri-v-daemonum-investigatio-cesalpino",
+     "book_title": "Peripatetic Questions; Investigation of Demons",
+     "book_author": "Andrea Cesalpino",
+     "book_year": 1571,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "making the beginning and root of generation from the first-born Monad one , with the whole proceeding toward an impression and likeness of the highest Beauty",
+     "page_number": 77,
+     "book_slug": "theologumena-arithmeticae-de-falco-teubner-iamblichus",
+     "book_title": "Theologumena Arithmeticae (de Falco, Teubner)",
+     "book_author": "Iamblichus",
+     "book_year": null,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "so the monad is not said to be a number, but monad: the origin of numbers, not a number itself. the origin of numbers",
+     "page_number": 168,
+     "book_slug": "macrobii-in-somnium-scipionis-saturnalia-1528-macrobius",
+     "book_title": "Commentary on the Dream of Scipio; Saturnalia",
+     "book_author": "Macrobius",
+     "book_year": 1528,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "All things came to be and all things persist through an original and constantly enduring eradiation",
+     "page_number": 25,
+     "book_slug": "on-the-nature-and-origin-of-the-doctrine-of-emanation-among-kleuker",
+     "book_title": "On the Nature and Origin of the Doctrine of Emanation among the Kabbalists",
+     "book_author": "Kleuker, Johann Friedrich",
+     "book_year": 1786,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "what would not come purely and solely from him, exist through him, and hold together through him. Everything comes from him by means of Eradiation",
+     "page_number": 21,
+     "book_slug": "on-the-nature-and-origin-of-the-doctrine-of-emanation-among-kleuker",
+     "book_title": "On the Nature and Origin of the Doctrine of Emanation among the Kabbalists",
+     "book_author": "Kleuker, Johann Friedrich",
+     "book_year": 1786,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "That is to say, in the centre of The Great Monad or the Primordial Air, which divides into the Two Powers, Light and Darkness",
+     "page_number": 167,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "a hierarchy that coincides with the various Emanations The process by which everything in the universe flows out from the divine source. from the one highest Good and their relative distance from it",
+     "page_number": 325,
+     "book_slug": "meister-eckhart-der-mystiker-lasson",
+     "book_title": "Meister Eckhart the Mystic",
+     "book_author": "Adolf Lasson",
+     "book_year": 1868,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "how the Work, through Wisdom, introduces itself from Unity into multiplicity and differentiation, into both Light and Darkness",
+     "page_number": 78,
+     "book_slug": "theosophical-questions-quaestiones-theosophicae-bohme",
+     "book_title": "Theosophical Questions",
+     "book_author": "Boehme, Jacob",
+     "book_year": 1730,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "so know that this LIGHT (NATURE) is an emanation or flowing-forth from the Triune GOD, the divine POWER or SPIRIT",
+     "page_number": 106,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "And through the Soul as a medium, He illuminates the nature of things generated and corruptible.",
+     "page_number": 85,
+     "book_slug": "theologia-aristotelis-theology-of-aristotle-pseudo-aristotle",
+     "book_title": "Theology of Aristotle",
+     "book_author": "Pseudo-Aristotle",
+     "book_year": 1519,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "an attempt to explain the real nature of how the \"One\" manifests as \"Many\"—how the many forms are held within the \"One Self.\"",
+     "page_number": 103,
+     "book_slug": "a-series-of-lessons-in-gnani-yoga-atkinson",
+     "book_title": "A Series of Lessons in Gnani Yoga",
+     "book_author": "Yogi Ramacharaka (William Walker Atkinson)",
+     "book_year": 1907,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c12",
+   "slug": "the-soul-is-reborn-in-another-body-after-death",
+   "title": "the soul is reborn in another body after death",
+   "passages": [
+    {
+     "tradition": "greek-roman",
+     "quote": "For he said he saw the soul that had once been that of Orpheus",
+     "page_number": 487,
+     "book_slug": "platos-republic-greek-text-plato",
+     "book_title": "The Republic",
+     "book_author": "Plato",
+     "book_year": 1894,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "they say Pythagoras came to rebirth and lived again after so many years",
+     "page_number": 71,
+     "book_slug": "theologumena-arithmeticae-de-falco-teubner-iamblichus",
+     "book_title": "Theologumena Arithmeticae (de Falco, Teubner)",
+     "book_author": "Iamblichus",
+     "book_year": null,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "there are souls that come several times in reincarnation to rectify what they have corrupted",
+     "page_number": 64,
+     "book_slug": "essence-of-pomegranates-gallico",
+     "book_title": "Essence of Pomegranates",
+     "book_author": "Gallico, Samuel",
+     "book_year": 1575,
+     "book_language": "Hebrew",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "travels in a few moments to the place of its next birth. There, it assumes a new body",
+     "page_number": 214,
+     "book_slug": "a-history-of-indian-philosophy-volume-1-dasgupta",
+     "book_title": "A History of Indian Philosophy, Volume 1",
+     "book_author": "Surendranath Dasgupta",
+     "book_year": 1922,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "In this world, they come again and again to undergo the consequences of their previous deeds.",
+     "page_number": 21,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "buddhist",
+     "quote": "The law of reincarnation is a fundamental tenet of the Buddhist faith.",
+     "page_number": 42,
+     "book_slug": "the-noble-eightfold-path-the-doctrine-of-dharma-hall",
+     "book_title": "The Noble Eightfold Path: The Doctrine of Dharma",
+     "book_author": "Manly P. Hall",
+     "book_year": 1937,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "buddhist",
+     "quote": "the spirit is born into the physical world and dies out of the physical world about eight hundred times",
+     "page_number": 44,
+     "book_slug": "the-noble-eightfold-path-the-doctrine-of-dharma-hall",
+     "book_title": "The Noble Eightfold Path: The Doctrine of Dharma",
+     "book_author": "Manly P. Hall",
+     "book_year": 1937,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "the powers of destiny were driven again and again to lead you back into a new incarnation upon earth",
+     "page_number": 129,
+     "book_slug": "initiation-and-its-results-steiner",
+     "book_title": "Initiation and Its Results",
+     "book_author": "Rudolf Steiner",
+     "book_year": 1909,
+     "book_language": "German-English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c13",
+   "slug": "acting-without-striving",
+   "title": "acting without striving; letting go of one's own will",
+   "passages": [
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "it consequently \"does nothing.\" And by doing nothing, all things are accomplished.",
+     "page_number": 382,
+     "book_slug": "chuang-tzu-mystic-moralist-and-social-reformer-giles",
+     "book_title": "Chuang Tzu: Mystic, Moralist, and Social Reformer",
+     "book_author": "Herbert Allen Giles",
+     "book_year": 1889,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "performs all the functions of life with his active faculties while remaining unconcerned about the result",
+     "page_number": 12,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "He who performs his prescribed duty without relying on the fruit of action, he is the sannyasi renunciate and the yogi",
+     "page_number": 67,
+     "book_slug": "bhagavad-gita-id-est-thespesion-melos",
+     "book_title": "Bhagavad-Gita, id est Thespesion Melos",
+     "book_author": "August Wilhelm von Schlegel, ed.",
+     "book_year": 1823,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "that is wrong, for then the person is holding fast to their self-will",
+     "page_number": 312,
+     "book_slug": "meister-eckhart-der-mystiker-lasson",
+     "book_title": "Meister Eckhart the Mystic",
+     "book_author": "Adolf Lasson",
+     "book_year": 1868,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "it is all mere running, racing, and willing, and yet nothing can be grasped except only in the resigned will in God’s mercy",
+     "page_number": 189,
+     "book_slug": "mysterium-magnum-oder-erklarung-uber-das-erste-buch-mosis-bohme",
+     "book_title": "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttlichen Worts durch die drey Principia Göttliches Wesens, auch vom Ursprung der Welt und der Schöpffung : Darinnen Das Reich der Natur, und Das Reich der Gnaden erkläret wird. Zu mehrerm Verstande des Alten und Neuen Testaments, was Adam und Christus sey ...",
+     "book_author": "Böhme, Jakob",
+     "book_year": 1682,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "So if you submit to what I will, I will suffice you for what you want",
+     "page_number": 273,
+     "book_slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+     "book_title": "Iḥyāʾ ʿUlūm al-Dīn (Revival of the Religious Sciences)",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1888,
+     "book_language": "Arabic",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c14",
+   "slug": "the-heart-as-the-organ-of-spiritual-knowledge",
+   "title": "the heart as the organ of spiritual knowledge",
+   "passages": [
+    {
+     "tradition": "islamic-sufi",
+     "quote": "My heart is thick with dust, though it should be clear— A mirror to reflect the Great King’s face",
+     "page_number": 99,
+     "book_slug": "poems-from-the-divan-of-hafiz-bell",
+     "book_title": "Poems from the Divan of Hafiz",
+     "book_author": "Hafiz / Gertrude Bell",
+     "book_year": 1897,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "when the heart is not hardened, true knowledge emerges like a light, and that the image of GOTT God consists in the purest light of the heart",
+     "page_number": 183,
+     "book_slug": "die-philosophie-der-alten-wiederkommend-in-der-guldenen-oetinger",
+     "book_title": "Die Philosophie der Alten wiederkommend in der güldenen Zeit : worinnen von den unsichtbaren Anfängen des spiritus rectoris oder bildenden Geists in den Pflanzen ... gehandelt wird",
+     "book_author": "Oetinger, Friedrich Christoph",
+     "book_year": 1762,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "on the part of one who practises concentration upon the Lotus of the Heart",
+     "page_number": 191,
+     "book_slug": "the-samkhya-philosophy-samkhya-pravachana-sutram-with-kapila-trans",
+     "book_title": "The Samkhya Philosophy",
+     "book_author": "Kapila (trans. Nandalal Sinha, comm. Aniruddha & Vijnanabhikshu)",
+     "book_year": 1915,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "the essential point of cultivating the Way lies in purifying the heart and lessening desires. If the heart is pure, the spirit will be bright.",
+     "page_number": 76,
+     "book_slug": "zhen-gao-vol-5-456-536",
+     "book_title": "Declarations of the Perfected",
+     "book_author": "陶弘景 Tao Hongjing (456–536)",
+     "book_year": 1782,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "He who has exhausted all his mental constitution knows his nature. Knowing his nature, he knows Heaven.",
+     "page_number": 938,
+     "book_slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+     "book_title": "Four Books of Confucius - Analects, Great Learning, Doctrine of Mean, Mencius",
+     "book_author": "James Legge",
+     "book_year": 1882,
+     "book_language": "Chinese-English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "In the heart of the intelligent man WISDOM rests: but in the midst of fools she is made known.",
+     "page_number": 169,
+     "book_slug": "amphitheatre-of-eternal-wisdom-1609-khunrath",
+     "book_title": "Amphitheatre of Eternal Wisdom (1609)",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1609,
+     "book_language": "Latin",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c15",
+   "slug": "the-creative-power-of-the-divine-word-name-letters-or-sound",
+   "title": "the creative power of the divine word, name, letters or sound",
+   "passages": [
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "all depend on the Seal of the Great Name, may He be blessed, through the permutation",
+     "page_number": 68,
+     "book_slug": "gates-of-righteousness-sha-arei-zedek-gikatilla",
+     "book_title": "Gates of Righteousness",
+     "book_author": "Gikatilla, Joseph ben Abraham",
+     "book_year": 1561,
+     "book_language": "Hebrew",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "Therefore, the world was created with the Name God. But when all things were perfected and all creations were finished",
+     "page_number": 66,
+     "book_slug": "gates-of-righteousness-sha-arei-zedek-gikatilla",
+     "book_title": "Gates of Righteousness",
+     "book_author": "Gikatilla, Joseph ben Abraham",
+     "book_year": 1561,
+     "book_language": "Hebrew",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "Thus the same revealed Word is still in all things, and has the Fiat as the desire in itself",
+     "page_number": 187,
+     "book_slug": "mysterium-magnum-oder-erklarung-uber-das-erste-buch-mosis-bohme",
+     "book_title": "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttlichen Worts durch die drey Principia Göttliches Wesens, auch vom Ursprung der Welt und der Schöpffung : Darinnen Das Reich der Natur, und Das Reich der Gnaden erkläret wird. Zu mehrerm Verstande des Alten und Neuen Testaments, was Adam und Christus sey ...",
+     "book_author": "Böhme, Jakob",
+     "book_year": 1682,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "do you know out of what the earth was born? You say, through the Word, as in the verbo fiat",
+     "page_number": 179,
+     "book_slug": "mysterium-magnum-oder-erklarung-uber-das-erste-buch-mosis-bohme",
+     "book_title": "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttlichen Worts durch die drey Principia Göttliches Wesens, auch vom Ursprung der Welt und der Schöpffung : Darinnen Das Reich der Natur, und Das Reich der Gnaden erkläret wird. Zu mehrerm Verstande des Alten und Neuen Testaments, was Adam und Christus sey ...",
+     "book_author": "Böhme, Jakob",
+     "book_year": 1682,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "For the Word was the medium that God used in the creation of the world.",
+     "page_number": 108,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "invoked sacred names act more upon our mind, when it is rightly exposed to them, than any body approaching another body acts upon it",
+     "page_number": 98,
+     "book_slug": "henrici-cornelii-agrippae-de-nobilitate-praecellentia-agrippa-von-2",
+     "book_title": "Henrici Cornelii Agrippae de nobilitate & praecellentia foeminei, sexus, ad Margaretam Augustam Austriaco. & Burgundionus principes",
+     "book_author": "Agrippa von Nettesheim, Heinrich Cornelius",
+     "book_year": 1529,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "All mantras are of the nature of letters, and all letters are of the nature of Śiva.",
+     "page_number": 39,
+     "book_slug": "pratyabhij-hdayam",
+     "book_title": "Pratyabhijñā-Hṛdayam",
+     "book_author": "Kṣemarāja",
+     "book_year": 1911,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "consisting of all objects to be denoted and all denoting words, which He has accepted by reflecting upon the entire mass of phonetic letters from A to Kṣa",
+     "page_number": 61,
+     "book_slug": "pratyabhij-hdayam",
+     "book_title": "Pratyabhijñā-Hṛdayam",
+     "book_author": "Kṣemarāja",
+     "book_year": 1911,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "His command, when He intends a thing, is only that He says to it: Be, and it is.",
+     "page_number": 30,
+     "book_slug": "daqaiq-al-haqaiq-or-7008",
+     "book_title": "Daqāʾiq al-Ḥaqāʾiq Or. 7008",
+     "book_author": "Rāzī, Fakhr al-Dīn al-",
+     "book_year": 1850,
+     "book_language": "Arabic",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c17",
+   "slug": "the-stages-of-the-spiritual-path",
+   "title": "the stages of the spiritual path",
+   "passages": [
+    {
+     "tradition": "christian",
+     "quote": "The first are the beginners, the second the progressing, and the third the perfect.",
+     "page_number": 122,
+     "book_slug": "books-and-writings-together-with-his-holy-miraculous-life-seuse",
+     "book_title": "Books and Writings, Together with His Holy Miraculous Life",
+     "book_author": "Seuse, Heinrich",
+     "book_year": 1661,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "the highest perfection / though they yet still stand on the first step / where they began",
+     "page_number": 123,
+     "book_slug": "books-and-writings-together-with-his-holy-miraculous-life-seuse",
+     "book_title": "Books and Writings, Together with His Holy Miraculous Life",
+     "book_author": "Seuse, Heinrich",
+     "book_year": 1661,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "There are four classes of yogis : (1) The Prathama-kalpika A beginner or neophyte in the first stage , (2) the Madhu-pratika",
+     "page_number": 148,
+     "book_slug": "yoga-darsana-sutras-with-the-commentary-of-vyasa-vyasa",
+     "book_title": "Yoga-Darsana: Sutras with the Commentary of Vyasa",
+     "book_author": "Patanjali / Vyasa",
+     "book_year": 1910,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "The stages of practice are the Beginning, the Jar, the Intimacy, and the Final Consummation; these occur in all forms of Yoga.",
+     "page_number": 34,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "The stages through which a developing soul passes are technically called stages of virtue",
+     "page_number": 214,
+     "book_slug": "a-history-of-indian-philosophy-volume-1-dasgupta",
+     "book_title": "A History of Indian Philosophy, Volume 1",
+     "book_author": "Surendranath Dasgupta",
+     "book_year": 1922,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "For being overwhelmed in the stages of the stations and rising from one of them to another is the path of the lovers.",
+     "page_number": 269,
+     "book_slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+     "book_title": "Iḥyāʾ ʿUlūm al-Dīn (Revival of the Religious Sciences)",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1888,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "the Degrees of KNOWLEDGE and the LADDER of UNION with GOD, through which the WISDOM of JEHOVAH",
+     "page_number": 163,
+     "book_slug": "amphitheatre-of-eternal-wisdom-1609-khunrath",
+     "book_title": "Amphitheatre of Eternal Wisdom (1609)",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1609,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "unless one ascends by degrees and ladders, which indeed, as you are accustomed to speak, [are] like the Homeric chain",
+     "page_number": 124,
+     "book_slug": "de-arte-cabalistica-id-est-de-divinae-revelationis-ad-reuchlin",
+     "book_title": "On the Art of the Kabbalah",
+     "book_author": "Reuchlin, Johannes",
+     "book_year": 1517,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "At the end of seven years, there was another change. I let my mind reflect on what it would, but it no longer occupied itself with right and wrong.",
+     "page_number": 46,
+     "book_slug": "taoist-teachings-from-the-book-of-lieh-tzu-trans",
+     "book_title": "Taoist Teachings from the Book of Lieh Tzŭ",
+     "book_author": "Liezi; Lionel Giles (trans.)",
+     "book_year": 1912,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c22",
+   "slug": "know-yourself-and-you-will-know-the-divine",
+   "title": "know yourself and you will know the divine",
+   "passages": [
+    {
+     "tradition": "greek-roman",
+     "quote": "THE MIND OF EACH PERSON IS THE TRUE SELF, NOT THAT FIGURE WHICH CAN BE POINTED OUT WITH A FINGER. KNOW YOURSELF, THEREFORE, TO BE A GOD.",
+     "page_number": 206,
+     "book_slug": "macrobii-in-somnium-scipionis-saturnalia-1528-macrobius",
+     "book_title": "Commentary on the Dream of Scipio; Saturnalia",
+     "book_author": "Macrobius",
+     "book_year": 1528,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "a greater part is to know oneself; the greatest and highest part is to know GOD",
+     "page_number": 178,
+     "book_slug": "amphitheatre-of-eternal-wisdom-1609-khunrath",
+     "book_title": "Amphitheatre of Eternal Wisdom (1609)",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1609,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "the knowledge of God and the knowledge of ourselves is absolutely necessary and more profitable than anything else",
+     "page_number": 96,
+     "book_slug": "the-book-of-divine-consolation-of-the-blessed-angela-of-foligno",
+     "book_title": "The Book of Divine Consolation of the Blessed Angela of Foligno",
+     "book_author": "Angela of Foligno",
+     "book_year": 1909,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "when he so sweetly knows himself and his own defect, and the goodness of God, he hates his defect",
+     "page_number": 273,
+     "book_slug": "the-works-of-saint-catherine-of-siena-siena",
+     "book_title": "The Works of Saint Catherine of Siena",
+     "book_author": "Catherine of Siena",
+     "book_year": 1707,
+     "book_language": "Italian",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "BY THE STUDY OF OURSELVES WE COME TO THE KNOWLEDGE OF HEAVEN, AND HEAVEN IS SERVED BY OUR OBEYING OUR NATURE.",
+     "page_number": 938,
+     "book_slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+     "book_title": "Four Books of Confucius - Analects, Great Learning, Doctrine of Mean, Mencius",
+     "book_author": "James Legge",
+     "book_year": 1882,
+     "book_language": "Chinese-English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "then he may be said to know his nature. When he knows his nature, he knows the way of Heaven",
+     "page_number": 939,
+     "book_slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+     "book_title": "Four Books of Confucius - Analects, Great Learning, Doctrine of Mean, Mencius",
+     "book_author": "James Legge",
+     "book_year": 1882,
+     "book_language": "Chinese-English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "that Supreme Lord—I am that! Because of this conviction, one becomes Śiva.",
+     "page_number": 40,
+     "book_slug": "pratyabhij-hdayam",
+     "book_title": "Pratyabhijñā-Hṛdayam",
+     "book_author": "Kṣemarāja",
+     "book_year": 1911,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "pointing out object after object while saying to the boy: \"You are That; That you are\"",
+     "page_number": 90,
+     "book_slug": "a-series-of-lessons-in-gnani-yoga-atkinson",
+     "book_title": "A Series of Lessons in Gnani Yoga",
+     "book_author": "Yogi Ramacharaka (William Walker Atkinson)",
+     "book_year": 1907,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Even a moment's reflection on the truth that \"I am Brahman \" wipes out all sin, just as the rising sun scatters all darkness.",
+     "page_number": 68,
+     "book_slug": "kularnava-tantra-english-translation-arthur-avalon-woodroffe",
+     "book_title": "Kularnava Tantra - English Translation (Arthur Avalon)",
+     "book_author": "Arthur Avalon (John Woodroffe)",
+     "book_year": 1917,
+     "book_language": "Sanskrit-English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c23",
+   "slug": "fasting-and-bodily-austerity-as-purification",
+   "title": "fasting and bodily austerity as purification",
+   "passages": [
+    {
+     "tradition": "christian",
+     "quote": "Through good and pure fasting, let us be cleansed. And let us abandon every spiritual and fleshly work and approach the Lord.",
+     "page_number": 559,
+     "book_slug": "lenten-hymnbook-11th-12th-century-georgian-ms-anonymous",
+     "book_title": "მარხვის საგალობელი (Lenten Hymnbook — 11th/12th century Georgian MS)",
+     "book_author": "Anonymous",
+     "book_year": 1100,
+     "book_language": "Georgian",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "he should liquefy the flesh and not allow matter to become redundant within it by means of frequent and prolonged fasts.",
+     "page_number": 201,
+     "book_slug": "lausiaca-quae-dicitur-historia-with-theodoret-theophiles-hervetus",
+     "book_title": "The Lausiac History and the Religious History",
+     "book_author": "Palladius / Theodoret (tr. Gentianus Hervetus)",
+     "book_year": 1555,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "do not give it what it wants / let it fast and hunger / until the tickle ceases. Regard the will of the flesh as your enemy",
+     "page_number": 113,
+     "book_slug": "der-weeg-zu-christo-verfasset-in-neun-buchlein-das-1-von-bohme-2",
+     "book_title": "Der  Weeg zu Christo: verfasset in neun Büchlein. Das 1. Von wahrer Busse. 2. Vom heiligen Gebeth. 3. Ein Schlüssel göttlicher Geheimnüsse. 4. Von wahrer Gelassenheit. 5. Von der Wiedergebuhrt. 6. Vom übersinnlichen Leben. 7. Von göttlicher Beschauligkeit. 8. Von der erleuchteten und unerleuchteten Seele. 9. Von den vier Complexionen",
+     "book_author": "Böhme, Jakob",
+     "book_year": 1682,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Of all sorts of tapasyâs , mortifying the body by observing vows and fastings is the best.",
+     "page_number": 345,
+     "book_slug": "the-srimad-devi-bhagavatam-vijnanananda-translation-vijnanananda",
+     "book_title": "The Srimad Devi Bhagavatam",
+     "book_author": "Swami Vijnanananda",
+     "book_year": 1921,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "If you want to reach the Heavens and if you want to become great, practise Tapasyâ austerity . There is no other way.",
+     "page_number": 344,
+     "book_slug": "the-srimad-devi-bhagavatam-vijnanananda-translation-vijnanananda",
+     "book_title": "The Srimad Devi Bhagavatam",
+     "book_author": "Swami Vijnanananda",
+     "book_year": 1921,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "All who receive the scriptures must first perform fasts and precepts to purify the body and mind.",
+     "page_number": 101,
+     "book_slug": "zhen-gao-vol-5-456-536",
+     "book_title": "Declarations of the Perfected",
+     "book_author": "陶弘景 Tao Hongjing (456–536)",
+     "book_year": 1782,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "must purify their body among remote peaks and wash their mind within distant forests.",
+     "page_number": 133,
+     "book_slug": "daozang-catalogue-with-detailed-notes-vol-1",
+     "book_title": "Daozang Catalogue with Detailed Notes, Vol. 1",
+     "book_author": "Unknown",
+     "book_year": 1445,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "decreed upon you is fasting as it was decreed upon those before you that you may become righteous.",
+     "page_number": 14,
+     "book_slug": "juz-part-of-quran-from-java-or-7092",
+     "book_title": "[Juzʾ (part) of Qurʾān; from Java] Or. 7092",
+     "book_author": "Unknown",
+     "book_year": 1750,
+     "book_language": "Arabic",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c24",
+   "slug": "the-elements-and-how-they-change-into-one-another",
+   "title": "the elements and how they change into one another",
+   "passages": [
+    {
+     "tradition": "islamic-sufi",
+     "quote": "Likewise, fire becomes air when it extinguishes and comes to rest; air, however, becomes water when it condenses, and water becomes earth when it becomes solid.",
+     "page_number": 83,
+     "book_slug": "die-philosophie-der-araber-im-x-jahrhundert-vol-5-dieterici",
+     "book_title": "The Philosophy of the Arabs in the 10th Century, Vol. 5",
+     "book_author": "Friedrich Dieterici",
+     "book_year": 1876,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "which happens when earth is turned into water, and when air arises from water, and when ether arises from air, and when the same returns backward in turn.",
+     "page_number": 57,
+     "book_slug": "de-natura-deorum-add-de-divinatione-de-legibus-academica-de-cicero-1",
+     "book_title": "On the Nature of the Gods and Other Philosophical Works",
+     "book_author": "Cicero, Marcus Tullius",
+     "book_year": 1496,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "since they change into one another, air being made from corrupted water, and water in turn from air, and all things from all things",
+     "page_number": 165,
+     "book_slug": "libri-duo-adversus-procli-rationes-de-mundi-aeternitate-philoponus",
+     "book_title": "Two Books Against Proclus on the Eternity of the World",
+     "book_author": "John Philoponus",
+     "book_year": 1551,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "If both are rarefied and changed into air, the smaller one must necessarily change into a smaller mass of air, and the larger into a larger mass.",
+     "page_number": 143,
+     "book_slug": "libri-duo-adversus-procli-rationes-de-mundi-aeternitate-philoponus",
+     "book_title": "Two Books Against Proclus on the Eternity of the World",
+     "book_author": "John Philoponus",
+     "book_year": 1551,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "When cold overcomes heat, then air is converted into water, and thus two contraries meet together until each agrees rightly with the other.",
+     "page_number": 142,
+     "book_slug": "theatrum-chemicum-volumen-secundum-ed",
+     "book_title": "Theatrum Chemicum Volumen Secundum",
+     "book_author": "Lazarus Zetzner (ed.)",
+     "book_year": 1602,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "And note, O you King, that the water is converted into air: which is to be understood that the said water is congealed and converted",
+     "page_number": 511,
+     "book_slug": "artis-auriferae-quam-chemiam-vocant-vol-ii-various",
+     "book_title": "The Art of Gold-making, Vol. II",
+     "book_author": "Various",
+     "book_year": 1572,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Wood generates Fire, and Metal generates Water; each has a small stroke which connects them together in their revolutions",
+     "page_number": 148,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "From ether, undergoing transformation, arose air ( nila ), which has the attribute of touch.",
+     "page_number": 27,
+     "book_slug": "srimad-bhagavata-purana-dvitiya-skandha-with-bhavartha-comm",
+     "book_title": "Śrīmad Bhāgavata Purāṇa (Dvitīya Skandha) with Bhāvārtha Dīpikā",
+     "book_author": "Vyasa; Śrīdhara Svāmī (comm.)",
+     "book_year": 1800,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c25",
+   "slug": "dreams-as-a-source-of-knowledge-or-revelation",
+   "title": "dreams as a source of knowledge or revelation",
+   "passages": [
+    {
+     "tradition": "islamic-sufi",
+     "quote": "what the Active Intellect gives to the imaginative faculty regarding particulars [is manifested] through dreams and true visions",
+     "page_number": 59,
+     "book_slug": "kitab-ara-ahl-al-madina-al-fadila-on-the-perfect-state-al-farabi",
+     "book_title": "On the Perfect State (Kitab Ara' Ahl al-Madina al-Fadila)",
+     "book_author": "Al-Farabi",
+     "book_year": 1906,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "saying that the dreams of Prophets were Divine Revelations, and then he recited the Verse: 'O my son! I have seen in a dream that I am slaughtering you...'",
+     "page_number": 137,
+     "book_slug": "sahih-al-bukhari-complete-al-bukhari",
+     "book_title": "Sahih al-Bukhari (Complete)",
+     "book_author": "Imam al-Bukhari",
+     "book_year": 1997,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "O eminent ones! Explain to me my vision, 44. if you are able to interpret visions.",
+     "page_number": 309,
+     "book_slug": "the-quran-al-coranus",
+     "book_title": "The Quran",
+     "book_author": "Unknown",
+     "book_year": 1694,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "is diversified first according to the difference of a dream, which occurs while sleeping, and a vision, which occurs while waking, which pertains to a higher degree of prophecy",
+     "page_number": 493,
+     "book_slug": "summa-theologica-aquinas",
+     "book_title": "Summa Theologica",
+     "book_author": "Thomas Aquinas",
+     "book_year": 1926,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "But in sleeping, some naturally foresee certain future events, as is evident through the Philosopher",
+     "page_number": 472,
+     "book_slug": "summa-theologica-aquinas",
+     "book_title": "Summa Theologica",
+     "book_author": "Thomas Aquinas",
+     "book_year": 1926,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "to those who love purity, pure things appear even in sleep; and to those who deal in foolish things, similar dreams occur.",
+     "page_number": 119,
+     "book_slug": "books-and-writings-together-with-his-holy-miraculous-life-seuse",
+     "book_title": "Books and Writings, Together with His Holy Miraculous Life",
+     "book_author": "Seuse, Heinrich",
+     "book_year": 1661,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "Sometimes it would be a dream through the \"swords of the partitions\" mystical barriers , where parables and riddles would multiply.",
+     "page_number": 62,
+     "book_slug": "gates-of-righteousness-sha-arei-zedek-gikatilla",
+     "book_title": "Gates of Righteousness",
+     "book_author": "Gikatilla, Joseph ben Abraham",
+     "book_year": 1561,
+     "book_language": "Hebrew",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "A dream is the meeting of minds; an event in our waking consciousness is the coming together of sensible substances.",
+     "page_number": 69,
+     "book_slug": "taoist-teachings-from-the-book-of-lieh-tzu-trans",
+     "book_title": "Taoist Teachings from the Book of Lieh Tzŭ",
+     "book_author": "Liezi; Lionel Giles (trans.)",
+     "book_year": 1912,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Now I have found the deer, so it appears that his dream was a true dream.",
+     "page_number": 72,
+     "book_slug": "taoist-teachings-from-the-book-of-lieh-tzu-trans",
+     "book_title": "Taoist Teachings from the Book of Lieh Tzŭ",
+     "book_author": "Liezi; Lionel Giles (trans.)",
+     "book_year": 1912,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "Whence it is that many philosophers were of opinion, that air is the cause of dreams, and of many other impressions of the mind",
+     "page_number": 107,
+     "book_slug": "the-magus-or-celestial-intelligencer-barrett",
+     "book_title": "The Magus, or Celestial Intelligencer",
+     "book_author": "Francis Barrett",
+     "book_year": 1801,
+     "book_language": "English",
+     "source": "published"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "In it, those sleeping foresee future events: for the goddess declares what is necessary through the visions of dreams.",
+     "page_number": 635,
+     "book_slug": "accurata-graeciae-descriptio-greek-latin-pausanias",
+     "book_title": "Description of Greece",
+     "book_author": "Pausanias",
+     "book_year": 1583,
+     "book_language": "Greek-Latin",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c26",
+   "slug": "what-happens-to-the-soul-after-death",
+   "title": "what happens to the soul after death; judgment of the dead",
+   "passages": [
+    {
+     "tradition": "greek-roman",
+     "quote": "He saw then, in this way, the souls departing through each opening of both heaven and earth after they had been judged",
+     "page_number": 479,
+     "book_slug": "platos-republic-greek-text-plato",
+     "book_title": "The Republic",
+     "book_author": "Plato",
+     "book_year": 1894,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "for all the wrongs they had committed and for all the people they had wronged, they paid the penalty for each in turn, tenfold for each",
+     "page_number": 480,
+     "book_slug": "platos-republic-greek-text-plato",
+     "book_title": "The Republic",
+     "book_author": "Plato",
+     "book_year": 1894,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "are nothing in number or size compared to those things which await each man after death.",
+     "page_number": 478,
+     "book_slug": "platos-republic-greek-text-plato",
+     "book_title": "The Republic",
+     "book_author": "Plato",
+     "book_year": 1894,
+     "book_language": "Greek",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "We will bring forth for him on the day of resurrection a book: he will find it wide open, and it will be said to him: 14. \"Read your book",
+     "page_number": 196,
+     "book_slug": "alcorani-textus-universus-arabic-latin-marracci",
+     "book_title": "Complete Text of the Quran (Alcorani Textus Universus)",
+     "book_author": "Ludovico Marracci",
+     "book_year": 1698,
+     "book_language": "Arabic-Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "even a cat that died for us—I saw it in the scale of good deeds. And there was a silk thread on my cap, and I saw it in the scale of bad deeds.",
+     "page_number": 297,
+     "book_slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+     "book_title": "Iḥyāʾ ʿUlūm al-Dīn (Revival of the Religious Sciences)",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1888,
+     "book_language": "Arabic",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "They are effective, I say, for the mitigation of punishments or for a swifter liberation, as divine providence sees fit to dispense.",
+     "page_number": 207,
+     "book_slug": "the-centiloquium-bonaventura",
+     "book_title": "The Hundred Sayings",
+     "book_author": "Bonaventura",
+     "book_year": 1503,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "First, we must consider how these three ranks of people who have departed this world without achieving full redemption shall recover their regeneration",
+     "page_number": 14,
+     "book_slug": "the-ascent-to-the-mount-of-vision-lead",
+     "book_title": "The Ascent to the Mount of Vision",
+     "book_author": "Jane Lead",
+     "book_year": 1699,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Thus, they proceed comfortably to the world of Yama, the righteous ones",
+     "page_number": 587,
+     "book_slug": "brahma-purana-press",
+     "book_title": "Brahma Purana",
+     "book_author": "Vyasa (ed. Venkateshwar Steam Press)",
+     "book_year": 1910,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Such is the law in its application to those who return to the world in another shape after death.",
+     "page_number": 129,
+     "book_slug": "taoist-texts-ethical-political-and-speculative-balfour",
+     "book_title": "Taoist Texts: Ethical, Political, and Speculative",
+     "book_author": "Frederic Henry Balfour",
+     "book_year": 1884,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c28",
+   "slug": "the-divine-dwells-within-every-being",
+   "title": "the divine dwells within every being",
+   "passages": [
+    {
+     "tradition": "hindu-indic",
+     "quote": "I am the soul that dwells within the bodies of all beings. I am the beginning, the middle, and the end of all things.",
+     "page_number": 28,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Those who behold all beings in the Self, and the Self in all things, never turn away from it.",
+     "page_number": 90,
+     "book_slug": "a-series-of-lessons-in-gnani-yoga-atkinson",
+     "book_title": "A Series of Lessons in Gnani Yoga",
+     "book_author": "Yogi Ramacharaka (William Walker Atkinson)",
+     "book_year": 1907,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "who has accepted the three modes of material nature, who is the indwelling soul of all beings, and whose path is difficult to perceive.",
+     "page_number": 21,
+     "book_slug": "srimad-bhagavata-purana-dvitiya-skandha-with-bhavartha-comm",
+     "book_title": "Śrīmad Bhāgavata Purāṇa (Dvitīya Skandha) with Bhāvārtha Dīpikā",
+     "book_author": "Vyasa; Śrīdhara Svāmī (comm.)",
+     "book_year": 1800,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "that we are temples of the Holy Spirit, who dwells in us; and that the kingdom of God is within us; and that Christ must gain a form in us",
+     "page_number": 124,
+     "book_slug": "der-weeg-zu-christo-verfasset-in-neun-buchlein-das-1-von-bohme-2",
+     "book_title": "Der  Weeg zu Christo: verfasset in neun Büchlein. Das 1. Von wahrer Busse. 2. Vom heiligen Gebeth. 3. Ein Schlüssel göttlicher Geheimnüsse. 4. Von wahrer Gelassenheit. 5. Von der Wiedergebuhrt. 6. Vom übersinnlichen Leben. 7. Von göttlicher Beschauligkeit. 8. Von der erleuchteten und unerleuchteten Seele. 9. Von den vier Complexionen",
+     "book_author": "Böhme, Jakob",
+     "book_year": 1682,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "Although God is in everyone, and everyone lives, moves, and has his being in him, yet unless the Spirit of God moves and teaches us",
+     "page_number": 480,
+     "book_slug": "works-of-jacob-behmen-william-law-edition-4-vols-law",
+     "book_title": "Works of Jacob Behmen (William Law Edition, 4 vols)",
+     "book_author": "Boehme, Jacob",
+     "book_year": 1781,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "in cattle, worms, and animals upon Earth; in humans; for LORD, your IMPERISHABLE Spirit IS IN ALL!",
+     "page_number": 97,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "in him was life; and elsewhere: The incorruptible Spirit of GOD is in every thing. Wisdom 12.",
+     "page_number": 82,
+     "book_slug": "sacred-and-truly-christian-philosophy-fludd-2",
+     "book_title": "Sacred and Truly Christian Philosophy, or Cosmic Meteorology",
+     "book_author": "Fludd, Robert",
+     "book_year": 1626,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "This principle is omnipresent, in the midst of seeing, hearing, speaking, and moving.",
+     "page_number": 77,
+     "book_slug": "vol-5-18",
+     "book_title": "麗澤論說集錄·卷八~卷十 (vol 5)",
+     "book_author": "呂祖謙",
+     "book_year": null,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "Why do you complain? You are attempting to scale the heavens, for you are a god",
+     "page_number": 130,
+     "book_slug": "astronomicon-manilius",
+     "book_title": "Astronomicon",
+     "book_author": "Marcus Manilius",
+     "book_year": 1473,
+     "book_language": "Latin",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c29",
+   "slug": "compassion-for-all-living-beings",
+   "title": "compassion for all living beings; do to others as you would have done to you",
+   "passages": [
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Finally, see that you do not do to others what you do not wish to be done to yourself.",
+     "page_number": 338,
+     "book_slug": "confucius-sinarum-philosophus-latin-jesuit-translation-1687-missionaries",
+     "book_title": "Confucius, Philosopher of the Chinese (Confucius Sinarum Philosophus)",
+     "book_author": "Confucius; Jesuit Missionaries",
+     "book_year": 1687,
+     "book_language": "Chinese-Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "If one acts with a vigorous effort at the law of reciprocity original: \"恕\" , when he seeks for the realization of perfect virtue, nothing can be closer",
+     "page_number": 942,
+     "book_slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+     "book_title": "Four Books of Confucius - Analects, Great Learning, Doctrine of Mean, Mencius",
+     "book_author": "James Legge",
+     "book_year": 1882,
+     "book_language": "Chinese-English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "I cannot love universally. I love the people of Zou original: Tsou better than the people of Chu",
+     "page_number": 233,
+     "book_slug": "the-ethical-and-political-works-of-motse-mei",
+     "book_title": "The Ethical and Political Works of Motse",
+     "book_author": "Y.P. Mei",
+     "book_year": 1929,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Refraining from injuring living beings having two or more senses, with a deliberate act of mind, speech or body",
+     "page_number": 80,
+     "book_slug": "ratnakaranda-sravakachara-the-householders-dharma-jain",
+     "book_title": "The Householder's Dharma (Ratnakaranda-Sravakachara)",
+     "book_author": "Samantabhadra (trans. Champat Rai Jain)",
+     "book_year": 1917,
+     "book_language": "English",
+     "source": "original"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Daya mercy and ahimsa non-injuring being the fundamental tenets of the Holy Siddhanta",
+     "page_number": 58,
+     "book_slug": "ratnakaranda-sravakachara-the-householders-dharma-jain",
+     "book_title": "The Householder's Dharma (Ratnakaranda-Sravakachara)",
+     "book_author": "Samantabhadra (trans. Champat Rai Jain)",
+     "book_year": 1917,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "consists of ahiṁsā (non-violence; not taking any life, even by mistake or through lack of focus)",
+     "page_number": 221,
+     "book_slug": "a-history-of-indian-philosophy-volume-1-dasgupta",
+     "book_title": "A History of Indian Philosophy, Volume 1",
+     "book_author": "Surendranath Dasgupta",
+     "book_year": 1922,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "buddhist",
+     "quote": "The Blessed One is the mother of all sentient beings, and gives them all the milk of mercy.",
+     "page_number": 122,
+     "book_slug": "the-religion-of-the-samurai-a-study-of-zen-philosophy-nukariya",
+     "book_title": "The Religion of the Samurai: A Study of Zen Philosophy",
+     "book_author": "Kaiten Nukariya",
+     "book_year": 1913,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "considering the image and likeness of divine majesty in all people, you should love everyone with a deep feeling of intimate charity.",
+     "page_number": 220,
+     "book_slug": "the-centiloquium-bonaventura",
+     "book_title": "The Hundred Sayings",
+     "book_author": "Bonaventura",
+     "book_year": 1503,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "But he who is truly stripped of sensory love loves his Creator above all things, and his neighbor as himself.",
+     "page_number": 273,
+     "book_slug": "the-works-of-saint-catherine-of-siena-siena",
+     "book_title": "The Works of Saint Catherine of Siena",
+     "book_author": "Catherine of Siena",
+     "book_year": 1707,
+     "book_language": "Italian",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "Whoever has the love of God overcome his heart will love all of God's creation, for they are His creatures.",
+     "page_number": 262,
+     "book_slug": "ihya-ulum-al-din-revival-of-the-religious-sciences-al-ghazali",
+     "book_title": "Iḥyāʾ ʿUlūm al-Dīn (Revival of the Religious Sciences)",
+     "book_author": "Abū Ḥāmid al-Ghazālī",
+     "book_year": 1888,
+     "book_language": "Arabic",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c31",
+   "slug": "correspondence-between-the-heavens-and-things-on-earth",
+   "title": "correspondence between the heavens and things on earth",
+   "passages": [
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "That which is below is equal to that which is above; and that which is above is equal to that which is below.",
+     "page_number": 111,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "For in lower things, it behaves entirely as it does in higher things.",
+     "page_number": 128,
+     "book_slug": "theatrum-chemicum-volumen-secundum-ed",
+     "book_title": "Theatrum Chemicum Volumen Secundum",
+     "book_author": "Lazarus Zetzner (ed.)",
+     "book_year": 1602,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "It ascends from the earth to the heaven, and again it descends to the earth, and it receives the strength of the superior and inferior things.",
+     "page_number": 261,
+     "book_slug": "dogme-et-rituel-de-la-haute-magie-tome-1-dogme-levi",
+     "book_title": "Transcendental Magic: Doctrine and Ritual, Vol. 1",
+     "book_author": "Eliphas Lévi",
+     "book_year": 1861,
+     "book_language": "French",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "If humans can possess the world itself within them? Each person is a miniature example of God, an image in small proportions.",
+     "page_number": 151,
+     "book_slug": "astronomicon-manilius",
+     "book_title": "Astronomicon",
+     "book_author": "Marcus Manilius",
+     "book_year": 1473,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Within this body exists Mount Meru, surrounded by the seven islands; there are rivers, oceans, mountains, fields, and the guardians of those fields.",
+     "page_number": 22,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "The complete Universe or Heaven, therefore, is merely a Man, while Man is a Microcosm",
+     "page_number": 174,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Heaven being the Head, Earth the Feet, the Sun and Moon the eyes &c., and this whole animated Kosmos, body and soul",
+     "page_number": 177,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "original"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "The superior world and the inferior world. The inferior is like the superior.",
+     "page_number": 143,
+     "book_slug": "zohar-symeonis-ben-jochai-interprete-gulielmo-postello-bsb-shim-on-ben-yohai",
+     "book_title": "The Law of the Mouth: On the Restoration of Nature and Grace",
+     "book_author": "Shimʿon ben Yoḥai, ca. 2. Jh.",
+     "book_year": 1550,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "The diversity of all these arises from the paths of the stars and the influence of their light rays falling upon the earth",
+     "page_number": 83,
+     "book_slug": "die-philosophie-der-araber-im-x-jahrhundert-vol-5-dieterici",
+     "book_title": "The Philosophy of the Arabs in the 10th Century, Vol. 5",
+     "book_author": "Friedrich Dieterici",
+     "book_year": 1876,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "which in its own way contains everything that is also in the macrocosm",
+     "page_number": 175,
+     "book_slug": "abraham-the-blessing-of-all-nations-muller",
+     "book_title": "Abraham, the Blessing of All Nations",
+     "book_author": "[Müller, Johann Daniel]",
+     "book_year": 1769,
+     "book_language": "German",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c32",
+   "slug": "silence-and-stillness-of-mind-as-the-way-to-truth",
+   "title": "silence and stillness of mind as the way to truth",
+   "passages": [
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "The essential point of studying the Way lies in the ability to achieve stillness. The arrival of stillness must result from being unmixed.",
+     "page_number": 80,
+     "book_slug": "zhen-gao-vol-5-456-536",
+     "book_title": "Declarations of the Perfected",
+     "book_author": "陶弘景 Tao Hongjing (456–536)",
+     "book_year": 1782,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "Its essence lies in clarity, stillness, and non-action, in being peaceful and detached.",
+     "page_number": 68,
+     "book_slug": "zhen-gao-vol-5-456-536",
+     "book_title": "Declarations of the Perfected",
+     "book_author": "陶弘景 Tao Hongjing (456–536)",
+     "book_year": 1782,
+     "book_language": "Chinese",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "that someone as important as yourself can have a body like dry wood and a mind like dead ashes?",
+     "page_number": 358,
+     "book_slug": "chuang-tzu-mystic-moralist-and-social-reformer-giles",
+     "book_title": "Chuang Tzu: Mystic, Moralist, and Social Reformer",
+     "book_author": "Herbert Allen Giles",
+     "book_year": 1889,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "it is the rest of our soul from all unrest in a sacred silence—a cessation from all will, thought, desire, affection, speech, and activity, both internal and external.",
+     "page_number": 26,
+     "book_slug": "astrologie-theologized-weigel",
+     "book_title": "Astrologie theologized",
+     "book_author": "Weigel, Valentin",
+     "book_year": 1649,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "Having fixed his mind within himself through steady resolution, he should think of nothing else. Wherever the unsteady mind wanders, he should subdue it",
+     "page_number": 19,
+     "book_slug": "the-bhagvat-geeta-or-dialogues-of-kreeshna-and-arjoon-trans",
+     "book_title": "The Bhagvat-Geeta, or Dialogues of Kreeshna and Arjoon",
+     "book_author": "Charles Wilkins (trans.)",
+     "book_year": 1785,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "He whose mind is steady without support, whose vital breath is steady without retention, whose gaze is steady without looking",
+     "page_number": 54,
+     "book_slug": "pratyabhij-hdayam",
+     "book_title": "Pratyabhijñā-Hṛdayam",
+     "book_author": "Kṣemarāja",
+     "book_year": 1911,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "We must learn how to be still and let Spirit—the I Am The eternal, divine spark or \"true self\" within the individual",
+     "page_number": 62,
+     "book_slug": "lessons-in-truth-cady",
+     "book_title": "Lessons in Truth",
+     "book_author": "H. Emilie Cady",
+     "book_year": 1896,
+     "book_language": "English",
+     "source": "machine"
+    }
+   ]
+  },
+  {
+   "id": "c33",
+   "slug": "how-the-world-first-came-into-being",
+   "title": "how the world first came into being",
+   "passages": [
+    {
+     "tradition": "hindu-indic",
+     "quote": "From water, undergoing transformation, arose the earth ( bhūta ), which possesses smell.",
+     "page_number": 27,
+     "book_slug": "srimad-bhagavata-purana-dvitiya-skandha-with-bhavartha-comm",
+     "book_title": "Śrīmad Bhāgavata Purāṇa (Dvitīya Skandha) with Bhāvārtha Dīpikā",
+     "book_author": "Vyasa; Śrīdhara Svāmī (comm.)",
+     "book_year": 1800,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "He, the Lord Viṣṇu , assumes māyā for the sake of creation, maintenance, and dissolution.",
+     "page_number": 26,
+     "book_slug": "srimad-bhagavata-purana-dvitiya-skandha-with-bhavartha-comm",
+     "book_title": "Śrīmad Bhāgavata Purāṇa (Dvitīya Skandha) with Bhāvārtha Dīpikā",
+     "book_author": "Vyasa; Śrīdhara Svāmī (comm.)",
+     "book_year": 1800,
+     "book_language": "Sanskrit",
+     "source": "machine"
+    },
+    {
+     "tradition": "hindu-indic",
+     "quote": "The wise have thus explained the creation of the world—the tattwas",
+     "page_number": 19,
+     "book_slug": "shiva-samhita-vasu",
+     "book_title": "The Compendium of Shiva",
+     "book_author": "Svatmarama / S.C. Vasu",
+     "book_year": 1887,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "In this section the Primordial Air is treated of as divided into two Airs, in order to the formation of the complete Kosmos",
+     "page_number": 159,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "chinese-daoist-confucian",
+     "quote": "When Heaven and Earth create living things, the Five Elements are the very first to appear.",
+     "page_number": 146,
+     "book_slug": "confucian-cosmogony-xi",
+     "book_title": "Confucian Cosmogony",
+     "book_author": "Zhu Xi",
+     "book_year": 1874,
+     "book_language": "English",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "For this cause, and from these four things, the body of the world was created, constructed by the proportion I have described.",
+     "page_number": 167,
+     "book_slug": "libri-duo-adversus-procli-rationes-de-mundi-aeternitate-philoponus",
+     "book_title": "Two Books Against Proclus on the Eternity of the World",
+     "book_author": "John Philoponus",
+     "book_year": 1551,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "greek-roman",
+     "quote": "For Plato openly asserts that the world was produced from a certain beginning, that it does not always exist, and that it did not exist before it was created.",
+     "page_number": 151,
+     "book_slug": "libri-duo-adversus-procli-rationes-de-mundi-aeternitate-philoponus",
+     "book_title": "Two Books Against Proclus on the Eternity of the World",
+     "book_author": "John Philoponus",
+     "book_year": 1551,
+     "book_language": "Latin",
+     "source": "machine"
+    },
+    {
+     "tradition": "jewish-kabbalistic",
+     "quote": "All things came to be and all things persist through an original and constantly enduring eradiation",
+     "page_number": 25,
+     "book_slug": "on-the-nature-and-origin-of-the-doctrine-of-emanation-among-kleuker",
+     "book_title": "On the Nature and Origin of the Doctrine of Emanation among the Kabbalists",
+     "book_author": "Kleuker, Johann Friedrich",
+     "book_year": 1786,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "floated at the beginning upon the water (that is, upon the watery CHAOS mixed together from Heaven, Earth, and Water).",
+     "page_number": 94,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "hermetic-esoteric",
+     "quote": "entering into the Hyleal, that is, Pri-material watery CHAOS created at the first beginning of the World, sanctifying and also impregnating it",
+     "page_number": 95,
+     "book_slug": "von-hylealischen-das-ist-pri-materialischen-catholischen-khunrath",
+     "book_title": "On the Hyleal Chaos",
+     "book_author": "Khunrath, Heinrich",
+     "book_year": 1597,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "christian",
+     "quote": "it is indicated that heaven and earth were brought forth from water through the spirit.",
+     "page_number": 174,
+     "book_slug": "die-philosophie-der-alten-wiederkommend-in-der-guldenen-oetinger",
+     "book_title": "Die Philosophie der Alten wiederkommend in der güldenen Zeit : worinnen von den unsichtbaren Anfängen des spiritus rectoris oder bildenden Geists in den Pflanzen ... gehandelt wird",
+     "book_author": "Oetinger, Friedrich Christoph",
+     "book_year": 1762,
+     "book_language": "German",
+     "source": "machine"
+    },
+    {
+     "tradition": "islamic-sufi",
+     "quote": "And it is He who created the heavens and the earth in six days—and His Throne was upon the water—that He might test you as to which of you is best in deed.",
+     "page_number": 290,
+     "book_slug": "the-quran-al-coranus",
+     "book_title": "The Quran",
+     "book_author": "Unknown",
+     "book_year": 1694,
+     "book_language": "Latin",
+     "source": "machine"
+    }
+   ]
+  }
+ ],
+ "verified_on": "2026-10-07"
+}

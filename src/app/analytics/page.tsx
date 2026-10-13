@@ -19,10 +19,9 @@ const UsageTab = dynamic(() => import('@/components/analytics/tabs/UsageTab'), {
 const PerformanceTab = dynamic(() => import('@/components/analytics/tabs/PerformanceTab'), { ssr: false, loading: LoadingBar });
 const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { ssr: false, loading: LoadingBar });
 const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false, loading: LoadingBar });
-const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false, loading: LoadingBar });
 const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false, loading: LoadingBar });
 const BooksTab = dynamic(() => import('@/components/analytics/tabs/BooksTab'), { ssr: false, loading: LoadingBar });
-type Tab = 'books' | 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
+type Tab = 'books' | 'usage' | 'performance' | 'logs' | 'search' | 'pipeline';
 
 const TABS: { key: Tab; label: string }[] = [
   { key: 'books', label: 'Books' },
@@ -30,7 +29,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'performance', label: 'Performance' },
   { key: 'logs', label: 'Logs' },
   { key: 'search', label: 'Search' },
-  { key: 'traffic', label: 'Traffic' },
   { key: 'pipeline', label: 'Pipeline' },
 ];
 
@@ -63,6 +61,13 @@ export default function AnalyticsPage() {
             <h1 className="text-xl font-medium" style={{ color: 'var(--text-primary)' }}>
               Analytics
             </h1>
+            <Link
+              href="/admin/traffic"
+              className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+            >
+              Traffic
+            </Link>
             <Link
               href="/jobs"
               className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
@@ -151,7 +156,6 @@ export default function AnalyticsPage() {
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}
         {activeTab === 'search' && <SearchTab key={refreshKey} days={days} />}
-        {activeTab === 'traffic' && <TrafficTab key={refreshKey} />}
         {activeTab === 'pipeline' && <PipelineTab key={refreshKey} hours={pipelineHours} />}
       </main>
     </div>

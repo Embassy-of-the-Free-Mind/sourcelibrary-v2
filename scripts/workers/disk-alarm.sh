@@ -48,7 +48,7 @@ case "$level" in
   critical) title="Hetzner disk ${used}% full — jobs about to die"; prio=urgent; msg="Root disk at ${used}% (${free} free). Jobs die silently when it fills. ${runbook}" ;;
   high)     title="Hetzner disk ${used}% full"; prio=high; msg="Root disk at ${used}% (${free} free, alarm at ${PCT_LIMIT}%). ${runbook}" ;;
   unknown)  title="Hetzner disk check UNKNOWN"; prio=high; msg="df could not read ${MOUNT}. Treat as not-clear until checked (#5534)." ;;
-  ok)       title="Hetzner disk recovered: ${used}%"; prio=default; msg="Root disk back under ${PCT_LIMIT}% (${free} free)." ;;
+  ok)       title="Hetzner disk recovered: ${used}%"; prio=low; msg="Root disk back under ${PCT_LIMIT}% (${free} free)." ;;
 esac
 [ "$page" = repeat ] && title="STILL: $title"
 if curl -fsS -m 15 -H "Title: $title" -H "Priority: $prio" -H "Tags: floppy_disk" -d "$msg" "$TOPIC" >/dev/null; then

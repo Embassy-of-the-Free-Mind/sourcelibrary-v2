@@ -8,30 +8,30 @@
     "The identity-review-apply.ts entries are the checker's known blind spot, not drift:",
     "reviewed_by/reviewed_at are written to work_merge_queue and edition_keeper_queue,",
     "never to books, but the file also writes books so every $set in it gets scanned.",
-    "They replace five identical entries for the two route files the code moved out of (#4271)."
+    "They replace five identical entries for the two route files the code moved out of (#4271).",
+    "#4493: six entries were ADDED on 2026-10-11, the one sanctioned growth of this list. They are not new",
+    "writes: stripe/webhook, work-coverage, audit-upgraded-artwork-images and kloss-hidden-reason-backfill",
+    "wrote these fields all along, through a hoisted handle or a built update the checker could not see.",
+    "Two were removed in the same change (verify-translation-claims::write, repair-bulkjp2::repair): a",
+    "ternary in a value read as a key."
   ],
-  "count": 21,
+  "count": 23,
   "accepted": [
-    "scripts/enrichment/verify-translation-claims.mjs::write",
+    "scripts/analysis/work-coverage.mjs::have_original",
+    "scripts/analysis/work-coverage.mjs::original_coverage_source",
     "scripts/enrichment/wikidata-books.mjs::wikidata_label",
     "scripts/enrichment/wikidata-books.mjs::wikidata_match",
-    "scripts/import/setup-1041-collections.mjs::color",
-    "scripts/import/setup-1041-collections.mjs::name",
-    "scripts/import/setup-1041-collections.mjs::order",
-    "scripts/import/setup-1041-collections.mjs::subtitle",
+    "scripts/maintenance/audit-upgraded-artwork-images.mjs::image_mismatch_suspected",
     "scripts/maintenance/batch-cover-selection.mjs::cover_confidence",
     "scripts/maintenance/batch-cover-selection.mjs::cover_rationale",
-    "scripts/maintenance/dedup-canonical-authors.mjs::is_person",
+    "scripts/maintenance/kloss-hidden-reason-backfill.mjs::hidden_reason_backfilled_at",
+    "scripts/maintenance/kloss-hidden-reason-backfill.mjs::hidden_reason_prior",
     "scripts/maintenance/reorganize-collections.mjs::name",
-    "scripts/maintenance/repair-bulkjp2-text-shift.mjs::repair",
     "scripts/maintenance/repair-bulkjp2-text-shift.mjs::text_shift_repair_manual",
     "scripts/maintenance/repair-erara-text-shift.mjs::text_shift_repair_manual",
     "scripts/maintenance/set-digitization-sponsor.mjs::digitization_adopted_at",
     "scripts/maintenance/set-digitization-sponsor.mjs::digitization_sponsor",
-    "src/app/api/admin/promote-warehouse/route.ts::demoted_at",
-    "src/app/api/admin/promote-warehouse/route.ts::promoted_session",
     "src/app/api/books/[id]/dedicate/route.ts::dedication",
-    "src/lib/identity-review-apply.ts::reviewed_at",
-    "src/lib/identity-review-apply.ts::reviewed_by"
+    "src/app/api/stripe/webhook/route.ts::digitization_adopted_at"
   ]
 }

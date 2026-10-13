@@ -93,13 +93,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: `${collection.name} - Source Library`,
         description,
         type: 'website',
-        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
+        images: [{ url: cardImage, alt: `${collection.name}, a Source Library collection` }],
       },
       twitter: {
         card: 'summary_large_image',
         title: `${collection.name} - Source Library`,
         description,
-        images: [{ url: cardImage, alt: `${collection.name} — Source Library collection` }],
+        images: [{ url: cardImage, alt: `${collection.name}, a Source Library collection` }],
       },
     };
   } catch {
@@ -496,7 +496,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     // The stamped rung (#5287): the FT badge gate, further-reading status and
     // card status line all read it; absent = unstamped, counters stand in.
     'translation_state.rung': 1, 'translation_state.english_original': 1,
-    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, published: 1, read_count: 1,
+    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, thumbnail_frame: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
     is_first_translation: 1,
     // What ftRenderProps needs to pick the claim register (#3726 Tier 3).
@@ -558,14 +558,19 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   };
 
   // book_count is cached by syncCollectionCounts in scripts/workers/sync-worker.mjs
-  // (Hetzner, every 2h) and reflects only translated books (pages_translated > 0) —
-  // meaningless for visual_art collections, whose items are artworks. Count those live.
+  // (Hetzner, every 2h) and counts the members readable in English (#5288) — the
+  // same view the expanded grid (/api/collections/[id]?mode=manifest) renders.
+  // A `show_all_books` collection's grid drops that filter, so its header is the
+  // whole membership (total_book_count). Meaningless for visual_art collections,
+  // whose items are artworks: count those live.
   const total = isArtCollection
     ? await withTimeout(
       db.collection('books').countDocuments(artFilter, { maxTimeMS: 8000 }),
       8000, collection.artwork_count || 0,
     )
-    : collection.book_count || 0;
+    : collection.show_all_books === true
+      ? collection.total_book_count ?? collection.book_count ?? 0
+      : collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
@@ -630,6 +635,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           pages_count: b.pages_count, pages_ocr: b.pages_ocr,
           pages_translated: b.pages_translated, pages_blank: b.pages_blank,
           photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+          thumbnail_frame: b.thumbnail_frame,
           published: b.published, read_count: b.read_count,
           is_first_translation: b.is_first_translation,
           categories: b.categories,
@@ -1460,7 +1466,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               </span>
             </div>
             <p className="text-sm text-muted mb-6 max-w-2xl leading-relaxed">
-              Works in this collection appearing in a modern, readable translation for the first time — read them in full here.
+              Works in this collection appearing in a modern, readable translation for the first time. Read them in full here.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {firstTranslations.map((b) => {

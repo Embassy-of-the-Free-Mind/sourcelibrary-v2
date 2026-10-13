@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: 20
+verdict: "The self-declared-blank rule flags 166,077 pages corpus-wide but 0 of 20 read by eye are invented text on a blank leaf (Wilson 0-16.1%); use it as a ranking signal, not a quarantine list."
+status: informational
+decision: "Not used to quarantine; kept as a supporting signal in detect-fabricated-ocr.mjs (PR #5652)"
+superseded_by: null
+issue: 4149
+---
 ## 2026-10-02 · Does the OCR's own "this page is blank" tag find invented pages corpus-wide? (#4149)
 
 - **Question.** On the confirmed #4149 fabrications, the page's own tags often say it is blank: `<page-type>blank`, or a `<warning>`/`<meta>`/`<image-desc>` reading blank, show-through or mirrored. That holds for 46.6% of fabrications vs 4.7% of `has_ink` controls. Does a rule "tags say blank AND body letters > 20" find the invented pages readers are reading now? That would include show-through leaves, which the pixel guard (#4184) passes.

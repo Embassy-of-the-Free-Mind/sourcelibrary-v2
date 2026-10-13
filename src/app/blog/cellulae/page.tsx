@@ -56,7 +56,7 @@ export default function CellulaePage() {
       <article className="prose-content max-w-none">
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          We were reading a fifteenth-century manuscript of the <em>Secretum Secretorum</em> &mdash; the most
+          We were reading a fifteenth-century manuscript of the <em>Secretum Secretorum</em>, the most
           widely copied text of the medieval period, framed as a letter from Aristotle to Alexander the Great
           on how to rule, eat, and live. Somewhere around{' '}
           <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c5" className="text-accent-rust hover:text-accent-rust underline">
@@ -89,7 +89,7 @@ export default function CellulaePage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          The word caught our attention. <em>Cellulas</em> &mdash; small chambers. The same Latin word
+          The word caught our attention. <em>Cellulas</em>: small chambers. The same Latin word
           that Robert Hooke would use in 1665 when he looked at cork through a microscope and saw
           &ldquo;a great many little Boxes,&rdquo; launching the concept that would become the foundation
           of modern biology.
@@ -108,8 +108,8 @@ export default function CellulaePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The doctrine that the uterus contained seven chambers &mdash; three on the right producing
-            males, three on the left producing females, one in the center producing hermaphrodites &mdash;
+            The doctrine that the uterus contained seven chambers (three on the right producing
+            males, three on the left producing females, one in the center producing hermaphrodites)
             was a widespread medieval medical belief. It first appears in the pseudo-Galenic{' '}
             <em>De Spermate</em>, a twelfth-century Latin compilation that circulated under Galen&apos;s name.
             It entered the European medical canon through figures like Michael Scot (c. 1180&ndash;1250),
@@ -119,7 +119,7 @@ export default function CellulaePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The word <em>cellula</em> &mdash; diminutive of <em>cella</em>, a small room &mdash; was already
+            The word <em>cellula</em> (diminutive of <em>cella</em>, a small room) was already
             standard anatomical terminology before Hooke ever touched a microscope. Medieval physicians
             spoke of the three <em>cellae</em> of the brain (the ventricles, each housing a cognitive
             faculty: imagination in the front, reason in the middle, memory in the rear), the{' '}
@@ -129,14 +129,14 @@ export default function CellulaePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             In a 2024 paper in the Royal Society&apos;s <em>Notes and Records</em>, Winfried S. Peters
             argues that when Hooke described the &ldquo;cells&rdquo; of cork, he was not thinking of
-            monks&apos; rooms at all &mdash; he was drawing on this existing anatomical vocabulary, where{' '}
+            monks&apos; rooms at all; he was drawing on this existing anatomical vocabulary, where{' '}
             <em>cellulae</em> meant linearly arranged compartments for the storage, modification, and
             transport of materials.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             If Peters is right, the word &ldquo;cell&rdquo; in biology descends not from monastery
-            architecture but from exactly this tradition of medieval anatomy &mdash; the tradition that
+            architecture but from exactly this tradition of medieval anatomy, the tradition that
             produced the <em>cellulae</em> in our manuscript. The seven chambers of the womb, the three
             chambers of the brain, the compartments of cork: it is the same word doing the same conceptual
             work across five centuries.
@@ -164,8 +164,8 @@ export default function CellulaePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The <em>cellulae</em> passage is part of a longer dialogue on reproduction, structured as a
             series of questions from a Disciple to a Philosopher. On the same page, the Disciple asks
-            why prostitutes rarely conceive. The Philosopher explains that conception requires pleasure &mdash;
-            the emission of female &ldquo;seed&rdquo; &mdash; and prostitutes &ldquo;experience no pleasure
+            why prostitutes rarely conceive. The Philosopher explains that conception requires pleasure
+            (the emission of female &ldquo;seed&rdquo;), and prostitutes &ldquo;experience no pleasure
             in the act but are moved only by the fee, so they emit nothing.&rdquo;
           </p>
 
@@ -183,7 +183,7 @@ export default function CellulaePage() {
               />
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
-              Page 33. The rape argument and the infertility discussion that contradicts it &mdash; both on the same page.{' '}
+              Page 33. The rape argument and the infertility discussion that contradicts it, both on the same page.{' '}
               <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c6" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
@@ -200,7 +200,7 @@ export default function CellulaePage() {
             and the <em>delectatio carnis</em> (delight of the flesh). Even in rape, he argues, the body
             experiences its own involuntary pleasure, independent of consent. And since conception requires
             female seed, and female seed requires pleasure, any pregnancy that results from rape proves
-            that pleasure &mdash; and therefore a kind of consent &mdash; was present.
+            that pleasure, and therefore a kind of consent, was present.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -252,15 +252,15 @@ export default function CellulaePage() {
               for without the will of the woman she could not conceive.&rdquo;
             </p>
             <p className="text-sm text-muted mt-3 not-italic font-body">
-              &mdash; Bracton, <em>De Legibus et Consuetudinibus Angliae</em>, Book III, on the appeal of rape
+              Bracton, <em>De Legibus et Consuetudinibus Angliae</em>, Book III, on the appeal of rape
             </p>
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             This effectively made pregnancy a defense against a rape charge. The doctrine persisted
             in English common law through the early modern period. While Blackstone (1765) did not
-            repeat it in exactly the same terms, the structural assumptions &mdash; that the female body
-            is a reliable witness to consent &mdash; remained embedded in how rape was prosecuted and how
+            repeat it in exactly the same terms, the structural assumptions (that the female body
+            is a reliable witness to consent) remained embedded in how rape was prosecuted and how
             juries were instructed.
           </p>
 
@@ -271,7 +271,7 @@ export default function CellulaePage() {
               that whole thing down&rdquo;
             </a>.
             The American College of Obstetricians and Gynecologists immediately refuted the claim.
-            Historians recognized it as a direct descendant of the medieval two-seed theory &mdash; the
+            Historians recognized it as a direct descendant of the medieval two-seed theory, the
             same theory articulated in our manuscript, on the page after the <em>cellulae</em>.
           </p>
         </section>
@@ -281,23 +281,23 @@ export default function CellulaePage() {
         {/* IV. Not Aristotle */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            IV. Not Aristotle &mdash; and Not the <em>Secretum</em>
+            IV. Not Aristotle, and Not the <em>Secretum</em>
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             When we checked the passage against the other copies of the <em>Secretum Secretorum</em> in
-            Source Library &mdash;{' '}
-            <Link href="/search?q=secretum+secretorum" className="text-accent-rust hover:text-accent-rust underline">
+            Source Library{' '}
+            (<Link href="/search?q=secretum+secretorum" className="text-accent-rust hover:text-accent-rust underline">
               seven copies in total
-            </Link>, spanning Latin, Arabic, and German &mdash; we discovered something unexpected. The{' '}
+            </Link>, spanning Latin, Arabic, and German), we discovered something unexpected. The{' '}
             <em>cellulae</em> passage, the rape argument, the infertility discussion: none of it appears
             in any other copy.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The reason is that our sixty-eight-page manuscript is a <strong>composite codex</strong>. The{' '}
-            <em>Secretum Secretorum</em> proper &mdash; pseudo-Aristotle&apos;s advice to Alexander on
-            governance, diet, and astrology &mdash; ends on{' '}
+            <em>Secretum Secretorum</em> proper (pseudo-Aristotle&apos;s advice to Alexander on
+            governance, diet, and astrology) ends on{' '}
             <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446bf" className="text-accent-rust hover:text-accent-rust underline">
               page 26
             </Link>{' '}
@@ -311,7 +311,7 @@ export default function CellulaePage() {
             Aristotle&apos;s name or claiming ancient authority. He was writing openly as a contemporary
             thinker, synthesizing Galen, Plato&apos;s <em>Timaeus</em>, and Salernitan medicine into a
             systematic account of the natural world. The <em>cellulae</em>, the two-seed theory, the rape
-            argument &mdash; these are the work of a named twelfth-century author doing what he believed
+            argument: these are the work of a named twelfth-century author doing what he believed
             was rigorous natural philosophy.
           </p>
 
@@ -319,15 +319,15 @@ export default function CellulaePage() {
             Which makes the passage not &ldquo;ancient wisdom gone wrong&rdquo; but something arguably
             worse: <strong>a smart man following correct logical form from wrong premises to a monstrous
             conclusion</strong>. William of Conches was not being cynical. The body/will distinction
-            (<em>delectatio carnis</em> versus <em>voluntas rationis</em>) is genuinely sophisticated &mdash;
+            (<em>delectatio carnis</em> versus <em>voluntas rationis</em>) is genuinely sophisticated;
             it anticipates later mind-body debates by centuries. He was recognizing that the flesh has
             responses independent of rational consent. But the legal system did not preserve the nuance.
             It took &ldquo;pleasure was present&rdquo; and made it a rule of evidence.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The accident of bookbinding &mdash; William&apos;s <em>Philosophia Mundi</em> stitched into
-            a codex alongside the most popular text of the Middle Ages &mdash; was the transmission vector.
+            The accident of bookbinding (William&apos;s <em>Philosophia Mundi</em> stitched into
+            a codex alongside the most popular text of the Middle Ages) was the transmission vector.
             A Chartres schoolmaster&apos;s thought experiment traveled under Aristotle&apos;s authority
             across Europe.
           </p>
@@ -374,7 +374,7 @@ export default function CellulaePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             It is a striking formulation of what cognitive scientists now call &ldquo;mental time
-            travel&rdquo; &mdash; the capacity to project consciousness backward and forward in time,
+            travel&rdquo;: the capacity to project consciousness backward and forward in time,
             which many researchers consider the defining feature of human cognition. William uses it
             to explain why pregnant humans still desire sex while other animals do not: because we can
             remember past pleasure and anticipate future pleasure, desire persists beyond its reproductive
@@ -412,7 +412,7 @@ export default function CellulaePage() {
             </Link>{' '}
             spanning Latin, Arabic, and German, dated from the twelfth to the sixteenth century. By
             searching all seven for the same passages, we could determine that the <em>cellulae</em> and
-            the rape argument appear in only one &mdash; and that the one is a composite codex binding
+            the rape argument appear in only one, and that the one is a composite codex binding
             two different texts together.
           </p>
 

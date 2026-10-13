@@ -36,7 +36,7 @@ export async function sendAdoptionThankYou(p: AdoptionEmailParams): Promise<void
   const certUrl = `${SITE_URL}/adopt/certificate/${encodeURIComponent(p.sessionId)}`;
 
   const creditLine = p.publicCredit
-    ? `Your credit &mdash; <strong>&ldquo;Digitized thanks to ${escapeHtml(p.publicCredit)}&rdquo;</strong> &mdash; now appears on the book&rsquo;s page, and will for as long as it is read.`
+    ? `Your credit, <strong>&ldquo;Digitized thanks to ${escapeHtml(p.publicCredit)}&rdquo;</strong>, now appears on the book&rsquo;s page, and will for as long as it is read.`
     : `At your request your gift is credited anonymously; the book&rsquo;s page simply records that a patron made its digitization possible.`;
 
   await resend.emails.send({
@@ -55,11 +55,11 @@ export async function sendAdoptionThankYou(p: AdoptionEmailParams): Promise<void
         <p>Dear ${firstName},</p>
         <p>
           Thank you for adopting <a href="${bookUrl}" style="color:#9e4a3a; text-decoration:none;"><em>${title}</em></a>${p.amountLabel ? ` with a gift of ${escapeHtml(p.amountLabel)}` : ''}.
-          Because of you, this book will be digitized, translated, and made freely readable by anyone, anywhere &mdash; permanently.
+          Because of you, this book will be digitized, translated, and made freely readable by anyone, anywhere, permanently.
         </p>
         <p>${creditLine}</p>
         <p style="font-size:14px; color:#4a4138;">
-          Your gift is tax-deductible &mdash; ANBI in the Netherlands, and (for US donors) via our 501(c)(3) partner,
+          Your gift is tax-deductible: ANBI in the Netherlands, and (for US donors) via our 501(c)(3) partner,
           the Netherland-America Foundation. Your Stripe receipt is your record; just reply to this email if you need
           anything further for your taxes.
         </p>

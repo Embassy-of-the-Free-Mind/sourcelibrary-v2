@@ -313,6 +313,6 @@ function checkSiege(
     method: 'siege',
     target: enemy.position,
     attackers: surrounders,
-    description: `${enemy.value} is besieged — all exits blocked`,
+    description: `${enemy.value} is besieged: all exits blocked`,
   };
 }

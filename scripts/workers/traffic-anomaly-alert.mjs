@@ -784,7 +784,7 @@ async function run() {
       'high',
     );
   } else if (changed && !firing.length && prevFiring.length) {
-    await pushNtfy('Traffic anomaly cleared', `Resolved: ${prevFiring.join(', ')}. No anomalies in the last ${HOURS}h.`, 'default');
+    await pushNtfy('Traffic anomaly cleared', `Resolved: ${prevFiring.join(', ')}. No anomalies in the last ${HOURS}h.`, 'low');
   } else if (firing.length) {
     console.log(`[traffic-anomaly] ${firing.length} critical still firing (unchanged) — no push`);
   }

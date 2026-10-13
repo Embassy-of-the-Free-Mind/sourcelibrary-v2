@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 72
+n_pages: 142
+verdict: "A long-s line cuts RECITATION refusals ~70% (lite 24 -> 7 of 142, p 0.002) with no accuracy loss, but it switches output to the s glyph, so retry-only."
+status: adopted
+decision: "Long-s line used only on RECITATION retry, collector folds the glyph to s (PR #5526, #5521); default prompt unchanged"
+superseded_by: null
+issue: [5488, 5521]
+---
 ## 2026-10-01 · Does one long-s line in the OCR prompt fix early-modern English print? Measured against EEBO-TCP same-edition references (#5488)
 <!-- PRIOR ART: en-ocr-reference-5124 (#5124/#5182) scored lite vs flash on 1800s+ English, which has no long s; lesson "reference reads get refused on clean print" measured RECITATION on clean print but tried no prompt fix. -->
 

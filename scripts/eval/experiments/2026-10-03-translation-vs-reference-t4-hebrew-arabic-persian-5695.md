@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: [he, arc, ar, fa]
+scripts: [Hebr, Arab]
+canons: []
+n_books: 52
+n_pages: 52
+verdict: "Served Hebrew/Aramaic/Arabic/Persian English scores 3.44/5; OCR is the primary cause on 14 of 23 low pages; corrected text +1.4, Flash over Lite +0.53."
+status: adopted
+decision: "Flash routes Hebrew, Aramaic, Arabic and Persian translation (PR #5740), provisional pending the #5873 top-up"
+superseded_by: null
+issue: [5695, 5740]
+---
 <!-- PRIOR ART: 2026-10-03-translation-vs-reference-harness-smoke-5695.md (the harness this run uses, unchanged); scripts/eval/translation-corpus-audit/ (#5274, source-grounded, no reference); scripts/eval/tibetan-mt-ab/ (#4742, Tibetan vs 84000). No earlier run scored Hebrew, Aramaic, Arabic or Persian translations against a published human translation. -->
 ## 2026-10-03 · How faithful is the served English for Hebrew/Aramaic, Arabic and Persian against published translations, and which lever fixes it? (#5695 track T4)
 

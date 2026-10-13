@@ -23,7 +23,7 @@
  * people" block, and neither may be loosened to fix the other.
  */
 import { describe, it, expect } from 'vitest';
-import { classifyVariant, stripRole } from '../../scripts/lib/variant-shape.mjs';
+import { buildExtenderIndex, classifyVariant, matchKeyVerdict, stripRole } from '../../scripts/lib/variant-shape.mjs';
 
 describe('several people — must NOT be matchable', () => {
   const MULTI: Array<[string, number]> = [
@@ -153,4 +153,58 @@ describe('stripRole', () => {
   it('drops a trailing role', () => expect(stripRole('Karl Gottlob Kühn (ed.)')).toBe('Karl Gottlob Kühn'));
   it('keeps life dates', () => expect(stripRole('Pico della Mirandola, Giovanni, 1463-1494'))
     .toBe('Pico della Mirandola, Giovanni, 1463-1494'));
+});
+
+/**
+ * #4313 part 1 — the canonical-link backfill screens every name form before it
+ * becomes a match key. These pin the two pieces it uses: the corpus evidence
+ * builder (shared with the standing audit) and the per-doc verdict.
+ */
+describe('match-key screen used by the author-link backfill', () => {
+  // The incident in miniature: a dozen different Johannes-es, one Kepler.
+  const corpus = [
+    'Johannes Chrysostomus', 'Johannes de Sacrobosco', 'Johannes Duns Scotus',
+    'Johannes Stobaeus', 'Johannes, of Salisbury', 'Johannes Kepler',
+    'Johannes', 'Kepler, Johannes', 'Plato', 'Plato; Ficino, Marsilio',
+    'Plato (trans. Ficino)', 'Plato, Platonis opera', 'Plato et Xenophon', 'Plato Latinus',
+    'Plato Atheniensis', 'Plato Comicus',
+  ];
+  const extendingPeople = buildExtenderIndex(corpus);
+
+  it('counts distinct people extending a bare form, not the bare form itself', () => {
+    expect(extendingPeople('Johannes')).toBe(6);
+    expect(extendingPeople('JOHANNES')).toBe(6);
+    expect(extendingPeople('Kepler')).toBe(1);
+  });
+
+  it('two spellings of one person count once', () => {
+    const f = buildExtenderIndex(['Thomas Aquinas', 'Thomas, Aquinas', 'THOMAS AQUINAS']);
+    expect(f('Thomas')).toBe(1);
+  });
+
+  it('refuses "Johannes" as a match key for jan-hus — the #4313 link', () => {
+    const c = matchKeyVerdict('Johannes', 'jan-hus', { extendingPeople });
+    expect(c.matchable).toBe(false);
+    expect(c.shape).toBe('underspecified');
+  });
+
+  it('still admits the specific forms of the same doc', () => {
+    expect(matchKeyVerdict('Hus, Johannes', 'jan-hus', { extendingPeople }).matchable).toBe(true);
+  });
+
+  it('admits a reviewed mononym for its own doc, and only for it', () => {
+    expect(classifyVariant('Plato', { extendingPeople }).matchable).toBe(false);
+    expect(matchKeyVerdict('Plato', 'plato', { extendingPeople }).matchable).toBe(true);
+    expect(matchKeyVerdict('Plato', 'some-other-doc', { extendingPeople }).matchable).toBe(false);
+  });
+
+  it('the reviewed list never rescues an unsafe SHAPE', () => {
+    expect(matchKeyVerdict('Plato (ed. Ficino)', 'plato', { extendingPeople }).matchable).toBe(false);
+  });
+
+  // NEGATIVE CONTROL: with no corpus evidence the screen cannot see "Johannes",
+  // which is exactly the state the backfill was in before this guard.
+  it('without corpus evidence "Johannes" passes — the pre-fix behaviour', () => {
+    expect(matchKeyVerdict('Johannes', 'jan-hus').matchable).toBe(true);
+  });
 });

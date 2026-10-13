@@ -33,9 +33,9 @@ note() {  # one line to the log and the issue
   echo "$(date -u +%FT%TZ) $1" | tee -a "$DIR/waves.log"
   gh issue comment "$ISSUE" --body "page-frame sweep: $1" >/dev/null 2>&1 || echo "  (issue comment failed)"
 }
-say() {  # ... and to Derek's phone: stops and completion only
+say() {  # ... and to Derek's phone: stops and completion only — both need him, so they buzz (#6181)
   note "$1"
-  curl -s -m 20 -H "Title: page-frame sweep" -d "$1" "$NTFY" >/dev/null || true
+  curl -s -m 20 -H "Title: page-frame sweep" -H "Priority: high" -d "$1" "$NTFY" >/dev/null || true
 }
 
 # Preflight: the checkout must parse and still frame the reference page (page 13

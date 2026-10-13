@@ -21,9 +21,9 @@ export const BERTHELOT_LAYER_LABEL = 'Critical edition · Berthelot & Ruelle 188
  * reader panel header (client) and the API payload (server) stay in sync.
  */
 export const MANUSCRIPT_OCR_FLAG = {
-  label: 'Rough AI transcription — flagged',
+  label: 'Rough AI transcription (flagged)',
   tooltip:
-    'Unverified — this folio’s OCR may contain fabricated wording; check the critical edition or facsimile before quoting.',
+    'Unverified: this folio’s OCR may contain fabricated wording; check the critical edition or facsimile before quoting.',
 };
 
 /** One confidence chip: label + honest tooltip + a design-token colour class. */

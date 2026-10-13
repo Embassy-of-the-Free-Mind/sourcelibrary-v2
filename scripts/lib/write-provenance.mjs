@@ -374,7 +374,7 @@ export function translationProvenance(text, engine) {
  *     `gemini-engine/1` block with model, api, call_site, prompt.version, prompt.sent_hash,
  *     generation (temperature, max_output_tokens, thinking), run.code_version, run.host, input
  *     (image_url for OCR, source_text_hash for translation).
- *   `kraken` / `bdrc` / `mineru` (specialist engines): content_hash, updated_at, engine.name/model/run.
+ *   `kraken` / `bdrc` / `mineru` / `paddle` (specialist engines): content_hash, updated_at, engine.name/model/run.
  *   `ia_djvu`: content_hash, updated_at, source_url, ia.item, ia.ingest_run.
  *   anything else (manual, corpus, source-column, …): content_hash and updated_at only.
  * @returns {{ missing: string[], markers: string[] }}
@@ -429,7 +429,7 @@ export function missingProvenance(field, sub) {
     else if (isNotRecorded(i)) markers.push(`${field}.engine.input`);
     else if (field === 'ocr' && !i.image_url) missing.push(`${field}.engine.input.image_url`);
     else if (field === 'translation' && !HEX16.test(i.source_text_hash || '')) missing.push(`${field}.engine.input.source_text_hash`);
-  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru') {
+  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle') {
     if (!e || typeof e !== 'object') missing.push(`${field}.engine`);
     else {
       if (!e.name) missing.push(`${field}.engine.name`);

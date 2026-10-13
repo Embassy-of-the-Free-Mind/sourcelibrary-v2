@@ -168,7 +168,7 @@ export default function EulerGradusDemo() {
 
   return (
     <LabCard
-      title="Station X — Grade the formula"
+      title="Station X: Grade the formula"
       headerRight={
         <button
           onClick={start}
@@ -177,7 +177,7 @@ export default function EulerGradusDemo() {
           {order === null ? 'Begin rating' : 'Restart'}
         </button>
       }
-      caption="Eight intervals in random order. Play each and rate its sweetness from 1 (grating) to 7 (sweet). At the end, your ranking is set against Euler's computed degrees of agreeableness — a formula from 1739, graded by your ear."
+      caption="Eight intervals in random order. Play each and rate its sweetness from 1 (grating) to 7 (sweet). At the end, your ranking is set against Euler's computed degrees of agreeableness: a formula from 1739, graded by your ear."
       sourceHref="/book/tentamen-novae-theoriae-musicae-euler"
       sourceLabel="Euler, Tentamen novae theoriae musicae (1739)"
     >
@@ -186,7 +186,7 @@ export default function EulerGradusDemo() {
           Euler&apos;s rule: reduce the interval to lowest terms, factor the product into primes, add
           (prime − 1) for each factor, plus one. The octave scores <span className="font-mono">2</span>,
           the fifth <span className="font-mono">4</span>, the semitone <span className="font-mono">11</span>.
-          Lower is sweeter — says the mathematics. You be the judge.
+          Lower is sweeter, says the mathematics. You be the judge.
         </p>
       )}
 
@@ -245,9 +245,9 @@ export default function EulerGradusDemo() {
             </Link>
             <div className="mt-3 md:mt-0 min-w-0 grow">
               <p className="text-xs text-secondary mb-2">
-                Euler drew every ratio as rows of coinciding pulses (figs. 1–9, engraved at left —
+                Euler drew every ratio as rows of coinciding pulses (figs. 1–9, engraved at left,
                 hidden until now so your eye couldn&apos;t outvote your ear). Here are the same
-                figures ordered by <em>your</em> ratings, sweetest first — the data column his 1739
+                figures ordered by <em>your</em> ratings, sweetest first, the data column his 1739
                 page was missing:
               </p>
               <div className="space-y-2">

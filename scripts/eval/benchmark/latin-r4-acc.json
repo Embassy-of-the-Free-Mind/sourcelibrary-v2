@@ -1,0 +1,2337 @@
+{
+ "stratum": "latin-r4-acc",
+ "issue": 5924,
+ "parent": 5660,
+ "built_by": "latin-r4-refs-5924.mjs export",
+ "unit": "book (3-page run)",
+ "pages": [
+  {
+   "slug": "r4l-69b6419e1c1c21a3738868c2-p70",
+   "book_id": "69b6419e1c1c21a3738868c2",
+   "page_number": 70,
+   "substratum": "1500s",
+   "title": "Nabal",
+   "year": 1549
+  },
+  {
+   "slug": "r4l-69b6419e1c1c21a3738868c2-p71",
+   "book_id": "69b6419e1c1c21a3738868c2",
+   "page_number": 71,
+   "substratum": "1500s",
+   "title": "Nabal",
+   "year": 1549
+  },
+  {
+   "slug": "r4l-69b6419e1c1c21a3738868c2-p72",
+   "book_id": "69b6419e1c1c21a3738868c2",
+   "page_number": 72,
+   "substratum": "1500s",
+   "title": "Nabal",
+   "year": 1549
+  },
+  {
+   "slug": "r4l-6a4fa9cdb5772a3dacaac6a6-p22",
+   "book_id": "6a4fa9cdb5772a3dacaac6a6",
+   "page_number": 22,
+   "substratum": "1500s",
+   "title": "Baptistes sive calumnia",
+   "year": 1578
+  },
+  {
+   "slug": "r4l-6a4fa9cdb5772a3dacaac6a6-p23",
+   "book_id": "6a4fa9cdb5772a3dacaac6a6",
+   "page_number": 23,
+   "substratum": "1500s",
+   "title": "Baptistes sive calumnia",
+   "year": 1578
+  },
+  {
+   "slug": "r4l-6a4fa9cdb5772a3dacaac6a6-p24",
+   "book_id": "6a4fa9cdb5772a3dacaac6a6",
+   "page_number": 24,
+   "substratum": "1500s",
+   "title": "Baptistes sive calumnia",
+   "year": 1578
+  },
+  {
+   "slug": "r4l-6a505e9078825bd7fddd2c18-p243",
+   "book_id": "6a505e9078825bd7fddd2c18",
+   "page_number": 243,
+   "substratum": "1500s",
+   "title": "Satyrarum Libri Qvinqve Priores",
+   "year": 1555
+  },
+  {
+   "slug": "r4l-6a505e9078825bd7fddd2c18-p244",
+   "book_id": "6a505e9078825bd7fddd2c18",
+   "page_number": 244,
+   "substratum": "1500s",
+   "title": "Satyrarum Libri Qvinqve Priores",
+   "year": 1555
+  },
+  {
+   "slug": "r4l-6a505e9078825bd7fddd2c18-p245",
+   "book_id": "6a505e9078825bd7fddd2c18",
+   "page_number": 245,
+   "substratum": "1500s",
+   "title": "Satyrarum Libri Qvinqve Priores",
+   "year": 1555
+  },
+  {
+   "slug": "r4l-6a429b2139deb1e8af694e06-p316",
+   "book_id": "6a429b2139deb1e8af694e06",
+   "page_number": 316,
+   "substratum": "1500s",
+   "title": "Militaris ordinis Johannitarum, rhodiorum, aut melitensium equttum, rerum memorabilium terra marique gestarum, ad praese",
+   "year": 1581
+  },
+  {
+   "slug": "r4l-6a429b2139deb1e8af694e06-p317",
+   "book_id": "6a429b2139deb1e8af694e06",
+   "page_number": 317,
+   "substratum": "1500s",
+   "title": "Militaris ordinis Johannitarum, rhodiorum, aut melitensium equttum, rerum memorabilium terra marique gestarum, ad praese",
+   "year": 1581
+  },
+  {
+   "slug": "r4l-6a429b2139deb1e8af694e06-p318",
+   "book_id": "6a429b2139deb1e8af694e06",
+   "page_number": 318,
+   "substratum": "1500s",
+   "title": "Militaris ordinis Johannitarum, rhodiorum, aut melitensium equttum, rerum memorabilium terra marique gestarum, ad praese",
+   "year": 1581
+  },
+  {
+   "slug": "r4l-6a503c772f6539fb38937d92-p48",
+   "book_id": "6a503c772f6539fb38937d92",
+   "page_number": 48,
+   "substratum": "1500s",
+   "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa t",
+   "year": 1590
+  },
+  {
+   "slug": "r4l-6a503c772f6539fb38937d92-p49",
+   "book_id": "6a503c772f6539fb38937d92",
+   "page_number": 49,
+   "substratum": "1500s",
+   "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa t",
+   "year": 1590
+  },
+  {
+   "slug": "r4l-6a503c772f6539fb38937d92-p50",
+   "book_id": "6a503c772f6539fb38937d92",
+   "page_number": 50,
+   "substratum": "1500s",
+   "title": "Armilla aurea, id est, Miranda series causarum et salutis & damnationis iuxta verbum Dei Eius synopsin continet annexa t",
+   "year": 1590
+  },
+  {
+   "slug": "r4l-6a90658feb8fb726ee3b3f2a-p206",
+   "book_id": "6a90658feb8fb726ee3b3f2a",
+   "page_number": 206,
+   "substratum": "1500s",
+   "title": "Hebraeis. Continens duodecim libros: quibus tota regum judaicorum, et israëliticorum historia,ex sacris literis ad verbu",
+   "year": 1599
+  },
+  {
+   "slug": "r4l-6a90658feb8fb726ee3b3f2a-p207",
+   "book_id": "6a90658feb8fb726ee3b3f2a",
+   "page_number": 207,
+   "substratum": "1500s",
+   "title": "Hebraeis. Continens duodecim libros: quibus tota regum judaicorum, et israëliticorum historia,ex sacris literis ad verbu",
+   "year": 1599
+  },
+  {
+   "slug": "r4l-6a90658feb8fb726ee3b3f2a-p208",
+   "book_id": "6a90658feb8fb726ee3b3f2a",
+   "page_number": 208,
+   "substratum": "1500s",
+   "title": "Hebraeis. Continens duodecim libros: quibus tota regum judaicorum, et israëliticorum historia,ex sacris literis ad verbu",
+   "year": 1599
+  },
+  {
+   "slug": "r4l-69b63e841c1c21a3738655d6-p138",
+   "book_id": "69b63e841c1c21a3738655d6",
+   "page_number": 138,
+   "substratum": "1500s",
+   "title": "Monomachia Davidis et Goliae, &amp; Allegorica eiusdem expositio, Heroico carmine descripta : unà cum alijs quibusdam, q",
+   "year": 1541
+  },
+  {
+   "slug": "r4l-69b63e841c1c21a3738655d6-p139",
+   "book_id": "69b63e841c1c21a3738655d6",
+   "page_number": 139,
+   "substratum": "1500s",
+   "title": "Monomachia Davidis et Goliae, &amp; Allegorica eiusdem expositio, Heroico carmine descripta : unà cum alijs quibusdam, q",
+   "year": 1541
+  },
+  {
+   "slug": "r4l-69b63e841c1c21a3738655d6-p140",
+   "book_id": "69b63e841c1c21a3738655d6",
+   "page_number": 140,
+   "substratum": "1500s",
+   "title": "Monomachia Davidis et Goliae, &amp; Allegorica eiusdem expositio, Heroico carmine descripta : unà cum alijs quibusdam, q",
+   "year": 1541
+  },
+  {
+   "slug": "r4l-69b637ba1c1c21a373833324-p32",
+   "book_id": "69b637ba1c1c21a373833324",
+   "page_number": 32,
+   "substratum": "1500s",
+   "title": "Familiarium colloquiorum formulae",
+   "year": 1519
+  },
+  {
+   "slug": "r4l-69b637ba1c1c21a373833324-p33",
+   "book_id": "69b637ba1c1c21a373833324",
+   "page_number": 33,
+   "substratum": "1500s",
+   "title": "Familiarium colloquiorum formulae",
+   "year": 1519
+  },
+  {
+   "slug": "r4l-69b637ba1c1c21a373833324-p34",
+   "book_id": "69b637ba1c1c21a373833324",
+   "page_number": 34,
+   "substratum": "1500s",
+   "title": "Familiarium colloquiorum formulae",
+   "year": 1519
+  },
+  {
+   "slug": "r4l-69b64a0b18b87551bfc6261e-p27",
+   "book_id": "69b64a0b18b87551bfc6261e",
+   "page_number": 27,
+   "substratum": "1500s",
+   "title": "Conradi Celtis Protucii, primi in Germania poetae coronati, libri odarum quatuor : cum epodo, &amp; saeculari carmine : ",
+   "year": 1513
+  },
+  {
+   "slug": "r4l-69b64a0b18b87551bfc6261e-p28",
+   "book_id": "69b64a0b18b87551bfc6261e",
+   "page_number": 28,
+   "substratum": "1500s",
+   "title": "Conradi Celtis Protucii, primi in Germania poetae coronati, libri odarum quatuor : cum epodo, &amp; saeculari carmine : ",
+   "year": 1513
+  },
+  {
+   "slug": "r4l-69b64a0b18b87551bfc6261e-p29",
+   "book_id": "69b64a0b18b87551bfc6261e",
+   "page_number": 29,
+   "substratum": "1500s",
+   "title": "Conradi Celtis Protucii, primi in Germania poetae coronati, libri odarum quatuor : cum epodo, &amp; saeculari carmine : ",
+   "year": 1513
+  },
+  {
+   "slug": "r4l-6a906bf4336010794b0d2ab0-p56",
+   "book_id": "6a906bf4336010794b0d2ab0",
+   "page_number": 56,
+   "substratum": "1500s",
+   "title": "Tragoedia alia nova mercator seu judicium, in qua in conspectum ponuntur apostolica et papistica doctrina, quantum utraq",
+   "year": 1590
+  },
+  {
+   "slug": "r4l-6a906bf4336010794b0d2ab0-p57",
+   "book_id": "6a906bf4336010794b0d2ab0",
+   "page_number": 57,
+   "substratum": "1500s",
+   "title": "Tragoedia alia nova mercator seu judicium, in qua in conspectum ponuntur apostolica et papistica doctrina, quantum utraq",
+   "year": 1590
+  },
+  {
+   "slug": "r4l-6a906bf4336010794b0d2ab0-p58",
+   "book_id": "6a906bf4336010794b0d2ab0",
+   "page_number": 58,
+   "substratum": "1500s",
+   "title": "Tragoedia alia nova mercator seu judicium, in qua in conspectum ponuntur apostolica et papistica doctrina, quantum utraq",
+   "year": 1590
+  },
+  {
+   "slug": "r4l-6a42ca0be76baa13aa84c734-p106",
+   "book_id": "6a42ca0be76baa13aa84c734",
+   "page_number": 106,
+   "substratum": "1500s",
+   "title": "Icones, id est veræ imagines virorum doctrina simul et pietate illustrium.",
+   "year": 1580
+  },
+  {
+   "slug": "r4l-6a42ca0be76baa13aa84c734-p107",
+   "book_id": "6a42ca0be76baa13aa84c734",
+   "page_number": 107,
+   "substratum": "1500s",
+   "title": "Icones, id est veræ imagines virorum doctrina simul et pietate illustrium.",
+   "year": 1580
+  },
+  {
+   "slug": "r4l-6a42ca0be76baa13aa84c734-p108",
+   "book_id": "6a42ca0be76baa13aa84c734",
+   "page_number": 108,
+   "substratum": "1500s",
+   "title": "Icones, id est veræ imagines virorum doctrina simul et pietate illustrium.",
+   "year": 1580
+  },
+  {
+   "slug": "r4l-6a463e29b000203b37d3e7b5-p136",
+   "book_id": "6a463e29b000203b37d3e7b5",
+   "page_number": 136,
+   "substratum": "1500s",
+   "title": "Kykneion asma. Cygnea cantio. / Autore Ioanne Lelando antiquario",
+   "year": 1545
+  },
+  {
+   "slug": "r4l-6a463e29b000203b37d3e7b5-p137",
+   "book_id": "6a463e29b000203b37d3e7b5",
+   "page_number": 137,
+   "substratum": "1500s",
+   "title": "Kykneion asma. Cygnea cantio. / Autore Ioanne Lelando antiquario",
+   "year": 1545
+  },
+  {
+   "slug": "r4l-6a463e29b000203b37d3e7b5-p138",
+   "book_id": "6a463e29b000203b37d3e7b5",
+   "page_number": 138,
+   "substratum": "1500s",
+   "title": "Kykneion asma. Cygnea cantio. / Autore Ioanne Lelando antiquario",
+   "year": 1545
+  },
+  {
+   "slug": "r4l-69b65c3218b87551bfd12324-p116",
+   "book_id": "69b65c3218b87551bfd12324",
+   "page_number": 116,
+   "substratum": "1500s",
+   "title": "Militaris ordinis Iohannitarum, Rhodiorum, aut Melitensium equitum rerum memorabilium terra marique gestarum ...",
+   "year": 1581
+  },
+  {
+   "slug": "r4l-69b65c3218b87551bfd12324-p117",
+   "book_id": "69b65c3218b87551bfd12324",
+   "page_number": 117,
+   "substratum": "1500s",
+   "title": "Militaris ordinis Iohannitarum, Rhodiorum, aut Melitensium equitum rerum memorabilium terra marique gestarum ...",
+   "year": 1581
+  },
+  {
+   "slug": "r4l-69b65c3218b87551bfd12324-p118",
+   "book_id": "69b65c3218b87551bfd12324",
+   "page_number": 118,
+   "substratum": "1500s",
+   "title": "Militaris ordinis Iohannitarum, Rhodiorum, aut Melitensium equitum rerum memorabilium terra marique gestarum ...",
+   "year": 1581
+  },
+  {
+   "slug": "r4l-69b64d3d18b87551bfc7bb8d-p857",
+   "book_id": "69b64d3d18b87551bfc7bb8d",
+   "page_number": 857,
+   "substratum": "1500s",
+   "title": "Dramata sacra : Comoediae atque tragoediae aliquot e Veteri Testamento desumptae, quibus praecipuae ipsius historiae ita",
+   "year": 1547
+  },
+  {
+   "slug": "r4l-69b64d3d18b87551bfc7bb8d-p858",
+   "book_id": "69b64d3d18b87551bfc7bb8d",
+   "page_number": 858,
+   "substratum": "1500s",
+   "title": "Dramata sacra : Comoediae atque tragoediae aliquot e Veteri Testamento desumptae, quibus praecipuae ipsius historiae ita",
+   "year": 1547
+  },
+  {
+   "slug": "r4l-69b64d3d18b87551bfc7bb8d-p859",
+   "book_id": "69b64d3d18b87551bfc7bb8d",
+   "page_number": 859,
+   "substratum": "1500s",
+   "title": "Dramata sacra : Comoediae atque tragoediae aliquot e Veteri Testamento desumptae, quibus praecipuae ipsius historiae ita",
+   "year": 1547
+  },
+  {
+   "slug": "r4l-6a434784201f98f53c3eff29-p4",
+   "book_id": "6a434784201f98f53c3eff29",
+   "page_number": 4,
+   "substratum": "1500s",
+   "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+   "year": 1568
+  },
+  {
+   "slug": "r4l-6a434784201f98f53c3eff29-p5",
+   "book_id": "6a434784201f98f53c3eff29",
+   "page_number": 5,
+   "substratum": "1500s",
+   "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+   "year": 1568
+  },
+  {
+   "slug": "r4l-6a434784201f98f53c3eff29-p6",
+   "book_id": "6a434784201f98f53c3eff29",
+   "page_number": 6,
+   "substratum": "1500s",
+   "title": "Libellus continens eclogas et alia quaedam po'ematia diversis temporibus et occa sionibus composita, a Joachimo camerari",
+   "year": 1568
+  },
+  {
+   "slug": "r4l-69b65bc918b87551bfd0f087-p131",
+   "book_id": "69b65bc918b87551bfd0f087",
+   "page_number": 131,
+   "substratum": "1500s",
+   "title": "Icones, id est, verae imagines virorum doctrina simul et pietate illustrium, quorum praecipue ministerio partim bonarum ",
+   "year": 1580
+  },
+  {
+   "slug": "r4l-69b65bc918b87551bfd0f087-p132",
+   "book_id": "69b65bc918b87551bfd0f087",
+   "page_number": 132,
+   "substratum": "1500s",
+   "title": "Icones, id est, verae imagines virorum doctrina simul et pietate illustrium, quorum praecipue ministerio partim bonarum ",
+   "year": 1580
+  },
+  {
+   "slug": "r4l-69b65bc918b87551bfd0f087-p133",
+   "book_id": "69b65bc918b87551bfd0f087",
+   "page_number": 133,
+   "substratum": "1500s",
+   "title": "Icones, id est, verae imagines virorum doctrina simul et pietate illustrium, quorum praecipue ministerio partim bonarum ",
+   "year": 1580
+  },
+  {
+   "slug": "r4l-69b6542618b87551bfcc6072-p2",
+   "book_id": "69b6542618b87551bfcc6072",
+   "page_number": 2,
+   "substratum": "1500s",
+   "title": "Caelii Augustini Curionis Sarracenicae historiae libri III : In quibus Sarracenorum, Turcarum, Aegypti Sultanorum, ... o",
+   "year": 1567
+  },
+  {
+   "slug": "r4l-69b6542618b87551bfcc6072-p3",
+   "book_id": "69b6542618b87551bfcc6072",
+   "page_number": 3,
+   "substratum": "1500s",
+   "title": "Caelii Augustini Curionis Sarracenicae historiae libri III : In quibus Sarracenorum, Turcarum, Aegypti Sultanorum, ... o",
+   "year": 1567
+  },
+  {
+   "slug": "r4l-69b6542618b87551bfcc6072-p4",
+   "book_id": "69b6542618b87551bfcc6072",
+   "page_number": 4,
+   "substratum": "1500s",
+   "title": "Caelii Augustini Curionis Sarracenicae historiae libri III : In quibus Sarracenorum, Turcarum, Aegypti Sultanorum, ... o",
+   "year": 1567
+  },
+  {
+   "slug": "r4l-6a9099bbb7feee6e9c42915e-p16",
+   "book_id": "6a9099bbb7feee6e9c42915e",
+   "page_number": 16,
+   "substratum": "1500s",
+   "title": "Hieremias. Tragoedia nova, ex propheta hieremia sumpta, hisce temporibus valdè accommoda, cum luculenta praefatione.",
+   "year": 1551
+  },
+  {
+   "slug": "r4l-6a9099bbb7feee6e9c42915e-p17",
+   "book_id": "6a9099bbb7feee6e9c42915e",
+   "page_number": 17,
+   "substratum": "1500s",
+   "title": "Hieremias. Tragoedia nova, ex propheta hieremia sumpta, hisce temporibus valdè accommoda, cum luculenta praefatione.",
+   "year": 1551
+  },
+  {
+   "slug": "r4l-6a9099bbb7feee6e9c42915e-p18",
+   "book_id": "6a9099bbb7feee6e9c42915e",
+   "page_number": 18,
+   "substratum": "1500s",
+   "title": "Hieremias. Tragoedia nova, ex propheta hieremia sumpta, hisce temporibus valdè accommoda, cum luculenta praefatione.",
+   "year": 1551
+  },
+  {
+   "slug": "r4l-6a94184aa4ed5935447a82d2-p168",
+   "book_id": "6a94184aa4ed5935447a82d2",
+   "page_number": 168,
+   "substratum": "1500s",
+   "title": "Dramata sacra. Comoediae atqte tragoediae aliquot è veteri testamento desumptae, quibus ipsius historiae ita eleganter i",
+   "year": 1547
+  },
+  {
+   "slug": "r4l-6a94184aa4ed5935447a82d2-p169",
+   "book_id": "6a94184aa4ed5935447a82d2",
+   "page_number": 169,
+   "substratum": "1500s",
+   "title": "Dramata sacra. Comoediae atqte tragoediae aliquot è veteri testamento desumptae, quibus ipsius historiae ita eleganter i",
+   "year": 1547
+  },
+  {
+   "slug": "r4l-6a94184aa4ed5935447a82d2-p170",
+   "book_id": "6a94184aa4ed5935447a82d2",
+   "page_number": 170,
+   "substratum": "1500s",
+   "title": "Dramata sacra. Comoediae atqte tragoediae aliquot è veteri testamento desumptae, quibus ipsius historiae ita eleganter i",
+   "year": 1547
+  },
+  {
+   "slug": "r4l-6958de4ecf7070242ed412dc-p304",
+   "book_id": "6958de4ecf7070242ed412dc",
+   "page_number": 304,
+   "substratum": "1500s",
+   "title": "Stirpium adversaria nova",
+   "year": 1571
+  },
+  {
+   "slug": "r4l-6958de4ecf7070242ed412dc-p305",
+   "book_id": "6958de4ecf7070242ed412dc",
+   "page_number": 305,
+   "substratum": "1500s",
+   "title": "Stirpium adversaria nova",
+   "year": 1571
+  },
+  {
+   "slug": "r4l-6958de4ecf7070242ed412dc-p306",
+   "book_id": "6958de4ecf7070242ed412dc",
+   "page_number": 306,
+   "substratum": "1500s",
+   "title": "Stirpium adversaria nova",
+   "year": 1571
+  },
+  {
+   "slug": "r4l-69b64da218b87551bfc7fe19-p165",
+   "book_id": "69b64da218b87551bfc7fe19",
+   "page_number": 165,
+   "substratum": "1500s",
+   "title": "Iudas Iscariotes : tragoedia nova et sacra : lectu &amp; actu festiva &amp; iucunda",
+   "year": 1552
+  },
+  {
+   "slug": "r4l-69b64da218b87551bfc7fe19-p166",
+   "book_id": "69b64da218b87551bfc7fe19",
+   "page_number": 166,
+   "substratum": "1500s",
+   "title": "Iudas Iscariotes : tragoedia nova et sacra : lectu &amp; actu festiva &amp; iucunda",
+   "year": 1552
+  },
+  {
+   "slug": "r4l-69b64da218b87551bfc7fe19-p167",
+   "book_id": "69b64da218b87551bfc7fe19",
+   "page_number": 167,
+   "substratum": "1500s",
+   "title": "Iudas Iscariotes : tragoedia nova et sacra : lectu &amp; actu festiva &amp; iucunda",
+   "year": 1552
+  },
+  {
+   "slug": "r4l-69b637a31c1c21a3738330ae-p36",
+   "book_id": "69b637a31c1c21a3738330ae",
+   "page_number": 36,
+   "substratum": "1500s",
+   "title": "[Familiarium colloquiorum formulae]",
+   "year": 1519
+  },
+  {
+   "slug": "r4l-69b637a31c1c21a3738330ae-p37",
+   "book_id": "69b637a31c1c21a3738330ae",
+   "page_number": 37,
+   "substratum": "1500s",
+   "title": "[Familiarium colloquiorum formulae]",
+   "year": 1519
+  },
+  {
+   "slug": "r4l-69b637a31c1c21a3738330ae-p38",
+   "book_id": "69b637a31c1c21a3738330ae",
+   "page_number": 38,
+   "substratum": "1500s",
+   "title": "[Familiarium colloquiorum formulae]",
+   "year": 1519
+  },
+  {
+   "slug": "r4l-69b660aeb3f4fc0441533e16-p66",
+   "book_id": "69b660aeb3f4fc0441533e16",
+   "page_number": 66,
+   "substratum": "1500s",
+   "title": "Sphaera Ioannis de Sacro Bosco emendata : Eliae Vineti Santonis scholia in eandem sphaeram ab ipso auctore restituta : A",
+   "year": 1586
+  },
+  {
+   "slug": "r4l-69b660aeb3f4fc0441533e16-p67",
+   "book_id": "69b660aeb3f4fc0441533e16",
+   "page_number": 67,
+   "substratum": "1500s",
+   "title": "Sphaera Ioannis de Sacro Bosco emendata : Eliae Vineti Santonis scholia in eandem sphaeram ab ipso auctore restituta : A",
+   "year": 1586
+  },
+  {
+   "slug": "r4l-69b660aeb3f4fc0441533e16-p68",
+   "book_id": "69b660aeb3f4fc0441533e16",
+   "page_number": 68,
+   "substratum": "1500s",
+   "title": "Sphaera Ioannis de Sacro Bosco emendata : Eliae Vineti Santonis scholia in eandem sphaeram ab ipso auctore restituta : A",
+   "year": 1586
+  },
+  {
+   "slug": "r4l-6a26beae0e247ebad6de8612-p208",
+   "book_id": "6a26beae0e247ebad6de8612",
+   "page_number": 208,
+   "substratum": "1500s",
+   "title": "Epistolarvm Philosophicarvm Medicinalivm, Ac Chymicarvm à Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Volv",
+   "year": 1598
+  },
+  {
+   "slug": "r4l-6a26beae0e247ebad6de8612-p209",
+   "book_id": "6a26beae0e247ebad6de8612",
+   "page_number": 209,
+   "substratum": "1500s",
+   "title": "Epistolarvm Philosophicarvm Medicinalivm, Ac Chymicarvm à Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Volv",
+   "year": 1598
+  },
+  {
+   "slug": "r4l-6a26beae0e247ebad6de8612-p210",
+   "book_id": "6a26beae0e247ebad6de8612",
+   "page_number": 210,
+   "substratum": "1500s",
+   "title": "Epistolarvm Philosophicarvm Medicinalivm, Ac Chymicarvm à Summis nostrae Aetatis Philosophis ac Medicis Exaratarum, Volv",
+   "year": 1598
+  },
+  {
+   "slug": "r4l-69b6446b18b87551bfc38978-p123",
+   "book_id": "69b6446b18b87551bfc38978",
+   "page_number": 123,
+   "substratum": "1500s",
+   "title": "Satyrarum libri quinque priores",
+   "year": 1555
+  },
+  {
+   "slug": "r4l-69b6446b18b87551bfc38978-p124",
+   "book_id": "69b6446b18b87551bfc38978",
+   "page_number": 124,
+   "substratum": "1500s",
+   "title": "Satyrarum libri quinque priores",
+   "year": 1555
+  },
+  {
+   "slug": "r4l-69b6446b18b87551bfc38978-p125",
+   "book_id": "69b6446b18b87551bfc38978",
+   "page_number": 125,
+   "substratum": "1500s",
+   "title": "Satyrarum libri quinque priores",
+   "year": 1555
+  },
+  {
+   "slug": "r4l-69b6564d18b87551bfcde9eb-p68",
+   "book_id": "69b6564d18b87551bfcde9eb",
+   "page_number": 68,
+   "substratum": "1500s",
+   "title": "Stultifera navis mortalium : in qua fatui affectus, mores, conatus atque studia, quibus vita haec nostra, in omni hominu",
+   "year": 1572
+  },
+  {
+   "slug": "r4l-69b6564d18b87551bfcde9eb-p69",
+   "book_id": "69b6564d18b87551bfcde9eb",
+   "page_number": 69,
+   "substratum": "1500s",
+   "title": "Stultifera navis mortalium : in qua fatui affectus, mores, conatus atque studia, quibus vita haec nostra, in omni hominu",
+   "year": 1572
+  },
+  {
+   "slug": "r4l-69b6564d18b87551bfcde9eb-p70",
+   "book_id": "69b6564d18b87551bfcde9eb",
+   "page_number": 70,
+   "substratum": "1500s",
+   "title": "Stultifera navis mortalium : in qua fatui affectus, mores, conatus atque studia, quibus vita haec nostra, in omni hominu",
+   "year": 1572
+  },
+  {
+   "slug": "r4l-69b658d818b87551bfcf6b7c-p277",
+   "book_id": "69b658d818b87551bfcf6b7c",
+   "page_number": 277,
+   "substratum": "1500s",
+   "title": "Epistolarum medicinalium Conradi Gesneri philosophi et medici Tigurini libri III : ; his accesserunt eiusdem Aconiti pri",
+   "year": 1577
+  },
+  {
+   "slug": "r4l-69b658d818b87551bfcf6b7c-p278",
+   "book_id": "69b658d818b87551bfcf6b7c",
+   "page_number": 278,
+   "substratum": "1500s",
+   "title": "Epistolarum medicinalium Conradi Gesneri philosophi et medici Tigurini libri III : ; his accesserunt eiusdem Aconiti pri",
+   "year": 1577
+  },
+  {
+   "slug": "r4l-69b658d818b87551bfcf6b7c-p279",
+   "book_id": "69b658d818b87551bfcf6b7c",
+   "page_number": 279,
+   "substratum": "1500s",
+   "title": "Epistolarum medicinalium Conradi Gesneri philosophi et medici Tigurini libri III : ; his accesserunt eiusdem Aconiti pri",
+   "year": 1577
+  },
+  {
+   "slug": "r4l-69b64c0318b87551bfc70acd-p38",
+   "book_id": "69b64c0318b87551bfc70acd",
+   "page_number": 38,
+   "substratum": "1500s",
+   "title": "Ioannis Atrociani elegia de bello rustico, anno redempti orbis M.D.XXV. in Germania exorto : ; Praeterea eiusdem Ioannis",
+   "year": 1528
+  },
+  {
+   "slug": "r4l-69b64c0318b87551bfc70acd-p39",
+   "book_id": "69b64c0318b87551bfc70acd",
+   "page_number": 39,
+   "substratum": "1500s",
+   "title": "Ioannis Atrociani elegia de bello rustico, anno redempti orbis M.D.XXV. in Germania exorto : ; Praeterea eiusdem Ioannis",
+   "year": 1528
+  },
+  {
+   "slug": "r4l-69b64c0318b87551bfc70acd-p40",
+   "book_id": "69b64c0318b87551bfc70acd",
+   "page_number": 40,
+   "substratum": "1500s",
+   "title": "Ioannis Atrociani elegia de bello rustico, anno redempti orbis M.D.XXV. in Germania exorto : ; Praeterea eiusdem Ioannis",
+   "year": 1528
+  },
+  {
+   "slug": "r4l-6a43779193aef4a7d61477df-p189",
+   "book_id": "6a43779193aef4a7d61477df",
+   "page_number": 189,
+   "substratum": "1500s",
+   "title": "Schediasmata poetica, secundo edita, multo auctiora",
+   "year": 1586
+  },
+  {
+   "slug": "r4l-6a43779193aef4a7d61477df-p190",
+   "book_id": "6a43779193aef4a7d61477df",
+   "page_number": 190,
+   "substratum": "1500s",
+   "title": "Schediasmata poetica, secundo edita, multo auctiora",
+   "year": 1586
+  },
+  {
+   "slug": "r4l-6a43779193aef4a7d61477df-p191",
+   "book_id": "6a43779193aef4a7d61477df",
+   "page_number": 191,
+   "substratum": "1500s",
+   "title": "Schediasmata poetica, secundo edita, multo auctiora",
+   "year": 1586
+  },
+  {
+   "slug": "r4l-69b64f1818b87551bfc907fb-p104",
+   "book_id": "69b64f1818b87551bfc907fb",
+   "page_number": 104,
+   "substratum": "1500s",
+   "title": "Historiarum de divis tam veteris quam novi testamenti tempore celeberrimis, omni mythologia libere resecta, liber unus :",
+   "year": 1557
+  },
+  {
+   "slug": "r4l-69b64f1818b87551bfc907fb-p105",
+   "book_id": "69b64f1818b87551bfc907fb",
+   "page_number": 105,
+   "substratum": "1500s",
+   "title": "Historiarum de divis tam veteris quam novi testamenti tempore celeberrimis, omni mythologia libere resecta, liber unus :",
+   "year": 1557
+  },
+  {
+   "slug": "r4l-69b64f1818b87551bfc907fb-p106",
+   "book_id": "69b64f1818b87551bfc907fb",
+   "page_number": 106,
+   "substratum": "1500s",
+   "title": "Historiarum de divis tam veteris quam novi testamenti tempore celeberrimis, omni mythologia libere resecta, liber unus :",
+   "year": 1557
+  },
+  {
+   "slug": "r4l-6a42aecb5207af7c42f5333c-p20",
+   "book_id": "6a42aecb5207af7c42f5333c",
+   "page_number": 20,
+   "substratum": "1600s",
+   "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+   "year": 1648
+  },
+  {
+   "slug": "r4l-6a42aecb5207af7c42f5333c-p21",
+   "book_id": "6a42aecb5207af7c42f5333c",
+   "page_number": 21,
+   "substratum": "1600s",
+   "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+   "year": 1648
+  },
+  {
+   "slug": "r4l-6a42aecb5207af7c42f5333c-p22",
+   "book_id": "6a42aecb5207af7c42f5333c",
+   "page_number": 22,
+   "substratum": "1600s",
+   "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+   "year": 1648
+  },
+  {
+   "slug": "r4l-6a42ec4006e6ead3ac544b8f-p51",
+   "book_id": "6a42ec4006e6ead3ac544b8f",
+   "page_number": 51,
+   "substratum": "1600s",
+   "title": "Poemata varii argumenti, partim E Georgio Herberto Latinè (utcunque) reddita, partim conscripta, a Wilh. Dillingham, S.T",
+   "year": 1678
+  },
+  {
+   "slug": "r4l-6a42ec4006e6ead3ac544b8f-p52",
+   "book_id": "6a42ec4006e6ead3ac544b8f",
+   "page_number": 52,
+   "substratum": "1600s",
+   "title": "Poemata varii argumenti, partim E Georgio Herberto Latinè (utcunque) reddita, partim conscripta, a Wilh. Dillingham, S.T",
+   "year": 1678
+  },
+  {
+   "slug": "r4l-6a42ec4006e6ead3ac544b8f-p53",
+   "book_id": "6a42ec4006e6ead3ac544b8f",
+   "page_number": 53,
+   "substratum": "1600s",
+   "title": "Poemata varii argumenti, partim E Georgio Herberto Latinè (utcunque) reddita, partim conscripta, a Wilh. Dillingham, S.T",
+   "year": 1678
+  },
+  {
+   "slug": "r4l-6a50496478825bd7fdd8515a-p487",
+   "book_id": "6a50496478825bd7fdd8515a",
+   "page_number": 487,
+   "substratum": "1600s",
+   "title": "Marci Velseri, Matthaei F. Ant. N. Reip. Augustanae Quondam Duumviri, Opera Historica Et Philologica, Sacra Et Profana :",
+   "year": 1682
+  },
+  {
+   "slug": "r4l-6a50496478825bd7fdd8515a-p488",
+   "book_id": "6a50496478825bd7fdd8515a",
+   "page_number": 488,
+   "substratum": "1600s",
+   "title": "Marci Velseri, Matthaei F. Ant. N. Reip. Augustanae Quondam Duumviri, Opera Historica Et Philologica, Sacra Et Profana :",
+   "year": 1682
+  },
+  {
+   "slug": "r4l-6a50496478825bd7fdd8515a-p489",
+   "book_id": "6a50496478825bd7fdd8515a",
+   "page_number": 489,
+   "substratum": "1600s",
+   "title": "Marci Velseri, Matthaei F. Ant. N. Reip. Augustanae Quondam Duumviri, Opera Historica Et Philologica, Sacra Et Profana :",
+   "year": 1682
+  },
+  {
+   "slug": "r4l-6a43001a4e06bc233ecf5ef6-p11",
+   "book_id": "6a43001a4e06bc233ecf5ef6",
+   "page_number": 11,
+   "substratum": "1600s",
+   "title": "Amoris Christiani Mnēmoneutikón: sive concio ad clerum, habita in visitatione metropoliticâ Ecclesiæ Cathedralis Sarum. ",
+   "year": 1686
+  },
+  {
+   "slug": "r4l-6a43001a4e06bc233ecf5ef6-p12",
+   "book_id": "6a43001a4e06bc233ecf5ef6",
+   "page_number": 12,
+   "substratum": "1600s",
+   "title": "Amoris Christiani Mnēmoneutikón: sive concio ad clerum, habita in visitatione metropoliticâ Ecclesiæ Cathedralis Sarum. ",
+   "year": 1686
+  },
+  {
+   "slug": "r4l-6a43001a4e06bc233ecf5ef6-p13",
+   "book_id": "6a43001a4e06bc233ecf5ef6",
+   "page_number": 13,
+   "substratum": "1600s",
+   "title": "Amoris Christiani Mnēmoneutikón: sive concio ad clerum, habita in visitatione metropoliticâ Ecclesiæ Cathedralis Sarum. ",
+   "year": 1686
+  },
+  {
+   "slug": "r4l-697a6e5cb981745f5fac1d7e-p89",
+   "book_id": "697a6e5cb981745f5fac1d7e",
+   "page_number": 89,
+   "substratum": "1600s",
+   "title": "Discursus politici singulares: I De tribus domesticae-societatis speciebus II De jure, ordinibusque civium",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-697a6e5cb981745f5fac1d7e-p90",
+   "book_id": "697a6e5cb981745f5fac1d7e",
+   "page_number": 90,
+   "substratum": "1600s",
+   "title": "Discursus politici singulares: I De tribus domesticae-societatis speciebus II De jure, ordinibusque civium",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-697a6e5cb981745f5fac1d7e-p91",
+   "book_id": "697a6e5cb981745f5fac1d7e",
+   "page_number": 91,
+   "substratum": "1600s",
+   "title": "Discursus politici singulares: I De tribus domesticae-societatis speciebus II De jure, ordinibusque civium",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-6a50ed6dc39423579e0cd6c6-p134",
+   "book_id": "6a50ed6dc39423579e0cd6c6",
+   "page_number": 134,
+   "substratum": "1600s",
+   "title": "Epistolarum Syntagmata Duo una cum Responsis: Praemissa Conringii Vita, Scriptorum Index, & de his Doctorum Virorum Iudi",
+   "year": 1694
+  },
+  {
+   "slug": "r4l-6a50ed6dc39423579e0cd6c6-p135",
+   "book_id": "6a50ed6dc39423579e0cd6c6",
+   "page_number": 135,
+   "substratum": "1600s",
+   "title": "Epistolarum Syntagmata Duo una cum Responsis: Praemissa Conringii Vita, Scriptorum Index, & de his Doctorum Virorum Iudi",
+   "year": 1694
+  },
+  {
+   "slug": "r4l-6a50ed6dc39423579e0cd6c6-p136",
+   "book_id": "6a50ed6dc39423579e0cd6c6",
+   "page_number": 136,
+   "substratum": "1600s",
+   "title": "Epistolarum Syntagmata Duo una cum Responsis: Praemissa Conringii Vita, Scriptorum Index, & de his Doctorum Virorum Iudi",
+   "year": 1694
+  },
+  {
+   "slug": "r4l-6a0b351d688e6a8e15f6759f-p880",
+   "book_id": "6a0b351d688e6a8e15f6759f",
+   "page_number": 880,
+   "substratum": "1600s",
+   "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+   "year": 1682
+  },
+  {
+   "slug": "r4l-6a0b351d688e6a8e15f6759f-p881",
+   "book_id": "6a0b351d688e6a8e15f6759f",
+   "page_number": 881,
+   "substratum": "1600s",
+   "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+   "year": 1682
+  },
+  {
+   "slug": "r4l-6a0b351d688e6a8e15f6759f-p882",
+   "book_id": "6a0b351d688e6a8e15f6759f",
+   "page_number": 882,
+   "substratum": "1600s",
+   "title": "Marci Velseri Opera historica et philologica, sacra et profana",
+   "year": 1682
+  },
+  {
+   "slug": "r4l-6a4263b1744db9e3105b1125-p212",
+   "book_id": "6a4263b1744db9e3105b1125",
+   "page_number": 212,
+   "substratum": "1600s",
+   "title": "Oeconomia animalis, novis in medicina hypothesibus superstructa, & mechanicè explicata. Autore Gualtero Charleton, M.D. ",
+   "year": 1659
+  },
+  {
+   "slug": "r4l-6a4263b1744db9e3105b1125-p213",
+   "book_id": "6a4263b1744db9e3105b1125",
+   "page_number": 213,
+   "substratum": "1600s",
+   "title": "Oeconomia animalis, novis in medicina hypothesibus superstructa, & mechanicè explicata. Autore Gualtero Charleton, M.D. ",
+   "year": 1659
+  },
+  {
+   "slug": "r4l-6a4263b1744db9e3105b1125-p214",
+   "book_id": "6a4263b1744db9e3105b1125",
+   "page_number": 214,
+   "substratum": "1600s",
+   "title": "Oeconomia animalis, novis in medicina hypothesibus superstructa, & mechanicè explicata. Autore Gualtero Charleton, M.D. ",
+   "year": 1659
+  },
+  {
+   "slug": "r4l-6a4b6fb28fe09ab0ff23ad56-p5",
+   "book_id": "6a4b6fb28fe09ab0ff23ad56",
+   "page_number": 5,
+   "substratum": "1600s",
+   "title": "Mormonostolismos, sive Lamiarum vestitus. A poem on the King and Queen of Fairy. Translated into Latine, by Mr. Walter D",
+   "year": 1691
+  },
+  {
+   "slug": "r4l-6a4b6fb28fe09ab0ff23ad56-p6",
+   "book_id": "6a4b6fb28fe09ab0ff23ad56",
+   "page_number": 6,
+   "substratum": "1600s",
+   "title": "Mormonostolismos, sive Lamiarum vestitus. A poem on the King and Queen of Fairy. Translated into Latine, by Mr. Walter D",
+   "year": 1691
+  },
+  {
+   "slug": "r4l-6a4b6fb28fe09ab0ff23ad56-p7",
+   "book_id": "6a4b6fb28fe09ab0ff23ad56",
+   "page_number": 7,
+   "substratum": "1600s",
+   "title": "Mormonostolismos, sive Lamiarum vestitus. A poem on the King and Queen of Fairy. Translated into Latine, by Mr. Walter D",
+   "year": 1691
+  },
+  {
+   "slug": "r4l-6a491369ac0c339f55337854-p3",
+   "book_id": "6a491369ac0c339f55337854",
+   "page_number": 3,
+   "substratum": "1600s",
+   "title": "Elegia Dauidis Echlini, Medici Reginæ. In funere charissimæ castissimæq[ue] coniugis Philibertæ Loubatæ, quæ nata Roanæ ",
+   "year": 1629
+  },
+  {
+   "slug": "r4l-6a491369ac0c339f55337854-p4",
+   "book_id": "6a491369ac0c339f55337854",
+   "page_number": 4,
+   "substratum": "1600s",
+   "title": "Elegia Dauidis Echlini, Medici Reginæ. In funere charissimæ castissimæq[ue] coniugis Philibertæ Loubatæ, quæ nata Roanæ ",
+   "year": 1629
+  },
+  {
+   "slug": "r4l-6a491369ac0c339f55337854-p5",
+   "book_id": "6a491369ac0c339f55337854",
+   "page_number": 5,
+   "substratum": "1600s",
+   "title": "Elegia Dauidis Echlini, Medici Reginæ. In funere charissimæ castissimæq[ue] coniugis Philibertæ Loubatæ, quæ nata Roanæ ",
+   "year": 1629
+  },
+  {
+   "slug": "r4l-69c8a3f26c6f3cc53c85e777-p185",
+   "book_id": "69c8a3f26c6f3cc53c85e777",
+   "page_number": 185,
+   "substratum": "1600s",
+   "title": "Discursus politici singulares, de informatione et coactione suditorum, ubi agitur",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-69c8a3f26c6f3cc53c85e777-p186",
+   "book_id": "69c8a3f26c6f3cc53c85e777",
+   "page_number": 186,
+   "substratum": "1600s",
+   "title": "Discursus politici singulares, de informatione et coactione suditorum, ubi agitur",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-69c8a3f26c6f3cc53c85e777-p187",
+   "book_id": "69c8a3f26c6f3cc53c85e777",
+   "page_number": 187,
+   "substratum": "1600s",
+   "title": "Discursus politici singulares, de informatione et coactione suditorum, ubi agitur",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-6a42777528e9db2e39c1ece8-p26",
+   "book_id": "6a42777528e9db2e39c1ece8",
+   "page_number": 26,
+   "substratum": "1600s",
+   "title": "Dissertationum ecclesiasticarum triga: de sanctitate relativa. Veneratione sacra. De sortitione & alea. Quibus accednnt ",
+   "year": 1653
+  },
+  {
+   "slug": "r4l-6a42777528e9db2e39c1ece8-p27",
+   "book_id": "6a42777528e9db2e39c1ece8",
+   "page_number": 27,
+   "substratum": "1600s",
+   "title": "Dissertationum ecclesiasticarum triga: de sanctitate relativa. Veneratione sacra. De sortitione & alea. Quibus accednnt ",
+   "year": 1653
+  },
+  {
+   "slug": "r4l-6a42777528e9db2e39c1ece8-p28",
+   "book_id": "6a42777528e9db2e39c1ece8",
+   "page_number": 28,
+   "substratum": "1600s",
+   "title": "Dissertationum ecclesiasticarum triga: de sanctitate relativa. Veneratione sacra. De sortitione & alea. Quibus accednnt ",
+   "year": 1653
+  },
+  {
+   "slug": "r4l-69b6b9618566c8381462b415-p107",
+   "book_id": "69b6b9618566c8381462b415",
+   "page_number": 107,
+   "substratum": "1600s",
+   "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+   "year": 1687
+  },
+  {
+   "slug": "r4l-69b6b9618566c8381462b415-p108",
+   "book_id": "69b6b9618566c8381462b415",
+   "page_number": 108,
+   "substratum": "1600s",
+   "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+   "year": 1687
+  },
+  {
+   "slug": "r4l-69b6b9618566c8381462b415-p109",
+   "book_id": "69b6b9618566c8381462b415",
+   "page_number": 109,
+   "substratum": "1600s",
+   "title": "Philosophiae Naturalis Principia Mathematica. Auctore Js. Newton ...",
+   "year": 1687
+  },
+  {
+   "slug": "r4l-6a4adfef9a3f4fa983d99fb9-p29",
+   "book_id": "6a4adfef9a3f4fa983d99fb9",
+   "page_number": 29,
+   "substratum": "1600s",
+   "title": "Exercitationes philologicæ tres; prima Infanticidium, poema credulam exprimens matrem delirantibus astrologorum insomnii",
+   "year": 1681
+  },
+  {
+   "slug": "r4l-6a4adfef9a3f4fa983d99fb9-p30",
+   "book_id": "6a4adfef9a3f4fa983d99fb9",
+   "page_number": 30,
+   "substratum": "1600s",
+   "title": "Exercitationes philologicæ tres; prima Infanticidium, poema credulam exprimens matrem delirantibus astrologorum insomnii",
+   "year": 1681
+  },
+  {
+   "slug": "r4l-6a4adfef9a3f4fa983d99fb9-p31",
+   "book_id": "6a4adfef9a3f4fa983d99fb9",
+   "page_number": 31,
+   "substratum": "1600s",
+   "title": "Exercitationes philologicæ tres; prima Infanticidium, poema credulam exprimens matrem delirantibus astrologorum insomnii",
+   "year": 1681
+  },
+  {
+   "slug": "r4l-69b6766cb3f4fc04415c2bba-p971",
+   "book_id": "69b6766cb3f4fc04415c2bba",
+   "page_number": 971,
+   "substratum": "1600s",
+   "title": "Ioann. Langii Lembergii, V. Palatinorum Electorum archiatri, Epistolarum medicinalium volumen tripartitum : denuo recogn",
+   "year": 1605
+  },
+  {
+   "slug": "r4l-69b6766cb3f4fc04415c2bba-p972",
+   "book_id": "69b6766cb3f4fc04415c2bba",
+   "page_number": 972,
+   "substratum": "1600s",
+   "title": "Ioann. Langii Lembergii, V. Palatinorum Electorum archiatri, Epistolarum medicinalium volumen tripartitum : denuo recogn",
+   "year": 1605
+  },
+  {
+   "slug": "r4l-69b6766cb3f4fc04415c2bba-p973",
+   "book_id": "69b6766cb3f4fc04415c2bba",
+   "page_number": 973,
+   "substratum": "1600s",
+   "title": "Ioann. Langii Lembergii, V. Palatinorum Electorum archiatri, Epistolarum medicinalium volumen tripartitum : denuo recogn",
+   "year": 1605
+  },
+  {
+   "slug": "r4l-6a94390b45a4780cb83dba46-p2",
+   "book_id": "6a94390b45a4780cb83dba46",
+   "page_number": 2,
+   "substratum": "1600s",
+   "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ ",
+   "year": 1661
+  },
+  {
+   "slug": "r4l-6a94390b45a4780cb83dba46-p3",
+   "book_id": "6a94390b45a4780cb83dba46",
+   "page_number": 3,
+   "substratum": "1600s",
+   "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ ",
+   "year": 1661
+  },
+  {
+   "slug": "r4l-6a94390b45a4780cb83dba46-p4",
+   "book_id": "6a94390b45a4780cb83dba46",
+   "page_number": 4,
+   "substratum": "1600s",
+   "title": "Academiæ Edinburgenæ gratulatio, ob serenissimi, augustissimiq[ue], Monarchæ Caroli II. Britanniarum, Galliæ & Hiberniæ ",
+   "year": 1661
+  },
+  {
+   "slug": "r4l-69b6ba018566c8381462e8fa-p476",
+   "book_id": "69b6ba018566c8381462e8fa",
+   "page_number": 476,
+   "substratum": "1600s",
+   "title": "Philosophiæ Naturalis Principia Mathematica",
+   "year": 1687
+  },
+  {
+   "slug": "r4l-69b6ba018566c8381462e8fa-p477",
+   "book_id": "69b6ba018566c8381462e8fa",
+   "page_number": 477,
+   "substratum": "1600s",
+   "title": "Philosophiæ Naturalis Principia Mathematica",
+   "year": 1687
+  },
+  {
+   "slug": "r4l-69b6ba018566c8381462e8fa-p478",
+   "book_id": "69b6ba018566c8381462e8fa",
+   "page_number": 478,
+   "substratum": "1600s",
+   "title": "Philosophiæ Naturalis Principia Mathematica",
+   "year": 1687
+  },
+  {
+   "slug": "r4l-6a496e86ff00b397e11984f3-p61",
+   "book_id": "6a496e86ff00b397e11984f3",
+   "page_number": 61,
+   "substratum": "1600s",
+   "title": "Ioannis Leochæi Epigrammatum libri quatuor. Edition Editio tertia, prioribus multo emendatior",
+   "year": 1623
+  },
+  {
+   "slug": "r4l-6a496e86ff00b397e11984f3-p62",
+   "book_id": "6a496e86ff00b397e11984f3",
+   "page_number": 62,
+   "substratum": "1600s",
+   "title": "Ioannis Leochæi Epigrammatum libri quatuor. Edition Editio tertia, prioribus multo emendatior",
+   "year": 1623
+  },
+  {
+   "slug": "r4l-6a496e86ff00b397e11984f3-p63",
+   "book_id": "6a496e86ff00b397e11984f3",
+   "page_number": 63,
+   "substratum": "1600s",
+   "title": "Ioannis Leochæi Epigrammatum libri quatuor. Edition Editio tertia, prioribus multo emendatior",
+   "year": 1623
+  },
+  {
+   "slug": "r4l-6a432b29e797132cc665b266-p2",
+   "book_id": "6a432b29e797132cc665b266",
+   "page_number": 2,
+   "substratum": "1600s",
+   "title": "Nuncius inanimatus.",
+   "year": 1629
+  },
+  {
+   "slug": "r4l-6a432b29e797132cc665b266-p3",
+   "book_id": "6a432b29e797132cc665b266",
+   "page_number": 3,
+   "substratum": "1600s",
+   "title": "Nuncius inanimatus.",
+   "year": 1629
+  },
+  {
+   "slug": "r4l-6a432b29e797132cc665b266-p4",
+   "book_id": "6a432b29e797132cc665b266",
+   "page_number": 4,
+   "substratum": "1600s",
+   "title": "Nuncius inanimatus.",
+   "year": 1629
+  },
+  {
+   "slug": "r4l-6a42ce3be76baa13aa851af5-p10",
+   "book_id": "6a42ce3be76baa13aa851af5",
+   "page_number": 10,
+   "substratum": "1600s",
+   "title": "Oratio funebris habita in templo beatæ Mariæ Oxon. Ab Isaaco Wake, Publico academie̜ oratore, Maij 25. An. 1607. quum mo",
+   "year": 1608
+  },
+  {
+   "slug": "r4l-6a42ce3be76baa13aa851af5-p11",
+   "book_id": "6a42ce3be76baa13aa851af5",
+   "page_number": 11,
+   "substratum": "1600s",
+   "title": "Oratio funebris habita in templo beatæ Mariæ Oxon. Ab Isaaco Wake, Publico academie̜ oratore, Maij 25. An. 1607. quum mo",
+   "year": 1608
+  },
+  {
+   "slug": "r4l-6a42ce3be76baa13aa851af5-p12",
+   "book_id": "6a42ce3be76baa13aa851af5",
+   "page_number": 12,
+   "substratum": "1600s",
+   "title": "Oratio funebris habita in templo beatæ Mariæ Oxon. Ab Isaaco Wake, Publico academie̜ oratore, Maij 25. An. 1607. quum mo",
+   "year": 1608
+  },
+  {
+   "slug": "r4l-6970e3599b09d309d780a252-p225",
+   "book_id": "6970e3599b09d309d780a252",
+   "page_number": 225,
+   "substratum": "1600s",
+   "title": "De aerario publico",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-6970e3599b09d309d780a252-p226",
+   "book_id": "6970e3599b09d309d780a252",
+   "page_number": 226,
+   "substratum": "1600s",
+   "title": "De aerario publico",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-6970e3599b09d309d780a252-p227",
+   "book_id": "6970e3599b09d309d780a252",
+   "page_number": 227,
+   "substratum": "1600s",
+   "title": "De aerario publico",
+   "year": 1626
+  },
+  {
+   "slug": "r4l-6a90b8fdfea824c8068281d6-p327",
+   "book_id": "6a90b8fdfea824c8068281d6",
+   "page_number": 327,
+   "substratum": "1600s",
+   "title": "Syntagmatis Musici Tomus",
+   "year": 1615
+  },
+  {
+   "slug": "r4l-6a90b8fdfea824c8068281d6-p328",
+   "book_id": "6a90b8fdfea824c8068281d6",
+   "page_number": 328,
+   "substratum": "1600s",
+   "title": "Syntagmatis Musici Tomus",
+   "year": 1615
+  },
+  {
+   "slug": "r4l-6a90b8fdfea824c8068281d6-p329",
+   "book_id": "6a90b8fdfea824c8068281d6",
+   "page_number": 329,
+   "substratum": "1600s",
+   "title": "Syntagmatis Musici Tomus",
+   "year": 1615
+  },
+  {
+   "slug": "r4l-6a4270ed62d175ca9e4e1aa5-p8",
+   "book_id": "6a4270ed62d175ca9e4e1aa5",
+   "page_number": 8,
+   "substratum": "1600s",
+   "title": "Dissertatio, quæ complectitur nova experimenta utilesque observationes circa aquam marinam, secundem eorum artem, quibus",
+   "year": 1684
+  },
+  {
+   "slug": "r4l-6a4270ed62d175ca9e4e1aa5-p9",
+   "book_id": "6a4270ed62d175ca9e4e1aa5",
+   "page_number": 9,
+   "substratum": "1600s",
+   "title": "Dissertatio, quæ complectitur nova experimenta utilesque observationes circa aquam marinam, secundem eorum artem, quibus",
+   "year": 1684
+  },
+  {
+   "slug": "r4l-6a4270ed62d175ca9e4e1aa5-p10",
+   "book_id": "6a4270ed62d175ca9e4e1aa5",
+   "page_number": 10,
+   "substratum": "1600s",
+   "title": "Dissertatio, quæ complectitur nova experimenta utilesque observationes circa aquam marinam, secundem eorum artem, quibus",
+   "year": 1684
+  },
+  {
+   "slug": "r4l-6a506fd980b7658fae261d6e-p70",
+   "book_id": "6a506fd980b7658fae261d6e",
+   "page_number": 70,
+   "substratum": "1600s",
+   "title": "Cambrensium Caroleia. Quibus pr[a]ecepta necessaria ad rempublicam nostram foeliciter administrandum interxuntur [sic]: ",
+   "year": 1630
+  },
+  {
+   "slug": "r4l-6a506fd980b7658fae261d6e-p71",
+   "book_id": "6a506fd980b7658fae261d6e",
+   "page_number": 71,
+   "substratum": "1600s",
+   "title": "Cambrensium Caroleia. Quibus pr[a]ecepta necessaria ad rempublicam nostram foeliciter administrandum interxuntur [sic]: ",
+   "year": 1630
+  },
+  {
+   "slug": "r4l-6a506fd980b7658fae261d6e-p72",
+   "book_id": "6a506fd980b7658fae261d6e",
+   "page_number": 72,
+   "substratum": "1600s",
+   "title": "Cambrensium Caroleia. Quibus pr[a]ecepta necessaria ad rempublicam nostram foeliciter administrandum interxuntur [sic]: ",
+   "year": 1630
+  },
+  {
+   "slug": "r4l-6a42acc65207af7c42f4db34-p7",
+   "book_id": "6a42acc65207af7c42f4db34",
+   "page_number": 7,
+   "substratum": "1600s",
+   "title": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem ",
+   "year": 1627
+  },
+  {
+   "slug": "r4l-6a42acc65207af7c42f4db34-p8",
+   "book_id": "6a42acc65207af7c42f4db34",
+   "page_number": 8,
+   "substratum": "1600s",
+   "title": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem ",
+   "year": 1627
+  },
+  {
+   "slug": "r4l-6a42acc65207af7c42f4db34-p9",
+   "book_id": "6a42acc65207af7c42f4db34",
+   "page_number": 9,
+   "substratum": "1600s",
+   "title": "Clauis apocalyptica ex innatis et insitis visionum characteribus eruta et demonstrata. Ad eorum usum quibus deus amorem ",
+   "year": 1627
+  },
+  {
+   "slug": "r4l-6953e4fa77f38f6761bef1dc-p493",
+   "book_id": "6953e4fa77f38f6761bef1dc",
+   "page_number": 493,
+   "substratum": "1600s",
+   "title": "Philosophiae Naturalis Principia Mathematica (1687 First Edition)",
+   "year": 1686
+  },
+  {
+   "slug": "r4l-6953e4fa77f38f6761bef1dc-p494",
+   "book_id": "6953e4fa77f38f6761bef1dc",
+   "page_number": 494,
+   "substratum": "1600s",
+   "title": "Philosophiae Naturalis Principia Mathematica (1687 First Edition)",
+   "year": 1686
+  },
+  {
+   "slug": "r4l-6953e4fa77f38f6761bef1dc-p495",
+   "book_id": "6953e4fa77f38f6761bef1dc",
+   "page_number": 495,
+   "substratum": "1600s",
+   "title": "Philosophiae Naturalis Principia Mathematica (1687 First Edition)",
+   "year": 1686
+  },
+  {
+   "slug": "r4l-6a434778201f98f53c3efe9d-p91",
+   "book_id": "6a434778201f98f53c3efe9d",
+   "page_number": 91,
+   "substratum": "1600s",
+   "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+   "year": 1688
+  },
+  {
+   "slug": "r4l-6a434778201f98f53c3efe9d-p92",
+   "book_id": "6a434778201f98f53c3efe9d",
+   "page_number": 92,
+   "substratum": "1600s",
+   "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+   "year": 1688
+  },
+  {
+   "slug": "r4l-6a434778201f98f53c3efe9d-p93",
+   "book_id": "6a434778201f98f53c3efe9d",
+   "page_number": 93,
+   "substratum": "1600s",
+   "title": "Opera posthuma chronologica, &c. Viz. De serie et successione primorum Romæ episcoporum dissertationes duæ: quibus præfi",
+   "year": 1688
+  },
+  {
+   "slug": "r4l-6a42f62b3ad4d80da1237aed-p456",
+   "book_id": "6a42f62b3ad4d80da1237aed",
+   "page_number": 456,
+   "substratum": "1600s",
+   "title": "Thomæ Bradwardini Archiepiscopi olim Cantuariensis, De causa Dei, contra Pelagium, et De virtute causarum, ad suos Merto",
+   "year": 1618
+  },
+  {
+   "slug": "r4l-6a42f62b3ad4d80da1237aed-p457",
+   "book_id": "6a42f62b3ad4d80da1237aed",
+   "page_number": 457,
+   "substratum": "1600s",
+   "title": "Thomæ Bradwardini Archiepiscopi olim Cantuariensis, De causa Dei, contra Pelagium, et De virtute causarum, ad suos Merto",
+   "year": 1618
+  },
+  {
+   "slug": "r4l-6a42f62b3ad4d80da1237aed-p458",
+   "book_id": "6a42f62b3ad4d80da1237aed",
+   "page_number": 458,
+   "substratum": "1600s",
+   "title": "Thomæ Bradwardini Archiepiscopi olim Cantuariensis, De causa Dei, contra Pelagium, et De virtute causarum, ad suos Merto",
+   "year": 1618
+  },
+  {
+   "slug": "r4l-6a430a2a22c0c8edb0f8c8d4-p27",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "page_number": 27,
+   "substratum": "1600s",
+   "title": "Carmen de sanguinis circuitu, a Gulielmo Harvæo Anglo, primum invento. Adjecta sunt, miscellanea quædam.",
+   "year": 1685
+  },
+  {
+   "slug": "r4l-6a430a2a22c0c8edb0f8c8d4-p28",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "page_number": 28,
+   "substratum": "1600s",
+   "title": "Carmen de sanguinis circuitu, a Gulielmo Harvæo Anglo, primum invento. Adjecta sunt, miscellanea quædam.",
+   "year": 1685
+  },
+  {
+   "slug": "r4l-6a430a2a22c0c8edb0f8c8d4-p29",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "page_number": 29,
+   "substratum": "1600s",
+   "title": "Carmen de sanguinis circuitu, a Gulielmo Harvæo Anglo, primum invento. Adjecta sunt, miscellanea quædam.",
+   "year": 1685
+  },
+  {
+   "slug": "r4l-6a9085af8696e74449c320be-p103",
+   "book_id": "6a9085af8696e74449c320be",
+   "page_number": 103,
+   "substratum": "1600s",
+   "title": "Advocatus Peccans, Sive Tractatus De Peccatis Advocatorum Et Procuratorum: Conscientiae ipsorum excutiendae inserviens",
+   "year": 1678
+  },
+  {
+   "slug": "r4l-6a9085af8696e74449c320be-p104",
+   "book_id": "6a9085af8696e74449c320be",
+   "page_number": 104,
+   "substratum": "1600s",
+   "title": "Advocatus Peccans, Sive Tractatus De Peccatis Advocatorum Et Procuratorum: Conscientiae ipsorum excutiendae inserviens",
+   "year": 1678
+  },
+  {
+   "slug": "r4l-6a9085af8696e74449c320be-p105",
+   "book_id": "6a9085af8696e74449c320be",
+   "page_number": 105,
+   "substratum": "1600s",
+   "title": "Advocatus Peccans, Sive Tractatus De Peccatis Advocatorum Et Procuratorum: Conscientiae ipsorum excutiendae inserviens",
+   "year": 1678
+  },
+  {
+   "slug": "r4l-697a8014e680cef7cedae395-p252",
+   "book_id": "697a8014e680cef7cedae395",
+   "page_number": 252,
+   "substratum": "1600s",
+   "title": "Dissertatio politico-iuridica, de majestate in genere",
+   "year": 1625
+  },
+  {
+   "slug": "r4l-697a8014e680cef7cedae395-p253",
+   "book_id": "697a8014e680cef7cedae395",
+   "page_number": 253,
+   "substratum": "1600s",
+   "title": "Dissertatio politico-iuridica, de majestate in genere",
+   "year": 1625
+  },
+  {
+   "slug": "r4l-697a8014e680cef7cedae395-p254",
+   "book_id": "697a8014e680cef7cedae395",
+   "page_number": 254,
+   "substratum": "1600s",
+   "title": "Dissertatio politico-iuridica, de majestate in genere",
+   "year": 1625
+  },
+  {
+   "slug": "r4l-6a906153ce57ddf536207e42-p372",
+   "book_id": "6a906153ce57ddf536207e42",
+   "page_number": 372,
+   "substratum": "1600s",
+   "title": "Poesis lyrica",
+   "year": 1670
+  },
+  {
+   "slug": "r4l-6a906153ce57ddf536207e42-p373",
+   "book_id": "6a906153ce57ddf536207e42",
+   "page_number": 373,
+   "substratum": "1600s",
+   "title": "Poesis lyrica",
+   "year": 1670
+  },
+  {
+   "slug": "r4l-6a906153ce57ddf536207e42-p374",
+   "book_id": "6a906153ce57ddf536207e42",
+   "page_number": 374,
+   "substratum": "1600s",
+   "title": "Poesis lyrica",
+   "year": 1670
+  },
+  {
+   "slug": "r4l-6a425310343d756d34e34ea7-p34",
+   "book_id": "6a425310343d756d34e34ea7",
+   "page_number": 34,
+   "substratum": "1600s",
+   "title": "Sanitatis semita. Authore Ioanne Makluireo, M.D. Cum tractatu de febre pestilente præfixo.",
+   "year": 1630
+  },
+  {
+   "slug": "r4l-6a425310343d756d34e34ea7-p35",
+   "book_id": "6a425310343d756d34e34ea7",
+   "page_number": 35,
+   "substratum": "1600s",
+   "title": "Sanitatis semita. Authore Ioanne Makluireo, M.D. Cum tractatu de febre pestilente præfixo.",
+   "year": 1630
+  },
+  {
+   "slug": "r4l-6a425310343d756d34e34ea7-p36",
+   "book_id": "6a425310343d756d34e34ea7",
+   "page_number": 36,
+   "substratum": "1600s",
+   "title": "Sanitatis semita. Authore Ioanne Makluireo, M.D. Cum tractatu de febre pestilente præfixo.",
+   "year": 1630
+  },
+  {
+   "slug": "r4l-69c7a6b092b884e4f8173c12-p-66",
+   "book_id": "69c7a6b092b884e4f8173c12",
+   "page_number": -66,
+   "substratum": "1600s",
+   "title": "Tractatus posthumus juris publici De origine, et successione, variisque imperii Romani mutationibus",
+   "year": 1646
+  },
+  {
+   "slug": "r4l-69c7a6b092b884e4f8173c12-p-65",
+   "book_id": "69c7a6b092b884e4f8173c12",
+   "page_number": -65,
+   "substratum": "1600s",
+   "title": "Tractatus posthumus juris publici De origine, et successione, variisque imperii Romani mutationibus",
+   "year": 1646
+  },
+  {
+   "slug": "r4l-69c7a6b092b884e4f8173c12-p-64",
+   "book_id": "69c7a6b092b884e4f8173c12",
+   "page_number": -64,
+   "substratum": "1600s",
+   "title": "Tractatus posthumus juris publici De origine, et successione, variisque imperii Romani mutationibus",
+   "year": 1646
+  },
+  {
+   "slug": "r4l-6a42bbf75207af7c42f6f607-p723",
+   "book_id": "6a42bbf75207af7c42f6f607",
+   "page_number": 723,
+   "substratum": "1600s",
+   "title": "Increpatio Barjesu sive Polimicae adsentiones Locorum aliquot S. Scripture ab imposturis per versionum in Catechesis Rac",
+   "year": 1660
+  },
+  {
+   "slug": "r4l-6a42bbf75207af7c42f6f607-p724",
+   "book_id": "6a42bbf75207af7c42f6f607",
+   "page_number": 724,
+   "substratum": "1600s",
+   "title": "Increpatio Barjesu sive Polimicae adsentiones Locorum aliquot S. Scripture ab imposturis per versionum in Catechesis Rac",
+   "year": 1660
+  },
+  {
+   "slug": "r4l-6a42bbf75207af7c42f6f607-p725",
+   "book_id": "6a42bbf75207af7c42f6f607",
+   "page_number": 725,
+   "substratum": "1600s",
+   "title": "Increpatio Barjesu sive Polimicae adsentiones Locorum aliquot S. Scripture ab imposturis per versionum in Catechesis Rac",
+   "year": 1660
+  },
+  {
+   "slug": "r4l-6a42bb105207af7c42f6d163-p35",
+   "book_id": "6a42bb105207af7c42f6d163",
+   "page_number": 35,
+   "substratum": "1600s",
+   "title": "Diatriba chronologica Johannis Marshami.",
+   "year": 1649
+  },
+  {
+   "slug": "r4l-6a42bb105207af7c42f6d163-p36",
+   "book_id": "6a42bb105207af7c42f6d163",
+   "page_number": 36,
+   "substratum": "1600s",
+   "title": "Diatriba chronologica Johannis Marshami.",
+   "year": 1649
+  },
+  {
+   "slug": "r4l-6a42bb105207af7c42f6d163-p37",
+   "book_id": "6a42bb105207af7c42f6d163",
+   "page_number": 37,
+   "substratum": "1600s",
+   "title": "Diatriba chronologica Johannis Marshami.",
+   "year": 1649
+  },
+  {
+   "slug": "r4l-69b69ef5080b19f98fd0f8ca-p115",
+   "book_id": "69b69ef5080b19f98fd0f8ca",
+   "page_number": 115,
+   "substratum": "1600s",
+   "title": "Historiæ Naturalis De Auibus Libri VI : Cum æneis figuris",
+   "year": 1650
+  },
+  {
+   "slug": "r4l-69b69ef5080b19f98fd0f8ca-p116",
+   "book_id": "69b69ef5080b19f98fd0f8ca",
+   "page_number": 116,
+   "substratum": "1600s",
+   "title": "Historiæ Naturalis De Auibus Libri VI : Cum æneis figuris",
+   "year": 1650
+  },
+  {
+   "slug": "r4l-69b69ef5080b19f98fd0f8ca-p117",
+   "book_id": "69b69ef5080b19f98fd0f8ca",
+   "page_number": 117,
+   "substratum": "1600s",
+   "title": "Historiæ Naturalis De Auibus Libri VI : Cum æneis figuris",
+   "year": 1650
+  },
+  {
+   "slug": "r4l-69b6a4f3080b19f98fd2132c-p46",
+   "book_id": "69b6a4f3080b19f98fd2132c",
+   "page_number": 46,
+   "substratum": "1600s",
+   "title": "Ioannis Barzaei Heroum Helvetiorum epistolae ...",
+   "year": 1657
+  },
+  {
+   "slug": "r4l-69b6a4f3080b19f98fd2132c-p47",
+   "book_id": "69b6a4f3080b19f98fd2132c",
+   "page_number": 47,
+   "substratum": "1600s",
+   "title": "Ioannis Barzaei Heroum Helvetiorum epistolae ...",
+   "year": 1657
+  },
+  {
+   "slug": "r4l-69b6a4f3080b19f98fd2132c-p48",
+   "book_id": "69b6a4f3080b19f98fd2132c",
+   "page_number": 48,
+   "substratum": "1600s",
+   "title": "Ioannis Barzaei Heroum Helvetiorum epistolae ...",
+   "year": 1657
+  },
+  {
+   "slug": "r4l-6a425af0744db9e3105a14b7-p118",
+   "book_id": "6a425af0744db9e3105a14b7",
+   "page_number": 118,
+   "substratum": "1600s",
+   "title": "Evangelium medici: seu Medicina mystica; de suspensis naturæ legibus sive, de miraculis; reliquisque en tois bibliois me",
+   "year": 1697
+  },
+  {
+   "slug": "r4l-6a425af0744db9e3105a14b7-p119",
+   "book_id": "6a425af0744db9e3105a14b7",
+   "page_number": 119,
+   "substratum": "1600s",
+   "title": "Evangelium medici: seu Medicina mystica; de suspensis naturæ legibus sive, de miraculis; reliquisque en tois bibliois me",
+   "year": 1697
+  },
+  {
+   "slug": "r4l-6a425af0744db9e3105a14b7-p120",
+   "book_id": "6a425af0744db9e3105a14b7",
+   "page_number": 120,
+   "substratum": "1600s",
+   "title": "Evangelium medici: seu Medicina mystica; de suspensis naturæ legibus sive, de miraculis; reliquisque en tois bibliois me",
+   "year": 1697
+  },
+  {
+   "slug": "r4l-69b694f8080b19f98fcee93f-p35",
+   "book_id": "69b694f8080b19f98fcee93f",
+   "page_number": 35,
+   "substratum": "1600s",
+   "title": "De Natvra Populorum, Ejvsqve Pro Loci Positu, ac temporis decursu variatione : Et insimul etiam, De Linguarum Ortv Atqve",
+   "year": 1632
+  },
+  {
+   "slug": "r4l-69b694f8080b19f98fcee93f-p36",
+   "book_id": "69b694f8080b19f98fcee93f",
+   "page_number": 36,
+   "substratum": "1600s",
+   "title": "De Natvra Populorum, Ejvsqve Pro Loci Positu, ac temporis decursu variatione : Et insimul etiam, De Linguarum Ortv Atqve",
+   "year": 1632
+  },
+  {
+   "slug": "r4l-69b694f8080b19f98fcee93f-p37",
+   "book_id": "69b694f8080b19f98fcee93f",
+   "page_number": 37,
+   "substratum": "1600s",
+   "title": "De Natvra Populorum, Ejvsqve Pro Loci Positu, ac temporis decursu variatione : Et insimul etiam, De Linguarum Ortv Atqve",
+   "year": 1632
+  },
+  {
+   "slug": "r4l-69b6b65896dc15d4a16ecf0e-p938",
+   "book_id": "69b6b65896dc15d4a16ecf0e",
+   "page_number": 938,
+   "substratum": "1600s",
+   "title": "Speculum Imaginum Veritatis Occultæ : exhibens Symbola, Emblemata, Hieroglyphica, Ænigmata, Omni Tam Materiæ quam formæ ",
+   "year": 1681
+  },
+  {
+   "slug": "r4l-69b6b65896dc15d4a16ecf0e-p939",
+   "book_id": "69b6b65896dc15d4a16ecf0e",
+   "page_number": 939,
+   "substratum": "1600s",
+   "title": "Speculum Imaginum Veritatis Occultæ : exhibens Symbola, Emblemata, Hieroglyphica, Ænigmata, Omni Tam Materiæ quam formæ ",
+   "year": 1681
+  },
+  {
+   "slug": "r4l-69b6b65896dc15d4a16ecf0e-p940",
+   "book_id": "69b6b65896dc15d4a16ecf0e",
+   "page_number": 940,
+   "substratum": "1600s",
+   "title": "Speculum Imaginum Veritatis Occultæ : exhibens Symbola, Emblemata, Hieroglyphica, Ænigmata, Omni Tam Materiæ quam formæ ",
+   "year": 1681
+  },
+  {
+   "slug": "r4l-6a90a3c03a69baad5d30d34e-p89",
+   "book_id": "6a90a3c03a69baad5d30d34e",
+   "page_number": 89,
+   "substratum": "1600s",
+   "title": "Aerarium, sive Tractatus Politicus De Aerario Sacro Civili Militari Communi [et] Sacratiori : Ex Reditibus Publicis: Tum",
+   "year": 1612
+  },
+  {
+   "slug": "r4l-6a90a3c03a69baad5d30d34e-p90",
+   "book_id": "6a90a3c03a69baad5d30d34e",
+   "page_number": 90,
+   "substratum": "1600s",
+   "title": "Aerarium, sive Tractatus Politicus De Aerario Sacro Civili Militari Communi [et] Sacratiori : Ex Reditibus Publicis: Tum",
+   "year": 1612
+  },
+  {
+   "slug": "r4l-6a90a3c03a69baad5d30d34e-p91",
+   "book_id": "6a90a3c03a69baad5d30d34e",
+   "page_number": 91,
+   "substratum": "1600s",
+   "title": "Aerarium, sive Tractatus Politicus De Aerario Sacro Civili Militari Communi [et] Sacratiori : Ex Reditibus Publicis: Tum",
+   "year": 1612
+  },
+  {
+   "slug": "r4l-69b689fb2368e1fad3217ffa-p148",
+   "book_id": "69b689fb2368e1fad3217ffa",
+   "page_number": 148,
+   "substratum": "1600s",
+   "title": "Iacobi Bidermani e Societate Iesu Epigrammatum libri tres",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-69b689fb2368e1fad3217ffa-p149",
+   "book_id": "69b689fb2368e1fad3217ffa",
+   "page_number": 149,
+   "substratum": "1600s",
+   "title": "Iacobi Bidermani e Societate Iesu Epigrammatum libri tres",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-69b689fb2368e1fad3217ffa-p150",
+   "book_id": "69b689fb2368e1fad3217ffa",
+   "page_number": 150,
+   "substratum": "1600s",
+   "title": "Iacobi Bidermani e Societate Iesu Epigrammatum libri tres",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-6a42d56d1894955eb725e97f-p47",
+   "book_id": "6a42d56d1894955eb725e97f",
+   "page_number": 47,
+   "substratum": "1600s",
+   "title": "Conclave Ignati: Sive Eius in Nuperis Inferni Comitiis Inthronisatio : Ubi varia De Jesuitarum Indole, De novo inferno c",
+   "year": 1611
+  },
+  {
+   "slug": "r4l-6a42d56d1894955eb725e97f-p48",
+   "book_id": "6a42d56d1894955eb725e97f",
+   "page_number": 48,
+   "substratum": "1600s",
+   "title": "Conclave Ignati: Sive Eius in Nuperis Inferni Comitiis Inthronisatio : Ubi varia De Jesuitarum Indole, De novo inferno c",
+   "year": 1611
+  },
+  {
+   "slug": "r4l-6a42d56d1894955eb725e97f-p49",
+   "book_id": "6a42d56d1894955eb725e97f",
+   "page_number": 49,
+   "substratum": "1600s",
+   "title": "Conclave Ignati: Sive Eius in Nuperis Inferni Comitiis Inthronisatio : Ubi varia De Jesuitarum Indole, De novo inferno c",
+   "year": 1611
+  },
+  {
+   "slug": "r4l-6a4f92c0d7f4f9119ff22b41-p143",
+   "book_id": "6a4f92c0d7f4f9119ff22b41",
+   "page_number": 143,
+   "substratum": "1600s",
+   "title": "Epigrammatum Libri Tres",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-6a4f92c0d7f4f9119ff22b41-p144",
+   "book_id": "6a4f92c0d7f4f9119ff22b41",
+   "page_number": 144,
+   "substratum": "1600s",
+   "title": "Epigrammatum Libri Tres",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-6a4f92c0d7f4f9119ff22b41-p145",
+   "book_id": "6a4f92c0d7f4f9119ff22b41",
+   "page_number": 145,
+   "substratum": "1600s",
+   "title": "Epigrammatum Libri Tres",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-69b21d9694025df5d2908a62-p73",
+   "book_id": "69b21d9694025df5d2908a62",
+   "page_number": 73,
+   "substratum": "1600s",
+   "title": "Index Librorum Prohibitorum (1620)",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-69b21d9694025df5d2908a62-p74",
+   "book_id": "69b21d9694025df5d2908a62",
+   "page_number": 74,
+   "substratum": "1600s",
+   "title": "Index Librorum Prohibitorum (1620)",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-69b21d9694025df5d2908a62-p75",
+   "book_id": "69b21d9694025df5d2908a62",
+   "page_number": 75,
+   "substratum": "1600s",
+   "title": "Index Librorum Prohibitorum (1620)",
+   "year": 1620
+  },
+  {
+   "slug": "r4l-6a48e2591e36bf8015227d14-p2",
+   "book_id": "6a48e2591e36bf8015227d14",
+   "page_number": 2,
+   "substratum": "1600s",
+   "title": "Appendix ad Catalogum plantarum circa Cantabrigiam nascentium: continens addenda et emendanda.",
+   "year": 1663
+  },
+  {
+   "slug": "r4l-6a48e2591e36bf8015227d14-p3",
+   "book_id": "6a48e2591e36bf8015227d14",
+   "page_number": 3,
+   "substratum": "1600s",
+   "title": "Appendix ad Catalogum plantarum circa Cantabrigiam nascentium: continens addenda et emendanda.",
+   "year": 1663
+  },
+  {
+   "slug": "r4l-6a48e2591e36bf8015227d14-p4",
+   "book_id": "6a48e2591e36bf8015227d14",
+   "page_number": 4,
+   "substratum": "1600s",
+   "title": "Appendix ad Catalogum plantarum circa Cantabrigiam nascentium: continens addenda et emendanda.",
+   "year": 1663
+  },
+  {
+   "slug": "r4l-6a48d782df05f7ea342b7309-p161",
+   "book_id": "6a48d782df05f7ea342b7309",
+   "page_number": 161,
+   "substratum": "1600s",
+   "title": "De Eclipsi Solari Anno M.DC.LIV. Die XII. Augusti, In Europa, A pluribus spectata Tubo Optico: Nunc iterum a Jacobo Bald",
+   "year": 1662
+  },
+  {
+   "slug": "r4l-6a48d782df05f7ea342b7309-p162",
+   "book_id": "6a48d782df05f7ea342b7309",
+   "page_number": 162,
+   "substratum": "1600s",
+   "title": "De Eclipsi Solari Anno M.DC.LIV. Die XII. Augusti, In Europa, A pluribus spectata Tubo Optico: Nunc iterum a Jacobo Bald",
+   "year": 1662
+  },
+  {
+   "slug": "r4l-6a48d782df05f7ea342b7309-p163",
+   "book_id": "6a48d782df05f7ea342b7309",
+   "page_number": 163,
+   "substratum": "1600s",
+   "title": "De Eclipsi Solari Anno M.DC.LIV. Die XII. Augusti, In Europa, A pluribus spectata Tubo Optico: Nunc iterum a Jacobo Bald",
+   "year": 1662
+  },
+  {
+   "slug": "r4l-6a5043b28b9a6870c42fcef8-p60",
+   "book_id": "6a5043b28b9a6870c42fcef8",
+   "page_number": 60,
+   "substratum": "1600s",
+   "title": "De Potestate papae, an et quatenus in reges et principes seculares jus et imperium habeat, liber posthumus",
+   "year": 1609
+  },
+  {
+   "slug": "r4l-6a5043b28b9a6870c42fcef8-p61",
+   "book_id": "6a5043b28b9a6870c42fcef8",
+   "page_number": 61,
+   "substratum": "1600s",
+   "title": "De Potestate papae, an et quatenus in reges et principes seculares jus et imperium habeat, liber posthumus",
+   "year": 1609
+  },
+  {
+   "slug": "r4l-6a5043b28b9a6870c42fcef8-p62",
+   "book_id": "6a5043b28b9a6870c42fcef8",
+   "page_number": 62,
+   "substratum": "1600s",
+   "title": "De Potestate papae, an et quatenus in reges et principes seculares jus et imperium habeat, liber posthumus",
+   "year": 1609
+  },
+  {
+   "slug": "r4l-69b6e47ea8d7b8d17a676440-p483",
+   "book_id": "69b6e47ea8d7b8d17a676440",
+   "page_number": 483,
+   "substratum": "1700s",
+   "title": "Conradi Samuelis Schurzfleischii Epistolae selectiores : secundum nunc sine lacunis et cum memoria auctoris emendatius e",
+   "year": 1729
+  },
+  {
+   "slug": "r4l-69b6e47ea8d7b8d17a676440-p484",
+   "book_id": "69b6e47ea8d7b8d17a676440",
+   "page_number": 484,
+   "substratum": "1700s",
+   "title": "Conradi Samuelis Schurzfleischii Epistolae selectiores : secundum nunc sine lacunis et cum memoria auctoris emendatius e",
+   "year": 1729
+  },
+  {
+   "slug": "r4l-69b6e47ea8d7b8d17a676440-p485",
+   "book_id": "69b6e47ea8d7b8d17a676440",
+   "page_number": 485,
+   "substratum": "1700s",
+   "title": "Conradi Samuelis Schurzfleischii Epistolae selectiores : secundum nunc sine lacunis et cum memoria auctoris emendatius e",
+   "year": 1729
+  },
+  {
+   "slug": "r4l-69b6f0d9b1a3146c05270a07-p164",
+   "book_id": "69b6f0d9b1a3146c05270a07",
+   "page_number": 164,
+   "substratum": "1700s",
+   "title": "Ignatii Weitenauer Societatis Iesu Carmina selecta : quorum Liber I Heroica, Liber II Lyrica, appendix elegias aliquot c",
+   "year": 1757
+  },
+  {
+   "slug": "r4l-69b6f0d9b1a3146c05270a07-p165",
+   "book_id": "69b6f0d9b1a3146c05270a07",
+   "page_number": 165,
+   "substratum": "1700s",
+   "title": "Ignatii Weitenauer Societatis Iesu Carmina selecta : quorum Liber I Heroica, Liber II Lyrica, appendix elegias aliquot c",
+   "year": 1757
+  },
+  {
+   "slug": "r4l-69b6f0d9b1a3146c05270a07-p166",
+   "book_id": "69b6f0d9b1a3146c05270a07",
+   "page_number": 166,
+   "substratum": "1700s",
+   "title": "Ignatii Weitenauer Societatis Iesu Carmina selecta : quorum Liber I Heroica, Liber II Lyrica, appendix elegias aliquot c",
+   "year": 1757
+  },
+  {
+   "slug": "r4l-6a4f22748afd506469a564d5-p277",
+   "book_id": "6a4f22748afd506469a564d5",
+   "page_number": 277,
+   "substratum": "1700s",
+   "title": "Tractatus Politico-Historico-Iuridicus De Iuribus Et Privilegiis Civitatum Imperialium, tam Generalibus, quam Specialibu",
+   "year": 1740
+  },
+  {
+   "slug": "r4l-6a4f22748afd506469a564d5-p278",
+   "book_id": "6a4f22748afd506469a564d5",
+   "page_number": 278,
+   "substratum": "1700s",
+   "title": "Tractatus Politico-Historico-Iuridicus De Iuribus Et Privilegiis Civitatum Imperialium, tam Generalibus, quam Specialibu",
+   "year": 1740
+  },
+  {
+   "slug": "r4l-6a4f22748afd506469a564d5-p279",
+   "book_id": "6a4f22748afd506469a564d5",
+   "page_number": 279,
+   "substratum": "1700s",
+   "title": "Tractatus Politico-Historico-Iuridicus De Iuribus Et Privilegiis Civitatum Imperialium, tam Generalibus, quam Specialibu",
+   "year": 1740
+  },
+  {
+   "slug": "r4l-69b6c2018566c8381465699b-p80",
+   "book_id": "69b6c2018566c8381465699b",
+   "page_number": 80,
+   "substratum": "1700s",
+   "title": "Symbolographia sive de arte symbolica sermones septem : quibus accessit studio &amp; opera eiusdem Sylloge celebriorum s",
+   "year": 1702
+  },
+  {
+   "slug": "r4l-69b6c2018566c8381465699b-p81",
+   "book_id": "69b6c2018566c8381465699b",
+   "page_number": 81,
+   "substratum": "1700s",
+   "title": "Symbolographia sive de arte symbolica sermones septem : quibus accessit studio &amp; opera eiusdem Sylloge celebriorum s",
+   "year": 1702
+  },
+  {
+   "slug": "r4l-69b6c2018566c8381465699b-p82",
+   "book_id": "69b6c2018566c8381465699b",
+   "page_number": 82,
+   "substratum": "1700s",
+   "title": "Symbolographia sive de arte symbolica sermones septem : quibus accessit studio &amp; opera eiusdem Sylloge celebriorum s",
+   "year": 1702
+  },
+  {
+   "slug": "r4l-69b6f32ab1a3146c05278d5a-p154",
+   "book_id": "69b6f32ab1a3146c05278d5a",
+   "page_number": 154,
+   "substratum": "1700s",
+   "title": "Ioannis Iacobi Baieri Epistolae ad viros eruditos eorundemque responsiones historiam literariam et physicam specialem ex",
+   "year": 1760
+  },
+  {
+   "slug": "r4l-69b6f32ab1a3146c05278d5a-p155",
+   "book_id": "69b6f32ab1a3146c05278d5a",
+   "page_number": 155,
+   "substratum": "1700s",
+   "title": "Ioannis Iacobi Baieri Epistolae ad viros eruditos eorundemque responsiones historiam literariam et physicam specialem ex",
+   "year": 1760
+  },
+  {
+   "slug": "r4l-69b6f32ab1a3146c05278d5a-p156",
+   "book_id": "69b6f32ab1a3146c05278d5a",
+   "page_number": 156,
+   "substratum": "1700s",
+   "title": "Ioannis Iacobi Baieri Epistolae ad viros eruditos eorundemque responsiones historiam literariam et physicam specialem ex",
+   "year": 1760
+  },
+  {
+   "slug": "r4l-69b65a0418b87551bfcffe7a-p5",
+   "book_id": "69b65a0418b87551bfcffe7a",
+   "page_number": 5,
+   "substratum": "1500s",
+   "title": "Vindiciae, contra tyrannos : sive, de Principis in Populum, Populique in Principem, legitima potestate, Stephano Iunio B",
+   "year": 1579
+  },
+  {
+   "slug": "r4l-69b65a0418b87551bfcffe7a-p6",
+   "book_id": "69b65a0418b87551bfcffe7a",
+   "page_number": 6,
+   "substratum": "1500s",
+   "title": "Vindiciae, contra tyrannos : sive, de Principis in Populum, Populique in Principem, legitima potestate, Stephano Iunio B",
+   "year": 1579
+  },
+  {
+   "slug": "r4l-69b65a0418b87551bfcffe7a-p7",
+   "book_id": "69b65a0418b87551bfcffe7a",
+   "page_number": 7,
+   "substratum": "1500s",
+   "title": "Vindiciae, contra tyrannos : sive, de Principis in Populum, Populique in Principem, legitima potestate, Stephano Iunio B",
+   "year": 1579
+  },
+  {
+   "slug": "r4l-6a9078467f9d520dd42e41e2-p76",
+   "book_id": "6a9078467f9d520dd42e41e2",
+   "page_number": 76,
+   "substratum": "1500s",
+   "title": "Tertius libellus epistolarum h. Eobani Hessi et aliorum quorundam, virorum, autoritate, virtute, sapientia, doctrinaque ",
+   "year": 1561
+  },
+  {
+   "slug": "r4l-6a9078467f9d520dd42e41e2-p77",
+   "book_id": "6a9078467f9d520dd42e41e2",
+   "page_number": 77,
+   "substratum": "1500s",
+   "title": "Tertius libellus epistolarum h. Eobani Hessi et aliorum quorundam, virorum, autoritate, virtute, sapientia, doctrinaque ",
+   "year": 1561
+  },
+  {
+   "slug": "r4l-6a9078467f9d520dd42e41e2-p78",
+   "book_id": "6a9078467f9d520dd42e41e2",
+   "page_number": 78,
+   "substratum": "1500s",
+   "title": "Tertius libellus epistolarum h. Eobani Hessi et aliorum quorundam, virorum, autoritate, virtute, sapientia, doctrinaque ",
+   "year": 1561
+  },
+  {
+   "slug": "r4l-6a4a5d549050f0b434326b99-p447",
+   "book_id": "6a4a5d549050f0b434326b99",
+   "page_number": 447,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d549050f0b434326b99-p448",
+   "book_id": "6a4a5d549050f0b434326b99",
+   "page_number": 448,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d549050f0b434326b99-p449",
+   "book_id": "6a4a5d549050f0b434326b99",
+   "page_number": 449,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-69ac83ddf37088db519184d5-p51",
+   "book_id": "69ac83ddf37088db519184d5",
+   "page_number": 51,
+   "substratum": "1600s",
+   "title": "Diatribae duae medico-philosophicae: De Fermentatione",
+   "year": 1659
+  },
+  {
+   "slug": "r4l-69ac83ddf37088db519184d5-p52",
+   "book_id": "69ac83ddf37088db519184d5",
+   "page_number": 52,
+   "substratum": "1600s",
+   "title": "Diatribae duae medico-philosophicae: De Fermentatione",
+   "year": 1659
+  },
+  {
+   "slug": "r4l-69ac83ddf37088db519184d5-p53",
+   "book_id": "69ac83ddf37088db519184d5",
+   "page_number": 53,
+   "substratum": "1600s",
+   "title": "Diatribae duae medico-philosophicae: De Fermentatione",
+   "year": 1659
+  },
+  {
+   "slug": "r4l-69b6b5c696dc15d4a16e974e-p380",
+   "book_id": "69b6b5c696dc15d4a16e974e",
+   "page_number": 380,
+   "substratum": "1600s",
+   "title": "Plantarum Historiæ Universalis Oxoniensis / 2 Plantarum Historiæ Universalis Oxoniensis Pars Secunda Seu Herbarum Distri",
+   "year": 1680
+  },
+  {
+   "slug": "r4l-69b6b5c696dc15d4a16e974e-p381",
+   "book_id": "69b6b5c696dc15d4a16e974e",
+   "page_number": 381,
+   "substratum": "1600s",
+   "title": "Plantarum Historiæ Universalis Oxoniensis / 2 Plantarum Historiæ Universalis Oxoniensis Pars Secunda Seu Herbarum Distri",
+   "year": 1680
+  },
+  {
+   "slug": "r4l-69b6b5c696dc15d4a16e974e-p382",
+   "book_id": "69b6b5c696dc15d4a16e974e",
+   "page_number": 382,
+   "substratum": "1600s",
+   "title": "Plantarum Historiæ Universalis Oxoniensis / 2 Plantarum Historiæ Universalis Oxoniensis Pars Secunda Seu Herbarum Distri",
+   "year": 1680
+  },
+  {
+   "slug": "r4l-6a9061f6c21b989bffd757b3-p571",
+   "book_id": "6a9061f6c21b989bffd757b3",
+   "page_number": 571,
+   "substratum": "1600s",
+   "title": "Epistolarum atticarum missus secundi, in centurias tres divisi",
+   "year": 1617
+  },
+  {
+   "slug": "r4l-6a9061f6c21b989bffd757b3-p572",
+   "book_id": "6a9061f6c21b989bffd757b3",
+   "page_number": 572,
+   "substratum": "1600s",
+   "title": "Epistolarum atticarum missus secundi, in centurias tres divisi",
+   "year": 1617
+  },
+  {
+   "slug": "r4l-6a9061f6c21b989bffd757b3-p573",
+   "book_id": "6a9061f6c21b989bffd757b3",
+   "page_number": 573,
+   "substratum": "1600s",
+   "title": "Epistolarum atticarum missus secundi, in centurias tres divisi",
+   "year": 1617
+  },
+  {
+   "slug": "r4l-69b673ddb3f4fc04415af91d-p182",
+   "book_id": "69b673ddb3f4fc04415af91d",
+   "page_number": 182,
+   "substratum": "1600s",
+   "title": "Jacobi Pontani De Societate Iesv Floridorvm Libri Octo",
+   "year": 1602
+  },
+  {
+   "slug": "r4l-69b673ddb3f4fc04415af91d-p183",
+   "book_id": "69b673ddb3f4fc04415af91d",
+   "page_number": 183,
+   "substratum": "1600s",
+   "title": "Jacobi Pontani De Societate Iesv Floridorvm Libri Octo",
+   "year": 1602
+  },
+  {
+   "slug": "r4l-69b673ddb3f4fc04415af91d-p184",
+   "book_id": "69b673ddb3f4fc04415af91d",
+   "page_number": 184,
+   "substratum": "1600s",
+   "title": "Jacobi Pontani De Societate Iesv Floridorvm Libri Octo",
+   "year": 1602
+  },
+  {
+   "slug": "r4l-69b303fb983e01f74b98704a-p714",
+   "book_id": "69b303fb983e01f74b98704a",
+   "page_number": 714,
+   "substratum": "1600s",
+   "title": "Historia de Bello Svecico",
+   "year": 1669
+  },
+  {
+   "slug": "r4l-69b303fb983e01f74b98704a-p715",
+   "book_id": "69b303fb983e01f74b98704a",
+   "page_number": 715,
+   "substratum": "1600s",
+   "title": "Historia de Bello Svecico",
+   "year": 1669
+  },
+  {
+   "slug": "r4l-69b303fb983e01f74b98704a-p716",
+   "book_id": "69b303fb983e01f74b98704a",
+   "page_number": 716,
+   "substratum": "1600s",
+   "title": "Historia de Bello Svecico",
+   "year": 1669
+  },
+  {
+   "slug": "r4l-69b6962c4a5f9daef79e827e-p42",
+   "book_id": "69b6962c4a5f9daef79e827e",
+   "page_number": 42,
+   "substratum": "1600s",
+   "title": "Insectorum sive minimorum animalium theatrum : olim ab Edoardo Wottono. Conrado Gesnero. Thomaque Pennio inchoatum",
+   "year": 1634
+  },
+  {
+   "slug": "r4l-69b6962c4a5f9daef79e827e-p43",
+   "book_id": "69b6962c4a5f9daef79e827e",
+   "page_number": 43,
+   "substratum": "1600s",
+   "title": "Insectorum sive minimorum animalium theatrum : olim ab Edoardo Wottono. Conrado Gesnero. Thomaque Pennio inchoatum",
+   "year": 1634
+  },
+  {
+   "slug": "r4l-69b6962c4a5f9daef79e827e-p44",
+   "book_id": "69b6962c4a5f9daef79e827e",
+   "page_number": 44,
+   "substratum": "1600s",
+   "title": "Insectorum sive minimorum animalium theatrum : olim ab Edoardo Wottono. Conrado Gesnero. Thomaque Pennio inchoatum",
+   "year": 1634
+  },
+  {
+   "slug": "r4l-6a42d91f1894955eb72629fe-p198",
+   "book_id": "6a42d91f1894955eb72629fe",
+   "page_number": 198,
+   "substratum": "1600s",
+   "title": "De secretione animali cogitata. Authore Gulielmo Cole, M.D.",
+   "year": 1674
+  },
+  {
+   "slug": "r4l-6a42d91f1894955eb72629fe-p199",
+   "book_id": "6a42d91f1894955eb72629fe",
+   "page_number": 199,
+   "substratum": "1600s",
+   "title": "De secretione animali cogitata. Authore Gulielmo Cole, M.D.",
+   "year": 1674
+  },
+  {
+   "slug": "r4l-6a42d91f1894955eb72629fe-p200",
+   "book_id": "6a42d91f1894955eb72629fe",
+   "page_number": 200,
+   "substratum": "1600s",
+   "title": "De secretione animali cogitata. Authore Gulielmo Cole, M.D.",
+   "year": 1674
+  },
+  {
+   "slug": "r4l-69b6a321080b19f98fd195a6-p67",
+   "book_id": "69b6a321080b19f98fd195a6",
+   "page_number": 67,
+   "substratum": "1600s",
+   "title": "Idea trigonometriae demonstratae ... : ; item praelectio de Cometis ; et inquisitio in Bullialdi astronomiae philolaicae",
+   "year": 1654
+  },
+  {
+   "slug": "r4l-69b6a321080b19f98fd195a6-p68",
+   "book_id": "69b6a321080b19f98fd195a6",
+   "page_number": 68,
+   "substratum": "1600s",
+   "title": "Idea trigonometriae demonstratae ... : ; item praelectio de Cometis ; et inquisitio in Bullialdi astronomiae philolaicae",
+   "year": 1654
+  },
+  {
+   "slug": "r4l-69b6a321080b19f98fd195a6-p69",
+   "book_id": "69b6a321080b19f98fd195a6",
+   "page_number": 69,
+   "substratum": "1600s",
+   "title": "Idea trigonometriae demonstratae ... : ; item praelectio de Cometis ; et inquisitio in Bullialdi astronomiae philolaicae",
+   "year": 1654
+  },
+  {
+   "slug": "r4l-6a4a5d1f9050f0b434324995-p112",
+   "book_id": "6a4a5d1f9050f0b434324995",
+   "page_number": 112,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d1f9050f0b434324995-p113",
+   "book_id": "6a4a5d1f9050f0b434324995",
+   "page_number": 113,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d1f9050f0b434324995-p114",
+   "book_id": "6a4a5d1f9050f0b434324995",
+   "page_number": 114,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d159050f0b434323f0b-p651",
+   "book_id": "6a4a5d159050f0b434323f0b",
+   "page_number": 651,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d159050f0b434323f0b-p652",
+   "book_id": "6a4a5d159050f0b434323f0b",
+   "page_number": 652,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  },
+  {
+   "slug": "r4l-6a4a5d159050f0b434323f0b-p653",
+   "book_id": "6a4a5d159050f0b434323f0b",
+   "page_number": 653,
+   "substratum": "1600s",
+   "title": "Huberti Langueti ... Epistolae Secretae Ad Principem Suum Augustum Sax. Ducem & S.R.I. Septemvirum :Ex Archeioi Saxonico",
+   "year": 1699
+  }
+ ]
+}

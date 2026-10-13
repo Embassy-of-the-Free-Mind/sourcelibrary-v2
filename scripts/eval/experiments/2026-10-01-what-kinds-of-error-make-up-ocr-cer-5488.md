@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [en, la, de, grc]
+scripts: [Latn, Grek]
+canons: []
+n_books: null
+n_pages: 73
+verdict: "On early English print flash-lite's OCR error is mostly long s read as f (57%) and flash's mostly refusals (72%); served OCR keeps body text but normalises spelling."
+status: informational
+decision: null
+superseded_by: null
+issue: [5488, 5564]
+---
 ## 2026-10-01 — What kinds of error make up an OCR engine's CER? On early English print, flash-lite's is mostly ſ read as f and flash's is mostly refusal; served OCR keeps its body text but normalises spelling (#5488)
 
 PRIOR ART: 2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md — the CERs this decomposes; .claude/docs/page-error-taxonomy.md — the page-level classes by eye (O5 omission, O8 normalisation, O12 marginalia), which this counts at word level.

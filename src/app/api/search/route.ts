@@ -14,7 +14,7 @@ import { defaultDiversity, diversify, parseDiversityParam } from '@/lib/search/d
 import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
-import { resolveSearchScope } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, closedScopeResponse } from '@/lib/tenant-search-scope';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
@@ -24,10 +24,22 @@ import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence } from '@/lib/search/page-rollup';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
+import { phraseMatch } from '@/lib/passage-score';
 
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 25;
+/**
+ * Pages the passage search (`pages_only`) reads before it orders them (#3700).
+ * The wanted page of the golden "not merely a heap" query sits 21st in Atlas's
+ * own order, so a pool of `limit` could never have surfaced it at limit 10.
+ */
+const PASSAGE_POOL = 150;
+const PASSAGE_POOL_MAX = 500;
+/** A passage that prints the whole query in order counts double one that only scatters its words. */
+const PHRASE_BOOST = 1;
+/** Below this a run is a pair of function words ("of the"); Atlas's own hit is the better place to cut the snippet. */
+const PHRASE_SNIPPET_MIN = 0.1;
 /** Extra page hits that print a queried person's name in another spelling (#5888). */
 const NAME_VARIANT_PAGE_RESULTS = 10;
 /**
@@ -95,6 +107,38 @@ function extractSnippet(text: string, query: string, contextChars = 150): string
   if (end < cleaned.length) snippet = snippet + '...';
 
   return snippet;
+}
+
+/** The snippet around a known place in already-cleaned text. */
+function snippetAt(cleaned: string, start: number, end: number, contextChars = 150): string {
+  const from = Math.max(0, start - contextChars);
+  const to = Math.min(cleaned.length, end + contextChars);
+  return (from > 0 ? '...' : '') + cleaned.slice(from, to) + (to < cleaned.length ? '...' : '');
+}
+
+interface PassagePhrase { match: number; start: number; end: number; field: 'translation' | 'ocr'; text: string }
+
+/**
+ * Passage search (#3700): Atlas scores a page on its words wherever they fall,
+ * so "to educate the mind without educating the heart" returned pages that
+ * print "educate", "mind" and "heart" paragraphs apart. Keep Atlas's score
+ * (corpus-wide BM25) and scale it by how much of the query the page prints in
+ * order at one place. Leaves `_phrase` on each page for the snippet and the
+ * response. A one-word query has no order, and comes back as Atlas ranked it.
+ */
+function rankPassages<T extends { searchScore?: unknown; translation?: { data?: string }; ocr?: { data?: string } }>(query: string, pages: T[]): T[] {
+  const texts = pages.flatMap(p => [cleanText(p.translation?.data || ''), cleanText(p.ocr?.data || '')]);
+  const phrase = phraseMatch(query, texts);
+  if (phrase.length === 0) return pages;
+  const adjusted = new Map<T, number>();
+  pages.forEach((p, i) => {
+    const [tr, ocr] = [phrase[2 * i], phrase[2 * i + 1]];
+    const field = tr.match >= ocr.match ? 'translation' : 'ocr';
+    const best = field === 'translation' ? tr : ocr;
+    (p as { _phrase?: PassagePhrase })._phrase = { ...best, field, text: texts[2 * i + (field === 'translation' ? 0 : 1)] } satisfies PassagePhrase;
+    adjusted.set(p, (Number(p.searchScore) || 0) * (1 + PHRASE_BOOST * best.match));
+  });
+  return [...pages].sort((a, b) => adjusted.get(b)! - adjusted.get(a)!);
 }
 
 // GET /api/search - Search across books and translations
@@ -218,11 +262,16 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // to query word count (1–2 words → ladder, 3+ → RRF) so 'auto' still works
     // with zero added latency when no intent is supplied.
     const queryWordCount = matchQuery.trim().split(/\s+/).filter(w => w.length >= 2).length;
+    // A passage list is always fused by lane score. The ladder ranks BOOKS
+    // (title words, edition age, quality) and, applied to passages, ordered a
+    // one- or two-word passage search by its books' titles (#3700).
     const useRrf = rankingParam === 'rrf'
       ? true
       : rankingParam === 'ladder'
         ? false
-        : llmIntent
+        : pagesOnly
+          ? true
+          : llmIntent
           ? llmIntent !== 'navigational'
           : queryWordCount >= 3;
     const rankingApplied = rankingParam === 'auto'
@@ -234,18 +283,20 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     const seenBooks = new Set<string>();
 
     // Read tenant context resolved by proxy.ts
-    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
-    if (tenantSlug && !tenantId) {
-      return NextResponse.json({ results: [], total: 0 });
-    }
+    const { slug: tenantSlug } = getTenantContextFromRequest(request.headers);
     // The book set the vector lanes are confined to (#4330). They used to rank
     // the whole library and rely on the Mongo materialization below to drop
     // foreign books — pure, but a tenant got whatever of its shelf happened to
     // sit in the global top-N, usually nothing.
+    //
+    // A slug without an id (the proxy's tenant read failed) is resolved here
+    // rather than answered empty on sight (#6426); if it cannot be, the scope
+    // is closed and the answer says so.
     const scope = await resolveSearchScope(request.headers);
     if (scope.kind === 'closed') {
-      return NextResponse.json({ results: [], total: 0 });
+      return closedScopeResponse(scope, { results: [], total: 0 }, 'search');
     }
+    const tenantId = scope.kind === 'tenant' ? scope.tenantId : null;
 
     // EXPERIMENTAL (#6173): `lane=concept` returns only the concept lane — pages
     // ranked by the embedding of a model-written abstract of their ideas
@@ -487,7 +538,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             pageFilter.book_id = { $in: allowedBookIds };
           }
 
-          const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;
+          // The passage search reads a pool and orders it afterwards; `limit`
+          // and `offset` are applied to the ordered list at the end. It used
+          // to read `limit` pages whatever the offset, so later pages ran dry.
+          const pageLimit = pagesOnly
+            ? Math.min(Math.max(PASSAGE_POOL, offset + limit), PASSAGE_POOL_MAX)
+            : bookId ? limit : MAX_PAGE_RESULTS;
 
           // Extract book IDs for Atlas Search filter
           let filteredBookIds: string | string[] | undefined;
@@ -509,6 +565,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 page_number: 1,
                 book_id: 1,
                 highlights: { $meta: 'searchHighlights' },
+                searchScore: { $meta: 'searchScore' },
                 'translation.data': 1,
                 'ocr.data': 1,
               },
@@ -570,7 +627,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             countsPromise,
           ]);
           const seenPages = new Set(mainPages.map(p => `${p.book_id}:${p.page_number}`));
-          const pages = [...mainPages, ...variantPages.filter(p => !seenPages.has(`${p.book_id}:${p.page_number}`))];
+          const rankedMain = pagesOnly ? rankPassages(matchQuery, mainPages) : mainPages;
+          const pages = [...rankedMain, ...variantPages.filter(p => !seenPages.has(`${p.book_id}:${p.page_number}`))];
           if (!terms) return pages;
           if (counts === null) { degradedLanes.push('page_rollup'); return pages; }
           if (counts.length === 0) return pages;
@@ -772,6 +830,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           snippet = extractSnippet(snippetSource, matchQuery);
         }
 
+        // Passage search: cut the snippet where the query's words stand
+        // together, which is the place the page was ranked on. Same cleaned
+        // text as extractSnippet reads, so no editorial wrapper can come back.
+        const phrase = (page as { _phrase?: PassagePhrase })._phrase;
+        if (phrase && phrase.match >= PHRASE_SNIPPET_MIN) {
+          snippet = snippetAt(phrase.text, phrase.start, phrase.end);
+          snippetType = phrase.field;
+        }
+
         const pageResult: SearchResult = {
           id: `${book.id}-p${page.page_number}`,
           page_id: page.id as string,
@@ -798,6 +865,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         attachIdentity(pageResult, book as unknown as Record<string, unknown>);
         if ((book as any).text_role) (pageResult as any)._text_role = (book as any).text_role;
         (pageResult as any)._match_pages = matchPagesByBook.get(book.id);
+        if (pagesOnly) {
+          pageResult.found_by = 'keyword';
+          if (phrase) pageResult.phrase_match = Math.round(phrase.match * 100) / 100;
+        }
         results.push(pageResult);
       }
     }
@@ -909,6 +980,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         for (const b of semPageBooks) pageBookMap.set(b.id as string, b);
       }
 
+      // Passage search says which lane found each page; found by both the
+      // words and the meaning is the strongest signal there is (#3700).
+      if (pagesOnly) {
+        const semanticKeys = new Set(semanticPageDocs.map(s => `${s.book_id}-${s.page_number}`));
+        for (const r of results) {
+          if (r.found_by === 'keyword' && semanticKeys.has(`${r.book_id}-${r.page_number}`)) r.found_by = 'both';
+        }
+      }
+
       for (const sp of semanticPageDocs) {
         const pageKey = `${sp.book_id}-${sp.page_number}`;
         if (seenPageKeys.has(pageKey)) continue;
@@ -944,6 +1024,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         attachIdentity(spResult, book as Record<string, unknown>);
         if ((book as any).text_role) (spResult as any)._text_role = (book as any).text_role;
         (spResult as any)._match_pages = matchPagesByBook.get(sp.book_id);
+        if (pagesOnly) spResult.found_by = 'semantic';
         results.push(spResult);
       }
     }
@@ -1089,6 +1170,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         // so this is surgical (265 books + their pages), not a filter.
         const rrfAdjusted = (r: SearchResult) => {
           const s = rrf.get(r.id) ?? 0;
+          // Not on a passage list. The demotion is about which EDITION of a
+          // work to show first; a caller looking for a sentence wants the page
+          // that prints it, and 1/1.5 here is the distance from rank 1 to rank
+          // 31. It put Taylor's "not merely a heap" page 9th of 10 (#3700).
+          if (pagesOnly) return s;
           const tr = (r as any)._text_role;
           if (tr === 'modern-translation') return s / 1.5;
           if (tr === 'period-translation') return s / 1.2;

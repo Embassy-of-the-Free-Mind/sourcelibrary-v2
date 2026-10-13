@@ -17,6 +17,7 @@
  *   node --env-file=.env.production.local scripts/audit/scope-progress.mjs --books id1,id2,...
  *   ... --verify    # recount OCR/translation from the pages collection instead of trusting book counters
  *   ... --json      # machine-readable output (for dashboards / other sessions)
+ *   ... --no-split  # skip the per-endpoint envelope spend split (#4870; one extra read per envelope)
  *
  * Reads the same stores the pipeline acts on: books counters (pages_archived /
  * pages_ocr / pages_translated / pages_translatable), summary, chapters,
@@ -35,6 +36,7 @@
  *     currently binding so the report never implies motion that cannot happen.
  */
 
+import { ObjectId } from 'mongodb';
 import { withMongo } from '../lib/mongo.mjs';
 import { getTodaySpendUsd, readDailyBudgetUsd, readScopeEnvelopes, getScopeSpendUsd } from '../lib/spend-guard.mjs';
 import { PAGE_RATE_USD, PAGE_RATES_MEASURED_ON, estimatePagesCost } from '../lib/model-pricing.mjs';
@@ -115,6 +117,56 @@ async function verifyFromPages(db, ids) {
   return out;
 }
 
+// Envelope spend split by usage-row `endpoint` (#4870): an envelope's meter is one number,
+// and an embeddings envelope silently buying translation read as a healthy $1.07 → $1.76.
+// Counts EVERY endpoint on the envelope's books, metered or not, so a laned envelope also
+// shows what other writers are spending on its books. Read-only; the gate never calls this.
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+async function spendByEndpoint(db, ids, since) {
+  const by = new Map();
+  const tally = (ep, usd, rows) => {
+    const k = ep || '(no endpoint)';
+    const cur = by.get(k) || { usd: 0, rows: 0 };
+    cur.usd += usd; cur.rows += rows;
+    by.set(k, cur);
+  };
+  const match = { book_id: { $in: ids } };
+  if (since) match._id = { $gte: ObjectId.createFromTime(Math.floor(since.getTime() / 1000)) };
+  const mongoRows = await db.collection('gemini_usage').aggregate([
+    { $match: match },
+    { $group: { _id: '$endpoint', usd: { $sum: { $ifNull: ['$cost_usd', 0] } }, rows: { $sum: 1 } } },
+  ]).toArray();
+  for (const r of mongoRows) tally(r._id, r.usd, r.rows);
+
+  let error = null;
+  if (!SUPABASE_SERVICE_KEY) error = 'SUPABASE_SERVICE_ROLE_KEY missing — Supabase half not counted';
+  const sinceClause = since ? `&timestamp=gte.${since.toISOString()}` : '';
+  try {
+    for (let i = 0; !error && i < ids.length; i += 80) {
+      const inList = ids.slice(i, i + 80).map(encodeURIComponent).join(',');
+      for (let pageNo = 0; ; pageNo++) {
+        if (pageNo >= 40) { error = '>40000 rows for one chunk — split truncated'; break; }
+        const from = pageNo * 1000;
+        const resp = await fetch(
+          `${SUPABASE_URL}/rest/v1/gemini_usage?select=cost_usd,endpoint&book_id=in.(${inList})${sinceClause}&order=id.asc`,
+          { headers: { apikey: SUPABASE_SERVICE_KEY, Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`, Range: `${from}-${from + 999}` } },
+        );
+        if (!resp.ok && resp.status !== 206) { error = `Supabase read failed (${resp.status})`; break; }
+        const batch = await resp.json();
+        for (const r of batch) tally(r.endpoint, r.cost_usd ?? 0, 1);
+        if (batch.length < 1000) break;
+      }
+    }
+  } catch (err) {
+    error = `Supabase read error: ${err.message}`;
+  }
+  const rows = [...by.entries()]
+    .map(([endpoint, v]) => ({ endpoint, usd: Number(v.usd.toFixed(4)), rows: v.rows }))
+    .sort((a, b) => b.usd - a.usd);
+  return { rows, error };
+}
+
 await withMongo(async (db) => {
   const control = (await db.collection('system_config').findOne({ _id: 'processing_control' })) || {};
 
@@ -159,6 +211,7 @@ await withMongo(async (db) => {
       for (const b of rows) envIds.add(String(b.id));
     }
     const s = await getScopeSpendUsd(db, { ids: [...envIds], since: env.created_at, endpoints: env.meter_endpoints });
+    const split = flag('no-split') ? null : await spendByEndpoint(db, [...envIds], env.created_at);
     envelopes.push({
       tag: env.tag,
       budget_usd: env.budget_usd,
@@ -166,6 +219,10 @@ await withMongo(async (db) => {
       books: envIds.size,
       open: !s.meterError && s.usd < env.budget_usd,
       meter_error: s.meterError || null,
+      lanes: env.lanes,
+      meter_endpoints: env.meter_endpoints,
+      spend_by_endpoint: split?.rows ?? null,
+      spend_by_endpoint_error: split?.error ?? null,
     });
   }
 
@@ -189,6 +246,15 @@ await withMongo(async (db) => {
     console.log(`  allow_scopes: ${gates.scopes.length ? gates.scopes.join(', ') : '(none)'}  legacy allow_book_ids: ${gates.legacy_allow_book_ids}`);
     for (const e of envelopes) {
       console.log(`    envelope ${e.tag}: $${e.spent_usd}/$${e.budget_usd} → ${e.meter_error ? `METER ERROR: ${e.meter_error}` : e.open ? 'OPEN' : 'SPENT'} (${e.books} books)`);
+      console.log(`      lanes: ${e.lanes ? e.lanes.join(', ') : 'ANY worker (unlaned — every lane may spend it)'}; meter: ${e.meter_endpoints ? e.meter_endpoints.join(', ') : 'all endpoints'}`);
+      if (e.spend_by_endpoint) {
+        const metered = (ep) => !e.meter_endpoints || e.meter_endpoints.includes(ep);
+        if (!e.spend_by_endpoint.length) console.log('      spend by endpoint: (no usage rows)');
+        for (const r of e.spend_by_endpoint) {
+          console.log(`      $${r.usd.toFixed(2).padStart(8)}  ${String(r.rows).padStart(6)} rows  ${r.endpoint}${metered(r.endpoint) ? '' : '  (not metered)'}`);
+        }
+        if (e.spend_by_endpoint_error) console.log(`      [split incomplete: ${e.spend_by_endpoint_error}]`);
+      }
     }
     console.log('\nPass --scope <tag>, --collection <slug>, or --books id1,id2 for per-book progress.');
     console.log('NOTE: a scope without a budget envelope bypasses the PAUSE only; an envelope (#4540) also opens a confined lane past the closed dial. Manage with scripts/maintenance/set-scope.mjs.');

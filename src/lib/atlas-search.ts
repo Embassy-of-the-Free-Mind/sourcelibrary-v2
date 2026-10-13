@@ -25,7 +25,8 @@ interface SearchOptions {
 
 /**
  * Build a $search aggregation stage for the books collection.
- * Searches title, display_title, english_title, author, reading_summary.overview with boosting.
+ * Searches title, display_title, english_title, author, name_forms, reading_summary.overview with boosting.
+ * Callers that document this to a model (MCP list_books `search`) must name the overview lane (#4388).
  * Filters on indexed fields (hidden, language, categories, year, is_first_translation, pages_translated).
  *
  * Options:

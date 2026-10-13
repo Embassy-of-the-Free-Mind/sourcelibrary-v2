@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [lzh]
+scripts: [Hani]
+canons: [chinese-classics]
+n_books: 433
+n_pages: 433
+verdict: "On the held SKQS cohort (97.7% brush manuscript) lite is catastrophic on 10.6% of pages, PaddleOCR-VL 0.9%, flash-preview 3.7%; Paddle passes the cost-lane rule again."
+status: undecided
+decision: "Paddle lane for the 7,894 books (dedup first, ~EUR 650-800) proposed; PENDING Derek in DECISIONS.md, default books stay held (#5547)"
+superseded_by: null
+issue: [5547, 4719]
+---
 ## 2026-10-01 · Which engine should OCR the 7,894 Chinese books held out of #4719, measured on the cohort itself? (#5547)
 
 **Question.** #4719's preview-stubs job held 8,141 Chinese books (1.01M OCR pages left) routed to `gemini-3.1-flash-lite`. The 09-18 benchmark (#4925) put lite at 14/69 catastrophic pages on Siku Quanshu manuscript and adopted PaddleOCR-VL-1.6 as a cost lane for that class. Does that hold on THIS cohort, what page classes does it contain, what does Paddle cost at scale, and how much of it is duplicated? Prereg: `PREREGISTRATION-chinese-cohort-5547.md` (committed before any engine ran).

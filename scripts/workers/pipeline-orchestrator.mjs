@@ -32,6 +32,7 @@ import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
 import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
+import { healthBlockedResidue, nameBlockedPages, BLOCKED_JOB_STATUS } from '../lib/translate-job-outcome.mjs';
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
 import { getOcrModelForBook, ocrEscalationModel, OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
@@ -45,29 +46,27 @@ import { promisify } from 'util';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd } from './lib/supabase-usage-logger.mjs';
+import { logUsage, logUsageAsync, outputTokensFrom, estimateBatchCostUsd, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
 import { decideFinalize } from '../lib/finalize-decision.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal } from '../lib/preview-stub-guard.mjs';
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
+import { filterCompletedCopies } from './lib/work-copy-dedup.mjs';
+import { partitionPreviewCandidates } from './lib/ocr-preview-eligibility.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { isPaused, pausedKeys, PHASE_PAUSE_KEY } from '../lib/pause.mjs';
+import { enrolBrake } from '../lib/quality-gate.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
 import { holdViolation } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { ACTIVE_OCR_JOB_STATUSES, claimBookForOcrSubmit, releaseOcrSubmitClaims, loadOcrPagesInFlight, partitionGuardedPages, describeSkips } from '../lib/ocr-submit-guard.mjs';
 import { projectCanonicals, projectTotal, projectMembers, keysWithRoom, isFileQuotaError } from '../lib/gemini-batch-keys.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
 
-// Fields consolidated away from `books` (#3969). The warehouse copy of a book is
-// a snapshot taken before those consolidations, so promoting it verbatim puts
-// them back (#4858: 2,489 `tenant_id` and 87 `pageCount` re-grown this way).
-const RETIRED_BOOK_FIELDS = JSON.parse(
-  fs.readFileSync(new URL('../lib/books-known-fields.json', import.meta.url), 'utf8'),
-).retired;
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -128,6 +127,9 @@ const OCR_GENERATION_CONFIG = Object.freeze({
 });
 const OCR_IMAGE_MAX_PX = 1500;
 const PROVENANCE_CALL_SITE = 'scripts/workers/pipeline-orchestrator.mjs';
+// Who holds an OCR submit lease (#5498). Phase-scoped workers are separate processes, so the pid
+// is what tells the main loop from the `--phase 1.5` worker in a lease that was never released.
+const OCR_SUBMIT_OWNER = `${PROVENANCE_CALL_SITE}#${process.argv.includes('--phase') ? `phase-${process.argv[process.argv.indexOf('--phase') + 1]}` : 'main'}@${os.hostname()}:${process.pid}`;
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 1000;  // Pages per file-based batch. With 1500px resize, 1000 pages = ~500MB JSONL (well under 2GB File API limit). Google recommends 1K-5K. Experiment 2026-04-13: identical OCR quality at 1500px vs full-res.
 const PASS2_POOL_PAGES = OCR_FILE_BATCH_SIZE; // Phase 2 Pass 2 packs whole books into one job of up to this many pages (#5544)
@@ -534,7 +536,7 @@ import { scorePageForCover } from '../lib/cover-scoring.mjs';
  * @param {number} maxPages - Max pages to consider (default 20)
  * @returns {Promise<{page: Object, score: number, reason: string} | null>}
  */
-async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) {
+async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null, bookAuthor = null) {
   const pages = await db.collection('pages').find(
     { book_id: bookId, page_number: { $lte: maxPages } },
     { projection: {
@@ -547,7 +549,7 @@ async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) 
   if (!pages.length) return null;
 
   const scored = pages
-    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle }) }))
+    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle, bookAuthor }) }))
     .sort((a, b) => b.score - a.score);
 
   const best = scored[0];
@@ -642,6 +644,19 @@ async function transliteratePage(db, page, sourceScript) {
   const inputTokens = usage.promptTokenCount || 0;
   const outputTokens = outputTokensFrom(usage);
 
+  // Priced by the shared table. A hardcoded $0.10/$0.40 here recorded flash-lite at ~30% of
+  // the $0.25/$1.50 Google bills: $6.32 metered for $21.45 billed, 2026-09-27..10-03 (#5499).
+  // Metered BEFORE the empty-text return (#4599): an empty answer is billed too, and the page,
+  // left untransliterated, is asked again every run (~350 unmetered calls/day in 2026-10).
+  const costUsd = calculateUsageCost(TRANSLITERATION_MODEL, inputTokens, outputTokens, false);
+  logUsageAsync({
+    type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
+    book_id: page.book_id, page_ids: [page.id],
+    input_tokens: inputTokens, output_tokens: outputTokens,
+    cost_usd: costUsd, endpoint: 'hetzner/pipeline-orchestrator',
+    ...(text ? { status: 'success' } : { status: 'failed', error_category: 'empty_response' }),
+  }, db);
+
   if (!text) return null;
 
   const ocrHash = hashString(page.ocr.data);
@@ -658,15 +673,6 @@ async function transliteratePage(db, page, sourceScript) {
       },
     }
   );
-
-  // Log usage (fire-and-forget)
-  const costUsd = (inputTokens / 1_000_000) * 0.10 + (outputTokens / 1_000_000) * 0.40;
-  logUsageAsync({
-    type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
-    book_id: page.book_id, page_ids: [page.id],
-    input_tokens: inputTokens, output_tokens: outputTokens,
-    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
-  }, db);
 
   return { inputTokens, outputTokens, costUsd };
 }
@@ -1055,7 +1061,7 @@ let PAUSE_CONTROL = null;
 
 // `phase` is the pause switch: paused_phases:[phase] stops this phase and nothing else.
 // `cronPhase` is the `--phase N` run the phase rides in, for phases with no cron line of
-// their own (Phase 0.5 runs in `--phase 1`, Phase 1.95 in `--phase 2`). It does not make
+// their own (Phase 0.5 runs in `--phase 1`). It does not make
 // the phase pausable by the host's switch (#5472).
 function shouldRun(phase, cronPhase = phase) {
   if (PAUSED_PHASES.has(phase)) return false;
@@ -1473,7 +1479,22 @@ async function getOcrPromptFromDb(db) {
  * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
-async function submitOcrDirectly(db, book, { modelOverride, maxPages, promptVariant } = {}) {
+async function submitOcrDirectly(db, book, opts = {}) {
+  // Same lease as the cross-book pooler (#5498): Phase 2 here and Phase 1.5's pool in the
+  // `--phase 1.5` worker can select the same book at the same moment.
+  const lease = await claimBookForOcrSubmit(db, book.id, { owner: OCR_SUBMIT_OWNER });
+  if (!lease.ok) {
+    console.log(`    Skipping: ${lease.reason}`);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true, skipReason: lease.reason };
+  }
+  try {
+    return await submitOcrDirectlyUnderLease(db, book, opts);
+  } finally {
+    await releaseOcrSubmitClaims(db, [book.id], { owner: OCR_SUBMIT_OWNER });
+  }
+}
+
+async function submitOcrDirectlyUnderLease(db, book, { modelOverride, maxPages, promptVariant } = {}) {
   const ocrModel = modelOverride || getOcrModelForBook(book);
   const pageLimit = maxPages || MAX_PAGES_PER_BOOK;
   // Guard: check for existing active batch_jobs for this book
@@ -1481,7 +1502,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages, promptVari
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
     $or: [{ book_id: book.id }, { book_ids: book.id }],
     type: 'ocr',
-    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+    status: { $in: ACTIVE_OCR_JOB_STATUSES },
   });
   if (activeBatchForBook > 0) {
     console.log(`    Skipping: ${activeBatchForBook} active batch jobs already exist for this book`);
@@ -1497,7 +1518,7 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages, promptVari
 
   // Find pages needing OCR — only pages with R2 images (archived_photo or cropped_photo).
   // Pages without R2 URLs are not ready for OCR (archiving incomplete).
-  const pages = await db.collection('pages')
+  let pages = await db.collection('pages')
     .find({
       book_id: book.id,
       page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
@@ -1527,6 +1548,15 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages, promptVari
   if (pages.length === 0) {
     return { submitted: 0, jobName: null, alreadyDone: true };
   }
+
+  // Page-level guard (#5498). If it refuses EVERY page, that is "already bought", not "done":
+  // returning alreadyDone here would advance the book to ocr_complete with pages still unread.
+  const guarded = partitionGuardedPages(pages, await loadOcrPagesInFlight(db, [book.id]));
+  if (guarded.skipped.length) console.log(`    ${describeSkips(guarded.skipped)}`);
+  if (guarded.keep.length === 0) {
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true, skipReason: describeSkips(guarded.skipped) };
+  }
+  pages = guarded.keep;
 
   // Minimum batch size gate — don't burn a batch API call for a handful of pages.
   // Small batches (1-20 pages) are usually RECITATION/failure retries that won't succeed.
@@ -1810,6 +1840,7 @@ Output structure:
       prompt_name: ocrPromptRef.name,
       prompt_hash: ocrPromptRef.content_hash,
       prompt_variant: promptVariant || null,
+      submitted_by: PROVENANCE_CALL_SITE,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -1864,6 +1895,21 @@ const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-bo
  *   OCR. A caller that loops can drop those books and never re-offer them.
  */
 async function submitCrossBookOcrBatches(db, books, opts = {}) {
+  // Lease every candidate BEFORE the active-batch check (#5498). Phase 1.5 runs in the main loop
+  // and in the `--phase 1.5` worker under different flock locks; without the lease both read "no
+  // pending job" and both pay for the same pool, because the job row only appears after a ~30s
+  // download + upload. The lease is atomic; the check after it is then sound.
+  const claimed = [];
+  try {
+    return await submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed);
+  } finally {
+    // After the batch_jobs row exists (or the submit failed): the next submitter's active-batch
+    // check now sees the job, so the lease has done its work.
+    await releaseOcrSubmitClaims(db, claimed, { owner: OCR_SUBMIT_OWNER });
+  }
+}
+
+async function submitCrossBookOcrBatchesUnderLease(db, books, opts, claimed) {
   const {
     maxPagesPerBook = null,
     advanceStatus = true,
@@ -1885,10 +1931,16 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
   for (const book of books) {
     considered.add(book.id);
     if (book.needs_splitting) continue; // Spread books need special prompt, keep per-book
+    const lease = await claimBookForOcrSubmit(db, book.id, { owner: OCR_SUBMIT_OWNER });
+    if (!lease.ok) {
+      console.log(`    Skipping ${(book.title || '').substring(0, 40)}: ${lease.reason}`);
+      continue;
+    }
+    claimed.push(book.id);
     const activeBatch = await db.collection('batch_jobs').countDocuments({
       $or: [{ book_id: book.id }, { book_ids: book.id }],
       type: 'ocr',
-      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+      status: { $in: ACTIVE_OCR_JOB_STATUSES },
     });
     if (activeBatch > 0) {
       console.log(`    Skipping ${(book.title || '').substring(0, 40)}: active OCR batch exists`);
@@ -1897,6 +1949,12 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     eligible.push(book);
   }
   if (eligible.length === 0) return { submitted: 0, batchCount: 0, bookIds: [], jobName: null, consideredBookIds: [...considered] };
+
+  // Page-level guard: a page already in a live OCR job, or in one saved in the last few hours,
+  // is not bought again. Read once, after the leases, so a job another process wrote before
+  // releasing its lease is visible here.
+  const pagesInFlight = await loadOcrPagesInFlight(db, eligible.map(b => b.id));
+  const guardSkipped = [];
 
   // Generation guard (#2449): per-book OCR generations, stamped on the job so
   // the collector can drop pages of any book that was reset after submit.
@@ -1956,6 +2014,13 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
         .sort({ page_number: 1 }).limit(remaining).project(pageProjection).toArray();
     }
 
+    const guarded = partitionGuardedPages(pages, pagesInFlight);
+    if (guarded.skipped.length) {
+      console.log(`    ${(book.title || '').substring(0, 40)}: ${describeSkips(guarded.skipped)}`);
+      guardSkipped.push(...guarded.skipped);
+    }
+    pages = guarded.keep;
+
     if (pages.length === 0) continue;
     if (wholeBooksOnly && pages.length > poolRoom) {
       // Too big for what is left of this pool. It may fit an emptier pool on a later call,
@@ -1988,7 +2053,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
   }
 
   const consideredBookIds = [...considered].filter(id => lookedAt.has(id) || !eligible.some(b => b.id === id));
-  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [], jobName: null, consideredBookIds };
+  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [], jobName: null, consideredBookIds, guardSkipped };
   console.log(`  Cross-book OCR pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
 
   // Build and submit a single cross-book batch
@@ -2093,6 +2158,8 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
     cross_book: true,
     ...(ocrSource ? { ocr_source: ocrSource } : {}),
     ...(maxPagesPerBook ? { preview: true, preview_page_cap: maxPagesPerBook } : {}),
+    // What the #5498 guard refused while building this pool, so a smaller job is explained.
+    ...(guardSkipped.length ? { submit_guard: { skipped_pages: guardSkipped.length, blocking_jobs: [...new Set(guardSkipped.map(s => s.job_id))].slice(0, 20) } } : {}),
     ocr_generation: bookGenerations[chunkBookIds[0]] ?? 0, // #2449 generation guard
     book_generations: Object.fromEntries(chunkBookIds.map(id => [id, bookGenerations[id] ?? 0])),
     created_at: new Date(),
@@ -2129,7 +2196,7 @@ async function submitCrossBookOcrBatches(db, books, opts = {}) {
   }, db);
 
   console.log(`  Cross-book OCR submitted: ${allDownloaded.length} pages from ${chunkBookIds.length} books — ${batchJob.name}`);
-  return { submitted: allDownloaded.length, batchCount: 1, bookIds: chunkBookIds, jobName: batchJob.name, consideredBookIds };
+  return { submitted: allDownloaded.length, batchCount: 1, bookIds: chunkBookIds, jobName: batchJob.name, consideredBookIds, guardSkipped };
 }
 
 /**
@@ -2315,6 +2382,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       page_count: chunk.length,
       status: 'pending',
       model: IMAGE_EXTRACTION_MODEL,
+      submitted_by: PROVENANCE_CALL_SITE,
       submission_method: 'file',
       key_index: batchJob.keyIndex,
       cross_book: true,
@@ -2352,6 +2420,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       total_pages: totalSubmitted,
       status: 'pending',
       model: IMAGE_EXTRACTION_MODEL,
+      submitted_by: PROVENANCE_CALL_SITE,
       cross_book: true,
       created_at: new Date(),
       updated_at: new Date(),
@@ -2845,36 +2914,6 @@ async function run() {
         }
       }
       console.log(`  Archive completed: ${archiveCompleted}/${archivingBooks.length}`);
-
-      // Also check warehouse books for archive completion
-      // Archive workers update pages_archived on warehouse books, but Phase 1 only checks live.
-      // Use pages_archived >= pages_count as a fast check (no per-page queries needed).
-      const WAREHOUSE_ARCHIVE_CHECK_LIMIT = 200;
-      const warehouseArchiving = await db.collection('books_warehouse')
-        .find({
-          'pipeline_auto.status': 'archiving',
-          pages_count: { $gt: 0 },
-          pages_archived: { $exists: true, $gt: 0 },
-        })
-        .project({ id: 1, title: 1, pages_count: 1, pages_archived: 1 })
-        .limit(WAREHOUSE_ARCHIVE_CHECK_LIMIT)
-        .toArray();
-
-      let warehouseCompleted = 0;
-      for (const book of warehouseArchiving) {
-        if (book.pages_archived >= book.pages_count) {
-          if (!DRY_RUN) {
-            await db.collection('books_warehouse').updateOne(
-              { id: book.id },
-              { $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() } }
-            );
-          }
-          warehouseCompleted++;
-        }
-      }
-      if (warehouseCompleted > 0 || warehouseArchiving.length > 0) {
-        console.log(`  Warehouse archive check: ${warehouseCompleted}/${warehouseArchiving.length} completed (${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archiving' })} total archiving)`);
-      }
     }
 
     // ── Phase 1.25: Split detection for spread scans ──
@@ -2907,7 +2946,9 @@ async function run() {
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': { $ne: true },
         })
-        .sort({ hidden: 1 })
+        // processing_priority first (#5308): Phase 1.5 requires split_checked, so an
+        // unsorted window here delays priority books exactly as Phase 1.97 did.
+        .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_confirm_failures': 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
@@ -3042,6 +3083,16 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             // looked at again.
             if (!geminiRes.ok) throw new Error(`Gemini HTTP ${geminiRes.status}`);
             const geminiData = await geminiRes.json();
+            // This call wrote no usage row at all (#4599): 50-550 calls a day on the soma key.
+            const splitUsage = geminiData.usageMetadata || {};
+            const splitIn = splitUsage.promptTokenCount || 0;
+            const splitOut = outputTokensFrom(splitUsage);
+            logUsageAsync({
+              type: 'split_confirm', mode: 'realtime', model: SPLIT_CONFIRM_MODEL,
+              book_id: book.id, input_tokens: splitIn, output_tokens: splitOut,
+              cost_usd: calculateUsageCost(SPLIT_CONFIRM_MODEL, splitIn, splitOut, false),
+              status: 'success', endpoint: 'hetzner/pipeline-split-confirm',
+            }, db);
             const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
             const jsonMatch = rawText.match(/\{[\s\S]*\}/);
             if (!jsonMatch) throw new Error(`Gemini returned no JSON: ${rawText.slice(0, 40)}`);
@@ -3311,7 +3362,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // Dial-gated. Phase 1.5 spends, so it must ask — it was outside the dial
     // while it was inline realtime, which meant the one phase that runs every
     // two minutes was the one phase the ceiling could not stop.
-    if (shouldRun(1.5) && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
+    // The standing quality gate (#5826): a NO-GO on ocr pauses ENROLMENT — no new book's pages are
+    // submitted (1.5 and 2); jobs already submitted are still collected by Phase 3 / batch-collector.
+    if (shouldRun(1.5) && !(await enrolBrake(db, 'ocr')).paused && await budgetAllowsDispatchForPhase('Phase 1.5 (preview OCR)')) {
       console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
       const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
@@ -3581,6 +3634,20 @@ Rules:
           const inputTokens = usage.promptTokenCount || 0;
           const outputTokens = outputTokensFrom(usage);
 
+          // Meter the call the moment Google has billed it (#4599). This row used to be written after
+          // the parse and the books write, so a call whose write threw was paid for and never recorded,
+          // and the book, never marked enriched, was asked again every run. From 2026-10-01 that loop
+          // was ~6,000 unmetered calls a day on the soma key (a field_provenance $set conflict, ~40
+          // books, two scheduler processes every 2 min). Priced by the shared table, not a constant.
+          logUsageAsync({
+            type: 'metadata_enrichment', mode: 'realtime', model: metadataModel,
+            book_id: book.id, book_title: book.display_title || book.title,
+            input_tokens: inputTokens, output_tokens: outputTokens,
+            cost_usd: calculateUsageCost(metadataModel, inputTokens, outputTokens, false),
+            duration_ms: durationMs, status: 'success',
+            endpoint: 'hetzner/pipeline-metadata',
+          }, db);
+
           let parsed;
           try {
             parsed = JSON.parse(rawText);
@@ -3606,15 +3673,20 @@ Rules:
             // ONE typed provenance entry, not three private fields (2026-09-10) — this mirrors
             // src/lib/metadata-enrichment.ts, which had the same three writes. language_source /
             // language_confidence / ai_detected_language were read by nothing.
+            // Held here and folded into the whole `field_provenance` object below: a dotted
+            // 'field_provenance.language' in the same $set as 'field_provenance' is a Mongo path
+            // conflict, so the write threw on every such book and the book was re-asked every run
+            // (~6,000 billed calls/day from 2026-10-01, #4599).
+            let languageProvenance = null;
             if (aiLang && currentLang === 'Unknown') {
               updates.language = aiLang;
-              updates['field_provenance.language'] = {
+              languageProvenance = {
                 source: 'enrichment', value: aiLang, chosen_from: 'gemini_text', confidence,
                 claims: [{ source: 'gemini_text', value: aiLang }], date: now.toISOString(),
               };
               changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
             } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
-              updates['field_provenance.language'] = {
+              languageProvenance = {
                 source: 'enrichment', value: currentLang, chosen_from: 'catalogue', confidence, conflict: true,
                 claims: [
                   { source: 'catalogue', value: currentLang },
@@ -3716,7 +3788,7 @@ Rules:
             // Field provenance
             const provenance = book.field_provenance || {};
             const aiSource = { source: 'ai_enrichment', model: metadataModel, date: now, confidence, pages_checked: ocrSamples.length };
-            if (updates.language) provenance.language = { ...aiSource, previous_value: book.language };
+            if (languageProvenance) provenance.language = languageProvenance;
             if (updates.author) provenance.author = { ...aiSource, previous_value: book.author };
             if (updates.is_first_translation !== undefined) provenance.is_first_translation = aiSource;
             if (updates.year) provenance.year = { ...aiSource, previous_value: null };
@@ -3749,16 +3821,6 @@ Rules:
             // Non-fatal — catalog lookup is best-effort
           }
 
-          // Log usage
-          const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
-          logUsageAsync({
-            type: 'metadata_enrichment', mode: 'realtime', model: metadataModel,
-            book_id: book.id, book_title: book.display_title || book.title,
-            input_tokens: inputTokens, output_tokens: outputTokens,
-            cost_usd: costUsd, duration_ms: durationMs, status: 'success',
-            endpoint: 'hetzner/pipeline-metadata',
-          }, db);
-
           // Log to audit_log if changes were made
           if (changes.length > 0) {
             db.collection('audit_log').insertOne({
@@ -3781,127 +3843,8 @@ Rules:
       console.log(`  AI metadata classified: ${metadataEnriched} books`);
     }
 
-    // ── Phase 1.95: Warehouse promotion (books_warehouse -> live books) ──
-    // Books sit in warehouse during archiving to reduce Atlas load. Once archive_complete,
-    // they must be promoted to the live collection before OCR can run.
-    // The old Vercel cron that did this was archived — this replaces it.
-    // Own pause switch (paused_phases:[1.95]), so pausing OCR (2) no longer stops promotion;
-    // still runs in the `--phase 2` cron (#5472).
-    if (shouldRun(1.95, 2)) {
-      const PROMOTE_LIMIT = 50; // Each book copies all pages — keep moderate to avoid Atlas spikes
-      const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
-      const promoteCandidates = await db.collection('books_warehouse')
-        .aggregate([
-          // promoted_to filter is CRITICAL: promotion marks the warehouse copy
-          // promoted_to:'live' but never changes pipeline_auto.status, so
-          // without it every promoted book stays a candidate forever and the
-          // same top-50 get re-promoted every cycle — each pass $set the STALE
-          // warehouse doc over the live one, silently reverting live edits
-          // (caught 2026-07-05: a #3002 collection re-tag kept undoing itself).
-          { $match: { 'pipeline_auto.status': 'archive_complete', promoted_to: { $ne: 'live' } } },
-          { $addFields: {
-            _priority: {
-              $switch: {
-                branches: [
-                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 },
-                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
-                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_WH] }, then: 2 },
-                ],
-                default: 1,
-              },
-            },
-          }},
-          { $sort: { _priority: 1, ...NEWEST_FIRST } },
-          { $project: { id: 1, title: 1, pages_count: 1 } },
-          { $limit: PROMOTE_LIMIT },
-        ])
-        .toArray();
-
-      if (promoteCandidates.length > 0) {
-        console.log(`\n--- Phase 1.95: Warehouse promotion ---`);
-        console.log(`  Candidates: ${promoteCandidates.length} (of ${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archive_complete' })} total)`);
-        let promoted = 0;
-        for (const candidate of promoteCandidates) {
-          try {
-            const book = await db.collection('books_warehouse').findOne({ id: candidate.id });
-            if (!book) continue;
-            for (const f of RETIRED_BOOK_FIELDS) delete book[f];
-
-            // Check if book already exists in live (can have different _id)
-            const existingLive = await db.collection('books').findOne(
-              { id: candidate.id },
-              { projection: { _id: 1, slug: 1, collections: 1, visible: 1, hidden: 1 } }
-            );
-            if (existingLive) {
-              // Update in place, preserving live _id and live slug.
-              // The live slug may have been disambiguated on first promotion
-              // (e.g. `foo-2`), while warehouse still holds the original `foo`.
-              // Overwriting would re-trigger E11000 against the record that
-              // owns `foo` in live.
-              // Also preserve live-side curation: collections tags and the
-              // visible/hidden pair are edited on the LIVE doc (merges,
-              // enrich assignment, curators) — the warehouse copy is a stale
-              // snapshot and must not roll them back.
-              const { _id, ...bookWithoutId } = book;
-              if (existingLive.slug) delete bookWithoutId.slug;
-              if (existingLive.collections !== undefined) delete bookWithoutId.collections;
-              if (existingLive.visible !== undefined) delete bookWithoutId.visible;
-              if (existingLive.hidden !== undefined) delete bookWithoutId.hidden;
-              bookWithoutId.updated_at = new Date();
-              await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
-            } else {
-              // Fresh insert — deduplicate slug to avoid E11000 on books_slug_idx
-              if (book.slug) {
-                const slugConflict = await db.collection('books').findOne(
-                  { slug: book.slug, id: { $ne: book.id } },
-                  { projection: { _id: 1 } }
-                );
-                if (slugConflict) {
-                  let suffix = 2;
-                  while (suffix < 100) {
-                    const candidate = `${book.slug}-${suffix}`;
-                    const exists = await db.collection('books').findOne({ slug: candidate }, { projection: { _id: 1 } });
-                    if (!exists) { book.slug = candidate; break; }
-                    suffix++;
-                  }
-                  console.log(`    Slug conflict resolved: ${book.slug}`);
-                }
-              }
-              await db.collection('books').insertOne(book);
-            }
-
-            // Move pages — handle _id conflicts by stripping _id for upserts matched by book_id+page_number
-            const pages = await db.collection('pages_warehouse').find({ book_id: candidate.id }).toArray();
-            if (pages.length > 0) {
-              const bulkOps = pages.map(page => {
-                // tenant_id is retired on pages too (#4858) — don't carry it over.
-                const { _id, tenant_id: _retired, ...pageWithoutId } = page;
-                return {
-                  updateOne: {
-                    filter: { book_id: page.book_id, page_number: page.page_number },
-                    update: { $set: pageWithoutId },
-                    upsert: true,
-                  },
-                };
-              });
-              await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
-            }
-
-            // Mark warehouse copy as promoted but keep it (permanent backup)
-            await db.collection('books_warehouse').updateOne(
-              { id: candidate.id },
-              { $set: { promoted_at: new Date(), promoted_to: 'live' } }
-            );
-
-            promoted++;
-          } catch (err) {
-            log.errors.push(`Promote ${candidate.id}: ${err.message}`);
-            console.error(`  ERROR promoting ${candidate.title?.slice(0, 60)}: ${err.message}`);
-          }
-        }
-        console.log(`  Promoted: ${promoted} books to live collection`);
-      }
-    }
+    // (Phase 1.95, warehouse promotion, was removed when the warehouse
+    // collections were retired 2026-10 and merged into books/pages, #5470.)
 
     // ── Phase 1.97: Trailing-dupe dedup (archive_complete, before OCR) ──
     // IA's PDF→page extraction often repeats a back cover / title page hundreds
@@ -3918,7 +3861,12 @@ Rules:
       let candidates = await db.collection('books').find({
         'pipeline_auto.status': 'archive_complete',
         'pipeline_auto.dedup_complete': { $ne: true },
-      }).project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
+      })
+        // processing_priority (#3756) must lead here too: Phase 2 only OCRs deduped
+        // books, so an unsorted window let a priority-100 book sit 10 h behind a
+        // 2.3K backlog before Phase 2's own sort ever saw it (#5308).
+        .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
         .limit(DEDUP_LIMIT).toArray();
       // Selective-unpause: confine dedup to the allowlist, like every other phase.
       // This phase previously had NO scope filter, so when globally paused with a
@@ -3983,7 +3931,7 @@ Rules:
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
     //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
-    if (shouldRun(2) && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
+    if (shouldRun(2) && !(await enrolBrake(db, 'ocr')).paused && await budgetAllowsDispatchForPhase('Phase 2 (OCR submit)')) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       // Ordering gate: never OCR a book before Phase 1.97 has deduped it, else
@@ -3994,26 +3942,12 @@ Rules:
       const requireDedup = !PAUSED_PHASES.has(1.97);
       const dedupGate = requireDedup ? { 'pipeline_auto.dedup_complete': true } : {};
 
-      // Work-ID dedup: skip books if another copy of the same work is already complete
+      // Work-ID dedup: skip a book only if a FULL-TEXT copy of the same volume
+      // is already complete — not a 25-page preview, not vol. 1 of a set (#4833).
       async function filterDuplicateWorks(db, candidates) {
-        const withWorkId = candidates.filter(b => b.work_id);
-        if (withWorkId.length === 0) return candidates;
-
-        const workIds = [...new Set(withWorkId.map(b => b.work_id))];
-        const completedWorks = await db.collection('books').distinct('work_id', {
-          work_id: { $in: workIds },
-          'pipeline_auto.status': { $in: ['complete', 'translate_complete', 'chapters_complete', 'images_complete', 'enriched'] },
-          hidden: { $ne: true },
-        });
-        const completedSet = new Set(completedWorks);
-
-        if (completedSet.size > 0) {
-          const before = candidates.length;
-          candidates = candidates.filter(b => !b.work_id || !completedSet.has(b.work_id));
-          const skipped = before - candidates.length;
-          if (skipped > 0) console.log(`  Work-ID dedup: skipped ${skipped} books (completed copy exists)`);
-        }
-        return candidates;
+        const { kept, skipped } = await filterCompletedCopies(db, candidates);
+        if (skipped.length > 0) console.log(`  Work-ID dedup: skipped ${skipped.length} books (completed full-text copy exists)`);
+        return kept;
       }
 
       // Check real Gemini-side active job count per key for load-aware routing
@@ -4079,11 +4013,19 @@ Rules:
             // "unknown script" and routes EVERY book to flash-preview (~2.75x).
             // created_at + processing_priority are carried only for the dry-run
             // queue-order printout below (#5082).
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, edition_key: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
-        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, visible: 1, created_at: 1, image_source: 1, pipeline_auto: 1 });
+        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, pages_ocr: 1, needs_splitting: 1, language: 1, visible: 1, created_at: 1, image_source: 1, pipeline_auto: 1 });
+        // --book replaces the list after the "no OCR yet" $match, so re-apply it
+        // here — else every --book run takes another 25-page preview and Pass 2
+        // skips on that fresh batch, never the full pass (#4624).
+        if (BOOK_OVERRIDE) {
+          const { eligible, dropped } = partitionPreviewCandidates(previewCandidates);
+          for (const { book, reason } of dropped) console.log(`  Preview pass: skipping ${(book.title || book.id || '').substring(0, 50)} — ${reason}`);
+          previewCandidates = eligible;
+        }
 
         const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
 
@@ -4198,7 +4140,7 @@ Rules:
           { $sort: { processing_priority: -1, _priority: 1, hidden: 1, ...NEWEST_FIRST } },
           // language + image_source.provider must survive the projection (see Pass 1).
           // created_at + processing_priority are for the dry-run queue-order printout (#5082).
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, edition_key: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
@@ -4385,9 +4327,9 @@ Rules:
         // thumbnail_source must survive the projection: the early-cover guard
         // below reads it, and a missing field made "!== 'manual'" always true —
         // silently overwriting human-chosen covers on every run.
-        .project({ id: 1, title: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
+        .project({ id: 1, title: 1, author: 1, thumbnail_source: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
-      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, thumbnail_source: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, author: 1, thumbnail_source: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -4502,7 +4444,7 @@ Rules:
               // cover immediately instead of waiting for the full pipeline to complete.
               if (book.thumbnail_source !== 'manual') {
                 try {
-                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
+                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title, book.author);
                   if (coverResult) {
                     await db.collection('books').updateOne(
                       { id: book.id },
@@ -4845,7 +4787,10 @@ Rules:
           'pipeline_auto.status': 'translate_submitted',
         });
         const headroom = MAX_INFLIGHT_TRANSLATIONS - inFlight;
-        const effectiveLimit = Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
+        // The standing quality gate (#5826): a NO-GO on translate pauses enrolment of new books into
+        // either lane; the reapers above and jobs already dispatched carry on.
+        const translateGate = await enrolBrake(db, 'translate');
+        const effectiveLimit = translateGate.paused ? 0 : Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
         console.log(`  In-flight translations: ${inFlight}/${MAX_INFLIGHT_TRANSLATIONS} — dispatching up to ${effectiveLimit}`);
 
         if (effectiveLimit === 0) {
@@ -5007,6 +4952,8 @@ Rules:
                 page_number: { $gt: 0 }, // Skip hidden/deduped trailing pages (page_number ≤ 0)
                 'ocr.data': { $exists: true, $nin: [null, ''] },
                 page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+                // translate-worker skips these, so a job for them does nothing (#5108).
+                'translation.health_blocked': { $exists: false },
                 $or: [
                   { 'translation.data': { $exists: false } },
                   { 'translation.data': null },
@@ -5019,6 +4966,10 @@ Rules:
               .toArray();
 
             if (pages.length === 0) {
+              // Name what is left instead of dispatching a job that cannot touch it (#5108). A block is
+              // lifted by the lane that re-reads the page, or by hand — never by re-dispatching.
+              const blocked = await healthBlockedResidue(db, { bookId: book.id });
+              if (blocked.length > 0) console.log(`  Not dispatched — health-blocked, untranslated: ${nameBlockedPages(blocked)}: ${book.title}`);
               // Guard: don't mark translate_complete if OCR isn't done yet
               // (preview OCR does 25 pages, translate-worker translates them, but full OCR hasn't run)
               const totalOcr = book.pages_ocr || 0;
@@ -5140,6 +5091,7 @@ Rules:
           book_id: book.id,
           'ocr.data': { $exists: true, $nin: [null, ''] },
           page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+          'translation.health_blocked': { $exists: false }, // not owed to this lane — Phase 4 names them (#5108)
           $or: [
             { 'translation.data': { $exists: false } },
             { 'translation.data': null },
@@ -5157,7 +5109,7 @@ Rules:
           if (jobId) {
             const job = await db.collection('jobs').findOne({
               id: jobId,
-              status: { $in: ['completed', 'completed_with_errors', 'failed'] },
+              status: { $in: ['completed', 'completed_with_errors', 'failed', BLOCKED_JOB_STATUS] },
             });
             if (job) {
               // Lambda job finished but pages remain — send back to Phase 4 for direct translation
@@ -5778,10 +5730,10 @@ Rules:
       let coverBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
+        .project({ id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(COVER_LIMIT)
         .toArray();
-      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
+      if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, author: 1, thumbnail: 1, thumbnail_source: 1 });
 
       console.log(`  Books needing cover selection: ${coverBooks.length}`);
       let coversSelected = 0;
@@ -5819,7 +5771,7 @@ Rules:
           }
 
           // Smart OCR-based cover selection
-          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
+          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title, book.author);
           if (coverResult && coverResult.url !== book.thumbnail) {
             await db.collection('books').updateOne(
               { id: book.id },

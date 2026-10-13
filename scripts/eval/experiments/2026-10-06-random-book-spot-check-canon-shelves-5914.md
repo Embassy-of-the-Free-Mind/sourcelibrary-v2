@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 30
+n_pages: 91
+verdict: "On 30 random canon-shelf books, 23% of pages (21/91) carry a serious error, driven by unreadable inputs, broken or misfiled books and modern editions rather than translation of clean prints."
+status: informational
+decision: "55 books hidden; arm added to the monthly audit; issues #5913, #5915, #5916, #5917 filed (#5914)"
+superseded_by: null
+issue: 5914
+---
 ## 2026-10-06 · What does an uncurated sample of the canon shelves look like, read against the page images? (#5914)
 <!-- PRIOR ART: _series-monthly-translation-corpus-audit.md (#5301) is the standing random audit: one interior page per book, text-only judge, page ends and non-text pages excluded. This run is the complement it names as missing (wrong leaf, page runs, book-level defects); #5914 folds it into that series as an arm. -->
 

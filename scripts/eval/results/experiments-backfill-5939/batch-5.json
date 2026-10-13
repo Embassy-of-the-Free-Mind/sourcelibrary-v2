@@ -1,0 +1,471 @@
+{
+ "2026-10-01-can-the-nyingma-tantra-manuscripts-get-an-accuracy-number-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-kangyur"
+   ],
+   "n_books": 95,
+   "n_pages": 245,
+   "verdict": "Can the Nyingma tantra manuscripts (BL EAP, non-Kangyur) get an accuracy number?",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-chained-batch-lane-random-sample-fidelity-of-pages-the-4681.md": {
+  "header": {
+   "issue": 4681,
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 75,
+   "n_pages": 206,
+   "verdict": "Controls pass: swap 15/15, drop 15/15, repeat 15/15 within one (13/15 exact).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (pipeline 5, translation 3, ocr 0, image 0, metadata 0)",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-chinese-ocr-cohort-5547.md": {
+  "header": {
+   "issue": [
+    5547,
+    4719
+   ],
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "lzh"
+   ],
+   "scripts": [
+    "Hani"
+   ],
+   "canons": [],
+   "n_books": 7894,
+   "n_pages": 69,
+   "verdict": "Decision row (proposal, PENDING Derek).",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "status unclear (adopted, rejected)"
+  ]
+ },
+ "2026-10-01-chinese-skqs-followup-5568.md": {
+  "header": {
+   "issue": 5568,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "lzh"
+   ],
+   "scripts": [
+    "Latn",
+    "Hani"
+   ],
+   "canons": [
+    "chinese-classics"
+   ],
+   "n_books": 7894,
+   "n_pages": 282,
+   "verdict": "Held Siku Quanshu cohort: can Kanripo's text replace OCR, does the OCR engine show in the English, and does Paddle's output fit the production writer?",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label"
+  ]
+ },
+ "2026-10-01-does-a-long-s-prompt-line-fix-early-english-ocr-5488.md": {
+  "header": {
+   "issue": 5488,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 72,
+   "n_pages": 142,
+   "verdict": "Does one long-s line in the OCR prompt fix early-modern English print?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-does-the-yigdzin-leaf-cut-drop-the-lower-leaf-s-first-line-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "image",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 118,
+   "verdict": "Does the Yigdzin per-leaf crop drop the lower leaf's first line, and should the \"lines < book median\" pages be re-read?",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-early-english-ocr-accuracy-against-eebo-tcp-5488.md": {
+  "header": {
+   "issue": 5488,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 69,
+   "n_pages": 73,
+   "verdict": "English · 1600–1699, decision grade (n = 52): flash-lite median CER 0.053 [0.042, 0.058], catastrophic 0/52.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-fingerprint-test-do-models-continue-our-transcriptions-with-our-misreads-5549.md": {
+  "header": {
+   "issue": 5549,
+   "stage": "ocr",
+   "measure": "agreement",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 9,
+   "n_pages": null,
+   "verdict": "| arm (band) | n (books) | Lite: our misread / printed | Flash: our misread / printed | Haiku: our misread / printed |",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-hidden-meta-full-mirror-repair-plan-5376.md": {
+  "header": {
+   "issue": 5376,
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": 3000,
+   "n_pages": 4938717,
+   "verdict": "Plan posted on #5376 (tiers A–F; A+B = move 10,160 pages for $0, hold list).",
+   "status": "undecided",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "n is the first count in the text"
+  ]
+ },
+ "2026-10-01-how-strong-are-the-quality-papers-numbers-once-corrected-for-chance-and-held-out-5495.md": {
+  "header": {
+   "issue": 5495,
+   "stage": "ocr",
+   "measure": "agreement",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 327,
+   "verdict": "- The two judges agree less than \"within one point on 107 of 107\" suggests.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-ia-candidate-dates-which-internet-archive-items-are-actually-old-5458.md": {
+  "header": {
+   "issue": 5458,
+   "stage": "metadata",
+   "measure": "accuracy",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "- Round 1, v1: 60/69 = 87%, which fails the bar.",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-kangyur-ocr-accuracy-confirmatory-redraw-4523.md": {
+  "header": {
+   "issue": 4523,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [
+    "bo"
+   ],
+   "scripts": [
+    "Tibt"
+   ],
+   "canons": [
+    "derge-kangyur"
+   ],
+   "n_books": 65,
+   "n_pages": 105,
+   "verdict": "Kangyur identity median 0.947 (IQR 0.904–0.972), 76/100 ≥ 0.9, 3/100 < 0.5 — against 0.950 (0.917–0.971), 53/65, 2/65 on 09-30.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-persian-manuscript-ocr-flash-vs-kraken-5525.md": {
+  "header": {
+   "issue": 5525,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "ar",
+    "fa"
+   ],
+   "scripts": [
+    "Arab"
+   ],
+   "canons": [
+    "ganjoor"
+   ],
+   "n_books": null,
+   "n_pages": 4,
+   "verdict": "Recommend flash as the Persian-manuscript OCR model over flash-lite.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-persian-ocr-vs-ganjoor-5525.md": {
+  "header": {
+   "issue": 5525,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "fa"
+   ],
+   "scripts": [
+    "Arab"
+   ],
+   "canons": [
+    "ganjoor",
+    "sufi"
+   ],
+   "n_books": 110,
+   "n_pages": 4700,
+   "verdict": "The gate is not met. Manuscript sequence accuracy is 0.41 and order-free line accuracy is 0.74, against a 0.90 bar.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-tibetan-retranslation-batch-lane-lite-flash-claude-4742.md": {
+  "header": {
+   "issue": [
+    4742,
+    4523
+   ],
+   "stage": "pipeline",
+   "measure": "judged",
+   "languages": [
+    "en",
+    "bo"
+   ],
+   "scripts": [
+    "Latn",
+    "Tibt"
+   ],
+   "canons": [
+    "derge-kangyur"
+   ],
+   "n_books": null,
+   "n_pages": 22,
+   "verdict": "Tibetan retranslation on the Batch lane: lite vs flash vs a Claude arm, on the CURRENT Yigdzin read, blind vs 84000 (#4742, #4523; costs the 189K-page decision)",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "no measure: line",
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-translation-recitation-pilot-5523.md": {
+  "header": {
+   "issue": 5523,
+   "stage": "translation",
+   "measure": "agreement",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": 36,
+   "n_pages": 7,
+   "verdict": "| arm | n | run ≥ 12 words | 95% CI (Wilson) | longest run | 8-gram share, mean [boot 95%] |",
+   "status": "informational",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "status unclear (no status phrase)"
+  ]
+ },
+ "2026-10-01-what-does-an-error-rate-look-like-5576.md": {
+  "header": {
+   "issue": 5576,
+   "stage": "ocr",
+   "measure": "judged",
+   "languages": [],
+   "scripts": [],
+   "canons": [],
+   "n_books": null,
+   "n_pages": null,
+   "verdict": "- A measured CER includes the reference's own spellings and edition differences, and at the low and middle rungs that is most of it.",
+   "status": "rejected",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "stage unclear (ocr 0, translation 0, image 0, metadata 0, pipeline 0)",
+   "no measure: line",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ },
+ "2026-10-01-what-kinds-of-error-make-up-ocr-cer-5488.md": {
+  "header": {
+   "issue": 5488,
+   "stage": "ocr",
+   "measure": "accuracy",
+   "languages": [
+    "en"
+   ],
+   "scripts": [
+    "Latn"
+   ],
+   "canons": [],
+   "n_books": null,
+   "n_pages": 73,
+   "verdict": "Share of each reader's OCR-kind error weight (word-weighted):",
+   "status": "adopted",
+   "decision": null
+  },
+  "confident": false,
+  "why": [
+   "languages/canons are word matches",
+   "n is the first count in the text",
+   "verdict not under a Verdict/Decision/Answer label",
+   "decision must be written by reading"
+  ]
+ }
+}

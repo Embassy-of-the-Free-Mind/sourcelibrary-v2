@@ -19,7 +19,7 @@ import BphWorkEditForm from '@/components/catalog/BphWorkEditForm';
  */
 
 export const metadata: Metadata = {
-  title: 'New catalogue entry — BPH',
+  title: 'New catalogue entry | BPH',
   robots: { index: false, follow: false },
 };
 

@@ -1,0 +1,77 @@
+[
+  {
+    "book_id": "6abe825059b86b7d32a6597a",
+    "slot": 7,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། འ (Derge Tengyur, vol. 102)",
+    "tradition": "Tibetan Buddhist (Derge Tengyur)",
+    "shelf_fit": "fits",
+    "shelf_note": "A Madhyamaka commentary on Mūlamadhyamakakārikā ch. 17 (karma), with MMK 17.29-30 quoted in verse. It belongs in the Derge Tengyur dbu ma section, vol. 'a.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 216,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "འབྲས་བུ་#མེད་པ་པ་ཡོད་པར་ག་ལ་འགྱུར",
+            "image": "འབྲས་བུ་ཡོད་པར་ག་ལ་འགྱུར (as far as I can read line 5)",
+            "problem": "'མེད་པ་པ' ('nihilist') looks inserted here, probably carried over from the later 'མེད་པ་པ་གཙོ་བོར'. It makes the clause ungrammatical. Neither translation follows it.",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "# markers (བརྗོད་དུ་#མེད་པའི, ནི་#ལས, #བྱུང་བ, #མི་རིགས, #ཞེས, #བྱས་པའི, #བསལ་བར)",
+            "image": "no such marks on the block print",
+            "problem": "Stray '#' characters are scattered through the transcription. The reader would see them.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_A": 4,
+        "tr_errors_A": [
+          {
+            "source": "ཁོ་བོ་ཅག་ནི་ལས་དང་བྱེད་པ་པོ་དང་འབྲས་བུ་ལ་སོགས་པ་ (page ends mid-sentence)",
+            "english": "We do not <note>deny</note> karma, the agent, and the result…",
+            "problem": "The page ends at 'as for us, karma, agent, result and so on…'. A adds a negation and a verb that are not on the page, guessing the next page's predicate.",
+            "severity": "moderate",
+            "class": "T5"
+          },
+          {
+            "source": "ཉིད་དང་གཞན་དུ་བརྗོད་དུ་མེད་པའི་ཕྱིར་རོ།",
+            "english": "different from <note>the cause</note>",
+            "problem": "The note guesses the referent; the page does not say what it is the same as or different from.",
+            "severity": "minor"
+          },
+          {
+            "source": "རྒྱུ་མེད་ན་ནི་འབྲས་བུ་དང་། རྒྱུ་དང་ཞེས་བྱ་བ་ལ་སོགས་པས",
+            "english": "starting with the logic that if there is no cause, there is no result and no cause",
+            "problem": "Paraphrases the cited line as an argument rather than marking it as a quotation; the sense is kept.",
+            "severity": "minor"
+          }
+        ],
+        "tr_score_B": 5,
+        "tr_errors_B": [
+          {
+            "source": "དེའི་ཕྱིར་འབྲས་བུ་ཟ་བ་པོ་ཡོད་པའི་ཕྱིར་ལས་ཡོད་པ་ཉིད་དོ་ཞེ་ན།",
+            "english": "Because of that, if one objects: ...",
+            "problem": "'Because of that' is attached to the reply frame rather than inside the objection. It is a slightly awkward but acceptable reading.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "Translation A renders the first verse line as a markdown heading ('### Because this karma is'), so the reader sees a heading that is not on the page.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "prefer": "B",
+        "prefer_reason": "Both are faithful and neither has a serious error, but A invents 'We do not deny' at the page break where B stops honestly at 'we...'.",
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "This is the right leaf, and the transcription is sound apart from stray '#' marks and one apparent insertion ('མེད་པ་པ'). Both English versions are faithful; B is cleaner and A adds a guessed negation at the page break."
+  }
+]

@@ -17,7 +17,7 @@ import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
-import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useIsEmbedded, useIsTenantHost } from '@/hooks/useEmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -34,6 +34,7 @@ import {
 } from '@/lib/api-client';
 import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
+import { LANE_SORT, completeYear, laneHonours, searchLane, type SearchFilterKey } from '@/lib/search-filter-support';
 import type { NameChoices } from '@/lib/search/name-chooser';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import HighlightedText from '@/components/search/HighlightedText';
@@ -111,6 +112,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // Host-based, unlike `embed`: true on a partner subdomain whichever route
   // rendered this page. The Librarian is refused there (tenant-global-paths).
   const isTenantSurface = useIsEmbedded();
+  // Host-only: the known-entity card must not offer a feature the proxy
+  // refuses on this host (the Librarian, #4330); the apex is unchanged.
+  const onTenantHost = useIsTenantHost();
 
   // The locale comes from the URL prefix; the `lang` prop that the `/es/search`
   // twin passes is the explicit form of the same answer. Defaulting to the
@@ -156,7 +160,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const [indexTotal, setIndexTotal] = useState(0);
   const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
   const [imageTotal, setImageTotal] = useState(0);
-  const [siteResults, setSiteResults] = useState<{ url: string; page_type: 'blog' | 'collection' | 'page' | 'feature'; title: string; snippet: string }[]>([]);
+  const [siteResults, setSiteResults] = useState<{ url: string; page_type: 'blog' | 'collection' | 'page' | 'feature' | 'author'; title: string; snippet: string; match?: 'name' }[]>([]);
   const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string; hero_image?: string; card_framing?: CardFraming }[]>([]);
 
   // Semantic results (parallel search agent)
@@ -869,12 +873,17 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // are English editorial copy with no localized map behind them, so the card
   // would be an English block above Spanish results.
   const knownEntity = useMemo(
-    () => (embed || localized ? null : matchKnownEntity(query, { collections: collectionsList })),
-    [embed, localized, query, collectionsList]
+    () => (embed || localized ? null : matchKnownEntity(query, { collections: collectionsList, onTenantHost })),
+    [embed, localized, query, collectionsList, onTenantHost]
   );
 
   // Browse mode: fetch books when no query
   const isBrowseMode = !query || query.length < 2;
+  // One filter panel sits over six lanes and each reads a different subset of
+  // it. A control the current lane ignores is not shown: it would change the
+  // URL and light the active-filter dot while the results stayed put (#3401).
+  const lane = searchLane(isBrowseMode, viewMode);
+  const can = (filter: SearchFilterKey) => laneHonours(lane, filter);
   const prefetchUsed = useRef(false);
   const performBrowse = useCallback(async () => {
     // Check for prefetched data from homepage (instant load for common views)
@@ -928,23 +937,33 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, viewMode]);
 
   // Browse gallery: load images when in browse mode + images tab
+  const browseYearFrom = completeYear(dateFrom);
+  const browseYearTo = completeYear(dateTo);
+  // The year boxes fire per keystroke, so a slower earlier answer must not
+  // land on top of a later one.
+  const browseGallerySeq = useRef(0);
   const performBrowseGallery = useCallback(async () => {
+    const seq = ++browseGallerySeq.current;
     setBrowseImageLoading(true);
     try {
       const data = await galleryApi.list({
         limit: resultsPerPage,
         offset,
         maxPerBook: 2,
+        yearFrom: browseYearFrom,
+        yearTo: browseYearTo,
       });
+      if (seq !== browseGallerySeq.current) return;
       setBrowseImages(data.items || []);
       setBrowseImageTotal(data.total || 0);
     } catch {
+      if (seq !== browseGallerySeq.current) return;
       setBrowseImages([]);
       setBrowseImageTotal(0);
     } finally {
-      setBrowseImageLoading(false);
+      if (seq === browseGallerySeq.current) setBrowseImageLoading(false);
     }
-  }, [offset, resultsPerPage]);
+  }, [offset, resultsPerPage, browseYearFrom, browseYearTo]);
 
   useEffect(() => {
     if (isBrowseMode && viewMode === 'images') {
@@ -952,7 +971,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       updateUrl('', 'images', offset);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBrowseMode, viewMode, offset, resultsPerPage]);
+  }, [isBrowseMode, viewMode, offset, resultsPerPage, browseYearFrom, browseYearTo]);
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
@@ -1006,7 +1025,12 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
     setLanguage(''); setCategory(''); setCollection(''); setDateFrom(''); setDateTo('');
     setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(defaultLibrary || ''); setSortBy('relevance'); setBrowseSortBy('recent-translation'); setOffset(0);
   };
-  const hasActiveFilters = language || category || collection || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || (library && library !== defaultLibrary) || sortBy !== 'relevance';
+  // Counts only what this lane applies, so the dot never claims a filter the
+  // results are not under.
+  const hasActiveFilters = (can('language') && language) || (can('category') && category) || (can('collection') && collection)
+    || (can('dates') && (dateFrom || dateTo)) || (can('hasDoi') && hasDoi) || (can('hasTranslation') && hasTranslation)
+    || (can('firstTranslation') && firstTranslation) || (can('library') && library && library !== defaultLibrary)
+    || (LANE_SORT[lane] === 'search' && sortBy !== 'relevance');
 
   return (
     <div className="bg-cream" lang={lang}>
@@ -1035,7 +1059,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                 <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted animate-spin" />
               )}
             </div>
-            {!isBrowseMode && viewMode !== 'unified' && (
+            {LANE_SORT[lane] === 'search' && (
               <div className="relative flex-shrink-0">
                 <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                 <select
@@ -1050,7 +1074,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                 </select>
               </div>
             )}
-            {isBrowseMode && (
+            {LANE_SORT[lane] === 'browse' && (
               <div className="relative flex-shrink-0">
                 <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                 <select
@@ -1168,31 +1192,37 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                   </div>
                 </div>
                 <div className="p-4 grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterLanguage}</label>
-                    <select value={language} onChange={(e) => setLanguage(e.target.value)}
-                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                      {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterSubject}</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)}
-                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                      {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterCollection}</label>
-                    <select value={collection} onChange={(e) => { setCollection(e.target.value); setOffset(0); }}
-                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                      <option value="">{t.allCollections}</option>
-                      {collectionsList.map((c) => (
-                        <option key={c.slug} value={c.slug}>{localizedCollection(c, lang).name} ({nf(c.book_count)})</option>
-                      ))}
-                    </select>
-                  </div>
-                  {!defaultLibrary && !embed && (
+                  {can('language') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterLanguage}</label>
+                      <select value={language} onChange={(e) => setLanguage(e.target.value)}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  {can('category') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterSubject}</label>
+                      <select value={category} onChange={(e) => setCategory(e.target.value)}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  {can('collection') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterCollection}</label>
+                      <select value={collection} onChange={(e) => { setCollection(e.target.value); setOffset(0); }}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        <option value="">{t.allCollections}</option>
+                        {collectionsList.map((c) => (
+                          <option key={c.slug} value={c.slug}>{localizedCollection(c, lang).name} ({nf(c.book_count)})</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {can('library') && !defaultLibrary && !embed && (
                     <div>
                       <label className="block text-sm text-secondary mb-1">{t.filterLibrary}</label>
                       <select value={library} onChange={(e) => setLibrary(e.target.value)}
@@ -1204,29 +1234,39 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                       </select>
                     </div>
                   )}
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterPublishedAfter}</label>
-                    <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
-                      placeholder={t.yearFromPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterPublishedBefore}</label>
-                    <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-                      placeholder={t.yearToPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
-                  </div>
+                  {can('dates') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterPublishedAfter}</label>
+                      <input type="text" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setOffset(0); }}
+                        placeholder={t.yearFromPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                    </div>
+                  )}
+                  {can('dates') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterPublishedBefore}</label>
+                      <input type="text" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setOffset(0); }}
+                        placeholder={t.yearToPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                    </div>
+                  )}
                   <div className="col-span-2 flex flex-wrap gap-x-6 gap-y-2">
-                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                      <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
-                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasTranslation}
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                      <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
-                        className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> {t.firstTranslation}
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                      <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
-                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasDoi}
-                    </label>
+                    {can('hasTranslation') && (
+                      <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                        <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
+                          className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasTranslation}
+                      </label>
+                    )}
+                    {can('firstTranslation') && (
+                      <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                        <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
+                          className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> {t.firstTranslation}
+                      </label>
+                    )}
+                    {can('hasDoi') && (
+                      <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                        <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
+                          className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasDoi}
+                      </label>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1241,31 +1281,37 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                   )}
                 </div>
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterLanguage}</label>
-                    <select value={language} onChange={(e) => setLanguage(e.target.value)}
-                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                      {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterSubject}</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)}
-                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                      {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterCollection}</label>
-                    <select value={collection} onChange={(e) => { setCollection(e.target.value); setOffset(0); }}
-                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                      <option value="">{t.allCollections}</option>
-                      {collectionsList.map((c) => (
-                        <option key={c.slug} value={c.slug}>{localizedCollection(c, lang).name} ({nf(c.book_count)})</option>
-                      ))}
-                    </select>
-                  </div>
-                  {!defaultLibrary && !embed && (
+                  {can('language') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterLanguage}</label>
+                      <select value={language} onChange={(e) => setLanguage(e.target.value)}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  {can('category') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterSubject}</label>
+                      <select value={category} onChange={(e) => setCategory(e.target.value)}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  {can('collection') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterCollection}</label>
+                      <select value={collection} onChange={(e) => { setCollection(e.target.value); setOffset(0); }}
+                        className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                        <option value="">{t.allCollections}</option>
+                        {collectionsList.map((c) => (
+                          <option key={c.slug} value={c.slug}>{localizedCollection(c, lang).name} ({nf(c.book_count)})</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {can('library') && !defaultLibrary && !embed && (
                     <div>
                       <label className="block text-sm text-secondary mb-1">{t.filterLibrary}</label>
                       <select value={library} onChange={(e) => setLibrary(e.target.value)}
@@ -1277,29 +1323,39 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
                       </select>
                     </div>
                   )}
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterPublishedAfter}</label>
-                    <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
-                      placeholder={t.yearFromPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-secondary mb-1">{t.filterPublishedBefore}</label>
-                    <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-                      placeholder={t.yearToPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
-                  </div>
+                  {can('dates') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterPublishedAfter}</label>
+                      <input type="text" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setOffset(0); }}
+                        placeholder={t.yearFromPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                    </div>
+                  )}
+                  {can('dates') && (
+                    <div>
+                      <label className="block text-sm text-secondary mb-1">{t.filterPublishedBefore}</label>
+                      <input type="text" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setOffset(0); }}
+                        placeholder={t.yearToPlaceholder} className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                    </div>
+                  )}
                   <div className="flex flex-col gap-2 justify-end">
-                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                      <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
-                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasTranslation}
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                      <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
-                        className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> {t.firstTranslation}
-                    </label>
-                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                      <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
-                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasDoi}
-                    </label>
+                    {can('hasTranslation') && (
+                      <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                        <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
+                          className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasTranslation}
+                      </label>
+                    )}
+                    {can('firstTranslation') && (
+                      <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                        <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
+                          className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> {t.firstTranslation}
+                      </label>
+                    )}
+                    {can('hasDoi') && (
+                      <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                        <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
+                          className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> {t.hasDoi}
+                      </label>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1771,7 +1827,31 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // The site's own writing (#1180): essays, collection intros and
           // editorial pages that answer the query. SL-wide and English-only,
           // so hidden in embed mode and on localized surfaces.
-          const siteLinks = siteResults.filter(r => r.url !== knownEntity?.href); // the "go here" card already shows it
+          const siteLinksAll = siteResults.filter(r => r.url !== knownEntity?.href); // the "go here" card already shows it
+          const siteLinks = siteLinksAll.filter(r => r.match !== 'name');
+          // Pages the query NAMES (#5945: "timeline", "check pages", an author):
+          // shown first, in the "go here" card's form, because the visitor asked
+          // for a place and not for passages about it.
+          const namedLinks = siteLinksAll.filter(r => r.match === 'name');
+          const namedSection = !embed && !localized && namedLinks.length > 0 && (
+            <div className="space-y-2">
+              {namedLinks.map(r => (
+                <Link
+                  key={r.url}
+                  href={r.url}
+                  className="group flex items-center gap-3 px-4 py-3 bg-warm rounded-lg border border-border-light hover:border-accent-rust/40 transition-colors"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs uppercase tracking-wide text-muted">{t.sitePageType(r.page_type)}</div>
+                    <div className="font-serif font-medium text-primary group-hover:text-accent-rust transition-colors">
+                      {r.title} <span aria-hidden>→</span>
+                    </div>
+                    {r.page_type !== 'author' && <p className="text-sm text-muted line-clamp-2">{r.snippet}</p>}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          );
           const siteSection = !embed && !localized && siteLinks.length > 0 && (
             <>
               <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-2">
@@ -1850,7 +1930,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           // A "From the site" answer is a match by meaning (similarity floor in
           // semanticSiteSearch); a banner saying nothing matches, above an essay
           // that answers the question, contradicts it (#1180).
-          const weakMatchBanner = matchQuality === 'weak' && !passageLoading && !passagesCover && !siteSection && (
+          const weakMatchBanner = matchQuality === 'weak' && !passageLoading && !passagesCover && !siteSection && !namedSection && (
             <div className="px-4 py-3 rounded-lg border border-border-light bg-warm/60">
               <p className="text-sm font-medium text-primary">{t.weakMatchTitle(query)}</p>
               <p className="text-sm text-secondary mt-0.5">{t.weakMatchBody}</p>
@@ -1860,6 +1940,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           return (
             <div className="space-y-3">
               {weakMatchBanner}
+              {namedSection}
               {passageSection}
               {collectionCards}
               {siteSection}

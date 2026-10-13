@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 125
+n_pages: 125
+verdict: "Seam lines alone do not cut page-boundary invention on block-door page breaks: 19 / 19 / 19 pages (v13a / v13b / seam), p 0.60. Rule output FAIL."
+status: rejected
+decision: "FAIL: seam lines not flipped (PR #5675, DECISIONS.md)"
+superseded_by: null
+issue: 5305
+---
 ## 2026-10-03 · Do the seam lines alone (#5305 items 1 + 1b) cut page-boundary invention on the chained lane's page breaks? Confirmatory (#5305)
 
 **Question.** In the v14 A/B, page-boundary invention fell from 20 to 8 pages and the continuity-meta payload from 32

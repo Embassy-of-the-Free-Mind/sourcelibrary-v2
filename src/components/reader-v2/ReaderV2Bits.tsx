@@ -11,10 +11,12 @@ import { usablePageFrame, frameForImage, framedImageBox, type PageFrame } from '
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
 import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
+import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality';
 import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
 import { issueUrl } from '@/lib/check-methods';
-import { PaneEmptyState, GatedPane } from './PaneEmptyState';
+import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
+import { noContentMarkerType, isUngroundedTranslation } from '../../../scripts/lib/model-only-translation.mjs';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // Shared presentational pieces for the v2 reader design previews. All values
@@ -156,13 +158,28 @@ export function TextSourceLine({ page }: { page: Pick<Page, 'ocr'> }) {
  * First line of the translation pane when the English is a machine translation
  * nobody has reviewed (#5571). Toned like the Archive-OCR caution; absent on
  * corpus, Sefaria and hand-edited translations.
+ *
+ * In a Derge Tengyur volume it also says how good that section measured and what
+ * goes wrong there, with a link to the method (#6120). The numbers come from
+ * src/data/tengyur-section-quality.json, generated from the #5829 review.
  */
-export function MachineDraftLine({ page }: { page: Pick<Page, 'translation'> }) {
-  const t = getReaderStrings(useLocale()).info;
+export function MachineDraftLine({ page, book }: { page: Pick<Page, 'translation'>; book?: Pick<Book, 'title'> }) {
+  const locale = useLocale();
+  const strings = getReaderStrings(locale);
+  const t = strings.info;
   if (!isUnreviewedMachineTranslation(page)) return null;
+  const note = tengyurNoteSentences(book, strings.tengyurNote, locale);
   return (
     <p data-machine-draft="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
       {t.machineDraftNotice}
+      {note && (
+        <span data-tengyur-note="" className="block mt-1" style={{ color: 'var(--text-secondary)' }}>
+          {note.join(' ')}{' '}
+          <a href={TENGYUR_METHOD_HREF} className="underline underline-offset-2 whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
+            {strings.tengyurNote.methodLink}
+          </a>
+        </span>
+      )}
     </p>
   );
 }
@@ -356,6 +373,16 @@ export function ReaderProse({
     return <PaneEmptyState page={page} book={book} kind={kind} />;
   }
 
+  // Model text the book never carried (#5903). The pipeline's own marker is page
+  // information, not English; a translation over a transcription with no text is
+  // the model describing a plate or an endpaper, framed and labelled as such.
+  // Display only — the stored text stays (page-counts reads the marker).
+  const markerType = kind === 'translation' ? noContentMarkerType(text) : null;
+  if (markerType) {
+    return <NoTextPageLine pageType={markerType} />;
+  }
+  const ungrounded = kind === 'translation' && isUngroundedTranslation({ ocr: page.ocr, translation: { data: text } });
+
   const fontSize = Math.round(baseSize * settings.textScale * 10) / 10;
 
   return (
@@ -378,6 +405,7 @@ export function ReaderProse({
         language={lang}
         columns={page.columns}
         pageType={page.page_type}
+        ungrounded={ungrounded}
       />
     </div>
   );

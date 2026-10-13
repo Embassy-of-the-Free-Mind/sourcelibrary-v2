@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: [Latn]
+canons: []
+n_books: 120
+n_pages: null
+verdict: "Registered rule unresolved (literal marker parse failed); read positionally, seam defects per 100 breaks: Lite 21/26, Lite+markers 15, Flash+markers 8."
+status: superseded
+decision: "Flag stays off; the confirmatory run found markers NO, attribution MODEL"
+superseded_by: "2026-10-04-seam-markers-confirm-5678.md"
+issue: 5678
+---
 ## 2026-10-03 · Page breaks where the sentence runs on: is the chained lane's defect the model or the forcing, and do folio markers fix it on Lite? (#5678)
 
 **Question.** The chained Batch lane (Flash-Lite) writes one self-contained `<translation page="N">` per page. Where

@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "About 1-1.5% of in-block boundaries put a clause on the wrong page (2.03% flagged, 9/20 real); context leak is mostly a single-page-era defect; a prompt fix did not help"
+status: adopted
+decision: "translate-worker rejects drifted/duplicated block pages and re-translates them single-page; prompt fix not shipped (#5021)"
+superseded_by: null
+issue: [5021, 5026]
+---
 ## 2026-09-24 — How often does a translation put text on the wrong page? Intra-block drift (#5021) and continuity leakage (#5026)
 
 **Question.** (a) How often does block translation (8 pages per prompt) finish page N's last

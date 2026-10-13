@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [syc]
+scripts: [Syrc]
+canons: []
+n_books: null
+n_pages: 80
+verdict: "On 80 fresh Syriac folios every prediction held: sauvola -3.8 pp CER on dark spreads, flatten -10.6 pp on clean leaves, unsharp helps both; flatten hurts dark spreads."
+status: informational
+decision: "No lane change; per-stratum routing was then tested on library pages and did not transfer (#5277)"
+superseded_by: null
+issue: [5250, 5277]
+---
 ## 2026-09-29 — Round 3 of #5250: do the round-2 Kraken photometric gains hold on FRESH Syriac pages? (#5250, follow-up #5277)
 
 **Headline: YES, every pre-registered prediction confirmed, per stratum.** Kraken Sophro Mhiro, order-free line CER N2

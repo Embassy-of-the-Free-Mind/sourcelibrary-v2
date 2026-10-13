@@ -5,32 +5,33 @@
  * PRIOR ART: the ops repo's costs/spend-dashboard/build-data.py — same shape (read the instruments'
  * result files, write ONE `ops_reports` document the renderer reads, no deploy). It does not fit as
  * code: it is Python in the private repo and reads billing exports; every input here is an eval
- * result file in THIS repo plus one ops ledger. scripts/eval/benchmark-dashboard-data.mjs is the
- * OCR half's builder; this script reads its OUTPUT (src/data/ocr-benchmark-evidence.json) rather
+ * result file in THIS repo, plus the paid-vs-got ledger docs and live counters for the trends.
+ * scripts/eval/benchmark-dashboard-data.mjs is the OCR half's builder; this script reads its OUTPUT (src/data/ocr-benchmark-evidence.json) rather
  * than re-scoring anything.
  *
  * The script judges nothing and calls no model. It copies what each instrument wrote, attaches
  * n / instrument / date / source to every figure, and records "no measurement" (with the date the
  * instrument last ran, when known) where an instrument has not run. The only arithmetic it adds:
- * Wilson 95% intervals on the unweighted script-group rates (labelled as such) and the speed-test
- * trend flag, which re-states gate-poll.sh's rule (two consecutive judged windows above baseline +
- * the judge's A/A floor).
+ * Wilson 95% intervals on the unweighted script-group rates (labelled as such), and the trend
+ * lines (trends.mjs, #6429): the #6388 panel scored against its key, and pooled 7-day ratios.
  *
- * Usage:
- *   node --env-file=.env.production.local scripts/eval/quality-dashboard/build.mjs           # print summary, write out.json
- *   node --env-file=.env.production.local scripts/eval/quality-dashboard/build.mjs --push    # also upsert ops_reports/quality-dashboard
- *   --ops <dir>        ops repo checkout (default ~/sourcelibrary-ops) — the speed-test ledger lives there
- *   --no-mongo         skip the reader-signal query (section shows "no measurement")
+ * Usage (daily on Hetzner, infrastructure/hetzner-crontab):
+ *   node --env-file=.env.production.local scripts/eval/quality-dashboard/build.mjs           # print summary, write the JSON
+ *   node --env-file=.env.production.local scripts/eval/quality-dashboard/build.mjs --push    # also append today's history points
+ *                                                                                              and upsert ops_reports/quality-dashboard
+ *   --no-mongo         skip reader signals and the history store (both show "no measurement")
  *   --no-github        skip issue-state and pending-branch lookups
+ *   --out-dir <dir>    where the JSON copy goes (default $JOB_SCRATCH, else scripts/output/)
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { buildTrends, recordHistory, readHistory } from './trends.mjs';
 
 export const REPORT_ID = 'quality-dashboard';
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2; // 2: trends added; lanes and round1 removed (#6429)
 const GH = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
 const blob = (p) => `${GH}/blob/main/${p}`;
 const tree = (p) => `${GH}/tree/main/${p}`;
@@ -40,16 +41,10 @@ const TCA_PREFIX = 'translation-corpus-audit-';
 const RESULTS = 'scripts/eval/results';
 const OCR_EVIDENCE = 'src/data/ocr-benchmark-evidence.json';
 const NALANDA = `${RESULTS}/nalanda-readiness-2026-09-30.json`;
-const ROUND1_PREREG = 'scripts/eval/quality-round-1/PREREGISTRATION.md';
-const ROUND1_RESULT_RE = /^quality-round-1-\d{4}-\d{2}\.json$/;
 const TAXONOMY = '.claude/docs/page-error-taxonomy.md';
-const SPEED_LEDGER = 'costs/speed-test-a-quality.jsonl';
 
 /** PR #5315 (the reader's "report a problem" control) merged — no page report can predate it. */
 const PAGE_REPORT_LAUNCH = '2026-09-30';
-
-/** gate-poll.sh's trend WARN: the chained-lane baseline (6.9%) + the judge's A/A floor (2.8 pp). */
-const TREND_FLOOR_PP = 2.8;
 
 /**
  * Corpus-audit flag → nearest page-error-taxonomy class(es). A judgement made once, here, in code
@@ -73,8 +68,6 @@ const FLAG_LABEL = {
 const SCRIPT_GROUP_LABEL = { all: 'All languages', 'latin-script': 'Latin-script languages', 'non-latin-script': 'Non-Latin-script languages' };
 
 const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
-const readJsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
-const day = (iso) => (iso ? String(iso).slice(0, 10) : null);
 
 export function wilson(k, n) {
   if (!n) return null;
@@ -213,50 +206,6 @@ export function buildNalanda(root) {
   return out;
 }
 
-/** Speed-test gate windows from the ops ledger, oldest first, with gate-poll.sh's trend flag. */
-export function buildLanes(ledgerRows, chainedRun) {
-  const baseline = chainedRun ? {
-    label: 'Chained-lane sample', run: chainedRun.id, drawn_at: chainedRun.drawn_at, n: chainedRun.n,
-    any_major: chainedRun.groups.all.any_major, source: chainedRun.report,
-  } : null;
-  const bound = baseline ? baseline.any_major.est + TREND_FLOOR_PP : null;
-  const rows = [...ledgerRows].sort((a, b) => String(a.window).localeCompare(String(b.window)));
-  let prevAbove = false;
-  const windows = rows.map((w) => {
-    const pct = w.rate != null ? Math.round(w.rate * 1000) / 10 : null;
-    const above = bound != null && pct != null && pct > bound;
-    const trend = above && prevAbove;
-    prevAbove = above;
-    return {
-      window: w.window, judged_at: w.at, verdict: w.verdict, reasons: w.reasons || [],
-      n: w.n, defective: w.defective, major_pct: pct, ci: w.n ? wilson(w.defective, w.n) : null,
-      seeded: w.seeded || null, seam: w.seam || null, by_class: w.by_class || {},
-      controls: w.controls || null, warn_count: (w.scope?.warn || []).length,
-      trend_warn: trend, by_eye: (w.by_eye || []).slice(0, 5),
-    };
-  });
-  return {
-    windows, baseline,
-    trend_rule: bound != null ? { bound_pct: Math.round(bound * 10) / 10, floor_pp: TREND_FLOOR_PP } : null,
-    ledger: `ops repo ${SPEED_LEDGER}`,
-    issue: issueUrl(4681),
-  };
-}
-
-export function buildRound1(root) {
-  const files = fs.readdirSync(path.join(root, RESULTS)).filter((f) => ROUND1_RESULT_RE.test(f)).sort();
-  const draw = fs.existsSync(path.join(root, 'scripts/eval/quality-round-1/draw-2026-10-01.json'));
-  const base = { issue: issueUrl(5438), preregistration: blob(ROUND1_PREREG), drawn: draw ? '2026-10-01' : null };
-  if (!files.length) return { ...base, status: 'not_run', rows: [] };
-  const f = files.at(-1);
-  const d = readJson(path.join(root, RESULTS, f));
-  const rows = (d.strata || d.rows || []).map((s) => ({
-    stratum: s.stratum ?? s.name, cost_per_book_usd: s.cost_per_book_usd ?? null, days: s.days ?? null,
-    ocr_score: s.ocr_score ?? null, translation_major_pct: s.translation_major_pct ?? null, verdict: s.verdict ?? null, n: s.n ?? null,
-  }));
-  return { ...base, status: 'done', result: blob(`${RESULTS}/${f}`), date: d.generated ?? d.date ?? null, rows };
-}
-
 export function buildDefects(latestRun, taxonomy, issueStates = {}) {
   if (!latestRun) return null;
   const rows = latestRun.flags
@@ -279,21 +228,18 @@ export function buildDefects(latestRun, taxonomy, issueStates = {}) {
   };
 }
 
-export function buildReport({ root, opsRoot, now = new Date(), reader = null, issueStates = {}, pendingBranches = [] }) {
+export function buildReport({ root, now = new Date(), reader = null, issueStates = {}, pendingBranches = [], history = null }) {
   const translation = buildTranslation(root, pendingBranches);
-  const chained = translation.runs.filter((r) => r.population === 'chained' && r.controls_pass).at(-1) || null;
   const latestServed = translation.runs.filter((r) => r.population === 'served' && r.controls_pass).at(-1) || null;
-  const ledgerPath = opsRoot ? path.join(opsRoot, SPEED_LEDGER) : null;
-  const ledger = ledgerPath && fs.existsSync(ledgerPath) ? readJsonl(ledgerPath) : null;
   const taxonomy = parseTaxonomy(fs.readFileSync(path.join(root, TAXONOMY), 'utf8'));
   return {
     generated: now.toISOString(),
     sampling: 'Every rate on this page samples one page per book: pages in a book are one observation, not many.',
+    // The four daily trend lines (#6429); null when the history store was not read (--no-mongo).
+    trends: buildTrends(history, now),
     translation,
     ocr: buildOcr(root),
     other_instruments: buildNalanda(root),
-    lanes: ledger ? buildLanes(ledger, chained) : { windows: [], baseline: null, trend_rule: null, ledger: `ops repo ${SPEED_LEDGER}`, missing: true, issue: issueUrl(4681) },
-    round1: buildRound1(root),
     defects: buildDefects(latestServed, taxonomy, issueStates),
     reader,
   };
@@ -360,7 +306,6 @@ async function main() {
   const flag = (f) => args.includes(f);
   const opt = (f, d) => { const i = args.indexOf(f); return i >= 0 ? args[i + 1] : d; };
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-  const opsRoot = opt('--ops', path.join(os.homedir(), 'sourcelibrary-ops'));
 
   const taxonomy = parseTaxonomy(fs.readFileSync(path.join(root, TAXONOMY), 'utf8'));
   const needed = [...new Set(Object.values(FLAG_TO_TAXONOMY).flat().map((c) => taxonomy[c]?.issue).filter(Boolean))];
@@ -368,16 +313,27 @@ async function main() {
   const pendingBranches = flag('--no-github') ? [] : pendingAuditBranches();
   const reader = flag('--no-mongo') ? null : await readerSignals(30);
 
-  const data = buildReport({ root, opsRoot, reader, issueStates, pendingBranches });
-  const outFile = path.join(root, 'scripts/output/quality-dashboard.json');
+  // The history store (#6429): --push appends today's points first, then every run reads the store.
+  let history = null;
+  if (!flag('--no-mongo')) {
+    const { withMongo } = await import('../../lib/mongo.mjs');
+    await withMongo(async (db) => {
+      if (flag('--push')) await recordHistory(db, { root });
+      history = await readHistory(db);
+    });
+  }
+
+  const data = buildReport({ root, reader, issueStates, pendingBranches, history });
+  const outFile = path.join(opt('--out-dir', process.env.JOB_SCRATCH || path.join(root, 'scripts/output')), 'quality-dashboard.json');
   fs.mkdirSync(path.dirname(outFile), { recursive: true });
   fs.writeFileSync(outFile, JSON.stringify(data, null, 2));
 
   const t = data.translation.latest;
   console.log(`translation: ${t ? `${t.run} n=${t.n} ≥4 ${t.ge4.est}% any-major ${t.any_major.est}%` : 'no measurement'}`);
   console.log(`ocr: ${data.ocr ? data.ocr.rows.filter((r) => r.median_cer != null).map((r) => `${r.script} ${r.median_cer} (n=${r.n})`).join(' · ') : 'no measurement'}`);
-  console.log(`lanes: ${data.lanes.windows.length} windows · round1: ${data.round1.status} · reader reports: ${data.reader?.page_reports.total ?? 'not queried'}`);
-  console.log(`wrote ${path.relative(root, outFile)}`);
+  for (const c of data.trends ?? []) console.log(`trend ${c.id}: ${c.newest ?? 'no measurement'} · ${c.statement ?? '–'}${c.stale ? ` · STALE: ${c.stale}` : ''}`);
+  console.log(`reader reports: ${data.reader?.page_reports.total ?? 'not queried'}`);
+  console.log(`wrote ${outFile}`);
 
   if (flag('--push')) {
     const { withMongo } = await import('../../lib/mongo.mjs');

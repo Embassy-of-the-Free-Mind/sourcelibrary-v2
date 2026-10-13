@@ -12,8 +12,8 @@ import SubjectIndex from '@/components/home/SubjectIndex';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
-import { HOME_STRINGS, type HomeLang, collectionName } from '@/lib/home-i18n';
-import { localePath } from '@/lib/locale-path';
+import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, type HomeLang, collectionName } from '@/lib/home-i18n';
+import { localePath, readsOriginal } from '@/lib/locale-path';
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -25,7 +25,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, latinShelf, beginnerShelf } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -42,7 +42,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
     // Latin whether or not it has been translated, so on /la the whole it is a
     // part of is every member: against `book_count` the line read "1,730 libri
     // · 2,839 Latine" (#6254).
-    const books = lang === 'la' ? Math.max(col.total_book_count ?? 0, col.book_count) : col.book_count;
+    const books = readsOriginal(lang) ? Math.max(col.total_book_count ?? 0, col.book_count) : col.book_count;
     const base = books > 0
       ? `${nf(books)} ${t.booksLabel}`
       : (col.artwork_count ?? 0) > 0 ? `${nf(col.artwork_count ?? 0)} ${t.artworksLabel}` : '';
@@ -93,7 +93,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           are in the visitor's language (#6254). Every card opens `/la/book/…`,
           where the reader shows the Latin text first. Empty, so unrendered, on
           the other homepages. */}
-      {latinShelf.length > 0 && (
+      {nativeShelf.length > 0 && (
         <section className="bg-white py-10 md:py-14">
           <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
             <div className="flex items-end justify-between gap-4 mb-3">
@@ -101,7 +101,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 {t.nativeShelfHeading}
               </h2>
               <Link
-                href="/search?language=Latin"
+                href={`/search?language=${NATIVE_SHELF_LANGUAGE[lang] ?? ''}`}
                 className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
               >
                 {t.nativeShelfAll} &rarr;
@@ -110,7 +110,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
             <p className="text-muted mb-6 max-w-2xl">
               {t.nativeShelfSubtitle}
             </p>
-            <BookSlider books={latinShelf as unknown as MiniBook[]} lang={lang} />
+            <BookSlider books={nativeShelf as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}
@@ -167,10 +167,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
           {hasShowcase && (
             <>
               <CuratedShowcase
-                // The one-line hooks are English prose. On /la the card carries
-                // its Latin name alone rather than a Latin title over an
-                // English sentence (#6278).
-                items={lang === 'la'
+                // The one-line hooks are English prose. On an original-text site
+                // the card carries its name in the page's language alone rather
+                // than a translated title over an English sentence (#6278).
+                items={readsOriginal(lang)
                   ? curatedShowcase.items.map((item) => ({ ...item, name: collectionName(lang, item.slug, item.name), subtitle: '' }))
                   : curatedShowcase.items}
                 lang={lang}

@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [fa]
+scripts: [Arab]
+canons: [persian-poetry]
+n_books: 20
+n_pages: 20
+verdict: "On Persian manuscript poetry flash beats served lite (seq 0.70 vs 0.41, loops 1 vs 4); no Kraken model is competitive; still far below the 0.90 gate."
+status: adopted
+decision: "Persian OCR moved to flash on 2026-10-04 (PR #5760, hidden backlog #5795); the prose-shelf pilot was not run"
+superseded_by: null
+issue: 5525
+---
 ## 2026-10-01 · Does Gemini flash, or an open-source Kraken model, read Persian manuscripts well enough to OCR the six prose books? (#5525 Stage 1b)
 
 **Question.** Stage 1 (`2026-10-01-persian-ocr-vs-ganjoor-5525.md`) found that served OCR, mostly `gemini-3.1-flash-lite`, reads Persian manuscript poetry at sequence accuracy 0.414 and line accuracy 0.738 against Ganjoor, with 4 of 20 pages degenerate. So the six prose manuscripts (4,698 pages) were not run. Derek asked for both alternatives to be tested: Gemini flash, and Kraken with published Arabic-script models.

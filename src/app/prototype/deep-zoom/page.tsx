@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import DeepZoomViewer, { type DeepZoomItem } from './DeepZoomViewer';
 
 export const metadata: Metadata = {
-  title: 'Deep Zoom — prototype · Source Library',
+  title: 'Deep Zoom (prototype) | Source Library',
   description:
     'A prototype tiled deep-zoom viewer for high-resolution artworks and engravings.',
   robots: { index: false, follow: false },
@@ -18,7 +18,7 @@ const ITEMS: DeepZoomItem[] = [
   {
     id: 'khunrath-oratory',
     title: 'The Oratory & the Laboratory',
-    book: 'Khunrath — Amphitheatre of Eternal Wisdom (1609)',
+    book: 'Khunrath, Amphitheatre of Eternal Wisdom (1609)',
     width: 4132,
     height: 3565,
     tileSize: 256,
@@ -32,8 +32,8 @@ const ITEMS: DeepZoomItem[] = [
   },
   {
     id: 'blaeu-world-map',
-    title: 'Nova Totius Terrarum Orbis — hand-coloured world map',
-    book: 'Willem Blaeu — Toonneel des Aerdrycks (Amsterdam) · BPH',
+    title: 'Nova Totius Terrarum Orbis: hand-coloured world map',
+    book: 'Willem Blaeu, Toonneel des Aerdrycks (Amsterdam) · BPH',
     width: 7355,
     height: 5507,
     tileSize: 256,
@@ -43,12 +43,12 @@ const ITEMS: DeepZoomItem[] = [
     source:
       'https://images.uba.uva.nl/iiif/2/default!1!3!1!990011196650205131!otm-kzl-1804-a-2_004.jpg/full/max/0/default.jpg',
     blurb:
-      'A 40-megapixel hand-coloured engraving from a Blaeu atlas. Zoom into the oceans to find the sailing ships and sea-creatures, then read the place-names threading across the continents and the allegorical borders — the four elements, the seasons, and the cities of the world.',
+      'A 40-megapixel hand-coloured engraving from a Blaeu atlas. Zoom into the oceans to find the sailing ships and sea-creatures, then read the place-names threading across the continents and the allegorical borders: the four elements, the seasons, and the cities of the world.',
   },
   {
     id: 'kircher-china',
     title: 'Frontispiece',
-    book: 'Kircher — China Illustrata (1667)',
+    book: 'Kircher, China Illustrata (1667)',
     width: 3741,
     height: 5903,
     tileSize: 256,
@@ -72,7 +72,7 @@ export default function DeepZoomPrototypePage() {
         <h1 className="mt-1 text-3xl font-semibold text-stone-900">Deep zoom</h1>
         <p className="mt-3 max-w-2xl leading-relaxed text-stone-600">
           The gallery experience, with a loupe. Page left and right through the
-          images — edge arrows, the ← → keys, or the thumbnail rail — exactly
+          images (edge arrows, the ← → keys, or the thumbnail rail), exactly
           like the gallery viewer, but every image is deep-zoomable. Scroll or
           pinch to zoom into the original; the viewer streams it in tiles, so
           only the detail you’re looking at is fetched and even a 40-megapixel
