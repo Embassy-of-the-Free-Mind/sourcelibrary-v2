@@ -166,6 +166,12 @@ export interface SearchStrings {
    * wording must promise the destination, not the rows we collapsed.
    */
   workEditionsLink: (n: number) => string;
+  /**
+   * Under a book a reader cannot yet read, the way to a translated edition of
+   * the same work (#5975). English requests only: the API does not send the
+   * field on a localized one, so the other locales' strings are not rendered.
+   */
+  translatedEditionLink: (title: string, published?: string) => string;
   findPassages: string;
   hidePassages: string;
   searchingEllipsis: string;
@@ -330,6 +336,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     pagesCount: (n) => `${n} pages`,
     translatedCount: (n) => `${n} translated`,
     workEditionsLink: (n) => `${n} editions & copies of this work`,
+    translatedEditionLink: (title, published) => `Translated edition: ${title}${published ? `, ${published}` : ''}`,
     findPassages: 'Find passages',
     hidePassages: 'Hide passages',
     searchingEllipsis: 'Searching...',
@@ -469,6 +476,7 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     pagesCount: (n) => `${n} páginas`,
     translatedCount: (n) => `${n} traducidas`,
     workEditionsLink: (n) => `${n} ediciones y ejemplares de esta obra`,
+    translatedEditionLink: (title, published) => `Edición traducida: ${title}${published ? `, ${published}` : ''}`,
     findPassages: 'Buscar pasajes',
     hidePassages: 'Ocultar pasajes',
     searchingEllipsis: 'Buscando...',

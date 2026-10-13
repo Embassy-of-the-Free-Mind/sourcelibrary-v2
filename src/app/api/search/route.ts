@@ -21,6 +21,7 @@ import { logSearchQuery } from '@/lib/search-log';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
+import { fetchTranslatedEditions, namesOneVolume, readabilityTier, TIER_READABLE, type ReadabilitySource } from '@/lib/search/readable-edition';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence } from '@/lib/search/page-rollup';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
@@ -66,6 +67,9 @@ function attachIdentity(result: SearchResult, book: Record<string, unknown>): vo
   if (book.work_id) r._work_id = book.work_id;
   if (Array.isArray(book.work_id_aliases)) r._work_id_aliases = book.work_id_aliases;
   if (book.duplicate_of) r._duplicate_of = book.duplicate_of;
+  // How readable this edition is (#5975) — decides which edition of a work
+  // takes the row, see `betterRepresentative` below.
+  r._readability = readabilityTier(book as ReadabilitySource);
 }
 
 /** Read the transients back as the shape `collapseByWork` expects. */
@@ -408,7 +412,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 };
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -786,7 +790,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // filters admit, whatever the search stage was handed (#5921).
             // A `book_id` search names its one book and keeps the old lookup.
             { id: { $in: pageBookIds }, ...(bookId ? (tenantId ? { tenantId } : {}) : buildBookFilters()) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -905,7 +909,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // language / languages / exclude_languages, and since #5921
             // category, has_doi, has_translation, first_translation, library.
             { id: { $in: semanticBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -973,7 +977,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // Same object as every other lane (#5921): a vector lane has no
             // metadata predicate, so what is not re-applied here leaks.
             { id: { $in: pageBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -1037,6 +1041,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       for (const c of canonDocs) results.push({ ...c, _canon: true } as SearchResult);
     }
 
+    // Set by the relevance sort below; the work collapse reads it (#5975).
+    let betterRepresentative: ((candidate: SearchResult, primary: SearchResult) => boolean) | undefined;
+
     // Sort results
     if (sortBy === 'date_asc' || sortBy === 'date_desc') {
       const dir = sortBy === 'date_asc' ? 1 : -1;
@@ -1061,7 +1068,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       // The legacy heuristic ladder. Used directly for ranking=ladder, and as
       // the tiebreaker when ranking=rrf (so equal fused scores still get a
       // deterministic, sensible order).
-      const ladderCompare = (a: SearchResult, b: SearchResult): number => {
+      //
+      // Split in two (#5975). `sourceRungs` is everything that says how well a
+      // row answers the query and how close it sits to the source;
+      // `ladderCompare` adds the edition tiebreaks (older first, then quality).
+      // The work collapse reuses the first half on its own: two editions of one
+      // work that tie on it differ only by age, and there the readable edition
+      // should represent the work, not the oldest.
+      const sourceRungs = (a: SearchResult, b: SearchResult): number => {
         // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
         // 1b. Among pages, a canon text's catalogue row (it names the text) before passages.
@@ -1146,6 +1160,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const aRank = textRoleRank((a as any)._text_role, a.language);
         const bRank = textRoleRank((b as any)._text_role, b.language);
         if (aRank !== bRank) return aRank - bRank;
+        return 0;
+      };
+
+      const ladderCompare = (a: SearchResult, b: SearchResult): number => {
+        const bySource = sourceRungs(a, b);
+        if (bySource !== 0) return bySource;
 
         // 4. Older editions rank higher (earlier = closer to source)
         const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '9999');
@@ -1189,6 +1209,33 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       } else {
         results.sort(ladderCompare);
       }
+
+      // Within one work, the edition a reader can read represents it (#5975).
+      // Five translation requests on 2026-10-06 came from readers sent to an
+      // untranslated copy of a work we held translated in another edition:
+      // rung 4 hands the row to the OLDEST edition, readable or not.
+      //
+      // A sibling takes the row only when it is strictly more readable AND no
+      // worse on the source rungs, so a modern translation never displaces the
+      // original (#2395) and a weaker match never displaces a stronger one.
+      // Books only: a passage row is the page that matched, not an edition
+      // choice. English only: a localized request already narrows every lane to
+      // books that have that edition, and this tier measures English.
+      if (!isLocalizedSearch) {
+        const tier = (r: SearchResult) => (r as any)._readability as number | undefined;
+        betterRepresentative = (candidate, primary) => {
+          if (candidate.type !== 'book' || primary.type !== 'book') return false;
+          const c = tier(candidate);
+          const p = tier(primary);
+          if (c === undefined || p === undefined || c >= p) return false;
+          // One volume of a set shares the work's id (#3708) and is not the
+          // whole work: it may stand in for another volume, never for a row
+          // that names none.
+          const oneVolume = (r: SearchResult) => namesOneVolume(r.title) || namesOneVolume(r.display_title);
+          if (oneVolume(candidate) && !oneVolume(primary)) return false;
+          return sourceRungs(candidate, primary) <= 0;
+        };
+      }
     }
 
     // Collapse to one row per work (#4300). Results are already sorted by
@@ -1197,7 +1244,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // "not shown to be an edition of anything", not "dedupe me by title".
     // Shared with the unified and semantic lanes — one definition, so a new
     // lane can't reintroduce the copies (src/lib/search/work-grouping.ts).
-    const collapsed = collapseByWork(results, { getIdentity: identityOf });
+    const collapsed = collapseByWork(results, { getIdentity: identityOf, betterRepresentative });
     let dedupedResults: SearchResult[] = collapsed.results;
 
     // Asked-for diversity on a passage list (MCP search_translations, #3895):
@@ -1234,12 +1281,31 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       }
     }
 
+    // "Translated edition: …" for a book row the reader cannot read, when we
+    // hold a translated edition of the same work that did NOT match the query
+    // (a different title on one work — the "Characteres Aegyptii" case, #5975).
+    // One indexed query for the page of results. Same exclusions as the
+    // fan-out above, for the same reasons, plus localized requests: the link
+    // promises an English translation.
+    const pageSlice = dedupedResults.slice(offset, offset + limit);
+    const unreadableRows = pagesOnly || isLocalizedSearch ? [] : pageSlice
+      .filter(r => r.type === 'book' && ((r as any)._readability ?? TIER_READABLE) > TIER_READABLE)
+      .map(r => ({ bookId: r.book_id, workId: (r as any)._work_id as string | undefined }));
+    const translatedEditions = unreadableRows.length > 0
+      ? await fetchTranslatedEditions(db, unreadableRows, { tenantScoped: !!tenantId || !!tenantSlug })
+      : new Map();
+
     // Apply offset and strip transient fields
-    const paginatedResults = dedupedResults.slice(offset, offset + limit)
+    const paginatedResults = pageSlice
       .map(r => {
-        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, _canon, ...clean } = r as any;
+        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, _canon, _readability, ...clean } = r as any;
         const fanout = fanoutByResultId.get(r.id);
-        return (fanout ? { ...clean, work_group: fanout } : clean) as SearchResult;
+        const translated = r.type === 'book' ? translatedEditions.get(r.book_id) : undefined;
+        return {
+          ...clean,
+          ...(fanout ? { work_group: fanout } : {}),
+          ...(translated ? { translated_edition: translated } : {}),
+        } as SearchResult;
       });
 
     // For exact year searches, find nearby books (within 5 years)
