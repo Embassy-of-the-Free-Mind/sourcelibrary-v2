@@ -493,6 +493,15 @@ main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
 /* Opacity only. A rise moved the text under the reader's eye, which on a
    facsimile is worse than the abrupt swap it replaced. */
 .rv2-page-in { animation: rv2-page-in 200ms ease-out both; }
+/* A turn whose page is still being fetched: the outgoing page steps back
+   rather than sitting there looking like the page that was asked for. Delayed,
+   so a fetch that lands quickly never dims at all. An animation of its own
+   and not a declared opacity: the fade above fills forwards, and an animated
+   property beats a declared one (#5952). */
+@keyframes rv2-page-pending {
+  to { opacity: 0.4; }
+}
+.rv2-page-in[data-page-pending] { animation: rv2-page-pending 150ms ease-out 150ms forwards; }
 
 /* The phone column swapped pages instantly, which on a swipe reads as a jolt
    rather than as having moved. The new page arrives from the side you sent it,
@@ -559,6 +568,7 @@ main.rv2-panes[data-wide-leaf] > section[data-scan-pane] {
 @media (prefers-reduced-motion: reduce) {
   .rv2-slide-in-left, .rv2-pop, .rv2-slide-up, .rv2-strip-in,
   .rv2-page-in, .rv2-panel-body-in, .rv2-tile-in,
+  .rv2-page-in[data-page-pending],
   .rv2-turn-next, .rv2-turn-prev, .rv2-scrim,
   .rv2-menu-ground, .rv2-menu-item { animation: none; }
 }
