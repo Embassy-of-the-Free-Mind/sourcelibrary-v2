@@ -89,7 +89,7 @@ import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
+import { cleanPageText, pageEmbeddingInput, buildPageEmbeddingRow, pageEmbeddingRowTs, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { isPaused } from '../lib/pause.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
@@ -992,6 +992,56 @@ let consecutiveFailures = 0;
 let supabaseBackoff = 0;
 
 let hitLimit = false;
+let alreadyCurrent = 0;
+
+// --incremental: a page already embedded at its current source timestamp is skipped. A scoped
+// run never advances the watermark (#5869), so without this every scoped run re-embedded every
+// page since the same mark: 2026-10-07..10-12 paid five passes over the same ~500K pages
+// (about $250). Checked against Supabase in chunks, the same test --collect applies.
+const CURRENT_CHECK_SIZE = 500;
+let pendingCheck = [];
+async function dropAlreadyCurrent(pages) {
+  const client = await getPgClient();
+  if (!client || !pages.length) return pages;
+  const { rows } = await client.query(
+    'SELECT page_id, mongo_updated_at FROM page_translations WHERE page_id = ANY($1) AND embedding_model = $2 AND embedding IS NOT NULL',
+    [pages.map((p) => p.id), MODEL]);
+  const stored = new Map(rows.map((r) => [r.page_id, r.mongo_updated_at]));
+  return pages.filter((p) => {
+    const have = stored.get(p.id);
+    const want = pageEmbeddingRowTs(p);
+    const current = have && want && new Date(have).getTime() >= new Date(want).getTime();
+    if (current) { alreadyCurrent++; skipped++; }
+    return !current;
+  });
+}
+
+async function embedPage(page) {
+  // Skip pages with no usable text
+  const composed = composeEmbedText(page);
+  if (!composed) { skipped++; return; }
+  const book = await getBook(page.book_id);
+  const item = { page, book, ...composed };
+  if (BATCH_MODE) {
+    await addToEmbedJob(item);
+  } else {
+    batch.push(item);
+    if (batch.length >= EMBED_BATCH_SIZE) {
+      await processBatch(batch);
+      batch = [];
+    }
+  }
+}
+
+async function flushPendingCheck() {
+  const todo = await dropAlreadyCurrent(pendingCheck);
+  pendingCheck = [];
+  for (const p of todo) {
+    await embedPage(p);
+    if (batchStop) break;
+  }
+}
+
 for await (const page of cursor) {
   if (LIMIT && processed >= LIMIT) { hitLimit = true; break; }
   const ts = pageSourceTs(page);
@@ -1013,27 +1063,13 @@ for await (const page of cursor) {
     continue;
   }
 
-  // Skip pages with no usable text
-  const composed = composeEmbedText(page);
-  if (!composed) {
-    skipped++;
-    processed++;
-    continue;
-  }
-
-  const book = await getBook(page.book_id);
-  const item = { page, book, ...composed };
-
-  if (BATCH_MODE) {
-    await addToEmbedJob(item);
-    if (batchStop) break;
+  if (INCREMENTAL) {
+    pendingCheck.push(page);
+    if (pendingCheck.length >= CURRENT_CHECK_SIZE) await flushPendingCheck();
   } else {
-    batch.push(item);
-    if (batch.length >= EMBED_BATCH_SIZE) {
-      await processBatch(batch);
-      batch = [];
-    }
+    await embedPage(page);
   }
+  if (BATCH_MODE && batchStop) break;
 
   processed++;
   if (processed % 500 === 0) {
@@ -1043,8 +1079,10 @@ for await (const page of cursor) {
   }
 }
 
+if (pendingCheck.length && !(BATCH_MODE && batchStop)) await flushPendingCheck();
 if (batch.length > 0) await processBatch(batch);
 if (BATCH_MODE) await submitEmbedJob();
+if (INCREMENTAL) console.log(`Already embedded at their current text, skipped: ${alreadyCurrent.toLocaleString()}`);
 
 // Record the tail. Without this, everything since the last flush is spend that
 // happened and was never written down — the exact hole #4162 is about.
