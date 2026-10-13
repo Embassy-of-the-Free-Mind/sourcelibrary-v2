@@ -49,6 +49,13 @@
  * Rule + evidence: scripts/lib/ia-ocr-cohort.mjs. Each page records its decision in
  * `ocr.agreement_ref.page_gate`.
  *
+ * DIGITS GATE (#5186, 2026-10-13). The word ratio cannot see "1886" for 1836. Each accepted book is
+ * also scored on its NUMBERS — the share of the reference pages' 2–4-digit numbers the Archive
+ * printed identically on the same leaf — and recorded as `ocr.agreement_ref.numeric`. Below 0.97
+ * (scripts/lib/ia-ocr-gate.mjs) the book is still filled, but every written page that prints a
+ * number carries `ocr.digits_unreliable: true`. In English that reaches only recitation-fallback
+ * pages (the cohort admits no numbers); in every other language it is the only digits check.
+ *
  * CUTOFF IS PER LANGUAGE (#4790, 2026-09-13). The delivered text was measured (CER of the written
  * page against a fresh model read, one interior page per book) and the right cutoff differs by
  * language: English/French 0.80, Latin/German/Italian 0.85, Greek never, unmeasured languages 0.85.
@@ -114,8 +121,8 @@ import { iaFetch, iaOcrMeta, iaProvenance } from '../lib/ia-ocr-meta.mjs';
 import { dehyphenateLineBreaks } from '../lib/dehyphenate.mjs';
 import { referenceTrigramSet, isImplausible, DEFAULT_MIN_PLAUSIBILITY } from '../lib/ocr-plausibility.mjs';
 import { normalizeLanguageToken } from '../lib/language-normalize.mjs';
-import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
-import { tokens, ratio } from '../lib/ia-ocr-agreement.mjs';
+import { iaOcrMinAgreement, iaOcrDigitsVerdict } from '../lib/ia-ocr-gate.mjs';
+import { tokens, ratio, numericAgreement, pageNumberCounts } from '../lib/ia-ocr-agreement.mjs';
 import { IA_ARCHIVE_COHORT, archiveCohortDecision, confirmedFolios, publicationYear } from '../lib/ia-ocr-cohort.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -297,7 +304,8 @@ await withMongo(async (db) => {
   console.log(`${books.length} candidate books (${APPLY ? 'APPLY' : 'dry run'}; min agreement ${MIN_AGREEMENT_OVERRIDE !== null ? `${MIN_AGREEMENT_OVERRIDE} (OVERRIDE for every language)` : 'per language (scripts/lib/ia-ocr-gate.mjs)'}, min ref pages ${MIN_REF_PAGES})`);
 
   const summary = { scored: 0, accepted: 0, rejected: 0, unstable: 0, lang_mismatch: 0, ref_shifted: 0, script_loss: 0, lang_excluded: 0, no_ref: 0, no_xml: 0, pages_written: 0, implausible_leaves: 0,
-    cohort_admitted: 0, recitation_fallback: 0, cohort_refused_year: 0, cohort_refused_numbers: 0, cohort_refused_script: 0 };
+    cohort_admitted: 0, recitation_fallback: 0, cohort_refused_year: 0, cohort_refused_numbers: 0, cohort_refused_script: 0,
+    digits_unreliable_books: 0, digits_unreliable_pages: 0 };
   for (const b of books) {
     const bid = b.id || String(b._id);
     const iaId = b.ia_identifier || (b.image_source?.identifier) || null;
@@ -356,6 +364,7 @@ await withMongo(async (db) => {
     // ≥ MIN_OFFSET_SHARE of them (front matter and plates are allowed to disagree).
     const leafTok = leaves.map((l) => tokens(l));
     const refs = [];
+    const numRefs = []; // [model text, leaf] of each reference page, for the digits gate (#5186)
     let plateRefs = 0;
     for (const p of pages) {
       // Reference = MODEL OCR only. Pages this script wrote earlier are the IA text itself and
@@ -373,6 +382,7 @@ await withMongo(async (db) => {
       for (let d = -MAX_OFFSET; d <= MAX_OFFSET; d++) { const j = k + d; if (j < 0 || j >= leaves.length || leafTok[j].length < 20) continue; byOffset[d] = ratio(tt, leafTok[j]); }
       if (!Object.keys(byOffset).length) continue;
       refs.push(byOffset);
+      numRefs.push([t, k]);
     }
     const title = (b.title || '').slice(0, 44);
     if (refs.length < MIN_REF_PAGES) { summary.no_ref++; console.log(`  ${bid} ${String(b.published || '').slice(0, 4)} ${title} | ref pages ${refs.length} < ${MIN_REF_PAGES} — cannot calibrate`); continue; }
@@ -428,6 +438,16 @@ await withMongo(async (db) => {
     const fillable = wordFillable.filter(({ k }) => !isImplausible(leaves[k], refSet, DEFAULT_MIN_PLAUSIBILITY));
     const implausibleLeaves = wordFillable.length - fillable.length;
     summary.implausible_leaves += implausibleLeaves;
+    // DIGITS GATE (#5186, 2026-10-13). The word ratio passed four county histories at 0.977+ with up
+    // to 8% of their years wrong. Pool the share of the reference pages' numbers the Archive printed
+    // identically on the same leaf (offset 0 — the only offset ever filled). Below the policy line
+    // (scripts/lib/ia-ocr-gate.mjs) the book is still filled, but every written page that carries a
+    // number is stamped `ocr.digits_unreliable` (writeFill). English cohort pages carry none (#5124),
+    // so in English this reaches only recitation-fallback pages; in every other language it is the
+    // only digits check there is.
+    const pooled = { ref: 0, matched: 0 };
+    for (const [t, k] of numRefs) { if (leafTok[k]?.length >= 20) { const a = numericAgreement(t, leaves[k]); pooled.ref += a.ref; pooled.matched += a.matched; } }
+    const digits = iaOcrDigitsVerdict(pooled);
     const refShifted = offset !== 0 && offsetShare >= MIN_OFFSET_SHARE;
     // Judge on OUR OWN pages, not the Archive's: the Archive's text is where the script is missing,
     // so asking IT whether the book has any would always answer no. This is the one signal that
@@ -438,16 +458,18 @@ await withMongo(async (db) => {
     const verdict = refShifted ? 'REF_SHIFTED' : med < gate.cutoff ? 'REJECT' : offsetShare < MIN_OFFSET_SHARE ? 'UNSTABLE' : langMismatch ? 'LANG_MISMATCH' : scriptLoss ? 'SCRIPT_LOSS' : 'ACCEPT';
     const langNote = detectedLang ? ` | lang ia=${detectedLang} book=${bookLangs.join('+') || '?'}` : '';
     const scriptNote = scriptPages > 0 ? ` | NON-LATIN on ${scriptPages} of our pages${ALLOW_SCRIPT_LOSS ? ' (override: filling anyway)' : ''}` : '';
-    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}; implausible skipped ${implausibleLeaves}, trigram cut ${DEFAULT_MIN_PLAUSIBILITY}) | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}${scriptNote}`);
+    console.log(`  ${verdict} ${bid} ${String(b.published || '').slice(0, 4)} ${title} | agreement median ${med.toFixed(3)} over ${scores.length} pages | gate ${gate.cutoff.toFixed(2)} (${gate.source}) | offset ${offset} (${(offsetShare * 100).toFixed(0)}%) | IA leaves ${leaves.length}/${pages.length} | plates excluded ${plateRefs} | fillable ${fillable.length} (garbage leaves skipped ${garbageLeaves}, cut ${shareCut.toFixed(2)}; implausible skipped ${implausibleLeaves}, trigram cut ${DEFAULT_MIN_PLAUSIBILITY}) | digits ${digits.ratio ?? 'unmeasured'} over ${digits.ref} numbers${digits.unreliable ? ' UNRELIABLE' : ''} | engine ${meta.engine || '?'} ${meta.version || ''}${langNote}${scriptNote}`);
     const cohortFill = verdict === 'ACCEPT' ? applyCohort(b, gate.language, leaves, fillable, summary) : fillable;
     if (verdict === 'ACCEPT' && cohortFill.length !== fillable.length) console.log(`     English cohort (#5124): ${cohortFill.length} of ${fillable.length} fillable leaves admitted (${cohortFill.filter((e) => e.gate?.admitted_by === 'recitation_fallback').length} as recitation fallback); the rest are left for lite`);
     if (verdict !== 'ACCEPT') { summary.rejected++; if (verdict === 'UNSTABLE') summary.unstable++; if (verdict === 'LANG_MISMATCH') summary.lang_mismatch++; if (verdict === 'REF_SHIFTED') summary.ref_shifted++; if (verdict === 'SCRIPT_LOSS') summary.script_loss++; continue; }
     summary.accepted++;
+    const stamped = digits.unreliable ? cohortFill.filter(({ k }) => carriesNumbers(leaves[k])).length : 0;
+    if (digits.unreliable && cohortFill.length) { summary.digits_unreliable_books++; summary.digits_unreliable_pages += stamped; console.log(`     digits gate (#5186): ${stamped} of ${cohortFill.length} pages to write carry numbers and will be stamped ocr.digits_unreliable`); }
     if (!APPLY) { summary.pages_written += cohortFill.length; continue; }
 
     summary.pages_written += await writeFill(db, b, bid, iaId, meta, leaves, cohortFill,
-      { median: +med.toFixed(3), n: refs.length, min_agreement: gate.cutoff, offset: 0, offset_share: +offsetShare.toFixed(2) },
-      { agreement_median: +med.toFixed(3), ref_pages: scores.length });
+      { median: +med.toFixed(3), n: refs.length, min_agreement: gate.cutoff, offset: 0, offset_share: +offsetShare.toFixed(2), numeric: digits },
+      { agreement_median: +med.toFixed(3), ref_pages: scores.length, numeric_agreement: digits.ratio, digits_unreliable_pages: stamped });
   }
   console.log(JSON.stringify(summary));
 }, { timeoutMs: 6 * 60 * 60 * 1000 });
@@ -474,6 +496,9 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
       // A recitation-fallback page now HAS text, so the "no text obtainable, skip it" block no longer
       // describes it; recitation_count and last_skip stay as the record of the refusal.
       ...(gate?.admitted_by === 'recitation_fallback' ? { recitation_blocked: false, recitation_fallback_at: now } : {}),
+      // The book failed the digits gate (#5186) and this leaf prints a number: its numbers are not to
+      // be quoted from this text. Absent (never false) otherwise, so the field means one thing.
+      ...(agreementRef.numeric?.unreliable && carriesNumbers(leaves[k]) ? { digits_unreliable: true } : {}),
       ia: { ...iaProvenance(iaId, meta), ingest_run: INGEST_RUN },
       content_hash: contentHash(leaves[k]),
     };
@@ -493,3 +518,5 @@ async function writeFill(db, b, bid, iaId, meta, leaves, fillable, agreementRef,
 }
 
 function bookId(b) { return b.id || String(b._id); }
+/** The leaf prints at least one 2–4-digit number besides its folio (the digits gate's unit). */
+const carriesNumbers = (text) => pageNumberCounts(text).size > 0;

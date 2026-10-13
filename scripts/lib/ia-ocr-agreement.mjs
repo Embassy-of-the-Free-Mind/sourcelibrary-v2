@@ -98,3 +98,63 @@ export function ratio(a, b) {
 
 /** The ratio of two texts. */
 export const agreement = (a, b) => ratio(tokens(a), tokens(b));
+
+// ---------- numeric agreement: the digits gate (#5186) ----------
+// The word ratio above cannot see a misread number: "1886" for 1836 is a perfectly good word, and
+// the four #5186 county histories passed the 0.80 gate at 0.977–0.990 with 1–8% of their years
+// wrong. The numbers test (#5224, scripts/eval/results/numbers-5224/report.md) found engine
+// agreement on a number is right on the image 98.8% of the time, so the share of the model's
+// numbers the Archive also printed is a free, per-book proxy for how far its digits can be trusted.
+//
+// THE TOKEN is #5224's v1: NFKC, split on anything not a letter or digit, keep /^\d{2,4}$/
+// ("1,538" → 538; "188%" → 188). A digit read as a letter ("i860", "SSI") is no longer a number
+// on the Archive side, so it counts as a miss — which is the point.
+// THE FOLIO is excluded on both sides: the Archive drops margin page numbers often (44 of its 266
+// #5224 errors), which is a furniture problem, not a digits problem. The model's `<page-num>` is
+// the folio when present; otherwise a bare number opening or closing the first or last short line.
+// Model editorial blocks (`<vocab>`, `<meta>` …) and `<page-num>` are dropped before counting.
+
+const NUM_TOKEN_RE = /^\d{2,4}$/;
+const numTokens = (s) => String(s || '').normalize('NFKC').split(/[^\p{L}\p{N}]+/u).filter((w) => NUM_TOKEN_RE.test(w));
+
+/** A bare number opening/closing the first or last line of ≤ 10 words: the probable folio. */
+function edgeFolio(text) {
+  const ls = String(text || '').split('\n').map((l) => l.trim()).filter(Boolean);
+  for (const l of [ls[0], ls[ls.length - 1]]) {
+    const ws = (l || '').split(/\s+/);
+    if (!l || ws.length > 10) continue;
+    for (const w of [ws[0], ws[ws.length - 1]]) { const m = w.match(/^(\d{1,4})[.,:;]?$/); if (m) return String(+m[1]); }
+  }
+  return null;
+}
+
+/**
+ * The 2–4-digit numbers a page prints, as a Map number → count, folio removed (one occurrence).
+ * `isModel`: the text is a model read (editorial blocks and `<page-num>` dropped, tags stripped).
+ */
+export function pageNumberCounts(text, isModel = false) {
+  let t = String(text || ''); let folio = null;
+  if (isModel) {
+    const pn = t.match(/<page-num>\s*(\d{1,4})\s*<\/page-num>/i);
+    if (pn) folio = String(+pn[1]);
+    t = t.replace(EDITORIAL_RE, ' ').replace(/<page-num>[\s\S]*?<\/page-num>/gi, ' ').replace(/<\/?[A-Za-z][^>]*>/g, '\n');
+  }
+  if (folio === null) folio = edgeFolio(t);
+  const counts = new Map();
+  for (const n of numTokens(t)) counts.set(n, (counts.get(n) || 0) + 1);
+  if (folio !== null && counts.get(folio)) { if (counts.get(folio) > 1) counts.set(folio, counts.get(folio) - 1); else counts.delete(folio); }
+  return counts;
+}
+
+/**
+ * Of the numbers on the model's reading of a leaf, how many the Archive's reading of the SAME leaf
+ * also printed (multiset). Returns `{ ref, matched }` — pool these over a book's reference pages
+ * and judge the pooled share with `iaOcrDigitsVerdict` (scripts/lib/ia-ocr-gate.mjs).
+ */
+export function numericAgreement(modelText, iaText) {
+  const a = pageNumberCounts(modelText, true);
+  const b = pageNumberCounts(iaText);
+  let ref = 0, matched = 0;
+  for (const [n, c] of a) { ref += c; matched += Math.min(c, b.get(n) || 0); }
+  return { ref, matched };
+}
