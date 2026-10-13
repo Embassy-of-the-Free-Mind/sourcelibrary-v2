@@ -17,6 +17,7 @@ import { logMetadataChange } from './book-changelog';
 import { generateUniqueBookSlug, isPlaceholderSlug } from './slugify';
 import { getGeminiClient } from './gemini-client';
 import { outputTokensFrom } from '@/lib/gemini-logger';
+import { normalizeLanguageToken, parseLanguageField, sameLanguageFamily } from './language-normalize';
 
 const MODEL = 'gemini-3-flash-preview';
 const MAX_OCR_PAGES = 25;
@@ -480,7 +481,12 @@ export async function enrichBookMetadata(
   const provenance = (book.field_provenance as Record<string, unknown>) || {};
   if (languageProvenance) {
     provenance.language = languageProvenance;
-  } else if (parsed.language && !provenance.language) {
+  } else if (
+    parsed.language && !provenance.language &&
+    parseLanguageField(currentLang).some((lang) => sameLanguageFamily(normalizeLanguageToken(parsed.language), lang))
+  ) {
+    // Only when the AI AGREES (#4766). A medium/low-confidence disagreement used to land here and be
+    // stored as "AI confirmed as <the other language>", a confirmation of a value it contradicts.
     provenance.language = {
       source: 'import',
       note: `AI confirmed as "${parsed.language}" (${confidence})`,
