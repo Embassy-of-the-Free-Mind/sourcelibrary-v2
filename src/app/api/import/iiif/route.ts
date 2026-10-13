@@ -12,6 +12,7 @@ import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
 import type { ImageSourceProvider } from '@/lib/types/image-source';
+import { initialPageCounters } from '@/lib/page-counts';
 
 export const maxDuration = 300;
 
@@ -529,9 +530,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       thumbnail: pageImages[0]?.thumbnail || '',
       // A book record declares its type at creation rather than landing null (#5292c).
       content_type: 'book',
-      pages_count: pageCount,
-      pages_ocr: 0,
-      pages_translated: 0,
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(pageCount),
       dublin_core: {
         dc_identifier: [
           `IIIF:${rawManifestId}`,

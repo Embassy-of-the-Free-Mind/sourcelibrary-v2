@@ -95,6 +95,8 @@ export const BOOK_FIELDS = Object.freeze([
   // page accounting
   'pages_count',
   'page_count_source', 'pages_ocr', 'pages_translated', 'pages_archived',
+  // the other two of the six counters; makeBookDoc() declares them at birth (#5328)
+  'pages_translatable', 'pages_blank',
   // when recountBook() (scripts/lib/page-counts.mjs) last wrote all six counters (#5325)
   'page_counts_at',
   // NOT here, deliberately: `translation_state` — { rung, english_original,
@@ -194,6 +196,7 @@ export const PAGE_FIELDS = Object.freeze([
 ]);
 
 import { sourceFingerprints } from './source-fingerprints.mjs';
+import { initialPageCounters, PAGE_COUNTERS } from './page-counts.mjs';
 
 const BOOK_FIELD_SET = new Set(BOOK_FIELDS);
 const PAGE_FIELD_SET = new Set(PAGE_FIELDS);
@@ -248,6 +251,16 @@ export function makeBookDoc(fields) {
   // content_type 'artwork') and are untouched; an explicit caller value wins.
   if (doc.content_type == null && doc.resource_type == null) {
     doc.content_type = 'book';
+  }
+  // Declare all six page counters at birth (#5328, .claude/docs/page-counts.md).
+  // Importers set pages_count and left pages_translatable missing, one of the two
+  // sources of the 10,282 live books without it. Every page of a new book is
+  // pending, so the whole book is the honest denominator until the first
+  // recountBook(). A counter the caller set explicitly wins; a doc with no
+  // numeric pages_count is left alone (nothing to declare from).
+  if (typeof doc.pages_count === 'number') {
+    const initial = initialPageCounters(doc.pages_count);
+    for (const c of PAGE_COUNTERS) if (doc[c] === undefined) doc[c] = initial[c];
   }
   return doc;
 }

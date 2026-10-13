@@ -14,6 +14,7 @@ import { join } from 'path';
 import { storagePut } from '@/lib/storage';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
+import { initialPageCounters } from '@/lib/page-counts';
 
 export const maxDuration = 300;
 
@@ -236,9 +237,8 @@ export const POST = withCuratorAuth(async (request) => {
       thumbnail: blobUrls[0]?.photo || '',
       // A book record declares its type at creation rather than landing null (#5292c).
       content_type: 'book',
-      pages_count: pageCount,
-      pages_ocr: 0,
-      pages_translated: 0,
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(pageCount),
       dublin_core: dublin_core || {
         dc_identifier: identifier ? [`${provider.toUpperCase()}:${identifier}`] : [],
         dc_source: source_url || pdf_url,

@@ -2,6 +2,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
+import { initialPageCounters } from '@/lib/page-counts';
 
 // Validation: Reject modern editions
 // Returns error message if invalid, null if OK
@@ -1042,7 +1043,8 @@ async function handlePOST() {
           },
           // A book record declares its type at creation rather than landing null (#5292c).
           content_type: 'book',
-          pages_count: 0,
+          // All six counters at birth: every page pending, so every page translatable (#5328).
+          ...initialPageCounters(0),
           created_at: now,
           updated_at: now,
         };

@@ -79,6 +79,23 @@ describe('makeBookDoc', () => {
     expect(makeBookDoc({ title: 'X', content_type: 'text' }).content_type).toBe('text');
   });
 
+  it('declares all six page counters from pages_count at birth (#5328)', () => {
+    const doc = makeBookDoc({ title: 'X', pages_count: 362 });
+    expect(doc).toMatchObject({
+      pages_count: 362, pages_translatable: 362,
+      pages_ocr: 0, pages_translated: 0, pages_blank: 0, pages_archived: 0,
+    });
+  });
+
+  it('keeps an explicit counter and declares nothing without a numeric pages_count', () => {
+    const doc = makeBookDoc({ title: 'X', pages_count: 10, pages_ocr: 10 });
+    expect(doc.pages_ocr).toBe(10);
+    expect(doc.pages_translatable).toBe(10);
+    const bare = makeBookDoc({ title: 'X' });
+    expect('pages_translatable' in bare).toBe(false);
+    expect('pages_count' in bare).toBe(false);
+  });
+
   it('throws on a non-object input', () => {
     expect(() => makeBookDoc(null as never)).toThrow(/plain object/);
     expect(() => makeBookDoc(['title'] as never)).toThrow(/plain object/);

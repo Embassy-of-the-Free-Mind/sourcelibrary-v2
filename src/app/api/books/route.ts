@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { Book } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { initialPageCounters } from '@/lib/page-counts';
 
 export async function GET(request: NextRequest) {
   try {
@@ -130,7 +131,8 @@ export const POST = withAuth(async (request, session) => {
       image_source: image_source || null,      
       // A book record declares its type at creation rather than landing null (#5292c).
       content_type: 'book',
-      pages_count: 0,
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(0),
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date(),
