@@ -40,7 +40,17 @@ def wilson(k, n, z=1.96):
     return [round(100 * p, 1), round(100 * max(0, c - h), 1), round(100 * min(1, c + h), 1)]
 
 base = confirmed(load('baseline-aliveness.jsonl'), load('baseline-judged.jsonl'))
-hits = confirmed(load('classified-aliveness.jsonl'), load('judged-aliveness.jsonl'))
+def lane(screen_f, judged_f, name):
+    if not os.path.exists(os.path.join(D, screen_f)): return []
+    rows = confirmed(load(screen_f), load(judged_f) if os.path.exists(os.path.join(D, judged_f)) else [])
+    for r in rows: r['lane'] = name
+    return rows
+emb = lane('classified-aliveness.jsonl', 'judged-aliveness.jsonl', 'embedding')
+lex = lane('classified-lex.jsonl', 'judged-lex.jsonl', 'lexical')
+seen = set(); hits = []
+for r in lex + emb:  # a page found by both lanes is counted once, under the lexical lane
+    if r['page_id'] in seen: continue
+    seen.add(r['page_id']); hits.append(r)
 probes = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'probes', 'probes-aliveness.json')))
 dim_layer = {d['id']: d['layer'] for d in probes['dimensions']}
 dim_label = {d['id']: d['label'] for d in probes['dimensions']}
@@ -62,6 +72,12 @@ N['hits_n'] = nh; N['hits_judged'] = sum(1 for r in hits if r['judged'])
 N['hits_screened_any'] = sum(1 for r in hits if any(r.get(L) for L in LAYERS))
 N['hits_confirmed_any'] = sum(1 for r in hits if any(r[L + '_final'] for L in LAYERS))
 N['hits_unjudged_positive'] = sum(1 for r in hits if any(r.get(L) for L in LAYERS) and not r['judged'])
+N['lanes'] = {}
+for name, rows in (('embedding', emb), ('lexical', lex)):
+    sc = [r for r in rows if any(r.get(L) for L in LAYERS)]; jd = [r for r in sc if r['judged']]
+    cf = [r for r in jd if any(r[L + '_final'] for L in LAYERS)]
+    N['lanes'][name] = {'retrieved': len(rows), 'screened': len(sc), 'judged': len(jd), 'confirmed': len(cf),
+                        'confirm_of_judged': wilson(len(cf), len(jd)), 'est_yield': round(100 * len(sc) / max(1, len(rows)) * len(cf) / max(1, len(jd)), 1)}
 N['books'] = len({r['book_id'] for r in hits if any(r[L + '_final'] for L in LAYERS)})
 N['languages'] = len({r['book_language'] for r in hits if any(r[L + '_final'] for L in LAYERS)})
 
@@ -124,6 +140,23 @@ for r in hits:
         if r[L + '_final']: cent[c][f'{L}_{r[L + "_final"]}'] += 1
 N['centuries'] = [{'c': c, **dict(v)} for c, v in sorted(cent.items())]
 
+# lexical lane, model-free: phrase occurrences per 10K translated pages by EDITION century (retrieve-aliveness-lexical.mjs)
+lc_path = os.path.join(D, 'lexical-counts.json')
+if os.path.exists(lc_path):
+    LC = json.load(open(lc_path)); den = LC['translated_pages_by_century']
+    BINS = [('before 1400', lambda c: c < 1400)] + [(f'{c}s', (lambda cc: (lambda c: c == cc))(c)) for c in (1400, 1500, 1600, 1700, 1800, 1900)]
+    def binned(d):
+        return [sum(n for c, n in d.items() if c != 'nd' and f(int(c))) for _, f in BINS]
+    dens = binned(den)
+    agg = C.defaultdict(C.Counter)
+    for ph, v in LC['phrases'].items():
+        for c, n in v['byCentury'].items(): agg[v['dim']][c] += n
+    N['lexical'] = {
+        'bins': [b for b, _ in BINS], 'denominators': dens, 'zero_hit': LC['zero_hit'],
+        'dims': {d: {'layer': dim_layer[d], 'label': dim_label[d], 'rate': [round(10000 * x / y, 1) if y else None for x, y in zip(binned(agg[d]), dens)], 'total': sum(agg[d].values())} for d in agg},
+        'phrases': sorted([{'ph': ph, 'dim': v['dim'], 'pages': v['pages'], 'books': v['books']} for ph, v in LC['phrases'].items()], key=lambda x: -x['pages']),
+    }
+
 # points
 pts = []
 for r in hits:
@@ -133,7 +166,7 @@ for r in hits:
         pts.append({'l': L, 'p': p, 'y': r.get('book_year'), 't': (r.get('book_title') or '')[:110], 'a': (r.get('book_author') or '')[:60],
                     'lg': r.get('book_language') or '', 'tr': r.get('tradition') or 'other', 'c': r.get('carrier'), 's': r.get('source_of_life'),
                     'q': r[L + '_quote'], 'why': (r[L + '_reason'] or '')[:220], 'fp': r.get('first_person'),
-                    'u': f"https://sourcelibrary.org/book/{r['book_id']}?page={r['page_number']}", 'd': r.get('probe_dim')})
+                    'u': f"https://sourcelibrary.org/book/{r['book_id']}?page={r['page_number']}", 'd': r.get('probe_dim'), 'ln': r['lane'], 'ph': r.get('probe') if r['lane'] == 'lexical' else None})
 N['points'] = len(pts)
 json.dump(pts, open(os.path.join(D, 'aliveness-data.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 json.dump(N, open(os.path.join(D, 'aliveness-numbers.json'), 'w'), ensure_ascii=False, indent=1)
