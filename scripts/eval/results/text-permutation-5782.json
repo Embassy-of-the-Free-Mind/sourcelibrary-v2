@@ -1,0 +1,1856 @@
+{
+ "book": "6988a59ffc2299bffde5f21a",
+ "issue": 5782,
+ "method": "Every one of the 368 leaves read by eye (running head, printed page number, first line) against the first words of the assigned text. Assignment seeded from the printed page numbers the split detector read off each spread at upload (split_detection.textWarning, independent of the text) matched to each text <page-num>, then corrected by eye.",
+ "rows": [
+  {
+   "page": 1,
+   "src": 170,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 2,
+   "src": 171,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 3,
+   "src": 172,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 4,
+   "src": 173,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 5,
+   "src": 174,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 6,
+   "src": 175,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 7,
+   "src": 176,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 8,
+   "src": 177,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 9,
+   "src": 178,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 10,
+   "src": 179,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 11,
+   "src": 180,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 12,
+   "src": 181,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 13,
+   "src": 182,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 14,
+   "src": 183,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 15,
+   "src": 184,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 16,
+   "src": 185,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 17,
+   "src": 186,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 18,
+   "src": 187,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 19,
+   "src": 188,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 20,
+   "src": 189,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 21,
+   "src": 190,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 22,
+   "src": 191,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 23,
+   "src": 192,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 24,
+   "src": 193,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 25,
+   "src": 194,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 26,
+   "src": 195,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 27,
+   "src": 196,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 28,
+   "src": 197,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 29,
+   "src": 199,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 30,
+   "src": 198,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 31,
+   "src": 200,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 32,
+   "src": 201,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 33,
+   "src": 202,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 34,
+   "src": 203,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 35,
+   "src": 205,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 36,
+   "src": 204,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 37,
+   "src": 206,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 38,
+   "src": 207,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 39,
+   "src": 208,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 40,
+   "src": 209,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 41,
+   "src": 210,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 42,
+   "src": 211,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 43,
+   "src": 212,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 44,
+   "src": 213,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 45,
+   "src": 214,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 46,
+   "src": 215,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 47,
+   "src": 216,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 48,
+   "src": 217,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 49,
+   "src": 218,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 50,
+   "src": 219,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 51,
+   "src": 220,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 52,
+   "src": 221,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 53,
+   "src": 222,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 54,
+   "src": 223,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 55,
+   "src": 224,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 56,
+   "src": 225,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 57,
+   "src": 226,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 58,
+   "src": 227,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 59,
+   "src": 229,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 60,
+   "src": 228,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 61,
+   "src": 230,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 62,
+   "src": 231,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 63,
+   "src": 232,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 64,
+   "src": 233,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 65,
+   "src": 234,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 66,
+   "src": 235,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 67,
+   "src": 236,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 68,
+   "src": 237,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 69,
+   "src": 239,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "text L/R swapped in the source pair"
+  },
+  {
+   "page": 70,
+   "src": 238,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "text L/R swapped in the source pair"
+  },
+  {
+   "page": 71,
+   "src": 240,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 72,
+   "src": 241,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 73,
+   "src": 242,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 74,
+   "src": 243,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 75,
+   "src": 244,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 76,
+   "src": 245,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 77,
+   "src": 246,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 78,
+   "src": 247,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 79,
+   "src": 248,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 80,
+   "src": 249,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 81,
+   "src": 250,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 82,
+   "src": 251,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 83,
+   "src": 252,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 84,
+   "src": 253,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 85,
+   "src": 254,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 86,
+   "src": 255,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 87,
+   "src": 256,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 88,
+   "src": 257,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 89,
+   "src": 258,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 90,
+   "src": 259,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "duplicate photograph of p.62; the unnumbered second transcription (text leaf 259)"
+  },
+  {
+   "page": 91,
+   "src": 261,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 92,
+   "src": 262,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 93,
+   "src": 263,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 94,
+   "src": 264,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 95,
+   "src": 265,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 96,
+   "src": 266,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 97,
+   "src": 267,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 98,
+   "src": 268,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 99,
+   "src": 269,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 100,
+   "src": 71,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 101,
+   "src": 72,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 102,
+   "src": 73,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 103,
+   "src": 74,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 104,
+   "src": 75,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 105,
+   "src": 76,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 106,
+   "src": 77,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 107,
+   "src": 78,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 108,
+   "src": 79,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 109,
+   "src": 80,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 110,
+   "src": 81,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 111,
+   "src": 82,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 112,
+   "src": 83,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 113,
+   "src": 84,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 114,
+   "src": 85,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 115,
+   "src": 86,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 116,
+   "src": 87,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 117,
+   "src": 88,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 118,
+   "src": 90,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 119,
+   "src": 89,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 120,
+   "src": 90,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 121,
+   "src": 91,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 122,
+   "src": 92,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 123,
+   "src": 93,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 124,
+   "src": 95,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 125,
+   "src": 94,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 126,
+   "src": 96,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 127,
+   "src": 97,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 128,
+   "src": 98,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 129,
+   "src": 99,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 130,
+   "src": 100,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 131,
+   "src": 101,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 132,
+   "src": 102,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 133,
+   "src": 103,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 134,
+   "src": 104,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 135,
+   "src": 105,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 136,
+   "src": 106,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 137,
+   "src": 107,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 138,
+   "src": 108,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 139,
+   "src": 109,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 140,
+   "src": 110,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 141,
+   "src": 111,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 142,
+   "src": 112,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 143,
+   "src": 113,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 144,
+   "src": 114,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 145,
+   "src": 115,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 146,
+   "src": 116,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 147,
+   "src": 117,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 148,
+   "src": 119,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 149,
+   "src": 118,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 150,
+   "src": 120,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 151,
+   "src": 121,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 152,
+   "src": 122,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 153,
+   "src": 123,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 154,
+   "src": 125,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 155,
+   "src": 124,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 156,
+   "src": 126,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 157,
+   "src": 127,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 158,
+   "src": 128,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 159,
+   "src": 129,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 160,
+   "src": 130,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 161,
+   "src": 131,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 162,
+   "src": 132,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 163,
+   "src": 133,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 164,
+   "src": 134,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 165,
+   "src": 135,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 166,
+   "src": 136,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 167,
+   "src": 137,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 168,
+   "src": 138,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 169,
+   "src": 139,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 170,
+   "src": 140,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 171,
+   "src": 141,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 172,
+   "src": 142,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 173,
+   "src": 143,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 174,
+   "src": 144,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 175,
+   "src": 145,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 176,
+   "src": 146,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 177,
+   "src": 147,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 178,
+   "src": 148,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 179,
+   "src": 149,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 180,
+   "src": 150,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 181,
+   "src": 151,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 182,
+   "src": 152,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 183,
+   "src": 153,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 184,
+   "src": 154,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 185,
+   "src": 155,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 186,
+   "src": 156,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 187,
+   "src": 157,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 188,
+   "src": 158,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 189,
+   "src": 159,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 190,
+   "src": 160,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 191,
+   "src": 161,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 192,
+   "src": 162,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 193,
+   "src": 163,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 194,
+   "src": null,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "p.163 never transcribed: the text in its slot is a second copy of p.133 (leaf 164)"
+  },
+  {
+   "page": 195,
+   "src": 165,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 196,
+   "src": 166,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 197,
+   "src": 167,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 198,
+   "src": 169,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 199,
+   "src": 168,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 200,
+   "src": 270,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "duplicate photograph of p.167; the second transcription (text leaf 270)"
+  },
+  {
+   "page": 201,
+   "src": 271,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 202,
+   "src": 272,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 203,
+   "src": 273,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 204,
+   "src": 275,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 205,
+   "src": 274,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 206,
+   "src": 276,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 207,
+   "src": 277,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 208,
+   "src": 278,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 209,
+   "src": 279,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 210,
+   "src": 280,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 211,
+   "src": 281,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 212,
+   "src": 282,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 213,
+   "src": 283,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 214,
+   "src": 284,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 215,
+   "src": 285,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 216,
+   "src": 286,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 217,
+   "src": 287,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 218,
+   "src": 288,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 219,
+   "src": 289,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 220,
+   "src": 290,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 221,
+   "src": 291,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 222,
+   "src": 292,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 223,
+   "src": 293,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 224,
+   "src": 294,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 225,
+   "src": 295,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 226,
+   "src": 296,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 227,
+   "src": 297,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 228,
+   "src": 298,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 229,
+   "src": 299,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 230,
+   "src": 300,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 231,
+   "src": 301,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 232,
+   "src": 302,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 233,
+   "src": 303,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 234,
+   "src": 304,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 235,
+   "src": 305,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 236,
+   "src": 306,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 237,
+   "src": 307,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 238,
+   "src": 309,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 239,
+   "src": 308,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 240,
+   "src": 310,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 241,
+   "src": 311,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 242,
+   "src": 312,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 243,
+   "src": 313,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 244,
+   "src": 314,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 245,
+   "src": 315,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 246,
+   "src": 316,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 247,
+   "src": 317,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 248,
+   "src": 318,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 249,
+   "src": 319,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 250,
+   "src": 320,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 251,
+   "src": 321,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 252,
+   "src": 322,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 253,
+   "src": 323,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 254,
+   "src": 325,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 255,
+   "src": 324,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 256,
+   "src": 326,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 257,
+   "src": 327,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 258,
+   "src": 328,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 259,
+   "src": 329,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 260,
+   "src": 330,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 261,
+   "src": 331,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 262,
+   "src": 332,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 263,
+   "src": 333,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 264,
+   "src": 334,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 265,
+   "src": 335,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 266,
+   "src": 336,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 267,
+   "src": 337,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 268,
+   "src": 338,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 269,
+   "src": 339,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 270,
+   "src": 340,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 271,
+   "src": 341,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 272,
+   "src": 342,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 273,
+   "src": 343,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 274,
+   "src": 344,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 275,
+   "src": 345,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 276,
+   "src": 346,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 277,
+   "src": 347,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 278,
+   "src": 348,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 279,
+   "src": 349,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 280,
+   "src": 350,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 281,
+   "src": 351,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 282,
+   "src": 352,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 283,
+   "src": 353,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 284,
+   "src": 354,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 285,
+   "src": 355,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 286,
+   "src": 356,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 287,
+   "src": 357,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 288,
+   "src": 358,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 289,
+   "src": 359,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 290,
+   "src": 360,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 291,
+   "src": 361,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 292,
+   "src": 362,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 293,
+   "src": 363,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 294,
+   "src": 364,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 295,
+   "src": 365,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 296,
+   "src": 364,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 297,
+   "src": 366,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 298,
+   "src": 367,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 299,
+   "src": 368,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 300,
+   "src": 1,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 301,
+   "src": 2,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 302,
+   "src": 3,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 303,
+   "src": 4,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 304,
+   "src": 5,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 305,
+   "src": 6,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 306,
+   "src": 7,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 307,
+   "src": 8,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 308,
+   "src": 9,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 309,
+   "src": 10,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 310,
+   "src": 11,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 311,
+   "src": 12,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 312,
+   "src": 13,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 313,
+   "src": 14,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 314,
+   "src": 15,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 315,
+   "src": 16,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 316,
+   "src": 17,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 317,
+   "src": 18,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 318,
+   "src": 19,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 319,
+   "src": 20,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 320,
+   "src": 21,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 321,
+   "src": 22,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 322,
+   "src": 23,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 323,
+   "src": 24,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 324,
+   "src": 26,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 325,
+   "src": 25,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 326,
+   "src": 27,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 327,
+   "src": 28,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 328,
+   "src": 29,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 329,
+   "src": 30,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 330,
+   "src": 31,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 331,
+   "src": 32,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 332,
+   "src": 33,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 333,
+   "src": 34,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 334,
+   "src": 35,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 335,
+   "src": 36,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 336,
+   "src": 37,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 337,
+   "src": 38,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 338,
+   "src": 39,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 339,
+   "src": 40,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 340,
+   "src": 41,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 341,
+   "src": 42,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 342,
+   "src": 43,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 343,
+   "src": 44,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "text carries <page-num>308, a misread; its body is p.300 (catchword chain from p.299)"
+  },
+  {
+   "page": 344,
+   "src": 45,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 345,
+   "src": 46,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 346,
+   "src": 47,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 347,
+   "src": 48,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 348,
+   "src": 49,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 349,
+   "src": 50,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 350,
+   "src": 51,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 351,
+   "src": 52,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 352,
+   "src": 53,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 353,
+   "src": 54,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 354,
+   "src": 55,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 355,
+   "src": 56,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 356,
+   "src": 57,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 357,
+   "src": 58,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 358,
+   "src": 60,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 359,
+   "src": 59,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 360,
+   "src": 61,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 361,
+   "src": 62,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 362,
+   "src": 63,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 363,
+   "src": 64,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 364,
+   "src": 65,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 365,
+   "src": 66,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13"
+  },
+  {
+   "page": 366,
+   "src": 68,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "blank endleaf"
+  },
+  {
+   "page": 367,
+   "src": 69,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "back flyleaf with shelfmarks"
+  },
+  {
+   "page": 368,
+   "src": 70,
+   "check": "eye:top-of-page header + first line vs text, 2026-10-13",
+   "note": "back cover"
+  }
+ ]
+}
