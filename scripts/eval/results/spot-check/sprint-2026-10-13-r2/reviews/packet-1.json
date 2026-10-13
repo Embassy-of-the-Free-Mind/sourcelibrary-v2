@@ -1,0 +1,713 @@
+[
+ {
+  "book_id": "6991eaef2f801130a473ec5c",
+  "slot": 1,
+  "title": "Notes et dessins sur la generation et le mecanisme des fonctions intimes",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collections are the source ones (getty, americana). A 1901 Rouveyre facsimile of Leonardo's Windsor anatomical leaves belongs in a library of early modern science. The `language: Italian` field describes Leonardo's leaves; the printed matter on these pages is French.",
+  "rights_flag": null,
+  "structure_note": "The run is a blank verso, a pasted printed label ('Feuillet n° 13. . . Verso.'), and another blank: normal for a facsimile portfolio with interleaved guard sheets. The 3 printed backsteps / 1 repeat among only 8 numbered pages are almost certainly these leaf labels ('Feuillet n° N Recto/Verso') read as page numbers, not a disorder. Images 88 and 90 look alike (same stain pattern low on the sheet) but the files differ in size and blank versos of adjacent guard sheets would look like this; I cannot tell a duplicate scan from the images. The counter field pages_translated=46 disagrees with 98 page records carrying a translation (stale counter; many of the 98 are the system 'Blank page' string).",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 88,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "OCR <meta> for a blank calls the book a 'manuscript facsimile' and the leaf 'an endpaper or a separator' — harmless description, not shown as text",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 89,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<page-type>title-page</page-type>",
+      "image": "a small printed label pasted in the middle of an otherwise blank leaf",
+      "problem": "self-reported page type wrong: this is a leaf-identification label, not a title page",
+      "severity": "minor",
+      "class": "O16"
+     },
+     {
+      "ocr": "<page-num>Feuillet n° 13. . . Verso.</page-num>",
+      "image": "'Feuillet n° 13. . . Verso.' is the label's content (leaf number of the facsimile), not a page number",
+      "problem": "label content tagged as page number; source of the book's printed_backsteps",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "(nothing on the page)",
+      "english": "<note>This title refers to Leonardo's anatomical studies of the reproductive system and internal biological processes.</note>",
+      "problem": "explanatory note added by the model; true enough but not on the page",
+      "severity": "minor",
+      "class": "T10"
+     },
+     {
+      "source": "(nothing on the page)",
+      "english": "<meta>… It follows a blank leaf and introduces a new thematic grouping of drawings.</meta>",
+      "problem": "the label identifies one leaf (13 verso), it does not introduce a 'new thematic grouping'",
+      "severity": "minor",
+      "class": "T15"
+     },
+     {
+      "source": "Édouard Rouveyre, Éditeur, rue de Seine, 76, Paris",
+      "english": "<summary>This is a title page from a late 19th-century facsimile edition…",
+      "problem": "book is dated 1901; 'late 19th-century' and 'title page' are both loose",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Translation carries <meta>, <note>, <term>, <summary>, <keywords> blocks; whether the reader shows them raw cannot be judged from the packet",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 90,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<lang>Italian</lang> … <note>This page is blank.</note>",
+      "image": "blank leaf",
+      "problem": "blank correctly reported; language tag on a blank is meaningless",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Sound on these pages: two blanks correctly reported as blank and one printed label transcribed and translated word for word. Only cosmetic issues (label tagged as title page / page number, a model-added note, a stale translated-pages counter)."
+ },
+ {
+  "book_id": "69b99ec16ed9e0490990a6f2",
+  "slot": 2,
+  "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collections are the source ones (Robarts/Toronto). The pages are the Therīgāthā verses of Sumedhā (LXXIII) with Dhammapāla's commentary beginning on p. 281, in Müller's 1893 PTS edition — the title and editor match what is on the page.",
+  "rights_flag": null,
+  "structure_note": "Printed 279–281 at scans 311–313, consecutive, text continuous across all three (v. 507 → 508 → 520). 353 of 360 pages have OCR and 338 a translation, consistent with front/back matter and blanks. One backstep and two repeats in 306 numbered pages look like misread numerals, not disorder.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 311,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "caturaṅulikā",
+      "image": "caturaṅgulikā",
+      "problem": "letter dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "¹⁷ asampatto, cd.",
+      "image": "17 asampatt°, cd.",
+      "problem": "abbreviation ring read as the letter o",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<header>THERĪ GĀTHĀ. 73.</header> placed after the footnotes",
+      "image": "running head at top of page",
+      "problem": "furniture moved to the end; harmless",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "⁷ paripuṇṇaṃ, cd. … ¹⁰ nandhe, cd. … ¹¹ parāhi, cd. … ¹³ mitena, cd. … ¹⁴ kudhitā, m. … ¹⁸ bahusamattā, cd.",
+      "english": "7. variant: complete … 10. variant: reading unclear … 11. variant: beyond … 13. variant: measured … 14. variant: hungry … 18. variant: many completions",
+      "problem": "the critical apparatus (variant readings with sigla cd., m.) is replaced by invented English 'meanings' of scribal variants, several of them guesses or corruptions with no such sense; the Pali readings and the manuscript sigla are gone ('in some versions')",
+      "severity": "moderate",
+      "class": "T13"
+     },
+     {
+      "source": "THERĪ GĀTHĀ. 73. (running head)",
+      "english": "# VERSES OF THE ELDER NUNS",
+      "problem": "running head promoted to a top-level heading",
+      "severity": "minor",
+      "class": "T16"
+     },
+     {
+      "source": "pitusu caturaṅgulikā ghaṭikā pitupitusv eva na ppahonti",
+      "english": "cut into finger-length pieces, they would not be enough to represent all the fathers and grandfathers one has had",
+      "problem": "'four-finger' sticks rendered 'finger-length'; sense kept",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Footnote 'translations' present invented glosses as scholarly notes (e.g. 'kudhitā' → 'hungry', 'bahusamattā' → 'many completions', 'nandhe' → 'reading unclear')",
+      "severity": "moderate",
+      "class": "T10"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 312,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "kāhinti⁴ khu taṃ kāmā",
+      "image": "khāhinti⁴ khu taṃ kāmā",
+      "problem": "text reading 'khāhinti' (will devour) made identical to the footnote variant 'kāhinti, m.'; the translation nevertheless has 'devour'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "anunenti¹⁴ Anikarattaṃ",
+      "image": "anunentī¹⁴ Anikarattaṃ",
+      "problem": "long vowel lost (it is the feminine participle that makes Sumedhā the subject)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "abbhutaṃ taṃ",
+      "image": "abbhutan taṃ",
+      "problem": "sandhi spelling normalised",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "⁹ idaṃ tamarāmaraṇapaduso",
+      "image": "9 idan tamarāmaraṇapaduso",
+      "problem": "same normalisation in the apparatus",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "anunentī Anikarattaṃ kese'va chamaṃ chupi Sumedhā. 514.",
+      "english": "While Anikaratta <note>the prince who wished to marry her</note> was pleading with her, Sumedha cut off her hair and threw it on the ground.",
+      "problem": "subject reversed: it is Sumedhā who is conciliating/persuading Anikaratta as she throws her hair to the ground; 'cut off' is added (the verse only has the hair flung down)",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "508. … 509. … 519. (twelve numbered verses)",
+      "english": "continuous prose paragraphs with no verse numbers",
+      "problem": "verse numbers 508–519 dropped and verse run into prose, while pages 311 and 313 keep the numbers — a reader cannot cite a verse from this page",
+      "severity": "moderate",
+      "class": "T16"
+     },
+     {
+      "source": "¹ vihaññati, cd. … ¹⁸ pana om. m. (18 footnotes)",
+      "english": "(nothing)",
+      "problem": "whole apparatus dropped on this page, though glossed on the page before",
+      "severity": "moderate",
+      "class": "T13"
+     },
+     {
+      "source": "Kāmaṃ kāmesu damassu tāva sunakho va saṅkhalābaddho",
+      "english": "Restrain yourself from sensual desires, or they will treat you like a dog bound by a chain.",
+      "problem": "the simile (be restrained, like a chained dog) recast as a threat",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Convention flips between adjacent pages: verse numbers and footnotes kept on 311 and 313, both absent on 312",
+      "severity": "moderate",
+      "class": "O9"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 313,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "so pabhavotam mūlaṃ",
+      "image": "so pabhavo taṃ mūlaṃ",
+      "problem": "word break lost",
+      "severity": "minor"
+     },
+     {
+      "ocr": "virajjanti ti",
+      "image": "virajjantī ti",
+      "problem": "long vowel lost",
+      "severity": "minor"
+     },
+     {
+      "ocr": "dhitā āsi … Silavatī",
+      "image": "dhītā āsi … Sīlavatī",
+      "problem": "long vowels lost",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "¹ asiṃ, m. … ⁸ apassapataṃ, cd.",
+      "english": "(nothing)",
+      "problem": "apparatus dropped",
+      "severity": "minor",
+      "class": "T13"
+     },
+     {
+      "source": "Mantāvatiyā nagare ti … (spaced lemmata)",
+      "english": "There, in the city of Mantāvatī <note>original: \"Mantāvatiyā nagare\"</note> means …",
+      "problem": "lemma/gloss structure of the commentary is kept and readable; fine",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Right leaves, right work, and a transcription that is close to the print (small diacritic slips, one text reading replaced by its own variant). The English reads well but handles the edition inconsistently: the apparatus is turned into invented 'meanings' on one page and silently dropped on the next two, verse numbers vanish on p. 280, and one clause of v. 514 has the actors reversed."
+ },
+ {
+  "book_id": "6a42fb76feb36226e8f0c975",
+  "slot": 3,
+  "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collection is the source one (europeanlibraries). A 1635 Jena-type law disputation on alterum tantum (interest not exceeding the principal). It is what the title says; it sits at the edge of the library's subject range (early modern university print, not esoterica or science). Catalogued under the praeses Fomann; the respondent Aveman is in the title only. The stored title is cut off mid-phrase ('Ad diem ').",
+  "rights_flag": null,
+  "structure_note": "16 records, all with OCR and translation; signatures A2, A3 on scans 3 and 5 and the theses run 1–9 continuously, so the order is right. The '6' stored as the printed page number of scan 4 is the catchword for thesis 6, not a page number (the pamphlet is unpaginated). Scan 5 includes a strip of the facing page at the left edge.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "->In Nomine Domini Nostri Jesu Christi.<-",
+      "image": "I. N. D. N. J. C.",
+      "problem": "initials silently expanded into a full invocation",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "ex lege 13. in principio ff. de Liberis & posthumis lege 9. §. 5. ff. de publicanis & vectigalibus … Ad Legem Juliam de Adulteris",
+      "image": "ex l.13. in pr. ff. de Liber. & posth. l.9. §.5. ff. de publ. & vectigal. … Ad L. Jul. de Adult.",
+      "problem": "every legal abbreviation silently expanded; the transcription is no longer what is printed",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "sese satis commendantis",
+      "image": "sese satis commendante",
+      "problem": "ending changed to agree with 'thematis'",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "ex Martini Lexico Philologico sub litera A.",
+      "image": "ex Martin. Lexic. Philologico sub lit. A.",
+      "problem": "expansion",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "I.N.D.N.J.C.",
+      "english": "In the Name of our Lord Jesus Christ.",
+      "problem": "follows the expanded OCR; correct",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Ornament descriptions from the OCR appear in the translation as a <note> and two <meta> lines ('An ornamental drop cap letter …') ahead of the text",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ut usura quoad materiam conveniat cum forte … consentire alterum tantum cum forte principali",
+      "image": "conveniat cum sorte … cum sorte principali",
+      "problem": "long s read as f: 'sorte' (the principal) becomes 'forte' (by chance); elsewhere on the page 'sortem', 'sors principalis' are right",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "notante Gothofr. ad ipsam l.13. H.",
+      "image": "notante Gothofr. ad ipsam l. lit. H.",
+      "problem": "Gothofredus's note 'letter H' on that law turned into 'l.13. H.' — a number put in that is not printed",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "<page-num>6</page-num>",
+      "image": "'6.' at the foot is the catchword for thesis 6",
+      "problem": "catchword tagged as the page number (and also, correctly, as catchword)",
+      "severity": "minor",
+      "class": "O11"
+     },
+     {
+      "ocr": "Hotoman. de usur. c.2.",
+      "image": "Hottoman. de usur. c.2.",
+      "problem": "name spelling",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Late … Stricte … Strictissime; et cetera",
+      "image": "Latè … Strictè … Strictissimè; &c.",
+      "problem": "accents and abbreviations normalised",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "notante Gothofr. ad ipsam l. lit. H. quae inibi vocatur alterum tantum",
+      "english": "as Gothofredus notes on that very *Law 13*, which is called here \"the other as much,\"",
+      "problem": "carries the OCR's '13' and loses 'lit. H' (the reference letter of the gloss); 'inibi' is 'there', not 'here'",
+      "severity": "minor"
+     },
+     {
+      "source": "Calvin. in Lex. jurid.",
+      "english": "Calvin, in *Lexicon Juridicum*",
+      "problem": "the author is the jurist Johannes Calvinus (Kahl); bare 'Calvin' invites the wrong man",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "cum forte reciprocari … simpli vel fortis principalis … quanta est fors ipsa … quantum fors ipsa debita valeat … pari cum forte quantitate … duplum fortis, forte non computata … ipsam fortem … unum fortis (twice)",
+      "image": "cum sorte reciprocari … simpli vel sortis principalis … quanta est sors ipsa … quantum sors ipsa … cum sorte … duplum sortis, sorte non computatâ … ipsam sortem … unum sortis",
+      "problem": "long s read as f throughout: the key term of the tract, sors (the principal of a loan), is transcribed as fors/fortis/forte (chance, of the strong, perhaps) about ten times, and 'fors' is listed in the page vocabulary. The Latin as served is not what is printed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "<margin>6.</margin>",
+      "image": "a '6.' in the strip of the facing page visible at the left edge (the previous page's catchword)",
+      "problem": "neighbour-page strip read as a marginal note of this page",
+      "severity": "moderate",
+      "class": "I4"
+     },
+     {
+      "ocr": "Budaeus ad legem 10. Codicis de usuris; Molinaeus tractatu de usuris numero 47; Molinaeus dicto loco et Borcholt capite finali de usuris numero 19; Hottomanus de usuris capite ultimo",
+      "image": "Budæus ad l.10. C. de usur.; Molin. tr. de usur. n.47; Molin. d. loc. & Borch. c. fin. de usur. n.19; Hottom. de usur. c. ult.",
+      "problem": "citations silently expanded, including a guessed name ('Borch.' → 'Borcholt')",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "7. Declaratur hinc controversia (the second thesis numbered 7 in the print)",
+      "english": "8. Hence the controversy is declared",
+      "problem": "printer's misnumbering silently corrected to 8",
+      "severity": "minor"
+     },
+     {
+      "source": "<margin>6.</margin>",
+      "english": "<margin>6.</margin>",
+      "problem": "the stray neighbour-page '6.' is passed through as a margin note",
+      "severity": "minor",
+      "class": "I4"
+     },
+     {
+      "source": "sors / sortis (OCR: fors / fortis)",
+      "english": "the principal",
+      "problem": "translation recovers the right sense despite the OCR",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Summary line: 'clarifies that legal limits on interest are not confined to annual sums' — acceptable paraphrase of thesis 7",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Right pages in the right order and an English version that follows the argument accurately. The Latin transcription is the weak half: it reads the long s of sors as f wherever it can (the tract's central term becomes 'fors'), expands every abbreviation and the opening initials without marking it, and picks up a catchword and a neighbour-page numeral as page furniture."
+ },
+ {
+  "book_id": "6a4c8dcb8e4c4eb7d2119d1d",
+  "slot": 4,
+  "title": "Dissertatio Medica Inauguralis de Fluore Albo … Erdmannus Kupizius, Sora-Lusatus",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition or collection set. A 1690 inaugural medical dissertation on leucorrhoea, citing Croll's Basilica Chymica, Sylvius, Charleton: early modern medicine, in scope.",
+  "rights_flag": null,
+  "structure_note": "20 records, all with OCR and translation; printed pages 4, 5, 6 at scans 4, 5, 6 with signature A3 and matching catchwords (fla- / cor- / VII. Ma-), so order is right. `published` is 'Unknown' although the title itself carries the date (27 June 1690) — a catalogue gap, not a scan problem.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "Caterùm liberiores sermones",
+      "image": "Cæterùm liberiores sermones",
+      "problem": "ligature lost",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "Utuntur autem Deorum filii vocabulo Fluoris",
+      "english": "The sons of the Gods use the word Fluor",
+      "problem": "literal; the phrase means physicians — unglossed but not wrong",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Page header '( 4. )' and a <note> describing the printer's ornaments stand at the top of the translation as if text",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "prout ex sequentibus Paragrapho patebit",
+      "image": "prout ex seqq. §. patebit",
+      "problem": "abbreviation expanded into ungrammatical Latin (should be paragraphis)",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "hîcque in Lycéo Professoris Publici",
+      "image": "hôcq; in Lycéo P. P.",
+      "problem": "'hocque' read as 'hicque'; P.P. expanded",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "maluit eum appellare Rhevmatismus Uteri",
+      "image": "maluit eum appellare Rhevmatismum Uteri",
+      "problem": "case ending changed",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quòd fit fluoris nutritii",
+      "image": "quòd sit fluoris nutritii",
+      "problem": "long s read as f (sit → fit)",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "Philosophiae et Medicinae Doctoris … Sectione XV. textu II. … Praxi Medica Libro XV. capite IV.",
+      "image": "Phil. & Medic. Doct. … Sect. XV. tx. II. … Prax. Medic. Lib. XV. c. IV.",
+      "problem": "abbreviations silently expanded throughout",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "definimus Fluorem album, quòd sit fluoris nutritii, nunc magis nunc minùs [cor- / next page: corrupti, præternaturalis ex utero excretio]",
+      "english": "we define the White Fluor as the preternatural excretion of nutritive fluor, now more, now less",
+      "problem": "'preternatural excretion' is pulled forward from the next page to finish the sentence, and 'ex utero' (from the uterus) is then in neither page's English",
+      "severity": "moderate",
+      "class": "T5"
+     },
+     {
+      "source": "fluoris nutritii",
+      "english": "nutritive fluor",
+      "problem": "'fluor' left untranslated where it means the nutritive fluid/humour",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Header '( 5. )' and ornament <note> at the top of the translation",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 6,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "pro affectâ fit habenda",
+      "image": "pro affectâ sit habenda",
+      "problem": "long s read as f",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "<image-desc …>Repeating decorative symbols in the bottom left margin.</image-desc>",
+      "image": "show-through / offset marks at the left edge outside the type area",
+      "problem": "scan artefact described as decoration",
+      "severity": "minor",
+      "class": "I4"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "corrupti, præternaturalis ex utero excretio, ab ejusdem substantiâ, glandulis & vasis præternaturaliter immutatis, originem ducens",
+      "english": "corrupted, drawing its origin from the substance of the uterus itself, and from its glands and vessels, which have been preternaturally altered",
+      "problem": "'præternaturalis ex utero excretio' omitted here because it was used on the previous page; the definition's 'from the uterus' is lost at the seam",
+      "severity": "moderate",
+      "class": "T6"
+     },
+     {
+      "source": "Brancho",
+      "english": "broncho",
+      "problem": "Latin branchus (hoarseness) left as a non-word",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<note>Repeating decorative symbols in the bottom left margin.</note> closes the translation — a description of a scan artefact shown as content",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A clean, legible dissertation, accurately transcribed (Greek included) and faithfully translated. The only substantive flaw on these pages is the seam between pp. 5 and 6, where the definition of fluor albus is completed early and loses 'from the uterus'; the date is missing from the catalogue record though it is in the title."
+ },
+ {
+  "book_id": "69af3c65d79faba421042e98",
+  "slot": 5,
+  "title": "Подросток, Т. 2",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collections are the source ones (Russian online libraries). It is what it says — Dostoevsky's The Adolescent, part two, chapter seven, in a 1911 pre-reform edition. A 19th-century novel is outside the library's core subject range (esoterica, early modern science), which is a curation question rather than a cataloguing error.",
+  "rights_flag": null,
+  "structure_note": "Printed 45, 46, 47 at scans 49, 50, 51 with alternating running heads and text continuous across the page breaks (Па-|рижа; вдругъ|всталъ). 446 of 454 pages have OCR and all 446 a translation; the counter field says 439 (stale). Two backsteps in 412 numbered pages look like misread numerals.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 49,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "годъ слишкомъ назадъ",
+      "english": "a year and a bit ago",
+      "problem": "fine; colloquial",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Translation opens with <page-num>45</page-num> and <header>CHAPTER SEVEN.</header> tags; cannot tell from the packet whether the reader shows them raw",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "рассчитывалъ Стебельковъ",
+      "image": "расчитывалъ Стебельковъ",
+      "problem": "spelling modernised (double с)",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "Я далъ ему двѣ строки",
+      "english": "I gave him two lines [of writing]",
+      "problem": "bracketed clarification added",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<page-num>/<header> tags at the head of the translation, as on p. 49",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "но вѣдь это мечта?",
+      "english": "surely that is a delusion?",
+      "problem": "'мечта' here is 'fancy/imagining'; 'delusion' is a shade strong",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<page-num>/<header> tags at the head of the translation",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Excellent on these pages: the pre-reform Russian is transcribed letter for letter and the English is accurate and natural, with the page-break word splits handled correctly."
+ }
+]

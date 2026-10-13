@@ -1,0 +1,1448 @@
+[
+ {
+  "book_id": "6991eaef2f801130a473ec5c",
+  "slot": 1,
+  "title": "Notes et dessins sur la generation et le mecanisme des fonctions intimes",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collections are the source ones (getty, americana). A 1901 Rouveyre facsimile of Leonardo's Windsor anatomical leaves belongs in a library of early modern science. The `language: Italian` field describes Leonardo's leaves; the printed matter on these pages is French.",
+  "rights_flag": null,
+  "structure_note": "The run is a blank verso, a pasted printed label ('Feuillet n° 13. . . Verso.'), and another blank: normal for a facsimile portfolio with interleaved guard sheets. The 3 printed backsteps / 1 repeat among only 8 numbered pages are almost certainly these leaf labels ('Feuillet n° N Recto/Verso') read as page numbers, not a disorder. Images 88 and 90 look alike (same stain pattern low on the sheet) but the files differ in size and blank versos of adjacent guard sheets would look like this; I cannot tell a duplicate scan from the images. The counter field pages_translated=46 disagrees with 98 page records carrying a translation (stale counter; many of the 98 are the system 'Blank page' string).",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 88,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "OCR <meta> for a blank calls the book a 'manuscript facsimile' and the leaf 'an endpaper or a separator' — harmless description, not shown as text",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 89,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<page-type>title-page</page-type>",
+      "image": "a small printed label pasted in the middle of an otherwise blank leaf",
+      "problem": "self-reported page type wrong: this is a leaf-identification label, not a title page",
+      "severity": "minor",
+      "class": "O16"
+     },
+     {
+      "ocr": "<page-num>Feuillet n° 13. . . Verso.</page-num>",
+      "image": "'Feuillet n° 13. . . Verso.' is the label's content (leaf number of the facsimile), not a page number",
+      "problem": "label content tagged as page number; source of the book's printed_backsteps",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "(nothing on the page)",
+      "english": "<note>This title refers to Leonardo's anatomical studies of the reproductive system and internal biological processes.</note>",
+      "problem": "explanatory note added by the model; true enough but not on the page",
+      "severity": "minor",
+      "class": "T10"
+     },
+     {
+      "source": "(nothing on the page)",
+      "english": "<meta>… It follows a blank leaf and introduces a new thematic grouping of drawings.</meta>",
+      "problem": "the label identifies one leaf (13 verso), it does not introduce a 'new thematic grouping'",
+      "severity": "minor",
+      "class": "T15"
+     },
+     {
+      "source": "Édouard Rouveyre, Éditeur, rue de Seine, 76, Paris",
+      "english": "<summary>This is a title page from a late 19th-century facsimile edition…",
+      "problem": "book is dated 1901; 'late 19th-century' and 'title page' are both loose",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Translation carries <meta>, <note>, <term>, <summary>, <keywords> blocks; whether the reader shows them raw cannot be judged from the packet",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 90,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<lang>Italian</lang> … <note>This page is blank.</note>",
+      "image": "blank leaf",
+      "problem": "blank correctly reported; language tag on a blank is meaningless",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Sound on these pages: two blanks correctly reported as blank and one printed label transcribed and translated word for word. Only cosmetic issues (label tagged as title page / page number, a model-added note, a stale translated-pages counter)."
+ },
+ {
+  "book_id": "69b99ec16ed9e0490990a6f2",
+  "slot": 2,
+  "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collections are the source ones (Robarts/Toronto). The pages are the Therīgāthā verses of Sumedhā (LXXIII) with Dhammapāla's commentary beginning on p. 281, in Müller's 1893 PTS edition — the title and editor match what is on the page.",
+  "rights_flag": null,
+  "structure_note": "Printed 279–281 at scans 311–313, consecutive, text continuous across all three (v. 507 → 508 → 520). 353 of 360 pages have OCR and 338 a translation, consistent with front/back matter and blanks. One backstep and two repeats in 306 numbered pages look like misread numerals, not disorder.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 311,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "caturaṅulikā",
+      "image": "caturaṅgulikā",
+      "problem": "letter dropped",
+      "severity": "minor"
+     },
+     {
+      "ocr": "¹⁷ asampatto, cd.",
+      "image": "17 asampatt°, cd.",
+      "problem": "abbreviation ring read as the letter o",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<header>THERĪ GĀTHĀ. 73.</header> placed after the footnotes",
+      "image": "running head at top of page",
+      "problem": "furniture moved to the end; harmless",
+      "severity": "minor",
+      "class": "O11"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "⁷ paripuṇṇaṃ, cd. … ¹⁰ nandhe, cd. … ¹¹ parāhi, cd. … ¹³ mitena, cd. … ¹⁴ kudhitā, m. … ¹⁸ bahusamattā, cd.",
+      "english": "7. variant: complete … 10. variant: reading unclear … 11. variant: beyond … 13. variant: measured … 14. variant: hungry … 18. variant: many completions",
+      "problem": "the critical apparatus (variant readings with sigla cd., m.) is replaced by invented English 'meanings' of scribal variants, several of them guesses or corruptions with no such sense; the Pali readings and the manuscript sigla are gone ('in some versions')",
+      "severity": "moderate",
+      "class": "T13"
+     },
+     {
+      "source": "THERĪ GĀTHĀ. 73. (running head)",
+      "english": "# VERSES OF THE ELDER NUNS",
+      "problem": "running head promoted to a top-level heading",
+      "severity": "minor",
+      "class": "T16"
+     },
+     {
+      "source": "pitusu caturaṅgulikā ghaṭikā pitupitusv eva na ppahonti",
+      "english": "cut into finger-length pieces, they would not be enough to represent all the fathers and grandfathers one has had",
+      "problem": "'four-finger' sticks rendered 'finger-length'; sense kept",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Footnote 'translations' present invented glosses as scholarly notes (e.g. 'kudhitā' → 'hungry', 'bahusamattā' → 'many completions', 'nandhe' → 'reading unclear')",
+      "severity": "moderate",
+      "class": "T10"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 312,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "kāhinti⁴ khu taṃ kāmā",
+      "image": "khāhinti⁴ khu taṃ kāmā",
+      "problem": "text reading 'khāhinti' (will devour) made identical to the footnote variant 'kāhinti, m.'; the translation nevertheless has 'devour'",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "anunenti¹⁴ Anikarattaṃ",
+      "image": "anunentī¹⁴ Anikarattaṃ",
+      "problem": "long vowel lost (it is the feminine participle that makes Sumedhā the subject)",
+      "severity": "minor"
+     },
+     {
+      "ocr": "abbhutaṃ taṃ",
+      "image": "abbhutan taṃ",
+      "problem": "sandhi spelling normalised",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "⁹ idaṃ tamarāmaraṇapaduso",
+      "image": "9 idan tamarāmaraṇapaduso",
+      "problem": "same normalisation in the apparatus",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "anunentī Anikarattaṃ kese'va chamaṃ chupi Sumedhā. 514.",
+      "english": "While Anikaratta <note>the prince who wished to marry her</note> was pleading with her, Sumedha cut off her hair and threw it on the ground.",
+      "problem": "subject reversed: it is Sumedhā who is conciliating/persuading Anikaratta as she throws her hair to the ground; 'cut off' is added (the verse only has the hair flung down)",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "508. … 509. … 519. (twelve numbered verses)",
+      "english": "continuous prose paragraphs with no verse numbers",
+      "problem": "verse numbers 508–519 dropped and verse run into prose, while pages 311 and 313 keep the numbers — a reader cannot cite a verse from this page",
+      "severity": "moderate",
+      "class": "T16"
+     },
+     {
+      "source": "¹ vihaññati, cd. … ¹⁸ pana om. m. (18 footnotes)",
+      "english": "(nothing)",
+      "problem": "whole apparatus dropped on this page, though glossed on the page before",
+      "severity": "moderate",
+      "class": "T13"
+     },
+     {
+      "source": "Kāmaṃ kāmesu damassu tāva sunakho va saṅkhalābaddho",
+      "english": "Restrain yourself from sensual desires, or they will treat you like a dog bound by a chain.",
+      "problem": "the simile (be restrained, like a chained dog) recast as a threat",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Convention flips between adjacent pages: verse numbers and footnotes kept on 311 and 313, both absent on 312",
+      "severity": "moderate",
+      "class": "O9"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 313,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "so pabhavotam mūlaṃ",
+      "image": "so pabhavo taṃ mūlaṃ",
+      "problem": "word break lost",
+      "severity": "minor"
+     },
+     {
+      "ocr": "virajjanti ti",
+      "image": "virajjantī ti",
+      "problem": "long vowel lost",
+      "severity": "minor"
+     },
+     {
+      "ocr": "dhitā āsi … Silavatī",
+      "image": "dhītā āsi … Sīlavatī",
+      "problem": "long vowels lost",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "¹ asiṃ, m. … ⁸ apassapataṃ, cd.",
+      "english": "(nothing)",
+      "problem": "apparatus dropped",
+      "severity": "minor",
+      "class": "T13"
+     },
+     {
+      "source": "Mantāvatiyā nagare ti … (spaced lemmata)",
+      "english": "There, in the city of Mantāvatī <note>original: \"Mantāvatiyā nagare\"</note> means …",
+      "problem": "lemma/gloss structure of the commentary is kept and readable; fine",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Right leaves, right work, and a transcription that is close to the print (small diacritic slips, one text reading replaced by its own variant). The English reads well but handles the edition inconsistently: the apparatus is turned into invented 'meanings' on one page and silently dropped on the next two, verse numbers vanish on p. 280, and one clause of v. 514 has the actors reversed."
+ },
+ {
+  "book_id": "6a42fb76feb36226e8f0c975",
+  "slot": 3,
+  "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collection is the source one (europeanlibraries). A 1635 Jena-type law disputation on alterum tantum (interest not exceeding the principal). It is what the title says; it sits at the edge of the library's subject range (early modern university print, not esoterica or science). Catalogued under the praeses Fomann; the respondent Aveman is in the title only. The stored title is cut off mid-phrase ('Ad diem ').",
+  "rights_flag": null,
+  "structure_note": "16 records, all with OCR and translation; signatures A2, A3 on scans 3 and 5 and the theses run 1–9 continuously, so the order is right. The '6' stored as the printed page number of scan 4 is the catchword for thesis 6, not a page number (the pamphlet is unpaginated). Scan 5 includes a strip of the facing page at the left edge.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "->In Nomine Domini Nostri Jesu Christi.<-",
+      "image": "I. N. D. N. J. C.",
+      "problem": "initials silently expanded into a full invocation",
+      "severity": "moderate",
+      "class": "O8"
+     },
+     {
+      "ocr": "ex lege 13. in principio ff. de Liberis & posthumis lege 9. §. 5. ff. de publicanis & vectigalibus … Ad Legem Juliam de Adulteris",
+      "image": "ex l.13. in pr. ff. de Liber. & posth. l.9. §.5. ff. de publ. & vectigal. … Ad L. Jul. de Adult.",
+      "problem": "every legal abbreviation silently expanded; the transcription is no longer what is printed",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "sese satis commendantis",
+      "image": "sese satis commendante",
+      "problem": "ending changed to agree with 'thematis'",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "ex Martini Lexico Philologico sub litera A.",
+      "image": "ex Martin. Lexic. Philologico sub lit. A.",
+      "problem": "expansion",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "I.N.D.N.J.C.",
+      "english": "In the Name of our Lord Jesus Christ.",
+      "problem": "follows the expanded OCR; correct",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Ornament descriptions from the OCR appear in the translation as a <note> and two <meta> lines ('An ornamental drop cap letter …') ahead of the text",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ut usura quoad materiam conveniat cum forte … consentire alterum tantum cum forte principali",
+      "image": "conveniat cum sorte … cum sorte principali",
+      "problem": "long s read as f: 'sorte' (the principal) becomes 'forte' (by chance); elsewhere on the page 'sortem', 'sors principalis' are right",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "notante Gothofr. ad ipsam l.13. H.",
+      "image": "notante Gothofr. ad ipsam l. lit. H.",
+      "problem": "Gothofredus's note 'letter H' on that law turned into 'l.13. H.' — a number put in that is not printed",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "<page-num>6</page-num>",
+      "image": "'6.' at the foot is the catchword for thesis 6",
+      "problem": "catchword tagged as the page number (and also, correctly, as catchword)",
+      "severity": "minor",
+      "class": "O11"
+     },
+     {
+      "ocr": "Hotoman. de usur. c.2.",
+      "image": "Hottoman. de usur. c.2.",
+      "problem": "name spelling",
+      "severity": "minor"
+     },
+     {
+      "ocr": "Late … Stricte … Strictissime; et cetera",
+      "image": "Latè … Strictè … Strictissimè; &c.",
+      "problem": "accents and abbreviations normalised",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "notante Gothofr. ad ipsam l. lit. H. quae inibi vocatur alterum tantum",
+      "english": "as Gothofredus notes on that very *Law 13*, which is called here \"the other as much,\"",
+      "problem": "carries the OCR's '13' and loses 'lit. H' (the reference letter of the gloss); 'inibi' is 'there', not 'here'",
+      "severity": "minor"
+     },
+     {
+      "source": "Calvin. in Lex. jurid.",
+      "english": "Calvin, in *Lexicon Juridicum*",
+      "problem": "the author is the jurist Johannes Calvinus (Kahl); bare 'Calvin' invites the wrong man",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "cum forte reciprocari … simpli vel fortis principalis … quanta est fors ipsa … quantum fors ipsa debita valeat … pari cum forte quantitate … duplum fortis, forte non computata … ipsam fortem … unum fortis (twice)",
+      "image": "cum sorte reciprocari … simpli vel sortis principalis … quanta est sors ipsa … quantum sors ipsa … cum sorte … duplum sortis, sorte non computatâ … ipsam sortem … unum sortis",
+      "problem": "long s read as f throughout: the key term of the tract, sors (the principal of a loan), is transcribed as fors/fortis/forte (chance, of the strong, perhaps) about ten times, and 'fors' is listed in the page vocabulary. The Latin as served is not what is printed",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "<margin>6.</margin>",
+      "image": "a '6.' in the strip of the facing page visible at the left edge (the previous page's catchword)",
+      "problem": "neighbour-page strip read as a marginal note of this page",
+      "severity": "moderate",
+      "class": "I4"
+     },
+     {
+      "ocr": "Budaeus ad legem 10. Codicis de usuris; Molinaeus tractatu de usuris numero 47; Molinaeus dicto loco et Borcholt capite finali de usuris numero 19; Hottomanus de usuris capite ultimo",
+      "image": "Budæus ad l.10. C. de usur.; Molin. tr. de usur. n.47; Molin. d. loc. & Borch. c. fin. de usur. n.19; Hottom. de usur. c. ult.",
+      "problem": "citations silently expanded, including a guessed name ('Borch.' → 'Borcholt')",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "7. Declaratur hinc controversia (the second thesis numbered 7 in the print)",
+      "english": "8. Hence the controversy is declared",
+      "problem": "printer's misnumbering silently corrected to 8",
+      "severity": "minor"
+     },
+     {
+      "source": "<margin>6.</margin>",
+      "english": "<margin>6.</margin>",
+      "problem": "the stray neighbour-page '6.' is passed through as a margin note",
+      "severity": "minor",
+      "class": "I4"
+     },
+     {
+      "source": "sors / sortis (OCR: fors / fortis)",
+      "english": "the principal",
+      "problem": "translation recovers the right sense despite the OCR",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Summary line: 'clarifies that legal limits on interest are not confined to annual sums' — acceptable paraphrase of thesis 7",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Right pages in the right order and an English version that follows the argument accurately. The Latin transcription is the weak half: it reads the long s of sors as f wherever it can (the tract's central term becomes 'fors'), expands every abbreviation and the opening initials without marking it, and picks up a catchword and a neighbour-page numeral as page furniture."
+ },
+ {
+  "book_id": "6a4c8dcb8e4c4eb7d2119d1d",
+  "slot": 4,
+  "title": "Dissertatio Medica Inauguralis de Fluore Albo … Erdmannus Kupizius, Sora-Lusatus",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition or collection set. A 1690 inaugural medical dissertation on leucorrhoea, citing Croll's Basilica Chymica, Sylvius, Charleton: early modern medicine, in scope.",
+  "rights_flag": null,
+  "structure_note": "20 records, all with OCR and translation; printed pages 4, 5, 6 at scans 4, 5, 6 with signature A3 and matching catchwords (fla- / cor- / VII. Ma-), so order is right. `published` is 'Unknown' although the title itself carries the date (27 June 1690) — a catalogue gap, not a scan problem.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 4,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "Caterùm liberiores sermones",
+      "image": "Cæterùm liberiores sermones",
+      "problem": "ligature lost",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "Utuntur autem Deorum filii vocabulo Fluoris",
+      "english": "The sons of the Gods use the word Fluor",
+      "problem": "literal; the phrase means physicians — unglossed but not wrong",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Page header '( 4. )' and a <note> describing the printer's ornaments stand at the top of the translation as if text",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 5,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "prout ex sequentibus Paragrapho patebit",
+      "image": "prout ex seqq. §. patebit",
+      "problem": "abbreviation expanded into ungrammatical Latin (should be paragraphis)",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "hîcque in Lycéo Professoris Publici",
+      "image": "hôcq; in Lycéo P. P.",
+      "problem": "'hocque' read as 'hicque'; P.P. expanded",
+      "severity": "minor",
+      "class": "O8"
+     },
+     {
+      "ocr": "maluit eum appellare Rhevmatismus Uteri",
+      "image": "maluit eum appellare Rhevmatismum Uteri",
+      "problem": "case ending changed",
+      "severity": "minor"
+     },
+     {
+      "ocr": "quòd fit fluoris nutritii",
+      "image": "quòd sit fluoris nutritii",
+      "problem": "long s read as f (sit → fit)",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "Philosophiae et Medicinae Doctoris … Sectione XV. textu II. … Praxi Medica Libro XV. capite IV.",
+      "image": "Phil. & Medic. Doct. … Sect. XV. tx. II. … Prax. Medic. Lib. XV. c. IV.",
+      "problem": "abbreviations silently expanded throughout",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "definimus Fluorem album, quòd sit fluoris nutritii, nunc magis nunc minùs [cor- / next page: corrupti, præternaturalis ex utero excretio]",
+      "english": "we define the White Fluor as the preternatural excretion of nutritive fluor, now more, now less",
+      "problem": "'preternatural excretion' is pulled forward from the next page to finish the sentence, and 'ex utero' (from the uterus) is then in neither page's English",
+      "severity": "moderate",
+      "class": "T5"
+     },
+     {
+      "source": "fluoris nutritii",
+      "english": "nutritive fluor",
+      "problem": "'fluor' left untranslated where it means the nutritive fluid/humour",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Header '( 5. )' and ornament <note> at the top of the translation",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 6,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "pro affectâ fit habenda",
+      "image": "pro affectâ sit habenda",
+      "problem": "long s read as f",
+      "severity": "minor",
+      "class": "O6"
+     },
+     {
+      "ocr": "<image-desc …>Repeating decorative symbols in the bottom left margin.</image-desc>",
+      "image": "show-through / offset marks at the left edge outside the type area",
+      "problem": "scan artefact described as decoration",
+      "severity": "minor",
+      "class": "I4"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "corrupti, præternaturalis ex utero excretio, ab ejusdem substantiâ, glandulis & vasis præternaturaliter immutatis, originem ducens",
+      "english": "corrupted, drawing its origin from the substance of the uterus itself, and from its glands and vessels, which have been preternaturally altered",
+      "problem": "'præternaturalis ex utero excretio' omitted here because it was used on the previous page; the definition's 'from the uterus' is lost at the seam",
+      "severity": "moderate",
+      "class": "T6"
+     },
+     {
+      "source": "Brancho",
+      "english": "broncho",
+      "problem": "Latin branchus (hoarseness) left as a non-word",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<note>Repeating decorative symbols in the bottom left margin.</note> closes the translation — a description of a scan artefact shown as content",
+      "severity": "minor",
+      "class": "O15"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "A clean, legible dissertation, accurately transcribed (Greek included) and faithfully translated. The only substantive flaw on these pages is the seam between pp. 5 and 6, where the definition of fluor albus is completed early and loses 'from the uterus'; the date is missing from the catalogue record though it is in the title."
+ },
+ {
+  "book_id": "69af3c65d79faba421042e98",
+  "slot": 5,
+  "title": "Подросток, Т. 2",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "No tradition set; collections are the source ones (Russian online libraries). It is what it says — Dostoevsky's The Adolescent, part two, chapter seven, in a 1911 pre-reform edition. A 19th-century novel is outside the library's core subject range (esoterica, early modern science), which is a curation question rather than a cataloguing error.",
+  "rights_flag": null,
+  "structure_note": "Printed 45, 46, 47 at scans 49, 50, 51 with alternating running heads and text continuous across the page breaks (Па-|рижа; вдругъ|всталъ). 446 of 454 pages have OCR and all 446 a translation; the counter field says 439 (stale). Two backsteps in 412 numbered pages look like misread numerals.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 49,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "годъ слишкомъ назадъ",
+      "english": "a year and a bit ago",
+      "problem": "fine; colloquial",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "Translation opens with <page-num>45</page-num> and <header>CHAPTER SEVEN.</header> tags; cannot tell from the packet whether the reader shows them raw",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 50,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "рассчитывалъ Стебельковъ",
+      "image": "расчитывалъ Стебельковъ",
+      "problem": "spelling modernised (double с)",
+      "severity": "minor",
+      "class": "O8"
+     }
+    ],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "Я далъ ему двѣ строки",
+      "english": "I gave him two lines [of writing]",
+      "problem": "bracketed clarification added",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<page-num>/<header> tags at the head of the translation, as on p. 49",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 51,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 5,
+    "tr_errors": [
+     {
+      "source": "но вѣдь это мечта?",
+      "english": "surely that is a delusion?",
+      "problem": "'мечта' here is 'fancy/imagining'; 'delusion' is a shade strong",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "<page-num>/<header> tags at the head of the translation",
+      "severity": "minor",
+      "class": "D1"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Excellent on these pages: the pre-reform Russian is transcribed letter for letter and the English is accurate and natural, with the page-break word splits handled correctly."
+ },
+ {
+  "book_id": "6a3c6549af3c49b59c5cb37d",
+  "slot": 6,
+  "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Siku quanshu manuscript copy of the Qing imperial leishu Yuding Zishi jinghua (juan 22 on these leaves); a general-library item, consistent with the 'universallibrary' collection.",
+  "rights_flag": null,
+  "structure_note": "192 page records, 162 with OCR, 140 translated: the volume is only partly readable in English. Only 20 pages carry a printed number, with 7 backsteps and 11 repeats; on my run the leaf number sits in the split centre column (十九 on p138, 二十 on p139) and each leaf number is shared by two half-leaf images, so repeats are expected and I read the backsteps as misread or half-visible leaf numerals, not a scan disorder. Text runs continuously across 137-138-139.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 137,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "歸國命王繼逺撰建南京碑\n作樂田園詩",
+      "image": "歸國命王繼遠撰建南京碑 丨丨丨丨丨 作樂田園詩",
+      "problem": "five headword-placeholder strokes (丨) dropped, so the previous entry's headword is no longer marked inside its citation",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "明博學能詩有\n行於世",
+      "image": "明博學能詩有丨丨丨行於世",
+      "problem": "three placeholders standing for the headword 閬苑集 dropped: the sentence 'he has the Langyuan ji, which circulates' loses its object",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "後遇\n帝喜設宴",
+      "image": "後遇丨丨丨丨丨帝喜設宴",
+      "problem": "five placeholders for the headword 十鹿射獲其九 dropped: 'later he met ten deer and shot nine; the emperor was pleased' loses the deer",
+      "severity": "moderate",
+      "class": "O5"
+     },
+     {
+      "ocr": "遼史宗室潛傳濬道宗",
+      "image": "遼史宗室濬傳濬道宗",
+      "problem": "name 濬 misread as 潛 at its first occurrence",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "OCR keeps other placeholders (丨梧丨葉以 / 丨丨而授)",
+      "image": "same convention throughout the leaf",
+      "problem": "placeholder strokes kept in some entries and dropped in others on one page",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "太宗立以東平為南京",
+      "english": "When Taizhou ascended the throne",
+      "problem": "emperor Taizong rendered 'Taizhou', which is not a person",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "忽汗降",
+      "english": "When the Huhar kingdom surrendered",
+      "problem": "Huhan (忽汗, the Bohai capital) mis-romanised as 'Huhar' and made a kingdom",
+      "severity": "moderate"
+     },
+     {
+      "source": "後遇[十鹿射獲其九]帝喜設宴",
+      "english": "Later, encountering the Emperor's joy, a banquet was prepared.",
+      "problem": "follows the OCR's dropped placeholders: the clause 'he met ten deer and shot nine' is detached into a separate headline and the sentence is made nonsense",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "source": "作樂田園詩",
+      "english": "He composed the *Garden Poetry on Making Music* and the *Langyuan Collection*.",
+      "problem": "'樂田園詩' is poems of delight in fields and gardens, not 'on Making Music'; the headword 閬苑集 is fused into the previous entry's sentence",
+      "severity": "moderate"
+     },
+     {
+      "source": "方術之士不逺千里卑辭重幣請[致之]",
+      "english": "Practitioners of methods traveled from a thousand miles away, drawn by his humble words and heavy gifts, to request an audience.",
+      "problem": "agent reversed: the king invites the adepts with humble words and rich gifts (請致之, continued on the next leaf); they do not request an audience",
+      "severity": "moderate",
+      "class": "T8"
+     },
+     {
+      "source": "作丨丨苑丨枕中之丨 (作鴻寶苑秘枕中之書)",
+      "english": "He produced the *Great Treasure* and the *Secret Books* kept in a pillow within the garden.",
+      "problem": "title 鴻寶苑秘枕中之書 broken up; 苑 turned into a garden",
+      "severity": "moderate"
+     },
+     {
+      "source": "遼史宗室濬傳",
+      "english": "concerning Qian, named Jun",
+      "problem": "invents a person 'Qian' from the OCR misread 潛",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "source": "(keywords)",
+      "english": "talismans",
+      "problem": "keyword not on the page",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 138,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "尚定子史釋華",
+      "image": "御定子史精華",
+      "problem": "running title misread in two characters (and emitted outside the <header> tag)",
+      "severity": "moderate",
+      "class": "O11"
+     },
+     {
+      "ocr": "思仙臺進金玉",
+      "image": "思仙臺進金玉几",
+      "problem": "last character of the headword dropped",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "致之於是乃有丨丨丨丨皆鬚眉皓白",
+      "english": "<note>original: \"致之於是乃有八公皆至\"</note>",
+      "problem": "the note quotes an 'original' that is not on the page: 皆至 is invented (the placeholders stand for 八公詣門)",
+      "severity": "moderate",
+      "class": "T10"
+     },
+     {
+      "source": "山有膚寸石",
+      "english": "On the mountain were stones of diverse textures",
+      "problem": "膚寸石 is a named rock (Fucun Rock), listed with the Falling-Gibbon Rock and Dwelling-Dragon Cave",
+      "severity": "minor"
+     },
+     {
+      "source": "西京雜記",
+      "english": "Xijing Zhaji",
+      "problem": "pinyin: Zaji",
+      "severity": "minor"
+     },
+     {
+      "source": "葛洪",
+      "english": "<gloss>283–343 AD, Taoist scholar and alchemist</gloss>",
+      "problem": "dates and description added by the translator inside the running text",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 139,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "映以流黃",
+      "english": "reflects sulfur-yellow light",
+      "problem": "流黃 here is yellow silk (set off with yellow silk)",
+      "severity": "minor"
+     },
+     {
+      "source": "御定子史精華",
+      "english": "Imperially Commissioned Essence of Subsidary Books and Histories",
+      "problem": "typo 'Subsidary'; title rendered differently from p138 ('Excerpts from the Masters and Historians')",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "main citation text is wrapped in <margin>…</margin> six times (e.g. '<margin>Ge Hong’s Miscellaneous Records of the Western Capital: King Xiao of Liang … visited the Hall of Forgetting Cares.</margin>'); these are the interlinear double-column citations of the body, not marginalia, and <header>/<page-num> tags are carried into the English",
+      "severity": "moderate",
+      "class": "T16"
+     }
+    ],
+    "confidence": "medium"
+   }
+  ],
+  "book_verdict": "Right leaves, and the transcription is mostly sound, but PaddleOCR drops the 丨 headword placeholders unevenly on p137 and the translation then garbles those entries and gets names wrong (Taizhou, Huhar, Qian). Readable as a guide to the page, not citable for the names."
+ },
+ {
+  "book_id": "69c8a2246c6f3cc53c85e367",
+  "slot": 7,
+  "title": "Dreams",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "A Societas Rosicruciana in Anglia pamphlet by W. Wynn Westcott from the BPH; squarely within the library's Rosicrucian/occult-revival scope. No tradition or collection is set on the record.",
+  "rights_flag": null,
+  "structure_note": "Catalogue identity is wrong: the record says original_language 'Latin', but the pamphlet is in English throughout (only the society's name and titles are Latin), and that is what sends an English text through translation. pages_translated field says 10 while 12 page records carry a translation. The cover's printed '[COPYRIGHT.' is a period notice on an undated pre-1925 pamphlet, not a modern rights mark.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 1,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [
+     {
+      "ocr": "<page-type>title-page</page-type>",
+      "image": "printed paper cover (wrapper)",
+      "problem": "cover tagged as title page",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "M.W. Supreme Magus, IX.°",
+      "english": "Highest Magician <note>original: \"Supreme Magus\"</note>, IX.°",
+      "problem": "an English title of office rewritten as if it were foreign; 'Supreme Magus' is the society's own English style",
+      "severity": "moderate",
+      "class": "T12"
+     },
+     {
+      "source": "By M.W. FRATER DR. W. WYNN WESTCOTT",
+      "english": "By MOST WORTHY BROTHER",
+      "problem": "abbreviation expanded wrongly: M.W. is 'Most Worshipful'",
+      "severity": "moderate",
+      "class": "T10"
+     }
+    ],
+    "other": [
+     {
+      "note": "broken markup: '<insert></insert>' followed by the stamp text and a second, unmatched '</insert>'",
+      "severity": "moderate",
+      "class": "D1"
+     },
+     {
+      "note": "invented opening line '<meta>This is the start of the document titled \"Dreams\" by W. Wynn Westcott.</meta>' and the stamp given twice (as a note and again as text)",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 2,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "Roz M S",
+      "image": "pencil shelfmark, reads 'Ros M 5' to me",
+      "problem": "pencilled shelfmark misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<page-type>frontispiece</page-type> … 'a shield-like frame with rays emanating from behind'",
+      "image": "inside of the cover with the modern BPH bookplate (pelican on a block lettered with four initials, inside an oval)",
+      "problem": "a library bookplate tagged as a frontispiece of high significance",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {
+      "note": "a <note> nested inside a <note>; the whole 'translation' is a description of a bookplate",
+      "severity": "minor"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 3,
+    "right_page": "yes",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "By M.W. FRATER DR. W. WYNN WESTCOTT, IX°. / Supreme Magus, Soc. Ros. in Ang.",
+      "english": "By MOST WORTHY BROTHER … Highest Magician … of the Rosicrucian Society in England",
+      "problem": "English byline rewritten; 'Most Worthy' is a wrong expansion of M.W. and 'Highest Magician' replaces the title of office",
+      "severity": "moderate",
+      "class": "T12"
+     },
+     {
+      "source": "Tennyson wrote— / mind-power / “ Like a dog he hunts in dreams—— ”",
+      "english": "Tennyson wrote: / mind power / “ Like a dog he hunts in dreams ”",
+      "problem": "the author's own English punctuation and hyphenation silently changed; body otherwise verbatim",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The transcription is accurate, but an English pamphlet is catalogued as Latin and served with a 'translation' that rewrites its English ('Highest Magician', 'Most Worthy Brother'). The translation pane should not exist for this book."
+ },
+ {
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slot": 8,
+  "title": "Cosmographey : oder Beschreibung aller Länder …",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Sebastian Münster's Cosmographey, Basel 1578 (MDZ scan): early modern science/geography, in scope. No collection set.",
+  "rights_flag": null,
+  "structure_note": "1,558 page records but only 25 with OCR and 23 translated: a visible book whose reader text stops after the preliminaries. No printed page numbers recorded (these leaves carry signatures a ij, a iij only). The three pages run in order (catchwords 'vnd' and 'Sie' match).",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 7,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "wie Menschliche wiß vnd vorsehung",
+      "image": "wie Menschliche witz vnd vorsehung",
+      "problem": "witz read as wiß",
+      "severity": "minor"
+     },
+     {
+      "ocr": "vil gescheh",
+      "image": "vil geschē (gesehen)",
+      "problem": "abbreviation mis-expanded; the translation still has 'seen much'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "aber jetzt ist es ein rauch/ bitter/ ungeschlacht Erdtrich",
+      "english": "but now it is a smoky, bitter, and wild soil",
+      "problem": "rauch is 'rough' (rauh), not 'smoky'",
+      "severity": "moderate"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 8,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "was mich verursacht hat zu beschreiben diß Buch/ das argument streckt sich gar weit.",
+      "image": "was mich verursacht hat zůbeschreiben diß Bůch/ das vor mir keiner vnderstanden hat in sollicher gestalt/ vnd in Teütscher zungen. Dann das argument streckt sich gar weit.",
+      "problem": "a full clause skipped (eye-skip from 'das' to 'das'): Münster's claim that no one before him had undertaken such a book in this form and in German is gone from OCR and translation",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "ocr": "alles der wunderbarlichkeit vnderworffen ist",
+      "image": "alles der wanderbarlichkeit vnderworffen ist",
+      "problem": "wanderbarlichkeit (mutability) read as wunderbarlichkeit (wondrousness)",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "scheinet er sie wol wirdig",
+      "image": "schetzet er sie wol wirdig",
+      "problem": "verb misread",
+      "severity": "minor"
+     },
+     {
+      "ocr": "und … unser … unnd",
+      "image": "vnd … vnser … vnnd",
+      "problem": "u/v silently modernised on this page, while p7 keeps 'vnd/vnnd'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "alles der wanderbarlichkeit vnderworffen ist",
+      "english": "everything is subject to wonder",
+      "problem": "should be 'everything is subject to change'; follows the OCR misread and breaks the argument about impermanence",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "source": "das vor mir keiner vnderstanden hat in sollicher gestalt/ vnd in Teütscher zungen",
+      "english": "(absent)",
+      "problem": "the dropped clause is absent from the English too",
+      "severity": "serious",
+      "class": "O5"
+     },
+     {
+      "source": "ex fortuna uel casu/ das ist von Glück oder unglück",
+      "english": "<term>ex fortuna uel casu</term> <gloss>from fortune or chance</gloss>",
+      "problem": "Münster's own German gloss replaced by the translator's",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   },
+   {
+    "page_number": 9,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "sie gaben waht umb waht",
+      "image": "sie gaben wahr vmb wahr",
+      "problem": "wahr (ware) misread twice",
+      "severity": "minor"
+     },
+     {
+      "ocr": "<page-num>a iij</page-num>",
+      "image": "signature a iij",
+      "problem": "signature tagged as page number; u/v modernised as on p8",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "also scheinbarlich und Burgerlich",
+      "english": "so visibly and civilly",
+      "problem": "scheinbarlich is 'splendidly, in fine style'",
+      "severity": "minor"
+     },
+     {
+      "source": "schlecht / einfeltig / ja frech unnd roh lebten",
+      "english": "lived poorly, simply, even boldly and crudely",
+      "problem": "schlecht = plainly, frech = wildly; tone off, sense recoverable",
+      "severity": "minor"
+     }
+    ],
+    "other": [],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "Right leaves and a good Fraktur read, but p8 silently drops the clause in which Münster claims priority for a German cosmography, and misreads 'mutability' as 'wonder'. Only 25 of 1,558 pages have any text."
+ },
+ {
+  "book_id": "69dea1ce4d19ec2e9ba75548",
+  "slot": 9,
+  "title": "Le Nuove Musiche",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Caccini's Le nuove musiche (Florence, Marescotti, dated 1601), BNCF copy; early modern music, in scope for the BNCF collection.",
+  "rights_flag": null,
+  "structure_note": "Every image in the run is an unsplit two-page opening (18|19, 20|21, 22|23), so the 33 records are openings, not pages. The one printed backstep and one repeat are most likely misread page numerals, as on p22 where the OCR gives '29, 31' for an opening that sits between 18|19 and 22|23. Staff notation is described, not transcribed (25 of 33 records have OCR, 23 a translation).",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 21,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "concertato tra voci e strumenti … altri concerti",
+      "image": "consertato tra voci e strumenti … altri conserti",
+      "problem": "period spelling normalised",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "Quãd haurò d'oro il volto, e'l crin d'argento",
+      "english": "When will I have a face of gold and hair of silver?",
+      "problem": "made a question; in the madrigal it is 'when I shall have …' completing 'what will the torment be'",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "two-page opening (pp. 18 and 19) served as one page; the six voice parts of the chorus become six identical English lines",
+      "severity": "moderate",
+      "class": "I3"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 22,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Muoue si dol ce, è si for ue guer ra",
+      "image": "[M]oue si dol ce, è si soa ue guer ra",
+      "problem": "soave (long s) read as 'for ue'; the translation turns 'so gentle' into 'so fiercely'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "ocr": "<page-num>29, 31</page-num>",
+      "image": "20 (the 0 is damaged) and 21",
+      "problem": "both page numbers wrong; the opening lies between 18|19 and 22|23",
+      "severity": "moderate",
+      "class": "O7"
+     },
+     {
+      "ocr": "Melchior Palontrotei",
+      "image": "Melchior Palontrotti",
+      "problem": "singer's name misread",
+      "severity": "moderate",
+      "class": "O6"
+     },
+     {
+      "ocr": "<gloss>Ec trillo</gloss>",
+      "image": "'Es. è trillo' (esclamazione e trillo) above the staff, small and faint",
+      "problem": "ornament marking misread",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "Muove sì dolce, e sì soave guerra",
+      "english": "It moves so sweetly, and so fiercely, a war",
+      "problem": "sense reversed: 'so sweet and so gentle a war'",
+      "severity": "serious",
+      "class": "O6"
+     },
+     {
+      "source": "ch'à volo un cor non spiegheria mai l'ale … Se non scendesse a risvegliarlo Amore",
+      "english": "if it did not descend to reawaken <term>Amore</term> <gloss>Love</gloss>",
+      "problem": "subject and object swapped, twice: Love descends to awaken the heart, not the heart to awaken Love",
+      "severity": "serious",
+      "class": "T8"
+     },
+     {
+      "source": "Quest’ Aria cantò solo con i proprij passaggi come sta Melchior Palontrotti / Musico Eccellente della Cappella di N. S.",
+      "english": "<header>Quest’ Aria cantò solo con i proprij passaggi come sta Melchior Palontrotei 29 Musico Eccellente della Cappella di N. S.</header>",
+      "problem": "the rubric naming the singer is left in Italian (the matching rubric for Peri on the same page is translated)",
+      "severity": "moderate",
+      "class": "T2"
+     },
+     {
+      "source": "Es. è trillo",
+      "english": "<term>Et trillo</term> <gloss>And trill</gloss>",
+      "problem": "invented reading of the ornament mark",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "two-page opening (pp. 20 and 21) served as one page; <column-break/> and <sig>F</sig> carried into the English",
+      "severity": "moderate",
+      "class": "I3"
+     }
+    ],
+    "confidence": "high"
+   },
+   {
+    "page_number": 23,
+    "right_page": "yes",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "l'õbre e not",
+      "image": "l'õbre not",
+      "problem": "an 'e' inserted before 'not[turne]'",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "i dardi Che'l cor piagato han di bear valore",
+      "english": "the darts that wound the heart, [for those] who have beautiful value",
+      "problem": "'which have the power to bless the wounded heart'; bear (to make blessed) taken as 'beautiful' and a bracketed supplement invented",
+      "severity": "moderate"
+     },
+     {
+      "source": "Qual trascorrendo per gli eterei campi Il Sol qua giù l'ombre notturne aggiorna, Tale amor su le stelle almo soggiorna",
+      "english": "Qual <note>As</note> traversing through the ethereal fields, the Sun down here [scatters] the shadows and... / ...night brings to day. Such love dwells in the soul above the stars",
+      "problem": "the sentence is broken at the gutter in the middle of 'notturne', 'Qual' is left untranslated with a note, and 'almo' (bountiful) becomes 'in the soul'",
+      "severity": "moderate",
+      "class": "T6"
+     }
+    ],
+    "other": [
+     {
+      "note": "two-page opening (pp. 22 and 23) served as one page",
+      "severity": "moderate",
+      "class": "I3"
+     }
+    ],
+    "confidence": "high"
+   }
+  ],
+  "book_verdict": "The prose (Caccini's note on p19) is read and translated well, but the book is served as unsplit openings and the sung texts under the staves are unreliable: on p22 'soave' becomes 'fiercely' and Love's descent is reversed, with page numbers and a singer's name misread."
+ },
+ {
+  "book_id": "69e78f6213e67bd16d4e6bc2",
+  "slot": 10,
+  "title": "Incomplete manuscripts",
+  "tradition": null,
+  "shelf_fit": "doubtful",
+  "shelf_note": "A bundle of unrelated Tibetan fragments from the Ogyen Choling collection (BL): Buddhist tantric ritual, at the edge of the library's scope, with no tradition or collection set. Title is a cataloguer's bucket and 'author' is the name of the collection, so the record does not say what a reader is opening.",
+  "rights_flag": null,
+  "structure_note": "Not one work: a set of fragments, each photograph showing two pecha leaves (or the two sides of one) on a board with tapes, pins and the archivist's sticky note, so printed backsteps (2) and repeats (5) are expected. p56 is a board with only a sticky note. Counters disagree: 135 page records have OCR but the pages_ocr field says 59; 55 of 157 are translated.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 56,
+    "right_page": "yes",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "མཛུབ་ཆད།",
+      "image": "མཇུག་ཆད། (handwritten on the sticky note)",
+      "problem": "the only words on the image misread: 'mjug chad' (the end is missing) became 'mdzub chad' (finger cut off). It pairs with the note 'dbu shog chad' on the next two photographs",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "མཇུག་ཆད།",
+      "english": "'Missing finger/index' <note>original: \"mdzub chad\"</note>",
+      "problem": "should be 'end missing'; the translator's guess that it marks a missing portion is right, the rendering is not",
+      "severity": "moderate",
+      "class": "O6"
+     }
+    ],
+    "other": [
+     {
+      "note": "a separator photograph (archivist's sticky note on the imaging board, no manuscript) is served as a page of the book, with a nested <note> inside a <note>",
+      "severity": "moderate",
+      "class": "O13"
+     }
+    ],
+    "confidence": "medium"
+   },
+   {
+    "page_number": 57,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "࿓࿔་། … མཚྡན … སོཌ་པས … རིནོེ … དཀྱོིར",
+      "image": "cursive (dbu med) leaf with abbreviated spellings",
+      "problem": "abbreviations and the opening ornament come out as impossible stacks and stray code points; I cannot read the cursive well enough at this size to check the rest word by word, but line counts (5 + 6) match the two leaves",
+      "severity": "moderate",
+      "class": "O10"
+     },
+     {
+      "ocr": "དབུ་ཤོག་ཆད།",
+      "image": "archivist's sticky note above the leaves",
+      "problem": "the modern note is transcribed as the first line of the text",
+      "severity": "minor"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "མཎྜལ་མདའ་གང་པ་གཅིག་བྱས་པའི་དབུས་སུ་ ཟླུམ་པོ་ཁྲུ་གང་པ་གཅིག",
+      "english": "make a mandala of one cubit. In its center, make a circle of one span",
+      "problem": "both measures wrong: the mandala is one arrow-length (mda' gang) and the circle one cubit (khru gang)",
+      "severity": "serious",
+      "class": "other:measure-mistranslated"
+     },
+     {
+      "source": "དུས་བཞིར་བསྐྱེད་སྟིཾ་",
+      "english": "perform the generation and visualization at the four times",
+      "problem": "bskyed bstim is generation and dissolution",
+      "severity": "moderate"
+     },
+     {
+      "source": "བསྒྲུབ་པ་ ལས་ལ་སྦྱར་བའོ་།",
+      "english": "First, regarding the practice: apply it to the activity.",
+      "problem": "the end of a list (approach, accomplishment, application to the activities) made into an instruction, with 'First' added",
+      "severity": "minor"
+     }
+    ],
+    "other": [
+     {
+      "note": "two leaves in one photograph, joined in the text with <leaf-break/>; <term> used for glosses rather than terms ('siddhi <term>spiritual attainment</term>')",
+      "severity": "moderate",
+      "class": "I5"
+     }
+    ],
+    "confidence": "low"
+   },
+   {
+    "page_number": 58,
+    "right_page": "yes",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "བཞུགསོུལ་ … དཀཽག … བདིུ༹དའི … ཏིངེ༹ནི … ཤྲགི་",
+      "image": "cursive (dbu med) with abbreviations",
+      "problem": "abbreviated words rendered as impossible stacks; same limits on my reading as p57, line counts (6 + 6) match",
+      "severity": "moderate",
+      "class": "O10"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "རང་བསྟན་བདེ་བ་ལ་འདུག་སྟེ་",
+      "english": "remain in a state of self-contained bliss",
+      "problem": "'sit on a comfortable seat'; the same phrase is rendered 'sitting comfortably' lower on the page",
+      "severity": "moderate"
+     },
+     {
+      "source": "དཀར་གསུམ་མངར་གསུམ་",
+      "english": "white and sweet offerings",
+      "problem": "'the three whites and three sweets' loses its number",
+      "severity": "minor"
+     },
+     {
+      "source": "བདུན་གཉིས་གཞན་པའི་ནང་དུ་ཁྲག་རེ་བླུག་པ་བཞི་བཞག",
+      "english": "Place four containers, each filled with a bit of blood, among the other fourteen.",
+      "problem": "fluent sentence built on a garbled line; 'fourteen' is the translator's arithmetic on 'seven, two'",
+      "severity": "moderate",
+      "class": "T7"
+     }
+    ],
+    "other": [
+     {
+      "note": "the archivist's sticky note is the first line of the reader text, as plain prose: 'The first page is missing.' (on p57 the same note is a <meta>)",
+      "severity": "moderate",
+      "class": "O13"
+     },
+     {
+      "note": "two leaves in one photograph",
+      "severity": "moderate",
+      "class": "I5"
+     }
+    ],
+    "confidence": "low"
+   }
+  ],
+  "book_verdict": "A catalogue bucket of fragments rather than a book: photographs of leaf pairs and separator cards, a BDRC read of cursive script full of impossible stacks, and a fluent translation over it that gets ritual measures wrong. I read dbu med poorly at this size, so the page scores are low-confidence; the unit and structure problems are not."
+ }
+]

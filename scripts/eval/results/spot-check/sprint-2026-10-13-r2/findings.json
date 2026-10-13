@@ -1,0 +1,1082 @@
+[
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 311,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=311",
+    "list": "tr",
+    "class": "T13",
+    "severity": "moderate",
+    "note": "the critical apparatus (variant readings with sigla cd., m.) is replaced by invented English 'meanings' of scribal variants, several of them guesses or corruptions with no such sense; the Pali readings and the manuscript sigla are gone ('in some versions')",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 311,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=311",
+    "list": "other",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "Footnote 'translations' present invented glosses as scholarly notes (e.g. 'kudhitā' → 'hungry', 'bahusamattā' → 'many completions', 'nandhe' → 'reading unclear')",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 312,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=312",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "text reading 'khāhinti' (will devour) made identical to the footnote variant 'kāhinti, m.'; the translation nevertheless has 'devour'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 312,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=312",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "subject reversed: it is Sumedhā who is conciliating/persuading Anikaratta as she throws her hair to the ground; 'cut off' is added (the verse only has the hair flung down)",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 312,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=312",
+    "list": "tr",
+    "class": "T16",
+    "severity": "moderate",
+    "note": "verse numbers 508–519 dropped and verse run into prose, while pages 311 and 313 keep the numbers — a reader cannot cite a verse from this page",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 312,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=312",
+    "list": "tr",
+    "class": "T13",
+    "severity": "moderate",
+    "note": "whole apparatus dropped on this page, though glossed on the page before",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69b99ec16ed9e0490990a6f2",
+    "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+    "page": 312,
+    "url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2?page=312",
+    "list": "other",
+    "class": "O9",
+    "severity": "moderate",
+    "note": "Convention flips between adjacent pages: verse numbers and footnotes kept on 311 and 313, both absent on 312",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Pali",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a42fb76feb36226e8f0c975",
+    "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+    "page": 3,
+    "url": "https://sourcelibrary.org/book/6a42fb76feb36226e8f0c975?page=3",
+    "list": "ocr",
+    "class": "O8",
+    "severity": "moderate",
+    "note": "initials silently expanded into a full invocation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a42fb76feb36226e8f0c975",
+    "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a42fb76feb36226e8f0c975?page=4",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "long s read as f: 'sorte' (the principal) becomes 'forte' (by chance); elsewhere on the page 'sortem', 'sors principalis' are right",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a42fb76feb36226e8f0c975",
+    "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+    "page": 4,
+    "url": "https://sourcelibrary.org/book/6a42fb76feb36226e8f0c975?page=4",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "Gothofredus's note 'letter H' on that law turned into 'l.13. H.' — a number put in that is not printed",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a42fb76feb36226e8f0c975",
+    "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/6a42fb76feb36226e8f0c975?page=5",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "long s read as f throughout: the key term of the tract, sors (the principal of a loan), is transcribed as fors/fortis/forte (chance, of the strong, perhaps) about ten times, and 'fors' is listed in the page vocabulary. The Latin as served is not what is printed",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a42fb76feb36226e8f0c975",
+    "title": "Positiones Inaugurales De Altero Tanto … Praeside … Ortholpho Fomanno … proponit … Johannes Christophorus Aveman Isennacensis",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/6a42fb76feb36226e8f0c975?page=5",
+    "list": "ocr",
+    "class": "I4",
+    "severity": "moderate",
+    "note": "neighbour-page strip read as a marginal note of this page",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a4c8dcb8e4c4eb7d2119d1d",
+    "title": "Dissertatio Medica Inauguralis de Fluore Albo … Erdmannus Kupizius, Sora-Lusatus",
+    "page": 5,
+    "url": "https://sourcelibrary.org/book/6a4c8dcb8e4c4eb7d2119d1d?page=5",
+    "list": "tr",
+    "class": "T5",
+    "severity": "moderate",
+    "note": "'preternatural excretion' is pulled forward from the next page to finish the sentence, and 'ex utero' (from the uterus) is then in neither page's English",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a4c8dcb8e4c4eb7d2119d1d",
+    "title": "Dissertatio Medica Inauguralis de Fluore Albo … Erdmannus Kupizius, Sora-Lusatus",
+    "page": 6,
+    "url": "https://sourcelibrary.org/book/6a4c8dcb8e4c4eb7d2119d1d?page=6",
+    "list": "tr",
+    "class": "T6",
+    "severity": "moderate",
+    "note": "'præternaturalis ex utero excretio' omitted here because it was used on the previous page; the definition's 'from the uterus' is lost at the seam",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite",
+      "language": "Latin",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "five headword-placeholder strokes (丨) dropped, so the previous entry's headword is no longer marked inside its citation",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "three placeholders standing for the headword 閬苑集 dropped: the sentence 'he has the Langyuan ji, which circulates' loses its object",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "moderate",
+    "note": "five placeholders for the headword 十鹿射獲其九 dropped: 'later he met ten deer and shot nine; the emperor was pleased' loses the deer",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "name 濬 misread as 潛 at its first occurrence",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "emperor Taizong rendered 'Taizhou', which is not a person",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "Huhan (忽汗, the Bohai capital) mis-romanised as 'Huhar' and made a kingdom",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "follows the OCR's dropped placeholders: the clause 'he met ten deer and shot nine' is detached into a separate headline and the sentence is made nonsense",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "'樂田園詩' is poems of delight in fields and gardens, not 'on Making Music'; the headword 閬苑集 is fused into the previous entry's sentence",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "T8",
+    "severity": "moderate",
+    "note": "agent reversed: the king invites the adepts with humble words and rich gifts (請致之, continued on the next leaf); they do not request an audience",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "title 鴻寶苑秘枕中之書 broken up; 苑 turned into a garden",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 137,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=137",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "invents a person 'Qian' from the OCR misread 潛",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 138,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=138",
+    "list": "ocr",
+    "class": "O11",
+    "severity": "moderate",
+    "note": "running title misread in two characters (and emitted outside the <header> tag)",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 138,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=138",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "the note quotes an 'original' that is not on the page: 皆至 is invented (the placeholders stand for 八公詣門)",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a3c6549af3c49b59c5cb37d",
+    "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+    "page": 139,
+    "url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d?page=139",
+    "list": "other",
+    "class": "T16",
+    "severity": "moderate",
+    "note": "main citation text is wrapped in <margin>…</margin> six times (e.g. '<margin>Ge Hong’s Miscellaneous Records of the Western Capital: King Xiao of Liang … visited the Hall of Forgetting Cares.</margin>'); these are the interlinear double-column citations of the body, not marginalia, and <header>/<page-num> tags are carried into the English",
+    "lane": {
+      "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Chinese",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69c8a2246c6f3cc53c85e367",
+    "title": "Dreams",
+    "page": 1,
+    "url": "https://sourcelibrary.org/book/69c8a2246c6f3cc53c85e367?page=1",
+    "list": "tr",
+    "class": "T12",
+    "severity": "moderate",
+    "note": "an English title of office rewritten as if it were foreign; 'Supreme Magus' is the society's own English style",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69c8a2246c6f3cc53c85e367",
+    "title": "Dreams",
+    "page": 1,
+    "url": "https://sourcelibrary.org/book/69c8a2246c6f3cc53c85e367?page=1",
+    "list": "tr",
+    "class": "T10",
+    "severity": "moderate",
+    "note": "abbreviation expanded wrongly: M.W. is 'Most Worshipful'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69c8a2246c6f3cc53c85e367",
+    "title": "Dreams",
+    "page": 1,
+    "url": "https://sourcelibrary.org/book/69c8a2246c6f3cc53c85e367?page=1",
+    "list": "other",
+    "class": "D1",
+    "severity": "moderate",
+    "note": "broken markup: '<insert></insert>' followed by the stamp text and a second, unmatched '</insert>'",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69c8a2246c6f3cc53c85e367",
+    "title": "Dreams",
+    "page": 3,
+    "url": "https://sourcelibrary.org/book/69c8a2246c6f3cc53c85e367?page=3",
+    "list": "tr",
+    "class": "T12",
+    "severity": "moderate",
+    "note": "English byline rewritten; 'Most Worthy' is a wrong expansion of M.W. and 'Highest Magician' replaces the title of office",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "English",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a26bd05d6b178e5aad87607",
+    "title": "Cosmographey : oder Beschreibung aller Länder …",
+    "page": 7,
+    "url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607?page=7",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "rauch is 'rough' (rauh), not 'smoky'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a26bd05d6b178e5aad87607",
+    "title": "Cosmographey : oder Beschreibung aller Länder …",
+    "page": 8,
+    "url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607?page=8",
+    "list": "ocr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "a full clause skipped (eye-skip from 'das' to 'das'): Münster's claim that no one before him had undertaken such a book in this form and in German is gone from OCR and translation",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a26bd05d6b178e5aad87607",
+    "title": "Cosmographey : oder Beschreibung aller Länder …",
+    "page": 8,
+    "url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607?page=8",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "wanderbarlichkeit (mutability) read as wunderbarlichkeit (wondrousness)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a26bd05d6b178e5aad87607",
+    "title": "Cosmographey : oder Beschreibung aller Länder …",
+    "page": 8,
+    "url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607?page=8",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "should be 'everything is subject to change'; follows the OCR misread and breaks the argument about impermanence",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "6a26bd05d6b178e5aad87607",
+    "title": "Cosmographey : oder Beschreibung aller Länder …",
+    "page": 8,
+    "url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607?page=8",
+    "list": "tr",
+    "class": "O5",
+    "severity": "serious",
+    "note": "the dropped clause is absent from the English too",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "German",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 21,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=21",
+    "list": "other",
+    "class": "I3",
+    "severity": "moderate",
+    "note": "two-page opening (pp. 18 and 19) served as one page; the six voice parts of the chorus become six identical English lines",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "soave (long s) read as 'for ue'; the translation turns 'so gentle' into 'so fiercely'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "ocr",
+    "class": "O7",
+    "severity": "moderate",
+    "note": "both page numbers wrong; the opening lies between 18|19 and 22|23",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "singer's name misread",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "tr",
+    "class": "O6",
+    "severity": "serious",
+    "note": "sense reversed: 'so sweet and so gentle a war'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "tr",
+    "class": "T8",
+    "severity": "serious",
+    "note": "subject and object swapped, twice: Love descends to awaken the heart, not the heart to awaken Love",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "tr",
+    "class": "T2",
+    "severity": "moderate",
+    "note": "the rubric naming the singer is left in Italian (the matching rubric for Peri on the same page is translated)",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 22,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=22",
+    "list": "other",
+    "class": "I3",
+    "severity": "moderate",
+    "note": "two-page opening (pp. 20 and 21) served as one page; <column-break/> and <sig>F</sig> carried into the English",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 23,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=23",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "'which have the power to bless the wounded heart'; bear (to make blessed) taken as 'beautiful' and a bracketed supplement invented",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 23,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=23",
+    "list": "tr",
+    "class": "T6",
+    "severity": "moderate",
+    "note": "the sentence is broken at the gutter in the middle of 'notturne', 'Qual' is left untranslated with a note, and 'almo' (bountiful) becomes 'in the soul'",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69dea1ce4d19ec2e9ba75548",
+    "title": "Le Nuove Musiche",
+    "page": 23,
+    "url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548?page=23",
+    "list": "other",
+    "class": "I3",
+    "severity": "moderate",
+    "note": "two-page opening (pp. 22 and 23) served as one page",
+    "lane": {
+      "ocr_model": "gemini-3-flash-preview",
+      "tr_model": "gemini-3.1-flash-lite-preview",
+      "language": "Italian",
+      "form": "print"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 56,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=56",
+    "list": "ocr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "the only words on the image misread: 'mjug chad' (the end is missing) became 'mdzub chad' (finger cut off). It pairs with the note 'dbu shog chad' on the next two photographs",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 56,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=56",
+    "list": "tr",
+    "class": "O6",
+    "severity": "moderate",
+    "note": "should be 'end missing'; the translator's guess that it marks a missing portion is right, the rendering is not",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 56,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=56",
+    "list": "other",
+    "class": "O13",
+    "severity": "moderate",
+    "note": "a separator photograph (archivist's sticky note on the imaging board, no manuscript) is served as a page of the book, with a nested <note> inside a <note>",
+    "lane": {
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 57,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=57",
+    "list": "ocr",
+    "class": "O10",
+    "severity": "moderate",
+    "note": "abbreviations and the opening ornament come out as impossible stacks and stray code points; I cannot read the cursive well enough at this size to check the rest word by word, but line counts (5 + 6) match the two leaves",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 57,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=57",
+    "list": "tr",
+    "class": "other:measure-mistranslated",
+    "severity": "serious",
+    "note": "both measures wrong: the mandala is one arrow-length (mda' gang) and the circle one cubit (khru gang)",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 57,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=57",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "bskyed bstim is generation and dissolution",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 57,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=57",
+    "list": "other",
+    "class": "I5",
+    "severity": "moderate",
+    "note": "two leaves in one photograph, joined in the text with <leaf-break/>; <term> used for glosses rather than terms ('siddhi <term>spiritual attainment</term>')",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=58",
+    "list": "ocr",
+    "class": "O10",
+    "severity": "moderate",
+    "note": "abbreviated words rendered as impossible stacks; same limits on my reading as p57, line counts (6 + 6) match",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=58",
+    "list": "tr",
+    "class": "unclassed",
+    "severity": "moderate",
+    "note": "'sit on a comfortable seat'; the same phrase is rendered 'sitting comfortably' lower on the page",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=58",
+    "list": "tr",
+    "class": "T7",
+    "severity": "moderate",
+    "note": "fluent sentence built on a garbled line; 'fourteen' is the translator's arithmetic on 'seven, two'",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=58",
+    "list": "other",
+    "class": "O13",
+    "severity": "moderate",
+    "note": "the archivist's sticky note is the first line of the reader text, as plain prose: 'The first page is missing.' (on p57 the same note is a <meta>)",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  },
+  {
+    "round": "sprint-2026-10-13-r2",
+    "frame": "public",
+    "book_id": "69e78f6213e67bd16d4e6bc2",
+    "title": "Incomplete manuscripts",
+    "page": 58,
+    "url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=58",
+    "list": "other",
+    "class": "I5",
+    "severity": "moderate",
+    "note": "two leaves in one photograph",
+    "lane": {
+      "ocr_model": "bdrc-yigdzin-v1",
+      "tr_model": "gemini-3-flash-preview",
+      "language": "Tibetan",
+      "form": "MS"
+    }
+  }
+]
