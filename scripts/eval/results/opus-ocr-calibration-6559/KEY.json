@@ -1,0 +1,134 @@
+[
+ {
+  "uid": "398336bb",
+  "page_id": "6acc39a3c1411f8cc628cfed",
+  "book_id": "6acc39a1c1411f8cc628cfc4",
+  "page_number": 41,
+  "plant": null
+ },
+ {
+  "uid": "f83bb29d",
+  "page_id": "6acc39a3c1411f8cc628cfe5",
+  "book_id": "6acc39a1c1411f8cc628cfc4",
+  "page_number": 33,
+  "plant": null
+ },
+ {
+  "uid": "5522d746",
+  "page_id": "6acc39a3c1411f8cc628cfe7",
+  "book_id": "6acc39a1c1411f8cc628cfc4",
+  "page_number": 35,
+  "plant": null
+ },
+ {
+  "uid": "2f762c65",
+  "page_id": "6acc39a3c1411f8cc628d005",
+  "book_id": "6acc39a1c1411f8cc628cfc4",
+  "page_number": 65,
+  "plant": null
+ },
+ {
+  "uid": "73c81ad7",
+  "page_id": "6acc39a3c1411f8cc628cfe9",
+  "book_id": "6acc39a1c1411f8cc628cfc4",
+  "page_number": 37,
+  "plant": null
+ },
+ {
+  "uid": "878e5f37",
+  "page_id": "6acc3a74c1411f8cc628eb6c",
+  "book_id": "6acc3a73c1411f8cc628eb63",
+  "page_number": 9,
+  "plant": null
+ },
+ {
+  "uid": "58e051ab",
+  "page_id": "6acc3a74c1411f8cc628eb6a",
+  "book_id": "6acc3a73c1411f8cc628eb63",
+  "page_number": 7,
+  "plant": null
+ },
+ {
+  "uid": "a4146f51",
+  "page_id": "6acc3a74c1411f8cc628eb69",
+  "book_id": "6acc3a73c1411f8cc628eb63",
+  "page_number": 6,
+  "plant": null
+ },
+ {
+  "uid": "6a5a7c4a",
+  "page_id": "6acc3a74c1411f8cc628eb6f",
+  "book_id": "6acc3a73c1411f8cc628eb63",
+  "page_number": 12,
+  "plant": null
+ },
+ {
+  "uid": "14fe51ce",
+  "page_id": "6acc3a74c1411f8cc628eb6e",
+  "book_id": "6acc3a73c1411f8cc628eb63",
+  "page_number": 11,
+  "plant": null
+ },
+ {
+  "uid": "d44d6722",
+  "page_id": "6acc3d74230e9a56175cccb7",
+  "book_id": "6acc3d72230e9a56175ccc93",
+  "page_number": 36,
+  "plant": null
+ },
+ {
+  "uid": "92e28b69",
+  "page_id": "6acc3d74230e9a56175ccc9e",
+  "book_id": "6acc3d72230e9a56175ccc93",
+  "page_number": 11,
+  "plant": null
+ },
+ {
+  "uid": "a8dade2b",
+  "page_id": "6acc3d74230e9a56175ccca5",
+  "book_id": "6acc3d72230e9a56175ccc93",
+  "page_number": 18,
+  "plant": null
+ },
+ {
+  "uid": "913a3da7",
+  "page_id": "6acc3d74230e9a56175cccbe",
+  "book_id": "6acc3d72230e9a56175ccc93",
+  "page_number": 43,
+  "plant": null
+ },
+ {
+  "uid": "318c6423",
+  "page_id": "6acc3d74230e9a56175ccca0",
+  "book_id": "6acc3d72230e9a56175ccc93",
+  "page_number": 13,
+  "plant": null
+ },
+ {
+  "uid": "3e95131e",
+  "page_id": "6acc39a3c1411f8cc628cfed",
+  "book_id": "6acc39a1c1411f8cc628cfc4",
+  "page_number": 41,
+  "plant": "dropped_line",
+  "detail": "moquetzticac in Quauhtli itzintlan mani initapazol inipepech ixquich",
+  "copy_of": "398336bb"
+ },
+ {
+  "uid": "815e62fb",
+  "page_id": "6acc3a74c1411f8cc628eb6c",
+  "book_id": "6acc3a73c1411f8cc628eb63",
+  "page_number": 9,
+  "plant": "invented_line",
+  "detail": "ca ye yxquich in quimatizque in ixquichtin christianosme",
+  "copy_of": "878e5f37"
+ },
+ {
+  "uid": "68b08faa",
+  "page_id": "6acc3d74230e9a56175cccb7",
+  "book_id": "6acc3d72230e9a56175ccc93",
+  "page_number": 36,
+  "plant": "respelled_word",
+  "detail": "ruyaom -> royaom",
+  "copy_of": "d44d6722"
+ }
+]

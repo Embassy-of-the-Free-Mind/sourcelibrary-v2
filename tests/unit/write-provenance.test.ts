@@ -362,6 +362,27 @@ describe('a read through a subscription CLI is a recorded api, with the CLI name
     expect(mjs.missingProvenance('ocr', sub).missing).toContain('ocr.engine.cli');
     expect(ts.missingProvenance('ocr', sub as never).missing).toContain('ocr.engine.cli');
   });
+
+  // #6559: Opus reads the Nahuatl and Mayan books through `claude -p`, and cli-ocr.mjs apply writes them.
+  it('an Opus read through the Claude CLI names Anthropic, and only a CLI read may', () => {
+    const claudeArgs = () => ({ ...cliArgs(), name: 'anthropic' as const, cli: { name: 'claude', version: '2.1.295 (Claude Code)' }, model: 'claude-opus-5-5' });
+    expect(mjs.engineNameForCli('claude')).toBe('anthropic');
+    expect(mjs.engineNameForCli('agy')).toBe('gemini');
+    const e = mjs.geminiEngine(claudeArgs());
+    expect(e.name).toBe('anthropic');
+    expect(e.cli).toEqual({ name: 'claude', version: '2.1.295 (Claude Code)' });
+    const sub = { data: 'text', source: 'ai', updated_at: new Date(), ...mjs.ocrProvenance('text', e) };
+    expect(mjs.missingProvenance('ocr', sub).missing).toEqual([]);
+    expect(ts.missingProvenance('ocr', sub).missing).toEqual([]);
+    // an Anthropic block that claims an API call is refused at build time and flagged by both checkers
+    expect(() => mjs.geminiEngine({ ...claudeArgs(), api: 'realtime', generationConfig: {} })).toThrow(/subscription CLI/);
+    expect(() => mjs.geminiEngine({ ...claudeArgs(), name: 'openai' as never })).toThrow(/engine name/);
+    const asApi = { ...sub, engine: { ...e, api: 'realtime' } };
+    expect(mjs.missingProvenance('ocr', asApi).missing).toContain('ocr.engine.name');
+    expect(ts.missingProvenance('ocr', asApi as never).missing).toContain('ocr.engine.name');
+    // and the default is still Gemini
+    expect(mjs.geminiEngine(cliArgs()).name).toBe('gemini');
+  });
 });
 
 // #6307: 167 translations stamped a commit that did not contain the script that wrote them (it ran from a
