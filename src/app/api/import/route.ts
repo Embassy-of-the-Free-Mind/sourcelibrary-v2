@@ -9,6 +9,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { resolveLanguage } from '@/lib/resolve-language';
 import { sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
+import { initialPageCounters } from '@/lib/page-counts';
 
 /**
  * Import a book from a local directory
@@ -127,7 +128,8 @@ export const POST = withCuratorAuth(async (request, session) => {
       source_fingerprints: gate.fingerprints,
       // A book record declares its type at creation rather than landing null (#5292c).
       content_type: 'book',
-      pages_count: pageFiles.length,
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(pageFiles.length),
       status: 'draft',
       hidden: true, visible: false,
       created_at: new Date(),

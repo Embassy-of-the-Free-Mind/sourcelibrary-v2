@@ -13,6 +13,7 @@ import { storeImportedManifest } from '@/lib/iiif-manifest-store';
 import { applyTextRole } from '@/lib/text-role';
 import { usableManifestLabel } from '@/lib/manifest-label';
 import { iiifFullSizeUrl } from '@/lib/iiif-image-service';
+import { initialPageCounters } from '@/lib/page-counts';
 
 // IIIF v2 manifest shape (covers most digital library providers)
 export interface IIIFManifest {
@@ -416,9 +417,8 @@ export async function importBookFromIIIF(
     thumbnail: pageImages[0]?.thumbnail || '',
     // A paged import is a text; declare it rather than leave it null (#5292c).
     content_type: 'book',
-    pages_count: pageCount,
-    pages_ocr: 0,
-    pages_translated: 0,
+    // All six counters at birth: every page pending, so every page translatable (#5328).
+    ...initialPageCounters(pageCount),
     dublin_core: {
       dc_identifier: [`${config.provider.toUpperCase()}:${config.identifier}`],
       dc_source: config.source_url,

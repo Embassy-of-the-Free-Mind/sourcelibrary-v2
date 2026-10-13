@@ -19,6 +19,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { acquisitionGate, confirmClaims } from '../lib/acquire-book.mjs';
+import { initialPageCounters } from '../lib/page-counts.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = path.join(__dirname, '..', 'erara-queue.txt');
@@ -156,7 +157,8 @@ async function importBook(db, entry) {
     erara_doi: meta.doi,
     thumbnail: getImageUrl(meta.canvases[0], 200),
     pageCount: meta.canvases.length,
-    pages_count: meta.canvases.length,
+    // All six counters at birth: every page pending, so every page translatable (#5328).
+    ...initialPageCounters(meta.canvases.length),
     dublin_core: {
       dc_identifier: [`ERARA:${eraraId}`, ...(meta.doi ? [`DOI:${meta.doi}`] : [])],
       dc_source: sourceUrl,
