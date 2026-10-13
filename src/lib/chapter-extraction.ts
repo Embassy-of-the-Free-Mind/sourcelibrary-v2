@@ -201,7 +201,8 @@ Guidelines:
 - For multi-volume works: use level 1 for volumes, level 2 for chapters within. Chapter numbering restarts per volume.
 - SKIP: title pages, dedications, indices, running headers, image captions, colophons
 - INCLUDE: prefaces/prologues if they are labeled sections
-- A typical book has 5-50 chapters. Over 80 usually means noise.
+- Return EVERY chapter — never sample or pick representative entries. If the headings show a numbered run (Chapter 1 … Chapter 343), include each member of that run found in the body. Herbals, commentaries and encyclopedias routinely have hundreds of chapters; a count is not a sign of noise.
+- Noise is running headers, captions, TOC listings, and citations of OTHER works' chapters (e.g. "Codicil, chapter 53") — drop those by their context, never by capping the count.
 - Cross-reference OCR and translation headings — prefer the cleaner version for "title"
 
 Respond with ONLY a JSON array, no markdown fences, no explanation:
