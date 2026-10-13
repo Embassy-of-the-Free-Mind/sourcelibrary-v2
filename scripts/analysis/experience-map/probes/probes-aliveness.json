@@ -1,0 +1,137 @@
+{
+  "_note": "Aliveness probe set (#6652). Three layers on one map: FELT (a person reports feeling alive, or dead inside), WORLD (a text says nature, matter or the heavens are alive, or that they are not), MADE (a text says a place, building, image or crafted thing is alive, or lifeless; Christopher Alexander's sense). Every layer carries its opposite as separate dimensions (polarity: -1) so the map can show where deadness is described as well as where life is. Probes are sentences in period-plausible voice, not topic labels: retrieval matches passages, and a label like 'vitalism' retrieves modern prose about vitalism.",
+  "layers": [
+    { "id": "felt", "label": "Felt aliveness", "gloss": "a person reports feeling alive, or dead inside" },
+    { "id": "world", "label": "The world as alive", "gloss": "nature, matter or the heavens are said to live, or not" },
+    { "id": "made", "label": "Aliveness in made things", "gloss": "a place, building, image or crafted thing is said to be alive, or lifeless" }
+  ],
+  "dimensions": [
+    { "id": "quickening", "layer": "felt", "polarity": 1, "label": "Quickening", "probes": [
+      "I felt the life rush back into my limbs as warmth returns to a frozen hand",
+      "a new vigour ran through my whole body and I was strong again",
+      "my heart leapt within me and every sense awoke at once",
+      "it was as though a fire of life had been kindled in my breast"] },
+    { "id": "vividness", "layer": "felt", "polarity": 1, "label": "The world made vivid", "probes": [
+      "every leaf and every stone seemed new to me, as if I saw them for the first time",
+      "the colours of the fields shone with a freshness I had never seen before",
+      "all creation appeared to me clothed in a new and living beauty",
+      "the morning was so bright and so alive that I could have wept for joy"] },
+    { "id": "rebirth", "layer": "felt", "polarity": 1, "label": "Rebirth", "probes": [
+      "I was as one born again, and the old man in me was dead",
+      "from that day I lived as if I had risen from the grave",
+      "I woke from a long sleep of the soul into true life",
+      "it seemed I had passed from death into life"] },
+    { "id": "gladness", "layer": "felt", "polarity": 1, "label": "Exuberant gladness", "probes": [
+      "my body could not contain my gladness and I leapt and sang",
+      "such joy filled me that I danced like a child",
+      "my blood sang in my veins and I could not keep still for delight",
+      "I laughed aloud for the sheer joy of being alive"] },
+    { "id": "wakefulness", "layer": "felt", "polarity": 1, "label": "Full wakefulness", "probes": [
+      "I was wholly awake and present, and nothing stood between me and the moment",
+      "my mind was clear and keen and every breath was felt",
+      "I seemed for the first time truly awake in my own body",
+      "I attended to each thing as it came and was entirely there"] },
+    { "id": "healing_strength", "layer": "felt", "polarity": 1, "label": "Strength returning", "probes": [
+      "after the fever left me my strength came back day by day and I could walk again",
+      "the sick man rose from his bed and felt himself whole and lively",
+      "colour returned to my face and appetite to my body",
+      "I recovered my spirits and my old liveliness returned"] },
+    { "id": "acedia", "layer": "felt", "polarity": -1, "label": "Acedia and deadness of heart", "probes": [
+      "my heart was dead within me and nothing could move it",
+      "I took no pleasure in anything, neither prayer nor food nor company",
+      "a dryness and weariness of soul came upon me so that I loathed all things",
+      "I sat idle in my cell and the hours would not pass"] },
+    { "id": "numbness", "layer": "felt", "polarity": -1, "label": "Numbness, living death", "probes": [
+      "I walked among men as one already dead",
+      "I felt nothing, neither grief nor joy, as though I were made of stone",
+      "the world seemed grey and far away and I was not in it",
+      "I lived but was not alive"] },
+    { "id": "torpor", "layer": "felt", "polarity": -1, "label": "Heaviness and torpor", "probes": [
+      "a heaviness lay on all my limbs and I could not rouse myself",
+      "my spirits were dull and sluggish and my blood cold",
+      "melancholy weighed me down so that I could barely lift my head",
+      "I was sunk in a lethargy from which nothing could wake me"] },
+
+    { "id": "world_soul", "layer": "world", "polarity": 1, "label": "The world soul", "probes": [
+      "the whole world is one living creature, having a soul and a mind",
+      "a single soul pervades the universe and animates every part of it",
+      "the world is not a dead thing but lives and breathes as a great animal",
+      "there is nothing in the universe that is not alive"] },
+    { "id": "vital_breath", "layer": "world", "polarity": 1, "label": "Vital breath (pneuma, spiritus, prana, qi)", "probes": [
+      "a subtle breath runs through all things and gives them life",
+      "the vital spirit is carried in the blood and quickens every member",
+      "when the breath departs the body, life departs with it",
+      "the life force flows through the channels of the body and of heaven and earth alike"] },
+    { "id": "living_minerals", "layer": "world", "polarity": 1, "label": "Living metals and stones", "probes": [
+      "metals grow in the womb of the earth as a child grows in its mother",
+      "the stone has a soul and a seed, and it must die before it can live again",
+      "gold is ripened in the mountains by the heat of the sun over long ages",
+      "the mineral lives, feeds and multiplies according to its nature"] },
+    { "id": "living_heavens", "layer": "world", "polarity": 1, "label": "Ensouled heavens", "probes": [
+      "the stars are living beings, moved by their own souls and intelligences",
+      "the heavens are animated and their motion is a kind of life",
+      "the sun is the heart of the world and pours life into all things",
+      "each sphere has its own spirit which turns it"] },
+    { "id": "living_earth", "layer": "world", "polarity": 1, "label": "The earth as a body", "probes": [
+      "the earth has veins as a body has veins, and the waters are its blood",
+      "the tides are the breathing of the earth",
+      "the mountains are the bones of the earth and the rivers its arteries",
+      "the earth is our mother, and she feeds and nourishes all living things"] },
+    { "id": "plant_soul", "layer": "world", "polarity": 1, "label": "The soul of plants", "probes": [
+      "the plant has a soul that nourishes it, makes it grow, and brings forth seed",
+      "trees feel and suffer when they are cut",
+      "every herb has its own virtue and spirit, which it draws from the stars",
+      "the seed holds within it the whole living form of the tree"] },
+    { "id": "sympathy", "layer": "world", "polarity": 1, "label": "Sympathy and attraction", "probes": [
+      "the lodestone loves the iron and draws it to itself",
+      "things of like nature are drawn to one another by a secret friendship",
+      "the vine hates the cabbage and turns away from it",
+      "all things in nature are bound together by sympathy and antipathy"] },
+    { "id": "dead_matter", "layer": "world", "polarity": -1, "label": "Matter as dead mechanism", "probes": [
+      "matter of itself is inert and moves only when another body pushes it",
+      "the world is a machine, like a clock wound up by its maker",
+      "animals are automata, without feeling, moved by springs and weights",
+      "there is no soul in stones or plants; they move only by the laws of motion"] },
+
+    { "id": "living_place", "layer": "made", "polarity": 1, "label": "A place that feels alive", "probes": [
+      "there was something in that place which drew me back to it again and again",
+      "the town was full of life, and to walk its streets made the heart glad",
+      "the place seemed to breathe, and everything in it belonged there",
+      "I have never been in a place so living and so peaceful"] },
+    { "id": "genius_loci", "layer": "made", "polarity": 1, "label": "Spirit of the place", "probes": [
+      "every grove and spring has its own spirit that dwells there",
+      "the old people said the place had a guardian and must be greeted on entering",
+      "the spirit of the place was offended and the crops failed",
+      "this ground is holy, for a power lives in it"] },
+    { "id": "building_body", "layer": "made", "polarity": 1, "label": "The building as a body", "probes": [
+      "the temple must be built in the proportions of a well-formed man",
+      "a building, like a living body, must have all its members in due measure",
+      "the house is a little world, as man is a little world",
+      "the church is the body of Christ and its stones are living stones"] },
+    { "id": "wholeness", "layer": "made", "polarity": 1, "label": "Wholeness of parts", "probes": [
+      "each part answers to every other, so that nothing can be added or taken away without harm",
+      "the work grows from within like a plant, not put together from without",
+      "all its parts agree in such harmony that it seems one living thing",
+      "the beauty of the whole arises from the fitting of each part to the next"] },
+    { "id": "garden", "layer": "made", "polarity": 1, "label": "The cultivated garden", "probes": [
+      "the garden flourished under his care and was full of birds and fragrance",
+      "the orchard must be tended as one tends a child",
+      "in the garden every plant was set where it would thrive best",
+      "the gardener works with nature, not against her, and so the garden lives"] },
+    { "id": "maker_spirit", "layer": "made", "polarity": 1, "label": "The maker's spirit in the work", "probes": [
+      "the craftsman put his whole soul into the work, and so the work lives",
+      "the painter gave such life to the figure that it seemed about to speak",
+      "a thing made with love has a life that a thing made for gain does not",
+      "the statue was so lifelike that one waited for it to breathe"] },
+    { "id": "animated_image", "layer": "made", "polarity": 1, "label": "The ensouled image", "probes": [
+      "the priests drew down the spirits into the statues so that the images lived",
+      "after the rite of consecration the god dwells in the image",
+      "the image wept, and moved its eyes, and spoke",
+      "by this art the figure receives life and power from the heavens"] },
+    { "id": "lifeless_made", "layer": "made", "polarity": -1, "label": "Lifeless work", "probes": [
+      "the work was correct in every rule and yet cold and dead",
+      "the building had no grace, a mere heap of stones without spirit",
+      "it was made by rote, without love, and it shows",
+      "the copy has the form of the original but none of its life"] }
+  ]
+}
