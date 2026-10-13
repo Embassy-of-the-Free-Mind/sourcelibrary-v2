@@ -52,7 +52,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.9.0';
+const SERVER_VERSION = '4.10.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -1219,15 +1219,19 @@ const BOOK_RUN_STEPS =
   '(long s vs f, u/v, abbreviation marks, the margins); (2) compare the English with the transcription: ' +
   'omissions ("…" where the original runs on), additions, misreadings, and text carried over from the ' +
   'previous page (use previous_page_tail); judge the texts exactly as returned, never a shortened copy; ' +
-  '(3) tell the user in two or three plain sentences what the page says and what you found, quoting only ' +
-  'the words at issue; do not paste the full transcription or translation unless asked; they do not need ' +
-  'to read the language; (4) call ' +
-  'submit_page_review with mode "book-run" and YOUR verdict and findings; (5) for each error you can see ' +
-  'on the scan or in the original, call propose_correction with drafted_by "assistant" (transcription ' +
-  'before translation); (6) ask whether to continue, and on yes call continue_review_shift with next.book ' +
-  'and next.after. Submit only after the user agreed, once at the start, that findings are submitted as ' +
-  'you go. Never invent a problem to have something to report: "both_sound" with no findings is a ' +
-  'useful result.';
+  '(3) call submit_page_review with mode "book-run" and YOUR verdict and findings; (4) for each error you ' +
+  'can see on the scan or in the original, call propose_correction with drafted_by "assistant" ' +
+  '(transcription before translation); (5) write a short paragraph for the user, so the stretch reads ' +
+  'as a guided reading of the book: the page number, then three or four plain sentences on what happens ' +
+  'or is argued on this page, in your own words, then one sentence on what you found and sent (quote ' +
+  'only the words at issue; never paste the full texts unless asked; they need not read the language); ' +
+  '(6) KEEP GOING: call continue_review_shift with ' +
+  'next.book and next.after straight away, without asking, until you have done the number of pages the ' +
+  'user chose (10 if they did not say), the book ends, or the user interrupts. Then give a short tally ' +
+  '(pages, fixes sent, anything serious such as English that belongs to another page) and ask whether ' +
+  'to do another stretch. Submit only after the user agreed, once at the start, that findings are ' +
+  'submitted as you go. Never invent a problem to have something to report: "both_sound" with no ' +
+  'findings is a useful result.';
 
 async function getBookRunPage(args: Record<string, unknown>, extra: Record<string, string>) {
   const params = new URLSearchParams(extra);
@@ -1256,11 +1260,12 @@ async function startReviewShift(args: Record<string, unknown>) {
   const result = await getBookRunPage(args, extra);
   return {
     ...result,
-    first_time: 'Before the first page, tell the user in a few lines: their Claude will check this book page by page ' +
-      'against the scans and send what it finds to Source Library; they can watch, ask questions, or just say ' +
-      '"continue"; findings and proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s ' +
-      'translations, and nothing changes on a page until a second reader agrees. Ask once whether that is OK. ' +
-      'Give them volunteer_code so a later chat can pick up where this one stops.',
+    first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
+      'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
+      'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
+      'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
+      'nothing changes on a page until a second reader agrees. Ask once whether that is OK and how many pages ' +
+      'to do. Give them volunteer_code so a later chat can pick up where this one stops.',
   };
 }
 
@@ -1690,7 +1695,7 @@ const TOOLS: Tool[] = [
   {
     name: 'start_review_shift',
     title: 'Start a Review Shift',
-    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user runs the shift, watches, asks questions and says "continue". Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Shifts are for a person at the keyboard: one page per message, never run unattended or in a loop.',
+    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user starts the shift, chooses how many pages, watches and asks questions. Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page, working through the stretch of pages without stopping between them. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Run shifts only while the user is in this conversation; never set one up to run on a schedule or from a script.',
     annotations: { title: 'Start a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -1705,7 +1710,7 @@ const TOOLS: Tool[] = [
   {
     name: 'continue_review_shift',
     title: 'Continue a Review Shift',
-    description: 'Next page of the book being reviewed, after the user says "continue" (or "next"). Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
+    description: 'Next page of the book being reviewed. Call it straight after finishing a page until the stretch the user chose is done, and again when they ask for more. Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
     annotations: { title: 'Continue a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -2130,7 +2135,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
         'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
         'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
-        'first_time and how_to_run; on "continue" call continue_review_shift. Use start_blind_check ' +
+        'first_time and how_to_run, working through the stretch of pages with continue_review_shift ' +
+        'without stopping between pages. Use start_blind_check ' +
         'only for a user who reads the language and wants to judge pages themselves.',
     },
   );
