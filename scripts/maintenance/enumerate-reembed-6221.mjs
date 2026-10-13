@@ -117,6 +117,10 @@ async function scan(bookId) {
       { projection: { _id: 0, id: 1, 'translation.data': 1, 'ocr.data': 1 } });
     for await (const d of docs) composed.set(String(d.id), workerEmbeddingInput(d));
   }
+  // A page that was asked for and did not come back would read as "nothing to embed" and leave the list
+  // without a word. Fail the book instead (it is counted in `errors`).
+  const lost = want.filter(id => !composed.has(id));
+  if (lost.length) throw new Error(`${lost.length} of ${want.length} page texts not returned (first ${lost[0]})`);
   const file = (r, cls) => unlisted.write(JSON.stringify([r.page_id, bookId, cls, isLive, Boolean(r.mongo_updated_at), !r.empty, r.embedding_model]) + '\n');
   let nRe = 0, nWd = 0;
   for (const r of rows) {
