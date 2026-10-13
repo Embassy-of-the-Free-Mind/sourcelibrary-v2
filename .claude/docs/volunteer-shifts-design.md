@@ -248,9 +248,19 @@ Reviews are evidence; **corrections change the page**, so they take two steps.
    pair, closes the proposal. Dry run by default. **Actuation:** an OCR correction makes the
    page's machine translation stale, and the stale lane re-translates it under the spend dial.
 
-The second reader is us for now (Derek or a session reading the scan). Phase 2 can let trusted
-volunteers apply each other's proposals, Wikisource's two-person rule, or route proposals to a
-blind model check against the image first.
+The second reader is now our own model adjudicator (#6679,
+`scripts/maintenance/adjudicate-corrections.mjs`, run by hand; a cron is a separate decision).
+Per proposal it downloads the 1,600 px scan, builds a packet (each edit in ±150 chars of context,
+the proposer's reason, never the proposer's identity or model) with **one planted decoy edit**
+(a correct word changed to a near-miss) at a random position, and asks two readers from different
+families, Opus via `claude -p` and Gemini via `agy -p`, both on the subscriptions, for
+`correct | wrong | cant_tell` per edit. A translation edit is judged against the transcription
+and the scan. A reader that calls the decoy correct has its verdicts for that packet discarded.
+Both correct → accept; both wrong → reject; anything else → left. Accepted edits go through
+`apply-page-correction.mjs --accept-edits=…`, which marks the proposal `partially_applied` when
+some were dropped and copies the verdicts into the page's `correction` block; every verdict is
+stored on the proposal (`adjudication`) whether or not anything was applied. Phase 2 can still
+let trusted volunteers apply each other's proposals (Wikisource's two-person rule).
 
 ### Credit
 

@@ -13,12 +13,18 @@
  *   1. re-reads the page and refuses if its text no longer matches the proposal's base_hash;
  *   2. refuses a translation correction while the translation is stale (a patched span would
  *      bump its date and make English made from old OCR look fresh), unless the OCR was
- *      corrected in the same shift;
+ *      corrected in the same shift (or, for a book run with no shift, proposed with it by the same volunteer);
  *   3. saves a page_revisions row (keepMeta) and CONFIRMS it exists before writing;
  *   4. writes compare-and-set on the current text, replacing the field object so the corrected
  *      text does not inherit the old model's prompt/engine keys: source 'volunteer-correction',
  *      edited_by = the volunteer (which also turns on the pipeline's human-edit guard);
  *   5. records a correction_events row (before/after pair, #3241) and marks the proposal applied.
+ *
+ * A SUBSET of a proposal's edits (#6679): `--accept-edits=1,3,4` (1-based, as --show numbers them)
+ * applies only those; the others are dropped with `--drop-reason` or, when the proposal carries an
+ * `adjudication` (scripts/maintenance/adjudicate-corrections.mjs), that edit's decision. The proposal
+ * becomes `partially_applied` with `accepted_edits` / `dropped_edits`, and the adjudicator's per-edit
+ * verdicts travel into the page's `correction` block.
  *
  * What it SETS IN MOTION (say so when you run it): an OCR correction bumps ocr.updated_at, so a
  * machine translation of that page becomes stale; the stale lane (mark-stale-translations.mjs,
@@ -64,6 +70,16 @@ function preview(text, edits) {
     .join('\n');
 }
 
+/** `--accept-edits=1,3,4` → [1,3,4]; absent → every edit. 1-based, unique, in range, non-empty. */
+function parseAccepted(raw, n) {
+  const all = Array.from({ length: n }, (_, i) => i + 1);
+  if (raw === undefined) return all;
+  if (raw === true || !String(raw).trim()) throw new Error('--accept-edits needs a list, e.g. --accept-edits=1,3');
+  const list = [...new Set(String(raw).split(',').map((x) => Number(x.trim())))].sort((a, b) => a - b);
+  for (const k of list) if (!Number.isInteger(k) || k < 1 || k > n) throw new Error(`--accept-edits: ${k} is not an edit number (1–${n})`);
+  return list;
+}
+
 async function main() {
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
@@ -81,7 +97,7 @@ async function main() {
 
     const id = args.show || args.apply || args.reject;
     if (!id || id === true) {
-      console.error('Use --list, --show=<id>, --apply=<id> --reader=… [--confirm], or --reject=<id> --reader=… --reason=… --confirm');
+      console.error('Use --list, --show=<id>, --apply=<id> --reader=… [--accept-edits=1,3] [--confirm], or --reject=<id> --reader=… --reason=… --confirm');
       process.exitCode = 2;
       return;
     }
@@ -106,6 +122,18 @@ async function main() {
     const reader = typeof args.reader === 'string' ? args.reader.trim() : '';
     if (!reader) throw new Error('--reader="<who checked it against the scan>" is required');
 
+    // Which edits: all, or the --accept-edits subset (1-based). Each dropped edit keeps a reason.
+    const accepted = parseAccepted(args['accept-edits'], corr.edits.length);
+    const decisions = corr.adjudication?.decisions ?? null;
+    const dropped = corr.edits.map((_, i) => i + 1).filter((n) => !accepted.includes(n)).map((n) => ({
+      index: n,
+      reason: (typeof args['drop-reason'] === 'string' && args['drop-reason'].trim())
+        || ((d) => (d ? `${d.decision}: ${d.why}` : 'not accepted by the second reader'))(decisions?.find((x) => x.index === n)),
+    }));
+    if (dropped.length) {
+      console.log(`\naccepting edit(s) ${accepted.join(',')}; dropping ${dropped.map((d) => `${d.index} (${d.reason})`).join('; ')}`);
+    }
+
     if (args.reject) {
       const reason = typeof args.reason === 'string' ? args.reason.trim() : '';
       if (!reason) throw new Error('--reason is required to reject');
@@ -125,13 +153,20 @@ async function main() {
     // 2. Do not freshen a stale translation by patching it.
     if (field === 'translation') {
       const stale = page.translation_stale || translationStaleness(page).stale;
-      const ocrFixedThisShift = page.ocr?.source === SOURCE && corr.shift_id && page.ocr?.correction?.shift_id === corr.shift_id;
+      let ocrFixedThisShift = page.ocr?.source === SOURCE && corr.shift_id && page.ocr?.correction?.shift_id === corr.shift_id;
+      // A book run (#6418) stamps no shift_id: the same volunteer proposing the OCR and the translation of this
+      // page together (minutes apart) is the same case — the English fix was written against the scan alongside
+      // the OCR fix (#6679).
+      if (!ocrFixedThisShift && page.ocr?.source === SOURCE && page.ocr?.correction?.volunteer_id === corr.volunteer_id) {
+        const ocrCorr = await corrections.findOne({ id: page.ocr.correction.id }, { projection: { page_id: 1, created_at: 1 } });
+        ocrFixedThisShift = ocrCorr?.page_id === page.id && Math.abs(+ocrCorr.created_at - +corr.created_at) < 10 * 60_000;
+      }
       if (stale && !ocrFixedThisShift) {
         throw new Error('the translation is stale (made from an older transcription); fix the OCR or let it re-translate first');
       }
     }
 
-    const result = applySpanEdits(current, corr.edits);
+    const result = applySpanEdits(current, accepted.map((n) => corr.edits[n - 1]));
     if ('error' in result) throw new Error(result.error);
     const next = result.text;
     console.log(`\n${current.length} → ${next.length} chars, ${currentHash} → ${contentHash(next)}`);
@@ -175,6 +210,8 @@ async function main() {
         shift_id: corr.shift_id ?? null,
         base_hash: corr.base_hash,
         revision_id: revision.id,
+        ...(dropped.length ? { accepted_edits: accepted, dropped_edits: dropped } : {}),
+        ...(decisions ? { adjudication: { reader, decoy_caught: corr.adjudication.decoy_caught ?? null, verdicts: decisions } } : {}),
       },
     };
     const res = await db.collection('pages').updateOne(
@@ -199,11 +236,16 @@ async function main() {
       edited_by: volunteer,
       drafted_by: corr.drafted_by,
       second_reader: reader,
+      ...(dropped.length ? { accepted_edits: accepted, dropped_edits: dropped } : {}),
       created_at: now,
     });
     await corrections.updateOne(
       { id },
-      { $set: { status: 'applied', reviewed_by: reader, reviewed_at: now, revision_id: revision.id, applied_hash: fieldDoc.content_hash } },
+      { $set: {
+        status: dropped.length ? 'partially_applied' : 'applied',
+        reviewed_by: reader, reviewed_at: now, revision_id: revision.id, applied_hash: fieldDoc.content_hash,
+        accepted_edits: accepted, dropped_edits: dropped,
+      } },
     );
     console.log(`applied: modifiedCount=${res.modifiedCount}, revision ${revision.id}, correction_event ${corr.id}`);
   } finally {
