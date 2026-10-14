@@ -18,6 +18,7 @@
  * enrich-source-work-dates.mjs is the older paid-API writer; its layer schema is kept.
  */
 import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 export const PROMPT_VERSION = 'date-works-2';
 export const BASES = ['title_page', 'catalogue', 'model_knowledge'];
@@ -31,7 +32,7 @@ export const loose = (s) => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').
 export function buildLead(pages, { perPage = 900, max = 2600 } = {}) {
   let lead = '';
   for (const pg of [...pages].sort((a, b) => a.page_number - b.page_number)) {
-    const t = (stripEditorialWrappers(pg.text || '') || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    const t = stripMarkupTags(stripEditorialWrappers(pg.text || '') || '', ' ').replace(/\s+/g, ' ').trim();
     if (t.length > 40) lead += `[page ${pg.page_number}] ${t.slice(0, perPage)}\n`;
     if (lead.length > max) break;
   }
