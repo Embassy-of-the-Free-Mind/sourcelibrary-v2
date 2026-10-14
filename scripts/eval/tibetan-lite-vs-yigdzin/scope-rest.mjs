@@ -18,7 +18,10 @@
 // $YIG_DIR/eye-books.json as checked by eye ({"<book>": "tibetan" | "<why not>"}). Anything else is held back as
 // `needs-eye` and listed, never read.
 //
-//   YIG_DIR=<state dir> node --env-file=.env.production.local scope-rest.mjs [--prior <decisions.jsonl> ...]
+// YIG_VISIBILITY=hidden (yigdzin-hidden-4523) takes the HIDDEN Tibetan books instead (language 'Tibetan', visible not
+// true); every other rule is the same, and the book's hidden_reason is carried into book-gate.jsonl.
+//
+//   YIG_DIR=<state dir> [YIG_VISIBILITY=hidden] node --env-file=.env.production.local scope-rest.mjs [--prior <decisions.jsonl> ...]
 // Out: $YIG_DIR/{todo-all.jsonl, todo-skipped.jsonl, book-gate.jsonl, scope-summary.json}
 import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
@@ -48,8 +51,9 @@ for (const f of passedFiles) for (const l of fs.readFileSync(f, 'utf8').split('\
 const LAT = /[A-Za-zÀ-ɏḀ-ỿ]/gu, CJK = /[㐀-鿿豈-﫿]/gu, TIB = /[ༀ-࿿]/gu;
 const m = new MongoClient(process.env.MONGODB_URI); await m.connect();
 const db = m.db('bookstore');
-const books = await db.collection('books').find({ language: 'Tibetan', visible: true, pages_count: { $gt: 0 } },
-  { projection: { id: 1, title: 1, provider: 1, 'pipeline_auto.hold.reason': 1 } }).toArray();
+const HIDDEN = process.env.YIG_VISIBILITY === 'hidden';
+const books = await db.collection('books').find({ language: 'Tibetan', ...(HIDDEN ? { visible: { $ne: true } } : { visible: true, pages_count: { $gt: 0 } }) },
+  { projection: { id: 1, title: 1, provider: 1, hidden_reason: 1, 'pipeline_auto.hold.reason': 1 } }).toArray();
 const out = fs.createWriteStream(`${DIR}/todo-all.jsonl`), skip = fs.createWriteStream(`${DIR}/todo-skipped.jsonl`);
 const bg = fs.createWriteStream(`${DIR}/book-gate.jsonl`);
 const c = { a: {}, b: {} }; const inc = (s, k) => { c[s][k] = (c[s][k] || 0) + 1; };
@@ -84,7 +88,7 @@ for (const b of books) {
     const eye = EYE[bid];
     bookGate = EXCL[bid] ? 'excluded-book' : eye ? (eye === 'tibetan' ? null : `eye:${eye}`) : esukhia ? null
       : share != null && n >= 200 && share >= 0.8 ? null : passed.has(bid) ? null : share != null && n >= 200 ? `script-share:${share}` : 'needs-eye';
-    bg.write(JSON.stringify({ book: bid, title: b.title, provider: b.provider, b_pages: want.filter((w) => w.scope === 'b').length, esukhia, share, n, eye: eye ?? null, passed: passed.has(bid), gate: bookGate }) + '\n');
+    bg.write(JSON.stringify({ book: bid, title: b.title, provider: b.provider, ...(HIDDEN ? { hidden_reason: b.hidden_reason ?? null } : {}), b_pages: want.filter((w) => w.scope === 'b').length, esukhia, share, n, eye: eye ?? null, passed: passed.has(bid), gate: bookGate }) + '\n');
   }
   const needText = want.filter((w) => w.scope === 'a').map((w) => w.p.id);
   const text = new Map();
@@ -106,6 +110,6 @@ for (const b of books) {
   }
 }
 out.end(); skip.end(); bg.end();
-fs.writeFileSync(`${DIR}/scope-summary.json`, JSON.stringify({ at: new Date().toISOString(), books: books.length, rejected_prior: rejected.size, passed_books: passed.size, eye_books: Object.keys(EYE).length, ...c }, null, 1));
+fs.writeFileSync(`${DIR}/scope-summary.json`, JSON.stringify({ at: new Date().toISOString(), visibility: HIDDEN ? 'hidden' : 'live', books: books.length, rejected_prior: rejected.size, passed_books: passed.size, eye_books: Object.keys(EYE).length, ...c }, null, 1));
 console.log(JSON.stringify(c));
 await m.close();
