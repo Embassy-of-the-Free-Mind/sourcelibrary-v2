@@ -118,7 +118,9 @@ export function findImprint(lead, year) {
   return null;
 }
 
-const DESCRIBING = /\b(edition|layout|image|scan|photograph|this page|the page|appears|transcri|original|reproduc|facsimile|copyright|digiti[sz]ed)\b/i;
+const DESCRIBING = /\b(edition|layout|image|scan|photograph|this page|the page|appears|transcri|original|reproduc|facsimile|copyright|digiti[sz]ed|indicated)\b/i;
+// a library's label, stamp or shelfmark slip carries the CATALOGUE's year, not the printer's (716 of 20,197 hits, #6721)
+const LABEL = /\b(library|libraries|bibliot\w*|biblioteca|incunab\w*|signatur|shelf\s?mark|call\s?n(o|umber)|catalog\w*|vellum|pages|museum|collection|purchased|bequeathed|presented|stamp)\b|#\s*\d|\b[A-Z]{1,3}\d{2,4}\.[A-Z]\d/i;
 // #3307: undated Bhutanese/Tibetan manuscripts carry a fabricated 1700
 const isPlaceholder = (b, y) => y === 1700 && /tibetan|dzongkha|bhutan/i.test(`${b.language} ${b.original_title}`);
 
@@ -135,7 +137,7 @@ export function ruleEdition(b) {
     if (isPlaceholder(b, y)) continue;
     const hit = findImprint(b.lead, y);
     // a year inside describing prose ("the original 1771 edition", "the image shows") is not an imprint (#4149 class)
-    if (hit && !DESCRIBING.test(hit.evidence) && loose(b.lead).includes(loose(hit.evidence))) {
+    if (hit && !DESCRIBING.test(hit.evidence) && !LABEL.test(hit.evidence) && loose(b.lead).includes(loose(hit.evidence))) {
       return { year: y, from: y, to: y, display: String(y), precision: 'exact', basis: 'title_page', evidence: hit.evidence.slice(0, 200), rule: `imprint_${hit.form}` };
     }
   }
@@ -199,6 +201,15 @@ export function parseBatchReply(answer, books, { leadChars = 1200 } = {}) {
 
 const int = (v) => (v !== '' && v !== null && v !== undefined && Number.isFinite(+v) && Math.round(+v) !== 0 ? Math.round(+v) : null);
 
+/** The window must hold the year: from ≤ to, and a year outside the model's own window widens it (in place). */
+export function fitWindow(o) {
+  if (!o) return o;
+  if (o.from !== null && o.to !== null && o.from > o.to) [o.from, o.to] = [o.to, o.from];
+  if (o.year !== null && o.from !== null && o.year < o.from) o.from = o.year;
+  if (o.year !== null && o.to !== null && o.year > o.to) o.to = o.year;
+  return o;
+}
+
 /** One date from the reply, checked: a title_page basis needs its words in the lead, or it is downgraded. */
 export function cleanDate(d, lead) {
   if (!d || typeof d !== 'object') return null;
@@ -207,7 +218,7 @@ export function cleanDate(d, lead) {
   if (o.year === null && o.from !== null && o.to !== null) o.year = Math.round((o.from + o.to) / 2);
   if (o.from === null) o.from = o.year;
   if (o.to === null) o.to = o.year;
-  if (o.from !== null && o.to !== null && o.from > o.to) [o.from, o.to] = [o.to, o.from];
+  fitWindow(o);
   if (o.basis === 'title_page' && !(o.evidence && loose(o.evidence).length >= 3 && loose(lead).includes(loose(o.evidence)))) {
     o.basis_claimed = 'title_page'; o.basis = 'model_knowledge';
   }

@@ -57,6 +57,10 @@ describe('edition rule', () => {
     const e = ruleEdition({ published: '1771', lead: '[page 1] mirroring the layout of the original 1771 edition', language: 'Latin' });
     expect(e?.basis).toBe('catalogue');
   });
+  it('takes a library label or shelfmark slip for the catalogue, not the title page', () => {
+    expect(ruleEdition({ published: '1662', lead: '[page 1] R-B B1299.M6 1662 BOSTON PUBLIC LIBRARY', language: 'Latin' })?.basis).toBe('catalogue');
+    expect(ruleEdition({ published: '1489', lead: '[page 1] MARSI FICINI DE VITA 1489 INCUNABULI C 6', language: 'Latin' })?.basis).toBe('catalogue');
+  });
   it('sends the 1700 Tibetan placeholder (#3307) and conflicting sources to the model', () => {
     expect(ruleEdition({ published: '1700', lead: '', language: 'Tibetan' })).toBeNull();
     expect(ruleEdition({ published: '1612', catalogue_years: [1613], lead: '', language: 'Latin' })).toBeNull();

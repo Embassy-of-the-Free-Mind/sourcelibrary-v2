@@ -14,8 +14,8 @@
  *             recorded in `agree_with` (amendment 2).
  *
  * Every write is logged first: recordSweepAction(sweep 'library-dating', action 'date', detail.previous) — and a
- * resumed run still writes a book it already logged: the skip test is the book's own `source_work_dates_meta.run_id`,
- * never the log. A book a human has dated (`source_work_dates_meta.edited_by`, re-read LIVE) is skipped.
+ * resumed run still writes a book it already logged: the skip test is the book's own stored value (this run's
+ * `run_id` AND the same dates), never the log. A book a human has dated (`source_work_dates_meta.edited_by`, re-read LIVE) is skipped.
  * Batches of 500. `--dry-run` writes nothing and prints the first batch's before/after to <dir>/dry-run-diff.json.
  *
  * PRIOR ART: scripts/_archived/2026-09-unmetered/enrichment/enrich-source-work-dates.mjs wrote source_work_dates with
@@ -28,7 +28,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient, ObjectId } from 'mongodb';
 import { recordSweepActions } from '../../lib/sweep-log.mjs';
-import { toStoredLayers, toMeta } from '../../lib/date-works.mjs';
+import { toStoredLayers, toMeta, fitWindow } from '../../lib/date-works.mjs';
 
 const [PLAN, RUN_ID, DATED] = process.argv.slice(2, 5);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -52,7 +52,7 @@ export function agreement(a, b) {
 }
 
 function bookUpdate(member, rep, repRow, ownRow) {
-  const work = { ...repRow.work, ...(member.book_id !== rep ? { from_book: rep } : {}) };
+  const work = fitWindow({ ...repRow.work, ...(member.book_id !== rep ? { from_book: rep } : {}) });
   // a volume of the representative's set (same catalogue date string, plan.mjs) shares its edition date
   const modelEd = ownRow?.edition || (member.edition_from_rep && repRow.edition ? { ...repRow.edition, from_book: rep } : null);
   const re = member.rule_edition;
@@ -60,6 +60,7 @@ function bookUpdate(member, rep, repRow, ownRow) {
     : modelEd?.basis === 'title_page' ? modelEd
       : re || modelEd;
   if (!edition) return null;
+  fitWindow(edition);
   let confidence = repRow.confidence;
   let agree_with = null;
   const other = check.get(rep);
@@ -68,12 +69,16 @@ function bookUpdate(member, rep, repRow, ownRow) {
     agree_with = { model: other.model, work: { year: other.work.year, from: other.work.from, to: other.work.to }, agrees: ok };
     if (ok === false) confidence = 'low';
   }
+  // an edition made before its work was written means one of the two is wrong: keep both, flag the row
+  const checks = [];
+  if (edition.to != null && work.from != null && edition.to < work.from) { checks.push('edition_before_work'); confidence = 'low'; }
   const r = { work, edition, layers: repRow.layers, catalogue_note: (ownRow || (member.book_id === rep ? repRow : null))?.catalogue_note || '', confidence, reasoning: repRow.reasoning };
   // the edition layer is THIS book's edition, whatever the representative's reply said
   const layers = toStoredLayers({ ...r, layers: [...(repRow.layers || []).filter((l) => l?.type !== 'edition'), { type: 'edition', year: edition.year, date_display: edition.display || String(edition.year), precision: 'exact' }] });
   const meta = toMeta(r, { model: repRow.model, run_id: RUN_ID, dated_at: repRow.dated_at });
   meta.family = /^claude|sonnet|haiku|opus/i.test(repRow.model) ? 'claude' : /gemini/i.test(repRow.model) ? 'gemini' : 'other';
   if (agree_with) meta.agree_with = agree_with;
+  if (checks.length) meta.checks = checks;
   if (ownRow && ownRow !== repRow) meta.edition_model = ownRow.model;
   return { source_work_dates: layers, source_work_dates_meta: meta };
 }
@@ -107,7 +112,12 @@ for (let i = 0, nb = 0; i < todo.length && (!MAX_BATCHES || nb < MAX_BATCHES); i
     const d = byId.get(t.book_id);
     if (!d) { stats.missing++; continue; }
     if (d.source_work_dates_meta?.edited_by) { stats.human++; continue; }
-    if (d.source_work_dates_meta?.run_id === RUN_ID) { stats.already++; continue; }
+    // already written by this run AND unchanged: skip. A row this run wrote that the code would now write differently
+    // (a fix landed mid-run) is rewritten, and logged again.
+    const same = (a, b) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+    if (d.source_work_dates_meta?.run_id === RUN_ID && same(d.source_work_dates_meta.work, t.set.source_work_dates_meta.work)
+      && same(d.source_work_dates_meta.edition, t.set.source_work_dates_meta.edition) && same(d.source_work_dates, t.set.source_work_dates)
+      && d.source_work_dates_meta.confidence === t.set.source_work_dates_meta.confidence) { stats.already++; continue; }
     go.push({ t, d });
   }
   if (DRY) {
