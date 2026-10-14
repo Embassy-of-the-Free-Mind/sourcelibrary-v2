@@ -83,6 +83,16 @@ function bookUpdate(member, rep, repRow, ownRow) {
   return { source_work_dates: layers, source_work_dates_meta: meta };
 }
 
+// #3307: 1,445 undated EAP Tibetan manuscripts keep an import placeholder `year: 1700` (their `published` is already
+// unset, so the model never sees it). Say so in the note; `year` itself is not this writer's to change.
+export function placeholderNote(d) {
+  const pub = d.published == null || String(d.published).trim() === '' ? null : String(d.published).trim();
+  if (Number(d.year) === 1700 && (pub === null || pub === '1700') && /tibet|dzongkha/i.test(String(d.language || ''))) {
+    return 'The catalogue year 1700 is an import placeholder, not a date: the source record gives none (#3307).';
+  }
+  return null;
+}
+
 const idFilter = (id) => (/^[0-9a-f]{24}$/i.test(id) ? { $or: [{ id }, { _id: new ObjectId(id) }] } : { $or: [{ id }, { _id: id }] });
 
 // build the write list
@@ -105,7 +115,7 @@ const booksOf = (d) => d.collection('books');
 const stats = { written: 0, already: 0, human: 0, missing: 0 }; const diffs = [];
 for (let i = 0, nb = 0; i < todo.length && (!MAX_BATCHES || nb < MAX_BATCHES); i += BATCH, nb++) {
   const batch = todo.slice(i, i + BATCH);
-  const live = await booksOf(db).find({ $or: batch.flatMap((t) => idFilter(t.book_id).$or) }, { projection: { id: 1, source_work_dates: 1, source_work_dates_meta: 1, published: 1 } }).toArray();
+  const live = await booksOf(db).find({ $or: batch.flatMap((t) => idFilter(t.book_id).$or) }, { projection: { id: 1, source_work_dates: 1, source_work_dates_meta: 1, published: 1, year: 1, language: 1 } }).toArray();
   const byId = new Map(); for (const d of live) { byId.set(String(d._id), d); if (d.id) byId.set(String(d.id), d); }
   const go = [];
   for (const t of batch) {
@@ -118,6 +128,10 @@ for (let i = 0, nb = 0; i < todo.length && (!MAX_BATCHES || nb < MAX_BATCHES); i
     if (d.source_work_dates_meta?.run_id === RUN_ID && same(d.source_work_dates_meta.work, t.set.source_work_dates_meta.work)
       && same(d.source_work_dates_meta.edition, t.set.source_work_dates_meta.edition) && same(d.source_work_dates, t.set.source_work_dates)
       && d.source_work_dates_meta.confidence === t.set.source_work_dates_meta.confidence) { stats.already++; continue; }
+    const pn = placeholderNote(d);
+    if (pn && !t.set.source_work_dates_meta.catalogue_note.includes('#3307')) {
+      t.set.source_work_dates_meta.catalogue_note = [pn, t.set.source_work_dates_meta.catalogue_note].filter(Boolean).join(' ').slice(0, 400);
+    }
     go.push({ t, d });
   }
   if (DRY) {
