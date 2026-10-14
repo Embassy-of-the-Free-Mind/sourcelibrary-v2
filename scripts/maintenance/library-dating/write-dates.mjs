@@ -76,6 +76,7 @@ function bookUpdate(member, rep, repRow, ownRow) {
   // the edition layer is THIS book's edition, whatever the representative's reply said
   const layers = toStoredLayers({ ...r, layers: [...(repRow.layers || []).filter((l) => l?.type !== 'edition'), { type: 'edition', year: edition.year, date_display: edition.display || String(edition.year), precision: 'exact' }] });
   const meta = toMeta(r, { model: repRow.model, run_id: RUN_ID, dated_at: repRow.dated_at });
+  if (repRow.prompt_version) meta.prompt_version = repRow.prompt_version;
   meta.family = /^claude|sonnet|haiku|opus/i.test(repRow.model) ? 'claude' : /gemini/i.test(repRow.model) ? 'gemini' : 'other';
   if (agree_with) meta.agree_with = agree_with;
   if (checks.length) meta.checks = checks;

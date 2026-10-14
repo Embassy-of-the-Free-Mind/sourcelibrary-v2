@@ -154,7 +154,10 @@ export function ruleEdition(b) {
  * record per book, the reply a JSON array with `n` echoing each record's number. Shorter leaves per book (the title
  * page comes first, and the work date rarely needs more).
  */
-export const buildBatchPrompt = (books, { leadChars = 1200 } = {}) => `You are a historian of the book dating volumes in a digital library of historical sources. Below are ${books.length} catalogue records, each with the OCR of its opening leaves (may be noisy). Date each one independently.
+// The one alternative wording tested (#6721 amendment 3d): the point year is the date scholars conventionally cite
+// (else the window's midpoint), and the window is the narrowest one defensible.
+const P2_YEAR = `\nFor each date, "year" is the date scholars conventionally cite (if there is none, the midpoint of the window), and "from"–"to" is the narrowest window you can defend: a known year is a window of zero, a decade's uncertainty is ten years, not a century.`;
+export const buildBatchPrompt = (books, { leadChars = 1200, variant = null } = {}) => `You are a historian of the book dating volumes in a digital library of historical sources. Below are ${books.length} catalogue records, each with the OCR of its opening leaves (may be noisy). Date each one independently.
 
 ${books.map((b, i) => `=== RECORD ${i + 1} ===
 - Title: ${b.original_title || b.title}${b.title && b.original_title && b.title !== b.original_title ? ` (English title: ${b.title})` : ''}
@@ -164,7 +167,11 @@ ${books.map((b, i) => `=== RECORD ${i + 1} ===
 - Opening leaves:
 """
 ${(b.lead || '[no text available]').slice(0, leadChars)}
-"""`).join('\n\n')}
+"""${b.context ? `
+- ${b.context_label || 'More of the book'}:
+"""
+${String(b.context).slice(0, 1500)}
+"""` : ''}`).join('\n\n')}
 
 For EACH record give two dates.
 1. WORK: when the text itself was first composed (or compiled), as scholars date it. For a translation or a later printing, this is the ORIGINAL composition, not this volume. For pseudepigrapha (Hermes, Solomon, Orpheus) give the scholarly date, not the legendary one. For a canon or anthology, the main composition window of its contents. For a modern original book, its first publication year.
@@ -175,7 +182,7 @@ For each date, say what it rests on:
 - "catalogue": (edition only) you can only repeat the catalogue date and nothing contradicts it.
 - "model_knowledge": your own scholarly estimate. Give an honest from–to window.
 If a catalogue date looks like a placeholder or is contradicted by the leaves, say so in "catalogue_note".
-Years are integers; negative for BCE.
+Years are integers; negative for BCE.${variant === 'p2' ? P2_YEAR : ''}
 
 Reply with ONLY a JSON array of ${books.length} objects, in record order, between two marker lines <<<BEGIN>>> and <<<END>>>, nothing outside them. Each object:
 {"n":<record number>,"work":{"year":0,"from":0,"to":0,"display":"","precision":"exact|decade|century|range","basis":"title_page|model_knowledge","evidence":""},

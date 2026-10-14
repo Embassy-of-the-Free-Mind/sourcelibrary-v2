@@ -27,7 +27,7 @@ import { buildPrompt, buildBatchPrompt, parseReply, parseBatchReply, PROMPT_VERS
 const [IN, OUT] = process.argv.slice(2, 4);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const ENGINE = arg('--engine', 'agy'); const MODEL = arg('--model', ENGINE === 'claude' ? 'haiku' : 'gemini-3.8-flash-low');
-const BATCH = +arg('--batch', 15); const CONC = +arg('--conc', 4); const MAX = +arg('--max', 0); const PER_HOUR = +arg('--per-hour', 0);
+const BATCH = +arg('--batch', 15); const VARIANT = arg('--prompt-variant', null); const CONC = +arg('--conc', 4); const MAX = +arg('--max', 0); const PER_HOUR = +arg('--per-hour', 0);
 const [SH, NSH] = (arg('--shard', '0/1')).split('/').map(Number);
 if (!IN || !OUT) { console.error('usage: date-books.mjs <in.jsonl> <out.jsonl> [--engine agy|claude] [--model m] [--batch n] [--conc n] [--max n] [--shard i/n]'); process.exit(2); }
 const BAD = OUT.replace(/\.jsonl$/, '') + '.unparsed.jsonl';
@@ -82,7 +82,7 @@ async function worker() {
   while (!stop && g < groups.length) {
     const books = groups[g++];
     await pace();
-    const prompt = BATCH === 1 ? buildPrompt(books[0]) : buildBatchPrompt(books);
+    const prompt = BATCH === 1 ? buildPrompt(books[0]) : buildBatchPrompt(books, { variant: VARIANT });
     const res = await call(prompt); calls++;
     fs.appendFileSync(CALLS, JSON.stringify({ at: new Date().toISOString(), engine: ENGINE, model: MODEL, n: books.length, cls: res.cls, secs: res.secs, usage: res.usage || null }) + '\n');
     // a dated reply can hold the year 429, which agy-cli's short-reply quota test reads as an HTTP 429 (2026-10-12
@@ -93,7 +93,7 @@ async function worker() {
     books.forEach((b, i) => {
       const r = parsed.get(i);
       if (!r) { bad++; fs.appendFileSync(BAD, JSON.stringify({ book_id: b.book_id, cls: res.cls, at: new Date().toISOString(), answer: String(res.answer || '').slice(0, 200) }) + '\n'); return; }
-      fs.appendFileSync(OUT, JSON.stringify({ book_id: b.book_id, engine: ENGINE, model: MODEL, batch: books.length, prompt_version: PROMPT_VERSION, dated_at: new Date().toISOString(),
+      fs.appendFileSync(OUT, JSON.stringify({ book_id: b.book_id, engine: ENGINE, model: MODEL, batch: books.length, prompt_version: VARIANT ? `${PROMPT_VERSION}-${VARIANT}` : PROMPT_VERSION, dated_at: new Date().toISOString(),
         catalogue: b.published ?? null, ...r }) + '\n');
       ok++;
     });
