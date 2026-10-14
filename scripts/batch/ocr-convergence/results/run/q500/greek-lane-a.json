@@ -1,0 +1,195 @@
+{
+ "built_at": "2026-10-14T19:32:40.954Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 401,
+   "book_id": "69b300125545150b61b4b882",
+   "slug": "novum-testamentum-graece-elzevir-1624-receptus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 77,
+   "lane_block": null
+  },
+  {
+   "rank": 418,
+   "book_id": "69944b932aa4c20217a33f12",
+   "slug": "philonos-ioudaiou-syngrammata-omnia-quae-extant-opera-1691-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 76,
+   "lane_block": null
+  },
+  {
+   "rank": 419,
+   "book_id": "6a3f023d97e91e1768f669a9",
+   "slug": "platonis-dialogi-secundum-thrasylli-tetralogias-dispositi-plato",
+   "group": "greek",
+   "language": "Greek",
+   "views": 76,
+   "lane_block": null
+  },
+  {
+   "rank": 420,
+   "book_id": "699247034c402ed78ad696ac",
+   "slug": "the-ascension-of-isaiah-ethiopic-greek-latin-slavonic-texts-ed",
+   "group": "greek",
+   "language": "Greek-Latin",
+   "views": 76,
+   "lane_block": null
+  },
+  {
+   "rank": 436,
+   "book_id": "69938e26d5a98fd66f4307b0",
+   "slug": "accurata-graeciae-descriptio-greek-latin-pausanias",
+   "group": "greek",
+   "language": "Greek-Latin",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 438,
+   "book_id": "69bfcf293047130b1c3beced",
+   "slug": "bodleian-library-ms-auct-e-1-6-theophylactus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 439,
+   "book_id": "6a357eaac6e2d5bb56a6406e",
+   "slug": "clemens-alexandrinus-gcs-edition-vol-3-stromateis-vii-viii-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 441,
+   "book_id": "6993890ece15387065946496",
+   "slug": "corpus-hermeticum-and-plotinus-enneads-cambridge-trinity-plotinus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 446,
+   "book_id": "69b6684cb3f4fc0441568c7e",
+   "slug": "diogenous-laertiou-peri-bion-dogmaton-kai-apophthegmaton-laerce-2",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 447,
+   "book_id": "6a3f02bb97e91e1768f68204",
+   "slug": "fragmenta-philosophorum-graecorum-mullach",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 448,
+   "book_id": "69938de1d5a98fd66f42f79c",
+   "slug": "kallimachou-kyrenaiou-hymnoi-callimachus-hymns-callimachus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 452,
+   "book_id": "6953e60e1479a63c11084af4",
+   "slug": "on-the-natural-faculties-loeb-classical-library-galen",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 454,
+   "book_id": "69b4c07086a5921d5bc43acd",
+   "slug": "proclus-commentary-on-plato-s-parmenides-proclus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 74,
+   "lane_block": null
+  },
+  {
+   "rank": 463,
+   "book_id": "69aebfe651d30e6c1f6c8eaf",
+   "slug": "de-cerimoniis-aulae-byzantinae-libri-duo-porphyrogenitus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 73,
+   "lane_block": null
+  },
+  {
+   "rank": 466,
+   "book_id": "69aea3b5912e8f072fbef54f",
+   "slug": "hierosolymitike-bibliotheke-ii-papadopoulos",
+   "group": "greek",
+   "language": "Greek",
+   "views": 73,
+   "lane_block": null
+  },
+  {
+   "rank": 469,
+   "book_id": "6956952b8c9559f6c2db06a3",
+   "slug": "meditations-latin-and-greek-bilingual-antoninus",
+   "group": "greek",
+   "language": "Greek/Latin",
+   "views": 73,
+   "lane_block": null
+  },
+  {
+   "rank": 489,
+   "book_id": "69b3006c5545150b61b4c6b0",
+   "slug": "opera-omnia-froben-1538-hippocrates",
+   "group": "greek",
+   "language": "Greek",
+   "views": 72,
+   "lane_block": null
+  },
+  {
+   "rank": 494,
+   "book_id": "69bfcc988ab50eb88e8c5589",
+   "slug": "bodleian-library-ms-barocci-29-anonymous",
+   "group": "greek",
+   "language": "Greek",
+   "views": 71,
+   "lane_block": null
+  },
+  {
+   "rank": 495,
+   "book_id": "69938d9dd5a98fd66f42dc60",
+   "slug": "chronographia-dindorf-cshb-edition-malalas",
+   "group": "greek",
+   "language": "Greek",
+   "views": 71,
+   "lane_block": null
+  },
+  {
+   "rank": 498,
+   "book_id": "69d146041c2a66dc094b1fad",
+   "slug": "in-nicomachi-arithmeticam-introductionem-de-fato-tennulius",
+   "group": "greek",
+   "language": "Greek",
+   "views": 71,
+   "lane_block": null
+  },
+  {
+   "rank": 499,
+   "book_id": "69942a7f045dfc482ad772e7",
+   "slug": "philocalia-editio-princeps-tarinus-1618-origen",
+   "group": "greek",
+   "language": "Greek",
+   "views": 71,
+   "lane_block": null
+  }
+ ]
+}
