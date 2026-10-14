@@ -190,8 +190,13 @@ function workOfPage(page) {
 const WAVE_ENGINES = new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5']);
 const CLI_6293_TIERS = [['3.8', 'cli-cost.json'], ['3.7', 'cli-cost-gemini-3.7-flash.json'], ['3.6', 'cli-cost-gemini-3.6-flash.json'], ['3.8', 'cli-cost-gemini-3.8-flash-high.json', 'high']]
   .map(([v, f, effort = 'low']) => ({ v, effort, engine: `gemini-${v}-flash${effort === 'low' ? '' : `-${effort}`}+antigravity-cli`,
-    label: `Gemini ${v} Flash (CLI${effort === 'low' ? '' : `, ${effort}`})`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }));
+    label: `Gemini ${v} Flash (CLI${effort === 'low' ? '' : `, ${effort}`})`, costFile: path.join(__dirname, 'results', 'ocr-pareto-6293', f) }))
+  // #6707 Amendment 4.1: Gemini 4 Argon low through the CLI on the hard panels. No API list price yet, so no cost file:
+  // the arm is listed unplaced, never placed at a guessed price.
+  .concat([{ v: '4-argon', effort: 'low', engine: 'gemini-4-argon-low+antigravity-cli', label: 'Gemini 4 Argon low (CLI)', costFile: null }]);
 const CLI_6293_ENGINES = new Set(CLI_6293_TIERS.map(t => t.engine));
+LABEL['gemini-4-argon-low+antigravity-cli'] = 'Gemini 4 Argon low (CLI)';
+NO_PRICE['gemini-4-argon-low+antigravity-cli'] = 'no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)';
 const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored', 'engine-wave2-6011/scored', 'ocr-pareto-6293/scored'];
 const DIR_ENGINES = { 'engine-wave1-6011/scored': WAVE_ENGINES, 'engine-wave2-6011/scored': WAVE_ENGINES, 'ocr-pareto-6293/scored': CLI_6293_ENGINES };
 const isRepeatArm = e => /-b$/.test(e); // the A-vs-A repeat of production: the noise band, never a point
@@ -273,7 +278,8 @@ const SYRIAC_CLI_COST_FILE = path.join(__dirname, 'results', 'syriac-pareto-6295
 const SYRIAC_CLI_TIERS = [['C38', '3.8'], ['C37', '3.7'], ['C36', '3.6']].map(([T, v]) => ({ T, v, key: `cli_${T.toLowerCase()}`, engine: `gemini-${v}-flash+antigravity-cli` }));
 for (const t of SYRIAC_CLI_TIERS) LABEL[t.engine] = `Gemini ${t.v} Flash (CLI)`;
 const SYRIAC_PRINT_ARMS = { omnisyr: 'omnisyr', 'omnisyr-nosplit': 'omnisyr-nosplit', 'sophro-mhiro': 'sophro-mhiro', 'qoruyo-eastern': 'qoruyo-eastern',
-  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru', 'C38-ocr': SYRIAC_CLI_TIERS[0].engine, 'C37-ocr': SYRIAC_CLI_TIERS[1].engine, 'C36-ocr': SYRIAC_CLI_TIERS[2].engine };
+  'qoruyo-estrangela': 'qoruyo-estrangela', 'L-ocr': 'gemini-3.1-flash-lite', mineru: 'mineru', 'C38-ocr': SYRIAC_CLI_TIERS[0].engine, 'C37-ocr': SYRIAC_CLI_TIERS[1].engine, 'C36-ocr': SYRIAC_CLI_TIERS[2].engine,
+  'G4L-syr-print': 'gemini-4-argon-low+antigravity-cli' };
 const syriacPrint = fs.existsSync(SYRIAC_PRINT_FILE) ? JSON.parse(fs.readFileSync(SYRIAC_PRINT_FILE, 'utf8')) : null;
 const syriacCliTiers = SYRIAC_CLI_TIERS.filter(t => syriacPrint?.[t.key]);
 if (syriacCliTiers.length) {
@@ -301,7 +307,7 @@ const CAP_6293 = fs.existsSync(CAP_6293_FILE) ? new Set(JSON.parse(fs.readFileSy
 // #6523 (scripts/eval/experiments/2026-10-12-cli-ocr-route-fix-6523.md): how the Latin / Early English CLI pages were read
 const ROUTE_6523 = 'reply asked for between <<<BEGIN>>>/<<<END>>> markers; a PreToolUse hook allows view_file on the page image and refuses every other tool with a reason; plan mode; up to 2 attempts, on an empty reply only (1 of 573 reads retried); print timeout 300 s (120 s for the 3.8 low held-out pages)';
 for (const t of CLI_6293_TIERS) {
-  if (!fs.existsSync(t.costFile)) continue;
+  if (!t.costFile || !fs.existsSync(t.costFile)) continue;
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
   LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
