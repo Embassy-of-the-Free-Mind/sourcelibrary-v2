@@ -214,3 +214,67 @@ refused or empty page counts as read). C38L-rep is a noise floor and is not char
 
 **Not run.** 3.8 Flash on the API (paid; ruled out 2026-10-08), so route and effort cannot be fully separated: a C38H
 that closes the gap shows effort is enough through this route, not that the API at low effort would also close it.
+
+## Amendment 4 (2026-10-14, job `g4-ocr-6707`, #6707): Gemini 4 Argon through the CLI
+
+Committed and pushed 2026-10-14 before any call of these arms. Everything in Amendments 1–3 holds except what this
+section changes.
+
+**Question (Derek, 2026-10-13).** Gemini 4 Argon appeared in `agy models` on 2026-10-13 (`gemini-4-argon-low`,
+`-medium`, `-high`). Does it read our pages better than 3.8 Flash through the CLI, 3 Flash (API) and production lite, on
+the same pages, references and scorer? $0: subscription CLI only, no paid API for any model.
+
+**Arms.** Both through `scripts/eval/run-cli-arm.py --kind ocr` as on main after #6523 (plan mode, the `agy-tool-gate.py`
+hook, the `<<<BEGIN>>>`/`<<<END>>>` markers, at most 2 attempts on an empty reply, never auto-approve), the two arms
+interleaved in time (each at 2 parallel, started together), at most 4 image calls in parallel in total.
+- **G4L:** `gemini-4-argon-low`, engine id `gemini-4-argon-low+antigravity-cli`, `--print-timeout 300` (the default).
+- **G4H:** `gemini-4-argon-high`, engine id `gemini-4-argon-high+antigravity-cli`, `--print-timeout 300`.
+`-medium` is not run.
+
+**Pages.** The same 191 requests as Amendment 3 (Latin 143 after #6304's drops of 147, Early English 44;
+`requests-effort.jsonl` of `cli-effort-6293`, which is byte-identical to those uids' rows of `cli-queue-b-6293`'s
+`requests-capped.jsonl`): the same sealed JPEGs and the same request per stratum, byte for byte, with the #6523 marker
+sentence appended by the runner as for every stored CLI read on these pages. Order: a 5-page G4L smoke run first (the
+first 5 uids of the file); if most of the 5 error, refuse or hit quota, the job stops with one BLOCKED comment.
+**Then, only if both arms finished on the 191 and no quota error was seen in the last hour:** G4L alone on the other
+364 pages of Amendment 2's 555-page capped set, read in this order: Greek (127), Chinese manuscript (Amendment 2's
+150-page subsample, its own panel), Chinese print (19), other Latin-script (23), Armenian (5), Syriac (40). Same rules.
+
+**Quota.** On a quota error `run-cli-arm.py` exits 3: sleep until the quoted reset (60 min if none is quoted), resume
+(a page with text is never re-read), at most 3 times, then report what was read. Quota events are reported with time
+and arm. Other jobs share this account.
+
+**Comparators (stored, not re-read).** On Latin and Early English: C38L (`gemini-3.8-flash+antigravity-cli`) and C38H
+(`gemini-3.8-flash-high+antigravity-cli`), both re-read on exactly these 191 pages with the #6523 route config, so the
+G4 arms and the 3.8 arms share one route; 3 Flash (`gemini-3-flash-preview`, API) and lite (`gemini-3.1-flash-lite`).
+On the step-4 panels the stored CLI reads are still the #6293 config (pre-#6523), so G4L vs C38L there compares routes
+as well as models and is reported as such; vs 3 Flash and lite it is clean.
+
+**Scoring.** Unchanged instruments: `import-cli-arm.py` into a copy of the bench, `benchmark-score.mjs` (control: every
+stored engine cell reproduces the committed score), rows from `build-ocr-pareto.mjs --dump-rows` with the G4 engines
+added, so every row rule is the chart's own as it stands on main: #6304 drops, the #6523 extractor, and the #6523 ONE
+FAILURE RULE (a failed read — copy filter, other refusal, empty, timeout, chat with no transcription — is counted as a
+failure and not scored; an unplaced read is a scored 1.0).
+
+**Reported per panel.** Median CER per arm with page-bootstrap 95 % CI (2,000 resamples, seeded as
+`analyze-cli-effort.py`). Paired, on the pages both arms answered: median Δ CER (G4 − other; negative = G4 reads better)
+with by-page bootstrap 95 % CI, W/L/T, sign-test p, for G4L and G4H each vs C38L, C38H, 3 Flash and lite, and G4H vs
+G4L; mean Δ with CI as a secondary line. Per arm: failures by kind (refusal / copy filter, empty, timeout, chat),
+wrapper share (reply not clean between the markers), nudged share, median seconds per call. The five worst G4 pages
+on Latin and on Early English, read against the page image, labelled read-from-image.
+
+**Decision rule, per panel and comparator.** G4 (L or H) **beats** a comparator when its paired median Δ CI lies
+wholly below 0 **and** |median Δ| exceeds the route's A-vs-A noise floor measured in Amendment 3 (C38L-rep vs stored
+C38, paired median Δ): Latin 0.000 [−0.001, 0.000] and Early English −0.010 [−0.213, 0.000], taken as **Latin 0.001**
+(CER is reported to 3 decimals, so 0.000 floors to the reporting resolution) and **Early English 0.010**. It **loses**
+under the mirror condition (CI wholly above 0 and Δ above the floor). Anything else is **same** (no detectable
+difference at this n). Failure counts are reported beside the verdict and never folded into it. On the step-4 panels no
+A-vs-A floor exists, so the larger measured floor (0.010) is used and the verdict there is labelled provisional. The
+one-line verdict names 3.8 Flash low (C38L) as "3.8 Flash". It is a statement about this route, these pages, this date.
+
+**Chart.** A G4 arm is added to a chart's panel in `src/data/ocr-pareto.json` only where it read that panel's whole
+set (the shared-page rule; a failed read counts as read). Cost axis: Gemini 4 Argon has no API price in
+`model-pricing.mjs`; if none is published by the wrap-up, the arm is plotted at $0 billed with a "no API list price"
+note, never at a guessed price.
+
+**Not run.** Any paid API read (ruled out), `-medium`, a G4 A-vs-A repeat.
