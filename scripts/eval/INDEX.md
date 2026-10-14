@@ -13,7 +13,7 @@ re-implementing one is the most common way work gets duplicated here.
 
 | module | exports |
 |---|---|
-| `lib/agreement-stats.mjs` | `wilson`, `wilsonHalfWidth`, `nForHalfWidth`, `binaryAgreement`, `weightedKappa`, `aucLowerIsPositive`, `bootstrapItems` |
+| `lib/agreement-stats.mjs` | `wilson`, `wilsonHalfWidth`, `nForHalfWidth`, `binaryAgreement`, `weightedKappa`, `aucLowerIsPositive`, `krippendorffAlpha`, `ALPHA_RELIABLE`, `ALPHA_TENTATIVE`, `judgeReliability`, `reliabilityLine`, `bootstrapItems` |
 | `lib/benchmark-rows.mjs` | `BENCHMARK_DIR`, `readBenchmarkRows` |
 | `lib/contact-sheet.mjs` | `sheetFor` |
 | `lib/edition-window.mjs` | `wordWindow`, `SUPPORTED_SCRIPTS`, `foldWord`, `stripTags`, `foldedWords`, `cutEditionWindow`, `longWordWindow`, `alignSpan`, `alignTrimWindow` |
