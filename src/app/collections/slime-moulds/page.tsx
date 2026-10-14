@@ -16,6 +16,7 @@ import CollectionBookCard, { type CollectionBook } from '@/components/Collection
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
+import { storedHeroCollageUrl } from '@/lib/collection-hero-collage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import LibrarianSearch from '@/components/LibrarianSearch';
 import HideOnTenantHost from '@/components/tenant/HideOnTenantHost';
@@ -377,6 +378,17 @@ export default async function SlimeMouldsCollectionPage() {
   ].filter(Boolean) as string[]).map((id) => ({ id, label: SECTION_LABELS[id], hideOnTenantHost: id === 'librarian' }));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
+  // The hero collage's R2 URL, straight into the HTML: going through the
+  // hero-collage route cost every cold visit a function call and a redirect
+  // before the largest image on the page could start. The route stays as the
+  // fallback for a collage that has never been built.
+  const [heroStored, heroStoredMobile] = await Promise.all([
+    withTimeout(storedHeroCollageUrl(SLUG, 'landscape', MYXO_DESC_RX), 2500, null),
+    withTimeout(storedHeroCollageUrl(SLUG, 'portrait', MYXO_DESC_RX), 2500, null),
+  ]);
+  const heroSrc = heroStored ?? `/api/collections/${SLUG}/hero-collage?match=${encodeURIComponent(MYXO_DESC_RX)}`;
+  const heroSrcMobile = heroStoredMobile ?? `/api/collections/${SLUG}/hero-collage?shape=portrait&match=${encodeURIComponent(MYXO_DESC_RX)}`;
+
   return (
     <div className="min-h-screen bg-cream">
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
@@ -387,9 +399,9 @@ export default async function SlimeMouldsCollectionPage() {
         {/* The collage is filtered to actual slime mould plates; the route falls
             back to the collection's full plate set while too few are extracted. */}
         <ParallaxImage
-          src={`/api/collections/${SLUG}/hero-collage?match=${encodeURIComponent(MYXO_DESC_RX)}`}
-          srcMobile={`/api/collections/${SLUG}/hero-collage?shape=portrait&match=${encodeURIComponent(MYXO_DESC_RX)}`}
-          loading="eager" strength={0.08} oversize={0.1}
+          src={heroSrc}
+          srcMobile={heroSrcMobile}
+          loading="eager" fetchPriority="high" strength={0.08} oversize={0.1}
         />
         {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
             is darkened to the same 72% base as the desktop one instead of the 45%

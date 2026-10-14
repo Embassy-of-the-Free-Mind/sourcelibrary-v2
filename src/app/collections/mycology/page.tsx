@@ -16,6 +16,7 @@ import CollectionBookCard, { type CollectionBook } from '@/components/Collection
 import MycoSlider, { type MiniBook } from './_components/MycoSlider';
 import MycoMasonry from './_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
+import { storedHeroCollageUrl } from '@/lib/collection-hero-collage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
@@ -271,6 +272,17 @@ export default async function MycologyCollectionPage() {
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
+  // The hero collage's R2 URL, straight into the HTML: going through the
+  // hero-collage route cost every cold visit a function call and a redirect
+  // before the largest image on the page could start. The route stays as the
+  // fallback for a collage that has never been built.
+  const [heroStored, heroStoredMobile] = await Promise.all([
+    withTimeout(storedHeroCollageUrl(SLUG, 'landscape', null), 2500, null),
+    withTimeout(storedHeroCollageUrl(SLUG, 'portrait', null), 2500, null),
+  ]);
+  const heroSrc = heroStored ?? `/api/collections/${SLUG}/hero-collage`;
+  const heroSrcMobile = heroStoredMobile ?? `/api/collections/${SLUG}/hero-collage?shape=portrait`;
+
   return (
     <div className="min-h-screen bg-cream">
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
@@ -283,9 +295,9 @@ export default async function MycologyCollectionPage() {
       <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end md:items-center" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         <ParallaxImage
-          src={`/api/collections/${SLUG}/hero-collage`}
-          srcMobile={`/api/collections/${SLUG}/hero-collage?shape=portrait`}
-          loading="eager" strength={0.08} oversize={0.1}
+          src={heroSrc}
+          srcMobile={heroSrcMobile}
+          loading="eager" fetchPriority="high" strength={0.08} oversize={0.1}
         />
         {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
             is darkened to the same 72% base as the desktop one instead of the 45%
