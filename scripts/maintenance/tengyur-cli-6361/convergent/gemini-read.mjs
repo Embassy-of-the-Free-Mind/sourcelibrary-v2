@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { recoverArray } from '../../../eval/second-reader/lib.mjs';
+import { assertGeminiModel } from '../../../lib/agy-cli.mjs'; // agy runs Gemini only (Claude goes through claude -p)
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const REPO = path.resolve(HERE, '../../../..');
@@ -34,6 +35,7 @@ function agy(prompt, cwd, conversation) {
   return new Promise((resolve) => {
     const args = ['-p', prompt, '--model', MODEL, '--mode', 'plan', '--print-timeout', '420s', '--output-format', 'json'];
     if (conversation) args.push('--conversation', conversation);
+    assertGeminiModel(args);
     const ch = spawn('agy', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '', err = '';
     ch.stdout.on('data', (d) => { out += d; });

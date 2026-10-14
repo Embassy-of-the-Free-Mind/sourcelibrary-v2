@@ -55,8 +55,17 @@ export function unwrapRead(raw) {
   return { text: u.inside, problem };
 }
 
+// Gemini only. agy can also reach Claude models; Claude runs only through the Claude subscription (`claude -p`,
+// subagents), never through agy (Derek, 2026-10-14, after #6721 dated 6,452 books with claude-sonnet via agy).
+export function assertGeminiModel(args) {
+  const i = args.indexOf('--model');
+  const model = i >= 0 ? String(args[i + 1] || '') : '';
+  if (!/^gemini-/.test(model)) throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only; use claude -p for Claude`);
+}
+
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
 export function agyCall(args, cwd) {
+  assertGeminiModel(args);
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
