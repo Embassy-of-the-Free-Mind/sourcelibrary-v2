@@ -215,6 +215,34 @@ Files: `scripts/eval/results/yigdzin-rest-4523/summary.json`, plus `page-outcome
 page with its outcome. Tooling: `scripts/eval/tibetan-lite-vs-yigdzin/{scope-rest,guard}.mjs`, and
 `judge.py` / `tend.py` / `box.sh` parametrised by `YIG_DIR` / `YIG_RUN` / `YIG_NAME` / `YIG_EUR_CAP` / `YIG_GUARD`.
 
+## 2026-10-14 · Does more context than the catalogue help a model date a work?
+
+**Design.** Same 318 Wikidata-gold works as the entry above, one engine and model (sealed `claude -p` Sonnet 5.5, 15
+books per call), three context arms and one wording arm (#6721 amendment 3): C1 = title + author + catalogue fields;
+C2 = + the opening leaves' OCR (the production prompt); C3 = C2 + `books.summary.data` (225 books), else the first two
+translated body pages (48), else nothing (45); C2-p2 = C2 with the year defined as the date scholars conventionally
+cite and the window as the narrowest defensible. Scored by coverage (gold interval meets the window) and the interval
+score (Gneiting–Raftery, α = 0.1: width + 20 × miss distance; lower is better).
+
+**Result.**
+
+| arm | coverage high/med (CI) | n | median width | mean interval score | HIT all rows |
+|---|---|---:|---:|---:|---|
+| C1 catalogue only | 85.9% (81–90) | 249 | 5 y | 704 | 85.8% |
+| C2 + opening leaves | 85.4% (81–89) | 268 | 5 y | 824 | 84.6% |
+| C3 + summary / translated pages | 84.7% (80–89) | 262 | 5 y | 766 | 83.3% |
+| C2-p2 wording | 85.5% (81–89) | 262 | 4 y | 525 | 83.0% |
+
+No arm differs from another beyond noise. Leaves change confidence, not accuracy: with C1 the model marks more Chinese
+books low (21 of 49 rows high/medium vs 40 with leaves). The edition date still needs the leaves, because title-page
+evidence must be a span of them. The interval-score means are driven by a few far misses (one *Timaeus* dated to its
+1888 edition costs ~45,000).
+
+**Replicated?** No.
+
+**Artifact.** `scripts/eval/library-dating-6721/score.mjs` (interval-score table); arms under
+`/mnt/HC_Volume_105839809/jobs/library-dating/ctx2/` on Hetzner; #6721.
+
 ## 2026-10-14 · Can a CLI model date works and editions well enough to write them library-wide?
 
 **Design.** External gold, two sets. *Work* (n=318, 8 traditions): Wikidata P571 inception, else P577 first
