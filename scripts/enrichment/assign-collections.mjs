@@ -369,7 +369,7 @@ async function main() {
     bulkOps.push({
       updateOne: {
         filter: { id: book.id },
-        update: { $set: { collections: slugs } },
+        update: { $set: { collections: slugs }, $currentDate: { updated_at: true } },
       },
     });
   }

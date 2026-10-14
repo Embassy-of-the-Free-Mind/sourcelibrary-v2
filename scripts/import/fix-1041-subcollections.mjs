@@ -25,7 +25,7 @@ async function main() {
     title: { $regex: '元曲選|Yuanqu|Yuan.*Play|yuan.*zaju', $options: 'i' }
   }).toArray();
   for (const b of yuanBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'yuan-zaju' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'yuan-zaju' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  yuan-zaju: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -35,7 +35,7 @@ async function main() {
     title: { $regex: '琵琶記|牡丹亭|六十種曲|盛明雜劇|西廂記|董解元|玉茗堂|崑曲|Peony Pavilion|Lute|Western Chamber|Sixty Plays|Kunqu', $options: 'i' }
   }).toArray();
   for (const b of mingBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'ming-chuanqi' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'ming-chuanqi' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  ming-chuanqi: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -45,7 +45,7 @@ async function main() {
     title: { $regex: '閑情偶寄|Xianqing|Casual Expressions|theater theory', $options: 'i' }
   }).toArray();
   for (const b of theoryBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-theater-theory' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-theater-theory' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  chinese-theater-theory: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -55,7 +55,7 @@ async function main() {
     title: { $regex: 'Hrotsvitha|Hrosvit|Everyman|Mystery Play|Morality|Hildegard|Ordo Virtutum', $options: 'i' }
   }).toArray();
   for (const b of medievalBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'medieval-drama' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'medieval-drama' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  medieval-drama: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -65,7 +65,7 @@ async function main() {
     title: { $regex: 'Orfeo|Poliziano|Aminta|Tasso|Pastor Fido|Guarini|Commedia|Flaminio|Scala|Castelvetro|Poetica.*Aristotele', $options: 'i' }
   }).toArray();
   for (const b of italianBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'italian-renaissance-theater' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'italian-renaissance-theater' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  italian-renaissance-theater: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -75,7 +75,7 @@ async function main() {
     title: { $regex: 'Celestina|Lope de Vega|Arte Nuevo|Calder[oó]n|vida es sue[nñ]o', $options: 'i' }
   }).toArray();
   for (const b of spanishBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'spanish-golden-age' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'spanish-golden-age' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  spanish-golden-age: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -85,7 +85,7 @@ async function main() {
     title: { $regex: 'Corneille|Cid|Tartuffe|Moli[eè]re|Racine|Ph[eè]dre', $options: 'i' }
   }).toArray();
   for (const b of frenchBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'french-classical-theater' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'french-classical-theater' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  french-classical-theater: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -95,7 +95,7 @@ async function main() {
     title: { $regex: 'Shakespeare|First Folio|Ben Jonson|Workes.*Jonson|Kyd|Spanish Tragedy|Marlowe|Tamburlaine|Sidney|Defence of Poesie', $options: 'i' }
   }).toArray();
   for (const b of englishBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'english-renaissance-theater' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'english-renaissance-theater' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  english-renaissance-theater: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -105,7 +105,7 @@ async function main() {
     title: { $regex: 'Panchatantra|Hitopadesha|Kathasaritsagara|Ocean of Story|Directorium|Buch der Beispiele|Bidpai', $options: 'i' }
   }).toArray();
   for (const b of panchBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'panchatantra-derivatives' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'panchatantra-derivatives' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  panchatantra-derivatives: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -115,7 +115,7 @@ async function main() {
     title: { $regex: 'Jataka|J[aā]taka', $options: 'i' }
   }).toArray();
   for (const b of jatakaBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'buddhist-jataka' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'buddhist-jataka' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  buddhist-jataka: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -125,7 +125,7 @@ async function main() {
     title: { $regex: 'Kalila|Dimna|Anvar|Suhaili|Suhayli|Bidpai', $options: 'i' }
   }).toArray();
   for (const b of persianBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'persian-arabic-fables' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'persian-arabic-fables' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  persian-arabic-fables: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -137,7 +137,7 @@ async function main() {
   for (const b of agriBooks) {
     // Sancai and Mengxi are general encyclopedias, skip subcollection
     if (/三才圖會|Sancai|夢溪筆談|Dream Pool/.test(b.title)) continue;
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-agricultural-industrial' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-agricultural-industrial' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  chinese-agricultural-industrial: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -146,7 +146,7 @@ async function main() {
     title: { $regex: '武備志|Wubei', $options: 'i' }
   }).toArray();
   for (const b of milBooks) {
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-military-technology' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-military-technology' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  chinese-military-technology: ${b.title.substring(0, 60)}`); total++; }
   }
 
@@ -156,7 +156,7 @@ async function main() {
   }).toArray();
   for (const b of natBooks) {
     // Already tagged — skip if already in subcollection
-    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-natural-history' } });
+    const r = await books.updateOne({ _id: b._id }, { $addToSet: { collections: 'chinese-natural-history' }, $currentDate: { updated_at: true } });
     if (r.modifiedCount) { console.log(`  chinese-natural-history: ${b.title.substring(0, 60)}`); total++; }
   }
 

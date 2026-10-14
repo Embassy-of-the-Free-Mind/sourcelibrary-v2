@@ -282,7 +282,7 @@ async function main() {
       const oids = toTag.map(h => new ObjectId(h.sl_book._id));
       const result = await books.updateMany(
         { _id: { $in: oids } },
-        { $addToSet: { collections: SLUG } },
+        { $addToSet: { collections: SLUG }, $currentDate: { updated_at: true } },
       );
       console.log(`Tagged ${result.modifiedCount} books.`);
       const totalTagged = await books.countDocuments({ collections: SLUG });
