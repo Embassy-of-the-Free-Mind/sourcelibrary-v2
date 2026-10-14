@@ -374,33 +374,8 @@ export function caughtSeed(seed, readerIssues, readerPage, plantedText) {
 
 // ── 7. Agreement: Krippendorff's alpha with missing values ─────────────────────────────────────────────────
 
-/**
- * Krippendorff's alpha. units: array of arrays of values (one per reader; null/undefined = missing).
- * level: 'nominal' | 'ordinal' | 'interval'. Units with fewer than two values are not pairable and are dropped.
- */
-export function krippendorffAlpha(units, level = 'nominal') {
-  const vals = units.map((u) => u.filter((v) => v !== null && v !== undefined)).filter((u) => u.length >= 2);
-  if (!vals.length) return null;
-  const cats = [...new Set(vals.flat())].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
-  const ix = new Map(cats.map((c, i) => [c, i]));
-  const K = cats.length, o = Array.from({ length: K }, () => new Array(K).fill(0));
-  for (const u of vals) {
-    const m = u.length;
-    for (let i = 0; i < m; i++) for (let j = 0; j < m; j++) if (i !== j) o[ix.get(u[i])][ix.get(u[j])] += 1 / (m - 1);
-  }
-  const nc = o.map((row) => row.reduce((s, x) => s + x, 0)), n = nc.reduce((s, x) => s + x, 0);
-  const d2 = (c, k) => {
-    if (level === 'nominal') return c === k ? 0 : 1;
-    if (level === 'interval') return (cats[c] - cats[k]) ** 2;
-    const [lo, hi] = c < k ? [c, k] : [k, c];
-    let s = 0; for (let g = lo; g <= hi; g++) s += nc[g];
-    return (s - (nc[c] + nc[k]) / 2) ** 2;
-  };
-  let Do = 0, De = 0;
-  for (let c = 0; c < K; c++) for (let k = 0; k < K; k++) { const d = d2(c, k); Do += o[c][k] * d; De += nc[c] * nc[k] * d; }
-  Do /= n; De /= n * (n - 1);
-  return De === 0 ? null : 1 - Do / De;
-}
+// Moved to scripts/eval/lib/agreement-stats.mjs (2026-10-14) so every judged run can report it; re-exported here.
+export { krippendorffAlpha } from '../lib/agreement-stats.mjs';
 
 // ── 8. Weighted rates and differences, bootstrap by unit (= book) ──────────────────────────────────────────
 
