@@ -333,3 +333,39 @@ list price; $0 billed on the subscription"), never placed at a guessed price.
 
 **Not run.** Any paid API read (ruled out), `-medium`, a G4 A-vs-A repeat, a #6523-route re-read of 3.8, Latin and
 Early English.
+
+## Amendment 4.1 (2026-10-14, job `g4-hard2-6707`, #6707): G4L only, on all six panels; G4H decided afterwards
+
+Committed and pushed 2026-10-14 before any read under this amendment. Everything in Amendment 4 holds (panels and
+their order, requests byte for byte, comparators, scoring instruments, the ONE FAILURE RULE, the decision rule and
+noise floors per panel, the worst-page reads, Tibetan on its own measure, the chart rule) except what this section
+changes.
+
+**Why (the smoke, job `g4-hard-6707`, 2026-10-14 00:23–00:54Z).** G4H (`gemini-4-argon-high`, `--print-timeout 300`)
+on Amendment 4's 5 smoke pages (Syriac manuscript): 5 of 5 failed, 10 of 10 calls timed out with 0 characters
+(`[agy] print timeout after 5m0s with turn in progress`), each after 2–6 refused tool calls (`run_command`,
+`search_web`). At that rate G4H on the six panels would hold the shared subscription for about 40 hours.
+Derek, 2026-10-14: "just try low first" — G4L on every panel; G4H is decided after the G4L results.
+
+**Arm.** G4L only: `gemini-4-argon-low`, engine id `gemini-4-argon-low+antigravity-cli`, `--print-timeout 300`, through
+`run-cli-arm.py --kind ocr` exactly as Amendment 4. At most 3 image calls in parallel (shared account). Panels in
+Amendment 4's order: Syriac manuscript, Syriac print, Chinese manuscript, Greek, Chinese print, Tibetan. Quota (exit 3):
+sleep to the quoted reset (60 min if none), resume, at most 3 times, then report what was read.
+
+**G4H is not run in this job.** Amendment 4's G4H rows, G4H-vs-G4L comparisons and G4H worst-page reads do not apply;
+the five worst pages on Syriac (manuscript and print) and Chinese manuscript are read for **G4L** instead. Whether G4H
+runs, and at what time limit, is decided after these results.
+
+**Reads before this amendment, named and not charted.**
+- G4H smoke: 5 Syriac-manuscript pages (`jerusalem36-0003/0005/0008/0009/0029`), all timeouts, 0 text
+  (`jobs/g4-hard-6707/raw/G4H-syr-ms.raw.jsonl`). Amendment 4 said these would be the first G4H rows; G4H is not run,
+  so they are not scored.
+- Diagnostic G4H at `--print-timeout 900`, 1 page (`jerusalem36-0003_SMMJ_00036__008`): text after 768 s
+  (`jobs/g4-hard-6707/diag/G4H-diag900.raw.jsonl`). Not scored, not charted.
+- Diagnostic G4L at 300 s on the same 5 smoke pages: 5 of 5 read, 53–102 s (`jobs/g4-hard-6707/diag/G4L-diag.raw.jsonl`).
+  Not scored, not charted. These 5 pages are **re-read** in this run with the full panel, into a fresh raw file, so the
+  run is one protocol from its first page; the diagnostic text is never substituted for a run read.
+- The one Early English G4L read of job `g4-ocr-6707` stays as named in Amendment 4.
+
+**Also reported per arm** (in addition to Amendment 4's list): refused tool calls per page (`gate_denials`, median and
+distribution, and by tool), and seconds per call (median and IQR).
