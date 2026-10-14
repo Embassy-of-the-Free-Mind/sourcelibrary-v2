@@ -22,9 +22,15 @@ for (const tag of process.argv.slice(2)) {
   for (const l of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (r.text || !rows[r.uid]) rows[r.uid] = r; }
   out.body[tag] = {}; out.dnr[tag] = {}; out.stats[tag] = {};
   for (const [uid, r] of Object.entries(rows)) {
-    const t = r.text || '';
+    let t = r.text || '';
+    // #6545 prompts.py unwrap(): Opus puts the house <summary>/<keywords> AFTER <<<END>>>. When nothing but tag
+    // blocks lies outside the markers, they are part of the translation's format, not chatter: a clean read.
+    if (r.problem === 'text outside the markers') {
+      const m = String(r.raw || '').match(/^\s*<<<\s*BEGIN\s*>>>([\s\S]*?)<<<\s*END\s*>>>([\s\S]*)$/);
+      if (m && m[2].trim() && !m[2].replace(/<(\w+)[^>]*>[\s\S]*?<\/\1>/g, '').trim()) { t = `${m[1].trim()}\n\n${m[2].trim()}`; r.problem = null; r.tags_after_end = true; }
+    }
     const body = bodyOf(t);
-    out.stats[tag][uid] = { raw_chars: t.length, body_chars: body.length, tags: tagChars(t), out_tok: r.usage?.output_tokens ?? null, think_tok: r.usage?.thinking_tokens ?? null, secs: r.secs, calls: r.calls, problem: r.problem };
+    out.stats[tag][uid] = { raw_chars: t.length, body_chars: body.length, tags: tagChars(t), out_tok: r.usage?.output_tokens ?? null, think_tok: r.usage?.thinking_tokens ?? null, secs: r.secs, calls: r.calls, problem: r.problem, tags_after_end: !!r.tags_after_end };
     const why = !t.trim() ? (r.problem || 'empty') : r.problem ? `wrapper: ${r.problem}` : cliChatterReason(t) ? `chatter: ${cliChatterReason(t)}` : body.length < 20 ? 'empty body' : null;
     if (why) out.dnr[tag][uid] = why; else out.body[tag][uid] = body;
   }
