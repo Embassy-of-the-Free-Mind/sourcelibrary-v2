@@ -60,7 +60,7 @@ export default function BookBiblioPanel({
         </span>
       )}
       {l.basis === 'catalogue' && (
-        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the holding library’s catalogue</span>
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the catalogue record</span>
       )}
     </>
   );
