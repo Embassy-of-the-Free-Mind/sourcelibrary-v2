@@ -15,6 +15,7 @@
  *
  *   node scripts/maintenance/library-dating/date-books.mjs <in.jsonl> <out.jsonl> [--engine agy|claude]
  *     [--model gemini-3.8-flash-low|haiku|sonnet] [--batch 15] [--conc 4] [--max N] [--shard i/n] [--per-hour 600]
+ *     [--reverse] [--also-done other.jsonl]
  */
 import fs from 'node:fs';
 import os from 'node:os';
@@ -40,6 +41,10 @@ const hash = (s) => { let h = 0; for (const ch of s) h = (h * 31 + ch.charCodeAt
 
 const rows = fs.readFileSync(IN, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 let todo = rows.filter((r) => !done.has(r.book_id) && (badCount.get(r.book_id) || 0) < 2 && hash(r.book_id) % NSH === SH);
+// --reverse: work the queue from its end, so a second model's runner meets the first in the middle instead of
+// re-dating the same books (each skips what the OTHER has written only if given its file via --also-done)
+if (process.argv.includes('--reverse')) todo.reverse();
+const ALSO = arg('--also-done'); if (ALSO) for (const f of ALSO.split(',')) { const s = ids(f); todo = todo.filter((r) => !s.has(r.book_id)); }
 if (MAX) todo = todo.slice(0, MAX);
 const groups = []; for (let k = 0; k < todo.length; k += BATCH) groups.push(todo.slice(k, k + BATCH));
 console.log(`${new Date().toISOString()} ${rows.length} books, ${done.size} dated, ${todo.length} to date in ${groups.length} calls: ${ENGINE}/${MODEL} batch ${BATCH} (shard ${SH}/${NSH}, ${PROMPT_VERSION})`);
