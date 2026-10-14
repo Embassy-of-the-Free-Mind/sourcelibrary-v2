@@ -59,6 +59,34 @@ for (const f of fs.readdirSync(DIR).filter((f) => /^(work|edition)-.*\.jsonl$/.t
   arms.get(arm)[`${set}_calls`] = calls.length;
   arms.get(arm)[`${set}_secs`] = calls.length ? Math.round(calls.reduce((s, c) => s + (c.secs || 0), 0) / calls.length) : null;
 }
+// Amendment 3 (2026-10-14 19:26): coverage alone rewards wide windows. Interval score (Gneiting & Raftery 2007,
+// alpha = 0.1): IS = (to − from) + (2/alpha) × distance from the window to the gold interval (0 when they meet).
+// Lower is better. Reported with coverage and median width by confidence and by period, beside the gold's own width.
+const ALPHA = 0.1;
+const PERIOD = (y) => (y < 500 ? 'ancient (<500)' : y < 1450 ? 'medieval (500–1449)' : y < 1800 ? 'early modern (1450–1799)' : 'modern (1800+)');
+function intervalRows(rows) {
+  return rows.filter((x) => goldW.has(x.book_id) && x.work && x.work.year != null).map((x) => {
+    const g = goldW.get(x.book_id); const from = Math.min(x.work.from, x.work.year); const to = Math.max(x.work.to, x.work.year);
+    const miss = g.hi < from ? from - g.hi : g.lo > to ? g.lo - to : 0;
+    return { conf: x.confidence, period: PERIOD(g.lo), width: to - from, gwidth: g.hi - g.lo, cover: miss === 0, is: (to - from) + (2 / ALPHA) * miss };
+  });
+}
+function intervalTable(armRows) {
+  const keysP = ['ancient (<500)', 'medieval (500–1449)', 'early modern (1450–1799)', 'modern (1800+)'];
+  const cell = (r) => (r.length ? `${(100 * r.filter((x) => x.cover).length / r.length).toFixed(0)}% · ${median(r.map((x) => x.width))} · ${Math.round(r.reduce((s, x) => s + x.is, 0) / r.length)} (n=${r.length})` : '–');
+  const lines = ['\n**Interval score (α = 0.1) — cell = coverage · median width (y) · mean interval score (n); high/medium rows**\n',
+    `| arm | all h/m | high | medium | low | ${keysP.join(' | ')} |`, `|---|---|---|---|---|${keysP.map(() => '---').join('|')}|`];
+  for (const [arm, r] of armRows) {
+    const hm = r.filter((x) => x.conf !== 'low');
+    lines.push(`| ${arm} | ${cell(hm)} | ${cell(r.filter((x) => x.conf === 'high'))} | ${cell(r.filter((x) => x.conf === 'medium'))} | ${cell(r.filter((x) => x.conf === 'low'))} | ${keysP.map((k) => cell(hm.filter((x) => x.period === k))).join(' | ')} |`);
+  }
+  const any = [...armRows.values()][0] || [];
+  lines.push(`| *gold interval width (median)* | ${median(any.map((x) => x.gwidth))} | | | | ${keysP.map((k) => median(any.filter((x) => x.period === k).map((x) => x.gwidth)) ?? '–').join(' | ')} |`);
+  return lines.join('\n');
+}
+const ivRows = new Map();
+for (const f of fs.readdirSync(DIR).filter((f) => /^work-.*\.jsonl$/.test(f) && !/\.(unparsed|calls)\.jsonl$/.test(f))) ivRows.set(f.replace(/^work-|\.jsonl$/g, ''), intervalRows(read(path.join(DIR, f))));
+
 if (arg('--existing')) arms.set('existing source_work_dates (no call)', { work: scoreWork(JSON.parse(fs.readFileSync(arg('--existing'), 'utf8'))) });
 
 console.log('| arm | work n | HIT high/med (95% CI) | BAR | low-conf rows (hit) | HIT all | median |err| (point gold) | ≤25 y | median window | work downgraded | edition n | edition exact | title_page kept (exact) | edition downgraded | calls (work+ed) | s/call |');
@@ -75,4 +103,5 @@ for (const k of ['by_trad', 'by_era']) {
   console.log(`\n| arm | ${ks.join(' | ')} |\n|---|${ks.map(() => '---').join('|')}|`);
   for (const [arm, a] of arms) console.log(`| ${arm} | ${ks.map((t) => { const v = a.work?.[k]?.[t]; return v ? `${v[0]}/${v[1]}` : '–'; }).join(' | ')} |`);
 }
+console.log(intervalTable(ivRows));
 if (arg('--misses')) fs.writeFileSync(arg('--misses'), JSON.stringify(Object.fromEntries([...arms].map(([k, a]) => [k, a.work?.misses || []])), null, 1));
