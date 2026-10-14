@@ -21,7 +21,7 @@ export const framingEvent = (slot: string) => `framing:${slot}`;
 export default function ParallaxImage({
   src, srcMobile, mobileBreakpoint = 768,
   alt = '', className = '', strength = 0.12, loading = 'lazy',
-  oversize = 0.15, objectPosition = 'center', framing, frameSlot,
+  oversize = 0.15, objectPosition = 'center', framing, frameSlot, fetchPriority,
 }: {
   src: string;
   /** Narrow-viewport variant, served below `mobileBreakpoint` via <picture>.
@@ -42,6 +42,8 @@ export default function ParallaxImage({
   framing?: Framing;
   /** Identifier so the admin editor can target this image's framing. */
   frameSlot?: string;
+  /** 'high' for a hero that is the page's largest paint. */
+  fetchPriority?: 'high' | 'low' | 'auto';
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -107,6 +109,7 @@ export default function ParallaxImage({
           src={src}
           alt={alt}
           loading={loading}
+          fetchPriority={fetchPriority}
           className={`w-full h-full object-cover ${className}`}
           style={{ objectPosition: op, transformOrigin: op, transform: `scale(${scale})` }}
         />
