@@ -36,6 +36,10 @@ not free-tier (see `.claude/docs/embeddings.md`).
 
     templates/  page bodies. build-deploy.py injects figures + data.
 
+    ontology/   the vocabulary of aliveness (#6720): concepts, terms, relations with
+                provenance, verbatim passages → ontology.json + aliveness-ontology.html.
+                See ontology/README.md.
+
 ## Non-obvious things that cost time
 
 - **`scripts/output/` is gitignored.** Anything written there is invisible to git

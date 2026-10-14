@@ -1,0 +1,28 @@
+{"key": "pneuma|translates|ruach", "verdict": "stated", "idx": 3, "reason": "it is called pneuma from pneo, whence in Hebrew it is called Ruach: the two given as the same word", "judge": "claude-opus-5-5"}
+{"key": "neidan|analogue|elixir", "verdict": "not_stated", "reason": "a Daoist poem on the Great Return Elixir; no comparison with the Western elixir", "judge": "claude-opus-5-5"}
+{"key": "rasayana|analogue|elixir", "verdict": "not_stated", "reason": "al-Biruni likens rasayana to 'this section' (alchemy), not to the elixir; referent unclear out of context", "judge": "claude-opus-5-5"}
+{"key": "local-spirits|analogue|genius-loci", "verdict": "not_stated", "reason": "lists lords of the soil; no Roman genius loci or comparison", "judge": "claude-opus-5-5"}
+{"key": "astral-light|descends|spiritus-mundi", "verdict": "not_stated", "reason": "both words appear in a 1722 text; no descent claimed", "judge": "claude-opus-5-5"}
+{"key": "astral-light|descends|animal-magnetism", "verdict": "not_stated", "reason": "passages co-mention magnetism and astral light; none says the astral light is or comes from the magnetic fluid (the defining sentences are truncated)", "judge": "claude-opus-5-5"}
+{"key": "helmontianism|descends|paracelsianism", "verdict": "not_stated", "reason": "Paracelsians and Helmontians only listed side by side", "judge": "claude-opus-5-5"}
+{"key": "plastic-nature|descends|seminal-reasons", "verdict": "not_stated", "reason": "logos spermatikos and natura plastica listed as alternative names; no descent", "judge": "claude-opus-5-5"}
+{"key": "plastic-nature|descends|anima-mundi", "verdict": "not_stated", "reason": "passages identify the world soul with what others named natura plastica (an equivalence), not descent or subordination", "judge": "claude-opus-5-5"}
+{"key": "panpsychism|descends|anima-mundi", "verdict": "not_stated", "reason": "Windelband names Patrizi's Panpsychia (glossed world-soul) but says nothing of later panpsychism descending from it", "judge": "claude-opus-5-5"}
+{"key": "radical-moisture|descends|innate-heat", "verdict": "not_stated", "reason": "passages state the fuel/vehicle relation (idx 4: no longer fuel for the innate heat), which is not descent", "judge": "claude-opus-5-5"}
+{"key": "elixir|descends|quintessence", "verdict": "not_stated", "reason": "Paracelsus identifies the fifth essence with the elixir of life; identity, not a statement that one came from the other", "judge": "claude-opus-5-5"}
+{"key": "neidan|descends|waidan", "verdict": "not_stated", "reason": "inner and outer elixir paired or compared ('similar to this'); no derivation stated", "judge": "claude-opus-5-5"}
+{"key": "talismans|descends|animated-statues", "verdict": "not_stated", "reason": "talismanic statues named; nothing on Ficino or the Hermetic ensouled statues as source", "judge": "claude-opus-5-5"}
+{"key": "pneuma|belongs|stoicism", "verdict": "stated", "idx": 0, "reason": "the Stoics extended pneuma to the vehicle of life in the whole cosmos", "judge": "claude-opus-5-5"}
+{"key": "radical-moisture|belongs|galenism", "verdict": "stated", "idx": 2, "reason": "radical humidity and innate heat of each part are 'well known to the Galenists'", "judge": "claude-opus-5-5"}
+{"key": "plastic-nature|belongs|cambridge-platonism", "verdict": "stated", "idx": 4, "reason": "Cudworth in the True Intellectual System argues for a plastic nature", "judge": "claude-opus-5-5"}
+{"key": "rasayana|belongs|ayurveda", "verdict": "not_stated", "reason": "a chapter colophon and co-mentions; no passage says rasayana is a branch of Ayurveda", "judge": "claude-opus-5-5"}
+{"key": "kundalini|belongs|hatha-yoga", "verdict": "stated", "idx": 2, "reason": "by awakening the Kundalini by Hatha Yoga the door of Brahma is unlocked", "judge": "claude-opus-5-5"}
+{"key": "animal-machine|belongs|mechanism", "verdict": "stated", "idx": 3, "reason": "through Descartes, animals were held to be mere automata or machines without sensibility", "judge": "claude-opus-5-5"}
+{"key": "neidan|cultivates|jing", "verdict": "not_stated", "reason": "jing/qi/shen named as starting point or to be stored, but the refining relation is only in the translator's gloss", "judge": "claude-opus-5-5"}
+{"key": "neidan|cultivates|immortality", "verdict": "stated", "idx": 5, "reason": "the Inner Elixir not only cures diseases but confers immortality", "judge": "claude-opus-5-5"}
+{"key": "rasayana|cultivates|rejuvenation", "verdict": "stated", "idx": 0, "reason": "rasayana is named as rejuvenation therapy", "judge": "claude-opus-5-5"}
+{"key": "rasayana|cultivates|ojas", "verdict": "stated", "idx": 0, "reason": "this rasayana is the foremost of things which generate ojas", "judge": "claude-opus-5-5"}
+{"key": "elixir|cultivates|longevity", "verdict": "not_stated", "reason": "Latin-elixir passages only juxtapose elixir vitae and longevity; the explicit long-life statements are about Chinese elixirs, a different node sense", "judge": "claude-opus-5-5"}
+{"key": "elixir|cultivates|rejuvenation", "verdict": "not_stated", "reason": "elixir and renewal of youth appear in a list and a book title", "judge": "claude-opus-5-5"}
+{"key": "talismans|cultivates|spiritus-mundi", "verdict": "not_stated", "reason": "says talismans encode the motion of the world spirit as a sign, not that they capture it", "judge": "claude-opus-5-5"}
+{"key": "animal-machine|opposes|psyche", "verdict": "stated", "idx": 0, "reason": "man alone had a true soul; animals mere machines without sensibility", "judge": "claude-opus-5-5"}
