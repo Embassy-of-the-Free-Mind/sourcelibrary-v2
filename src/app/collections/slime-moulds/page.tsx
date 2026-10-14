@@ -401,7 +401,7 @@ export default async function SlimeMouldsCollectionPage() {
         <ParallaxImage
           src={heroSrc}
           srcMobile={heroSrcMobile}
-          loading="eager" fetchPriority="high" strength={0.08} oversize={0.1}
+          loading="eager" fetchPriority="high" reveal strength={0.08} oversize={0.1}
         />
         {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
             is darkened to the same 72% base as the desktop one instead of the 45%
@@ -418,7 +418,7 @@ export default async function SlimeMouldsCollectionPage() {
           <HeroScrim />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
+        <div className="hero-load-in relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
           {/* Breadcrumb set as the book hero's author eyebrow (same size, tracking
               and rust), so the collection hero carries the brand red where the
               book hero does. The parent's name is the collection record's own
