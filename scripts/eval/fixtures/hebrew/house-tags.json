@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "house-tags",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "<language>Hebrew</language>\n<page-type>text</page-type>\n<meta>Rashi script, two columns</meta>\n<header>בראשית</header>\nבראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "house metadata blocks dropped; leading header text before the passage is free"
+}

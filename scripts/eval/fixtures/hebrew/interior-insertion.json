@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "interior-insertion",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "בראשית ברא אלהים את השמים ואבן עזרא ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "expected_cer": 0.14035087719298245,
+ "tolerance": 1e-09,
+ "ref_is_sefaria": false,
+ "why": "text read INSIDE the passage is charged (8 letters: ואבן עזרא)"
+}

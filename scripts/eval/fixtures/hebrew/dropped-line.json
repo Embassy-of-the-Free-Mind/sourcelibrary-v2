@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "dropped-line",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "בראשית ברא אלהים את השמים ואת הארץ וחשך על פני תהום",
+ "expected_cer": 0.2807017543859649,
+ "tolerance": 1e-09,
+ "ref_is_sefaria": false,
+ "why": "a line dropped is charged as deletions (16 letters)"
+}

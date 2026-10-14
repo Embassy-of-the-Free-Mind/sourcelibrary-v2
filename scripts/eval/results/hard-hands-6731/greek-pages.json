@@ -1,0 +1,1026 @@
+[
+ {
+  "uid": "greek|e41cba-p56",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 56,
+  "page_id": "69a5e5e985fa13e734e41cf2",
+  "fit": "kraken",
+  "span": [
+   262496,
+   267857
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p293",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 293,
+  "page_id": "69a5e5e985fa13e734e41ddf",
+  "fit": "kraken",
+  "span": [
+   1334775,
+   1339976
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p123",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 123,
+  "page_id": "69a5e5e985fa13e734e41d35",
+  "fit": "kraken",
+  "span": [
+   561809,
+   564383
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p336",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 336,
+  "page_id": "69a5e5e985fa13e734e41e0a",
+  "fit": "kraken",
+  "span": [
+   1552039,
+   1557396
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p169",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 169,
+  "page_id": "69a5e5e985fa13e734e41d63",
+  "fit": "kraken",
+  "span": [
+   751291,
+   755819
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p284",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 284,
+  "page_id": "69a5e5e985fa13e734e41dd6",
+  "fit": "kraken",
+  "span": [
+   1295070,
+   1299911
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p93",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 93,
+  "page_id": "69a5e5e985fa13e734e41d17",
+  "fit": "kraken",
+  "span": [
+   426314,
+   431013
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p176",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 176,
+  "page_id": "69a5e5e985fa13e734e41d6a",
+  "fit": "kraken",
+  "span": [
+   783894,
+   788497
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p39",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 39,
+  "page_id": "69a5e5e985fa13e734e41ce1",
+  "fit": "kraken",
+  "span": [
+   181989,
+   186722
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p11",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 11,
+  "page_id": "69a5e5e985fa13e734e41cc5",
+  "fit": "kraken",
+  "span": [
+   25684,
+   30577
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p344",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 344,
+  "page_id": "69a5e5e985fa13e734e41e12",
+  "fit": "kraken",
+  "span": [
+   1597569,
+   1603300
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p331",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 331,
+  "page_id": "69a5e5e985fa13e734e41e05",
+  "fit": "kraken",
+  "span": [
+   1525485,
+   1530694
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p330",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 330,
+  "page_id": "69a5e5e985fa13e734e41e04",
+  "fit": "kraken",
+  "span": [
+   1520476,
+   1525486
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p100",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 100,
+  "page_id": "69a5e5e985fa13e734e41d1e",
+  "fit": "kraken",
+  "span": [
+   460283,
+   465118
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41cba-p109",
+  "book": "69a5e5e985fa13e734e41cba",
+  "work": "Grec 1841",
+  "page": 109,
+  "page_id": "69a5e5e985fa13e734e41d27",
+  "fit": "kraken",
+  "span": [
+   499676,
+   504265
+  ],
+  "pad": 55,
+  "verdict_k6": "verified",
+  "n_images": 2,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p192",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 192,
+  "page_id": "69a5e5e385fa13e734e41954",
+  "fit": "kraken",
+  "span": [
+   283986,
+   285770
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p234",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 234,
+  "page_id": "69a5e5e385fa13e734e4197e",
+  "fit": "kraken",
+  "span": [
+   351884,
+   353142
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p595",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 595,
+  "page_id": "69a5e5e385fa13e734e41ae7",
+  "fit": "kraken",
+  "span": [
+   936887,
+   938635
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p725",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 725,
+  "page_id": "69a5e5e385fa13e734e41b69",
+  "fit": "kraken",
+  "span": [
+   1147650,
+   1149138
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p226",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 226,
+  "page_id": "69a5e5e385fa13e734e41976",
+  "fit": "kraken",
+  "span": [
+   339337,
+   340969
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p251",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 251,
+  "page_id": "69a5e5e385fa13e734e4198f",
+  "fit": "kraken",
+  "span": [
+   377463,
+   379361
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p870",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 870,
+  "page_id": "69a5e5e385fa13e734e41bfa",
+  "fit": "kraken",
+  "span": [
+   1377656,
+   1379384
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p513",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 513,
+  "page_id": "69a5e5e385fa13e734e41a95",
+  "fit": "kraken",
+  "span": [
+   801990,
+   803389
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p381",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 381,
+  "page_id": "69a5e5e385fa13e734e41a11",
+  "fit": "kraken",
+  "span": [
+   591563,
+   593267
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p38",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 38,
+  "page_id": "69a5e5e385fa13e734e418ba",
+  "fit": "kraken",
+  "span": [
+   45348,
+   46976
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p899",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 899,
+  "page_id": "69a5e5e385fa13e734e41c17",
+  "fit": "kraken",
+  "span": [
+   1422827,
+   1424292
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p26",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 26,
+  "page_id": "69a5e5e385fa13e734e418ae",
+  "fit": "kraken",
+  "span": [
+   28860,
+   30297
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p220",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 220,
+  "page_id": "69a5e5e385fa13e734e41970",
+  "fit": "kraken",
+  "span": [
+   330080,
+   331837
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p393",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 393,
+  "page_id": "69a5e5e385fa13e734e41a1d",
+  "fit": "kraken",
+  "span": [
+   613224,
+   614837
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|e41894-p159",
+  "book": "69a5e5e385fa13e734e41894",
+  "work": "Grec 1839",
+  "page": 159,
+  "page_id": "69a5e5e385fa13e734e41933",
+  "fit": "kraken",
+  "span": [
+   229593,
+   231406
+  ],
+  "pad": 49,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p406",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 406,
+  "page_id": "6a45298cc6d95bc278fbca59",
+  "fit": "kraken",
+  "span": [
+   165678,
+   166832
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p151",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 151,
+  "page_id": "6a45298cc6d95bc278fbc95a",
+  "fit": "kraken",
+  "span": [
+   196727,
+   198424
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p327",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 327,
+  "page_id": "6a45298cc6d95bc278fbca0a",
+  "fit": "kraken",
+  "span": [
+   93041,
+   94629
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p200",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 200,
+  "page_id": "6a45298cc6d95bc278fbc98b",
+  "fit": "kraken",
+  "span": [
+   38699,
+   40099
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p199",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 199,
+  "page_id": "6a45298cc6d95bc278fbc98a",
+  "fit": "kraken",
+  "span": [
+   37359,
+   38671
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p323",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 323,
+  "page_id": "6a45298cc6d95bc278fbca06",
+  "fit": "kraken",
+  "span": [
+   86828,
+   88286
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p328",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 328,
+  "page_id": "6a45298cc6d95bc278fbca0b",
+  "fit": "kraken",
+  "span": [
+   94655,
+   96183
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p269",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 269,
+  "page_id": "6a45298cc6d95bc278fbc9d0",
+  "fit": "kraken",
+  "span": [
+   391395,
+   392716
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p179",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 179,
+  "page_id": "6a45298cc6d95bc278fbc976",
+  "fit": "kraken",
+  "span": [
+   403641,
+   405442
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p333",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 333,
+  "page_id": "6a45298cc6d95bc278fbca10",
+  "fit": "kraken",
+  "span": [
+   102630,
+   104085
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p223",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 223,
+  "page_id": "6a45298cc6d95bc278fbc9a2",
+  "fit": "kraken",
+  "span": [
+   229825,
+   231276
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p413",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 413,
+  "page_id": "6a45298cc6d95bc278fbca60",
+  "fit": "kraken",
+  "span": [
+   171578,
+   172276
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p152",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 152,
+  "page_id": "6a45298cc6d95bc278fbc95b",
+  "fit": "kraken",
+  "span": [
+   198406,
+   200253
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p106",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 106,
+  "page_id": "6a45298cc6d95bc278fbc92d",
+  "fit": "kraken",
+  "span": [
+   246902,
+   248510
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|fbc8c3-p270",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "work": "Marcianus gr. 299",
+  "page": 270,
+  "page_id": "6a45298cc6d95bc278fbc9d1",
+  "fit": "kraken",
+  "span": [
+   392742,
+   393862
+  ],
+  "pad": 39,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p484",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 484,
+  "page_id": "69b4c04d978ca9526eda35db",
+  "fit": "kraken",
+  "span": [
+   177607,
+   178547
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p52",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 52,
+  "page_id": "69b4c04d978ca9526eda342b",
+  "fit": "kraken",
+  "span": [
+   301457,
+   302926
+  ],
+  "pad": 33,
+  "verdict_k6": "coverage",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p459",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 459,
+  "page_id": "69b4c04d978ca9526eda35c2",
+  "fit": "kraken",
+  "span": [
+   38996,
+   40084
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p487",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 487,
+  "page_id": "69b4c04d978ca9526eda35de",
+  "fit": "kraken",
+  "span": [
+   180344,
+   181114
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p421",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 421,
+  "page_id": "69b4c04d978ca9526eda359c",
+  "fit": "kraken",
+  "span": [
+   195752,
+   196897
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p51",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 51,
+  "page_id": "69b4c04d978ca9526eda342a",
+  "fit": "kraken",
+  "span": [
+   300340,
+   301457
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p576",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 576,
+  "page_id": "69b4c04d978ca9526eda3637",
+  "fit": "kraken",
+  "span": [
+   436169,
+   437052
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "uid": "greek|da33f7-p578",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 578,
+  "page_id": "69b4c04d978ca9526eda3639",
+  "fit": "kraken",
+  "span": [
+   437841,
+   438834
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3.1-flash-lite-preview"
+ },
+ {
+  "uid": "greek|da33f7-p240",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 240,
+  "page_id": "69b4c04d978ca9526eda34e7",
+  "fit": "kraken",
+  "span": [
+   393837,
+   395151
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p488",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 488,
+  "page_id": "69b4c04d978ca9526eda35df",
+  "fit": "kraken",
+  "span": [
+   181114,
+   182175
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p463",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 463,
+  "page_id": "69b4c04d978ca9526eda35c6",
+  "fit": "kraken",
+  "span": [
+   43576,
+   44869
+  ],
+  "pad": 33,
+  "verdict_k6": "coverage",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p367",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 367,
+  "page_id": "69b4c04d978ca9526eda3566",
+  "fit": "kraken",
+  "span": [
+   442218,
+   443304
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p312",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 312,
+  "page_id": "69b4c04d978ca9526eda352f",
+  "fit": "kraken",
+  "span": [
+   123935,
+   125018
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p239",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 239,
+  "page_id": "69b4c04d978ca9526eda34e6",
+  "fit": "kraken",
+  "span": [
+   392723,
+   393837
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|da33f7-p314",
+  "book": "69b4c04d978ca9526eda33f7",
+  "work": "Ars sacra",
+  "page": 314,
+  "page_id": "69b4c04d978ca9526eda3531",
+  "fit": "kraken",
+  "span": [
+   126090,
+   126886
+  ],
+  "pad": 33,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|946912-p33",
+  "book": "69938921ce15387065946912",
+  "work": "Psellos",
+  "page": 33,
+  "page_id": "69938921ce153870659469d6",
+  "fit": "flash-v2",
+  "span": [
+   943168,
+   943475
+  ],
+  "pad": 23,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|946912-p35",
+  "book": "69938921ce15387065946912",
+  "work": "Psellos",
+  "page": 35,
+  "page_id": "69938921ce153870659469d8",
+  "fit": "flash-v2",
+  "span": [
+   943792,
+   944255
+  ],
+  "pad": 23,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|946912-p44",
+  "book": "69938921ce15387065946912",
+  "work": "Psellos",
+  "page": 44,
+  "page_id": "69938921ce153870659469e1",
+  "fit": "flash-v2",
+  "span": [
+   899758,
+   900102
+  ],
+  "pad": 23,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ },
+ {
+  "uid": "greek|946912-p34",
+  "book": "69938921ce15387065946912",
+  "work": "Psellos",
+  "page": 34,
+  "page_id": "69938921ce153870659469d7",
+  "fit": "flash-v2",
+  "span": [
+   943475,
+   943788
+  ],
+  "pad": 23,
+  "verdict_k6": "verified",
+  "n_images": 1,
+  "production_model": "gemini-3-flash-preview"
+ }
+]

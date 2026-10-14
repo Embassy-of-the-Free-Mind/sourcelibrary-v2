@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "trailing-other-block",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום\nאבן עזרא בראשית הטעם כי",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "text after the passage (another commentary) is free"
+}

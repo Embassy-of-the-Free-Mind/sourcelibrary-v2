@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "final-forms",
+ "reference": "שלום עולם מלך ארץ כף",
+ "hypothesis": "שלומ עולמ מלכ ארצ כפ",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "final forms fold to their base letters"
+}
