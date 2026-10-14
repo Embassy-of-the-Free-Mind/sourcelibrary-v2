@@ -30,7 +30,8 @@ const u = (s) => parseInt(createHash('sha256').update(s).digest('hex').slice(0, 
 
 // ── arm rows → per-uid {text, failure, secs, gate_denials} (last row per uid wins) ──
 function armRows(arm, panel) {
-  const f = path.join(S, 'raw', `${arm}-${panel}.jsonl`);
+  // Amendment 1: the OPUS arm's reads came through the Claude CLI (run-claude-arm.py), kept in their own file
+  const f = path.join(S, 'raw', arm === 'OPUS' ? `${arm}-${panel}.claude.jsonl` : `${arm}-${panel}.jsonl`);
   const by = new Map();
   if (fs.existsSync(f)) for (const l of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); by.set(r.uid, r); }
   return by;
