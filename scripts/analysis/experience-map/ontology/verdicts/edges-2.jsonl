@@ -1,0 +1,22 @@
+{"key": "chulen|translates|rasayana", "verdict": "not_stated", "reason": "the equation rests on the translator's brackets; no passage itself says bcud len renders rasāyana", "judge": "claude-opus-5-5"}
+{"key": "breath-of-life|analogue|ruach", "verdict": "stated", "idx": 5, "reason": "says what God breathed into Adam's nostrils was the Ruach, identifying the breath of life with ruach", "judge": "claude-opus-5-5"}
+{"key": "mana|analogue|manitou", "verdict": "stated", "idx": 0, "reason": "groups manitou and mana as words for one mysterious force", "judge": "claude-opus-5-5"}
+{"key": "stahlian-animism|descends|helmontianism", "verdict": "not_stated", "reason": "bibliography and list co-mentions only", "judge": "claude-opus-5-5"}
+{"key": "vital-principle|descends|archeus", "verdict": "not_stated", "reason": "passages equate archeus with a vital principle; none says a later concept derives from it", "judge": "claude-opus-5-5"}
+{"key": "universal-medicine|descends|elixir", "verdict": "not_stated", "reason": "passages name them as the same work or say the elixir comes from the medicine; no descent stated", "judge": "claude-opus-5-5"}
+{"key": "microcosm|belongs|hermetism", "verdict": "not_stated", "reason": "Trismegistus calls man a miracle, not a microcosm; the other is a glossary line", "judge": "claude-opus-5-5"}
+{"key": "microcosm|belongs|paracelsianism", "verdict": "stated", "idx": 1, "reason": "the Paracelsians frequently say man is a microcosm containing all parts of the world", "judge": "claude-opus-5-5"}
+{"key": "mumia|belongs|paracelsianism", "verdict": "stated", "idx": 3, "reason": "places the mumia/vital balsam in the physiology and pathology of the Paracelsians", "judge": "claude-opus-5-5"}
+{"key": "regimen|belongs|galenism", "verdict": "not_stated", "reason": "'in Galenic medicine' is an editorial gloss inside the quote, not the source's statement", "judge": "claude-opus-5-5"}
+{"key": "vegetative-soul|belongs|psyche", "verdict": "stated", "idx": 4, "reason": "divides all powers of the soul into vegetative, sensitive and rational", "judge": "claude-opus-5-5"}
+{"key": "vital-principle|belongs|montpellier", "verdict": "stated", "idx": 0, "reason": "the principium vitale learned in Montpellier from Barthez", "judge": "claude-opus-5-5"}
+{"key": "chulen|belongs|sowa-rigpa", "verdict": "not_stated", "reason": "no passage names the Four Tantras or Tibetan medicine as the system chülen belongs to", "judge": "claude-opus-5-5"}
+{"key": "chulen|cultivates|rejuvenation", "verdict": "stated", "idx": 4, "reason": "chülen increases lifespan and physical vigor and clarifies the senses", "judge": "claude-opus-5-5"}
+{"key": "universal-medicine|cultivates|rejuvenation", "verdict": "stated", "idx": 0, "reason": "reports the claim that the universal medicine has powers of rejuvenation", "judge": "claude-opus-5-5"}
+{"key": "regimen|cultivates|innate-heat", "verdict": "stated", "idx": 0, "reason": "food and drink restore the humidities that fuel natural heat; regimen is the science obviating old age's causes", "judge": "claude-opus-5-5"}
+{"key": "regimen|cultivates|vital-spirits", "verdict": "stated", "idx": 3, "reason": "moderate exercise preserves the elaboration of vital and animal spirits", "judge": "claude-opus-5-5"}
+{"key": "consecration|cultivates|prana", "verdict": "not_stated", "reason": "no candidate passages", "judge": "claude-opus-5-5"}
+{"key": "stahlian-animism|opposes|mechanism", "verdict": "not_stated", "reason": "price lists and bibliographies; 'mechanical' grinding of cinnabar is unrelated", "judge": "claude-opus-5-5"}
+{"key": "antipathy|opposes|sympathy", "verdict": "stated", "idx": 0, "reason": "natural concord vs discord, called sympathia and antipathia", "judge": "claude-opus-5-5"}
+{"key": "old-age|opposes|innate-heat", "verdict": "stated", "idx": 2, "reason": "in old age heat is gradually extinguished along with moisture", "judge": "claude-opus-5-5"}
+{"key": "old-age|opposes|rejuvenation", "verdict": "stated", "idx": 0, "reason": "asks whether the art can make old age itself young: renewal of youth set against old age", "judge": "claude-opus-5-5"}

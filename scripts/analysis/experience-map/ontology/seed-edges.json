@@ -1,0 +1,1351 @@
+{
+ "_about": "Seed relations for the aliveness ontology (#6720). Every edge starts as scholarly background (claude-opus-5-5) with the one-line `claim` below; edges.mjs then looks for pages that name both ends and a judge keeps a passage only if it STATES the relation. Types: translates (a translator's or tradition's rendering of the same concept), analogue (a cross-tradition parallel; never a merge), descends (`from` is a later development of `to`), belongs (`from` is a part or teaching of doctrine `to`), cultivates (practice `from` cultivates, conserves or produces `to`), opposes (`from` is set against `to`). Optional `cue` overrides the search phrases for one end.",
+ "edges": [
+  {
+   "from": "spiritus",
+   "to": "pneuma",
+   "type": "translates",
+   "claim": "Latin spiritus renders Greek pneuma."
+  },
+  {
+   "from": "pneuma",
+   "to": "ruach",
+   "type": "translates",
+   "claim": "The Septuagint renders Hebrew ruach as pneuma."
+  },
+  {
+   "from": "ruh",
+   "to": "ruach",
+   "type": "translates",
+   "claim": "Arabic rūḥ and Hebrew ruach are cognate words for breath and spirit."
+  },
+  {
+   "from": "ruh",
+   "to": "pneuma",
+   "type": "translates",
+   "claim": "Arabic medical writers used rūḥ for the Galenic pneuma."
+  },
+  {
+   "from": "vital-spirits",
+   "to": "pneuma",
+   "type": "translates",
+   "claim": "Spiritus vitalis renders Galen's pneuma zōtikon."
+  },
+  {
+   "from": "animal-spirits",
+   "to": "pneuma",
+   "type": "translates",
+   "claim": "Spiritus animalis renders Galen's pneuma psychikon."
+  },
+  {
+   "from": "anima-mundi",
+   "to": "psyche",
+   "type": "translates",
+   "claim": "Anima mundi renders the Timaeus's psychē of the cosmos."
+  },
+  {
+   "from": "chulen",
+   "to": "rasayana",
+   "type": "translates",
+   "claim": "Tibetan bcud len translates Sanskrit rasāyana."
+  },
+  {
+   "from": "rlung",
+   "to": "prana",
+   "type": "translates",
+   "claim": "Tibetan rlung renders Sanskrit prāṇa and vāyu."
+  },
+  {
+   "from": "breath-of-life",
+   "to": "ruach",
+   "type": "analogue",
+   "claim": "The breath of life of Genesis 2:7 (neshamah) is a near-synonym of ruach in the Hebrew Bible."
+  },
+  {
+   "from": "qi",
+   "to": "pneuma",
+   "type": "analogue",
+   "claim": "Qi and pneuma are both breath that becomes the stuff of life; comparativists pair them, the traditions did not."
+  },
+  {
+   "from": "qi",
+   "to": "prana",
+   "type": "analogue",
+   "claim": "Qi and prāṇa are both breath-energies moving through channels; the pairing is comparative.",
+   "cue_from": [
+    "qi",
+    "ch'i"
+   ],
+   "cue_to": [
+    "prana",
+    "prāṇa",
+    "vital breath"
+   ]
+  },
+  {
+   "from": "tummo",
+   "to": "innate-heat",
+   "type": "analogue",
+   "claim": "The inner heat of tummo and the innate heat of Greek medicine are both a vital fire in the trunk; the pairing is comparative."
+  },
+  {
+   "from": "neidan",
+   "to": "elixir",
+   "type": "analogue",
+   "claim": "Chinese and Western alchemy each sought an elixir of long life; contact between them is debated."
+  },
+  {
+   "from": "rasayana",
+   "to": "elixir",
+   "type": "analogue",
+   "claim": "Indian rasāyana and the Arabic-Latin elixir both promise rejuvenation by a prepared medicine."
+  },
+  {
+   "from": "kami",
+   "to": "genius-loci",
+   "type": "analogue",
+   "claim": "Kami of a place and the Roman genius loci are both resident spirits of a site; the pairing is comparative.",
+   "cue_to": [
+    "genius loci",
+    "genii",
+    "lares",
+    "tutelary",
+    "guardian spirits",
+    "local gods"
+   ]
+  },
+  {
+   "from": "local-spirits",
+   "to": "genius-loci",
+   "type": "analogue",
+   "claim": "Tibetan lords of the soil and the Roman genius loci are both owners of a place; the pairing is comparative.",
+   "cue_to": [
+    "genius loci",
+    "genii loci",
+    "tutelary",
+    "genius of the place"
+   ]
+  },
+  {
+   "from": "mana",
+   "to": "manitou",
+   "type": "analogue",
+   "claim": "Anthropologists from Marett to Mauss grouped mana, manitou and orenda as one category of impersonal power."
+  },
+  {
+   "from": "kayakalpa",
+   "to": "rasayana",
+   "type": "belongs",
+   "claim": "Kāyakalpa is a rasāyana regimen."
+  },
+  {
+   "from": "vital-spirits",
+   "to": "spiritus",
+   "type": "descends",
+   "claim": "The Galenic vital spirits are a specification of spiritus."
+  },
+  {
+   "from": "spiritus-mundi",
+   "to": "spiritus",
+   "type": "descends",
+   "claim": "Ficino's spiritus mundi extends the body's spirit to the cosmos."
+  },
+  {
+   "from": "spiritus-mundi",
+   "to": "anima-mundi",
+   "type": "descends",
+   "claim": "Ficino's spirit of the world is the vehicle of the world soul."
+  },
+  {
+   "from": "astral-light",
+   "to": "spiritus-mundi",
+   "type": "descends",
+   "claim": "Lévi's astral light restates the Renaissance spirit of the world."
+  },
+  {
+   "from": "astral-light",
+   "to": "animal-magnetism",
+   "type": "descends",
+   "claim": "Lévi identified the astral light with the magnetic fluid of the mesmerists."
+  },
+  {
+   "from": "galvanism",
+   "to": "animal-spirits",
+   "type": "descends",
+   "claim": "Galvani's animal electricity took over the role of the animal spirits in the nerves.",
+   "cue_from": [
+    "galvanism",
+    "animal electricity",
+    "Galvani",
+    "electric fluid",
+    "electricity"
+   ],
+   "cue_to": [
+    "animal spirits",
+    "nervous fluid",
+    "nerve fluid",
+    "nervous juice"
+   ]
+  },
+  {
+   "from": "odic-force",
+   "to": "animal-magnetism",
+   "type": "descends",
+   "claim": "Reichenbach's Od was proposed as the real agent behind mesmeric effects."
+  },
+  {
+   "from": "natural-magic",
+   "to": "sympathy",
+   "type": "descends",
+   "claim": "Renaissance natural magic works through the sympathies of things."
+  },
+  {
+   "from": "weapon-salve",
+   "to": "sympathy",
+   "type": "descends",
+   "claim": "The weapon salve was defended as a cure by sympathy."
+  },
+  {
+   "from": "weapon-salve",
+   "to": "mumia",
+   "type": "descends",
+   "claim": "Paracelsian defenders explained the weapon salve by the mumia in the blood on the weapon."
+  },
+  {
+   "from": "animal-magnetism",
+   "to": "weapon-salve",
+   "type": "descends",
+   "claim": "Mesmer's magnetic medicine continues the 17th-century magnetic cure of wounds."
+  },
+  {
+   "from": "animal-magnetism",
+   "to": "sympathy",
+   "type": "descends",
+   "claim": "Mesmer's universal fluid restates cosmic sympathy as a physical medium."
+  },
+  {
+   "from": "helmontianism",
+   "to": "paracelsianism",
+   "type": "descends",
+   "claim": "Van Helmont reworked Paracelsian chemistry and the archeus."
+  },
+  {
+   "from": "stahlian-animism",
+   "to": "helmontianism",
+   "type": "descends",
+   "claim": "Stahl's soul-directed physiology follows van Helmont's archeus."
+  },
+  {
+   "from": "montpellier",
+   "to": "stahlian-animism",
+   "type": "descends",
+   "claim": "Montpellier vitalism grew from Stahl's animism while removing the rational soul.",
+   "cue_from": [
+    "Montpellier",
+    "Barthez",
+    "Bordeu",
+    "Sauvages"
+   ],
+   "cue_to": [
+    "Stahl",
+    "Stahlian",
+    "Stahlians"
+   ]
+  },
+  {
+   "from": "vital-principle",
+   "to": "archeus",
+   "type": "descends",
+   "claim": "Barthez's vital principle is a secularised successor of the archeus."
+  },
+  {
+   "from": "vital-force",
+   "to": "vital-principle",
+   "type": "descends",
+   "claim": "German Lebenskraft physiology took up the Montpellier vital principle."
+  },
+  {
+   "from": "elan-vital",
+   "to": "vitalism",
+   "type": "descends",
+   "claim": "Bergson's élan vital is the last major restatement of vitalism.",
+   "cue_to": [
+    "vitalism",
+    "vitalist",
+    "vitalists",
+    "vital force",
+    "vital principle"
+   ]
+  },
+  {
+   "from": "entelechy",
+   "to": "psyche",
+   "type": "descends",
+   "claim": "Aristotle defines the soul as the first entelechy of a natural body."
+  },
+  {
+   "from": "vitalism",
+   "to": "entelechy",
+   "type": "descends",
+   "claim": "Driesch revived Aristotle's entelechy as the agent of neo-vitalism."
+  },
+  {
+   "from": "plastic-nature",
+   "to": "seminal-reasons",
+   "type": "descends",
+   "claim": "Cudworth's plastic nature restates the Stoic and Platonic seminal reasons."
+  },
+  {
+   "from": "plastic-nature",
+   "to": "anima-mundi",
+   "type": "descends",
+   "claim": "Cudworth's plastic nature is a subordinate instrument of the world soul or of God."
+  },
+  {
+   "from": "bildungstrieb",
+   "to": "plastic-nature",
+   "type": "descends",
+   "claim": "Blumenbach's formative drive replaces the older vis plastica."
+  },
+  {
+   "from": "seminal-reasons",
+   "to": "pneuma",
+   "type": "descends",
+   "claim": "The Stoic seminal reasons are carried in the divine pneuma."
+  },
+  {
+   "from": "anima-mundi",
+   "to": "platonism",
+   "type": "belongs",
+   "claim": "The world soul is a Platonic teaching (Timaeus)."
+  },
+  {
+   "from": "naturphilosophie",
+   "to": "anima-mundi",
+   "type": "descends",
+   "claim": "Schelling's Von der Weltseele (1798) revives the world soul."
+  },
+  {
+   "from": "panpsychism",
+   "to": "anima-mundi",
+   "type": "descends",
+   "claim": "Modern panpsychism descends from Renaissance world-soul doctrines (Patrizi)."
+  },
+  {
+   "from": "radical-moisture",
+   "to": "innate-heat",
+   "type": "descends",
+   "claim": "The radical moisture was posited as the fuel of the innate heat."
+  },
+  {
+   "from": "prolongation",
+   "to": "radical-moisture",
+   "type": "descends",
+   "claim": "Medieval and early modern programmes of prolonging life aimed to conserve the radical moisture."
+  },
+  {
+   "from": "sober-life",
+   "to": "regimen",
+   "type": "descends",
+   "claim": "Cornaro's sober life is an extreme form of the Galenic regimen of diet."
+  },
+  {
+   "from": "prolongation",
+   "to": "sober-life",
+   "type": "descends",
+   "claim": "Francis Bacon and later writers on long life cite Cornaro."
+  },
+  {
+   "from": "makrobiotik",
+   "to": "prolongation",
+   "type": "descends",
+   "claim": "Hufeland's Makrobiotik belongs to the line of Bacon's Historia vitae et mortis."
+  },
+  {
+   "from": "makrobiotik",
+   "to": "sober-life",
+   "type": "descends",
+   "claim": "Hufeland cites Cornaro as an example of long life through moderation.",
+   "cue_from": [
+    "Hufeland",
+    "Makrobiotik",
+    "macrobiotic",
+    "art of prolonging life",
+    "prolonging human life"
+   ],
+   "cue_to": [
+    "Cornaro",
+    "Cornarus",
+    "Cornaro's",
+    "Lewis Cornaro",
+    "Luigi Cornaro"
+   ]
+  },
+  {
+   "from": "makrobiotik",
+   "to": "vital-force",
+   "type": "descends",
+   "claim": "Hufeland's art of long life is the husbanding of the Lebenskraft."
+  },
+  {
+   "from": "elixir",
+   "to": "quintessence",
+   "type": "descends",
+   "claim": "Latin elixir lore merged with Rupescissa's quintessence."
+  },
+  {
+   "from": "aurum-potabile",
+   "to": "elixir",
+   "type": "descends",
+   "claim": "Potable gold is one form of the elixir of life."
+  },
+  {
+   "from": "universal-medicine",
+   "to": "elixir",
+   "type": "descends",
+   "claim": "The universal medicine is the elixir as cure for all disease."
+  },
+  {
+   "from": "water-of-life",
+   "to": "quintessence",
+   "type": "descends",
+   "claim": "Aqua vitae is the distilled spirit from which Rupescissa drew the quintessence."
+  },
+  {
+   "from": "neidan",
+   "to": "waidan",
+   "type": "descends",
+   "claim": "Inner alchemy took its vocabulary from laboratory (external) alchemy."
+  },
+  {
+   "from": "spagyric",
+   "to": "quintessence",
+   "type": "descends",
+   "claim": "Spagyric pharmacy separates the quintessence or virtue from matter."
+  },
+  {
+   "from": "talismans",
+   "to": "animated-statues",
+   "type": "descends",
+   "claim": "Ficino justified talismans with the Hermetic account of ensouled statues.",
+   "cue_to": [
+    "Asclepius",
+    "statues",
+    "images of the gods"
+   ]
+  },
+  {
+   "from": "golem",
+   "to": "breath-of-life",
+   "type": "descends",
+   "claim": "The golem legend repeats the forming of Adam from earth and his animation.",
+   "cue_to": [
+    "Adam",
+    "breathed",
+    "dust of the earth",
+    "living soul"
+   ]
+  },
+  {
+   "from": "homunculus",
+   "to": "spontaneous-generation",
+   "type": "descends",
+   "claim": "The homunculus recipe applies putrefactive generation to human seed.",
+   "cue_to": [
+    "putrefaction",
+    "putrefied",
+    "horse dung",
+    "venter equinus",
+    "generation"
+   ]
+  },
+  {
+   "from": "pneuma",
+   "to": "stoicism",
+   "type": "belongs",
+   "claim": "Pneuma is the active principle of Stoic physics."
+  },
+  {
+   "from": "sympathy",
+   "to": "stoicism",
+   "type": "belongs",
+   "claim": "Cosmic sympathy is a Stoic teaching."
+  },
+  {
+   "from": "seminal-reasons",
+   "to": "stoicism",
+   "type": "belongs",
+   "claim": "Seminal reasons are a Stoic teaching."
+  },
+  {
+   "from": "sympathy",
+   "to": "platonism",
+   "type": "belongs",
+   "claim": "Plotinus adopted cosmic sympathy."
+  },
+  {
+   "from": "spiritus-mundi",
+   "to": "platonism",
+   "type": "belongs",
+   "claim": "Ficino's spirit of the world belongs to his Platonism.",
+   "cue_to": [
+    "Ficino",
+    "Platonists",
+    "Plotinus",
+    "Platonic",
+    "Marsilio"
+   ]
+  },
+  {
+   "from": "animated-statues",
+   "to": "hermetism",
+   "type": "belongs",
+   "claim": "The ensouled statues are described in the Hermetic Asclepius."
+  },
+  {
+   "from": "microcosm",
+   "to": "hermetism",
+   "type": "belongs",
+   "claim": "The correspondence of microcosm and macrocosm is central to Hermetic and Paracelsian thought."
+  },
+  {
+   "from": "microcosm",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "Paracelsus built medicine on the microcosm."
+  },
+  {
+   "from": "archeus",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "The archeus is a Paracelsian concept.",
+   "cue_to": [
+    "Paracelsus",
+    "Paracelsians",
+    "Paracelsian",
+    "Theophrastus"
+   ]
+  },
+  {
+   "from": "archeus",
+   "to": "helmontianism",
+   "type": "belongs",
+   "claim": "Van Helmont made the archeus the governor of each organ."
+  },
+  {
+   "from": "mumia",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "Mumia is a Paracelsian concept."
+  },
+  {
+   "from": "vital-balsam",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "The natural balsam is a Paracelsian concept."
+  },
+  {
+   "from": "elementals",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "The elemental beings come from Paracelsus's Liber de nymphis."
+  },
+  {
+   "from": "homunculus",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "The homunculus recipe is in the Paracelsian De natura rerum."
+  },
+  {
+   "from": "spagyric",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "Spagyric pharmacy is Paracelsian."
+  },
+  {
+   "from": "weapon-salve",
+   "to": "paracelsianism",
+   "type": "belongs",
+   "claim": "The weapon salve was attributed to Paracelsus and defended by Paracelsians."
+  },
+  {
+   "from": "vital-spirits",
+   "to": "galenism",
+   "type": "belongs",
+   "claim": "Vital spirits are one of Galen's three spirits."
+  },
+  {
+   "from": "animal-spirits",
+   "to": "galenism",
+   "type": "belongs",
+   "claim": "Animal spirits are one of Galen's three spirits."
+  },
+  {
+   "from": "innate-heat",
+   "to": "galenism",
+   "type": "belongs",
+   "claim": "Innate heat is central to Galenic physiology."
+  },
+  {
+   "from": "radical-moisture",
+   "to": "galenism",
+   "type": "belongs",
+   "claim": "Radical moisture belongs to Arabic-Latin Galenism."
+  },
+  {
+   "from": "regimen",
+   "to": "galenism",
+   "type": "belongs",
+   "claim": "The six non-naturals are Galenic."
+  },
+  {
+   "from": "gerocomy",
+   "to": "galenism",
+   "type": "belongs",
+   "claim": "Gerocomia is a branch of Galenic hygiene.",
+   "cue_to": [
+    "Galen",
+    "Galenus"
+   ]
+  },
+  {
+   "from": "vegetative-soul",
+   "to": "psyche",
+   "type": "belongs",
+   "claim": "The vegetative soul is the lowest power of Aristotle's psychē.",
+   "cue_to": [
+    "Aristotle",
+    "De anima",
+    "three souls",
+    "powers of the soul"
+   ]
+  },
+  {
+   "from": "plastic-nature",
+   "to": "cambridge-platonism",
+   "type": "belongs",
+   "claim": "Plastic nature is Cudworth's.",
+   "cue_to": [
+    "Cudworth",
+    "Henry More",
+    "Dr. More"
+   ]
+  },
+  {
+   "from": "vital-principle",
+   "to": "montpellier",
+   "type": "belongs",
+   "claim": "The vital principle is the Montpellier school's."
+  },
+  {
+   "from": "montpellier",
+   "to": "vitalism",
+   "type": "belongs",
+   "claim": "Montpellier is the paradigm school of vitalism.",
+   "cue_from": [
+    "Montpellier",
+    "Barthez",
+    "Bordeu"
+   ],
+   "cue_to": [
+    "vitalism",
+    "vitalists",
+    "vital principle",
+    "vitalist"
+   ]
+  },
+  {
+   "from": "vital-force",
+   "to": "vitalism",
+   "type": "belongs",
+   "claim": "Lebenskraft is the central concept of German vitalism."
+  },
+  {
+   "from": "elan-vital",
+   "to": "creative-evolution",
+   "type": "belongs",
+   "claim": "The élan vital is the core of Creative Evolution."
+  },
+  {
+   "from": "bildungstrieb",
+   "to": "vitalism",
+   "type": "belongs",
+   "claim": "The formative drive was a vitalist force.",
+   "cue_from": [
+    "Bildungstrieb",
+    "formative drive",
+    "formative impulse",
+    "nisus formativus",
+    "Blumenbach"
+   ],
+   "cue_to": [
+    "vital force",
+    "vitalism",
+    "Lebenskraft",
+    "vital principle"
+   ]
+  },
+  {
+   "from": "qi",
+   "to": "daoism",
+   "type": "belongs",
+   "claim": "Qi cultivation is central to Daoist practice."
+  },
+  {
+   "from": "jing",
+   "to": "daoism",
+   "type": "belongs",
+   "claim": "Essence is one of the Daoist three treasures."
+  },
+  {
+   "from": "immortality",
+   "to": "daoism",
+   "type": "belongs",
+   "claim": "Transcendence is the Daoist goal."
+  },
+  {
+   "from": "prana",
+   "to": "ayurveda",
+   "type": "belongs",
+   "claim": "Prāṇa is a principle of Āyurveda and yoga."
+  },
+  {
+   "from": "ojas",
+   "to": "ayurveda",
+   "type": "belongs",
+   "claim": "Ojas is an Āyurvedic concept."
+  },
+  {
+   "from": "rasayana",
+   "to": "ayurveda",
+   "type": "belongs",
+   "claim": "Rasāyana is a branch of Āyurveda."
+  },
+  {
+   "from": "kundalini",
+   "to": "hatha-yoga",
+   "type": "belongs",
+   "claim": "Kuṇḍalinī is raised in haṭha yoga."
+  },
+  {
+   "from": "pranayama",
+   "to": "hatha-yoga",
+   "type": "belongs",
+   "claim": "Prāṇāyāma is a haṭha yoga practice."
+  },
+  {
+   "from": "rlung",
+   "to": "sowa-rigpa",
+   "type": "belongs",
+   "claim": "Wind is one of the three humours of Tibetan medicine.",
+   "cue_from": [
+    "rlung",
+    "wind"
+   ],
+   "cue_to": [
+    "Tibetan medicine",
+    "three humors",
+    "three humours",
+    "bile and phlegm",
+    "Four Tantras",
+    "medical tantra"
+   ]
+  },
+  {
+   "from": "chulen",
+   "to": "sowa-rigpa",
+   "type": "belongs",
+   "claim": "Rejuvenation (bcud len) is a branch of the Four Tantras.",
+   "cue_to": [
+    "medicine",
+    "medical",
+    "Four Tantras",
+    "rgyud bzhi",
+    "physician"
+   ]
+  },
+  {
+   "from": "manitou",
+   "to": "animism",
+   "type": "belongs",
+   "claim": "Manitou is a standard example in anthropological writing on animism.",
+   "cue_to": [
+    "spirits",
+    "worship",
+    "animism",
+    "Great Spirit",
+    "religion"
+   ]
+  },
+  {
+   "from": "genius-loci",
+   "to": "animism",
+   "type": "belongs",
+   "claim": "Place spirits are classed under animism by Tylor and his successors."
+  },
+  {
+   "from": "animal-machine",
+   "to": "mechanism",
+   "type": "belongs",
+   "claim": "The animal machine is a Cartesian thesis.",
+   "cue_from": [
+    "animal machine",
+    "bête machine",
+    "beast-machine",
+    "machines",
+    "automata"
+   ],
+   "cue_to": [
+    "Descartes",
+    "Cartesian",
+    "Cartesians"
+   ]
+  },
+  {
+   "from": "pranayama",
+   "to": "prana",
+   "type": "cultivates",
+   "claim": "Prāṇāyāma restrains and directs prāṇa."
+  },
+  {
+   "from": "pranayama",
+   "to": "kundalini",
+   "type": "cultivates",
+   "claim": "Breath retention wakes kuṇḍalinī."
+  },
+  {
+   "from": "tummo",
+   "to": "rlung",
+   "type": "cultivates",
+   "claim": "Tummo works by drawing the winds into the central channel."
+  },
+  {
+   "from": "daoyin",
+   "to": "qi",
+   "type": "cultivates",
+   "claim": "Daoyin guides qi."
+  },
+  {
+   "from": "taixi",
+   "to": "qi",
+   "type": "cultivates",
+   "claim": "Embryonic breathing holds and circulates qi."
+  },
+  {
+   "from": "neidan",
+   "to": "jing",
+   "type": "cultivates",
+   "claim": "Inner alchemy refines essence into qi."
+  },
+  {
+   "from": "neidan",
+   "to": "immortality",
+   "type": "cultivates",
+   "claim": "Inner alchemy aims at transcendence."
+  },
+  {
+   "from": "waidan",
+   "to": "immortality",
+   "type": "cultivates",
+   "claim": "The cinnabar elixir was taken for immortality."
+  },
+  {
+   "from": "bigu",
+   "to": "immortality",
+   "type": "cultivates",
+   "claim": "Avoiding grains was a step toward transcendence."
+  },
+  {
+   "from": "yangsheng",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "Nourishing life aims at a long life."
+  },
+  {
+   "from": "yangsheng",
+   "to": "qi",
+   "type": "cultivates",
+   "claim": "Nourishing life conserves qi."
+  },
+  {
+   "from": "rasayana",
+   "to": "rejuvenation",
+   "type": "cultivates",
+   "claim": "Rasāyana is rejuvenation therapy."
+  },
+  {
+   "from": "rasayana",
+   "to": "ojas",
+   "type": "cultivates",
+   "claim": "Rasāyana increases ojas."
+  },
+  {
+   "from": "kayakalpa",
+   "to": "rejuvenation",
+   "type": "cultivates",
+   "claim": "Kāyakalpa renews the body."
+  },
+  {
+   "from": "chulen",
+   "to": "rejuvenation",
+   "type": "cultivates",
+   "claim": "Essence extraction restores the body."
+  },
+  {
+   "from": "elixir",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "The elixir was taken to lengthen life."
+  },
+  {
+   "from": "elixir",
+   "to": "rejuvenation",
+   "type": "cultivates",
+   "claim": "The elixir was said to restore youth."
+  },
+  {
+   "from": "aurum-potabile",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "Potable gold was sold to preserve health and lengthen life."
+  },
+  {
+   "from": "universal-medicine",
+   "to": "rejuvenation",
+   "type": "cultivates",
+   "claim": "The universal medicine was said to restore youth."
+  },
+  {
+   "from": "quintessence",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "Rupescissa's quintessence preserves the body from corruption."
+  },
+  {
+   "from": "water-of-life",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "Aqua vitae was praised as a preserver of youth and life."
+  },
+  {
+   "from": "regimen",
+   "to": "innate-heat",
+   "type": "cultivates",
+   "claim": "Regimen keeps the innate heat in balance."
+  },
+  {
+   "from": "regimen",
+   "to": "vital-spirits",
+   "type": "cultivates",
+   "claim": "Air, food and the passions govern the spirits.",
+   "cue_from": [
+    "non-naturals",
+    "non-natural",
+    "regimen",
+    "diet",
+    "moderate exercise"
+   ],
+   "cue_to": [
+    "spirits",
+    "vital spirits",
+    "animal spirits"
+   ]
+  },
+  {
+   "from": "sober-life",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "Cornaro's sober life was a recipe for a long life."
+  },
+  {
+   "from": "sober-life",
+   "to": "radical-moisture",
+   "type": "cultivates",
+   "claim": "Moderate diet spares the radical moisture.",
+   "cue_from": [
+    "Cornaro",
+    "sober life",
+    "temperance",
+    "sobriety",
+    "moderate diet",
+    "temperate diet"
+   ]
+  },
+  {
+   "from": "prolongation",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "The programme of prolonging life aims at longevity."
+  },
+  {
+   "from": "makrobiotik",
+   "to": "longevity",
+   "type": "cultivates",
+   "claim": "Hufeland's macrobiotics is the art of long life."
+  },
+  {
+   "from": "gerocomy",
+   "to": "old-age",
+   "type": "opposes",
+   "claim": "Gerocomia treats and slows old age."
+  },
+  {
+   "from": "gymnastics",
+   "to": "vigour",
+   "type": "cultivates",
+   "claim": "Exercise warms the body and preserves its strength."
+  },
+  {
+   "from": "natural-magic",
+   "to": "spiritus-mundi",
+   "type": "cultivates",
+   "claim": "Natural magic draws on the spirit of the world."
+  },
+  {
+   "from": "talismans",
+   "to": "spiritus-mundi",
+   "type": "cultivates",
+   "claim": "Talismans capture celestial spirit."
+  },
+  {
+   "from": "consecration",
+   "to": "prana",
+   "type": "cultivates",
+   "claim": "Prāṇapratiṣṭhā installs prāṇa in an image.",
+   "cue_to": [
+    "prāṇa",
+    "prana",
+    "life-breath",
+    "vital breath",
+    "breath of life",
+    "life into"
+   ]
+  },
+  {
+   "from": "offerings",
+   "to": "local-spirits",
+   "type": "cultivates",
+   "claim": "Offerings placate the spirits of the land.",
+   "cue_from": [
+    "offerings",
+    "offering",
+    "bsang",
+    "smoke offering",
+    "incense"
+   ],
+   "cue_to": [
+    "sa bdag",
+    "gzhi bdag",
+    "lords of the soil",
+    "earth lords",
+    "local deities",
+    "local spirits",
+    "klu",
+    "nagas",
+    "lords of the place"
+   ]
+  },
+  {
+   "from": "offerings",
+   "to": "genius-loci",
+   "type": "cultivates",
+   "claim": "Romans made offerings to the genius of a place."
+  },
+  {
+   "from": "spagyric",
+   "to": "vital-balsam",
+   "type": "cultivates",
+   "claim": "Spagyric balsams strengthen the body's natural balsam."
+  },
+  {
+   "from": "palingenesis",
+   "to": "seminal-reasons",
+   "type": "cultivates",
+   "claim": "The resurrected plant was taken to show the seminal form surviving in the salts."
+  },
+  {
+   "from": "palingenesis",
+   "to": "rebirth",
+   "type": "cultivates",
+   "claim": "Plant palingenesis was read as an image of resurrection."
+  },
+  {
+   "from": "mechanism",
+   "to": "vitalism",
+   "type": "opposes",
+   "claim": "Vitalism defined itself against mechanism.",
+   "cue_from": [
+    "mechanism",
+    "mechanical",
+    "mechanists",
+    "mechanistic"
+   ],
+   "cue_to": [
+    "vitalism",
+    "vitalists",
+    "vitalist",
+    "vital force",
+    "vital principle"
+   ]
+  },
+  {
+   "from": "mechanism",
+   "to": "plastic-nature",
+   "type": "opposes",
+   "claim": "Cudworth proposed plastic nature against the mechanical philosophy.",
+   "cue_from": [
+    "mechanical",
+    "mechanick",
+    "mechanists",
+    "mechanism",
+    "Atomists",
+    "atheists"
+   ]
+  },
+  {
+   "from": "stahlian-animism",
+   "to": "mechanism",
+   "type": "opposes",
+   "claim": "Stahl argued against the mechanist physiology of Hoffmann.",
+   "cue_from": [
+    "Stahl",
+    "Stahlian",
+    "Stahlians"
+   ],
+   "cue_to": [
+    "mechanical",
+    "mechanism",
+    "mechanists",
+    "Hoffmann",
+    "mechanics"
+   ]
+  },
+  {
+   "from": "animal-machine",
+   "to": "psyche",
+   "type": "opposes",
+   "claim": "The animal machine denies animals a sensitive soul.",
+   "cue_from": [
+    "animal machine",
+    "bête machine",
+    "beast-machine",
+    "mere machines",
+    "automata"
+   ],
+   "cue_to": [
+    "soul",
+    "souls",
+    "feeling",
+    "sensation"
+   ]
+  },
+  {
+   "from": "automaton",
+   "to": "breath-of-life",
+   "type": "opposes",
+   "claim": "An automaton moves without a breath of life."
+  },
+  {
+   "from": "inert-matter",
+   "to": "hylozoism",
+   "type": "opposes",
+   "claim": "Hylozoism denies that matter is inert.",
+   "cue_to": [
+    "hylozoism",
+    "hylozoists",
+    "living matter",
+    "Strato",
+    "matter is alive",
+    "matter itself"
+   ]
+  },
+  {
+   "from": "inert-matter",
+   "to": "anima-mundi",
+   "type": "opposes",
+   "claim": "A world soul denies that the world's matter is dead."
+  },
+  {
+   "from": "antipathy",
+   "to": "sympathy",
+   "type": "opposes",
+   "claim": "Antipathy is the counterpart of sympathy."
+  },
+  {
+   "from": "acedia",
+   "to": "vigour",
+   "type": "opposes",
+   "claim": "Acedia is the loss of vigour of the soul."
+  },
+  {
+   "from": "old-age",
+   "to": "innate-heat",
+   "type": "opposes",
+   "claim": "Old age is the waning of the innate heat."
+  },
+  {
+   "from": "old-age",
+   "to": "rejuvenation",
+   "type": "opposes",
+   "claim": "Rejuvenation reverses old age."
+  },
+  {
+   "from": "death",
+   "to": "innate-heat",
+   "type": "opposes",
+   "claim": "Death is the extinction of the innate heat."
+  },
+  {
+   "from": "death",
+   "to": "longevity",
+   "type": "opposes",
+   "claim": "Long life defers death."
+  },
+  {
+   "from": "genius-loci",
+   "to": "daimon",
+   "type": "translates",
+   "claim": "Latin writers rendered the Greek daimon as genius."
+  },
+  {
+   "from": "daimon",
+   "to": "platonism",
+   "type": "belongs",
+   "claim": "Plato's Symposium and the Neoplatonists made daimones intermediaries between gods and humans."
+  },
+  {
+   "from": "growth-of-metals",
+   "to": "seminal-reasons",
+   "type": "descends",
+   "claim": "Alchemists and Paracelsians spoke of metallic seeds growing in the earth."
+  },
+  {
+   "from": "inert-matter",
+   "to": "growth-of-metals",
+   "type": "opposes",
+   "claim": "Metals that grow are not dead matter.",
+   "cue_from": [
+    "dead matter",
+    "inanimate",
+    "lifeless",
+    "dead"
+   ],
+   "cue_to": [
+    "generation of metals",
+    "growth of metals",
+    "metals grow",
+    "metals are generated",
+    "seeds of metals",
+    "metallic seed"
+   ]
+  }
+ ],
+ "chains": [
+  {
+   "title": "Breath becomes spirit",
+   "nodes": [
+    "ruach",
+    "pneuma",
+    "spiritus",
+    "vital-spirits"
+   ]
+  },
+  {
+   "title": "Spirits in the nerves, then electricity",
+   "nodes": [
+    "pneuma",
+    "animal-spirits",
+    "galvanism"
+   ]
+  },
+  {
+   "title": "The soul of the world",
+   "nodes": [
+    "psyche",
+    "anima-mundi",
+    "spiritus-mundi",
+    "astral-light"
+   ]
+  },
+  {
+   "title": "Seeds of form",
+   "nodes": [
+    "pneuma",
+    "seminal-reasons",
+    "plastic-nature",
+    "bildungstrieb"
+   ]
+  },
+  {
+   "title": "Sympathy at a distance",
+   "nodes": [
+    "sympathy",
+    "weapon-salve",
+    "animal-magnetism",
+    "astral-light"
+   ]
+  },
+  {
+   "title": "From the archeus to the élan vital",
+   "nodes": [
+    "archeus",
+    "helmontianism",
+    "stahlian-animism",
+    "montpellier",
+    "vital-principle",
+    "vital-force",
+    "vitalism",
+    "elan-vital"
+   ]
+  },
+  {
+   "title": "The lamp and its oil",
+   "nodes": [
+    "innate-heat",
+    "radical-moisture",
+    "prolongation",
+    "makrobiotik"
+   ]
+  },
+  {
+   "title": "Eating less, living longer",
+   "nodes": [
+    "regimen",
+    "sober-life",
+    "prolongation",
+    "makrobiotik"
+   ]
+  },
+  {
+   "title": "Distilled life",
+   "nodes": [
+    "water-of-life",
+    "quintessence",
+    "elixir",
+    "aurum-potabile"
+   ]
+  },
+  {
+   "title": "From the furnace to the body",
+   "nodes": [
+    "waidan",
+    "neidan",
+    "immortality"
+   ]
+  },
+  {
+   "title": "From Sanskrit to Tibetan",
+   "nodes": [
+    "rasayana",
+    "chulen"
+   ]
+  },
+  {
+   "title": "Breath and wind",
+   "nodes": [
+    "prana",
+    "rlung"
+   ]
+  }
+ ]
+}
