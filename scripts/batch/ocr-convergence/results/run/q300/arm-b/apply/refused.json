@@ -1,0 +1,121 @@
+[
+ {
+  "page_id": "695004cbf426a210d1098f36",
+  "slug": "poliziano-miscellaneorum-1489-florence-poliziano",
+  "page_number": 98,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "695004d8f426a210d109a118",
+  "slug": "vesalius-de-humani-corporis-fabrica-1555-vesalius",
+  "page_number": 724,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "6953ab9577f38f6761bd7878",
+  "slug": "pal-lat-984-llull",
+  "page_number": 10,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "6953ab9577f38f6761bd7882",
+  "slug": "pal-lat-984-llull",
+  "page_number": 20,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "6953ab9577f38f6761bd7885",
+  "slug": "pal-lat-984-llull",
+  "page_number": 23,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "695591c87bd6d2cd1d6197a8",
+  "slug": "amphitheatre-of-anatomy-fludd",
+  "page_number": 29,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "695931ccb91a6184ea94337f",
+  "slug": "radiant-sparks-al-buni",
+  "page_number": 3,
+  "group": "arabic",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "6959af9b1dfc1806c080b83a",
+  "slug": "musaeum-hermeticum-1677-edition-jennis",
+  "page_number": 93,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69754b17e1e76d343872cdec",
+  "slug": "apostolic-light-and-law-lange",
+  "page_number": 8,
+  "group": "german",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69938d615d28b693146cefa6",
+  "slug": "dionysiaca-cunaeus-edition-panopolis",
+  "page_number": 351,
+  "group": "greek",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69942e5cd607f8e57e4b8c44",
+  "slug": "paraphrasis-in-dionysium-areopagitam-pachymeres",
+  "page_number": 586,
+  "group": "greek",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69942e5cd607f8e57e4b8cd4",
+  "slug": "paraphrasis-in-dionysium-areopagitam-pachymeres",
+  "page_number": 730,
+  "group": "greek",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69b2ffbce5d6d64d8e1975c4",
+  "slug": "institutiones-iuris-civilis-greek-justinian",
+  "page_number": 73,
+  "group": "greek",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69b4cd24d5b6c3815e1a43da",
+  "slug": "gerardus-mercator-jodocus-hondius-atlas-minor-latin-edition-hondius",
+  "page_number": 303,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69b631a51c1c21a373809449",
+  "slug": "summula-confessionis-antonino",
+  "page_number": 70,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69f74490a765ef41f8e34fe4",
+  "slug": "lehr-und-geistreiche-predigten-tauler",
+  "page_number": 963,
+  "group": "german",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ },
+ {
+  "page_id": "69f747f855b5473daf7938c8",
+  "slug": "in-quatuor-evangelia-enarationes-luculentissimae-ochrid",
+  "page_number": 50,
+  "group": "latin",
+  "why": "shared-words guard (<40% of words in the stored read)"
+ }
+]
