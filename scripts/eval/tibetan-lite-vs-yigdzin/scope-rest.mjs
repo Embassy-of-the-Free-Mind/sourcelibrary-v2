@@ -57,7 +57,7 @@ for (const b of books) {
   const bid = b.id || String(b._id);
   const pages = await db.collection('pages').find({ book_id: bid }, {
     projection: { id: 1, page_number: 1, page_type: 1, archived_photo: 1, 'ocr.model': 1, 'ocr.unreadable': 1, 'ocr.source': 1,
-      has: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] } },
+      has: { $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: '$ocr.data' }, 0] }] } },
   }).sort({ page_number: 1 }).toArray();
   const want = [];
   for (const p of pages) {
