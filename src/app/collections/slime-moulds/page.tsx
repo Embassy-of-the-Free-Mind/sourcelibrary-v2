@@ -652,7 +652,8 @@ export default async function SlimeMouldsCollectionPage() {
           {worksMore > 0 && (
             <div className="mt-8 border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more work{worksMore === 1 ? '' : 's'} in this collection</p>
+                {/* Links the A–Z list, the crawl path to every member (#2266). */}
+                <p className="text-primary font-medium font-body"><Link href={`/collections/${SLUG}/catalog`} className="hover:underline">{worksMore.toLocaleString('en-US')} more work{worksMore === 1 ? '' : 's'} in this collection</Link></p>
                 <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
               </div>
               <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
@@ -689,12 +690,6 @@ export default async function SlimeMouldsCollectionPage() {
         </div>
       </section>
 
-      {/* Crawl path to every member: the full A–Z list (#2266). */}
-      <p className="max-w-4xl mx-auto px-6 md:px-12 my-8 text-sm text-center">
-        <Link href="/collections/slime-moulds/catalog" className="underline hover:opacity-70">
-          All books in this collection, as a list
-        </Link>
-      </p>
 
       <SignUpCTA
         bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0"
