@@ -234,6 +234,11 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
         y = r.get('book_year')
         if isinstance(y, (int, float)): cv[int(y // 100 * 100)][r['voice_final'] or 'unknown'] += 1
     A['centuries'] = [{'c': c, **dict(v)} for c, v in sorted(cv.items())]
+    dated = lambda v, f: sum(n for c, x in cv.items() if f(c) for k, n in x.items() if k == v)
+    A['voice_dated'] = {v: {'from_1800': dated(v, lambda c: c >= 1800), 'all': dated(v, lambda c: True)} for v in ['insider', 'outsider', 'literary']}
+    for v in A['voice_dated'].values(): v['share_from_1800'] = round(100 * v['from_1800'] / max(1, v['all']))
+    tmap = tv  # all traditions, not only the top 14 in the table
+    A['trad'] = {t.replace('-', '_'): {k: tmap.get(t, {}).get(k, 0) for k in ['person', 'insider', 'outsider', 'literary']} for t in ['tibetan-buddhist', 'chinese-folk', 'greco-roman', 'african', 'shinto', 'native-american', 'pacific']}
     # which books meet the other layers: of books with a confirmed inhabited passage, how many also have world_alive
     inh_books = {r['book_id'] for r in cf}
     A['books_also_world_alive'] = sum(1 for b in inh_books if 'world_alive' in book.get(b, set()))
