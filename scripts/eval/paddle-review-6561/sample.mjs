@@ -22,15 +22,24 @@ const hanOnly = (s) => (s.match(/\p{Script=Han}/gu) || []).join('');
 
 export const reviewPrompt = (text) => PROMPT.replace('{{TEXT}}', text) + '\n\nThe page image is attached:';
 
+// Cloudflare Polish re-encodes the JPEG on the way out (same pixel size, q85) and names the stored size in
+// `cf-polished: ok, orig_size=N`. A reader may have got either variant, so bytes cannot say whether the image changed;
+// the stored object's last-modified can. Both kept in a sidecar.
 export async function fetchImage(url, dir) {
   const f = path.join(dir, crypto.createHash('sha1').update(url).digest('hex').slice(0, 20) + (path.extname(new URL(url).pathname) || '.jpg'));
-  if (!fs.existsSync(f)) {
+  if (!fs.existsSync(f) || !fs.existsSync(f + '.json')) {
     for (let i = 0; ; i++) {
-      try { const r = await fetch(url); if (!r.ok) throw new Error('HTTP ' + r.status); fs.writeFileSync(f + '.part', Buffer.from(await r.arrayBuffer())); fs.renameSync(f + '.part', f); break; } catch (e) { if (i >= 2) throw e; await new Promise((x) => setTimeout(x, 2000)); }
+      try {
+        const r = await fetch(url); if (!r.ok) throw new Error('HTTP ' + r.status);
+        fs.writeFileSync(f + '.part', Buffer.from(await r.arrayBuffer())); fs.renameSync(f + '.part', f);
+        const m = (r.headers.get('cf-polished') || '').match(/orig_size=(\d+)/);
+        fs.writeFileSync(f + '.json', JSON.stringify({ url, orig_bytes: m ? Number(m[1]) : null, polished: !!m, last_modified: r.headers.get('last-modified') }));
+        break;
+      } catch (e) { if (i >= 2) throw e; await new Promise((x) => setTimeout(x, 2000)); }
     }
   }
-  const b = fs.readFileSync(f);
-  return { file: f, bytes: b.length, sha256: crypto.createHash('sha256').update(b).digest('hex') };
+  const b = fs.readFileSync(f); const side = JSON.parse(fs.readFileSync(f + '.json', 'utf8'));
+  return { file: f, bytes: b.length, sha256: crypto.createHash('sha256').update(b).digest('hex'), orig_bytes: side.orig_bytes ?? b.length, polished: side.polished, last_modified: side.last_modified ? new Date(side.last_modified) : null };
 }
 
 // Shape: string corrected_text whose sha16 is corrected_sha; one doc per page_id; page still withheld for 6388.

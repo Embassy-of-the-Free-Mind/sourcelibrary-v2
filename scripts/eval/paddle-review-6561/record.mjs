@@ -12,7 +12,7 @@ const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\
 const uidMap = new Map();
 for (const m of JSON.parse(fs.readFileSync('gate-sample.json', 'utf8'))) uidMap.set(m.uid, m.page_id);
 if (fs.existsSync('all-uids.json')) for (const [uid, pid] of Object.entries(JSON.parse(fs.readFileSync('all-uids.json', 'utf8')))) uidMap.set(uid, pid);
-const files = fs.readdirSync('.').filter((f) => /^(gate-review|all-review-pass\d+)\.jsonl$/.test(f)).sort();
+const files = fs.readdirSync('.').filter((f) => /^(gate-review(-r\d)?|all-review-pass\d+)\.jsonl$/.test(f)).sort();
 const best = new Map(), tried = new Map();
 for (const f of files) for (const r of readJsonl(f)) {
   const pid = uidMap.get(r.uid); if (!pid) continue; // controls (g101..g105) are not pages

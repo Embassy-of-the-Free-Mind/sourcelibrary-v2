@@ -8,7 +8,7 @@
 // review-step2.mjs) and writes `pages`. Dry run unless --apply.
 //
 // Per page: re-read live; skip if not still withheld for paddle_table_6388, human-edited, or its book is gone; skip if
-// the image bytes differ from those Opus read. SNAPSHOT FIRST: `saveRevisionBeforeOverwrite` is a no-op on these pages
+// the image was replaced after Opus read it. SNAPSHOT FIRST: `saveRevisionBeforeOverwrite` is a no-op on these pages
 // (the withhold removed `ocr.data`, keeping `withheld_chars`), so the withheld state is snapshotted here in the same
 // row shape — field 'ocr', reason 'opus_correct_6561', `data` = the Paddle text (the withhold's own snapshot, pinned by
 // content_hash), `meta` = the whole withheld `ocr` object. A failed snapshot aborts the page. Then the write, guarded on
@@ -22,7 +22,7 @@
 //   pages.updateOne({ id: page_id, 'ocr.engine.run.job_id': /^serve-opus-correct-6561/ }, { $set: { ocr: rev.meta } })
 //   then recountBook + sync-pages-content.mjs --book.  `node serve.mjs --undo [--apply] [--pages-file=ids.json]`
 //
-// Usage (cwd = $JOB_SCRATCH): node --env-file=… serve.mjs [--apply] [--limit=20] [--pages-file=ids.json] [--undo]
+// Usage (cwd = $JOB_SCRATCH): node --env-file=… serve.mjs --gate=gate-score.json [--apply] [--limit=20] [--pages-file=ids.json] [--undo]
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -47,6 +47,9 @@ const SERVE = new Set(['clean', 'minor', 'material']);
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
+// The gate (#6561 step 1) must have said GO before anything is written: --gate=<gate-score.json from score-gate.mjs>.
+const GATE = arg('gate') ? JSON.parse(fs.readFileSync(arg('gate'), 'utf8')).summary?.gate : null;
+if (APPLY && !UNDO && !String(GATE || '').startsWith('GO')) { console.error(`refusing --apply: the gate is ${GATE ?? 'not given (--gate=gate-score.json)'}`); process.exit(2); }
 const LIMIT = arg('limit') ? Number(arg('limit')) : Infinity;
 const ONLY = arg('pages-file') ? new Set(JSON.parse(fs.readFileSync(arg('pages-file'), 'utf8')).map((x) => (typeof x === 'string' ? x : x.page_id))) : null;
 const sha16 = (s) => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16);
@@ -111,7 +114,9 @@ for (const d of cand) {
   if ((text.match(/<page-type>/g) || []).length !== 1) { skip(d, 'not exactly one <page-type> tag'); continue; }
   let im;
   try { im = await fetchImage(d.image_url, 'img'); } catch (e) { skip(d, `image fetch failed: ${e.message}`); continue; }
-  if (d.provenance?.image?.bytes && im.bytes !== d.provenance.image.bytes) { skip(d, 'image bytes differ from those Opus read', { now: im.bytes, read: d.provenance.image.bytes }); continue; }
+  // The image must not have been replaced after Opus read it (bytes cannot tell: Cloudflare Polish serves either variant).
+  const readAt = d.provenance?.read_at;
+  if (!im.last_modified || !readAt || im.last_modified > new Date(readAt)) { skip(d, 'image replaced after the Opus read (or no last-modified)', { last_modified: im.last_modified, read_at: readAt }); continue; }
   // The Paddle draft Opus corrected = the withhold's snapshot of it (pinned by its content_hash).
   const paddleRev = await db.collection('page_revisions').findOne({ page_id: d.page_id, field: 'ocr', reason: 'withhold_paddle_table_6388' }, { sort: { created_at: -1 } });
   if (!paddleRev || sha16(paddleRev.data || '') !== d.paddle_sha) { skip(d, 'withhold snapshot of the Paddle draft not found or hash differs'); continue; }
@@ -129,7 +134,7 @@ for (const d of cand) {
       reviewer: { model: d.review.model, cli: 'agy -p', verdict: d.review.verdict, at: d.review.at, prompt: 'scripts/eval/paddle-table-pilot-6388/review-prompt-pilot.txt' },
       staging: { collection: 'paddle_table_corrections_6561', corrected_sha: d.corrected_sha },
     },
-    input: { ...imageInput({ url: d.image_url, mime: 'image/jpeg', bytes: im.bytes }), image_sha256: im.sha256 },
+    input: { ...imageInput({ url: d.image_url, mime: 'image/jpeg', bytes: im.orig_bytes }), image_sha256: im.polished ? null : im.sha256, ...(im.polished && { served_variant: { cf_polished: true, bytes: im.bytes, sha256: im.sha256 } }) },
   });
   const tags = liftOcrTags(text);
   const detectedImages = parseDetectedImages(text);

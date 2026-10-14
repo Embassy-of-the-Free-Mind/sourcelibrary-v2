@@ -1,3 +1,4 @@
+// NOT RUN (2026-10-14): the gate said NO-GO, so step 2 never started.
 // PRIOR ART: sample.mjs (this directory) — the gate's request builder; this builds the same request for every page
 // the gate did not review. Usage (cwd = $JOB_SCRATCH): node --env-file=… mkall.mjs → all-req.jsonl, all-uids.json
 import fs from 'node:fs';

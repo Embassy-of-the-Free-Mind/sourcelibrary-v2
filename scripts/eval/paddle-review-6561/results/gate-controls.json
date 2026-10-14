@@ -1,0 +1,57 @@
+[
+ {
+  "uid": "g101",
+  "page_id": "6a3c657039b4508b04e2eed4",
+  "book_id": "6a3c657039b4508b04e2ee51",
+  "page_number": 131,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c657039b4508b04e2ee51/131.jpg",
+  "duplicated_row": "## 指病自愈",
+  "row_line": 19,
+  "inserted_at_line": 20,
+  "row_han": "指病自愈"
+ },
+ {
+  "uid": "g102",
+  "page_id": "6a3ce9470a0011cb4bc0f842",
+  "book_id": "6a3ce9470a0011cb4bc0f7bd",
+  "page_number": 133,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3ce9470a0011cb4bc0f7bd/133.jpg",
+  "duplicated_row": "| 享群臣及聘問之賔 | 大雅 | 大雅 | 大雅 | 小雅 |",
+  "row_line": 12,
+  "inserted_at_line": 13,
+  "row_han": "享群臣及聘問之賔大雅大雅大雅小雅"
+ },
+ {
+  "uid": "g103",
+  "page_id": "6a3cbefff9474f825c164941",
+  "book_id": "6a3cbefff9474f825c164904",
+  "page_number": 61,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3cbefff9474f825c164904/61.jpg",
+  "duplicated_row": "𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎",
+  "row_line": 21,
+  "inserted_at_line": 22,
+  "row_han": "咎咎咎咎咎咎咎咎咎"
+ },
+ {
+  "uid": "g104",
+  "page_id": "6a3c65fc39b4508b04e30b24",
+  "book_id": "6a3c65fc39b4508b04e30a91",
+  "page_number": 147,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c65fc39b4508b04e30a91/147.jpg",
+  "duplicated_row": "## 莫隱乎慈莫便乎恕",
+  "row_line": 16,
+  "inserted_at_line": 17,
+  "row_han": "莫隱乎慈莫便乎恕"
+ },
+ {
+  "uid": "g105",
+  "page_id": "6a3c660339b4508b04e30f8b",
+  "book_id": "6a3c660339b4508b04e30f6e",
+  "page_number": 29,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c660339b4508b04e30f6e/29.jpg",
+  "duplicated_row": "志至則天",
+  "row_line": 23,
+  "inserted_at_line": 24,
+  "row_han": "志至則天"
+ }
+]

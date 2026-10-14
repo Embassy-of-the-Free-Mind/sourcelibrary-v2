@@ -25,7 +25,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const S = JSON.parse(fs.readFileSync('gate-sample.json', 'utf8'));
   const C = JSON.parse(fs.readFileSync('gate-controls.json', 'utf8'));
   const rev = new Map();
-  for (const r of readJsonl('gate-review.jsonl')) { const v = parseReview(r.text); if (v) rev.set(r.uid, { ...v, secs: r.secs }); }
+  const files = fs.readdirSync('.').filter((f) => /^gate-review(-r\d)?\.jsonl$/.test(f)).sort(); // the run, then the retries of unparsed replies
+  for (const f of files) for (const r of readJsonl(f)) { if (rev.has(r.uid)) continue; const v = parseReview(r.text); if (v) rev.set(r.uid, { ...v, secs: r.secs, file: f }); }
   const ctl = C.map((c) => {
     const v = rev.get(c.uid); const row = norm(c.duplicated_row); const w = Math.min(6, [...row].length);
     const named = !!v && (v.invented || []).some((x) => { const what = norm(x.what); const R = [...row]; for (let i = 0; i + w <= R.length; i++) if (what.includes(R.slice(i, i + w).join(''))) return true; return false; });
@@ -36,10 +37,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const inv = R.filter((p) => p.review.verdict === 'invented');
   const split = Object.fromEntries(VERDICTS.map((v) => [v, R.filter((p) => p.review.verdict === v).length]));
   const caught = ctl.filter((c) => c.caught).length;
-  // The gate is on the 100: pages not reviewed count as NOT passing the gate in the denominator's favour? No — the
-  // brief's gate is "called invented <= 10 of the 100", so it is k over the 100 drawn, and not-reviewed pages are listed.
+  // The gate is k called invented over the 100 drawn ("<= 10 of the 100"); pages never reviewed are listed, not dropped.
   const out = {
-    model: [...new Set(readJsonl('gate-review.jsonl').map((r) => r.model))],
+    model: [...new Set(files.flatMap((f) => readJsonl(f).map((r) => r.model)))],
+    calls: files.reduce((a, f) => a + readJsonl(f).length, 0),
     controls: { planted: ctl.length, caught, rows: ctl.map(({ uid, book_id, page_number, row_line, duplicated_row, verdict, invented, caught }) => ({ uid, book_id, page_number, row_line, duplicated_row, verdict, invented, caught })) },
     drawn: S.length, reviewed: R.length, not_reviewed: pages.filter((p) => !p.review).map((p) => p.uid),
     verdicts: split,

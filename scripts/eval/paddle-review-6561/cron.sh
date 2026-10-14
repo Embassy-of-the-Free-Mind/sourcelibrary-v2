@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOT RUN (2026-10-14): the gate said NO-GO, so step 2 never started and this cron was never installed.
 # PRIOR ART: scripts/eval/paddle-correct-6561/batch/cron.sh — the Opus run's hourly watcher (progress comment, then
 # start the next job, then remove itself). #6561 step 2's watcher, installed as /root/bin/table-review-6561-cron.sh:
 #   7 * * * * /root/bin/table-review-6561-cron.sh >> /root/claude-jobs/table-review-6561-cron.log 2>&1

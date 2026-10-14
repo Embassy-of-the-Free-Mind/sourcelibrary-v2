@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOT RUN (2026-10-14): the gate said NO-GO, so step 2 never started and this cron was never installed.
 # PRIOR ART: scripts/eval/paddle-correct-6561/batch/cron.sh — the Opus run's detached runner + cron pair; this is the
 # review side. #6561 step 2: review every page the gate did not, detached (setsid nohup), resumable.
 # Pass 0 reviews all-req.jsonl; passes 1 and 2 re-ask only the pages whose reply did not parse (or was empty): the
