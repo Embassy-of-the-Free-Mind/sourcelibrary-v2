@@ -261,12 +261,21 @@ export interface Book {
 
   // Source work compositional timeline
   source_work_dates?: SourceWorkDateLayer[];
+  // schema 1 (ai_enrichment, 2026): enriched_at + source. schema 2 (#6721): a work and an edition date, each with a basis.
   source_work_dates_meta?: {
-    enriched_at: Date;
+    enriched_at?: Date;
     model: string;
     confidence: 'high' | 'medium' | 'low';
-    source: 'ai_enrichment' | 'manual';
+    source?: 'ai_enrichment' | 'manual';
     reasoning?: string;
+    schema?: 2;
+    work?: SourceWorkDate;
+    edition?: SourceWorkDate;
+    catalogue_note?: string;
+    prompt_version?: string;
+    run_id?: string;
+    dated_at?: Date;
+    edited_by?: string;
   };
 
   // KDP publishing score
@@ -346,6 +355,22 @@ export interface SourceWorkDateLayer {
   work_title?: string;
   language?: string;
   notes?: string;
+  // #6721: what the date rests on. title_page = the opening leaves print it (evidence is their verbatim words);
+  // catalogue = the holding library's record; model_knowledge = a scholarly estimate. Absent on schema-1 layers.
+  basis?: SourceWorkDateBasis;
+  evidence?: string;
+}
+
+export type SourceWorkDateBasis = 'title_page' | 'catalogue' | 'model_knowledge';
+
+export interface SourceWorkDate {
+  year: number | null;
+  from: number | null;
+  to: number | null;
+  display: string;
+  precision?: string | null;
+  basis: SourceWorkDateBasis;
+  evidence?: string;
 }
 
 // Provenance entry for a single metadata field
