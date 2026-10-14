@@ -35,6 +35,7 @@ interface GenerateGalleryImagesInput {
 interface GenerateGalleryImagesResult {
   extractedUrl: string;   // Full-size cropped+rotated JPEG
   thumbnailUrl: string;   // 300px thumbnail JPEG
+  cardUrl: string;        // 600px grid-card JPEG (#2401)
   extractedWidth: number; // Pixel width of extracted image
   extractedHeight: number; // Pixel height of extracted image
   dhash: string;          // 64-bit perceptual hash for dedup
@@ -44,7 +45,10 @@ interface GenerateGalleryImagesResult {
  * Generate cropped+rotated gallery image and thumbnail, upload to R2.
  *
  * Pipeline: fetch source → sharp extract (bbox + padding) → rotate → JPEG → upload
- * Also generates a 300px-wide thumbnail for the gallery grid.
+ * Also generates the 300px thumbnail and the 600px `-card.jpg` the gallery grid
+ * prefers — the same three variants scripts/workers/generate-thumbnails.mjs
+ * writes. Skipping the card left new crops 404ing in the grid and edited crops
+ * serving the card of their OLD bbox (#4465).
  */
 export async function generateGalleryImages(
   input: GenerateGalleryImagesInput
@@ -157,18 +161,28 @@ export async function generateGalleryImages(
     .jpeg({ quality: 70 })
     .toBuffer();
 
+  // Generate 600px card variant (JPEG 72) — matches generate-thumbnails.mjs
+  const cardBuffer = await sharp(extractedBuffer)
+    .resize(600, null, { fit: 'inside', withoutEnlargement: true })
+    .jpeg({ quality: 72 })
+    .toBuffer();
+
   // Compute perceptual hash from thumbnail (small buffer = fast)
   const dhash = await computeDHash(thumbnailBuffer);
 
-  // Upload both to R2
+  // Upload all three to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
 
-  const [extractedBlob, thumbnailBlob] = await Promise.all([
+  const [extractedBlob, thumbnailBlob, cardBlob] = await Promise.all([
     storagePut(`${blobPrefix}.jpg`, extractedBuffer, {
       contentType: 'image/jpeg',
       allowOverwrite: true,
     }),
     storagePut(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
+      contentType: 'image/jpeg',
+      allowOverwrite: true,
+    }),
+    storagePut(`${blobPrefix}-card.jpg`, cardBuffer, {
       contentType: 'image/jpeg',
       allowOverwrite: true,
     }),
@@ -180,6 +194,7 @@ export async function generateGalleryImages(
   return {
     extractedUrl: extractedBlob.url + cacheBust,
     thumbnailUrl: thumbnailBlob.url + cacheBust,
+    cardUrl: cardBlob.url + cacheBust,
     extractedWidth,
     extractedHeight,
     dhash,
