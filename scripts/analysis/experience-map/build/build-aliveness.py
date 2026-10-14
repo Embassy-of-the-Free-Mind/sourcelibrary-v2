@@ -245,7 +245,13 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
     lc = os.path.join(D, 'lexical-counts-animism.json')
     if os.path.exists(lc):
         LCA = json.load(open(lc))
-        A['phrases'] = sorted([{'ph': ph, 'dim': v['dim'], 'pages': v['pages'], 'books': v['books'], 'langs': list(v['byLanguage'].items())[:3]} for ph, v in LCA['phrases'].items()], key=lambda x: -x['pages'])
+        # the FTS index folds diacritics, so "naga king" and "nāga king" are one search: list it once
+        import unicodedata
+        fold = lambda t: ''.join(c for c in unicodedata.normalize('NFKD', t) if not unicodedata.combining(c))
+        seen_ph = set(); A['phrases'] = []
+        for ph, v in sorted(LCA['phrases'].items(), key=lambda kv: -kv[1]['pages']):
+            if fold(ph) in seen_ph: continue
+            seen_ph.add(fold(ph)); A['phrases'].append({'ph': ph, 'dim': v['dim'], 'pages': v['pages'], 'books': v['books'], 'langs': list(v['byLanguage'].items())[:3]})
     # Jev (classify/jev-animism.py), a non-Gemini rater: does its score separate what the judge confirmed from what it rejected?
     jf = os.path.join(D, 'jev-animism.jsonl')
     if os.path.exists(jf):
@@ -272,6 +278,11 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
                     'recall_at_half': wilson(sum(1 for v in allp if v >= .5), len(allp)),
                     'flag_rate_baseline_at_half': wilson(sum(1 for r in AB if JV.get(r['page_id'], 0) >= .5), len(AB))}
     N['animism'] = A
+    # header figures over all four senses: books and languages with any confirmed passage, and random pages holding any
+    N['books_all'] = len({r['book_id'] for r in hits if any(r[L + '_final'] for L in LAYERS)} | {r['book_id'] for r in cf})
+    N['languages_all'] = len({r['book_language'] for r in hits if any(r[L + '_final'] for L in LAYERS)} | {r['book_language'] for r in cf})
+    b4 = {r['page_id'] for r in base if any(r[L + '_final'] for L in LAYERS)} | {r['page_id'] for r in AB if r['inh_final']}
+    N['baseline_any4'] = {'confirmed': len(b4), 'rate': wilson(len(b4), nb)}
     for r in cf:
         pts.append({'l': 'inhabited', 'p': 'alive' if r['inh_final'] == 'person' else 'dead', 'y': r.get('book_year'), 't': (r.get('book_title') or '')[:110],
                     'a': (r.get('book_author') or '')[:60], 'lg': r.get('book_language') or '', 'tr': r.get('tradition') or 'other',
@@ -282,6 +293,8 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
     print('animism', json.dumps({k: A[k] for k in ['baseline_n', 'baseline', 'draw', 'confirmed', 'books', 'languages', 'voice']}))
     if 'jev' in A: print('jev', json.dumps(A['jev']))
 
+N.setdefault('books_all', N['books']); N.setdefault('languages_all', N['languages'])  # without the fourth layer
+N.setdefault('baseline_any4', N['baseline_any'])
 N['points'] = len(pts)
 json.dump(pts, open(os.path.join(D, 'aliveness-data.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 json.dump(N, open(os.path.join(D, 'aliveness-numbers.json'), 'w'), ensure_ascii=False, indent=1)
