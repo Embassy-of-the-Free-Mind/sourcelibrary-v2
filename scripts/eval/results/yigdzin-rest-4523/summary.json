@@ -1,0 +1,259 @@
+{
+ "job": "yigdzin-rest-4523",
+ "issue": 4523,
+ "run": "yigdzin-leaf-2026-10-14-rest",
+ "at": "2026-10-14",
+ "frame": {
+  "books_live_tibetan": 1697,
+  "pages": 428825,
+  "filter": "language Tibetan, visible, pages_count > 0"
+ },
+ "scope_recount": {
+  "a_withheld_gemini_flash_family": 79409,
+  "a_by_model": {
+   "gemini-3.1-flash-lite-preview": 60101,
+   "gemini-3-flash-preview": 19293,
+   "gemini-2.5-flash": 15
+  },
+  "b_no_ocr": 4699,
+  "b_brief_142k_explained": {
+   "esukhia_derge_tengyur_etext": 128369,
+   "esukhia_derge_kangyur_etext": 9166,
+   "of_which_translated": 130164,
+   "note": "typed reference e-text, ocr.source esukhia-derge-*, no ocr.model: out of scope"
+  }
+ },
+ "recipe": {
+  "worker": "yig_leaf_worker.py per-leaf partition (yig527 /root/yig527/box, unchanged)",
+  "model": "BDRC/tibetan-ocr 50506eb6",
+  "vllm": "0.29.0",
+  "judge": "leaf_v4 against an empty reference",
+  "write_rule": "v4 accept AND first-ocr-guard unflagged AND >= 150 syllables (Derek 2026-10-10)"
+ },
+ "tally": {
+  "a": {
+   "WRITE": 72226,
+   "guard-refused:guard:blank_leaf": 2,
+   "guard-refused:guard:dominant_unit": 122,
+   "guard-refused:guard:line_loop": 193,
+   "guard-refused:guard:local_loop": 998,
+   "guard-refused:guard:numeral_loop": 8,
+   "guard-refused:guard:punct_noise": 214,
+   "guard-refused:guard:repeated_line": 30,
+   "guard-refused:short:<150-syllables": 2467,
+   "judge:reject:duplication": 1443,
+   "judge:reject:loop": 51,
+   "judge:reject:validity-drop": 184,
+   "judge:serve": 76260,
+   "not_read_by_worker": 4,
+   "read": 77938,
+   "sent_to_boxes": 77942
+  },
+  "b": {
+   "WRITE": 3971,
+   "guard-refused:guard:dominant_unit": 5,
+   "guard-refused:guard:line_loop": 12,
+   "guard-refused:guard:local_loop": 52,
+   "guard-refused:guard:numeral_loop": 2,
+   "guard-refused:guard:punct_noise": 7,
+   "guard-refused:short:<150-syllables": 94,
+   "judge:reject:duplication": 67,
+   "judge:reject:loop": 8,
+   "judge:reject:validity-drop": 37,
+   "judge:serve": 4143,
+   "not_read_by_worker": 0,
+   "read": 4255,
+   "sent_to_boxes": 4255
+  },
+  "apply_totals": {
+   "serve": 76197,
+   "mark": 0,
+   "textless": 0,
+   "skipped": 0,
+   "alreadyApplied": 0,
+   "loopRefused": 0,
+   "humanEdited": 0,
+   "raced": 0,
+   "books": 2115
+  },
+  "apply_skips": {}
+ },
+ "mongo_check": {
+  "books_written": 1296,
+  "pages_on_run": 76197,
+  "hold_changed": 0,
+  "visible_changed": 0,
+  "pages_with_translation": 0,
+  "scope_a_with_page_revisions_snapshot": "72226/72226"
+ },
+ "eye": {
+  "label": "read-from-image",
+  "n": 15,
+  "invented": 0,
+  "wrong_leaf": 0,
+  "omission_near_empty_leaf": 2,
+  "pages": [
+   {
+    "book": "69e78a954a6785cfd60d474f",
+    "page": 7,
+    "scope": "a",
+    "when": "pilot",
+    "verdict": "minor",
+    "note": "Madhyamakavatara with interlinear notes; main verses right, glosses noisy (stray I, (་་་))"
+   },
+   {
+    "book": "69e782d1d93c1f6007504ce0",
+    "page": 29,
+    "scope": "a",
+    "when": "pilot",
+    "verdict": "omission",
+    "note": "pigment manual; leaves 1-2 line for line; leaf 3 (2 centred lines) dropped"
+   },
+   {
+    "book": "69e7885d4a6785cfd60d0b4c",
+    "page": 1,
+    "scope": "a",
+    "when": "pilot",
+    "verdict": "clean",
+    "note": "Padma gling pa protector ritual: title leaf + 4-line + 7-line leaves"
+   },
+   {
+    "book": "69e7966e80b52390feb19659",
+    "page": 2,
+    "scope": "a",
+    "when": "pilot",
+    "verdict": "clean",
+    "note": "orthography primer, 21 image lines / 22 text lines"
+   },
+   {
+    "book": "69e77acf0fc6fc955e362537",
+    "page": 79,
+    "scope": "b",
+    "when": "pilot",
+    "verdict": "clean",
+    "note": "medical text, 6+6+3 lines, ends on mangga lam"
+   },
+   {
+    "book": "69e7884b4a6785cfd60d0574",
+    "page": 29,
+    "scope": "b",
+    "when": "pilot",
+    "verdict": "omission",
+    "note": "consecration ritual 7+7 lines incl. abbreviation marks; leaf 3 single title line dropped"
+   },
+   {
+    "book": "69e7ac015f1a22ab19aa2104",
+    "page": 219,
+    "scope": "b",
+    "when": "pilot",
+    "verdict": "clean",
+    "note": "Vinaya (Upali questions) 8+8 lines, repetitive formulae real"
+   },
+   {
+    "book": "6a14e14b311a9edd4621ea48",
+    "page": 300,
+    "scope": "b",
+    "when": "pilot",
+    "verdict": "clean",
+    "note": "Yamantaka tantra 8+8 lines"
+   },
+   {
+    "book": "69e788774a6785cfd60d1101",
+    "page": 18,
+    "scope": "a",
+    "when": "pilot-short",
+    "verdict": "clean",
+    "note": "152 syllables: blessing prayer, refrain and abbreviation marks in place"
+   },
+   {
+    "book": "6a14e142311a9edd4621def8",
+    "page": 2,
+    "scope": "a",
+    "when": "pilot-short",
+    "verdict": "clean",
+    "note": "154 syllables: Vajrakila gold title leaf verbatim + 6-line leaf"
+   },
+   {
+    "book": "69e7619ccc48e59ad74f0ad7",
+    "page": 67,
+    "scope": "a",
+    "when": "mid-run",
+    "verdict": "clean",
+    "note": "Dzogchen text 7+7+7 lines, numeral abbreviations kept"
+   },
+   {
+    "book": "69e76144cc48e59ad74eec94",
+    "page": 23,
+    "scope": "a",
+    "when": "mid-run",
+    "verdict": "clean",
+    "note": "astronomy text 6+6 + 2 footer lines, glosses in parentheses"
+   },
+   {
+    "book": "69e78b484a6785cfd60d5254",
+    "page": 31,
+    "scope": "b",
+    "when": "mid-run",
+    "verdict": "clean",
+    "note": "tantric feast / gtum mo 6+6+6 lines"
+   },
+   {
+    "book": "69e7abd65f1a22ab19a9f151",
+    "page": 138,
+    "scope": "b",
+    "when": "mid-run",
+    "verdict": "clean",
+    "note": "Kangyur tantra 7+7 lines, leaf seam right"
+   },
+   {
+    "book": "69e7ac3e5f1a22ab19aa5def",
+    "page": 102,
+    "scope": "a",
+    "when": "late",
+    "verdict": "minor",
+    "note": "Vajravidarana sadhana 3 leaves, abbreviation marks right; a few stray I"
+   }
+  ]
+ },
+ "gpu": {
+  "provider": "Scaleway",
+  "type": "L4-1-24G",
+  "boxes": {
+   "sl-yigrest-p0": {
+    "zone": "fr-par-1",
+    "h": 0.34
+   },
+   "sl-yigrest-0": {
+    "zone": "fr-par-1",
+    "h": 8.14
+   },
+   "sl-yigrest-1": {
+    "zone": "fr-par-1",
+    "h": 7.88
+   },
+   "sl-yigrest-2": {
+    "zone": "pl-waw-2",
+    "h": 7.62
+   },
+   "sl-yigrest-3": {
+    "zone": "pl-waw-2",
+    "h": 7.36
+   }
+  },
+  "l4_hours": 31.33,
+  "eur_per_h": 0.7875,
+  "eur": 24.68,
+  "estimate_eur": 55,
+  "cap_eur": 65,
+  "deleted": "all 5 servers + volumes deleted (GET 404), no unattached volume in fr-par-1/2/3, pl-waw-1/2/3, nl-ams-1/2/3"
+ },
+ "gemini_usd": 0,
+ "hidden_books_not_run": {
+  "books": 638,
+  "candidate_pages": 44764,
+  "in_excluded_books": 19835,
+  "net_pages": 24929,
+  "net_books": 478,
+  "est_eur": "7-9 at 0.8 pages/s per L4"
+ }
+}
