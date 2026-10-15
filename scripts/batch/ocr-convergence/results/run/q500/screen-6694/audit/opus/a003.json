@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f689b46a62344316bb7007",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'Clauicola', 'Latinitati' and 'Suoque'; X has 'Clauicula', 'Latinitate' and 'suosque', which are small misreadings that do not change the title's sense."
+ },
+ {
+  "item_id": "69b4c057978ca9526eda3975",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y invents or garbles several words: 'pars vicina' (leaf: 'pars t're'), 'Athlamantem', 'pmitteret pudor a promisso' (leaf: 'pmittes mutare promissum'), 'In nobis enim' (leaf: 'tenue'), 'omissionibus' and 'cononduerda'. X follows the leaf much more closely."
+ },
+ {
+  "item_id": "69f7131b2b69423529626dca",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X makes up a long second column ('atque iniustos solem suum... reddet nobis mercedem nostram in futuro seculo') that is not on this leaf, drops 'perducas, ostendens illi non solum patrem', and moves main text into margin tags."
+ },
+ {
+  "item_id": "69f7350f33881e31c2c0f09f",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts match in wording. X misspells 'Kezer', 'Albigenfer', 'Waldenfern' and 'wieder' where the leaf has 'Ketzer', 'Albigenser', 'Waldensern' and 'wider'."
+ },
+ {
+  "item_id": "69b51e0fefd8df28f2dafa8e",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf begins 'quit, ętatis'; X starts with 'Quis', reads 'reíor' for 'peior', drops '(qđ aiunt)', and adds stray accents throughout. Y is close to the print."
+ },
+ {
+  "item_id": "69b4c08586a5921d5bc44294",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts have the full passage. X keeps abbreviations and adds glosses, some of them wrong ('ituentem', 'subtelabatur'). Y expands them correctly ('subterlabebatur', 'exagitatam')."
+ },
+ {
+  "item_id": "69b301edc22956d8a0de55a6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X gives 'ἐν σαββάτῳ θεραπεύειν' where the leaf prints 'καὶ ἐν σαββάτῳ περιτέμνετε', garbles other Greek ('Ἀφαστορά', 'τὸ σφραγίδα πίνειν'), and adds a margin of text from the facing page."
+ },
+ {
+  "item_id": "69aec5d23b6ebce5e0ee9896",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts are almost identical. X has small slips: 'Phil. præt.' and 'confarcinata' where the leaf has 'Phil. pract.' and 'consarcinata'."
+ },
+ {
+  "item_id": "6aa94ec498dd95a320804a53",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts are complete. Y misreads the main text in places: 'traditionem Apostolicorum' (leaf: 'Apostolorum'), 'sensum verorum' (leaf: 'verborum') and 'ordinetur' (leaf: 'ordinaretur'). X's errors are smaller, such as the margin 'Decisio' where the leaf has 'Diuisio'."
+ },
+ {
+  "item_id": "69b4c08586a5921d5bc442ac",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y expands the abbreviations correctly ('Quando uero', 'tui', 'essentiam', 'uniuersorum'). X keeps literal or wrong forms ('Quand uo', 'tuu', 'eentiam', 'uniuersos'), but the sense is still clear."
+ }
+]

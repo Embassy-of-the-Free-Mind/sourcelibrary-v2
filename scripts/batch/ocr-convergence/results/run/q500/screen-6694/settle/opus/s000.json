@@ -1,0 +1,20 @@
+[
+ {
+  "item_id": "6a0850b515c643eb1af486c9",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "Every line from 'est. qui, dum alii pontem Sublicium' to 'domum reuersus est. Cum Cn.' is on the leaf; the flagged <vocab> block is a tagged annotation listing names from the text, a convention rather than a passage presented as leaf text."
+ },
+ {
+  "item_id": "6953e4fa77f38f6761bef2ea",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "Page [252] Cas. 1–5 through 'erit a/2A^1/2 sive' and catchword '2 a A' are all on the leaf; the flagged <vocab> tag is an annotation convention, not a transcribed passage."
+ },
+ {
+  "item_id": "6a26bd05d6b178e5aad8760d",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "The leaf really is mirror-reversed show-through of a title page with a Münster portrait, and the only right-reading ink is the stamp 'BIBLIOTHECA REGIA MONACENSIS', which is what was transcribed; the flagged <warning> is a tagged note that accurately describes the leaf, not a passage it claims the leaf prints."
+ }
+]

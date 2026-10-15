@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b2f44bf9f1ad2b3b1525ae",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads the printed 'οὗτοι γὰρ πρότερον' as 'ἔστι γὰρ πρῶτον' and 'ἐπεκάλουν' as 'ἐνεκάλλουν', and gives the signature as 'θ. iij.' (leaf shows 'θ. iiij.'); Y's 'Πρίσκος' for the printed 'Γρίσκος' is minor by comparison."
+ },
+ {
+  "item_id": "69b51e0fefd8df28f2dafbba",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y adds the margin word 'principio' to the end of the main text ('& an principio'), misreads 'recēset' as 'recesset' and the signature 't v' as 'r v'; X matches the leaf."
+ },
+ {
+  "item_id": "6a100a22f71729295096e37b",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y keeps the printed spellings ('Irtümer', 'Lehrsäze', 'adpendic.', 'Selenlehre', 'glüklich'), where X normalizes them ('Irrtümer', 'appendic.', 'Seelenlehre') and runs the catchword 'vor' into the text; the wording is otherwise the same."
+ },
+ {
+  "item_id": "6a100a22f71729295096e0ef",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X keeps the printed 'ausdrüklich', 'befolen', 'Kirchenversamlung', 'Commißion', 'Muhtmaßung', where Y modernizes them, and Y adds a signature 'D' that isn't visible on the leaf; the text is otherwise the same."
+ },
+ {
+  "item_id": "69f6b59f9169821cc3b24b63",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y has sense-changing misreads such as 'vnsern herzen' for 'herren', 'leran' for 'leren', 'wiem alle creature' and 'pe'/'ept' for 'ÿe'/'eytel'; X's normalized reading follows the leaf more closely."
+ },
+ {
+  "item_id": "699066482ec9f7db57179ef3",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X turns 'eo quod nigra sum et fusca' into 'co[r]p[us] m[eu]m finu[m] et fusca' and 'quesivi consolantem / et non inveni' into 'q[uo]d solante / r[ati]onuem'; Y reads the passage correctly."
+ },
+ {
+  "item_id": "69b4c057978ca9526eda3974",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y garbles many words ('Vex diu', 'fluxi itineris', 'spatia communia' for 'contraria', 'grassandis me lurida sordibus huentibus plumis' for 'grassitudine lurida sordidus liuentibus spumis'), and it describes a red initial O that was never painted."
+ },
+ {
+  "item_id": "6aa94d3a98dd95a320802eea",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads 'probare solutionem nisi per scripturam', 'Quid de iuribus non scriptis', 'Qualiter debet fieri' (X has 'Quare') and several of the legal citations, and its numbering doesn't match; Y follows the abbreviated text much more closely."
+ },
+ {
+  "item_id": "6a0850b515c643eb1af48898",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y correctly reads 'occulte', 'Aquitaniam' ('Aqtaniā'), 'Pyreneum' and 'quod' ('ꝙ') where X has 'oculte', 'Aquitania', 'Pyrenaeum', 'quia'; these are minor slips."
+ },
+ {
+  "item_id": "69b4c057978ca9526eda39a8",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y reads 'Iupiter' as 'supra' throughout, has 'mox dictos', 'fomigas potestates' and 'in annulos', and gives the page number as '111' (the leaf shows 27); X is a close reading."
+ }
+]

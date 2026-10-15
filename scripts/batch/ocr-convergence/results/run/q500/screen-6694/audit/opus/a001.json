@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69bd9c706120d54bd036f140",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y omits 'ergo ab alio eam accipit qui plenius habet' and replaces 'neque eternaliter. neque temporaliter' with invented 'nec creatur. nec patitur'."
+ },
+ {
+  "item_id": "69d38c81b4368876d32ec819",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has 'cultum Idolorum' for the leaf's 'Latriam Idolorum' and garbles 'Idcirco caveat' as 'Ad liris caveat'; otherwise the two agree."
+ },
+ {
+  "item_id": "6aa94d3a98dd95a320802e89",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X invents content such as 'Ostendit Augustinus' and 'secundum Thomam Secunda Secunde questione 67' where the leaf has 'Quid si clericus ... sc(dm) Ray. § ij/iij', which Y follows."
+ },
+ {
+  "item_id": "69f6b5a09169821cc3b24b6b",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y garbles words with sense changes ('von wo deine ege lebe' for 'vnd von deinem eygen leibe', 'nymmer' for 'mynner') and drops 'der mynne' from 'an der mynne büch'."
+ },
+ {
+  "item_id": "69f713792b69423529626e5b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops the line 'siue ut etiam quæ incepturi sumus, prospera, secunda, fortunata, ad uotaque succedant, sup-' and 'concinna', and adds margin fragments from the facing page."
+ },
+ {
+  "item_id": "69bd9c706120d54bd036f158",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y is badly garbled throughout ('a vobis symbolorum', 'deorsum', 'submirabu', 'Psal. lxxviij') and misreads the folio number as 'LCCXXV'; X follows the leaf closely."
+ },
+ {
+  "item_id": "69527367ab34727b1f048f45",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both texts match the leaf; the only differences are trivial, e.g. X's 'occafione' and 'occultis’que'."
+ },
+ {
+  "item_id": "6aa94ec498dd95a320804aa1",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y miscites 'Ledesma 2. p. q. 97. a. 5.' (the leaf reads '2.p.4.q.7.a.5') and drops 'ex' in 'hoc est ex honestate'."
+ },
+ {
+  "item_id": "69527367ab34727b1f048f46",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches the leaf's 'κατὰ τὴν αὐτοψίαν', 'Ætolias' and 'fuſiſſimè', where X omits 'κατὰ' and reads 'Æolias'."
+ },
+ {
+  "item_id": "6978f9037d9f19863f38557d",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The texts are identical apart from long-s readings ('fine' vs 'sine') and X folding the catchword into 'inspissare'."
+ }
+]
