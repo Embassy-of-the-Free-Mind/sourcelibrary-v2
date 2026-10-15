@@ -1,0 +1,92 @@
+[
+ {
+  "rank": 910,
+  "book_id": "6992ce8a673ee1e40e320f60",
+  "slug": "sancai-tuhui-juan-105",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 55,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 911,
+  "book_id": "6992cdae43713c66ea637ec9",
+  "slug": "sancai-tuhui-juan-45",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 55,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 912,
+  "book_id": "6992ce2b3ea667fbac828609",
+  "slug": "sancai-tuhui-juan-79",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 55,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 915,
+  "book_id": "6992cdbc43713c66ea6383f4",
+  "slug": "wubei-zhi-vol-25",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 55,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 923,
+  "book_id": "6992cffef5b4f75c1a4c9ede",
+  "slug": "chengshi-moyuan",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 54,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 947,
+  "book_id": "6992cd9643713c66ea63769d",
+  "slug": "sancai-tuhui-juan-38",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 54,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 948,
+  "book_id": "6992ce273ea667fbac82854a",
+  "slug": "sancai-tuhui-juan-78",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 54,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 957,
+  "book_id": "69e788094a6785cfd60ceb41",
+  "slug": "bencao-gangmu-vol-10",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 53,
+  "lane_block": "78% translated: gap-fill would re-queue it",
+  "skip": "lane_block: 78% translated: gap-fill would re-queue it"
+ },
+ {
+  "rank": 992,
+  "book_id": "6992ce153ea667fbac82803e",
+  "slug": "sancai-tuhui-juan-73",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 53,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]
