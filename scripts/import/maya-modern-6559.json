@@ -1,0 +1,98 @@
+{
+  "_comment": [
+    "1800-1929 Mayan-language and Maya-people books (#6559, job maya-modern-6559). Each candidate was run through scripts/import/check-holdings.ts by IA URL AND by title (2026-10-15).",
+    "Not imported, already held: libraryofaborigi03brinuoft (Gueguence; held as gegencecomed00brinrich, 6acc39a7c1411f8cc628d038), libraryofaborigi08brinuoft (Rig Veda Americanus; held as rigvedaamericanu00brin, 6acc3999c1411f8cc628ce54), relationdeschos00landgoog (Landa/Brasseur 1864; held visible as 69f8c0f74c6a515115aedadd and 69ee93b9f2c6312502f6a526, plus hidden 6a09ff6efa20006dbaba949c).",
+    "Imported as other editions of held books: the 1910 and 1928 U molcabthanil camathan (Merida printings by different presses; the 1905 Loteria printing is held as umolcabthanilcam00belt, 6acc3e9f230e9a56175ce699) and the 1912 Beltran Declaracion (the 1860 Espinosa reprint is held as declaracindelad00beltgoog, 6acc3df2230e9a56175cdd1c).",
+    "Run: node scripts/import/new-world-wave.mjs --list scripts/import/maya-modern-6559.json --commit, then hold every inserted id with scripts/maintenance/hold-pipeline-books.mjs --reason maya-modern-6559 --issue 6559 so no paid OCR lane reads them; they go to the Opus lane (maya-ref-opus-6559's recipe).",
+    "Decipherment studies (Thomas, Morley, Gates, Spinden, Tozzer, Gunckel) belong to #5653 and are not in this list."
+  ],
+  "books": [
+    {
+      "ia": "Ayer_BX2163_Q55_1880",
+      "region": "maya",
+      "title": "Quilich xocbil u payalchi ti c-colebil x-zuhuy Maria: yetel u chucaan payalchi or ualkezahantacob ti Maya-dtan",
+      "author": "Anonymous",
+      "language": "Yucatec Maya",
+      "published": "1880",
+      "text_role": "original",
+      "note": "1880, Merida (Spinosa). Yucatec Marian rosary and prayers, 31 p. IA newberry (Ayer)."
+    },
+    {
+      "ia": "Ayer_BX1966M39_U46_1910a",
+      "region": "maya",
+      "title": "U molcabthanil camathan = Catecismo de la doctrina cristiana",
+      "author": "Pedro Beltrán de Santa Rosa",
+      "language": "Yucatec Maya",
+      "languages": ["Yucatec Maya", "Spanish"],
+      "published": "1910",
+      "text_role": "original",
+      "note": "1910, Merida (Tipografia y Litografia Moderna), 46 p. Other edition of the held 1905 printing (umolcabthanilcam00belt). IA newberry (Ayer)."
+    },
+    {
+      "ia": "Ayer_BX1966M39_U46_1928a",
+      "region": "maya",
+      "title": "U molcabthanil camathan = Catecismo de la doctrina cristiana",
+      "author": "Pedro Beltrán de Santa Rosa",
+      "language": "Yucatec Maya",
+      "languages": ["Yucatec Maya", "Spanish"],
+      "published": "1928",
+      "text_role": "original",
+      "note": "1928, Merida (Imprenta Cecilio Leal), 46 p. Other edition of the held 1905 printing. IA newberry (Ayer)."
+    },
+    {
+      "ia": "Ayer_BX2128M39_B45_1912a",
+      "region": "maya",
+      "title": "Declaración de la doctrina cristiana en el idioma yucateco",
+      "author": "Pedro Beltrán de Santa Rosa",
+      "language": "Yucatec Maya",
+      "languages": ["Yucatec Maya", "Spanish"],
+      "published": "1912",
+      "text_role": "original",
+      "note": "1912, Merida (Imprenta de la Loteria del Estado), 39 p. Other edition of the held 1860 reprint (declaracindelad00beltgoog). IA newberry (Ayer)."
+    },
+    {
+      "ia": "Ayer_PC4822_B2_1894",
+      "region": "maya",
+      "title": "Quicheísmos: contribución al estudio del folklore americano",
+      "author": "Santiago Ignacio Barberena",
+      "language": "Spanish",
+      "languages": ["Spanish", "K'iche'"],
+      "published": "1894",
+      "text_role": "original",
+      "note": "1894, San Salvador. K'iche' loanwords and folklore in Salvadoran Spanish. IA newberry (Ayer)."
+    },
+    {
+      "ia": "losmayasprimitiv00rejo_0",
+      "region": "maya",
+      "title": "Los mayas primitivos: algunos estudios sobre su origen, idioma y costumbres",
+      "author": "Manuel Rejón García",
+      "language": "Spanish",
+      "languages": ["Spanish", "Yucatec Maya"],
+      "published": "1905",
+      "text_role": "original",
+      "note": "1905, Merida. Yucatecan study of Maya origin, language and customs by the author of the Maya-dialect folk tales."
+    },
+    {
+      "ia": "Ayer_F1204_R63_1902",
+      "region": "maya",
+      "title": "Toponimia maya-hispano-nahoa",
+      "author": "Cecilio Agustín Robelo",
+      "language": "Spanish",
+      "languages": ["Spanish", "Yucatec Maya", "Nahuatl"],
+      "published": "1902",
+      "text_role": "original",
+      "note": "1902, Cuernavaca. Place-name dictionary of Maya and Nahuatl toponyms. IA newberry (Ayer)."
+    },
+    {
+      "ia": "mlangesdephilol00chargoog",
+      "region": "maya",
+      "title": "Mélanges de philologie et de paléographie américaines",
+      "author": "Hyacinthe de Charencey",
+      "language": "French",
+      "languages": ["French", "Yucatec Maya"],
+      "published": "1883",
+      "text_role": "original",
+      "note": "1883, Paris. Charencey's essays on Maya-Quiche philology and the Maya calendar and script. IA Google scan."
+    }
+  ]
+}
