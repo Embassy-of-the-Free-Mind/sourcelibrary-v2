@@ -1,0 +1,142 @@
+[
+ {
+  "rank": 680,
+  "book_id": "69c815276c6f3cc53c8484be",
+  "slug": "veritas-sui-vindex-seu-solennis-fidei-declaratio-labadie",
+  "group": "latin",
+  "language": "Latin",
+  "views": 63,
+  "lane_block": null,
+  "skip": "held: english-page-shift-5021"
+ },
+ {
+  "rank": 660,
+  "book_id": "69c8a2e26c6f3cc53c85e51f",
+  "slug": "hussiten-krieg-theobald",
+  "group": "german",
+  "language": "German",
+  "views": 63,
+  "lane_block": null,
+  "skip": "held: english-page-shift-5021"
+ },
+ {
+  "rank": 601,
+  "book_id": "6992ce492960dc4e5cea8efb",
+  "slug": "sancai-tuhui-juan-87",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-excluded"
+ },
+ {
+  "rank": 602,
+  "book_id": "6992ce582960dc4e5cea91f2",
+  "slug": "sancai-tuhui-juan-91",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 624,
+  "book_id": "6992cd22ae978f7d41598549",
+  "slug": "sancai-tuhui-juan-7",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 65,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 635,
+  "book_id": "69af0f0cbe5fc7f363547076",
+  "slug": "da-qing-shi-xian-shu-qing-imperial-calendar-bureau",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 64,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 639,
+  "book_id": "6992cfdaf5b4f75c1a4c9a6b",
+  "slug": "in-search-of-the-supernatural-soushen-ji",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 64,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 647,
+  "book_id": "6992cd5c43713c66ea63600f",
+  "slug": "sancai-tuhui-juan-22",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 64,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 654,
+  "book_id": "6992cdf081c9d7efb84d0e9a",
+  "slug": "compendium-of-materia-medica-vol-49",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 63,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 675,
+  "book_id": "6992ce60673ee1e40e320488",
+  "slug": "sancai-tuhui-juan-93",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 63,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 676,
+  "book_id": "6992ce66673ee1e40e32081c",
+  "slug": "sancai-tuhui-juan-95",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 63,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 677,
+  "book_id": "6992ce6a673ee1e40e32090d",
+  "slug": "sancai-tuhui-juan-96",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 63,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 692,
+  "book_id": "6992cbd8018b80967354ba40",
+  "slug": "nongzheng-quanshu-complete-treatise-on-agricultural-guangqi",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 62,
+  "lane_block": "92% translated: gap-fill would re-queue it",
+  "skip": "lane_block: 92% translated: gap-fill would re-queue it"
+ },
+ {
+  "rank": 697,
+  "book_id": "6992ce353ea667fbac8287cc",
+  "slug": "sancai-tuhui-juan-82",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 62,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]
