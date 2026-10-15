@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'preserved-by-enemies',
+    title: 'Preserved by Their Enemies',
+    subtitle:
+      'The books written to stamp out a religion are often the only record of it. Hippolytus and Epiphanius copied the Gnostics they refuted; in Mexico and Yucatán the friars who burned the books wrote down the spells, the omens and the alphabet.',
+    date: '16 October 2026',
+    readTime: '12 min read',
+    kind: 'stories',
+    // A printed page because the page is the evidence: the "a b c" Landa kept after burning the books.
+    image: '/blog/preserved-by-enemies/landa-abc-1864-hero.jpg',
+    imageAlt:
+      'Diego de Landa’s “a b c” of Maya signs, as printed by Brasseur de Bourbourg in 1864: numbered glyphs, each with the Spanish letter Landa’s informant was asked to write.',
+  },
+  {
     slug: 'hyperborea',
     title: 'Beyond the North Wind: Hyperborea and the Amber Coast',
     subtitle:
