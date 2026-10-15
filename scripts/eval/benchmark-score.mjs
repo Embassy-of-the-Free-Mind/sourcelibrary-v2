@@ -70,7 +70,13 @@ const REFS_DIR = argOf('refs-dir', path.join(__dirname, 'benchmark', 'refs'));
 if (!ROOT) { console.error('--root required'); process.exit(1); }
 
 // ── normalisation ──────────────────────────────────────────────────
-const CJK_STRATA = new Set(['chinese', 'chinese-ext', 'chinese-cohort-5547', 'japanese', 'japanese-ext']);
+const CJK_STRATA = new Set(['chinese', 'chinese-ext', 'chinese-cohort-5547', 'japanese', 'japanese-ext', 'chinese-print-cbeta', 'chinese-print-cbeta-all', 'chinese-print-cbeta-controls']);
+// HAN-ONLY strata (#6101, preregistered in PREREGISTRATION-chinese-print-cbeta-6101.md): the reference is CBETA's Chinese
+// text, and many of these Japanese prints carry kunten (okurigana and reading marks in katakana beside the columns).
+// An engine that transcribes them is faithful to the page but is charged an insertion per kana against a reference
+// that has none, so on these strata kana are dropped and only Han (and 〇) is scored.
+const HAN_ONLY_STRATA = new Set(['chinese-print-cbeta', 'chinese-print-cbeta-all', 'chinese-print-cbeta-controls']);
+let hanOnly = false;   // set per stratum in the main loop
 function normAlpha(s) {
   // Tags out WITHOUT eating the body after a ->centred<- line (#5564).
   return stripMarkupTags(String(s || '')
@@ -93,6 +99,7 @@ function normCJK(s) {
   // Han + kana + Hangul kept; Latin digits dropped; punctuation and layout dropped (normalizeCJK
   // keeps only Han/ideographic — extend for kana so Japanese pages are scored on their kana too).
   const t = stripMarkupTags(s).normalize('NFC');
+  if (hanOnly) return [...t].filter(c => /[\p{Script=Han}〇]/u.test(c)).join('');
   return [...t].filter(c => /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}〇]/u.test(c)).join('');
 }
 const cjkTokens = s => [...s];
@@ -251,6 +258,7 @@ if (process.argv.includes('--refusals-only')) {
 for (const stratum of strata) {
   if (stratum.startsWith('ref-')) { summaryAll[stratum] = scoreRefTier(stratum); continue; }
   const cjk = CJK_STRATA.has(stratum), greek = GREEK_STRATA.has(stratum), marks = MARK_STRATA.has(stratum);
+  hanOnly = HAN_ONLY_STRATA.has(stratum);
   const regPath = path.join(__dirname, 'benchmark', `${stratum}.json`);
   const reg = fs.existsSync(regPath) ? JSON.parse(fs.readFileSync(regPath, 'utf8')) : null;
   // english-ia-5124 (#5216) keeps its registry as `rows` (catalogue nested); a referenced, non-excluded row is a sealed page

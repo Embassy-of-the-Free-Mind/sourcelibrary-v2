@@ -369,8 +369,8 @@
               "de2e",
               "codem",
               "cadique",
-              "pluviæe",
-              "excrẽct",
+              "pluvi\u00e6e",
+              "excr\u1ebdct",
               "seflicet",
               "estatem"
             ]
@@ -598,7 +598,7 @@
             "has_ref": true,
             "unsupported": [
               "ceafe",
-              "experimentš",
+              "experiment\u0161",
               "infeets",
               "hafband",
               "expectall",
@@ -617,7 +617,7 @@
             "has_ref": true,
             "unsupported": [
               "fhould",
-              "fubjećt",
+              "fubje\u0107t",
               "jungrus",
               "fend",
               "fpecimen",
@@ -638,7 +638,7 @@
               "fhall",
               "likewife",
               "fpeak",
-              "exaćt",
+              "exa\u0107t",
               "treatife",
               "cbalcegrapby",
               "fecond",
@@ -684,6 +684,500 @@
             ]
           }
         ]
+      }
+    }
+  },
+  "chinese-print-cbeta": {
+    "stratum": "chinese-print-cbeta",
+    "issue": 6101,
+    "date": "2026-10-06",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 200,
+    "n_with_ref": 199,
+    "ref_mismatch": [
+      "chinese-print-cbeta-5595ab-p45"
+    ],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 200,
+        "empty": 0,
+        "refused": 1,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 199,
+          "median_cer": 0.052,
+          "mean_cer": 0.066,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.953,
+          "refused": 1,
+          "n_answered": 198,
+          "median_cer_answered": 0.052,
+          "mean_cer_answered": 0.062,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.731,
+          "catastrophic": 1,
+          "median_gap": 0.244,
+          "median_bow": 0.85,
+          "refused": 0,
+          "n_answered": 1,
+          "median_cer_answered": 0.731,
+          "mean_cer": 0.731,
+          "mean_cer_answered": 0.731
+        },
+        "invention": {
+          "median": 0.054,
+          "mean": 0.065,
+          "n_engines": 3,
+          "ref_median": 0.121,
+          "ref_mean": 0.133
+        },
+        "paired_vs_ref": {
+          "n": 198,
+          "excluded_refused": 1,
+          "wins": 162,
+          "losses": 30,
+          "ties": 6,
+          "median_delta_cer": 0.019,
+          "p_sign": 0,
+          "invention_wins": 156,
+          "invention_losses": 38
+        },
+        "worst": [
+          {
+            "slug": "chinese-print-cbeta-be0167-p30",
+            "title": "\u5713\u609f\u4f5b\u679c\u79aa\u5e2b\u8a9e\u9304 \u537714\u201320 (vol 3 of 3)",
+            "year": null,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-print-cbeta-5595ab-p45",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u537719\u201321 (vol 7 of 10)",
+            "year": null,
+            "cer": 0.731,
+            "gap": 0.244,
+            "invention": 0.09,
+            "has_ref": false,
+            "unsupported": [
+              "\u5cef\u9752\u7165",
+              "\u9752\u7165\u7985",
+              "\u7165\u7985\u5e2b",
+              "\u95a9\u5c71\u542b",
+              "\u5c71\u542b\u542b",
+              "\u542b\u542b\u7985",
+              "\u5c71\u9053\u6bbc",
+              "\u9053\u6bbc\u7985"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-559462-p8",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u53774\u20136 (vol 2 of 10)",
+            "year": null,
+            "cer": 0.417,
+            "gap": 0.083,
+            "invention": 0.348,
+            "has_ref": true,
+            "unsupported": [
+              "\u65e2\u5177\u662f",
+              "\u5177\u662f\u4f55",
+              "\u662f\u4f55\u8005",
+              "\u554f\u4ecf\u4ecf",
+              "\u4ecf\u4ecf\u975e",
+              "\u4ecf\u975e\u5fc3",
+              "\u4e0d\u554f\u5e2b",
+              "\u5927\u5e2b\u983b"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-55968d-p65",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u537728\u201330 (vol 10 of 10)",
+            "year": null,
+            "cer": 0.227,
+            "gap": 0.005,
+            "invention": 0.111,
+            "has_ref": true,
+            "unsupported": [
+              "\u5728\u51e1\u4e0e",
+              "\u51e1\u4e0e\u9119",
+              "\u4e0e\u9119\u602a",
+              "\u52e7\u6642\u4f60",
+              "\u73e0\u52ff\u907a",
+              "\u52ff\u907a\u5931",
+              "\u907a\u5931\u4e94",
+              "\u5bc4\u4f4f\u6b63"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-d933ba-p16",
+            "title": "\u865b\u5802\u548c\u5c1a\u8a9e\u9304 \u537710 (vol 4 of 4)",
+            "year": null,
+            "cer": 0.179,
+            "gap": 0,
+            "invention": 0.161,
+            "has_ref": true,
+            "unsupported": [
+              "\u6b63\u5982\u5375",
+              "\u5982\u5375\u6d3b",
+              "\u5375\u6d3b\u5982",
+              "\u7121\u7f88\u83f4",
+              "\u7f88\u83f4\u9053",
+              "\u83f4\u9053\u7fc1",
+              "\u9053\u7fc1\u83ab",
+              "\u8d77\u898f\u77e9"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 200,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 2,
+        "ref": {
+          "n": 199,
+          "median_cer": 0.068,
+          "mean_cer": 0.186,
+          "catastrophic": 3,
+          "median_gap": 0,
+          "median_seq": 0.939,
+          "refused": 0,
+          "n_answered": 199,
+          "median_cer_answered": 0.068,
+          "mean_cer_answered": 0.186,
+          "catastrophic_answered": 3
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.089,
+          "mean": 0.107,
+          "n_engines": 3,
+          "ref_median": 0.153,
+          "ref_mean": 0.17
+        },
+        "worst": [
+          {
+            "slug": "chinese-print-cbeta-55963c-p52",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u537725\u201327 (vol 9 of 10)",
+            "year": null,
+            "cer": 10.591,
+            "gap": 0.014,
+            "invention": 0.249,
+            "has_ref": true,
+            "unsupported": [
+              "\u8a00\u8a9e\u5728",
+              "\u8a9e\u5728\u4e16",
+              "\u9593\u4f55\u4e0d",
+              "\u4f55\u4e0d\u6319",
+              "\u7b49\u898b\u51e6",
+              "\u898b\u51e6\u7b87",
+              "\u51e6\u7b87\u8aac",
+              "\u4f1a\u9ebc\u82e6"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-559462-p8",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u53774\u20136 (vol 2 of 10)",
+            "year": null,
+            "cer": 7.693,
+            "gap": 0.055,
+            "invention": 0.314,
+            "has_ref": true,
+            "unsupported": [
+              "\u66f0\u975e\u5ff5",
+              "\u975e\u5ff5\u4e0d",
+              "\u5ff5\u4e0d\u805e",
+              "\u4e0d\u805e\u5883",
+              "\u805e\u5883\u7de3",
+              "\u597d\u919c\u5883",
+              "\u919c\u5883\u8d77",
+              "\u5883\u8d77\u65bc"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-559462-p50",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u53774\u20136 (vol 2 of 10)",
+            "year": null,
+            "cer": 0.62,
+            "gap": 0.273,
+            "invention": 0.155,
+            "has_ref": true,
+            "unsupported": [
+              "\u4f1d\u706f\u5ef6",
+              "\u706f\u5ef6\u798f",
+              "\u798f\u4e09\u5bfa",
+              "\u4e09\u5bfa\u7af9",
+              "\u5bfa\u7af9\u4e0b",
+              "\u7af9\u4e0b\u89b3",
+              "\u4e0b\u89b3\u4fee",
+              "\u89b3\u4fee\u9053"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-559523-p42",
+            "title": "\u666f\u5fb7\u50b3\u71c8\u9304 \u537713\u201315 (vol 5 of 10)",
+            "year": null,
+            "cer": 0.418,
+            "gap": 0.141,
+            "invention": 0.173,
+            "has_ref": true,
+            "unsupported": [
+              "\u4e09\u4eba\u6f6d",
+              "\u4eba\u6f6d\u5dde",
+              "\u7985\u5e2b\u83ef",
+              "\u5e2b\u83ef\u4ead",
+              "\u7985\u5e2b\u898b",
+              "\u5e2b\u898b\u9332",
+              "\u5b50\u5c71\u540c",
+              "\u5c71\u540c\u7985"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-bae2a1-p17",
+            "title": "\u96f2\u9580\u5321\u771f\u79aa\u5e2b\u5ee3\u9304 \u53772\u20133 (vol 3 of 3)",
+            "year": null,
+            "cer": 0.38,
+            "gap": 0.02,
+            "invention": 0.136,
+            "has_ref": true,
+            "unsupported": [
+              "\u5f37\u5f97\u4f9d",
+              "\u5f97\u4f9d\u7121",
+              "\u4f9d\u7121\u5bfe",
+              "\u5c1a\u7ba1\u9818",
+              "\u7ba1\u9818\u4ee3",
+              "\u9818\u4ee3\u5f8c",
+              "\u65e5\u4e8b\u4ec0",
+              "\u4e8b\u4ec0\u9ebc"
+            ]
+          }
+        ]
+      },
+      "paddleocr-vl-1.6": {
+        "pages_run": 200,
+        "empty": 16,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 199,
+          "median_cer": 0.127,
+          "mean_cer": 0.252,
+          "catastrophic": 29,
+          "median_gap": 0.002,
+          "median_seq": 0.916,
+          "refused": 0,
+          "n_answered": 199,
+          "median_cer_answered": 0.127,
+          "mean_cer_answered": 0.252,
+          "catastrophic_answered": 29
+        },
+        "proxy_vs_ref_engine": {
+          "n": 1,
+          "median_cer": 0.728,
+          "catastrophic": 1,
+          "median_gap": 0.25,
+          "median_bow": 0.817,
+          "refused": 0,
+          "n_answered": 1,
+          "median_cer_answered": 0.728,
+          "mean_cer": 0.728,
+          "mean_cer_answered": 0.728
+        },
+        "invention": {
+          "median": 0.15,
+          "mean": 0.191,
+          "n_engines": 3,
+          "ref_median": 0.197,
+          "ref_mean": 0.236
+        },
+        "paired_vs_ref": {
+          "n": 199,
+          "excluded_refused": 0,
+          "wins": 33,
+          "losses": 166,
+          "ties": 0,
+          "median_delta_cer": -0.062,
+          "p_sign": 0,
+          "invention_wins": 56,
+          "invention_losses": 143
+        },
+        "worst": [
+          {
+            "slug": "chinese-print-cbeta-1de5d3-p6",
+            "title": "\u5929\u5982\u60df\u5247\u79aa\u5e2b\u8a9e\u9304 \u53771\u20132 (vol 1 of 4)",
+            "year": null,
+            "cer": 1.02,
+            "gap": 0.448,
+            "invention": 0.107,
+            "has_ref": true,
+            "unsupported": [
+              "\u5b50\u6797\u522b",
+              "\u6797\u522b\u9332",
+              "\u522b\u9332\u5e8f",
+              "\u7c95\u8033\u51b5",
+              "\u8033\u51b5\u5931",
+              "\u51b5\u5931\u4e16",
+              "\u5931\u4e16\u4e4b",
+              "\u975e\u81ea\u60b0"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-1de632-p27",
+            "title": "\u5929\u5982\u60df\u5247\u79aa\u5e2b\u8a9e\u9304 \u53773\u20135 (vol 2 of 4)",
+            "year": null,
+            "cer": 1.015,
+            "gap": 0.459,
+            "invention": 0.148,
+            "has_ref": true,
+            "unsupported": [
+              "\u5048\u5176\u7567",
+              "\u9577\u8606\u7258",
+              "\u8606\u7258\u5186",
+              "\u7258\u5186\u7167",
+              "\u7686\u5584\u9039",
+              "\u5584\u9039\u60df",
+              "\u9039\u60df\u5fc3",
+              "\u897f\u8cc7\u3479"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-9e6d1d-p46",
+            "title": "\u4f5b\u679c\u571c\u609f\u79aa\u5e2b\u78a7\u5dd6\u9304 \u53777\u20138 (vol 4 of 5)",
+            "year": null,
+            "cer": 1.015,
+            "gap": 0.433,
+            "invention": 0.204,
+            "has_ref": true,
+            "unsupported": [
+              "\u9e84\u8a00\u53ca",
+              "\u82e5\u6041\u9ebd",
+              "\u6041\u9ebd\u3479",
+              "\u9ebd\u3479\u4e14",
+              "\u3479\u4e14\u53bb",
+              "\u5982\u4eca\u619a",
+              "\u4eca\u619a\u548c",
+              "\u619a\u548c\u5b50"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-9e6c38-p30",
+            "title": "\u4f5b\u679c\u571c\u609f\u79aa\u5e2b\u78a7\u5dd6\u9304 \u53771\u20132 (vol 1 of 5)",
+            "year": null,
+            "cer": 1.012,
+            "gap": 0.463,
+            "invention": 0.124,
+            "has_ref": true,
+            "unsupported": [
+              "\u89e3\u4f5c\u3479",
+              "\u4f5c\u3479\u4e0d",
+              "\u3479\u4e0d\u552f",
+              "\u6709\u4ec0\u9ebd",
+              "\u4ec0\u9ebd\u4e86",
+              "\u9ebd\u4e86\u671f",
+              "\u9084\u898b\u9ebd",
+              "\u898b\u9ebd\u66f4"
+            ]
+          },
+          {
+            "slug": "chinese-print-cbeta-1de632-p45",
+            "title": "\u5929\u5982\u60df\u5247\u79aa\u5e2b\u8a9e\u9304 \u53773\u20135 (vol 2 of 4)",
+            "year": null,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      }
+    },
+    "by_class": {
+      "typeset": {
+        "n": 26,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 26,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.057,
+            "catastrophic": 0,
+            "median_unsupported": 0.08
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 26,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.073,
+            "catastrophic": 0,
+            "median_unsupported": 0.094
+          },
+          "paddleocr-vl-1.6": {
+            "n": 26,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.192,
+            "catastrophic": 0,
+            "median_unsupported": 0.202
+          }
+        }
+      },
+      "woodblock": {
+        "n": 174,
+        "engines": {
+          "gemini-3-flash-preview": {
+            "n": 174,
+            "empty": 0,
+            "refused": 1,
+            "loop": 0,
+            "median_cer": 0.051,
+            "catastrophic": 2,
+            "median_unsupported": 0.051
+          },
+          "gemini-3.1-flash-lite": {
+            "n": 174,
+            "empty": 0,
+            "refused": 0,
+            "loop": 2,
+            "median_cer": 0.068,
+            "catastrophic": 3,
+            "median_unsupported": 0.088
+          },
+          "paddleocr-vl-1.6": {
+            "n": 174,
+            "empty": 16,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.122,
+            "catastrophic": 30,
+            "median_unsupported": 0.148
+          }
+        }
       }
     }
   }

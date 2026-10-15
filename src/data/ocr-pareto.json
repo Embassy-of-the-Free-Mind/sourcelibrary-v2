@@ -5813,6 +5813,153 @@
    "panels": [
     {
      "kind": "primary",
+     "n_pages": 218,
+     "n_works": 72,
+     "reference": "references sealed with chinese-print-cbeta; Kanripo (Siku Quanshu) and CBETA e-texts",
+     "references": [
+      {
+       "stratum": "chinese-print-cbeta",
+       "reference": "references sealed with chinese-print-cbeta",
+       "pages": 199
+      },
+      {
+       "stratum": "chinese-ext",
+       "reference": "Kanripo (Siku Quanshu) and CBETA e-texts",
+       "pages": 9
+      },
+      {
+       "stratum": "chinese-cohort-5547",
+       "reference": "Kanripo (Siku Quanshu) and CBETA e-texts",
+       "pages": 6
+      },
+      {
+       "stratum": "chinese",
+       "reference": "Kanripo (Siku Quanshu) and CBETA e-texts",
+       "pages": 4
+      }
+     ],
+     "grade": {
+      "level": "not_fit",
+      "why": "the sample check (#6304) found its references do not fit"
+     },
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-06",
+     "files": [
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json",
+      "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
+      "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
+      "scripts/eval/results/benchmark/chinese-print-cbeta-2026-10-06.json"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "mean_cer": 0.076,
+       "accuracy": 0.924,
+       "accuracy_ci95": [
+        0.912,
+        0.935
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 1,
+        "n": 218,
+        "kinds": {
+         "copy_filter": 1
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": 0.119,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "billed",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "vs_in_use": {
+        "diff": 0.042,
+        "ci95": [
+         0.027,
+         0.06
+        ],
+        "n_pages": 217,
+        "n_works": 72
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "mean_cer": 0.117,
+       "accuracy": 0.883,
+       "accuracy_ci95": [
+        0.857,
+        0.902
+       ],
+       "fail_share": 0.018,
+       "did_not_read": {
+        "k": 0,
+        "n": 218,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": 0.155,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "billed",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "mean_cer": 0.224,
+       "accuracy": 0.776,
+       "accuracy_ci95": [
+        0.722,
+        0.82
+       ],
+       "fail_share": 0.104,
+       "did_not_read": {
+        "k": 7,
+        "n": 218,
+        "kinds": {
+         "empty": 7
+        }
+       },
+       "unplaced": 0,
+       "words_not_in_ref": 0.193,
+       "cost": {
+        "usd_per_1k": 2.324,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h, two runners on NDL two-page spreads (≤ 2,400 px); whole billed rental, measured 2026-10-07",
+        "source": "scripts/eval/experiments/2026-10-07-chinese-print-against-cbeta-6101.md"
+       },
+       "vs_in_use": {
+        "diff": -0.107,
+        "ci95": [
+         -0.162,
+         -0.057
+        ],
+        "n_pages": 211,
+        "n_works": 72
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [],
+     "role": "primary",
+     "heading": null,
+     "verdict": "No verdict."
+    },
+    {
+     "kind": "primary-more-engines",
      "n_pages": 12,
      "n_works": 11,
      "reference": "Kanripo (Siku Quanshu) and CBETA e-texts",
@@ -5857,8 +6004,8 @@
        "mean_cer": 0.161,
        "accuracy": 0.839,
        "accuracy_ci95": [
-        0.783,
-        0.896
+        0.781,
+        0.895
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -5877,8 +6024,8 @@
        "vs_in_use": {
         "diff": 0.018,
         "ci95": [
-         0.005,
-         0.031
+         0.006,
+         0.032
         ],
         "n_pages": 12,
         "n_works": 11
@@ -5892,8 +6039,8 @@
        "mean_cer": 0.162,
        "accuracy": 0.838,
        "accuracy_ci95": [
-        0.788,
-        0.889
+        0.791,
+        0.887
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -5912,7 +6059,7 @@
        "vs_in_use": {
         "diff": 0.017,
         "ci95": [
-         0.006,
+         0.007,
          0.028
         ],
         "n_pages": 12,
@@ -5928,7 +6075,7 @@
        "accuracy": 0.836,
        "accuracy_ci95": [
         0.789,
-        0.885
+        0.887
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -5963,7 +6110,7 @@
        "accuracy": 0.835,
        "accuracy_ci95": [
         0.79,
-        0.883
+        0.879
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -5982,8 +6129,8 @@
        "vs_in_use": {
         "diff": 0.013,
         "ci95": [
-         0.001,
-         0.027
+         0.002,
+         0.026
         ],
         "n_pages": 12,
         "n_works": 11
@@ -5997,8 +6144,8 @@
        "mean_cer": 0.165,
        "accuracy": 0.835,
        "accuracy_ci95": [
-        0.789,
-        0.881
+        0.788,
+        0.884
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -6009,16 +6156,16 @@
        "unplaced": 0,
        "words_not_in_ref": 0.109,
        "cost": {
-        "usd_per_1k": 1.036,
+        "usd_per_1k": 2.324,
         "basis": "billed",
-        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
-        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h, two runners on NDL two-page spreads (≤ 2,400 px); whole billed rental, measured 2026-10-07",
+        "source": "scripts/eval/experiments/2026-10-07-chinese-print-against-cbeta-6101.md"
        },
        "vs_in_use": {
         "diff": 0.013,
         "ci95": [
          0.004,
-         0.025
+         0.024
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6032,7 +6179,7 @@
        "mean_cer": 0.168,
        "accuracy": 0.832,
        "accuracy_ci95": [
-        0.79,
+        0.786,
         0.879
        ],
        "fail_share": 0,
@@ -6067,8 +6214,8 @@
        "mean_cer": 0.172,
        "accuracy": 0.828,
        "accuracy_ci95": [
-        0.779,
-        0.881
+        0.783,
+        0.877
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -6090,7 +6237,7 @@
         "diff": 0.014,
         "ci95": [
          0.006,
-         0.024
+         0.023
         ],
         "n_pages": 11,
         "n_works": 10
@@ -6104,8 +6251,8 @@
        "mean_cer": 0.179,
        "accuracy": 0.821,
        "accuracy_ci95": [
-        0.767,
-        0.874
+        0.772,
+        0.875
        ],
        "fail_share": 0,
        "did_not_read": {
@@ -6130,8 +6277,8 @@
        "mean_cer": 0.234,
        "accuracy": 0.766,
        "accuracy_ci95": [
-        0.63,
-        0.865
+        0.618,
+        0.862
        ],
        "fail_share": 0.083,
        "did_not_read": {
@@ -6150,7 +6297,7 @@
        "vs_in_use": {
         "diff": -0.056,
         "ci95": [
-         -0.211,
+         -0.209,
          0.02
         ],
         "n_pages": 12,
@@ -6165,8 +6312,8 @@
        "mean_cer": 0.246,
        "accuracy": 0.754,
        "accuracy_ci95": [
-        0.598,
-        0.858
+        0.605,
+        0.86
        ],
        "fail_share": 0.083,
        "did_not_read": {
@@ -6185,7 +6332,7 @@
        "vs_in_use": {
         "diff": -0.067,
         "ci95": [
-         -0.228,
+         -0.234,
          0.014
         ],
         "n_pages": 12,
@@ -6200,8 +6347,8 @@
        "mean_cer": 0.264,
        "accuracy": 0.736,
        "accuracy_ci95": [
-        0.579,
-        0.839
+        0.569,
+        0.837
        ],
        "fail_share": 0.083,
        "did_not_read": {
@@ -6220,8 +6367,8 @@
        "vs_in_use": {
         "diff": -0.086,
         "ci95": [
-         -0.22,
-         -0.015
+         -0.221,
+         -0.014
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6235,8 +6382,8 @@
        "mean_cer": 0.507,
        "accuracy": 0.493,
        "accuracy_ci95": [
-        0.266,
-        0.68
+        0.272,
+        0.675
        ],
        "fail_share": 0.333,
        "did_not_read": {
@@ -6255,8 +6402,8 @@
        "vs_in_use": {
         "diff": -0.329,
         "ci95": [
-         -0.561,
-         -0.137
+         -0.567,
+         -0.135
         ],
         "n_pages": 12,
         "n_works": 11
@@ -6265,8 +6412,8 @@
       }
      ],
      "no_cost": [],
-     "role": "primary",
-     "heading": null,
+     "role": "secondary",
+     "heading": "Typed editions of the text: more engines, fewer pages",
      "verdict": "No verdict."
     }
    ]
