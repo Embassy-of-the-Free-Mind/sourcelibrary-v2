@@ -941,6 +941,16 @@ B said CONTAIN on none of the 976 pages, these 12 included: it wrote a correctio
 - Code: `correct.mjs`, `judge-6694.mjs`, `JUDGE.md`. `driver.mjs`'s Gemini audit now counts only verdicts that opened
   the image.
 
+**After (2026-10-14, job opus-route-6694).** Derek overrode the audit stop.
+- q300 B's writes went through `cli-ocr.mjs apply` with the shared-words guard on and `--mark-stale=convergent-ocr-6420`:
+  - **600 written** (Latin 356, German 124, Greek 63, Arabic 38, Hebrew 10, Chinese 9);
+  - 17 refused by the guard;
+  - excluded: pages in held books, the contained pages, and the 3 disputed Greek pages.
+- A read-from-image spot check of 5 written pages (one each in Latin, German, Chinese, Arabic and Greek) found all 5 better and none worse.
+- B then read ranks 301–1000 of the queue: one run dir per 100 ranks, `q400` … `q1000`, reads only. Greek books are listed per batch in `greek-lane-a.json`.
+- Unlike q300, where B said CONTAIN on 0 of 976 pages, B named wrong-leaf or invented text on pages of 13 books by the end of q900. The job checked one per book by eye or from the text, and contained them under `ocr-wrong-leaf-6694`.
+- Per-batch counts are in the issue thread (#6694).
+
 ## 2026-10-13 · Lane B at scale: what does a Gemini second read plus Opus adjudication change on 150 of the most-read non-English books?
 
 **Design.** As the gate (`scripts/eval/PREREGISTRATION-ocr-convergence-6420.md`), T = 0.01, every disagreement to
