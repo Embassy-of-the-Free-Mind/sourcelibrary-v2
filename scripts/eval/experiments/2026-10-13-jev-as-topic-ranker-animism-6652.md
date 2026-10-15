@@ -1,5 +1,5 @@
 ---
-stage: analysis
+stage: metadata
 measure: agreement
 languages: []
 scripts: []
@@ -7,7 +7,7 @@ canons: []
 n_books: null
 n_pages: 4245
 verdict: "Jev ranks a topic rubric (animism) against the flash-lite screen + Gemini CLI judge at AUC 0.92 (0.87 on the hard judged set); at 0.5 it keeps 96% of confirmed passages and flags 2.1% of random pages, for $0.00005 a page."
-status: decided
+status: adopted
 decision: "Jev is usable as a cheap topic ranker in front of the two-pass instrument; it does not replace the judge, and its scores are not rates."
 superseded_by: null
 issue: 6652
