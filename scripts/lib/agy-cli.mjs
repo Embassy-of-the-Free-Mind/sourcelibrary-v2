@@ -81,7 +81,8 @@ export function agyCall(args, cwd) {
       const denied = (j.denied_actions || []).map((d) => d.action);
       // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
       const cls = isQuotaError({ out, err, j, text }) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
-      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000 });
+      // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
+      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null });
     });
   });
 }
