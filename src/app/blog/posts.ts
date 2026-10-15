@@ -78,6 +78,18 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'trees-of-life',
+    title: 'Trees of Life Across the Traditions',
+    subtitle:
+      'The world tree in Kabbalah, Norse myth, Assyria, the Codex Laud, the Tree of Jesse, alchemy, Llull and the Bodhi tree, in the plates and pages the library holds.',
+    date: '15 October 2026',
+    readTime: '9 min read',
+    kind: 'tours',
+    image: 'https://images.sourcelibrary.org/artwork/art-tree-of-life-fludd-1.jpg',
+    imageAlt: 'Robert Fludd’s inverted sefirotic tree, 1621: roots in a crowned light above, branches spreading below',
+    imagePosition: 'center 20%',
+  },
+  {
     slug: 'one-sentence-of-hermes',
     title: 'One Sentence of Hermes, Copied for Sixteen Hundred Years',
     subtitle:
