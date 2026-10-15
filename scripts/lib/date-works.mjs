@@ -146,6 +146,50 @@ export function ruleEdition(b) {
     const y = cands[0];
     return { year: y, from: y, to: y, display: String(y), precision: 'exact', basis: 'catalogue', evidence: '', rule: pub ? 'published' : 'catalog_metadata' };
   }
+  // the catalogue states a window, not a year ("C.18th Century CE", "1804–1821", "2. Hälfte 18. Jh.", "17uu", "um 1600"):
+  // stored as that window, basis catalogue, when no other source year contradicts it (#6721 lean route)
+  const w = !cands.length || cands.every((y) => y === pub) ? catalogueWindow(b.published) : null;
+  if (w && w.to >= 1450 && !(w.from <= 1700 && w.to >= 1700 && isPlaceholder(b, 1700))) {
+    return { year: w.year, from: w.from, to: w.to, display: String(b.published).trim().slice(0, 60), precision: w.to - w.from >= 99 ? 'century' : w.to === w.from ? 'exact' : 'range',
+      basis: 'catalogue', evidence: String(b.published).trim().slice(0, 200), rule: 'catalogue_window' };
+  }
+  return null;
+}
+
+const ORD = (n) => +n;
+const PART = { early: [0, 33], mid: [33, 66], middle: [33, 66], late: [66, 99], first: [0, 49], second: [50, 99] };
+/**
+ * A window the catalogue's own words state, or null: a century ("C.18th Century CE", "17th - 18th Century", "Late 18th
+ * century", "18. Jh.", "2. Hälfte 18. Jh.", "1. Viertel 18. Jh.", "17uu"), a year range ("1804-1821", "1804–21"), a
+ * circa year ("um 1600", "C.1600 CE": ±10), a dated day ("1604 März 12", "1600 CE"). Years CE only; BCE, regnal,
+ * Hijri and Samvat dates are left to the model (an AH year in a catalogue can be the composition's, #6057).
+ */
+export function catalogueWindow(v) {
+  const s = String(v ?? '').trim().replace(/\s+/g, ' ');
+  if (!s || /\b(BCE?|AH|A\.H\.|Samvat|Hijri|Shaka|era)\b/i.test(s)) return null;
+  let m;
+  const cent = (c) => [(c - 1) * 100 + 1, c * 100];
+  if ((m = s.match(/^(?:c\.?\s*|ca\.?\s*|circa\s*)?(early|mid|middle|late|first half of the|second half of the)?\s*-?\s*(\d{1,2})(?:st|nd|rd|th)?\s*(?:-|–|to)\s*(\d{1,2})(?:st|nd|rd|th)\s+century(?:\s*CE|\s*AD)?\.?$/i))) {
+    const [a] = cent(ORD(m[2])); const [, b] = cent(ORD(m[3])); return b > a ? { from: a, to: b, year: Math.round((a + b) / 2) } : null;
+  }
+  if ((m = s.match(/^(?:c\.?\s*|ca\.?\s*|circa\s*)?(?:(early|mid|middle|late)[\s-]+|(first|second) half of the\s+)?(\d{1,2})\s?(?:st|nd|rd|th)\s+century(?:\s*CE|\s*AD)?\.?$/i))) {
+    const [a, b] = cent(ORD(m[3])); const part = PART[(m[1] || m[2] || '').toLowerCase()];
+    const from = part ? a + part[0] : a; const to = part ? Math.min(b, a + part[1]) : b;
+    return { from, to, year: Math.round((from + to) / 2) };
+  }
+  if ((m = s.match(/^(?:(\d)\.\s*(Hälfte|Viertel|Drittel)\s+)?(\d{1,2})\.\s*Jh(?:dt)?\.?$/i))) {
+    const [a] = cent(ORD(m[3])); const k = m[1] ? +m[1] : 0; const size = { hälfte: 50, viertel: 25, drittel: 33 }[(m[2] || '').toLowerCase()];
+    const from = size ? a + (k - 1) * size : a; const to = size ? Math.min(a + 99, a + k * size - 1) : a + 99;
+    return k && size && from > a + 99 ? null : { from, to, year: Math.round((from + to) / 2) };
+  }
+  if ((m = s.match(/^\[?(1\d)uu\]?\.?$/i))) { const a = +m[1] * 100; return { from: a, to: a + 99, year: a + 50 }; }
+  if ((m = s.match(/^\[?(1\d{2})-\]?\.?$/))) { const a = +m[1] * 10; return { from: a, to: a + 9, year: a + 5 }; }
+  if ((m = s.match(/^\[?(1\d{3})\s?(?:-|–|—|to)\s?(1?\d{1,3})\]?\.?$/))) {
+    const a = +m[1]; let b = +m[2]; if (m[2].length < 4) b = +String(a).slice(0, 4 - m[2].length) * 10 ** m[2].length + b;
+    return b >= a && b - a <= 150 ? { from: a, to: b, year: Math.round((a + b) / 2) } : null;
+  }
+  if ((m = s.match(/^(?:um|ca\.?|c\.?|circa)\s*(1\d{3})(?:\s*CE)?\??\.?$/i))) { const y = +m[1]; return { from: y - 10, to: y + 10, year: y }; }
+  if ((m = s.match(/^(1\d{3})(?:\s*CE|\s*AD|\s+\d{1,2}\.?\s+\p{L}+|\s+\p{L}+\.?\s+\d{1,2})\.?$/u))) { const y = +m[1]; return { from: y, to: y, year: y }; }
   return null;
 }
 
@@ -286,4 +330,123 @@ export function toStoredLayers(r) {
 export function toMeta(r, { model, run_id, dated_at }) {
   return { work: r.work, edition: r.edition, catalogue_note: r.catalogue_note, confidence: r.confidence, reasoning: r.reasoning,
     model, prompt_version: PROMPT_VERSION, run_id, dated_at: new Date(dated_at), schema: 2 };
+}
+
+// ── The lean route (#6721, 2026-10-15: "why does it take so much just to get an estimated date?") ─────────────────
+// Cheapest first: the edition by rule (ruleEdition), the work by a model on catalogue fields alone (the reference check
+// showed C1 85.9% vs C2 85.4%: leaves do not move the work date), 100 books a call, one short JSON object per book and
+// nothing else. Wikidata is a SOURCE and a CHECK, never the date on its own: on the library, `books.work_id` QIDs often
+// name an edition item (the Loeb Iliad, P577 1973) and `author_id` often names the translator or editor (R. H. Charles
+// for 1 Enoch, James Legge for the Li Ki), so an unchecked Wikidata date was wrong on 19% of work items and on most of
+// the 661 lifespans that contradicted a model date (#6721 lean reference check).
+
+export const LEAN_PROMPT_VERSION = 'date-works-lean-1';
+export const SOURCED_BASES = ['wikidata'];
+const fmtYear = (y) => (y < 0 ? `${-y} BCE` : String(y));
+const fmtSpan = (a, b) => (a === b ? fmtYear(a) : a < 0 && b < 0 ? `${-a}–${-b} BCE` : `${fmtYear(a)}–${fmtYear(b)}`);
+
+/**
+ * The author's dated window from the Wikidata cache (wikidata-dates.mjs), or null: [birth + 15, death]; else the work
+ * period (P2031–P2032); else floruit ± 15; else 60 years before death or 85 after birth.
+ */
+export function authorWindow(a) {
+  if (!a) return null;
+  const b = a.P569, d = a.P570, ws = a.P2031, we = a.P2032, fl = a.P1317;
+  if (b && d) return { from: b[0] + 15, to: d[1], how: 'lifespan' };
+  if (ws || we) return { from: (ws || we)[0], to: (we || ws)[1], how: 'work_period' };
+  if (fl) return { from: fl[0] - 15, to: fl[1] + 15, how: 'floruit' };
+  if (d) return { from: d[1] - 60, to: d[1], how: 'death_only' };
+  if (b) return { from: b[0] + 15, to: b[1] + 85, how: 'birth_only' };
+  return null;
+}
+/** The book's author's window with its QID (books.author_id → authors.wikidata_id), or null. */
+export function authorWindowOf(b, wd) {
+  const qid = b.author_id ? wd.author_qid?.[b.author_id] : null;
+  const w = qid ? authorWindow(wd.authors?.[qid]) : null;
+  return w ? { qid, ...w } : null;
+}
+
+/**
+ * The date of the Wikidata WORK item a book's `work_id` names — P571 inception, else P577 publication, else P1191 —
+ * or null; an item dated after `editionYear` is a later edition's or translation's and is ignored. A CANDIDATE only:
+ * the writer stores it (basis wikidata) only where it agrees with the model's window (agreesWith()).
+ */
+export function wikidataWork(b, wd, editionYear = null) {
+  const w = /^Q\d+$/.test(b.work_id || '') ? wd.works?.[b.work_id] : null;
+  for (const p of ['P571', 'P577', 'P1191']) {
+    const iv = w?.[p];
+    if (!iv || (editionYear != null && iv[0] > editionYear)) continue;
+    const year = iv[0] === iv[1] ? iv[0] : Math.round((iv[0] + iv[1]) / 2);
+    return { year, from: iv[0], to: iv[1], display: fmtSpan(iv[0], iv[1]), precision: iv[0] === iv[1] ? 'exact' : 'range',
+      basis: 'wikidata', evidence: `${b.work_id} ${p}` };
+  }
+  return null;
+}
+/** Two dated windows agree when they meet, or their years are within 25 years. */
+export const agreesWith = (a, b) => !!a && !!b && ((a.from <= b.to && a.to >= b.from) || Math.abs(a.year - b.year) <= 25);
+
+/** The author's Wikidata dates as the lean prompt shows them ("b. 1433, d. 1499", "fl. 1520–1540"), else null. */
+export function authorDates(b, wd) {
+  const a = b.author_id ? wd.authors?.[wd.author_qid?.[b.author_id]] : null;
+  if (!a) return null;
+  const s = (iv) => fmtSpan(iv[0], iv[1]);
+  const parts = [a.P569 && `b. ${s(a.P569)}`, a.P570 && `d. ${s(a.P570)}`, !a.P569 && !a.P570 && a.P1317 && `fl. ${s(a.P1317)}`].filter(Boolean);
+  return parts.length ? parts.join(', ') : null;
+}
+
+/** The lean work prompt: catalogue fields (+ the author's Wikidata dates when known), one line of JSON per book. */
+export const buildLeanPrompt = (books) => `Date the WORK in each catalogue record below: when the text itself was first composed or compiled, as scholars date it. For a translation, commentary or later printing, the ORIGINAL composition, not this volume. Pseudepigrapha (Hermes, Solomon, Orpheus): the scholarly date, not the legendary one. A canon or anthology: the main composition window of its contents. A modern original book: its first publication year. The catalogue date is the date of this copy, may be wrong, and may be a placeholder.
+
+${books.map((b, i) => `${i + 1}. ${[b.original_title || b.title, b.title && b.original_title && b.title !== b.original_title ? `[${b.title}]` : null,
+  b.author ? `by ${b.author}${b.author_dates ? ` (${b.author_dates})` : ''}` : null, b.published != null && String(b.published).trim() !== '' ? `cat. ${b.published}` : null, b.language || null]
+  .filter(Boolean).join(' | ').replace(/\s+/g, ' ').slice(0, 400)}`).join('\n')}
+
+Reply with exactly ${books.length} lines, one per record, in order, and nothing else. Each line is one JSON object:
+{"i":<record number>,"w":[<from>,<to>],"y":<the year scholars conventionally cite>,"c":"h|m|l"}
+w is the narrowest window you can defend (a known year is [y,y]). c is your confidence. Years are integers, negative for BCE. No prose, no code fences, no tools.`;
+
+/** Parse a lean reply: Map(index → { work, confidence }) for the records it answered. */
+export function parseLeanReply(answer, n) {
+  const out = new Map();
+  for (const m of String(answer || '').matchAll(/\{[^{}\n]*\}/g)) {
+    let o; try { o = JSON.parse(m[0]); } catch { continue; }
+    const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
+    if (i < 0 || i >= n || out.has(i) || !Array.isArray(o.w)) continue;
+    const work = cleanDate({ year: o.y, from: o.w[0], to: o.w[1], basis: 'model_knowledge' }, '');
+    if (!work || work.year === null) continue;
+    work.display = work.from === work.to ? fmtYear(work.year) : `c. ${fmtSpan(work.from, work.to)}`;
+    work.precision = work.from === work.to ? 'exact' : 'range';
+    out.set(i, { work, confidence: { h: 'high', m: 'medium', l: 'low' }[o.c] || 'low' });
+  }
+  return out;
+}
+
+/**
+ * The lean edition prompt, only for books no rule could date: catalogue fields plus the opening leaves, one line of
+ * JSON per book. b = "t" (the leaves print it: x is their exact words), "c" (only the catalogue date, nothing
+ * contradicts it), "m" (your estimate).
+ */
+export const buildLeanEditionPrompt = (books, { leadChars = 700 } = {}) => `For each volume below give the date THIS copy (printing, manuscript copy, xylograph, reprint) was made, from its catalogue record and the OCR of its opening leaves (may be noisy). The catalogue date may be wrong, a range, or a placeholder.
+
+${books.map((b, i) => `=== ${i + 1}. ${[b.original_title || b.title, b.author ? `by ${b.author}` : null, `cat. ${b.published ?? 'none'}`, b.language || null].filter(Boolean).join(' | ').replace(/\s+/g, ' ').slice(0, 300)}
+${(b.lead || '[no text]').slice(0, leadChars).replace(/\s+/g, ' ')}`).join('\n')}
+
+Reply with exactly ${books.length} lines, one per volume, in order, and nothing else. Each line is one JSON object:
+{"i":<number>,"e":[<from>,<to>],"y":<year>,"b":"t|c|m","x":"<if b is t: the exact words of the leaves that state the date, else empty>","c":"h|m|l"}
+b: t = the leaves print the date, c = only the catalogue date and nothing contradicts it, m = your estimate. Years are integers. No prose, no code fences, no tools.`;
+
+/** Parse a lean edition reply against what each volume SHOWED the model. Map(index → { edition, confidence }). */
+export function parseLeanEditionReply(answer, books, { leadChars = 700 } = {}) {
+  const out = new Map();
+  for (const m of String(answer || '').matchAll(/\{[^\n]*\}/g)) {
+    let o; try { o = JSON.parse(m[0]); } catch { continue; }
+    const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
+    if (i < 0 || i >= books.length || out.has(i) || !Array.isArray(o.e)) continue;
+    const lead = (books[i].lead || '').slice(0, leadChars).replace(/\s+/g, ' ');
+    const edition = cleanDate({ year: o.y, from: o.e[0], to: o.e[1], basis: { t: 'title_page', c: 'catalogue', m: 'model_knowledge' }[o.b] || 'model_knowledge', evidence: o.x || '' }, lead);
+    if (!edition || edition.year === null) continue;
+    edition.display = edition.from === edition.to ? fmtYear(edition.year) : fmtSpan(edition.from, edition.to);
+    out.set(i, { edition, confidence: { h: 'high', m: 'medium', l: 'low' }[o.c] || 'low' });
+  }
+  return out;
 }

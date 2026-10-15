@@ -62,6 +62,9 @@ export default function BookBiblioPanel({
       {l.basis === 'catalogue' && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>From the catalogue record</span>
       )}
+      {l.basis === 'wikidata' && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>From Wikidata</span>
+      )}
     </>
   );
 

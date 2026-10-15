@@ -356,12 +356,14 @@ export interface SourceWorkDateLayer {
   language?: string;
   notes?: string;
   // #6721: what the date rests on. title_page = the opening leaves print it (evidence is their verbatim words);
-  // catalogue = the holding library's record; model_knowledge = a scholarly estimate. Absent on schema-1 layers.
+  // catalogue = the holding library's record; model_knowledge = a scholarly estimate; wikidata = the work's Wikidata
+  // item, stored only where a model's estimate agrees with it (evidence "Q… P571").
+  // Absent on schema-1 layers.
   basis?: SourceWorkDateBasis;
   evidence?: string;
 }
 
-export type SourceWorkDateBasis = 'title_page' | 'catalogue' | 'model_knowledge';
+export type SourceWorkDateBasis = 'title_page' | 'catalogue' | 'model_knowledge' | 'wikidata';
 
 export interface SourceWorkDate {
   year: number | null;
