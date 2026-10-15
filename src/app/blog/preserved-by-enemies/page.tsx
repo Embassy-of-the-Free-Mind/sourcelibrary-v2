@@ -81,6 +81,7 @@ const EXT = {
   knorozov: 'https://exhibits.lib.unc.edu/exhibits/show/maya/decipherment/sistema-pisma-drevnikh-maiia',
   florentine1577:
     'https://biblat.unam.mx/pt/revista/historia-y-espacio/articulo/el-manuscrito-andante-las-misteriosas-vicisitudes-del-codice-florentino-entre-mexico-e-italia-1577-1587',
+  augurios: 'https://www.mesoweb.com/es/articulos/sub/Augurios.pdf',
   ruizDeAlarcon: 'https://www.oupress.com/9780806160405/guardians-of-idolatry',
   nagHammadi: 'https://www.biblicalarchaeology.org/daily/the-nag-hammadi-codices/',
   experiment:
@@ -313,9 +314,11 @@ export default function PreservedByEnemiesPage() {
         </p>
 
         <p className={p}>
-          That book nearly went the same way. In 1577 a royal order from Philip II called in Sahagún&rsquo;s writings and sent
-          them to Spain, to keep them from circulating. The manuscript in our scans, now in the Biblioteca Laurenziana in
-          Florence, had reached Italy within about a decade (
+          That book nearly went the same way. A royal decree of Philip II, dated 22 April 1577, ordered Sahagún&rsquo;s work
+          collected because it contained the rites, ceremonies and idolatries of the Indians, and forbade anyone to write
+          about their superstitions and way of life (Alfredo López Austin,{' '}
+          <Ext href={EXT.augurios}><em>Augurios y abusiones</em></Ext>, UNAM). The manuscript in our scans went to Spain and
+          then to the Medici, and it is now in the Biblioteca Laurenziana in Florence (
           <Ext href={EXT.florentine1577}>Historia y Espacio</Ext>).
         </p>
 
@@ -363,8 +366,8 @@ export default function PreservedByEnemiesPage() {
 
         <p className={p}>
           Some of these records are less a sermon than a census. Hernando Ruiz de Alarcón&rsquo;s <em>Treatise on the
-          Heathen Superstitions</em> (1629) wrote down about ninety Nahua incantations, in Nahuatl, in order to stamp them
-          out (<Ext href={EXT.ruizDeAlarcon}>University of Oklahoma Press</Ext>). We do not yet hold it; it stayed in
+          Heathen Superstitions</em> (1629) recorded the incantations Nahua healers and farmers used, in Nahuatl with a
+          Spanish translation, to help the Church abolish them (<Ext href={EXT.ruizDeAlarcon}>University of Oklahoma Press</Ext>). We do not yet hold it; it stayed in
           manuscript until 1892.
         </p>
 
@@ -543,9 +546,9 @@ export default function PreservedByEnemiesPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Related:{' '}
           <Link href="/blog/indigenous-traditions" className={linkClass}>Indigenous traditions</Link>,{' '}
-          <Link href="/collection/maya" className={linkClass}>Maya</Link>,{' '}
-          <Link href="/collection/aztec-nahua" className={linkClass}>Aztec and Nahua</Link>,{' '}
-          <Link href="/collection/mesoamerican" className={linkClass}>Mesoamerican</Link>
+          <Link href="/collections/maya" className={linkClass}>Maya</Link>,{' '}
+          <Link href="/collections/aztec-nahua" className={linkClass}>Aztec and Nahua</Link>,{' '}
+          <Link href="/collections/mesoamerican" className={linkClass}>Mesoamerican</Link>
         </p>
       </article>
     </ContentPageLayout>
