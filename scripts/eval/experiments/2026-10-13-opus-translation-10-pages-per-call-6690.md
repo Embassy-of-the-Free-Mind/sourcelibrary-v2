@@ -7,7 +7,7 @@ canons: []
 n_books: 5
 n_pages: 50
 verdict: "Opus at 10 pages per call scores 0.30 lower than Opus at 1 page per call (−0.30 [−0.54, −0.08], 50 pages, cross-family judge). It is worse on 23 pages and better on 10. The loss is mostly small omissions, not text moved between pages. It costs about 2.7× less subscription usage per page (list-equivalent)."
-status: undecided
+status: superseded
 decision: "Keep Opus translation at 1 page per call where it is routed (#6545). Do not use 10 pages per call to stretch Opus capacity unless a same-round check shows it still beats 3.8 Flash (#6690)."
 superseded_by: "2026-10-15-opus-10-per-call-vs-flash-same-round-6690.md"
 issue: [6690, 6545]
