@@ -347,7 +347,7 @@ def run_claude(key, J, OUT, drops):
                   + " | " + " ".join(f"{x}-{y} {st[f'{x}-{y}']['mean']:+.2f} {st[f'{x}-{y}']['ci_by_book']}" for x, y in PAIRS[:2] + PAIRS[3:4]))
 
 
-def run_cli(key, J, OUT, drops, new="C38", base="G38", texts=None, verdict_vs=()):
+def run_cli(key, J, OUT, drops, new="C38", base="G38", texts=None, verdict_vs=(), out_name="scores.json"):
     """#6331 test 1 (experiments/2026-10-08-cli-arm-xl-365-6331.md): C38 (CLI) beside G38 (API) and the page's production
     engine on the 365 pages, both judges on every item. Gate per stratum and pooled: C38 − G38 by-book lower bound > −0.15
     and C38 inversion pages ≤ G38's + 2. Primary on all pages; again without #6304's drops.
@@ -447,7 +447,7 @@ def run_cli(key, J, OUT, drops, new="C38", base="G38", texts=None, verdict_vs=()
     res["cost"] = {f"{new}_billed_usd": 0, f"{new}_over_{base}_output_chars": round(sum(len(c38[u]) for u in both) / sum(len(g38[u]) for u in both), 3),
                    "pages_with_G38_cost": sum(r["usd"]["G38"] is not None for r in rows), "pages_with_PROD_cost": sum(r["usd"]["PROD"] is not None for r in rows)}
     res["rows"] = rows
-    json.dump(res, open(f"{OUT}/scores.json", "w"), indent=1)
+    json.dump(res, open(f"{OUT}/{out_name}", "w"), indent=1)
     print("gate", {j: g for j, g in gate.items() if j != "controls"}, "agree", res["judge_fid_agree_within_1"])
     for lab, blk in (("ALL PAGES", res["primary"]), (f"WITHOUT #6304 DROPS ({len(dropped)})", res["exclude_6304"])):
         print(f"\n#### {lab}: gate all pass = {blk['gate_all_pass']}")

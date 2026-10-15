@@ -84,8 +84,15 @@ if ROUND in ("cli6182xl", "g4xl6750"):  # #6331 test 1; #6750 the same with C4L 
     spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
     if G4:
+        # Amendment 1: a failed C4L read (failed.jsonl: timeouts and the two filter stubs found after judging) is counted,
+        # not scored: its C4L label is dropped, so the page leaves the three-arm comparison. --as-judged scores them as read.
+        AJ = "--as-judged" in sys.argv
+        failed = set() if AJ else {json.loads(l)["uid"] for l in open(f"{S}/failed.jsonl") if l.strip()}
+        for k in key["items"].values():
+            if k["kind"] == "ARMS" and k["page_id"] in failed:
+                k["labels"] = {t: a for t, a in k["labels"].items() if a != "C4L"}
         m.run_cli(key=key, J=J, OUT=OUT, drops=drops, new="C4L", base="C38", verdict_vs=("C38", "PROD"),
-                  texts={"C4L": f"{S}/C4L.jsonl", "C38": "/root/cli38-6182/C38-full.jsonl"})
+                  texts={"C4L": f"{S}/C4L.as-read.jsonl" if AJ else f"{S}/C4L.jsonl", "C38": "/root/cli38-6182/C38-full.jsonl"}, out_name="scores-as-judged.json" if AJ else "scores.json")
     else:
         m.run_cli(key=key, J=J, OUT=OUT, drops=drops)
     sys.exit(0)
