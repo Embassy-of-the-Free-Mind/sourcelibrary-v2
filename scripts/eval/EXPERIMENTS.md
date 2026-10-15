@@ -1569,6 +1569,29 @@ Artifacts: `scripts/eval/results/page-integrity-leaf-order-sharpened-2026-10-13.
 `scripts/eval/results/page-integrity-leaf-order-seam-read-2026-10-13.jsonl.gz` (6,357 read items with the key).
 Re-run: `--fetch --dir=<dir>`, then `--dir=<dir> --out=<rows>`, `--packet-dir`, `--score`.
 
+## 2026-10-13 · Can Jev rank pages for a topic rubric, as a search engine in front of the judge? (#6652)
+
+**Question.** The aliveness atlas's animism layer (the inhabited world) is read by a flash-lite screen with a verbatim
+evidence gate and then a Gemini CLI judge. Could Jev (`typesafe-ai/jev`, a different maker) score every page cheaply
+enough to replace the 60-pages-per-phrase sample with a census?
+
+**Method.** `scripts/analysis/experience-map/classify/jev-animism.py`: the judge's rubric as one noul question plus the
+reverse wording scored 1 - p, averaged; first 6,000 characters of the English translation. 4,245 pages scored: the
+3,500-page phrase draw and the 745-page random baseline. Reference = the two-pass instrument (screen positive, quote
+verbatim, judge confirmed). Wordings a priori, not tuned.
+
+**Result.** n = 906 confirmed, 3,339 not. AUC 0.918 on all scored pages; 0.865 among the 2,516 pages the judge read
+(the harder set, all of them screen positives). At a 0.5 cut: recall 95.7% (94.2–96.8), agreement 73.8%, random pages
+flagged 2.1% (1.3–3.5). The two-pass instrument confirmed 1 of 745 random pages, so baseline AUC (0.997) rests on one
+positive and is not quoted. Cost $0.20 for 4,245 pages (4.79M input tokens).
+
+**Reading.** At 2% of random pages flagged, a whole-corpus Jev pass would cut the pages a stronger reader must see by
+about 45 times while keeping ~96% of what it would confirm. Agreement at the cut is 74%, so Jev is a ranker, not a
+classifier: counts and rates still come from the judge. The reference is itself two Gemini models, so this measures
+agreement with the instrument, not accuracy against a human reader.
+
+**Limits.** One topic, one wording pair, 6,000-character truncation, English translations only.
+
 ## 2026-10-12 · Can Opus or Gemini 3.1 Pro correct the Yigdzin OCR of the BL Kangyurs, and is correct or redo better? (#6560)
 
 PRIOR ART: `2026-10-04-tibetan-lite-vs-yigdzin-4523.md` (Yigdzin vs flash-lite on held pages; Yigdzin 0.962 vs Derge),
