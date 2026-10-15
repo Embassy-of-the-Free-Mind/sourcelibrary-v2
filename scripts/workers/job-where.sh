@@ -8,10 +8,12 @@
 # Why: on 2026-10-09 the main box sat at load 17 on 16 cores with its root disk 86% full while cloudlayer
 # ran no jobs at all. Nothing told a dispatching session where there was room.
 # A box is skipped when it is not ready (no Claude login, no gh login, no env file), has under 4 GB of
-# memory or 15 GB of job disk free, or does not answer. The rest are ranked by load per core, then live jobs.
+# memory or 15 GB of job disk free, has a 5-minute load above 1.5 per core, or does not answer. The rest are
+# ranked by load per core, then live jobs. The load ceiling came on 2026-10-15: main ran 42 model processes
+# at load 50 on 16 cores (3.1 per core) and this script still called it "ok".
 set -u
 BOXES=${SL_JOB_BOXES:-"main=root@46.224.122.120 cloudlayer=root@46.224.208.175 l7a=root@167.233.32.250"}
-MIN_MEM_MB=${MIN_MEM_MB:-4096}; MIN_DISK_GB=${MIN_DISK_GB:-15}
+MIN_MEM_MB=${MIN_MEM_MB:-4096}; MIN_DISK_GB=${MIN_DISK_GB:-15}; MAX_LOAD_PER_CORE=${MAX_LOAD_PER_CORE:-1.5}
 best=""; bestscore=""; bestssh=""
 printf '%-11s %-6s %-9s %-9s %-9s %-5s %s\n' box load/core mem-free job-disk root-disk jobs verdict
 for b in $BOXES; do
@@ -26,6 +28,7 @@ for b in $BOXES; do
   [ "$ready" = yes ] || verdict="skip: $ready"
   [ "$verdict" = ok ] && [ "$mem_free_mb" -lt "$MIN_MEM_MB" ] && verdict="skip: memory"
   [ "$verdict" = ok ] && [ "$job_disk_free_gb" -lt "$MIN_DISK_GB" ] && verdict="skip: disk"
+  [ "$verdict" = ok ] && awk -v p="$per" -v m="$MAX_LOAD_PER_CORE" 'BEGIN{exit !(p>m)}' && verdict="skip: load"
   printf '%-11s %-6s %-9s %-9s %-9s %-5s %s\n' "$label" "$per" "$((mem_free_mb/1024))G" "${job_disk_free_gb}G" "${root_free_gb}G" "$live_jobs" "$verdict"
   [ "$verdict" = ok ] || continue
   score=$(awk -v p="$per" -v j="$live_jobs" 'BEGIN{printf "%.3f", p + j/100}')
