@@ -29,6 +29,9 @@ interface BookItem {
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
 }
 
 type ViewMode = 'grid' | 'list';

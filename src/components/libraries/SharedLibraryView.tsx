@@ -41,6 +41,9 @@ interface BookItem {
   thumbnail_frame?: unknown;
   published?: string;
   read_count?: number;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
 }
 
 interface LibraryPartner {
@@ -444,6 +447,7 @@ export default function SharedLibraryView({
                     translation_percent: book.pages_ocr && book.pages_translated
                       ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                       : 0,
+                    preview: book.preview,
                   }}
                   bookUrlPrefix=""
                   priority={i < 10}
@@ -532,6 +536,7 @@ export default function SharedLibraryView({
                         translation_percent: book.pages_ocr && book.pages_translated
                           ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                           : 0,
+                        preview: book.preview,
                       }}
                       bookUrlPrefix=""
                       priority={i < 5}
