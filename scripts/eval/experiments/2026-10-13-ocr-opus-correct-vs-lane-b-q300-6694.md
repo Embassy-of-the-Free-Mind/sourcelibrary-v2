@@ -7,8 +7,8 @@ canons: []
 n_books: 99
 n_pages: 976
 verdict: "On 976 pages of 99 most-read non-English books (queue ranks 201–300), Opus correcting the stored text in place (arm B) beat lane B (Gemini 3.8 Flash read + Opus adjudication, arm A) under both blind judges and passed the preregistered rule: B made 1/196 (Opus) and 9/196 (Gemini 3.8 Flash high; 4.6%, book-clustered 95% CI 2.0–7.7%) of its changed pages worse, and was preferred to A 158–6 (Opus) and 148–21 (Gemini). B changes far more pages (809 vs 189). But B's 40-write audit STOPPED: Gemini 3/40 worse (Opus 0/40), so nothing was written."
-status: undecided
-decision: null
+status: adopted
+decision: "Derek 2026-10-14 (#6694): B (Opus correcting in place) is the OCR route for the rest of queue-next-1000, Greek excepted (Greek stays on lane A); q300 B applied over the 3/40 audit stop with the 3 disputed Greek pages excluded: 600 written, 17 refused by the shared-words guard"
 superseded_by: null
 issue: [6694, 6420, 6553, 6561]
 ---
@@ -129,3 +129,14 @@ B said CONTAIN on none of the 976 pages, these 12 included: it wrote a correctio
   - `audit/`.
 - Code: `correct.mjs`, `judge-6694.mjs`, `JUDGE.md`. `driver.mjs`'s Gemini audit now counts only verdicts that opened
   the image.
+
+**After (2026-10-14, job opus-route-6694).** Derek overrode the audit stop.
+- q300 B's writes went through `cli-ocr.mjs apply` with the shared-words guard on and `--mark-stale=convergent-ocr-6420`:
+  - **600 written** (Latin 356, German 124, Greek 63, Arabic 38, Hebrew 10, Chinese 9);
+  - 17 refused by the guard;
+  - excluded: pages in held books, the contained pages, and the 3 disputed Greek pages.
+- A read-from-image spot check of 5 written pages (one each in Latin, German, Chinese, Arabic and Greek) found all 5 better and none worse.
+- B then read ranks 301–1000 of the queue: one run dir per 100 ranks, `q400` … `q1000`, reads only. Greek books are listed per batch in `greek-lane-a.json`.
+- Unlike q300, where B said CONTAIN on 0 of 976 pages, B named wrong-leaf or invented text on pages of 13 books by the end of q900. The job checked one per book by eye or from the text, and contained them under `ocr-wrong-leaf-6694`.
+- Per-batch counts are in the issue thread (#6694).
+
