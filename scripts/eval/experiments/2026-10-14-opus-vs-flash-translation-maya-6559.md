@@ -7,7 +7,7 @@ canons: []
 n_books: 25
 n_pages: 68
 verdict: "On 20 Mayan-language pages (4 books), Gemini 3.8 Flash Low through the CLI translates better than Opus under both judges, order-averaged: a Gemini 3.8 Flash High judge gives +1.60 and an Opus judge gives +0.38. Opus fails on the 1846 Yucatec sermons and leads only on the Kaqchikel manuscript. On the 30 Nahuatl pages of 2026-10-13, Opus and Gemini tie under the Opus judge (−0.07). Sonnet and gemini-3.1-flash-lite trail both by 1–3 points in every language, and lite OCR trails the stored Opus OCR by 1.3."
-status: decided
+status: adopted
 decision: "Maya lane: Gemini 3.8 Flash Low, by the 2026-10-14 brief's rule (Opus only if both judges put it ahead). Sonnet and flash-lite are rejected for these languages."
 superseded_by: null
 issue: [6559]
