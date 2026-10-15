@@ -1,0 +1,703 @@
+{
+ "at": "2026-10-14",
+ "by": "Opus 5.5 (this job) viewing each drawn page image",
+ "rule": "12 eligible books in seeded order; per book, pages in seeded order (10-90% of the book), kept while the image carries Rashi-type text of the mapped work, 5 per book",
+ "n_books": 12,
+ "n_pages": 60,
+ "per_book": {
+  "6990630be7b7642c081de08b": 5,
+  "69924401bc722ec0ee80b312": 5,
+  "699ef9f2c2bcb75dbdbaad92": 5,
+  "699ef9fd15618a982bb1ebd9": 5,
+  "69b2f3b821208ea9dc278c50": 5,
+  "69c7a0a892b884e4f8173817": 5,
+  "69c7b18425ec2ba5ccd7f44e": 5,
+  "69c7b45e25ec2ba5ccd7f5be": 5,
+  "69d5ac5f4dc55b8478ddd6b5": 5,
+  "69d5ac824dc55b8478dddb9a": 5,
+  "69d5ac8c4dc55b8478dddcab": 5,
+  "69d5ad004dc55b8478dde8b5": 5
+ },
+ "pages": [
+  {
+   "book": "6990630be7b7642c081de08b",
+   "work": "Zohar (1558, 548 pp.)",
+   "rank": 0,
+   "page": 484,
+   "page_id": "6990630ce7b7642c081de270",
+   "viewed_keep": true,
+   "note": "Zohar text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "6990630be7b7642c081de08b",
+   "work": "Zohar (1558, 548 pp.)",
+   "rank": 1,
+   "page": 269,
+   "page_id": "6990630ce7b7642c081de199",
+   "viewed_keep": true,
+   "note": "Zohar text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "6990630be7b7642c081de08b",
+   "work": "Zohar (1558, 548 pp.)",
+   "rank": 2,
+   "page": 139,
+   "page_id": "6990630ce7b7642c081de117",
+   "viewed_keep": true,
+   "note": "Zohar text in Rashi type with square section heads",
+   "keep": true
+  },
+  {
+   "book": "6990630be7b7642c081de08b",
+   "work": "Zohar (1558, 548 pp.)",
+   "rank": 3,
+   "page": 413,
+   "page_id": "6990630ce7b7642c081de229",
+   "viewed_keep": true,
+   "note": "Zohar text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "6990630be7b7642c081de08b",
+   "work": "Zohar (1558, 548 pp.)",
+   "rank": 4,
+   "page": 339,
+   "page_id": "6990630ce7b7642c081de1df",
+   "viewed_keep": true,
+   "note": "Zohar text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69924401bc722ec0ee80b312",
+   "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+   "rank": 0,
+   "page": 81,
+   "page_id": "69924402bc722ec0ee80b363",
+   "viewed_keep": true,
+   "note": "Psalms text above, commentary in Rashi type below",
+   "keep": true
+  },
+  {
+   "book": "69924401bc722ec0ee80b312",
+   "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+   "rank": 1,
+   "page": 46,
+   "page_id": "69924402bc722ec0ee80b340",
+   "viewed_keep": true,
+   "note": "Psalms text and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69924401bc722ec0ee80b312",
+   "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+   "rank": 2,
+   "page": 31,
+   "page_id": "69924402bc722ec0ee80b331",
+   "viewed_keep": true,
+   "note": "Psalms text and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69924401bc722ec0ee80b312",
+   "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+   "rank": 3,
+   "page": 122,
+   "page_id": "69924402bc722ec0ee80b38c",
+   "viewed_keep": true,
+   "note": "Psalms text and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69924401bc722ec0ee80b312",
+   "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+   "rank": 4,
+   "page": 146,
+   "page_id": "69924402bc722ec0ee80b3a4",
+   "viewed_keep": true,
+   "note": "Psalms text, commentary in Rashi type, index columns at foot",
+   "keep": true
+  },
+  {
+   "book": "699ef9f2c2bcb75dbdbaad92",
+   "work": "Sha'arei Orah / Gates of Light (1715)",
+   "rank": 0,
+   "page": 85,
+   "page_id": "699f0fa62fdad2ef3c3a88d5",
+   "viewed_keep": true,
+   "note": "spread, Sha'arei Orah text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "699ef9f2c2bcb75dbdbaad92",
+   "work": "Sha'arei Orah / Gates of Light (1715)",
+   "rank": 1,
+   "page": 15,
+   "page_id": "699eff1f724c4005e86cc4d6",
+   "viewed_keep": true,
+   "note": "spread, Rashi type, water-stained left page",
+   "keep": true
+  },
+  {
+   "book": "699ef9f2c2bcb75dbdbaad92",
+   "work": "Sha'arei Orah / Gates of Light (1715)",
+   "rank": 2,
+   "page": 183,
+   "page_id": "699f28190ff59dbbd748660e",
+   "viewed_keep": true,
+   "note": "spread, Rashi type with a square-type passage",
+   "keep": true
+  },
+  {
+   "book": "699ef9f2c2bcb75dbdbaad92",
+   "work": "Sha'arei Orah / Gates of Light (1715)",
+   "rank": 3,
+   "page": 13,
+   "page_id": "699efe2547c25c6a1763b855",
+   "viewed_keep": true,
+   "note": "spread, introduction in Rashi type with an ornament",
+   "keep": true
+  },
+  {
+   "book": "699ef9f2c2bcb75dbdbaad92",
+   "work": "Sha'arei Orah / Gates of Light (1715)",
+   "rank": 4,
+   "page": 114,
+   "page_id": "699f17e3e39b8df793c732b9",
+   "viewed_keep": true,
+   "note": "spread, Rashi type",
+   "keep": true
+  },
+  {
+   "book": "699ef9fd15618a982bb1ebd9",
+   "work": "Shenei Luchot ha-Berit (1698)",
+   "rank": 0,
+   "page": 221,
+   "page_id": "699f367aa1734457fbfe16ee",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body with square headings",
+   "keep": true
+  },
+  {
+   "book": "699ef9fd15618a982bb1ebd9",
+   "work": "Shenei Luchot ha-Berit (1698)",
+   "rank": 1,
+   "page": 885,
+   "page_id": "699fa9c44b06b061461e9331",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body with square headings",
+   "keep": true
+  },
+  {
+   "book": "699ef9fd15618a982bb1ebd9",
+   "work": "Shenei Luchot ha-Berit (1698)",
+   "rank": 2,
+   "page": 581,
+   "page_id": "699f7a39cd7dcfa85b82690e",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body in two columns",
+   "keep": true
+  },
+  {
+   "book": "699ef9fd15618a982bb1ebd9",
+   "work": "Shenei Luchot ha-Berit (1698)",
+   "rank": 3,
+   "page": 178,
+   "page_id": "699f295e5193538a13e853e8",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body with square marginal heads",
+   "keep": true
+  },
+  {
+   "book": "699ef9fd15618a982bb1ebd9",
+   "work": "Shenei Luchot ha-Berit (1698)",
+   "rank": 4,
+   "page": 753,
+   "page_id": "699f96b9722c50c7c6786150",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body",
+   "keep": true
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "work": "Twelve Prophets with commentary (1539)",
+   "rank": 0,
+   "page": 59,
+   "page_id": "69b2f3b821208ea9dc278c8b",
+   "viewed_keep": true,
+   "note": "Hosea: pointed verses and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "work": "Twelve Prophets with commentary (1539)",
+   "rank": 1,
+   "page": 100,
+   "page_id": "69b2f3b821208ea9dc278cb4",
+   "viewed_keep": true,
+   "note": "Amos: pointed verses and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "work": "Twelve Prophets with commentary (1539)",
+   "rank": 2,
+   "page": 71,
+   "page_id": "69b2f3b821208ea9dc278c97",
+   "viewed_keep": false,
+   "note": "blank leaf",
+   "keep": false
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "work": "Twelve Prophets with commentary (1539)",
+   "rank": 3,
+   "page": 109,
+   "page_id": "69b2f3b821208ea9dc278cbd",
+   "viewed_keep": true,
+   "note": "Amos: commentary in Rashi type, pointed verses",
+   "keep": true
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "work": "Twelve Prophets with commentary (1539)",
+   "rank": 4,
+   "page": 58,
+   "page_id": "69b2f3b821208ea9dc278c8a",
+   "viewed_keep": true,
+   "note": "Hosea: pointed verses and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "work": "Twelve Prophets with commentary (1539)",
+   "rank": 5,
+   "page": 218,
+   "page_id": "69b2f3b821208ea9dc278d2a",
+   "viewed_keep": true,
+   "note": "Habakkuk: pointed verses and commentary in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7a0a892b884e4f8173817",
+   "work": "Zohar Chadash (1702)",
+   "rank": 0,
+   "page": 43,
+   "page_id": "69f66dbc80c7a291ec4c222e",
+   "viewed_keep": true,
+   "note": "Midrash ha-Ne'elam text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7a0a892b884e4f8173817",
+   "work": "Zohar Chadash (1702)",
+   "rank": 1,
+   "page": 115,
+   "page_id": "69f66de580c7a291ec4c2278",
+   "viewed_keep": true,
+   "note": "Zohar Chadash text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7a0a892b884e4f8173817",
+   "work": "Zohar Chadash (1702)",
+   "rank": 2,
+   "page": 71,
+   "page_id": "69f66dcd80c7a291ec4c224a",
+   "viewed_keep": true,
+   "note": "Zohar Chadash text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7a0a892b884e4f8173817",
+   "work": "Zohar Chadash (1702)",
+   "rank": 3,
+   "page": 140,
+   "page_id": "69f66df580c7a291ec4c2291",
+   "viewed_keep": true,
+   "note": "spread, Zohar Chadash text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7a0a892b884e4f8173817",
+   "work": "Zohar Chadash (1702)",
+   "rank": 4,
+   "page": 66,
+   "page_id": "69f66dc780c7a291ec4c2247",
+   "viewed_keep": true,
+   "note": "Zohar Chadash text in Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 0,
+   "page": -65,
+   "page_id": "69c7b3ac25ec2ba5ccd7f4cc",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body in two columns",
+   "keep": true
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 1,
+   "page": 2,
+   "page_id": "69f6972792ec22e3603c00b3",
+   "viewed_keep": false,
+   "note": "binding/endpaper with bookplate, no text",
+   "keep": false
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 2,
+   "page": 291,
+   "page_id": "69f697a592ec22e3603c01d2",
+   "viewed_keep": true,
+   "note": "Rashi-type body in two columns",
+   "keep": true
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 3,
+   "page": 21,
+   "page_id": "69f6972f92ec22e3603c00c6",
+   "viewed_keep": true,
+   "note": "chapter opening, Rashi-type body",
+   "keep": true
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 4,
+   "page": -6,
+   "page_id": "69c7b2da25ec2ba5ccd7f49f",
+   "viewed_keep": false,
+   "note": "table of contents (index), not the work's running text",
+   "keep": false
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 5,
+   "page": 203,
+   "page_id": "69f6977992ec22e3603c0178",
+   "viewed_keep": true,
+   "note": "chapter opening with a circle diagram, Rashi-type body",
+   "keep": true
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "work": "Pardes Rimmonim (1786)",
+   "rank": 6,
+   "page": -39,
+   "page_id": "69c7b45925ec2ba5ccd7f4f6",
+   "viewed_keep": true,
+   "note": "spread, Rashi-type body in two columns",
+   "keep": true
+  },
+  {
+   "book": "69c7b45e25ec2ba5ccd7f5be",
+   "work": "Tikkunei ha-Zohar (1706)",
+   "rank": 0,
+   "page": 175,
+   "page_id": "69f69a374f6489cca681de42",
+   "viewed_keep": true,
+   "note": "Tikkun text with the Hemdat Tzvi commentary, Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7b45e25ec2ba5ccd7f5be",
+   "work": "Tikkunei ha-Zohar (1706)",
+   "rank": 1,
+   "page": -83,
+   "page_id": "69c7b6be25ec2ba5ccd7f660",
+   "viewed_keep": true,
+   "note": "spread, Tikkun text with commentary, Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7b45e25ec2ba5ccd7f5be",
+   "work": "Tikkunei ha-Zohar (1706)",
+   "rank": 2,
+   "page": 188,
+   "page_id": "69f69a3b4f6489cca681de45",
+   "viewed_keep": true,
+   "note": "Tikkun text with commentary, Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7b45e25ec2ba5ccd7f5be",
+   "work": "Tikkunei ha-Zohar (1706)",
+   "rank": 3,
+   "page": 65,
+   "page_id": "69f699e04f6489cca681ddd4",
+   "viewed_keep": true,
+   "note": "introduction to the Tikkunim with commentary, Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69c7b45e25ec2ba5ccd7f5be",
+   "work": "Tikkunei ha-Zohar (1706)",
+   "rank": 4,
+   "page": 201,
+   "page_id": "69f69a424f6489cca681de5e",
+   "viewed_keep": true,
+   "note": "Tikkun text with commentary, Rashi type",
+   "keep": true
+  },
+  {
+   "book": "69d5ac5f4dc55b8478ddd6b5",
+   "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+   "rank": 0,
+   "page": 276,
+   "page_id": "69d5ac5f4dc55b8478ddd9ad",
+   "viewed_keep": true,
+   "note": "Sukkah: Gemara with Rashi and Tosafot",
+   "keep": true
+  },
+  {
+   "book": "69d5ac5f4dc55b8478ddd6b5",
+   "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+   "rank": 1,
+   "page": 163,
+   "page_id": "69d5ac5f4dc55b8478ddd93c",
+   "viewed_keep": true,
+   "note": "Rosh Hashanah: Gemara with Rashi and Tosafot",
+   "keep": true
+  },
+  {
+   "book": "69d5ac5f4dc55b8478ddd6b5",
+   "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+   "rank": 2,
+   "page": 319,
+   "page_id": "69d5ac5f4dc55b8478ddd9d8",
+   "viewed_keep": true,
+   "note": "Sukkah: Gemara with Rashi and Tosafot",
+   "keep": true
+  },
+  {
+   "book": "69d5ac5f4dc55b8478ddd6b5",
+   "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+   "rank": 3,
+   "page": 146,
+   "page_id": "69d5ac5f4dc55b8478ddd92b",
+   "viewed_keep": true,
+   "note": "Yoma: Gemara with Rashi and Tosafot",
+   "keep": true
+  },
+  {
+   "book": "69d5ac5f4dc55b8478ddd6b5",
+   "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+   "rank": 4,
+   "page": 269,
+   "page_id": "69d5ac5f4dc55b8478ddd9a6",
+   "viewed_keep": true,
+   "note": "Sukkah: Gemara with Rashi and Tosafot",
+   "keep": true
+  },
+  {
+   "book": "69d5ac824dc55b8478dddb9a",
+   "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+   "rank": 0,
+   "page": 120,
+   "page_id": "69d5ac824dc55b8478dddc12",
+   "viewed_keep": true,
+   "note": "Berakhot: Ein Yaakov text with Rashi and other commentaries",
+   "keep": true
+  },
+  {
+   "book": "69d5ac824dc55b8478dddb9a",
+   "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+   "rank": 1,
+   "page": 102,
+   "page_id": "69d5ac824dc55b8478dddc00",
+   "viewed_keep": true,
+   "note": "Berakhot: Ein Yaakov text with Rashi and other commentaries",
+   "keep": true
+  },
+  {
+   "book": "69d5ac824dc55b8478dddb9a",
+   "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+   "rank": 2,
+   "page": 190,
+   "page_id": "69d5ac824dc55b8478dddc58",
+   "viewed_keep": true,
+   "note": "Berakhot: Ein Yaakov text with Rashi and other commentaries",
+   "keep": true
+  },
+  {
+   "book": "69d5ac824dc55b8478dddb9a",
+   "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+   "rank": 3,
+   "page": 218,
+   "page_id": "69d5ac824dc55b8478dddc74",
+   "viewed_keep": true,
+   "note": "Berakhot: Ein Yaakov text with Rashi and other commentaries",
+   "keep": true
+  },
+  {
+   "book": "69d5ac824dc55b8478dddb9a",
+   "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+   "rank": 4,
+   "page": 208,
+   "page_id": "69d5ac824dc55b8478dddc6a",
+   "viewed_keep": true,
+   "note": "Berakhot: Ein Yaakov text with Rashi and other commentaries",
+   "keep": true
+  },
+  {
+   "book": "69d5ac8c4dc55b8478dddcab",
+   "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+   "rank": 0,
+   "page": 161,
+   "page_id": "69d5ac8c4dc55b8478dddd4c",
+   "viewed_keep": true,
+   "note": "Choshen Mishpat text in Rashi type with the Perush column",
+   "keep": true
+  },
+  {
+   "book": "69d5ac8c4dc55b8478dddcab",
+   "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+   "rank": 1,
+   "page": 279,
+   "page_id": "69d5ac8c4dc55b8478ddddc2",
+   "viewed_keep": true,
+   "note": "Choshen Mishpat text in Rashi type with the Perush column",
+   "keep": true
+  },
+  {
+   "book": "69d5ac8c4dc55b8478dddcab",
+   "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+   "rank": 2,
+   "page": 159,
+   "page_id": "69d5ac8c4dc55b8478dddd4a",
+   "viewed_keep": true,
+   "note": "Choshen Mishpat text in Rashi type with the Perush column",
+   "keep": true
+  },
+  {
+   "book": "69d5ac8c4dc55b8478dddcab",
+   "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+   "rank": 3,
+   "page": 115,
+   "page_id": "69d5ac8c4dc55b8478dddd1e",
+   "viewed_keep": true,
+   "note": "Choshen Mishpat text in Rashi type with the Perush column",
+   "keep": true
+  },
+  {
+   "book": "69d5ac8c4dc55b8478dddcab",
+   "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+   "rank": 4,
+   "page": 181,
+   "page_id": "69d5ac8c4dc55b8478dddd60",
+   "viewed_keep": true,
+   "note": "Choshen Mishpat text in Rashi type with the Perush column",
+   "keep": true
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 0,
+   "page": 1626,
+   "page_id": "69d5ad004dc55b8478ddeffe",
+   "viewed_keep": true,
+   "note": "Leviticus page with a Rashi block under the Targum",
+   "keep": true
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 1,
+   "page": 2270,
+   "page_id": "69d5ad004dc55b8478ddf282",
+   "viewed_keep": true,
+   "note": "Numbers 19 page with a Rashi block",
+   "keep": true
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 2,
+   "page": 1593,
+   "page_id": "69d5ad004dc55b8478ddefdd",
+   "viewed_keep": false,
+   "note": "haftarah page: Prophets commentaries, no Rashi on Torah",
+   "keep": false
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 3,
+   "page": 2105,
+   "page_id": "69d5ad004dc55b8478ddf1dd",
+   "viewed_keep": true,
+   "note": "Numbers page with a Rashi block",
+   "keep": true
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 4,
+   "page": 2384,
+   "page_id": "69d5ad004dc55b8478ddf2f4",
+   "viewed_keep": true,
+   "note": "Numbers 26 page with a Rashi block",
+   "keep": true
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 5,
+   "page": 2255,
+   "page_id": "69d5ad004dc55b8478ddf273",
+   "viewed_keep": false,
+   "note": "Targum Yonatan/Yerushalmi page with later commentaries, no Rashi block",
+   "keep": false
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 6,
+   "page": 2461,
+   "page_id": "69d5ad004dc55b8478ddf341",
+   "viewed_keep": false,
+   "note": "Targum Yonatan page and haftarah, no Rashi block",
+   "keep": false
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 7,
+   "page": 355,
+   "page_id": "69d5ad004dc55b8478ddeb07",
+   "viewed_keep": false,
+   "note": "Targum Yonatan page with later commentaries, no Rashi block",
+   "keep": false
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 8,
+   "page": 2195,
+   "page_id": "69d5ad004dc55b8478ddf237",
+   "viewed_keep": false,
+   "note": "Targum Yonatan page with later commentaries, no Rashi block",
+   "keep": false
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rank": 9,
+   "page": 2428,
+   "page_id": "69d5ad004dc55b8478ddf320",
+   "viewed_keep": true,
+   "note": "Numbers 30 Onkelos page with a Rashi block",
+   "keep": true
+  }
+ ]
+}

@@ -1,0 +1,976 @@
+{
+ "at": "2026-10-14",
+ "by": "Opus 5.5 (job hardhands-6731 session), viewing each page image (whole page + centre crop; full resolution where marked)",
+ "rule": "one interior page per book at the seeded position in the middle 30-70% of pages with an image (PREREGISTRATION-hard-hands-6731.md)",
+ "counts": {
+  "other": 39,
+  "mixed": 10,
+  "square": 30,
+  "rashi": 28
+ },
+ "books": [
+  {
+   "book": "6a42a1e1dec0f9e2ecca1420",
+   "title": "Joann. Buxtorfii Epitome grammaticæ Hebrææ, brevitèr & methodicè ad publicum scholarum usum proposita. Adjecta succincta de mutatione punctorum vocalium instructio, & textuum Psalmorúmque aliquot Hebraicorum Latina interpretatio. Vt prompta sit juventuti, & ad manum posita lectionis & exercitationes materies. Aucta & emendata per Iohannem Buxtorfium filium. Cui tandem accessit Christiani Schotani appendix ad pleniorem etymologiæ [Greek characters].",
+   "year": 1666,
+   "page": 109,
+   "page_id": "6a42a1e1dec0f9e2ecca148d",
+   "label": "other",
+   "note": "Latin grammar; Hebrew only as pointed square-type example words"
+  },
+  {
+   "book": "6a357f1ac6e2d5bb56a64539",
+   "title": "Talmud Yerushalmi",
+   "year": 1922,
+   "page": 236,
+   "page_id": "6a357f1ac6e2d5bb56a64625",
+   "label": "mixed",
+   "note": "Yerushalmi page: central text square, surrounding commentaries (Penei Moshe / Korban ha-Edah) in Rashi type"
+  },
+  {
+   "book": "6a26bf4e0e247ebad6debeb4",
+   "title": "Otto, Julius Conrad: Galî rāzyâ",
+   "year": 1605,
+   "page": 155,
+   "page_id": "6a26bf4e0e247ebad6debf4f",
+   "label": "other",
+   "note": "Latin and German Fraktur, no Hebrew on the page"
+  },
+  {
+   "book": "6a26bbb54045b346e6ad3a35",
+   "title": "Maimonides, Moses: De Astrologia Rabbi Mosis Filii Meimon Epistola elegans, & cum Christiana religione congruens, Hebr[a]ea",
+   "year": 1555,
+   "page": 39,
+   "page_id": "6a26bbb54045b346e6ad3a5c",
+   "label": "other",
+   "note": "Latin roman type, no Hebrew"
+  },
+  {
+   "book": "69e7518610ee9075bcdcde12",
+   "title": "ספר תהלים (Sepher Tehillim / Psalms)",
+   "year": 1685,
+   "page": 142,
+   "page_id": "69e7518610ee9075bcdcdea0",
+   "label": "square",
+   "note": "pointed square-type Psalms with Latin chapter heads"
+  },
+  {
+   "book": "69e7490485f786e884a4d186",
+   "title": "שיר השירים (Shīr ha-Shīrīm / Song of Songs)",
+   "year": 1500,
+   "page": 22,
+   "page_id": "69e7490485f786e884a4d19c",
+   "label": "square",
+   "note": "square-script manuscript hand (Aramaic Targum), not print type"
+  },
+  {
+   "book": "69b2f4a2f9f1ad2b3b1548b3",
+   "title": "Pagnini Hebrew Dictionary",
+   "year": 1548,
+   "page": 638,
+   "page_id": "69b2f4a2f9f1ad2b3b154b31",
+   "label": "other",
+   "note": "Latin dictionary; Hebrew head-words in pointed square type"
+  },
+  {
+   "book": "69c866316c6f3cc53c856381",
+   "title": "Aesch mezareph or purifying fire. A chymico-kabalistic treatise collected from the Kabala denudata of Knorr von Rosenroth. Translated by a lover of Philalethes, 1714",
+   "year": 1894,
+   "page": 48,
+   "page_id": "69d38442823383edd6e6dd9f",
+   "label": "other",
+   "note": "English print, no Hebrew"
+  },
+  {
+   "book": "699ef9fe16733aa5a290e3d6",
+   "title": "A Short Enquiry Concerning the Hermetic Art",
+   "year": 1714,
+   "page": 92,
+   "page_id": "699f09f0f91b2022bedb6b37",
+   "label": "other",
+   "note": "English print (spread), no Hebrew"
+  },
+  {
+   "book": "697c8e137aeb5769e4cf1a26",
+   "title": "The Secret of the Decay and Combustion of All Things",
+   "year": 1729,
+   "page": 51,
+   "page_id": "697c99e743c0c11045711995",
+   "label": "other",
+   "note": "Latin and German print (spread), no Hebrew"
+  },
+  {
+   "book": "69b3e612304c1c6b3950b1a3",
+   "title": "Astronomical and Astrological Treatises",
+   "year": 1476,
+   "page": 30,
+   "page_id": "69b3e612304c1c6b3950b1c1",
+   "label": "other",
+   "note": "blank leaf"
+  },
+  {
+   "book": "695285cdab34727b1f04c25a",
+   "title": "The Key of Solomon",
+   "year": 1914,
+   "page": 60,
+   "page_id": "695285cdab34727b1f04c296",
+   "label": "other",
+   "note": "Hebrew handwritten Ashkenazi cursive (facsimile of a manuscript), not Rashi print type"
+  },
+  {
+   "book": "69c1b7d48522835be844a136",
+   "title": "Treatise on Astronomy (Sefer Ha-Tekhuna) by Hayyim Vital",
+   "year": 1590,
+   "page": 47,
+   "page_id": "69c1b7d48522835be844a165",
+   "label": "other",
+   "note": "Hebrew semi-cursive manuscript hand with a diagram (not print type)"
+  },
+  {
+   "book": "69b525942379d2fed6c29135",
+   "title": "Sefer ʼElim : ... šaʼal ... Zeraḥ bar Natan ... meha-rav Yosef Šelomoh Delmedigo. ...",
+   "year": 1629,
+   "page": 102,
+   "page_id": "69b525942379d2fed6c2919c",
+   "label": "rashi",
+   "note": "print, body in Rashi type, square-type headwords (spread)"
+  },
+  {
+   "book": "69b4cd36d5b6c3815e1a4e66",
+   "title": "Joseph Solomon Delmedigo: Sefer Elim (1629)",
+   "year": 1629,
+   "page": 60,
+   "page_id": "69b4cd36d5b6c3815e1a4ea2",
+   "label": "rashi",
+   "note": "print, body in Rashi type, square-type headwords (spread)"
+  },
+  {
+   "book": "6984e8507eb10d325a7aac61",
+   "title": "Commentary on the Song of Songs",
+   "year": 1587,
+   "page": 45,
+   "page_id": "6984f39d5cbfcefde0d3d3ba",
+   "label": "rashi",
+   "note": "print, commentary body in Rashi type, verse lemmas in square (spread)"
+  },
+  {
+   "book": "69e9617a2beefe2f6f72ba14",
+   "title": "The Itinerary of Benjamin of Tudela",
+   "year": 1840,
+   "page": 113,
+   "page_id": "69e9617a2beefe2f6f72ba85",
+   "label": "other",
+   "note": "English print, no Hebrew on the page"
+  },
+  {
+   "book": "69d5ad004dc55b8478dde8b5",
+   "title": "תורה מקראות גדולות (Rabbinic Bible, Vilna 1899)",
+   "year": 1899,
+   "page": 1057,
+   "page_id": "69d5ad004dc55b8478ddedc5",
+   "label": "mixed",
+   "note": "Mikraot Gedolot page: square headers/Targum, commentaries (Baal ha-Turim, Or ha-Hayyim, Kli Yakar) in Rashi type"
+  },
+  {
+   "book": "69d5acb04dc55b8478dde57f",
+   "title": "מחזור קרבן אהרן (Holiday Prayer Book, Vilna 1882)",
+   "year": 1882,
+   "page": 157,
+   "page_id": "69d5acb04dc55b8478dde61c",
+   "label": "square",
+   "note": "pointed square-type liturgy, small marginal notes only"
+  },
+  {
+   "book": "69d5aca44dc55b8478dddf51",
+   "title": "סידור אוצר התפילות (Treasury of Prayers, Vilna 1914)",
+   "year": 1914,
+   "page": 1059,
+   "page_id": "69d5aca44dc55b8478dde374",
+   "label": "mixed",
+   "note": "siddur page: prayer text square, commentaries (Rashi, Iyun Tefillah, Etz Yosef) in Rashi type"
+  },
+  {
+   "book": "69d5ac824dc55b8478dddb9a",
+   "title": "עין יעקב (Well of Jacob, Aggadic Talmud, Vilna 1883)",
+   "year": 1883,
+   "page": 140,
+   "page_id": "69d5ac824dc55b8478dddc26",
+   "label": "mixed",
+   "note": "Ein Yaakov page: aggadah square, commentaries (Rashi, Iyun Yaakov, Etz Yosef, Anaf Yosef) in Rashi type"
+  },
+  {
+   "book": "69d5ac5f4dc55b8478ddd6b5",
+   "title": "תלמוד בבלי (Babylonian Talmud, Vilna Romm Edition, 1884)",
+   "year": 1884,
+   "page": 412,
+   "page_id": "69d5ac5f4dc55b8478ddda35",
+   "label": "rashi",
+   "note": "Talmud volume, appended commentary page (Tashlum Yefe Einayim) entirely in Rashi type"
+  },
+  {
+   "book": "69c7e216295ea01b70c8d7d2",
+   "title": "[Hebrew: Seder olam raba ve seder olam suta]",
+   "year": 1711,
+   "page": 20,
+   "page_id": "69f66403ff95efeaa83275c6",
+   "label": "square",
+   "note": "unpointed square type (Seder Olam)"
+  },
+  {
+   "book": "69c734076a0f3d112faf750d",
+   "title": "[Hebrew: Ayelet ahavim. Perush al shir ha-shirim]",
+   "year": 1552,
+   "page": 38,
+   "page_id": "69f656858b68eaabaab5b6ab",
+   "label": "rashi",
+   "note": "commentary body in Rashi type, verse lemmas in square"
+  },
+  {
+   "book": "69c731f56a0f3d112faf73d7",
+   "title": "[Hebrew:] Ma'yenei ha-yesh'ua",
+   "year": 1551,
+   "page": 18,
+   "page_id": "69f67d9f3827b7f1edce91b7",
+   "label": "rashi",
+   "note": "body in Rashi type with a square-type headword"
+  },
+  {
+   "book": "69b632cf66ab51b501d94024",
+   "title": "Samaritan Pentateuch (Pentateuchus Samaritanus)",
+   "year": 1872,
+   "page": 251,
+   "page_id": "69b632cf66ab51b501d9411f",
+   "label": "other",
+   "note": "Samaritan script, Latin apparatus"
+  },
+  {
+   "book": "69b525d06be6046083032b72",
+   "title": "Seder parašiyot we-hafṭarot kol ha-šanah ... = Quinque libri Mosis ...",
+   "year": 1726,
+   "page": 40,
+   "page_id": "69b525d06be6046083032b9a",
+   "label": "square",
+   "note": "pointed square-type Torah text (spread)"
+  },
+  {
+   "book": "69b525cc6be6046083032827",
+   "title": "880-01 Seder hagadah šel pesaḥ : ... be-viʼurim u-ferušim ... ha-peruš ha...",
+   "year": 1712,
+   "page": 29,
+   "page_id": "69b525cc6be6046083032844",
+   "label": "mixed",
+   "note": "Haggadah: text in square, surrounding commentaries (Abarbanel etc.) in Rashi type (spread)"
+  },
+  {
+   "book": "69b525b56be6046083030af0",
+   "title": "Seder ha-tefilot : mi-kol ha-šanah ʻim peruš bi-lešon ʾAškenaz.",
+   "year": 1705,
+   "page": 182,
+   "page_id": "69b525b56be6046083030ba6",
+   "label": "mixed",
+   "note": "liturgy in pointed square; Yiddish commentary in vaybertaytsh type (Ashkenazi semi-cursive, not Rashi)"
+  },
+  {
+   "book": "69b525ac29577f283b57a775",
+   "title": "Seder berak̲ot = Orden de bendiciones. Y las ocaziones en que se deven dezir .... ...",
+   "year": 1687,
+   "page": 360,
+   "page_id": "69b525ac29577f283b57a8dd",
+   "label": "other",
+   "note": "Spanish roman type, no Hebrew text"
+  },
+  {
+   "book": "69b525a729577f283b579f0c",
+   "title": "Tiqun qeriʼah le-k̲ol laylah we-yom ...",
+   "year": 1666,
+   "page": 190,
+   "page_id": "69b525a729577f283b579fca",
+   "label": "square",
+   "note": "pointed square-type liturgy (Tikkun)"
+  },
+  {
+   "book": "69b5259a95677df8153c62c0",
+   "title": "880-01 Sefer Toldot ʼAharon : marʼeh maqom mi-kol ha-pesuqim šeba-Torah u-ne...",
+   "year": 1652,
+   "page": 235,
+   "page_id": "69b5259a95677df8153c63ab",
+   "label": "square",
+   "note": "biblical index: verses in square type, references in small square"
+  },
+  {
+   "book": "69b525962379d2fed6c29517",
+   "title": "Sefer tehilim.",
+   "year": 1635,
+   "page": 60,
+   "page_id": "69b525962379d2fed6c29553",
+   "label": "square",
+   "note": "pointed square-type Psalms (spread)"
+  },
+  {
+   "book": "69b52596cced70d8e6d72a41",
+   "title": "Zek̲er rav : yizkor yeme ʻolam we-šoreš davar nimz̲a bi-lešonenu ha-qedošah le-zikaron ...",
+   "year": 1635,
+   "page": 20,
+   "page_id": "69b52596cced70d8e6d72a56",
+   "label": "square",
+   "note": "pointed square-type liturgical poetry (spread)"
+  },
+  {
+   "book": "69b525922379d2fed6c28f13",
+   "title": "Sefer maʻaneh lašon ...",
+   "year": 1627,
+   "page": 19,
+   "page_id": "69b525922379d2fed6c28f26",
+   "label": "square",
+   "note": "pointed square-type grammar/glossary (spread)"
+  },
+  {
+   "book": "69b5258eea48bdf05847e18e",
+   "title": "Paršegen ništewan ... / ʻal yede Hugo Brugṭon ...",
+   "year": 1604,
+   "page": 11,
+   "page_id": "69b5258eea48bdf05847e19a",
+   "label": "square",
+   "note": "unpointed square type with tables (spread); small notes square"
+  },
+  {
+   "book": "69b5258e2379d2fed6c28eb9",
+   "title": "Paršegen ništewan ... / ʻal yede Hugo Brugṭon ...",
+   "year": 1606,
+   "page": 23,
+   "page_id": "69b5258e2379d2fed6c28ed0",
+   "label": "square",
+   "note": "unpointed square type (spread)"
+  },
+  {
+   "book": "69b4cd4bd5b6c3815e1a5565",
+   "title": "Menasseh ben Israel: Ḥamišah ḥumše Torah / Pentateuch (1635) (1635)",
+   "year": 1635,
+   "page": 222,
+   "page_id": "69b4cd4bd5b6c3815e1a5643",
+   "label": "square",
+   "note": "pointed square-type Torah with Targum (spread)"
+  },
+  {
+   "book": "69b4cd49d5b6c3815e1a5454",
+   "title": "Menasseh ben Israel: Tehilim / Psalterium (1634)",
+   "year": 1634,
+   "page": 93,
+   "page_id": "69b4cd49d5b6c3815e1a54b1",
+   "label": "square",
+   "note": "pointed square-type Psalms"
+  },
+  {
+   "book": "69b4cd46d5b6c3815e1a53f2",
+   "title": "Menasseh ben Israel: Sidur berakah (1634)",
+   "year": 1634,
+   "page": 57,
+   "page_id": "69b4cd46d5b6c3815e1a542b",
+   "label": "square",
+   "note": "pointed square-type blessings with Spanish translation"
+  },
+  {
+   "book": "69b4cd44d5b6c3815e1a52de",
+   "title": "Menasseh ben Israel: Misnaioth (1633)",
+   "year": 1633,
+   "page": 99,
+   "page_id": "69b4cd44d5b6c3815e1a5341",
+   "label": "square",
+   "note": "Mishnah in unpointed square type; only small marginal notes"
+  },
+  {
+   "book": "69b4cd3dd5b6c3815e1a504b",
+   "title": "Menasseh ben Israel: Ḥamišah ḥumše Torah (1631) (1631)",
+   "year": 1631,
+   "page": 117,
+   "page_id": "69b4cd3dd5b6c3815e1a50c0",
+   "label": "square",
+   "note": "pointed square-type Torah and Targum in columns (spread)"
+  },
+  {
+   "book": "69b4cd3ad5b6c3815e1a4f1b",
+   "title": "Menasseh ben Israel: Ḥamišah ḥumše Torah (1630) (1630)",
+   "year": 1630,
+   "page": 120,
+   "page_id": "69b4cd3ad5b6c3815e1a4f93",
+   "label": "square",
+   "note": "unpointed square-type Bible text in columns (spread)"
+  },
+  {
+   "book": "69b4cd38d5b6c3815e1a4ec1",
+   "title": "Menasseh ben Israel: Sefer pene rabah (1628)",
+   "year": 1628,
+   "page": 55,
+   "page_id": "69b4cd38d5b6c3815e1a4ef8",
+   "label": "square",
+   "note": "square-type biblical index with references (spread)"
+  },
+  {
+   "book": "69b3e677304c1c6b3950b41f",
+   "title": "The Book of Splendor on Genesis and Exodus",
+   "year": 1526,
+   "page": 307,
+   "page_id": "69b3e677304c1c6b3950b552",
+   "label": "other",
+   "note": "manuscript in a semi-cursive hand (not print)"
+  },
+  {
+   "book": "69b3e675304c1c6b3950b1fa",
+   "title": "The Book of Splendor: Exodus",
+   "year": 1501,
+   "page": 372,
+   "page_id": "69b3e675304c1c6b3950b36e",
+   "label": "other",
+   "note": "manuscript in an Ashkenazi square/semi-square hand (not print)"
+  },
+  {
+   "book": "69b3e5af304c1c6b39509880",
+   "title": "Zohar (Parashat Bereshit, with Moses Cordovero commentary Or yakar)",
+   "year": 1591,
+   "page": 195,
+   "page_id": "69b3e5af304c1c6b39509943",
+   "label": "other",
+   "note": "manuscript in a cursive hand (not print)"
+  },
+  {
+   "book": "69b30091e5d6d64d8e199898",
+   "title": "Compound Hebrew Words and Names",
+   "year": 1527,
+   "page": 73,
+   "page_id": "69b30091e5d6d64d8e1998e1",
+   "label": "other",
+   "note": "Latin print, no Hebrew text"
+  },
+  {
+   "book": "69b2f3b821208ea9dc278c50",
+   "title": "The Twelve Prophets (Hebrew text)",
+   "year": 1539,
+   "page": 187,
+   "page_id": "69b2f3b821208ea9dc278d0b",
+   "label": "mixed",
+   "note": "pointed square-type Bible text, commentary block above in Rashi type"
+  },
+  {
+   "book": "699ef9fd15618a982bb1ebd9",
+   "title": "The Two Tablets of the Covenant",
+   "year": 1698,
+   "page": 626,
+   "page_id": "699f81f4a23921df2bbd96f5",
+   "label": "rashi",
+   "note": "body in Rashi type, square-type headings (spread)"
+  },
+  {
+   "book": "69924727d263adc1aa7b0c35",
+   "title": "The Wisdom of Ben Sira",
+   "year": 1899,
+   "page": 75,
+   "page_id": "69924727d263adc1aa7b0e49",
+   "label": "other",
+   "note": "English print with square-type Hebrew citations"
+  },
+  {
+   "book": "6992470ad263adc1aa7b0180",
+   "title": "The Apocalypse of Abraham",
+   "year": 1918,
+   "page": 88,
+   "page_id": "6992470ad263adc1aa7b0355",
+   "label": "other",
+   "note": "English print, no Hebrew"
+  },
+  {
+   "book": "69924401bc722ec0ee80b312",
+   "title": "First Rabbinic Bible (Mikraot Gedolot)",
+   "year": 1517,
+   "page": 81,
+   "page_id": "69924402bc722ec0ee80b363",
+   "label": "mixed",
+   "note": "Torah and Targum in square type above, commentary block below in Rashi type"
+  },
+  {
+   "book": "699243fabc722ec0ee80b251",
+   "title": "Prague Haggadah (1526)",
+   "year": 1526,
+   "page": -92,
+   "page_id": "699243fabc722ec0ee80b2ad",
+   "label": "other",
+   "note": "blank (all-white) image at page_number -92"
+  },
+  {
+   "book": "697a7fc5e680cef7cedae391",
+   "title": "The Tradition of Tradition: A Philological Dissertation on the Masorah",
+   "year": 1670,
+   "page": 19,
+   "page_id": "697a859e5435bcdddc17dbac",
+   "label": "other",
+   "note": "Latin print with a few square-type Hebrew words (spread)"
+  },
+  {
+   "book": "697711607e1d5a07ae945879",
+   "title": "The Five Books of Moses",
+   "year": 1635,
+   "page": 81,
+   "page_id": "69772751d383f3d5bdc67a2b",
+   "label": "square",
+   "note": "pointed square-type Torah in two columns (spread)"
+  },
+  {
+   "book": "6952e50877f38f6761bc95bb",
+   "title": "Hexaglot Bible: Hebrew, Septuagint, Vulgate, Syriac, English, German, French",
+   "year": 1901,
+   "page": 358,
+   "page_id": "6952e50977f38f6761bc9721",
+   "label": "other",
+   "note": "Greek, Syriac and Latin columns, no Hebrew on this page"
+  },
+  {
+   "book": "6952e4bc77f38f6761bc7db1",
+   "title": "The Hebrew Bible",
+   "year": 1720,
+   "page": 891,
+   "page_id": "6952e4bc77f38f6761bc812c",
+   "label": "square",
+   "note": "pointed square-type Bible text, Latin apparatus"
+  },
+  {
+   "book": "69520c0fab34727b1f043e63",
+   "title": "The Book of Splendor: Genesis",
+   "year": 1526,
+   "page": 246,
+   "page_id": "69520c10ab34727b1f043f59",
+   "label": "other",
+   "note": "manuscript in a cursive hand (not print)"
+  },
+  {
+   "book": "6992469abc722ec0ee80efa9",
+   "title": "Mamusse Wunneetupanatamwe Up-Biblium God (Eliot Indian Bible)",
+   "year": 1663,
+   "page": 636,
+   "page_id": "6992469abc722ec0ee80f225",
+   "label": "other",
+   "note": "Massachusett (Eliot Bible) in roman type, no Hebrew"
+  },
+  {
+   "book": "69924669bc722ec0ee80bafa",
+   "title": "Apocrypha and Pseudepigrapha of the Old Testament, Vol. 2: Pseudepigrapha",
+   "year": 1913,
+   "page": 522,
+   "page_id": "69924669bc722ec0ee80bd04",
+   "label": "other",
+   "note": "English print, no Hebrew"
+  },
+  {
+   "book": "6953af0577f38f6761bd92a5",
+   "title": "Aramaic Incantation Texts from Nippur",
+   "year": 1913,
+   "page": 249,
+   "page_id": "6953af0577f38f6761bd939e",
+   "label": "other",
+   "note": "English print with square-type Aramaic words"
+  },
+  {
+   "book": "69c8552d6c6f3cc53c853a69",
+   "title": "[Hebrew: Mafteach ha-Zohar]",
+   "year": 1710,
+   "page": 22,
+   "page_id": "69d3744bcf434572a7450ad4",
+   "label": "rashi",
+   "note": "index in Rashi type with square-type headwords"
+  },
+  {
+   "book": "69c7f4546c6f3cc53c841836",
+   "title": "[Hebrew: Sefer neveh shalom]",
+   "year": 1575,
+   "page": 183,
+   "page_id": "69f6ca2a978388ea9fb5efd4",
+   "label": "rashi",
+   "note": "body in Rashi type with square-type chapter heading"
+  },
+  {
+   "book": "69c7b45e25ec2ba5ccd7f5be",
+   "title": "[Hebrew: Sefer shiv'im tikunei ha-zohar]",
+   "year": 1706,
+   "page": 171,
+   "page_id": "69f69a374f6489cca681de3a",
+   "label": "rashi",
+   "note": "two columns in Rashi type (Tikkunim with the Hemdat Tzvi commentary), square running head"
+  },
+  {
+   "book": "69c7b2da25ec2ba5ccd7f49a",
+   "title": "[Hebrew: Sefer eshel Avraham]",
+   "year": 1786,
+   "page": 182,
+   "page_id": "69f6a5f3df145ccaf404208f",
+   "label": "rashi",
+   "note": "commentary on the Zohar introduction in Rashi type, square lemmas (spread)"
+  },
+  {
+   "book": "69c7b18425ec2ba5ccd7f44e",
+   "title": "[Hebrew: Sefer pardes rimmonim]",
+   "year": 1786,
+   "page": 96,
+   "page_id": "69f6974c92ec22e3603c010f",
+   "label": "rashi",
+   "note": "two columns in Rashi type, square running head"
+  },
+  {
+   "book": "69c7b0ec25ec2ba5ccd7f3f3",
+   "title": "[Hebrew: Sefer asis rimmonim]",
+   "year": 1623,
+   "page": 33,
+   "page_id": "69f65c2398ea849a02f01f04",
+   "label": "rashi",
+   "note": "body in Rashi type, square running head"
+  },
+  {
+   "book": "69c7a1c492b884e4f817382f",
+   "title": "[Hebrew: Sefer me'orot natan]",
+   "year": 1709,
+   "page": 92,
+   "page_id": "69f505c75d9a0ccdd896bf87",
+   "label": "rashi",
+   "note": "lexicon/index in Rashi type with square headwords (spread)"
+  },
+  {
+   "book": "69c7a0a892b884e4f8173817",
+   "title": "Zohar chadash",
+   "year": 1702,
+   "page": 99,
+   "page_id": "69f66dda80c7a291ec4c2262",
+   "label": "rashi",
+   "note": "Midrash ha-Ne'elam text in Rashi type, square titles"
+  },
+  {
+   "book": "69c79fed92b884e4f817374f",
+   "title": "[Hebrew: Sefer sha'arei orah]",
+   "year": 1561,
+   "page": 58,
+   "page_id": "69f67250bafa02cd379922b3",
+   "label": "rashi",
+   "note": "worn print, body in Rashi type"
+  },
+  {
+   "book": "69c79f1492b884e4f817372f",
+   "title": "[Hebrew: Sefer ha-bahir]",
+   "year": 1651,
+   "page": 3,
+   "page_id": "69f5c064e39b8a203be7ea9f",
+   "label": "other",
+   "note": "endpaper with bookplate and pencil notes, no printed text"
+  },
+  {
+   "book": "69c79e8492b884e4f81736f3",
+   "title": "[Hebrew: Sefer hadrat melech]",
+   "year": 1766,
+   "page": 9,
+   "page_id": "69f52537e5335173d0257200",
+   "label": "rashi",
+   "note": "approbation page: body in Rashi type, square-type heading and names"
+  },
+  {
+   "book": "69c736b46a0f3d112faf76b0",
+   "title": "Jesuitici templi stupenda",
+   "year": 1610,
+   "page": 64,
+   "page_id": "69f500ee343a9b4f8e7aa39c",
+   "label": "rashi",
+   "note": "two columns in Rashi type with square chapter heads; marginal notes"
+  },
+  {
+   "book": "69c734936a0f3d112faf7595",
+   "title": "[Hebrew:] Sefer me'ulefet sapirim",
+   "year": 1703,
+   "page": 60,
+   "page_id": "69d38808c7b210e751ab9287",
+   "label": "rashi",
+   "note": "body in Rashi type, square running head"
+  },
+  {
+   "book": "69c734846a0f3d112faf755c",
+   "title": "[Hebrew: Sefer me'il Shemu'el]",
+   "year": 1705,
+   "page": 64,
+   "page_id": "69f68f9dc9c556d6c9d24578",
+   "label": "rashi",
+   "note": "two columns in Rashi type, square headings"
+  },
+  {
+   "book": "69c1b7d28522835be844a132",
+   "title": "Just measure (Kav ha-Yashar) and Orchard of pomegranates (Pardes Rimonim)",
+   "year": 1548,
+   "page": 1,
+   "page_id": "69c1b7d28522835be844a133",
+   "label": "other",
+   "note": "manuscript fragment in a semi-cursive hand (not print)"
+  },
+  {
+   "book": "69b525af95677df8153c70aa",
+   "title": "Sefer refuʼat ha-nefeš / ... ʼElyaqim bhrʺr Yaʻaqov Šaz̲ ... mi-sefer ha-qadoš Šene luh...",
+   "year": 1683,
+   "page": 15,
+   "page_id": "69b525af95677df8153c70b9",
+   "label": "square",
+   "note": "pointed square type printed in red (spread)"
+  },
+  {
+   "book": "69b5259b2f891867c1ae3d2f",
+   "title": "Sefer meqor ḥayim : we-huʼ ḥeleq rʼišon mi-ṭur ʼOraḥ ḥayim / Y. Qaro .....",
+   "year": 1646,
+   "page": 65,
+   "page_id": "69b5259b2f891867c1ae3d70",
+   "label": "rashi",
+   "note": "two columns in Rashi type, square running heads (Mekor Hayyim)"
+  },
+  {
+   "book": "69b525992379d2fed6c299da",
+   "title": "Sefer nišmat ḥayyim : kōlel derūšīm yeqarīm weniśegavīm ʻal ʻinyan hanešamah haṭ...",
+   "year": 1651,
+   "page": 112,
+   "page_id": "69b525992379d2fed6c29a4a",
+   "label": "rashi",
+   "note": "body in Rashi type with square headings (spread)"
+  },
+  {
+   "book": "69b525932379d2fed6c29089",
+   "title": "Sefer ʼimre noʻam : seder širim u-fizmonim u-teḥinot ... / liqṭo ... Yosef...",
+   "year": 1628,
+   "page": 72,
+   "page_id": "69b525932379d2fed6c290d1",
+   "label": "square",
+   "note": "pointed square-type liturgical poetry (spread)"
+  },
+  {
+   "book": "69b3e679304c1c6b3950b712",
+   "title": "Kabbalistic Compendium",
+   "year": 1635,
+   "page": 78,
+   "page_id": "69b3e679304c1c6b3950b760",
+   "label": "other",
+   "note": "manuscript in a cursive hand (not print)"
+  },
+  {
+   "book": "69b3e5c1304c1c6b3950a0a3",
+   "title": "New Rectifications and Short Discourses on Kabbalah",
+   "year": 1720,
+   "page": 80,
+   "page_id": "69b3e5c1304c1c6b3950a0f3",
+   "label": "other",
+   "note": "manuscript in a cursive hand (not print)"
+  },
+  {
+   "book": "69b3e5bd304c1c6b39509eb8",
+   "title": "Collection of Kabbalistic and Philosophical Writings",
+   "year": 1501,
+   "page": 189,
+   "page_id": "69b3e5bd304c1c6b39509f75",
+   "label": "other",
+   "note": "manuscript in a semi-cursive hand with square lemmas (not print)"
+  },
+  {
+   "book": "69b3e5ba304c1c6b39509ddb",
+   "title": "Collected Kabbalistic Works of Abraham Abulafia",
+   "year": 1476,
+   "page": 106,
+   "page_id": "69b3e5ba304c1c6b39509e45",
+   "label": "other",
+   "note": "manuscript in two columns, semi-cursive hand (not print)"
+  },
+  {
+   "book": "69b3e5b8304c1c6b39509cc0",
+   "title": "Collection of Kabbalistic Texts",
+   "year": 1475,
+   "page": 121,
+   "page_id": "69b3e5b8304c1c6b39509d39",
+   "label": "other",
+   "note": "manuscript in a semi-cursive hand (not print)"
+  },
+  {
+   "book": "69b3e5b5304c1c6b395099fd",
+   "title": "Commentary on the Zohar of Genesis",
+   "year": 1706,
+   "page": 246,
+   "page_id": "69b3e5b6304c1c6b39509af3",
+   "label": "other",
+   "note": "manuscript in a cursive hand (not print)"
+  },
+  {
+   "book": "699ef9f2c2bcb75dbdbaad92",
+   "title": "Gates of Light",
+   "year": 1715,
+   "page": 88,
+   "page_id": "699f11103b6dc8d9ef459d45",
+   "label": "rashi",
+   "note": "body in Rashi type with notes, square headings (spread)"
+  },
+  {
+   "book": "6990633def12272ffdc907b0",
+   "title": "The Book of Splendor",
+   "year": 1558,
+   "page": 381,
+   "page_id": "6990633def12272ffdc9092d",
+   "label": "rashi",
+   "note": "Zohar text in Rashi type, square-type 'פתח' and running head"
+  },
+  {
+   "book": "6990630be7b7642c081de08b",
+   "title": "The Book of Splendor",
+   "year": 1558,
+   "page": 369,
+   "page_id": "6990630ce7b7642c081de1fd",
+   "label": "rashi",
+   "note": "Zohar text in Rashi type, square running head"
+  },
+  {
+   "book": "6988a5a3d8fdf4cf94c34930",
+   "title": "Book of the Unleavened Bread of Watchfulness",
+   "year": 1660,
+   "page": 76,
+   "page_id": "6988b69deacb8cf0e3d7af7f",
+   "label": "rashi",
+   "note": "halakhic text in Rashi type, square headings (spread)"
+  },
+  {
+   "book": "6988a5a0a23e0a8ef27fec91",
+   "title": "The Book of Formation",
+   "year": 1562,
+   "page": 162,
+   "page_id": "6988c80bc36233aef5243ea7",
+   "label": "rashi",
+   "note": "commentaries in Rashi type around square-type Mishnah lemmas, with a diagram (spread)"
+  },
+  {
+   "book": "6988a59fa4de5da34fd130e0",
+   "title": "Gates of Righteousness",
+   "year": 1561,
+   "page": 81,
+   "page_id": "6988bd379a2975ab8735a842",
+   "label": "square",
+   "note": "body in square type (checked at full resolution), square headwords (spread)"
+  },
+  {
+   "book": "6985ca7194b042cd03912166",
+   "title": "The Book of the Angel Raziel",
+   "year": 1701,
+   "page": 30,
+   "page_id": "6985d55dfc207c42e91967c2",
+   "label": "square",
+   "note": "body in small square type (checked at full resolution) (spread)"
+  },
+  {
+   "book": "6984e84e45b45b78e8d48ab4",
+   "title": "The Bell and the Pomegranate",
+   "year": 1708,
+   "page": 81,
+   "page_id": "6984fd0add3eab539f3e1c36",
+   "label": "mixed",
+   "note": "main text in square type, side commentary column in Rashi type (checked at full resolution) (spread)"
+  },
+  {
+   "book": "6976db51097b3607ee4be2f9",
+   "title": "The Holy Service",
+   "year": 1578,
+   "page": 179,
+   "page_id": "6976f7ea5aedebf96dc8e99f",
+   "label": "rashi",
+   "note": "two columns in Rashi type, square running heads (spread)"
+  },
+  {
+   "book": "6911cf678cb6d2ae494a1061",
+   "title": "The Book of Brightness",
+   "year": 1651,
+   "page": 36,
+   "page_id": "6911cfa88cb6d2ae494a107b",
+   "label": "square",
+   "note": "two columns in small square type (Sefer ha-Bahir), not Rashi"
+  },
+  {
+   "book": "fec0b295-0795-440f-a467-434e17ba2a8e",
+   "title": "Essence of Pomegranates",
+   "year": 1575,
+   "page": 55,
+   "page_id": "b2b373fcc5f149b7437b90b1",
+   "label": "other",
+   "note": "manuscript in a cursive hand with marginal glosses (not print)"
+  },
+  {
+   "book": "69d5ac8c4dc55b8478dddcab",
+   "title": "שולחן ערוך חושן המשפט (Code of Jewish Law, Civil Section)",
+   "year": 1565,
+   "page": 118,
+   "page_id": "69d5ac8c4dc55b8478dddd21",
+   "label": "mixed",
+   "note": "Shulchan Arukh: main text and commentary (Perush) in Rashi type, square headings; section title square"
+  },
+  {
+   "book": "69b52593cced70d8e6d72941",
+   "title": "880-01 Sefer ha-Yirʼah we-sod ha-tešuvah we-ʼigeret ha-tešuvah / leha-ḥasi...",
+   "year": 1627,
+   "page": 58,
+   "page_id": "69b52593cced70d8e6d7297c",
+   "label": "square",
+   "note": "pointed square type (spread)"
+  },
+  {
+   "book": "69920bb1e0a548a13d884da7",
+   "title": "The Hebrew Pentateuch of the Samaritans",
+   "year": 1918,
+   "page": 131,
+   "page_id": "69920bb1e0a548a13d884e2a",
+   "label": "other",
+   "note": "edition with apparatus; Hebrew in modern square type, Latin/Greek sigla"
+  },
+  {
+   "book": "6a08e2eb50bd891addfb5666",
+   "title": "The Notebooks of Immanuel",
+   "year": 1535,
+   "page": 182,
+   "page_id": "6a08e2eb50bd891addfb571c",
+   "label": "square",
+   "note": "pointed square-type poetry in columns"
+  },
+  {
+   "book": "6a1ab4e2bf7a13be0eb53710",
+   "title": "De arte cabalistica",
+   "year": 1730,
+   "page": 74,
+   "page_id": "6a1ab869bf7a13be0eb537a4",
+   "label": "other",
+   "note": "Latin and Greek in a cursive hand (not print), no Hebrew"
+  },
+  {
+   "book": "6992540a59cdabeb78f1b209",
+   "title": "The Authorised Daily Prayer Book",
+   "year": 1904,
+   "page": 474,
+   "page_id": "6992540a59cdabeb78f1b3e3",
+   "label": "square",
+   "note": "pointed square-type liturgy with English rubric"
+  },
+  {
+   "book": "699246babc722ec0ee8120e8",
+   "title": "The Holy Bible (Wycliffe), Vol. 2",
+   "year": 1850,
+   "page": 601,
+   "page_id": "699246babc722ec0ee812341",
+   "label": "other",
+   "note": "English print, no Hebrew"
+  },
+  {
+   "book": "699246b3bc722ec0ee81144f",
+   "title": "The Holy Bible (Wycliffe), Vol. 1",
+   "year": 1850,
+   "page": 291,
+   "page_id": "699246b3bc722ec0ee811572",
+   "label": "other",
+   "note": "English print, no Hebrew"
+  },
+  {
+   "book": "699243ebbc722ec0ee80a9d1",
+   "title": "Midrash Bereshit Rabbah (Theodor-Albeck Critical Edition)",
+   "year": 1903,
+   "page": 276,
+   "page_id": "699243ebbc722ec0ee80aae5",
+   "label": "square",
+   "note": "critical edition in modern square type with apparatus"
+  }
+ ]
+}

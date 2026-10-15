@@ -1,0 +1,181 @@
+{
+ "at": "2026-10-14",
+ "rule": "classified rashi or mixed AND the Rashi-type text on the page has a Sefaria text (index API + public export merged.json); committed before any read",
+ "books": {
+  "6a357f1ac6e2d5bb56a64539": {
+   "name": "Talmud Yerushalmi, Seder Nezikin (1922)",
+   "rashi_type": "Penei Moshe (Korban ha-Edah has no Sefaria text)",
+   "sefaria": [
+    "Penei Moshe on Jerusalem Talmud Bava Kamma",
+    "Penei Moshe on Jerusalem Talmud Bava Metzia",
+    "Penei Moshe on Jerusalem Talmud Bava Batra",
+    "Penei Moshe on Jerusalem Talmud Sanhedrin",
+    "Penei Moshe on Jerusalem Talmud Makkot",
+    "Penei Moshe on Jerusalem Talmud Shevuot",
+    "Penei Moshe on Jerusalem Talmud Avodah Zarah",
+    "Penei Moshe on Jerusalem Talmud Horayot"
+   ]
+  },
+  "69d5ad004dc55b8478dde8b5": {
+   "name": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "rashi_type": "Rashi on Torah",
+   "sefaria": [
+    "Rashi on Genesis",
+    "Rashi on Exodus",
+    "Rashi on Leviticus",
+    "Rashi on Numbers",
+    "Rashi on Deuteronomy"
+   ]
+  },
+  "69d5ac824dc55b8478dddb9a": {
+   "name": "Ein Yaakov, Berakhot (Vilna 1883)",
+   "rashi_type": "Rashi",
+   "sefaria": [
+    "Rashi on Berakhot"
+   ]
+  },
+  "69d5ac5f4dc55b8478ddd6b5": {
+   "name": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+   "rashi_type": "Rashi on the tractate",
+   "sefaria": [
+    "Rashi on Shabbat",
+    "Rashi on Eruvin",
+    "Rashi on Pesachim",
+    "Rashi on Yoma",
+    "Rashi on Sukkah",
+    "Rashi on Beitzah",
+    "Rashi on Rosh Hashanah",
+    "Rashi on Taanit",
+    "Rashi on Megillah",
+    "Rashi on Moed Katan",
+    "Rashi on Chagigah"
+   ]
+  },
+  "69b2f3b821208ea9dc278c50": {
+   "name": "Twelve Prophets with commentary (1539)",
+   "rashi_type": "commentary block (Radak/Rashi/Ibn Ezra; which one is found by the locate)",
+   "sefaria": [
+    "Radak on Hosea",
+    "Rashi on Hosea",
+    "Ibn Ezra on Hosea",
+    "Radak on Joel",
+    "Rashi on Joel",
+    "Ibn Ezra on Joel",
+    "Radak on Amos",
+    "Rashi on Amos",
+    "Ibn Ezra on Amos",
+    "Radak on Obadiah",
+    "Rashi on Obadiah",
+    "Ibn Ezra on Obadiah",
+    "Radak on Jonah",
+    "Rashi on Jonah",
+    "Ibn Ezra on Jonah",
+    "Radak on Micah",
+    "Rashi on Micah",
+    "Ibn Ezra on Micah",
+    "Radak on Nahum",
+    "Rashi on Nahum",
+    "Ibn Ezra on Nahum",
+    "Radak on Habakkuk",
+    "Rashi on Habakkuk",
+    "Ibn Ezra on Habakkuk",
+    "Radak on Zephaniah",
+    "Rashi on Zephaniah",
+    "Ibn Ezra on Zephaniah",
+    "Radak on Haggai",
+    "Rashi on Haggai",
+    "Ibn Ezra on Haggai",
+    "Radak on Zechariah",
+    "Rashi on Zechariah",
+    "Ibn Ezra on Zechariah",
+    "Radak on Malachi",
+    "Rashi on Malachi",
+    "Ibn Ezra on Malachi"
+   ]
+  },
+  "699ef9fd15618a982bb1ebd9": {
+   "name": "Shenei Luchot ha-Berit (1698)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Shenei Luchot HaBerit"
+   ]
+  },
+  "69924401bc722ec0ee80b312": {
+   "name": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+   "rashi_type": "commentary block (Rashi/Radak/Ibn Ezra/Ralbag)",
+   "sefaria": [
+    "Rashi on Psalms",
+    "Radak on Psalms",
+    "Ibn Ezra on Psalms",
+    "Rashi on Proverbs",
+    "Ralbag on Proverbs",
+    "Ibn Ezra on Proverbs"
+   ]
+  },
+  "69c7b45e25ec2ba5ccd7f5be": {
+   "name": "Tikkunei ha-Zohar (1706)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Tikkunei Zohar"
+   ]
+  },
+  "69c7b18425ec2ba5ccd7f44e": {
+   "name": "Pardes Rimmonim (1786)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Pardes Rimmonim"
+   ]
+  },
+  "69c7a0a892b884e4f8173817": {
+   "name": "Zohar Chadash (1702)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Zohar Chadash"
+   ]
+  },
+  "69c79fed92b884e4f817374f": {
+   "name": "Sha'arei Orah (1561)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Sha'arei Orah"
+   ]
+  },
+  "699ef9f2c2bcb75dbdbaad92": {
+   "name": "Sha'arei Orah / Gates of Light (1715)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Sha'arei Orah"
+   ]
+  },
+  "6990633def12272ffdc907b0": {
+   "name": "Zohar (1558, 612 pp.)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Zohar"
+   ]
+  },
+  "6990630be7b7642c081de08b": {
+   "name": "Zohar (1558, 548 pp.)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Zohar"
+   ]
+  },
+  "69d5ac8c4dc55b8478dddcab": {
+   "name": "Shulchan Arukh, Choshen Mishpat (1565)",
+   "rashi_type": "main text",
+   "sefaria": [
+    "Shulchan Arukh, Choshen Mishpat"
+   ]
+  }
+ },
+ "excluded": {
+  "69d5aca44dc55b8478dddf51": "Siddur Otzar ha-Tefillot: its Rashi-type commentaries (Iyun Tefillah, Etz Yosef) have no Sefaria text",
+  "69b525cc6be6046083032827": "Haggadah 1712: commentary has no Sefaria text",
+  "69b525b56be6046083030af0": "Seder ha-Tefilot 1705: the second script is Yiddish vaybertaytsh, not Rashi",
+  "69b5259b2f891867c1ae3d2f": "Mekor Hayyim 1646: its own text has no Sefaria text",
+  "6988a5a0a23e0a8ef27fec91": "Sefer Yetzirah 1562: the Rashi-type commentaries have no Sefaria text; the main text is square",
+  "6976db51097b3607ee4be2f9": "Avodat ha-Kodesh 1578 (Ibn Gabbai): Sefaria's Avodat HaKodesh is a different work (Rashba)",
+  "other rashi-classified books": "no Sefaria text found by title (Sefer Elim ×2, Gallico, Ayelet Ahavim, Ma'yenei ha-Yeshu'a, Mafteach ha-Zohar, Neveh Shalom, Eshel Avraham, Asis Rimmonim, Me'orot Natan, Hadrat Melech, Jesuitici templi, Me'ulefet Sapirim, Me'il Shemu'el, Nishmat Hayyim, Matzat Shimurim, Bell and Pomegranate)"
+ }
+}

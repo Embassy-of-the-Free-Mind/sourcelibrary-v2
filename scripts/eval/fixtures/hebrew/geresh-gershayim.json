@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "geresh-gershayim",
+ "reference": "רש\"י ז\"ל אמר",
+ "hypothesis": "רש״י ז״ל אמר",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "abbreviation marks (gershayim, ASCII quote) are not letters"
+}

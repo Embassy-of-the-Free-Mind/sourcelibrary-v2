@@ -1,0 +1,296 @@
+{
+ "all": {
+  "script": "greek",
+  "n_pages": 64,
+  "n_works": 5,
+  "arms": {
+   "G4L": {
+    "n_scored": 64,
+    "accuracy": 0.7819,
+    "ci95": [
+     0.7566,
+     0.806
+    ],
+    "median_cer": 0.2213,
+    "failures": {},
+    "secs_median": 46.55,
+    "secs_iqr": [
+     39,
+     83.4
+    ],
+    "gate_denials": 65,
+    "pages_with_denials": 49
+   },
+   "C38L": {
+    "n_scored": 45,
+    "accuracy": 0.6536,
+    "ci95": [
+     0.6242,
+     0.6855
+    ],
+    "median_cer": 0.3333,
+    "failures": {
+     "copy_filter": 18,
+     "empty": 1
+    },
+    "secs_median": 71.2,
+    "secs_iqr": [
+     29.2,
+     116
+    ],
+    "gate_denials": 52,
+    "pages_with_denials": 43
+   },
+   "OPUS": {
+    "n_scored": 64,
+    "accuracy": 0.6759,
+    "ci95": [
+     0.647,
+     0.705
+    ],
+    "median_cer": 0.339,
+    "failures": {},
+    "secs_median": 44.95,
+    "secs_iqr": [
+     39.8,
+     59.5
+    ],
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   },
+   "PROD": {
+    "n_scored": 64,
+    "accuracy": 0.5828,
+    "ci95": [
+     0.5456,
+     0.6197
+    ],
+    "median_cer": 0.4051,
+    "failures": {},
+    "secs_median": null,
+    "secs_iqr": null,
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   },
+   "KRAKEN": {
+    "n_scored": 64,
+    "accuracy": 0.7191,
+    "ci95": [
+     0.6987,
+     0.7394
+    ],
+    "median_cer": 0.2893,
+    "failures": {},
+    "secs_median": null,
+    "secs_iqr": null,
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   }
+  },
+  "paired": {
+   "C38L": {
+    "n": 45,
+    "wins": 45,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": -0.14,
+    "ci95": [
+     -0.149,
+     -0.1139
+    ],
+    "mean_delta": -0.1377,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "OPUS": {
+    "n": 64,
+    "wins": 64,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": -0.0781,
+    "ci95": [
+     -0.102,
+     -0.0688
+    ],
+    "mean_delta": -0.106,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "PROD": {
+    "n": 64,
+    "wins": 64,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": -0.1461,
+    "ci95": [
+     -0.1823,
+     -0.1275
+    ],
+    "mean_delta": -0.199,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "KRAKEN": {
+    "n": 64,
+    "wins": 63,
+    "losses": 1,
+    "ties": 0,
+    "median_delta": -0.0607,
+    "ci95": [
+     -0.0708,
+     -0.0496
+    ],
+    "mean_delta": -0.0627,
+    "sign_p": 0,
+    "verdict": "better"
+   }
+  }
+ },
+ "without_flash_fit": {
+  "script": "greek",
+  "n_pages": 60,
+  "n_works": 4,
+  "arms": {
+   "G4L": {
+    "n_scored": 60,
+    "accuracy": 0.7805,
+    "ci95": [
+     0.7585,
+     0.8022
+    ],
+    "median_cer": 0.2213,
+    "failures": {},
+    "secs_median": 49.2,
+    "secs_iqr": [
+     39.9,
+     84.1
+    ],
+    "gate_denials": 60,
+    "pages_with_denials": 45
+   },
+   "C38L": {
+    "n_scored": 41,
+    "accuracy": 0.6464,
+    "ci95": [
+     0.6193,
+     0.675
+    ],
+    "median_cer": 0.3333,
+    "failures": {
+     "copy_filter": 18,
+     "empty": 1
+    },
+    "secs_median": 70.7,
+    "secs_iqr": [
+     29.2,
+     116
+    ],
+    "gate_denials": 50,
+    "pages_with_denials": 41
+   },
+   "OPUS": {
+    "n_scored": 60,
+    "accuracy": 0.6792,
+    "ci95": [
+     0.648,
+     0.7087
+    ],
+    "median_cer": 0.3371,
+    "failures": {},
+    "secs_median": 45.1,
+    "secs_iqr": [
+     40.1,
+     64.4
+    ],
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   },
+   "PROD": {
+    "n_scored": 60,
+    "accuracy": 0.5729,
+    "ci95": [
+     0.5365,
+     0.6076
+    ],
+    "median_cer": 0.4104,
+    "failures": {},
+    "secs_median": null,
+    "secs_iqr": null,
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   },
+   "KRAKEN": {
+    "n_scored": 60,
+    "accuracy": 0.7204,
+    "ci95": [
+     0.699,
+     0.7411
+    ],
+    "median_cer": 0.2898,
+    "failures": {},
+    "secs_median": null,
+    "secs_iqr": null,
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   }
+  },
+  "paired": {
+   "C38L": {
+    "n": 41,
+    "wins": 41,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": -0.1412,
+    "ci95": [
+     -0.1548,
+     -0.1276
+    ],
+    "mean_delta": -0.1437,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "OPUS": {
+    "n": 60,
+    "wins": 60,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": -0.0777,
+    "ci95": [
+     -0.0999,
+     -0.0675
+    ],
+    "mean_delta": -0.1013,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "PROD": {
+    "n": 60,
+    "wins": 60,
+    "losses": 0,
+    "ties": 0,
+    "median_delta": -0.151,
+    "ci95": [
+     -0.1892,
+     -0.1329
+    ],
+    "mean_delta": -0.2076,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "KRAKEN": {
+    "n": 60,
+    "wins": 59,
+    "losses": 1,
+    "ties": 0,
+    "median_delta": -0.0604,
+    "ci95": [
+     -0.0705,
+     -0.0453
+    ],
+    "mean_delta": -0.0601,
+    "sign_p": 0,
+    "verdict": "better"
+   }
+  }
+ }
+}

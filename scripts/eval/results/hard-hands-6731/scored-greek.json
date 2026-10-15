@@ -1,0 +1,3850 @@
+[
+ {
+  "uid": "greek|e41cba-p56",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 56,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5471,
+   "reads_used": [
+    "G4L:0.21",
+    "C38L:0.33",
+    "OPUS:0.26",
+    "KRAKEN:0.25"
+   ],
+   "letters_after": 5071
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2019325576809308,
+    "ref_letters": 5071,
+    "read_letters": 4386,
+    "secs": 110.69999999999999,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3295208045750345,
+    "ref_letters": 5071,
+    "read_letters": 4349,
+    "secs": 203.2,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.25537369355156775,
+    "ref_letters": 5071,
+    "read_letters": 4447,
+    "secs": 118,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6184184578978505,
+    "ref_letters": 5071,
+    "read_letters": 3328,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.24216130940642872,
+    "ref_letters": 5071,
+    "read_letters": 4308,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p293",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 293,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5311,
+   "reads_used": [
+    "G4L:0.34",
+    "OPUS:0.39",
+    "KRAKEN:0.37"
+   ],
+   "letters_after": 4221
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.28950485666903575,
+    "ref_letters": 4221,
+    "read_letters": 4117,
+    "secs": 98.4,
+    "gate_denials": 3,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4458659085524757,
+    "ref_letters": 4221,
+    "read_letters": 4028,
+    "secs": 116.30000000000001,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.3390191897654584,
+    "ref_letters": 4221,
+    "read_letters": 4147,
+    "secs": 127.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6676143094053542,
+    "ref_letters": 4221,
+    "read_letters": 3756,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3314380478559583,
+    "ref_letters": 4221,
+    "read_letters": 3834,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p123",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 123,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 2684,
+   "reads_used": [],
+   "letters_after": 2684,
+   "kept": "whole window (no aligning read, or window over the cap)"
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.28129657228017885,
+    "ref_letters": 2684,
+    "read_letters": 3832,
+    "secs": 124.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.42511177347242923,
+    "ref_letters": 2684,
+    "read_letters": 3829,
+    "secs": 82,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.3513412816691505,
+    "ref_letters": 2684,
+    "read_letters": 3818,
+    "secs": 118.30000000000001,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6024590163934426,
+    "ref_letters": 2684,
+    "read_letters": 3650,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3166915052160954,
+    "ref_letters": 2684,
+    "read_letters": 3707,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p336",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 336,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5467,
+   "reads_used": [
+    "G4L:0.28",
+    "C38L:0.47",
+    "OPUS:0.39",
+    "KRAKEN:0.31"
+   ],
+   "letters_after": 5380
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.28643122676579924,
+    "ref_letters": 5380,
+    "read_letters": 4653,
+    "secs": 111.6,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4700743494423792,
+    "ref_letters": 5380,
+    "read_letters": 4587,
+    "secs": 141.9,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.39684014869888473,
+    "ref_letters": 5380,
+    "read_letters": 4161,
+    "secs": 124.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6882899628252788,
+    "ref_letters": 5380,
+    "read_letters": 4088,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3159851301115242,
+    "ref_letters": 5380,
+    "read_letters": 4267,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p169",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 169,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4638,
+   "reads_used": [
+    "G4L:0.18",
+    "C38L:0.32",
+    "OPUS:0.24",
+    "KRAKEN:0.21"
+   ],
+   "letters_after": 4523
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.18439089100154765,
+    "ref_letters": 4523,
+    "read_letters": 4011,
+    "secs": 104.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.32434225071854966,
+    "ref_letters": 4523,
+    "read_letters": 3963,
+    "secs": 111.69999999999999,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.23855847888569534,
+    "ref_letters": 4523,
+    "read_letters": 4021,
+    "secs": 117.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6095511828432456,
+    "ref_letters": 4523,
+    "read_letters": 3697,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.20848994030510723,
+    "ref_letters": 4523,
+    "read_letters": 3920,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p284",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 284,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4951,
+   "reads_used": [
+    "G4L:0.28",
+    "C38L:0.46",
+    "OPUS:0.40",
+    "KRAKEN:0.31"
+   ],
+   "letters_after": 4679
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.269288309467835,
+    "ref_letters": 4679,
+    "read_letters": 4171,
+    "secs": 89.5,
+    "gate_denials": 3,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.43299850395383627,
+    "ref_letters": 4679,
+    "read_letters": 4011,
+    "secs": 116.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.36802735627270783,
+    "ref_letters": 4679,
+    "read_letters": 3963,
+    "secs": 116.30000000000001,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7022868134216713,
+    "ref_letters": 4679,
+    "read_letters": 3977,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3013464415473392,
+    "ref_letters": 4679,
+    "read_letters": 3953,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p93",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 93,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4809,
+   "reads_used": [
+    "G4L:0.18",
+    "C38L:0.33",
+    "OPUS:0.19",
+    "KRAKEN:0.22"
+   ],
+   "letters_after": 4598
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.17986080904741192,
+    "ref_letters": 4598,
+    "read_letters": 4176,
+    "secs": 91.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3288386254893432,
+    "ref_letters": 4598,
+    "read_letters": 4239,
+    "secs": 177.2,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1870378425402349,
+    "ref_letters": 4598,
+    "read_letters": 4243,
+    "secs": 123.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6089604175728578,
+    "ref_letters": 4598,
+    "read_letters": 3880,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.21313614615050022,
+    "ref_letters": 4598,
+    "read_letters": 4029,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p176",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 176,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4713,
+   "reads_used": [
+    "G4L:0.15",
+    "C38L:0.37",
+    "OPUS:0.22",
+    "KRAKEN:0.22"
+   ],
+   "letters_after": 4603
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.1542472300673474,
+    "ref_letters": 4603,
+    "read_letters": 4259,
+    "secs": 110.30000000000001,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3667173582446231,
+    "ref_letters": 4603,
+    "read_letters": 4143,
+    "secs": 116,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.2248533565066261,
+    "ref_letters": 4603,
+    "read_letters": 4191,
+    "secs": 115.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.630675646317619,
+    "ref_letters": 4603,
+    "read_letters": 3785,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2187703671518575,
+    "ref_letters": 4603,
+    "read_letters": 4035,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p39",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 39,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4843,
+   "reads_used": [
+    "G4L:0.13",
+    "C38L:0.30",
+    "OPUS:0.20",
+    "KRAKEN:0.19"
+   ],
+   "letters_after": 4731
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.12830268442189813,
+    "ref_letters": 4731,
+    "read_letters": 4414,
+    "secs": 82.6,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2974001268230818,
+    "ref_letters": 4731,
+    "read_letters": 4321,
+    "secs": 129.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.19720989220038046,
+    "ref_letters": 4731,
+    "read_letters": 4446,
+    "secs": 109.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6216444726273516,
+    "ref_letters": 4731,
+    "read_letters": 3827,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.18685267385330798,
+    "ref_letters": 4731,
+    "read_letters": 4182,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p11",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 11,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5003,
+   "reads_used": [
+    "G4L:0.15",
+    "C38L:0.30",
+    "OPUS:0.18",
+    "KRAKEN:0.19"
+   ],
+   "letters_after": 4891
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.14864035984461255,
+    "ref_letters": 4891,
+    "read_letters": 4417,
+    "secs": 84.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.29687180535677776,
+    "ref_letters": 4891,
+    "read_letters": 4407,
+    "secs": 92.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.18401144960130852,
+    "ref_letters": 4891,
+    "read_letters": 4462,
+    "secs": 111,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6088734410141076,
+    "ref_letters": 4891,
+    "read_letters": 4286,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.18707830709466367,
+    "ref_letters": 4891,
+    "read_letters": 4360,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p344",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 344,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5841,
+   "reads_used": [
+    "G4L:0.23",
+    "C38L:0.50",
+    "OPUS:0.35",
+    "KRAKEN:0.32"
+   ],
+   "letters_after": 5330
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.22345215759849907,
+    "ref_letters": 5330,
+    "read_letters": 4734,
+    "secs": 139,
+    "gate_denials": 3,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4851782363977486,
+    "ref_letters": 5330,
+    "read_letters": 4530,
+    "secs": 106.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.33527204502814256,
+    "ref_letters": 5330,
+    "read_letters": 4661,
+    "secs": 92.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7133208255159474,
+    "ref_letters": 5330,
+    "read_letters": 3075,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.31407129455909943,
+    "ref_letters": 5330,
+    "read_letters": 4337,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p331",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 331,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5319,
+   "reads_used": [
+    "G4L:0.27",
+    "OPUS:0.36",
+    "KRAKEN:0.30"
+   ],
+   "letters_after": 5002
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2680927628948421,
+    "ref_letters": 5002,
+    "read_letters": 4459,
+    "secs": 140.2,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4662135145941623,
+    "ref_letters": 5002,
+    "read_letters": 4303,
+    "secs": 132.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.36065573770491804,
+    "ref_letters": 5002,
+    "read_letters": 4456,
+    "secs": 122.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6789284286285486,
+    "ref_letters": 5002,
+    "read_letters": 3749,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2994802079168333,
+    "ref_letters": 5002,
+    "read_letters": 4194,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p330",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 330,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 5120,
+   "reads_used": [
+    "G4L:0.22",
+    "C38L:0.45",
+    "OPUS:0.34",
+    "KRAKEN:0.28"
+   ],
+   "letters_after": 5005
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.21838161838161838,
+    "ref_letters": 5005,
+    "read_letters": 4421,
+    "secs": 99.9,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.44175824175824174,
+    "ref_letters": 5005,
+    "read_letters": 4248,
+    "secs": 148.4,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.33906093906093904,
+    "ref_letters": 5005,
+    "read_letters": 4327,
+    "secs": 101.69999999999999,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6631368631368632,
+    "ref_letters": 5005,
+    "read_letters": 3841,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.27732267732267735,
+    "ref_letters": 5005,
+    "read_letters": 4121,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p100",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 100,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4945,
+   "reads_used": [
+    "G4L:0.22",
+    "C38L:0.36",
+    "OPUS:0.25",
+    "KRAKEN:0.25"
+   ],
+   "letters_after": 4836
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.21918941273779982,
+    "ref_letters": 4836,
+    "read_letters": 4100,
+    "secs": 84.1,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3629032258064516,
+    "ref_letters": 4836,
+    "read_letters": 4124,
+    "secs": 109.30000000000001,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.25165425971877586,
+    "ref_letters": 4836,
+    "read_letters": 4062,
+    "secs": 119.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6095947063688999,
+    "ref_letters": 4836,
+    "read_letters": 3639,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2535153019023987,
+    "ref_letters": 4836,
+    "read_letters": 3949,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41cba-p109",
+  "work": "Grec 1841",
+  "book": "69a5e5e985fa13e734e41cba",
+  "page": 109,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 4699,
+   "reads_used": [
+    "G4L:0.18",
+    "C38L:0.37",
+    "OPUS:0.25",
+    "KRAKEN:0.23"
+   ],
+   "letters_after": 4589
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.17541948136848987,
+    "ref_letters": 4589,
+    "read_letters": 4014,
+    "secs": 98.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.37241229025931577,
+    "ref_letters": 4589,
+    "read_letters": 4008,
+    "secs": 230.8,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.24798431030725648,
+    "ref_letters": 4589,
+    "read_letters": 4005,
+    "secs": 137.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5667901503595555,
+    "ref_letters": 4589,
+    "read_letters": 3378,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2314229679668773,
+    "ref_letters": 4589,
+    "read_letters": 3876,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p192",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 192,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1882,
+   "reads_used": [
+    "G4L:0.13",
+    "C38L:0.24",
+    "OPUS:0.17",
+    "PROD:0.26",
+    "KRAKEN:0.22"
+   ],
+   "letters_after": 1800
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.1361111111111111,
+    "ref_letters": 1800,
+    "read_letters": 1624,
+    "secs": 35.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.24222222222222223,
+    "ref_letters": 1800,
+    "read_letters": 1603,
+    "secs": 23.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1711111111111111,
+    "ref_letters": 1800,
+    "read_letters": 1601,
+    "secs": 64.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2588888888888889,
+    "ref_letters": 1800,
+    "read_letters": 1611,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.21888888888888888,
+    "ref_letters": 1800,
+    "read_letters": 1583,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p234",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 234,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1356,
+   "reads_used": [
+    "G4L:0.27",
+    "C38L:0.45",
+    "OPUS:0.45",
+    "PROD:0.44",
+    "KRAKEN:0.43"
+   ],
+   "letters_after": 1265
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.27035573122529644,
+    "ref_letters": 1265,
+    "read_letters": 1127,
+    "secs": 40.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.350197628458498,
+    "ref_letters": 1265,
+    "read_letters": 1129,
+    "secs": 119.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.3486166007905138,
+    "ref_letters": 1265,
+    "read_letters": 1115,
+    "secs": 40.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.39288537549407115,
+    "ref_letters": 1265,
+    "read_letters": 1091,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3312252964426877,
+    "ref_letters": 1265,
+    "read_letters": 1110,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p595",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 595,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1846,
+   "reads_used": [
+    "G4L:0.10",
+    "C38L:0.23",
+    "OPUS:0.17",
+    "PROD:0.28",
+    "KRAKEN:0.18"
+   ],
+   "letters_after": 1422
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.07665260196905767,
+    "ref_letters": 1422,
+    "read_letters": 1459,
+    "secs": 49.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.22362869198312235,
+    "ref_letters": 1422,
+    "read_letters": 1459,
+    "secs": 33.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.16526019690576652,
+    "ref_letters": 1422,
+    "read_letters": 1468,
+    "secs": 43.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.26441631504922647,
+    "ref_letters": 1422,
+    "read_letters": 1451,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.17651195499296765,
+    "ref_letters": 1422,
+    "read_letters": 1453,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p725",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 725,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1586,
+   "reads_used": [
+    "G4L:0.05",
+    "C38L:0.21",
+    "OPUS:0.15",
+    "PROD:0.23",
+    "KRAKEN:0.13"
+   ],
+   "letters_after": 1537
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.05985686402081978,
+    "ref_letters": 1537,
+    "read_letters": 1524,
+    "secs": 39.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.21470396877033182,
+    "ref_letters": 1537,
+    "read_letters": 1552,
+    "secs": 24.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.14638906961613532,
+    "ref_letters": 1537,
+    "read_letters": 1573,
+    "secs": 46.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.23682498373454783,
+    "ref_letters": 1537,
+    "read_letters": 1502,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.12947299934938192,
+    "ref_letters": 1537,
+    "read_letters": 1527,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p226",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 226,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1730,
+   "reads_used": [
+    "G4L:0.11",
+    "C38L:0.19",
+    "OPUS:0.16",
+    "PROD:0.22",
+    "KRAKEN:0.19"
+   ],
+   "letters_after": 1331
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.08189331329827197,
+    "ref_letters": 1331,
+    "read_letters": 1377,
+    "secs": 35.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.16979714500375656,
+    "ref_letters": 1331,
+    "read_letters": 1365,
+    "secs": 70,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.12396694214876033,
+    "ref_letters": 1331,
+    "read_letters": 1373,
+    "secs": 44.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.19083395942900075,
+    "ref_letters": 1331,
+    "read_letters": 1370,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.16829451540195342,
+    "ref_letters": 1331,
+    "read_letters": 1335,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p251",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 251,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1996,
+   "reads_used": [
+    "G4L:0.15",
+    "C38L:0.23",
+    "OPUS:0.19",
+    "PROD:0.27",
+    "KRAKEN:0.22"
+   ],
+   "letters_after": 1901
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.14729089952656496,
+    "ref_letters": 1901,
+    "read_letters": 1679,
+    "secs": 56.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2325092056812204,
+    "ref_letters": 1901,
+    "read_letters": 1676,
+    "secs": 33.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1893740136770121,
+    "ref_letters": 1901,
+    "read_letters": 1689,
+    "secs": 55.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.26933193056286164,
+    "ref_letters": 1901,
+    "read_letters": 1642,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.22409258285113098,
+    "ref_letters": 1901,
+    "read_letters": 1635,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p870",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 870,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1826,
+   "reads_used": [
+    "G4L:0.23",
+    "C38L:0.33",
+    "PROD:0.50",
+    "KRAKEN:0.30"
+   ],
+   "letters_after": 1773
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.22673434856175972,
+    "ref_letters": 1773,
+    "read_letters": 1470,
+    "secs": 45.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3333333333333333,
+    "ref_letters": 1773,
+    "read_letters": 1475,
+    "secs": 71.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.41624365482233505,
+    "ref_letters": 1773,
+    "read_letters": 1196,
+    "secs": 49.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.38071065989847713,
+    "ref_letters": 1773,
+    "read_letters": 1453,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.29892836999435984,
+    "ref_letters": 1773,
+    "read_letters": 1435,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p513",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 513,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1497,
+   "reads_used": [
+    "G4L:0.05",
+    "C38L:0.21",
+    "OPUS:0.10",
+    "PROD:0.23",
+    "KRAKEN:0.15"
+   ],
+   "letters_after": 1476
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.06436314363143632,
+    "ref_letters": 1476,
+    "read_letters": 1464,
+    "secs": 50.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2540650406504065,
+    "ref_letters": 1476,
+    "read_letters": 1468,
+    "secs": 66.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.14227642276422764,
+    "ref_letters": 1476,
+    "read_letters": 1469,
+    "secs": 56.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.26355013550135503,
+    "ref_letters": 1476,
+    "read_letters": 1417,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.16802168021680217,
+    "ref_letters": 1476,
+    "read_letters": 1444,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p381",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 381,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1802,
+   "reads_used": [
+    "G4L:0.15",
+    "C38L:0.30",
+    "OPUS:0.22",
+    "PROD:0.29",
+    "KRAKEN:0.23"
+   ],
+   "letters_after": 1577
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.15916296766011415,
+    "ref_letters": 1577,
+    "read_letters": 1582,
+    "secs": 44.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2878883956880152,
+    "ref_letters": 1577,
+    "read_letters": 1639,
+    "secs": 142.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.22257450856055802,
+    "ref_letters": 1577,
+    "read_letters": 1606,
+    "secs": 50.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.28662016487000636,
+    "ref_letters": 1577,
+    "read_letters": 1607,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.21940393151553583,
+    "ref_letters": 1577,
+    "read_letters": 1540,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p38",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 38,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1726,
+   "reads_used": [
+    "G4L:0.24",
+    "C38L:0.48",
+    "KRAKEN:0.30"
+   ],
+   "letters_after": 1398
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.20314735336194564,
+    "ref_letters": 1398,
+    "read_letters": 1452,
+    "secs": 74.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.45064377682403434,
+    "ref_letters": 1398,
+    "read_letters": 1445,
+    "secs": 22.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.5901287553648069,
+    "ref_letters": 1398,
+    "read_letters": 723,
+    "secs": 41.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.47782546494992845,
+    "ref_letters": 1398,
+    "read_letters": 1461,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.27896995708154504,
+    "ref_letters": 1398,
+    "read_letters": 1342,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p899",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 899,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1563,
+   "reads_used": [
+    "G4L:0.17",
+    "C38L:0.28",
+    "OPUS:0.21",
+    "PROD:0.30",
+    "KRAKEN:0.23"
+   ],
+   "letters_after": 1465
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.1658703071672355,
+    "ref_letters": 1465,
+    "read_letters": 1337,
+    "secs": 28.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.28054607508532425,
+    "ref_letters": 1465,
+    "read_letters": 1359,
+    "secs": 136.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.21228668941979523,
+    "ref_letters": 1465,
+    "read_letters": 1357,
+    "secs": 59.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.30102389078498293,
+    "ref_letters": 1465,
+    "read_letters": 1334,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.22457337883959044,
+    "ref_letters": 1465,
+    "read_letters": 1317,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p26",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 26,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1535,
+   "reads_used": [
+    "G4L:0.27",
+    "KRAKEN:0.32"
+   ],
+   "letters_after": 1222
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2144026186579378,
+    "ref_letters": 1222,
+    "read_letters": 1303,
+    "secs": 56.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 28.1,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.795417348608838,
+    "ref_letters": 1222,
+    "read_letters": 342,
+    "secs": 33.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5531914893617021,
+    "ref_letters": 1222,
+    "read_letters": 1321,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.279050736497545,
+    "ref_letters": 1222,
+    "read_letters": 1244,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p220",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 220,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1855,
+   "reads_used": [
+    "G4L:0.20",
+    "C38L:0.30",
+    "OPUS:0.24",
+    "PROD:0.33",
+    "KRAKEN:0.27"
+   ],
+   "letters_after": 1361
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.14915503306392358,
+    "ref_letters": 1361,
+    "read_letters": 1476,
+    "secs": 45.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2630418809698751,
+    "ref_letters": 1361,
+    "read_letters": 1475,
+    "secs": 32.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.2020573108008817,
+    "ref_letters": 1361,
+    "read_letters": 1482,
+    "secs": 56.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.29537105069801617,
+    "ref_letters": 1361,
+    "read_letters": 1480,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.21675238795003673,
+    "ref_letters": 1361,
+    "read_letters": 1450,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p393",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 393,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1711,
+   "reads_used": [
+    "G4L:0.15",
+    "C38L:0.31",
+    "OPUS:0.20",
+    "PROD:0.33",
+    "KRAKEN:0.21"
+   ],
+   "letters_after": 1620
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.1537037037037037,
+    "ref_letters": 1620,
+    "read_letters": 1420,
+    "secs": 40,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.30864197530864196,
+    "ref_letters": 1620,
+    "read_letters": 1462,
+    "secs": 26.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.20555555555555555,
+    "ref_letters": 1620,
+    "read_letters": 1431,
+    "secs": 51.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.3333333333333333,
+    "ref_letters": 1620,
+    "read_letters": 1435,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.21419753086419754,
+    "ref_letters": 1620,
+    "read_letters": 1392,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|e41894-p159",
+  "work": "Grec 1839",
+  "book": "69a5e5e385fa13e734e41894",
+  "page": 159,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1911,
+   "reads_used": [
+    "G4L:0.19",
+    "C38L:0.30",
+    "OPUS:0.21",
+    "PROD:0.28",
+    "KRAKEN:0.24"
+   ],
+   "letters_after": 1828
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.19474835886214442,
+    "ref_letters": 1828,
+    "read_letters": 1558,
+    "secs": 43.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3063457330415755,
+    "ref_letters": 1828,
+    "read_letters": 1548,
+    "secs": 365.2,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.21717724288840262,
+    "ref_letters": 1828,
+    "read_letters": 1552,
+    "secs": 58,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2850109409190372,
+    "ref_letters": 1828,
+    "read_letters": 1567,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.23577680525164113,
+    "ref_letters": 1828,
+    "read_letters": 1513,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p406",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 406,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1232,
+   "reads_used": [
+    "G4L:0.09",
+    "C38L:0.33",
+    "OPUS:0.25",
+    "PROD:0.30",
+    "KRAKEN:0.12"
+   ],
+   "letters_after": 1116
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.09229390681003584,
+    "ref_letters": 1116,
+    "read_letters": 1128,
+    "secs": 37.9,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3324372759856631,
+    "ref_letters": 1116,
+    "read_letters": 1145,
+    "secs": 63.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.24731182795698925,
+    "ref_letters": 1116,
+    "read_letters": 1119,
+    "secs": 44.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.29838709677419356,
+    "ref_letters": 1116,
+    "read_letters": 1124,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.11827956989247312,
+    "ref_letters": 1116,
+    "read_letters": 1089,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p151",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 151,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1775,
+   "reads_used": [
+    "G4L:0.33",
+    "OPUS:0.46",
+    "PROD:0.48",
+    "KRAKEN:0.42"
+   ],
+   "letters_after": 1197
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.26399331662489556,
+    "ref_letters": 1197,
+    "read_letters": 1201,
+    "secs": 39,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 23.7,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.4018379281537176,
+    "ref_letters": 1197,
+    "read_letters": 1051,
+    "secs": 39.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.4068504594820384,
+    "ref_letters": 1197,
+    "read_letters": 1206,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.341687552213868,
+    "ref_letters": 1197,
+    "read_letters": 1150,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p327",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 327,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1665,
+   "reads_used": [
+    "G4L:0.33",
+    "OPUS:0.49",
+    "KRAKEN:0.34"
+   ],
+   "letters_after": 1616
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.33044554455445546,
+    "ref_letters": 1616,
+    "read_letters": 1294,
+    "secs": 37,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.46844059405940597,
+    "ref_letters": 1616,
+    "read_letters": 1334,
+    "secs": 100.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.5061881188118812,
+    "ref_letters": 1616,
+    "read_letters": 960,
+    "secs": 44.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.47648514851485146,
+    "ref_letters": 1616,
+    "read_letters": 1330,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.33663366336633666,
+    "ref_letters": 1616,
+    "read_letters": 1238,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p200",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 200,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1478,
+   "reads_used": [
+    "G4L:0.33"
+   ],
+   "letters_after": 1412
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.32790368271954673,
+    "ref_letters": 1412,
+    "read_letters": 1202,
+    "secs": 42.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4681303116147309,
+    "ref_letters": 1412,
+    "read_letters": 1221,
+    "secs": 43.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.4213881019830028,
+    "ref_letters": 1412,
+    "read_letters": 1195,
+    "secs": 40,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.4447592067988669,
+    "ref_letters": 1412,
+    "read_letters": 1218,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.37960339943342775,
+    "ref_letters": 1412,
+    "read_letters": 1221,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p199",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 199,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1390,
+   "reads_used": [
+    "G4L:0.32",
+    "KRAKEN:0.37"
+   ],
+   "letters_after": 1329
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.32505643340857787,
+    "ref_letters": 1329,
+    "read_letters": 1182,
+    "secs": 70.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4635063957863055,
+    "ref_letters": 1329,
+    "read_letters": 1230,
+    "secs": 62.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.4251316779533484,
+    "ref_letters": 1329,
+    "read_letters": 1218,
+    "secs": 46,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.454477050413845,
+    "ref_letters": 1329,
+    "read_letters": 1206,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.36418359668924005,
+    "ref_letters": 1329,
+    "read_letters": 1170,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p323",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 323,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1536,
+   "reads_used": [
+    "G4L:0.19",
+    "OPUS:0.35",
+    "PROD:0.37",
+    "KRAKEN:0.33"
+   ],
+   "letters_after": 1470
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.19047619047619047,
+    "ref_letters": 1470,
+    "read_letters": 1294,
+    "secs": 45.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 20.2,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.34625850340136055,
+    "ref_letters": 1470,
+    "read_letters": 1240,
+    "secs": 43.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.37142857142857144,
+    "ref_letters": 1470,
+    "read_letters": 1235,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.32857142857142857,
+    "ref_letters": 1470,
+    "read_letters": 1198,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p328",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 328,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1606,
+   "reads_used": [
+    "G4L:0.27",
+    "PROD:0.42",
+    "KRAKEN:0.31"
+   ],
+   "letters_after": 1540
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2779220779220779,
+    "ref_letters": 1540,
+    "read_letters": 1280,
+    "secs": 32.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 30.1,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.40974025974025974,
+    "ref_letters": 1540,
+    "read_letters": 1142,
+    "secs": 45.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.42597402597402595,
+    "ref_letters": 1540,
+    "read_letters": 1241,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.29805194805194807,
+    "ref_letters": 1540,
+    "read_letters": 1226,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p269",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 269,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1399,
+   "reads_used": [
+    "G4L:0.29",
+    "OPUS:0.43",
+    "KRAKEN:0.30"
+   ],
+   "letters_after": 921
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.25841476655808904,
+    "ref_letters": 921,
+    "read_letters": 952,
+    "secs": 42,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 26.1,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.3963083604777416,
+    "ref_letters": 921,
+    "read_letters": 963,
+    "secs": 37.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.4571118349619978,
+    "ref_letters": 921,
+    "read_letters": 966,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.251900108577633,
+    "ref_letters": 921,
+    "read_letters": 973,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p179",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 179,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1879,
+   "reads_used": [
+    "G4L:0.44",
+    "KRAKEN:0.49"
+   ],
+   "letters_after": 1017
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.344149459193707,
+    "ref_letters": 1017,
+    "read_letters": 1164,
+    "secs": 30.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 21.7,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.400196656833825,
+    "ref_letters": 1017,
+    "read_letters": 1177,
+    "secs": 42.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.42084562438544737,
+    "ref_letters": 1017,
+    "read_letters": 1169,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.37168141592920356,
+    "ref_letters": 1017,
+    "read_letters": 1200,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p333",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 333,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1533,
+   "reads_used": [
+    "G4L:0.30",
+    "C38L:0.48",
+    "OPUS:0.48",
+    "PROD:0.50",
+    "KRAKEN:0.34"
+   ],
+   "letters_after": 1119
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2421805183199285,
+    "ref_letters": 1119,
+    "read_letters": 1146,
+    "secs": 59.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4280607685433423,
+    "ref_letters": 1119,
+    "read_letters": 1159,
+    "secs": 27.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.41465594280607687,
+    "ref_letters": 1119,
+    "read_letters": 1018,
+    "secs": 40,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.42716711349419123,
+    "ref_letters": 1119,
+    "read_letters": 1124,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.28150134048257375,
+    "ref_letters": 1119,
+    "read_letters": 1129,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p223",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 223,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1529,
+   "reads_used": [
+    "G4L:0.37",
+    "KRAKEN:0.38"
+   ],
+   "letters_after": 835
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2874251497005988,
+    "ref_letters": 835,
+    "read_letters": 913,
+    "secs": 27,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "empty",
+    "why": "exit_1: error: Eligibility check failed: UNAVAILABLE (code 503): The service is currently unavailable.",
+    "secs": 326.5,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.4095808383233533,
+    "ref_letters": 835,
+    "read_letters": 921,
+    "secs": 40.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.42634730538922155,
+    "ref_letters": 835,
+    "read_letters": 945,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2994011976047904,
+    "ref_letters": 835,
+    "read_letters": 895,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p413",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 413,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 776,
+   "reads_used": [
+    "G4L:0.10",
+    "OPUS:0.26",
+    "PROD:0.25",
+    "KRAKEN:0.17"
+   ],
+   "letters_after": 732
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.08060109289617487,
+    "ref_letters": 732,
+    "read_letters": 749,
+    "secs": 43.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 58.6,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.2581967213114754,
+    "ref_letters": 732,
+    "read_letters": 745,
+    "secs": 45,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2814207650273224,
+    "ref_letters": 732,
+    "read_letters": 707,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.1557377049180328,
+    "ref_letters": 732,
+    "read_letters": 725,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p152",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 152,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1925,
+   "reads_used": [
+    "G4L:0.39",
+    "OPUS:0.45",
+    "KRAKEN:0.47"
+   ],
+   "letters_after": 1108
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.30685920577617326,
+    "ref_letters": 1108,
+    "read_letters": 1212,
+    "secs": 23.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 49.8,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.4368231046931408,
+    "ref_letters": 1108,
+    "read_letters": 1044,
+    "secs": 44,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.44945848375451264,
+    "ref_letters": 1108,
+    "read_letters": 1190,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3925992779783393,
+    "ref_letters": 1108,
+    "read_letters": 1191,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p106",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 106,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1686,
+   "reads_used": [
+    "G4L:0.24",
+    "KRAKEN:0.30"
+   ],
+   "letters_after": 1617
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.23623995052566482,
+    "ref_letters": 1617,
+    "read_letters": 1337,
+    "secs": 52.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 32.6,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.4100185528756957,
+    "ref_letters": 1617,
+    "read_letters": 1281,
+    "secs": 50.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.4155844155844156,
+    "ref_letters": 1617,
+    "read_letters": 1314,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3067408781694496,
+    "ref_letters": 1617,
+    "read_letters": 1296,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|fbc8c3-p270",
+  "work": "Marcianus gr. 299",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "page": 270,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1198,
+   "reads_used": [
+    "G4L:0.22",
+    "C38L:0.36",
+    "OPUS:0.43",
+    "PROD:0.41",
+    "KRAKEN:0.30"
+   ],
+   "letters_after": 857
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.176196032672112,
+    "ref_letters": 857,
+    "read_letters": 911,
+    "secs": 41,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.31738623103850644,
+    "ref_letters": 857,
+    "read_letters": 919,
+    "secs": 111.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.35939323220536756,
+    "ref_letters": 857,
+    "read_letters": 934,
+    "secs": 45.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.352392065344224,
+    "ref_letters": 857,
+    "read_letters": 936,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2427071178529755,
+    "ref_letters": 857,
+    "read_letters": 901,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p484",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 484,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1006,
+   "reads_used": [
+    "G4L:0.30",
+    "C38L:0.39",
+    "OPUS:0.35",
+    "PROD:0.35",
+    "KRAKEN:0.38"
+   ],
+   "letters_after": 691
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2662807525325615,
+    "ref_letters": 691,
+    "read_letters": 803,
+    "secs": 55.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.32850940665701883,
+    "ref_letters": 691,
+    "read_letters": 804,
+    "secs": 90,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.3140376266280753,
+    "ref_letters": 691,
+    "read_letters": 800,
+    "secs": 32.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.30390738060781475,
+    "ref_letters": 691,
+    "read_letters": 797,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.34442836468885674,
+    "ref_letters": 691,
+    "read_letters": 751,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p52",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 52,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1535,
+   "reads_used": [
+    "G4L:0.42",
+    "KRAKEN:0.48"
+   ],
+   "letters_after": 1469
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.40776038121170866,
+    "ref_letters": 1469,
+    "read_letters": 943,
+    "secs": 47.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 29.2,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.4703880190605854,
+    "ref_letters": 1469,
+    "read_letters": 889,
+    "secs": 35.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.48944860449285227,
+    "ref_letters": 1469,
+    "read_letters": 924,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.48944860449285227,
+    "ref_letters": 1469,
+    "read_letters": 842,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p459",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 459,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1154,
+   "reads_used": [
+    "G4L:0.46"
+   ],
+   "letters_after": 667
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.335832083958021,
+    "ref_letters": 667,
+    "read_letters": 778,
+    "secs": 33.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.424287856071964,
+    "ref_letters": 667,
+    "read_letters": 764,
+    "secs": 97.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.37031484257871067,
+    "ref_letters": 667,
+    "read_letters": 765,
+    "secs": 42.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.391304347826087,
+    "ref_letters": 667,
+    "read_letters": 784,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.38980509745127434,
+    "ref_letters": 667,
+    "read_letters": 708,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p487",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 487,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 836,
+   "reads_used": [
+    "G4L:0.10",
+    "C38L:0.20",
+    "OPUS:0.20",
+    "PROD:0.16",
+    "KRAKEN:0.17"
+   ],
+   "letters_after": 768
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.09635416666666667,
+    "ref_letters": 768,
+    "read_letters": 771,
+    "secs": 48.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.1953125,
+    "ref_letters": 768,
+    "read_letters": 781,
+    "secs": 102.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.20052083333333334,
+    "ref_letters": 768,
+    "read_letters": 779,
+    "secs": 34.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.16145833333333334,
+    "ref_letters": 768,
+    "read_letters": 757,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.16927083333333334,
+    "ref_letters": 768,
+    "read_letters": 688,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p421",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 421,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1211,
+   "reads_used": [
+    "G4L:0.45",
+    "PROD:0.49",
+    "KRAKEN:0.49"
+   ],
+   "letters_after": 761
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.3324572930354796,
+    "ref_letters": 761,
+    "read_letters": 863,
+    "secs": 83.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 23.7,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.4099868593955322,
+    "ref_letters": 761,
+    "read_letters": 837,
+    "secs": 45.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.40341655716162944,
+    "ref_letters": 761,
+    "read_letters": 831,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.4152431011826544,
+    "ref_letters": 761,
+    "read_letters": 750,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p51",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 51,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1183,
+   "reads_used": [
+    "G4L:0.28",
+    "OPUS:0.35",
+    "PROD:0.36",
+    "KRAKEN:0.35"
+   ],
+   "letters_after": 800
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2275,
+    "ref_letters": 800,
+    "read_letters": 838,
+    "secs": 35.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 90,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.295,
+    "ref_letters": 800,
+    "read_letters": 862,
+    "secs": 38.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.3025,
+    "ref_letters": 800,
+    "read_letters": 844,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.30375,
+    "ref_letters": 800,
+    "read_letters": 800,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p576",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 576,
+  "fit": "kraken",
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "trim": {
+   "letters_before": 949,
+   "reads_used": [
+    "G4L:0.20",
+    "OPUS:0.29",
+    "PROD:0.42",
+    "KRAKEN:0.34"
+   ],
+   "letters_after": 741
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.1632928475033738,
+    "ref_letters": 741,
+    "read_letters": 759,
+    "secs": 64.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 37,
+    "gate_denials": 1
+   },
+   "OPUS": {
+    "cer": 0.2631578947368421,
+    "ref_letters": 741,
+    "read_letters": 780,
+    "secs": 41.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.37786774628879893,
+    "ref_letters": 741,
+    "read_letters": 705,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.31713900134952766,
+    "ref_letters": 741,
+    "read_letters": 698,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p578",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 578,
+  "fit": "kraken",
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "trim": {
+   "letters_before": 1059,
+   "reads_used": [
+    "G4L:0.28",
+    "OPUS:0.40",
+    "PROD:0.48",
+    "KRAKEN:0.41"
+   ],
+   "letters_after": 993
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2809667673716012,
+    "ref_letters": 993,
+    "read_letters": 796,
+    "secs": 380.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 52.1,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.35750251762336355,
+    "ref_letters": 993,
+    "read_letters": 790,
+    "secs": 43.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.41389728096676737,
+    "ref_letters": 993,
+    "read_letters": 732,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3605236656596173,
+    "ref_letters": 993,
+    "read_letters": 736,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p240",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 240,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1380,
+   "reads_used": [
+    "G4L:0.44",
+    "OPUS:0.48",
+    "KRAKEN:0.46"
+   ],
+   "letters_after": 828
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.35628019323671495,
+    "ref_letters": 828,
+    "read_letters": 912,
+    "secs": 92,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.45169082125603865,
+    "ref_letters": 828,
+    "read_letters": 882,
+    "secs": 105.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.40700483091787437,
+    "ref_letters": 828,
+    "read_letters": 901,
+    "secs": 47.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.3961352657004831,
+    "ref_letters": 828,
+    "read_letters": 866,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3864734299516908,
+    "ref_letters": 828,
+    "read_letters": 822,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p488",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 488,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1127,
+   "reads_used": [
+    "G4L:0.13",
+    "OPUS:0.25",
+    "PROD:0.24",
+    "KRAKEN:0.22"
+   ],
+   "letters_after": 775
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.10451612903225807,
+    "ref_letters": 775,
+    "read_letters": 784,
+    "secs": 29,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 20.6,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.21806451612903227,
+    "ref_letters": 775,
+    "read_letters": 756,
+    "secs": 32,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2232258064516129,
+    "ref_letters": 775,
+    "read_letters": 782,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.20387096774193547,
+    "ref_letters": 775,
+    "read_letters": 753,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p463",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 463,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1359,
+   "reads_used": [
+    "G4L:0.36",
+    "OPUS:0.40",
+    "PROD:0.41",
+    "KRAKEN:0.39"
+   ],
+   "letters_after": 685
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.27445255474452557,
+    "ref_letters": 685,
+    "read_letters": 789,
+    "secs": 35.4,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 22,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.31386861313868614,
+    "ref_letters": 685,
+    "read_letters": 771,
+    "secs": 34.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.32262773722627736,
+    "ref_letters": 685,
+    "read_letters": 772,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.3197080291970803,
+    "ref_letters": 685,
+    "read_letters": 727,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p367",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 367,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1152,
+   "reads_used": [],
+   "letters_after": 1152,
+   "kept": "whole window (no aligning read, or window over the cap)"
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.4609375,
+    "ref_letters": 1152,
+    "read_letters": 876,
+    "secs": 70.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.515625,
+    "ref_letters": 1152,
+    "read_letters": 876,
+    "secs": 164.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.4982638888888889,
+    "ref_letters": 1152,
+    "read_letters": 877,
+    "secs": 38.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5017361111111112,
+    "ref_letters": 1152,
+    "read_letters": 845,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.4930555555555556,
+    "ref_letters": 1152,
+    "read_letters": 813,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p312",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 312,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1149,
+   "reads_used": [
+    "G4L:0.36",
+    "OPUS:0.45",
+    "PROD:0.43",
+    "KRAKEN:0.47"
+   ],
+   "letters_after": 712
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.2345505617977528,
+    "ref_letters": 712,
+    "read_letters": 809,
+    "secs": 57.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 23.1,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.30196629213483145,
+    "ref_letters": 712,
+    "read_letters": 831,
+    "secs": 37.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.29353932584269665,
+    "ref_letters": 712,
+    "read_letters": 795,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.34269662921348315,
+    "ref_letters": 712,
+    "read_letters": 702,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p239",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 239,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 1180,
+   "reads_used": [
+    "G4L:0.32",
+    "C38L:0.38",
+    "OPUS:0.40",
+    "PROD:0.39",
+    "KRAKEN:0.34"
+   ],
+   "letters_after": 836
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.27631578947368424,
+    "ref_letters": 836,
+    "read_letters": 868,
+    "secs": 44.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3397129186602871,
+    "ref_letters": 836,
+    "read_letters": 850,
+    "secs": 98.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.35287081339712917,
+    "ref_letters": 836,
+    "read_letters": 891,
+    "secs": 39.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.35287081339712917,
+    "ref_letters": 836,
+    "read_letters": 847,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.30741626794258375,
+    "ref_letters": 836,
+    "read_letters": 808,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|da33f7-p314",
+  "work": "Ars sacra",
+  "book": "69b4c04d978ca9526eda33f7",
+  "page": 314,
+  "fit": "kraken",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 862,
+   "reads_used": [
+    "G4L:0.08",
+    "OPUS:0.21",
+    "PROD:0.20",
+    "KRAKEN:0.18"
+   ],
+   "letters_after": 794
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.07934508816120907,
+    "ref_letters": 794,
+    "read_letters": 794,
+    "secs": 27.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 27.6,
+    "gate_denials": 0
+   },
+   "OPUS": {
+    "cer": 0.20654911838790932,
+    "ref_letters": 794,
+    "read_letters": 783,
+    "secs": 29.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.20025188916876574,
+    "ref_letters": 794,
+    "read_letters": 791,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.18261964735516373,
+    "ref_letters": 794,
+    "read_letters": 737,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|946912-p33",
+  "work": "Psellos",
+  "book": "69938921ce15387065946912",
+  "page": 33,
+  "fit": "flash-v2",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 353,
+   "reads_used": [
+    "G4L:0.04",
+    "C38L:0.14",
+    "OPUS:0.21",
+    "PROD:0.09",
+    "KRAKEN:0.19"
+   ],
+   "letters_after": 316
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.04746835443037975,
+    "ref_letters": 316,
+    "read_letters": 308,
+    "secs": 41.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.14556962025316456,
+    "ref_letters": 316,
+    "read_letters": 318,
+    "secs": 280,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.22151898734177214,
+    "ref_letters": 316,
+    "read_letters": 310,
+    "secs": 25.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.10443037974683544,
+    "ref_letters": 316,
+    "read_letters": 316,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.18670886075949367,
+    "ref_letters": 316,
+    "read_letters": 289,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|946912-p35",
+  "work": "Psellos",
+  "book": "69938921ce15387065946912",
+  "page": 35,
+  "fit": "flash-v2",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 509,
+   "reads_used": [],
+   "letters_after": 509,
+   "kept": "whole window (no aligning read, or window over the cap)"
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.48722986247544203,
+    "ref_letters": 509,
+    "read_letters": 305,
+    "secs": 34,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.5245579567779961,
+    "ref_letters": 509,
+    "read_letters": 306,
+    "secs": 88.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.5363457760314342,
+    "ref_letters": 509,
+    "read_letters": 294,
+    "secs": 20.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5324165029469549,
+    "ref_letters": 509,
+    "read_letters": 308,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.5245579567779961,
+    "ref_letters": 509,
+    "read_letters": 298,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|946912-p44",
+  "work": "Psellos",
+  "book": "69938921ce15387065946912",
+  "page": 44,
+  "fit": "flash-v2",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 390,
+   "reads_used": [
+    "G4L:0.17",
+    "C38L:0.29",
+    "OPUS:0.34",
+    "PROD:0.31",
+    "KRAKEN:0.33"
+   ],
+   "letters_after": 367
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.22615803814713897,
+    "ref_letters": 367,
+    "read_letters": 325,
+    "secs": 44.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.335149863760218,
+    "ref_letters": 367,
+    "read_letters": 330,
+    "secs": 24.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.37329700272479566,
+    "ref_letters": 367,
+    "read_letters": 324,
+    "secs": 33.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.35149863760217986,
+    "ref_letters": 367,
+    "read_letters": 333,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.2970027247956403,
+    "ref_letters": 367,
+    "read_letters": 333,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "greek|946912-p34",
+  "work": "Psellos",
+  "book": "69938921ce15387065946912",
+  "page": 34,
+  "fit": "flash-v2",
+  "prod_model": "gemini-3-flash-preview",
+  "trim": {
+   "letters_before": 359,
+   "reads_used": [
+    "G4L:0.02",
+    "C38L:0.07",
+    "OPUS:0.36",
+    "PROD:0.08",
+    "KRAKEN:0.20"
+   ],
+   "letters_after": 318
+  },
+  "kept": true,
+  "cells": {
+   "G4L": {
+    "cer": 0.031446540880503145,
+    "ref_letters": 318,
+    "read_letters": 312,
+    "secs": 30.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.0880503144654088,
+    "ref_letters": 318,
+    "read_letters": 311,
+    "secs": 71,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.36477987421383645,
+    "ref_letters": 318,
+    "read_letters": 326,
+    "secs": 19.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.0880503144654088,
+    "ref_letters": 318,
+    "read_letters": 315,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "KRAKEN": {
+    "cer": 0.1918238993710692,
+    "ref_letters": 318,
+    "read_letters": 290,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ }
+]
