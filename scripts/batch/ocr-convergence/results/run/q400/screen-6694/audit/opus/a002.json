@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f7418d5be574e98e4842fc",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts are complete; the leaf prints 'Au-ctrice', which X keeps and Y gives as 'Autrice' (Y also has 'Differentiis' for 'Differentijs'), both minor."
+ },
+ {
+  "item_id": "69b52c2b3dd6d9423027e5f7",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y gives a coherent expanded reading ('dirkimen .i. in mane cum sirupo acetoso'), while X is largely garbled abbreviation ('diu tam. i. m. mane', 'r. em plumi. dirk mueru') that would mislead a reader."
+ },
+ {
+  "item_id": "69f742565be574e98e484585",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y misreads long s in 'amara, falsa' (the leaf has 'salsa') and 'illapfus', and adds cut-off fragments of the facing page as margins; X matches the leaf."
+ },
+ {
+  "item_id": "69af1113c59ddc7f44a856a9",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops the passage 'sentire. Circa Romã inuenitur genus quoddam parui lacerti, dorso per totum stellato, quod terrantulam' (line 10-11), which Y has."
+ },
+ {
+  "item_id": "69f74f1f36ac84430f3dc7cb",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf prints page '561', 'Esa. 57. v. 55' and 'Offenb. 1. v.' with no number; X changes these to '161', 'v. 15' and 'v. 8', and modernises 'Gebuhrt' and 'kurtzer'."
+ },
+ {
+  "item_id": "697685c364679e70ce5024dc",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X keeps the printed 'Saltz', 'geschmoltzen', 'gantz', 'præpariret', which Y modernises to 'Salz', 'ganz', 'präpariret'; the wording is otherwise the same."
+ },
+ {
+  "item_id": "6953ab7477f38f6761bd72b0",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'lettere [struck] quasi infinite' with 'in quelle' written above the struck 'nelle lor lettere'; Y invents 'et <unclear>punti</unclear> infiniti' and leaves out the inserted 'in quelle'."
+ },
+ {
+  "item_id": "697301113acb470c0d9e72fa",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X records only what is visible past the gutter; Y garbles the text ('à periculo se inuicem procellis. Atq; etiam numerant hos fluctus', which drops 'nauigantibus, qui semper post unius impulsum') and rewrites the Greek ('τὰς ἐλπίδας οἷα' where the leaf has 'ἕως ... διὰ')."
+ },
+ {
+  "item_id": "6976637d7f56ed750cef8896",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X matches the leaf's 'Rotz', 'saltzichten', 'nitrosischen'; Y misreads these as 'Roß' and 'nitrofischen' (long s) and modernises to 'salzichten', but the sense stays recoverable."
+ },
+ {
+  "item_id": "695361ce9c494f9f9f042f20",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches the leaf in 'وتجربة', 'الطلاسم وهى الناشرة' and 'بالتعاديل', where X has 'وتجرية', 'التاشيرة' and 'بالتعادل'; both are otherwise complete."
+ }
+]

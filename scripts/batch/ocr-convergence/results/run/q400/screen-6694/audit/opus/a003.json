@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69af0d3bca8f47eb1206b492",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X drops 'os' in 'ad os stomachi eorum' and misreads 'acrestæ' as 'agrestæ', 'permisti' as 'permissi', 'cibent' for 'cibentur'; Y matches the print."
+ },
+ {
+  "item_id": "6959068695a91542b28bd7a3",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has 'Ita chrysanthemo' and 'insertur' where the print reads 'chrysanthemum' and 'infertur'; X follows the leaf."
+ },
+ {
+  "item_id": "6970d6977c9ab1d50ed22c00",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Same wording in both; they differ only in bold markup and 'ullo'/'vllo' ('exfulum' vs 'exsulum')."
+ },
+ {
+  "item_id": "69e72692a409200ea79ef81f",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y misreads '媼聾憒不聞' as '嫗聾，憤不聞' and gives the gutter title as '聊齋志異卷一 明安當', but the leaf reads '新評卷二 嬰寧'."
+ },
+ {
+  "item_id": "69b2ff09a1a4246ddb45abca",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X reads 'μᾶον' for 'μεῖον', 'feruū' for 'seruū' and 'quotidiē' for 'quotidie'; Y matches the print."
+ },
+ {
+  "item_id": "69b52bdad6bd9f58edb24fee",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X is largely garbled (e.g. 'Et habuit ex ditione custodis', 'huius mensis' where the leaf has 'Et subbibus ... custodum', 'lumen intus'); Y gives a coherent reading of the hand."
+ },
+ {
+  "item_id": "69afdc01e42898a2828787d4",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Same text in both; X just joins the hyphenated 'vie-' as 'viele'."
+ },
+ {
+  "item_id": "69906a0cd69de0e69806f5d5",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X modernizes the spelling ('einzelnen', 'ganzen', 'herzlichem', 'geschichet'), but the leaf prints 'eintzelen', 'gantzen', 'hertzlichem', 'geschiehet'; Y follows it."
+ },
+ {
+  "item_id": "6976100abac5d8af9860847c",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y leaves out several banderoles ('Coite nas', 'Wen', 'der solder naturen an') and merges two into 'Wen schau der folger der naturen an'; X records each scroll separately."
+ },
+ {
+  "item_id": "699df07e3430a1d77dc790ad",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y reverses the two half-leaves' reading order, drops '勞' from '必先勞其筋骨', and reads '侵害之神' for '所害之神'."
+ }
+]

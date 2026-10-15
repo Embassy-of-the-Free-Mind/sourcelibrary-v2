@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69af1113c59ddc7f44a8575d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads several words that the leaf prints correctly in Y ('halcyonæum', 'subsalsum', 'conferta', 'concerptis', 'inserenda'), and its Greek 'πτερύγίῳ μικρῷ ἢ ἀπώχῳ' drops the 'ὀφθαλμικῷ ... σπογγῷ' that the passage goes on to discuss."
+ },
+ {
+  "item_id": "69c86506fa4a99c7511f7e30",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y gives the name as 'Dauid Befferer' where the print reads 'Besserer', and it adds word fragments from the facing page ('idha', 'ʒ iij.', 'potu:')."
+ },
+ {
+  "item_id": "695677cbbe7c607c5f03b0a8",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y turns the Greek 'κατ' ἐξοχήν' into the made-up word 'ἰξὴρ'; X's main faults are the page number '14' (the leaf has 41) and 'sit secreta' where the print has 'fit'."
+ },
+ {
+  "item_id": "69b633381c1c21a3738170bc",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X reads 'aut sacros' where the leaf has 'aut duos', and it also gets 'perficitur' (for 'conficitur'), 'lxxxviii' (for 'lxxxiii') and 'sentire' (for 'consentire') wrong."
+ },
+ {
+  "item_id": "6976bc3282db1013c42ce5b8",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts match apart from trivial spellings such as X's 'cælo' where the print has 'cœlo'."
+ },
+ {
+  "item_id": "699df07e3430a1d77dc790aa",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y gives the wrong book in its heading ('三命通會 卷之四'), adds a note that is not on the leaf ('此段原在後卷今移置於此'), and misreads '襍氣' as '獲氣' and '有了' as '有子'."
+ },
+ {
+  "item_id": "699f2a4ef111f6f43744579f",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y modernises the printed spellings ('Kwellgeist' to 'Quellgeist', 'kurtze', 'Unmögligkeit', 'deütlich'); X keeps them as printed."
+ },
+ {
+  "item_id": "69e72692a409200ea79ef850",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y drops '新評' from the heading and misreads '夤緣' as '覓緣', '嚴子方' as '嚴于方' and '鼻騶' as '鼻驂'."
+ },
+ {
+  "item_id": "695004b2f426a210d109715b",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The wording and formulas are the same in both; they differ only in markup and in where 'LIBER PRIMUS' is placed."
+ },
+ {
+  "item_id": "69942c9eb2f6748db4abe245",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y reads 'testimonio' where the leaf has 'testimonium', and also 'fit iustius' for 'sit' and 'Odiofissimum' for 'Odiosissimum'."
+ }
+]

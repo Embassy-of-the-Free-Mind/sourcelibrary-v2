@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "698440d6c64d5d8c45c53eb1",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts are complete; X keeps the Greek 'ἐκ γενέσεως' and 'sit', while Y gives 'ex γενέσεως', 'fit' and joins 'extincturis', which are minor slips."
+ },
+ {
+  "item_id": "699f0faa7c242695325defec",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y modernises spellings ('affirmirt', 'präsentire euch' for 'affirmiert', 'præsentiere eüch') and misreads 'heüttgen' for 'heütigen'; the wording is otherwise the same."
+ },
+ {
+  "item_id": "69b52c263dd6d9423027e314",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf reads 'Acorum ... iridis radicibus' and 'Allec pisciculus dicitur'; X garbles these as 'Aesum ... indeta dicitur' and 'Alleluia siculi dicitur', and many other entries are wrong as well."
+ },
+ {
+  "item_id": "697c0a0804ee52a657ddf719",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y normalises printed spellings ('vierten', 'Geiz', 'sollst', 'stürzete' for 'vierdten', 'Geitz', 'solst', 'stürtzete'); the content is otherwise identical."
+ },
+ {
+  "item_id": "69b52c2b3dd6d9423027e43e",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X gives a readable expansion that follows the manuscript, whereas Y is largely meaningless pseudo-abbreviation (e.g. 'Cereb̃ septẽ nuoz̃ p̃aia' for 'A cerebro septem nervorum paria') and invents a page number '22'."
+ },
+ {
+  "item_id": "69bd0aabb01b17638a097e66",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X puts the left half-leaf before the right (the text starts at '髻齔時') and misreads '閣皁' as '閱皁', '二名' as '亦名' and '處' as '慶'; Y has the right order and readings."
+ },
+ {
+  "item_id": "6970d9a67c9ab1d50ed22c63",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y normalises 'Sol dis' to 'Soll dis' and 'wuste' to 'wußte'; the text is otherwise the same."
+ },
+ {
+  "item_id": "69906a0cd69de0e69806f88a",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf reads 'Hexen-Proceß' and 'Hexerey', and the name is 'Malbosson'; Y repeatedly misreads these as 'Heren-Proceß', 'Hererey' and 'Malboffon'."
+ },
+ {
+  "item_id": "6970cb363932a3984e911843",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y misreads 'hiebey' as 'hieben'; otherwise the two are identical apart from bold markup."
+ },
+ {
+  "item_id": "69aff9963346b1fdd94b30ca",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The final 'Ad' on the leaf is the first word of the next sentence, not a catchword; X keeps it in the text, while Y moves it to a catchword. The two differ otherwise only in italics."
+ }
+]
