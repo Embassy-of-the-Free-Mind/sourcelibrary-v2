@@ -68,12 +68,15 @@ export function plainSeed(text) {
 // The BODY a judge scores, the same function for every arm: editorial blocks removed with their content (what the
 // house prompt adds: notes, definitions, summary, keywords, metadata, image descriptions, warnings, OCR metadata tags);
 // every other tag unwrapped so its words stay (term, gloss, margin, insert, unclear, header, heading, page-num …).
-// <gloss> is KEPT: both prompts define it to carry interlinear text printed in the source (pilot, Sanguo yanyi p. 22).
+// <gloss> is KEPT: both prompts define it to carry interlinear text printed in the source (pilot, Sanguo yanyi p. 22) —
+// EXCEPT a <gloss> straight after </term>, which is CURRENT's definition of a term (the prompt's own pattern): dropped.
+const termGlossRe = /(<\/term>)\s*<gloss\b[^>]*>[\s\S]*?<\/gloss>/gi;
 const DROP = ['note', 'summary', 'keywords', 'meta', 'vocab', 'warning', 'image-desc', 'scan-quality', 'language', 'page-type', 'sig', 'columns', 'script'];
 const dropRe = new RegExp(`<(${DROP.join('|')})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi');
 const loneRe = new RegExp(`</?(${DROP.join('|')})\\b[^>]*>`, 'gi');
 export function bodyOf(text) {
   return String(text || '')
+    .replace(termGlossRe, '$1')
     .replace(dropRe, '')
     .replace(loneRe, '')
     .replace(/<(column-break|leaf-break)\s*\/?>/gi, '\n')
