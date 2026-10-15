@@ -57,6 +57,7 @@ for (let i = 0; TAIL && i < todo.length; i += CHUNK) {
   const chunk = todo.slice(i, i + CHUNK);
   // the last four pages by number (an empty or unreadable one falls out), and only the END of each page's text: a
   // colophon closes the book, and Atlas egress is billed by the byte
+  // strlen-safe: the filter below admits only pages whose ocr.data is $type 'string'
   const rows = await pages.find({ $or: chunk.map((b) => ({ book_id: b.book_id, page_number: { $gt: (b.pages_count || 0) - 4 } })),
     'ocr.data': { $type: 'string', $ne: '' }, 'ocr.unreadable': { $ne: true } },
   { projection: { _id: 0, book_id: 1, page_number: 1, text: { $substrCP: ['$ocr.data', { $max: [0, { $subtract: [{ $strLenCP: '$ocr.data' }, 1500] }] }, 1500] } }, maxTimeMS: 120_000 }).toArray();
