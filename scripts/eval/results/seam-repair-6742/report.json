@@ -1,0 +1,304 @@
+{
+ "candidates": {
+  "booksScanned": 923,
+  "joins": 500,
+  "noTrancheJoin": 423,
+  "notLive": 0,
+  "fired": {
+   "carried": 81,
+   "dup8": 117,
+   "catchwordEcho": 185,
+   "bracketBridge": 114,
+   "ocrNext": 23
+  }
+ },
+ "arms": {
+  "opus": {
+   "tried": 500,
+   "labels": {
+    "ok": 102,
+    "drift": 66,
+    "catchword": 154,
+    "duplication": 83,
+    "other": 22,
+    "broken_syntax": 61,
+    "omission": 11,
+    "unparsed": 1
+   },
+   "placement": {
+    "labelled-ok": 102,
+    "no-repair": 11,
+    "placed": 318,
+    "touches-more-than-3-sentences": 45,
+    "edit-too-large": 10,
+    "reply-not-parsed": 1,
+    "head-old-not-at-edge": 11,
+    "tail-old-not-at-edge": 2
+   },
+   "verified": 304,
+   "verifierSplit": 14,
+   "verifierWorse": 0,
+   "first100": {
+    "placed": 64,
+    "verified": 61
+   },
+   "aaPairs": [
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie"
+   ]
+  },
+  "sonnet": {
+   "tried": 100,
+   "labels": {
+    "drift": 12,
+    "ok": 31,
+    "other": 2,
+    "unparsed": 2,
+    "duplication": 11,
+    "omission": 6,
+    "broken_syntax": 11,
+    "catchword": 25
+   },
+   "placement": {
+    "placed": 47,
+    "labelled-ok": 31,
+    "head-old-not-at-edge": 4,
+    "reply-not-parsed": 2,
+    "edit-too-large": 4,
+    "touches-more-than-3-sentences": 9,
+    "tail-old-not-at-edge": 1,
+    "no-repair": 2
+   },
+   "verified": 45,
+   "verifierSplit": 2,
+   "verifierWorse": 0,
+   "first100": {
+    "placed": 47,
+    "verified": 45
+   },
+   "aaPairs": [
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie",
+    "tie/tie"
+   ]
+  }
+ },
+ "calls": {
+  "repair:sonnet": {
+   "calls": 10,
+   "items": 100,
+   "failed": 0,
+   "outTokens": 76719,
+   "listUsd": 1.77,
+   "secs": 556,
+   "first": "2026-10-15T18:43:11.644Z",
+   "last": "2026-10-15T18:45:13.803Z"
+  },
+  "repair:opus": {
+   "calls": 50,
+   "items": 500,
+   "failed": 0,
+   "outTokens": 358010,
+   "listUsd": 17.13,
+   "secs": 3218,
+   "first": "2026-10-15T18:43:31.824Z",
+   "last": "2026-10-15T18:59:20.589Z"
+  },
+  "verify:opus": {
+   "calls": 70,
+   "items": 676,
+   "failed": 0,
+   "outTokens": 135447,
+   "listUsd": 20.88,
+   "secs": 1384,
+   "first": "2026-10-15T18:46:12.744Z",
+   "last": "2026-10-15T19:03:58.182Z"
+  },
+  "verify:sonnet": {
+   "calls": 12,
+   "items": 114,
+   "failed": 0,
+   "outTokens": 22403,
+   "listUsd": 3.57,
+   "secs": 230,
+   "first": "2026-10-15T18:46:13.407Z",
+   "last": "2026-10-15T18:47:14.396Z"
+  },
+  "imagecheck:opus": {
+   "calls": 60,
+   "items": 60,
+   "failed": 0,
+   "outTokens": 22624,
+   "listUsd": 6.82,
+   "secs": 480,
+   "first": "2026-10-15T19:04:23.696Z",
+   "last": "2026-10-15T19:06:25.789Z"
+  }
+ },
+ "imagecheck": {
+  "joins": 30,
+  "prefersRepairBothOrders": 30,
+  "worseBothOrders": 0,
+  "detail": {
+   "7d7799f14b37": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "e44be43b87dd": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "d02072ebdcbd": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "284e73ed8df6": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "f047f92cb559": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "eea199cfc8b2": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "530192431527": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "3d8c3cdbe823": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "cb1d2203535b": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "dda3dcaf5cfa": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "136915139003": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "13d680d0e3d9": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "a74103d60479": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "b1205805b03c": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "39cf480b3408": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "75746c3232e0": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "40c5a9e1561d": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "53b8d1efb14b": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "ebc896db6958": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "580404956348": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "52ffd4e9f17b": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "565080e136a8": {
+    "rep-first": "P",
+    "cur-first": "Q"
+   },
+   "a048dd410d21": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "3b55c6253590": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "5f8e02901389": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "6d955b8ea651": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "fd282f03fc99": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "073ab09f0d73": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "46290b03e454": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   },
+   "db05c542fb22": {
+    "cur-first": "Q",
+    "rep-first": "P"
+   }
+  }
+ },
+ "write": {
+  "joinsWritten": 227,
+  "pagesWritten": 348,
+  "revisionRows": 348,
+  "refused": {
+   "head-span-not-in-stored-text": 30,
+   "tail-span-not-in-stored-text": 31,
+   "head-span-not-at-stored-edge": 11,
+   "tail-span-not-at-stored-edge": 1,
+   "tail-span-not-unique-in-stored-text": 2,
+   "head-span-not-unique-in-stored-text": 1,
+   "door-precheck-health:echo": 1
+  }
+ }
+}

@@ -14,6 +14,7 @@
  *   $N $S imagecheck --out=DIR [--n=30]                           the same verifier, with the two page images
  *   $N $S apply      --out=DIR [--apply]                          dry run unless --apply; writes manifest.jsonl
  *   $N $S report     --out=DIR
+ *   $N $S undo       --out=DIR [--apply]                          restore every written page from its revision row
  *
  * Tranche (#6742 write-up §3, 29/30 precise vs Opus): catchword echo, dup8, carried, ocrNext, bracketed bridge, on a
  * prose join whose two pages are machine-translated (not human, placeholder, withheld or same-language) in a live,
@@ -275,10 +276,8 @@ async function imagecheck(out, arm, n) {
   const acc = placed(out, arm).filter(r => !r.refuse && v[r.id]?.prefers);
   const pick = shuffle(acc, makeRng(30)).slice(0, n);
   const { client, db } = await mongo();
-  for (const r of pick) {
-    for (const order of ['cur-first', 'rep-first']) {
-      const pair = `img-${r.id}-${order}`;
-      if (done.has(pair)) continue;
+  const tasks = pick.flatMap(r => ['cur-first', 'rep-first'].map(order => ({ r, order, pair: `img-${r.id}-${order}` }))).filter(t => !done.has(t.pair));
+  await pool(tasks, 4, async ({ r, order, pair }) => {
       const dir = fs.mkdtempSync(path.join(process.env.TMPDIR || os.tmpdir(), 'seam-img-'));
       for (const [pid, name] of [[r.it.idA, 'page-N.jpg'], [r.it.idB, 'page-N1.jpg']]) {
         const pg = await db.collection('pages').findOne({ id: pid }, { projection: { display_photo: 1, archived_photo: 1, photo: 1 } });
@@ -297,8 +296,8 @@ async function imagecheck(out, arm, n) {
       const vv = (arr || []).find(x => x?.better);
       append(file, { pair, id: r.id, order, better: vv?.better ?? null, note: vv?.note, cls: res.cls, model: res.model });
       process.stderr.write(`${pair} ${vv?.better ?? res.cls}\n`);
-    }
-  }
+      return { ok: !!vv, cls: /limit/i.test(res.text || '') ? 'usage_limit' : res.cls };
+  });
   await client.close();
 }
 
@@ -404,6 +403,28 @@ function report(out) {
   console.log(JSON.stringify(rep, null, 1).slice(0, 6000));
 }
 
+// ── undo: put every written page back to its page_revisions pre-image (dry run unless --apply) ────────────────
+async function undo(out, doApply) {
+  const man = readJsonl(path.join(out, 'manifest.jsonl')).filter(m => m.written && m.revision_id);
+  const { client, db } = await mongo();
+  const tally = { restored: 0, skipped: {} };
+  for (const m of man) {
+    const rev = await db.collection('page_revisions').findOne({ id: m.revision_id, page_id: m.page });
+    const pg = await db.collection('pages').findOne({ id: m.page }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 } });
+    const why = !rev ? 'revision-missing' : !pg ? 'page-missing' : pg.translation?.content_hash !== m.new_hash ? 'changed-since-repair' : null;
+    if (why) { tally.skipped[why] = (tally.skipped[why] || 0) + 1; continue; }
+    if (doApply) {
+      const t = pg.translation, book = await db.collection('books').findOne({ id: pg.book_id });
+      const res = await writePageTranslation(db, { page: pg, book, text: rev.data, promptRef: { id: t.prompt_id, name: t.prompt_name, version: t.prompt_version, content_hash: t.prompt_hash }, model: rev.model || t.model,
+        jobId: `${TAG}-undo`, note: `${TAG}-undo`, engine: notRecorded(`restore of the pre-${TAG} text from page_revisions ${rev.id}`) });
+      if (!res.written) { tally.skipped[res.reason || 'protected'] = (tally.skipped[res.reason || 'protected'] || 0) + 1; continue; }
+    }
+    tally.restored++;
+  }
+  await client.close();
+  console.log(JSON.stringify({ apply: doApply, ...tally }));
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   const cmd = process.argv[2], out = arg('out');
   const run = {
@@ -412,6 +433,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     verify: () => verify(out, arg('arm', 'opus'), Number(arg('pack', 10)), Number(arg('conc', 4))),
     imagecheck: () => imagecheck(out, arg('arm', 'opus'), Number(arg('n', 30))),
     report: async () => report(out),
+    undo: () => undo(out, process.argv.includes('--apply')),
     apply: () => applyStage(out, arg('arms', 'opus').split(','), process.argv.includes('--apply')),
   }[cmd];
   if (!run) { console.error('usage: see the header'); process.exit(2); }
