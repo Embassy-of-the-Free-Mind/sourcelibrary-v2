@@ -62,8 +62,16 @@ export default function BookBiblioPanel({
       {l.basis === 'catalogue' && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>From the catalogue record</span>
       )}
+      {l.basis === 'colophon' && l.evidence && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>
+          Stated in the colophon: <span className="italic">“{l.evidence}”</span>
+        </span>
+      )}
       {l.basis === 'wikidata' && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>From Wikidata</span>
+      )}
+      {l.basis === 'author_lifespan' && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the author’s recorded dates</span>
       )}
     </>
   );

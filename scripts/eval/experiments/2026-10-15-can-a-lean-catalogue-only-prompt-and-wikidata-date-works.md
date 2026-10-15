@@ -33,6 +33,8 @@ the author's window [birth + 15, death] (capped at the edition), and the `work_i
 | Sonnet lean@100 | 85.2% (81–89) | 297 | 2 y | 724 | – | ~30 |
 | Sonnet lean@100 + work item where the windows meet | 85.5% (81–89) | 304 | 0 y | – | – | ~30 |
 | Haiku lean@100 | 75.0% (70–80) | 288 | 6 y | 536 | – | ~150 (thinks at `--effort low`) |
+| Gemini 3.8 Flash low lean@100 (agy) | 83.2% (79–87) | 316 | 2 y | – | – | – (marks 2 of 318 low; all rows 82.7%) |
+| Gemini 3.8 Flash low lean edition@25 | – | – | – | – | 91.5% (85–95), title_page kept 109 (108 exact) | – |
 | author lifespan only (no model) | 90.1% (86–93) | 262 | 50 y | 348 | – | 0 |
 | Sonnet lean edition@25 (catalogue date withheld) | – | – | – | – | 90.0% (84–94), title_page kept 94/94 exact | ~60 |
 | *first run: Sonnet b15, full prompt + leaves* | 85.4% (81–89) | 268 | 6 y | 824 | 93.8% | ~430 |
