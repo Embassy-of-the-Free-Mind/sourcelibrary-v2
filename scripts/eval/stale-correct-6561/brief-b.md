@@ -5,8 +5,9 @@ PR: yes
 
 Started by `main-cron.sh` (job stale-correct-6561, 2026-10-15) when agy Gemini answered again. Every agy Gemini model
 had answered "Individual quota reached" since 2026-10-14 13:06 UTC (the message's "resets in 30m" was false for over a
-day). Job stale-correct-6561's comments on #6561 say what it already did; read them first, and its PR (search
-`stale-correct-6561`). Derek's answers of 2026-10-13 and 2026-10-15 stand: Claude is the final arbiter, and a Gemini
+day; it answered again from about 15:00 UTC on 2026-10-15). Job stale-correct-6561's comments on #6561 say what
+it already did; read them first. Its PRs: #6749 (item 1 pilot, runbook, crons), #6748 (item 2's `--withheld` mode,
+stacked on #6598), #6747 (item 3, the detector). Derek's answers of 2026-10-13 and 2026-10-15 stand: Claude is the final arbiter, and a Gemini
 call alone withholds nothing.
 
 Claim: comment "taking this (job stale-correct-6561-b)" on #6561. Report ONLY by comments on #6561 / #6567 and the PRs.
@@ -22,7 +23,7 @@ for new output.
 
 ## A. Item 2: the 1,320 withheld English pages of the served table pages
 - Code: `scripts/batch/stale-retranslate-6567.mjs` with the `--withheld` mode, branch `job-stale-correct-6561-withheld`
-  (stacked on PR #6598; its PR is linked on #6561). Use a worktree of that branch.
+  (PR #6748, stacked on #6598). Use a worktree of that branch.
 - The set is already selected (read-only census, 2026-10-15: 1,320 eligible pages, 270 books):
   `/mnt/HC_Volume_105839809/jobs/stale-correct-6561/item2/{census.json,set.jsonl}`. Re-run `select-withheld` into a
   fresh dir first if more than a day has passed, and say if the count moved.
