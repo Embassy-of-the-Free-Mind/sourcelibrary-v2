@@ -24,6 +24,9 @@ writes results/.../refjudge/scores.json (no quotes).
   --round claude6182xl the same arms on the 365 other-language pages: score-xl.run_claude
   --round cli6182xl #6331 test 1: C38 beside G38 and production on the 365 other-language pages (score-xl.run_cli;
                  experiments/2026-10-08-cli-arm-xl-365-6331.md), with and without #6304's drops
+  --round g4xl6750 #6750: C4L (Gemini 4 Argon low, CLI) beside C38 (stored) and production on the same pages, the
+                 same run_cli with new=C4L, base=C38 and the better / same / worse rule against C38 and PROD
+                 (experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md); packets in $JOB_SCRATCH/xljudge
 """
 import collections, glob, itertools, json, random, sys
 
@@ -62,9 +65,12 @@ if ROUND == "claude6182xl":  # both judges on every item (companion packet, PRER
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
     m.run_claude(key=key, J=J, OUT=OUT, drops=drops)
     sys.exit(0)
-if ROUND == "cli6182xl":  # #6331 test 1: C38 beside G38 and production on the 365 xl pages, both judges on every item
+if ROUND in ("cli6182xl", "g4xl6750"):  # #6331 test 1; #6750 the same with C4L in C38's place and C38 in G38's: C38 beside G38 and production on the 365 xl pages, both judges on every item
     import importlib.util, re
-    OUT, JW = "scripts/eval/results/cli-arm-6182/xljudge", "/root/cli38-6182/xljudge"
+    import os
+    G4 = ROUND == "g4xl6750"
+    S = os.environ.get("JOB_SCRATCH", "/mnt/HC_Volume_105839809/jobs/g4-xl-6750")
+    OUT, JW = ("scripts/eval/results/g4-xl-6750/xljudge", f"{S}/xljudge") if G4 else ("scripts/eval/results/cli-arm-6182/xljudge", "/root/cli38-6182/xljudge")
     key = json.load(open(f"{OUT}/key.json"))
     J = {"J1": {}, "J2": {}}
     for f in glob.glob(f"{JW}/out-J*-*.jsonl"):
@@ -77,7 +83,11 @@ if ROUND == "cli6182xl":  # #6331 test 1: C38 beside G38 and production on the 3
     drops = {re.sub(r"_0*(\d+)$", r"_\1", d["page"]) for d in json.load(open("scripts/eval/results/pareto-sample-audit-6304/drops.json"))["drops"] if d["family"] == "translation"}
     spec = importlib.util.spec_from_file_location("p6182xl", "scripts/eval/pareto-6182/score-xl.py")
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
-    m.run_cli(key=key, J=J, OUT=OUT, drops=drops)
+    if G4:
+        m.run_cli(key=key, J=J, OUT=OUT, drops=drops, new="C4L", base="C38", verdict_vs=("C38", "PROD"),
+                  texts={"C4L": f"{S}/C4L.jsonl", "C38": "/root/cli38-6182/C38-full.jsonl"})
+    else:
+        m.run_cli(key=key, J=J, OUT=OUT, drops=drops)
     sys.exit(0)
 P6182 = ROUND == "6182"
 CLT = ROUND == "claude6182"
