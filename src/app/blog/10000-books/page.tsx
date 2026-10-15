@@ -262,7 +262,7 @@ export default function TenThousandBooksPage() {
 
           <p className="text-secondary leading-relaxed mb-4 font-body">
             <a
-              href="https://sourcelibrary.org/book/on-the-fundamentals-of-hebrew-de-rudimentis-hebraicis-reuchlin"
+              href="https://sourcelibrary.org/book/de-rudimentis-hebraicis-reuchlin"
               className="text-accent-rust hover:text-accent-rust underline"
             >
               <em>De rudimentis hebraicis</em>

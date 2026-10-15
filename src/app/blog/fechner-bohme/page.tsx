@@ -122,7 +122,7 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           This was not a casual project. B&ouml;hme&apos;s{' '}
-          <Link href="/book/69525f56ab34727b1f046185" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
+          <Link href="/book/aurora-that-is-the-day-spring-boehme" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
           {' '}(1612), his first and most famous work, describes a moment of illumination in which B&ouml;hme perceived the inner life of all things: the <em>Signatura Rerum</em>, the signature of spirit in every natural form. Everything in nature, B&ouml;hme argued, is an expression of a living divine process. Matter is not dead; it is the outermost manifestation of an inner spiritual reality. The cosmos is not a machine but a theophany, God making himself visible.
         </p>
 
@@ -329,7 +329,7 @@ export default function FechnerBohmePage() {
 
         <ul className="list-disc list-inside text-secondary space-y-2 mb-8 ml-4">
           <li>
-            <Link href="/book/69525f56ab34727b1f046185" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
+            <Link href="/book/aurora-that-is-the-day-spring-boehme" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
             : B&ouml;hme&apos;s first vision (1612)
           </li>
           <li>
@@ -362,7 +362,7 @@ export default function FechnerBohmePage() {
           Reading Fechner&apos;s{' '}
           <Link href="/book/6992cbd5018b80967354b452" className="text-accent-rust hover:text-accent-rust underline"><em>Jakob B&ouml;hme</em></Link>
           {' '}alongside B&ouml;hme&apos;s own{' '}
-          <Link href="/book/69525f56ab34727b1f046185" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
+          <Link href="/book/aurora-that-is-the-day-spring-boehme" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
           {' '}is to watch one of the strangest and most productive encounters in intellectual history: a laboratory physicist finding in a visionary shoemaker the metaphysical framework for a new science.
         </p>
 
