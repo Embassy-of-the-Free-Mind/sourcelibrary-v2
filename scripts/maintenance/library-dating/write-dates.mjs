@@ -26,7 +26,8 @@
  *             it disagrees, the model's, flagged `wikidata_disagrees`. The author's Wikidata window is recorded as
  *             `author_window`, flagged `outside_author_window` when the date lies outside it (usually a translator or
  *             editor in author_id, or a pseudepigraphon: informational, confidence unchanged). Where the lean and the
- *             earlier run's years differ by more than 50, the lean one is kept at confidence low with `agree_with`.
+ *             earlier run's years differ by more than 50, the one inside the author's window wins if only one is,
+ *             else the lean one; either way at confidence low, the other recorded in `agree_with`.
  *   edition — rule title_page > lean model title_page > rule catalogue (year or window) > lean model > the
  *             representative's (same catalogue string) > the earlier run's own
  * A row the earlier run (`--earlier-run`) already wrote is REWRITTEN only when the work date is now sourced (basis
@@ -116,8 +117,18 @@ function bookUpdateLean(member, c, repMember) {
     if (agreesWith(c.wikidata_work, lw.work)) { extra.model_work = lw.work; w.work = { ...c.wikidata_work }; w.confidence = 'high'; }
     else { checks.push('wikidata_disagrees'); extra.wikidata_work = c.wikidata_work; }
   }
-  if (lw && er && Math.abs(lw.work.year - er.work.year) > 50) {
-    w.confidence = 'low'; extra.agree_with = { model: er.model, work: { year: er.work.year, from: er.work.from, to: er.work.to }, agrees: false };
+  let keptEarlier = false;
+  if (lw && er && Math.abs(lw.work.year - er.work.year) > 50 && w.work.basis !== 'wikidata') {
+    // two estimates a lifetime apart: the author's Wikidata window breaks the tie when exactly one lies inside it
+    // (Boehme's Theosophia revelata: earlier c. 1600–1624 inside 1590–1624, lean 1730 outside → the earlier stays)
+    const inside = (x) => c.author_window && x.year >= c.author_window.from && x.year <= c.author_window.to;
+    if (inside(er.work) && !inside(lw.work)) {
+      keptEarlier = true;
+      w = { work: { ...er.work }, model: er.model, prompt_version: er.prompt_version, dated_at: er.dated_at, confidence: 'low', layers: er.layers, earlier: true };
+      extra.agree_with = { model: lw.model, work: { year: lw.work.year, from: lw.work.from, to: lw.work.to }, agrees: false };
+    } else {
+      w.confidence = 'low'; extra.agree_with = { model: er.model, work: { year: er.work.year, from: er.work.from, to: er.work.to }, agrees: false };
+    }
   }
   if (c.author_window) {
     extra.author_window = c.author_window;
@@ -144,7 +155,7 @@ function bookUpdateLean(member, c, repMember) {
   if (edModel) meta.edition_model = edModel;
   Object.assign(meta, extra);
   if (checks.length) meta.checks = checks;
-  return { source_work_dates: layers, source_work_dates_meta: meta, _lean: { sourced: w.work.basis === 'wikidata', lean_year: lw ? lw.work.year : null } };
+  return { source_work_dates: layers, source_work_dates_meta: meta, _lean: { sourced: w.work.basis === 'wikidata', lean_year: lw && !keptEarlier ? lw.work.year : null } };
 }
 
 // #3307: 1,445 undated EAP Tibetan manuscripts keep an import placeholder `year: 1700` (their `published` is already

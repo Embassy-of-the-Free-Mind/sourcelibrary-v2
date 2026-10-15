@@ -382,8 +382,11 @@ export function wikidataWork(b, wd, editionYear = null) {
   }
   return null;
 }
-/** Two dated windows agree when they meet, or their years are within 25 years. */
-export const agreesWith = (a, b) => !!a && !!b && ((a.from <= b.to && a.to >= b.from) || Math.abs(a.year - b.year) <= 25);
+/**
+ * Two dated windows agree when they meet. No tolerance beyond that: a work_id naming a neighbouring work (Kepler's
+ * Apologia → Harmonices Mundi, 1622 vs 1619) must not replace a model's exact year.
+ */
+export const agreesWith = (a, b) => !!a && !!b && a.from <= b.to && a.to >= b.from;
 
 /** The author's Wikidata dates as the lean prompt shows them ("b. 1433, d. 1499", "fl. 1520–1540"), else null. */
 export function authorDates(b, wd) {
@@ -411,8 +414,10 @@ export function parseLeanReply(answer, n) {
   for (const m of String(answer || '').matchAll(/\{[^{}\n]*\}/g)) {
     let o; try { o = JSON.parse(m[0]); } catch { continue; }
     const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
-    if (i < 0 || i >= n || out.has(i) || !Array.isArray(o.w)) continue;
-    const work = cleanDate({ year: o.y, from: o.w[0], to: o.w[1], basis: 'model_knowledge' }, '');
+    // a reply that gives "w" as one year instead of [from, to] (1 call in 20 on the first run): the window is that year and "y"
+    const w = Array.isArray(o.w) ? o.w : Number.isFinite(+o.w) && o.w !== null && o.w !== '' ? [Math.min(+o.w, +o.y || +o.w), Math.max(+o.w, +o.y || +o.w)] : null;
+    if (i < 0 || i >= n || out.has(i) || !w) continue;
+    const work = cleanDate({ year: o.y, from: w[0], to: w[1], basis: 'model_knowledge' }, '');
     if (!work || work.year === null) continue;
     work.display = work.from === work.to ? fmtYear(work.year) : `c. ${fmtSpan(work.from, work.to)}`;
     work.precision = work.from === work.to ? 'exact' : 'range';
