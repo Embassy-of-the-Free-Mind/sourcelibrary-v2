@@ -7,7 +7,7 @@ canons: []
 n_books: 162
 n_pages: 26664
 verdict: "The whole-leaf shift gate in dropDriftedPages catches all 12 by-eye wrong-leaf pages (in 6-8 of their 8 block alignments; the misses are runs cut by a block edge) and rejects 7 of 3,321 single-page-lane blocks (0.21%, 3 of them tier-A strength), each costing a single-page translation of that block."
-status: decided
+status: adopted
 decision: "Ship the gate in all four block lanes through dropDriftedPages (PR for #5021)."
 superseded_by: null
 issue: [5021, 6553]
