@@ -1,0 +1,22 @@
+{
+  "note": "Polynesian chant sources, issue #6768. Enumerated on archive.org 2026-10-15 by title/author search; every work holdings-checked with check-holdings.ts --title/--author (all NEW except White vols. 1 and 4, already held; vol. 4 was mis-titled 'Vol. 1' on 69e00979846d79f28d5669eb — title page reads VOLUME IV, 1888 — corrected 2026-10-15). Scans are institutional (Bishop Museum Memoirs, Toronto, Google, Michigan), pre-1930, not access-restricted. One scan per work. Left out: White vol. 2 (no clean scan), Liliuokalani 1897 Kumulipo (not on IA), Henry Ancient Tahiti, Gifford Tongan Myths, Handy Polynesian Religion (lending-style scans).",
+  "campaign": "polynesian-chants-6768",
+  "collections": ["polynesian", "oceania"],
+  "BOOKS": [
+    { "id": "memoirsofbernice04bern", "title": "Fornander Collection of Hawaiian Antiquities and Folk-lore, Vol. 4 (Memoirs of the Bernice Pauahi Bishop Museum)", "author": "Abraham Fornander; ed. Thomas G. Thrum", "year": 1916, "lang": "Hawaiian", "languages": ["Hawaiian", "English"] },
+    { "id": "memoirsofbernice05bern", "title": "Fornander Collection of Hawaiian Antiquities and Folk-lore, Vol. 5 (Memoirs of the Bernice Pauahi Bishop Museum)", "author": "Abraham Fornander; ed. Thomas G. Thrum", "year": 1918, "lang": "Hawaiian", "languages": ["Hawaiian", "English"] },
+    { "id": "memoirsofbernice06bern", "title": "Fornander Collection of Hawaiian Antiquities and Folk-lore, Vol. 6 (Memoirs of the Bernice Pauahi Bishop Museum)", "author": "Abraham Fornander; ed. Thomas G. Thrum", "year": 1919, "lang": "Hawaiian", "languages": ["Hawaiian", "English"] },
+    { "id": "mythssongsfromso00gill", "title": "Myths and Songs from the South Pacific", "author": "William Wyatt Gill", "year": 1876, "lang": "English" },
+    { "id": "historicalsketch00gill", "title": "Historical Sketches of Savage Life in Polynesia, with Illustrative Clan Songs", "author": "William Wyatt Gill", "year": 1880, "lang": "English" },
+    { "id": "fromdarknesstoli00gilluoft", "title": "From Darkness to Light in Polynesia, with Illustrative Clan Songs", "author": "William Wyatt Gill", "year": 1894, "lang": "English" },
+    { "id": "pelehiiakamyth00emer", "title": "Pele and Hiiaka: A Myth from Hawaii", "author": "Nathaniel B. Emerson", "year": 1915, "lang": "English" },
+    { "id": "hawaiianromanceo00hale", "title": "The Hawaiian Romance of Laieikawai", "author": "S. N. Haleole; trans. Martha Warren Beckwith", "year": 1918, "lang": "Hawaiian", "languages": ["Hawaiian", "English"] },
+    { "id": "ancienthistoryof03whit", "title": "The Ancient History of the Maori, his Mythology and Traditions, Vol. 3", "author": "John White", "year": 1889, "lang": "English", "languages": ["English", "Maori"] },
+    { "id": "ancienthistorym00whitgoog", "title": "The Ancient History of the Maori, his Mythology and Traditions, Vol. 5", "author": "John White", "year": 1888, "lang": "English", "languages": ["English", "Maori"], "note": "volume read from djvu text (VOLUME V, Tai-nui); confirm title page" },
+    { "id": "ancienthistoryof06whit", "title": "The Ancient History of the Maori, his Mythology and Traditions, Vol. 6", "author": "John White", "year": 1890, "lang": "English", "languages": ["English", "Maori"] },
+    { "id": "voyagesauxlesdug00moer", "title": "Voyages aux îles du Grand Océan", "author": "Jacques-Antoine Moerenhout", "year": 1837, "lang": "French" },
+    { "id": "dieheiligesagede00bastuoft", "title": "Die heilige Sage der Polynesier: Kosmogonie und Theogonie", "author": "Adolf Bastian", "year": 1881, "lang": "German" },
+    { "id": "samoaahundredye00turngoog", "title": "Samoa, a Hundred Years Ago and Long Before", "author": "George Turner", "year": 1884, "lang": "English" },
+    { "id": "hawaiianfolktale00", "title": "Hawaiian Folk Tales: A Collection of Native Legends", "author": "Thomas G. Thrum", "year": 1912, "lang": "English" }
+  ]
+}
