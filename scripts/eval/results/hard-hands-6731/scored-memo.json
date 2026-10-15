@@ -299,10 +299,10 @@
    "read_letters": 2097
   },
   "image": {
-   "cer": 0.08534322820037106,
+   "cer": 0.31993403421974853,
    "ref_letters": 4851,
-   "read_letters": 4879,
-   "secs": 65.4,
+   "read_letters": 4892,
+   "secs": 92.6,
    "gate_denials": 0,
    "nudged": false
   }
@@ -311,22 +311,13 @@
   "uid": "rashi|baad92-p13",
   "arm": "G4L",
   "work": "Sha'arei Orah / Gates of Light (1715)",
-  "refs": [
-   "Sha'arei Orah Introduction 1",
-   "Sha'arei Orah Introduction 5"
-  ],
   "recall": {
    "cer": 0.7253886010362695,
    "ref_letters": 1158,
    "read_letters": 897
   },
   "image": {
-   "cer": 0.07167530224525043,
-   "ref_letters": 1158,
-   "read_letters": 2070,
-   "secs": 65.9,
-   "gate_denials": 1,
-   "nudged": false
+   "unscored": "page dropped"
   }
  },
  {
@@ -619,22 +610,13 @@
   "uid": "rashi|baad92-p13",
   "arm": "C38L",
   "work": "Sha'arei Orah / Gates of Light (1715)",
-  "refs": [
-   "Sha'arei Orah Introduction 1",
-   "Sha'arei Orah Introduction 5"
-  ],
   "recall": {
    "cer": 0.7184801381692574,
    "ref_letters": 1158,
    "read_letters": 1018
   },
   "image": {
-   "cer": 0.11917098445595854,
-   "ref_letters": 1158,
-   "read_letters": 1502,
-   "secs": 23.4,
-   "gate_denials": 0,
-   "nudged": false
+   "unscored": "page dropped"
   }
  },
  {
@@ -650,11 +632,11 @@
    "why": "denied_tool: tski: no output produced — a tool required the \"read_url\" permission that headless mode cannot prompt for, "
   },
   "image": {
-   "cer": 0.422180993609565,
+   "cer": 0.6427540713254999,
    "ref_letters": 4851,
-   "read_letters": 4795,
-   "secs": 185.4,
-   "gate_denials": 2,
+   "read_letters": 4554,
+   "secs": 35.5,
+   "gate_denials": 0,
    "nudged": false
   }
  },
@@ -931,10 +913,10 @@
    "read_letters": 0
   },
   "image": {
-   "cer": 0.07812822098536384,
+   "cer": 0.07936507936507936,
    "ref_letters": 4851,
-   "read_letters": 4872,
-   "secs": 93.2,
+   "read_letters": 4871,
+   "secs": 85.1,
    "gate_denials": 0,
    "nudged": false
   }
@@ -965,22 +947,13 @@
   "uid": "rashi|baad92-p13",
   "arm": "OPUS",
   "work": "Sha'arei Orah / Gates of Light (1715)",
-  "refs": [
-   "Sha'arei Orah Introduction 1",
-   "Sha'arei Orah Introduction 5"
-  ],
   "recall": {
    "cer": 0.7072538860103627,
    "ref_letters": 1158,
    "read_letters": 1141
   },
   "image": {
-   "cer": 0.09153713298791019,
-   "ref_letters": 1158,
-   "read_letters": 2057,
-   "secs": 53.7,
-   "gate_denials": 0,
-   "nudged": false
+   "unscored": "page dropped"
   }
  }
 ]

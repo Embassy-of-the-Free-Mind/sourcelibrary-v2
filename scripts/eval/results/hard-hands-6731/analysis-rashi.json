@@ -1,70 +1,72 @@
 {
  "all": {
   "script": "rashi",
-  "n_pages": 58,
+  "n_pages": 57,
   "n_works": 12,
   "arms": {
    "G4L": {
-    "n_scored": 56,
-    "accuracy": 0.8288,
+    "n_scored": 55,
+    "accuracy": 0.838,
     "ci95": [
-     0.7963,
-     0.8567
+     0.8055,
+     0.8657
     ],
-    "median_cer": 0.1345,
+    "median_cer": 0.1226,
     "failures": {
      "copy_filter": 2
     },
-    "secs_median": 91.2,
+    "secs_median": 72,
     "secs_iqr": [
-     57.4,
-     126.2
+     52.6,
+     111.2
     ],
-    "gate_denials": 20,
-    "pages_with_denials": 20
+    "gate_denials": 12,
+    "pages_with_denials": 12
    },
    "C38L": {
-    "n_scored": 58,
-    "accuracy": 0.5762,
+    "n_scored": 56,
+    "accuracy": 0.6051,
     "ci95": [
-     0.5252,
-     0.6251
+     0.5452,
+     0.6637
     ],
-    "median_cer": 0.4264,
-    "failures": {},
-    "secs_median": 65.19999999999999,
+    "median_cer": 0.4076,
+    "failures": {
+     "copy_filter": 1
+    },
+    "secs_median": 60.2,
     "secs_iqr": [
-     33.2,
-     106.1
+     35.5,
+     102.5
     ],
-    "gate_denials": 28,
-    "pages_with_denials": 26
+    "gate_denials": 25,
+    "pages_with_denials": 24
    },
    "OPUS": {
-    "n_scored": 58,
-    "accuracy": 0.7243,
+    "n_scored": 57,
+    "accuracy": 0.7884,
     "ci95": [
-     0.6449,
-     0.7958
+     0.7279,
+     0.8419
     ],
-    "median_cer": 0.1266,
+    "median_cer": 0.1225,
     "failures": {},
-    "secs_median": 51.5,
+    "secs_median": 52.9,
     "secs_iqr": [
-     39.6,
-     77.6
+     40.9,
+     82.5
     ],
     "gate_denials": 0,
     "pages_with_denials": 0
    },
    "PROD": {
-    "n_scored": 54,
-    "accuracy": 0.482,
+    "n_scored": 53,
+    "accuracy": 0.5257,
     "ci95": [
-     0.4192,
-     0.5455
+     0.4568,
+     0.5941
     ],
-    "median_cer": 0.6172,
+    "median_cer": 0.5,
     "failures": {
      "not_ocr": 3,
      "empty": 1
@@ -77,31 +79,31 @@
   },
   "paired": {
    "C38L": {
-    "n": 56,
-    "wins": 55,
-    "losses": 1,
+    "n": 54,
+    "wins": 51,
+    "losses": 3,
     "ties": 0,
-    "median_delta": -0.2398,
+    "median_delta": -0.1944,
     "ci95": [
-     -0.3114,
-     -0.1436
+     -0.3232,
+     -0.0848
     ],
-    "mean_delta": -0.2493,
+    "mean_delta": -0.2322,
     "sign_p": 0,
     "verdict": "better"
    },
    "OPUS": {
-    "n": 56,
+    "n": 55,
     "wins": 30,
-    "losses": 26,
+    "losses": 25,
     "ties": 0,
-    "median_delta": -0.0118,
+    "median_delta": -0.0031,
     "ci95": [
-     -0.024,
-     0.0057
+     -0.022,
+     0.002
     ],
-    "mean_delta": -0.0981,
-    "sign_p": 0.6889,
+    "mean_delta": -0.0415,
+    "sign_p": 0.5901,
     "verdict": "same"
    },
    "PROD": {
@@ -109,18 +111,23 @@
     "wins": 51,
     "losses": 1,
     "ties": 0,
-    "median_delta": -0.3454,
+    "median_delta": -0.313,
     "ci95": [
-     -0.4623,
-     -0.2417
+     -0.4437,
+     -0.1368
     ],
-    "mean_delta": -0.343,
+    "mean_delta": -0.3211,
     "sign_p": 0,
     "verdict": "better"
    }
   }
  },
  "dropped": [
+  {
+   "uid": "rashi|baad92-p13",
+   "work": "Sha'arei Orah / Gates of Light (1715)",
+   "dropped": "no read aligns (letter CER < 0.5 over >= 80 letters)"
+  },
   {
    "uid": "rashi|dde8b5-p2270",
    "work": "Mikraot Gedolot, Torah (Vilna 1899)",

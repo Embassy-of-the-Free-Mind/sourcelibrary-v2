@@ -1145,18 +1145,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 98992,
-    "share": 0.109
+    "pos": 101344,
+    "share": 0.231
    },
    {
     "k": "C38L",
-    "pos": 98840,
-    "share": 0.103
+    "pos": 101344,
+    "share": 0.226
    },
    {
     "k": "OPUS",
-    "pos": 101416,
-    "share": 0.163
+    "pos": 101344,
+    "share": 0.226
    },
    {
     "k": "PROD",
@@ -1166,24 +1166,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 101329,
+    "ws": 101328,
     "we": 103520,
-    "len": 2191,
-    "cer": 0.093,
+    "len": 2192,
+    "cer": 0.094,
     "aligns": true
    },
    "C38L": {
-    "ws": 101329,
+    "ws": 101328,
     "we": 103520,
-    "len": 2191,
-    "cer": 0.102,
+    "len": 2192,
+    "cer": 0.096,
     "aligns": true
    },
    "OPUS": {
     "ws": 101328,
-    "we": 105458,
-    "len": 4130,
-    "cer": 0.162,
+    "we": 103520,
+    "len": 2192,
+    "cer": 0.093,
     "aligns": true
    },
    "PROD": {
@@ -1196,8 +1196,8 @@
   },
   "kept": true,
   "ref_span": [
-   101329,
-   103522
+   101328,
+   103520
   ],
   "ref_rule": "median",
   "aligning": [
@@ -1207,38 +1207,38 @@
    "PROD"
   ],
   "ref_refs": [
-   "Sha'arei Orah Third and Fourth Gates, Seventh and Eight Sefirah 2",
+   "Sha'arei Orah Third and Fourth Gates, Seventh and Eight Sefirah 1",
    "Sha'arei Orah Third and Fourth Gates, Seventh and Eight Sefirah 10"
   ],
-  "ref_text_sha": "d912aeb19ac5",
+  "ref_text_sha": "c7fd8b10a325",
   "cells": {
    "G4L": {
-    "cer": 0.09430523917995444,
-    "ref_letters": 2195,
-    "read_letters": 4528,
-    "secs": 65.8,
+    "cer": 0.09352189781021898,
+    "ref_letters": 2192,
+    "read_letters": 2164,
+    "secs": 70.5,
     "gate_denials": 1,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.10387243735763098,
-    "ref_letters": 2195,
-    "read_letters": 4525,
-    "secs": 127.2,
-    "gate_denials": 1,
+    "cer": 0.09580291970802919,
+    "ref_letters": 2192,
+    "read_letters": 2156,
+    "secs": 33.1,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.0929384965831435,
-    "ref_letters": 2195,
-    "read_letters": 4082,
-    "secs": 76.7,
+    "cer": 0.0926094890510949,
+    "ref_letters": 2192,
+    "read_letters": 2164,
+    "secs": 51,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.09476082004555808,
-    "ref_letters": 2195,
+    "cer": 0.0948905109489051,
+    "ref_letters": 2192,
     "read_letters": 2167,
     "secs": null,
     "gate_denials": 0,
@@ -1258,18 +1258,13 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 1192,
-    "share": 0.098
-   },
-   {
-    "k": "C38L",
     "pos": 1200,
-    "share": 0.102
+    "share": 0.223
    },
    {
     "k": "OPUS",
-    "pos": 1240,
-    "share": 0.367
+    "pos": 1192,
+    "share": 0.219
    },
    {
     "k": "PROD",
@@ -1280,23 +1275,16 @@
   "spans": {
    "G4L": {
     "ws": 1199,
-    "we": 2459,
-    "len": 1260,
-    "cer": 0.129,
-    "aligns": true
-   },
-   "C38L": {
-    "ws": 1203,
-    "we": 2458,
-    "len": 1255,
-    "cer": 0.152,
+    "we": 2460,
+    "len": 1261,
+    "cer": 0.115,
     "aligns": true
    },
    "OPUS": {
     "ws": 1199,
-    "we": 3094,
-    "len": 1895,
-    "cer": 0.115,
+    "we": 2460,
+    "len": 1261,
+    "cer": 0.118,
     "aligns": true
    },
    "PROD": {
@@ -1309,13 +1297,12 @@
   },
   "kept": true,
   "ref_span": [
-   1201,
+   1199,
    2460
   ],
   "ref_rule": "median",
   "aligning": [
    "G4L",
-   "C38L",
    "OPUS",
    "PROD"
   ],
@@ -1326,26 +1313,24 @@
   "ref_text_sha": "81b32ba34b8d",
   "cells": {
    "G4L": {
-    "cer": 0.13005551149881048,
+    "cer": 0.11498810467882632,
     "ref_letters": 1261,
-    "read_letters": 5157,
-    "secs": 85.1,
+    "read_letters": 2430,
+    "secs": 153.4,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.15543219666931007,
-    "ref_letters": 1261,
-    "read_letters": 5316,
-    "secs": 133.5,
-    "gate_denials": 1,
-    "nudged": false
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 24.7,
+    "gate_denials": 0
    },
    "OPUS": {
-    "cer": 0.09674861221252974,
+    "cer": 0.11816019032513878,
     "ref_letters": 1261,
-    "read_letters": 1872,
-    "secs": 47.6,
+    "read_letters": 2436,
+    "secs": 52,
     "gate_denials": 0,
     "nudged": false
    },
@@ -1371,18 +1356,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 261144,
-    "share": 0.174
+    "pos": 263416,
+    "share": 0.4
    },
    {
     "k": "C38L",
-    "pos": 263480,
-    "share": 0.159
+    "pos": 263400,
+    "share": 0.404
    },
    {
     "k": "OPUS",
     "pos": 263416,
-    "share": 0.205
+    "share": 0.389
    },
    {
     "k": "PROD",
@@ -1392,24 +1377,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 263375,
-    "we": 264983,
-    "len": 1608,
-    "cer": 0.076,
+    "ws": 263376,
+    "we": 264982,
+    "len": 1606,
+    "cer": 0.073,
     "aligns": true
    },
    "C38L": {
     "ws": 263376,
-    "we": 266639,
-    "len": 3263,
-    "cer": 0.262,
+    "we": 264983,
+    "len": 1607,
+    "cer": 0.082,
     "aligns": true
    },
    "OPUS": {
     "ws": 263376,
-    "we": 266644,
-    "len": 3268,
-    "cer": 0.222,
+    "we": 264983,
+    "len": 1607,
+    "cer": 0.073,
     "aligns": true
    },
    "PROD": {
@@ -1423,7 +1408,7 @@
   "kept": true,
   "ref_span": [
    263376,
-   265811
+   264983
   ],
   "ref_rule": "median",
   "aligning": [
@@ -1434,37 +1419,37 @@
   ],
   "ref_refs": [
    "Sha'arei Orah Sixth Gate, Fifth Sefirah 107",
-   "Sha'arei Orah Seventh Gate, Fourth Sefirah 4"
+   "Sha'arei Orah Seventh Gate, Fourth Sefirah 2"
   ],
-  "ref_text_sha": "d988ef0b2425",
+  "ref_text_sha": "f82b66af82fa",
   "cells": {
    "G4L": {
-    "cer": 0.34673779236766517,
-    "ref_letters": 2437,
-    "read_letters": 3898,
-    "secs": 53.9,
+    "cer": 0.07342874922215308,
+    "ref_letters": 1607,
+    "read_letters": 1633,
+    "secs": 27.2,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.28190398030365205,
-    "ref_letters": 2437,
-    "read_letters": 3698,
-    "secs": 106.1,
-    "gate_denials": 1,
+    "cer": 0.08151835718730553,
+    "ref_letters": 1607,
+    "read_letters": 1646,
+    "secs": 62.2,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.23963890028723842,
-    "ref_letters": 2437,
-    "read_letters": 3137,
-    "secs": 77.6,
+    "cer": 0.07280647168637212,
+    "ref_letters": 1607,
+    "read_letters": 1638,
+    "secs": 32.8,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.35576528518670497,
-    "ref_letters": 2437,
+    "cer": 0.08462974486621033,
+    "ref_letters": 1607,
     "read_letters": 1630,
     "secs": null,
     "gate_denials": 0,
@@ -1484,18 +1469,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": -552,
-    "share": 0.288
+    "pos": 237256,
+    "share": 0.025
    },
    {
     "k": "C38L",
-    "pos": 24,
-    "share": 0.281
+    "pos": 237256,
+    "share": 0.025
    },
    {
     "k": "OPUS",
-    "pos": -544,
-    "share": 0.215
+    "pos": 237256,
+    "share": 0.025
    },
    {
     "k": "PROD",
@@ -1505,75 +1490,48 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 0,
-    "we": 1158,
-    "len": 1158,
-    "cer": 0.072,
-    "aligns": true
+    "ws": 237804,
+    "we": 237824,
+    "len": 20,
+    "cer": 0,
+    "aligns": false
    },
    "C38L": {
-    "ws": 4,
-    "we": 1158,
-    "len": 1154,
-    "cer": 0.116,
-    "aligns": true
+    "ws": 237804,
+    "we": 237824,
+    "len": 20,
+    "cer": 0,
+    "aligns": false
    },
    "OPUS": {
-    "ws": 0,
-    "we": 1158,
-    "len": 1158,
-    "cer": 0.092,
-    "aligns": true
-   }
-  },
-  "kept": true,
-  "ref_span": [
-   0,
-   1158
-  ],
-  "ref_rule": "median",
-  "aligning": [
-   "G4L",
-   "C38L",
-   "OPUS"
-  ],
-  "ref_refs": [
-   "Sha'arei Orah Introduction 1",
-   "Sha'arei Orah Introduction 5"
-  ],
-  "ref_text_sha": "e442183742a0",
-  "cells": {
-   "G4L": {
-    "cer": 0.07167530224525043,
-    "ref_letters": 1158,
-    "read_letters": 2070,
-    "secs": 65.9,
-    "gate_denials": 1,
-    "nudged": false
-   },
-   "C38L": {
-    "cer": 0.11917098445595854,
-    "ref_letters": 1158,
-    "read_letters": 1502,
-    "secs": 23.4,
-    "gate_denials": 0,
-    "nudged": false
-   },
-   "OPUS": {
-    "cer": 0.09153713298791019,
-    "ref_letters": 1158,
-    "read_letters": 2057,
-    "secs": 53.7,
-    "gate_denials": 0,
-    "nudged": false
+    "ws": 237804,
+    "we": 237824,
+    "len": 20,
+    "cer": 0,
+    "aligns": false
    },
    "PROD": {
-    "cer": 0.7590673575129534,
-    "ref_letters": 1158,
-    "read_letters": 561,
-    "secs": null,
-    "gate_denials": 0,
-    "nudged": false
+    "ws": 237804,
+    "we": 237824,
+    "len": 20,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": false,
+  "dropped": "no read aligns (letter CER < 0.5 over >= 80 letters)",
+  "cells": {
+   "G4L": {
+    "unscored": "page dropped"
+   },
+   "C38L": {
+    "unscored": "page dropped"
+   },
+   "OPUS": {
+    "unscored": "page dropped"
+   },
+   "PROD": {
+    "unscored": "page dropped"
    }
   }
  },
@@ -1589,18 +1547,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 153304,
-    "share": 0.213
+    "pos": 157624,
+    "share": 0.254
    },
    {
     "k": "C38L",
-    "pos": 153328,
-    "share": 0.199
+    "pos": 157616,
+    "share": 0.261
    },
    {
     "k": "OPUS",
-    "pos": 155480,
-    "share": 0.276
+    "pos": 157616,
+    "share": 0.293
    },
    {
     "k": "PROD",
@@ -1610,24 +1568,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 155397,
-    "we": 157619,
-    "len": 2222,
-    "cer": 0.077,
+    "ws": 157614,
+    "we": 159570,
+    "len": 1956,
+    "cer": 0.071,
     "aligns": true
    },
    "C38L": {
-    "ws": 155397,
-    "we": 157619,
-    "len": 2222,
-    "cer": 0.085,
+    "ws": 157614,
+    "we": 159570,
+    "len": 1956,
+    "cer": 0.074,
     "aligns": true
    },
    "OPUS": {
-    "ws": 155397,
+    "ws": 157614,
     "we": 159570,
-    "len": 4173,
-    "cer": 0.091,
+    "len": 1956,
+    "cer": 0.075,
     "aligns": true
    },
    "PROD": {
@@ -1640,8 +1598,8 @@
   },
   "kept": true,
   "ref_span": [
-   155397,
-   158595
+   157614,
+   159570
   ],
   "ref_rule": "median",
   "aligning": [
@@ -1651,38 +1609,38 @@
    "PROD"
   ],
   "ref_refs": [
-   "Sha'arei Orah Fifth Gate, Sixth Sefirah 73",
-   "Sha'arei Orah Fifth Gate, Sixth Sefirah 85"
+   "Sha'arei Orah Fifth Gate, Sixth Sefirah 81",
+   "Sha'arei Orah Fifth Gate, Sixth Sefirah 87"
   ],
-  "ref_text_sha": "ec60d319e75f",
+  "ref_text_sha": "a605716f03fc",
   "cells": {
    "G4L": {
-    "cer": 0.3588621444201313,
-    "ref_letters": 3199,
-    "read_letters": 4307,
-    "secs": 55.3,
+    "cer": 0.07106339468302658,
+    "ref_letters": 1956,
+    "read_letters": 2154,
+    "secs": 34.7,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.36417630509534227,
-    "ref_letters": 3199,
-    "read_letters": 4280,
-    "secs": 28.8,
-    "gate_denials": 0,
+    "cer": 0.07413087934560328,
+    "ref_letters": 1956,
+    "read_letters": 2161,
+    "secs": 66.2,
+    "gate_denials": 1,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.08690215692403876,
-    "ref_letters": 3199,
-    "read_letters": 4164,
-    "secs": 73.8,
+    "cer": 0.07515337423312883,
+    "ref_letters": 1956,
+    "read_letters": 2152,
+    "secs": 40.7,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.7095967489840576,
-    "ref_letters": 3199,
+    "cer": 0.08077709611451943,
+    "ref_letters": 1956,
     "read_letters": 2147,
     "secs": null,
     "gate_denials": 0,
@@ -1702,18 +1660,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 971152,
-    "share": 0.106
+    "pos": 975928,
+    "share": 0.103
    },
    {
     "k": "C38L",
-    "pos": 971120,
-    "share": 0.25
+    "pos": 975944,
+    "share": 0.107
    },
    {
     "k": "OPUS",
-    "pos": 975720,
-    "share": 0.272
+    "pos": 975944,
+    "share": 0.102
    },
    {
     "k": "PROD",
@@ -1723,24 +1681,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 972720,
-    "we": 979987,
-    "len": 7267,
-    "cer": 0.194,
+    "ws": 975579,
+    "we": 979990,
+    "len": 4411,
+    "cer": 0.11,
     "aligns": true
    },
    "C38L": {
-    "ws": 975768,
-    "we": 975850,
-    "len": 82,
-    "cer": 0.159,
+    "ws": 975579,
+    "we": 979987,
+    "len": 4408,
+    "cer": 0.13,
     "aligns": true
    },
    "OPUS": {
-    "ws": 975908,
-    "we": 976023,
-    "len": 115,
-    "cer": 0.009,
+    "ws": 975579,
+    "we": 979987,
+    "len": 4408,
+    "cer": 0.112,
     "aligns": true
    },
    "PROD": {
@@ -1753,8 +1711,8 @@
   },
   "kept": true,
   "ref_span": [
-   975675,
-   978005
+   975579,
+   979989
   ],
   "ref_rule": "median",
   "aligning": [
@@ -1764,38 +1722,38 @@
    "PROD"
   ],
   "ref_refs": [
-   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Birkot HaNehenin 13:3",
-   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Birkot HaNehenin 13:12"
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Birkot HaNehenin 13:2",
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Birkot HaNehenin 13:17"
   ],
-  "ref_text_sha": "83a39665bc40",
+  "ref_text_sha": "adee8992651d",
   "cells": {
    "G4L": {
-    "cer": 0.17223650385604114,
-    "ref_letters": 2334,
-    "read_letters": 8113,
-    "secs": 111.1,
-    "gate_denials": 1,
-    "nudged": false
-   },
-   "C38L": {
-    "cer": 0.8299057412167952,
-    "ref_letters": 2334,
-    "read_letters": 553,
-    "secs": 21.2,
+    "cer": 0.11053227633069082,
+    "ref_letters": 4415,
+    "read_letters": 3980,
+    "secs": 46.8,
     "gate_denials": 0,
     "nudged": false
    },
+   "C38L": {
+    "cer": 0.13114382785956966,
+    "ref_letters": 4415,
+    "read_letters": 3969,
+    "secs": 122.3,
+    "gate_denials": 2,
+    "nudged": false
+   },
    "OPUS": {
-    "cer": 0.8658954584404456,
-    "ref_letters": 2334,
-    "read_letters": 374,
-    "secs": 26.1,
+    "cer": 0.1130237825594564,
+    "ref_letters": 4415,
+    "read_letters": 3969,
+    "secs": 65.7,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.149528706083976,
-    "ref_letters": 2334,
+    "cer": 0.14971687429218572,
+    "ref_letters": 4415,
     "read_letters": 3948,
     "secs": null,
     "gate_denials": 0,
@@ -1815,18 +1773,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 4246520,
-    "share": 0.287
+    "pos": 4250960,
+    "share": 0.191
    },
    {
     "k": "C38L",
-    "pos": 4246624,
-    "share": 0.076
+    "pos": 4250904,
+    "share": 0.219
    },
    {
     "k": "OPUS",
-    "pos": 4251688,
-    "share": 0.168
+    "pos": 4251024,
+    "share": 0.117
    },
    {
     "k": "PROD",
@@ -1837,24 +1795,24 @@
   "spans": {
    "G4L": {
     "ws": 4250815,
-    "we": 4255102,
-    "len": 4287,
-    "cer": 0.135,
+    "we": 4255092,
+    "len": 4277,
+    "cer": 0.107,
     "aligns": true
    },
    "C38L": {
     "ws": 4250815,
-    "we": 4255069,
-    "len": 4254,
-    "cer": 0.417,
+    "we": 4255089,
+    "len": 4274,
+    "cer": 0.136,
     "aligns": true
    },
    "OPUS": {
-    "ws": 4251787,
-    "we": 4251826,
-    "len": 39,
-    "cer": 0,
-    "aligns": false
+    "ws": 4250815,
+    "we": 4255089,
+    "len": 4274,
+    "cer": 0.125,
+    "aligns": true
    },
    "PROD": {
     "ws": 4250815,
@@ -1867,12 +1825,13 @@
   "kept": true,
   "ref_span": [
    4250815,
-   4255091
+   4255090
   ],
   "ref_rule": "median",
   "aligning": [
    "G4L",
    "C38L",
+   "OPUS",
    "PROD"
   ],
   "ref_refs": [
@@ -1882,26 +1841,26 @@
   "ref_text_sha": "5d79fd21aae6",
   "cells": {
    "G4L": {
-    "cer": 0.13514145429039046,
+    "cer": 0.10708440495674539,
     "ref_letters": 4277,
-    "read_letters": 8560,
-    "secs": 151.5,
-    "gate_denials": 1,
+    "read_letters": 4088,
+    "secs": 51.7,
+    "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.41524433013794715,
+    "cer": 0.13654430675707271,
     "ref_letters": 4277,
-    "read_letters": 8460,
-    "secs": 183.6,
-    "gate_denials": 1,
+    "read_letters": 4162,
+    "secs": 26.3,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.9532382511105916,
+    "cer": 0.12555529576806174,
     "ref_letters": 4277,
-    "read_letters": 202,
-    "secs": 24.3,
+    "read_letters": 3996,
+    "secs": 47.5,
     "gate_denials": 0,
     "nudged": false
    },
@@ -1927,18 +1886,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 2741232,
-    "share": 0.071
+    "pos": 2741104,
+    "share": 0.136
    },
    {
     "k": "C38L",
-    "pos": 2745416,
-    "share": 0.034
+    "pos": 2741112,
+    "share": 0.105
    },
    {
     "k": "OPUS",
-    "pos": 2690208,
-    "share": 0.087
+    "pos": 2741144,
+    "share": 0.134
    },
    {
     "k": "PROD",
@@ -1949,16 +1908,23 @@
   "spans": {
    "G4L": {
     "ws": 2742063,
-    "we": 2751203,
-    "len": 9140,
-    "cer": 0.285,
+    "we": 2746245,
+    "len": 4182,
+    "cer": 0.352,
     "aligns": true
    },
    "C38L": {
-    "ws": 2746889,
-    "we": 2749795,
-    "len": 2906,
-    "cer": 0.372,
+    "ws": 2742064,
+    "we": 2746246,
+    "len": 4182,
+    "cer": 0.143,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 2742063,
+    "we": 2746245,
+    "len": 4182,
+    "cer": 0.355,
     "aligns": true
    },
    "PROD": {
@@ -1972,47 +1938,48 @@
   "kept": true,
   "ref_span": [
    2742063,
-   2749795
+   2746246
   ],
   "ref_rule": "median",
   "aligning": [
    "G4L",
    "C38L",
+   "OPUS",
    "PROD"
   ],
   "ref_refs": [
    "Shenei Luchot HaBerit Torah Shebikhtav, Bereshit, Torah Ohr 21",
-   "Shenei Luchot HaBerit Torah Shebikhtav, Bereshit, Torah Ohr 42"
+   "Shenei Luchot HaBerit Torah Shebikhtav, Bereshit, Torah Ohr 33"
   ],
-  "ref_text_sha": "ecb38f03112f",
+  "ref_text_sha": "98e0b99a00f8",
   "cells": {
    "G4L": {
-    "cer": 0.30906504590715117,
-    "ref_letters": 7733,
-    "read_letters": 9909,
-    "secs": 151.6,
-    "gate_denials": 1,
+    "cer": 0.3522808693575352,
+    "ref_letters": 4187,
+    "read_letters": 5060,
+    "secs": 60.9,
+    "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.6511056511056511,
-    "ref_letters": 7733,
-    "read_letters": 10028,
-    "secs": 205,
-    "gate_denials": 1,
+    "cer": 0.14282302364461427,
+    "ref_letters": 4187,
+    "read_letters": 5115,
+    "secs": 54.2,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.9903013060907798,
-    "ref_letters": 7733,
-    "read_letters": 75,
-    "secs": 19.2,
+    "cer": 0.35538571769763555,
+    "ref_letters": 4187,
+    "read_letters": 4955,
+    "secs": 91.1,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.5718349928876245,
-    "ref_letters": 7733,
+    "cer": 0.22235490804872224,
+    "ref_letters": 4187,
     "read_letters": 5123,
     "secs": null,
     "gate_denials": 0,
@@ -2032,18 +1999,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 771512,
-    "share": 0.092
+    "pos": 771536,
+    "share": 0.164
    },
    {
     "k": "C38L",
-    "pos": 771616,
-    "share": 0.023
+    "pos": 771560,
+    "share": 0.143
    },
    {
     "k": "OPUS",
-    "pos": 779584,
-    "share": 0.067
+    "pos": 771568,
+    "share": 0.2
    },
    {
     "k": "PROD",
@@ -2053,25 +2020,25 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 771351,
-    "we": 780749,
-    "len": 9398,
-    "cer": 0.187,
+    "ws": 771346,
+    "we": 775803,
+    "len": 4457,
+    "cer": 0.085,
     "aligns": true
    },
    "C38L": {
-    "ws": 771441,
-    "we": 780377,
-    "len": 8936,
-    "cer": 0.497,
+    "ws": 771346,
+    "we": 775803,
+    "len": 4457,
+    "cer": 0.126,
     "aligns": true
    },
    "OPUS": {
-    "ws": 779690,
-    "we": 779704,
-    "len": 14,
-    "cer": 0,
-    "aligns": false
+    "ws": 771348,
+    "we": 775803,
+    "len": 4455,
+    "cer": 0.107,
+    "aligns": true
    },
    "PROD": {
     "ws": 771346,
@@ -2083,48 +2050,49 @@
   },
   "kept": true,
   "ref_span": [
-   771351,
-   780377
+   771346,
+   775803
   ],
   "ref_rule": "median",
   "aligning": [
    "G4L",
    "C38L",
+   "OPUS",
    "PROD"
   ],
   "ref_refs": [
    "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Maachalot Asurot 2:16",
-   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Maachalot Asurot 2:53"
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Maachalot Asurot 2:37"
   ],
-  "ref_text_sha": "a79b8653d858",
+  "ref_text_sha": "ae4f97969bdf",
   "cells": {
    "G4L": {
-    "cer": 0.18837852794687326,
-    "ref_letters": 9035,
-    "read_letters": 8691,
-    "secs": 154.8,
+    "cer": 0.08525914292124748,
+    "ref_letters": 4457,
+    "read_letters": 4166,
+    "secs": 59.6,
     "gate_denials": 1,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.4961815163254012,
-    "ref_letters": 9035,
-    "read_letters": 8858,
-    "secs": 87.1,
-    "gate_denials": 1,
+    "cer": 0.1263181512227956,
+    "ref_letters": 4457,
+    "read_letters": 4161,
+    "secs": 35.8,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.9861649142224682,
-    "ref_letters": 9035,
-    "read_letters": 125,
-    "secs": 26.4,
+    "cer": 0.10724702714830603,
+    "ref_letters": 4457,
+    "read_letters": 4134,
+    "secs": 78.1,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.6194798007747648,
-    "ref_letters": 9035,
+    "cer": 0.2355844738613417,
+    "ref_letters": 4457,
     "read_letters": 4545,
     "secs": null,
     "gate_denials": 0,
@@ -2144,18 +2112,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 3629712,
-    "share": 0.057
+    "pos": 3634848,
+    "share": 0.127
    },
    {
     "k": "C38L",
-    "pos": 3629672,
-    "share": 0.019
+    "pos": 3634824,
+    "share": 0.097
    },
    {
     "k": "OPUS",
-    "pos": 3636000,
-    "share": 0.399
+    "pos": 3634848,
+    "share": 0.117
    },
    {
     "k": "PROD",
@@ -2165,24 +2133,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 3639768,
-    "we": 3645188,
-    "len": 5420,
-    "cer": 0.161,
+    "ws": 3634738,
+    "we": 3639769,
+    "len": 5031,
+    "cer": 0.093,
     "aligns": true
    },
    "C38L": {
-    "ws": 3639772,
-    "we": 3644014,
-    "len": 4242,
-    "cer": 0.423,
+    "ws": 3634738,
+    "we": 3639768,
+    "len": 5030,
+    "cer": 0.133,
     "aligns": true
    },
    "OPUS": {
-    "ws": 3636075,
-    "we": 3636171,
-    "len": 96,
-    "cer": 0.063,
+    "ws": 3634738,
+    "we": 3639769,
+    "len": 5031,
+    "cer": 0.122,
     "aligns": true
    },
    "PROD": {
@@ -2195,8 +2163,8 @@
   },
   "kept": true,
   "ref_span": [
-   3637922,
-   3641894
+   3634738,
+   3639769
   ],
   "ref_rule": "median",
   "aligning": [
@@ -2206,38 +2174,38 @@
    "PROD"
   ],
   "ref_refs": [
-   "Shenei Luchot HaBerit Torah Shebikhtav, Sh'lach, Torah Ohr 12",
-   "Shenei Luchot HaBerit Torah Shebikhtav, Sh'lach, Torah Ohr 26"
+   "Shenei Luchot HaBerit Torah Shebikhtav, Sh'lach, Torah Ohr 3",
+   "Shenei Luchot HaBerit Torah Shebikhtav, Sh'lach, Torah Ohr 19"
   ],
-  "ref_text_sha": "c63407d97b41",
+  "ref_text_sha": "6da497a614d5",
   "cells": {
    "G4L": {
-    "cer": 0.5432813286361349,
-    "ref_letters": 3974,
-    "read_letters": 9675,
-    "secs": 141.2,
+    "cer": 0.0934207910952097,
+    "ref_letters": 5031,
+    "read_letters": 4806,
+    "secs": 54.8,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.6504781077000503,
-    "ref_letters": 3974,
-    "read_letters": 9849,
-    "secs": 142,
-    "gate_denials": 2,
+    "cer": 0.13297555158020274,
+    "ref_letters": 5031,
+    "read_letters": 4805,
+    "secs": 42.1,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.9516859587317564,
-    "ref_letters": 3974,
-    "read_letters": 194,
-    "secs": 21.1,
+    "cer": 0.12144702842377261,
+    "ref_letters": 5031,
+    "read_letters": 4788,
+    "secs": 98.8,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.6149974836436839,
-    "ref_letters": 3974,
+    "cer": 0.18902802623732856,
+    "ref_letters": 5031,
     "read_letters": 4765,
     "secs": null,
     "gate_denials": 0,
@@ -2997,18 +2965,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 164600,
-    "share": 0.165
+    "pos": 162176,
+    "share": 0.262
    },
    {
     "k": "C38L",
-    "pos": 164600,
-    "share": 0.003
+    "pos": 162072,
+    "share": 0.048
    },
    {
     "k": "OPUS",
-    "pos": 162192,
-    "share": 0.307
+    "pos": 162176,
+    "share": 0.162
    },
    {
     "k": "PROD",
@@ -3018,24 +2986,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 164614,
-    "we": 167129,
-    "len": 2515,
-    "cer": 0.15,
+    "ws": 162035,
+    "we": 167125,
+    "len": 5090,
+    "cer": 0.149,
     "aligns": true
    },
    "C38L": {
-    "ws": 165534,
-    "we": 165640,
-    "len": 106,
-    "cer": 0.396,
+    "ws": 162055,
+    "we": 163705,
+    "len": 1650,
+    "cer": 0.355,
     "aligns": true
    },
    "OPUS": {
     "ws": 162035,
     "we": 167126,
     "len": 5091,
-    "cer": 0.113,
+    "cer": 0.121,
     "aligns": true
    },
    "PROD": {
@@ -3048,8 +3016,8 @@
   },
   "kept": true,
   "ref_span": [
-   163325,
-   166383
+   162035,
+   165415
   ],
   "ref_rule": "median",
   "aligning": [
@@ -3059,38 +3027,38 @@
    "PROD"
   ],
   "ref_refs": [
-   "Zohar Chadash Noach 49",
-   "Zohar Chadash Noach 66"
+   "Zohar Chadash Noach 42",
+   "Zohar Chadash Noach 59"
   ],
-  "ref_text_sha": "c3cb8f3ab05c",
+  "ref_text_sha": "118a60091e94",
   "cells": {
    "G4L": {
-    "cer": 0.5022875816993464,
-    "ref_letters": 3060,
-    "read_letters": 4735,
-    "secs": 117.1,
-    "gate_denials": 1,
-    "nudged": false
-   },
-   "C38L": {
-    "cer": 0.7173202614379085,
-    "ref_letters": 3060,
-    "read_letters": 4953,
-    "secs": 50.9,
+    "cer": 0.1603550295857988,
+    "ref_letters": 3380,
+    "read_letters": 4849,
+    "secs": 71.8,
     "gate_denials": 0,
     "nudged": false
    },
+   "C38L": {
+    "cer": 0.4840236686390533,
+    "ref_letters": 3380,
+    "read_letters": 5076,
+    "secs": 149.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
    "OPUS": {
-    "cer": 0.11045751633986928,
-    "ref_letters": 3060,
-    "read_letters": 4856,
-    "secs": 87,
+    "cer": 0.12248520710059171,
+    "ref_letters": 3380,
+    "read_letters": 4845,
+    "secs": 81.6,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.826797385620915,
-    "ref_letters": 3060,
+    "cer": 0.8100591715976332,
+    "ref_letters": 3380,
     "read_letters": 7789,
     "secs": null,
     "gate_denials": 0,
@@ -3109,52 +3077,39 @@
   ],
   "located": [
    {
-    "k": "G4L",
-    "pos": 540264,
-    "share": 0.106
-   },
-   {
     "k": "C38L",
-    "pos": 540232,
-    "share": 0.017
+    "pos": 540288,
+    "share": 0.069
    },
    {
     "k": "OPUS",
-    "pos": 540216,
-    "share": 0.282
+    "pos": 540248,
+    "share": 0.126
    }
   ],
   "spans": {
-   "G4L": {
-    "ws": 540275,
-    "we": 545365,
-    "len": 5090,
-    "cer": 0.164,
-    "aligns": true
-   },
    "C38L": {
-    "ws": 540274,
-    "we": 544814,
-    "len": 4540,
-    "cer": 0.484,
+    "ws": 540312,
+    "we": 545268,
+    "len": 4956,
+    "cer": 0.339,
     "aligns": true
    },
    "OPUS": {
     "ws": 540270,
     "we": 545360,
     "len": 5090,
-    "cer": 0.125,
+    "cer": 0.149,
     "aligns": true
    }
   },
   "kept": true,
   "ref_span": [
-   540274,
+   540270,
    545360
   ],
-  "ref_rule": "median",
+  "ref_rule": "union",
   "aligning": [
-   "G4L",
    "C38L",
    "OPUS"
   ],
@@ -3165,26 +3120,24 @@
   "ref_text_sha": "1447d0e0faf0",
   "cells": {
    "G4L": {
-    "cer": 0.1644400785854617,
-    "ref_letters": 5090,
-    "read_letters": 4863,
-    "secs": 92.5,
-    "gate_denials": 0,
-    "nudged": false
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 80.6,
+    "gate_denials": 1
    },
    "C38L": {
-    "cer": 0.48978388998035366,
+    "cer": 0.3444007858546169,
     "ref_letters": 5090,
-    "read_letters": 4875,
-    "secs": 41.7,
+    "read_letters": 4893,
+    "secs": 49.7,
     "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.12455795677799607,
+    "cer": 0.14891944990176817,
     "ref_letters": 5090,
-    "read_letters": 5031,
-    "secs": 97.2,
+    "read_letters": 4916,
+    "secs": 96.4,
     "gate_denials": 0,
     "nudged": false
    },
@@ -3209,17 +3162,17 @@
    {
     "k": "G4L",
     "pos": 312032,
-    "share": 0.185
+    "share": 0.16
    },
    {
     "k": "C38L",
-    "pos": 312040,
-    "share": 0.111
+    "pos": 312032,
+    "share": 0.03
    },
    {
     "k": "OPUS",
     "pos": 312040,
-    "share": 0.161
+    "share": 0.208
    }
   ],
   "spans": {
@@ -3227,21 +3180,21 @@
     "ws": 312045,
     "we": 317582,
     "len": 5537,
-    "cer": 0.155,
+    "cer": 0.157,
     "aligns": true
    },
    "C38L": {
-    "ws": 312070,
-    "we": 317563,
-    "len": 5493,
-    "cer": 0.37,
+    "ws": 312124,
+    "we": 317009,
+    "len": 4885,
+    "cer": 0.454,
     "aligns": true
    },
    "OPUS": {
-    "ws": 312025,
+    "ws": 312045,
     "we": 317571,
-    "len": 5546,
-    "cer": 0.139,
+    "len": 5526,
+    "cer": 0.144,
     "aligns": true
    }
   },
@@ -3263,26 +3216,26 @@
   "ref_text_sha": "ee296f1820dc",
   "cells": {
    "G4L": {
-    "cer": 0.1550850524791893,
-    "ref_letters": 5526,
-    "read_letters": 5287,
-    "secs": 79,
-    "gate_denials": 0,
-    "nudged": false
-   },
-   "C38L": {
-    "cer": 0.37115454216431415,
+    "cer": 0.15653275425262395,
     "ref_letters": 5526,
     "read_letters": 5257,
-    "secs": 140.4,
+    "secs": 83.7,
     "gate_denials": 1,
     "nudged": false
    },
-   "OPUS": {
-    "cer": 0.1375316684762939,
+   "C38L": {
+    "cer": 0.46362649294245384,
     "ref_letters": 5526,
-    "read_letters": 5262,
-    "secs": 98.3,
+    "read_letters": 5279,
+    "secs": 40.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1444082519001086,
+    "ref_letters": 5526,
+    "read_letters": 5268,
+    "secs": 105.2,
     "gate_denials": 0,
     "nudged": false
    },
@@ -3305,14 +3258,14 @@
   ],
   "located": [
    {
-    "k": "C38L",
-    "pos": 666808,
-    "share": 0.001
+    "k": "G4L",
+    "pos": 666672,
+    "share": 0.061
    },
    {
     "k": "OPUS",
-    "pos": 666960,
-    "share": 0.072
+    "pos": 666672,
+    "share": 0.095
    },
    {
     "k": "PROD",
@@ -3321,18 +3274,18 @@
    }
   ],
   "spans": {
-   "C38L": {
-    "ws": 670896,
-    "we": 671144,
-    "len": 248,
-    "cer": 0.423,
+   "G4L": {
+    "ws": 666539,
+    "we": 674397,
+    "len": 7858,
+    "cer": 0.264,
     "aligns": true
    },
    "OPUS": {
     "ws": 666539,
-    "we": 671909,
-    "len": 5370,
-    "cer": 0.195,
+    "we": 671906,
+    "len": 5367,
+    "cer": 0.183,
     "aligns": true
    },
    "PROD": {
@@ -3346,44 +3299,46 @@
   "kept": true,
   "ref_span": [
    666539,
-   671909
+   674397
   ],
   "ref_rule": "union",
   "aligning": [
-   "C38L",
+   "G4L",
    "OPUS"
   ],
   "ref_refs": [
    "Zohar Chadash Midrash Rut 605",
-   "Zohar Chadash Midrash Rut 638"
+   "Zohar Chadash Midrash Rut 654"
   ],
-  "ref_text_sha": "dd6338c671b3",
+  "ref_text_sha": "2e5df22021d5",
   "cells": {
    "G4L": {
-    "failure": "copy_filter",
-    "why": "CLI: blocked by Gemini's filters",
-    "secs": 57.9,
-    "gate_denials": 1
-   },
-   "C38L": {
-    "cer": 0.5897244973938943,
-    "ref_letters": 5372,
-    "read_letters": 6875,
-    "secs": 68.4,
+    "cer": 0.26291677271570374,
+    "ref_letters": 7858,
+    "read_letters": 7037,
+    "secs": 118.3,
     "gate_denials": 0,
     "nudged": false
    },
+   "C38L": {
+    "cer": 1,
+    "ref_letters": 0,
+    "read_letters": 0,
+    "secs": 102.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
    "OPUS": {
-    "cer": 0.1950856291883842,
-    "ref_letters": 5372,
-    "read_letters": 4885,
-    "secs": 106.1,
+    "cer": 0.4395520488673963,
+    "ref_letters": 7858,
+    "read_letters": 4979,
+    "secs": 101.2,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.774385703648548,
-    "ref_letters": 5372,
+    "cer": 0.7790786459658946,
+    "ref_letters": 7858,
     "read_letters": 19024,
     "secs": null,
     "gate_denials": 0,
@@ -3404,17 +3359,17 @@
    {
     "k": "G4L",
     "pos": 285176,
-    "share": 0.484
+    "share": 0.542
    },
    {
     "k": "C38L",
-    "pos": 285152,
-    "share": 0.121
+    "pos": 284352,
+    "share": 0.007
    },
    {
     "k": "OPUS",
-    "pos": 285184,
-    "share": 0.483
+    "pos": 285176,
+    "share": 0.429
    },
    {
     "k": "PROD",
@@ -3424,24 +3379,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 285177,
+    "ws": 285176,
     "we": 287804,
-    "len": 2627,
-    "cer": 0.104,
+    "len": 2628,
+    "cer": 0.103,
     "aligns": true
    },
    "C38L": {
-    "ws": 285176,
-    "we": 287816,
-    "len": 2640,
-    "cer": 0.319,
+    "ws": 285216,
+    "we": 286962,
+    "len": 1746,
+    "cer": 0.473,
     "aligns": true
    },
    "OPUS": {
     "ws": 285176,
     "we": 287804,
     "len": 2628,
-    "cer": 0.121,
+    "cer": 0.129,
     "aligns": true
    },
    "PROD": {
@@ -3470,26 +3425,26 @@
   "ref_text_sha": "7032dc0bb6eb",
   "cells": {
    "G4L": {
-    "cer": 0.10388127853881278,
+    "cer": 0.10312024353120243,
     "ref_letters": 2628,
-    "read_letters": 2570,
-    "secs": 73.9,
+    "read_letters": 2568,
+    "secs": 46.8,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.3184931506849315,
+    "cer": 0.4950532724505327,
     "ref_letters": 2628,
-    "read_letters": 3418,
-    "secs": 28.8,
+    "read_letters": 3410,
+    "secs": 60.5,
     "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.12100456621004566,
+    "cer": 0.12861491628614916,
     "ref_letters": 2628,
-    "read_letters": 2556,
-    "secs": 56,
+    "read_letters": 2558,
+    "secs": 54.1,
     "gate_denials": 0,
     "nudged": false
    },
@@ -3626,47 +3581,47 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 1364912,
-    "share": 0.131
+    "pos": 1367448,
+    "share": 0.134
    },
    {
     "k": "C38L",
-    "pos": 1364920,
-    "share": 0.036
+    "pos": 1364992,
+    "share": 0.076
    },
    {
     "k": "OPUS",
     "pos": 1364912,
-    "share": 0.119
+    "share": 0.165
    }
   ],
   "spans": {
    "G4L": {
     "ws": 1364842,
-    "we": 1369989,
-    "len": 5147,
-    "cer": 0.144,
+    "we": 1367407,
+    "len": 2565,
+    "cer": 0.129,
     "aligns": true
    },
    "C38L": {
-    "ws": 1365109,
-    "we": 1369052,
-    "len": 3943,
-    "cer": 0.386,
+    "ws": 1364842,
+    "we": 1369985,
+    "len": 5143,
+    "cer": 0.289,
     "aligns": true
    },
    "OPUS": {
     "ws": 1364842,
     "we": 1369989,
     "len": 5147,
-    "cer": 0.105,
+    "cer": 0.099,
     "aligns": true
    }
   },
   "kept": true,
   "ref_span": [
    1364842,
-   1369989
+   1369985
   ],
   "ref_rule": "median",
   "aligning": [
@@ -3681,26 +3636,26 @@
   "ref_text_sha": "c9a25b750b61",
   "cells": {
    "G4L": {
-    "cer": 0.14413364413364413,
+    "cer": 0.5642968142968143,
     "ref_letters": 5148,
-    "read_letters": 4963,
-    "secs": 72.2,
+    "read_letters": 4978,
+    "secs": 72,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.43065268065268064,
+    "cer": 0.28768453768453767,
     "ref_letters": 5148,
-    "read_letters": 4787,
-    "secs": 39.3,
-    "gate_denials": 0,
+    "read_letters": 4843,
+    "secs": 214.6,
+    "gate_denials": 1,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.10450660450660451,
+    "cer": 0.09887334887334888,
     "ref_letters": 5148,
-    "read_letters": 4941,
-    "secs": 87,
+    "read_letters": 4960,
+    "secs": 91,
     "gate_denials": 0,
     "nudged": false
    },
@@ -3725,17 +3680,17 @@
    {
     "k": "G4L",
     "pos": 64432,
-    "share": 0.678
+    "share": 0.114
    },
    {
     "k": "C38L",
-    "pos": 64512,
-    "share": 0.154
+    "pos": 67112,
+    "share": 0.093
    },
    {
     "k": "OPUS",
     "pos": 64440,
-    "share": 0.722
+    "share": 0.66
    },
    {
     "k": "PROD",
@@ -3745,24 +3700,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 64465,
-    "we": 69315,
-    "len": 4850,
-    "cer": 0.085,
+    "ws": 64464,
+    "we": 69320,
+    "len": 4856,
+    "cer": 0.32,
     "aligns": true
    },
    "C38L": {
-    "ws": 66340,
-    "we": 68560,
-    "len": 2220,
-    "cer": 0.299,
+    "ws": 67659,
+    "we": 69315,
+    "len": 1656,
+    "cer": 0.219,
     "aligns": true
    },
    "OPUS": {
     "ws": 64464,
     "we": 69315,
     "len": 4851,
-    "cer": 0.078,
+    "cer": 0.079,
     "aligns": true
    },
    "PROD": {
@@ -3775,7 +3730,7 @@
   },
   "kept": true,
   "ref_span": [
-   64465,
+   64464,
    69315
   ],
   "ref_rule": "median",
@@ -3791,26 +3746,26 @@
   "ref_text_sha": "079bb21d819c",
   "cells": {
    "G4L": {
-    "cer": 0.08534322820037106,
+    "cer": 0.31993403421974853,
     "ref_letters": 4851,
-    "read_letters": 4879,
-    "secs": 65.4,
+    "read_letters": 4892,
+    "secs": 92.6,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.422180993609565,
+    "cer": 0.6427540713254999,
     "ref_letters": 4851,
-    "read_letters": 4795,
-    "secs": 185.4,
-    "gate_denials": 2,
+    "read_letters": 4554,
+    "secs": 35.5,
+    "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.07812822098536384,
+    "cer": 0.07936507936507936,
     "ref_letters": 4851,
-    "read_letters": 4872,
-    "secs": 93.2,
+    "read_letters": 4871,
+    "secs": 85.1,
     "gate_denials": 0,
     "nudged": false
    },
@@ -3836,18 +3791,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 955904,
-    "share": 0.143
+    "pos": 953368,
+    "share": 0.114
    },
    {
     "k": "C38L",
-    "pos": 957496,
-    "share": 0.071
+    "pos": 956176,
+    "share": 0.106
    },
    {
     "k": "OPUS",
     "pos": 955904,
-    "share": 0.159
+    "share": 0.162
    },
    {
     "k": "PROD",
@@ -3857,24 +3812,24 @@
   ],
   "spans": {
    "G4L": {
-    "ws": 956148,
-    "we": 960161,
-    "len": 4013,
-    "cer": 0.168,
+    "ws": 957509,
+    "we": 960162,
+    "len": 2653,
+    "cer": 0.125,
     "aligns": true
    },
    "C38L": {
-    "ws": 957509,
-    "we": 960132,
-    "len": 2623,
-    "cer": 0.24,
+    "ws": 956257,
+    "we": 960109,
+    "len": 3852,
+    "cer": 0.27,
     "aligns": true
    },
    "OPUS": {
     "ws": 956145,
-    "we": 960161,
-    "len": 4016,
-    "cer": 0.176,
+    "we": 960158,
+    "len": 4013,
+    "cer": 0.159,
     "aligns": true
    },
    "PROD": {
@@ -3887,8 +3842,8 @@
   },
   "kept": true,
   "ref_span": [
-   956676,
-   960147
+   956730,
+   960134
   ],
   "ref_rule": "median",
   "aligning": [
@@ -3901,35 +3856,35 @@
    "Pardes Rimmonim 21:16:9",
    "Pardes Rimmonim 22:1:4"
   ],
-  "ref_text_sha": "50d4dc79238d",
+  "ref_text_sha": "b23bf4feac2f",
   "cells": {
    "G4L": {
-    "cer": 0.13903281519861832,
-    "ref_letters": 3474,
-    "read_letters": 4135,
-    "secs": 87.2,
-    "gate_denials": 1,
+    "cer": 0.31894273127753303,
+    "ref_letters": 3405,
+    "read_letters": 4129,
+    "secs": 61.7,
+    "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.41738629821531376,
-    "ref_letters": 3474,
-    "read_letters": 3929,
-    "secs": 107.3,
+    "cer": 0.25345080763582967,
+    "ref_letters": 3405,
+    "read_letters": 3916,
+    "secs": 135,
     "gate_denials": 1,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.15112262521588946,
-    "ref_letters": 3474,
-    "read_letters": 4093,
-    "secs": 84.5,
+    "cer": 0.12246696035242291,
+    "ref_letters": 3405,
+    "read_letters": 4132,
+    "secs": 82.5,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.671272308578008,
-    "ref_letters": 3474,
+    "cer": 0.6687224669603524,
+    "ref_letters": 3405,
     "read_letters": 16924,
     "secs": null,
     "gate_denials": 0,
@@ -4060,18 +4015,18 @@
   "located": [
    {
     "k": "G4L",
-    "pos": 191024,
-    "share": 0.024
+    "pos": 190840,
+    "share": 0.019
    },
    {
     "k": "C38L",
-    "pos": 191040,
+    "pos": 185584,
     "share": 0.016
    },
    {
     "k": "OPUS",
-    "pos": 191024,
-    "share": 0.406
+    "pos": 191032,
+    "share": 0.348
    },
    {
     "k": "PROD",
@@ -4084,21 +4039,21 @@
     "ws": 191052,
     "we": 191340,
     "len": 288,
-    "cer": 0.267,
+    "cer": 0.271,
     "aligns": true
    },
    "C38L": {
-    "ws": 191135,
+    "ws": 191090,
     "we": 191340,
-    "len": 205,
-    "cer": 0.298,
+    "len": 250,
+    "cer": 0.292,
     "aligns": true
    },
    "OPUS": {
     "ws": 191052,
     "we": 191340,
     "len": 288,
-    "cer": 0.222,
+    "cer": 0.253,
     "aligns": true
    },
    "PROD": {
@@ -4128,26 +4083,26 @@
   "ref_text_sha": "661189eff6fa",
   "cells": {
    "G4L": {
-    "cer": 0.25925925925925924,
+    "cer": 0.26666666666666666,
     "ref_letters": 270,
-    "read_letters": 5784,
-    "secs": 137.7,
-    "gate_denials": 1,
+    "read_letters": 5972,
+    "secs": 116.2,
+    "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.3851851851851852,
+    "cer": 0.32222222222222224,
     "ref_letters": 270,
-    "read_letters": 5578,
-    "secs": 82.1,
+    "read_letters": 5749,
+    "secs": 48.8,
     "gate_denials": 0,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.21851851851851853,
+    "cer": 0.2518518518518518,
     "ref_letters": 270,
-    "read_letters": 395,
-    "secs": 21.4,
+    "read_letters": 336,
+    "secs": 20.9,
     "gate_denials": 0,
     "nudged": false
    },
@@ -4290,13 +4245,13 @@
    },
    {
     "k": "C38L",
-    "pos": 217896,
-    "share": 0.022
+    "pos": 217944,
+    "share": 0.028
    },
    {
     "k": "OPUS",
-    "pos": 218256,
-    "share": 0.326
+    "pos": 218288,
+    "share": 0.278
    },
    {
     "k": "PROD",
@@ -4307,30 +4262,30 @@
   "spans": {
    "G4L": {
     "ws": 218351,
-    "we": 218887,
-    "len": 536,
+    "we": 218881,
+    "len": 530,
     "cer": 0.123,
     "aligns": true
    },
    "C38L": {
-    "ws": 218351,
-    "we": 218886,
-    "len": 535,
-    "cer": 0.181,
+    "ws": 218345,
+    "we": 218881,
+    "len": 536,
+    "cer": 0.218,
     "aligns": true
    },
    "OPUS": {
     "ws": 218351,
-    "we": 218888,
-    "len": 537,
-    "cer": 0.158,
+    "we": 218885,
+    "len": 534,
+    "cer": 0.137,
     "aligns": true
    }
   },
   "kept": true,
   "ref_span": [
    218351,
-   218887
+   218881
   ],
   "ref_rule": "median",
   "aligning": [
@@ -4342,35 +4297,35 @@
    "Tikkunei Zohar 114 4",
    "Tikkunei Zohar 114 10"
   ],
-  "ref_text_sha": "c7573213cc39",
+  "ref_text_sha": "17e2a7a4b9fb",
   "cells": {
    "G4L": {
-    "cer": 0.12777777777777777,
-    "ref_letters": 540,
-    "read_letters": 5755,
-    "secs": 111.7,
+    "cer": 0.12264150943396226,
+    "ref_letters": 530,
+    "read_letters": 5877,
+    "secs": 128.9,
     "gate_denials": 0,
     "nudged": false
    },
    "C38L": {
-    "cer": 0.18888888888888888,
-    "ref_letters": 540,
-    "read_letters": 5844,
-    "secs": 69.5,
+    "cer": 0.21132075471698114,
+    "ref_letters": 530,
+    "read_letters": 5917,
+    "secs": 84,
     "gate_denials": 1,
     "nudged": false
    },
    "OPUS": {
-    "cer": 0.16111111111111112,
-    "ref_letters": 540,
-    "read_letters": 669,
-    "secs": 27.5,
+    "cer": 0.13584905660377358,
+    "ref_letters": 530,
+    "read_letters": 617,
+    "secs": 28.9,
     "gate_denials": 0,
     "nudged": false
    },
    "PROD": {
-    "cer": 0.7722222222222223,
-    "ref_letters": 540,
+    "cer": 0.7716981132075472,
+    "ref_letters": 530,
     "read_letters": 18219,
     "secs": null,
     "gate_denials": 0,
@@ -4391,17 +4346,17 @@
    {
     "k": "G4L",
     "pos": 1848,
-    "share": 0.026
+    "share": 0.027
    },
    {
     "k": "C38L",
-    "pos": 1808,
-    "share": 0.02
+    "pos": 1848,
+    "share": 0.022
    },
    {
     "k": "OPUS",
     "pos": 1840,
-    "share": 0.332
+    "share": 0.441
    }
   ],
   "spans": {
@@ -4409,28 +4364,28 @@
     "ws": 1869,
     "we": 2273,
     "len": 404,
-    "cer": 0.257,
+    "cer": 0.248,
     "aligns": true
    },
    "C38L": {
-    "ws": 1921,
-    "we": 2264,
-    "len": 343,
-    "cer": 0.277,
+    "ws": 1893,
+    "we": 2284,
+    "len": 391,
+    "cer": 0.261,
     "aligns": true
    },
    "OPUS": {
-    "ws": 1869,
+    "ws": 1881,
     "we": 2277,
-    "len": 408,
-    "cer": 0.221,
+    "len": 396,
+    "cer": 0.225,
     "aligns": true
    }
   },
   "kept": true,
   "ref_span": [
-   1869,
-   2273
+   1881,
+   2277
   ],
   "ref_rule": "median",
   "aligning": [
@@ -4442,29 +4397,29 @@
    "Tikkunei Zohar 2 2",
    "Tikkunei Zohar 2 3"
   ],
-  "ref_text_sha": "aeb480195465",
+  "ref_text_sha": "63ef41dd7778",
   "cells": {
    "G4L": {
-    "cer": 0.25735294117647056,
-    "ref_letters": 408,
-    "read_letters": 6017,
-    "secs": 154.8,
-    "gate_denials": 1,
-    "nudged": false
-   },
-   "C38L": {
-    "cer": 0.3602941176470588,
-    "ref_letters": 408,
-    "read_letters": 5497,
-    "secs": 58.3,
+    "cer": 0.24242424242424243,
+    "ref_letters": 396,
+    "read_letters": 5780,
+    "secs": 178.4,
     "gate_denials": 0,
     "nudged": false
    },
+   "C38L": {
+    "cer": 0.2777777777777778,
+    "ref_letters": 396,
+    "read_letters": 5485,
+    "secs": 101,
+    "gate_denials": 1,
+    "nudged": false
+   },
    "OPUS": {
-    "cer": 0.22058823529411764,
-    "ref_letters": 408,
-    "read_letters": 542,
-    "secs": 29.8,
+    "cer": 0.22474747474747475,
+    "ref_letters": 396,
+    "read_letters": 419,
+    "secs": 23.3,
     "gate_denials": 0,
     "nudged": false
    },
@@ -4489,17 +4444,12 @@
    {
     "k": "G4L",
     "pos": 162744,
-    "share": 0.046
-   },
-   {
-    "k": "C38L",
-    "pos": 162752,
-    "share": 0.014
+    "share": 0.045
    },
    {
     "k": "OPUS",
-    "pos": 162744,
-    "share": 0.321
+    "pos": 162752,
+    "share": 0.467
    },
    {
     "k": "PROD",
@@ -4512,21 +4462,14 @@
     "ws": 162787,
     "we": 163225,
     "len": 438,
-    "cer": 0.094,
-    "aligns": true
-   },
-   "C38L": {
-    "ws": 162787,
-    "we": 163212,
-    "len": 425,
-    "cer": 0.398,
+    "cer": 0.084,
     "aligns": true
    },
    "OPUS": {
     "ws": 162787,
     "we": 163225,
     "len": 438,
-    "cer": 0.116,
+    "cer": 0.082,
     "aligns": true
    },
    "PROD": {
@@ -4540,12 +4483,11 @@
   "kept": true,
   "ref_span": [
    162787,
-   163219
+   163225
   ],
   "ref_rule": "median",
   "aligning": [
    "G4L",
-   "C38L",
    "OPUS",
    "PROD"
   ],
@@ -4556,26 +4498,26 @@
   "ref_text_sha": "73137c0fffdf",
   "cells": {
    "G4L": {
-    "cer": 0.09360730593607305,
+    "cer": 0.08447488584474885,
     "ref_letters": 438,
-    "read_letters": 5885,
-    "secs": 130.6,
-    "gate_denials": 1,
-    "nudged": false
-   },
-   "C38L": {
-    "cer": 0.408675799086758,
-    "ref_letters": 438,
-    "read_letters": 5638,
-    "secs": 89.3,
+    "read_letters": 5947,
+    "secs": 111.2,
     "gate_denials": 0,
     "nudged": false
    },
+   "C38L": {
+    "cer": 1,
+    "ref_letters": 0,
+    "read_letters": 0,
+    "secs": 103.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
    "OPUS": {
-    "cer": 0.11643835616438356,
+    "cer": 0.0821917808219178,
     "ref_letters": 438,
-    "read_letters": 601,
-    "secs": 24.8,
+    "read_letters": 529,
+    "secs": 26.2,
     "gate_denials": 0,
     "nudged": false
    },
