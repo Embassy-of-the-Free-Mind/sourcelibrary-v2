@@ -137,8 +137,9 @@ function bookUpdateLean(member, c, repMember) {
   if (member.book_id !== c.rep && !w.work.from_book) w.work.from_book = c.rep;
   fitWindow(w.work);
   const re = member.rule_edition; const le = editions.get(member.book_id)?.edition; const own = earlier.get(member.book_id);
-  const repEd = member.edition_from_rep || (member.book_id !== c.rep && !re && !le)
-    ? (repMember?.rule_edition || editions.get(c.rep)?.edition || er?.edition) : null;
+  // only a volume sharing the representative's catalogue string borrows its edition (plan.mjs edition_from_rep); any
+  // other member waits for its own edition call
+  const repEd = member.edition_from_rep ? (repMember?.rule_edition || editions.get(c.rep)?.edition || er?.edition) : null;
   const edition = re?.basis === 'title_page' ? re : le?.basis === 'title_page' ? le : re || le
     || (repEd ? { ...repEd, from_book: c.rep } : null) || own?.edition || null;
   if (!edition) return null;
