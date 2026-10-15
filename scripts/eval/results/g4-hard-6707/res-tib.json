@@ -1,0 +1,103 @@
+{
+ "pages": 60,
+ "off_index": [],
+ "books": 60,
+ "arms": {
+  "bdrc-yigdzin-v1": {
+   "median_identity": 0.949,
+   "ci95": [
+    0.932,
+    0.97
+   ],
+   "pages_lt_0.5": 0,
+   "n": 60,
+   "books": 60
+  },
+  "gemini-4-argon-low+antigravity-cli": {
+   "median_identity": 0.912,
+   "ci95": [
+    0.898,
+    0.924
+   ],
+   "pages_lt_0.5": 0,
+   "n": 60,
+   "books": 60
+  },
+  "claude-opus-5-5": {
+   "median_identity": 0.715,
+   "ci95": [
+    0.683,
+    0.784
+   ],
+   "pages_lt_0.5": 4,
+   "n": 60,
+   "books": 60
+  },
+  "mistral-ocr-4-1": {
+   "median_identity": 0.564,
+   "ci95": [
+    0.463,
+    0.646
+   ],
+   "pages_lt_0.5": 25,
+   "n": 60,
+   "books": 60
+  },
+  "qwen3-vl-8b": {
+   "median_identity": 0.032,
+   "ci95": [
+    0.0,
+    0.092
+   ],
+   "pages_lt_0.5": 58,
+   "n": 60,
+   "books": 60
+  },
+  "chandra-ocr-2": {
+   "median_identity": 0.0,
+   "ci95": [
+    0.0,
+    0.0
+   ],
+   "pages_lt_0.5": 60,
+   "n": 60,
+   "books": 60
+  },
+  "deepseek-ocr": {
+   "median_identity": 0.0,
+   "ci95": [
+    0.0,
+    0.0
+   ],
+   "pages_lt_0.5": 60,
+   "n": 60,
+   "books": 60
+  }
+ },
+ "paired": {
+  "vs bdrc-yigdzin-v1": {
+   "n": 60,
+   "wins": 18,
+   "losses": 42,
+   "ties": 0,
+   "median_delta": -0.0343,
+   "median_delta_ci95": [
+    -0.0538,
+    -0.02
+   ],
+   "verdict": "worse"
+  },
+  "vs claude-opus-5-5": {
+   "n": 60,
+   "wins": 56,
+   "losses": 4,
+   "ties": 0,
+   "median_delta": 0.1773,
+   "median_delta_ci95": [
+    0.1103,
+    0.2072
+   ],
+   "verdict": "better"
+  }
+ }
+}
