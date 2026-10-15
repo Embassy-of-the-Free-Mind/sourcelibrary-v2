@@ -1,0 +1,489 @@
+{
+ "model": [
+  "gemini-3.8-flash-high"
+ ],
+ "calls": 106,
+ "controls": {
+  "planted": 5,
+  "caught": 5,
+  "rows": [
+   {
+    "uid": "g101",
+    "book_id": "6a3c657039b4508b04e2ee51",
+    "page_number": 131,
+    "row_line": 19,
+    "duplicated_row": "## 指病自愈",
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "指病自愈",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "caught": true
+   },
+   {
+    "uid": "g102",
+    "book_id": "6a3ce9470a0011cb4bc0f7bd",
+    "page_number": 133,
+    "row_line": 12,
+    "duplicated_row": "| 享群臣及聘問之賔 | 大雅 | 大雅 | 大雅 | 小雅 |",
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "| 享群臣及聘問之賔 | 大雅 | 大雅 | 大雅 | 小雅 |",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "caught": true
+   },
+   {
+    "uid": "g103",
+    "book_id": "6a3cbefff9474f825c164904",
+    "page_number": 61,
+    "row_line": 21,
+    "duplicated_row": "𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎",
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎 𝍦咎",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "caught": true
+   },
+   {
+    "uid": "g104",
+    "book_id": "6a3c65fc39b4508b04e30a91",
+    "page_number": 147,
+    "row_line": 16,
+    "duplicated_row": "## 莫隱乎慈莫便乎恕",
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "莫隱乎慈莫便乎恕",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "caught": true
+   },
+   {
+    "uid": "g105",
+    "book_id": "6a3c660339b4508b04e30f6e",
+    "page_number": 29,
+    "row_line": 23,
+    "duplicated_row": "志至則天",
+    "verdict": "invented",
+    "invented": [
+     {
+      "what": "擣白石為末羅之塗屋上其堅宻光潤還如玉石至於",
+      "written": 1,
+      "printed": 0
+     },
+     {
+      "what": "志至則天",
+      "written": 2,
+      "printed": 1
+     }
+    ],
+    "caught": true
+   }
+  ]
+ },
+ "drawn": 100,
+ "reviewed": 100,
+ "not_reviewed": [],
+ "verdicts": {
+  "clean": 63,
+  "minor": 13,
+  "material": 1,
+  "invented": 23
+ },
+ "invented": {
+  "k": 23,
+  "n": 100,
+  "rate": 0.23,
+  "wilson95": [
+   0.158,
+   0.322
+  ],
+  "k_of_reviewed": "23/100",
+  "wilson95_reviewed": [
+   0.158,
+   0.322
+  ]
+ },
+ "by_layout": {
+  "prose": {
+   "n": 64,
+   "invented": 20
+  },
+  "table": {
+   "n": 17,
+   "invented": 1
+  },
+  "mixed": {
+   "n": 17,
+   "invented": 2
+  },
+  "illustration": {
+   "n": 1,
+   "invented": 0
+  },
+  "diagram": {
+   "n": 1,
+   "invented": 0
+  }
+ },
+ "invented_pages": [
+  {
+   "uid": "g004",
+   "link": "https://sourcelibrary.org/book/6a3c5fc8879008ba7e157ce5?page=7",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "風雨",
+     "written": 1,
+     "printed": 0
+    },
+    {
+     "what": "飄風",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents headwords before the glosses for 風雨 and 飄風, and omits the second 紛 in 雨雪紛紛."
+  },
+  {
+   "uid": "g014",
+   "link": "https://sourcelibrary.org/book/6a3c654eaf3c49b59c5cb5f3?page=102",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "丨",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "A repetition mark is duplicated across the line break, the character 於 is omitted before 隋書髙祖紀, and two repetition marks are omitted from the song."
+  },
+  {
+   "uid": "g016",
+   "link": "https://sourcelibrary.org/book/6a3c654e39b4508b04e2db7e?page=19",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "宋書",
+     "written": 1,
+     "printed": 0
+    },
+    {
+     "what": "丨",
+     "written": 4,
+     "printed": 2
+    },
+    {
+     "what": "丨",
+     "written": 2,
+     "printed": 1
+    },
+    {
+     "what": "丨",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The transcription adds '宋書' before '樂志' and writes extra repetition strokes (丨) in the first and sixth entries."
+  },
+  {
+   "uid": "g019",
+   "link": "https://sourcelibrary.org/book/6a3c662439b4508b04e32465?page=106",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "賜",
+     "written": 1,
+     "printed": 0
+    },
+    {
+     "what": "史記信陵君傳如姬果盜晉鄙兵符與公子公子",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription misreads 子 as 于, inserts 賜, and invents an unprinted 19-character sentence before 行侯生曰."
+  },
+  {
+   "uid": "g021",
+   "link": "https://sourcelibrary.org/book/6a3c653539b4508b04e2cfa6?page=119",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "時尼",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents the Chinese characters 時尼 (transcribing the Manchu script word sini as Chinese), writing four small gloss characters where the page only prints two."
+  },
+  {
+   "uid": "g024",
+   "link": "https://sourcelibrary.org/book/6a3c652c39b4508b04e2cab0?page=82",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "斡",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The character 斡 in the phonetic gloss for 雲梯 is written in the transcription but not printed on the page."
+  },
+  {
+   "uid": "g041",
+   "link": "https://sourcelibrary.org/book/6a3c663439b4508b04e32e5f?page=41",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "不以法則",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription interpolates '不以法則' before '能化去', which is not printed on the page."
+  },
+  {
+   "uid": "g042",
+   "link": "https://sourcelibrary.org/book/6a3c661a39b4508b04e31e58?page=10",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "漢書",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents the characters 漢書 before 五行志, where the page only prints 五行志."
+  },
+  {
+   "uid": "g043",
+   "link": "https://sourcelibrary.org/book/6a3c656139b4508b04e2e5ed?page=48",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "律宋孝武問永以太極殿前丨丨丨永答鐘",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription prepends 17 characters from the preceding page that do not appear on this page."
+  },
+  {
+   "uid": "g054",
+   "link": "https://sourcelibrary.org/book/6a3c660d39b4508b04e315d1?page=44",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "梁書昭明太子傳爰初敬業離經斷句奠爵崇師",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents the 19-character passage 梁書昭明太子傳爰初敬業離經斷句奠爵崇師 under the heading 饜飫膏腴含咀肴核, which does not appear on the page."
+  },
+  {
+   "uid": "g055",
+   "link": "https://sourcelibrary.org/book/6a3c652a39b4508b04e2c984?page=55",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "捏姑",
+     "written": 1,
+     "printed": 0
+    },
+    {
+     "what": "伊阿阿",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents the phonetic gloss characters 捏姑 and 伊阿阿, which are not printed on the page."
+  },
+  {
+   "uid": "g063",
+   "link": "https://sourcelibrary.org/book/6a3cc247f9474f825c1764dd?page=133",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "夜",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The character 夜 is printed once in the gloss 坎月夜 but transcribed twice (in both the main text 為隂夜 and the gloss), and 夷 is misread as 洟."
+  },
+  {
+   "uid": "g066",
+   "link": "https://sourcelibrary.org/book/6a3c655239b4508b04e2dcda?page=9",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "丨 (after 寒暑必)",
+     "written": 1,
+     "printed": 0
+    },
+    {
+     "what": "丨 (before 治事凡十年)",
+     "written": 3,
+     "printed": 2
+    },
+    {
+     "what": "丨 (before 無倦)",
+     "written": 3,
+     "printed": 2
+    }
+   ],
+   "note": "The transcription invents an extra repetition mark after 寒暑必 (written 1, printed 0) and an extra repetition mark before 治事凡十年 and before 無倦 (each written 3, printed 2)."
+  },
+  {
+   "uid": "g068",
+   "link": "https://sourcelibrary.org/book/6a3c661a39b4508b04e31e59?page=114",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "丨丨歎曰此兒後當復有大名嘗書壁為",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription prepends text from the preceding page (丨丨歎曰此兒後當復有大名嘗書壁為) not printed on this page, and misreads 釘 as 訂."
+  },
+  {
+   "uid": "g069",
+   "link": "https://sourcelibrary.org/book/6a3cb92c3dce6cfad749340c?page=120",
+   "layout": "table",
+   "invented": [
+    {
+     "what": "十三",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents '十三' in row 10 where the right-column cell is printed blank, and misreads multiple two-digit numerals that are printed with transposed characters."
+  },
+  {
+   "uid": "g073",
+   "link": "https://sourcelibrary.org/book/6a3c65c239b4508b04e2f5c1?page=32",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "啟靈篇兮",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription invents the four-character phrase 啟靈篇兮 in the Bai Zhi entry, which does not appear on the page."
+  },
+  {
+   "uid": "g077",
+   "link": "https://sourcelibrary.org/book/6a3c652f39b4508b04e2ccf4?page=123",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "烏補 烏",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The Chinese phonetic gloss 烏補 烏 is transcribed twice but printed only once in the leftmost column."
+  },
+  {
+   "uid": "g078",
+   "link": "https://sourcelibrary.org/book/6a3ced114701a906f10dd359?page=89",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "宋",
+     "written": 2,
+     "printed": 1
+    },
+    {
+     "what": "功名",
+     "written": 1,
+     "printed": 0
+    }
+   ],
+   "note": "The transcription repeats '宋' under the '人名' heading and invents '功名' at the end of the Bai Juyi quotation."
+  },
+  {
+   "uid": "g082",
+   "link": "https://sourcelibrary.org/book/6a3c65fe39b4508b04e30bea?page=3",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "俗惡俊異世疵文雅",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The entry heading 俗惡俊異世疵文雅 is printed only once spanning columns 3 and 4 but transcribed twice (once after 所謂 and once as a standalone heading), and 陵 is misread as 陸."
+  },
+  {
+   "uid": "g084",
+   "link": "https://sourcelibrary.org/book/6a3c652a39b4508b04e2ca0a?page=28",
+   "layout": "mixed",
+   "invented": [
+    {
+     "what": "烏翁",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The phonetic gloss in the final entry invents an extra repeat of the characters 烏翁, which are printed only once on the page in the preceding entry."
+  },
+  {
+   "uid": "g087",
+   "link": "https://sourcelibrary.org/book/6a3c654baf3c49b59c5cb576?page=98",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "歲",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The transcription duplicates the character 歲 in the line 歲何曾捨逸遨 (writing 歲歲何曾捨逸遨), whereas it is printed only once on the page."
+  },
+  {
+   "uid": "g091",
+   "link": "https://sourcelibrary.org/book/6a3c6b2739b4508b04e41283?page=51",
+   "layout": "prose",
+   "invented": [
+    {
+     "what": "古文",
+     "written": 2,
+     "printed": 1
+    }
+   ],
+   "note": "The transcription writes the label 古文 twice in the entry for 怨, but it is printed only once on the page as part of 古文从宛."
+  },
+  {
+   "uid": "g099",
+   "link": "https://sourcelibrary.org/book/6a3c6527af3c49b59c5cb27a?page=98",
+   "layout": "mixed",
+   "invented": [
+    {
+     "what": "倭呵 額額",
+     "written": 4,
+     "printed": 0
+    }
+   ],
+   "note": "The phonetic gloss 倭呵 額額 for the Manchu word wehe is transcribed after each of the four entries but does not appear anywhere on the page."
+  }
+ ],
+ "gate": "NO-GO (called invented on > 10 of 100)"
+}
