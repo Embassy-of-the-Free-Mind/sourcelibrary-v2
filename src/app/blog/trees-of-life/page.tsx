@@ -32,6 +32,7 @@ function Plate({
   href,
   width,
   height,
+  wide = false,
   children,
 }: {
   src: string;
@@ -39,10 +40,12 @@ function Plate({
   href: string;
   width: number;
   height: number;
+  // Tall plates are capped so one picture does not fill several screens.
+  wide?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <figure className="mb-10">
+    <figure className={wide ? 'mb-10' : 'mb-10 max-w-md mx-auto'}>
       <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
         <Link href={href}>
           <Image src={src} alt={alt} width={width} height={height} className="w-full h-auto" unoptimized />
@@ -275,6 +278,7 @@ export default function TreesOfLifePage() {
           href="/artwork/nga-israhel-van-meckenem-ornament-with-the-tree-of-jesse"
           width={2000}
           height={903}
+          wide
         >
           Israhel van Meckenem, <em>Ornament with the Tree of Jesse</em>, engraving, late fifteenth century. David
           plays the harp at the centre.
