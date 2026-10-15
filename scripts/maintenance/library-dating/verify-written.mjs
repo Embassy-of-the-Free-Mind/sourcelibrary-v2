@@ -17,7 +17,7 @@
 import fs from 'node:fs';
 import readline from 'node:readline';
 import { MongoClient } from 'mongodb';
-import { loose, BASES } from '../../lib/date-works.mjs';
+import { loose, BASES, SOURCED_BASES } from '../../lib/date-works.mjs';
 
 const [ALL, RUN_ID] = process.argv.slice(2, 4);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -44,7 +44,7 @@ for (const b of books) {
     if (!/^-?\d+$/.test(String(l.date))) f(`layer date ${l.date}`);
     if (typeof l.date_display !== 'string' || !l.date_display) f('layer date_display');
     if (!PREC.has(l.date_precision)) f(`layer precision ${l.date_precision}`);
-    if (!BASES.includes(l.basis)) f(`layer basis ${l.basis}`);
+    if (!BASES.includes(l.basis) && !SOURCED_BASES.includes(l.basis)) f(`layer basis ${l.basis}`);
     if (typeof l.evidence !== 'string') f('layer evidence not a string');
     if (l.basis === 'title_page' && !l.evidence) f('title_page layer without evidence');
   }
@@ -53,7 +53,9 @@ for (const b of books) {
     const d = m[k];
     if (!d || !Number.isInteger(d.year)) { f(`${k} year`); continue; }
     if (!(d.from <= d.year && d.year <= d.to)) f(`${k} year ${d.year} outside [${d.from}, ${d.to}]`);
-    if (!BASES.includes(d.basis) || (k === 'work' && d.basis === 'catalogue')) f(`${k} basis ${d.basis}`);
+    if (!(BASES.includes(d.basis) || (k === 'work' && SOURCED_BASES.includes(d.basis))) || (k === 'work' && d.basis === 'catalogue')) f(`${k} basis ${d.basis}`);
+    // a sourced work date names its Wikidata item
+    if (k === 'work' && SOURCED_BASES.includes(d.basis) && !/^Q\d+ /.test(d.evidence || '')) f(`work ${d.basis} without a QID in evidence`);
   }
   if (!['high', 'medium', 'low'].includes(m.confidence)) f(`confidence ${m.confidence}`);
   if (!m.model || !m.prompt_version || !(m.dated_at instanceof Date)) f('model/prompt_version/dated_at');
