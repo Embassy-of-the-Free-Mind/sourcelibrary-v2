@@ -1,0 +1,29 @@
+{
+ "liveBooks": 23016,
+ "heldBooks": 3482,
+ "books": 19534,
+ "booksWithBreak": 19105,
+ "eligiblePages": 4917889,
+ "breaks": 4777862,
+ "excluded": {
+  "human": 5862,
+  "placeholder": 85591,
+  "same-language": 10545,
+  "withheld": 75807
+ },
+ "sources": {
+  "corpus": 5826,
+  "ai": 4901482,
+  "undefined": 280,
+  "batch_api": 91925,
+  "system": 85180,
+  "skip": 418,
+  "volunteer-correction": 5,
+  "same-language": 10545,
+  "manual-backfill": 10,
+  "manual": 21,
+  "AI generated": 1,
+  "leaf-shift-repair-6672": 1
+ },
+ "at": "2026-10-15T14:23:49.020Z"
+}
