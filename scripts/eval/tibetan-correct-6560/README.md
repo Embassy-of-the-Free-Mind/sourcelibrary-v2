@@ -105,3 +105,11 @@ scripts/eval/tibetan-correct-6560/pass/run-volume.sh <book_id> [--no-apply]
 4. **gate** (first volume only): `leafcheck.mjs audit-req` samples 40 pages that apply would write. A fresh Opus
    judges every changed span (draft vs written, A/B blind). A page is worse when the leaf shows the draft at more
    spans than the correction. GO if at most 2 of 40 are worse.
+||||||| parent of dd397dd50 (eval(#6560): Gemini 4 Argon low correct arm on the Yigdzin Tibetan folios)
+## Gemini 4 Argon low arm (#6560, 2026-10-15)
+
+`prep.py --root <scratch> --reuse-plants`, then `scripts/eval/run-cli-arm.py --model gemini-4-argon-low --kind ocr
+--parallel 2 --print-timeout 300` on `req/corr.jsonl` and `req/corr-anchor.jsonl`, into `out/g4l-corr*.jsonl`.
+`score.py readoff-prep --settler opus-settles-g4l` builds its own read-off key. Opus ran that key through
+`replicate-6547/run-claude-arm.py --model opus --parallel 2`. Scores: `results/tibetan-correct-6560/scores-g4l.json.gz`.
+Write-up: `scripts/eval/experiments/2026-10-15-tibetan-gemini4-argon-correct-6560.md`.

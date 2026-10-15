@@ -30,14 +30,15 @@ REPO = os.path.abspath(os.path.join(HERE, '../../..'))
 RES = os.path.join(REPO, 'scripts/eval/results/tibetan-correct-6560')
 MANIFEST = os.path.join(REPO, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl')
 ARMS = ['opus-corr', 'pro-corr', 'opus-redo', 'pro-redo', 'sonnet-corr', 'haiku-corr',  # #6667 added sonnet, haiku
-        'flash-low-corr', 'flash-high-corr']  # Gemini 3.8 Flash at low and high thinking (agy -p), same CORR prompt
+        'flash-low-corr', 'flash-high-corr',  # Gemini 3.8 Flash at low and high thinking (agy -p), same CORR prompt
+        'g4l-corr']  # Gemini 4 Argon at low thinking (agy -p), same CORR prompt (2026-10-15)
 ANCHOR_ARMS = ['opus-corr-anchor', 'pro-corr-anchor', 'sonnet-corr-anchor', 'haiku-corr-anchor',
-               'flash-low-corr-anchor', 'flash-high-corr-anchor']
+               'flash-low-corr-anchor', 'flash-high-corr-anchor', 'g4l-corr-anchor']
 FAMILY = {'opus': 'claude', 'pro': 'gemini'}
 # who reads off whose toward-Derge changes: always the other family. The Flash arms get their own Opus key so the
 # committed opus-settles key (Pro's arms) is not rebuilt.
 SETTLERS = {'pro-settles': ['opus-corr', 'opus-redo'], 'opus-settles': ['pro-corr', 'pro-redo'],
-            'opus-settles-flash': ['flash-low-corr', 'flash-high-corr']}
+            'opus-settles-flash': ['flash-low-corr', 'flash-high-corr'], 'opus-settles-g4l': ['g4l-corr']}
 TIB = re.compile('[ཀ-ྼ]')
 REFUSAL = re.compile(r"\bI (?:cannot|can't|am unable to)|content (?:safety )?filter|blocked by Gemini", re.I)
 
@@ -397,7 +398,8 @@ def score(a):
                      ('sonnet-corr-anchor', 'opus-corr-anchor'), ('haiku-corr-anchor', 'opus-corr-anchor'),
                      ('flash-low-corr', 'opus-corr'), ('flash-high-corr', 'opus-corr'), ('flash-high-corr', 'flash-low-corr'),
                      ('flash-low-corr', 'pro-corr'), ('flash-high-corr', 'pro-corr'),
-                     ('flash-low-corr-anchor', 'opus-corr-anchor'), ('flash-high-corr-anchor', 'opus-corr-anchor')]:
+                     ('flash-low-corr-anchor', 'opus-corr-anchor'), ('flash-high-corr-anchor', 'opus-corr-anchor'),
+                     ('g4l-corr', 'flash-low-corr'), ('g4l-corr', 'opus-corr'), ('g4l-corr-anchor', 'flash-low-corr-anchor')]:
         both = [p for p in ids if pages[p].get(arm, {}).get('status') == 'read' and pages[p].get(ref, {}).get('status') == 'read']
         if both:
             fp, fo = pooled(arm, both), pooled(ref, both)
