@@ -42,6 +42,9 @@ export interface SearchResult {
   image_display?: string;
   image_thumb?: string;
   quality_score?: number;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
   /**
    * The work this edition belongs to, when it has one. Exposed so a CLIENT that
    * merges two independently-fetched lanes can dedup at the work grain — the

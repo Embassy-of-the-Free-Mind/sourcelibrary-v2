@@ -82,10 +82,12 @@ export default async function BrowseYearsPage({ params, searchParams }: PageProp
     published: string;
     year: number;
     pages_count: number;
+    pages_ocr: number;
     pages_translated: number;
     thumbnail: string | null;
     thumbnail_blob: string | null;
     is_first_translation: boolean;
+    preview?: boolean;
   }> = [];
   let total = 0;
   try {
@@ -112,10 +114,12 @@ export default async function BrowseYearsPage({ params, searchParams }: PageProp
         published: b.published || '',
         year: b.year || 0,
         pages_count: b.pages_count || 0,
+        pages_ocr: b.pages_ocr || 0,
         pages_translated: b.pages_translated || 0,
         thumbnail: b.thumbnail,
         thumbnail_blob: b.thumbnail_blob,
         is_first_translation: b.is_first_translation || false,
+        preview: b.preview || false,
       }));
     }
   } catch {
