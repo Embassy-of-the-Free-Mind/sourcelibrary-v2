@@ -21,7 +21,8 @@ import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 export const PROMPT_VERSION = 'date-works-2';
-export const BASES = ['title_page', 'catalogue', 'model_knowledge'];
+// colophon (#6721, 2026-10-15): the closing leaves state the date (evidence is their verbatim words, a cycle year converted)
+export const BASES = ['title_page', 'colophon', 'catalogue', 'model_knowledge'];
 
 export const loose = (s) => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 
@@ -271,8 +272,8 @@ export function cleanDate(d, lead) {
   if (o.from === null) o.from = o.year;
   if (o.to === null) o.to = o.year;
   fitWindow(o);
-  if (o.basis === 'title_page' && !(o.evidence && loose(o.evidence).length >= 3 && loose(lead).includes(loose(o.evidence)))) {
-    o.basis_claimed = 'title_page'; o.basis = 'model_knowledge';
+  if ((o.basis === 'title_page' || o.basis === 'colophon') && !(o.evidence && loose(o.evidence).length >= 3 && loose(lead).includes(loose(o.evidence)))) {
+    o.basis_claimed = o.basis; o.basis = 'model_knowledge';
   }
   if (!BASES.includes(o.basis)) o.basis = 'model_knowledge';
   if (o.basis === 'model_knowledge') o.evidence = '';
@@ -341,7 +342,9 @@ export function toMeta(r, { model, run_id, dated_at }) {
 // the 661 lifespans that contradicted a model date (#6721 lean reference check).
 
 export const LEAN_PROMPT_VERSION = 'date-works-lean-1';
-export const SOURCED_BASES = ['wikidata'];
+// wikidata = the work item's date where a model's window meets it; author_lifespan = the author's dated window
+// (Wikidata, else BDRC), used where nothing narrower is sourced and the model's estimate does not contradict it
+export const SOURCED_BASES = ['wikidata', 'author_lifespan'];
 const fmtYear = (y) => (y < 0 ? `${-y} BCE` : String(y));
 const fmtSpan = (a, b) => (a === b ? fmtYear(a) : a < 0 && b < 0 ? `${-a}–${-b} BCE` : `${fmtYear(a)}–${fmtYear(b)}`);
 
@@ -359,11 +362,27 @@ export function authorWindow(a) {
   if (b) return { from: b[0] + 15, to: b[1] + 85, how: 'birth_only' };
   return null;
 }
-/** The book's author's window with its QID (books.author_id → authors.wikidata_id), or null. */
-export function authorWindowOf(b, wd) {
+/**
+ * The book's author's window and its source, or null: books.author_id → authors.wikidata_id (Wikidata P569/P570/…),
+ * else → authors.bdrc_ids (a BDRC person's PersonBirth/PersonDeath/PersonFlourished; `bd` = bdrc-dates.mjs cache).
+ */
+export function authorWindowOf(b, wd, bd = null) {
   const qid = b.author_id ? wd.author_qid?.[b.author_id] : null;
   const w = qid ? authorWindow(wd.authors?.[qid]) : null;
-  return w ? { qid, ...w } : null;
+  if (w) return { qid, src: qid, ...w };
+  const pid = b.author_id ? bd?.author_person?.[b.author_id] : null; const p = pid ? bd.persons?.[pid] : null;
+  const bw = p ? authorWindow({ P569: p.birth, P570: p.death, P1317: p.floruit }) : null;
+  return bw ? { src: `bdr:${pid}`, ...bw } : null;
+}
+const WINDOW_WHAT = { lifespan: "the author's adult life", work_period: "the author's working years", floruit: "around the author's floruit",
+  death_only: "before the author's death", birth_only: "the author's likely working life" };
+/** The work date an author's window gives, capped at the edition's year (a work cannot postdate a copy), or null. */
+export function lifespanWork(aw, editionYear = null) {
+  if (!aw) return null;
+  const to = editionYear != null ? Math.min(aw.to, editionYear) : aw.to;
+  if (to < aw.from) return null;
+  return { year: Math.round((aw.from + to) / 2), from: aw.from, to, display: `${fmtSpan(aw.from, to)}, ${WINDOW_WHAT[aw.how]}`, precision: 'range',
+    basis: 'author_lifespan', evidence: `${aw.src} ${aw.how}` };
 }
 
 /**
@@ -431,24 +450,28 @@ export function parseLeanReply(answer, n) {
  * JSON per book. b = "t" (the leaves print it: x is their exact words), "c" (only the catalogue date, nothing
  * contradicts it), "m" (your estimate).
  */
-export const buildLeanEditionPrompt = (books, { leadChars = 700 } = {}) => `For each volume below give the date THIS copy (printing, manuscript copy, xylograph, reprint) was made, from its catalogue record and the OCR of its opening leaves (may be noisy). The catalogue date may be wrong, a range, or a placeholder.
+/** What one volume shows the edition model: opening leaves, then closing leaves (where a colophon dates the copy). */
+export const editionText = (b, { leadChars = 700, tailChars = 700 } = {}) =>
+  `${(b.lead || '').slice(0, leadChars).replace(/\s+/g, ' ')}${b.tail ? ` ... CLOSING LEAVES: ${String(b.tail).slice(-tailChars).replace(/\s+/g, ' ')}` : ''}`;
+export const buildLeanEditionPrompt = (books, opts = {}) => `For each volume below give the date THIS copy (printing, manuscript copy, xylograph, reprint) was made, from its catalogue record and the OCR (may be noisy) of its opening leaves and, where shown, its closing leaves. Tibetan, Chinese, Arabic, Persian and Hebrew books often date themselves in a colophon on the closing leaves, in a cycle year (rab byung, ganzhi/reign year, AH, anno mundi): convert it to CE. The catalogue date may be wrong, a range, or a placeholder. A range is fine; do not invent a precise year.
 
 ${books.map((b, i) => `=== ${i + 1}. ${[b.original_title || b.title, b.author ? `by ${b.author}` : null, `cat. ${b.published ?? 'none'}`, b.language || null].filter(Boolean).join(' | ').replace(/\s+/g, ' ').slice(0, 300)}
-${(b.lead || '[no text]').slice(0, leadChars).replace(/\s+/g, ' ')}`).join('\n')}
+${editionText(b, opts) || '[no text]'}`).join('\n')}
 
 Reply with exactly ${books.length} lines, one per volume, in order, and nothing else. Each line is one JSON object:
-{"i":<number>,"e":[<from>,<to>],"y":<year>,"b":"t|c|m","x":"<if b is t: the exact words of the leaves that state the date, else empty>","c":"h|m|l"}
-b: t = the leaves print the date, c = only the catalogue date and nothing contradicts it, m = your estimate. Years are integers. No prose, no code fences, no tools.`;
+{"i":<number>,"e":[<from>,<to>],"y":<year>,"b":"t|k|c|m","x":"<if b is t or k: the exact words of the leaves that state the date, copied character for character, else empty>","c":"h|m|l"}
+b: t = the opening leaves (title page, imprint) print the date, k = a colophon on the closing leaves states it, c = only the catalogue date and nothing contradicts it, m = your estimate. Years are integers. No prose, no code fences, no tools.`;
 
 /** Parse a lean edition reply against what each volume SHOWED the model. Map(index → { edition, confidence }). */
-export function parseLeanEditionReply(answer, books, { leadChars = 700 } = {}) {
+export function parseLeanEditionReply(answer, books, opts = {}) {
   const out = new Map();
   for (const m of String(answer || '').matchAll(/\{[^\n]*\}/g)) {
     let o; try { o = JSON.parse(m[0]); } catch { continue; }
     const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
     if (i < 0 || i >= books.length || out.has(i) || !Array.isArray(o.e)) continue;
-    const lead = (books[i].lead || '').slice(0, leadChars).replace(/\s+/g, ' ');
-    const edition = cleanDate({ year: o.y, from: o.e[0], to: o.e[1], basis: { t: 'title_page', c: 'catalogue', m: 'model_knowledge' }[o.b] || 'model_knowledge', evidence: o.x || '' }, lead);
+    // a title-page quote must be on the opening leaves, a colophon quote on the closing ones
+    const shown = o.b === 'k' ? editionText({ tail: books[i].tail }, opts) : editionText({ lead: books[i].lead }, opts);
+    const edition = cleanDate({ year: o.y, from: o.e[0], to: o.e[1], basis: { t: 'title_page', k: 'colophon', c: 'catalogue', m: 'model_knowledge' }[o.b] || 'model_knowledge', evidence: o.x || '' }, shown);
     if (!edition || edition.year === null) continue;
     edition.display = edition.from === edition.to ? fmtYear(edition.year) : fmtSpan(edition.from, edition.to);
     out.set(i, { edition, confidence: { h: 'high', m: 'medium', l: 'low' }[o.c] || 'low' });

@@ -45,7 +45,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient, ObjectId } from 'mongodb';
 import { recordSweepActions } from '../../lib/sweep-log.mjs';
-import { toStoredLayers, toMeta, fitWindow, LEAN_PROMPT_VERSION, agreesWith } from '../../lib/date-works.mjs';
+import { toStoredLayers, toMeta, fitWindow, LEAN_PROMPT_VERSION, agreesWith, lifespanWork, SOURCED_BASES } from '../../lib/date-works.mjs';
 
 const [PLAN, RUN_ID, DATED] = process.argv.slice(2, 5);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
@@ -105,13 +105,25 @@ function bookUpdate(member, rep, repRow, ownRow) {
 }
 
 const PREC = (w) => (w.from === w.to ? 'exact' : w.to - w.from <= 10 ? 'decade' : w.to - w.from <= 150 ? 'century' : 'millennium');
-const familyOf = (model) => (model === 'wikidata' ? 'wikidata' : /^claude|sonnet|haiku|opus/i.test(model) ? 'claude' : /gemini/i.test(model) ? 'gemini' : 'other');
+const familyOf = (model) => (model === 'wikidata' || model === 'author_dates' ? 'sourced' : /^claude|sonnet|haiku|opus/i.test(model) ? 'claude' : /gemini/i.test(model) ? 'gemini' : 'other');
 /** The lean route's update for one member (see the header), or null when it has no edition date. */
 function bookUpdateLean(member, c, repMember) {
   const lw = dated.get(c.rep); const er = earlier.get(c.rep);
   let w; const checks = []; const extra = {};
+  // the edition first: the author's window is capped at it (a work cannot postdate a copy of it). Order (Derek
+  // 2026-10-15): the title page > a colophon > the catalogue (year or window) > the model
+  const re = member.rule_edition; const le = editions.get(member.book_id)?.edition; const own = earlier.get(member.book_id);
+  // only a volume sharing the representative's catalogue string borrows its edition (plan.mjs edition_from_rep); any
+  // other member waits for its own edition call
+  const repEd = member.edition_from_rep ? (repMember?.rule_edition || editions.get(c.rep)?.edition || er?.edition) : null;
+  const edition = re?.basis === 'title_page' ? re : le?.basis === 'title_page' || le?.basis === 'colophon' ? le : re || le
+    || (repEd ? { ...repEd, from_book: c.rep } : null) || own?.edition || null;
+  if (!edition) return null;
+  fitWindow(edition);
+  const lsw = lifespanWork(c.author_window, edition.year);
   if (lw) w = { work: { ...lw.work }, model: lw.model, prompt_version: lw.prompt_version || LEAN_PROMPT_VERSION, dated_at: lw.dated_at, confidence: lw.confidence };
   else if (er) w = { work: { ...er.work }, model: er.model, prompt_version: er.prompt_version, dated_at: er.dated_at, confidence: er.confidence, layers: er.layers, earlier: true };
+  else if (lsw) w = { work: { ...lsw }, model: 'author_dates', prompt_version: 'author-window-1', dated_at: new Date().toISOString(), confidence: 'medium' };
   else return null;
   if (lw && c.wikidata_work) {
     if (agreesWith(c.wikidata_work, lw.work)) { extra.model_work = lw.work; w.work = { ...c.wikidata_work }; w.confidence = 'high'; }
@@ -132,18 +144,17 @@ function bookUpdateLean(member, c, repMember) {
   }
   if (c.author_window) {
     extra.author_window = c.author_window;
-    if (w.work.year < c.author_window.from || w.work.year > c.author_window.to) checks.push('outside_author_window');
+    // the author's window is the work's date where nothing narrower is sourced and the model's estimate lies inside it
+    // (Derek 2026-10-15: "author lifespan, no problem. a range is fine"); an estimate OUTSIDE it is kept, flagged: on
+    // the library that is mostly a translator or editor in author_id, or a pseudepigraphon (641 of 3,791, #6721)
+    if (w.work.basis !== 'wikidata' && w.work.basis !== 'author_lifespan') {
+      const inside = w.work.year >= c.author_window.from && w.work.year <= c.author_window.to;
+      if (inside && lsw) { extra.model_work = w.work; w.work = { ...lsw }; w.layers = null; if (w.confidence !== 'low') w.confidence = 'high'; }
+      else if (!inside) checks.push('outside_author_window');
+    }
   }
   if (member.book_id !== c.rep && !w.work.from_book) w.work.from_book = c.rep;
   fitWindow(w.work);
-  const re = member.rule_edition; const le = editions.get(member.book_id)?.edition; const own = earlier.get(member.book_id);
-  // only a volume sharing the representative's catalogue string borrows its edition (plan.mjs edition_from_rep); any
-  // other member waits for its own edition call
-  const repEd = member.edition_from_rep ? (repMember?.rule_edition || editions.get(c.rep)?.edition || er?.edition) : null;
-  const edition = re?.basis === 'title_page' ? re : le?.basis === 'title_page' ? le : re || le
-    || (repEd ? { ...repEd, from_book: c.rep } : null) || own?.edition || null;
-  if (!edition) return null;
-  fitWindow(edition);
   let confidence = w.confidence;
   if (edition.to != null && w.work.from != null && edition.to < w.work.from) { checks.push('edition_before_work'); confidence = 'low'; }
   const layers = toStoredLayers({ work: w.work, edition, layers: [
@@ -156,7 +167,7 @@ function bookUpdateLean(member, c, repMember) {
   if (edModel) meta.edition_model = edModel;
   Object.assign(meta, extra);
   if (checks.length) meta.checks = checks;
-  return { source_work_dates: layers, source_work_dates_meta: meta, _lean: { sourced: w.work.basis === 'wikidata', lean_year: lw && !keptEarlier ? lw.work.year : null } };
+  return { source_work_dates: layers, source_work_dates_meta: meta, _lean: { sourced: SOURCED_BASES.includes(w.work.basis), lean_year: lw && !keptEarlier ? lw.work.year : null } };
 }
 
 // #3307: 1,445 undated EAP Tibetan manuscripts keep an import placeholder `year: 1700` (their `published` is already

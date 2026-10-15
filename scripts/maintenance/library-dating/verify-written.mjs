@@ -54,8 +54,8 @@ for (const b of books) {
     if (!d || !Number.isInteger(d.year)) { f(`${k} year`); continue; }
     if (!(d.from <= d.year && d.year <= d.to)) f(`${k} year ${d.year} outside [${d.from}, ${d.to}]`);
     if (!(BASES.includes(d.basis) || (k === 'work' && SOURCED_BASES.includes(d.basis))) || (k === 'work' && d.basis === 'catalogue')) f(`${k} basis ${d.basis}`);
-    // a sourced work date names its Wikidata item
-    if (k === 'work' && SOURCED_BASES.includes(d.basis) && !/^Q\d+ /.test(d.evidence || '')) f(`work ${d.basis} without a QID in evidence`);
+    // a sourced work date names its Wikidata item or BDRC person
+    if (k === 'work' && SOURCED_BASES.includes(d.basis) && !/^(Q\d+|bdr:P\w+) /.test(d.evidence || '')) f(`work ${d.basis} without a Wikidata or BDRC id in evidence`);
   }
   if (!['high', 'medium', 'low'].includes(m.confidence)) f(`confidence ${m.confidence}`);
   if (!m.model || !m.prompt_version || !(m.dated_at instanceof Date)) f('model/prompt_version/dated_at');

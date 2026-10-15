@@ -31,7 +31,10 @@
  * `author_id` is joined from the nightly mirror (the export predates it).
  *
  *   node scripts/maintenance/library-dating/plan.mjs <all-books.jsonl> <dir> [--batch 15]
- *     [--lean wikidata-cache.json] [--keep dated-earlier.jsonl]
+ *     [--lean wikidata-cache.json] [--bdrc bdrc-cache.json] [--tails tails.jsonl] [--keep dated-earlier.jsonl]
+ * `--bdrc`: author windows fall back to BDRC person dates (bdrc-dates.mjs). `--tails`: edition rows carry their closing
+ * leaves (export-books.mjs --tail) for a colophon; the edition queue is split into editiontext-queue.jsonl (opening or
+ * closing text: 20/call) and editionbare-queue.jsonl (catalogue only: 100/call).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,6 +46,8 @@ const [IN, DIR] = process.argv.slice(2, 4);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const BATCH = +arg('--batch', 15);
 const LEAN = arg('--lean'); const wd = LEAN ? JSON.parse(fs.readFileSync(LEAN, 'utf8')) : null;
+const bd = arg('--bdrc') ? JSON.parse(fs.readFileSync(arg('--bdrc'), 'utf8')) : null;
+const tails = new Map(); if (arg('--tails')) for (const l of fs.readFileSync(arg('--tails'), 'utf8').split('\n')) if (l) { const r = JSON.parse(l); if (r.tail) tails.set(r.book_id, r.tail); }
 const keep = new Set(); const KEEP = arg('--keep');
 if (KEEP) for (const l of fs.readFileSync(KEEP, 'utf8').split('\n')) if (l) try { const r = JSON.parse(l); if (r.edition) keep.add(r.book_id); } catch { /* torn */ }
 const authorOf = new Map();
@@ -91,18 +96,20 @@ if (LEAN) {
     // the representative's author window
     const eys = ms.map((m) => m.e?.year).filter((y) => y != null); const ey = eys.length ? Math.min(...eys) : null;
     for (const m of ms) { const w = wikidataWork(m.b, wd, ey); if (w) { p.wikidata_work = w; cand.wikidata_work++; break; } }
-    const aw = authorWindowOf(rep.b, wd); if (aw) { p.author_window = aw; cand.author_window++; }
+    const aw = authorWindowOf(rep.b, wd, bd); if (aw) { p.author_window = aw; cand.author_window++; }
     wq.push({ ...rep.b, lead: undefined, role: 'work' });
     const samePub = (m) => m.b.published != null && String(m.b.published).trim() !== '' && String(m.b.published) === String(rep.b.published);
-    for (const [k, m] of ms.entries()) if (!m.e && !keep.has(m.b.book_id) && (k === 0 || !samePub(m))) eq.push({ ...m.b, role: 'edition' });
+    for (const [k, m] of ms.entries()) if (!m.e && !keep.has(m.b.book_id) && (k === 0 || !samePub(m))) eq.push({ ...m.b, tail: tails.get(m.b.book_id) || undefined, role: 'edition' });
   }
   fs.writeFileSync(path.join(DIR, 'work-queue.jsonl'), wq.map((q) => JSON.stringify(q)).join('\n') + '\n');
   fs.writeFileSync(path.join(DIR, 'edition-queue.jsonl'), eq.map((q) => JSON.stringify(q)).join('\n') + '\n');
+  fs.writeFileSync(path.join(DIR, 'editiontext-queue.jsonl'), eq.filter((q) => q.lead || q.tail).map((q) => JSON.stringify(q)).join('\n') + '\n');
+  fs.writeFileSync(path.join(DIR, 'editionbare-queue.jsonl'), eq.filter((q) => !q.lead && !q.tail).map((q) => JSON.stringify(q)).join('\n') + '\n');
   fs.writeFileSync(path.join(DIR, 'plan.json'), JSON.stringify(plan));
-  const withLead = eq.filter((q) => q.lead).length;
+  const withLead = eq.filter((q) => q.lead || q.tail).length;
   console.log(JSON.stringify({ books: n, works: clusters.size, edition_by_rule: rule, wikidata_candidates: cand,
     work_model_items: wq.length, work_calls_at_100: Math.ceil(wq.length / 100), with_author_dates_in_prompt: wq.filter((q) => q.author_dates).length,
-    edition_model_items: eq.length, edition_with_leaves: withLead, edition_calls: Math.ceil(withLead / 25) + Math.ceil((eq.length - withLead) / 100),
+    edition_model_items: eq.length, edition_with_leaves: withLead, edition_with_closing_leaves: eq.filter((q) => q.tail).length, edition_calls: Math.ceil(withLead / 20) + Math.ceil((eq.length - withLead) / 100),
     edition_kept_from_earlier_run: keep.size }, null, 1));
   process.exit(0);
 }

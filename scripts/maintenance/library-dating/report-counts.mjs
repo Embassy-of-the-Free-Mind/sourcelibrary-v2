@@ -26,7 +26,11 @@ out.push(table('Edition date: basis · rule', await group({ basis: '$source_work
 out.push(table('Confidence', await group('$source_work_dates_meta.confidence'), 'confidence'));
 out.push(table('Model (family)', await group({ model: '$source_work_dates_meta.model', family: '$source_work_dates_meta.family' }), 'model · family'));
 out.push(table('Second-family check', await group({ $ifNull: ['$source_work_dates_meta.agree_with.agrees', 'not checked'] }), 'agrees'));
-out.push(table('Flags', await group({ $ifNull: [{ $arrayElemAt: ['$source_work_dates_meta.checks', 0] }, 'none'] }), 'check'));
+// every flag a row carries (a row can carry several: wikidata_disagrees + outside_author_window)
+const flags = await books.aggregate([{ $match: match }, { $project: { c: { $ifNull: ['$source_work_dates_meta.checks', ['none']] } } }, { $unwind: '$c' },
+  { $group: { _id: '$c', n: { $sum: 1 } } }, { $sort: { n: -1 } }], { maxTimeMS: 600_000 }).toArray();
+out.push(table('Flags (each flag a row carries)', flags, 'check'));
+out.push(table('Rows an earlier run wrote, rewritten by this one (lean route)', await group({ $ifNull: ['$source_work_dates_meta.rewrote.reason', 'not a rewrite'] }), 'reason'));
 const notes = await books.countDocuments({ ...match, 'source_work_dates_meta.catalogue_note': { $nin: ['', null] } }, { maxTimeMS: 600_000 });
 const ph = await books.countDocuments({ ...match, 'source_work_dates_meta.catalogue_note': /#3307/ }, { maxTimeMS: 600_000 });
 const phAll = await books.countDocuments({ year: 1700, language: /tibet/i, pages_count: { $gt: 0 } }, { maxTimeMS: 600_000 });
