@@ -50,6 +50,8 @@
  * Recall is traded for precision: a parser that rejects on this re-translates pages.
  */
 
+import { blockLeafShiftRuns } from './leaf-shift.mjs';
+
 export const MIN_FRAGMENT_LETTERS = 20;
 export const FRAGMENT_WINDOW = 400;
 
@@ -353,9 +355,23 @@ export function blockDriftBoundaries(pages, translations) {
  * Remove BOTH pages of every drifted boundary from a parsed block, so the caller's
  * existing "missing from batch" path re-translates them single-page, in order, each with the
  * previous page's translation as continuity. Mutates and returns `translations`.
+ *
+ * A whole-leaf shift (#5021, blockLeafShiftRuns: two or more adjacent pages whose English
+ * prints only the neighbouring leaf's numbers) drops EVERY page of the block, kind 'leaf-shift':
+ * a block that slipped one leaf usually slipped from some page onward, and the pages without
+ * printed numbers cannot show it. Controls (scripts/audit/leaf-shift-gate-controls-5021.mjs,
+ * 2026-10-15): the 12 by-eye wrong-leaf pages are caught in 6-8 of their 8 block alignments
+ * (the misses are runs cut by a block edge); 7 of 3,321 single-page-lane blocks (0.21%) are
+ * rejected, which costs those 8 pages a single-page translation, never a wrong text.
  */
 export function dropDriftedPages(pages, translations) {
   const drifted = blockDriftBoundaries(pages, translations);
+  // Read before any page is dropped: a dropped page breaks a run in two.
+  const shifted = blockLeafShiftRuns(pages, translations);
   for (const d of drifted) { translations.delete(d.prev); translations.delete(d.next); }
+  for (const run of shifted) {
+    drifted.push({ prev: run.start, next: run.end, kind: 'leaf-shift', fragment: `${run.dir} leaf's numbers ${run.pages.map((x) => x.n.join('/')).join(', ')}` });
+    for (const p of pages) translations.delete(p.page_number);
+  }
   return { translations, drifted };
 }
