@@ -1,0 +1,20 @@
+{
+ "scored": 60,
+ "worse": 4,
+ "better": 26,
+ "pairs": {
+  "髙": "高",
+  "䖏": "處",
+  "㑹": "會",
+  "内": "內",
+  "巳": "已",
+  "随": "隨",
+  "廄": "廏"
+ },
+ "worse_pages": [
+  "https://sourcelibrary.org/book/6a3ceb1395fcd4556305338e?page=131 0.0183→0.0275",
+  "https://sourcelibrary.org/book/6a3cc188ec254ff6cae0d21c?page=117 0.0042→0.0127",
+  "https://sourcelibrary.org/book/6a3c5e9940c88a541d8e3c45?page=25 0.1308→0.1395",
+  "https://sourcelibrary.org/book/6a3c5ea840c88a541d8e4567?page=3 0.1176→0.2647"
+ ]
+}
