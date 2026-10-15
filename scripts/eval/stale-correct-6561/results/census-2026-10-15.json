@@ -1,0 +1,17 @@
+{
+ "computed_at": "2026-10-15T14:52:21.932Z",
+ "lane": "paddle-zh-2026-10",
+ "cer_min": 0.1,
+ "stale_pages": 56097,
+ "excluded": {
+  "under 8 Han characters": 30
+ },
+ "cer_lt_0_1": 31233,
+ "eligible": 24834,
+ "books": 738,
+ "pilot": {
+  "n": 100,
+  "books": 100,
+  "seed": 6561
+ }
+}
