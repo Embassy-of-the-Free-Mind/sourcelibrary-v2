@@ -1,0 +1,92 @@
+[
+ {
+  "rank": 702,
+  "book_id": "6992cefff7519cdd65044b57",
+  "slug": "zhiwu-mingshi-tukao-vol-2",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 62,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 723,
+  "book_id": "6992cdb243713c66ea638041",
+  "slug": "sancai-tuhui-juan-46",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 61,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 724,
+  "book_id": "6992ce63673ee1e40e320633",
+  "slug": "sancai-tuhui-juan-94",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 61,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 738,
+  "book_id": "6992cac1d4d545ae73feeac4",
+  "slug": "diqiu-tushu-illustrated-explanation-of-the-earth",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 60,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 766,
+  "book_id": "6992cabad4d545ae73fee83d",
+  "slug": "great-meaning-of-the-five-elements-wuxing-dayi-ji",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 59,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 776,
+  "book_id": "6992cd3b43713c66ea635917",
+  "slug": "sancai-tuhui-juan-13",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 59,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 777,
+  "book_id": "6992cdc343713c66ea63870c",
+  "slug": "sancai-tuhui-juan-51",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 59,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 778,
+  "book_id": "6992cdf681c9d7efb84d108a",
+  "slug": "sancai-tuhui-juan-65",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 59,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 790,
+  "book_id": "6992cf083158e1eeeea7f958",
+  "slug": "erya-with-annotations",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 58,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]
