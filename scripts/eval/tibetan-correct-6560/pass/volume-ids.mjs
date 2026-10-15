@@ -27,7 +27,7 @@ if (CMD === 'order') {
   const books = await db.collection('books').find({ id: { $in: agg.map((a) => a._id) } }, { projection: { id: 1, title: 1, visible: 1, created_at: 1, 'pipeline_auto.status': 1 } }).toArray();
   const n = Object.fromEntries(agg.map((a) => [a._id, a.n]));
   const order = books.filter((b) => (b.visible || b.pipeline_auto?.status === 'held') && KANGYUR.test(b.title || ''))
-    .sort((a, b) => String(a.created_at ?? '').localeCompare(String(b.created_at ?? '')) || a.id.localeCompare(b.id))
+    .sort((a, b) => (new Date(a.created_at ?? 0) - new Date(b.created_at ?? 0)) || a.id.localeCompare(b.id))
     .map((b) => ({ book_id: b.id, title: b.title, pages: n[b.id], visible: !!b.visible }));
   fs.writeFileSync(arg('out'), JSON.stringify(order, null, 1));
   console.log(`${order.length} Kangyur volumes, ${order.reduce((s, b) => s + b.pages, 0)} pages`);
