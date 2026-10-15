@@ -1,0 +1,4820 @@
+{
+ "diagnostics": {
+  "divergences": 0,
+  "max_rhat": 1.004,
+  "chains": 3,
+  "draws_per_chain": 1000
+ },
+ "judges": {
+  "opus": {
+   "catch": [
+    0.9176,
+    0.9514,
+    0.9747
+   ],
+   "false_positive": [
+    0.0005,
+    0.0045,
+    0.0135
+   ],
+   "catch_controls": [
+    "52/56 6560 tibetan read-off known-answer controls",
+    "57/60 6560 tibetan read-off known-answer controls",
+    "41/41 6561 read-off look-alike controls",
+    "3/3 6203 cross-family controls"
+   ],
+   "fp_controls": [
+    "0/40 6694 q300 blind judge controls"
+   ]
+  },
+  "gemini-3.8-flash-high": {
+   "catch": [
+    0.8692,
+    0.929,
+    0.9684
+   ],
+   "false_positive": [
+    0.0257,
+    0.0426,
+    0.0637
+   ],
+   "catch_controls": [
+    "53/57 6561 read-off look-alike controls",
+    "5/5 6388 paddle table pilot controls",
+    "3/3 6559 opus calibration"
+   ],
+   "fp_controls": [
+    "0/40 6694 q300 blind judge controls",
+    "1/15 6559 opus calibration judge false flag"
+   ]
+  },
+  "gemini-3.1-pro": {
+   "catch": [
+    0.7343,
+    0.8304,
+    0.902
+   ],
+   "false_positive": [
+    0.0059,
+    0.0693,
+    0.2621
+   ],
+   "catch_controls": [
+    "47/56 6560 tibetan read-off known-answer controls"
+   ],
+   "fp_controls": []
+  }
+ },
+ "cells": [
+  {
+   "rate": "failed_read",
+   "route": "Gemini 3.1 Pro low CLI read",
+   "script": "nahuatl",
+   "est": [
+    0.0019,
+    0.0191,
+    0.1037
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 1/18",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6559 nahuatl/maya screen (Nahuatl)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 10,
+     "k_eff": 0.0,
+     "n_eff": 10.0,
+     "file": "scripts/eval/experiments/2026-10-12-nahuatl-maya-ocr-cli-6559.md"
+    },
+    {
+     "source": "6559 nahuatl/maya screen (Mayan)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 8,
+     "books": 8,
+     "k_eff": 1.0,
+     "n_eff": 8.0,
+     "file": "scripts/eval/experiments/2026-10-12-nahuatl-maya-ocr-cli-6559.md"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "Gemini 3.7 Flash low CLI read (lane B)",
+   "script": "mixed",
+   "est": [
+    0.0028,
+    0.0165,
+    0.0546
+   ],
+   "n_eff": 66.0,
+   "raw": "mechanical 18/660",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6420 gate",
+     "judge": "mechanical",
+     "k": 8,
+     "n": 300,
+     "books": 30,
+     "k_eff": 0.8,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-10-ocr-convergence-gate-6420.md"
+    },
+    {
+     "source": "6420 main200a",
+     "judge": "mechanical",
+     "k": 10,
+     "n": 360,
+     "books": 36,
+     "k_eff": 1.0,
+     "n_eff": 36.0,
+     "file": "issue #6420 comment 2026-10-12T07:24"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "Gemini 3.8 Flash low CLI read",
+   "script": "nahuatl",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0254
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/18",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6559 nahuatl/maya screen (Nahuatl)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 10,
+     "k_eff": 0.0,
+     "n_eff": 10.0,
+     "file": "scripts/eval/experiments/2026-10-12-nahuatl-maya-ocr-cli-6559.md"
+    },
+    {
+     "source": "6559 nahuatl/maya screen (Mayan)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 8,
+     "books": 8,
+     "k_eff": 0.0,
+     "n_eff": 8.0,
+     "file": "scripts/eval/experiments/2026-10-12-nahuatl-maya-ocr-cli-6559.md"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "Gemini 3.8 Flash low CLI read (lane B, after one retry)",
+   "script": "mixed",
+   "est": [
+    0.004,
+    0.0167,
+    0.0452
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 23/976",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6694 q300 armA",
+     "judge": "mechanical",
+     "k": 23,
+     "n": 976,
+     "books": 99,
+     "k_eff": 2.33,
+     "n_eff": 99.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/summary.json"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "Opus corrects stored text in place",
+   "script": "mixed",
+   "est": [
+    0.0,
+    0.0011,
+    0.0103
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 0/976",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6694 q300 armB",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 976,
+     "books": 99,
+     "k_eff": 0.0,
+     "n_eff": 99.0,
+     "file": "scripts/eval/experiments/2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "Opus read",
+   "script": "nahuatl",
+   "est": [
+    0.0001,
+    0.0026,
+    0.0627
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/150",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6559 opus calibration",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 150,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "scripts/eval/experiments/2026-10-13-opus-ocr-calibration-6559.md"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0,
+    0.0007,
+    0.0134
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0,
+    0.0004,
+    0.0035
+   ],
+   "n_eff": 261.0,
+   "raw": "mechanical 0/498",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 498,
+     "books": 261,
+     "k_eff": 0.0,
+     "n_eff": 261.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0,
+    0.0006,
+    0.0119
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0,
+    0.0006,
+    0.0076
+   ],
+   "n_eff": 48.0,
+   "raw": "mechanical 0/49",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 49,
+     "books": 48,
+     "k_eff": 0.0,
+     "n_eff": 48.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0,
+    0.0005,
+    0.0058
+   ],
+   "n_eff": 122.0,
+   "raw": "mechanical 0/136",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 136,
+     "books": 122,
+     "k_eff": 0.0,
+     "n_eff": 122.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0,
+    0.0007,
+    0.0137
+   ],
+   "n_eff": 9.0,
+   "raw": "mechanical 0/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 9,
+     "k_eff": 0.0,
+     "n_eff": 9.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0,
+    0.0005,
+    0.0048
+   ],
+   "n_eff": 151.0,
+   "raw": "mechanical 0/155",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 155,
+     "books": 151,
+     "k_eff": 0.0,
+     "n_eff": 151.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0,
+    0.0007,
+    0.0102
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 0/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 23,
+     "books": 23,
+     "k_eff": 0.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "chandra-ocr-2 (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0,
+    0.0006,
+    0.014
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-opus-5-5 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0001,
+    0.0026,
+    0.0274
+   ],
+   "n_eff": 19.0,
+   "raw": "mechanical 0/21",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 21,
+     "books": 19,
+     "k_eff": 0.0,
+     "n_eff": 19.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-opus-5-5 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.0027,
+    0.0347
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-opus-5-5 (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0008,
+    0.0074,
+    0.039
+   ],
+   "n_eff": 51.0,
+   "raw": "mechanical 1/55",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 55,
+     "books": 51,
+     "k_eff": 0.93,
+     "n_eff": 51.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-opus-5-5 (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0001,
+    0.0027,
+    0.0373
+   ],
+   "n_eff": 9.0,
+   "raw": "mechanical 0/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 9,
+     "k_eff": 0.0,
+     "n_eff": 9.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-sonnet-5-5 (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0,
+    0.0009,
+    0.0176
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-sonnet-5-5 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0,
+    0.0005,
+    0.0039
+   ],
+   "n_eff": 261.0,
+   "raw": "mechanical 0/498",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 498,
+     "books": 261,
+     "k_eff": 0.0,
+     "n_eff": 261.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-sonnet-5-5 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0,
+    0.0008,
+    0.0145
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-sonnet-5-5 (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0,
+    0.0007,
+    0.0094
+   ],
+   "n_eff": 48.0,
+   "raw": "mechanical 0/49",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 49,
+     "books": 48,
+     "k_eff": 0.0,
+     "n_eff": 48.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-sonnet-5-5 (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0,
+    0.0006,
+    0.0054
+   ],
+   "n_eff": 151.0,
+   "raw": "mechanical 0/155",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 155,
+     "books": 151,
+     "k_eff": 0.0,
+     "n_eff": 151.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "claude-sonnet-5-5 (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0,
+    0.0008,
+    0.0113
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 0/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 23,
+     "books": 23,
+     "k_eff": 0.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "cllg-qwen3vl-8b (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0247
+   ],
+   "n_eff": 19.0,
+   "raw": "mechanical 0/25",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 25,
+     "books": 19,
+     "k_eff": 0.0,
+     "n_eff": 19.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0002,
+    0.0045,
+    0.0575
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0001,
+    0.0013,
+    0.007
+   ],
+   "n_eff": 261.0,
+   "raw": "mechanical 0/498",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 498,
+     "books": 261,
+     "k_eff": 0.0,
+     "n_eff": 261.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0002,
+    0.0038,
+    0.0383
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0002,
+    0.0027,
+    0.0189
+   ],
+   "n_eff": 48.0,
+   "raw": "mechanical 0/49",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 49,
+     "books": 48,
+     "k_eff": 0.0,
+     "n_eff": 48.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.2598,
+    0.3273,
+    0.3963
+   ],
+   "n_eff": 122.0,
+   "raw": "mechanical 47/136",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 47,
+     "n": 136,
+     "books": 122,
+     "k_eff": 42.16,
+     "n_eff": 122.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0002,
+    0.0037,
+    0.0427
+   ],
+   "n_eff": 9.0,
+   "raw": "mechanical 0/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 9,
+     "k_eff": 0.0,
+     "n_eff": 9.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0002,
+    0.0017,
+    0.0098
+   ],
+   "n_eff": 151.0,
+   "raw": "mechanical 0/155",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 155,
+     "books": 151,
+     "k_eff": 0.0,
+     "n_eff": 151.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0002,
+    0.0032,
+    0.0276
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 0/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 23,
+     "books": 23,
+     "k_eff": 0.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "deepseek-ocr (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0002,
+    0.0044,
+    0.0513
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "dots-mocr (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0,
+    0.0017,
+    0.0253
+   ],
+   "n_eff": 19.0,
+   "raw": "mechanical 0/21",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 21,
+     "books": 19,
+     "k_eff": 0.0,
+     "n_eff": 19.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "dots-mocr (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.002,
+    0.0384
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "dots-mocr (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0001,
+    0.0018,
+    0.0277
+   ],
+   "n_eff": 10.0,
+   "raw": "mechanical 0/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 10,
+     "k_eff": 0.0,
+     "n_eff": 10.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0004,
+    0.0079,
+    0.0882
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/9",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 9,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0002,
+    0.0018,
+    0.008
+   ],
+   "n_eff": 262.0,
+   "raw": "mechanical 0/499",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 499,
+     "books": 262,
+     "k_eff": 0.0,
+     "n_eff": 262.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0004,
+    0.0057,
+    0.0406
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/19",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 19,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0274,
+    0.0682,
+    0.137
+   ],
+   "n_eff": 56.0,
+   "raw": "mechanical 5/57",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 5,
+     "n": 57,
+     "books": 56,
+     "k_eff": 4.91,
+     "n_eff": 56.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0024,
+    0.0097,
+    0.0266
+   ],
+   "n_eff": 147.0,
+   "raw": "mechanical 2/170",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 170,
+     "books": 147,
+     "k_eff": 1.73,
+     "n_eff": 147.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0004,
+    0.0075,
+    0.0777
+   ],
+   "n_eff": 4.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 4,
+     "k_eff": 0.0,
+     "n_eff": 4.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0076,
+    0.0197,
+    0.0414
+   ],
+   "n_eff": 165.0,
+   "raw": "mechanical 4/170",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 4,
+     "n": 170,
+     "books": 165,
+     "k_eff": 3.88,
+     "n_eff": 165.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0077,
+    0.0333,
+    0.0923
+   ],
+   "n_eff": 37.0,
+   "raw": "mechanical 2/37",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 37,
+     "books": 37,
+     "k_eff": 2.0,
+     "n_eff": 37.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3-flash-preview (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0005,
+    0.0079,
+    0.0951
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0003,
+    0.0051,
+    0.0575
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/9",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 9,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0004,
+    0.0025,
+    0.0091
+   ],
+   "n_eff": 262.0,
+   "raw": "mechanical 1/499",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 499,
+     "books": 262,
+     "k_eff": 0.53,
+     "n_eff": 262.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0002,
+    0.0039,
+    0.0338
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/19",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 19,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0044,
+    0.0202,
+    0.0604
+   ],
+   "n_eff": 57.0,
+   "raw": "mechanical 2/58",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 58,
+     "books": 57,
+     "k_eff": 1.97,
+     "n_eff": 57.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0007,
+    0.0048,
+    0.0181
+   ],
+   "n_eff": 147.0,
+   "raw": "mechanical 1/170",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 170,
+     "books": 147,
+     "k_eff": 0.86,
+     "n_eff": 147.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0003,
+    0.005,
+    0.0591
+   ],
+   "n_eff": 4.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 4,
+     "k_eff": 0.0,
+     "n_eff": 4.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0044,
+    0.0135,
+    0.0317
+   ],
+   "n_eff": 165.0,
+   "raw": "mechanical 3/170",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 3,
+     "n": 170,
+     "books": 165,
+     "k_eff": 2.91,
+     "n_eff": 165.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0019,
+    0.0125,
+    0.0523
+   ],
+   "n_eff": 37.0,
+   "raw": "mechanical 1/37",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 37,
+     "books": 37,
+     "k_eff": 1.0,
+     "n_eff": 37.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0003,
+    0.005,
+    0.0607
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.1-flash-lite (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0003,
+    0.0039,
+    0.0324
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0001,
+    0.0026,
+    0.0415
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0001,
+    0.0015,
+    0.0101
+   ],
+   "n_eff": 101.0,
+   "raw": "mechanical 0/148",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 148,
+     "books": 101,
+     "k_eff": 0.0,
+     "n_eff": 101.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.0023,
+    0.0291
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "english",
+   "est": [
+    0.001,
+    0.0083,
+    0.0395
+   ],
+   "n_eff": 43.0,
+   "raw": "mechanical 1/44",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 44,
+     "books": 43,
+     "k_eff": 0.98,
+     "n_eff": 43.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0001,
+    0.0015,
+    0.0102
+   ],
+   "n_eff": 109.0,
+   "raw": "mechanical 0/121",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 121,
+     "books": 109,
+     "k_eff": 0.0,
+     "n_eff": 109.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.002,
+    0.0088,
+    0.0261
+   ],
+   "n_eff": 141.0,
+   "raw": "mechanical 2/143",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 143,
+     "books": 141,
+     "k_eff": 1.97,
+     "n_eff": 141.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0001,
+    0.0021,
+    0.021
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 0/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 23,
+     "books": 23,
+     "k_eff": 0.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0001,
+    0.0028,
+    0.0371
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.6-flash+antigravity-cli (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0023,
+    0.023
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0023,
+    0.0307,
+    0.2447
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 1/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.4,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0025,
+    0.0122,
+    0.038
+   ],
+   "n_eff": 101.0,
+   "raw": "mechanical 2/148",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 148,
+     "books": 101,
+     "k_eff": 1.36,
+     "n_eff": 101.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0008,
+    0.0101,
+    0.076
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "english",
+   "est": [
+    0.003,
+    0.0176,
+    0.0608
+   ],
+   "n_eff": 43.0,
+   "raw": "mechanical 1/44",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 44,
+     "books": 43,
+     "k_eff": 0.98,
+     "n_eff": 43.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0064,
+    0.0206,
+    0.049
+   ],
+   "n_eff": 109.0,
+   "raw": "mechanical 3/121",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 3,
+     "n": 121,
+     "books": 109,
+     "k_eff": 2.7,
+     "n_eff": 109.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0063,
+    0.0187,
+    0.0432
+   ],
+   "n_eff": 141.0,
+   "raw": "mechanical 3/143",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 3,
+     "n": 143,
+     "books": 141,
+     "k_eff": 2.96,
+     "n_eff": 141.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.1546,
+    0.2847,
+    0.4485
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 8/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 8,
+     "n": 23,
+     "books": 23,
+     "k_eff": 8.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0008,
+    0.0138,
+    0.1325
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.7-flash+antigravity-cli (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0007,
+    0.0085,
+    0.0569
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0042,
+    0.0522,
+    0.3332
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 1/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.4,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0499,
+    0.074,
+    0.1022
+   ],
+   "n_eff": 261.0,
+   "raw": "mechanical 38/498",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 38,
+     "n": 498,
+     "books": 261,
+     "k_eff": 19.92,
+     "n_eff": 261.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0074,
+    0.0479,
+    0.1836
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 1/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.92,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0039,
+    0.021,
+    0.0703
+   ],
+   "n_eff": 43.0,
+   "raw": "mechanical 1/44",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 44,
+     "books": 43,
+     "k_eff": 0.98,
+     "n_eff": 43.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0263,
+    0.0525,
+    0.0938
+   ],
+   "n_eff": 109.0,
+   "raw": "mechanical 7/121",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 7,
+     "n": 121,
+     "books": 109,
+     "k_eff": 6.31,
+     "n_eff": 109.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0106,
+    0.0265,
+    0.0541
+   ],
+   "n_eff": 141.0,
+   "raw": "mechanical 4/143",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 4,
+     "n": 143,
+     "books": 141,
+     "k_eff": 3.94,
+     "n_eff": 141.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.1265,
+    0.2543,
+    0.4195
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 7/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 7,
+     "n": 23,
+     "books": 23,
+     "k_eff": 7.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0017,
+    0.023,
+    0.1897
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash+antigravity-cli (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0013,
+    0.0125,
+    0.0716
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash-high+antigravity-cli (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0013,
+    0.0108,
+    0.0477
+   ],
+   "n_eff": 43.0,
+   "raw": "mechanical 1/44",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 44,
+     "books": 43,
+     "k_eff": 0.98,
+     "n_eff": 43.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-3.8-flash-high+antigravity-cli (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0008,
+    0.0054,
+    0.0197
+   ],
+   "n_eff": 141.0,
+   "raw": "mechanical 1/143",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 143,
+     "books": 141,
+     "k_eff": 0.99,
+     "n_eff": 141.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-4-argon-low+antigravity-cli (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0001,
+    0.0012,
+    0.0088
+   ],
+   "n_eff": 101.0,
+   "raw": "mechanical 0/148",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 148,
+     "books": 101,
+     "k_eff": 0.0,
+     "n_eff": 101.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-4-argon-low+antigravity-cli (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0243
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-4-argon-low+antigravity-cli (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0004,
+    0.0043,
+    0.0203
+   ],
+   "n_eff": 97.0,
+   "raw": "mechanical 1/109",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 109,
+     "books": 97,
+     "k_eff": 0.89,
+     "n_eff": 97.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-4-argon-low+antigravity-cli (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0001,
+    0.002,
+    0.0369
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "gemini-4-argon-low+antigravity-cli (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0207
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "kraken-austriannewspapers (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0001,
+    0.0016,
+    0.0182
+   ],
+   "n_eff": 35.0,
+   "raw": "mechanical 0/35",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 35,
+     "books": 35,
+     "k_eff": 0.0,
+     "n_eff": 35.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "kraken-catmus (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0,
+    0.0011,
+    0.0111
+   ],
+   "n_eff": 71.0,
+   "raw": "mechanical 0/76",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 76,
+     "books": 71,
+     "k_eff": 0.0,
+     "n_eff": 71.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "kraken-catmus (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0,
+    0.0012,
+    0.0155
+   ],
+   "n_eff": 35.0,
+   "raw": "mechanical 0/35",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 35,
+     "books": 35,
+     "k_eff": 0.0,
+     "n_eff": 35.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "kraken-greek-cllg (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0001,
+    0.001,
+    0.0078
+   ],
+   "n_eff": 130.0,
+   "raw": "mechanical 0/150",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 150,
+     "books": 130,
+     "k_eff": 0.0,
+     "n_eff": 130.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mineru (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0275
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0,
+    0.0008,
+    0.0179
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0,
+    0.0004,
+    0.004
+   ],
+   "n_eff": 261.0,
+   "raw": "mechanical 0/498",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 498,
+     "books": 261,
+     "k_eff": 0.0,
+     "n_eff": 261.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0,
+    0.0007,
+    0.0111
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0,
+    0.0006,
+    0.008
+   ],
+   "n_eff": 48.0,
+   "raw": "mechanical 0/49",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 49,
+     "books": 48,
+     "k_eff": 0.0,
+     "n_eff": 48.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0,
+    0.0005,
+    0.0053
+   ],
+   "n_eff": 122.0,
+   "raw": "mechanical 0/136",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 136,
+     "books": 122,
+     "k_eff": 0.0,
+     "n_eff": 122.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0,
+    0.0007,
+    0.0125
+   ],
+   "n_eff": 9.0,
+   "raw": "mechanical 0/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 9,
+     "k_eff": 0.0,
+     "n_eff": 9.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0,
+    0.0005,
+    0.0049
+   ],
+   "n_eff": 151.0,
+   "raw": "mechanical 0/155",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 155,
+     "books": 151,
+     "k_eff": 0.0,
+     "n_eff": 151.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0,
+    0.0006,
+    0.0092
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 0/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 23,
+     "books": 23,
+     "k_eff": 0.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "mistral-ocr-4-1 (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0,
+    0.0007,
+    0.0127
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "ndlkotenocr-v3 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0001,
+    0.0017,
+    0.0269
+   ],
+   "n_eff": 19.0,
+   "raw": "mechanical 0/21",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 21,
+     "books": 19,
+     "k_eff": 0.0,
+     "n_eff": 19.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "ndlkotenocr-v3 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.0021,
+    0.0426
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "olmocr-2-7b-fp8 (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0002,
+    0.0027,
+    0.0191
+   ],
+   "n_eff": 57.0,
+   "raw": "mechanical 0/58",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 58,
+     "books": 57,
+     "k_eff": 0.0,
+     "n_eff": 57.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "olmocr-2-7b-fp8 (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0392,
+    0.0681,
+    0.1078
+   ],
+   "n_eff": 138.0,
+   "raw": "mechanical 12/153",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 12,
+     "n": 153,
+     "books": 138,
+     "k_eff": 10.82,
+     "n_eff": 138.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "olmocr-2-7b-fp8 (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0002,
+    0.0023,
+    0.0161
+   ],
+   "n_eff": 79.0,
+   "raw": "mechanical 0/79",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 79,
+     "books": 79,
+     "k_eff": 0.0,
+     "n_eff": 79.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "olmocr-2-7b-fp8 (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0002,
+    0.0031,
+    0.0288
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 0/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 30,
+     "books": 30,
+     "k_eff": 0.0,
+     "n_eff": 30.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "omnisyr (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0001,
+    0.0022,
+    0.0493
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "omnisyr (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0018,
+    0.0249
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "omnisyr-nosplit (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.002,
+    0.0304
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "paddleocr-vl-1.6 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0002,
+    0.0018,
+    0.0078
+   ],
+   "n_eff": 262.0,
+   "raw": "mechanical 1/499",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 499,
+     "books": 262,
+     "k_eff": 0.53,
+     "n_eff": 262.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "paddleocr-vl-1.6 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.002,
+    0.0238
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/19",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 19,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "paddleocr-vl-1.6 (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0001,
+    0.0016,
+    0.0138
+   ],
+   "n_eff": 57.0,
+   "raw": "mechanical 0/58",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 58,
+     "books": 57,
+     "k_eff": 0.0,
+     "n_eff": 57.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "paddleocr-vl-1.6 (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0033,
+    0.0125,
+    0.033
+   ],
+   "n_eff": 138.0,
+   "raw": "mechanical 3/153",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 3,
+     "n": 153,
+     "books": 138,
+     "k_eff": 2.71,
+     "n_eff": 138.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "paddleocr-vl-1.6 (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0001,
+    0.0015,
+    0.0104
+   ],
+   "n_eff": 79.0,
+   "raw": "mechanical 0/79",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 79,
+     "books": 79,
+     "k_eff": 0.0,
+     "n_eff": 79.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "paddleocr-vl-1.6 (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0001,
+    0.0018,
+    0.0188
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 0/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 30,
+     "books": 30,
+     "k_eff": 0.0,
+     "n_eff": 30.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qoruyo-eastern (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0001,
+    0.0021,
+    0.0417
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qoruyo-eastern (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0266
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qoruyo-estrangela (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0001,
+    0.0022,
+    0.0541
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qoruyo-estrangela (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0018,
+    0.028
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0,
+    0.0007,
+    0.0139
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/5",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 5,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0,
+    0.0004,
+    0.0038
+   ],
+   "n_eff": 261.0,
+   "raw": "mechanical 0/498",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 498,
+     "books": 261,
+     "k_eff": 0.0,
+     "n_eff": 261.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0,
+    0.0007,
+    0.0118
+   ],
+   "n_eff": 11.0,
+   "raw": "mechanical 0/12",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 12,
+     "books": 11,
+     "k_eff": 0.0,
+     "n_eff": 11.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "english",
+   "est": [
+    0.0,
+    0.0006,
+    0.0078
+   ],
+   "n_eff": 48.0,
+   "raw": "mechanical 0/49",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 49,
+     "books": 48,
+     "k_eff": 0.0,
+     "n_eff": 48.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0,
+    0.0005,
+    0.0057
+   ],
+   "n_eff": 122.0,
+   "raw": "mechanical 0/136",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 136,
+     "books": 122,
+     "k_eff": 0.0,
+     "n_eff": 122.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0,
+    0.0007,
+    0.012
+   ],
+   "n_eff": 9.0,
+   "raw": "mechanical 0/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 10,
+     "books": 9,
+     "k_eff": 0.0,
+     "n_eff": 9.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0,
+    0.0005,
+    0.005
+   ],
+   "n_eff": 151.0,
+   "raw": "mechanical 0/155",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 155,
+     "books": 151,
+     "k_eff": 0.0,
+     "n_eff": 151.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0,
+    0.0006,
+    0.0107
+   ],
+   "n_eff": 23.0,
+   "raw": "mechanical 0/23",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 23,
+     "books": 23,
+     "k_eff": 0.0,
+     "n_eff": 23.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "qwen3-vl-8b (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0,
+    0.0007,
+    0.0147
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "sophro-defaultseg (benchmark read)",
+   "script": "syriac",
+   "est": [
+    0.0001,
+    0.0028,
+    0.0649
+   ],
+   "n_eff": 2.0,
+   "raw": "mechanical 0/40",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 40,
+     "books": 2,
+     "k_eff": 0.0,
+     "n_eff": 2.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "sophro-mhiro (benchmark read)",
+   "script": "syriac-print",
+   "est": [
+    0.0001,
+    0.0019,
+    0.029
+   ],
+   "n_eff": 18.0,
+   "raw": "mechanical 0/20",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 20,
+     "books": 18,
+     "k_eff": 0.0,
+     "n_eff": 18.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0,
+    0.0011,
+    0.0228
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/9",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 9,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0,
+    0.001,
+    0.0152
+   ],
+   "n_eff": 19.0,
+   "raw": "mechanical 0/21",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 21,
+     "books": 19,
+     "k_eff": 0.0,
+     "n_eff": 19.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0,
+    0.0012,
+    0.0224
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0,
+    0.0009,
+    0.0109
+   ],
+   "n_eff": 43.0,
+   "raw": "mechanical 0/51",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 51,
+     "books": 43,
+     "k_eff": 0.0,
+     "n_eff": 43.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "hebrew",
+   "est": [
+    0.0,
+    0.0011,
+    0.0257
+   ],
+   "n_eff": 4.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 4,
+     "k_eff": 0.0,
+     "n_eff": 4.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0,
+    0.0009,
+    0.0098
+   ],
+   "n_eff": 71.0,
+   "raw": "mechanical 0/76",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 76,
+     "books": 71,
+     "k_eff": 0.0,
+     "n_eff": 71.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "surya2 (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0,
+    0.0009,
+    0.0123
+   ],
+   "n_eff": 37.0,
+   "raw": "mechanical 0/37",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 37,
+     "books": 37,
+     "k_eff": 0.0,
+     "n_eff": 37.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-chi_tra_vert (benchmark read)",
+   "script": "chinese-manuscript",
+   "est": [
+    0.0001,
+    0.0019,
+    0.0225
+   ],
+   "n_eff": 19.0,
+   "raw": "mechanical 0/21",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 21,
+     "books": 19,
+     "k_eff": 0.0,
+     "n_eff": 19.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-chi_tra_vert (benchmark read)",
+   "script": "chinese-print",
+   "est": [
+    0.0001,
+    0.0021,
+    0.0435
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/4",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 4,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-deu (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0001,
+    0.0016,
+    0.0198
+   ],
+   "n_eff": 37.0,
+   "raw": "mechanical 0/37",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 37,
+     "books": 37,
+     "k_eff": 0.0,
+     "n_eff": 37.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-frk (benchmark read)",
+   "script": "latin-script-other",
+   "est": [
+    0.0001,
+    0.0015,
+    0.0179
+   ],
+   "n_eff": 37.0,
+   "raw": "mechanical 0/37",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 37,
+     "books": 37,
+     "k_eff": 0.0,
+     "n_eff": 37.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-grc (benchmark read)",
+   "script": "greek",
+   "est": [
+    0.0008,
+    0.0085,
+    0.0444
+   ],
+   "n_eff": 43.0,
+   "raw": "mechanical 1/51",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 51,
+     "books": 43,
+     "k_eff": 0.84,
+     "n_eff": 43.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-hye (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0001,
+    0.0025,
+    0.064
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/9",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 9,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-hye_calfa (benchmark read)",
+   "script": "armenian",
+   "est": [
+    0.0001,
+    0.0025,
+    0.0535
+   ],
+   "n_eff": 3.0,
+   "raw": "mechanical 0/9",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 9,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "failed_read",
+   "route": "tesseract-lat (benchmark read)",
+   "script": "latin",
+   "est": [
+    0.0007,
+    0.0073,
+    0.0322
+   ],
+   "n_eff": 71.0,
+   "raw": "mechanical 1/76",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "Pareto charts (build-ocr-pareto.mjs)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 76,
+     "books": 71,
+     "k_eff": 0.93,
+     "n_eff": 71.0,
+     "file": "src/data/ocr-pareto.json via --dump-rows"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Gemini 3.1 Pro corrects a specialist draft",
+   "script": "chinese",
+   "est": [
+    0.3093,
+    0.3903,
+    0.4715
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 39/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6561/6667 paddle zh set A (40 withheld table pages)",
+     "judge": "mechanical",
+     "k": 21,
+     "n": 40,
+     "books": null,
+     "k_eff": 21.0,
+     "n_eff": 40.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B random (30 ordinary pages)",
+     "judge": "mechanical",
+     "k": 7,
+     "n": 30,
+     "books": null,
+     "k_eff": 7.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B disagree (30 pages, 29 scored)",
+     "judge": "mechanical",
+     "k": 11,
+     "n": 29,
+     "books": null,
+     "k_eff": 11.0,
+     "n_eff": 29.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Gemini 3.1 Pro corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0764,
+    0.164,
+    0.2844
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 5/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan correct-vs-redo folios worse",
+     "judge": "mechanical",
+     "k": 5,
+     "n": 30,
+     "books": 30,
+     "k_eff": 5.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Gemini 3.1 Pro re-reads from the image (replacing a specialist read)",
+   "script": "tibetan",
+   "est": [
+    0.8532,
+    0.9475,
+    0.9901
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 29/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan correct-vs-redo folios worse",
+     "judge": "mechanical",
+     "k": 29,
+     "n": 30,
+     "books": 30,
+     "k_eff": 29.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Gemini 3.8 Flash high corrects a specialist draft",
+   "script": "chinese",
+   "est": [
+    0.0418,
+    0.077,
+    0.1259
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 8/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6561/6667 paddle zh set A (40 withheld table pages)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 40,
+     "books": null,
+     "k_eff": 2.0,
+     "n_eff": 40.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B random (30 ordinary pages)",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 30,
+     "books": null,
+     "k_eff": 0.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B disagree (30 pages, 29 scored)",
+     "judge": "mechanical",
+     "k": 6,
+     "n": 29,
+     "books": null,
+     "k_eff": 6.0,
+     "n_eff": 29.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Gemini 3.8 Flash high corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0065,
+    0.034,
+    0.1083
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 1/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan correct-vs-redo folios worse",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 30,
+     "books": 30,
+     "k_eff": 1.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-tibetan-flash38-correct-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Gemini 3.8 Flash low corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0002,
+    0.0068,
+    0.0507
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 0/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan correct-vs-redo folios worse",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 30,
+     "books": 30,
+     "k_eff": 0.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-tibetan-flash38-correct-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Haiku corrects a specialist draft",
+   "script": "chinese",
+   "est": [
+    0.3702,
+    0.4492,
+    0.5269
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 45/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6561/6667 paddle zh set A (40 withheld table pages)",
+     "judge": "mechanical",
+     "k": 26,
+     "n": 40,
+     "books": null,
+     "k_eff": 26.0,
+     "n_eff": 40.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B random (30 ordinary pages)",
+     "judge": "mechanical",
+     "k": 12,
+     "n": 30,
+     "books": null,
+     "k_eff": 12.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B disagree (30 pages, 29 scored)",
+     "judge": "mechanical",
+     "k": 7,
+     "n": 29,
+     "books": null,
+     "k_eff": 7.0,
+     "n_eff": 29.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Haiku corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0382,
+    0.102,
+    0.2062
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 3/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6667 tibetan folios worse",
+     "judge": "mechanical",
+     "k": 3,
+     "n": 30,
+     "books": 30,
+     "k_eff": 3.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Opus corrects a specialist draft",
+   "script": "chinese",
+   "est": [
+    0.0264,
+    0.0556,
+    0.1009
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 6/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6561/6667 paddle zh set A (40 withheld table pages)",
+     "judge": "mechanical",
+     "k": 1,
+     "n": 40,
+     "books": null,
+     "k_eff": 1.0,
+     "n_eff": 40.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B random (30 ordinary pages)",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 30,
+     "books": null,
+     "k_eff": 2.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B disagree (30 pages, 29 scored)",
+     "judge": "mechanical",
+     "k": 3,
+     "n": 29,
+     "books": null,
+     "k_eff": 3.0,
+     "n_eff": 29.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Opus corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0008,
+    0.0109,
+    0.0531
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 0/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan correct-vs-redo folios worse",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 30,
+     "books": 30,
+     "k_eff": 0.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Opus corrects stored text in place",
+   "script": "mixed",
+   "est": [
+    0.0001,
+    0.0037,
+    0.0196
+   ],
+   "n_eff": 138.0,
+   "raw": "by-eye 0/5; gemini-3.8-flash-high 12/236; opus 1/236",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6694 q300 armB write audit",
+     "judge": "opus",
+     "k": 0,
+     "n": 40,
+     "books": null,
+     "k_eff": 0.0,
+     "n_eff": 40.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/arm-b/audit/result.json"
+    },
+    {
+     "source": "6694 q300 armB write audit",
+     "judge": "gemini-3.8-flash-high",
+     "k": 3,
+     "n": 40,
+     "books": null,
+     "k_eff": 3.0,
+     "n_eff": 40.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/arm-b/audit/result.json"
+    },
+    {
+     "source": "6694 q300 blind judge (all)",
+     "judge": "opus",
+     "k": 1,
+     "n": 196,
+     "books": 98,
+     "k_eff": 0.5,
+     "n_eff": 98.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/arm-b/judge/result.json.gz"
+    },
+    {
+     "source": "6694 q300 blind judge (all)",
+     "judge": "gemini-3.8-flash-high",
+     "k": 9,
+     "n": 196,
+     "books": 98,
+     "k_eff": 4.5,
+     "n_eff": 98.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/arm-b/judge/result.json.gz"
+    },
+    {
+     "source": "6694 q300 after-apply spot check",
+     "judge": "by-eye",
+     "k": 0,
+     "n": 5,
+     "books": null,
+     "k_eff": 0.0,
+     "n_eff": 5.0,
+     "file": "scripts/eval/experiments/2026-10-13-ocr-opus-correct-vs-lane-b-q300-6694.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Opus re-reads from the image (replacing a specialist read)",
+   "script": "chinese",
+   "est": [
+    0.357,
+    0.4368,
+    0.5185
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 43/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6561/6667 paddle zh set A (40 withheld table pages)",
+     "judge": "mechanical",
+     "k": 15,
+     "n": 40,
+     "books": null,
+     "k_eff": 15.0,
+     "n_eff": 40.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B random (30 ordinary pages)",
+     "judge": "mechanical",
+     "k": 9,
+     "n": 30,
+     "books": null,
+     "k_eff": 9.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B disagree (30 pages, 29 scored)",
+     "judge": "mechanical",
+     "k": 19,
+     "n": 29,
+     "books": null,
+     "k_eff": 19.0,
+     "n_eff": 29.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-correct-vs-redo-6561.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Opus re-reads from the image (replacing a specialist read)",
+   "script": "tibetan",
+   "est": [
+    0.7662,
+    0.8819,
+    0.9527
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 27/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan correct-vs-redo folios worse",
+     "judge": "mechanical",
+     "k": 27,
+     "n": 30,
+     "books": 30,
+     "k_eff": 27.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Sonnet corrects a specialist draft",
+   "script": "chinese",
+   "est": [
+    0.1781,
+    0.2449,
+    0.3238
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 25/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6561/6667 paddle zh set A (40 withheld table pages)",
+     "judge": "mechanical",
+     "k": 10,
+     "n": 40,
+     "books": null,
+     "k_eff": 10.0,
+     "n_eff": 40.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B random (30 ordinary pages)",
+     "judge": "mechanical",
+     "k": 6,
+     "n": 30,
+     "books": null,
+     "k_eff": 6.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    },
+    {
+     "source": "6561/6667 paddle zh set B disagree (30 pages, 29 scored)",
+     "judge": "mechanical",
+     "k": 9,
+     "n": 29,
+     "books": null,
+     "k_eff": 9.0,
+     "n_eff": 29.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "Sonnet corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0016,
+    0.0154,
+    0.0721
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 0/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6667 tibetan folios worse",
+     "judge": "mechanical",
+     "k": 0,
+     "n": 30,
+     "books": 30,
+     "k_eff": 0.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "laneA: Tengyur CLI re-read + re-translation (applied)",
+   "script": "tibetan",
+   "est": [
+    0.0117,
+    0.0483,
+    0.1244
+   ],
+   "n_eff": 40.0,
+   "raw": "two-readers 2/40",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6361 laneA Tengyur convergent check",
+     "judge": "two-readers",
+     "k": 2,
+     "n": 40,
+     "books": null,
+     "k_eff": 2.0,
+     "n_eff": 40.0,
+     "file": "issue #6420 comment 2026-10-11T03:13"
+    }
+   ]
+  },
+  {
+   "rate": "made_worse",
+   "route": "laneB: Gemini CLI read + Opus adjudication (write)",
+   "script": "mixed",
+   "est": [
+    0.0002,
+    0.0045,
+    0.0196
+   ],
+   "n_eff": 164.0,
+   "raw": "gemini-3.8-flash-high 8/164; opus 1/164",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6420 gate write audit",
+     "judge": "opus",
+     "k": 0,
+     "n": 40,
+     "books": null,
+     "k_eff": 0.0,
+     "n_eff": 40.0,
+     "file": "scripts/batch/ocr-convergence/results/run/gate/audit/result.json"
+    },
+    {
+     "source": "6420 gate write audit",
+     "judge": "gemini-3.8-flash-high",
+     "k": 3,
+     "n": 40,
+     "books": null,
+     "k_eff": 3.0,
+     "n_eff": 40.0,
+     "file": "scripts/batch/ocr-convergence/results/run/gate/audit/result.json"
+    },
+    {
+     "source": "6420 main200a write audit",
+     "judge": "opus",
+     "k": 0,
+     "n": 38,
+     "books": null,
+     "k_eff": 0.0,
+     "n_eff": 38.0,
+     "file": "git show origin/results/convergence-main200a-6420:scripts/batch/ocr-convergence/results/run/main200a/audit/result.json"
+    },
+    {
+     "source": "6420 main200a write audit",
+     "judge": "gemini-3.8-flash-high",
+     "k": 3,
+     "n": 38,
+     "books": null,
+     "k_eff": 3.0,
+     "n_eff": 38.0,
+     "file": "git show origin/results/convergence-main200a-6420:scripts/batch/ocr-convergence/results/run/main200a/audit/result.json"
+    },
+    {
+     "source": "6420 main200b write audit",
+     "judge": "opus",
+     "k": 0,
+     "n": 40,
+     "books": null,
+     "k_eff": 0.0,
+     "n_eff": 40.0,
+     "file": "scripts/batch/ocr-convergence/results/run/main200b/audit/result.json"
+    },
+    {
+     "source": "6420 main200b write audit",
+     "judge": "gemini-3.8-flash-high",
+     "k": 1,
+     "n": 40,
+     "books": null,
+     "k_eff": 1.0,
+     "n_eff": 40.0,
+     "file": "scripts/batch/ocr-convergence/results/run/main200b/audit/result.json"
+    },
+    {
+     "source": "6694 q300 blind judge (all)",
+     "judge": "opus",
+     "k": 1,
+     "n": 46,
+     "books": null,
+     "k_eff": 1.0,
+     "n_eff": 46.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/arm-b/judge/result.json.gz"
+    },
+    {
+     "source": "6694 q300 blind judge (all)",
+     "judge": "gemini-3.8-flash-high",
+     "k": 1,
+     "n": 46,
+     "books": null,
+     "k_eff": 1.0,
+     "n_eff": 46.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/arm-b/judge/result.json.gz"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Gemini 3.1 Pro re-reads from the image (replacing a specialist read)",
+   "script": "tibetan",
+   "est": [
+    0.7607,
+    0.8778,
+    0.952
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 27/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan redo",
+     "judge": "mechanical",
+     "k": 27,
+     "n": 30,
+     "books": 30,
+     "k_eff": 27.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Gemini 3.8 Flash low CLI read",
+   "script": "nahuatl",
+   "est": [
+    0.0081,
+    0.0882,
+    0.2799
+   ],
+   "n_eff": 10.0,
+   "raw": "opus 1/10",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6559 nahuatl screen 1759 page",
+     "judge": "opus",
+     "k": 1,
+     "n": 10,
+     "books": 10,
+     "k_eff": 1.0,
+     "n_eff": 10.0,
+     "file": "scripts/eval/experiments/2026-10-12-nahuatl-maya-ocr-cli-6559.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Haiku corrects a specialist draft",
+   "script": "chinese",
+   "est": [
+    0.1397,
+    0.1976,
+    0.2659
+   ],
+   "n_eff": 99.0,
+   "raw": "mechanical 20/99",
+   "books_unrecorded": true,
+   "observations": [
+    {
+     "source": "6667 haiku chinese markdown rewrite",
+     "judge": "mechanical",
+     "k": 20,
+     "n": 99,
+     "books": null,
+     "k_eff": 20.0,
+     "n_eff": 99.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Haiku corrects a specialist draft",
+   "script": "tibetan",
+   "est": [
+    0.0197,
+    0.0673,
+    0.1646
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 2/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6667 haiku tibetan duplicated text",
+     "judge": "mechanical",
+     "k": 2,
+     "n": 30,
+     "books": 30,
+     "k_eff": 2.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Opus re-reads from the image (replacing a specialist read)",
+   "script": "chinese",
+   "est": [
+    0.1338,
+    0.209,
+    0.2914
+   ],
+   "n_eff": 100.0,
+   "raw": "gemini-3.8-flash-high 23/100",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6388 paddle table opus re-read pilot",
+     "judge": "gemini-3.8-flash-high",
+     "k": 23,
+     "n": 100,
+     "books": 100,
+     "k_eff": 23.0,
+     "n_eff": 100.0,
+     "file": "scripts/eval/experiments/2026-10-12-paddle-zh-table-opus-reread-pilot-6388.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Opus re-reads from the image (replacing a specialist read)",
+   "script": "tibetan",
+   "est": [
+    0.4343,
+    0.5824,
+    0.7197
+   ],
+   "n_eff": 30.0,
+   "raw": "mechanical 18/30",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6560 tibetan redo",
+     "judge": "mechanical",
+     "k": 18,
+     "n": 30,
+     "books": 30,
+     "k_eff": 18.0,
+     "n_eff": 30.0,
+     "file": "scripts/eval/experiments/2026-10-12-tibetan-yigdzin-correct-vs-redo-6560.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "Opus read",
+   "script": "nahuatl",
+   "est": [
+    0.0016,
+    0.0504,
+    0.3267
+   ],
+   "n_eff": 3.0,
+   "raw": "by-eye 0/15",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6559 opus calibration",
+     "judge": "by-eye",
+     "k": 0,
+     "n": 15,
+     "books": 3,
+     "k_eff": 0.0,
+     "n_eff": 3.0,
+     "file": "scripts/eval/experiments/2026-10-13-opus-ocr-calibration-6559.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "served text, all lanes (random book)",
+   "script": "mixed",
+   "est": [
+    0.0313,
+    0.0539,
+    0.0869
+   ],
+   "n_eff": 184.0,
+   "raw": "by-eye 10/184",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6691 served audit",
+     "judge": "by-eye",
+     "k": 10,
+     "n": 184,
+     "books": 184,
+     "k_eff": 10.0,
+     "n_eff": 184.0,
+     "file": "git show origin/job-served-audit-6691:scripts/eval/experiments/2026-10-13-served-text-audit-by-lane-6691.md"
+    }
+   ]
+  },
+  {
+   "rate": "not_of_leaf",
+   "route": "served text, most-read non-English books (contained by the adjudicator/corrector)",
+   "script": "mixed",
+   "est": [
+    0.0037,
+    0.0148,
+    0.026
+   ],
+   "n_eff": 771.0,
+   "raw": "opus 144/7682",
+   "books_unrecorded": false,
+   "observations": [
+    {
+     "source": "6420 gate",
+     "judge": "opus",
+     "k": 13,
+     "n": 300,
+     "books": 30,
+     "k_eff": 1.3,
+     "n_eff": 30.0,
+     "file": "scripts/batch/ocr-convergence/results/run/gate/summary.json"
+    },
+    {
+     "source": "6420 main200 (a+b)",
+     "judge": "opus",
+     "k": 34,
+     "n": 1491,
+     "books": 150,
+     "k_eff": 3.42,
+     "n_eff": 150.0,
+     "file": "scripts/eval/experiments/2026-10-13-ocr-convergence-main200-6420.md"
+    },
+    {
+     "source": "6694 q300 armA",
+     "judge": "opus",
+     "k": 12,
+     "n": 976,
+     "books": 99,
+     "k_eff": 1.22,
+     "n_eff": 99.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q300/summary.json"
+    },
+    {
+     "source": "6694 q400 opus-correct contain",
+     "judge": "opus",
+     "k": 5,
+     "n": 710,
+     "books": 71,
+     "k_eff": 0.5,
+     "n_eff": 71.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q400/summary.json"
+    },
+    {
+     "source": "6694 q500 opus-correct contain",
+     "judge": "opus",
+     "k": 1,
+     "n": 630,
+     "books": 63,
+     "k_eff": 0.1,
+     "n_eff": 63.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q500/summary.json"
+    },
+    {
+     "source": "6694 q600 opus-correct contain",
+     "judge": "opus",
+     "k": 16,
+     "n": 680,
+     "books": 68,
+     "k_eff": 1.6,
+     "n_eff": 68.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q600/summary.json"
+    },
+    {
+     "source": "6694 q700 opus-correct contain",
+     "judge": "opus",
+     "k": 5,
+     "n": 710,
+     "books": 71,
+     "k_eff": 0.5,
+     "n_eff": 71.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q700/summary.json"
+    },
+    {
+     "source": "6694 q800 opus-correct contain",
+     "judge": "opus",
+     "k": 32,
+     "n": 775,
+     "books": 78,
+     "k_eff": 3.22,
+     "n_eff": 78.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q800/summary.json"
+    },
+    {
+     "source": "6694 q900 opus-correct contain",
+     "judge": "opus",
+     "k": 2,
+     "n": 680,
+     "books": 68,
+     "k_eff": 0.2,
+     "n_eff": 68.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q900/summary.json"
+    },
+    {
+     "source": "6694 q1000 opus-correct contain",
+     "judge": "opus",
+     "k": 24,
+     "n": 730,
+     "books": 73,
+     "k_eff": 2.4,
+     "n_eff": 73.0,
+     "file": "scripts/batch/ocr-convergence/results/run/q1000/summary.json"
+    }
+   ]
+  }
+ ]
+}
