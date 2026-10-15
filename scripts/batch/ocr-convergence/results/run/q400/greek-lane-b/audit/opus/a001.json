@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b6848470c69d645a73836a",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X romanizes the Greek and garbles or invents passages, e.g. the Sextus quotation 'Omoios de pherometha en tois kata ten proten aitian' for the printed 'Ὁμοίως δὲ φέρεσθαι καὶ τὸ, μὴ ἐν τῷ ἐρωτᾶσθαι', and adds 'absurdum'; Y follows the print closely."
+ },
+ {
+  "item_id": "6952e4cc77f38f6761bc8cee",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The page prints 'πεῖν' in the text and 'πειν bis' in the apparatus, which Y keeps; X normalizes this to 'πιειν', which turns the variant note into nonsense, and also misreads 'al⁴⁰' as 'al¹⁰' and '48ᵉᵛ' as '480ᵉᵛ'."
+ },
+ {
+  "item_id": "69938963ce15387065946d95",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The first line reads 'ὅσα ἐποίησα· ὡς οὖν ἦλθον πρὸς αὐτὸν', which Y gets essentially right; X invents 'ὁ δὲ ὡς ἤκουσαν· αὐτοῦ ἐλθον' and garbles the red rubric at the foot ('τῷ κ(αιρῷ) ἐκ(είνῳ) ἦν τις βασιλικ(ός)')."
+ },
+ {
+  "item_id": "69938963ce15387065946c0d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X leaves out the opening words 'πτισθῆναι … σὺ ἔρχῃ πρός με;' and replaces the written 'τότε ὁ ἰς ἀνήχθη' with the lectionary incipit 'Τῷ καιρῷ ἐκείνῳ ἀνήχθη ὁ ις'; Y's main text is faithful, though its header is wrong."
+ },
+ {
+  "item_id": "69a5e5f385fa13e734e41ed9",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y matches the leaf ('λον καὶ ψεῦδος ἀποτίκτει τοῦ νέου', 'εἰμὶ δὴ οὖν αὐτὸς μὲν οὐ', 'εὐστόχως τοπάζω οἷς ἂν συγγιγνόμενοι ὄναιντο'); X corrupts these into 'ψευδὸς ἀποτίκτω τοὺ νου', 'οὐδὲ αὐτός μέν εἰμι' and an invented 'ἱκανῶς τινι ἂν δόξωσιν ἀμιγῆ'."
+ },
+ {
+  "item_id": "6993838c50654cbbe29170d4",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Most of this dense cursive page is unreadable, and X marks it as '[...]'; Y supplies about 40 lines of fluent prose ('κοσμοποιΐας', 'τὸν πολέμιον') that cannot be verified against the hand and looks fabricated."
+ },
+ {
+  "item_id": "69a5e5f385fa13e734e41ebc",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both are badly wrong (this is Plato's Cratylus). X's middle lines are closer to the leaf ('ὁμολογεῖται· τὸ γὰρ ἐμποδιζόμενα ἴσχον… λοιδορία μοι φαίνεται διαπαντός', 'λέγε γ' αὐτὸ ἁρμονίαν μόνον'), while Y substitutes invented sense such as 'ἡ κωμωιδία' for κακία and 'αἰσχρὸν μαθοῦσιν' for 'αἰσχρὸν καλοῦσιν'. X also misnames the stamp as Napoli; it is the Bodleian's."
+ },
+ {
+  "item_id": "69a5e5f385fa13e734e41f86",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reproduces the leaf's 'ἢ αἴσθησις ἢ λόγος ἢ ὄνομα ἢ ἄλλο ὁτιοῦν τῶν ὄντων περὶ τὸ μὴ ὂν ἔσται' and 'ὥσπερ ὄναρ ἐν ὕπνῳ φαινόμενα … ἀντὶ ἑνὸς δόξαντος'; Y turns these into invented text ('ἢ λόγος ἢ ὅμοια, κᾂν εἴ ποτε δόξῃ', 'ὥσπερ ὅμαρθ᾽ ὑπερφαινόμενος')."
+ },
+ {
+  "item_id": "69ae633c5d11d232640c38ec",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X drops negations that the print has: it gives 'Ὃ δεῖ' for 'οὐ δεῖ', 'ὡς καὶ καλλίον' for 'ὡς οὐ καλλίον', 'κἂν εἰ' for 'οὐδ' εἰ' and 'οὐκ ἔστι ἔτι ταὐτὸν'; Y keeps all of these, though it has smaller slips such as 'καθ' ὅλως'."
+ },
+ {
+  "item_id": "6952e4cc77f38f6761bc8ca3",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The two are nearly identical; X has minor apparatus slips ('Gbᵉ' for 'Gb⁰', 'u Mt 6, 7' for 'ut Mc 6, 7') that Y avoids."
+ }
+]

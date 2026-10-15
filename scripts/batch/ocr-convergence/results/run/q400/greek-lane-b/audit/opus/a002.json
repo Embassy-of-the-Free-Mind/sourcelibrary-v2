@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6955801057e3b773024f50e6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reverses the sense in 'οἱ δὲ μαχομένοις ἑαυτοῖς δὲ συνίσασι' (print: 'ὃ'=οὐ συνίσασι), also 'καὶ ὃ σαφῶς', 'περιέψεσθαι' for 'περιστῆναι', 'σύνοικον' for 'σύσοιχον' and 'εἴτε' for 'οὔτε'; Y has smaller slips ('ἃ τοιαῦτα', 'ἢ πατᾶσθαι', 'ἐφεχελίας')."
+ },
+ {
+  "item_id": "69b6848470c69d645a73825b",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "The two are nearly equivalent; Y keeps the printed 'γένους τε τῶν' and 'quo tempore & Xenocrates', where X drops the '&'."
+ },
+ {
+  "item_id": "6953c68877f38f6761bd9e22",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The texts are identical apart from X's accent typo 'ἀμφότεραὶ' and how the 'ARIST. RHET. A' footer is tagged."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d171",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has the typos 'euaferant', 'superfstructa' and 'medacius', where Y gives 'euaserant', 'superstructā' and 'mēdacius' as printed; the Greek table of contents is the same in both."
+ },
+ {
+  "item_id": "69938dcfd5a98fd66f42eec6",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The wording is the same; they differ only in markup (<term>, subscripts, column-break in the footnote)."
+ },
+ {
+  "item_id": "6953c68877f38f6761bd9e9c",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The texts are the same except for punctuation spacing ('ἂν ·' vs 'ἄν·') and the quote mark form."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a76dc",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has 'θάλασσαν' where the page prints 'θάλατταν', and in the apparatus 'τὰ] ἴσα FM' where the page has 'ὅσα FM'; Y matches the page in both places."
+ },
+ {
+  "item_id": "699389f2ce15387065947f89",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads the hand throughout ('ὡρισμένους … σεκουνιακοὺς' for 'ὠριγενιαστὰς … κοινωνικοὺς', invents 'παρὰ τὸ πρόσωπον ἠκρωτηρίασε', and gives 'Ἰωάννου ἄξιον' for 'τοῦ ἁγίου'), while Y follows it closely; Y does misnumber the charges as 'ια, ιβ, ιγ' where the page has ιε, ιϛ, ιζ."
+ },
+ {
+  "item_id": "699382f784cf5845c644c523",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X adds 'ὁ πρῶτος ἄρτος' and has 'τά σφι ἔπεσσε' and 'καὶ ἐκάλεσε', where the manuscript reads 'ὁ ἄρτος', 'τὰ σιτία ἔπεσσε' and 'καλέσας δὲ'; Y follows the manuscript more closely."
+ },
+ {
+  "item_id": "69a97a1bf3f3d2fb7de26cbb",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The wording is the same; X puts the lemma 'utpote quae…' in a blockquote, while Y bolds it inline as the page prints it."
+ }
+]

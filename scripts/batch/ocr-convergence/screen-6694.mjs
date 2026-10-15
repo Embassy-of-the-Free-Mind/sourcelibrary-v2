@@ -191,6 +191,10 @@ function settleVerdicts() {
 function decide() {
   const screen = new Map(readJsonl(path.join(W, 'screen', 'verdicts.jsonl')).map((r) => [r.page_id, r]));
   const settled = settleVerdicts();
+  // override.json: [{ page_id, action, why }] — a settled flag whose fault is arm B's OWN text (a model comment in place
+  // of the page), not the served text: no write, and no containment, since what readers get now was not found wrong.
+  const ovF = path.join(W, 'override.json');
+  const ov = new Map(fs.existsSync(ovF) ? JSON.parse(fs.readFileSync(ovF, 'utf8')).map((o) => [o.page_id, o]) : []);
   const out = readJsonl(path.join(W, 'decisions-b.jsonl')).map((d) => {
     const s = screen.get(d.page_id);
     // Not screened because the book was held at prep: never written here (apply also drops held books).
@@ -202,6 +206,7 @@ function decide() {
     const v = settled.get(d.page_id);
     if (!v) return { ...base, action: 'residual', why: `screen ${s.answer}, not settled` };
     const settle = { verdict: v.verdict, kind: v.kind, confidence: v.confidence, note: v.note };
+    if (ov.has(d.page_id)) return { ...base, action: ov.get(d.page_id).action, why: ov.get(d.page_id).why, settle };
     // Opus confirms the flag: the text is not this leaf's (containment-on-finding). A low-confidence confirmation is
     // not a finding with the image open: no write, listed for a person.
     if (v.verdict === 'confirmed' && v.confidence !== 'low') return { ...base, action: 'contain', why: `screen ${s.answer}; Opus confirmed ${v.kind}: ${v.note}`.slice(0, 400), settle };
@@ -220,7 +225,7 @@ function decide() {
 // ── contain ────────────────────────────────────────────────────────────────────────────────────────────────────────
 async function contain() {
   const APPLY = flag('apply');
-  const dec = readJsonl(path.join(W, 'decisions.jsonl')).filter((d) => d.action === 'contain');
+  const dec = readJsonl(path.join(W, 'decisions.jsonl')).filter((d) => d.action === 'contain' && d.settle); // arm B's own CONTAIN pages were contained by opus-route-6694
   const byBook = {}; for (const d of dec) (byBook[d.book_id] ??= []).push(d);
   const { client, db } = await connect();
   const { holdBook } = await import('../../lib/pipeline-hold.mjs');

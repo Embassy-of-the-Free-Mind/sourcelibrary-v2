@@ -1,0 +1,301 @@
+[
+ {
+  "item_id": "69b2f40e0e2f024dfbfba648",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Suppressio superfumentis sanguinis' — image 'Suppressiones supertumescentis'",
+   "'Sanguine lentus' — image 'Sanguinolentus' (hyphenated)",
+   "'τὰ τοῖς νεκροῖς ἐναγιζόμενα' — image 'τὰ περὶ νεκρῶν ἐναγίσματα'",
+   "'amissa per syncopen μα syllaba' — image 'vna syllaba'",
+   "col. 2 'περὶ τῶν ἐκ θώρακος αἱμοῤῥαγούντων' — image 'περὶ καθάρσεως αἱμορραγούσης ὑστέρας'"
+  ],
+  "b_errors": [
+   "drops the passage after 'cui accommodatur' ('etiam αἱματῶπις) & exponitur αἷμα βλέπουσα, id est Sanguine intuens, pro Sanguineum & cruentum quendam aspe-')",
+   "headword 'Αἱμαποφλεβοκέντησις' and '… κέντησις' — image 'Αἱματοφλεβοστάσις … στάσις'",
+   "'Idem quod αἱματηρὸς' — image 'αἱματόρρυτος'",
+   "'dicitur' — image 'dicetur'"
+  ],
+  "note": "Checked the spans on the image: B drops a whole passage and corrupts one headword; A has several wrong Latin and Greek readings that B gets right."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba66e",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Vis sentiendi, seu facultas' — image 'Vis sensitiua, Sensitrix facultas'",
+   "'aut ὁ ὀφθαλμος' — image 'aut ὁράσεως'",
+   "'Ἀνταισθάνομαι … est Suidas' — image 'Ἀνεπαίσθητος, ου, ὁ καὶ ἡ … Suidas'",
+   "Athenaeus quote 'στοματὰς ἐπιδώκαν … ἤδη πολλῶν προχωρεῖ' garbled"
+  ],
+  "b_errors": [
+   "'αἰσθητήριον ὀσφρήσεως, est oculus' — image 'ὁράσεως'",
+   "'αἰσθητήριον γνώσεως vertit sensorium gustandi' — image 'γεύσεως'",
+   "'pro non sentire: vt Non sentio' — image 'pro οὐκ αἰσθάνομαι, Non sentio'",
+   "Basil quote in col. 2 garbled ('πῶς πλεονεξίας, τοῦτο, ἀλλ' ἐν ταῖς …')"
+  ],
+  "note": "Each text has meaning-changing errors the other avoids (B is wrong on the sense-organ examples, A on the Latin glosses and headwords); neither is better overall."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba6cb",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "opening quote 'ἐκ δὲ τετάρτου … τῇ ἕκτῃ' — image 'τις ἐν τέτταρσι τόκοις … γὰρ ἔτικε'",
+   "'Peloponno' — image 'Peloponneso'",
+   "'vnde & syllabam Re' drops 'per'",
+   "'ἀνάγκη ἀδικίας ἡ ὑποψία' — image 'ἡ ἀπορία'",
+   "Plato Timaeus quote garbled ('πᾶν δὲ τοῦ καὶ ἐπιστήμης ἱερὸν …')"
+  ],
+  "b_errors": [
+   "'ἀνὰ κράτεος τέταται, pro ἀνατέταται' — image 'ἀνὰ κρατῆρας κέρασ(σ)αν, pro ἀνεκέρασαν'",
+   "Od. α 'Ὃς ῥ' ἤτοι θεὸς ὤμνοσεν ἀνάγκῃ' — image 'Ὅς ῥ' ἤειδε παρὰ μνηστῆρσιν ἀνάγκῃ'",
+   "Demosthenes/Philip quote garbled ('κἀδίκους ἐπιθεὶς, ἀποπληρώσει …')",
+   "appends a string of stray <sig> letters"
+  ],
+  "note": "B is better on the Latin and many Greek quotations, but it invents some Homeric lines that A has right; both garble several citations."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba764",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'Βασιλεὺς, ὁ, Rex, Lex' — image 'έως, ὁ, Rex' ('Lex' not on leaf)",
+   "drops 'dicens' and has 'διογενὴς βασιλεύς' — image 'dicēs διοτρεφέος βασιλῆος'",
+   "Il. γ quote 'ἑκατόν γε ἀνδρὶ ἔοικεν' — image 'βασιλῆϊ γὰρ ἀνδρὶ ἔοικεν'",
+   "'Βασιλώτερος/Βασιλώτατος' — image 'Βασιλεύτερος/Βασιλεύτατος'",
+   "col. 2 opens 'Αἰσχίνης δὲ … ἡμῖν' and drops 'respondisse' in the Lucian passage"
+  ],
+  "b_errors": [
+   "line 1 'καὶ ἠρεμώτερον νῦν ἀλῆσαι' — image 'καὶ θρυλούμενον τὴν ἀλήθειαν'",
+   "'καὶ δίχα βασάνων χρησήσεσθαι' — image 'καὶ διὰ βασάνων χωρήσασι μαθεῖν'",
+   "'Socratem quemdam τὸν Ἀπολλώνιον' — image 'τὸν ἀπὸ Μόψου'"
+  ],
+  "note": "Spot-checked many spans: B has fewer errors and matches the image on the headwords, the Homer quotations and 'generalius'/'Matth.', though it garbles a few Greek quotations too."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba7f1",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'qui det poenas' — image 'dat'",
+   "Polybius quote 'κατέλειπον τοῖς ἐγκαλουμένοις, ἀλλὰ καὶ πᾶσαν ἐλπίδα …' not on leaf (image 'κατηξίου … χλευάζων αὐτοὺς … ἐξεκαλεῖτο')",
+   "'Δικολικὸς, η, ον' — image 'Δικολίκτης, ου, ὁ'",
+   "'Laxè vertitur à Cicerone' — image 'Lædo vertitur'",
+   "'item ἀδικία & ἀδικία opponuntur' — image 'ἡ δίκη & ἡ ἀδικία'"
+  ],
+  "b_errors": [
+   "'eum qui ab alio dante poenas' — image 'cui'",
+   "Plutarch quote 'ὡς δὲ πολιτευομένων οἱ στρατευόμενοι τοῖς δικαζομένοις …' — image 'οἱ στρατηγοῦντες τοῖς δημαγωγοῦσιν … τοῖς σοφισταῖς'",
+   "Ἀδικοδοξία quote 'ὁ δὲ γραφεὺς … ἐπιδεῖξαι' — image 'στρατηγὸς … φέρειν'",
+   "'Κἀδικοπραγέω' and 'Fit ex κεχείῳ … pro σφετερίζω' — image 'Ἀδικοπραγέω' and 'πρᾶγος? … pro πρᾶγμα'",
+   "'Ἄδικος, aduerbium' — image 'Ἀδίκως'"
+  ],
+  "note": "Each text gets right some quotations and headwords that the other garbles; neither is clearly better as a whole."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba937",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἀνιεμένων τ' ἐλαίων … αἰνιγμένον ῥοδίνου' — image 'ἀνιέμενον τ' ἐλαίῳ … ἀνιέμενον ῥοδίνῳ'",
+   "'καταπνευσῇ με' — image 'κατακτενεῖτέ με'",
+   "'nam in loco' drops 'hoc'",
+   "'Ἄνισις … vt ἀνίεται, pro Liquefacere' — image 'Ἄνεσις … vt ἀνιέναι'"
+  ],
+  "b_errors": [
+   "Galen quote 'καὶ δίψα αἰτιώδης λυτικὴ' — image ends '… γλυκεῖ'",
+   "Dioscorides 'ὑπὸς ὑποῦ δὲ κελὶς ἀνίεται' — image 'ὀπὸς ὑπὸ τοῦ ἡλίου ἀνίεται'",
+   "'ζηλῶν τις ἄν' — image 'θνήσκων τις ἄν'",
+   "'longè simplicius' — image 'simplicior'"
+  ],
+  "note": "A and B alternate in which Greek quotations they read correctly; both garble several, so neither text is clearly better."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba965",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1 'Θέοσφυς sum' — image '…otiosus sum'",
+   "'μέρη τάσεων' — image 'περὶ στάσεων'",
+   "headword 'Ἀνέστη' — image 'Ἀνέστην'"
+  ],
+  "b_errors": [
+   "headword 'Ανιστασθαι, Reluctationis' — image 'Ἀντιστατικός, οῦ, ὁ, Reluctatiuus'",
+   "Plato quote 'πάνυ με ανέστησεν, μάλιστα δ' η …' invented",
+   "'Hermetus Odysseae' — image 'Homerus'",
+   "'vel exulo' — image 'vel excio'",
+   "Pausanias quotes replaced by different text; all Greek stripped of accents and breathings"
+  ],
+  "note": "A matches the image far more closely on the headwords and Latin; B misreads the first headword and replaces several quotations with text that is not on the leaf."
+ },
+ {
+  "item_id": "69938963ce15387065946c0c",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "header 'θεοφάνια· τε͂ς ρκεῖ' — image 'εἰς τὰ ἅγια θεοφάνια τῇ κ(υρι)ακῇ'"
+  ],
+  "b_errors": [
+   "last word 'καὶ' — image 'βα-' (start of βαπτισθῆναι)",
+   "margin section number 'ιθ' — image 'ια'"
+  ],
+  "note": "The main text agrees; on the image the last line ends 'σοῦ βα-' and the margin reads ια, both as A has it. B is right only about the header."
+ },
+ {
+  "item_id": "69938963ce15387065946c0d",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "drops the first line 'πτισθῆναι … καὶ σὺ ἔρχῃ πρός με;'",
+   "'Τῷ καιρῷ ἐκείνῳ ἀνήχθη ὁ ἰς' — image 'τότε ὁ ἰς ἀνήχθη'",
+   "drops 'καὶ' before 'ἐρχόμενον'"
+  ],
+  "b_errors": [
+   "header 'τῷ αὐτῷ καιρῷ εἰς ἣν ἀνήχθη' — image 'εὐα(γγέλιον) μετὰ τὰ φῶτα· τῷ καιρῷ ἐκείνῳ ἀνήχθη'",
+   "first line adds 'ὑπ' αὐτοῦ' and omits 'καὶ'"
+  ],
+  "note": "The image begins with the line 'πτισθῆναι … πρός με', which A drops, and reads 'τότε ὁ ἰς ἀνήχθη' as B has it."
+ },
+ {
+  "item_id": "69938963ce15387065946c18",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "margin 'ἀρχὴ μδ' — image 'ἀρ(χὴ) μα'"
+  ],
+  "b_errors": [],
+  "note": "The main text is identical; the differences are accents, hyphenation and small marginal readings."
+ },
+ {
+  "item_id": "69938963ce15387065946c7e",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "first line 'ἀμὴν λέγω ὑμῖν αὐτοῖς' — image 'εἰς μνημόσυνον αὐτῆς'"
+  ],
+  "note": "The image's first line reads 'εἰς μνημόσυνον αὐτῆς' as A has it; B puts words there that are not on the leaf. The rest agrees apart from conventions."
+ },
+ {
+  "item_id": "69938963ce15387065946cad",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "'γνῷ' normalised — image 'γνοῖ'"
+  ],
+  "note": "Both texts are the same apart from punctuation, capitalisation, hyphenation and one normalised spelling."
+ },
+ {
+  "item_id": "69938963ce15387065946cc7",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "margin section numbers 'ρα, ρβ, ργ, ρδ' — image 'ρδ, ρε, ρϛ, ρζ'"
+  ],
+  "note": "The text is the same (B keeps the nomina sacra abbreviated), but the red margin numbers on the image read ρδ–ρζ as in A."
+ },
+ {
+  "item_id": "69938963ce15387065946cde",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'κατάλυμά μου' — image 'κατάλυμα' (μου added)",
+   "'ἐκεῖ ἑτοιμάσατε' — image 'κἀκεῖ'"
+  ],
+  "b_errors": [],
+  "note": "The two differ only slightly; on the image the readings are 'κατάλυμα ὅπου' and 'κἀκεῖ', as in B."
+ },
+ {
+  "item_id": "69938963ce15387065946d06",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "genealogy drops the lines 'τοῦ θάρα τοῦ ναχὼρ τοῦ σερούχ / τοῦ ῥαγαῦ τοῦ φαλὲγ τοῦ ἕβερ' (six names)"
+  ],
+  "b_errors": [
+   "line 2 'τοῦ ἰάρεδ τοῦ μαλελεὴλ τοῦ καϊνᾶν' duplicated — image 'τοῦ θάρα τοῦ ναχὼρ τοῦ σερούχ'",
+   "extra margin 'ιδ', drops margin 'ις'"
+  ],
+  "note": "The image has five genealogy lines. B gets four of them right but repeats one in place of line 2; A collapses lines 2–4 and loses six names."
+ },
+ {
+  "item_id": "69938963ce15387065946d95",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "first line 'ὁ δὲ ὡς ἤκουσαν· αὐτοῦ ἐλθον' — image 'ὅσα ἐποίησα· ὡς οὖν ἦλθον'",
+   "bottom rubric garbled ('ω̅ ω̅ κ̅ τ̅ κ̅ ε̅ κ̅') — image 'τῷ καιρῷ ἐκείνῳ ἦν τις βασιλικός'"
+  ],
+  "b_errors": [
+   "'πάντας ἑωρακότες' — image 'πάντα'"
+  ],
+  "note": "The image's first line and bottom rubric match B; A's opening words are wrong."
+ },
+ {
+  "item_id": "69938963ce15387065946d9c",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1 drops 'οὐ' ('δόξαν παρὰ ἀνθρώπου λαμβάνω'), reversing the sense — image '… οὐ λαμβάνω'",
+   "puts a model note 'Red liturgical or section markers …' and invented margin 'κε ϛ τ. ϛ.' into the text"
+  ],
+  "b_errors": [
+   "'ἀπῆλθεν δὲ εἰς τὸ ὄρος' — image 'ἀνῆλθεν'"
+  ],
+  "note": "The image clearly has 'οὐ λαμβάνω' and margin numbers λε/λϛ, as B gives them; A drops the negation."
+ }
+]
