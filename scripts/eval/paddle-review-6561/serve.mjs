@@ -3,9 +3,13 @@
 // recount, book event); it reads a read directory of meta/txt files, this reads the staging collection. And
 // scripts/maintenance/withhold-paddle-table-pages-6388.mjs, the write this one reverses for a reviewed page.
 //
-// #6561 step 3: serve the Opus-corrected text of withheld Paddle table pages that the Gemini reviewer reviewed and did
-// NOT call invented (verdict clean | minor | material). Reads `paddle_table_corrections_6561` (review written by
-// review-step2.mjs) and writes `pages`. Dry run unless --apply.
+// #6561 step 3: serve the Opus-corrected text of withheld Paddle table pages. Reads `paddle_table_corrections_6561`
+// and writes `pages`. Dry run unless --apply.
+//
+// WHO DECIDES (Derek 2026-10-15, job serve-6561): Claude is the arbiter; the Gemini review is a recorded second opinion,
+// NOT a gate. So every staged page is served EXCEPT (a) a page the arbiter withheld (--arbitration file, `withheld`),
+// and (b) a page Gemini called invented that the arbiter has not ruled `serve` on (Kanripo leaf + the image). Pages
+// Gemini never reviewed (the gate stopped at 100) are served on the Opus correction alone; their provenance says so.
 //
 // Per page: re-read live; skip if not still withheld for paddle_table_6388, human-edited, or its book is gone; skip if
 // the image was replaced after Opus read it. SNAPSHOT FIRST: `saveRevisionBeforeOverwrite` is a no-op on these pages
@@ -22,7 +26,7 @@
 //   pages.updateOne({ id: page_id, 'ocr.engine.run.job_id': /^serve-opus-correct-6561/ }, { $set: { ocr: rev.meta } })
 //   then recountBook + sync-pages-content.mjs --book.  `node serve.mjs --undo [--apply] [--pages-file=ids.json]`
 //
-// Usage (cwd = $JOB_SCRATCH): node --env-file=… serve.mjs --gate=gate-score.json [--apply] [--limit=20] [--pages-file=ids.json] [--undo]
+// Usage (cwd = $JOB_SCRATCH): node --env-file=… serve.mjs --arbitration=<repo>/scripts/eval/paddle-review-6561/results/arbitration.json [--apply] [--limit=20] [--pages-file=ids.json] [--undo]
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -43,13 +47,14 @@ const CALL_SITE = 'scripts/eval/paddle-review-6561/serve.mjs';
 const REASON = 'paddle_table_6388';
 const REV_REASON = 'opus_correct_6561';
 const SWEEP = 'serve-opus-correct-6561';
-const SERVE = new Set(['clean', 'minor', 'material']);
 const APPLY = process.argv.includes('--apply');
 const UNDO = process.argv.includes('--undo');
 const arg = (n) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=');
-// The gate (#6561 step 1) must have said GO before anything is written: --gate=<gate-score.json from score-gate.mjs>.
-const GATE = arg('gate') ? JSON.parse(fs.readFileSync(arg('gate'), 'utf8')).summary?.gate : null;
-if (APPLY && !UNDO && !String(GATE || '').startsWith('GO')) { console.error(`refusing --apply: the gate is ${GATE ?? 'not given (--gate=gate-score.json)'}`); process.exit(2); }
+// The arbiter's rulings on the pages Gemini called invented (results/arbitration.json) must be given before a write.
+const ARB = arg('arbitration') ? JSON.parse(fs.readFileSync(arg('arbitration'), 'utf8')) : null;
+if (APPLY && !UNDO && !ARB) { console.error('refusing --apply: no --arbitration=results/arbitration.json'); process.exit(2); }
+const ARB_WITHHELD = new Set(ARB?.withheld || []);
+const ARB_SERVE = new Map((ARB?.rows || []).filter((r) => r.verdict === 'serve').map((r) => [r.page_id, r]));
 const LIMIT = arg('limit') ? Number(arg('limit')) : Infinity;
 const ONLY = arg('pages-file') ? new Set(JSON.parse(fs.readFileSync(arg('pages-file'), 'utf8')).map((x) => (typeof x === 'string' ? x : x.page_id))) : null;
 const sha16 = (s) => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16);
@@ -90,14 +95,17 @@ if (UNDO) {
 }
 
 const CODE_VERSION = await codeVersion();
-const staged = await db.collection('paddle_table_corrections_6561').find({ 'review.verdict': { $in: [...SERVE] } }).toArray();
+const staged = await db.collection('paddle_table_corrections_6561').find({ served: { $exists: false } }).toArray();
 const cand = staged.filter((d) => !ONLY || ONLY.has(d.page_id)).sort((a, b) => (a.book_id + String(a.page_number).padStart(6, '0') < b.book_id + String(b.page_number).padStart(6, '0') ? -1 : 1));
-console.log(`${staged.length} staged pages reviewed and not called invented; ${cand.length} selected; ${APPLY ? 'APPLY' : 'dry run'}`);
+console.log(`${staged.length} staged pages not yet served; ${cand.length} selected; ${APPLY ? 'APPLY' : 'dry run'}`);
 const bookAlive = new Map();
 fs.mkdirSync('img', { recursive: true });
 
 for (const d of cand) {
   if (tally.written >= LIMIT) break;
+  if (ARB_WITHHELD.has(d.page_id)) { skip(d, 'withheld by the arbiter (text not on the leaf)'); continue; }
+  const arb = ARB_SERVE.get(d.page_id) || null;
+  if (d.review?.verdict === 'invented' && !arb) { skip(d, 'Gemini called it invented and the arbiter has not ruled'); continue; }
   const text = d.corrected_text;
   if (typeof text !== 'string' || sha16(text) !== d.corrected_sha) { skip(d, 'staging text does not match its hash'); continue; }
   const page = await pagesC.findOne({ id: d.page_id }, { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1 } });
@@ -127,11 +135,16 @@ for (const d of cand) {
     prompt: { id: null, name: P.prompt?.name, version: P.prompt?.version, hash: P.prompt?.head_sha, sent_hash: NOT_RECORDED },
     generationConfig: notRecorded('claude -p exposes no temperature, output cap or thinking setting; the model id names the tier'),
     run: {
-      job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(), reason: 'issue 6561: Opus-correct of a withheld Paddle table page, served after a Gemini review that did not call it invented',
+      job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(), reason: 'issue 6561: Opus-correct of a withheld Paddle table page; Claude arbitrates, the Gemini review is a second opinion (Derek 2026-10-15)',
       method: 'opus-correct', correction_run: d.run, read_at: P.read_at, read_host: P.host, read_account: P.account,
       prompt_hashes: { head_sha: P.prompt?.head_sha ?? null, redo_opus_sha: P.prompt?.redo_opus_sha ?? null, note: P.prompt?.note ?? null, per_page_sent_hash: 'not recorded by the read; the prompt embeds the page\'s Paddle draft' },
       draft: { engine: 'paddle', model: paddleRev.model, content_hash: d.paddle_sha, revision: paddleRev.id, run: paddleRev.engine?.run ?? null },
-      reviewer: { model: d.review.model, cli: 'agy -p', verdict: d.review.verdict, at: d.review.at, prompt: 'scripts/eval/paddle-table-pilot-6388/review-prompt-pilot.txt' },
+      reviewer: d.review
+        ? { model: d.review.model, cli: 'agy -p', verdict: d.review.verdict, at: d.review.at, prompt: 'scripts/eval/paddle-table-pilot-6388/review-prompt-pilot.txt', role: 'second opinion, not a gate' }
+        : { verdict: null, note: 'not reviewed: the Gemini gate stopped after its 100-page sample (NO-GO 2026-10-14); served on the Opus correction' },
+      arbiter: arb
+        ? { by: 'claude-opus', at: ARB.at, verdict: 'serve', decided_by: arb.decided_by, kanripo: arb.kanripo, reading: arb.arbiter_reading, record: 'scripts/eval/paddle-review-6561/results/arbitration.json' }
+        : { by: 'claude-opus', at: ARB?.at ?? null, verdict: 'serve', note: 'no reviewer objection to arbitrate' },
       staging: { collection: 'paddle_table_corrections_6561', corrected_sha: d.corrected_sha },
     },
     input: { ...imageInput({ url: d.image_url, mime: 'image/jpeg', bytes: im.orig_bytes }), image_sha256: im.polished ? null : im.sha256, ...(im.polished && { served_variant: { cf_polished: true, bytes: im.bytes, sha256: im.sha256 } }) },
@@ -139,7 +152,7 @@ for (const d of cand) {
   const tags = liftOcrTags(text);
   const detectedImages = parseDetectedImages(text);
   const prov = ocrProvenance(text, engine); // throws on an incomplete engine block, in the dry run too
-  if (!APPLY) { tally.written++; rec({ page_id: d.page_id, book_id: d.book_id, page_number: d.page_number, status: 'would-write', verdict: d.review.verdict, chars: text.length }); continue; }
+  if (!APPLY) { tally.written++; rec({ page_id: d.page_id, book_id: d.book_id, page_number: d.page_number, status: 'would-write', verdict: d.review?.verdict ?? null, arbitrated: !!arb, chars: text.length }); continue; }
 
   // SNAPSHOT FIRST: the withheld state, whole.
   const revId = crypto.randomBytes(6).toString('hex');
@@ -161,17 +174,17 @@ for (const d of cand) {
     } },
   );
   if (r.modifiedCount !== 1) { skip(d, 'page changed before the write (a concurrent writer won)'); await db.collection('page_revisions').deleteOne({ id: revId }); continue; }
-  await recordSweepAction(db, { sweep: SWEEP, book_id: page.book_id, action: 'ocr-served-opus-correct', detail: { page_id: page.id, page_number: page.page_number, from: `withheld paddle (${page.ocr.model})`, to_model: P.model, verdict: d.review.verdict, reviewer: d.review.model, revision: revId, run: runId, issue: 6561 } });
+  await recordSweepAction(db, { sweep: SWEEP, book_id: page.book_id, action: 'ocr-served-opus-correct', detail: { page_id: page.id, page_number: page.page_number, from: `withheld paddle (${page.ocr.model})`, to_model: P.model, verdict: d.review?.verdict ?? null, reviewer: d.review?.model ?? null, arbiter: 'claude-opus', revision: revId, run: runId, issue: 6561 } });
   await db.collection('paddle_table_corrections_6561').updateOne({ page_id: page.id }, { $set: { served: { at: new Date(), run: runId, revision: revId } } });
   (books.get(page.book_id) || books.set(page.book_id, []).get(page.book_id)).push(page.page_number);
   tally.written++;
-  rec({ page_id: page.id, book_id: page.book_id, page_number: page.page_number, status: 'written', verdict: d.review.verdict, revision: revId });
+  rec({ page_id: page.id, book_id: page.book_id, page_number: page.page_number, status: 'written', verdict: d.review?.verdict ?? null, revision: revId });
 }
 
 if (APPLY) {
   for (const [bookId, nums] of books) {
     await recountBook(db, bookId, { reason: SWEEP });
-    await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_served', at: new Date(), source: CALL_SITE, details: { run: runId, issue: 6561, method: 'opus-correct, Gemini-reviewed', pages: nums.length, page_numbers: nums.sort((a, b) => a - b), note: 'withheld Paddle table pages (6388) replaced by the reviewed Opus correction; book hold and withheld translations unchanged' } });
+    await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_served', at: new Date(), source: CALL_SITE, details: { run: runId, issue: 6561, method: 'opus-correct, Claude-arbitrated (Gemini review a second opinion)', pages: nums.length, page_numbers: nums.sort((a, b) => a - b), note: 'withheld Paddle table pages (6388) replaced by the reviewed Opus correction; book hold and withheld translations unchanged' } });
   }
   syncBooks(books.keys());
 }
