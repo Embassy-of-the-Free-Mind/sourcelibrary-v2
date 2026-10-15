@@ -1,0 +1,21 @@
+{"key": "spiritus|translates|pneuma", "verdict": "stated", "idx": 4, "reason": "called pneuma by the Greeks and spiritus by the Latins", "judge": "claude-opus-5-5"}
+{"key": "anima-mundi|translates|psyche", "verdict": "not_stated", "reason": "passages cite Greek soul phrases near world-soul talk but none gives one as the rendering of the other", "judge": "claude-opus-5-5"}
+{"key": "qi|analogue|pneuma", "verdict": "not_stated", "reason": "only an index entry 'Ch'i (pneuma)'; no comparison stated", "judge": "claude-opus-5-5"}
+{"key": "qi|analogue|prana", "verdict": "not_stated", "reason": "no candidate mentions prana", "judge": "claude-opus-5-5"}
+{"key": "kami|analogue|genius-loci", "verdict": "not_stated", "reason": "Kukai at Ise; no comparison to genius loci", "judge": "claude-opus-5-5"}
+{"key": "elan-vital|descends|vitalism", "verdict": "not_stated", "reason": "describe élan vital but never link it to vitalism", "judge": "claude-opus-5-5"}
+{"key": "vitalism|descends|entelechy", "verdict": "not_stated", "reason": "Ambrose on blood as soul; 'vitalist' is a translator's bracket, no descent stated", "judge": "claude-opus-5-5"}
+{"key": "anima-mundi|belongs|platonism", "verdict": "stated", "idx": 0, "reason": "world soul set forth in Plato's Timaeus, fundamental to Plotinus and the Neoplatonists", "judge": "claude-opus-5-5"}
+{"key": "prolongation|descends|radical-moisture", "verdict": "not_stated", "reason": "says strengthening radical moisture prolongs life, a means relation not descent", "judge": "claude-opus-5-5"}
+{"key": "prolongation|descends|sober-life", "verdict": "not_stated", "reason": "bibliographic list co-mentioning sober life and prolonging life", "judge": "claude-opus-5-5"}
+{"key": "spagyric|descends|quintessence", "verdict": "not_stated", "reason": "passages say spagyric method extracts quintessence, not that it descends from the doctrine", "judge": "claude-opus-5-5"}
+{"key": "homunculus|descends|spontaneous-generation", "verdict": "stated", "idx": 5, "reason": "Paracelsus grounds the homunculus in putrefaction as the beginning of generation", "judge": "claude-opus-5-5"}
+{"key": "homunculus|belongs|paracelsianism", "verdict": "stated", "idx": 1, "reason": "Libavius lists the homunculus among the filths of Paracelsian impiety", "judge": "claude-opus-5-5"}
+{"key": "spagyric|belongs|paracelsianism", "verdict": "stated", "idx": 0, "reason": "Paracelsian medicines purified by the Spagyric art", "judge": "claude-opus-5-5"}
+{"key": "elan-vital|belongs|creative-evolution", "verdict": "stated", "idx": 1, "reason": "élan vital given as the creative impulse in Bergson's doctrine of being as creativity", "judge": "claude-opus-5-5"}
+{"key": "qi|belongs|daoism", "verdict": "not_stated", "reason": "mostly the Qi dynasty/name; idx 3 co-mentions qi and Taoists without attribution", "judge": "claude-opus-5-5"}
+{"key": "immortality|belongs|daoism", "verdict": "stated", "idx": 5, "reason": "Baopuzi: the Daoist masters keep the arts of the immortals as secrets", "judge": "claude-opus-5-5"}
+{"key": "daoyin|cultivates|qi", "verdict": "stated", "idx": 4, "reason": "practice daoyin to restore the blood and qi", "judge": "claude-opus-5-5"}
+{"key": "prolongation|cultivates|longevity", "verdict": "stated", "idx": 1, "reason": "Arnald's De retardatione senectutis: gold water averts a shorter life and approaching old age", "judge": "claude-opus-5-5"}
+{"key": "spagyric|cultivates|vital-balsam", "verdict": "not_stated", "reason": "natural balsam is only called similar to spagyric medicine; no strengthening stated", "judge": "claude-opus-5-5"}
+{"key": "growth-of-metals|descends|seminal-reasons", "verdict": "not_stated", "reason": "Augustine's seminal reasons quoted but no metals in the passage", "judge": "claude-opus-5-5"}

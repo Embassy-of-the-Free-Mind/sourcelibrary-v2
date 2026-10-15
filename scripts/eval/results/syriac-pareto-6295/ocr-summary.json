@@ -2,7 +2,7 @@
  "issue": 6295,
  "generated_by": "scripts/eval/syriac-pareto-6295/analyze-ocr.mjs",
  "scorer": "syriac-cer/1",
- "date": "2026-10-08",
+ "date": "2026-10-14",
  "grade": "directional (under 30 books)",
  "n_sealed": 24,
  "n_scored": 20,
@@ -139,6 +139,24 @@
    ],
    "pages_cer_le_010": 0,
    "pages_cer_ge_050": 8
+  },
+  {
+   "arm": "G4L-syr-print",
+   "n_pages": 20,
+   "n_books": 20,
+   "n_editions": 18,
+   "median_cer": 0.292,
+   "cer_ci95": [
+    0.238,
+    0.343
+   ],
+   "accuracy": 0.708,
+   "accuracy_ci95": [
+    0.657,
+    0.762
+   ],
+   "pages_cer_le_010": 1,
+   "pages_cer_ge_050": 2
   },
   {
    "arm": "L-ocr",
@@ -586,6 +604,7 @@
     "C37-ocr": 0.3766,
     "C38-ocr-b": 0.3434,
     "C38-ocr": 0.3552,
+    "G4L-syr-print": 0.0926,
     "L-ocr-b": 0.6717,
     "L-ocr": 1,
     "mineru": 1
@@ -609,6 +628,7 @@
     "C37-ocr": 0.299,
     "C38-ocr-b": 0.984,
     "C38-ocr": 0.3041,
+    "G4L-syr-print": 0.1976,
     "L-ocr-b": 0.5895,
     "L-ocr": 0.6807,
     "mineru": 1
@@ -632,6 +652,7 @@
     "C37-ocr": 0.3097,
     "C38-ocr-b": 0.3303,
     "C38-ocr": 0.4145,
+    "G4L-syr-print": 0.3377,
     "L-ocr-b": 1,
     "L-ocr": 0.5797,
     "mineru": 1
@@ -655,6 +676,7 @@
     "C37-ocr": 0.3556,
     "C38-ocr-b": 0.3261,
     "C38-ocr": 0.3727,
+    "G4L-syr-print": 0.2376,
     "L-ocr-b": 0.6242,
     "L-ocr": 0.5714,
     "mineru": 1
@@ -678,6 +700,7 @@
     "C37-ocr": 0.3902,
     "C38-ocr-b": 1,
     "C38-ocr": 1,
+    "G4L-syr-print": 0.314,
     "L-ocr-b": 0.6382,
     "L-ocr": 0.7106,
     "mineru": 1
@@ -701,6 +724,7 @@
     "C37-ocr": 0.9053,
     "C38-ocr-b": 0.433,
     "C38-ocr": 0.4471,
+    "G4L-syr-print": 0.6828,
     "L-ocr-b": 0.7482,
     "L-ocr": 0.7543,
     "mineru": 1
@@ -724,6 +748,7 @@
     "C37-ocr": 0.4342,
     "C38-ocr-b": 0.407,
     "C38-ocr": 0.3645,
+    "G4L-syr-print": 0.3428,
     "L-ocr-b": 0.6942,
     "L-ocr": 0.7018,
     "mineru": 1
@@ -747,6 +772,7 @@
     "C37-ocr": 0.4188,
     "C38-ocr-b": 0.3896,
     "C38-ocr": 0.632,
+    "G4L-syr-print": 0.2703,
     "L-ocr-b": 0.5419,
     "L-ocr": 0.5457,
     "mineru": 1
@@ -770,6 +796,7 @@
     "C37-ocr": 0.3039,
     "C38-ocr-b": 0.2522,
     "C38-ocr": 0.203,
+    "G4L-syr-print": 0.1223,
     "L-ocr-b": 1,
     "L-ocr": 0.686,
     "mineru": 1
@@ -793,6 +820,7 @@
     "C37-ocr": 1,
     "C38-ocr-b": 0.2132,
     "C38-ocr": 0.2203,
+    "G4L-syr-print": 0.1755,
     "L-ocr-b": 0.9658,
     "L-ocr": 0.8092,
     "mineru": 1
@@ -816,6 +844,7 @@
     "C37-ocr": 0.5332,
     "C38-ocr-b": 0.6536,
     "C38-ocr": 0.4181,
+    "G4L-syr-print": 0.2152,
     "L-ocr-b": 1,
     "L-ocr": 0.7199,
     "mineru": 1
@@ -838,6 +867,7 @@
     "C37-ocr": 0.3107,
     "C38-ocr-b": 0.9946,
     "C38-ocr": 1,
+    "G4L-syr-print": 0.2873,
     "L-ocr-b": 0.6649,
     "L-ocr": 0.6107,
     "mineru": 1
@@ -860,6 +890,7 @@
     "C37-ocr": 1,
     "C38-ocr-b": 0.9813,
     "C38-ocr": 1,
+    "G4L-syr-print": 0.2976,
     "L-ocr-b": 0.6346,
     "L-ocr": 0.6316,
     "mineru": 1
@@ -883,6 +914,7 @@
     "C37-ocr": 0.4669,
     "C38-ocr-b": 0.8195,
     "C38-ocr": 0.4633,
+    "G4L-syr-print": 0.343,
     "L-ocr-b": 0.7172,
     "L-ocr": 0.7028,
     "mineru": 1
@@ -906,6 +938,7 @@
     "C37-ocr": 0.9249,
     "C38-ocr-b": 0.9913,
     "C38-ocr": 0.9335,
+    "G4L-syr-print": 0.4894,
     "L-ocr-b": 0.6329,
     "L-ocr": 0.6387,
     "mineru": 1
@@ -929,6 +962,7 @@
     "C37-ocr": 0.4931,
     "C38-ocr-b": 0.4806,
     "C38-ocr": 0.5809,
+    "G4L-syr-print": 0.4856,
     "L-ocr-b": 0.7077,
     "L-ocr": 0.7265,
     "mineru": 1
@@ -952,6 +986,7 @@
     "C37-ocr": 0.2994,
     "C38-ocr-b": 0.2961,
     "C38-ocr": 0.9609,
+    "G4L-syr-print": 0.2737,
     "L-ocr-b": 1,
     "L-ocr": 0.6257,
     "mineru": 1
@@ -975,6 +1010,7 @@
     "C37-ocr": 0.433,
     "C38-ocr-b": 0.454,
     "C38-ocr": 0.4053,
+    "G4L-syr-print": 0.3677,
     "L-ocr-b": 0.6766,
     "L-ocr": 0.6224,
     "mineru": 1
@@ -998,6 +1034,7 @@
     "C37-ocr": 0.3404,
     "C38-ocr-b": 0.3721,
     "C38-ocr": 0.2945,
+    "G4L-syr-print": 0.1411,
     "L-ocr-b": 0.6296,
     "L-ocr": 0.6261,
     "mineru": 1
@@ -1021,6 +1058,7 @@
     "C37-ocr": 0.6381,
     "C38-ocr-b": 0.6101,
     "C38-ocr": 0.6122,
+    "G4L-syr-print": 0.5471,
     "L-ocr-b": 0.7042,
     "L-ocr": 0.698,
     "mineru": 1

@@ -1,0 +1,1592 @@
+{
+ "items": {
+  "k-001": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00078",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-002": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00077",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-003": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-004": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00042",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-005": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00372",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-006": {
+   "kind": "PLANT",
+   "page_id": "69e792fd80b52390feb1770f_00031",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1_PLANT",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "they saw Boshe coming toward them, with two jars of wine hanging from the front of his donkey's saddle and fruit and vegetables in his hands.",
+    "new": "they saw Boshe coming toward them, with three jars of wine hanging from the front of his donkey's saddle and fruit and vegetables in his hands.",
+    "how": "two → three"
+   },
+   "plant_6690_item": "j-036"
+  },
+  "k-007": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00163",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-008": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00168",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-009": {
+   "kind": "PLANT",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "and can a \"raising\" ever be right when the governing word is one of \"dragging\"?",
+    "new": "and can a \"raising\" ever be right when the governing word is not one of \"dragging\"?",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-059"
+  },
+  "k-010": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00039",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-011": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00375",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-012": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00373",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "\"Is it anything other, then,\" I said, \"than that the tyrannical man, in the",
+    "new": "\"Is it anything other, then,\" I said, in the",
+    "how": "clause dropped",
+    "dropped": "\"than that the tyrannical man,"
+   },
+   "plant_6690_item": "j-055"
+  },
+  "k-013": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00370",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-014": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00043",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "F",
+    "T3": "O10"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Do not praise any gentile, not for charm and not for beauty, but only for his deeds.",
+    "new": "Do not praise any gentile, but only for his deeds.",
+    "how": "clause dropped",
+    "dropped": "not for charm and not for beauty,"
+   },
+   "plant_6690_item": "j-064"
+  },
+  "k-015": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00165",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-016": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00030",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-017": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00370",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-018": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00040",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-019": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00376",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-020": {
+   "kind": "PLANT",
+   "page_id": "69ea3e63300d991d0f1d3186_00168",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "F",
+    "T3": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "For middle-grade and low-grade horses it is one-fifth less.",
+    "new": "For middle-grade and low-grade horses it is not one-fifth less.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-049"
+  },
+  "k-021": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00079",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-022": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00371",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "\"But, Adeimantus, in the name of Zeus: for the sake of a mistress he has only just come to love, a woman he does not need, would he strike his mother, whom he has loved for so long and whom he needs?",
+    "new": "\"But, Zeus, in the name of Adeimantus: for the sake of a mistress he has only just come to love, a woman he does not need, would he strike his mother, whom he has loved for so long and whom he needs?",
+    "how": "swap Adeimantus ↔ Zeus"
+   },
+   "plant_6690_item": "j-023"
+  },
+  "k-023": {
+   "kind": "PLANT",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1_PLANT",
+    "T3": "O10"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Among the females: female calves, heifers, cows that have not yet calved, pregnant cows, milch cows, and barren cows and buffaloes.",
+    "new": "Among the females: female calves, heifers, pregnant cows, milch cows, and barren cows and buffaloes.",
+    "how": "clause dropped",
+    "dropped": "cows that have not yet calved,"
+   },
+   "plant_6690_item": "j-060"
+  },
+  "k-024": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00024",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-025": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00042",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-026": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00374",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-027": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00368",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-028": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00028",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-029": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-030": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00373",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-031": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00168",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-032": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00046",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-033": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00041",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-034": {
+   "kind": "PLANT",
+   "page_id": "69ea3e63300d991d0f1d3186_00168",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "For middle-grade and low-grade horses it is one-fifth less.",
+    "new": "For middle-grade and low-grade horses it is not one-fifth less.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-049"
+  },
+  "k-035": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00376",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-036": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-037": {
+   "kind": "PLANT",
+   "page_id": "69e792fd80b52390feb1770f_00027",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1_PLANT",
+    "T3": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "The attendants said, \"He is in the small pavilion.\" Cao went straight in and found Dong Zhuo sitting on his couch, with Lü Bu standing in attendance at his side.",
+    "new": "The attendants said, \"He is not in the small pavilion.\" Cao went straight in and found Dong Zhuo sitting on his couch, with Lü Bu standing in attendance at his side.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-047"
+  },
+  "k-038": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00040",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "And if, God forbid, some harm should befall you, your Employer is faithful to repay you for the loss you suffered for His sake.",
+    "new": "And if, God forbid, some harm should befall you, your Employer is not faithful to repay you for the loss you suffered for His sake.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-008"
+  },
+  "k-039": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00027",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-040": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00084",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-041": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00167",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-042": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00081",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-043": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00031",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-044": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00079",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-045": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00046",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-046": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00045",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-047": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00162",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-048": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00023",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-049": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00084",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-050": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-051": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-052": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00169",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-053": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00028",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-054": {
+   "kind": "PLANT",
+   "page_id": "69ea3e63300d991d0f1d3186_00164",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Among the females: female calves, heifers, cows that have not yet calved, pregnant cows, milch cows, and barren cows and buffaloes.",
+    "new": "Among the females: female calves, heifers, pregnant cows, milch cows, and barren cows and buffaloes.",
+    "how": "clause dropped",
+    "dropped": "cows that have not yet calved,"
+   },
+   "plant_6690_item": "j-060"
+  },
+  "k-055": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00368",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-056": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-057": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00375",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-058": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00027",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-059": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00371",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "name",
+    "old": "\"But, Adeimantus, in the name of Zeus: for the sake of a mistress he has only just come to love, a woman he does not need, would he strike his mother, whom he has loved for so long and whom he needs?",
+    "new": "\"But, Zeus, in the name of Adeimantus: for the sake of a mistress he has only just come to love, a woman he does not need, would he strike his mother, whom he has loved for so long and whom he needs?",
+    "how": "swap Adeimantus ↔ Zeus"
+   },
+   "plant_6690_item": "j-023"
+  },
+  "k-060": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00040",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1_PLANT",
+    "T3": "O10"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "And if, God forbid, some harm should befall you, your Employer is faithful to repay you for the loss you suffered for His sake.",
+    "new": "And if, God forbid, some harm should befall you, your Employer is not faithful to repay you for the loss you suffered for His sake.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-008"
+  },
+  "k-061": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00374",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-062": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00029",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-063": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00030",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-064": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00080",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-065": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00029",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-066": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00166",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-067": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00080",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-068": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00023",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-069": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00026",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-070": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00162",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-071": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00077",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-072": {
+   "kind": "PLANT",
+   "page_id": "69e792fd80b52390feb1770f_00027",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "The attendants said, \"He is in the small pavilion.\" Cao went straight in and found Dong Zhuo sitting on his couch, with Lü Bu standing in attendance at his side.",
+    "new": "The attendants said, \"He is not in the small pavilion.\" Cao went straight in and found Dong Zhuo sitting on his couch, with Lü Bu standing in attendance at his side.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-047"
+  },
+  "k-073": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00043",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-074": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00044",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-075": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00373",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-076": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00022",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-077": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00031",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-078": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00369",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-079": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00367",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-080": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00076",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-081": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00372",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-082": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00083",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-083": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00039",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-084": {
+   "kind": "PLANT",
+   "page_id": "69b52593cced70d8e6d72941_00043",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1_PLANT",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "Do not praise any gentile, not for charm and not for beauty, but only for his deeds.",
+    "new": "Do not praise any gentile, but only for his deeds.",
+    "how": "clause dropped",
+    "dropped": "not for charm and not for beauty,"
+   },
+   "plant_6690_item": "j-064"
+  },
+  "k-085": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-086": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00025",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-087": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00167",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-088": {
+   "kind": "PLANT",
+   "page_id": "69e792fd80b52390feb1770f_00031",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "F",
+    "T3": "O10"
+   },
+   "plant": {
+    "kind": "number",
+    "old": "they saw Boshe coming toward them, with two jars of wine hanging from the front of his donkey's saddle and fruit and vegetables in his hands.",
+    "new": "they saw Boshe coming toward them, with three jars of wine hanging from the front of his donkey's saddle and fruit and vegetables in his hands.",
+    "how": "two → three"
+   },
+   "plant_6690_item": "j-036"
+  },
+  "k-089": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00161",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-090": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00045",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-091": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00044",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-092": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00369",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-093": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00024",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-094": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00026",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-095": {
+   "kind": "PLANT",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "and can a \"raising\" ever be right when the governing word is one of \"dragging\"?",
+    "new": "and can a \"raising\" ever be right when the governing word is not one of \"dragging\"?",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-059"
+  },
+  "k-096": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00038",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-097": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-098": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00163",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-099": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00025",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-100": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00083",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-101": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00078",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-102": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00166",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-103": {
+   "kind": "PLANT",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1_PLANT"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Once he has grown hard and coarse, so that he is good for nothing, he turns gentle and shows friendliness.",
+    "new": "Once he has grown hard and coarse, so that he is not good for nothing, he turns gentle and shows friendliness.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-057"
+  },
+  "k-104": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00041",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-105": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00038",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-106": {
+   "kind": "PLANT",
+   "page_id": "699376d2b0a84a5763961a97_00373",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "clause",
+    "old": "\"Is it anything other, then,\" I said, \"than that the tyrannical man, in the",
+    "new": "\"Is it anything other, then,\" I said, in the",
+    "how": "clause dropped",
+    "dropped": "\"than that the tyrannical man,"
+   },
+   "plant_6690_item": "j-055"
+  },
+  "k-107": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00160",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-108": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00037",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O10",
+    "T2": "O1",
+    "T3": "F"
+   }
+  },
+  "k-109": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00043",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "F",
+    "T3": "O10"
+   }
+  },
+  "k-110": {
+   "kind": "ARMS",
+   "page_id": "69b52593cced70d8e6d72941_00040",
+   "run": "he",
+   "lang": "Hebrew",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-111": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00371",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "A",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-112": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00085",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-113": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O1",
+    "T3": "O10"
+   }
+  },
+  "k-114": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00161",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-115": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00169",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "O10",
+    "T2": "F",
+    "T3": "O1"
+   }
+  },
+  "k-116": {
+   "kind": "ARMS",
+   "page_id": "69e792fd80b52390feb1770f_00022",
+   "run": "zh",
+   "lang": "Chinese",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-117": {
+   "kind": "ARMS",
+   "page_id": "69ea3e63300d991d0f1d3186_00165",
+   "run": "sa",
+   "lang": "Sanskrit",
+   "order": "B",
+   "labels": {
+    "T1": "F",
+    "T2": "O10",
+    "T3": "O1"
+   }
+  },
+  "k-118": {
+   "kind": "PLANT",
+   "page_id": "69e748bd49abba5e982816d3_00082",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O1_PLANT",
+    "T2": "O10",
+    "T3": "F"
+   },
+   "plant": {
+    "kind": "negation",
+    "old": "Once he has grown hard and coarse, so that he is good for nothing, he turns gentle and shows friendliness.",
+    "new": "Once he has grown hard and coarse, so that he is not good for nothing, he turns gentle and shows friendliness.",
+    "how": "\\bis\\b → is not"
+   },
+   "plant_6690_item": "j-057"
+  },
+  "k-119": {
+   "kind": "ARMS",
+   "page_id": "69e748bd49abba5e982816d3_00081",
+   "run": "fa",
+   "lang": "Persian",
+   "order": "A",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  },
+  "k-120": {
+   "kind": "ARMS",
+   "page_id": "699376d2b0a84a5763961a97_00371",
+   "run": "grc",
+   "lang": "Greek",
+   "order": "B",
+   "labels": {
+    "T1": "O1",
+    "T2": "O10",
+    "T3": "F"
+   }
+  }
+ },
+ "missing": [],
+ "flash_failures": {}
+}

@@ -114,6 +114,9 @@ interface BookItem {
   published?: string;
   read_count?: number;
   is_first_translation?: boolean;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
 }
 
 // ---------- Data fetching ----------
@@ -299,6 +302,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
                 translation_percent: book.pages_ocr && book.pages_translated
                   ? Math.round((book.pages_translated / book.pages_ocr) * 100)
                   : 0,
+                preview: book.preview,
               }}
               priority={i < 10}
             />

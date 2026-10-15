@@ -1,0 +1,419 @@
+[
+ {
+  "uid": "69920b97_271",
+  "failure": null,
+  "why": null,
+  "secs": 30.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1825,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:14:32.054898+00:00"
+ },
+ {
+  "uid": "69943ce1_628",
+  "failure": null,
+  "why": null,
+  "secs": 48.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 2086,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:14:49.704336+00:00"
+ },
+ {
+  "uid": "69a5ea9a_391",
+  "failure": null,
+  "why": null,
+  "secs": 53.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2015,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:14:54.790214+00:00"
+ },
+ {
+  "uid": "69943f7b_732",
+  "failure": null,
+  "why": null,
+  "secs": 36.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1534,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:15:08.975222+00:00"
+ },
+ {
+  "uid": "69a5eaa3_611",
+  "failure": null,
+  "why": null,
+  "secs": 32.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1299,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:15:22.402577+00:00"
+ },
+ {
+  "uid": "69943c78_154",
+  "failure": null,
+  "why": null,
+  "secs": 36.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1731,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:15:45.627334+00:00"
+ },
+ {
+  "uid": "69943f85_836",
+  "failure": null,
+  "why": null,
+  "secs": 51.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1387,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:15:46.254862+00:00"
+ },
+ {
+  "uid": "69943c68_564",
+  "failure": "copy_filter",
+  "why": "CLI: blocked by Gemini's filters",
+  "secs": 26.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": "reply cut before <<<END>>>",
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1201,
+  "blocked": true,
+  "error": null,
+  "date": "2026-10-14T01:15:48.609682+00:00"
+ },
+ {
+  "uid": "69943c94_125",
+  "failure": null,
+  "why": null,
+  "secs": 57.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "write_to_file:deny"
+  ],
+  "chars": 3125,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:16:43.751060+00:00"
+ },
+ {
+  "uid": "69a5f3e0_197",
+  "failure": null,
+  "why": null,
+  "secs": 67.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "write_to_file:deny"
+  ],
+  "chars": 2944,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:16:55.967100+00:00"
+ },
+ {
+  "uid": "69a5eaa8_205",
+  "failure": null,
+  "why": null,
+  "secs": 96,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1407,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:17:21.628975+00:00"
+ },
+ {
+  "uid": "6994400f_296",
+  "failure": null,
+  "why": null,
+  "secs": 48.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 3338,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:17:32.084605+00:00"
+ },
+ {
+  "uid": "69a5f3f0_555",
+  "failure": null,
+  "why": null,
+  "secs": 36.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2910,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:17:32.887884+00:00"
+ },
+ {
+  "uid": "69a5f02c_183",
+  "failure": null,
+  "why": null,
+  "secs": 29.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 3338,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:17:51.419789+00:00"
+ },
+ {
+  "uid": "69a5f031_235",
+  "failure": null,
+  "why": null,
+  "secs": 44.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2875,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:18:16.942940+00:00"
+ },
+ {
+  "uid": "6aaafbb1_300",
+  "failure": null,
+  "why": null,
+  "secs": 44.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1439,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:18:17.180760+00:00"
+ },
+ {
+  "uid": "6aaafba3_151",
+  "failure": null,
+  "why": null,
+  "secs": 43.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1533,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:18:34.648199+00:00"
+ },
+ {
+  "uid": "69a5e9f0_81",
+  "failure": "copy_filter",
+  "why": "CLI: blocked by Gemini's filters",
+  "secs": 35.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": "reply cut before <<<END>>>",
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1378,
+  "blocked": true,
+  "error": null,
+  "date": "2026-10-14T01:18:52.857549+00:00"
+ },
+ {
+  "uid": "69a5eb6b_205",
+  "failure": null,
+  "why": null,
+  "secs": 55.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "write_to_file:deny"
+  ],
+  "chars": 1674,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:19:12.466493+00:00"
+ },
+ {
+  "uid": "69a5eb4d_529",
+  "failure": null,
+  "why": null,
+  "secs": 44.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1734,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:19:18.768749+00:00"
+ },
+ {
+  "uid": "69a5eb54_268",
+  "failure": null,
+  "why": null,
+  "secs": 45.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1578,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:19:38.070615+00:00"
+ },
+ {
+  "uid": "69a5eb64_461",
+  "failure": null,
+  "why": null,
+  "secs": 33.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1551,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:19:45.553135+00:00"
+ },
+ {
+  "uid": "69943c4f_169",
+  "failure": null,
+  "why": null,
+  "secs": 30,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:19:48.755376+00:00"
+ },
+ {
+  "uid": "699443fa_308",
+  "failure": null,
+  "why": null,
+  "secs": 55,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2128,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:20:33.064635+00:00"
+ }
+]

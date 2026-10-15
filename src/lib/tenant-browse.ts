@@ -21,10 +21,12 @@ const BOOK_PROJECTION = {
   published: 1,
   year: 1,
   pages_count: 1,
+  pages_ocr: 1,
   pages_translated: 1,
   thumbnail: 1, image_display: 1,
   thumbnail_blob: 1, image_thumb: 1,
   is_first_translation: 1,
+  preview: 1,
 } as const;
 
 export type TenantBrowseBook = {
@@ -37,10 +39,12 @@ export type TenantBrowseBook = {
   published: string;
   year: number;
   pages_count: number;
+  pages_ocr: number;
   pages_translated: number;
   thumbnail: string | null;
   thumbnail_blob: string | null;
   is_first_translation: boolean;
+  preview?: boolean;
 };
 
 function mapBook(b: Record<string, unknown>): TenantBrowseBook {
@@ -54,10 +58,12 @@ function mapBook(b: Record<string, unknown>): TenantBrowseBook {
     published: (b.published as string) || '',
     year: (b.year as number) || 0,
     pages_count: (b.pages_count as number) || 0,
+    pages_ocr: (b.pages_ocr as number) || 0,
     pages_translated: (b.pages_translated as number) || 0,
     thumbnail: (b.thumbnail as string) || null,
     thumbnail_blob: (b.thumbnail_blob as string) || null,
     is_first_translation: (b.is_first_translation as boolean) || false,
+    preview: (b.preview as boolean) || false,
   };
 }
 

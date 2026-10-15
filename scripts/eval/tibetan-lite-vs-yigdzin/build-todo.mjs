@@ -3,7 +3,7 @@
 // scope here is books-527.jsonl and every page the read can see (page mode was never run on these).
 import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
-import { isLiteModel, scriptGate as gate } from './lane-lib.mjs';
+import { isLiteModel, isGeminiFlashModel, scriptGate as gate } from './lane-lib.mjs';
 const DIR = process.env.YIG_DIR || '/root/yig527';
 const SKIP_TYPES = new Set(['blank', 'archived-spread']);
 const EXCL = JSON.parse(fs.readFileSync(new URL('./exclude-books.json', import.meta.url), 'utf8')).books;
@@ -21,7 +21,7 @@ for (const b of books) {
     if (!p.archived_photo) { skip.write(JSON.stringify({ ...base, why: 'no-archived_photo' }) + '\n'); c.noImage++; continue; }
     if (!p.archived_photo.includes(`/${b.book}/`)) { skip.write(JSON.stringify({ ...base, why: 'key-not-book-scoped', url: p.archived_photo }) + '\n'); c.badKey++; continue; }
     const mo = p.ocr?.model || 'none';
-    c[isLiteModel(mo) ? 'lite' : mo === 'gemini-3-flash-preview' ? 'flash' : 'none']++;
+    c[isLiteModel(mo) ? 'lite' : isGeminiFlashModel(mo) ? 'flash' : 'none']++;
     out.write(JSON.stringify({ ...base, stem: `${b.book}_${String(p.page_number).padStart(5, '0')}`, url: p.archived_photo, type: p.page_type ?? null, prior: mo, gate: gate(p.ocr?.data) }) + '\n');
     c.rows++;
   }

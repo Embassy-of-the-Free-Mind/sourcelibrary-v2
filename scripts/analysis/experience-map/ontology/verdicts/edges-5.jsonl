@@ -1,0 +1,21 @@
+{"key": "vital-spirits|translates|pneuma", "verdict": "stated", "idx": 0, "reason": "gives Lebenshauch as the pneuma or spiritus vitalis", "judge": "claude-opus-5-5"}
+{"key": "vital-spirits|descends|spiritus", "verdict": "not_stated", "reason": "passages only use spiritus vitales; none derives it from spiritus", "judge": "claude-opus-5-5"}
+{"key": "spiritus-mundi|descends|spiritus", "verdict": "not_stated", "reason": "none says the world spirit extends or derives from the bodily spirit; E2 runs the other way", "judge": "claude-opus-5-5"}
+{"key": "spiritus-mundi|descends|anima-mundi", "verdict": "stated", "idx": 1, "reason": "Ficino: the Spirit of the World is the first instrument of the Soul of the World", "judge": "claude-opus-5-5"}
+{"key": "animal-magnetism|descends|weapon-salve", "verdict": "not_stated", "reason": "bibliography list only", "judge": "claude-opus-5-5"}
+{"key": "animal-magnetism|descends|sympathy", "verdict": "stated", "idx": 3, "reason": "the premises of animal magnetism: a universal fluid and sympathy and antipathy between animated bodies", "judge": "claude-opus-5-5"}
+{"key": "naturphilosophie|descends|anima-mundi", "verdict": "stated", "idx": 0, "reason": "the world soul, revived by Renaissance Platonists, returns in certain works of Schelling", "judge": "claude-opus-5-5"}
+{"key": "makrobiotik|descends|prolongation", "verdict": "not_stated", "reason": "only a gloss of the title; no link to Bacon", "judge": "claude-opus-5-5"}
+{"key": "makrobiotik|descends|sober-life", "verdict": "not_stated", "reason": "no candidates", "judge": "claude-opus-5-5"}
+{"key": "makrobiotik|descends|vital-force", "verdict": "not_stated", "reason": "Hahnemann on Hufeland and vital force, not about the Makrobiotik", "judge": "claude-opus-5-5"}
+{"key": "spiritus-mundi|belongs|platonism", "verdict": "not_stated", "reason": "Ficino letter on Jupiter does not tie the world spirit to Platonism", "judge": "claude-opus-5-5"}
+{"key": "vital-spirits|belongs|galenism", "verdict": "not_stated", "reason": "only says Galenists use volatile salts", "judge": "claude-opus-5-5"}
+{"key": "jing|belongs|daoism", "verdict": "not_stated", "reason": "names jing among the three treasures; Daoism only in a bracket gloss on Tianyinzi", "judge": "claude-opus-5-5"}
+{"key": "genius-loci|belongs|animism", "verdict": "not_stated", "reason": "no candidates", "judge": "claude-opus-5-5"}
+{"key": "taixi|cultivates|qi", "verdict": "stated", "idx": 5, "reason": "the circulation of qi: its great essence is nothing more than embryonic breathing", "judge": "claude-opus-5-5"}
+{"key": "makrobiotik|cultivates|longevity", "verdict": "not_stated", "reason": "E1 is Wang Chong, E0 a gloss in Jung; none says Hufeland's art produces long life", "judge": "claude-opus-5-5"}
+{"key": "offerings|cultivates|local-spirits", "verdict": "not_stated", "reason": "no candidates", "judge": "claude-opus-5-5"}
+{"key": "offerings|cultivates|genius-loci", "verdict": "not_stated", "reason": "the lararium is where the Lares were worshipped; nothing on the genius of a place being kept well disposed", "judge": "claude-opus-5-5"}
+{"key": "palingenesis|cultivates|seminal-reasons", "verdict": "not_stated", "reason": "Stoic cosmic regeneration, not the plant experiment", "judge": "claude-opus-5-5"}
+{"key": "palingenesis|cultivates|rebirth", "verdict": "not_stated", "reason": "theological palingenesia; E2 names plant regeneration but not as an image of resurrection", "judge": "claude-opus-5-5"}
+{"key": "genius-loci|translates|daimon", "verdict": "stated", "idx": 0, "reason": "old glossaries render genius as δαίμων and bonus genius as ἀγαθὸς δαίμων", "judge": "claude-opus-5-5"}

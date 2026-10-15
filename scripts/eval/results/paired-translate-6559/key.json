@@ -1,0 +1,272 @@
+[
+ {
+  "uid": "9ac6603b",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e74745",
+  "page_number": 60,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "3e2d521d",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e74746",
+  "page_number": 61,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "3eab6e55",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e74747",
+  "page_number": 62,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "82d2d5cd",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e74748",
+  "page_number": 63,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "61bdc9a5",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e74749",
+  "page_number": 64,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "e60c1288",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e7474a",
+  "page_number": 65,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "69bb963b",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e7474b",
+  "page_number": 66,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "4f0940b6",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e7474c",
+  "page_number": 67,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "0daa4011",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e7474d",
+  "page_number": 68,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "ab7f8046",
+  "book_id": "6acc3c2677e6be3481e74709",
+  "title": "A Iesu Christo S.N. ofrece este Sermonario en lengua mexican",
+  "page_id": "6acc3c2877e6be3481e7474e",
+  "page_number": 69,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "d1be8332",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f97f",
+  "page_number": 60,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "e9117ec2",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f980",
+  "page_number": 61,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "ffc7ce18",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f981",
+  "page_number": 62,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "5c6197d0",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f982",
+  "page_number": 63,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "c6250b74",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f983",
+  "page_number": 64,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "237a412a",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f984",
+  "page_number": 65,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "a47c2ff6",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f985",
+  "page_number": 66,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "865e9ce0",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f986",
+  "page_number": 67,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "25c5e37e",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f987",
+  "page_number": 68,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "1a00a312",
+  "book_id": "6acc3b31c1411f8cc628f943",
+  "title": "Evangeliarium, epistolarium et lectionarium Aztecum sive Mex",
+  "page_id": "6acc3b32c1411f8cc628f988",
+  "page_number": 69,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "9270afe8",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f521",
+  "page_number": 60,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "1c2e0543",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f522",
+  "page_number": 61,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "b2ed9f6f",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f523",
+  "page_number": 62,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "3c591fa0",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f524",
+  "page_number": 63,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "fd2c2faa",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f525",
+  "page_number": 64,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "dc3a6734",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f526",
+  "page_number": 65,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "69a58b7c",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f527",
+  "page_number": 66,
+  "A": "opus",
+  "B": "gemini"
+ },
+ {
+  "uid": "1cc42e73",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f528",
+  "page_number": 67,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "4404c167",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f529",
+  "page_number": 68,
+  "A": "gemini",
+  "B": "opus"
+ },
+ {
+  "uid": "4cdb93c9",
+  "book_id": "6acc3ae4c1411f8cc628f4e5",
+  "title": "Promptuario manual mexicano: que á la verdad podrá ser uti",
+  "page_id": "6acc3ae6c1411f8cc628f52a",
+  "page_number": 69,
+  "A": "gemini",
+  "B": "opus"
+ }
+]

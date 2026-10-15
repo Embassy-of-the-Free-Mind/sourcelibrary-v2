@@ -7,14 +7,19 @@
 // #6561 batch, step 3: put run.mjs's accepted corrections where the review job on main can read them.
 // Writes ONLY to `paddle_table_corrections_6561` (new, staging; no cron or worker reads it). Not `pages`.
 //
-// Usage (cwd = scratch): node --env-file=… upload.mjs [--apply]
+// Usage (cwd = scratch): node --env-file=… upload.mjs [--apply] [--coll=NAME] [--account=TEXT] [--draft=TEXT]
+// #6561 item 1 (the stale pages) uploads with --coll=stale_corrections_6561, its box's account, and
+// --draft='current ocr.data (paddle-zh-2026-10 reading)'. Defaults: the table batch, unchanged.
 import fs from 'node:fs';
 import os from 'node:os';
 import { MongoClient } from 'mongodb';
 import { sha } from './prompt.mjs';
 
 const APPLY = process.argv.includes('--apply');
-const COLL = 'paddle_table_corrections_6561';
+const ARG = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? d;
+const COLL = ARG('coll', 'paddle_table_corrections_6561');
+const ACCOUNT = ARG('account', 'derek@playpowerlabs (cloudlayer)');
+const DRAFT = ARG('draft', 'page_revisions snapshot, reason withhold_paddle_table_6388');
 const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
 const P = JSON.parse(fs.readFileSync('prompt.json', 'utf8'));
 const pages = new Map(readJsonl('pages.jsonl').map((p) => [p.pid, p]));
@@ -28,12 +33,12 @@ for (const [pid, r] of last) {
   docs.push({
     page_id: pid, book_id: p.bid, page_number: p.pn, title: p.title, image_url: p.image_url,
     paddle_text: p.paddle, paddle_sha: r.paddle_sha, corrected_text: r.text, corrected_sha: r.corrected_sha,
-    layout: r.layout, flags: r.flags || [], detector_reasons: p.reasons || [], run: r.run,
+    layout: r.layout, flags: r.flags || [], detector_reasons: p.reasons || [], ...(p.cer != null ? { stale_cer: p.cer } : {}), run: r.run,
     provenance: {
       method: 'opus-correct (#6561): page image + Paddle draft in, corrected transcription out, one page per call',
-      model: r.model, cli: 'claude -p', cli_version: r.cli_version ?? null, account: 'derek@playpowerlabs (cloudlayer)', host: os.hostname(),
+      model: r.model, cli: 'claude -p', cli_version: r.cli_version ?? null, account: ACCOUNT, host: os.hostname(),
       prompt: { name: P.prompt_name, version: P.prompt_version, head_sha: P.head_sha, redo_opus_sha: P.redo_opus_sha, note: 'default OCR prompt + the #6388 pilot addendum (count, counting rods, drawings) + the #6561 draft block + sentinel reply format; scripts/eval/paddle-correct-6561/batch/prompt.mjs' },
-      draft: { engine: 'paddle', source: 'page_revisions snapshot, reason withhold_paddle_table_6388' },
+      draft: { engine: 'paddle', source: DRAFT },
       image: { url: p.image_url, bytes: r.image_bytes ?? null, sha256: r.image_sha256 ?? null },
       read_at: new Date(r.at), secs: r.secs, num_turns: r.num_turns,
     },
@@ -55,9 +60,12 @@ for (let i = 0; i < docs.length; i += 500) {
 }
 // A count is not an integrity check: read every doc back and compare its text hash with the checkpoint's.
 let n = 0, wrong = 0;
-for await (const d of coll.find({ run: docs[0]?.run }, { projection: { page_id: 1, corrected_text: 1, paddle_text: 1 } })) {
-  n++; const r = last.get(d.page_id);
-  if (!r || typeof d.corrected_text !== 'string' || sha(d.corrected_text) !== r.corrected_sha || sha(d.paddle_text) !== r.paddle_sha) wrong++;
+// By this upload's own page ids: several boxes may upload one run into one collection (#6561 item 1).
+for (let i = 0; i < docs.length; i += 1000) {
+  for await (const d of coll.find({ page_id: { $in: docs.slice(i, i + 1000).map((x) => x.page_id) } }, { projection: { page_id: 1, corrected_text: 1, paddle_text: 1 } })) {
+    n++; const r = last.get(d.page_id);
+    if (!r || typeof d.corrected_text !== 'string' || sha(d.corrected_text) !== r.corrected_sha || sha(d.paddle_text) !== r.paddle_sha) wrong++;
+  }
 }
 await c.close();
 console.log(`${COLL}: ${n} docs read back, ${wrong} wrong`);

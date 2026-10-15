@@ -18,6 +18,7 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { MongoClient } from 'mongodb';
 import fs from 'fs';
+import { aiLanguageAssessment } from '../lib/ai-language-provenance.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -438,7 +439,8 @@ async function main() {
           if (updates.language) {
             provenance.language = { ...aiSource, previous_value: book.language };
           } else if (!provenance.language) {
-            provenance.language = { source: 'import', note: `AI confirmed as "${result.language}" (${result.confidence})`, ai_confirmed_at: now };
+            const assessed = aiLanguageAssessment(book.language, result.language, result.confidence, now, 'gemini_text');
+            if (assessed) provenance.language = assessed;
           }
         }
         if (updates.year) provenance.year = { ...aiSource, previous_value: null };

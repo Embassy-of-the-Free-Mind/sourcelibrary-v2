@@ -1,0 +1,1407 @@
+{
+ "judges": {
+  "opus": "Opus 5.5 (claude -p, sealed)",
+  "g38h": "gemini-3.8-flash-high (agy -p)"
+ },
+ "items": 120,
+ "missing": [],
+ "flash_failures": {},
+ "judged": {
+  "opus": 120,
+  "g38h": 118
+ },
+ "by_judge": {
+  "opus": {
+   "arms": {
+    "O1": {
+     "n": 50,
+     "fidelity": 4.68,
+     "ci_by_page": [
+      4.56,
+      4.79
+     ],
+     "omission_pct": 5.0,
+     "ci_by_book_then_page": [
+      4.52,
+      4.82
+     ]
+    },
+    "O10": {
+     "n": 50,
+     "fidelity": 4.53,
+     "ci_by_page": [
+      4.41,
+      4.66
+     ],
+     "omission_pct": 30.0,
+     "ci_by_book_then_page": [
+      4.32,
+      4.75
+     ]
+    },
+    "F": {
+     "n": 50,
+     "fidelity": 3.97,
+     "ci_by_page": [
+      3.8,
+      4.14
+     ],
+     "omission_pct": 24.0,
+     "ci_by_book_then_page": [
+      3.5,
+      4.37
+     ]
+    }
+   },
+   "paired": {
+    "O10-F": {
+     "n": 50,
+     "mean": 0.56,
+     "ci_by_page": [
+      0.37,
+      0.75
+     ],
+     "better": 33,
+     "worse": 6,
+     "ties": 11,
+     "ci_by_book_then_page": [
+      0.15,
+      0.96
+     ]
+    },
+    "O1-F": {
+     "n": 50,
+     "mean": 0.71,
+     "ci_by_page": [
+      0.54,
+      0.88
+     ],
+     "better": 36,
+     "worse": 1,
+     "ties": 13,
+     "ci_by_book_then_page": [
+      0.37,
+      1.16
+     ]
+    },
+    "O10-O1": {
+     "n": 50,
+     "mean": -0.15,
+     "ci_by_page": [
+      -0.31,
+      0.02
+     ],
+     "better": 9,
+     "worse": 19,
+     "ties": 22,
+     "ci_by_book_then_page": [
+      -0.39,
+      0.07
+     ]
+    }
+   },
+   "by_run": {
+    "fa": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.75,
+       "ci_by_page": [
+        4.5,
+        5.0
+       ],
+       "omission_pct": 10.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.85,
+       "ci_by_page": [
+        4.65,
+        5.0
+       ],
+       "omission_pct": 10.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 4.3,
+       "ci_by_page": [
+        4.0,
+        4.6
+       ],
+       "omission_pct": 5.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 0.55,
+       "ci_by_page": [
+        0.25,
+        0.85
+       ],
+       "better": 6,
+       "worse": 0,
+       "ties": 4
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.45,
+       "ci_by_page": [
+        0.2,
+        0.75
+       ],
+       "better": 5,
+       "worse": 0,
+       "ties": 5
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": 0.1,
+       "ci_by_page": [
+        0.0,
+        0.3
+       ],
+       "better": 1,
+       "worse": 0,
+       "ties": 9
+      }
+     }
+    },
+    "sa": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.65,
+       "ci_by_page": [
+        4.35,
+        4.9
+       ],
+       "omission_pct": 0.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.35,
+       "ci_by_page": [
+        4.1,
+        4.65
+       ],
+       "omission_pct": 40.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 3.05,
+       "ci_by_page": [
+        2.9,
+        3.2
+       ],
+       "omission_pct": 60.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 1.3,
+       "ci_by_page": [
+        1.0,
+        1.55
+       ],
+       "better": 10,
+       "worse": 0,
+       "ties": 0
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 1.6,
+       "ci_by_page": [
+        1.35,
+        1.85
+       ],
+       "better": 10,
+       "worse": 0,
+       "ties": 0
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.3,
+       "ci_by_page": [
+        -0.75,
+        0.2
+       ],
+       "better": 2,
+       "worse": 6,
+       "ties": 2
+      }
+     }
+    },
+    "zh": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.45,
+       "ci_by_page": [
+        4.2,
+        4.7
+       ],
+       "omission_pct": 15.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.4,
+       "ci_by_page": [
+        4.15,
+        4.65
+       ],
+       "omission_pct": 25.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 3.8,
+       "ci_by_page": [
+        3.55,
+        4.05
+       ],
+       "omission_pct": 15.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 0.6,
+       "ci_by_page": [
+        0.35,
+        0.9
+       ],
+       "better": 8,
+       "worse": 0,
+       "ties": 2
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.65,
+       "ci_by_page": [
+        0.4,
+        0.9
+       ],
+       "better": 9,
+       "worse": 0,
+       "ties": 1
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.05,
+       "ci_by_page": [
+        -0.35,
+        0.3
+       ],
+       "better": 2,
+       "worse": 3,
+       "ties": 5
+      }
+     }
+    },
+    "grc": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.75,
+       "ci_by_page": [
+        4.55,
+        4.95
+       ],
+       "omission_pct": 0.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.7,
+       "ci_by_page": [
+        4.4,
+        5.0
+       ],
+       "omission_pct": 20.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 4.25,
+       "ci_by_page": [
+        4.0,
+        4.5
+       ],
+       "omission_pct": 40.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 0.45,
+       "ci_by_page": [
+        0.0,
+        0.9
+       ],
+       "better": 6,
+       "worse": 2,
+       "ties": 2
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.5,
+       "ci_by_page": [
+        0.25,
+        0.8
+       ],
+       "better": 6,
+       "worse": 0,
+       "ties": 4
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.05,
+       "ci_by_page": [
+        -0.45,
+        0.3
+       ],
+       "better": 3,
+       "worse": 3,
+       "ties": 4
+      }
+     }
+    },
+    "he": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.8,
+       "ci_by_page": [
+        4.6,
+        5.0
+       ],
+       "omission_pct": 0.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.35,
+       "ci_by_page": [
+        4.1,
+        4.6
+       ],
+       "omission_pct": 55.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 4.45,
+       "ci_by_page": [
+        4.2,
+        4.7
+       ],
+       "omission_pct": 0.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": -0.1,
+       "ci_by_page": [
+        -0.4,
+        0.2
+       ],
+       "better": 3,
+       "worse": 4,
+       "ties": 3
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.35,
+       "ci_by_page": [
+        0.05,
+        0.65
+       ],
+       "better": 6,
+       "worse": 1,
+       "ties": 3
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.45,
+       "ci_by_page": [
+        -0.75,
+        -0.15
+       ],
+       "better": 1,
+       "worse": 7,
+       "ties": 2
+      }
+     }
+    }
+   },
+   "position": {
+    "mean_by_position": {
+     "T1": 4.38,
+     "T2": 4.39,
+     "T3": 4.41
+    },
+    "relative_by_position": {
+     "T1": 0.01,
+     "T2": -0.015,
+     "T3": 0.005
+    },
+    "order_pairs": 150,
+    "order_identical": 122,
+    "order_mean_abs_diff": 0.187
+   },
+   "plants": {
+    "n": 20,
+    "located": 19,
+    "lower": 18,
+    "rows": [
+     {
+      "item": "k-006",
+      "run": "zh",
+      "order": "A",
+      "kind": "number",
+      "how": "two → three",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-009",
+      "run": "fa",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-012",
+      "run": "grc",
+      "order": "B",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-014",
+      "run": "he",
+      "order": "B",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": false
+     },
+     {
+      "item": "k-020",
+      "run": "sa",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-022",
+      "run": "grc",
+      "order": "A",
+      "kind": "name",
+      "how": "swap Adeimantus ↔ Zeus",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-023",
+      "run": "sa",
+      "order": "B",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-034",
+      "run": "sa",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-037",
+      "run": "zh",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-038",
+      "run": "he",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-054",
+      "run": "sa",
+      "order": "A",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-059",
+      "run": "grc",
+      "order": "B",
+      "kind": "name",
+      "how": "swap Adeimantus ↔ Zeus",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-060",
+      "run": "he",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-072",
+      "run": "zh",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-084",
+      "run": "he",
+      "order": "A",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-088",
+      "run": "zh",
+      "order": "B",
+      "kind": "number",
+      "how": "two → three",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-095",
+      "run": "fa",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-103",
+      "run": "fa",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-106",
+      "run": "grc",
+      "order": "A",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": false,
+      "fid": 5.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": false
+     },
+     {
+      "item": "k-118",
+      "run": "fa",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     }
+    ]
+   }
+  },
+  "g38h": {
+   "arms": {
+    "O1": {
+     "n": 50,
+     "fidelity": 4.77,
+     "ci_by_page": [
+      4.66,
+      4.87
+     ],
+     "omission_pct": 4.0,
+     "ci_by_book_then_page": [
+      4.61,
+      4.92
+     ]
+    },
+    "O10": {
+     "n": 50,
+     "fidelity": 4.32,
+     "ci_by_page": [
+      4.16,
+      4.48
+     ],
+     "omission_pct": 26.0,
+     "ci_by_book_then_page": [
+      4.07,
+      4.55
+     ]
+    },
+    "F": {
+     "n": 50,
+     "fidelity": 3.99,
+     "ci_by_page": [
+      3.78,
+      4.2
+     ],
+     "omission_pct": 16.0,
+     "ci_by_book_then_page": [
+      3.5,
+      4.46
+     ]
+    }
+   },
+   "paired": {
+    "O10-F": {
+     "n": 50,
+     "mean": 0.33,
+     "ci_by_page": [
+      0.07,
+      0.59
+     ],
+     "better": 28,
+     "worse": 13,
+     "ties": 9,
+     "ci_by_book_then_page": [
+      -0.17,
+      0.8
+     ]
+    },
+    "O1-F": {
+     "n": 50,
+     "mean": 0.78,
+     "ci_by_page": [
+      0.56,
+      1.0
+     ],
+     "better": 35,
+     "worse": 6,
+     "ties": 9,
+     "ci_by_book_then_page": [
+      0.37,
+      1.23
+     ]
+    },
+    "O10-O1": {
+     "n": 50,
+     "mean": -0.45,
+     "ci_by_page": [
+      -0.66,
+      -0.24
+     ],
+     "better": 9,
+     "worse": 30,
+     "ties": 11,
+     "ci_by_book_then_page": [
+      -0.77,
+      -0.18
+     ]
+    }
+   },
+   "by_run": {
+    "fa": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.75,
+       "ci_by_page": [
+        4.55,
+        4.95
+       ],
+       "omission_pct": 0.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.65,
+       "ci_by_page": [
+        4.4,
+        4.9
+       ],
+       "omission_pct": 0.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 4.25,
+       "ci_by_page": [
+        3.9,
+        4.6
+       ],
+       "omission_pct": 0.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 0.4,
+       "ci_by_page": [
+        -0.05,
+        0.8
+       ],
+       "better": 6,
+       "worse": 2,
+       "ties": 2
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.5,
+       "ci_by_page": [
+        0.15,
+        0.85
+       ],
+       "better": 6,
+       "worse": 1,
+       "ties": 3
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.1,
+       "ci_by_page": [
+        -0.4,
+        0.2
+       ],
+       "better": 3,
+       "worse": 4,
+       "ties": 3
+      }
+     }
+    },
+    "sa": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.75,
+       "ci_by_page": [
+        4.5,
+        5.0
+       ],
+       "omission_pct": 5.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.3,
+       "ci_by_page": [
+        4.0,
+        4.6
+       ],
+       "omission_pct": 35.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 3.25,
+       "ci_by_page": [
+        2.95,
+        3.55
+       ],
+       "omission_pct": 30.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 1.05,
+       "ci_by_page": [
+        0.6,
+        1.5
+       ],
+       "better": 7,
+       "worse": 0,
+       "ties": 3
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 1.5,
+       "ci_by_page": [
+        1.15,
+        1.85
+       ],
+       "better": 10,
+       "worse": 0,
+       "ties": 0
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.45,
+       "ci_by_page": [
+        -0.95,
+        0.1
+       ],
+       "better": 2,
+       "worse": 7,
+       "ties": 1
+      }
+     }
+    },
+    "zh": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.55,
+       "ci_by_page": [
+        4.25,
+        4.85
+       ],
+       "omission_pct": 15.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.1,
+       "ci_by_page": [
+        3.9,
+        4.35
+       ],
+       "omission_pct": 55.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 3.45,
+       "ci_by_page": [
+        3.05,
+        3.95
+       ],
+       "omission_pct": 40.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 0.65,
+       "ci_by_page": [
+        0.1,
+        1.1
+       ],
+       "better": 8,
+       "worse": 2,
+       "ties": 0
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 1.1,
+       "ci_by_page": [
+        0.4,
+        1.7
+       ],
+       "better": 8,
+       "worse": 2,
+       "ties": 0
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.45,
+       "ci_by_page": [
+        -0.9,
+        0.05
+       ],
+       "better": 2,
+       "worse": 6,
+       "ties": 2
+      }
+     }
+    },
+    "grc": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 4.8,
+       "ci_by_page": [
+        4.6,
+        5.0
+       ],
+       "omission_pct": 0.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.45,
+       "ci_by_page": [
+        4.1,
+        4.75
+       ],
+       "omission_pct": 10.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 4.45,
+       "ci_by_page": [
+        4.15,
+        4.75
+       ],
+       "omission_pct": 10.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": 0.0,
+       "ci_by_page": [
+        -0.4,
+        0.45
+       ],
+       "better": 4,
+       "worse": 4,
+       "ties": 2
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.35,
+       "ci_by_page": [
+        -0.1,
+        0.8
+       ],
+       "better": 6,
+       "worse": 3,
+       "ties": 1
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.35,
+       "ci_by_page": [
+        -0.75,
+        0.05
+       ],
+       "better": 2,
+       "worse": 5,
+       "ties": 3
+      }
+     }
+    },
+    "he": {
+     "arms": {
+      "O1": {
+       "n": 10,
+       "fidelity": 5.0,
+       "ci_by_page": [
+        5.0,
+        5.0
+       ],
+       "omission_pct": 0.0
+      },
+      "O10": {
+       "n": 10,
+       "fidelity": 4.1,
+       "ci_by_page": [
+        3.6,
+        4.55
+       ],
+       "omission_pct": 30.0
+      },
+      "F": {
+       "n": 10,
+       "fidelity": 4.55,
+       "ci_by_page": [
+        4.25,
+        4.85
+       ],
+       "omission_pct": 0.0
+      }
+     },
+     "paired": {
+      "O10-F": {
+       "n": 10,
+       "mean": -0.45,
+       "ci_by_page": [
+        -1.05,
+        0.15
+       ],
+       "better": 3,
+       "worse": 5,
+       "ties": 2
+      },
+      "O1-F": {
+       "n": 10,
+       "mean": 0.45,
+       "ci_by_page": [
+        0.15,
+        0.75
+       ],
+       "better": 5,
+       "worse": 0,
+       "ties": 5
+      },
+      "O10-O1": {
+       "n": 10,
+       "mean": -0.9,
+       "ci_by_page": [
+        -1.4,
+        -0.45
+       ],
+       "better": 0,
+       "worse": 8,
+       "ties": 2
+      }
+     }
+    }
+   },
+   "position": {
+    "mean_by_position": {
+     "T1": 4.455,
+     "T2": 4.313,
+     "T3": 4.323
+    },
+    "relative_by_position": {
+     "T1": 0.087,
+     "T2": -0.046,
+     "T3": -0.041
+    },
+    "order_pairs": 147,
+    "order_identical": 111,
+    "order_mean_abs_diff": 0.245
+   },
+   "plants": {
+    "n": 19,
+    "located": 18,
+    "lower": 17,
+    "rows": [
+     {
+      "item": "k-006",
+      "run": "zh",
+      "order": "A",
+      "kind": "number",
+      "how": "two → three",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-009",
+      "run": "fa",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-014",
+      "run": "he",
+      "order": "B",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-020",
+      "run": "sa",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-022",
+      "run": "grc",
+      "order": "A",
+      "kind": "name",
+      "how": "swap Adeimantus ↔ Zeus",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-023",
+      "run": "sa",
+      "order": "B",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-034",
+      "run": "sa",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-037",
+      "run": "zh",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-038",
+      "run": "he",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-054",
+      "run": "sa",
+      "order": "A",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": false
+     },
+     {
+      "item": "k-059",
+      "run": "grc",
+      "order": "B",
+      "kind": "name",
+      "how": "swap Adeimantus ↔ Zeus",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-060",
+      "run": "he",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-072",
+      "run": "zh",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-084",
+      "run": "he",
+      "order": "A",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-088",
+      "run": "zh",
+      "order": "B",
+      "kind": "number",
+      "how": "two → three",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-095",
+      "run": "fa",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 3.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": true
+     },
+     {
+      "item": "k-103",
+      "run": "fa",
+      "order": "B",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     },
+     {
+      "item": "k-106",
+      "run": "grc",
+      "order": "A",
+      "kind": "clause",
+      "how": "clause dropped",
+      "located": false,
+      "fid": 4.0,
+      "O1_fid_unplanted": 4.0,
+      "lower": false
+     },
+     {
+      "item": "k-118",
+      "run": "fa",
+      "order": "A",
+      "kind": "negation",
+      "how": "\\bis\\b → is not",
+      "located": true,
+      "fid": 4.0,
+      "O1_fid_unplanted": 5.0,
+      "lower": true
+     }
+    ]
+   }
+  }
+ },
+ "agreement": {
+  "fidelity": {
+   "alpha": 0.6144960245410753,
+   "ci": [
+    0.48594426944816294,
+    0.7228793094032584
+   ],
+   "n_units": 297,
+   "level": "ordinal",
+   "verdict": "not settled",
+   "line": "fidelity (ordinal): α 0.61 [0.49, 0.72], 297 item×arm ratings — not settled"
+  },
+  "omission": {
+   "alpha": 0.4340831629175188,
+   "ci": [
+    0.31011619095731247,
+    0.55881734006734
+   ],
+   "n_units": 297,
+   "level": "nominal",
+   "verdict": "not settled",
+   "line": "omission (nominal): α 0.43 [0.31, 0.56], 297 item×arm ratings — not settled"
+  },
+  "best arm": {
+   "alpha": 0.3156893557191299,
+   "ci": [
+    0.17860330209727804,
+    0.4213714562636298
+   ],
+   "n_units": 99,
+   "level": "nominal",
+   "verdict": "not settled",
+   "line": "best arm (nominal): α 0.32 [0.18, 0.42], 99 items — not settled"
+  },
+  "O10 vs F (page sign)": {
+   "alpha": 0.4637499999999999,
+   "ci": [
+    0.1000968158347677,
+    0.5692362869198313
+   ],
+   "n_units": 50,
+   "level": "ordinal",
+   "verdict": "not settled",
+   "line": "O10 vs F (page sign) (ordinal): α 0.46 [0.10, 0.57], 50 pages — not settled"
+  }
+ },
+ "routing_rule": {
+  "per_judge": {
+   "opus": {
+    "mean": 0.56,
+    "ci_by_book_then_page": [
+     0.15,
+     0.96
+    ],
+    "ci_by_page": [
+     0.37,
+     0.75
+    ],
+    "excludes_0_above": true
+   },
+   "g38h": {
+    "mean": 0.33,
+    "ci_by_book_then_page": [
+     -0.17,
+     0.8
+    ],
+    "ci_by_page": [
+     0.07,
+     0.59
+    ],
+    "excludes_0_above": false
+   }
+  },
+  "route_O10": false
+ }
+}

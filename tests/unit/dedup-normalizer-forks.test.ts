@@ -129,12 +129,6 @@ const KNOWN_LOCAL_DEFINITIONS: Record<string, string> = {
   'scripts/import/import-artwork.mjs': 'bare lowercase+strip',
   'scripts/import/import-met-egyptian.mjs': 'bare lowercase+strip',
   'scripts/import/import-oraec.mjs': 'bare lowercase+strip',
-  'scripts/import/founders-collected-direct.mjs': 'normalizeAuthor: no born/died/fl/circa strip',
-  'scripts/import/founding-enrich-direct.mjs': 'normalizeAuthor: no born/died/fl/circa strip',
-  'scripts/import/founding-influences2-direct.mjs': 'normalizeAuthor: no born/died/fl/circa strip',
-  'scripts/import/founding-tail-direct.mjs': 'normalizeAuthor: no born/died/fl/circa strip',
-  'scripts/import/jefferson-canon-direct.mjs': 'normalizeAuthor: no born/died/fl/circa strip',
-  'scripts/import/founding-chase.mjs': 'normalizeAuthor: no honorific and no date strip at all',
 };
 
 describe('dedup normalizer fork census (#4444)', () => {

@@ -1,0 +1,105 @@
+{
+ "built_at": "2026-10-14T19:32:41.365Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 507,
+   "book_id": "69b2f32121208ea9dc2779bb",
+   "slug": "eklogai-ek-ton-dionos-dio-cassius-excerpts-estienne",
+   "group": "greek",
+   "language": "Greek",
+   "views": 70,
+   "lane_block": null
+  },
+  {
+   "rank": 518,
+   "book_id": "69b2f30ba9a500a45e5e7ac4",
+   "slug": "thucydides-peloponnesian-war-estienne",
+   "group": "greek",
+   "language": "Greek",
+   "views": 70,
+   "lane_block": null
+  },
+  {
+   "rank": 522,
+   "book_id": "69bfccdf8ab50eb88e8c6c4c",
+   "slug": "bodleian-library-ms-barocci-241-anonymous",
+   "group": "greek",
+   "language": "Greek",
+   "views": 69,
+   "lane_block": null
+  },
+  {
+   "rank": 528,
+   "book_id": "695aa9ddbe4023bd34bd7448",
+   "slug": "heronis-alexandrini-opera-quae-supersunt-omnia-vol-4-ed-2",
+   "group": "greek",
+   "language": "Greek",
+   "views": 69,
+   "lane_block": null
+  },
+  {
+   "rank": 535,
+   "book_id": "69937706b0a84a57639627bb",
+   "slug": "platos-republic-greek-text-plato",
+   "group": "greek",
+   "language": "Greek",
+   "views": 69,
+   "lane_block": null
+  },
+  {
+   "rank": 537,
+   "book_id": "69b222db56715b0e324757a1",
+   "slug": "scholia-on-homer-ancient-commentaries-on-the-iliad-and-scholars",
+   "group": "greek",
+   "language": "Greek",
+   "views": 69,
+   "lane_block": null
+  },
+  {
+   "rank": 545,
+   "book_id": "69b222ed56715b0e32475a8c",
+   "slug": "greek-anthology-florilegium-epigrammatum-aldine-press-2nd-ed-poets",
+   "group": "greek",
+   "language": "Greek",
+   "views": 68,
+   "lane_block": null
+  },
+  {
+   "rank": 564,
+   "book_id": "6a3f035697e91e1768f6a0b5",
+   "slug": "epiphanius-epiphanius",
+   "group": "greek",
+   "language": "Greek",
+   "views": 67,
+   "lane_block": null
+  },
+  {
+   "rank": 570,
+   "book_id": "69b300275545150b61b4c385",
+   "slug": "novum-testamentum-graece-elzevir-1662-receptus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 67,
+   "lane_block": null
+  },
+  {
+   "rank": 583,
+   "book_id": "69bfccb18ab50eb88e8c5ec1",
+   "slug": "bodleian-library-ms-barocci-235-anonymous",
+   "group": "greek",
+   "language": "Greek",
+   "views": 66,
+   "lane_block": null
+  },
+  {
+   "rank": 591,
+   "book_id": "699382d984cf5845c644af1f",
+   "slug": "homer-and-quintus-of-smyrna-cambridge-corpus-christi-homer",
+   "group": "greek",
+   "language": "Greek",
+   "views": 66,
+   "lane_block": null
+  }
+ ]
+}

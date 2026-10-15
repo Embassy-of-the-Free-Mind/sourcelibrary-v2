@@ -434,7 +434,7 @@ async function auditPackets() {
   writeJsonl(path.join(AUD, 'key.jsonl'), key);
   // The Gemini auditor: one page per call through scripts/eval/run-cli-arm.py (plan mode, the nudge), brief inline.
   const brief = fs.readFileSync(path.join(HERE, 'AUDITOR.md'), 'utf8').replace(/^\s*<!--[\s\S]*?-->\s*/, '');
-  const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. ITEMS_FILE is given inline below and holds ONE item; its image is the file attached at the end of this message. OUTPUT_FILE is your reply: reply with ONLY one JSON object (`item_id`, `better`, `worse_serious`, `confidence`, `note`), with no prose and no markdown fence.';
+  const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. ITEMS_FILE is given inline below and holds ONE item; its image is the file attached at the end of this message: open it with view_file before you judge (#6694: verdicts given without opening it are discarded). OUTPUT_FILE is your reply: reply with ONLY one JSON object (`item_id`, `better`, `worse_serious`, `confidence`, `note`), with no prose and no markdown fence.';
   writeJsonl(path.join(AUD, 'gemini-requests.jsonl'), items.map((it) => ({ uid: it.item_id, image: path.join(AUD, it.image_file), prompt: `${brief}\n\n${wrapper}\n\nITEMS_FILE:\n${JSON.stringify([{ ...it, image_file: `${it.item_id}.jpg` }], null, 1)}` })));
   const tally = {}; for (const k of key) tally[k.action] = (tally[k.action] || 0) + 1;
   console.log(`${SET}: audit of ${items.length} decisions ${JSON.stringify(tally)}\nnext: driver.mjs audit-opus, and python3 scripts/eval/run-cli-arm.py --requests ${path.join(AUD, 'gemini-requests.jsonl')} --out ${path.join(AUD, 'gemini-out.jsonl')} --arm audit6420-g38 --model gemini-3.8-flash-high --job convergent-ocr-6420 --kind audit --parallel 2 --attempts 4`);
@@ -461,7 +461,8 @@ async function auditScore() {
   for (const f of fs.readdirSync(path.join(AUD, 'opus'))) for (const v of JSON.parse(fs.readFileSync(path.join(AUD, 'opus', f), 'utf8'))) opus.set(v.item_id, v);
   const gem = new Map();
   for (const l of fs.existsSync(path.join(AUD, 'gemini-out.jsonl')) ? fs.readFileSync(path.join(AUD, 'gemini-out.jsonl'), 'utf8').split('\n') : []) {
-    try { const o = JSON.parse(l); if (!o.text) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
+    // #6694: a verdict whose call never opened the attached image (no view_file in the tool gate's log) is missing.
+    try { const o = JSON.parse(l); if (!o.text || !(o.gate_calls || []).includes('view_file')) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
   }
   const rows = key.map((k) => {
     const verdict = (v) => (!v ? null : v.better === 'same' ? 'same' : v.better === k.stored_is ? 'stored' : 'cli');

@@ -92,7 +92,7 @@ const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_translatable: 1, year: 1,
-  summary: 1, is_first_translation: 1,
+  summary: 1, is_first_translation: 1, preview: 1,
   // What ftRenderProps needs to pick the claim register (#3726 Tier 3). The
   // old `ft_disposition: 1` projected a field Mongo books never had.
   'translation_verification.disposition': 1,

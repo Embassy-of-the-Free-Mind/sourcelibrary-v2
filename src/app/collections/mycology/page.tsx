@@ -16,6 +16,7 @@ import CollectionBookCard, { type CollectionBook } from '@/components/Collection
 import MycoSlider, { type MiniBook } from './_components/MycoSlider';
 import MycoMasonry from './_components/MycoMasonry';
 import ParallaxImage from '@/components/ParallaxImage';
+import { storedHeroCollageUrl } from '@/lib/collection-hero-collage';
 import CollectionAnchorBar from '@/components/CollectionAnchorBar';
 import QuoteBlock from './_components/QuoteBlock';
 import { getImageFraming } from '@/lib/image-framing';
@@ -271,6 +272,17 @@ export default async function MycologyCollectionPage() {
   const worksMore = Math.max(0, total - Math.min(sourceWorks.length, 10));
   const featuredHref = featured ? tenantBookUrl({ id: featured.id, slug: featured.slug }, null) : '#';
 
+  // The hero collage's R2 URL, straight into the HTML: going through the
+  // hero-collage route cost every cold visit a function call and a redirect
+  // before the largest image on the page could start. The route stays as the
+  // fallback for a collage that has never been built.
+  const [heroStored, heroStoredMobile] = await Promise.all([
+    withTimeout(storedHeroCollageUrl(SLUG, 'landscape', null), 2500, null),
+    withTimeout(storedHeroCollageUrl(SLUG, 'portrait', null), 2500, null),
+  ]);
+  const heroSrc = heroStored ?? `/api/collections/${SLUG}/hero-collage`;
+  const heroSrcMobile = heroStoredMobile ?? `/api/collections/${SLUG}/hero-collage?shape=portrait`;
+
   return (
     <div className="min-h-screen bg-cream">
       {/* Dark navbar variant of the global header. Breadcrumbs live in the hero. */}
@@ -283,9 +295,9 @@ export default async function MycologyCollectionPage() {
       <section className="relative overflow-hidden min-h-[56svh] md:min-h-[75vh] flex items-end md:items-center" style={{ background: '#14100c' }}>
         {/* One composited collage image (2:3 tiles) — single optimized load, subtle parallax. */}
         <ParallaxImage
-          src={`/api/collections/${SLUG}/hero-collage`}
-          srcMobile={`/api/collections/${SLUG}/hero-collage?shape=portrait`}
-          loading="eager" strength={0.08} oversize={0.1}
+          src={heroSrc}
+          srcMobile={heroSrcMobile}
+          loading="eager" fetchPriority="high" reveal strength={0.08} oversize={0.1}
         />
         {/* Mobile: the shared scrim's bottom-weighted variant, so the phone hero
             is darkened to the same 72% base as the desktop one instead of the 45%
@@ -299,7 +311,7 @@ export default async function MycologyCollectionPage() {
           <HeroScrim />
         </div>
 
-        <div className="relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
+        <div className="hero-load-in relative z-10 w-full max-w-[1500px] mx-auto px-6 md:px-12 py-12 md:py-16" style={{ textShadow: '0 1px 16px rgba(0,0,0,0.72)' }}>
           {/* Breadcrumb set as the book hero's author eyebrow (same size, tracking
               and rust), so the collection hero carries the brand red where the
               book hero does. The parent's name is the collection record's own. */}
@@ -513,7 +525,8 @@ export default async function MycologyCollectionPage() {
           )}
           <div className="mt-8 border border-border-light bg-cream p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <p className="text-primary font-medium font-body">{worksMore.toLocaleString('en-US')} more works in mycology</p>
+              {/* Links the A–Z list, the crawl path to every member (#2266). */}
+              <p className="text-primary font-medium font-body"><Link href={`/collections/${SLUG}/catalog`} className="hover:underline">{worksMore.toLocaleString('en-US')} more works in mycology</Link></p>
               <p className="text-sm text-muted">The full catalogue lives on a dedicated, paginated browse page.</p>
             </div>
             <Link href={`/catalog?collection=${SLUG}`} className={`${BTN_DARK} self-start sm:self-auto`}>Browse all {total.toLocaleString('en-US')} <ArrowRight className="w-4 h-4" /></Link>
@@ -607,12 +620,6 @@ export default async function MycologyCollectionPage() {
         </div>
       </section>
 
-      {/* Crawl path to every member: the full A–Z list (#2266). */}
-      <p className="max-w-4xl mx-auto px-6 md:px-12 my-8 text-sm text-center">
-        <Link href="/collections/mycology/catalog" className="underline hover:opacity-70">
-          All books in this collection, as a list
-        </Link>
-      </p>
 
       <SignUpCTA
         bgImageUrl="/api/gallery-crop/6955d43628a09ca65928002a-0"

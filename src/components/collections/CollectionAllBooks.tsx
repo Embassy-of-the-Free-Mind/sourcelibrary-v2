@@ -40,6 +40,9 @@ interface BookItem {
   resource_type?: string;
   commons_width?: number;
   commons_height?: number;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
 }
 
 interface CollectionAllBooksProps {
@@ -476,6 +479,7 @@ export default function CollectionAllBooks({
                 pages_translatable: book.pages_translatable,
                 translation_percent: translationPercent(book),
                 resource_type: book.resource_type,
+                preview: book.preview,
               }}
               priority={!expanded && i < 4}
             />

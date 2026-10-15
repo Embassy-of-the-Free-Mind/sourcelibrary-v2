@@ -1,0 +1,235 @@
+{
+ "panel": "zh-print",
+ "chart": "chinese-print",
+ "n_pages": 12,
+ "noise_floor": 0.01,
+ "comparators": {
+  "chart": "chinese-print",
+  "thr": 0.01,
+  "ref38": "gemini-3.8-flash+antigravity-cli",
+  "best": "qwen3-vl-8b",
+  "flash3": "gemini-3-flash-preview",
+  "prod": "gemini-3.1-flash-lite"
+ },
+ "arms": {
+  "qwen3-vl-8b": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.839,
+   "ci95": [
+    0.78,
+    0.889
+   ],
+   "failures": {},
+   "median_cer": 0.126
+  },
+  "chandra-ocr-2": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.838,
+   "ci95": [
+    0.788,
+    0.883
+   ],
+   "failures": {},
+   "median_cer": 0.1415
+  },
+  "gemini-4-argon-low+antigravity-cli": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.838,
+   "ci95": [
+    0.788,
+    0.884
+   ],
+   "failures": {},
+   "median_cer": 0.1575
+  },
+  "gemini-3-flash-preview": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.836,
+   "ci95": [
+    0.787,
+    0.881
+   ],
+   "failures": {},
+   "median_cer": 0.147
+  },
+  "paddleocr-vl-1.6": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.835,
+   "ci95": [
+    0.789,
+    0.878
+   ],
+   "failures": {},
+   "median_cer": 0.1505
+  },
+  "claude-opus-5-5": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.835,
+   "ci95": [
+    0.79,
+    0.878
+   ],
+   "failures": {},
+   "median_cer": 0.1515
+  },
+  "gemini-3.7-flash+antigravity-cli": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.832,
+   "ci95": [
+    0.784,
+    0.875
+   ],
+   "failures": {},
+   "median_cer": 0.1505
+  },
+  "gemini-3.8-flash+antigravity-cli": {
+   "n_read": 12,
+   "n_scored": 11,
+   "accuracy": 0.828,
+   "ci95": [
+    0.78,
+    0.875
+   ],
+   "failures": {
+    "empty": 1
+   },
+   "median_cer": 0.173
+  },
+  "gemini-3.1-flash-lite": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.821,
+   "ci95": [
+    0.772,
+    0.869
+   ],
+   "failures": {},
+   "median_cer": 0.162
+  },
+  "claude-sonnet-5-5": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.766,
+   "ci95": [
+    0.625,
+    0.864
+   ],
+   "failures": {},
+   "median_cer": 0.165
+  },
+  "gemini-3.6-flash+antigravity-cli": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.754,
+   "ci95": [
+    0.601,
+    0.856
+   ],
+   "failures": {},
+   "median_cer": 0.169
+  },
+  "mistral-ocr-4-1": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.736,
+   "ci95": [
+    0.588,
+    0.837
+   ],
+   "failures": {},
+   "median_cer": 0.1835
+  },
+  "deepseek-ocr": {
+   "n_read": 12,
+   "n_scored": 12,
+   "accuracy": 0.493,
+   "ci95": [
+    0.276,
+    0.697
+   ],
+   "failures": {},
+   "median_cer": 0.3735
+  }
+ },
+ "paired": {
+  "ref38:gemini-3.8-flash+antigravity-cli": {
+   "n": 11,
+   "wins": 8,
+   "losses": 3,
+   "ties": 0,
+   "median_delta": -0.005,
+   "median_delta_ci95": [
+    -0.009,
+    0.002
+   ],
+   "mean_delta": -0.0052,
+   "mean_delta_ci95": [
+    -0.012,
+    0.0026
+   ],
+   "sign_p": 0.2266,
+   "verdict": "same"
+  },
+  "best:qwen3-vl-8b": {
+   "n": 12,
+   "wins": 6,
+   "losses": 5,
+   "ties": 1,
+   "median_delta": -0.0015,
+   "median_delta_ci95": [
+    -0.0115,
+    0.0155
+   ],
+   "mean_delta": 0.0009,
+   "mean_delta_ci95": [
+    -0.0122,
+    0.0155
+   ],
+   "sign_p": 1.0,
+   "verdict": "same"
+  },
+  "flash3:gemini-3-flash-preview": {
+   "n": 12,
+   "wins": 4,
+   "losses": 3,
+   "ties": 5,
+   "median_delta": 0.0,
+   "median_delta_ci95": [
+    -0.0095,
+    0.0015
+   ],
+   "mean_delta": -0.0018,
+   "mean_delta_ci95": [
+    -0.0107,
+    0.007
+   ],
+   "sign_p": 1.0,
+   "verdict": "same"
+  },
+  "prod:gemini-3.1-flash-lite": {
+   "n": 12,
+   "wins": 10,
+   "losses": 1,
+   "ties": 1,
+   "median_delta": -0.0125,
+   "median_delta_ci95": [
+    -0.035,
+    -0.0035
+   ],
+   "mean_delta": -0.0167,
+   "mean_delta_ci95": [
+    -0.0269,
+    -0.0066
+   ],
+   "sign_p": 0.0117,
+   "verdict": "better"
+  }
+ }
+}

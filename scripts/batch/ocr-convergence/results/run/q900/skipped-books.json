@@ -1,0 +1,122 @@
+[
+ {
+  "rank": 884,
+  "book_id": "69bd9e106120d54bd037b2d8",
+  "slug": "tractatus-posthumus-jani-jacobi-boissardi-de-divinatione-boissard-2",
+  "group": "latin",
+  "language": "Latin",
+  "views": 56,
+  "lane_block": null,
+  "skip": "held: image-shift-erara-pdf-5803"
+ },
+ {
+  "rank": 803,
+  "book_id": "6992cd6743713c66ea6363c5",
+  "slug": "sancai-tuhui-juan-25",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 58,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 804,
+  "book_id": "6992ce0200f13b15f3ca3ccf",
+  "slug": "sancai-tuhui-juan-68",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 58,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 833,
+  "book_id": "6992cf48f5b4f75c1a4c877b",
+  "slug": "illustrated-compendium-of-materia-medica-vol-21",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 57,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 835,
+  "book_id": "6992ca5ad4d545ae73fedda0",
+  "slug": "jihe-yuanben-euclids-elements-in-chinese-vol-1-guangqi",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 57,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 843,
+  "book_id": "6992cdcb23b3ade43ec150d5",
+  "slug": "sancai-tuhui-juan-53",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 57,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 848,
+  "book_id": "69af0dc5d2d9291eaf09bbd5",
+  "slug": "tian-wen-chu-xue-kao-elementary-study-of-astronomy-dynasty",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 57,
+  "lane_block": "88% translated: gap-fill would re-queue it",
+  "skip": "lane_block: 88% translated: gap-fill would re-queue it"
+ },
+ {
+  "rank": 850,
+  "book_id": "6992ca94d4d545ae73fee548",
+  "slug": "zhenjiu-dacheng-great-compendium-of-acupuncture-vol-1-jizhou",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 57,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 851,
+  "book_id": "6992ca97d4d545ae73fee68a",
+  "slug": "zhenjiu-dacheng-great-compendium-of-acupuncture-vol-3-jizhou",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 57,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 873,
+  "book_id": "6992cd2dae978f7d41598661",
+  "slug": "sancai-tuhui-juan-10",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 56,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 885,
+  "book_id": "6992cebd673ee1e40e32171f",
+  "slug": "treatise-on-armament-technology-wubei-zhi-2",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 56,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 886,
+  "book_id": "69dea7dd51267905f92aaca5",
+  "slug": "water-margin-vol-35-shi-nai-an-li-zhuowu",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 56,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]

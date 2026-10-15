@@ -1,0 +1,141 @@
+{
+ "built_at": "2026-10-14T19:32:41.869Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 604,
+   "book_id": "69b2f4280e2f024dfbfbb79d",
+   "slug": "theocriti-idyllia-et-epigrammata-estienne",
+   "group": "greek",
+   "language": "Greek",
+   "views": 66,
+   "lane_block": null
+  },
+  {
+   "rank": 607,
+   "book_id": "69b1deccca46fa60ea1ee439",
+   "slug": "alexander-von-tralles-original-text-und-ubersetzung-vol-1-tralles",
+   "group": "greek",
+   "language": "Greek",
+   "views": 65,
+   "lane_block": null
+  },
+  {
+   "rank": 610,
+   "book_id": "69b220b356715b0e324732e1",
+   "slug": "aristotle-opera-vol-6-metaphysica-aldine-editio-princeps-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 65,
+   "lane_block": null
+  },
+  {
+   "rank": 613,
+   "book_id": "69942c54b2f6748db4abd74f",
+   "slug": "de-natura-hominis-first-greek-latin-edition-trans",
+   "group": "greek",
+   "language": "Greek",
+   "views": 65,
+   "lane_block": null
+  },
+  {
+   "rank": 623,
+   "book_id": "69b21f344522d8c1db3be18c",
+   "slug": "plutarchi-vitae-vol-2-didot-greek-latin-doehner",
+   "group": "greek",
+   "language": "Greek",
+   "views": 65,
+   "lane_block": null
+  },
+  {
+   "rank": 641,
+   "book_id": "69aea5c81c89af5ce4bc1d8f",
+   "slug": "novum-testamentum-graece-editio-octava-critica-maior-tischendorf",
+   "group": "greek",
+   "language": "Greek",
+   "views": 64,
+   "lane_block": null
+  },
+  {
+   "rank": 645,
+   "book_id": "69b21d4addb4fa7c305b4a88",
+   "slug": "platonis-opera-quae-extant-vol-3-stephanus-plato",
+   "group": "greek",
+   "language": "Greek",
+   "views": 64,
+   "lane_block": null
+  },
+  {
+   "rank": 651,
+   "book_id": "6a0851bb49638a50931b901a",
+   "slug": "aristotelous-pasan-logiken-retoriken-kai-poietiken-pragmatei",
+   "group": "greek",
+   "language": "Greek",
+   "views": 63,
+   "lane_block": null
+  },
+  {
+   "rank": 659,
+   "book_id": "69942a9b045dfc482ad7797c",
+   "slug": "hexaplorum-quae-supersunt-i-field-critical-edition-origen",
+   "group": "greek",
+   "language": "Greek",
+   "views": 63,
+   "lane_block": null
+  },
+  {
+   "rank": 668,
+   "book_id": "6953a88c77f38f6761bd19d6",
+   "slug": "novum-testamentum-graece-tischendorf-tischendorf",
+   "group": "greek",
+   "language": "Greek",
+   "views": 63,
+   "lane_block": null
+  },
+  {
+   "rank": 672,
+   "book_id": "6a3f027f97e91e1768f67513",
+   "slug": "patrologiae-cursus-completus-series-graeca-volume-48-books",
+   "group": "greek",
+   "language": "Greek",
+   "views": 63,
+   "lane_block": null
+  },
+  {
+   "rank": 683,
+   "book_id": "69938d895d28b693146d0231",
+   "slug": "alexias-reifferscheid-critical-edition-comnena",
+   "group": "greek",
+   "language": "Greek",
+   "views": 62,
+   "lane_block": null
+  },
+  {
+   "rank": 684,
+   "book_id": "69938f985d28b693146d1099",
+   "slug": "bodleian-library-ms-barocci-131-various",
+   "group": "greek",
+   "language": "Greek",
+   "views": 62,
+   "lane_block": null
+  },
+  {
+   "rank": 695,
+   "book_id": "6993882874305116d72cf9f3",
+   "slug": "pal-gr-182-laertius",
+   "group": "greek",
+   "language": "Greek",
+   "views": 62,
+   "lane_block": null
+  },
+  {
+   "rank": 696,
+   "book_id": "69938d705d28b693146cf97e",
+   "slug": "paraphrasis-evangelii-ioannei-panopolis",
+   "group": "greek",
+   "language": "Greek",
+   "views": 62,
+   "lane_block": null
+  }
+ ]
+}

@@ -23,6 +23,21 @@ function upgradeIiifUrl(url: string, width: number): string {
   return url.replace(/\/full\/(full|max|\d+,|pct:\d+)\//, `/full/${width},/`);
 }
 
+/**
+ * Downscale a gallery crop to a grid variant: `width` px wide, but never less
+ * than `width / 2` px tall. A width-only resize turns a wide banner (6:1) into a
+ * 300×50 sliver that blurs in any fixed-height slot — and GalleryClient treats
+ * a thumb under 150px tall as corrupt and discards it (#3229). Tall crops are
+ * unaffected (the width governs); nothing is ever upscaled. Mirrored in
+ * scripts/workers/generate-thumbnails.mjs and scripts/maintenance/backfill-card-thumbs.mjs.
+ */
+export function galleryVariant(buffer: Buffer, width: number, quality: number): Promise<Buffer> {
+  return sharp(buffer)
+    .resize(width, Math.ceil(width / 2), { fit: 'outside', withoutEnlargement: true })
+    .jpeg({ quality })
+    .toBuffer();
+}
+
 interface GenerateGalleryImagesInput {
   sourceImageUrl: string;
   bbox: { x: number; y: number; width: number; height: number };
@@ -35,6 +50,7 @@ interface GenerateGalleryImagesInput {
 interface GenerateGalleryImagesResult {
   extractedUrl: string;   // Full-size cropped+rotated JPEG
   thumbnailUrl: string;   // 300px thumbnail JPEG
+  cardUrl: string;        // 600px grid-card JPEG (#2401)
   extractedWidth: number; // Pixel width of extracted image
   extractedHeight: number; // Pixel height of extracted image
   dhash: string;          // 64-bit perceptual hash for dedup
@@ -44,7 +60,10 @@ interface GenerateGalleryImagesResult {
  * Generate cropped+rotated gallery image and thumbnail, upload to R2.
  *
  * Pipeline: fetch source → sharp extract (bbox + padding) → rotate → JPEG → upload
- * Also generates a 300px-wide thumbnail for the gallery grid.
+ * Also generates the 300px thumbnail and the 600px `-card.jpg` the gallery grid
+ * prefers — the same three variants scripts/workers/generate-thumbnails.mjs
+ * writes. Skipping the card left new crops 404ing in the grid and edited crops
+ * serving the card of their OLD bbox (#4465).
  */
 export async function generateGalleryImages(
   input: GenerateGalleryImagesInput
@@ -151,24 +170,31 @@ export async function generateGalleryImages(
   const extractedWidth = extractedMeta.width || 0;
   const extractedHeight = extractedMeta.height || 0;
 
-  // Generate 300px thumbnail (JPEG 70)
-  const thumbnailBuffer = await sharp(extractedBuffer)
-    .resize(300, null, { fit: 'inside', withoutEnlargement: true })
-    .jpeg({ quality: 70 })
-    .toBuffer();
+  // Generate the 300px thumbnail (JPEG 70) and the 600px `-card.jpg` (JPEG 72)
+  // that grid cards prefer (#2401). Writing the card here too matters: the grid
+  // derives the card URL from the thumb URL, so a re-crop that rewrote only the
+  // thumb left the OLD crop showing in the grid.
+  const [thumbnailBuffer, cardBuffer] = await Promise.all([
+    galleryVariant(extractedBuffer, 300, 70),
+    galleryVariant(extractedBuffer, 600, 72),
+  ]);
 
   // Compute perceptual hash from thumbnail (small buffer = fast)
   const dhash = await computeDHash(thumbnailBuffer);
 
-  // Upload both to R2
+  // Upload all three to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
 
-  const [extractedBlob, thumbnailBlob] = await Promise.all([
+  const [extractedBlob, thumbnailBlob, cardBlob] = await Promise.all([
     storagePut(`${blobPrefix}.jpg`, extractedBuffer, {
       contentType: 'image/jpeg',
       allowOverwrite: true,
     }),
     storagePut(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
+      contentType: 'image/jpeg',
+      allowOverwrite: true,
+    }),
+    storagePut(`${blobPrefix}-card.jpg`, cardBuffer, {
       contentType: 'image/jpeg',
       allowOverwrite: true,
     }),
@@ -180,6 +206,7 @@ export async function generateGalleryImages(
   return {
     extractedUrl: extractedBlob.url + cacheBust,
     thumbnailUrl: thumbnailBlob.url + cacheBust,
+    cardUrl: cardBlob.url + cacheBust,
     extractedWidth,
     extractedHeight,
     dhash,

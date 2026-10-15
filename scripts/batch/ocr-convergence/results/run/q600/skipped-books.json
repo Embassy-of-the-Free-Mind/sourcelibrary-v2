@@ -1,0 +1,212 @@
+[
+ {
+  "rank": 581,
+  "book_id": "69b4d63cf22c8341a90b9e32",
+  "slug": "verae-alchemiae-artis-qve-metallicae-citra-aenigmata-philosophorum",
+  "group": "latin",
+  "language": "Latin",
+  "views": 67,
+  "lane_block": "status ocr_complete: a translate lane would re-translate the page",
+  "skip": "lane_block: status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "rank": 587,
+  "book_id": "6a08a9e20e77acb4f9307cde",
+  "slug": "dio-chrysostom-orationes-von-arnim-teubner-chrysostom",
+  "group": "greek",
+  "language": "Greek",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: title-leaf-recitation-6297"
+ },
+ {
+  "rank": 596,
+  "book_id": "6993892b74305116d72d1169",
+  "slug": "proclus-elements-of-theology-proclus",
+  "group": "greek",
+  "language": "Greek",
+  "views": 66,
+  "lane_block": "91% translated: gap-fill would re-queue it",
+  "skip": "lane_block: 91% translated: gap-fill would re-queue it"
+ },
+ {
+  "rank": 544,
+  "book_id": "69bda06af6d63c919748703b",
+  "slug": "deutsches-theatrum-chemicum-auf-welchem-der-beruhmtesten-roth-scholtz",
+  "group": "german",
+  "language": "German",
+  "views": 68,
+  "lane_block": "status ocr_complete: a translate lane would re-translate the page",
+  "skip": "lane_block: status ocr_complete: a translate lane would re-translate the page"
+ },
+ {
+  "rank": 501,
+  "book_id": "6992cd6a43713c66ea6364a0",
+  "slug": "sancai-tuhui-juan-26",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 71,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 502,
+  "book_id": "6992ce393ea667fbac828874",
+  "slug": "sancai-tuhui-juan-83",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 71,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 514,
+  "book_id": "6992cdde81c9d7efb84d0815",
+  "slug": "sancai-tuhui-juan-58",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 70,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 552,
+  "book_id": "6992ce86673ee1e40e320e15",
+  "slug": "sancai-tuhui-juan-104",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 68,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 553,
+  "book_id": "6992cd7c43713c66ea636be2",
+  "slug": "sancai-tuhui-juan-31",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 68,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 554,
+  "book_id": "6992cda743713c66ea637c9a",
+  "slug": "sancai-tuhui-juan-43",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 68,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 555,
+  "book_id": "6992cdcf23b3ade43ec1519b",
+  "slug": "sancai-tuhui-juan-54",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 68,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 561,
+  "book_id": "69935b692c63944063133f67",
+  "slug": "dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 67,
+  "lane_block": "84% translated: gap-fill would re-queue it",
+  "skip": "lane_block: 84% translated: gap-fill would re-queue it"
+ },
+ {
+  "rank": 573,
+  "book_id": "6992cc12018b80967354cc95",
+  "slug": "qimin-yaoshu-essential-techniques-for-the-welfare-of-the-sixie-3",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 67,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 575,
+  "book_id": "6992cd3e43713c66ea63598e",
+  "slug": "sancai-tuhui-juan-14",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 67,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 576,
+  "book_id": "6992cd4a43713c66ea635aa2",
+  "slug": "sancai-tuhui-juan-17",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 67,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 577,
+  "book_id": "6992ce243ea667fbac8284b0",
+  "slug": "sancai-tuhui-juan-77",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 67,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 578,
+  "book_id": "6992ce313ea667fbac828700",
+  "slug": "sancai-tuhui-juan-81",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 67,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 592,
+  "book_id": "6992cf3cf5b4f75c1a4c8518",
+  "slug": "illustrated-treatise-on-the-maritime-kingdoms-vol-3",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 598,
+  "book_id": "6992cd6e43713c66ea636659",
+  "slug": "sancai-tuhui-juan-27",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 599,
+  "book_id": "6992cdf281c9d7efb84d0ee0",
+  "slug": "sancai-tuhui-juan-64",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 600,
+  "book_id": "6992cd26ae978f7d415985b3",
+  "slug": "sancai-tuhui-juan-8",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 66,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]

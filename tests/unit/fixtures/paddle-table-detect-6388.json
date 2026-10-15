@@ -33,5 +33,26 @@
   "verdict": "clean",
   "layout": "prose",
   "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n歌曰謡亦謂之咢\n謂無絲竹之\n類獨歌之\n蔡邕月令章句曰歌\n者樂之聲也 韓詩章句曰有章曲曰歌無章曲曰謡\n増玉海曰樂辭曰詩詩聲曰歌 原梁元帝纂要曰\n齊歌曰謳吳歌曰歈楚歌曰艷淫歌曰哇又有清歌髙\n歌安歌緩歌長歌浩歌雅歌酣歌怨歌勞歌\n韓詩曰飢\n者歌食勞\n者歌\n事\n振旅而歌曰凱歌堂上奏樂而歌曰登歌亦曰升\n歌 増郊廟所歌唐曲曰和宋曲曰安遼參用之金曲\n曰寧元曲曰成間襲宋金之舊明曲亦曰和又有鐃歌"
+ },
+ "ditto_short_clean": {
+  "key": "6a3c654e39b4508b04e2db7e_165",
+  "title": "御定子史精華·卷三十五~卷三十七 (vol 11)",
+  "verdict": "prose; Opus correction removed <5% of its Han (#6561)",
+  "layout": "prose",
+  "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n諸路監司不才更用杜杞張盈之輩公取班簿視不才\n監司每見一人姓名一筆勾之以次更易富公素以丈\n事公謂公曰丨丨則是丨丨焉知一家哭\n矣公曰一家哭何如一路哭耶遂悉罷之\n政令問集賢\n典故問東廳文學問西廳\n朱子名臣言行錄韓魏公為\n相曰曾公為亞相趙康靖歐\n公為參政凡事該丨丨則曰丨丨丨該丨丨則曰丨丨\n丨該丨丨則曰丨丨丨至大事則自決之人以為得相\n體\n寒花晚節\n朱子名臣言行錄韓魏公為相作久旱喜\n雨詩斷句云湏臾慰滿三農望收歛神功\n絕似無人謂此真做出宰相事業也在北門重陽有詩\n云不羞老圃秋容淡且看丨丨丨丨香公居常謂保初\n節易保晚節難故晚節\n事事尤著力所立特全\n老鳳\n朱子名臣言行錄曾魯公\n公亮自嘉祐秉政至熙寕\n中尚在中書年雖髙而精力不哀故臺諫無非之者唯\n李復圭以為不可作詩曰丨丨池邊蹲不去饑烏臺上\n<header>欽定四庫全書</header>\n<header>御定子史精華</header>\n<header>卷三十七</header>\n<page-num>二十二</page-num>"
+ },
+ "ditto_invented": {
+  "key": "6a3c663439b4508b04e32e5f_41",
+  "title": "御定子史精華·卷一百四十一~卷一百四十二 (vol 150)",
+  "verdict": "invented",
+  "layout": "prose",
+  "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n間多楓木歲久則生瘤癭一夕遇暴雷驟雨其樹贅暗\n長三五尺謂之楓人越巫取之作術有通神之驗取之\n不以法則\n能化去\n指甲花\n嵇含南方草木狀丨丨丨其樹髙五\n六尺枝條柔弱葉如嫩榆與耶悉茗\n末利花皆雪白而香不相上下亦胡人自大秦國移植\n於南海而此花極繁細纔如半米粒許彼人多折置襟\n袖間葢資其芬馥\n爾一名散沫花\n金可作枕紫可作牀白可作履\n嵇含\n南方\n草木狀荆寧浦有三種丨荆丨丨丨丨丨荆丨丨丨丨荆\n丨丨丨與他處牡荆蔓荆全異又彼境有杜荆指病自\n愈節不相當者月暈時刻之與病\n人身齊等置牀下雖危困亦愈\n指病自愈\n見\n上\n懷風\n葛\n洪\n西京雜記樂遊苑自生玫瑰樹下多苜蓿苜蓿一名丨\n丨時人或謂之光風風在其間蕭蕭然日照其花有光\n采故名苜蓿為懷風\n茂陵人謂之連枝草\n紫籜緑節\n葛洪西京雜記太液池\n邊皆是彫胡丨丨丨丨\n御定子史隋華\n四"
+ },
+ "rod_chart": {
+  "key": "6a3cbefff9474f825c164904_6",
+  "title": "洪範皇極內篇·卷四~卷五 (vol 2)",
+  "verdict": "counting-rod chart; 丨 is a rod, not a ditto (#6561)",
+  "layout": "mixed",
+  "text": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>卷四</header>\n丨吝\n丨吉\n丨咎\n丨災\n丨平\n丨祥\n丨休\n丨凶\n丨悔\n丨災\n丨災\n丨災\n丨災\n丨災\n丨災\n丨災\n丨災\n丨災\n丨吝\n丨吉\n丨咎\n丨災\n丨平\n丨祥\n丨休\n丨凶\n丨悔\n丨休\n丨休\n丨休\n丨休\n丨休\n丨休\n丨休\n丨休\n丨休\n丨休\n丨晉四之三\n晉進賢去邪百工咸理監工日號悖于時凶蠶\n桑吉數曰\n丨災\n丨吝\n丨吉\n丨休\n丨平\n丨咎\n丨凶\n丨悔\n丨祥\n丨咎\n丨咎\n丨咎\n丨咎\n丨咎\n丨咎\n丨災\n丨咎\n丨吉\n丨休\n丨平\n丨咎\n丨凶\n丨悔\n丨祥\n丨祥\n丨祥\n丨祥\n丨祥\n丨祥\n丨祥\n丨災\n丨吝\n丨吉\n丨休\n丨平\n丨咎\n丨凶\n丨悔\n丨祥\n丨悔\n丨悔\n丨悔\n丨悔\n丨悔\n丨悔\n丨悔\n丨悔\n丨悔"
  }
 }

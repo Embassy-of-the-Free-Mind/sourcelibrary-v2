@@ -11,11 +11,15 @@
  * pages). READ stage only; `cli-ocr.mjs apply` writes.
  *
  *   node --env-file=.env.production.local scripts/batch/claude-ocr.mjs --out=DIR (--books-file=F | --page-ids-file=F)
- *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME]
+ *        [--model=opus] [--per-call=10] [--concurrency=2] [--max-pages=N] [--job=NAME] [--language=NAME]
  *   node --env-file=.env.production.local scripts/batch/cli-ocr.mjs apply --out=DIR --reason="..." [--apply]
  *
  * --books-file: book ids, one per line; reads every page of each that has NO OCR yet (a page with text is never
  * re-read here). --page-ids-file: a JSON array of page ids (as cli-ocr.mjs), pages that have OCR are still skipped.
+ * --language: the CONTENT language for the prompt's language slot, overriding `books.language` for every book in the
+ * run — for a dictionary or grammar catalogued under its front-matter language (Spanish, French…) whose pages are
+ * mostly Maya. `books.language` is the edition's language and is not changed (language-fields.md); each page's meta
+ * records the language sent (`language`) and the book's own (`book_language`).
  *
  * WHAT A CALL IS. Up to --per-call consecutive pages of ONE book are copied into a sealed folder as p01.jpg … pNN.jpg
  * (neutral names) and `claude -p --model opus --restricted --tools Read` is asked to transcribe each on the live
@@ -61,6 +65,17 @@ export function languageInstruction(language) {
   const letters = ORTHOGRAPHY[language];
   return `**Source language:** This book is in ${language}; pages may also carry Spanish or Latin. Transcribe every language on the page, and report the primary language of THIS page in the <language> tag (e.g. <language>${language}</language>).`
     + (letters ? `\n**${language} orthography (CRITICAL):** keep the colonial spelling exactly as written, never modernised and never moved toward Spanish. These signs are LETTERS of the language, not abbreviations, and are kept as printed or written: ${letters}. The abbreviation rules below apply to Latin and Spanish scribal abbreviations (a tilde or macron standing for an omitted n or m, q̃ = que, and the like); a sign that is a letter of ${language} is never expanded or replaced, and when you cannot tell which it is, keep it as written.` : '');
+}
+
+/**
+ * The language the prompt's slot names for a book: the --language override when given, else the book's language.
+ * An override must name a language this script has an orthography for — a typo would otherwise silently drop the
+ * orthography paragraph, which is the reason to override at all.
+ */
+export function slotLanguage(bookLanguage, override) {
+  if (override == null || override === '') return bookLanguage;
+  if (!ORTHOGRAPHY[override]) throw new Error(`--language=${override}: no orthography for it (known: ${Object.keys(ORTHOGRAPHY).join(', ')})`);
+  return override;
 }
 
 /** The per-call instruction that follows the prompt. Part of the prompt SENT, so part of what is hashed. */
@@ -119,6 +134,8 @@ async function main() {
   const CONCURRENCY = Math.max(1, Math.min(4, Number(arg('concurrency') || 2)));
   const MAX_PAGES = Number(arg('max-pages') || Infinity);
   const JOB = arg('job') || 'claude-ocr';
+  const LANGUAGE = arg('language');
+  if (LANGUAGE) slotLanguage(null, LANGUAGE);   // refuse an unknown override before touching anything
   if (!OUT || !(arg('books-file') || arg('page-ids-file'))) { console.error('usage: claude-ocr.mjs --out=DIR (--books-file=F | --page-ids-file=F) (see the header)'); process.exit(2); }
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
@@ -138,7 +155,7 @@ async function main() {
   const { base, ref } = await liveOcrPrompt(db);   // the auto-detect base, for the log line; each book's slot is filled here
   const promptFor = {};
   for (const b of books.values()) {
-    const live = await liveOcrPrompt(db, languageInstruction(b.language));
+    const live = await liveOcrPrompt(db, languageInstruction(slotLanguage(b.language, LANGUAGE)));
     if (live.ref.hash !== ref.hash || live.ref.version !== ref.version) throw new Error('the live OCR prompt changed during setup; re-run');
     promptFor[b.id] = live.base;
   }
@@ -154,7 +171,7 @@ async function main() {
     const last = calls[calls.length - 1];
     if (last && last[0].book_id === p.book_id && last.length < PER_CALL) last.push(p); else calls.push([p]);
   }
-  console.log(`${pages.length} pages without OCR in ${books.size} books; ${todo.length} to read in ${calls.length} calls; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} calls at a time; prompt ${ref.name} v${ref.version} (base ${contentHash(base)})`);
+  console.log(`${pages.length} pages without OCR in ${books.size} books; ${todo.length} to read in ${calls.length} calls; model ${MODEL}; ${CLI} ${version}; ${CONCURRENCY} calls at a time; prompt ${ref.name} v${ref.version} (base ${contentHash(base)})${LANGUAGE ? `; language slot ${LANGUAGE} (override)` : ''}`);
 
   const sealRoot = path.join(process.env.TMPDIR || os.tmpdir(), 'claude-ocr-sealed', path.basename(OUT));
   const callLog = path.join(OUT, 'calls.jsonl');
@@ -199,7 +216,7 @@ async function main() {
     const texts = r.cls ? null : splitPages(r.text, group.length);
     fs.appendFileSync(callLog, JSON.stringify({ ts: new Date().toISOString(), call_id: callId, book_id: group[0].book_id, pages: group.map((p) => p.page_number), model: r.model, secs: Math.round(r.secs), cls: r.cls || (texts ? null : 'page_count_mismatch'), usage: r.usage }) + '\n');
     if (r.cls === 'usage_limit') { stop = `usage limit: ${r.err || r.text.slice(0, 200)}`; return 'failed'; }
-    const common = { model: r.model || MODEL, model_requested: MODEL, call_id: callId, call_pages: group.length, started_at: t0.toISOString(), finished_at: new Date().toISOString(), prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, language: books.get(group[0].book_id)?.language ?? null, call_usage: r.usage };
+    const common = { model: r.model || MODEL, model_requested: MODEL, call_id: callId, call_pages: group.length, started_at: t0.toISOString(), finished_at: new Date().toISOString(), prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, language: slotLanguage(books.get(group[0].book_id)?.language ?? null, LANGUAGE), book_language: books.get(group[0].book_id)?.language ?? null, language_override: !!LANGUAGE, call_usage: r.usage };
     if (r.cls || !texts) {
       if (attempt > 0) group.forEach((p, i) => writePage(p, '', { ...common, call_position: i + 1, exit: r.code === null ? -9 : (r.code || 1), error_class: r.cls || 'page_count_mismatch', stderr_tail: r.err, image_url: imgs[i].src, image_bytes: imgs[i].buf.length, image_sha256: imgs[i].sha }));
       console.log(`  ${group[0].book_id} p.${group[0].page_number}-${group[group.length - 1].page_number}: ${r.cls || 'page markers do not match: call refused'} (${Math.round(r.secs)}s)`);
