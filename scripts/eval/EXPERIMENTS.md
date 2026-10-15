@@ -828,6 +828,39 @@ Every rate above is therefore "not settled" for each judge. The judges disagree 
 
 *Files:* `scripts/eval/opus10-flash-6690/` (build-packet.py, score.py), `scripts/eval/pro-translate-6545/claude-arm.py --sealed`, `scripts/eval/results/opus10-flash-6690/{scores.json, key.json}`. The arm outputs, references and judge packets quote published translations and stay on the box (`$JOB_SCRATCH/w/`).
 
+## 2026-10-15 · Does a write-time leaf-shift gate catch the known shifts without rejecting clean blocks? (#5021)
+
+PRIOR ART: `scripts/audit/translation-leaf-shift.mjs` (2026-10-13 entry) judges whole books with both neighbours of
+every page in hand. A write-time gate sees one 8-page block and nothing past its edges, so recall and false alarms
+were measured on blocks. `scripts/lib/block-drift.mjs` already rejects a clause moved across one boundary; it cannot
+see a leaf shifted whole.
+
+**Design.** `scripts/audit/leaf-shift-gate-controls-5021.mjs`, read-only, $0. The gate is `blockLeafShiftRuns`
+(the audit's classifier, moved unchanged to `scripts/lib/leaf-shift.mjs`): two or more adjacent pages of a block whose
+English votes only for the neighbouring leaf's printed numbers.
+
+- **Positive control:** the 12 pages withheld on 2026-10-13 after being read against their scans. Their English was
+  rebuilt from `page_revisions` as of 2026-10-13T15:45Z (before the withhold). Every 8-page block alignment that
+  contains the page was run through the gate.
+- **False-alarm control:** 150 books drawn at random (seed 5021) whose every translated page came from the
+  single-page lane (prompt v1-v6), which cannot put one leaf's text on another. Each book was cut into 8-page blocks
+  at page 1.
+
+**Results.**
+
+| control | n | rejected |
+|---|---:|---:|
+| positive: wrong-leaf pages caught in at least one alignment | 12 pages | 12 |
+| positive: alignments caught | 96 | 75 (6-8 of 8 per page) |
+| false alarm: single-page-lane blocks | 3,321 | 7 (0.21%), 3 tier-A strength |
+
+The 21 missed alignments are blocks where the run is cut by the block edge, so fewer than two shifted pages have
+both neighbours in hand. A false alarm costs eight pages a single-page translation and never writes a wrong text.
+
+**Limits.** One draw. The false-alarm frame assumes `prompt_version` v1-v6 means single-page; a few of the 7
+rejections may be real OCR-side leaf errors rather than false alarms, and none were opened. A shift with no printed
+numbers in the body is invisible to this gate, as it is to the audit.
+
 ## 2026-10-15 · Gemini 4 Argon low vs Opus vs 3.8 Flash, translation, the #6545 panels (#6729)
 
 PRIOR ART: `2026-10-12-pro-opus-correction-hardest-languages-6545.md` (the panels, prompt, OPUS and C38S arms, judge
