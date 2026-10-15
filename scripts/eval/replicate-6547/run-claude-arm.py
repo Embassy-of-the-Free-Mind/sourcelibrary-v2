@@ -80,6 +80,10 @@ def main():
         cwd = os.path.join(a.workdir, a.arm + '-' + ''.join(c if c.isalnum() or c in '.-_' else '_' for c in req['uid']))
         shutil.rmtree(cwd, ignore_errors=True); os.makedirs(cwd)
         shutil.copyfile(req['image'], os.path.join(cwd, 'page' + ext))
+        # #6560: optional extra images (e.g. full-resolution tiles of the frame), copied under their own names; the
+        # request's prompt says what they are.
+        for x in req.get('extra_images') or []:
+            shutil.copyfile(x, os.path.join(cwd, os.path.basename(x)))
         prompt = f"{req['prompt']}\n\nThe page image is the file ./page{ext} in this folder. Open it with the Read tool."
         out, err, total, cls, meta, tries = '', '', 0.0, None, {}, 0
         for tries in range(1, a.attempts + 1):

@@ -223,6 +223,64 @@ if (CMD === 'yatags-req') {
   const { page_rows, ...head } = out;
   console.log(JSON.stringify(head, null, 1));
   for (const p of page_rows.filter((x) => x.verdict === 'worse')) console.log('WORSE', p.page_number, p.page_id, p.worse_spans.join(' | '));
+} else if (CMD === 'tiles-req') {
+  // A second judge on the SAME items: the request as built, plus the frame cut into four overlapping tiles at full
+  // resolution. The Read tool shows a 3888 px frame at about 2000 px, where a subscribed ya or a vowel sign can be too
+  // small to see (the full-frame audit judge abstained on 46% of spans, 2026-10-15).
+  const sharp = (await import('sharp')).default;
+  const TILE_NOTE = '\n\nThe same frame is also cut into four overlapping tiles at full resolution: tile-ul.jpg (upper left), '
+    + 'tile-ur.jpg (upper right), tile-ll.jpg (lower left) and tile-lr.jpg (lower right), in this folder. Open the tile '
+    + 'that holds a spot to read small marks such as a subscribed letter or a vowel sign.';
+  const out = [];
+  for (const r of readJsonl(arg('req'))) {
+    const dir = path.join(arg('tiles-dir'), r.uid);
+    fs.mkdirSync(dir, { recursive: true });
+    const img = sharp(r.image); const { width: W, height: H } = await img.metadata();
+    const files = [];
+    for (const [nm, x0, y0] of [['ul', 0, 0], ['ur', 0.45, 0], ['ll', 0, 0.45], ['lr', 0.45, 0.45]]) {
+      const f = path.join(dir, `tile-${nm}.jpg`);
+      if (!fs.existsSync(f)) await sharp(r.image).extract({ left: Math.round(x0 * W), top: Math.round(y0 * H), width: Math.round(0.55 * W), height: Math.round(0.55 * H) }).jpeg({ quality: 92 }).toFile(f);
+      files.push(f);
+    }
+    out.push({ ...r, prompt: r.prompt + TILE_NOTE, extra_images: files });
+  }
+  writeJsonl(arg('out'), out);
+  console.log(`tiles-req: ${out.length} requests`);
+} else if (CMD === 'judges') {
+  // Two judges on the same audit items: alpha per judged measure, and the GO rule on the pooled verdict.
+  const key = JSON.parse(fs.readFileSync(arg('key'), 'utf8'));
+  const load = (f) => Object.fromEntries(readJsonl(f).filter((r) => r.text).map((r) => [r.uid, parseReply(r.text)]));
+  const J = [load(arg('a')), load(arg('b'))];
+  const spanUnits = [], decisiveUnits = [], ctl = [{ right: 0, wrong: 0, unclear: 0 }, { right: 0, wrong: 0, unclear: 0 }];
+  const pages = [];
+  for (const [pid, k] of Object.entries(key)) {
+    const p = { page_id: pid, page_number: k.page_number, arm: 0, base: 0, spans: 0, both_unclear: 0, worse_spans: [] };
+    for (const it of k.items) {
+      const s = J.map((j) => sideOf(it, j[pid]?.[it.item]));
+      if (it.kind === 'control') { s.forEach((x, i) => { if (x === 'base') ctl[i].right++; else if (x === 'arm' || x === 'other') ctl[i].wrong++; else ctl[i].unclear++; }); continue; }
+      spanUnits.push({ cluster: k.book_id, values: s.map((x) => x ?? 'unclear') });
+      decisiveUnits.push({ cluster: k.book_id, values: s.map((x) => (x === 'arm' || x === 'base' ? x : null)) });
+      // pooled: a span counts for the side a judge saw; two judges who saw opposite sides cancel out
+      p.spans++;
+      const seen = s.filter((x) => x === 'arm' || x === 'base');
+      if (!seen.length) p.both_unclear++;
+      else if (seen.every((x) => x === 'arm')) p.arm++;
+      else if (seen.every((x) => x === 'base')) { p.base++; p.worse_spans.push(`${it.base || '∅'}→${it.arm || '∅'} (line ${it.line})`); }
+    }
+    p.verdict = p.base > p.arm ? 'worse' : p.arm > p.base ? 'better' : 'same';
+    pages.push(p);
+  }
+  const rng = rngFor('6560|alpha|judges');
+  const r1 = judgeReliability(spanUnits, { rng }), r2 = judgeReliability(decisiveUnits, { rng });
+  const tot = pages.reduce((t, p) => ({ arm: t.arm + p.arm, base: t.base + p.base, spans: t.spans + p.spans, unclear: t.unclear + p.both_unclear }), { arm: 0, base: 0, spans: 0, unclear: 0 });
+  const worse = pages.filter((p) => p.verdict === 'worse');
+  const out = { pages: pages.length, better: pages.filter((p) => p.verdict === 'better').length, same: pages.filter((p) => p.verdict === 'same').length, worse: worse.length, go: worse.length <= 2,
+    spans: tot, correction_right: tot.arm / Math.max(1, tot.arm + tot.base), correction_right_ci: wilson(tot.arm, tot.arm + tot.base), controls: ctl,
+    alpha_span_answer: { ...r1, line: reliabilityLine('span answer (draft / correction / other / unclear)', r1, 'spans') },
+    alpha_span_side: { ...r2, line: reliabilityLine('leaf side where both judges saw one (draft / correction)', r2, 'spans') },
+    worse_pages: worse.map((p) => ({ page_number: p.page_number, page_id: p.page_id, spans: p.worse_spans })) };
+  if (arg('out')) fs.writeFileSync(arg('out'), JSON.stringify({ ...out, page_rows: pages }, null, 1));
+  console.log(JSON.stringify(out, null, 1));
 } else {
   console.error('usage: leafcheck.mjs yatags-req|yatags-verdicts|audit-req|audit-score (see the header)');
   process.exit(2);
