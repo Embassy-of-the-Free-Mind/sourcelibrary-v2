@@ -125,8 +125,18 @@ async function scoreRashi(units) {
     const win = st.letters.slice(w0, w1);
     const spans = {};
     for (const [k, q] of Object.entries(L)) {
-      const a = localAlign(q, win);
-      if (a) { const len = a.we - a.ws; spans[k] = { ws: w0 + a.ws, we: w0 + a.we, len, cer: +(a.edits / Math.max(1, len)).toFixed(3), aligns: len >= 80 && a.edits / len < 0.5 }; }
+      // Band for speed: the stretch of the read whose 7-grams hit inside the window (± 400 letters), aligned to the
+      // stretch of the window they hit (± 800). Smith–Waterman over a whole page against the whole window is
+      // 10^8–10^9 cells per read; the band is ~10^7 and holds the same best local alignment unless the block is
+      // scattered beyond the pad. A read with no hit in the window has no band and does not align.
+      const hitsR = [], hitsW = [];
+      for (let j = 0; j + 7 <= q.length; j++) { const ps = index.idx.get(q.slice(j, j + 7)); if (!ps || ps.length >= 64) continue; for (const p of ps) if (p >= w0 && p < w1) { hitsR.push(j); hitsW.push(p - w0); } }
+      if (hitsR.length < 3) continue;
+      const qs = (a, f) => { const t = [...a].sort((x, y) => x - y); return t[Math.floor(f * (t.length - 1))]; };
+      const r0 = Math.max(0, qs(hitsR, 0.02) - 400), r1 = Math.min(q.length, qs(hitsR, 0.98) + 400);
+      const b0 = Math.max(0, qs(hitsW, 0.02) - 800), b1 = Math.min(win.length, qs(hitsW, 0.98) + 800);
+      const a = localAlign(q.slice(r0, r1), win.slice(b0, b1));
+      if (a) { const len = a.we - a.ws; spans[k] = { ws: w0 + b0 + a.ws, we: w0 + b0 + a.we, len, cer: +(a.edits / Math.max(1, len)).toFixed(3), aligns: len >= 80 && a.edits / len < 0.5 }; }
     }
     const al = Object.entries(spans).filter(([, s]) => s.aligns);
     rec.spans = spans;
@@ -223,7 +233,11 @@ async function main() {
     const pref = (p) => (p.ref_refs[0].startsWith('Rashi on ') ? 0 : 1);
     const pick = scored.sort((a, b) => pref(a) - pref(b) || u(`hardhands-6731|memo|${a.uid}`) - u(`hardhands-6731|memo|${b.uid}`)).slice(0, 15);
     const title = (r) => r.replace(/ [\d:]+$/, ''), loc = (r) => (r.match(/ ([\d:]+)$/) || [, ''])[1];
-    const rows = pick.map((p) => ({ uid: `memo|${p.uid}`, prompt: `From memory, without any image, write out in Hebrew the text of ${title(p.ref_refs[0])}, from ${loc(p.ref_refs[0])} to ${loc(p.ref_refs[1])}${title(p.ref_refs[1]) !== title(p.ref_refs[0]) ? ` (${title(p.ref_refs[1])})` : ''}, exactly as it is printed in a traditional edition. Write the commentary text only, with no translation and no notes.` }));
+    // flattenVersion numbers Talmud sections 1, 2, 3 … (Sefaria's 1a, 1b, 2a …; Sukkah has 112 = 56b): give the model the daf.
+    const TALMUD = /^Rashi on (Berakhot|Shabbat|Eruvin|Pesachim|Yoma|Sukkah|Beitzah|Rosh Hashanah|Taanit|Megillah|Moed Katan|Chagigah) (\d+) ([\d:]+)$/;
+    const human = (r) => { const m = r.match(TALMUD); if (!m) return r; const n = +m[2]; return `Rashi on ${m[1]} ${Math.floor((n - 1) / 2) + 1}${n % 2 ? "a" : "b"}, comment ${m[3]}`; };
+    const rows = pick.map((p) => { const a = human(p.ref_refs[0]), b = human(p.ref_refs[1]);
+      return { uid: `memo|${p.uid}`, refs: [a, b], prompt: `From memory, without any image, write out in Hebrew the text of ${a} through ${b}, exactly as it is printed in a traditional edition. Write the text only, with no translation and no notes.` }; });
     for (const arm of ARMS) fs.writeFileSync(path.join(S, 'req', `memo-${arm}.jsonl`), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
     console.log(rows.map((r) => r.prompt).join('\n'));
   }
