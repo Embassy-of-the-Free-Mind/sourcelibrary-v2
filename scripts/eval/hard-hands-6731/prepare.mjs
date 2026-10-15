@@ -24,6 +24,7 @@ import { liveOcrPrompt } from '../../lib/live-ocr-prompt.mjs';
 import { buildGreekStream } from '../greek-ms-fit-5619.mjs';
 import { bodyText } from '../../import/sefaria-fit-5560.mjs';
 import { flattenVersion } from '../../lib/sefaria-fit.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const args = process.argv.slice(2);
 const cmd = args[0];
@@ -73,7 +74,8 @@ for x in range(int(W * 0.45), int(W * 0.58)):
 print(best[1] * 4)
 `, src]).toString().trim());
 }
-const imgUrl = (p) => p.archived_photo || p.photo;
+// Amendment 2: the page's own image (a split page's archived_photo is the whole spread).
+const imgUrl = (p) => getPageSource(p);
 
 // ── Rashi: one seeded interior page per candidate book, for classification by eye ──
 async function classPages(db) {
@@ -81,7 +83,7 @@ async function classPages(db) {
   const dir = mk(path.join(SCRATCH, 'class'));
   const out = [];
   for (const b of cands) {
-    const ps = await db.collection('pages').find({ book_id: b.id }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1 } }).sort({ page_number: 1 }).toArray();
+    const ps = await db.collection('pages').find({ book_id: b.id }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, photo_original: 1 } }).sort({ page_number: 1 }).toArray();
     const withImg = ps.filter(imgUrl);
     if (!withImg.length) { out.push({ book: b.id, page: null, note: 'no page image' }); continue; }
     const lo = Math.floor(withImg.length * 0.3), hi = Math.max(lo + 1, Math.ceil(withImg.length * 0.7));
@@ -124,7 +126,7 @@ async function greek(db) {
     if (pool.length < 15) { const f = qualifying(book, cfg.ed, 'flash-v2'); const have = new Set(pool.map((r) => r.page)); pool.push(...f.rows.filter((r) => !have.has(r.page)).map((r) => ({ ...r, fit: 'flash-v2', L: f.L }))); }
     pool.sort((a, b) => u(`hardhands-6731|${book}|${a.page}`) - u(`hardhands-6731|${book}|${b.page}`));
     for (const r of pool.slice(0, 15)) {
-      const p = await db.collection('pages').findOne({ book_id: book, page_number: r.page }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1, 'ocr.data': 1, 'ocr.model': 1 } });
+      const p = await db.collection('pages').findOne({ book_id: book, page_number: r.page }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1, 'ocr.model': 1 } });
       const a = Math.max(0, r.a - r.L), b = Math.min(st.letters.length, r.b + r.L);
       // letter range → edition text (segments joined by newlines, each cut at the letter's offset)
       const s0 = st.seg[a], s1 = st.seg[b - 1];
@@ -162,7 +164,7 @@ async function rashiPages(db) {
   const dir = mk(path.join(SCRATCH, 'rashi-view'));
   const out = [];
   for (const id of ids) {
-    const ps = (await db.collection('pages').find({ book_id: id }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1 } }).sort({ page_number: 1 }).toArray()).filter(imgUrl);
+    const ps = (await db.collection('pages').find({ book_id: id }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, photo_original: 1 } }).sort({ page_number: 1 }).toArray()).filter(imgUrl);
     const lo = Math.floor(ps.length * 0.1), hi = Math.ceil(ps.length * 0.9);
     const order = ps.slice(lo, hi).sort((a, b) => u(`hardhands-6731|page|${id}|${a.page_number}`) - u(`hardhands-6731|page|${id}|${b.page_number}`)).slice(0, n);
     for (const [i, p] of order.entries()) {
@@ -197,7 +199,7 @@ async function rashi(db) {
   const dir = mk(path.join(SCRATCH, 'rashi'));
   const units = [];
   for (const k of kept) {
-    const p = await db.collection('pages').findOne({ book_id: k.book, page_number: k.page }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1, 'ocr.data': 1, 'ocr.model': 1 } });
+    const p = await db.collection('pages').findOne({ book_id: k.book, page_number: k.page }, { projection: { _id: 0, id: 1, page_number: 1, photo: 1, archived_photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, photo_original: 1, 'ocr.data': 1, 'ocr.model': 1 } });
     const raw = path.join(SCRATCH, 'rashi-view', `${k.book}-${k.page}.orig.jpg`);
     await fetchTo(imgUrl(p), raw);
     const img = resize(raw, path.join(dir, `${k.book}-${k.page}.jpg`), 3000);
