@@ -1,0 +1,33 @@
+[
+ {
+  "item_id": "699253ff59cdabeb78f1ada0",
+  "verdict": "not-confirmed",
+  "confidence": "medium",
+  "note": "Every passage is on the leaf (the leaf prints '(Per Dómitium nostrum.)'); the '<note>Likely a typo for Dominum</note>' is a tagged annotation on that word, not a passage claimed for the leaf."
+ },
+ {
+  "item_id": "6a0853d015c643eb1af51255",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "The body runs from 'dum uidetur, quod insit Iucunditatis' to 'Et in Atheniensium rebus Parasition' as the leaf does; the trailing <vocab> list is a tagged index, not a transcribed passage."
+ },
+ {
+  "item_id": "69ae9b7902039497d3a626a2",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "Matthew 13:44–58 and the three apparatus blocks ('45 ανθρωπω εμπορω … πατρ. αυτου') all match the leaf; the trailing <vocab> list is a tagged index, not a transcribed passage."
+ },
+ {
+  "item_id": "695924fe1cac2ce31a4a8b72",
+  "verdict": "confirmed",
+  "kind": "invented",
+  "confidence": "high",
+  "note": "The leaf prints Xiao Tianshi's preface ('昔太史公論六家旨要…'), but the text gives none of it, only a model's <warning> comment ('This page is the modern author's preface…'), which is not on the leaf."
+ },
+ {
+  "item_id": "69f656b88b68eaabaab5b6d5",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "The leaf's last line does end '…יגדיל תורה ויאדיר ואז' before the catchword 'צדיקים', so 'ואז' is on the leaf."
+ }
+]

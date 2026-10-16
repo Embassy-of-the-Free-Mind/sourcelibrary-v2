@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a4f7563eeef22aafac61710",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both texts are complete. Y reads 'Sed dicta' and 'vt' as printed, where X has 'dictæ' and 'ut'. X keeps the catchword 'sepè' inline and Y moves it into meta; none of these changes the sense."
+ },
+ {
+  "item_id": "695203a6ab34727b1f041c5b",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "All 16 entries and page numbers agree. Y normalizes spelling ('Unica', 'Naturae') and treats the ornament '(o)' as a page number. X keeps '545' without a period, as printed."
+ },
+ {
+  "item_id": "6992ca1bd4d545ae73fed80d",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y has many misreadings that change the sense: '疑或障不通達' for '疑惑障於通達', '閼終' for '闕修', '轉大法故' for '轉大恭敬', '開絜金以為其綯' for '閻浮檀金以為其鬚'. It also reads 无 as '元' and wraps running text in spurious gloss tags."
+ },
+ {
+  "item_id": "69f69c88523c3a10c14bae0a",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The initial is C, so Y's 'C. Valerius' is right and X's 'Valerius' (initial V) is wrong. X also garbles the name 'Liuij' (Livy) as 'Liun' and has 'pæmodum' for 'propemodum'; Y follows the print."
+ },
+ {
+  "item_id": "697c907be7e251fee704e40b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "This leaf only shows the facing title page through the paper; Y calls it blank with show-through. X makes up a title that is not in the mirrored text ('menschlichen Verstands… Geisterseher', where the show-through reads 'menschlichen Narrheit oder Lebensbeschreibungen… Schwarzkünstler')."
+ },
+ {
+  "item_id": "69b5259e2f891867c1ae405b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X misreads several words: 'למהרתי' for 'לעזרתי', 'השיגו עוני' for 'השיגוני עונתי', 'בשם' for 'בשתם', 'ישמרנו' for 'ישמרהו'. It also garbles the 'ספר שני' (Book II) heading into 'כפר מנ'."
+ },
+ {
+  "item_id": "6992ca1bd4d545ae73fed820",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y has wrong words: '亦無實性' for '都無實性', '名出生故' for '分別生故', and an added 就 in '求成就菩提' and '成就於佛果'. It also inserts stray em-space runs."
+ },
+ {
+  "item_id": "69b00ea8312120db3b4891b8",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The page prints '(Ep. LXXX, 11.)'. X gives a wrong letter number, 'Ep. LXXXII'; the rest of the two texts is essentially the same."
+ },
+ {
+  "item_id": "69b18655c4be2cdd0edc5f45",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y drops 'κόρη' from 'ἄῤῥητος κόρη ‡ dicta est', which is the very phrase the margin glosses. It also reads the long s in 'sationem' as 'fationem' and has 'Quanquam' where the page prints 'Quamquam'."
+ },
+ {
+  "item_id": "697c9227427be62ffe88c8cb",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The texts are the same except that Y modernizes the printed 'Würkung gewust' and 'gewust' to 'Wirkung gewußt' and 'gewußt'; X keeps the print."
+ }
+]

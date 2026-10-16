@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a0853d015c643eb1af51177",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y turns 'ad annos quinq; & quadraginta' into 'quinquaginta et quadraginta' and the Galen title 'ὅροι ἰατρικοί' into 'περὶ ἰατρικῆς'; X follows the print."
+ },
+ {
+  "item_id": "6956eaf5f23ebf30578dba52",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The texts are nearly identical, but Y prints 'charites' where the leaf reads 'charitas', and X keeps the printed form."
+ },
+ {
+  "item_id": "699253ff59cdabeb78f1ada0",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has 'qui loquámini' where the leaf reads 'loquímini' and 'Octavæ;' where it reads 'Octava;'; X matches both."
+ },
+ {
+  "item_id": "69c80ee56c6f3cc53c8470fa",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops the sentence 'Dann sie muß höher im grad stehn/ dann die kranckheit', has many misreadings ('franckheit', 'Calentiam', 'sehen' for 'setzen'), and appends text from the facing page's margin."
+ },
+ {
+  "item_id": "6991bf70734f402cad489e97",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X leaves out the whole line 'Misericordiam. Tot quondam populis terrisque superbum regnatorem asie' and garbles many words ('Cepariu casas', 'dauni'→'diutini'); Y reads the manuscript faithfully."
+ },
+ {
+  "item_id": "6a0853d015c643eb1af50f48",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y misreads 'Dies senis horis' as 'festis', 'C. XXIIII' as 'XXIII' and 'Nympharum' as 'Nymphas', and adds a 'Cap. XXXII' that the leaf does not have; X matches the print."
+ },
+ {
+  "item_id": "69c831dc77742393128441d6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X is badly garbled ('auff ein stoß oder man' for 'oder zwen', 'Salniter' for 'Saltzstern', 'Es aber mehr em Salniter ist' missing 'stern der Eigenschafft'); Y follows the page closely."
+ },
+ {
+  "item_id": "69af1119266659b71a322d5e",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads 'fœtifico' and 'secundarum', drops 'eius' in 'succo eius reficiendo', invents Greek 'γυιανή', and makes up an ending ('Serpentes astuti') where the leaf breaks off at 'Ser-'."
+ },
+ {
+  "item_id": "69b5259e2f891867c1ae40ee",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X gets the folio wrong ('קטס' for 'קסב'), numbers verses 12–18 as 2–8, and misreads words ('לַחֹצְבִים' for 'לחטבים', 'עֲצֵי לָרֹב' for 'עצים לרב'); Y matches the spread."
+ },
+ {
+  "item_id": "69b18675c4be2cdd0edc6c08",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X leaves out the clause 'cùm Sophron de mulieribus loquitur, tanquam de piscibus. Nam' before 'pisces videtur nominare'; Y has it and renders the Greek more accurately."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f720bec62629c8f7146f12",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X reads 'fatis' and 'nouu' for printed 'satis'/'nouũ', expands the header to 'CHRISTIANAE' (print: 'CHRIST.'), misreads the manuscript note ('Paub. Animal. cap. 7' for 'cap. X') and omits 'Conditus'; Y matches the leaf closely."
+ },
+ {
+  "item_id": "69f6a6e1d003c47d22ea0e61",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X drops the woodcut initial Q ('Vicunque' for 'Quicunque', calling the initial a V) and has slips such as 'videtur aggreffi', 'fors', 'cades', 'qua ire' where Y correctly gives 'videntur aggressi', 'sors', 'cædes', 'quam ire'."
+ },
+ {
+  "item_id": "6990616fef12272ffdc8db4c",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Both have the title text and imprint right. X reads the college stamp more accurately ('BIB. DE VRBE BIBLIOT. COLL.') where Y normalizes it to 'EX BIBLIOT. COLL. ROM. SOC. IESV' and writes 'Æquenfis', 'Iofephum'."
+ },
+ {
+  "item_id": "69f69c90523c3a10c14bae1c",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X follows the print ('Larentius', 'Insectatus', 'Christianos'). Y normalizes to 'Laurentius' and has the errors 'Infectatus' and 'Christi nos' plus truncated forms ('loquit', 'celebrant', 'refert')."
+ },
+ {
+  "item_id": "69af0fc46f6d83348c7fa632",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X omits '& soluta' from 'contra se adducta & soluta', reads 'indeterminata' for printed 'interminata' and 'omnis talis forma' for 'formæ'; Y has all three right."
+ },
+ {
+  "item_id": "69aead2466bcc9447837c522",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X drops 'solidas' ('Radices geniculatas, solidas, odoratas') and misreads 'odorationes', 'per frictiones', 'Decoctu', 'obliuum', where Y correctly has 'odoratiores', 'perfrictiones', 'Decocto', 'obliquum'."
+ },
+ {
+  "item_id": "69b00ea8312120db3b489392",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X keeps the footnote markers and the two-column order of the notes correct. Y reads 'Si non tanget' for 'tangent' and 'abladit' for 'abludit', mislabels the margin section number 2 as a note, and drops note marker 1."
+ },
+ {
+  "item_id": "695258d1ab34727b1f045afb",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y misreads the long s in 'Aqua falsa' (print 'salsa') and 'Amygdaloperficum'; X reads both correctly and marks the underlined entries properly."
+ },
+ {
+  "item_id": "69f7563da90a22185d37b76b",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X reads 'Si primus esset' for the italic 'Si prius esset' and 'folvere' for 'solvere'; otherwise the two texts are the same."
+ },
+ {
+  "item_id": "69af45f4d6be7ec9cc3236bb",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y reads 'Subito et necopinus' for printed 'es', 'Hedenns' for 'Hedenus' and 'indignerit' for 'indiguerit', and puts the column break in the wrong place; X matches the print."
+ }
+]
