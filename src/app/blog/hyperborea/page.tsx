@@ -95,7 +95,7 @@ export default function HyperboreaPage() {
           image={LEAD_IMAGE}
           imageAlt={LEAD_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 27 min read</p>
+          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 30 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -707,6 +707,57 @@ export default function HyperboreaPage() {
           does not prove descent. On the present evidence, Celtic participation in the chain is possible and the
           later Greek writers clearly thought the Celts were Hyperboreans. That the senders were druids, or
           Pythagoreans, is a hypothesis the sources do not yet support.
+        </P>
+
+        <Section>The twelve-sided objects</Section>
+
+        <P>
+          One class of object keeps being drawn into this argument: the bronze dodecahedra of Roman Gaul. They are
+          hollow, about the size of a fist or smaller, with twelve pentagonal faces, a round hole of a different
+          diameter in each face and a small knob at each of the twenty corners. Somewhere between eighty and a
+          hundred and thirty are known, depending on the catalogue; amateur archaeologists at Norton Disney in
+          Lincolnshire added the thirty-third from Britain in 2023, from a sealed and datable layer. Most belong to
+          the second to fourth centuries CE. They cluster in the north-western provinces, Gaul, the Rhineland and
+          Britain, where the population was Celtic, and several turned up in coin hoards and graves. No ancient text
+          mentions them. A small dodecahedron found at Geneva in 1982 carries the Latin names of the twelve signs of
+          the zodiac, one to a face.
+        </P>
+
+        <P>
+          The Pythagorean connection is real on the Greek side. The dodecahedron was the figure the Pythagoreans
+          kept secret. Iamblichus says that Hippasus, one of the school,{' '}
+          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=152" className={linkClass}>
+            &ldquo;was the first to divulge and write down the sphere made of the twelve pentagons&rdquo;
+          </Link>{' '}
+          and drowned at sea for the impiety. Plato gave it to the cosmos. In the <em>Timaeus</em>, after assigning
+          four regular solids to the four elements,{' '}
+          <Link href="/book/69942e25d607f8e57e4b7950?page=550" className={linkClass}>
+            &ldquo;God used this one for the whole&rdquo;
+          </Link>
+          ; in the <em>Phaedo</em> the true earth seen from above looks{' '}
+          <Link href="/book/69937767b0a84a57639639fe?page=287" className={linkClass}>
+            &ldquo;like balls made of twelve pieces of leather.&rdquo;
+          </Link>{' '}
+          Plutarch, in his <em>Platonic Questions</em>, read the twelve faces as the zodiac: the figure, he wrote,{' '}
+          <Link href="/book/69905f1140bc3a0478efa1d3?page=209" className={linkClass}>
+            seems to imitate the zodiac and the year
+          </Link>
+          . The Geneva object spells out the same idea.
+        </P>
+
+        <P>
+          The Celtic side is less certain. The objects have been read as candle holders, surveying instruments,
+          gauges and knitting tools; the surveying and gauge ideas founder on the fact that no two are the same size.
+          The curators at Tongeren, which holds a complete one found in 1939, lean toward unofficial religious use,
+          divination or magic, and a 2025 study proposes a ritual instrument of number divination in a
+          Pythagorean and druidic setting. That would fit the distribution and the Geneva zodiac. It would not
+          reach back to Herodotus. The dodecahedra are six to eight centuries later than his Hyperborean offerings,
+          and they postdate the Roman suppression of the druids in the first century CE. An older stone dodecahedron
+          was reported in 1885 from Monte Loffa near Verona, an Alpine site of the fifth to second centuries BCE
+          that also produced Etruscan and Gallic objects, but its own date has never been fixed. The most the
+          objects show is that in the Celtic provinces of the Roman empire someone was making and treasuring the
+          Pythagorean figure of the cosmos. Whether that was druid learning surviving under Rome, or Greek
+          geometry arriving with Roman rule, they do not say.
         </P>
 
         <Section>Everyone&apos;s Hyperborea</Section>
