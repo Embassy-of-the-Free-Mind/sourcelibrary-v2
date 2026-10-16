@@ -78,6 +78,17 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'hyperborea',
+    title: 'Beyond the North Wind: Hyperborea and the Amber Coast',
+    subtitle:
+      'The Greeks placed a blessed people beyond the north wind and said amber came from the edge of the world. Herodotus doubted both. Prussian and Lithuanian historians later claimed them for the Baltic, and a nineteenth-century folklorist showed which parts of their pagan past had been invented.',
+    date: '16 October 2026',
+    readTime: '21 min read',
+    kind: 'stories',
+    image: 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg',
+    imageAlt: 'Engraving after Hendrick Goltzius: the sisters of Phaethon turning into poplars by the river Eridanus',
+  },
+  {
     slug: 'shipwrecks-and-buried-treasure',
     title: 'Shipwrecks and Buried Treasure',
     subtitle:
