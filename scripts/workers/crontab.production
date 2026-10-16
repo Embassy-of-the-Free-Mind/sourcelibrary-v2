@@ -311,3 +311,7 @@
 40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-export-mirror.lock node --max-old-space-size=1536 --env-file=.env.production.local scripts/maintenance/export-mirror.mjs >> /var/log/sourcelibrary/export-mirror.log 2>&1
 # Weekly cover-frame backfill (#6010, Derek 2026-10-10): writes only books.thumbnail_frame diffs, sweep_log per write; undo: --rollback --apply
 30 1 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-cover-frame-backfill.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/cover-frame-backfill.mjs --apply" >> /var/log/sourcelibrary/cover-frame-backfill.log 2>&1
+# Seam repair nightly (#6742): lean.mjs night repairs broken page joins in the most-read books first (Gemini via agy,
+# a 7% blind Opus sample, writes through writePageTranslation, label seam-repair-6742; undo seam-repair.mjs undo).
+# Stops itself at the box account's 60% weekly. Approved 2026-10-16 (Derek); installed by hand on main 2026-10-16.
+30 1 * * * cd /root/sourcelibrary && flock -n /tmp/sl-seam-lean.lock bash -c 'export PATH=/usr/local/bin:/root/.local/bin:/usr/bin:/bin; set -a; source .env.production.local; set +a; node scripts/maintenance/seam-repair-6742/lean.mjs night --out=/mnt/HC_Volume_105839809/seam-lean-6742 --max-joins=2500 --apply' >> /var/log/sourcelibrary/seam-lean.log 2>&1  # seam repair nightly, #6742, Derek yes 2026-10-16
