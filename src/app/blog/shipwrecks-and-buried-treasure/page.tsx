@@ -136,8 +136,8 @@ export default function ShipwrecksAndBuriedTreasurePage() {
         >
           Ulrich Schmidt, a German soldier, was sailing home from South America when his fleet anchored off Cadiz. A
           captain named Henrik Schetz mistook a fire burning at a mill on shore for the admiral’s lantern, steered for
-          it and struck the rocks. Twenty-two people drowned; the captain and the helmsman survived by holding on to a
-          tree trunk. Schmidt had been left ashore because the captain forgot to call him aboard.
+          it and struck the rocks. Of the twenty-two people aboard, only the captain and the helmsman survived, by
+          holding on to a tree trunk. Schmidt had been left ashore because the captain forgot to call him aboard.
         </Find>
 
         <Find
@@ -434,11 +434,12 @@ export default function ShipwrecksAndBuriedTreasurePage() {
             <Link href="/book/69b525c46be6046083031e1b?page=88" className={linkClass}>
               p. 71
             </Link>
-            ), and Schetz is the family he names as owners of sugar estates at São Vicente in Brazil (
+            ). The captain’s name is also the name of the Antwerp merchant family Schmidt mentions as owners of
+            sugar estates at São Vicente in Brazil (
             <Link href="/book/69b525c46be6046083031e1b?page=85" className={linkClass}>
               p. 68
             </Link>
-            ).
+            ), but he does not say they owned this ship.
           </li>
           <li>
             <strong>The Maldonado silver ship</strong> has no identified site either. Pernety’s visit was in 1763, so
