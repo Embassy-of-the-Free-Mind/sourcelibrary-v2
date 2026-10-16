@@ -70,12 +70,20 @@ export function firstLine(text, max = 240) {
   return redact(line.replace(/^#+\s*/, '').replace(/\*\*|__/g, ''), max);
 }
 
-/** SL / LOGD / JD / WT as claude-job.sh sets them (first assignment wins, $VAR expanded). */
-export function parseJobScriptPaths(src) {
+/**
+ * SL / LOGD / JD / WT as claude-job.sh sets them, $VAR expanded. The wrapper's HOST block assigns each
+ * path once per box (ARM guests first, main Hetzner in the else branch), so the first assignment whose
+ * path exists on THIS box wins; if none exists, the first one. Taking the first unconditionally read the
+ * guests' /data/scratch/sl/claude-jobs on main and failed every run from 2026-10-16.
+ */
+export function parseJobScriptPaths(src, exists = fs.existsSync) {
+  const seen = {};
+  for (const m of src.matchAll(/(?:^|[;\s])(SL|LOGD|WT|JD)=("?)([^\s;"]+)\2/gm)) (seen[m[1]] ??= []).push(m[3]);
   const vars = {};
-  for (const m of src.matchAll(/(?:^|[;\s])(SL|LOGD|WT|JD)=("?)([^\s;"]+)\2/gm)) {
-    if (m[1] in vars) continue;
-    vars[m[1]] = m[3].replace(/\$\{?(\w+)\}?/g, (_, v) => vars[v] ?? '');
+  for (const k of ['SL', 'LOGD', 'JD', 'WT']) {
+    if (!seen[k]) continue;
+    const vals = seen[k].map(v => v.replace(/\$\{?(\w+)\}?/g, (_, x) => vars[x] ?? ''));
+    vars[k] = vals.find(v => exists(v)) ?? vals[0];
   }
   return vars;
 }
