@@ -9,6 +9,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   cleanDate, parseReply, parseBatchReply, ruleEdition, findImprint, catalogueYears, toStoredLayers, buildLead,
+  parseWhyReply, buildWhyPrompt,
 } from '../../scripts/lib/date-works.mjs';
 
 const lead = '[page 1] HARMONICES MUNDI LIBRI V. Lincii Austriae, Anno M. DC. XIX.\n[page 2] Dedicatio ad regem';
@@ -84,5 +85,22 @@ describe('stored shape', () => {
     const l = buildLead([{ page_number: 1, text: '<meta>The title page reads Anno 1612.</meta>\nAMSTELODAMI, Apud Joannem Janssonium, 1650, cum privilegio.' }]);
     expect(l).toContain('1650');
     expect(l).not.toContain('1612');
+  });
+});
+
+describe('reasons for estimated work dates (date-why-1)', () => {
+  it('shows the model the stored date it is explaining', () => {
+    const p = buildWhyPrompt([{ title: 'Ars medica', author: 'Galen', work: { year: 175, from: 150, to: 200, display: 'c. 150–200' } }]);
+    expect(p).toContain('STORED DATE: c. 150–200');
+  });
+  it('keeps one reason per record, the year only when given, and drops out-of-range or repeated indices', () => {
+    const m = parseWhyReply('{"i":1,"why":"Galen, fl. 2nd c. CE; standard dating"}\n{"i":2,"why":"no evidence","y":-300}\n{"i":2,"why":"dup"}\n{"i":9,"why":"x"}\n{"i":3,"why":"  "}', 3);
+    expect([...m.keys()]).toEqual([0, 1]);
+    expect(m.get(0)).toEqual({ why: 'Galen, fl. 2nd c. CE; standard dating', year: null });
+    expect(m.get(1)?.year).toBe(-300);
+  });
+  it('cuts a runaway reason', () => {
+    const m = parseWhyReply(`{"i":1,"why":"${'word '.repeat(60)}"}`, 1);
+    expect(m.get(0)!.why.split(' ').length).toBeLessThanOrEqual(24);
   });
 });
