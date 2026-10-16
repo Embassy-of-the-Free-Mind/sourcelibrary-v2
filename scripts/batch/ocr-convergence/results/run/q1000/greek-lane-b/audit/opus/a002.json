@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b2ff82e5d6d64d8e197211",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y's table detaches and misplaces page numbers (most entries lose theirs) and drops entries such as 'Infidelium detractiones quò respiciat 22' and 'ab Infantia ad infantiam redimus 212', which X keeps."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8664ca",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 109 'ORDO SEV NVMERVS LIBRORVM NOVI TESTAMENTI'; Y transcribes another leaf (p. 112, Gospel capita and 'VITA SANCTI MARCI')."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50e23",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Nearly identical, but Y misreads 'pfe.' as 'per se' and gives 'feminabo' and 'fortiti' where the print has 'ſeminabo' and 'ſortiti'."
+ },
+ {
+  "item_id": "695906ee95a91542b28c0208",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the same Greek/Latin text of Deut. 14:13–15:4 and footnote 14; the only differences are accents and punctuation (e.g. 'ἴκτινον' vs 'ἰκτῖνα')."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e5",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has several word errors where X follows the print, e.g. 'ὧ-στῶν' for 'ὦ οὗτος', 'δίστυχε' for 'δύστηνε', 'αὐτὸν ἔτι' for 'αὐτὸ τοῦτο', 'καὶ τοῦ λαιμοῦ' for 'κατὰ τοῦ λαιμοῦ'."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866647",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 348 'ΕΠΙΣΤΟΛΗ / EPISTOLA' (Rom. 15–16, 'illuc, si tamen uestra consuetudine'); X transcribes a different leaf (1 Cor. 12–13, p. 373)."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f86657d",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 154 (Luke 12, 'uos præstatis uolucribus'); Y transcribes another leaf (p. 171, Luke 19, 'interficite ante me')."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76a0e",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Same text, but the headword is printed 'Μυοῦς' (Y), not 'Μνοῦς' (X)."
+ },
+ {
+  "item_id": "699388e61075be7d32054f41",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both garble this manuscript, but Y gets more right (e.g. 'ἐκ τῆς αὐτῆς πατρίδος', 'ὁ ἐπὶ ταῖς γενέσεσι τῶν παίδων λεγόμενος λόγος', 'τὴν ᾠδήν') where X has 'ἐλευθερίας', 'κόσμιος', 'παιδείαν'; Y in turn errs with 'ἀπὸ τῶν νόμων' for 'ἀπὸ τοῦ γένους'."
+ },
+ {
+  "item_id": "699388e61075be7d32054f3b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both are heavily garbled; Y follows the manuscript lines more closely (e.g. 'Συνήχθησαν δὲ ὑπὸ ἀνθρώπων σοφῶν', 'ἡ δὲ Ἡρακλείῳ'), while X paraphrases and invents phrases not on the leaf such as 'ὅτι μονογενὴς ὄντως ἐστίν' and 'ἀληθῆ μελῳδία'."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69938dd7d5a98fd66f42f476",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Nearly identical; Y reads 'ἔλευθον' for 'ἔκευθον' in line 49 and 'ὁ δ''/'ἡ δ'' for the accented relatives, otherwise the same."
+ },
+ {
+  "item_id": "699438416879ff0184cb830e",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops 'Cavens (e) scribit de Philone: Ad Cyprum', making the quoted Cave passage look like the author's own words, and shifts the footnote letters (e)-(g)."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd39b",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y reads 'αὐτοῦ ἀγαθότης' and loses the 'ὑπερ-' printed in 'ὑπεραγαθότης', and has 'ἀλλήλοις' where the leaf has 'ἀλλήλαις'; X has small slips such as 'ἥνωνται' for 'ἥνωται'."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76b09",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y drops the '~' in 'ἡ ~ παρὰ τῷ Μωυσεῖ', has 'θείᾳ' for 'θεία' and omits 'αἱ' in 'αἱ λυμαντικαὶ'; X matches the leaf closely."
+ },
+ {
+  "item_id": "699388e61075be7d32055157",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y is largely gibberish (e.g. 'μοίμην ἂν ἑλόντο παραλιπεῖν' where the leaf has 'λοιμεν ... ἐπ' ἔλεον προπαρασκευάσομεν τὸν δικαστὴν'), while X follows the hand closely."
+ },
+ {
+  "item_id": "699438416879ff0184cb8449",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y misreads the Greek as 'κατὰ τὸν μὲν' (leaf: 'κατὰ πρῶτον μὲν') and 'ὑδατώδης/γεώδης', and adds 'ἰδίῳ' in note 74; X's main slip is 'percipit' for 'percipitur'."
+ },
+ {
+  "item_id": "69557475f63a757109173878",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has 'πρὸς τὰ παντελὲς ζῷον' and drops 'τὸ' in 'τῷ γὰρ μέσῳ τὸ τὰ ἔσχατα'; X's only slip is 'θεῖα' for 'θεία' in note 2."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50ced",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y gives the opening optative paradigm as 'ποιοίην, οίην ... ποιοίησαν', but the leaf prints 'ποιέοιμι, οῖμι· ποιέοις, οῖς ...'; X matches."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76c1f",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X omits the headword entry 'προοδοποιέω: II 18, 4.' that is printed on the leaf, and has 'φιλοσοφίᾳ' for 'φιλοσοφίας'."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8664cc",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y transcribes a different leaf (p. 114: Luke chapters and 'VITA SANCTI LVCAE'), while the image is p. 111 with chapters κα–νϛ, 'De eo qui manu habebat aridam' etc., which X matches."
+ }
+]

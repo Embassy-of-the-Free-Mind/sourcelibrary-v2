@@ -1,0 +1,410 @@
+[
+ {
+  "item_id": "6959067f95a91542b28bd39b",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'παντελῶς ἥνωνται' — image 'ἥνωται'"
+  ],
+  "b_errors": [
+   "'ἡ αὐτοῦ ἀγαθότης' — image 'αὐτοϋπεραγαθότης' (drops ὑπερ-)",
+   "'ἀλλήλοις ἥνωνται' — image 'ἀλλήλαις'",
+   "'προεῖσι' — image 'πρόεισι'",
+   "adds a <meta> description that is not on the leaf"
+  ],
+  "note": "Checked on the image: A has the compound αὐτοϋπεραγαθότης and ἀλλήλαις correct, while B loses ὑπερ- and changes the gender of ἀλλήλαις."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd3b5",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'κατὰ τὸ δοκοῦν δύσφημον' — image 'εὐφημότερον' (reverses the sense)",
+   "'ἀλλὰ τοῖς ὀρθῶς' — image 'ἐπὶ τοῖς ὀρθῶς'",
+   "'χαμαιζήλους' — image 'χαμαιζήλοις'",
+   "invents a '2 Sam. 1:26' margin note"
+  ],
+  "note": "The image reads εὐφημότερον and ἐπὶ τοῖς, as in A. B substitutes words that change the sense and invents a margin note."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd3bb",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'τελιωτικὸν' — image 'τελειωτικὸν' (spelling)"
+  ],
+  "b_errors": [
+   "'ἐκ τῶν καλοῦ' — image 'ἐκ τοῦ καλοῦ'",
+   "'ἀρχὴ πάντων' — image 'ἀρχὴ παντὸς'",
+   "'τελικωτικὸν' — image 'τελειωτικὸν'"
+  ],
+  "note": "The image shows τοῦ καλοῦ and παντὸς, as in A. B has wrong word forms in both places."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd402",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'αἰκιγετογνῶσιν' — image 'ἀνήγετο γνῶσιν' (garbled)",
+   "'ἴτ' αὖ τὰς' — image 'Εἶτα τὰς'",
+   "'ἀκαταλήπτου' — image 'ἀκαταλήκτου'"
+  ],
+  "b_errors": [
+   "'ἀεικίνητον' — image 'ἀεικινησίαν'",
+   "'ἔρευναν' replaced by 'ὄψιν'",
+   "'ὑψηλοτέραν καὶ βαθυτέραν' — image 'ὑψηλοτέρων καὶ βαθυτέρων'",
+   "'πολυπρόου' — image 'πολυπόρου'; 'ἁγνότης' — image 'ἁγνότητος'",
+   "'Εἰ τὰς' — image 'Εἶτα'; margin letter 'B' — image 'E'"
+  ],
+  "note": "A has one garbled word. B has several wrong words that the image contradicts (ὄψιν for ἔρευναν, ἀεικίνητον, and others)."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd433",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'συναγωγοῦ πατρός ἑνότητα' — image 'πνεύματος'",
+   "'Αγελικῆς ... κικήσας' — image 'Ἀγγελικῆς ... κιχήσας'",
+   "inserts editorial notes ('abbreviation for τοῦ') into the text"
+  ],
+  "b_errors": [
+   "epigram's last word 'ᾆσον' — image unclear (looks like 'ἄσεον/ἄζεον'); neither text matches it with certainty"
+  ],
+  "note": "The image reads πνεύματος, as in B; A puts in πατρός. Neither text can be confirmed for the epigram's faint final word."
+ },
+ {
+  "item_id": "699388e61075be7d32054f3b",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "opening 'θεῶν, ὡς ἁπάντων σὲν τῶν ἀνθρώπῳ χρησίμων...' does not match the manuscript lines",
+   "later stretch ('φροντῶ ἃ ἐνεγράφετο, λάγωμεν ... τιμοθεσίαν') is invented or garbled",
+   "top-right margin notes misread"
+  ],
+  "b_errors": [
+   "invents 'ὧν ἀρχαιότατον μὲν εὐσεβές τι μίμημα χειροπαραδώτων νόμων'",
+   "'ἀμφίβολος', 'οἱ δὲ ἄλλοι, τερπνόν τι' — image 'ἀμφότερα', 'ἀθληταί'",
+   "the second half (hymn to the god) is largely invented"
+  ],
+  "note": "On this difficult minuscule page each text gets some lines right (A: ἀθληταί, Ἀπόλλωνος ὀπαδοί; B: συνήχθησαν δὲ ὑπὸ ἀνθρώπων σοφῶν), but both contain long invented stretches."
+ },
+ {
+  "item_id": "699388e61075be7d32054f41",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1 'ὁ ἀπὸ τῶν νόμων' — image 'ὁ ἀπὸ τοῦ γένους'",
+   "'ἀπὸ τῆς ἀρετῆς' — image 'ἀγωγῆς'",
+   "'προοιμιάσῃ' — image 'προοιμιάσθω'",
+   "many paraphrased or invented phrases in the middle section"
+  ],
+  "b_errors": [
+   "'Κόμψος λόγου τούτου' — image 'Ἑπόμενος λόγος'",
+   "'κόσμιος λόγος' — image 'λεγόμενος λόγος'",
+   "the second half (γενεθλιακός) is largely unusable gibberish"
+  ],
+  "note": "B is closer in the first lines and A in the γενεθλιακός section, but both are badly garbled throughout this manuscript page."
+ },
+ {
+  "item_id": "699388e61075be7d32054fc1",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "opening lines ('ἑαυτῶ τιμήσασθαι· ὥσπερ γὰρ ἐμαυτῶ...') do not match the leaf",
+   "omits 'τὰ ἐγκώμια τῆς πόλεως λήψῃ' and 'Ἀλέξανδρον' visible in lines 3–4",
+   "most of the middle text is invented"
+  ],
+  "b_errors": [
+   "final lines under 'περὶ συντακτικοῦ' do not match (image 'ὁ συνταττόμενος ... ἐπὶ τῷ χωρισμῷ')",
+   "'Θεμιστοκλέα' and other words are not supported by the image"
+  ],
+  "note": "B follows the leaf much more closely (ἐγκώμια τῆς πόλεως, Ἀλέξανδρον, ἐφ' ἑκάστου τῶν ἐπιχειρημάτων). A is largely invented, although its last lines are closer."
+ },
+ {
+  "item_id": "699388e61075be7d32055022",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "repeated 'ὦ ῥῆμα' — image 'ὁ δῆμος'",
+   "'Ἐπιδιάληψις' — image 'ἐπανάληψις'",
+   "garbled examples throughout"
+  ],
+  "b_errors": [
+   "invents example 'ὁ λέων καὶ ὁ δράκων ... κατὰ λόχμην'",
+   "invents example 'ἐν τῇ νήσῳ ... ἐν τῇ Ῥόδῳ'",
+   "omits 'ταυτολογία λέξεων' definition of πλεονασμός"
+  ],
+  "note": "Each gets some spans right (A the definitions, B the ὁ δῆμος examples), but both contain invented or garbled examples on most lines."
+ },
+ {
+  "item_id": "699388e61075be7d32055077",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "first 7 lines garbled ('τα βροτων ἧμαρ ἔλοι αὐτοὺς...') — image 'τα, ἐρωτῶν εἰ ἀφέλοι αὐτῆς τοὺς κυνοραιστάς'",
+   "'παρατιθέμενα γάρ' — image 'προτιθέμενα μὲν γάρ'",
+   "'ἄνθρωπον πεφυκότα' — image 'ἀρτίφρων πέφυκ' ἀνήρ'"
+  ],
+  "b_errors": [
+   "'περὶ μὲν οὖν ὧν δεῖ παραδειγμάτων' — image 'πόσα μὲν οὖν εἴδη παραδειγμάτων'",
+   "'καὶ τίσι καὶ πότε χρῆσθαι ... ἁρμόττει' — image 'καὶ τίσιν ἁρμόττει χρῆσθαι τῷ γνωμολογεῖν ἐν τοῖς λόγοις'"
+  ],
+  "note": "The image confirms B's reading of the fox-and-ticks fable, which A garbles. B normalizes two phrases toward the standard text."
+ },
+ {
+  "item_id": "699388e61075be7d320550d2",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "lines 1–6 paraphrased/invented (e.g. 'γῆν τε πῶς', 'πτώσεσι χρήσασθαι')",
+   "omits 'κέραμον' and 'τρία ταῦτα πραγματευόμενος' wording"
+  ],
+  "b_errors": [
+   "'πλέγμα ποιεῖν ἁρμοσμένον' etc. not on the leaf",
+   "second half ('πῶς νικᾷν· διὰ τί οὕτω πᾶς ἄνθρωπος') invented"
+  ],
+  "note": "This dense abbreviated minuscule page (Dionysius, De compositione) is garbled in both texts. Each matches only scattered phrases."
+ },
+ {
+  "item_id": "699388e61075be7d32055104",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Θουκυδίδου ... πῖνον τ' ἄριστον' garbled",
+   "'ὁ δέ γε ἵππιος τοῦ κώλου' — not on leaf",
+   "many invented clauses in the second half"
+  ],
+  "b_errors": [
+   "'ὁμολογουμένως μὲν γὰρ ὁ νόμος οὗτος' — image 'ἐν τρισὶ δ' ἤδη τὸ μεγαλοπρεπές· διανοίᾳ, λέξει'",
+   "invented sentences ('ὁ δὲ ῥήτωρ οὐκ οὕτως...', 'θεὸς ἥλιος μέγας...')"
+  ],
+  "note": "A gets line 2 (ἐν τρισὶ ... διανοίᾳ, λέξει) and B gets Ἀριστοτέλης and Θεόφραστος, but both are seriously garbled across the page."
+ },
+ {
+  "item_id": "699388e61075be7d32055110",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "opening 'τὸν δὲ χαρίτων ἄμοιρον ... μαστιχῶν ἰέναι' — image 'τῶν δὲ χαρίτων αἱ μέν εἰσι μείζους ... κωμικώτεραι'",
+   "'ὑπὸ ἰδιωτιτισμοῖς' — image 'ἢ τοὺς δακτύλους'",
+   "much of the second section invented"
+  ],
+  "b_errors": [
+   "'Ἀριστοφάνους ... Φρυνίχου' — image shows different names (Ἀριστοτέλους/Σώφρονος)",
+   "'ἔραται θάλασσα' — image 'ἐρωτηθεὶς ὑπὸ'",
+   "'Ξενοφῶντι', 'ἰωάννου' not on leaf"
+  ],
+  "note": "B is closer in the first lines and A in the Paphlagon passage, but both contain long invented stretches."
+ },
+ {
+  "item_id": "699388e61075be7d32055157",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'λιθοποιΐας ... ἐλθέσεως τῶν ἀριθμῶν' — image 'ἠθοποιΐας ... ἐπιθέσεως τῶν ἐγκλημάτων'",
+   "'φιλαπίας' throughout — image 'φιλανθρωπίας' (abbrev.)",
+   "garbled stretches throughout ('προσοπαραβουλευστιμοσ', 'ἑλθόνκομος')"
+  ],
+  "b_errors": [
+   "a few minor misreadings in the last lines (e.g. 'ὑπομνήσομεν τοὺς Λακεδαιμονίους')"
+  ],
+  "note": "The image confirms B's ἠθοποιΐας, περὶ ἐλέου, φιλανθρωπίας and the Athenians example. A is largely garbled."
+ },
+ {
+  "item_id": "69b00964c7a61612f0103bff",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Greek drachma sign rendered '℥' (ounce) — image '<'-shaped drachma sign",
+   "'cardamomomi' — image 'cardamomi'"
+  ],
+  "b_errors": [],
+  "note": "The two texts are otherwise identical. A uses the ounce sign for the Greek drachma symbol and has one typo. Long-s spelling is only a convention."
+ },
+ {
+  "item_id": "69b00964c7a61612f0103c91",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The two texts differ only in symbol rendering (B writes 'The symbol for drachma' notes), accents and italics. All numbers match the image."
+ },
+ {
+  "item_id": "69b00964c7a61612f0103c92",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The texts differ only in apostrophe and numeral-mark style, hyphenation and layout. Both match the image."
+ },
+ {
+  "item_id": "69b00964c7a61612f0103cd1",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The only differences are the drachma-symbol glyph and italics. Both match the image."
+ },
+ {
+  "item_id": "69b00964c7a61612f0103f2b",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'quuum' — image 'quum' (typo)"
+  ],
+  "b_errors": [],
+  "note": "The differences are accent forms plus one typo in A. Both texts are faithful."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76a0e",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "headword 'Μνοῦς' — image 'Μυοῦς' (name whose etymology the entry discusses)"
+  ],
+  "b_errors": [],
+  "note": "The image reads Μυοῦς. Everything else is formatting."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76b09",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'ἡ παρὰ τῷ Μωυσῇ ... θείᾳ' — image 'ἡ ~ παρὰ τῷ Μωυσεῖ ... θεία' (drops the headword tilde)",
+   "'αἱ πονηραὶ καὶ λυμαντικαὶ' — image 'καὶ αἱ λυμαντικαὶ'"
+  ],
+  "note": "The image confirms A's ἡ ~ παρὰ τῷ Μωυσεῖ ... θεία and αἱ λυμαντικαί. B drops a tilde and an article."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76b54",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'~ουμεν' — image '~οῦμεν' (accent)"
+  ],
+  "b_errors": [
+   "drops 'τύραννον I 67, 34; θεὸν ὁ ~ων ἑαυτὸν' from the θεραπεύω entry",
+   "'οὗ ~ασι' — image 'οὐ'",
+   "'ἶσον' — image 'ἴσον'"
+  ],
+  "note": "B omits a whole citation clause under θεραπεύω that the image shows."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76b74",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'τὰς πράξεις πρὸς θεωρίαν' — image 'πρὸς τὴν θεωρίαν' (drops article)",
+   "'ἐπὶ τι' — image 'ἐπί τι'"
+  ],
+  "b_errors": [],
+  "note": "Apart from LaTeX versus plain tildes, the only real difference is an article that A drops, which is minor."
+ },
+ {
+  "item_id": "69942a5a045dfc482ad76c1f",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "drops the entry 'προοδοποιέω: II 18, 4.'",
+   "'φιλοσοφίᾳ' — image 'φιλοσοφίας'",
+   "'ἀπονέμουσης' — image 'ἀπονεμούσης'"
+  ],
+  "note": "The image shows the προοδοποιέω entry that B omits."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e1",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'δοκεῖ μοι πόρρω' — image 'δοκεῖ μὴ πόρρω' (changes sense)",
+   "marginal glosses spliced into words ('ἀκροωμέ- allicrebat νων', 'ποι- αισχυνη εῖν')",
+   "'τὰ δὲ μεγίστης' — image 'ἃ δὲ'",
+   "'εἰκόνα τιθέμενος' — image 'προθέμενος'; 'αἰσώπῳ γὰρ' — image 'γοῦν'",
+   "initial described as a bearded man/'ANTONIUS' — image shows a woman, 'ANTONIA'"
+  ],
+  "b_errors": [
+   "'ὄρνιθας ... ἀλώπεκας' — image 'ὄρνιθες ... ἀλώπεκες'",
+   "'κινδύνου ἐπεγερθέντος' — image 'ἐπηρμένους'-type reading",
+   "'ἔτυχεν' — image 'ἔτυχον'"
+  ],
+  "note": "B has μὴ, ἃ δὲ, προθέμενος and γοῦν right and keeps the glosses apart from the text. A has ὄρνιθες and ἔτυχον right. Each text has errors the other does not."
+ }
+]

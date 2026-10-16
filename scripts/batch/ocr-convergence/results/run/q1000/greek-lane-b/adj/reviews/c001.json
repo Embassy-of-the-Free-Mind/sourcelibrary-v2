@@ -1,0 +1,423 @@
+[
+ {
+  "item_id": "69557475f63a757109173869",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "last line: 'ἀποδιδόασι κά-' — image ends 'ἀποδιδόασι πα-' (faint)"
+  ],
+  "b_errors": [
+   "'σωματοουργίᾳ' — image 'σωματουργίᾳ'",
+   "footnote 1: 'οἳ)' — image 'οἱ)'",
+   "last line ends 'π <unclear>...'"
+  ],
+  "note": "Body text and apparatus agree with the image in both; remaining differences are hyphenation, footnote-marker style and single-letter slips."
+ },
+ {
+  "item_id": "69557475f63a757109173878",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'πρὸς τὰ παντελὲς ζῷον' — image 'τὸ παντελὲς'",
+   "'τῷ γὰρ μέσῳ τὰ ἔσχατα' — drops 'τὸ' (image 'τὸ τὰ ἔσχατα')",
+   "footnote 2: 'θεία' — image 'θεῖα'"
+  ],
+  "note": "Checked the differing spans on the image; A matches it, while B has two small wrong or dropped words in the main text."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53d06",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἣ καὶ πρόσιτον ἦν' — image 'ϗ ἀπρόσιτον ἦν' (A reverses the sense)",
+   "'κεναῖς γὰρ ἐκεχώρει' — image 'ἐκεχήνει'",
+   "'ἠπείγετο λαβεῖν' — image 'ἐνήθλει λαβεῖν'",
+   "'οἵ τε ἄστεως' — image 'οἱ τοῦ ἄστεος'"
+  ],
+  "b_errors": [
+   "'ἀντιτάξαν' — image 'ἀντιτάξατο'",
+   "'ἀνεστήσαν' — image 'ἀνεστήσατο'",
+   "'ὑπογύης' — image 'ὑπογύου'",
+   "'ἐπαγνέσαντα' — image 'ἐπαινέσαντα'",
+   "'προσέβαλε' / 'ἀγωνιστικώτερον δὲ' — image 'ἀγωνιστικώτερόν τε'"
+  ],
+  "note": "In the Greek column each text gets different words wrong against the image; the Latin columns are equivalent apart from conventions."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53d0a",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'τούτοις ἐδέδοκτο' — image 'τόποις'",
+   "'τῶν ἀποπεμπομένων βελῶν' — image 'τῶν ἀπὸ πομπίμων βελῶν'",
+   "'εἴσοδος ... μία οὖσα' — image 'εἴσοδον ... μὴ οὖσαν'",
+   "'καταπάλται', 'ξενηλατοῦντες', 'ἀσχολήσεως' — image 'καταπέλται', 'ξενηλαλοῦντες', 'ἀσχολήσης'",
+   "'εἰσδύουσί τε' — image 'εἰσδύντες'"
+  ],
+  "b_errors": [
+   "Latin column: after 'ingressum re-' appends an invented transliterated Greek passage ('gentes, eis in prosow echōrun ...') that is not on the leaf",
+   "Greek last word 'τὸ' — image 'ὀ-' (start of next word)",
+   "'μὴ ὅσαν' — image 'μὴ οὖσαν'"
+  ],
+  "note": "B's Greek is closer to the image, but B adds invented text to the Latin column; A's Latin is right but its Greek has many wrong words."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53d10",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ὀρτίως' — image 'ἀρτίως'",
+   "'ταῦτ’ οὖν τοπάσας' — image 'τοῦτο ὑποτοπάσας'",
+   "'διὰ ταῦτα τὸν ἱερέα' — image 'διὰ τοι τοῦτο'"
+  ],
+  "b_errors": [
+   "'ὅστις ὡς' — image 'ἀρτίως'",
+   "'ἦρθε δ’ ὁ Πρίσκος μέν' — image 'ἦρος δ’ ἐπιγινομένου'",
+   "'προσταττόμενος ... συλλέξας' — image 'προστάττει εἰς ... συλλέγεσθαι'",
+   "'οὕτω ... τῶν ὑπὸ τὰς πάσας' — image 'οὗτος ... ὁ χς. τοῦτο ὑποτοπάσας'",
+   "'ὡς εἰ δεῖ' — image 'ὡς οὐ δεῖ'"
+  ],
+  "note": "B garbles several clauses of the Greek, and 'εἰ δεῖ' inverts a negation; A has only minor slips. The Latin columns are equivalent."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53d8d",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'καὶ ὀναροὺς ἄνδρας' — image 'καὶ ὁ ναρσῆς ἄνδρας' (gets the name Narses wrong)",
+   "Latin column: the Greek of the bottom three lines is copied in again after 'Luce proxime sequenti,'",
+   "drops final 'τόν τε'",
+   "'διέχεεν' — image 'διέταξεν'"
+  ],
+  "b_errors": [
+   "'περσικὰς ἀφιέναι' — image 'περσικὰ σίφη ἰέναι'",
+   "'προτέμῃ' — image 'ἀποτέμῃ'"
+  ],
+  "note": "B has the name Narses right and does not duplicate text; A misreads the name and repeats the Greek lines inside the Latin column."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53df1",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'τὰ δὲ περὶ εἰρημένου' — image 'τοῦ δὲ προειρημένου'",
+   "'ἐπὶ τὸν νεῖλον' — image 'ἐπὶ τὸ νεῖλον'",
+   "'ἔτι ἀναπλάσασι' — image 'ἔτι ἀνατιθέασι'",
+   "'πληρύμενον' — image 'πληρούμενον'"
+  ],
+  "b_errors": [
+   "'ἐπιἀνατιθέασι' — image 'ἔτι ἀνατιθέασι'",
+   "'ὀνομαζομένων' — image 'ὀνομαζόμενος'",
+   "'τῇ ἐκβολαῖς' — image 'ταῖς ἐκβολαῖς'"
+  ],
+  "note": "Each text has a different set of single-word Greek errors against the image; the Latin columns differ only in long-s and ligature conventions."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53df2",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ζωτετύπωκε' — image 'συντέταχε'",
+   "'ὑπερβολὴν' — image 'ὑπεροχὴν'",
+   "'καὶ οὕτως ἐλέγχεται' — image 'καὶ αὖθις'",
+   "'προλεχθὲν' — image 'προλεχθέντος'",
+   "adds 'τε' after 'ταπεινήν' (not on the leaf)"
+  ],
+  "b_errors": [
+   "'συνέταξε' — image 'συντέταχε'",
+   "'οὐ τὸ ὅλως' — image 'οὔτε ὅλως'"
+  ],
+  "note": "Most of the differing Greek words match B on the image; the Latin columns are equivalent."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53e34",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'multisuo' — image 'multi suo'",
+   "'hac verba' — image 'hæc verba'"
+  ],
+  "b_errors": [
+   "'obstupuiffet' — image 'obstupuisset'"
+  ],
+  "note": "The only differences are &/et and spacing, plus single-letter slips."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53ed9",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'nuptia' — image 'nuptiæ'"
+  ],
+  "b_errors": [],
+  "note": "The differences are u/v, ae/æ, expansion of 'Imp.', and how the ornaments are described."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53f7e",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Greek quote 'Ὡς ἀνέγνων καὶ αὐτὰς, καὶ μετέγραψα' — image 'ὡς ἀνεγνωκὼς αὐτὰς, καὶ μεταγράψας'",
+   "'obsignabantur' — image 'obsignabatur'"
+  ],
+  "b_errors": [
+   "'quopacto' — image 'quo pacto'"
+  ],
+  "note": "In the quoted Greek phrase the participles on the image match B; elsewhere the Latin agrees apart from conventions."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53fbe",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "omits catchword 'polim'"
+  ],
+  "b_errors": [],
+  "note": "The index entries and page numbers agree; the differences are u/v, ae/æ and accents."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e197013",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'sanguinaij' — image 'sanguinarij'"
+  ],
+  "b_errors": [
+   "'uerōne creditis' — image 'ueróne credis'"
+  ],
+  "note": "The differences are abbreviation marks kept or expanded, plus one minor slip in each."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e19702a",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'treis hypostaseis consistentes' — image 'confitentes'",
+   "describes the initial as a seated figure; it is foliate"
+  ],
+  "note": "B's 'consistentes' changes the sense where the image reads 'confitentes'; otherwise the two differ only in abbreviation conventions."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e19702d",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'reprehendit' — image 'deprehẽdit'"
+  ],
+  "b_errors": [
+   "'creditur personis' — image 'creditæ sunt, personis'",
+   "'summae rerum esse' — drops '&' (image 'rerũ & esse')",
+   "'peculiare efficaciam' — image 'peculiarẽ'"
+  ],
+  "note": "A is closer to the image overall, though it has one wrong word ('reprehendit')."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e19705f",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are only abbreviation expansion, long s, and where the 'Gen. 2.' marginal note is placed."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e1970b5",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "'quiddam incommodum' — image 'quoddam incommodum'"
+  ],
+  "note": "Apart from one pronoun slip in B, the differences are hyphenation and abbreviation marks."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e19712e",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'magnam gratiam uultus' — image 'gratia'"
+  ],
+  "b_errors": [
+   "'augustum quædam' — image 'quẽdam' (quendam)"
+  ],
+  "note": "Each has one trivial slip; otherwise the differences are abbreviation conventions."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e197175",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "page number '456' — image '458'",
+   "'exiit de sepulchro' — image 'exilit'",
+   "'prohibitus' — image 'præhibitus'"
+  ],
+  "b_errors": [
+   "'paruola' — image 'paruula'"
+  ],
+  "note": "The image confirms B's page number and B's readings 'exilit' and 'præhibitus'."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e1971eb",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'uidebit es quos' — image 'uidebit equos'",
+   "'uita præstat' — image 'uitā prestat'"
+  ],
+  "b_errors": [
+   "'videbit ea quos' — image 'uidebit equos'",
+   "'spiritu qui sequimur' — image 'spiritū'",
+   "'in aqua baptismatis' — image 'in aquā'"
+  ],
+  "note": "Each text drops or misreads different abbreviation marks, and both garble 'equos'; the rest is u/v convention."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e1971f8",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'uita nobis morte, mors uero uita' — image 'mortẽ ... uitã'",
+   "'Hebraeorum uirtute' / 'obedientia' / 'qua tollit' — image 'uirtutẽ', 'obedientiã', 'quã'",
+   "'inaures' — image 'inaurẽ'; 'in terra' — image 'in terrã'"
+  ],
+  "b_errors": [
+   "'seriem sequentes' — image 'seriẽ'? (reads 'serie')",
+   "'hæc conflatae' — image 'hæ'"
+  ],
+  "note": "A drops many of the nasal-stroke endings shown on the image, which changes the grammatical cases; B keeps nearly all of them."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e197211",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'Inscitionis modus' — image 'Insitionis'",
+   "'incoporea' kept as printed"
+  ],
+  "b_errors": [
+   "three-column index forced into a table that splits entries from their page numbers",
+   "many page numbers dropped or attached to the wrong entries (e.g. 'Ioseph quo pacto ... 97' row also carries '418')",
+   "'non seuitia sed dementia' — image 'amentia'"
+  ],
+  "note": "A lists every entry with its page number in reading order; B's table separates entries from their numbers, so the index cannot be used."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0dbc",
+  "pick": "B",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 2: 'θαυμασθήσονται πολλάκις τῷ μακαρίῳ Διονυσίῳ' — image 'θεωρήμασι πολλαῖς ... Διονυσίου'",
+   "line 5: 'φατὶ ὅσα λήψονται' — image 'σφετερίσαιντο'",
+   "much of the rest does not follow the letter-forms on the leaf"
+  ],
+  "b_errors": [
+   "line 1 opening is uncertain ('Πονηρὸν ἔστιν')"
+  ],
+  "note": "The legible anchors on this hard minuscule hand ('θεωρήμασι', 'σφετερίσαιντο τὰς αὐτοῦ πραγματείας') follow B; A reads like a reconstruction."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0dc1",
+  "pick": "B",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "opening 'φανεροῦσι δὲ, ὅτι' — image begins '...ῥητορείας; ὥσπερ ὀλιγοδεές'",
+   "most lines do not correspond to the hand on the leaf"
+  ],
+  "b_errors": [
+   "some readings in this difficult hand are probably inexact"
+  ],
+  "note": "B's opening words and line structure fit the visible letter-forms; A's text does not match the leaf."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0dde",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "main text opens 'Εἰ μὲν οὖν πρὸς τὰς ὑπεροχὰς' — image 'αἱ μὲν οὖν περὶ τὰς ὑπερουσίους οὐσίας'",
+   "'ὕψωμα τῶν ἱερατικῶν διακοσμήσεων' — image 'ὑφ’ ἡμῶν τῶν οὐρανίων οὐσιῶν διακοσμήσεις'",
+   "margins and lower text largely not matching the leaf"
+  ],
+  "b_errors": [
+   "'τοῦτο γὰρ ὡς οἰκειότατον' — image 'τοῦτο γὰρ ὡς οἶμαι τὸ λόγιον'",
+   "right-margin scholion much longer and more fluent than the narrow column on the leaf supports; likely partly invented",
+   "bottom margin lines largely not matching"
+  ],
+  "note": "Both texts fit the image only in scattered places; in each, much of the main text and the marginal scholia does not correspond to this dense hand."
+ }
+]

@@ -1,0 +1,379 @@
+[
+ {
+  "item_id": "69942f6fb2f6748db4ac0e09",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "top margin 'ἡ παροῦσα διαγραφὴ πίναξ...' — image begins '+ περὶ ἀμφ... πρὸς οἰκονομίαν... διά τινα πίστιν δηλονότι'",
+   "merges left marginal column and omits right-margin column entirely",
+   "bottom margin largely invented ('σκοπεῖτε ἱεροὶ καὶ εὐσεβεῖς...')",
+   "main text after the first lines is a fluent paraphrase not matching the leaf"
+  ],
+  "b_errors": [
+   "title 'ΕΙΣ ΤΟ ΑΓΙΟΝ ΦΩΤΙΣΜΑ' — image reads a genitive '...φωτίσματος'",
+   "main text opening 'Ὑμῖν ἴδια καὶ ἐξαίρετα γῇ' — image 'Ὅτι νυνὶ ... ἐπὶ γῆς ἵνα ἀφομοιώσῃ'",
+   "left column 'ἐπιμόνως / τὸ πρόβλημα' — image 'ὡς ἐπὶ μόνον / τὸ πρόβατον'",
+   "long stretches of main text and right-margin column are invented"
+  ],
+  "note": "Checked opening lines, title and left column on the image: each text gets a few spans right but both are mostly hallucinated beyond the first lines."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0e37",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "left margin opening 'ὅτι οὐδὲ ὁ ἄγγελος κάτοπτρον ἔχει' — image reads differently ('...ἐγκύκλιον...')",
+   "some main-text words uncertain/garbled in later lines"
+  ],
+  "b_errors": [
+   "main text 'Διὸ μὲν οὖν τὸν νόμον ἡμῶν τὴν ἱεραρχίαν...' — image line 2 'ἔμελλε ... αὐτοῖς παρουσίαν ἀνάλογον τὸ ἐν αὐτῷ φῶς' as A",
+   "drops the diagram and its labels at the foot of the page",
+   "main text largely paraphrased/invented, not following the lines on the leaf"
+  ],
+  "note": "A follows the main-text lines (παρουσίαν ἀνάλογον, ἀναπετάσας, λαμπάδας) and records the diagram; B's main text is a fluent invention, though its first margin note is closer."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0e5a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "page number '38' — image foliation '8e'/'δε'"
+  ],
+  "b_errors": [
+   "turns the chapter list (α' ... θ' περὶ ...) into invented continuous prose",
+   "invents a margin column (from the facing page) as content",
+   "'ἀρχὴ σὺν θεῷ τῶν περὶ ἱερῶν ὀνομάτων' — image is the recapitulation title on θεαρχικῶν/θείων ὀνομάτων",
+   "'ὁ θεῖος καὶ μακάριος παῦλος' — image 'Διονύσιος καὶ μακάριος Παῦλος'"
+  ],
+  "note": "Image is a list of chapter headings (ἡνωμένης καὶ διακεκριμένης θεολογίας; ἀγαθοῦ φωτὸς καλοῦ ἔρωτος; μεγάλου μικροῦ ταὐτοῦ), which A gives and B replaces with prose."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0e64",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "main text 'Ὅταν αὐτὸς τε ὀνομάζηται θεὸς' — image 'ὅταν αὐτό τε ὀνομάζωσιν ἀγαθότητα'",
+   "invents a heading 'Περὶ τοῦ ὀνόματος τοῦ πατρὸς...' and a John 1:1 quotation not on the leaf",
+   "omits the rubricated section beginning with large initial Τ ('Τὴν μὲν ἀρχικὴν ... θεότητα')"
+  ],
+  "b_errors": [
+   "main text block encoded as a <margin>",
+   "many words in the dense scholia are likely wrong (not verifiable line by line)"
+  ],
+  "note": "The image's main text and the rubricated Τ-initial section match B's 'ὅταν αὐτό τε ὀνομάζωσιν ἀγαθότητα' and 'Τὴν μὲν ἀρχικὴν'; A invents a Trinitarian section."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0e95",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "top margin 'περὶ τῆς κτίσεως τῆς ὑφ’ ἑνὸς' — image 'περὶ τοῦ κτίσματος παρεγένοντο καὶ ἃ καὶ πῶς τῶν ἀτόπων'",
+   "'οἷον ζωὴν καὶ σοφίαν καὶ ἰσχύν' — image '...καὶ λόγον'",
+   "invents names 'Πλάτωνος', 'Φίλων', 'ὁ θεολόγος ... Βασίλειος' — image 'βασιλεὺς λέγεται'"
+  ],
+  "b_errors": [
+   "main text opening 'διπλᾶ οἷς γυμνάζοις' and many later words garbled",
+   "long margin passages likely partly invented"
+  ],
+  "note": "B matches checked spans (κτίσματος, ζωὴν καὶ σοφίαν καὶ λόγον, συνειληφὼς ... βασιλεὺς λέγεται); A invents names and content; both are rough."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0ebf",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "top margin 'πολεμεῖν ἐμφύλιον, ὦ γυναῖκες' — image 'πόλεμον ἐμφύλιον ὠνόμασαν'",
+   "'εὔθετον εἶναι' — image 'εὐσέβειαν'",
+   "main text 'ἐμφύλιον τοὐναντίον ποιούμενος' — image 'ἐμφύλιον τοῦ παντὸς πόλεμον ... ὁμονο... συνάφειαν'",
+   "adds a right-margin column of <unclear> lines from the facing page"
+  ],
+  "b_errors": [
+   "top margin opening 'οἷον ὅτι οὐκ οἰκεῖον μόνον' — image 'ὅλην γένοιτο ... ἔλαβον' (closer to A)",
+   "main text 'εἰς ἅπαν αὐτῆς ἐφ’ ἑξῆς' — image 'γεννητικὴ καὶ προαγωγικὴ διὸ ἅπαν αὐτῆς ἐφίεται' (as A)",
+   "left column rewritten as prose that does not match its lines"
+  ],
+  "note": "Spot checks split: B is right on πόλεμον ἐμφύλιον ὠνόμασαν, εὐσέβειαν and the bottom margin, A on the first margin line, the left column and 'γεννητικὴ καὶ προαγωγική'."
+ },
+ {
+  "item_id": "69942f6fb2f6748db4ac0f13",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1–2 'ὥσθ' ἅμα δὲ ταύτην ... ὑποδέχεσθαι πρὸς τὴν αἴσθησιν' — image 'ὥστε μηδὲ ... ὑποδέξασθαι· τὰς δὲ αἰσθήσεις χρῆσθαι'",
+   "'ἀλλὰ τὸ ξύλον' (axe passage) — image 'ἀλλὰ τὸ σύνολον'",
+   "'Ἡ ψυχὴ συνωματίδουσα καὶ ὀργάνῳ' — image 'ἐν σώματι εἶδος ἢ ὀργάνῳ'"
+  ],
+  "b_errors": [
+   "'Πλάτων οὖν τί μὲν ἡμῶν' — image 'Τιμαίῳ μὲν'",
+   "'τὰς δόξας καὶ τὰς λύπας' — image 'τὰς ἡδονὰς καὶ τὰς λύπας'",
+   "marginal section numeral 'λη' placed at top — image has λδ there; drops diagram at head of page and page number 5"
+  ],
+  "note": "B follows the first lines and the axe/σύνολον passage better; A is right on Τιμαίῳ, ἡδονὰς, page number, diagram and the marginal numerals."
+ },
+ {
+  "item_id": "69b21e0f94025df5d290b2f2",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same text; only the placement of the D/E margin letters, an escaped asterisk and an accent on ὂν in the apparatus differ."
+ },
+ {
+  "item_id": "69b21e0f94025df5d290b308",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Identical wording; differences are line breaks, line numbers, apostrophe forms and margin-letter placement."
+ },
+ {
+  "item_id": "69b21e0f94025df5d290b38a",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Only line numbers, margin letter placement, a doubled apostrophe and τῶ/τῷ in the apparatus differ."
+ },
+ {
+  "item_id": "69b21e0f94025df5d290b3c4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Differences are bold formatting, hyphenation and a breathing on εἱλήσεις/εἰλήσεις."
+ },
+ {
+  "item_id": "69b21e0f94025df5d290b426",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same text; iota adscript vs subscript (ἡμέρηι/ἡμέρῃ), line numbers and hyphenation only."
+ },
+ {
+  "item_id": "69b21e0f94025df5d290b433",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Formatting, hyphenation and punctuation only; apparatus καθαιροῦσιν/καθαιροῦσι is a one-letter slip."
+ },
+ {
+  "item_id": "69b21e3194025df5d290b91d",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same content; A uses column breaks, B a table layout; otherwise hyphenation and accent variants."
+ },
+ {
+  "item_id": "69b21e3194025df5d290b942",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "'αὑτοῦ' — image 'αὐτοῦ' (breathing only)"
+  ],
+  "note": "Same text; angle-bracket supplement is just encoded differently, plus apostrophe and breathing variants."
+ },
+ {
+  "item_id": "69b21e3194025df5d290b9b6",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Only heading levels, an accent on χρειώ and a label line differ."
+ },
+ {
+  "item_id": "69b21e3194025df5d290b9db",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "Simonides line 'ἄδηλος ἵππῳ πῶλος' — image 'ἄθηλος' (unweaned)"
+  ],
+  "note": "The image clearly prints 'ἄθηλος'; B's 'ἄδηλος' changes the word in the quoted fragment, and the other differences are italics and apostrophes."
+ },
+ {
+  "item_id": "69b21e3194025df5d290ba55",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 3 'ὑπάρχαι' — image 'ὑπάρξαι'"
+  ],
+  "b_errors": [
+   "line 24 'ἐν νῷ' — image 'ἐν νόῳ'",
+   "apparatus 'Ἀγεσιμάχου: corr. W' — image 'Αἰγεσιμάχου' (the reading being corrected)",
+   "apparatus 'ἠδὺ' — image 'ἡδὺ'"
+  ],
+  "note": "Each has small errors the other lacks: A misprints ὑπάρξαι in the main text, while B alters νόῳ and makes the apparatus note self-contradictory."
+ },
+ {
+  "item_id": "69b21e3194025df5d290ba85",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Line breaks, bold apparatus numbers and apostrophe or accent forms only."
+ },
+ {
+  "item_id": "69b21e3194025df5d290bae2",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Only quotation-mark and apostrophe glyphs, one raised dot and a descriptive note differ."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd2d0",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 2 'κελεύσεις παραβλέπεσθαι, κἀγὼ' — image 'καὶ καταφρονεῖται ἡ κέλευσις παραβλέπεσθαι καὶ'",
+   "'οὐ δεύτερος' — image 'ὁ δεύτερος'; 'ἅμα' — image 'ἀλλὰ'"
+  ],
+  "b_errors": [
+   "'καὶ οἷς θύομεν' — image 'καὶ πιστεύομεν' (reverses the sense)",
+   "'δικασταὶ' — image 'διῶκται'",
+   "'αὐτῇ ὁρᾷν' — image 'πίστει ὁρᾶν'",
+   "'νόμων' at top — image 'θυμοι'; adds 'πρὸς τὸν σωτηρα' after 'προβαίνουσα', not on the page",
+   "'εἰρήταμεν' — image 'εἴρηται ἐν'"
+  ],
+  "note": "B has several sense-changing misreadings (θύομεν for πιστεύομεν, δικασταί, an added phrase); A's errors are fewer and smaller."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd2e0",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "normalizes spellings: 'εἰς', 'χαμαλωτέρου', 'ἀσφαλείας γ’', 'εἰσκομίζοντες' — image 'ἐς', 'χαμαλεωτέρου', 'ἀσφαλίας γε', 'ἐσκομίζοντες'"
+  ],
+  "b_errors": [
+   "'μηδ’ ἔτι τῶν ἄλλων' — image appears 'μηδ’ ἐπὶ/μηδέ τι'"
+  ],
+  "note": "Same text; B keeps the print's spellings and A normalizes them, which is a spelling-convention difference, not a change of words."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd30a",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'οὔτε κινεῖται' — image 'οὐδὲ κινεῖται'"
+  ],
+  "b_errors": [
+   "'οὐ νοεῖται' — image 'οὐ-δὲ νοεῖται'",
+   "'οὐδὲ ἐπὶ τῶν οὐκ ὄντων' — image 'οὐδέ τι τῶν οὐκ ὄντων'",
+   "appends a JSON detected-images blob"
+  ],
+  "note": "Each has one or two small particle-level misreadings the other lacks; otherwise the texts are the same."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd357",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'Οὐ γὰρ ἔστιν' — image 'ἔνεστιν'",
+   "margin note spliced into line 1 as 'ὅπου δή κοινωνίαν καλεῖτε'",
+   "invented margin 'ἡ ἱεραρχικὴ σύνεσις ... σοφία ϗ σύνεσις'; garbled abbreviations 'τ̃', 'κᾲὶ'"
+  ],
+  "b_errors": [
+   "'ἐπισκοπήσωμεν' — image 'ἐποπτεύσωμεν'",
+   "'διῃρημένων' — image 'διαιρετῶν'",
+   "margin 'ἑορτή καὶ κλητέον' is not what the marginal note reads"
+  ],
+  "note": "B is cleaner and right on ἔνεστιν and expands abbreviations, but substitutes two words that A reads correctly."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd37c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἐξ ἀρχῆς' — image 'ἀπ’ ἀρχῆς'",
+   "'φησι, τῆς' — image 'φησὶ τὸ'",
+   "'ἰδέναι' — image 'εἰδέναι'",
+   "header 'αἰῶνος' is a guess (image 'περὶ' abbreviation only)"
+  ],
+  "b_errors": [
+   "'προφῆναι' — image 'προϊέναι'",
+   "'διδάσκοντα' — image 'διδασκόντων'",
+   "'προσηρητέον' — image 'προσρητέον'",
+   "'ἀγέννητα' — image 'ἀγένητα'; drops 'τὸ' before 'ἐπάρθητε'"
+  ],
+  "note": "Both are close to the print, but each misreads a handful of words that the other gets right."
+ }
+]

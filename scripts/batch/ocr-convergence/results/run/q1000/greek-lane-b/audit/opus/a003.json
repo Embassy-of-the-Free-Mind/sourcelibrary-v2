@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "699388e61075be7d32055110",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Both are rough, but Y follows the leaf line by line (e.g. 'τὸ ἐπὶ τοῦ χαριεστάτου προσώπου', 'πρῶτος δὲ ἀριστείδη', 'τοῦτο δὲ τῷ ξενοφῶντι δοκεῖ πρῶτον'), while X largely invents its wording ('μαστιχῶν ἰέναι· οἷον αἱ ἄφιποι τέλοις χάριτες', 'τοῦτο δὲ τῶν συντροφίας τίθεμαι πρῶτον')."
+ },
+ {
+  "item_id": "699388e61075be7d32055104",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y keeps the line structure and the leaf's names ('ἀριστοτέλης', 'θεόφραστος παράδειγμα ἐκτίθεται', 'τῶν μὲν περὶ τὰ μετέωρα φιλοσοφούντων'), while X runs the text together as a garbled paraphrase ('Φράντου παράδειγμα', 'περὶ τῶν ἐδεσμάτων φιλοσοφούντων')."
+ },
+ {
+  "item_id": "699388e61075be7d32055022",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X follows the leaf's examples ('αὐτὸς ὁ στήσας', 'ἐγὼ … τὸν οἶκον αὐτοῦ· ἐγὼ ἔφθειρα τὴν περιουσίαν αὐτοῦ', 'ἀντὶ τοῦ οἱ ὕπαρχοι'), while Y invents examples such as 'ᾠκοδόμησα τὴν οἰκίαν αὐτοῦ', 'ὁ λέων καὶ ὁ δράκων' and the Rhodes sentence."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53e34",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two are nearly identical; each has only trivial slips (X 'obstupuiffet', 'haec verba' where the print has 'hac'; Y 'Moleft.', 'multisuo')."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f4c7",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both are faithful; they differ only by single accents or breathings (X 'γαληνιόων' is correct, Y 'εὐζώνοισι' and apparatus 'εὐιεροῖς' are correct)."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66e48",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Text and apparatus match the page in both; the only differences are line breaks and Y's 'ε (i. e. β)' where the print has 'e'."
+ },
+ {
+  "item_id": "69aec0e11f4011b58bb53ed9",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both match the page; the differences are orthographic normalisation and abbreviation expansion ('Imp.' becomes 'Imperator'), plus Y's minor 'nuptia'."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f4b4",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both transcribe the hymns, the Thryllitianus variant lines and the apparatus correctly; they differ only in formatting and verse-number placement."
+ },
+ {
+  "item_id": "69937716b0a84a5763962ef6",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two are identical apart from line breaks, the placement of '848' and one accent (Y 'περιπειρόντες' where the print has 'περιπείροντες')."
+ },
+ {
+  "item_id": "69557475f63a757109173638",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both reproduce the cut-off lines faithfully; Y misreads 'Ταῖς' as 'Ἧις' and wraps fragments in <unclear>, and X has small apparatus slips, but neither misleads a reader."
+ }
+]
