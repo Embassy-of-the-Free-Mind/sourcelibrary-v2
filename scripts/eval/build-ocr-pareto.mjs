@@ -59,6 +59,7 @@ import { fileURLToPath } from 'node:url';
 import { readBenchmarkRows, BENCHMARK_DIR } from './lib/benchmark-rows.mjs';
 import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
 import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, toDecide, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { canRunToday } from './lib/model-availability.mjs';
 import { readFailure, READ_FAILURE_KINDS } from '../lib/read-failure.mjs';
 import { extractTranscription } from '../lib/cli-chatter.mjs';
 
@@ -529,7 +530,7 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
     date: dates.filter(Boolean).sort().at(-1) || null, files: [...files].filter(Boolean).sort(),
     placed, no_cost: noCost, ...extra,
   };
-  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page' });
+  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page', canRun: canRunToday });
   return p;
 }
 

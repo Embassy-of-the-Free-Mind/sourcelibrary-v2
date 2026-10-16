@@ -26,6 +26,11 @@
   "gpu": "leased GPU, billed by the hour",
   "own": "our own server"
  },
+ "production_lane_note": "Production lanes keep their approved routes; new work runs Flash-Lite on the API and every other Gemini model on the CLI.",
+ "newest": {
+  "engine": "gemini-4-argon-low+antigravity-cli",
+  "label": "Gemini 4 Argon low (CLI)"
+ },
  "groups": [
   {
    "id": "gemini-api",
@@ -61,6 +66,13 @@
    "route": "own",
    "how": "our own server, CPU",
    "cost_basis": "no per-page bill"
+  },
+  {
+   "id": "production-lane",
+   "title": "Gemini 3 Flash on its production lanes",
+   "route": "api",
+   "how": "the paid Gemini API, Batch, on the lanes production already runs",
+   "cost_basis": "billed per page at the Batch rate"
   },
   {
    "id": "production",
@@ -136,13 +148,15 @@
    "stages": [
     "ocr"
    ],
-   "group": "other-api",
-   "route": "api",
-   "how": "the Anthropic API, billed per request",
-   "available": false,
-   "why_not": "Claude runs only on the Claude subscription (claude -p), never through the API or agy",
+   "group": "claude-cli",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription, $0 billed",
+   "available": true,
+   "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
    "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "measured_via": "api",
+   "note": "measured via API; we run it on the subscription, $0 billed",
    "checked": "2026-10-16"
   },
   {
@@ -167,13 +181,15 @@
    "stages": [
     "ocr"
    ],
-   "group": "other-api",
-   "route": "api",
-   "how": "the Anthropic API, billed per request",
-   "available": false,
-   "why_not": "Claude runs only on the Claude subscription (claude -p), never through the API or agy",
+   "group": "claude-cli",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription, $0 billed",
+   "available": true,
+   "why_not": null,
    "source": "scripts/lib/agy-cli.mjs",
    "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "measured_via": "api",
+   "note": "measured via API; we run it on the subscription, $0 billed",
    "checked": "2026-10-16"
   },
   {
@@ -243,13 +259,19 @@
     "ocr",
     "translation"
    ],
-   "group": "other-api",
+   "group": "production-lane",
    "route": "api",
-   "how": "the paid Gemini API",
+   "how": "the paid Gemini API (Batch), on the lanes production runs it on",
    "available": false,
-   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
-   "source": "scripts/batch/cli-ocr.mjs",
-   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "why_not": "new work: the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/lib/ocr-routing.mjs",
+   "rule": "The first exception to OCR_LITE_ONLY: Greek reads on flash (#5575)",
+   "in_use_route": "paid API, production lane",
+   "lanes": "OCR of Greek, Persian, Sanskrit, Pali, Arabic and Ge’ez; translation of the languages measured to gain from it",
+   "lane_sources": [
+    "scripts/lib/ocr-routing.mjs",
+    "scripts/lib/translate-core.mjs"
+   ],
    "checked": "2026-10-16"
   },
   {
@@ -394,13 +416,14 @@
    "stages": [
     "translation"
    ],
-   "group": "other-api",
-   "route": "api",
-   "how": "the paid Gemini API",
-   "available": false,
-   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08; the same model runs today through the Antigravity CLI, $0 billed, measured in its own runs",
-   "source": "scripts/batch/cli-ocr.mjs",
-   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-3.8-flash on the Google subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "measured_via": "api",
+   "note": "measured via the paid API; we run it on the Antigravity CLI, $0 billed",
    "checked": "2026-10-16"
   },
   {

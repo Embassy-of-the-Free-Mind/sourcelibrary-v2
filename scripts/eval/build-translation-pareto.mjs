@@ -44,6 +44,7 @@ import { fileURLToPath } from 'node:url';
 import { wilson } from './lib/agreement-stats.mjs';
 import { getTranslateModelForBook } from '../lib/translate-core.mjs';
 import { r3, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, toDecide, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { canRunToday } from './lib/model-availability.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -231,7 +232,7 @@ function buildPanel(chart, kind, items, arms, o) {
     reference: references.map(r => r.reference).join('; '), references, grade, to_decide: toDecide(gradeIn),
     frontier: grade.level !== 'not_fit' && placed.length >= FRONTIER_MIN, noise, date, files, notes, placed, no_cost: noCost,
   };
-  p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
+  p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale', canRun: canRunToday });
   return p;
 }
 const billed = (usdPerPage, detail, source) => ({ usd_per_1k: r3(usdPerPage * 1000), basis: 'billed', detail, source });
@@ -519,7 +520,7 @@ if (fs.existsSync(SYR_FILE)) {
     const p = { kind: rd.kind, heading: rd.heading, n_pages: s.n_pages, n_works: s.n_editions, n_books: s.n_books, judges: 2,
       reference: 'the typed Syriac text of the same passage; the judges read the Syriac', references: [{ reference: 'the typed Syriac text (Digital Syriac Corpus)', pages: s.n_pages }],
       grade, to_decide: toDecide(gradeIn), frontier: false, noise: null, date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(rd.file)], notes: [], placed: pts, no_cost: [] };
-    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
+    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale', canRun: canRunToday });
     syr.panels.push(p);
   }
 }
@@ -558,7 +559,7 @@ if (fs.existsSync(G4.file)) {
       date: dateOf(G4.writeup), files: [G4.writeup, rel(G4.file)],
       notes: ['Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps.'],
       placed: [], no_cost: pts };
-    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
+    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale', canRun: canRunToday });
     chart.panels.push(p);
   }
   TRACKS.push({ id: 'g4-argon-6729', writeup: G4.writeup, judges: 2 });

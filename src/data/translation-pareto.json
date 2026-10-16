@@ -378,7 +378,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.7 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.46 a page on the 1 to 5 scale (95% interval +0.30 to +0.63). Also better: Gemini 3.8 Flash, Gemini 3.1 Pro (thinking 128) and 2 more.",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.41 a page on the 1 to 5 scale (95% interval +0.21 to +0.61). Measured better, not runnable today: Gemini 3.7 Flash, Gemini 3.1 Pro (thinking 128), Gemini 3.6 Flash and Gemini 3.5 Flash.",
      "role": "primary"
     },
     {
@@ -768,7 +768,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.22 a page on the 1 to 5 scale (95% interval +0.09 to +0.38).",
+     "verdict": "No engine we can run today is clearly better than Gemini 3.1 Flash-Lite, the engine we use. Measured better, not runnable today: Gemini 3 Flash.",
      "role": "secondary"
     }
    ],
@@ -1109,7 +1109,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.35 a page on the 1 to 5 scale (95% interval +0.17 to +0.53). Also better: Gemini 3.7 Flash and Gemini 3.1 Pro (thinking 128).",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.35 a page on the 1 to 5 scale (95% interval +0.17 to +0.53). Measured better, not runnable today: Gemini 3.7 Flash and Gemini 3.1 Pro (thinking 128).",
      "role": "primary"
     },
     {
@@ -1934,7 +1934,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.1 Pro (thinking 128) scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.48 a page on the 1 to 5 scale (95% interval +0.20 to +0.73). Also better: Gemini 3.8 Flash, Gemini 3.5 Flash and 2 more.",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.48 a page on the 1 to 5 scale (95% interval +0.23 to +0.73). Measured better, not runnable today: Gemini 3.1 Pro (thinking 128), Gemini 3.5 Flash, Gemini 3 Flash and Gemini 3.6 Flash.",
      "role": "primary"
     },
     {
@@ -2200,7 +2200,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.39 a page on the 1 to 5 scale (95% interval +0.18 to +0.59). Also better: Gemini 3 Flash (thinking).",
+     "verdict": "No engine we can run today is clearly better than Gemini 3.1 Flash-Lite, the engine we use. Measured better, not runnable today: Gemini 3 Flash and Gemini 3 Flash (thinking).",
      "role": "secondary"
     }
    ],
@@ -3143,7 +3143,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "The evidence points toward Gemini 3.1 Pro (thinking 128) over Gemini 3.1 Flash-Lite, the engine we use (+0.65 a page on the 1 to 5 scale, 95% interval +0.20 to +1.15); directional only.",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3.1 Flash-Lite, the engine we use (+0.60 a page on the 1 to 5 scale, 95% interval +0.10 to +1.10); directional only. Measured ahead, not runnable today: Gemini 3.1 Pro (thinking 128), Gemini 3.7 Flash, Gemini 3.5 Flash and Gemini 3 Flash.",
      "role": "primary"
     },
     {
@@ -3413,7 +3413,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "The evidence points toward Gemini 3 Flash (thinking) over Gemini 3.1 Flash-Lite, the engine we use (+0.55 a page on the 1 to 5 scale, 95% interval +0.05 to +1.10); directional only.",
+     "verdict": "No engine we can run today stands out from Gemini 3.1 Flash-Lite, the engine we use. Measured ahead, not runnable today: Gemini 3 Flash (thinking).",
      "role": "secondary"
     }
    ],
@@ -6250,7 +6250,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.1 Pro (thinking 128) scores better than Gemini 3 Flash, the engine we use, by +0.44 a page on the 1 to 5 scale (95% interval +0.11 to +0.78). Also better: Gemini 3.8 Flash.",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.39 a page on the 1 to 5 scale (95% interval +0.13 to +0.68). Measured better, not runnable today: Gemini 3.1 Pro (thinking 128).",
      "role": "primary"
     },
     {
@@ -7075,7 +7075,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "The evidence points toward Gemini 3.1 Pro (thinking 128) over Gemini 3 Flash, the engine we use (+0.43 a page on the 1 to 5 scale, 95% interval +0.20 to +0.65); directional only.",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3 Flash, the engine we use (+0.36 a page on the 1 to 5 scale, 95% interval +0.12 to +0.59); directional only. Measured ahead, not runnable today: Gemini 3.1 Pro (thinking 128) and Gemini 3.7 Flash.",
      "role": "primary"
     },
     {

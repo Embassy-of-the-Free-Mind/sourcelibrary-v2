@@ -662,7 +662,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "Gemini 3.8 Flash (CLI, high) reads better than Gemini 3.1 Flash-Lite, the engine we use, by +2.7 points a page (95% interval +0.7 to +6.0). Also better: Gemini 3.7 Flash (CLI), Claude Sonnet 5.5 and 3 more."
+     "verdict": "Gemini 3.8 Flash (CLI, high) reads better than Gemini 3.1 Flash-Lite, the engine we use, by +2.7 points a page (95% interval +0.7 to +6.0). Also better: Claude Sonnet 5.5 and Gemini 3.8 Flash (CLI). Measured better, not runnable today: Gemini 3.7 Flash (CLI), Gemini 3 Flash and Mistral OCR 4.1."
     },
     {
      "kind": "family-whole-anchored",
@@ -2883,7 +2883,7 @@
      ],
      "role": "primary",
      "heading": null,
-     "verdict": "Claude Sonnet 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +0.4 points a page (95% interval +0.2 to +0.8). Also better: Gemini 3.6 Flash (CLI) and Gemini 3 Flash."
+     "verdict": "Claude Sonnet 5.5 reads better than Gemini 3.1 Flash-Lite, the engine we use, by +0.4 points a page (95% interval +0.2 to +0.8). Measured better, not runnable today: Gemini 3.6 Flash (CLI) and Gemini 3 Flash."
     }
    ]
   },
@@ -5298,7 +5298,7 @@
      "no_cost": [],
      "role": "primary",
      "heading": null,
-     "verdict": "The evidence points toward PaddleOCR-VL 1.6 over Gemini 3.1 Flash-Lite, the engine we use (+9.0 points a page, 95% interval +5.9 to +12.4); directional only."
+     "verdict": "The evidence points toward PaddleOCR-VL 1.6 over Gemini 3.1 Flash-Lite, the engine we use (+9.0 points a page, 95% interval +5.9 to +12.4); directional only. Measured ahead, not runnable today: Gemini 3 Flash."
     },
     {
      "kind": "primary-more-engines",
@@ -5854,7 +5854,7 @@
      ],
      "role": "secondary",
      "heading": "Typed editions of the text: more engines, fewer pages",
-     "verdict": "The evidence points toward Claude Opus 5.5 over Gemini 3.1 Flash-Lite, the engine we use (+8.6 points a page, 95% interval +2.8 to +16.9); directional only."
+     "verdict": "The evidence points toward Claude Opus 5.5 over Gemini 3.1 Flash-Lite, the engine we use (+8.6 points a page, 95% interval +2.8 to +16.9); directional only. Measured ahead, not runnable today: Gemini 3 Flash."
     },
     {
      "kind": "cli-subsample",
@@ -6379,7 +6379,7 @@
      ],
      "role": "secondary",
      "heading": "148 pages drawn at random, with Gemini 3.7 Flash (CLI) and Gemini 3.6 Flash (CLI) and Gemini 4 Argon low (CLI)",
-     "verdict": "The evidence points toward Gemini 4 Argon low (CLI) over Gemini 3.1 Flash-Lite, the engine we use (+9.5 points a page, 95% interval +5.1 to +14.2); directional only."
+     "verdict": "The evidence points toward Gemini 4 Argon low (CLI) over Gemini 3.1 Flash-Lite, the engine we use (+9.5 points a page, 95% interval +5.1 to +14.2); directional only. Measured ahead, not runnable today: Gemini 3 Flash and Gemini 3.7 Flash (CLI)."
     }
    ]
   },

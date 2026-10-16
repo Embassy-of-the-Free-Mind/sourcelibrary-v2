@@ -2,14 +2,15 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { GradeRules, NotEnoughEvidence, ParetoPresentation, ParetoSummary, RosterTable, TRANSLATION } from '../ParetoCharts';
+import { ChartLegend, GradeRules, NotEnoughEvidence, OCR, ParetoPresentation, RosterTable, SmallMultiples, TRANSLATION } from '../ParetoCharts';
 
 // Quality against price or time, per script (OCR) and per language (translation) (#5983, rebuilt in #6386, laid out
 // around the decision in #6524, drawn as model-comparison scatters in #6776). The reader: someone at a desk choosing
 // which model to run on a script or a language. They want, per chart, which engines sit on the frontier, which of
 // those we can run today, and whether the chart is about reading the page or translating it. So the page opens with
-// what we can run, then two separate halves (OCR, translation), each with its definition, its summary rows, one
-// scatter per script or language, and its thin panels folded away; the method comes last.
+// the small multiples (one small scatter per script, then per language, each linking to its section), then what we
+// can run, then two separate halves (OCR, translation), each with its definition, one scatter per script or language,
+// and its thin panels folded away; the method comes last, folded (Derek 2026-10-16: "clean it up").
 // Every number is read at build time from src/data/ocr-pareto.json, src/data/translation-pareto.json and
 // src/data/model-roster.json.
 export const revalidate = false;
@@ -36,44 +37,53 @@ export default function ParetoPage() {
           </p>
           <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mt-2">Which engine to run: quality against price and time</h1>
           <p className="text-lg text-stone-700 leading-relaxed mt-4">
-            One chart per script and per language. Each dot is an engine we measured: higher reads or translates better,
-            further left costs less or runs faster. The line is the frontier, the engines nothing else beats on both.
-            Filled dots are engines we can run today; hollow ones we cannot.
+            Each dot is an engine we measured: higher reads or translates better, further left is faster or cheaper. The
+            line is the frontier, the engines nothing else beats on both. Filled dots are engines we can run today;
+            hollow ones we cannot.
           </p>
           <p className="text-base text-stone-600 mt-3">
-            <a href="#roster" className={LINK}>What we can run today</a> {'·'} <a href="#ocr" className={LINK}>Transcription (OCR)</a> {'·'}{' '}
-            <a href="#translation" className={LINK}>Translation</a> {'·'} <a href="#method" className={LINK}>Method and grades</a>
+            <a href="#ocr" className={LINK}>Transcription (OCR)</a> {'·'} <a href="#translation" className={LINK}>Translation</a>{' '}
+            {'·'} <a href="#roster" className={LINK}>What we can run today</a> {'·'} <a href="#method" className={LINK}>Method and grades</a>
           </p>
         </header>
 
-        <section id="roster" className="mt-10 scroll-mt-16 max-w-4xl">
+        <section id="overview" className="mt-8 scroll-mt-16" aria-label="Every script and language at a glance">
+          <ChartLegend short />
+          <h2 className="font-serif text-2xl text-stone-900 mt-5 mb-3">OCR · by script</h2>
+          <SmallMultiples m={OCR} />
+          <h2 className="font-serif text-2xl text-stone-900 mt-8 mb-3">Translation · by language</h2>
+          <SmallMultiples m={TRANSLATION} />
+        </section>
+
+        <section id="roster" className="mt-12 scroll-mt-16 max-w-4xl">
           <h2 className="font-serif text-2xl text-stone-900 mb-2">What we can run today</h2>
           <RosterTable />
         </section>
 
-        <section id="ocr" className="mt-16 scroll-mt-16">
+        <section id="ocr" className="mt-14 scroll-mt-16">
           <h2 className="font-serif text-3xl md:text-4xl text-stone-900">Transcription (OCR)</h2>
           <p className="text-lg text-stone-700 mt-2 max-w-3xl">
             Reading the page image into text, scored as character accuracy against a typed transcription.
           </p>
-          <div className="mt-6"><ParetoSummary /></div>
+          <div className="mt-3"><ChartLegend m={OCR} /></div>
           <ParetoPresentation />
           <NotEnoughEvidence />
         </section>
 
-        <section id="translation" className="mt-20 scroll-mt-16">
+        <section id="translation" className="mt-14 scroll-mt-16">
           <h2 className="font-serif text-3xl md:text-4xl text-stone-900">Translation</h2>
           <p className="text-lg text-stone-700 mt-2 max-w-3xl">
             Turning that text into English, scored on the 1 to 5 fidelity scale by blind AI judges (Claude Opus) against
             published translations.
           </p>
-          <div className="mt-6"><ParetoSummary m={TRANSLATION} /></div>
+          <div className="mt-3"><ChartLegend m={TRANSLATION} /></div>
           <ParetoPresentation m={TRANSLATION} />
           <NotEnoughEvidence m={TRANSLATION} />
         </section>
 
-        <section id="method" className="max-w-3xl mt-16 text-stone-700 leading-relaxed space-y-3 scroll-mt-16">
-          <h2 className="font-serif text-3xl text-stone-900">How these are measured</h2>
+        <details id="method" className="max-w-3xl mt-14 text-stone-700 leading-relaxed scroll-mt-16">
+          <summary className="cursor-pointer font-serif text-3xl text-stone-900 hover:text-amber-800">How these are measured</summary>
+          <div className="space-y-3 mt-3">
           <p>
             <strong className="text-stone-900">Transcription.</strong> Accuracy is one minus the character error rate against a
             typed text of the page, averaged over the pages, each page&rsquo;s error capped at 100%. Accuracy is measured
@@ -106,23 +116,25 @@ export default function ParetoPage() {
             the 1 to 5 scale (translation) of the engine in use; one margin per measure, never tuned per chart.
           </p>
           <p>
+            <strong className="text-stone-900">Time.</strong> The default view. Many of these runs went through
+            command-line tools on our subscriptions, where a page costs time and quota rather than dollars. The time view
+            plots the median seconds a page, taken from each run&rsquo;s own meter on those pages. A run that did not time
+            its pages is listed under the chart as not measured; no time is estimated.
+          </p>
+          <p>
             <strong className="text-stone-900">Price.</strong> Dollars billed per 1,000 pages: Gemini at its metered Batch
-            rate, other APIs at their billed rate, rented GPUs at the whole rental shared by running time. A run through a
-            command-line tool on our subscription is billed nothing; it is placed at the API price for the same requests,
-            for comparison only, and marked &dagger;. An engine with no price on record is listed under the chart instead.
+            rate, other APIs at their billed rate, rented GPUs at the whole rental shared by running time. An engine we run
+            on a subscription bills nothing; it is placed at the API price for the same requests, for comparison only, and
+            marked &dagger; and &ldquo;$0 billed&rdquo;. An engine with no price on record is listed under the chart instead.
           </p>
           <p>
-            <strong className="text-stone-900">Time.</strong> Many of these runs went through command-line tools on our
-            subscriptions, where a page costs time and quota rather than dollars. The time view plots the median seconds a
-            page, taken from each run&rsquo;s own meter on those pages. A run that did not time its pages is listed under
-            the chart as not measured; no time is estimated.
-          </p>
-          <p>
-            <strong className="text-stone-900">Available today.</strong> Whether we can run an engine now, and by which
-            route, is read from the rules in the repository (the paid Gemini API runs Flash-Lite only; other Gemini models
-            run through the Antigravity command-line tool if it still offers them; Claude runs only on the Claude
+            <strong className="text-stone-900">Available today.</strong> Judged per model, by the route we can run it on,
+            not the route it was measured on: Claude measured through the API runs on the Claude subscription, and a Gemini
+            model measured on the paid API runs on the Antigravity command-line tool when the tool still offers it. The rules
+            come from the repository (the paid Gemini API runs Flash-Lite only for new work; Claude only on the Claude
             subscription; open models on a leased GPU; Tesseract is not used) and from a recorded list of the models the
-            command-line tool offers. Each engine&rsquo;s row names its source.
+            command-line tool offers. The engine in use is what production runs, on the route production runs it on.
+            Each engine&rsquo;s row names its source.
           </p>
           <div>
             <p><strong className="text-stone-900">Grades.</strong></p>
@@ -134,7 +146,8 @@ export default function ParetoPage() {
             <Link href="/quality#chart-limits" className={LINK}>limits of these charts</Link>.{' '}
             <a href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`} className={LINK}>Source code</a>.
           </p>
-        </section>
+          </div>
+        </details>
       </div>
     </ContentPageLayout>
   );

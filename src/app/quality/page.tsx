@@ -549,8 +549,8 @@ export default function QualityCenterPage() {
               Transcription (OCR): reading the page image into text, scored as character accuracy against a typed
               transcription. For each script: is any OCR engine we can run today clearly better or cheaper than the one we
               use, judged on the same pages, and how far can that answer be trusted (<a href="#chart-limits" className={LINK}>limits</a>)?
-              Each dot is an engine; higher reads better, further left costs less. Price and time views, tables and method
-              are on{' '}
+              Each dot is an engine; higher reads better, further left is faster (or, where no run was timed, cheaper). Price
+              and time views, tables and method are on{' '}
               <Link href="/quality/pareto#ocr" className={LINK}>
                 the cost and quality page
               </Link>
@@ -558,7 +558,7 @@ export default function QualityCenterPage() {
             </p>
             <p className="text-sm text-stone-600 leading-relaxed mb-4 max-w-3xl">
               <Link href="/quality/pareto#roster" className={LINK}>What we can run today</Link>: <RosterLine />. Engines
-              we cannot run are drawn hollow and never offered as the switch.
+              we cannot run are drawn hollow and never named as the one to run.
             </p>
             <ParetoCharts />
             <Source>
