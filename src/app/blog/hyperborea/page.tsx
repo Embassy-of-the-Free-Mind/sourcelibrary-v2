@@ -95,7 +95,7 @@ export default function HyperboreaPage() {
           image={LEAD_IMAGE}
           imageAlt={LEAD_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 16 min read</p>
+          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 21 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -352,6 +352,72 @@ export default function HyperboreaPage() {
           Abaris is less a visitor from Hyperborea than the Greeks&apos; picture of a northern holy man.
         </P>
 
+        <Section>Other travellers from the north</Section>
+
+        <P>
+          Abaris was not alone. Greek cult stories kept bringing people, gods and things south from Hyperborea,
+          almost always to Delos or Delphi. Pausanias, in the second century CE, collected many of them.
+        </P>
+
+        <ul className="list-disc pl-6 space-y-3 text-secondary leading-relaxed mb-6">
+          <li>
+            <strong>The Delian maidens.</strong> Herodotus names two pairs: Hyperoche and Laodice with their five
+            escorts, and before them Arge and Opis, who came &ldquo;at the same time as the gods themselves.&rdquo;
+            Later poets added Opis and Hecaerge, and Olen&apos;s hymn brought a third, Achaeia,{' '}
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=346" className={linkClass}>
+              &ldquo;to Delos from these Hyperboreans.&rdquo;
+            </Link>
+          </li>
+          <li>
+            <strong>Eileithyia,</strong> goddess of childbirth, who in the Athenian story{' '}
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=125" className={linkClass}>
+              &ldquo;is said to have come from the Hyperboreans to Delos to help Latona in her pangs.&rdquo;
+            </Link>{' '}
+            Diodorus said Leto herself was born among the Hyperboreans, which is why Apollo was honoured there above
+            all gods.
+          </li>
+          <li>
+            <strong>The founders of Delphi.</strong> The Delphian poetess Boeo wrote that the oracle was set up by
+            Hyperboreans, Pagasus and Agyieus, and that{' '}
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=605" className={linkClass}>
+              Olen, who came with them, &ldquo;was the first to give oracles and sing in hexameters.&rdquo;
+            </Link>{' '}
+            Herodotus calls Olen a Lycian; Boeo made him a northerner. The Delphians also said their second temple,
+            made by bees{' '}
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=606" className={linkClass}>
+              &ldquo;out of wax and feathers,&rdquo; was &ldquo;sent to the Hyperboreans by Apollo.&rdquo;
+            </Link>
+          </li>
+          <li>
+            <strong>Two ghost warriors.</strong> When the Gauls attacked Delphi in 279 BCE, thunderbolts and
+            falling rocks drove them off, and{' '}
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=106" className={linkClass}>
+              &ldquo;two of these phantom warriors, Hyperochus and Amadocus, came from the Hyperboreans.&rdquo;
+            </Link>
+          </li>
+          <li>
+            <strong>The olive of Olympia.</strong> Pindar tells how Heracles persuaded{' '}
+            <Link href="/book/the-odes-of-pindar-sandys?page=91" className={linkClass}>
+              &ldquo;the servants of Apollo, the people of the Hyperboreans&rdquo;
+            </Link>{' '}
+            to give him the wild olive from the springs of the Danube, and planted it at Olympia, where it crowned
+            the victors.
+          </li>
+          <li>
+            <strong>Aristeas of Proconnesus,</strong> the poet who said he had travelled north possessed by Apollo,
+            reappeared at Metapontum in Italy long after his supposed death. The Metapontines set up a{' '}
+            <Link href="/book/historiae-commentitiae-dyscolus?page=116" className={linkClass}>
+              bronze laurel &ldquo;when he said he had arrived from the Hyperboreans.&rdquo;
+            </Link>
+          </li>
+        </ul>
+
+        <P>
+          The pattern is consistent. What comes from Hyperborea is old and holy: the first prophet, the first
+          temple, the first offerings, the olive of the games, help in a sacred war. Hyperborea worked as the source
+          Apollo&apos;s worship was believed to have come from, at a distance that kept it pure.
+        </P>
+
         <Section>Apollo&apos;s tears</Section>
 
         <P>
@@ -413,6 +479,105 @@ export default function HyperboreaPage() {
           </Link>{' '}
           What the Greek sources do record is a chain of hands running out of the north toward Delos, and amber
           arriving along the same kind of chain. Early modern readers took the overlap for an identity.
+        </P>
+
+        <Section>Thule and the other edges of the north</Section>
+
+        <P>
+          Hyperborea was not the only northern edge, and the others are easy to confuse with it. The difference is
+          that Hyperborea came from poets and cult, while Thule came from a traveller. Around 325 BCE Pytheas of
+          Massalia (Marseille) sailed north past Britain and reported an island where at midsummer the sun did not
+          set. Pliny preserves the distance: Thule is{' '}
+          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=138" className={linkClass}>
+            &ldquo;six days&apos; sail from the north of Britain.&rdquo;
+          </Link>{' '}
+          Beyond it, Pytheas said, there was no longer land or sea or air but{' '}
+          <Link href="/book/the-geography-of-strabo-vol-1-strabo?page=451" className={linkClass}>
+            &ldquo;a kind of substance concreted from all these elements, resembling a sea-lung.&rdquo;
+          </Link>{' '}
+          Pliny adds that{' '}
+          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=374" className={linkClass}>
+            &ldquo;at one day&apos;s sail from Thule is the frozen ocean, which by some is called the Cronian
+            Sea.&rdquo;
+          </Link>
+        </P>
+
+        <P>
+          Strabo did not believe a word of it. Gerardus Vossius, listing the charges in 1624, noted that Strabo
+          had called Pytheas{' '}
+          <Link href="/book/de-historicis-graecis-vossius?page=563" className={linkClass}>
+            <em>andra pseudestaton</em>, &ldquo;a most lying man.&rdquo;
+          </Link>{' '}
+          The same page shows why Pytheas matters for the amber story. Pliny cites him for an estuary of the
+          Guttones, a Germanic people, and an island called Abalus a day&apos;s sail off, where amber washes up in
+          spring as &ldquo;a refuse of the congealed sea,&rdquo; which the islanders burn as fuel and sell to the
+          Teutons. Pliny also reports that Pytheas called a huge northern island{' '}
+          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=363" className={linkClass}>
+            Basilia
+          </Link>
+          , the name Diodorus used for the amber island that Hartknoch would claim as Samland. Pytheas is the
+          first Greek who seems to have reached the amber coast, or met people who had. In 1641 Pierre Gassendi, at
+          the urging of his friend Peiresc, set out to defend his fellow Provençal:{' '}
+          <Link
+            href="/book/viri-illustris-nicolai-claudii-fabricii-de-peiresc-vita-gassendi?page=322"
+            className={linkClass}
+          >
+            &ldquo;Pytheas is the oldest scholar the entire West possesses.&rdquo;
+          </Link>
+        </P>
+
+        <P>
+          Rome kept Thule as the end of the world. Virgil called it <em>ultima Thule</em>, &ldquo;farthest
+          Thule,&rdquo; and Tacitus says Agricola&apos;s fleet, rounding Scotland in 83 CE, saw it:{' '}
+          <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=121" className={linkClass}>
+            &ldquo;The shores of Thule were even descried.&rdquo;
+          </Link>{' '}
+          Later writers moved it to wherever the edge of knowledge then lay. Procopius, in the sixth century, made
+          Thule Scandinavia, where the Heruli sent{' '}
+          <Link href="/book/procopii-caesariensis-opera-omnia-caesarea?page=488" className={linkClass}>
+            to fetch a king of royal blood
+          </Link>{' '}
+          and where the people, after a{' '}
+          <Link href="/book/procopii-caesariensis-opera-omnia-caesarea?page=489" className={linkClass}>
+            &ldquo;great and perpetual night of thirty-five days,&rdquo;
+          </Link>{' '}
+          sent watchers up the mountains to look for the sun. Adam of Bremen, around 1075, settled it on Iceland:{' '}
+          <Link href="/book/gesta-hammaburgensis-ecclesiae-pontificum-bremen?page=212" className={linkClass}>
+            &ldquo;This Thyle is now called Island, from the ice which binds the ocean.&rdquo;
+          </Link>{' '}
+          Olaus Magnus, the exiled Swedish archbishop, agreed in 1555, calling Iceland{' '}
+          <Link href="/book/historia-de-gentibus-septentrionalibus-magnus?page=152" className={linkClass}>
+            &ldquo;the glacial land, or the ultimate Thule.&rdquo;
+          </Link>{' '}
+          A Greek-Latin edition of Cleomedes printed in 1605{' '}
+          <Link href="/book/cleomedis-meteora-graece-et-latine-balfour-1605-cleomedes?page=244" className={linkClass}>
+            lists the rival answers
+          </Link>
+          : Mercator&apos;s Iceland, Ortelius&apos;s Telemark in Norway, Camden&apos;s Shetland.
+        </P>
+
+        <P>
+          The other names belong to the same map. The Rhipaean mountains were the imagined range along the top of
+          the world, behind which lay Hyperborea. Pterophoros, &ldquo;feather-bearing,&rdquo; was the land of
+          falling snow that Herodotus explained as a figure of speech. The one-eyed Arimaspians and the griffins
+          guarded northern gold. For the Goths the north was a beginning, not an edge: Jordanes, in the sixth
+          century, called the island of Scandza{' '}
+          <Link href="/book/iordanis-romana-et-getica-jordanes?page=141" className={linkClass}>
+            &ldquo;a workshop of nations or indeed a womb of peoples,&rdquo;
+          </Link>{' '}
+          and placed it opposite the mouth of the Vistula, close to the amber coast.
+        </P>
+
+        <P>
+          Learned writers kept Thule and Hyperborea apart for a long time. Toland in 1740 was careful to say that
+          by Thule he meant{' '}
+          <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland?page=198" className={linkClass}>
+            &ldquo;only that of Pytheas, or Iceland,&rdquo;
+          </Link>{' '}
+          and by the island of the Hyperboreans the one Diodorus described. The modern occult and racial writers
+          merged them. The Thule Society, founded in Munich in 1918, gave Pytheas&apos;s island the qualities of
+          Hyperborea and made it a lost homeland of the Aryans. The ancient sources do not support the merger:
+          Thule was a place a man said he had sailed to, and Hyperborea was a place no road reached.
         </P>
 
         <Section>Everyone&apos;s Hyperborea</Section>
@@ -603,8 +768,8 @@ export default function HyperboreaPage() {
         </P>
 
         <P>
-          In the twentieth century the polar homeland was taken up by German racial nationalists. The Thule Society
-          in Munich (1918) took its name from the northern island of Pytheas, and the Dutch-German writer Herman Wirth,
+          In the twentieth century the polar homeland was taken up by German racial nationalists. Besides the Thule
+          Society (see the section on Thule above), the Dutch-German writer Herman Wirth,
           a founder of the SS research office <em>Ahnenerbe</em>, built a prehistory of a northern master race on the
           same classical passages. That use has continued on the far right. The passages themselves say much less, as
           the earlier readers in this note show.
