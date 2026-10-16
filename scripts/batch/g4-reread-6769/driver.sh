@@ -32,7 +32,7 @@ ENV_FILE=${ENV_FILE:-/root/sourcelibrary/.env.production.local}
 STATE=${STATE:-/mnt/HC_Volume_105839809/jobs/g4-reread-6769/driver}
 LANE=g4-reread-6769; MODEL=gemini-4-argon-low; ISSUE=6769
 NTFY=${NTFY:-https://ntfy.sh/sourcelibrary-uptime}
-POST=${POST_COMMENTS:-1}
+POST=${POST_COMMENTS:-1}   # SUMMARY=0: no final summary comment (a one-book run)
 MIN_DISK_GB=${MIN_DISK_GB:-12}
 PILOT="$REPO/scripts/eval/g4-reread-pilot-6769"
 RELEASE_SENTENCE="every page the g4-reread-6769 lane rewrote carries English written after its new OCR (scripts/batch/g4-reread-6769/book.mjs verify), or the book's gate failed and nothing was written"
@@ -176,7 +176,7 @@ done < "$QUEUE"
   echo
   echo "Pages written: $(cat "$STATE"/*/written.json 2>/dev/null | jq -s 'map(length) | add // 0'). Per-book comments above; state in \`$STATE\`."
 } > "$STATE/summary.md"
-[ -f "$STATE/STOP" ] || comment "$STATE/summary.md"
+[ -f "$STATE/STOP" ] || [ "${SUMMARY:-1}" != 1 ] || comment "$STATE/summary.md"
 touch "$STATE/driver.done"
 ntfy "g4-reread-6769 driver finished: $(head -c 300 "$STATE/summary.md" | tr '\n' ' ')"
 log "driver done"
