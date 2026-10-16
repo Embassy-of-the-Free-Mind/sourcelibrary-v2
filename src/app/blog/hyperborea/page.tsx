@@ -713,14 +713,16 @@ export default function HyperboreaPage() {
 
         <P>
           One class of object keeps being drawn into this argument: the bronze dodecahedra of Roman Gaul. They are
-          hollow, about the size of a fist or smaller, with twelve pentagonal faces, a round hole of a different
-          diameter in each face and a small knob at each of the twenty corners. Somewhere between eighty and a
-          hundred and thirty are known, depending on the catalogue; amateur archaeologists at Norton Disney in
-          Lincolnshire added the thirty-third from Britain in 2023, from a sealed and datable layer. Most belong to
-          the second to fourth centuries CE. They cluster in the north-western provinces, Gaul, the Rhineland and
-          Britain, where the population was Celtic, and several turned up in coin hoards and graves. No ancient text
-          mentions them. A small dodecahedron found at Geneva in 1982 carries the Latin names of the twelve signs of
-          the zodiac, one to a face.
+          hollow, cast in copper alloy, four to eleven centimetres across, with twelve pentagonal faces, a round
+          hole of a different diameter in each face and a small knob at each of the twenty corners. The first was
+          shown to the Society of Antiquaries of London in 1739; about 130 are now known. Amateur archaeologists at
+          Norton Disney in Lincolnshire added the thirty-third from Britain in 2023. They date from the second to
+          the fourth centuries CE and were mostly made in Gaul. They have been found in France, Belgium, the
+          Netherlands, Luxembourg, Germany, Switzerland, Austria, Hungary and Britain, but not in Italy, the Roman
+          heartland. Where the find context is known it is usually military or funerary, and several came from coin
+          hoards. No ancient text or picture mentions them, and none carries letters or numbers. The one exception
+          is a different object: a solid silver dodecahedron found at Geneva in 1982 has the name of a zodiac sign
+          on each face.
         </P>
 
         <P>
@@ -746,11 +748,14 @@ export default function HyperboreaPage() {
         </P>
 
         <P>
-          The Celtic side is less certain. The objects have been read as candle holders, surveying instruments,
-          gauges and knitting tools; the surveying and gauge ideas founder on the fact that no two are the same size.
-          The curators at Tongeren, which holds a complete one found in 1939, lean toward unofficial religious use,
-          divination or magic, and a 2025 study proposes a ritual instrument of number divination in a
-          Pythagorean and druidic setting. That would fit the distribution and the Geneva zodiac. It would not
+          The Celtic side is less certain. More than fifty uses have been proposed, among them candle holders,
+          surveying instruments, coin gauges, glove-knitting tools and metalsmiths&apos; test pieces. The surveying
+          and gauge ideas founder on the absence of any markings and on sizes that do not match; spool knitting is
+          not recorded before 1535. The curators at Tongeren, which holds a complete one found in 1939, lean toward
+          unofficial religious use, divination or magic. A 2025 paper in <em>The Antiquaries Journal</em> by Michael
+          Guggenberger and Stephen Leach reads them through Plato: its title, &ldquo;The Gallo-Roman Dodecahedron
+          and the Receptacle of All Becoming,&rdquo; borrows the <em>Timaeus</em>&apos;s name for the matrix in which
+          the cosmos takes shape. A ritual use would fit the Gallic distribution. It would not
           reach back to Herodotus. The dodecahedra are six to eight centuries later than his Hyperborean offerings,
           and they postdate the Roman suppression of the druids in the first century CE. An older stone dodecahedron
           was reported in 1885 from Monte Loffa near Verona, an Alpine site of the fifth to second centuries BCE
