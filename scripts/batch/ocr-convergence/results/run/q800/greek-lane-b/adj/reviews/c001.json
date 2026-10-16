@@ -1,0 +1,458 @@
+[
+ {
+  "item_id": "695230c6ab34727b1f04478d",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 4: 'τῆς ἐν αἰσθήσει ἐνεργείας' — image 'τῆς τῶν αἰσθητῶν ἐνεργείας'",
+   "line 10: 'τῶν ἀέρων προσηγορίαν ἕξειν, ἤτοι ἧς' — image 'τῇ τοῦ ὑδροσκοπείου ἕξει, ἣ ...' (invented)",
+   "line 15: 'εἰς δύο καὶ εἰς τρία καὶ τεττάρων' — image 'τῶν τεσσάρων στοιχείων συμ-'",
+   "line 16: 'ποικίλη διάθεσις ἐνεργεῖται' — image 'ποικίλαι διαθέσεις ἐνεργοῦνται'",
+   "line 7: 'εἰσενεγκεῖν' — image 'εἰσθέσθαι'"
+  ],
+  "b_errors": [
+   "line 8: 'βουλομένους' — image 'βουλομένοις'",
+   "line 9: 'ὠφελεῖσθαι' — image 'ὠφελείας'"
+  ],
+  "note": "Checked the differing spans against the manuscript; B follows the hand (ὑδροσκοπείου, τῶν τεσσάρων στοιχείων), while A puts invented phrases in several places."
+ },
+ {
+  "item_id": "695230c6ab34727b1f04478e",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 3: 'συντάξαι τὸν λόγον, περὶ ὧν περιείληφε' — image begins 'Πρὸ δὲ τῶν λε-...' (not on leaf)",
+   "line 7: 'ὑπὸ τῶν αἰσθήσεων' / 'ἔκ τε' — image 'ἐκ γὰρ ... ὑπὸ τὴν αἴσθησιν'",
+   "line 8: 'δεικνύντες τὸ συμβαῖνον' — image 'δείκνυται τοῦτο συμβαῖνον'",
+   "line 9: 'ἔτι τὰς ἐνεργείας' — image 'τι τὰ ἀγγεῖα'",
+   "line 1: adds 'ἐπὶ' before 'τῷ βίῳ'"
+  ],
+  "b_errors": [
+   "line 11: 'ὃ δὲ πνεῦμά ἐστιν' — image 'ὃ δὴ ἀήρ ἐστιν'",
+   "line 14: 'τις οὖν' — image 'γοῦν'",
+   "line 17-18: drops 'τις' after 'ἐάν γὰρ'"
+  ],
+  "note": "In most of the differing spans the image supports B (ἐκ γὰρ, αἴσθησιν, δείκνυται, ἀγγεῖα), but B also has a few wrong words of its own."
+ },
+ {
+  "item_id": "695230c6ab34727b1f04478f",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'τὸ καταλειφθὲν ἄχρι νῦν εἰς δόξαν φυλαχθὲν' — image 'πιέζῃς ... ἵνα ... διαφύγῃ' (invented)",
+   "line 10: 'παρὰ τὴν ἐν τῷ ἀγγείῳ' — image 'πᾶσαν τὴν ἐντὸς τοῦ ἀγγείου'",
+   "line 11: 'οὐκ ἦν πρὸ τοῦ βληθῆναι δι' ὅλου' — image 'ἦν καὶ πρὸ τοῦ τεθῆναι. δι' ὃ δὴ'",
+   "line 16: 'αἰσθήσῃ τοῦ ... τρυπήματος χώρᾳ' — image 'τρυπήματι τὴν χεῖρα, αἰσθήσεται'",
+   "line 19: 'ἀπολελεῖφθαί τινα τοῦ ἀέρος ἀναπλήρωσιν' — image '... φύσει ἀθρόον εἶναι κενὸν'"
+  ],
+  "b_errors": [
+   "line 4: 'σήκειν' — image 'σελθεῖν'",
+   "line 14: 'μετὰ τὸ τρυπηθῆναι τὸν' — image 'τετρυπημένου ... κατὰ τὸν'"
+  ],
+  "note": "A fills several lines with plausible but invented Greek; B is close to the manuscript apart from minor misreadings."
+ },
+ {
+  "item_id": "695230c6ab34727b1f044792",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'ἀρθέντος δὲ δακτύλου, δύνασθαι εἰς τὸν ἄνω τόπον ταῦτα' — image 'ρεθέντος τοῦ δακτύλου, ἀνασπᾶται εἰς τὸν κενωθέντα'",
+   "line 2: 'καὶ παραίτιον' — image 'καίτοι παρὰ φύσιν'",
+   "line 3: 'τῷ ἀέρι' — image 'τῷ ὑγρῷ'",
+   "line 5: 'οὕτως οὐκ ἐκ-πίπτουσιν' — image 'οὐ μόνον οὐκ ἀ-ποπίπτουσιν'",
+   "lines 16-19: 'δι' ἀπώλειαν ... εἰς τὴν ... ταύτην' — image 'διαλλάσσουσι ... εἴς τε ... τὰ μὲν'"
+  ],
+  "b_errors": [
+   "line 7: 'ἑλκυστικαί εἰσι τῆς παρακειμένης ὕλης' — image '...σπῶνται τὴν παρακειμένην ὕλην'",
+   "line 12: 'ὅτι δὲ πῦρ φθείρει' — image 'ὅτι μὲν γὰρ φθείρει'",
+   "line 13: 'περιεχομένων ... ἐκλελοιπότα' — image 'περιλειπομένων ... ἑλόντες'"
+  ],
+  "note": "The opening lines and lines 15-19 in the image match B; A is right in a few places (l.12-13) but wrong in more of the spans that matter."
+ },
+ {
+  "item_id": "695230c6ab34727b1f044796",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'μέγα καὶ παρὰ τῇ ἑτέρᾳ γνωμόνων' — image 'οὐ μέγα ... ἐξεγνωσμένον'",
+   "line 5-6: 'κεραμεοῦν καὶ παραπλήσιά τει ὡς τὸ' — image 'κεράννυται καὶ παραπλάσσεται ὥστε'",
+   "line 7: 'θερμαινομένου' — image 'θλιβομένου'-like reading",
+   "line 19: 'τὸ φύσει μὲν κενὸν, εἰ καὶ λεπτωθὲν' — image 'κατὰ φύσιν ..., κατὰ λεπτὸν δέ'",
+   "line 20: 'καὶ πεπηγότα σώματα' — image 'κατὰ πίλησιν'"
+  ],
+  "b_errors": [
+   "line 13: 'οὖν φαμέν, ὡς' — image 'τοῖς οὖν φαμένοις'",
+   "line 14: 'ἐν τοῖς πράγμασι' — image 'ἐπιχειρήματα'",
+   "line 18: 'ἀθροιστὸν μέν' — image 'ἄθρουν ἐστί'",
+   "line 11: 'πινουμένης ... οὐσίας' — image differs (neither matches)"
+  ],
+  "note": "The image supports B in lines 1-10 and 19-20 and A in lines 13-18, so each text has real errors in a different half of the page."
+ },
+ {
+  "item_id": "695230c6ab34727b1f044798",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 2: 'ἐπίσχεσιν ἀέρος' — image 'οὐ δέξεται ἀέρα'",
+   "line 11-12: 'προσκειμένων ταύτης τῆς περιοχῆς' — image 'πρὸς τὴν τοῦ τεύχους περιοχήν'",
+   "line 14: 'προσεισκρῖναι ἄν τι ἐκτὸς' — image 'προσεισκριθῆναί τι τῶν ἐκτὸς'"
+  ],
+  "b_errors": [
+   "line 5: 'ὁτιοῦν δέξεται τι. πλήρους γὰρ ὄντος σωμάτων' — image 'ἐπιδέξεταί τι πλῆρες ὑπάρχον. ὥστε'",
+   "line 6: 'δι’ ἀέρος εἰσιέναι τι' — image 'σώματα τοῦ ἀέρος ... συνελθεῖν'",
+   "line 8: 'ὡς τὰ ... ἐλάσσω ποιεῖν τὸν ὄγκον' — image 'εἰς ἃ ... ἐλάσσονα αὐτοῖς ὄγκον'",
+   "line 9: 'κενὸν δὲ ... μηδ’ ἐν αὐτῷ' — image 'μηδενὸς καθόλου κενοῦ'",
+   "line 19: 'προσείσκειν' — image 'προσεισκρίνει'"
+  ],
+  "note": "Both texts have wrong words, but in lines 3-9 and 15-19 the image follows A, and B garbles the central argument."
+ },
+ {
+  "item_id": "695230c6ab34727b1f044799",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 4-5: 'παραβαλὼν ... τῷ σίφωνι ἀποσχῇ πρὸς ὥραν' — image 'παρ’ αὐτὸ τὸ στόμα περιλαβὼν τὴν χεῖρα'",
+   "line 6-7: 'μένει πᾶν τὸ ἐν τῷ τεύχει πνεῦμα ἐντὸς σεσηνωμένος' — image 'μενεῖ πάντα τὸν χρόνον συνεσφηνωμένος'",
+   "line 8: 'ὑπὸ φωνῆς βοῆς' — image 'ψόφου καὶ βοῆς'",
+   "line 19: 'ἀναπληρῶσαι τὸν ἀντὶ ἐκκενομένων' — image 'συναναπληροῦν τὸν τῶν ἐκκεκρουμένων'"
+  ],
+  "b_errors": [
+   "line 1: 'ὥστε δείκνυται' — image 'σαφῶς δείκνυται'",
+   "line 12-13: 'ὥστε τὸ μέλι' — image 'τῷ στόματι' (invented)",
+   "line 14: 'εἰσηκούσης οὐσίας' — image 'ἄλλης οὐσίας'",
+   "line 20: 'καὶ πλέον ἐὰν ζητήσῃ' — image 'ἡ γὰρ αὔξησις...'"
+  ],
+  "note": "The image confirms B in lines 4-11 and A in lines 1 and 12-14, and both texts are wrong in lines 3 and 17-18."
+ },
+ {
+  "item_id": "69938d5f5d28b693146cedef",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The only differences are long-s/ampersand conventions and that A puts the catchword 'motus,' inline; the wording matches the print."
+ },
+ {
+  "item_id": "69938d5f5d28b693146cee37",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 2: 'ἔκρυψεν Ἀθανιάδος· οὐδὲ' — print 'ἔκρυψεν· ἀθανιάδος δὲ'",
+   "line 8: 'νόος ἔμφυτος' — print 'νύ οἱ ἔμφυτος'",
+   "line 15: 'λιθείς, ὃ' — print 'τιθείς, ὁ'",
+   "line 23: 'σύνθροον ... μυκητῆρος' — print 'σύνθρονον ... μυκήτορος'",
+   "line 13: 'παιπαλέης' — print 'παλέης'"
+  ],
+  "b_errors": [
+   "line 1: 'τριτάτης' — print 'τρίτατος'",
+   "line 7: 'σύγγονον' — print 'σύγγονος'"
+  ],
+  "note": "Checked each span against the print; B has two small slips, while A has several wrong words that change the reading."
+ },
+ {
+  "item_id": "699750805583d749eb732d4a",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'λούθιον ἀμβροσίῳ' — print 'λοίσθιον ἀμβροσίην'",
+   "line 9: 'σφαλλοὶ σενάχιζον' — print 'σιληνοὶ στενάχιζον'",
+   "line 10: 'οὐδὲ κάλλος ἔληπε' — print 'οὐδέ ἑ κάλλος ἔλειπε'",
+   "line 16: 'ταυρεοὶ' — print 'ταῦροι'",
+   "line 18: 'Φοῖβος· ἀτίετον' — print 'Φοῖβος ἀτίμητος·'"
+  ],
+  "b_errors": [
+   "line 5: 'ὠκυμόρῳ' — print 'ὠκυμόρου'",
+   "line 24: 'τιμάορον εἰς φόβον' — print 'τιμήορον εἰς Φόβον'",
+   "line 25: 'ἅζομαι' — print 'ἄξομαι'"
+  ],
+  "note": "In most of the spans the print supports B; A has many wrong words, while B's few errors are mostly accents and single letters."
+ },
+ {
+  "item_id": "699750805583d749eb732d6b",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 3: 'οἷς χάρις' — print 'ὃν χάρις'",
+   "line 5: 'οὖδας Ὑρίης' — print 'οὖδας ἀρούρης'",
+   "line 6: 'μεθέπεσκαν ... Ὑριῆος' — print 'μεθέπουσαν ... ἐρείης'",
+   "line 7: 'ἀπειρογάμων ὑπὸ' — print 'ἀπ’ εὐρυγάμων ἀπὸ'",
+   "line 19: 'ἀχιλήϊ' — print 'ἀχιλῆος'"
+  ],
+  "b_errors": [
+   "line 2: 'σφεας' — print 'οἱ'",
+   "line 3: 'ὥστε καὶ ἀπληδόντος ἄγον' — print 'οἵ τ’ ἀσπληδόνος ἄστυ'",
+   "line 10: 'ὕδρων' — print 'οὔρων'",
+   "line 12: 'ἷα' — print 'υἷα'",
+   "line 23: 'εὔλοφα' — print 'ἄψοφα'"
+  ],
+  "note": "Each text gets roughly half of the contested words right against the print, and neither is clearly better."
+ },
+ {
+  "item_id": "699750805583d749eb732d93",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 2: 'πτόμος' — print 'πρόμος'",
+   "line 15: 'ὄφρα δὲ' — print 'τόφρα δὲ'",
+   "line 20: 'ἆσμα λιταίνων' — print 'ἆσθμα τιταίνων'",
+   "line 22: 'εὐερκάλαμον' — print 'εὐκροκάλῳ'",
+   "line 25: 'ἔκειτο τανυσμένος' — print 'ἔην τετανυσμένος'"
+  ],
+  "b_errors": [
+   "line 7: 'δὲ' — print 'γὰρ'",
+   "line 14: 'ὕρεσιν' — print 'οὔρεσιν'",
+   "line 15: 'ἶσον ἑλίξας' — print 'ὅλον ἑλίξας'"
+  ],
+  "note": "The print supports B in most of the substantive spans; B's remaining errors are single-word slips."
+ },
+ {
+  "item_id": "699750805583d749eb732e0a",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'πλευρῆς' — print 'πρηνὴς'",
+   "line 14: 'διὰ θώρηκες' — print 'εὐθώρηκες'",
+   "line 15-16: 'ἔλεν ... πίτυος' — print 'ἔην ... πίσυνος'",
+   "line 21: 'ζωὸς' — print 'Ζηνὸς'",
+   "line 23: 'ἔνθετο ἀνήρ' — print 'ἔνθεος ἀνήρ'"
+  ],
+  "b_errors": [
+   "line 17: 'οὔτι σιδήρῳ' — print 'ἀντὶ σιδήρου'",
+   "signature 'bb 2' — print 'α 2'",
+   "line 7: 'ἑὼ' — print 'ἑὴν'"
+  ],
+  "note": "Almost every contested word matches B in the print; A has many wrong words, including a name (Ζηνός)."
+ },
+ {
+  "item_id": "699750805583d749eb732ef6",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 6: 'πεπήλυθε' — print 'περήλυθε'",
+   "line 11: 'βαρείῃ' — print 'βελαρῇ'",
+   "line 16: 'ναέτῃσι' — print 'ναετῆρι'",
+   "line 24: 'ὀξὺς ἀθλητής' — print 'ἀσὸς/ἀζὸς ἀθλητής'",
+   "line 25: 'ἔτι προθέοντα' — print 'ἐπιπροθέοντα'"
+  ],
+  "b_errors": [
+   "line 1: 'ὀνομαίοιο ποδύσκελος' — print 'οἰνομάοιο πανείκελος'",
+   "line 3: 'μεμηλότος' — print 'μεμαῶτος'",
+   "line 7: 'αἰών ... ἐπέφισε ... ἱμάθλην' — print 'ἀΐων ... ἐκούφισε ... ἱμάσθλην'",
+   "line 9-10: 'θορόντες ... πέλας' — print 'θορόντος ... πέλει'",
+   "line 13: 'τύχοντες' — print 'τεύχοντες'"
+  ],
+  "note": "A matches the print in most spans, including the name Oenomaus in line 1; B garbles that name and several verbs."
+ },
+ {
+  "item_id": "699750805583d749eb732fe7",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 17: 'τί πλέον' — print 'Σοὶ πλέον'",
+   "line 19: 'τοῖς καθαροῖς' — print 'σοῖς καθαροῖς'",
+   "line 23: 'γυνὴ δι᾽' — print 'γυνὴ δ᾽'",
+   "line 25: 'αὐτοχθόνες' — print 'αὐτολόχευτος'"
+  ],
+  "b_errors": [
+   "line 17: 'Εἰ πλέον' — print 'Σοὶ πλέον'",
+   "line 18: 'οὐ δὲ σὺν αὐτοῖς' — print 'οὐδὲ γὰρ αὐτοῖς'",
+   "line 21-22: 'τελεσιγάμῳ ... γονῇ' — print 'τελεσιγάμου ... γονῆς'",
+   "line 10: 'ὀνείρειον' — print 'ὀνειρείων'"
+  ],
+  "note": "Each text gets different contested words right (A: γὰρ, γονῆς, ὀνειρείων; B: σοῖς, δ᾽, αὐτολόχευτος), and both miss Σοί in line 17."
+ },
+ {
+  "item_id": "699750805583d749eb733000",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "note 22: 'οὐ συνάτῳ διονυσακῶν' — print 'ἐν ἐνάτῳ διονυσιακῶν'",
+   "167.8: 'ἄϋραις ἢ ἄϋρης' — print 'αὔραις ἢ αὔρης'",
+   "169.15: 'θύη' — print 'θήβη'",
+   "ver. vlt.: 'λυσατέος ἰνῦς' — print 'λυσσώδεος ἰνῦς'"
+  ],
+  "b_errors": [
+   "uses 'χρ.' throughout where the print has the abbreviation γρ.",
+   "162.10: 'ὑπτίοεν' — print 'ὕπτιος ἦεν'",
+   "169.5: 'ἐλαιοκόμων' — print 'ἑλισσομένων'",
+   "176.8: 'ψευδύφες πεπότητο θεώτερα γένετα πάλαι' — print '...πεπότητο θοάτερα γούνατα πάλλων'",
+   "last line '24. χρ.' — print '14. γρ.'"
+  ],
+  "note": "In this dense notes page each text misreads different Greek lemmata, so neither can be trusted alone."
+ },
+ {
+  "item_id": "69aeb621b6cf480123443468",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same wording in both; they differ only in bold/italic markup and where the footnote is placed."
+ },
+ {
+  "item_id": "69aeb621b6cf4801234434ea",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same text in both; the differences are quote marks, ⟨⟨ ⟩⟩ vs « » brackets and italic placement."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b444d",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'conquisiissem' — print 'conquisiuissem'"
+  ],
+  "b_errors": [
+   "first word 'Cvvm' — print has initial Q: 'QVVM'",
+   "initial described as 'C' with Hercules — it is a Q",
+   "'Aldine' — print 'Aldinæ'"
+  ],
+  "note": "The woodcut initial is clearly a Q (with a hare in the headpiece), so A's 'QVVM' is right and B's 'Cvvm' is wrong; otherwise the two differ only in conventions."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4451",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'θεοπρεπὲς ἀξίωμα' — print 'πρωτοφυὲς ἀξίωμα'"
+  ],
+  "b_errors": [
+   "'monstrat' — print 'commonstrat'",
+   "'ὥςπερ θεοῦ ἀγνοίᾳ' — print 'ἅτε θεοῦ ἀγχίνοια'",
+   "'ἀχρανίτῳ' — print 'ἀκηράτῳ'",
+   "'κλυδωνιζόμενος' — print 'κλυδωνίζεσθαι'",
+   "'ἐπικειμένου' — print 'ἐπικεχύσθαι'"
+  ],
+  "note": "The Greek quotations in the print match A except for one word; in B several are wrong, and 'ἀγνοίᾳ' reverses the sense."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4467",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "transcribes a different leaf (Tomus III, Quinta/Sexta Syzygia) — the image shows the title CATALOGVS DIALOGORVM with Primo Tomo syzygies 1-3 and Secundo Tomo Quarta Syzygia"
+  ],
+  "b_errors": [
+   "handwritten margin numbers slightly misread (e.g. '3' for Theages, '17 9')"
+  ],
+  "note": "The image is the first page of the dialogue catalogue, which B transcribes; A gives the facing page's text, which shows through only faintly."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4469",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "invents a full page (PRIMVS TOMVS, Euthyphro/Apologia/Crito/Phaedo descriptions) — the leaf is blank apart from reversed show-through"
+  ],
+  "note": "The leaf is blank and shows only mirror-image show-through of the catalogue, as A says; B's text is not on this leaf."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b447d",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "transcribes another page (APOLOGIA p. 19) — the image is PLATONIS p. 14, Euthyphro"
+  ],
+  "b_errors": [],
+  "note": "The header '14 PLATONIS' and the Euthyphro dialogue in both columns match B; A is the text of a different page."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b44a8",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "margin note a: 'Cur illius παῤῥησίας' — print 'Suæ illius παῤῥησίας'"
+  ],
+  "b_errors": [
+   "transcribes another page (Phaedo, Cebes/Socrates on suicide) — the image is APOLOGIA SOCR. p. 37"
+  ],
+  "note": "The header 'APOLOGIA SOCR. 37' and both columns match A; B is from a different dialogue."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4568",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "transcribes another page (PLATONIS p. 254, Sophista) — the image is THEAETETVS p. 153"
+  ],
+  "note": "The header 'THEAETETVS 153' and the Greek and Latin columns match A; B is the text of a Sophist page."
+ }
+]

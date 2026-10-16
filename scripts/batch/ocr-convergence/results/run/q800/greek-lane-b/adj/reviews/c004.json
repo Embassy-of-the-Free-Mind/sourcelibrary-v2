@@ -1,0 +1,110 @@
+[
+ {
+  "item_id": "69afe2eccf56258c93890d1d",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "whole text is the English facing page 47 ('summer, that the body may become cold…'); image is Greek page 44 'ΠΕΡΙ ΔΙΑΙΤΗΣ ΥΓΙΕΙΝΗΣ'",
+   "footnotes are from another page ('A omits ἀγαθὸς here…'); image footnotes are ποιέεσθαι/ἤδη χρῆσθαι/μαλθακοῖσι"
+  ],
+  "b_errors": [],
+  "note": "Image is Greek p. 44 beginning 'Τοὺς ἰδιώτας ὧδε χρὴ διαιτᾶσθαι', which B transcribes; A is the English translation of another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890d75",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "whole text is English page 135 (Aphorisms IV. i–vii); image is Greek page 132 (Aphorisms XXVII–XXXI)",
+   "footnotes 9–11 not on this leaf; image has footnotes 1–9"
+  ],
+  "note": "Image is Greek p. 132 'καρίδες, ἀκροχορδόνες…' with footnotes 1–9, matching A; B is another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890d8d",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "whole text is English page 159 (Fifth Section I–X); image is Greek page 156 (Aphorisms LXXVIII–LXXXIII)"
+  ],
+  "b_errors": [],
+  "note": "Image is Greek p. 156 'πιτυρώδεα συνεξουρεῖται…' with footnotes 1–5, which B matches; A is another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890d91",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "whole text is English page 163 (Aphorisms V. xviii–xxii); image is Greek page 160 (X–XVII)"
+  ],
+  "b_errors": [],
+  "note": "Image is Greek p. 160 'πλεύμονα αὐτοῖσι τρέπεται…' with footnotes 1–6, matching B; A is another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890dda",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "whole text is Greek page 236 (ΠΕΡΙ ΔΙΑΙΤΗΣ ch. V); image is English page 233 'REGIMEN, I. III.–IV.'"
+  ],
+  "note": "Image is English p. 233 'each of them possesses is this…' with footnotes 1, 4, 5, matching A; B is another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890e61",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "omits superscript markers 3–7 in the main text (after σύμφορον, οὖν, διαιρέω, ἐπιτολῆς, ἢν) — minor"
+  ],
+  "b_errors": [
+   "whole text is English page 371 (Regimen III. LXVIII); image is Greek page 368"
+  ],
+  "note": "Image is Greek p. 368 'δεῖται ἤδη…' with footnotes 1–2, matching A apart from a few dropped note markers; B is another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890e76",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "whole text is Greek page 392 (ΠΕΡΙ ΔΙΑΙΤΗΣ LXXIII); image is English page 389 'REGIMEN, III. LXXI.–LXXII.'"
+  ],
+  "b_errors": [],
+  "note": "Image is English p. 389 'have fall upon them long and pleasant sleeps…' with notes 1–2 and 6–8, matching B; A is another page."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890eb8",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "whole text is page 458 (on λόγος, doxographies, Bywater); image is page 455 'season to season and from day to day…'"
+  ],
+  "note": "Image is p. 455 on the strife of opposites with the Philo footnote, matching A; B is another page of the Introduction."
+ }
+]

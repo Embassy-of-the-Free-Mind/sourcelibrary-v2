@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69afe2eccf56258c93890e61",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is the Greek page 368 ('δεῖται ἤδη ... LXVIII. Πρῶτον μὲν οὖν'); X gives the English translation from another page (371, 'nature, of a warming character...')."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4467",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is the 'CATALOGVS DIALOGORVM' (Primo Tomo, 'Εὐθύφρων ... Pag. 1' to 'Πολιτειῶν ... pag. 327'); X gives the following leaf (Νόμων, Τίμαιος, Sexta Syzygia)."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b45fa",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is SOPHISTA p. 233 ('μάλιστα λέγῃς; ... consilio hoc dicis'); X gives a Cratylus page (400, 'ψυχῆς ... Σῶμα') from elsewhere in the book."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4724",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is PLATONIS p. 128 ('fallamur, dum nostri curam nõ habemus ... σκυτική'); Y gives Alcibiades I p. 133 ('κατοπτρικῷ ὄψει'), a different leaf."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4568",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is THEAETETVS p. 153 ('στρατόπεδον ... exercitum & imperatorem Homerum'); Y gives a Sophista page (254), a different leaf."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b447d",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is PLATONIS p. 14 (Euthyphro, 'οἱ στρατηγοί, ὦ φίλε ... Euthyphro, [multa quidem agunt:]'); Y gives Apologia p. 19, a different leaf."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b49d2",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is PLATONIS p. 808 ('excitetur & surgat ... ἐγειρομένου τε καὶ ἐξανισταμένου'); X gives De Legibus VII p. 819 ('ἃ σὺ νῦν λέγεις'), a different leaf."
+ },
+ {
+  "item_id": "699750805583d749eb732d4a",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts give the same 25 lines, but Y reads the print more closely: line 9 'σηλεινοὶ στενάχιζον' (X 'σφαλλοὶ σενάχιζον'), line 10 'οὐδέ ἑ κάλλος ἔλειπε' (X 'οὐδὲ κάλλος ἔληπε'), line 18 'Φοῖβος ἀτίμητος' (X 'ἀτίετον'); X does get 'ἄξομαι' right in the last line."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890eb8",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is INTRODUCTION p. 455 ('season to season and from day to day ... Philo, Rer. Div. Her. 43'); X gives p. 458 ('refers in the word λόγος ... Bywater'), a different leaf."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b48b8",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is PLATONIS p. 528 ('differas: an potius cum neutris ... πρὸς οὐδετέρους'); X gives De Repub. VII p. 537 ('ζοντας τρέφε'), a different leaf."
+ }
+]

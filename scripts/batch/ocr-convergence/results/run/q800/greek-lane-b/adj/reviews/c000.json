@@ -1,0 +1,437 @@
+[
+ {
+  "item_id": "699389830f04c37dcfa616d7",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "gives a fluent, near-complete homily for a leaf that is largely effaced; much of the middle and lower text cannot be confirmed on the image",
+   "ends with a doxology ('… εἰς τοὺς αἰῶνας τῶν αἰώνων. Ἀμήν'); the last visible lines of the leaf do not read as a doxology"
+  ],
+  "b_errors": [
+   "almost all lines are '…'; the few words given ('ὁ μηχανικὸς', 'ὀρθὰς γωνίας', 'κἀμπύλῃ') are geometry terms that do not fit the visible homiletic text",
+   "omits the readable opening lines (uppercase 'ΓΕΝΗ…' line, 'ὁ μηδὲ χαίρειν …')"
+  ],
+  "note": "The image is badly damaged; A's opening lines match what is visible but the rest looks invented, and B is almost empty with words that are not on the leaf."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e4",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1: garbled duplicate 'Ἐγγυτέρω … τῶν ἀσfed…' before the reading",
+   "'οὐstr' glitch before the unclear passage"
+  ],
+  "b_errors": [
+   "entire text is a different passage about divine names ('Συγγνώμην γὰρ ἔχειν …'); image line 1 reads 'ἐγγυτέρω γὰρ τὰ …'",
+   "heading 'περὶ τῆς τάξεως τῶν ἐπιθέτων ἐν ὀνόμασι' — image 'περὶ τῆς τάξεως τῶν θεωρημάτων'"
+  ],
+  "note": "The image's first lines and its mid-page heading match A; B is invented text."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e5",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "whole text is Gregory of Nyssa's De hominis opificio ('ὅτι τῶν ἐμφανῶν τὸ θαυμάζεσθαι …'); image line 1 'ὅτι τὴν ἐπιφάνειαν τῆς θ… ἕως … ὕδατος ἠρέμου …'",
+   "line 2 'ἐπαρχαὶ τῆς ἡδονῆς' — image 'ἐπαρχὴ τῆς ἐκθέσεως μέση τοῦ σώματος οὐρανοῦ'"
+  ],
+  "note": "The opening lines on the leaf match A, and A has the page number 3 at the foot; B is a different known text."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e6",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "repetitive astrological text ('τῶν ἀστέρων κινήσεις' over and over) that does not follow the leaf line by line",
+   "planet list 'τόν τε τοῦ κρόνου· τοῦ διὸς· τοῦ ἄρεως …' — image 'τὸν … τοῦ δρόμου … σάρκας … ἀφροδίτης … ἑρμοῦ διὰ τὸ'",
+   "'μόνον οὐχὶ τοὺς ὁρῶντας' line on the image is missing from A"
+  ],
+  "b_errors": [
+   "individual words are doubtful in several places (e.g. 'θεοτόκος', 'θεοδώρου'), but the text follows the leaf's lines"
+  ],
+  "note": "B's lines match the image at checkable points ('μαγικὰς ἐπινοίας', 'ἀφροδίτης, ἑρμοῦ, διὰ τὸ / μόνον οὐχὶ τοὺς ὁρῶντας', and the final line); A looks invented."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e8",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1 'ὥσπερ γὰρ τὴν ἀρχὴν ποιουμένοις ἀναμνηστέον …' — image 'ὡς ἔφαμεν τῶν ἀρχῶν ποιουμένους ἅμα δὲ ὥρμησθαι …'",
+   "rest of the page is invented geometry about spirals that does not match the leaf"
+  ],
+  "b_errors": [
+   "'ferουσῶν' contains a Latin-letter glitch"
+  ],
+  "note": "The image's first lines and the right-margin note match B; A's text is not on the leaf."
+ },
+ {
+  "item_id": "699389830f04c37dcfa617ba",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1 'αὐτοῦ προσθετικοὶ καὶ ἀφαιρετικοὶ' — image 'αὐτοῦ τροπικοῦ καὶ …'"
+  ],
+  "b_errors": [
+   "text does not follow the leaf: line 4 on the image reads 'διδύμων καὶ τοῦ ὑδροχόου διαμετροῦντες … τοῦ χρι-', which B lacks",
+   "omits the narrow column beside the diagram ('… τῶν προσθέσεων, ἡμερῶν αὐτῶν δύο λημμάτων, ἑξήκοντα …')",
+   "diagram labels given as ΑΝΑΤΟΛΗ/ΔΥΣΙΣ/ΜΕΣΗΜΒΡΙΑ/ΑΡΚΤΟΣ; the image shows zodiac names (ταῦρος, λέων, ζυγός, σκορπίος, τοξότης)"
+  ],
+  "note": "A's lines 3–4, its narrow side column and its zodiac diagram labels match the leaf; B is mostly invented."
+ },
+ {
+  "item_id": "699389830f04c37dcfa617bb",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "the body text after the diagram (e.g. 'λαμβανέτω δὲ τρίτον ἡμικύκλιον …') does not match the leaf's lines ('… τοῦ ἀπὸ τοῦ ἰσημερινοῦ … ἐδίχασε …')",
+   "the narrow column beside the diagram is not what is written there"
+  ],
+  "b_errors": [
+   "repeated 'μεσημβρινός' filler that does not follow the leaf",
+   "the same margin note is given twice, top and bottom; the two right-margin notes on the leaf are different",
+   "'ΑΒΓΔΕ' line-labels are invented"
+  ],
+  "note": "Neither text follows the hand line by line; beyond a few shared words, both are largely invented."
+ },
+ {
+  "item_id": "699389830f04c37dcfa6180f",
+  "pick": "neither",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "degenerates into a loop: 'ἢ τῶν ἐν τῷ θέρει' repeated for about 20 lines",
+   "the lists of 'θερμασιῶν/ῥιγῶν/αἱμάτων' are not on the leaf"
+  ],
+  "b_errors": [
+   "a single unclear paragraph about 'ὑπόθεσις', looping, which does not match the leaf's lines",
+   "drops the numeric content (κζ, λ …) visible in the lower half"
+  ],
+  "note": "A is a repetition loop and B is invented filler, apart from a few words such as ἑξαμοιρία/τριμοιρία."
+ },
+ {
+  "item_id": "699389830f04c37dcfa6184c",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "body after the diagram (epicycle/Mercury discussion) does not match the leaf, which speaks of the apogee ('ἀπὸ τοῦ ἀπογείου ἡμικύκλιον')",
+   "drops the 'στρέψωμεν … τοῦτο πρῶτον εἰς σχῆμα διὰ τὸ σαφές' line"
+  ],
+  "b_errors": [
+   "line 1 'ἔμπαντος τοῦ χρόνου' — image 'ἐνιαυσίου χρόνου'",
+   "first-line numeral 'ρ̄ῑ ῑθʹ' doubtful; image suggests ρπθ"
+  ],
+  "note": "B's body matches the leaf at several points (ἀπόγειον, 'ἀνωμαλίας διαφορὰ … ὡς ἔφαμεν … ἡλίου τυγχάνοντος'); A has the first line right but invents the rest."
+ },
+ {
+  "item_id": "695aa9c7be4023bd34bd6fd3",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 12 'ἄκαινα' — image 'ἄκενα'",
+   "line 15 adds 'δὲ' ('ἡ δὲ ἄκαινα') — image 'ἡ ἄκαινα'"
+  ],
+  "b_errors": [],
+  "note": "Same printed text; B is slightly more exact, but the differences are minor spelling and formatting."
+ },
+ {
+  "item_id": "695aa9c7be4023bd34bd6fdf",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'πόδες φκγʹ καὶ ιβʹ εἰκοστόπρωτα' — image 'ιζʹ'",
+   "'πολλαπλασιασθέντα' — image 'πολυπλασιασθέντα'",
+   "apparatus '15. σφαίρας] C cum suprascr.' — image 'O cum suprascr.'",
+   "apparatus 'καὶ τῶν γινομένων' — image prints 'τῶτ'"
+  ],
+  "b_errors": [],
+  "note": "The printed page reads ιζʹ, πολυπλασιασθέντα and 'O cum suprascr.', as B does."
+ },
+ {
+  "item_id": "695aa9c7be4023bd34bd6ff2",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "apparatus '15. σϙϑ'] σπϑ' B' — image 'σηθ' B'",
+   "drops 'πόδες' in 'ταῦτα ἑνδεκάκις γίνονται πόδες ,γρμα''"
+  ],
+  "note": "Both texts are close; the image confirms A's 'σηθ' B' in the apparatus and 'πόδες ,γρμα''."
+ },
+ {
+  "item_id": "695aa9c7be4023bd34bd7016",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The words are the same; the differences are only bold/italic formatting, an accent (Ἡμικύκλιόν, as on the page), and '.' vs '·'."
+ },
+ {
+  "item_id": "695aa9c7be4023bd34bd7031",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "apparatus '16. κέντρον] κε̅ H' — image 'ιε H'"
+  ],
+  "b_errors": [
+   "diagram described as triangle 'αβλ'; the image shows αβγ with λ, κ, θ as additional points"
+  ],
+  "note": "The main text is the same; each has one small slip, one in the apparatus and one in the diagram description."
+ },
+ {
+  "item_id": "6993895d74305116d72d1649",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 3 'incorrupto genuit' — image 'intacte enixa'",
+   "'Omnia ferre nitent' — image 'Omnia festa nitent'",
+   "'stella cunctis peragrant' — image 'stella cunctiq; requirunt'",
+   "'eriperet a faucibus' — image 'qrens a faucibus'",
+   "'myrrhaque et thure tyranni' — not what the leaf reads"
+  ],
+  "b_errors": [
+   "'numinis alta' — image 'alti'",
+   "'lux aurea orbem' — image 'lux clarior orbe'",
+   "'humū uariis … gēmis' — image 'humū uiolis … q[uoque]'",
+   "'fert m r̃ rā quā t~r̃ a didit urbs' — a garbled stretch",
+   "'nec morituro lege nitēs' — image 'nec moribus et lege nitens'"
+  ],
+  "note": "Each text gets right lines the other gets wrong (A: alti, clarior, violis, dira; B: festa, requirunt, intact-/enixa, qrens), and both have serious substitutions."
+ },
+ {
+  "item_id": "6993895d74305116d72d164a",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "page number 32 — image 72",
+   "'patriaeque paterni' — image 'patr ore patern-'",
+   "'communiaque genus' — image 'commixtūq; genus'",
+   "'te cura monente' — image 'moneret'",
+   "'Viuorum lux et iudex' — image 'lucex iudex'"
+  ],
+  "b_errors": [
+   "'per armina regū' — image 'carmina'",
+   "'pandere faſſi' — image 'pandere fas sit'",
+   "'Vnū hominiſ' — image 'Primū hominis'",
+   "'Ne forte incendaū prerrāſ uiſ ignibus iſtaſ' — image 'incendat pressas uis ignea terras'",
+   "'tē ide iūicę ui ſidi' — a garbled stretch"
+  ],
+  "note": "A smooths many lines into wrong words while B garbles others; each is correct where the other fails."
+ },
+ {
+  "item_id": "6993895d74305116d72d164b",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'a scriptoribus imperitis emendata per vitium' — image 'a presumptoribus imperitis emendata peruersius'",
+   "omits 'iam' in 'quia iam inter se variant'",
+   "'in vocem falsarium' omits 'me' (image 'in uocem me falsariū')",
+   "'sacrilegium' — image 'sacrilegū'"
+  ],
+  "b_errors": [
+   "'doctus pariter uel indoctus' — image 'ut indoctus'",
+   "gloss '·i· doctrina' placed over 'paruulorum'; on the image it is over 'saliua'",
+   "gloss 'inuidis' placed over 'maledicorum'; on the image it is over 'respondeant'"
+  ],
+  "note": "B is more accurate in the main text (presumptoribus, peruersius, iam, me), while A places the glosses better and has 'ut indoctus'."
+ },
+ {
+  "item_id": "6993895d74305116d72d164c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Preterea' — image 'p[rae]t[er]mitto'",
+   "'interpretem dare' — image 'interpretes emendare'",
+   "'cum nro sermone' omits 'in'",
+   "many garbled glosses inserted inline ('multi co miserat for dinare …')"
+  ],
+  "b_errors": [
+   "top note invented: 'Cesaria Nicopolis ubi innotavit Iulius Africanus contra Origenem …' — image 'Cesaria Metapolis ubi uictoriā habuit Iulius cesar contra antonium & Cleop. …'",
+   "'nec in ueteri testamento' — image 'instrumento'",
+   "adds 'sua propria restitues', which is not on this leaf (the page ends 'singulis canonibus')"
+  ],
+  "note": "B's main text is generally better, but it invents the top note and adds text from the next page; A gets the note and 'instrumento' right but garbles words and glosses."
+ },
+ {
+  "item_id": "6993895d74305116d72d164d",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'scriptus' — image 'p[re]scriptus'",
+   "'numerū discolorū … priorū merū' — image 'numerū discolorem … prior numerus'"
+  ],
+  "b_errors": [
+   "'sua quaequere statuet' — image 'sua quaeque restitues'",
+   "gloss 'a damaso' — image 'a damare'",
+   "'nuntiat lites partim morte' — image 'nuntiat uita post mortē'",
+   "adds 'sine mora reperies' twice"
+  ],
+  "note": "A has the opening line, the glosses and the 'uita post mortem' line right, where B garbles them; A's slips are smaller."
+ },
+ {
+  "item_id": "6993895d74305116d72d164e",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Et virtute leo est indoctus' — image 'indoctis'",
+   "'excelsis … Inventus graviora' — image 'e celis … Intuentu t grauiora'",
+   "'Ac tu magne pater nati … pendens solio opida pendua' — image 'At tu magne pat natū … residens solio opa ardua'",
+   "'tunc tremorp dominica gessisset choricus' — a garbled stretch"
+  ],
+  "b_errors": [
+   "'xp̃r erat tūre patri que collocat arctis' — image 'xps erit terris raptum que collocet astris'",
+   "'bis duodena unū' — image 'uirū'",
+   "'stola candida matris amictū' — image 'martyris'",
+   "'recurre ad tē hōem' — image 'sentit ad ee hominem'",
+   "'Idala gentes … atrae' — image 'Talia gentes … actae'"
+  ],
+  "note": "Each text gets right lines the other gets wrong (A: raptum … astris, uirum, martyris, sentit, Talia; B: Intuentu, residens, ardua, gravis ora); both have serious errors."
+ },
+ {
+  "item_id": "6993895d74305116d72d164f",
+  "pick": "A",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "row 11 Mattheus 'XCVII' — image 'XCVIII'",
+   "Lucas column has impossible numerals such as 'LXXCIIII' and 'IXXXXIIII'"
+  ],
+  "b_errors": [
+   "row 5 'XI VIIII X XIIII' — image 'XI IIII X XXIIII'",
+   "row 7 'XXIIII XXVII XVII XLII' — image 'XXIII XXVII XVII XLVI'",
+   "row 11 Marcus 'XXXVI' — image 'XCVI'",
+   "column 2 row 1 'CCXCIII CLXXXII CCLXXXII CLXX' — image 'CCXCIIII CLXXV CCLXXXI CLXI'"
+  ],
+  "note": "Spot checks of the canon table favour A in most rows, but both have many wrong numerals."
+ },
+ {
+  "item_id": "6993895d74305116d72d1650",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "row 4 'xxxiii cviii clxxxvii' — image 'xxxii xxxviii clxxxiiii'",
+   "right half row 1 'cxlvii lvi xc' — image 'cxliii lvi xc'",
+   "right half row 2 'cxluiii lviii xci' — image 'cxliiii lviiii xii'",
+   "rows are misaligned against the leaf in several places"
+  ],
+  "b_errors": [
+   "some single numerals doubtful (e.g. 'bxxxiiii')"
+  ],
+  "note": "B matches the leaf's rows at the points checked (rows 4–5 on the left, top rows on the right), while A drifts."
+ },
+ {
+  "item_id": "6993895d74305116d72d1651",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'cxlini' misreads 'cxliiii'",
+   "row 4 Lucas 'ccliii' — image 'cciiii'"
+  ],
+  "b_errors": [
+   "row 8 'ccclviiii … ccclxxviiii' — image 'cclxviii … ccxxviii'",
+   "row 9 'ccclxxxi' — image 'cclxxi'",
+   "right table row 7 'lxxiii lxxv cccxii' — image 'lxiii lxv xxxiiii'",
+   "right table row 8 Iohannes 'ccxcvii' — image 'cxiiii'",
+   "right table row 12 'clx' — image 'xx'"
+  ],
+  "note": "B adds a spurious extra 'c' to many Matthew numbers and misreads the John column; A matches most rows checked."
+ },
+ {
+  "item_id": "6993895d74305116d72d1652",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "row 1 Iohannes 'lxxi' — image 'xxvi'",
+   "row 2 Marcus 'xxxvi' — image 'xxvi'",
+   "rows 13–19 Mattheus 'ccclxxxvi/ccclxxxviii' — image 'cclxxxvi/cclxxxviii/ccxciii'",
+   "Canon V row 2 Lucas 'xiiii' — image 'viii'"
+  ],
+  "b_errors": [
+   "some single numerals doubtful in the last columns"
+  ],
+  "note": "B matches the leaf's numbers at the points checked (xxvi, lxvii, lxxvii, cclxxxvi, viii, xvi); A repeats wrong values."
+ },
+ {
+  "item_id": "695230c6ab34727b1f044787",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "'Poimander' — image 'Pomander'"
+  ],
+  "note": "Same content; the differences are formatting, the crosses before each line and one spelling."
+ }
+]

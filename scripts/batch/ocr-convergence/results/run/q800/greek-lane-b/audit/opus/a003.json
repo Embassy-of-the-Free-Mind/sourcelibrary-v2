@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69afe2eccf56258c93890d1d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is Greek p. 44 'ΠΕΡΙ ΔΙΑΙΤΗΣ ΥΓΙΕΙΝΗΣ ... Τοὺς ἰδιώτας ὧδε χρὴ διαιτᾶσθαι', which Y reproduces; X gives an English translation page (p. 47, 'summer, that the body may become cold') from another leaf."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890ce0",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. xliii beginning '(Book III) the \"discovery\" is clearly identified with προδιάγνωσις', as in Y; X transcribes a different page (xlvi, 'Ariston, or Euryphon, or Phaon')."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4727",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 131 'ALCIBIADES I.' with Greek/Latin columns ('ΑΛ. Ἔοικεν... mum suum norit'), matching Y; X gives the Alcibiades II argumentum from p. 136, another leaf."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616d7",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "The leaf is badly degraded; X's opening lines ('ὁ μηδὲ χαίρειν...', 'ἁμάρτανε') fit visible traces though much of its fluent text is doubtful, while Y is almost all '<unclear>' with invented geometric words ('ὀρθὰς γωνίας', 'κἀμπύλῃ') that misrepresent the content."
+ },
+ {
+  "item_id": "699389830f04c37dcfa6180f",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Neither is reliable, but X marks its whole text '<unclear>' and catches visible words like 'ἑξάμοιρον/τριμοιρία', whereas Y falls into an invented loop repeating 'ἐν τῷ θέρει ἢ τῶν' for dozens of lines."
+ },
+ {
+  "item_id": "699389830f04c37dcfa617bb",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y's first line ('...γραφέσθω... τῶν ζῳδίων τὸ Ζ ἡμικύκλιον'), its separate top and bottom marginalia and its 'ἐδίχασε' after the diagram fit the leaf; X's meridian text is largely invented, and it repeats the same margin note twice."
+ },
+ {
+  "item_id": "695230c6ab34727b1f044787",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both correctly give the Greek contents list ('Τάδε περιέχει ἐνταῦθα... ὠκέλλου φιλοσόφου περὶ τοῦ παντός'), the Latin note, '2518.' and the printed slip; the differences are only formatting."
+ },
+ {
+  "item_id": "695230c6ab34727b1f04478f",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X follows the hand more closely ('κἂν ὅλον αὐτὸ κρύψῃς', 'ὄψει πᾶσαν τὴν ἐντὸς τοῦ ἀγγείου ἐπιφάνειαν', 'ἀθροῦν... κενὸν'); Y gives the opposite sense with 'καθάπερ οὐκ ἦν' and invents 'τὸ καταλειφθὲν ἄχρι νῦν εἰς δόξαν φυλαχθὲν' and 'ἀναπλήρωσιν'."
+ },
+ {
+  "item_id": "695aa9c7be4023bd34bd7016",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both reproduce 'HERONIS LIBER GEEPONICUS' and sections 1–8 ('Τίνες αἱ γενικαὶ τῶν σχημάτων διαφοραί;' ... '(V. ibid. 34)') word for word; X mixes up line numbers and section numbers in its margin tags, which is only markup."
+ },
+ {
+  "item_id": "695311a477f38f6761bccbb5",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Both give Ezekiel 1 as on the leaf; X keeps the column-1 line 'ΠΤΕΡΥΓΩΝ ΑΥΤΩΝ ΕΠΙ ΤΑ ΤΕΣΣΑΡΑ ΜΕΡΗ ΑΥΤΩΝ' that Y moves into a margin and replaces with 'ΣΥΝΑΠΤΟΜΕΝΑΙ', but X in turn drops 'ΑΥΤΟΙΣ' and garbles 'Η ΝΕΦΕΛΗ ΕΚΕΙ ΤΟ ΠΝΑ'."
+ }
+]
