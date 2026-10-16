@@ -9,7 +9,8 @@
  *
  *   node --env-file=.env.production.local scripts/eval/g4-reread-pilot-6769/plan.mjs \
  *        --greek-census=<5619 census books.json> --rashi-class=scripts/eval/results/hard-hands-6731/rashi-classification.json \
- *        [--secs-greek=S --secs-rashi=S (measured wall seconds per page at concurrency 2)] --out=FILE.json
+ *        [--edition-match=<5619 census-edition-match.json>] [--secs-greek=S --secs-rashi=S (measured wall seconds per
+ *        page of one concurrency-2 read)] --out=FILE.json [--csv=FILE.csv]
  *
  * Per book: pages (page_number > 0), with OCR, with a real translation, status, hold, the #5700 trust-gate verdict, and
  * what an OCR apply of EVERY page would set off:
@@ -72,7 +73,10 @@ async function bookRows(ids, labelOf) {
 
 const census = JSON.parse(fs.readFileSync(arg('greek-census'), 'utf8')).filter((b) => b.kind === 'manuscript');
 const cls = JSON.parse(fs.readFileSync(arg('rashi-class'), 'utf8')).books.filter((b) => ['rashi', 'mixed'].includes(b.label));
-const greek = await bookRows(census.map((b) => b.id), () => 'greek-ms');
+const censusBy = new Map(census.map((b) => [b.id, b]));
+const matchFile = arg('edition-match');
+const matched = new Map(matchFile ? JSON.parse(fs.readFileSync(matchFile, 'utf8')).map((b) => [b.id, b.matched || null]) : []);
+const greek = (await bookRows(census.map((b) => b.id), () => 'greek-ms')).map((r) => ({ ...r, greek_share: Math.round(100 * (censusBy.get(r.id)?.greek_share_median ?? 0)) / 100, open_edition: matched.get(r.id) ?? null }));
 const clsBy = new Map(cls.map((b) => [b.book, b.label]));
 const rashi = await bookRows(cls.map((b) => b.book), (id) => clsBy.get(id));
 await client.close();
@@ -97,4 +101,10 @@ const summarise = (rows, s) => {
 const out = { at: new Date().toISOString(), dial: control, usd_page_realtime: USD_PAGE_REALTIME, secs_per_page_wall: secs,
   greek: { summary: summarise(greek, secs.greek), rows: greek }, rashi: { summary: summarise(rashi, secs.rashi), rows: rashi } };
 fs.writeFileSync(arg('out', '/dev/stdout'), JSON.stringify(out, null, 1));
+// One CSV row per book, both lists, for the issue comment's link.
+if (arg('csv')) {
+  const cols = ['label', 'id', 'title', 'language', 'year', 'visible', 'provider', 'pages', 'with_ocr', 'with_translation', 'status', 'held', 'trust', 'greek_share', 'open_edition', 'auto_retranslate_lane'];
+  const q = (v) => (v == null ? '' : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v));
+  fs.writeFileSync(arg('csv'), [cols.join(','), ...[...greek, ...rashi].map((r) => cols.map((c) => q(r[c])).join(','))].join('\n') + '\n');
+}
 console.error(JSON.stringify({ dial: control, greek: out.greek.summary, rashi: out.rashi.summary }, null, 1));
