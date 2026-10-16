@@ -239,7 +239,7 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
   // Supabase typed select() with a dynamic column list returns an over-broad
   // union; the runtime shape is { ubn, field_provenance, sl_book_id, ...editable fields }
   // so we cast through unknown and narrow on the application side.
-  const selectCols = ['ubn', 'uuid', 'field_provenance', 'sl_book_id', ...Object.keys(fieldChanges)].join(', ');
+  const selectCols = ['ubn', 'uuid', 'field_provenance', 'sl_book_id', 'deleted_at', ...Object.keys(fieldChanges)].join(', ');
   const { data: rawCurrent, error: fetchErr } = await supabaseAdmin
     .from('bph_works')
     .select(selectCols)
@@ -252,6 +252,11 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
     | null;
   if (!current && changeType !== 'create') {
     throw new BphCatalogError(`bph_works row not found for ${keyCol}=${ubn}`);
+  }
+  // A soft-deleted record (#6800) is frozen until an admin restores it. This
+  // also stops a pending proposal from being approved onto it.
+  if (current?.deleted_at && changeType !== 'create') {
+    throw new BphCatalogError('This record is deleted and cannot be edited. Restore it first');
   }
   if (current && changeType === 'create') {
     throw new BphCatalogError(
