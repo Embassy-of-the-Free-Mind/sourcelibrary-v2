@@ -96,8 +96,9 @@ for b in $BOXES; do
   [ "$verdict" = ok ] && [ "$mem_free_mb" -lt "$MIN_MEM_MB" ] && verdict="skip: memory"
   [ "$verdict" = ok ] && [ "$job_disk_free_gb" -lt "$MIN_DISK_GB" ] && verdict="skip: disk"
   [ "$verdict" = ok ] && awk -v p="$per" -v m="$MAX_LOAD_PER_CORE" 'BEGIN{exit !(p>m)}' && verdict="skip: load"
-  [ "$verdict" = ok ] && [ "$sp" != "?" ] && [ "$sp" -ge "$MAX_SESSION_PCT" ] && verdict="skip: 5-hour ${sp}%"
-  [ "$verdict" = ok ] && [ "$wp" != "?" ] && [ "$wp" -ge "$MAX_WEEK_PCT" ] && verdict="skip: week ${wp}%"
+  ge() { awk -v a="$1" -v b="$2" 'BEGIN{exit !(a+0>=b+0)}'; }  # a percent may come back as 80.5
+  [ "$verdict" = ok ] && [ "$sp" != "?" ] && ge "$sp" "$MAX_SESSION_PCT" && verdict="skip: 5-hour ${sp}%"
+  [ "$verdict" = ok ] && [ "$wp" != "?" ] && ge "$wp" "$MAX_WEEK_PCT" && verdict="skip: week ${wp}%"
   wk="?"; [ "$wp" != "?" ] && wk="${wp}%/${hr}h"
   printf '%-11s %-6s %-9s %-9s %-9s %-5s %-25s %-7s %-12s %-7s %-6s %s\n' "$label" "$per" "$((mem_free_mb/1024))G" \
     "${job_disk_free_gb}G" "${root_free_gb}G" "$live_jobs" "$acct" "${sp}%" "$wk" "$unused" "$score" "$verdict"
