@@ -184,7 +184,7 @@ export default function PreservedByEnemiesPage() {
           of the Maya alphabet&rdquo;; the book &ldquo;is the key to American inscriptions&rdquo; (
           <Link href={PAGE.landa19} className={linkClass}>Brasseur&rsquo;s introduction</Link>). It was not an alphabet. The
           key turned only in 1952, when the Soviet linguist Yuri Knorozov argued that Landa&rsquo;s informant had written
-          syllables: asked for the letter <em>b</em>, pronounced <em>be</em>, he wrote the sign for the syllable <em>be</em>
+          syllables: asked for the letter <em>b</em>, pronounced <em>be</em>, he wrote the sign for the syllable <em>be</em>{' '}
           (<Ext href={EXT.knorozov}>University of North Carolina Libraries</Ext>). That reading opened the Maya script.
         </p>
 
@@ -350,8 +350,8 @@ export default function PreservedByEnemiesPage() {
         <p className={p}>
           The list runs to seven kinds of specialist across the two pages: day-count diviners, those who claim to draw stones
           out of the body, those who revive the frightened and fainting, those who give medicines to barren women, star-readers,
-          water-gazers, night shape-changers. A sermon meant to make them disappear is one of the fullest lists of them that
-          survives from the period.
+          water-gazers, night shape-changers. A sermon meant to make them disappear is, page for page, a
+          record of who they were.
         </p>
 
         <p className={p}>
