@@ -347,16 +347,19 @@ def run_claude(key, J, OUT, drops):
                   + " | " + " ".join(f"{x}-{y} {st[f'{x}-{y}']['mean']:+.2f} {st[f'{x}-{y}']['ci_by_book']}" for x, y in PAIRS[:2] + PAIRS[3:4]))
 
 
-def run_cli(key, J, OUT, drops):
+def run_cli(key, J, OUT, drops, new="C38", base="G38", texts=None, verdict_vs=(), out_name="scores.json"):
     """#6331 test 1 (experiments/2026-10-08-cli-arm-xl-365-6331.md): C38 (CLI) beside G38 (API) and the page's production
     engine on the 365 pages, both judges on every item. Gate per stratum and pooled: C38 − G38 by-book lower bound > −0.15
-    and C38 inversion pages ≤ G38's + 2. Primary on all pages; again without #6304's drops."""
+    and C38 inversion pages ≤ G38's + 2. Primary on all pages; again without #6304's drops.
+    #6750 (experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md) calls it with new="C4L", base="C38": the same
+    measures and gate, plus the better / same / worse rule against each arm in verdict_vs. texts = {arm: jsonl path}
+    for the length ratio new / base."""
     items = key["items"]
     dec = {j: {i: decode(o, items[i]["labels"]) for i, o in J[j].items()} for j in J}
     gate = judge_gate(items, dec)
     JP = [j for j in J if gate[j]["pass"]]
     assert JP, "instrument failed: no judge passed the gate"
-    ARMS = ["C38", "G38", "PROD"]
+    ARMS = [new, base, "PROD"]
     cost = {}
     for a in ("G38", "L31", "FP"):
         for o in map(json.loads, open(f"{W}/arms/{a}.jsonl")):
@@ -407,16 +410,22 @@ def run_cli(key, J, OUT, drops):
                             "reversal_pages": sum(either(r, a, "rev") for r in rs), "reversal_pages_both": sum(all(r["J"][j][a]["rev"] for j in r["J"]) for r in rs),
                             "omission_pages": sum(either(r, a, "om") for r in rs), "invention_pages": sum(either(r, a, "inven") for r in rs),
                             "span_off_pages": sum(either(r, a, "span_off") for r in rs)}
-        for x, y in (("C38", "G38"), ("C38", "PROD"), ("G38", "PROD")):
+        for x, y in ((new, base), (new, "PROD"), (base, "PROD")):
             d = lambda r: fid(r, x) - fid(r, y)
             o[f"{x}-{y}"] = {"pages": n, "mean": round(sum(d(r) for r in rs) / n, 3), "ci_by_book": boot(rs, lambda v: sum(d(r) for r in v) / len(v)),
                              "pages_higher": sum(d(r) > 0 for r in rs), "pages_lower": sum(d(r) < 0 for r in rs)}
-        g = {"lower_bound_C38_minus_G38": o["C38-G38"]["ci_by_book"][0], "C38_reversal_pages": o["arms"]["C38"]["reversal_pages"],
-             "G38_reversal_pages": o["arms"]["G38"]["reversal_pages"]}
-        g["lower_bound_gt_-0.15"] = g["lower_bound_C38_minus_G38"] > -0.15
-        g["reversals_ok"] = g["C38_reversal_pages"] <= g["G38_reversal_pages"] + 2
+        g = {f"lower_bound_{new}_minus_{base}": o[f"{new}-{base}"]["ci_by_book"][0], f"{new}_reversal_pages": o["arms"][new]["reversal_pages"],
+             f"{base}_reversal_pages": o["arms"][base]["reversal_pages"]}
+        g["lower_bound_gt_-0.15"] = g[f"lower_bound_{new}_minus_{base}"] > -0.15
+        g["reversals_ok"] = g[f"{new}_reversal_pages"] <= g[f"{base}_reversal_pages"] + 2
         g["pass"] = g["lower_bound_gt_-0.15"] and g["reversals_ok"]
         o["gate"] = g
+        for x in verdict_vs:  # #6750's rule: better / same / worse, the reversal rule folded in
+            lo, hi = o[f"{new}-{x}"]["ci_by_book"]
+            more_rev = o["arms"][new]["reversal_pages"] > o["arms"][x]["reversal_pages"] + 2
+            v = "worse" if hi < 0 else "worse (more reversals)" if more_rev else "better" if lo > 0 else "same"
+            o.setdefault("verdict", {})[x] = {"verdict": v, "non_inferior": lo > -0.15 and not more_rev,
+                                              "reversals_per_100": {a: round(100 * o["arms"][a]["reversal_pages"] / max(1, n), 1) for a in (new, x)}}
         return o
 
     def block(rs):
@@ -431,17 +440,19 @@ def run_cli(key, J, OUT, drops):
                                                  if r["J"]["J1"][a]["fid"] is not None and r["J"]["J2"][a]["fid"] is not None)
                                              / max(1, sum(1 for r in rows if len(r["J"]) == 2 for a in r["arms"] if r["J"]["J1"][a]["fid"] is not None and r["J"]["J2"][a]["fid"] is not None)), 3),
            "primary": block(rows), "exclude_6304": {"dropped_pages": dropped, **block([r for r in rows if r["page_id"] not in dropped])}}
-    c38 = {o["uid"]: o["text"] for o in map(json.loads, open("/root/cli38-6182/C38-full.jsonl"))}
-    g38 = {o["uid"]: o["text"] for o in map(json.loads, open(f"{W}/arms/G38.jsonl")) if o.get("text")}
+    texts = texts or {"C38": "/root/cli38-6182/C38-full.jsonl", "G38": f"{W}/arms/G38.jsonl"}
+    c38 = {o["uid"]: o["text"] for o in map(json.loads, open(texts[new]))}
+    g38 = {o["uid"]: o["text"] for o in map(json.loads, open(texts[base])) if o.get("text")}
     both = [r["page_id"] for r in rows if r["page_id"] in g38 and r["page_id"] in c38]
-    res["cost"] = {"C38_billed_usd": 0, "C38_over_G38_output_chars": round(sum(len(c38[u]) for u in both) / sum(len(g38[u]) for u in both), 3),
+    res["cost"] = {f"{new}_billed_usd": 0, f"{new}_over_{base}_output_chars": round(sum(len(c38[u]) for u in both) / sum(len(g38[u]) for u in both), 3),
                    "pages_with_G38_cost": sum(r["usd"]["G38"] is not None for r in rows), "pages_with_PROD_cost": sum(r["usd"]["PROD"] is not None for r in rows)}
     res["rows"] = rows
-    json.dump(res, open(f"{OUT}/scores.json", "w"), indent=1)
+    json.dump(res, open(f"{OUT}/{out_name}", "w"), indent=1)
     print("gate", {j: g for j, g in gate.items() if j != "controls"}, "agree", res["judge_fid_agree_within_1"])
     for lab, blk in (("ALL PAGES", res["primary"]), (f"WITHOUT #6304 DROPS ({len(dropped)})", res["exclude_6304"])):
         print(f"\n#### {lab}: gate all pass = {blk['gate_all_pass']}")
         for name, s in list(blk["strata"].items()) + [("Pooled", blk["pooled"])] + list(blk["languages_ge_20"].items()):
             a = s["arms"]
-            print(f"{name:9} n={s['pages_shared']:3} C38 {a['C38']['fidelity']:.2f} G38 {a['G38']['fidelity']:.2f} PROD {a['PROD']['fidelity']:.2f} | rev {a['C38']['reversal_pages']}/{a['G38']['reversal_pages']}/{a['PROD']['reversal_pages']}"
-                  f" | C-G {s['C38-G38']['mean']:+.2f} {s['C38-G38']['ci_by_book']} C-P {s['C38-PROD']['mean']:+.2f} {s['C38-PROD']['ci_by_book']} G-P {s['G38-PROD']['mean']:+.2f} {s['G38-PROD']['ci_by_book']} gate {s['gate']['pass']}")
+            print(f"{name:9} n={s['pages_shared']:3} {new} {a[new]['fidelity']:.2f} {base} {a[base]['fidelity']:.2f} PROD {a['PROD']['fidelity']:.2f} | rev {a[new]['reversal_pages']}/{a[base]['reversal_pages']}/{a['PROD']['reversal_pages']}"
+                  f" | N-B {s[f'{new}-{base}']['mean']:+.2f} {s[f'{new}-{base}']['ci_by_book']} N-P {s[f'{new}-PROD']['mean']:+.2f} {s[f'{new}-PROD']['ci_by_book']} B-P {s[f'{base}-PROD']['mean']:+.2f} {s[f'{base}-PROD']['ci_by_book']} gate {s['gate']['pass']}"
+                  + "".join(f" | vs {x}: {v['verdict']}" for x, v in s.get("verdict", {}).items()))
