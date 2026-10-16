@@ -95,7 +95,7 @@ export default function HyperboreaPage() {
           image={LEAD_IMAGE}
           imageAlt={LEAD_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 21 min read</p>
+          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 27 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -580,6 +580,135 @@ export default function HyperboreaPage() {
           Thule was a place a man said he had sailed to, and Hyperborea was a place no road reached.
         </P>
 
+        <Section>A round temple: Stonehenge?</Section>
+
+        <P>
+          The most specific Hyperborean landscape in Greek is the one Diodorus took from Hecataeus of Abdera, who
+          wrote around 300 BCE. An island in the ocean opposite the land of the Celts, at least as large as Sicily,
+          fertile, with a sacred precinct and a famous round temple, where the god comes
+          every nineteen years and the moon looks very close to the earth. Readers in Britain drew the obvious
+          conclusion. William Stukeley, in his <em>Stonehenge</em> of 1740, wrote that Diodorus{' '}
+          <Link href="/book/stonehenge-stukeley?page=161" className={linkClass}>
+            &ldquo;gives an odd account from thence mix&apos;d with fable, and seemingly some reports of Stonehenge
+            itself.&rdquo;
+          </Link>{' '}
+          William Borlase quoted the moon passage in 1769 as if the islanders{' '}
+          <Link href="/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=114" className={linkClass}>
+            &ldquo;had the use of telescopes&rdquo;
+          </Link>
+          . John Smith, whose <em>Choir Gaur</em> (1771) called Stonehenge &ldquo;the Grand Orrery of the Ancient
+          Druids,&rdquo; counted{' '}
+          <Link href="/book/choir-gaur-the-grand-orrery-of-the-ancient-druids-commonly-smith?page=42" className={linkClass}>
+            nineteen stones in the inner oval
+          </Link>
+          . Richard Payne Knight concluded in 1786 that{' '}
+          <Link href="/book/an-account-of-the-remains-of-the-worship-of-priapus?page=140" className={linkClass}>
+            &ldquo;the Island I think can be no other than Britain.&rdquo;
+          </Link>
+        </P>
+
+        <P>
+          Several details fit. Britain lies opposite Gaul and is far larger than Sicily. The moon&apos;s rising
+          and setting points swing to their extremes and back over 18.6 years, and the four Station Stones at
+          Stonehenge form a rectangle that many archaeoastronomers read as aligned on those lunar extremes as well as
+          on the midsummer sunrise. Hecataeus wrote a generation after Pytheas had sailed round Britain, so news of
+          its stone circles could have reached him.
+        </P>
+
+        <P>
+          Other details do not fit. Stonehenge was built between about 3000 and 1500 BCE and was an old monument by
+          the time of Hecataeus; whatever he heard described a ruin, or a living cult somewhere else. The nineteen
+          years are a Greek number: Meton had announced the nineteen-year cycle that reconciles the sun and the moon
+          at Athens in 432 BCE, and Hecataeus may simply have given his ideal temple the best calendar he knew. His
+          Hyperborea has two harvests a year and citizens who play the harp to Apollo all day, which belongs to the
+          genre of the ideal commonwealth, not to a report. The great stone circle at Callanish, on Lewis in
+          Toland&apos;s Hebrides, is the other usual candidate. The cautious reading is that a report of British
+          stone circles may lie behind the passage. Nothing in it proves which circle, or that it was any circle at
+          all.
+        </P>
+
+        <Section>Pythagorean druids?</Section>
+
+        <P>
+          There is a bolder version of the British case: that the Hyperborean offerings reaching Delos in
+          Herodotus&apos;s lifetime were sent by Pythagorean druids. Roman and Greek writers did describe the druids
+          in Pythagorean terms. Caesar, in the 50s BCE, says that the druids&apos; discipline{' '}
+          <Link href="/book/6a085cfb49638a50931ce60a?page=189" className={linkClass}>
+            &ldquo;is thought to have been invented in Britain and transferred from there into Gaul,&rdquo;
+          </Link>{' '}
+          that they keep their teaching out of writing although they use Greek letters for accounts, and that they
+          teach above all{' '}
+          <Link href="/book/6a085cfb49638a50931ce60a?page=190" className={linkClass}>
+            &ldquo;that souls do not perish, but after death pass to others.&rdquo;
+          </Link>{' '}
+          Their Apollo, he adds,{' '}
+          <Link href="/book/6a085cfb49638a50931ce60a?page=191" className={linkClass}>
+            &ldquo;drives away diseases&rdquo;
+          </Link>
+          , which is what Abaris did at Sparta. Diodorus says outright that among the Gauls{' '}
+          <Link href="/book/studies-on-celtic-law-jubainville?page=30" className={linkClass}>
+            &ldquo;the word of Pythagoras prevails&rdquo;
+          </Link>
+          : souls are immortal and live again in another body after a fixed number of years. Ammianus Marcellinus,
+          in the fourth century CE, describes the druids as bound in fellowships{' '}
+          <Link
+            href="/book/ammiani-marcellini-rerum-gestarum-libri-xviii-valesius-1693-marcellinus?page=197"
+            className={linkClass}
+          >
+            &ldquo;as the authority of Pythagoras decreed.&rdquo;
+          </Link>{' '}
+          Alexander Polyhistor claimed that Pythagoras himself had studied with the Galatians and the Brahmans.
+        </P>
+
+        <P>
+          The dates allow the hypothesis. Pythagoras died around 495 BCE. His communities in southern Italy were
+          still active when Herodotus settled at Thurii, a few days from Croton, in the 440s. Herodotus speaks of the
+          Hyperborean offerings as arriving in his own time, and Greeks and Celts were already in contact through
+          the Greek colony at Massalia, founded around 600 BCE. Herodotus knew that the Danube rose{' '}
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=276" className={linkClass}>
+            &ldquo;among the Celts&rdquo;
+          </Link>
+          , and the Hyperborean bundles came down to the head of the Adriatic, which can be reached from the upper
+          Danube and the Alps. Two old witnesses point the same way. Hellanicus, a contemporary of Herodotus, put
+          the Hyperboreans{' '}
+          <Link href="/book/argonautica-editio-princeps-lascaris-rhodius?page=159" className={linkClass}>
+            &ldquo;beyond the Alps of Italy,&rdquo;
+          </Link>{' '}
+          and in the next century Heraclides of Pontus called the Gauls who sacked Rome in 390 BCE{' '}
+          <Link href="/book/histoire-des-celtes-pelloutier?page=68" className={linkClass}>
+            &ldquo;an Army, coming from the country of the Hyperboreans&rdquo;
+          </Link>
+          ; Plutarch adds that Aristotle called the same people Celts. Apollonius, finally, attributes the story of
+          Apollo&apos;s amber tears among the Hyperboreans to the Celts themselves.
+        </P>
+
+        <P>
+          The evidence stops short of the claim in three places. First, no source says that Celts or druids sent the
+          offerings; Herodotus names Scythians as the first carriers, and Pausanias&apos;s later route runs through
+          the Black Sea. Second, the druids are first named in Greek around 200 BCE, by Sotion and a work on magic
+          attributed to Aristotle, which Diogenes Laertius cites at the start of his{' '}
+          <Link
+            href="/book/diogenes-laertius-lives-and-opinions-of-eminent-philosophers-yonge?page=25"
+            className={linkClass}
+          >
+            <em>Lives of the Philosophers</em>
+          </Link>
+          , two and a half centuries after Herodotus. Third, the Pythagorean description of the druids goes back to
+          one Greek ethnographer, Posidonius, around 100 BCE, whom Caesar, Diodorus and Alexander all seem to follow.
+          The French Celticist Henri d&apos;Arbois de Jubainville called it, in 1895, a hypothesis{' '}
+          <Link href="/book/studies-on-celtic-law-jubainville?page=30" className={linkClass}>
+            &ldquo;flattering to the self-esteem of the Greeks&rdquo;
+          </Link>
+          : a Greek explaining a foreign belief in the terms of his own philosophy. Jacob Brucker had made the same
+          objection in 1742, that{' '}
+          <Link href="/book/historia-critica-philosophiae-brucker?page=338" className={linkClass}>
+            &ldquo;some slight harmony and similarity of this or that doctrine&rdquo;
+          </Link>{' '}
+          does not prove descent. On the present evidence, Celtic participation in the chain is possible and the
+          later Greek writers clearly thought the Celts were Hyperboreans. That the senders were druids, or
+          Pythagoreans, is a hypothesis the sources do not yet support.
+        </P>
+
         <Section>Everyone&apos;s Hyperborea</Section>
 
         <P>
@@ -749,6 +878,41 @@ export default function HyperboreaPage() {
           from the amber two centuries earlier.
         </P>
 
+        <Section>Was it Russia?</Section>
+
+        <P>
+          The oldest Greek route to Hyperborea runs north-east. Aristeas, in Herodotus, travels past the Scythians of
+          the Ukrainian steppe to the Issedones, and beyond them come the one-eyed Arimaspians, the gold-guarding
+          griffins and finally the Hyperboreans. Pausanias&apos;s route for the offerings comes the same way:{' '}
+          <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=148" className={linkClass}>
+            &ldquo;the Hyperboreans, they say, hand them over to the Arimaspians, the Arimaspians to the
+            Issedonians, and from the Issedonians the Scythians convey them to Sinope.&rdquo;
+          </Link>{' '}
+          That points up the steppe toward the Urals and the Altai, whose gold the Scythians traded. In that sense the
+          earliest Hyperborea lay in what is now Russia and Kazakhstan.
+        </P>
+
+        <P>
+          Western Europeans later used the word for Russians. In a dialogue Alexander Herzen wrote at Nice in 1869,
+          a French doctor greets the Russian narrator as &ldquo;my dear Hyperborean,&rdquo; and he answers:{' '}
+          <Link href="/book/2-herzen?page=239" className={linkClass}>
+            &ldquo;do not call me a Hyperborean. Firstly, the word makes me cold every time,&rdquo;
+          </Link>{' '}
+          and it recalls the age of Montesquieu, when Paris called Peter the Great{' '}
+          <em>le Grand Tzar hyperboréen</em>. In the twentieth century the claim became Russian. In 1922 Alexander
+          Barchenko led an expedition to the Kola Peninsula in search of an ancient northern civilisation, and since
+          the 1990s Russian esoteric and nationalist writers, Aleksandr Dugin among them, have placed Hyperborea in
+          the Russian Arctic. It is the same move Rudbeck made for Sweden and Hartknoch, more cautiously, for
+          Prussia.
+        </P>
+
+        <P>
+          Other ancient writers pointed elsewhere: Hellanicus to the Alps, Hecataeus to an island off the Celts,
+          Herodotus&apos;s offering route to the head of the Adriatic. The north-east was one direction among
+          several. Hyperborea was wherever the known peoples ran out, and the Greeks knew the steppe earlier than
+          they knew the Atlantic.
+        </P>
+
         <Section>The polar homeland</Section>
 
         <P>
@@ -774,6 +938,49 @@ export default function HyperboreaPage() {
           same classical passages. That use has continued on the far right. The passages themselves say much less, as
           the earlier readers in this note show.
         </P>
+
+        <Section>What was the Hyperborean Apollo?</Section>
+
+        <P>
+          Everything the Greeks said came from Hyperborea is old and holy: the first prophet, the first temples,
+          first-fruit offerings, the olive of the games, purification, healing and survival after death. If there
+          was a real &ldquo;Apollo of the north&rdquo; behind the stories, the candidates are these, in order of the
+          evidence.
+        </P>
+
+        <ul className="list-disc pl-6 space-y-3 text-secondary leading-relaxed mb-6">
+          <li>
+            <strong>The near north.</strong> The one Hyperborean rite Herodotus saw for himself was local: Thracian
+            and Paeonian women who never sacrificed to Artemis without wheat straw. Thrace also had Zalmoxis, the
+            Getic teacher of immortality whom Herodotus makes a former slave of Pythagoras. In Plato&apos;s{' '}
+            <em>Charmides</em>, Socrates names the two northern kinds of healing together:{' '}
+            <Link href="/book/cologny-fondation-martin-bodmer-cod-bodmer-136-plato?page=304" className={linkClass}>
+              &ldquo;the charms of Zalmoxis&rdquo; and &ldquo;those of Abaris the Hyperborean.&rdquo;
+            </Link>
+          </li>
+          <li>
+            <strong>Beyond the Scythians.</strong> The Hyperborean holy men fast, purify cities, avert plague,
+            travel out of the body and ride an arrow. Dodds and Burkert read them as Greek reflections of steppe
+            shamanism, met at second hand through Scythian contacts and attached to Apollo as healer and prophet.
+          </li>
+          <li>
+            <strong>The Celts and their druids.</strong> A real but later layer. Greeks of the fourth and third
+            centuries BCE identified the Celts as Hyperboreans and described the druids in Pythagorean terms, as the
+            section above sets out. The myth itself is older than any Greek knowledge of the Celts.
+          </li>
+          <li>
+            <strong>The Baltic.</strong> The amber link is real; a cult link is not attested. Baltic religion fits
+            Apollo poorly: the sun is a goddess, Saulė, the chief god is the thunderer Perkūnas, and the amber
+            gatherers of Tacitus worship a Mother of the Gods. The Baltic peoples were probably an unseen far end of
+            the chain rather than the source of the cult.
+          </li>
+          <li>
+            <strong>Not northern at all.</strong> Many historians think Apollo himself came into Greek religion from
+            Anatolia: a Hittite treaty of about 1280 BCE with Wilusa, probably Troy, names a god Apaliunas, and
+            Herodotus makes the first Delian hymn-poet, Olen, a Lycian. On that view the north is where the Greeks
+            put the purity of a god who had reached them from the east.
+          </li>
+        </ul>
 
         <Section>What the sources support</Section>
 
