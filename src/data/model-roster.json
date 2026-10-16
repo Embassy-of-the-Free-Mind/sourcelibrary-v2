@@ -1,0 +1,838 @@
+{
+ "issue": 6776,
+ "generated_by": "scripts/eval/build-model-roster.mjs",
+ "checked": "2026-10-16",
+ "agy_models": {
+  "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+  "models": [
+   "gemini-4-argon-medium",
+   "gemini-4-argon-high",
+   "gemini-4-argon-low",
+   "gemini-3.8-flash-high",
+   "gemini-3.8-flash-medium",
+   "gemini-3.8-flash-low",
+   "claude-opus-5-5-low",
+   "claude-opus-5-5-medium",
+   "claude-opus-5-5-high",
+   "claude-sonnet-5-5-low",
+   "claude-sonnet-5-5-medium",
+   "claude-sonnet-5-5-high",
+   "gpt-oss-120b-medium"
+  ]
+ },
+ "route_labels": {
+  "api": "API, billed per request",
+  "subscription": "CLI on a subscription, $0 billed",
+  "gpu": "leased GPU, billed by the hour",
+  "own": "our own server"
+ },
+ "groups": [
+  {
+   "id": "gemini-api",
+   "title": "Gemini 3.1 Flash-Lite",
+   "route": "api",
+   "how": "the paid Gemini API, Batch",
+   "cost_basis": "billed per page at the Batch rate"
+  },
+  {
+   "id": "gemini-cli",
+   "title": "Gemini through the Antigravity CLI",
+   "route": "subscription",
+   "how": "agy -p on the Google subscription",
+   "cost_basis": "$0 billed; costs time and subscription quota"
+  },
+  {
+   "id": "claude-cli",
+   "title": "Claude through the Claude CLI",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription",
+   "cost_basis": "$0 billed; costs time and subscription quota"
+  },
+  {
+   "id": "gpu",
+   "title": "Open models on a rented GPU",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU under the lease watchdog",
+   "cost_basis": "rental billed by the hour, shared over the pages read"
+  },
+  {
+   "id": "kraken",
+   "title": "Kraken models",
+   "route": "own",
+   "how": "our own server, CPU",
+   "cost_basis": "no per-page bill"
+  },
+  {
+   "id": "production",
+   "title": "What production already stored",
+   "route": "api",
+   "how": "the reads already in the library",
+   "cost_basis": "already paid"
+  },
+  {
+   "id": "other-api",
+   "title": "Other paid APIs",
+   "route": "api",
+   "how": "billed per request",
+   "cost_basis": "billed per request"
+  },
+  {
+   "id": "banned",
+   "title": "Banned",
+   "route": "own",
+   "how": "—",
+   "cost_basis": "—"
+  }
+ ],
+ "engines": [
+  {
+   "engine": "chandra-ocr-2",
+   "label": "Chandra OCR 2",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "claude-haiku-4.5",
+   "label": "Claude Haiku 4.5",
+   "stages": [
+    "translation"
+   ],
+   "group": "claude-cli",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/lib/agy-cli.mjs",
+   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "claude-opus",
+   "label": "Claude Opus",
+   "stages": [
+    "translation"
+   ],
+   "group": "claude-cli",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/lib/agy-cli.mjs",
+   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "claude-opus-5-5",
+   "label": "Claude Opus 5.5",
+   "stages": [
+    "ocr"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the Anthropic API, billed per request",
+   "available": false,
+   "why_not": "Claude runs only on the Claude subscription (claude -p), never through the API or agy",
+   "source": "scripts/lib/agy-cli.mjs",
+   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "claude-opus-5-5+claude-cli",
+   "label": "Claude Opus 5.5 (Claude CLI)",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "claude-cli",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/lib/agy-cli.mjs",
+   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "claude-sonnet-5-5",
+   "label": "Claude Sonnet 5.5",
+   "stages": [
+    "ocr"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the Anthropic API, billed per request",
+   "available": false,
+   "why_not": "Claude runs only on the Claude subscription (claude -p), never through the API or agy",
+   "source": "scripts/lib/agy-cli.mjs",
+   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "claude-sonnet-5.5",
+   "label": "Claude Sonnet 5.5",
+   "stages": [
+    "translation"
+   ],
+   "group": "claude-cli",
+   "route": "subscription",
+   "how": "claude -p on the Claude subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/lib/agy-cli.mjs",
+   "rule": "Claude runs only through the Claude subscription (`claude -p`, subagents), never through agy",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "cllg-qwen3vl-8b",
+   "label": "Qwen3-VL 8B (CLLG)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "deepseek-ocr",
+   "label": "DeepSeek-OCR",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "dots-mocr",
+   "label": "dots.mocr",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3-flash-preview",
+   "label": "Gemini 3 Flash",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3-flash-preview+thinking",
+   "label": "Gemini 3 Flash (thinking)",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.1-flash-lite",
+   "label": "Gemini 3.1 Flash-Lite",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "gemini-api",
+   "route": "api",
+   "how": "the paid Gemini API (Batch)",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.1-pro-preview+thinking128",
+   "label": "Gemini 3.1 Pro (thinking 128)",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.5-flash",
+   "label": "Gemini 3.5 Flash",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.5-flash-lite",
+   "label": "Gemini 3.5 Flash-Lite",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.6-flash",
+   "label": "Gemini 3.6 Flash",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "label": "Gemini 3.6 Flash (CLI)",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-3.6-flash on the Google subscription, $0 billed",
+   "available": false,
+   "why_not": "no longer offered by the Antigravity CLI (agy models, 2026-10-16)",
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.7-flash",
+   "label": "Gemini 3.7 Flash",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08, and the Antigravity CLI does not offer this model",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "label": "Gemini 3.7 Flash (CLI)",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-3.7-flash on the Google subscription, $0 billed",
+   "available": false,
+   "why_not": "no longer offered by the Antigravity CLI (agy models, 2026-10-16)",
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.8-flash",
+   "label": "Gemini 3.8 Flash",
+   "stages": [
+    "translation"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the paid Gemini API",
+   "available": false,
+   "why_not": "the paid Gemini API runs Flash-Lite only since 2026-10-08; the same model runs today through the Antigravity CLI, $0 billed, measured in its own runs",
+   "source": "scripts/batch/cli-ocr.mjs",
+   "rule": "Since 2026-10-08 every Gemini model except flash-lite runs through the subscription CLI instead",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "label": "Gemini 3.8 Flash (CLI, high)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-3.8-flash-high on the Google subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.8-flash-low+antigravity-cli",
+   "label": "Gemini 3.8 Flash low (CLI)",
+   "stages": [
+    "translation"
+   ],
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-3.8-flash-low on the Google subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "label": "Gemini 3.8 Flash (CLI)",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-3.8-flash on the Google subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "label": "Gemini 4 Argon low (CLI)",
+   "stages": [
+    "ocr",
+    "translation"
+   ],
+   "group": "gemini-cli",
+   "route": "subscription",
+   "how": "agy -p --model gemini-4-argon-low on the Google subscription, $0 billed",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/eval/results/model-roster/agy-models-2026-10-16.txt",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "kraken-austriannewspapers",
+   "label": "Kraken (Austrian newspapers)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "kraken-catmus",
+   "label": "Kraken (CATMuS)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "kraken-greek-cllg",
+   "label": "Kraken (CLLG Greek)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "mineru",
+   "label": "MinerU",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "mistral-ocr-4-1",
+   "label": "Mistral OCR 4.1",
+   "stages": [
+    "ocr"
+   ],
+   "group": "other-api",
+   "route": "api",
+   "how": "the Mistral API, billed per page",
+   "available": false,
+   "why_not": "the paid API is for Gemini 3.1 Flash-Lite only since 2026-10-08",
+   "source": "scripts/eval/experiments/2026-10-08-syriac-print-pareto-6295.md",
+   "rule": "spend rule of 2026-10-08: only `gemini-3.1-flash-lite` on the paid API",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "ndlkotenocr-v3",
+   "label": "NDL Koten OCR v3",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "olmocr-2-7b-fp8",
+   "label": "olmOCR 2 7B",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "omnisyr",
+   "label": "Kraken (OmniSyr)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "omnisyr-nosplit",
+   "label": "Kraken (OmniSyr), no column split",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "paddleocr-vl-1.6",
+   "label": "PaddleOCR-VL 1.6",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "production-per-book",
+   "label": "Production (each book’s engine)",
+   "stages": [
+    "translation"
+   ],
+   "group": "production",
+   "route": "api",
+   "how": "each book’s production engine",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/lib/ocr-routing.mjs",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "production-stored",
+   "label": "Production OCR as stored",
+   "stages": [
+    "ocr"
+   ],
+   "group": "production",
+   "route": "api",
+   "how": "the production OCR already stored for each page",
+   "available": true,
+   "why_not": null,
+   "source": "scripts/lib/ocr-routing.mjs",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "qoruyo-eastern",
+   "label": "Kraken (Qoruyo East)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "qoruyo-estrangela",
+   "label": "Kraken (Qoruyo Estrangela)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "qwen3-vl-8b",
+   "label": "Qwen3-VL 8B",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "sophro-defaultseg",
+   "label": "Kraken (Sophro)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "sophro-mhiro",
+   "label": "Kraken (Sophro Mhiro)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "kraken",
+   "route": "own",
+   "how": "Kraken on our own server (CPU)",
+   "available": true,
+   "why_not": null,
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "Kraken lane on Hetzner (`syriac-kraken-lane.mjs`)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "surya2",
+   "label": "Surya 2",
+   "stages": [
+    "ocr"
+   ],
+   "group": "gpu",
+   "route": "gpu",
+   "how": "a leased Scaleway GPU, under the lease watchdog; billed by the hour",
+   "available": true,
+   "why_not": null,
+   "source": "CLAUDE.md",
+   "rule": "lease it (`scripts/maintenance/gpu-lease-watchdog.mjs --lease",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-chi_tra_vert",
+   "label": "Tesseract (chi_tra_vert)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-deu",
+   "label": "Tesseract (deu)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-frk",
+   "label": "Tesseract (frk)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-grc",
+   "label": "Tesseract (grc)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-hye",
+   "label": "Tesseract (hye)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-hye_calfa",
+   "label": "Tesseract (hye, Calfa)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  },
+  {
+   "engine": "tesseract-lat",
+   "label": "Tesseract (lat)",
+   "stages": [
+    "ocr"
+   ],
+   "group": "banned",
+   "route": "own",
+   "how": "Tesseract on our own server",
+   "available": false,
+   "why_not": "banned: Tesseract is not used, as an engine or as a reference",
+   "source": ".claude/docs/ocr-lane-decision-tree.md",
+   "rule": "**No Tesseract**, as an engine or as a free reference (Derek)",
+   "checked": "2026-10-16"
+  }
+ ]
+}
