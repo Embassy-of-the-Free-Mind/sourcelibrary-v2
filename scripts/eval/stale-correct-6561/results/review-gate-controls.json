@@ -1,0 +1,57 @@
+[
+ {
+  "uid": "s101",
+  "page_id": "6a3c5e9a40c88a541d8e3d8a",
+  "book_id": "6a3c5e9a40c88a541d8e3d85",
+  "page_number": 5,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c5e9a40c88a541d8e3d85/5.jpg",
+  "duplicated_row": "**四** **夋** 廣韻集韻𠀤七倫切音逡說文行夋夋也 又子峻切音俊綱目冠編帝俈一名夋",
+  "row_line": 21,
+  "inserted_at_line": 22,
+  "row_han": "四夋廣韻集韻𠀤七倫切音逡說文行夋夋也又子峻切音俊綱目冠編帝俈一名夋"
+ },
+ {
+  "uid": "s102",
+  "page_id": "6a3c674aaf3c49b59c5d1ff7",
+  "book_id": "6a3c674aaf3c49b59c5d1fb9",
+  "page_number": 62,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c674aaf3c49b59c5d1fb9/62.jpg",
+  "duplicated_row": "人之達大槩是視人如巳推巳及物之謂　忠者盡",
+  "row_line": 11,
+  "inserted_at_line": 12,
+  "row_han": "人之達大槩是視人如巳推巳及物之謂忠者盡"
+ },
+ {
+  "uid": "s103",
+  "page_id": "6a3c66f9af3c49b59c5cf1b0",
+  "book_id": "6a3c66f9af3c49b59c5cf181",
+  "page_number": 46,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c66f9af3c49b59c5cf181/46.jpg",
+  "duplicated_row": "性出於天才出於氣氣清則才清氣濁則才濁才則有",
+  "row_line": 12,
+  "inserted_at_line": 13,
+  "row_han": "性出於天才出於氣氣清則才清氣濁則才濁才則有"
+ },
+ {
+  "uid": "s104",
+  "page_id": "6a3c679e39b4508b04e3792a",
+  "book_id": "6a3c679e39b4508b04e378d0",
+  "page_number": 90,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c679e39b4508b04e378d0/90.jpg",
+  "duplicated_row": "白恩禮相申束使已茅菅之不若也",
+  "row_line": 12,
+  "inserted_at_line": 13,
+  "row_han": "白恩禮相申束使已茅菅之不若也"
+ },
+ {
+  "uid": "s105",
+  "page_id": "6a3c67ae39b4508b04e38122",
+  "book_id": "6a3c67ae39b4508b04e38102",
+  "page_number": 32,
+  "image_url": "https://images.sourcelibrary.org/archived/6a3c67ae39b4508b04e38102/32.jpg",
+  "duplicated_row": "也至其所守雖規規於信果之小節然與誕謾苟賤",
+  "row_line": 13,
+  "inserted_at_line": 14,
+  "row_han": "也至其所守雖規規於信果之小節然與誕謾苟賤"
+ }
+]

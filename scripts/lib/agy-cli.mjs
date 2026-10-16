@@ -55,8 +55,17 @@ export function unwrapRead(raw) {
   return { text: u.inside, problem };
 }
 
+// Gemini only. agy can also reach Claude models; Claude runs only through the Claude subscription (`claude -p`,
+// subagents), never through agy (Derek, 2026-10-14, after #6721 dated 6,452 books with claude-sonnet via agy).
+export function assertGeminiModel(args) {
+  const i = args.indexOf('--model');
+  const model = i >= 0 ? String(args[i + 1] || '') : '';
+  if (!/^gemini-/.test(model)) throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only; use claude -p for Claude`);
+}
+
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
 export function agyCall(args, cwd) {
+  assertGeminiModel(args);
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -72,7 +81,8 @@ export function agyCall(args, cwd) {
       const denied = (j.denied_actions || []).map((d) => d.action);
       // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
       const cls = isQuotaError({ out, err, j, text }) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
-      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000 });
+      // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
+      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null });
     });
   });
 }

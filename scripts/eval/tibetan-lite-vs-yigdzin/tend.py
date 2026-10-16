@@ -11,9 +11,12 @@ State: /root/yig527/tend-state.json  {boxes: {k: {...}}, pending: [batch files n
 import json, os, subprocess, time, urllib.request, glob
 from datetime import datetime, timezone, timedelta
 
-D = "/root/yig527"; ST = f"{D}/tend-state.json"; LOG = f"{D}/tend.log"
+# A later run (yigdzin-rest-4523) sets YIG_DIR / YIG_RUN / YIG_EUR_CAP / YIG_GUARD=1; the defaults are yig527's.
+# YIG_GUARD=1 puts guard.mjs (first-ocr-guard + >= 150 syllables) between the judge and the apply.
+D = os.environ.get("YIG_DIR", "/root/yig527"); ST = f"{D}/tend-state.json"; LOG = f"{D}/tend.log"
+RUN = os.environ.get("YIG_RUN", "yigdzin-leaf-2026-10-03"); GUARD = os.environ.get("YIG_GUARD") == "1"
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.abspath(f"{HERE}/../../..")
-EUR_H = 0.7875; EUR_CAP = 118.0   # L4-1-24G list price; a box's own eur_h (L4-4-24G 3.15) overrides. Hard cap 120 approved; stop 2 short
+EUR_H = 0.7875; EUR_CAP = float(os.environ.get("YIG_EUR_CAP", "118.0"))   # L4-1-24G list price; a box's own eur_h (L4-4-24G 3.15) overrides. Hard cap 120 approved; stop 2 short
 TOKEN = [l.split("=", 1)[1].strip().strip('"') for l in open("/root/.scaleway.env") if l.startswith("SCALEWAY_SECRET_KEY=")][0]
 SSH = "ssh -o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new"
 ENV = "/root/sourcelibrary/.env.production.local"
@@ -96,7 +99,7 @@ def tend_box(k, b, s):
 
 
 def judge_and_apply(s):
-    r = sh(f"python3 {HERE}/judge.py", t=3000)
+    r = sh(f"YIG_DIR={D} YIG_RUN={RUN} python3 {HERE}/judge.py", t=3000)
     if r.returncode != 0: log(f"JUDGE FAILED rc={r.returncode} {r.stderr[-300:]}"); return
     j = json.loads(r.stdout.strip().splitlines()[-1]); log(f"judge: {json.dumps(j)[:300]}")
     if j.get("batch"): s.setdefault("pending", []).append(j["batch"])
@@ -104,8 +107,17 @@ def judge_and_apply(s):
     os.makedirs(f"{D}/apply", exist_ok=True)
     while s.get("pending"):
         bf = s["pending"][0]; tag = os.path.basename(bf)[:-6]
+        if GUARD:
+            wf = bf[:-6] + ".write.jsonl"
+            if not os.path.exists(wf):
+                g = sh(f"cd {HERE} && YIG_DIR={D} node guard.mjs {bf}", t=3000)
+                if g.returncode != 0: log(f"GUARD FAILED {tag} rc={g.returncode} {g.stderr[-300:]}"); return
+                log(f"guard {tag}: {g.stdout.strip().splitlines()[-1][:300]}")
+            if os.path.getsize(wf) == 0:
+                s["pending"].pop(0); s.setdefault("applied", []).append(bf); json.dump(s, open(ST, "w"), indent=1); continue
+            bf = wf
         cmd = (f"cd {REPO} && node --env-file={ENV} scripts/maintenance/apply-reocr-verdicts.mjs --verdicts={bf} --textdir={D}/stripped "
-               f"--model=bdrc-yigdzin-v1 --run=yigdzin-leaf-2026-10-03 --read-mode=leaf --leaf-ledger={D}/ledger-all.jsonl --leafdir={D}/leafdir "
+               f"--model=bdrc-yigdzin-v1 --run={RUN} --read-mode=leaf --leaf-ledger={D}/ledger-all.jsonl --leafdir={D}/leafdir "
                f"--report={D}/apply/{tag}.report.jsonl --apply")
         r = sh(cmd, t=3000)
         if r.returncode != 0: log(f"APPLY FAILED {tag} rc={r.returncode} {r.stderr[-300:]}"); return

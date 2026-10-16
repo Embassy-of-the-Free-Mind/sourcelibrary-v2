@@ -1,0 +1,986 @@
+[
+ {
+  "uid": "rashi|dddb9a-p208",
+  "arm": "G4L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 112 5:1",
+   "Rashi on Berakhot 112 8:2"
+  ],
+  "recall": {
+   "cer": 0.7446808510638298,
+   "ref_letters": 235,
+   "read_letters": 167
+  },
+  "image": {
+   "cer": 0.03829787234042553,
+   "ref_letters": 235,
+   "read_letters": 8062,
+   "secs": 124.6,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p163",
+  "arm": "G4L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Rosh Hashanah 59 16:1",
+   "Rashi on Rosh Hashanah 59 17:1"
+  ],
+  "recall": {
+   "cer": 0.6371681415929203,
+   "ref_letters": 226,
+   "read_letters": 619
+  },
+  "image": {
+   "cer": 0.13274336283185842,
+   "ref_letters": 226,
+   "read_letters": 9486,
+   "secs": 200.6,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p276",
+  "arm": "G4L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 85 1:1",
+   "Rashi on Sukkah 85 12:1"
+  ],
+  "recall": {
+   "cer": 0.7490664675130695,
+   "ref_letters": 1339,
+   "read_letters": 775
+  },
+  "image": {
+   "cer": 0.026138909634055265,
+   "ref_letters": 1339,
+   "read_letters": 6166,
+   "secs": 92.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p190",
+  "arm": "G4L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 107 10:1",
+   "Rashi on Berakhot 107 13:3"
+  ],
+  "recall": {
+   "cer": 0.7264150943396226,
+   "ref_letters": 212,
+   "read_letters": 611
+  },
+  "image": {
+   "cer": 0.04245283018867924,
+   "ref_letters": 212,
+   "read_letters": 5735,
+   "secs": 109.1,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p319",
+  "arm": "G4L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 42 1:1",
+   "Rashi on Sukkah 42 13:1"
+  ],
+  "recall": {
+   "cer": 0.7418586179507546,
+   "ref_letters": 1259,
+   "read_letters": 875
+  },
+  "image": {
+   "cer": 0.10881652104845115,
+   "ref_letters": 1259,
+   "read_letters": 5750,
+   "secs": 138.2,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2105",
+  "arm": "G4L",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Numbers 7 23:1",
+   "Rashi on Numbers 7 24:1"
+  ],
+  "recall": {
+   "cer": 0.6834170854271356,
+   "ref_letters": 398,
+   "read_letters": 392
+  },
+  "image": {
+   "cer": 0.10301507537688442,
+   "ref_letters": 398,
+   "read_letters": 3602,
+   "secs": 57.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p1626",
+  "arm": "G4L",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Leviticus 11 27:2",
+   "Rashi on Leviticus 11 34:1"
+  ],
+  "recall": {
+   "cer": 0.8468992248062015,
+   "ref_letters": 516,
+   "read_letters": 118
+  },
+  "image": {
+   "cer": 0.11434108527131782,
+   "ref_letters": 516,
+   "read_letters": 2802,
+   "secs": 161.6,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p102",
+  "arm": "G4L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 21 15:1",
+   "Rashi on Berakhot 21 15:4"
+  ],
+  "recall": {
+   "cer": 0.7335907335907336,
+   "ref_letters": 259,
+   "read_letters": 369
+  },
+  "image": {
+   "cer": 0.1969111969111969,
+   "ref_letters": 259,
+   "read_letters": 6749,
+   "secs": 93.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p120",
+  "arm": "G4L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 33 8:1",
+   "Rashi on Berakhot 33 9:1"
+  ],
+  "recall": {
+   "cer": 0.7677165354330708,
+   "ref_letters": 254,
+   "read_letters": 98
+  },
+  "image": {
+   "cer": 0.12598425196850394,
+   "ref_letters": 254,
+   "read_letters": 6992,
+   "secs": 100.9,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p218",
+  "arm": "G4L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 117 7:5",
+   "Rashi on Berakhot 117 13:2"
+  ],
+  "recall": {
+   "cer": 0.7344537815126051,
+   "ref_letters": 595,
+   "read_letters": 462
+  },
+  "image": {
+   "cer": 0.2453781512605042,
+   "ref_letters": 595,
+   "read_letters": 5528,
+   "secs": 97,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2384",
+  "arm": "G4L",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Numbers 26 16:1",
+   "Rashi on Numbers 26 24:1"
+  ],
+  "recall": {
+   "cer": 0.7114624505928854,
+   "ref_letters": 506,
+   "read_letters": 320
+  },
+  "image": {
+   "cer": 0.05731225296442688,
+   "ref_letters": 506,
+   "read_letters": 3375,
+   "secs": 55.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p146",
+  "arm": "G4L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Yoma 163 1:1",
+   "Rashi on Yoma 163 3:4"
+  ],
+  "recall": {
+   "cer": 0.7312414733969986,
+   "ref_letters": 733,
+   "read_letters": 1206
+  },
+  "image": {
+   "cer": 0.24010914051841747,
+   "ref_letters": 733,
+   "read_letters": 8089,
+   "secs": 110.9,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p269",
+  "arm": "G4L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 92 1:7",
+   "Rashi on Sukkah 92 11:1"
+  ],
+  "recall": {
+   "cer": 0.7261410788381742,
+   "ref_letters": 1446,
+   "read_letters": 3284
+  },
+  "image": {
+   "cer": 0.17219917012448133,
+   "ref_letters": 1446,
+   "read_letters": 6619,
+   "secs": 126.2,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p21",
+  "arm": "G4L",
+  "work": "Pardes Rimmonim (1786)",
+  "refs": [
+   "Pardes Rimmonim 1:10:1",
+   "Pardes Rimmonim 2:1:8"
+  ],
+  "recall": {
+   "cer": 0.7633477633477633,
+   "ref_letters": 4851,
+   "read_letters": 2097
+  },
+  "image": {
+   "cer": 0.08534322820037106,
+   "ref_letters": 4851,
+   "read_letters": 4879,
+   "secs": 65.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|baad92-p13",
+  "arm": "G4L",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "refs": [
+   "Sha'arei Orah Introduction 1",
+   "Sha'arei Orah Introduction 5"
+  ],
+  "recall": {
+   "cer": 0.7253886010362695,
+   "ref_letters": 1158,
+   "read_letters": 897
+  },
+  "image": {
+   "cer": 0.07167530224525043,
+   "ref_letters": 1158,
+   "read_letters": 2070,
+   "secs": 65.9,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p163",
+  "arm": "C38L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Rosh Hashanah 59 16:1",
+   "Rashi on Rosh Hashanah 59 17:1"
+  ],
+  "recall": {
+   "cer": 0.7522123893805309,
+   "ref_letters": 226,
+   "read_letters": 133
+  },
+  "image": {
+   "cer": 0.4778761061946903,
+   "ref_letters": 226,
+   "read_letters": 6121,
+   "secs": 104.5,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p276",
+  "arm": "C38L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 85 1:1",
+   "Rashi on Sukkah 85 12:1"
+  ],
+  "recall": {
+   "cer": 0.7528005974607916,
+   "ref_letters": 1339,
+   "read_letters": 576
+  },
+  "image": {
+   "cer": 0.48693054518297235,
+   "ref_letters": 1339,
+   "read_letters": 8066,
+   "secs": 56.3,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p190",
+  "arm": "C38L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 107 10:1",
+   "Rashi on Berakhot 107 13:3"
+  ],
+  "recall": {
+   "cer": 0.7452830188679245,
+   "ref_letters": 212,
+   "read_letters": 188
+  },
+  "image": {
+   "cer": 0.45754716981132076,
+   "ref_letters": 212,
+   "read_letters": 5263,
+   "secs": 140.5,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p208",
+  "arm": "C38L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 112 5:1",
+   "Rashi on Berakhot 112 8:2"
+  ],
+  "recall": {
+   "cer": 0.7574468085106383,
+   "ref_letters": 235,
+   "read_letters": 178
+  },
+  "image": {
+   "cer": 0.451063829787234,
+   "ref_letters": 235,
+   "read_letters": 8109,
+   "secs": 55.2,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2105",
+  "arm": "C38L",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Numbers 7 23:1",
+   "Rashi on Numbers 7 24:1"
+  ],
+  "recall": {
+   "cer": 0.5527638190954773,
+   "ref_letters": 398,
+   "read_letters": 346
+  },
+  "image": {
+   "cer": 0.14824120603015076,
+   "ref_letters": 398,
+   "read_letters": 3615,
+   "secs": 103.5,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p319",
+  "arm": "C38L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 42 1:1",
+   "Rashi on Sukkah 42 13:1"
+  ],
+  "recall": {
+   "cer": 0.7482128673550437,
+   "ref_letters": 1259,
+   "read_letters": 603
+  },
+  "image": {
+   "cer": 0.4980142970611596,
+   "ref_letters": 1259,
+   "read_letters": 5529,
+   "secs": 67.4,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p1626",
+  "arm": "C38L",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Leviticus 11 27:2",
+   "Rashi on Leviticus 11 34:1"
+  ],
+  "recall": {
+   "cer": 0.6608527131782945,
+   "ref_letters": 516,
+   "read_letters": 1173
+  },
+  "image": {
+   "cer": 0.18992248062015504,
+   "ref_letters": 516,
+   "read_letters": 2654,
+   "secs": 65.1,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p120",
+  "arm": "C38L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 33 8:1",
+   "Rashi on Berakhot 33 9:1"
+  ],
+  "recall": {
+   "cer": 0.8779527559055118,
+   "ref_letters": 254,
+   "read_letters": 42
+  },
+  "image": {
+   "cer": 0.6535433070866141,
+   "ref_letters": 254,
+   "read_letters": 6724,
+   "secs": 45.5,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p102",
+  "arm": "C38L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 21 15:1",
+   "Rashi on Berakhot 21 15:4"
+  ],
+  "recall": {
+   "cer": 0.7915057915057915,
+   "ref_letters": 259,
+   "read_letters": 102
+  },
+  "image": {
+   "cer": 0.42084942084942084,
+   "ref_letters": 259,
+   "read_letters": 6717,
+   "secs": 112.1,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p218",
+  "arm": "C38L",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 117 7:5",
+   "Rashi on Berakhot 117 13:2"
+  ],
+  "recall": {
+   "cer": 0.7411764705882353,
+   "ref_letters": 595,
+   "read_letters": 495
+  },
+  "image": {
+   "cer": 0.5260504201680672,
+   "ref_letters": 595,
+   "read_letters": 5302,
+   "secs": 45,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2384",
+  "arm": "C38L",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Numbers 26 16:1",
+   "Rashi on Numbers 26 24:1"
+  ],
+  "recall": {
+   "cer": 0.9051383399209486,
+   "ref_letters": 506,
+   "read_letters": 54
+  },
+  "image": {
+   "cer": 0.4762845849802372,
+   "ref_letters": 506,
+   "read_letters": 3238,
+   "secs": 32.3,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p146",
+  "arm": "C38L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Yoma 163 1:1",
+   "Rashi on Yoma 163 3:4"
+  ],
+  "recall": {
+   "cer": 0.7517053206002728,
+   "ref_letters": 733,
+   "read_letters": 389
+  },
+  "image": {
+   "cer": 0.38472032742155526,
+   "ref_letters": 733,
+   "read_letters": 7134,
+   "secs": 116.6,
+   "gate_denials": 1,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p269",
+  "arm": "C38L",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 92 1:7",
+   "Rashi on Sukkah 92 11:1"
+  ],
+  "recall": {
+   "cer": 0.7323651452282157,
+   "ref_letters": 1446,
+   "read_letters": 944
+  },
+  "image": {
+   "cer": 0.553941908713693,
+   "ref_letters": 1446,
+   "read_letters": 6290,
+   "secs": 42.7,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|baad92-p13",
+  "arm": "C38L",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "refs": [
+   "Sha'arei Orah Introduction 1",
+   "Sha'arei Orah Introduction 5"
+  ],
+  "recall": {
+   "cer": 0.7184801381692574,
+   "ref_letters": 1158,
+   "read_letters": 1018
+  },
+  "image": {
+   "cer": 0.11917098445595854,
+   "ref_letters": 1158,
+   "read_letters": 1502,
+   "secs": 23.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p21",
+  "arm": "C38L",
+  "work": "Pardes Rimmonim (1786)",
+  "refs": [
+   "Pardes Rimmonim 1:10:1",
+   "Pardes Rimmonim 2:1:8"
+  ],
+  "recall": {
+   "failure": "empty",
+   "why": "denied_tool: tski: no output produced — a tool required the \"read_url\" permission that headless mode cannot prompt for, "
+  },
+  "image": {
+   "cer": 0.422180993609565,
+   "ref_letters": 4851,
+   "read_letters": 4795,
+   "secs": 185.4,
+   "gate_denials": 2,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p208",
+  "arm": "OPUS",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 112 5:1",
+   "Rashi on Berakhot 112 8:2"
+  ],
+  "recall": {
+   "failure": "empty",
+   "why": "no text"
+  },
+  "image": {
+   "cer": 0.02127659574468085,
+   "ref_letters": 235,
+   "read_letters": 1374,
+   "secs": 39.6,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p163",
+  "arm": "OPUS",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Rosh Hashanah 59 16:1",
+   "Rashi on Rosh Hashanah 59 17:1"
+  ],
+  "recall": {
+   "failure": "empty",
+   "why": "no text"
+  },
+  "image": {
+   "cer": 0.16371681415929204,
+   "ref_letters": 226,
+   "read_letters": 2297,
+   "secs": 50.1,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p276",
+  "arm": "OPUS",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 85 1:1",
+   "Rashi on Sukkah 85 12:1"
+  ],
+  "recall": {
+   "failure": "empty",
+   "why": "no text"
+  },
+  "image": {
+   "cer": 0.06646751306945482,
+   "ref_letters": 1339,
+   "read_letters": 5604,
+   "secs": 125.5,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p190",
+  "arm": "OPUS",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 107 10:1",
+   "Rashi on Berakhot 107 13:3"
+  ],
+  "recall": {
+   "cer": 1,
+   "ref_letters": 0,
+   "read_letters": 0
+  },
+  "image": {
+   "cer": 0.03773584905660377,
+   "ref_letters": 212,
+   "read_letters": 1745,
+   "secs": 41.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p319",
+  "arm": "OPUS",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 42 1:1",
+   "Rashi on Sukkah 42 13:1"
+  ],
+  "recall": {
+   "failure": "empty",
+   "why": "no text"
+  },
+  "image": {
+   "cer": 0.09451945988880063,
+   "ref_letters": 1259,
+   "read_letters": 5707,
+   "secs": 114.6,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2105",
+  "arm": "OPUS",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Numbers 7 23:1",
+   "Rashi on Numbers 7 24:1"
+  ],
+  "recall": {
+   "cer": 1,
+   "ref_letters": 0,
+   "read_letters": 0
+  },
+  "image": {
+   "cer": 0.09547738693467336,
+   "ref_letters": 398,
+   "read_letters": 3560,
+   "secs": 74.5,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p102",
+  "arm": "OPUS",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 21 15:1",
+   "Rashi on Berakhot 21 15:4"
+  ],
+  "recall": {
+   "cer": 1,
+   "ref_letters": 0,
+   "read_letters": 0
+  },
+  "image": {
+   "cer": 0.16988416988416988,
+   "ref_letters": 259,
+   "read_letters": 2220,
+   "secs": 60,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p120",
+  "arm": "OPUS",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 33 8:1",
+   "Rashi on Berakhot 33 9:1"
+  ],
+  "recall": {
+   "failure": "refusal",
+   "why": "I can't reliably reproduce this passage word for word from memory."
+  },
+  "image": {
+   "cer": 0.1062992125984252,
+   "ref_letters": 254,
+   "read_letters": 3644,
+   "secs": 72,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p218",
+  "arm": "OPUS",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "refs": [
+   "Rashi on Berakhot 117 7:5",
+   "Rashi on Berakhot 117 13:2"
+  ],
+  "recall": {
+   "cer": 1,
+   "ref_letters": 0,
+   "read_letters": 0
+  },
+  "image": {
+   "cer": 0.20336134453781513,
+   "ref_letters": 595,
+   "read_letters": 5519,
+   "secs": 103,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p1626",
+  "arm": "OPUS",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Leviticus 11 27:2",
+   "Rashi on Leviticus 11 34:1"
+  ],
+  "recall": {
+   "cer": 0.17054263565891473,
+   "ref_letters": 516,
+   "read_letters": 521
+  },
+  "image": {
+   "cer": 0.07364341085271318,
+   "ref_letters": 516,
+   "read_letters": 1332,
+   "secs": 48.8,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2384",
+  "arm": "OPUS",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "refs": [
+   "Rashi on Numbers 26 16:1",
+   "Rashi on Numbers 26 24:1"
+  ],
+  "recall": {
+   "cer": 0.8972332015810277,
+   "ref_letters": 506,
+   "read_letters": 55
+  },
+  "image": {
+   "cer": 0.05533596837944664,
+   "ref_letters": 506,
+   "read_letters": 3360,
+   "secs": 68.3,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p146",
+  "arm": "OPUS",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Yoma 163 1:1",
+   "Rashi on Yoma 163 3:4"
+  ],
+  "recall": {
+   "cer": 0.7012278308321964,
+   "ref_letters": 733,
+   "read_letters": 432
+  },
+  "image": {
+   "cer": 0.6807639836289222,
+   "ref_letters": 733,
+   "read_letters": 978,
+   "secs": 33.5,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p21",
+  "arm": "OPUS",
+  "work": "Pardes Rimmonim (1786)",
+  "refs": [
+   "Pardes Rimmonim 1:10:1",
+   "Pardes Rimmonim 2:1:8"
+  ],
+  "recall": {
+   "cer": 1,
+   "ref_letters": 0,
+   "read_letters": 0
+  },
+  "image": {
+   "cer": 0.07812822098536384,
+   "ref_letters": 4851,
+   "read_letters": 4872,
+   "secs": 93.2,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p269",
+  "arm": "OPUS",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "refs": [
+   "Rashi on Sukkah 92 1:7",
+   "Rashi on Sukkah 92 11:1"
+  ],
+  "recall": {
+   "cer": 1,
+   "ref_letters": 0,
+   "read_letters": 0
+  },
+  "image": {
+   "cer": 0.23858921161825727,
+   "ref_letters": 1446,
+   "read_letters": 4309,
+   "secs": 109.4,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ },
+ {
+  "uid": "rashi|baad92-p13",
+  "arm": "OPUS",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "refs": [
+   "Sha'arei Orah Introduction 1",
+   "Sha'arei Orah Introduction 5"
+  ],
+  "recall": {
+   "cer": 0.7072538860103627,
+   "ref_letters": 1158,
+   "read_letters": 1141
+  },
+  "image": {
+   "cer": 0.09153713298791019,
+   "ref_letters": 1158,
+   "read_letters": 2057,
+   "secs": 53.7,
+   "gate_denials": 0,
+   "nudged": false
+  }
+ }
+]

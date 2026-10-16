@@ -1,5 +1,6 @@
 // Agreement and screening statistics for small labelled samples: Wilson intervals,
-// chance-corrected agreement (Cohen's kappa, weighted kappa, Gwet's AC1), a rank AUC,
+// chance-corrected agreement (Cohen's kappa, weighted kappa, Gwet's AC1, Krippendorff's alpha and the
+// judge-reliability verdict every two-judge run reports), a rank AUC,
 // and the sample size a Wilson interval needs.
 //
 // PRIOR ART: lib/paired-stats.mjs — bootstrap and paired-difference intervals, no
@@ -73,6 +74,66 @@ export function aucLowerIsPositive(rows, score = (r) => r.score, isPos = (r) => 
   let c = 0;
   for (const p of pos) for (const q of neg) c += p < q ? 1 : p === q ? 0.5 : 0;
   return c / (pos.length * neg.length);
+}
+
+/**
+ * Krippendorff's alpha (Krippendorff 2011). units: array of arrays of values (one per reader; null/undefined =
+ * missing). level: 'nominal' | 'ordinal' | 'interval'. Units with fewer than two values are not pairable and are
+ * dropped. Moved here from scripts/eval/second-reader/lib.mjs (#6338), unchanged.
+ */
+export function krippendorffAlpha(units, level = 'nominal') {
+  const vals = units.map((u) => u.filter((v) => v !== null && v !== undefined)).filter((u) => u.length >= 2);
+  if (!vals.length) return null;
+  const cats = [...new Set(vals.flat())].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+  const ix = new Map(cats.map((c, i) => [c, i]));
+  const K = cats.length, o = Array.from({ length: K }, () => new Array(K).fill(0));
+  for (const u of vals) {
+    const m = u.length;
+    for (let i = 0; i < m; i++) for (let j = 0; j < m; j++) if (i !== j) o[ix.get(u[i])][ix.get(u[j])] += 1 / (m - 1);
+  }
+  const nc = o.map((row) => row.reduce((s, x) => s + x, 0)), n = nc.reduce((s, x) => s + x, 0);
+  const d2 = (c, k) => {
+    if (level === 'nominal') return c === k ? 0 : 1;
+    if (level === 'interval') return (cats[c] - cats[k]) ** 2;
+    const [lo, hi] = c < k ? [c, k] : [k, c];
+    let s = 0; for (let g = lo; g <= hi; g++) s += nc[g];
+    return (s - (nc[c] + nc[k]) / 2) ** 2;
+  };
+  let Do = 0, De = 0;
+  for (let c = 0; c < K; c++) for (let k = 0; k < K; k++) { const d = d2(c, k); Do += o[c][k] * d; De += nc[c] * nc[k] * d; }
+  Do /= n; De /= n * (n - 1);
+  return De === 0 ? null : 1 - Do / De;
+}
+
+/** Krippendorff's conventional cut-offs: ≥ 0.800 reliable, ≥ 0.667 tentative, below that the measure is not settled. */
+export const ALPHA_RELIABLE = 0.8;
+export const ALPHA_TENTATIVE = 0.667;
+
+/**
+ * Judge reliability for one judged measure (eval-design.md §2, "Judge agreement"): alpha, a 95% bootstrap interval
+ * over units, and a verdict word. Bootstrap by BOOK when units carry a cluster key (pages of one book are one
+ * observation): units as [{ cluster, values }] or plain arrays of values.
+ */
+export function judgeReliability(units, { level = 'nominal', rng, iters = 2000 } = {}) {
+  const rows = units.map((u) => (Array.isArray(u) ? { cluster: null, values: u } : u));
+  const paired = rows.filter((r) => r.values.filter((v) => v !== null && v !== undefined).length >= 2);
+  const alpha = krippendorffAlpha(paired.map((r) => r.values), level);
+  let ci = null;
+  if (alpha !== null && rng) {
+    const groups = new Map();
+    paired.forEach((r, i) => { const k = r.cluster ?? `u${i}`; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(r.values); });
+    const gs = [...groups.values()];
+    ci = bootstrapItems(gs, (s) => krippendorffAlpha(s.flat(), level), rng, iters);
+  }
+  const verdict = alpha === null ? 'no pairable units' : alpha >= ALPHA_RELIABLE ? 'reliable' : alpha >= ALPHA_TENTATIVE ? 'tentative' : 'not settled';
+  return { alpha, ci, n_units: paired.length, level, verdict };
+}
+
+/** One printable line: `serious (nominal): α 0.02 [−0.20, 0.25], 16 pages — not settled`. */
+export function reliabilityLine(name, r, unit = 'pages') {
+  const f = (x) => (x == null ? '—' : x.toFixed(2).replace('-', '−'));
+  const ci = r.ci ? ` [${f(r.ci[0])}, ${f(r.ci[1])}]` : '';
+  return `${name} (${r.level}): α ${f(r.alpha)}${ci}, ${r.n_units} ${unit} — ${r.verdict}`;
 }
 
 /** Percentile bootstrap over items: stat(resample) → number; returns [lo, hi] at 95%. */

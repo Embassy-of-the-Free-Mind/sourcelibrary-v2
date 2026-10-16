@@ -1,0 +1,162 @@
+[
+ {
+  "rank": 403,
+  "book_id": "6992cddac8c0c1ab515dcded",
+  "slug": "sancai-tuhui-juan-57",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 77,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 404,
+  "book_id": "6992ce113ea667fbac827f2f",
+  "slug": "sancai-tuhui-juan-72",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 77,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 405,
+  "book_id": "6992ce203ea667fbac8283ec",
+  "slug": "sancai-tuhui-juan-76",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 77,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 408,
+  "book_id": "6992ce7877d26f93217773a6",
+  "slug": "treatise-on-armament-technology-wubei-zhi-vol-63",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 77,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 424,
+  "book_id": "69e788024a6785cfd60ce896",
+  "slug": "bencao-gangmu-vol-5",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 75,
+  "lane_block": "71% translated: gap-fill would re-queue it",
+  "skip": "lane_block: 71% translated: gap-fill would re-queue it"
+ },
+ {
+  "rank": 429,
+  "book_id": "6992cd4e43713c66ea635b76",
+  "slug": "sancai-tuhui-juan-18",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 75,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 430,
+  "book_id": "6992cd7943713c66ea636b07",
+  "slug": "sancai-tuhui-juan-30",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 75,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 431,
+  "book_id": "6992ce1d3ea667fbac828320",
+  "slug": "sancai-tuhui-juan-75",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 75,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 432,
+  "book_id": "6992ce2e3ea667fbac8286b2",
+  "slug": "sancai-tuhui-juan-80",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 75,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 457,
+  "book_id": "6992ce81673ee1e40e320cff",
+  "slug": "wubei-zhi-vol-65",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 74,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 474,
+  "book_id": "6992cd8343713c66ea636fce",
+  "slug": "sancai-tuhui-juan-33",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 73,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 475,
+  "book_id": "6992ce542960dc4e5cea9195",
+  "slug": "sancai-tuhui-juan-90",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 73,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 480,
+  "book_id": "6992ca3bd4d545ae73feda2a",
+  "slug": "wubai-shi-dongtian-huidun-vol-5",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 73,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 481,
+  "book_id": "6992cd7e43713c66ea636d58",
+  "slug": "-al",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 72,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-excluded"
+ },
+ {
+  "rank": 491,
+  "book_id": "6992ceca673ee1e40e321953",
+  "slug": "treatise-on-armament-technology-6",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 72,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 493,
+  "book_id": "6992cde681c9d7efb84d0ab7",
+  "slug": "bencao-gangmu-compendium-of-materia-medica-vols-43-44",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 71,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]

@@ -42,9 +42,11 @@ import { cliChatterReason } from '../lib/cli-chatter.mjs';
 
 const READ_SITE = 'scripts/batch/claude-translate.mjs';
 const CLI = 'claude';
-const PROMPT_VARIANT = 'claude-block-6559';
+const PROMPT_VARIANT = 'claude-block-6559-unclear';
 /** Part of the prompt SENT, so part of what is hashed: the CLI is an agent and must answer with text only. */
-export const CALL_SUFFIX = '\n\nAnswer with the translation tags only, one per page in the order given, and nothing before, between or after them: no commentary, no code fence. Do not use any tool: the text is above.\n';
+// The <unclear> line: on the #6559 paired check Opus copied doubtful Nahuatl words through untranslated inside
+// <unclear> tags (Promptuario p. 67), where Gemini translated them. Translate the best reading and keep the doubt.
+export const CALL_SUFFIX = '\n\nWhere the source marks a word <unclear>, translate your best reading of it into English and keep the <unclear> tag around the English; never copy the source word through untranslated.\n\nAnswer with the translation tags only, one per page in the order given, and nothing before, between or after them: no commentary, no code fence. Do not use any tool: the text is above.\n';
 
 /**
  * Split a block reply into pages. Returns Map<page_number, text>, or null when the tags are not exactly one

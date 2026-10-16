@@ -29,7 +29,7 @@ for f in ['index.html', 'atlas.html', 'compare.html', 'bodies.html', 'peace.html
 peace = open(os.path.join(SITE, 'peace.html')).read()
 head = peace[:peace.index('</head>')]
 head = re.sub(r'<title>.*?</title>', '<title>An Atlas of Aliveness</title>', head, flags=re.S)
-head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="' + prose['DESCRIPTION'] + '">', head)
+head_desc = lambda: re.sub(r'\{\{([\w.]+)\}\}', lambda m: num(m.group(1)), prose['DESCRIPTION'])  # num() is defined below
 nav = peace[peace.index('<nav class="site">'):peace.index('</nav>') + 6].replace('<a href="#examples">Passages</a>', '<a href="#map-h">Map</a>')
 
 def num(path):
@@ -38,6 +38,7 @@ def num(path):
     for part in path.split('.'):
         v = v[int(part)] if isinstance(v, list) else v[part]
     return f'{v:,}' if isinstance(v, int) else str(v)
+head = re.sub(r'<meta name="description" content="[^"]*">', lambda m: '<meta name="description" content="' + head_desc() + '">', head)
 body = tpl
 for k, v in prose.items():
     body = body.replace(f'__{k}__', re.sub(r'\{\{([\w.]+)\}\}', lambda m: num(m.group(1)), v))

@@ -1,0 +1,108 @@
+{
+ "built_at": "2026-10-16T01:04:51.104Z",
+ "window_days": 60,
+ "instrument": "analytics_pageviews, distinct (ip, day) per book, human-filtered at write (ocr-convergence/driver.mjs frame)",
+ "books": 13634,
+ "top": [
+  {
+   "id": "69b51ea1cf111105c42a1a56",
+   "title": "Raymvndi Lvllii Opera Ea Qvae Ad Adinventam Ab Ipso Artem Vniversalem, ... perti",
+   "views": 567
+  },
+  {
+   "id": "6952dac677f38f6761bc683a",
+   "title": "Utriusque Cosmi Historia Vol. 1",
+   "views": 453
+  },
+  {
+   "id": "69aebfc3e997cc01b0caafe3",
+   "title": "Lettere di M. Pietro Aretino (vol. 3)",
+   "views": 406
+  },
+  {
+   "id": "69e961652beefe2f6f72b4a8",
+   "title": "大唐西域記 (Da Tang Xiyu Ji / Records of Western Regions)",
+   "views": 403
+  },
+  {
+   "id": "69f33df1876dd827cbc5cb4c",
+   "title": "Choya chibyo, 29-kwŏn",
+   "views": 395
+  },
+  {
+   "id": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autu",
+   "views": 395
+  },
+  {
+   "id": "695924fa1cac2ce31a4a8a33",
+   "title": "道藏 (Daozang - Taoist Canon)",
+   "views": 365
+  },
+  {
+   "id": "699246babc722ec0ee8120e8",
+   "title": "The Holy Bible (Wycliffe), Vol. 2",
+   "views": 350
+  },
+  {
+   "id": "69b2f4110e2f024dfbfba9d3",
+   "title": "Thesaurus Graecae Linguae (vol. 3)",
+   "views": 348
+  },
+  {
+   "id": "69b6476a18b87551bfc4c2c2",
+   "title": "Supplementum summae Pisanellae",
+   "views": 287
+  },
+  {
+   "id": "695361879c494f9f9f0424f4",
+   "title": "Picatrix (Ghāyat al-Ḥakīm)",
+   "views": 285
+  },
+  {
+   "id": "6a909543ac1fcc717ba30057",
+   "title": "Angeli de Clavasio Summa de casibus conscientiae",
+   "views": 274
+  },
+  {
+   "id": "6a3a3bcc862ce9a5b4d7658d",
+   "title": "Summa confessorum",
+   "views": 270
+  },
+  {
+   "id": "6a410c29d95727ee3e0ee8ae",
+   "title": "The Rasārṇava, or The Ocean of Mercury and Other Metals",
+   "views": 270
+  },
+  {
+   "id": "69b303d95facc83a9a3db234",
+   "title": "De Jure Belli",
+   "views": 263
+  },
+  {
+   "id": "69f327d552a77bb28fdb7aa1",
+   "title": "Manʾgi yoram, 11-kwŏn",
+   "views": 262
+  },
+  {
+   "id": "69f33e5f876dd827cbc5e35c",
+   "title": "Yŏho Sŏnsaeng munjip, v.1-9,11-16",
+   "views": 255
+  },
+  {
+   "id": "6a3a3bc2862ce9a5b4d76271",
+   "title": "Summa casuum conscientiae, sive De instructione sacerdotum",
+   "views": 240
+  },
+  {
+   "id": "697b079611cc8928b55ea394",
+   "title": "Eroeffneter Weg zum Frieden mit Gott und allen Creaturen",
+   "views": 232
+  },
+  {
+   "id": "6a3a3b6882a064363d359f64",
+   "title": "Summa de casibus conscientiae (Summa Pisanella)",
+   "views": 231
+  }
+ ]
+}

@@ -20,11 +20,11 @@
 
 The boxes reach each other through the **box mesh** (below), and the laptop reaches all three as root. The ARM boxes have no Python ML tools (kraken, CLIP, onnx): a brief that needs them goes to main.
 
-Each box's Claude login is a different account; check with `python3 -c "import json;print(json.load(open('/root/.claude.json'))['oauthAccount']['emailAddress'])"` on the box, since logins change (main: dereklomas@gmail.com since ~2026-10-12, cloudlayer: derek@playpowerlabs.com, l7a: derek@sourcelibrary.org), so spreading jobs across the boxes also spreads them across three weekly limits.
+Each box's Claude login is a different account; check with `python3 -c "import json;print(json.load(open('/root/.claude.json'))['oauthAccount']['emailAddress'])"` on the box, since logins change (main: team@sourcelibrary.org since 2026-10-15, cloudlayer: derek@playpowerlabs.com, l7a: derek@sourcelibrary.org), so spreading jobs across the boxes also spreads them across three weekly limits.
 
 ## The spare lane on every box (#6395)
 
-Each box is logged into a different Claude account (main: dereklomas@gmail.com since ~2026-10-12, cloudlayer: derek@playpowerlabs, l7a: derek@sourcelibrary). `scripts/workers/spare-lane.py` runs from cron on all three and spends that account's allowance on small issues when the account is under its fair share of the week. Only main polls usage. It publishes the poll to Mongo (`ops_reports` `claude-limits:latest`, `claude-limits-share.mjs`), and the guests read it there, because no box can ssh to another. Cron: main `*/30` (in `crontab.production`); guests `15,45 * * * *`, logging to `/data/scratch/sl/logs/spare-lane.log`, guarded on the script existing. Jobs are named `spare-<issue>`, at most 2 on main and 1 on a guest, and an issue the lane picks is labelled `spare-lane` so no other box takes it.
+Each box is logged into a different Claude account (main: team@sourcelibrary.org since 2026-10-15, cloudlayer: derek@playpowerlabs, l7a: derek@sourcelibrary; the laptop stays on dereklomas@gmail.com, so no box shares a 5-hour window with interactive sessions). `scripts/workers/spare-lane.py` runs from cron on all three and spends that account's allowance on small issues when the account is under its fair share of the week. Only main polls usage. It publishes the poll to Mongo (`ops_reports` `claude-limits:latest`, `claude-limits-share.mjs`), and the guests read it there, because no box can ssh to another. Cron: main `*/30` (in `crontab.production`); guests `15,45 * * * *`, logging to `/data/scratch/sl/logs/spare-lane.log`, guarded on the script existing. Jobs are named `spare-<issue>`, at most 2 on main and 1 on a guest, and an issue the lane picks is labelled `spare-lane` so no other box takes it. In the last 48 h of an account's week, when no issue is eligible, it runs an Opus-only #6420 convergent-audit round instead (`spare-audit-<date>-<n>`, same cap, logged `reason: fallback audit`) and posts that account-week's rounds as one pooled comment on #6420 after the reset (#6781).
 
 ## Placing a job: ask before you start
 
@@ -32,7 +32,7 @@ Each box is logged into a different Claude account (main: dereklomas@gmail.com s
 scripts/workers/job-where.sh
 ```
 
-It asks each box for `claude-job.sh where` (load, free memory, free job disk, live jobs, and whether the box is ready to run a job at all) and names the emptiest. Start the job there:
+It asks each box for `claude-job.sh where` (load, free memory, free job disk, live jobs, and whether the box is ready to run a job at all) and each box account's Claude headroom (5-hour %, week % and hours to reset, the week that would go unused at its pace; from `ops_reports` `claude-limits:latest`). Load, memory and disk only filter; it drops accounts at >= 80% of their 5-hour window or >= 90% of their week, and names the box whose account has the most week left per hour to its reset (#6751). Start the job there:
 
 ```
 scp brief.txt root@<box>:/tmp/ && ssh root@<box> /root/bin/claude-job.sh start <name> /tmp/brief.txt

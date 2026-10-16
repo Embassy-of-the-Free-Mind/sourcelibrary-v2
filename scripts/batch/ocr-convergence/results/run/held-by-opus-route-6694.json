@@ -1,0 +1,22 @@
+{
+ "note": "Books this job (opus-route-6694, #6694 step 2) held as ocr-wrong-leaf-6694 after arm B named wrong-leaf or invented text (containment-on-finding). Step 3 must not write their pages while held; their write decisions stay in each run dir.",
+ "held_at": "2026-10-14/15",
+ "book_ids": [
+  "69b52c43a2d71b015aa97877",
+  "69af42393fd91d3991398cca",
+  "69906e648a353648e1ecf7df",
+  "69d5ac5f4dc55b8478ddd6b5",
+  "69906ed58a353648e1ed05e7",
+  "69bd9d3c6120d54bd037424c",
+  "69afd0df775a23a98ee93a30",
+  "69b00d34229049d651692532",
+  "69b3e5b5304c1c6b395099fd",
+  "69af0ddf9f13b61d0a6c642b",
+  "6a1009c3f71729295096b78b",
+  "69a5ef38bfd8cafd91e43e69",
+  "699067ef249ce014347d4e4f",
+  "69af131693903bf8119f36db",
+  "69c7b2da25ec2ba5ccd7f49a",
+  "6a1009edf71729295096d027"
+ ]
+}

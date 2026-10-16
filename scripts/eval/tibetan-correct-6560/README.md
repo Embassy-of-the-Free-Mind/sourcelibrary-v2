@@ -79,3 +79,36 @@ Scores with all arms: `results/tibetan-correct-6560/scores-6667.json.gz`. Write-
 committed `opus-settles` key (Pro's arms) is not rebuilt. Opus ran it through `replicate-6547/run-claude-arm.py
 --model opus`. Scores with all arms: `results/tibetan-correct-6560/scores-flash.json.gz`. Write-up:
 `scripts/eval/experiments/2026-10-13-tibetan-flash38-correct-6560.md`.
+
+## The volume pass (#6560, 2026-10-15): Flash low correction of the served Yigdzin read
+
+Derek, 2026-10-14: a $0 Gemini 3.8 Flash LOW correction pass over the Yigdzin-read Tibetan, every ya-btags change held
+for an Opus check. Frame and order: `pass/volume-ids.mjs` (Yigdzin SERVE pages in visible or held books; Kangyur
+volumes first, oldest book first, because the 30-folio evidence and the prompt are Kangyur's). One volume:
+
+```
+scripts/eval/tibetan-correct-6560/pass/run-volume.sh <book_id> [--no-apply]
+```
+
+1. **read**: `scripts/batch/cli-ocr.mjs read --correct-prompt=corr-prompt.txt --lane=tib-correct-6560`. The request is
+   the arm's exactly: `prep.py` `CORR` (written to `corr-prompt.txt`) with the stored read as the draft, then
+   ` @./<page>.jpg`. Two agy calls in flight.
+2. **ya-btags guard** (`scripts/lib/tibetan-yatags-guard.mjs`): a syllable change that only adds or drops ྱ under མ
+   (མི/མེད ↔ མྱི/མྱེད, also དམིགས ↔ དམྱིགས) holds its page. `pass/leafcheck.mjs yatags-req` builds `score.py`'s READOFF
+   request for it (the two spellings as A/B in random order, context from the draft, 2 known-answer controls). A
+   sealed Opus (`replicate-6547/run-claude-arm.py`) answers, and `yatags-verdicts` keeps a change only where Opus saw
+   the correction's spelling on the leaf. `apply` puts every other change back to the draft's syllable.
+3. **apply**: `cli-ocr.mjs apply --yatags-verdicts=… --mark-stale=tib-correct-6560`. It refuses a correction that
+   changes over 25% of the draft's syllables, and a page whose draft changed after the read. The prior read goes to
+   `page_revisions`. The page is stamped `ocr.pipeline = tib-correct-6560`, a lane outside `WITHHOLD_LANES`, so the
+   hourly sweep does not withhold its English. `translation_stale` queues the English for re-translation.
+4. **gate** (first volume only): `leafcheck.mjs audit-req` samples 40 pages that apply would write. A fresh Opus
+   judges every changed span (draft vs written, A/B blind). A page is worse when the leaf shows the draft at more
+   spans than the correction. GO if at most 2 of 40 are worse.
+## Gemini 4 Argon low arm (#6560, 2026-10-15)
+
+`prep.py --root <scratch> --reuse-plants`, then `scripts/eval/run-cli-arm.py --model gemini-4-argon-low --kind ocr
+--parallel 2 --print-timeout 300` on `req/corr.jsonl` and `req/corr-anchor.jsonl`, into `out/g4l-corr*.jsonl`.
+`score.py readoff-prep --settler opus-settles-g4l` builds its own read-off key. Opus ran that key through
+`replicate-6547/run-claude-arm.py --model opus --parallel 2`. Scores: `results/tibetan-correct-6560/scores-g4l.json.gz`.
+Write-up: `scripts/eval/experiments/2026-10-15-tibetan-gemini4-argon-correct-6560.md`.

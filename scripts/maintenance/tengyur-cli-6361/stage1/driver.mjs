@@ -20,6 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawn, execFileSync } from 'node:child_process';
+import { assertGeminiModel } from '../../../lib/agy-cli.mjs'; // agy runs Gemini only (Claude goes through claude -p)
 
 const W = '/root/tengyur-cli-6361';
 const MODEL = 'gemini-3.8-flash-low';
@@ -69,6 +70,7 @@ function agy(prompt, cwd) {
   return new Promise((resolve) => {
     const t0 = Date.now();
     const args = ['-p', prompt, '--model', MODEL, '--mode', 'plan', '--print-timeout', `${TIMEOUT_S - 60}s`, '--output-format', 'json'];
+    assertGeminiModel(args);
     const ch = spawn('agy', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '', err = '', timedOut = false;
     ch.stdout.on('data', (d) => { out += d; });

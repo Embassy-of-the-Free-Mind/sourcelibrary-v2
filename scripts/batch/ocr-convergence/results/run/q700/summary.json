@@ -1,0 +1,52 @@
+{
+ "set": "q700",
+ "arm": "B: Opus corrects the stored text (correct.mjs)",
+ "pages": 710,
+ "books": 71,
+ "actions": {
+  "write": 590,
+  "keep": 115,
+  "contain": 5
+ },
+ "decided_at": "2026-10-15T00:13:13.534Z",
+ "job": "opus-route-6694",
+ "frame": "queue-next-1000.json ranks 601-700 minus lane_block, held books and Greek (#6694 step 2, job opus-route-6694)",
+ "books_in_frame": 71,
+ "books_selected": 71,
+ "books_answered": 71,
+ "pages_answered": 710,
+ "greek_lane_a_books": 15,
+ "skipped_books": 14,
+ "changed_pages": 590,
+ "by_group": {
+  "latin": {
+   "write": 443,
+   "keep": 73,
+   "contain": 4
+  },
+  "german": {
+   "write": 86,
+   "keep": 34
+  },
+  "chinese": {
+   "write": 41,
+   "keep": 8,
+   "contain": 1
+  },
+  "arabic": {
+   "write": 10
+  },
+  "hebrew": {
+   "write": 10
+  }
+ },
+ "calls": 84,
+ "call_classes": {
+  "ok": 80,
+  "usage_limit": 2,
+  "page_count_mismatch": 2
+ },
+ "list_cost_usd_equiv": 68.19,
+ "complete": true,
+ "next": "step 3 (separate job, after the Gemini reset): screen + 40-write audit (driver.mjs audit-packets on decisions.jsonl) + cli-ocr.mjs apply --out=reads --only=<write ids> --mark-stale=convergent-ocr-6420, shared-words guard on"
+}

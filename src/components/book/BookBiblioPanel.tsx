@@ -41,14 +41,37 @@ export default function BookBiblioPanel({
   const publisher = book.publisher?.trim();
   const impressum = [place, publisher].filter(Boolean).join(', ');
 
+  // #6721: say what each date rests on. A date the opening leaves print shows their words; a scholarly estimate
+  // (every schema-1 layer, written by enrichment, is one) says so.
+  const estimated = (l: SourceWorkDateLayer) =>
+    l.basis ? l.basis === 'model_knowledge' : book.source_work_dates_meta?.source === 'ai_enrichment';
   const layerLine = (l: SourceWorkDateLayer) => (
     <>
       {l.author && <span>{l.author}</span>}
       {l.work_title && <span className="italic">{l.author ? ', ' : ''}{l.work_title}</span>}
       {(l.language || l.date_display) && (
         <span style={{ color: '#948d80' }}>
-          {' '}({[l.language, l.date_display].filter(Boolean).join(', ')})
+          {' '}({[l.language, l.date_display].filter(Boolean).join(', ')}{estimated(l) ? ', estimated' : ''})
         </span>
+      )}
+      {l.basis === 'title_page' && l.evidence && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>
+          Printed on the opening leaves: <span className="italic">“{l.evidence}”</span>
+        </span>
+      )}
+      {l.basis === 'catalogue' && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the catalogue record</span>
+      )}
+      {l.basis === 'colophon' && l.evidence && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>
+          Stated in the colophon: <span className="italic">“{l.evidence}”</span>
+        </span>
+      )}
+      {l.basis === 'wikidata' && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>From Wikidata</span>
+      )}
+      {l.basis === 'author_lifespan' && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>From the author’s recorded dates</span>
       )}
     </>
   );

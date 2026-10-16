@@ -1,0 +1,173 @@
+{
+ "job": "yigdzin-hidden-4523",
+ "issue": 4523,
+ "run": "yigdzin-leaf-2026-10-14-hidden",
+ "at": "2026-10-14",
+ "frame": {
+  "books_hidden_tibetan": 638,
+  "filter": "language Tibetan, visible != true",
+  "books_with_candidate_pages": 495,
+  "candidate_pages": 47368
+ },
+ "scope_summary": {
+  "at": "2026-10-14T20:28:51.622Z",
+  "visibility": "hidden",
+  "books": 638,
+  "rejected_prior": 10256,
+  "passed_books": 2155,
+  "eye_books": 23,
+  "a": {
+   "book-not-held": 475,
+   "todo": 10
+  },
+  "b": {
+   "book-not-held": 2251,
+   "prior-yigdzin-reject": 8143,
+   "todo": 12204,
+   "excluded-book": 19835,
+   "page-number-not-positive": 79,
+   "book-gate:eye:devanagari-sanskrit-palm-leaf": 2,
+   "book-gate:eye:tibetan-english-dictionary": 373,
+   "book-held-other:warehouse-promotion-5470": 1082,
+   "book-held-other:kangyur-import": 2914
+  }
+ },
+ "eye_book_gate": {
+  "6a3702236b486c89426f9606": "tibetan",
+  "6a3702246b486c89426f9a3a": "tibetan",
+  "6a370230e7c320dda4b0fee6": "tibetan",
+  "6a370237e7c320dda4b10235": "tibetan",
+  "6a379f696b84dd3f2ea58223": "tibetan",
+  "6a379f776b84dd3f2ea58cc9": "tibetan",
+  "6a37c23263d3f620b49f0e96": "tibetan",
+  "6a37c9cb06d55b107dabe564": "tibetan",
+  "6a37c9dd06d55b107dabf191": "tibetan",
+  "6a37ca2f06d55b107dad4a10": "tibetan",
+  "6a37ca4506d55b107dad67eb": "tibetan",
+  "6a37d704d07939943b23ea3f": "tibetan",
+  "6a37d731d07939943b242dc5": "tibetan",
+  "6a37d9acd07939943b251a63": "tibetan",
+  "69bcfff6f403a9ca2380e8c7": "tibetan",
+  "69bd003af403a9ca2380e9b0": "tibetan",
+  "69bcfeb6f403a9ca2380e022": "tibetan",
+  "69bcffadf403a9ca2380e78a": "tibetan",
+  "69bcfef5f403a9ca2380e1e7": "tibetan",
+  "6a37022ee7c320dda4b0fde2": "tibetan",
+  "69bcff5ff403a9ca2380e553": "tibetan",
+  "6a37d7e4d07939943b24cbb5": "devanagari-sanskrit-palm-leaf",
+  "69bc8039173577a33741dba5": "tibetan-english-dictionary"
+ },
+ "recipe": "unchanged from yigdzin-rest-4523 (#6717): yig_leaf_worker.py partition, BDRC/tibetan-ocr 50506eb6, vLLM 0.29.0, v4 judge vs empty reference, guard.mjs (first-ocr-guard unflagged AND >= 150 syllables), apply-reocr-verdicts --read-mode=leaf",
+ "tally": {
+  "a": {
+   "guard-refused:short:<150-syllables": 2,
+   "judge:reject:duplication": 4,
+   "judge:reject:validity-drop": 1,
+   "skipped:book-not-held": 475,
+   "worker-skip:guttered-skip": 3
+  },
+  "b": {
+   "WRITE": 5145,
+   "guard-refused:guard:blank_leaf": 8,
+   "guard-refused:guard:dominant_unit": 128,
+   "guard-refused:guard:line_loop": 22,
+   "guard-refused:guard:local_loop": 62,
+   "guard-refused:guard:numeral_loop": 47,
+   "guard-refused:guard:punct_noise": 613,
+   "guard-refused:guard:repeated_line": 3,
+   "guard-refused:short:<150-syllables": 763,
+   "judge:reject:duplication": 15,
+   "judge:reject:validity-drop": 120,
+   "skipped:book-gate:eye:devanagari-sanskrit-palm-leaf": 2,
+   "skipped:book-gate:eye:tibetan-english-dictionary": 373,
+   "skipped:book-held-other:kangyur-import": 2914,
+   "skipped:book-held-other:warehouse-promotion-5470": 1082,
+   "skipped:book-not-held": 2251,
+   "skipped:excluded-book": 19835,
+   "skipped:page-number-not-positive": 79,
+   "skipped:prior-yigdzin-reject": 8143,
+   "worker-skip:guttered-skip": 5132,
+   "worker-skip:http": 146
+  }
+ },
+ "written": 5145,
+ "mongo_check": {
+  "onRun": 5145,
+  "runBooks": 15,
+  "written_expected": 5145,
+  "written_found": 5145,
+  "written_with_translation": 0,
+  "written_unreadable": 0,
+  "not_written_touched": 0,
+  "todo_books": 221,
+  "books_found": 221,
+  "books_visible_now": 0,
+  "holds_now": {
+   "specialist-ocr-lane-4523": 220,
+   "gpu-backlog-5660": 1
+  }
+ },
+ "eye": {
+  "label": "read-from-image",
+  "n": 7,
+  "invented": 0,
+  "wrong_leaf": 0,
+  "pages": [
+   {
+    "stem": "6a370230e7c320dda4b0fee6_00013",
+    "when": "pre-apply",
+    "verdict": "clean",
+    "note": "dbu med cursive, 2 leaves; red section marks land where the read puts \u0f3c \u0f22\u0f3d; lines 1-3 match (four snow mountains, four valleys)"
+   },
+   {
+    "stem": "6a37ca4506d55b107dad67eb_00177",
+    "when": "pre-apply",
+    "verdict": "clean",
+    "note": "blockprint 70b, 6 lines, each line opening matches (\u0f68\u0f7c\u0f7e\u0f0b\u0f54\u0fb2\u0f5b\u0f99\u0f71\u2026, \u0f58\u0f46\u0f7c\u0f51\u0f0b\u0f54\u0f60\u0f72\u0f0b\u0f58\u0f62\u0f0b\u0f58\u0f7a\u2026, \u0f56\u0f45\u0f51\u0f0b\u0f42\u0f51\u0f44\u0f66\u2026, \u0f42\u0f66\u0f7c\u0f63\u0f0b\u0f5e\u0f72\u0f44\u2026, \u0f56\u0fb1\u0f0b\u0f58\u0f44\u0f60\u2026)"
+   },
+   {
+    "stem": "6a37ca2f06d55b107dad4a10_00009",
+    "when": "pre-apply",
+    "verdict": "clean",
+    "note": "blockprint 5a, 6 lines; lines 1-2 match (\u2026\u0f58\u0f7a\u0f51\u0f0b\u0f54\u0f60\u0f72\u0f0b\u0f55\u0fb1\u0f72\u0f62\u0f0b\u0f63\u0f7c\u0f42\u0f0b\u0f63\u0f9f\u0f0b\u0f58\u0f41\u0f53\u2026, \u0f60\u0f51\u0f66\u0f0b\u0f66\u0f7a\u0f58\u0f66\u2026\u0f60\u0f5a\u0f44\u0f0b\u0f62\u0f92\u0fb1\u0f0b\u0f56\u0f0b\u0f53)"
+   },
+   {
+    "stem": "69bd003af403a9ca2380e9b0_00409",
+    "when": "mid-run",
+    "verdict": "minor",
+    "note": "blockprint 6 lines, every line's text matches (Nyarong war letter), but the line breaks are lost: the page is served as one line"
+   },
+   {
+    "stem": "6a37d9acd07939943b251a63_00077",
+    "when": "mid-run",
+    "verdict": "clean",
+    "note": "Abhisamayalamkara commentary, 6+6 lines, lines 1-6 match line for line"
+   },
+   {
+    "stem": "69bcfef5f403a9ca2380e1e7_00174",
+    "when": "late",
+    "verdict": "clean",
+    "note": "Milarepa songs blockprint, 6 lines, lines 1-4 match verse by verse"
+   },
+   {
+    "stem": "6a37c9dd06d55b107dabf191_00185",
+    "when": "shortest (written, fewest syllables)",
+    "verdict": "clean",
+    "note": "dbu med lineage list, 6 lines; names in order (sGrol ma, kLu sgrub, ... Ngor chen); contractions kept"
+   }
+  ]
+ },
+ "spend": {
+  "gpu_eur": 1.5,
+  "l4_hours": 1.9,
+  "boxes": {
+   "sl-yighid-0 fr-par-1": 0.805,
+   "sl-yighid-1 pl-waw-2": 1.097
+  },
+  "eur_per_h": 0.7875,
+  "cap_eur": 10,
+  "tender_cap_eur": 9.5,
+  "gemini_usd": 0
+ },
+ "boxes_deleted": "GET 404 on both servers and both volumes; no unattached volume in fr-par-1/2/3, pl-waw-1/2/3, nl-ams-1/2/3 (2026-10-14T21:45Z)"
+}

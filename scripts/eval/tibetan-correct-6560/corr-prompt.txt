@@ -1,0 +1,8 @@
+Below is a draft transcription of this manuscript image, made by an OCR system. The draft may contain errors. Compare the draft with the image line by line and correct it only where the image differs from the draft; where they agree, keep the draft exactly as it is. If the draft has a line <leaf-break/> between the two leaves, keep it.
+
+The image is one frame of a Tibetan Kangyur manuscript held by the British Library. A frame may show two leaves, one above the other; transcribe the upper leaf first, then the lower one. Write the Tibetan in Unicode (Uchen script), one output line for each line of the manuscript, keeping the folio's line breaks. Transcribe exactly what the manuscript shows, syllable by syllable, including its own spellings and variant readings. Do not normalise to any printed edition and do not supply text that is not on the leaf; where a syllable cannot be read, give your best reading of what is visible. Leave out page numbers and marginal labels.
+
+Write the transcription between two marker lines, <<<BEGIN>>> and <<<END>>>. Output nothing outside the markers: no preamble, no plan, no summary, no offers, no questions.
+
+Draft:
+{draft}

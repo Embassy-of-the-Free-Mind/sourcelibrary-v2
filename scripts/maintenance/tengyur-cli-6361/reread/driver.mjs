@@ -23,6 +23,7 @@ import crypto from 'node:crypto';
 import { spawn, execFileSync } from 'node:child_process';
 import { cliChatterReason } from '../../../lib/cli-chatter.mjs';
 import { refusableReasoningLeak } from '../../../lib/page-integrity.mjs';
+import { assertGeminiModel } from '../../../lib/agy-cli.mjs'; // agy runs Gemini only (Claude goes through claude -p)
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3) ?? d;
 const RUN = '/root/tengyur-cli-6361';
@@ -78,6 +79,7 @@ function agy(prompt, cwd, conversation) {
     const t0 = Date.now();
     const args = ['-p', prompt, '--model', MODEL, '--mode', 'plan', '--print-timeout', `${TIMEOUT_S - 60}s`, '--output-format', 'json'];
     if (conversation) args.push('--conversation', conversation);
+    assertGeminiModel(args);
     const ch = spawn('agy', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '', err = '', timedOut = false;
     ch.stdout.on('data', (d) => { out += d; });

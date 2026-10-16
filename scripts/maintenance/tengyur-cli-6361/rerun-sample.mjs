@@ -20,6 +20,7 @@ import { unwrapHiddenTranslation } from '../../lib/hidden-translation.mjs';
 import { strayScriptVerdict } from '../../lib/stray-script.mjs';
 import { refusableReasoningLeak, translationProse } from '../../lib/page-integrity.mjs';
 import { cliChatterReason } from '../../lib/cli-chatter.mjs';
+import { assertGeminiModel } from '../../lib/agy-cli.mjs'; // agy runs Gemini only (Claude goes through claude -p)
 
 const arg = (n, d) => process.argv.find((a) => a.startsWith(`--${n}=`))?.slice(n.length + 3) ?? d;
 const W = arg('run', '/root/tengyur-cli-6361'), OUT = arg('out'), STORED = arg('stored');
@@ -45,6 +46,7 @@ const stored = new Map(zlib.gunzipSync(fs.readFileSync(STORED)).toString('utf8')
 function agy(args, cwd) {
   return new Promise((resolve) => {
     const t0 = Date.now();
+    assertGeminiModel(args);
     const ch = spawn('agy', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '', err = '', timedOut = false;
     ch.stdout.on('data', (d) => { out += d; }); ch.stderr.on('data', (d) => { err += d; });

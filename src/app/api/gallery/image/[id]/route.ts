@@ -576,6 +576,7 @@ export async function PATCH(
                 $set: {
                   [`detected_images.${detectionIndex}.extracted_url`]: generated.extractedUrl,
                   [`detected_images.${detectionIndex}.thumbnail_url`]: generated.thumbnailUrl,
+                  [`detected_images.${detectionIndex}.card_url`]: generated.cardUrl,
                   [`detected_images.${detectionIndex}.extracted_width`]: generated.extractedWidth,
                   [`detected_images.${detectionIndex}.extracted_height`]: generated.extractedHeight,
                   [`detected_images.${detectionIndex}.dhash`]: generated.dhash,
@@ -589,6 +590,7 @@ export async function PATCH(
               const gallerySync: Record<string, unknown> = {
                 extracted_url: generated.extractedUrl,
                 thumbnail_url: generated.thumbnailUrl,
+                card_url: generated.cardUrl,
                 extracted_width: generated.extractedWidth,
                 extracted_height: generated.extractedHeight,
                 dhash: generated.dhash,

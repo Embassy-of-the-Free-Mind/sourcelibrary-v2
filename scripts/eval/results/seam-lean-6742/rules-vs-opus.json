@@ -1,0 +1,75 @@
+{
+ "catchwordEcho": {
+  "joins": 185,
+  "ruleEdits": 122,
+  "declined": {
+   "echo-no-source-cause": 62
+  },
+  "placementRefused": {
+   "touches-more-than-3-sentences": 1
+  },
+  "onOpusOk": 10,
+  "onOpusDefectNoRepair": 4,
+  "vsOpusRepair": {
+   "n": 108,
+   "exact": 34,
+   "equivalent": 84,
+   "sameSide": 52
+  },
+  "vsWritten": {
+   "n": 121,
+   "equivalent": 70,
+   "ruleDeclined": 35
+  },
+  "opusRepairedButRuleDeclined": 49,
+  "differs": {
+   "opusAddsOrRewordsWords": 13,
+   "sameWordsDifferentCut": 11
+  },
+  "precisionVsOpus": 0.778,
+  "precisionCI95": [
+   0.691,
+   0.846
+  ],
+  "okEditRate": 0.082,
+  "trusted": false
+ },
+ "dup8": {
+  "joins": 117,
+  "ruleEdits": 15,
+  "declined": {
+   "dup-not-at-facing-edges": 75,
+   "no-dup-run-in-excerpts": 21,
+   "dup-ratio-ambiguous": 3,
+   "dup-no-ratio": 2
+  },
+  "placementRefused": {
+   "touches-more-than-3-sentences": 1
+  },
+  "onOpusOk": 0,
+  "onOpusDefectNoRepair": 0,
+  "vsOpusRepair": {
+   "n": 15,
+   "exact": 2,
+   "equivalent": 9,
+   "sameSide": 4
+  },
+  "vsWritten": {
+   "n": 37,
+   "equivalent": 5,
+   "ruleDeclined": 28
+  },
+  "opusRepairedButRuleDeclined": 66,
+  "differs": {
+   "opusAddsOrRewordsWords": 2,
+   "sameWordsDifferentCut": 4
+  },
+  "precisionVsOpus": 0.6,
+  "precisionCI95": [
+   0.357,
+   0.802
+  ],
+  "okEditRate": 0,
+  "trusted": false
+ }
+}

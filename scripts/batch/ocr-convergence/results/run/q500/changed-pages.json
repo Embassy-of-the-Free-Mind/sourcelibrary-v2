@@ -1,0 +1,4194 @@
+[
+ {
+  "page_id": "69b51e0fefd8df28f2dafa88",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafa8e",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 17,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafa92",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 21,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafae6",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 105,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafb71",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 244,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafb92",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 277,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafbba",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 317,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafbdd",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 352,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafc47",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 458,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b51e0fefd8df28f2dafd3f",
+  "book_id": "69b51e0fefd8df28f2dafa7d",
+  "slug": "platonis-opera-plato",
+  "page_number": 706,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802d26",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 63,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802dcf",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 232,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802e12",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 299,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802e89",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 418,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802eea",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 515,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802eff",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 536,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802f57",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 624,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320802fbd",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 726,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320803076",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 911,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94d3a98dd95a320803095",
+  "book_id": "6aa94d3a98dd95a320802ce7",
+  "slug": "summa-confessorum-john-of-freiburg-bsb-clm-14268-1444-bsb-freiburg",
+  "page_number": 942,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6978f6e878e6a53ad2064c6f",
+  "book_id": "6978ee3a598a6361bba7fbaf",
+  "slug": "the-sum-of-perfection-and-the-marrow-of-alchemy-geber",
+  "page_number": 59,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6978f9037d9f19863f38557d",
+  "book_id": "6978ee3a598a6361bba7fbaf",
+  "slug": "the-sum-of-perfection-and-the-marrow-of-alchemy-geber",
+  "page_number": 79,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6978f9687d9f19863f38558f",
+  "book_id": "6978ee3a598a6361bba7fbaf",
+  "slug": "the-sum-of-perfection-and-the-marrow-of-alchemy-geber",
+  "page_number": 81,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b1524be",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 7,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b1524fd",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 70,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b1525ae",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 247,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b152632",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 379,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b15267c",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 453,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b15271d",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 614,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b15274d",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 662,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b152808",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 849,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b152882",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 971,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b2f44bf9f1ad2b3b1528dd",
+  "book_id": "69b2f44bf9f1ad2b3b1524b7",
+  "slug": "varii-historiae-romanae-scriptores-ed",
+  "page_number": 1062,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a3208048f2",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 5,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a3208048fc",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804902",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 21,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804903",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 22,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804905",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 24,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804a1f",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 306,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804a25",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 312,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804a53",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 358,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804aa1",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 436,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94ec498dd95a320804b3f",
+  "book_id": "6aa94ec498dd95a3208048ed",
+  "slug": "commentariorum-ac-disputationum-in-tertiam-partem-d-thomae-suarez",
+  "page_number": 594,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398d61",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 151,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398d73",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 169,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398dc8",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 254,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398dd3",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 265,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398e3f",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 373,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398e58",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 398,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42393fd91d3991398eb0",
+  "book_id": "69af42393fd91d3991398cca",
+  "slug": "corpus-iuris-civilis-vol-i-digest-justinian",
+  "page_number": 486,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f700dc45807dffe0959c71",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 93,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f700f845807dffe0959cad",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 155,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7011445807dffe0959ce5",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 215,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7013545807dffe0959d2e",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 280,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7015645807dffe0959d72",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 352,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7016045807dffe0959d8d",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 379,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7016e45807dffe0959da9",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 407,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7019645807dffe0959df6",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 484,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f701d145807dffe0959e5d",
+  "book_id": "69c81f706c6f3cc53c84a56d",
+  "slug": "de-perenni-philosophia-steuco-2",
+  "page_number": 581,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c345",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 407,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c372",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 452,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c377",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 457,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c4cb",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 797,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c4cd",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 799,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c4d8",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 810,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c4ee",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 832,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b32d635a396b236494c4f1",
+  "book_id": "69b32d635a396b236494c1ae",
+  "slug": "dissertatio-de-foenore-trapezitico-saumaise",
+  "page_number": 835,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc4428c",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 13,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc4428f",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 16,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc44290",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 17,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc44291",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc44294",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 21,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc44299",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 26,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc442ac",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 45,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc4432c",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 173,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc44357",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 216,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c08586a5921d5bc44408",
+  "book_id": "69b4c08586a5921d5bc4427f",
+  "slug": "hermes-trismegistus-ficino-translation-various-ficino-works-ficino",
+  "page_number": 393,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b987056",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 12,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b9870db",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 145,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b987247",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 509,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b9872b4",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 618,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b9872e1",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 663,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b98732f",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 741,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b987382",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 824,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b987458",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 1038,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b303fb983e01f74b98747a",
+  "book_id": "69b303fb983e01f74b98704a",
+  "slug": "historia-de-bello-svecico-matthiae",
+  "page_number": 1072,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bc8b",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 8,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bc8c",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bc95",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bc9b",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 24,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bd37",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 180,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bd47",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 196,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bd96",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 275,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bdbe",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 315,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bdbf",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 316,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6959afa11dfc1806c080bdfa",
+  "book_id": "912cf0da-035c-425b-8975-e5a195a47767",
+  "slug": "iamblichus-de-mysteriis-1497-aldine-ficino",
+  "page_number": 375,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab3b",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 7,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab3d",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab3e",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab42",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab45",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 17,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab46",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab47",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 19,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61ab48",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 20,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695592827bd6d2cd1d61aba3",
+  "book_id": "695592827bd6d2cd1d61ab34",
+  "slug": "kircher-ars-magna-lucis-et-umbrae-1646-kircher",
+  "page_number": 111,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b0209f85",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 91,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a008",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 222,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a047",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 285,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a048",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 286,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a172",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 584,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a1fb",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 721,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a242",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 792,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991ec417cafcbc1b020a26d",
+  "book_id": "6991ec417cafcbc1b0209f2a",
+  "slug": "theatrum-chemicum-vol-v-ed",
+  "page_number": 835,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747ef72",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 55,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747efca",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 143,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f07c",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 321,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f0bb",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 384,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f117",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 476,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f143",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 520,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f178",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 573,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f186",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 587,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f28c",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 849,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9f13f6d63c919747f36c",
+  "book_id": "69bd9f13f6d63c919747ef3b",
+  "slug": "andreae-alciati-emblemata-cum-commentariis-claudii-minois-i-alciati-2",
+  "page_number": 1073,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324ea3",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324ea4",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324ea7",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324ea9",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 20,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324eaa",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 21,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324eab",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 22,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "694f3d6fbe37f451a5324eac",
+  "book_id": "694f3d6ebe37f451a5324e95",
+  "slug": "complete-hermetica-1505-paris-edition-hermes-trismegistus",
+  "page_number": 23,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec811",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 2,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec815",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 6,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec818",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec819",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec81a",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec81b",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 12,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec836",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 39,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec837",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 40,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec838",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 41,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69d38c81b4368876d32ec85d",
+  "book_id": "69b418bc2b0edf3eaa2ddc19",
+  "slug": "kabbalistic-art-key-of-solomon-two-esoteric-texts-18th-c",
+  "page_number": 78,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109c9f7",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109c9f8",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109c9f9",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109c9fa",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 12,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109ca04",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 22,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109ca11",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 35,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109ca13",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 37,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6950050cf426a210d109ca1c",
+  "book_id": "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "slug": "oedipus-aegyptiacus-volume-ii-1653-kircher",
+  "page_number": 46,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7344e33881e31c2c0ee11",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 49,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7347933881e31c2c0eea4",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 196,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7348033881e31c2c0eebf",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 215,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f734a633881e31c2c0ef3e",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 346,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f734c633881e31c2c0efad",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 459,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f734ce33881e31c2c0efcc",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 486,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f734e633881e31c2c0f00e",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 554,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f734e933881e31c2c0f018",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 566,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7350f33881e31c2c0f09f",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 693,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7352633881e31c2c0f0f6",
+  "book_id": "69c78d3a6a0f3d112faf99bc",
+  "slug": "saltz-bund-gottes-in-viii-theilen-rieger",
+  "page_number": 782,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6977385eda0b017a2212bb4a",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 53,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697762cc778875ed1daedf68",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 244,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697779012ac52aca5ec3bc02",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 344,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69777a10031270df0b405879",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 351,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69779838178faad77cac55e0",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 476,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6977b5329d6b45b48325cbcc",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 583,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6977c03f8ba22b8de7c8db84",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 623,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6977dbf4605ea93f27f706d2",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 746,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697807a9cc22bd93dae93b54",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 941,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69781c827b60adddbd0969a7",
+  "book_id": "69772b6b47dc849429ffb22e",
+  "slug": "the-curious-chemical-library-manget",
+  "page_number": 1042,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697d9d9e74a5c5ffe482dc86",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 2,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697d9deb74a5c5ffe482dc90",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 4,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697da0723b07a1196fc02d1c",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697da0c3dc89a400a04ee555",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697dafdded399e36a385881f",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 71,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697dcc97c8d96e86b52f097c",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 174,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697dd400a88606692ddb4d6e",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 208,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697de0af6f51c18cd551727d",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 263,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697df0cde299cc4ef5d52afa",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 320,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "697dfb6978424eedfd8927d1",
+  "book_id": "697d9ca2e930671f09614566",
+  "slug": "the-harmony-of-the-world-kepler",
+  "page_number": 362,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179ee7",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 5,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179ee8",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 6,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179ee9",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 7,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179eec",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179eed",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179eee",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 12,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179ef1",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179ef3",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 17,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179f01",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 31,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "699066482ec9f7db57179f4c",
+  "book_id": "699066472ec9f7db57179ee2",
+  "slug": "zurich-zentralbibliothek-ms-rh-172-aquinas",
+  "page_number": 106,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907eee",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 77,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907f30",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 143,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907f3c",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 155,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907f79",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 216,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907f8d",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 236,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907fa3",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 258,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf0907fed",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 332,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf090801d",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 380,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a357ed02aadc65cf090806f",
+  "book_id": "6a357ed02aadc65cf0907ea1",
+  "slug": "asclepius-mercurii-trismegisti-pymander-trismegistus",
+  "page_number": 462,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695573a0f63a757109172146",
+  "book_id": "695573a0f63a757109172141",
+  "slug": "commentary-on-the-dream-of-scipio-the-saturnalia-macrobius",
+  "page_number": 5,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695573a0f63a75710917215b",
+  "book_id": "695573a0f63a757109172141",
+  "slug": "commentary-on-the-dream-of-scipio-the-saturnalia-macrobius",
+  "page_number": 26,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695573a0f63a757109172195",
+  "book_id": "695573a0f63a757109172141",
+  "slug": "commentary-on-the-dream-of-scipio-the-saturnalia-macrobius",
+  "page_number": 84,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695573a0f63a7571091721cf",
+  "book_id": "695573a0f63a757109172141",
+  "slug": "commentary-on-the-dream-of-scipio-the-saturnalia-macrobius",
+  "page_number": 142,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "695573a0f63a757109172380",
+  "book_id": "695573a0f63a757109172141",
+  "slug": "commentary-on-the-dream-of-scipio-the-saturnalia-macrobius",
+  "page_number": 575,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc64f7",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 108,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc6578",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 237,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc662c",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 417,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc6687",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 508,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc66a0",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 533,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc672f",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 676,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b18669c4be2cdd0edc67ec",
+  "book_id": "69b18669c4be2cdd0edc648b",
+  "slug": "de-historicis-latinis-vossius",
+  "page_number": 865,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf05dc",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 13,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf05f2",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 35,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf0658",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 137,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf068e",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 191,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf070f",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 320,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf0768",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 409,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf07e0",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 529,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf082b",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 604,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf086a",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 667,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e55777f38f6761bf0887",
+  "book_id": "6953e55777f38f6761bf05cf",
+  "slug": "de-humani-corporis-fabrica-1543-first-edition-vesalius",
+  "page_number": 696,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b36a62344316bb7002",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b26a62344316bb6ffe",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 12,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b26a62344316bb7000",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b26a62344316bb7001",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b46a62344316bb7006",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 16,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b46a62344316bb7007",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 17,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b36a62344316bb7004",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689b36a62344316bb7005",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 19,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689bb6a62344316bb700a",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 20,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f689bb6a62344316bb700b",
+  "book_id": "69b418b22b0edf3eaa2dda8d",
+  "slug": "key-of-solomon-latin-ms-18th-c-colorni",
+  "page_number": 21,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42b25d9a8c328fe8a0ab",
+  "book_id": "69af42b25d9a8c328fe8a0a4",
+  "slug": "m-verrii-flacci-fragmenta-et-sexti-pompei-festi-de-verborum-festus",
+  "page_number": 7,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42b25d9a8c328fe8a0af",
+  "book_id": "69af42b25d9a8c328fe8a0a4",
+  "slug": "m-verrii-flacci-fragmenta-et-sexti-pompei-festi-de-verborum-festus",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af42b25d9a8c328fe8a0b3",
+  "book_id": "69af42b25d9a8c328fe8a0a4",
+  "slug": "m-verrii-flacci-fragmenta-et-sexti-pompei-festi-de-verborum-festus",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3de5c",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 130,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3dea9",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 207,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3df65",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 395,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3df95",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 443,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3e04f",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 629,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3e094",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 698,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3e0ae",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 724,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3e11e",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 836,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3e172",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 920,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69a9571a65ddd05bbcd3e1ef",
+  "book_id": "69a9571a65ddd05bbcd3ddda",
+  "slug": "opera-omnia-graece-et-latine-jewish-antiquities-jewish-war-havercampus",
+  "page_number": 1045,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6988b142ee9913bc77466c0d",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 49,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6988b6144c187bd80fd5b2aa",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 58,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6988d32ac85a421d5e206b40",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 159,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6988ed5210cc7c74762ecff3",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 256,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6989306c67ef060d5d4ce219",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 567,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "698930d91ae774d5a2aef365",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 568,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69894b1dec8ceabd5d816e4e",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 692,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6989627526e5199d728467b5",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 803,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69898242100eb36e82e5dcf2",
+  "book_id": "6988a5a076a49ee3a652f51c",
+  "slug": "revealer-of-secrets-cregut",
+  "page_number": 957,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ad3c",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 414,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ad4a",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 428,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ad6d",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 463,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994adfd",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 607,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ae12",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 628,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ae1f",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 641,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ae3a",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 668,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1b0339ebc850994ae67",
+  "book_id": "6991e1b0339ebc850994ab9e",
+  "slug": "summa-theologica-secunda-secundae-on-justice-and-just-price-aquinas",
+  "page_number": 713,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c83bdb6c6f3cc53c84f7cc",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 35,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c83bfa6c6f3cc53c84f813",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 73,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c83c2a6c6f3cc53c84f88b",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 137,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c84f3049c7004727cc34e0",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 146,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c83c4c6c6f3cc53c84f8f9",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 197,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c92d5cacb41c32936115c7",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 245,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c92d69acb41c32936115e2",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 270,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c92d7dacb41c329361160a",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 313,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69c92d82acb41c3293611613",
+  "book_id": "69c83bc96c6f3cc53c84f7a2",
+  "slug": "alle-de-wercken-cats",
+  "page_number": 322,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de52b3",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 26,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de5302",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 105,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de5344",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 171,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de5463",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 458,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de54b3",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 538,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de54b4",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 539,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de54cb",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 562,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b301edc22956d8a0de55a6",
+  "book_id": "69b301ecc22956d8a0de5299",
+  "slug": "aristarchus-sacer-heinsius",
+  "page_number": 781,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbaa6",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 22,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbab6",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 38,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbadf",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 79,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbb11",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 129,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbb6c",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 220,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbbd9",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 329,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbbe0",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 336,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b3040b5facc83a9a3dbc42",
+  "book_id": "69b3040b5facc83a9a3dba90",
+  "slug": "de-bosporo-thracio-gilles",
+  "page_number": 434,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af486c9",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 13,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af486e8",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 44,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af4872e",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 114,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af48740",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 132,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af48787",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 203,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af48802",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 326,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af48844",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 392,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af48898",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 476,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af4891d",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 609,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0850b515c643eb1af4895c",
+  "book_id": "6a0850b515c643eb1af486bc",
+  "slug": "ex-xiiii-t-liuii-decadibus-prima-tertia-quarta-in-qua-prter--4",
+  "page_number": 672,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69527367ab34727b1f048f41",
+  "book_id": "69527367ab34727b1f048f38",
+  "slug": "mundus-subterraneus-kircher",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69527367ab34727b1f048f45",
+  "book_id": "69527367ab34727b1f048f38",
+  "slug": "mundus-subterraneus-kircher",
+  "page_number": 13,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69527367ab34727b1f048f46",
+  "book_id": "69527367ab34727b1f048f38",
+  "slug": "mundus-subterraneus-kircher",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69527367ab34727b1f048f47",
+  "book_id": "69527367ab34727b1f048f38",
+  "slug": "mundus-subterraneus-kircher",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e4fa77f38f6761bef1ee",
+  "book_id": "6953e4fa77f38f6761bef1dc",
+  "slug": "philosophiae-naturalis-principia-mathematica-1687-first-newton",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e4fa77f38f6761bef1f0",
+  "book_id": "6953e4fa77f38f6761bef1dc",
+  "slug": "philosophiae-naturalis-principia-mathematica-1687-first-newton",
+  "page_number": 20,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e4fa77f38f6761bef1f3",
+  "book_id": "6953e4fa77f38f6761bef1dc",
+  "slug": "philosophiae-naturalis-principia-mathematica-1687-first-newton",
+  "page_number": 23,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aeade197d553c75e9d9440",
+  "book_id": "69aeade197d553c75e9d9421",
+  "slug": "poggii-florentini-opera-bracciolini",
+  "page_number": 31,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aeade197d553c75e9d94a2",
+  "book_id": "69aeade197d553c75e9d9421",
+  "slug": "poggii-florentini-opera-bracciolini",
+  "page_number": 129,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aeade197d553c75e9d94ba",
+  "book_id": "69aeade197d553c75e9d9421",
+  "slug": "poggii-florentini-opera-bracciolini",
+  "page_number": 153,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aeade197d553c75e9d94d8",
+  "book_id": "69aeade197d553c75e9d9421",
+  "slug": "poggii-florentini-opera-bracciolini",
+  "page_number": 183,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aeade197d553c75e9d9503",
+  "book_id": "69aeade197d553c75e9d9421",
+  "slug": "poggii-florentini-opera-bracciolini",
+  "page_number": 226,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aeade197d553c75e9d959f",
+  "book_id": "69aeade197d553c75e9d9421",
+  "slug": "poggii-florentini-opera-bracciolini",
+  "page_number": 382,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a808",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 6,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a81c",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 26,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a820",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 30,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a837",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 53,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a85e",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 92,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a871",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 111,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a872",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 112,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a88a",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 136,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6991e1a8339ebc850994a8cf",
+  "book_id": "6991e1a8339ebc850994a802",
+  "slug": "politicorum-libri-octo-aristotle",
+  "page_number": 205,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a3208044c1",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 28,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a3208044d5",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 48,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a320804524",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 127,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a320804527",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 130,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a320804648",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 419,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a320804659",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 436,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a320804696",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 497,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a32080469c",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 503,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a3208046a4",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 511,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb398dd95a3208046ad",
+  "book_id": "6aa94eb398dd95a3208044a5",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio",
+  "page_number": 520,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a320804705",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 76,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a320804734",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 123,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a3208047c5",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 268,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a320804828",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 367,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a320804852",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 409,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a32080485a",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 417,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a320804880",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 455,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a3208048a0",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 487,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a3208048d1",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 536,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6aa94eb698dd95a3208048d4",
+  "book_id": "6aa94eb698dd95a3208046b9",
+  "slug": "sylvestrinae-summae-quae-summa-summarum-merito-nuncupatur-prierio-2",
+  "page_number": 539,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985060909cc43d8909b6399",
+  "book_id": "6984e8498a2f054f912420d3",
+  "slug": "two-volumes-of-pasquils",
+  "page_number": 154,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "698536a18af7a6820a286348",
+  "book_id": "6984e8498a2f054f912420d3",
+  "slug": "two-volumes-of-pasquils",
+  "page_number": 428,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69854092da715f71277a6a54",
+  "book_id": "6984e8498a2f054f912420d3",
+  "slug": "two-volumes-of-pasquils",
+  "page_number": 491,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "698550ba2ec39aa865d36566",
+  "book_id": "6984e8498a2f054f912420d3",
+  "slug": "two-volumes-of-pasquils",
+  "page_number": 598,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "698557cc8384be3fb3f3dd57",
+  "book_id": "6984e8498a2f054f912420d3",
+  "slug": "two-volumes-of-pasquils",
+  "page_number": 639,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b9449474c1",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 18,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b9449474c3",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 20,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b944947574",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 197,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b94494758b",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 220,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b9449475c5",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 278,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b944947649",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 410,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b944947675",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 454,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b9449477a9",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 762,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b944947806",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 855,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af13c46de7e4b94494785e",
+  "book_id": "69af13c46de7e4b9449474af",
+  "slug": "avicennae-canon-medicinae-vol-i-1595-latin-sina",
+  "page_number": 943,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda3974",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 7,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda3975",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 8,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda3977",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda3978",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda398b",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 30,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda3997",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 42,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda39a8",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 59,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda39ab",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 62,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda39b7",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 74,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69b4c057978ca9526eda3a75",
+  "book_id": "69b4c057978ca9526eda396d",
+  "slug": "firmicus-maternus-mathesis-second-copy-maternus",
+  "page_number": 264,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd73604374080",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 172,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd73604374081",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 173,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd7360437409a",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 198,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd736043740bd",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 233,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd736043740d7",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 259,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd736043741f4",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 544,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd736043741f8",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 548,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd73604374296",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 706,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69af2339285bd736043742e0",
+  "book_id": "69af2339285bd73604373fd4",
+  "slug": "isidore-of-seville-etymologiarum-sive-originum-libri-xx-vol-seville",
+  "page_number": 780,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985cb6dcac5ff7d5cc6d462",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 2,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985cbd8cac5ff7d5cc6d46d",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 7,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985cc9615f3fc6e88e6ebaf",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985cd18c2d0de96fd41ae0e",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 10,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985cd18c2d0de96fd41ae0f",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985ce243e6700de2787d463",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 12,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985ce243e6700de2787d464",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 13,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985ce783e6700de2787d46f",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985cef34634f434dd3337c2",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 16,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "6985f5da878cbebf09dcac44",
+  "book_id": "6985ca7130d79dd170ec623f",
+  "slug": "on-the-preternatural-history-of-both-worlds-fludd",
+  "page_number": 187,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036ef32",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 123,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036efc2",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 267,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036efe4",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 301,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f095",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 478,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f0b6",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 511,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f140",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 649,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f158",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 673,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f175",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 702,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f1ec",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 821,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69bd9c706120d54bd036f2a4",
+  "book_id": "69bd9c706120d54bd036eeb7",
+  "slug": "opera-dionysii-veteris-et-nove-translationis-etiam-albertus-2",
+  "page_number": 1005,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba8351377907635",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 69,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba8351377907667",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 119,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba8351377907670",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 128,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba835137790768a",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 154,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba835137790768b",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 155,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba835137790768c",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 156,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69944b981ba835137790768d",
+  "book_id": "69944b981ba83513779075f0",
+  "slug": "opera-exegetica-in-libros-mosis-eds",
+  "page_number": 157,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9896",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 156,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9941",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 327,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9977",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 381,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9a07",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 525,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9a15",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 539,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9a1f",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 549,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9a24",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 554,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9aa7",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 685,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69aec5d23b6ebce5e0ee9aea",
+  "book_id": "69aec5d23b6ebce5e0ee97fa",
+  "slug": "philosophia-moralis-sive-ethica-wolff-2",
+  "page_number": 752,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b27796f",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 9,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b277971",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 11,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b277973",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 13,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b277974",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 14,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b277975",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 15,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b277976",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 16,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b277977",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 17,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69593410b282844d7b27797b",
+  "book_id": "69593410b282844d7b277966",
+  "slug": "arcana-arcanissima-hieroglyphica-aegyptio-graeca-maier",
+  "page_number": 21,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f712422b69423529626c47",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 61,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f712642b69423529626c8b",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 135,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7127c2b69423529626cb3",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 171,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7129f2b69423529626cec",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 230,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f712be2b69423529626d36",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 302,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f712e52b69423529626d79",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 375,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7131b2b69423529626dca",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 452,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f713592b69423529626e26",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 540,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f713792b69423529626e5b",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 599,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f713ae2b69423529626ea5",
+  "book_id": "69c70f9dda9771c71631622d",
+  "slug": "greek-mikropresbytikon-veterum-quorundam-brevium-theologorum-anonymous",
+  "page_number": 679,
+  "group": "latin",
+  "action": "write"
+ },
+ {
+  "page_id": "69f7183ae9ea739a6b44e6ca",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 84,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f71853e9ea739a6b44e726",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 170,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f71864e9ea739a6b44e767",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 235,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f71887e9ea739a6b44e7e1",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 359,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f71896e9ea739a6b44e80e",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 406,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f71898e9ea739a6b44e814",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 410,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f718a4e9ea739a6b44e83c",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 458,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f718b1e9ea739a6b44e86d",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 499,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f718d2e9ea739a6b44e8d3",
+  "book_id": "69c8330b6c6f3cc53c84e140",
+  "slug": "ausfuhrliche-nachricht-von-seinen-eigenen-schrifften-der-wolf",
+  "page_number": 605,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad87609",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 2,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad8760d",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 6,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad8760f",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 8,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad87611",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 10,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad87612",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 11,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad87615",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 14,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad87618",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 17,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad8761a",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 19,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad8761d",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 22,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26bd05d6b178e5aad8761f",
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "slug": "cosmographey-oder-beschreibung-aller-lander-herrschafftenn-munster-2",
+  "page_number": 24,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b59f9169821cc3b24b63",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 13,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5a09169821cc3b24b6a",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 14,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5a09169821cc3b24b6b",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 15,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5a39169821cc3b24b72",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 20,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5a39169821cc3b24b70",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 26,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5ae9169821cc3b24b8d",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 55,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5d69169821cc3b24bf2",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 150,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5ee9169821cc3b24c32",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 216,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b5f59169821cc3b24c42",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 238,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f6b6109169821cc3b24c82",
+  "book_id": "69c88e706c6f3cc53c85b0f4",
+  "slug": "die-vierundzwanzig-alten-oder-der-goldne-thron-passau",
+  "page_number": 294,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b407",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 1,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b40a",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 4,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b40d",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 7,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b40e",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 8,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b415",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 15,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b416",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 16,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6992cbd3018b80967354b418",
+  "book_id": "6992cbd3018b80967354b406",
+  "slug": "on-the-highest-good-fechner",
+  "page_number": 18,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e3d6b70293ff4a3f635",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 13,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e3d6b70293ff4a3f637",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 19,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e4a6b70293ff4a3f659",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 41,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e546b70293ff4a3f672",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 70,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e646b70293ff4a3f69b",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 117,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e6a6b70293ff4a3f6ad",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 139,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e6d6b70293ff4a3f6b7",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 141,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e916b70293ff4a3f71f",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 243,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69e9f6b70293ff4a3f748",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 284,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69f69ea96b70293ff4a3f763",
+  "book_id": "69c85d376c6f3cc53c854e7c",
+  "slug": "briefe-an-den-frey-herrn-von-metternich-guyon",
+  "page_number": 317,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69af55b6ec9e6c278212da04",
+  "book_id": "69af55b5ec9e6c278212d9f4",
+  "slug": "das-aegyptische-todtenbuch-der-xviii-bis-xx-dynastie-naville",
+  "page_number": 16,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c837b76c6f3cc53c84ee6c",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 125,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c837ce6c6f3cc53c84eea0",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 149,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c837f06c6f3cc53c84eeee",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 189,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c84861acfba68303020665",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 258,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c838bb6c6f3cc53c84f0fb",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 425,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c838db6c6f3cc53c84f143",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 481,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c839906c6f3cc53c84f2c1",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 735,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c839d56c6f3cc53c84f34c",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 831,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c84b54acfba683030207ab",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 910,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69c84c0facfba68303020808",
+  "book_id": "69c836fd6c6f3cc53c84ed4c",
+  "slug": "der-gantze-psalter-davids-arndt",
+  "page_number": 1096,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b47",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 3,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b48",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 4,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b4a",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 6,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b4d",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 9,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b51",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 13,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b52",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 14,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b55",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 17,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b58",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 20,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a26c4b9aad44c98627d1b5a",
+  "book_id": "6a26c4b9aad44c98627d1b44",
+  "slug": "m-johannis-praetorii-p-l-c-theil-der-newen-weltbeschreibung-praetorius",
+  "page_number": 22,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69afe485d3545b7c9c2cfab9",
+  "book_id": "69afe484d3545b7c9c2cfaaa",
+  "slug": "wissenschaft-der-logik-erster-band-die-objective-logik-hegel-2",
+  "page_number": 15,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "69afe485d3545b7c9c2cfaf9",
+  "book_id": "69afe484d3545b7c9c2cfaaa",
+  "slug": "wissenschaft-der-logik-erster-band-die-objective-logik-hegel-2",
+  "page_number": 79,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e0ef",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 67,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e12a",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 126,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e13b",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 143,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e147",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 155,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e202",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 342,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e224",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 376,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e29f",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 499,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6a100a22f71729295096e37b",
+  "book_id": "6a100a22f71729295096e0ac",
+  "slug": "christian-wilhelm-franz-walchs-entwurf-einer-vollstandigen-s-n-4",
+  "page_number": 719,
+  "group": "german",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e27b77f38f6761be9101",
+  "book_id": "6953e27b77f38f6761be90fa",
+  "slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+  "page_number": 7,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e27b77f38f6761be9102",
+  "book_id": "6953e27b77f38f6761be90fa",
+  "slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+  "page_number": 8,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e27b77f38f6761be9107",
+  "book_id": "6953e27b77f38f6761be90fa",
+  "slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+  "page_number": 13,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e27b77f38f6761be9108",
+  "book_id": "6953e27b77f38f6761be90fa",
+  "slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+  "page_number": 14,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e27b77f38f6761be910b",
+  "book_id": "6953e27b77f38f6761be90fa",
+  "slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+  "page_number": 17,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6953e27b77f38f6761be915f",
+  "book_id": "6953e27b77f38f6761be90fa",
+  "slug": "four-books-of-confucius-analects-great-learning-doctrine-of-legge",
+  "page_number": 101,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c1594971f0",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 6,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497219",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 47,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c15949721c",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 50,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497276",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 140,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497283",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 153,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497306",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 284,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497370",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 390,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c1594973b1",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 455,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "6a0acab24d80f9c159497409",
+  "book_id": "6a0acab14d80f9c1594971ea",
+  "slug": "resshi-japanese-kanbun-edition-of-the-liezi-with-zhang-zhan-1912",
+  "page_number": 543,
+  "group": "chinese",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be8459740",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 5,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be84597c4",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 137,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be8459841",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 262,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be8459993",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 600,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be84599d5",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 666,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be84599d7",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 668,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be84599e7",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 684,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be8459a77",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 828,
+  "group": "hebrew",
+  "action": "write"
+ },
+ {
+  "page_id": "69c1ba978522835be8459aa0",
+  "book_id": "69c1ba978522835be845973b",
+  "slug": "illuminated-hebrew-bible-in-sephardi-script-anonymous",
+  "page_number": 869,
+  "group": "hebrew",
+  "action": "write"
+ }
+]

@@ -1,0 +1,1448 @@
+{
+ "mechanical": {
+  "O-CUR": {
+   "reads": 132,
+   "did_not_read": 0,
+   "dnr_why": [],
+   "out_tok_mean": 2697.053,
+   "out_tok_median": 2202.5,
+   "think_tok_mean": null,
+   "secs_median": 24.0,
+   "raw_chars_mean": 4254.409,
+   "body_chars_mean": 2628.932,
+   "tag_share_of_raw": {
+    "gloss": 0.0321,
+    "keywords": 0.0497,
+    "meta": 0.0522,
+    "note": 0.1411,
+    "summary": 0.0797,
+    "term": 0.0223,
+    "warning": 0.0009
+   }
+  },
+  "O-PLAIN": {
+   "reads": 132,
+   "did_not_read": 0,
+   "dnr_why": [],
+   "out_tok_mean": 1796.167,
+   "out_tok_median": 1358.0,
+   "think_tok_mean": null,
+   "secs_median": 16.0,
+   "raw_chars_mean": 2752.348,
+   "body_chars_mean": 2654.811,
+   "tag_share_of_raw": {
+    "gloss": 0.0117,
+    "image-desc": 0.0052,
+    "meta": 0.0009,
+    "note": 0.0031
+   }
+  },
+  "O-CUR2": {
+   "reads": 50,
+   "did_not_read": 0,
+   "dnr_why": [],
+   "out_tok_mean": 2536.82,
+   "out_tok_median": 2334.5,
+   "think_tok_mean": null,
+   "secs_median": 24.5,
+   "raw_chars_mean": 3976.12,
+   "body_chars_mean": 2395.34,
+   "tag_share_of_raw": {
+    "gloss": 0.0266,
+    "keywords": 0.0545,
+    "meta": 0.0548,
+    "note": 0.1511,
+    "summary": 0.0857,
+    "term": 0.0201,
+    "warning": 0.0014
+   }
+  },
+  "G-CUR": {
+   "reads": 132,
+   "did_not_read": 0,
+   "dnr_why": [],
+   "out_tok_mean": 3341.773,
+   "out_tok_median": 2424.0,
+   "think_tok_mean": 2474.977,
+   "secs_median": 23.0,
+   "raw_chars_mean": 3551.568,
+   "body_chars_mean": 2719.386,
+   "tag_share_of_raw": {
+    "gloss": 0.0354,
+    "keywords": 0.0389,
+    "meta": 0.0098,
+    "note": 0.047,
+    "summary": 0.0766,
+    "term": 0.0276,
+    "warning": 0.0018
+   }
+  },
+  "G-PLAIN": {
+   "reads": 132,
+   "did_not_read": 0,
+   "dnr_why": [],
+   "out_tok_mean": 4114.477,
+   "out_tok_median": 3578.5,
+   "think_tok_mean": 3422.992,
+   "secs_median": 24.5,
+   "raw_chars_mean": 2823.727,
+   "body_chars_mean": 2742.417,
+   "tag_share_of_raw": {
+    "gloss": 0.0143,
+    "image-desc": 0.0066,
+    "meta": 0.0001,
+    "note": 0.0008
+   }
+  },
+  "G-CUR2": {
+   "reads": 50,
+   "did_not_read": 0,
+   "dnr_why": [],
+   "out_tok_mean": 3244.82,
+   "out_tok_median": 2527.0,
+   "think_tok_mean": 2429.42,
+   "secs_median": 24.0,
+   "raw_chars_mean": 3292.0,
+   "body_chars_mean": 2482.64,
+   "tag_share_of_raw": {
+    "gloss": 0.028,
+    "keywords": 0.0413,
+    "meta": 0.0091,
+    "note": 0.0496,
+    "summary": 0.082,
+    "term": 0.036,
+    "warning": 0.0025
+   }
+  },
+  "G out_tok PLAIN-CUR": {
+   "n": 132,
+   "mean": 772.705,
+   "ci_by_work": [
+    81.659,
+    1412.28
+   ],
+   "relative": 0.231,
+   "relative_ci": [
+    0.022,
+    0.478
+   ]
+  },
+  "G body_chars PLAIN/CUR-1": {
+   "n": 132,
+   "relative": 0.008,
+   "ci_by_work": [
+    -0.019,
+    0.044
+   ]
+  },
+  "O out_tok PLAIN-CUR": {
+   "n": 132,
+   "mean": -900.886,
+   "ci_by_work": [
+    -1040.636,
+    -749.742
+   ],
+   "relative": -0.334,
+   "relative_ci": [
+    -0.38,
+    -0.286
+   ]
+  },
+  "O body_chars PLAIN/CUR-1": {
+   "n": 132,
+   "relative": 0.01,
+   "ci_by_work": [
+    -0.011,
+    0.038
+   ]
+  }
+ },
+ "G": {
+  "judge": "opus (claude -p)",
+  "items": 141,
+  "judged": 141,
+  "unparsed": [],
+  "panels": {
+   "Persian": {
+    "arms": {
+     "G-CUR": {
+      "n": 23,
+      "fidelity": 3.957,
+      "ci_by_work": [
+       3.652,
+       4.217
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 6,
+      "acc_spans_per_page": 3.13,
+      "major_acc_spans_per_page": 0.478,
+      "omission_spans_per_page": 0.478,
+      "invention_per_page": 0.913,
+      "invention_by_kind": {
+       "unreadable_fill": 12,
+       "gloss": 7,
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "pages_with_invention": 10
+     },
+     "G-PLAIN": {
+      "n": 23,
+      "fidelity": 3.826,
+      "ci_by_work": [
+       3.522,
+       4.13
+      ],
+      "reversal_pages": 5,
+      "omission_pages": 2,
+      "acc_spans_per_page": 2.87,
+      "major_acc_spans_per_page": 0.696,
+      "omission_spans_per_page": 0.174,
+      "invention_per_page": 0.304,
+      "invention_by_kind": {
+       "unreadable_fill": 7
+      },
+      "pages_with_invention": 3
+     },
+     "G-CUR2": {
+      "n": 10,
+      "fidelity": 4.0,
+      "ci_by_work": [
+       3.6,
+       4.4
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 3,
+      "acc_spans_per_page": 1.3,
+      "major_acc_spans_per_page": 0.3,
+      "omission_spans_per_page": 0.4,
+      "invention_per_page": 0.5,
+      "invention_by_kind": {
+       "gloss": 5
+      },
+      "pages_with_invention": 2
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 23,
+     "mean": -0.13,
+     "ci_by_work": [
+      -0.391,
+      0.13
+     ],
+     "wins": 4,
+     "losses": 7,
+     "ties": 12
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": -0.2,
+     "ci_by_work": [
+      -0.7,
+      0.3
+     ],
+     "wins": 2,
+     "losses": 4,
+     "ties": 4
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": 0.0,
+     "ci_by_work": [
+      -0.5,
+      0.5
+     ]
+    }
+   },
+   "Sanskrit": {
+    "arms": {
+     "G-CUR": {
+      "n": 30,
+      "fidelity": 3.833,
+      "ci_by_work": [
+       3.567,
+       4.1
+      ],
+      "reversal_pages": 4,
+      "omission_pages": 13,
+      "acc_spans_per_page": 2.767,
+      "major_acc_spans_per_page": 0.533,
+      "omission_spans_per_page": 0.733,
+      "invention_per_page": 1.2,
+      "invention_by_kind": {
+       "gloss": 23,
+       "added_fact": 2,
+       "unreadable_fill": 9,
+       "boundary": 2
+      },
+      "pages_with_invention": 17
+     },
+     "G-PLAIN": {
+      "n": 30,
+      "fidelity": 4.0,
+      "ci_by_work": [
+       3.7,
+       4.267
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 5,
+      "acc_spans_per_page": 2.033,
+      "major_acc_spans_per_page": 0.4,
+      "omission_spans_per_page": 0.267,
+      "invention_per_page": 0.767,
+      "invention_by_kind": {
+       "gloss": 14,
+       "added_fact": 2,
+       "unreadable_fill": 6,
+       "boundary": 1
+      },
+      "pages_with_invention": 9
+     },
+     "G-CUR2": {
+      "n": 10,
+      "fidelity": 3.8,
+      "ci_by_work": [
+       3.4,
+       4.2
+      ],
+      "reversal_pages": 3,
+      "omission_pages": 7,
+      "acc_spans_per_page": 2.6,
+      "major_acc_spans_per_page": 0.3,
+      "omission_spans_per_page": 0.6,
+      "invention_per_page": 1.3,
+      "invention_by_kind": {
+       "unreadable_fill": 1,
+       "gloss": 11,
+       "boundary": 1
+      },
+      "pages_with_invention": 3
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 30,
+     "mean": 0.167,
+     "ci_by_work": [
+      -0.133,
+      0.467
+     ],
+     "wins": 9,
+     "losses": 6,
+     "ties": 15
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": -0.2,
+     "ci_by_work": [
+      -0.5,
+      0.0
+     ],
+     "wins": 0,
+     "losses": 2,
+     "ties": 8
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": -0.1,
+     "ci_by_work": [
+      -0.5,
+      0.3
+     ]
+    }
+   },
+   "Chinese": {
+    "arms": {
+     "G-CUR": {
+      "n": 25,
+      "fidelity": 4.08,
+      "ci_by_work": [
+       3.88,
+       4.28
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 3,
+      "acc_spans_per_page": 2.32,
+      "major_acc_spans_per_page": 0.16,
+      "omission_spans_per_page": 0.2,
+      "invention_per_page": 0.96,
+      "invention_by_kind": {
+       "unreadable_fill": 9,
+       "gloss": 7,
+       "boundary": 2,
+       "added_fact": 6
+      },
+      "pages_with_invention": 12
+     },
+     "G-PLAIN": {
+      "n": 25,
+      "fidelity": 4.16,
+      "ci_by_work": [
+       3.88,
+       4.4
+      ],
+      "reversal_pages": 3,
+      "omission_pages": 2,
+      "acc_spans_per_page": 1.56,
+      "major_acc_spans_per_page": 0.2,
+      "omission_spans_per_page": 0.16,
+      "invention_per_page": 0.12,
+      "invention_by_kind": {
+       "gloss": 2,
+       "unreadable_fill": 1
+      },
+      "pages_with_invention": 3
+     },
+     "G-CUR2": {
+      "n": 10,
+      "fidelity": 3.9,
+      "ci_by_work": [
+       3.5,
+       4.3
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 1,
+      "acc_spans_per_page": 2.5,
+      "major_acc_spans_per_page": 0.4,
+      "omission_spans_per_page": 0.1,
+      "invention_per_page": 1.1,
+      "invention_by_kind": {
+       "unreadable_fill": 3,
+       "gloss": 6,
+       "added_fact": 2
+      },
+      "pages_with_invention": 6
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 25,
+     "mean": 0.08,
+     "ci_by_work": [
+      -0.12,
+      0.28
+     ],
+     "wins": 5,
+     "losses": 3,
+     "ties": 17
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": 0.0,
+     "ci_by_work": [
+      -0.5,
+      0.5
+     ],
+     "wins": 3,
+     "losses": 3,
+     "ties": 4
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": -0.1,
+     "ci_by_work": [
+      -0.5,
+      0.4
+     ]
+    }
+   },
+   "Greek": {
+    "arms": {
+     "G-CUR": {
+      "n": 25,
+      "fidelity": 3.96,
+      "ci_by_work": [
+       3.68,
+       4.24
+      ],
+      "reversal_pages": 3,
+      "omission_pages": 9,
+      "acc_spans_per_page": 3.0,
+      "major_acc_spans_per_page": 0.72,
+      "omission_spans_per_page": 0.4,
+      "invention_per_page": 0.76,
+      "invention_by_kind": {
+       "gloss": 7,
+       "unreadable_fill": 9,
+       "boundary": 1,
+       "added_fact": 2
+      },
+      "pages_with_invention": 12
+     },
+     "G-PLAIN": {
+      "n": 25,
+      "fidelity": 4.24,
+      "ci_by_work": [
+       3.88,
+       4.56
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 4,
+      "acc_spans_per_page": 1.84,
+      "major_acc_spans_per_page": 0.4,
+      "omission_spans_per_page": 0.2,
+      "invention_per_page": 0.44,
+      "invention_by_kind": {
+       "boundary": 1,
+       "gloss": 2,
+       "unreadable_fill": 7,
+       "added_fact": 1
+      },
+      "pages_with_invention": 7
+     },
+     "G-CUR2": {
+      "n": 10,
+      "fidelity": 3.5,
+      "ci_by_work": [
+       3.1,
+       3.9
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 6,
+      "acc_spans_per_page": 3.8,
+      "major_acc_spans_per_page": 1.3,
+      "omission_spans_per_page": 0.5,
+      "invention_per_page": 0.8,
+      "invention_by_kind": {
+       "gloss": 2,
+       "unreadable_fill": 6
+      },
+      "pages_with_invention": 5
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 25,
+     "mean": 0.28,
+     "ci_by_work": [
+      0.08,
+      0.48
+     ],
+     "wins": 8,
+     "losses": 1,
+     "ties": 16
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": -0.3,
+     "ci_by_work": [
+      -0.6,
+      -0.1
+     ],
+     "wins": 0,
+     "losses": 3,
+     "ties": 7
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": 0.4,
+     "ci_by_work": [
+      0.0,
+      0.8
+     ]
+    }
+   },
+   "Hebrew": {
+    "arms": {
+     "G-CUR": {
+      "n": 29,
+      "fidelity": 4.207,
+      "ci_by_work": [
+       3.931,
+       4.448
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 6,
+      "acc_spans_per_page": 2.69,
+      "major_acc_spans_per_page": 0.517,
+      "omission_spans_per_page": 0.345,
+      "invention_per_page": 1.0,
+      "invention_by_kind": {
+       "boundary": 2,
+       "unreadable_fill": 15,
+       "gloss": 9,
+       "added_fact": 3
+      },
+      "pages_with_invention": 13
+     },
+     "G-PLAIN": {
+      "n": 29,
+      "fidelity": 4.31,
+      "ci_by_work": [
+       4.0,
+       4.552
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 4,
+      "acc_spans_per_page": 2.345,
+      "major_acc_spans_per_page": 0.517,
+      "omission_spans_per_page": 0.172,
+      "invention_per_page": 0.517,
+      "invention_by_kind": {
+       "unreadable_fill": 12,
+       "boundary": 1,
+       "gloss": 2
+      },
+      "pages_with_invention": 9
+     },
+     "G-CUR2": {
+      "n": 10,
+      "fidelity": 4.5,
+      "ci_by_work": [
+       4.2,
+       4.8
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 1,
+      "acc_spans_per_page": 1.2,
+      "major_acc_spans_per_page": 0.0,
+      "omission_spans_per_page": 0.3,
+      "invention_per_page": 0.4,
+      "invention_by_kind": {
+       "unreadable_fill": 2,
+       "gloss": 2
+      },
+      "pages_with_invention": 3
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 29,
+     "mean": 0.103,
+     "ci_by_work": [
+      -0.069,
+      0.276
+     ],
+     "wins": 5,
+     "losses": 2,
+     "ties": 22
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": 0.1,
+     "ci_by_work": [
+      -0.2,
+      0.4
+     ],
+     "wins": 2,
+     "losses": 1,
+     "ties": 7
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": 0.0,
+     "ci_by_work": [
+      -0.4,
+      0.4
+     ]
+    }
+   },
+   "pooled": {
+    "arms": {
+     "G-CUR": {
+      "n": 132,
+      "fidelity": 4.008,
+      "ci_by_work": [
+       3.886,
+       4.129
+      ],
+      "reversal_pages": 11,
+      "omission_pages": 37,
+      "acc_spans_per_page": 2.773,
+      "major_acc_spans_per_page": 0.485,
+      "omission_spans_per_page": 0.439,
+      "invention_per_page": 0.977,
+      "invention_by_kind": {
+       "gloss": 53,
+       "unreadable_fill": 54,
+       "boundary": 8,
+       "added_fact": 14
+      },
+      "pages_with_invention": 64
+     },
+     "G-PLAIN": {
+      "n": 132,
+      "fidelity": 4.114,
+      "ci_by_work": [
+       3.97,
+       4.25
+      ],
+      "reversal_pages": 13,
+      "omission_pages": 17,
+      "acc_spans_per_page": 2.121,
+      "major_acc_spans_per_page": 0.439,
+      "omission_spans_per_page": 0.197,
+      "invention_per_page": 0.447,
+      "invention_by_kind": {
+       "gloss": 20,
+       "unreadable_fill": 33,
+       "boundary": 3,
+       "added_fact": 3
+      },
+      "pages_with_invention": 31
+     },
+     "G-CUR2": {
+      "n": 50,
+      "fidelity": 3.94,
+      "ci_by_work": [
+       3.74,
+       4.14
+      ],
+      "reversal_pages": 7,
+      "omission_pages": 18,
+      "acc_spans_per_page": 2.28,
+      "major_acc_spans_per_page": 0.46,
+      "omission_spans_per_page": 0.38,
+      "invention_per_page": 0.82,
+      "invention_by_kind": {
+       "unreadable_fill": 12,
+       "gloss": 26,
+       "boundary": 1,
+       "added_fact": 2
+      },
+      "pages_with_invention": 19
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 132,
+     "mean": 0.106,
+     "ci_by_work": [
+      0.0,
+      0.212
+     ],
+     "wins": 31,
+     "losses": 19,
+     "ties": 82
+    },
+    "floor CUR2-CUR": {
+     "n": 50,
+     "mean": -0.12,
+     "ci_by_work": [
+      -0.28,
+      0.06
+     ],
+     "wins": 7,
+     "losses": 13,
+     "ties": 30
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 50,
+     "mean": 0.04,
+     "ci_by_work": [
+      -0.16,
+      0.24
+     ]
+    }
+   }
+  },
+  "plants": {
+   "n": 9,
+   "located": 9,
+   "rows": [
+    {
+     "item": "G-029",
+     "lang": "Chinese",
+     "kind": "negation",
+     "how": "\\bdoes not\\b → does",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "G-032",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "how": "\\bare\\b → are not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "G-040",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 2.0
+    },
+    {
+     "item": "G-048",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "G-066",
+     "lang": "Greek",
+     "kind": "number",
+     "how": "First → Second",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "G-086",
+     "lang": "Greek",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "G-114",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "G-127",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "G-129",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "fourth → fifth",
+     "located": true,
+     "fid": 3.0
+    }
+   ]
+  }
+ },
+ "O": {
+  "judge": "gemini-3.8-flash-high (agy -p)",
+  "items": 142,
+  "judged": 141,
+  "unparsed": [
+   "O-042"
+  ],
+  "panels": {
+   "Persian": {
+    "arms": {
+     "O-CUR": {
+      "n": 22,
+      "fidelity": 3.909,
+      "ci_by_work": [
+       3.545,
+       4.273
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 8,
+      "acc_spans_per_page": 1.591,
+      "major_acc_spans_per_page": 0.455,
+      "omission_spans_per_page": 0.591,
+      "invention_per_page": 0.409,
+      "invention_by_kind": {
+       "gloss": 7,
+       "added_fact": 2
+      },
+      "pages_with_invention": 2
+     },
+     "O-PLAIN": {
+      "n": 22,
+      "fidelity": 4.364,
+      "ci_by_work": [
+       4.0,
+       4.682
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 3,
+      "acc_spans_per_page": 1.0,
+      "major_acc_spans_per_page": 0.182,
+      "omission_spans_per_page": 0.182,
+      "invention_per_page": 0.0,
+      "invention_by_kind": {},
+      "pages_with_invention": 0
+     },
+     "O-CUR2": {
+      "n": 9,
+      "fidelity": 3.778,
+      "ci_by_work": [
+       3.333,
+       4.222
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 1,
+      "acc_spans_per_page": 1.444,
+      "major_acc_spans_per_page": 0.222,
+      "omission_spans_per_page": 0.444,
+      "invention_per_page": 0.222,
+      "invention_by_kind": {
+       "gloss": 2
+      },
+      "pages_with_invention": 1
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 22,
+     "mean": 0.455,
+     "ci_by_work": [
+      0.0,
+      0.909
+     ],
+     "wins": 12,
+     "losses": 6,
+     "ties": 4
+    },
+    "floor CUR2-CUR": {
+     "n": 9,
+     "mean": -0.333,
+     "ci_by_work": [
+      -0.889,
+      0.222
+     ],
+     "wins": 1,
+     "losses": 3,
+     "ties": 5
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 9,
+     "mean": 0.778,
+     "ci_by_work": [
+      0.111,
+      1.444
+     ]
+    }
+   },
+   "Sanskrit": {
+    "arms": {
+     "O-CUR": {
+      "n": 30,
+      "fidelity": 4.133,
+      "ci_by_work": [
+       3.8,
+       4.433
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 9,
+      "acc_spans_per_page": 1.2,
+      "major_acc_spans_per_page": 0.2,
+      "omission_spans_per_page": 0.567,
+      "invention_per_page": 0.167,
+      "invention_by_kind": {
+       "boundary": 4,
+       "added_fact": 1
+      },
+      "pages_with_invention": 5
+     },
+     "O-PLAIN": {
+      "n": 30,
+      "fidelity": 4.4,
+      "ci_by_work": [
+       4.067,
+       4.667
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 3,
+      "acc_spans_per_page": 0.867,
+      "major_acc_spans_per_page": 0.167,
+      "omission_spans_per_page": 0.367,
+      "invention_per_page": 0.1,
+      "invention_by_kind": {
+       "boundary": 3
+      },
+      "pages_with_invention": 3
+     },
+     "O-CUR2": {
+      "n": 10,
+      "fidelity": 4.2,
+      "ci_by_work": [
+       3.7,
+       4.6
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 3,
+      "acc_spans_per_page": 1.4,
+      "major_acc_spans_per_page": 0.3,
+      "omission_spans_per_page": 0.2,
+      "invention_per_page": 0.1,
+      "invention_by_kind": {
+       "boundary": 1
+      },
+      "pages_with_invention": 1
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 30,
+     "mean": 0.267,
+     "ci_by_work": [
+      -0.067,
+      0.633
+     ],
+     "wins": 12,
+     "losses": 7,
+     "ties": 11
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": -0.1,
+     "ci_by_work": [
+      -0.6,
+      0.4
+     ],
+     "wins": 3,
+     "losses": 4,
+     "ties": 3
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": 0.3,
+     "ci_by_work": [
+      -0.3,
+      0.9
+     ]
+    }
+   },
+   "Chinese": {
+    "arms": {
+     "O-CUR": {
+      "n": 25,
+      "fidelity": 4.12,
+      "ci_by_work": [
+       3.76,
+       4.44
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 6,
+      "acc_spans_per_page": 1.64,
+      "major_acc_spans_per_page": 0.2,
+      "omission_spans_per_page": 0.36,
+      "invention_per_page": 0.2,
+      "invention_by_kind": {
+       "added_fact": 3,
+       "boundary": 2
+      },
+      "pages_with_invention": 5
+     },
+     "O-PLAIN": {
+      "n": 25,
+      "fidelity": 4.36,
+      "ci_by_work": [
+       4.04,
+       4.64
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 3,
+      "acc_spans_per_page": 0.92,
+      "major_acc_spans_per_page": 0.08,
+      "omission_spans_per_page": 0.24,
+      "invention_per_page": 0.08,
+      "invention_by_kind": {
+       "added_fact": 1,
+       "boundary": 1
+      },
+      "pages_with_invention": 2
+     },
+     "O-CUR2": {
+      "n": 10,
+      "fidelity": 4.2,
+      "ci_by_work": [
+       3.9,
+       4.6
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 0,
+      "acc_spans_per_page": 1.4,
+      "major_acc_spans_per_page": 0.0,
+      "omission_spans_per_page": 0.0,
+      "invention_per_page": 0.4,
+      "invention_by_kind": {
+       "unreadable_fill": 2,
+       "boundary": 1,
+       "added_fact": 1
+      },
+      "pages_with_invention": 4
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 25,
+     "mean": 0.24,
+     "ci_by_work": [
+      -0.08,
+      0.56
+     ],
+     "wins": 9,
+     "losses": 4,
+     "ties": 12
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": 0.1,
+     "ci_by_work": [
+      -0.3,
+      0.5
+     ],
+     "wins": 3,
+     "losses": 2,
+     "ties": 5
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": -0.1,
+     "ci_by_work": [
+      -0.7,
+      0.5
+     ]
+    }
+   },
+   "Greek": {
+    "arms": {
+     "O-CUR": {
+      "n": 25,
+      "fidelity": 4.2,
+      "ci_by_work": [
+       3.96,
+       4.44
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 5,
+      "acc_spans_per_page": 1.16,
+      "major_acc_spans_per_page": 0.0,
+      "omission_spans_per_page": 0.44,
+      "invention_per_page": 0.08,
+      "invention_by_kind": {
+       "added_fact": 2
+      },
+      "pages_with_invention": 2
+     },
+     "O-PLAIN": {
+      "n": 25,
+      "fidelity": 4.44,
+      "ci_by_work": [
+       4.12,
+       4.72
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 2,
+      "acc_spans_per_page": 0.92,
+      "major_acc_spans_per_page": 0.2,
+      "omission_spans_per_page": 0.12,
+      "invention_per_page": 0.0,
+      "invention_by_kind": {},
+      "pages_with_invention": 0
+     },
+     "O-CUR2": {
+      "n": 10,
+      "fidelity": 4.3,
+      "ci_by_work": [
+       4.0,
+       4.6
+      ],
+      "reversal_pages": 0,
+      "omission_pages": 1,
+      "acc_spans_per_page": 1.3,
+      "major_acc_spans_per_page": 0.0,
+      "omission_spans_per_page": 0.1,
+      "invention_per_page": 0.4,
+      "invention_by_kind": {
+       "boundary": 1,
+       "added_fact": 1,
+       "unreadable_fill": 2
+      },
+      "pages_with_invention": 3
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 25,
+     "mean": 0.24,
+     "ci_by_work": [
+      -0.16,
+      0.6
+     ],
+     "wins": 12,
+     "losses": 5,
+     "ties": 8
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": 0.3,
+     "ci_by_work": [
+      -0.2,
+      0.8
+     ],
+     "wins": 3,
+     "losses": 1,
+     "ties": 6
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": 0.2,
+     "ci_by_work": [
+      -0.5,
+      0.8
+     ]
+    }
+   },
+   "Hebrew": {
+    "arms": {
+     "O-CUR": {
+      "n": 29,
+      "fidelity": 4.0,
+      "ci_by_work": [
+       3.621,
+       4.379
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 7,
+      "acc_spans_per_page": 1.724,
+      "major_acc_spans_per_page": 0.379,
+      "omission_spans_per_page": 0.276,
+      "invention_per_page": 0.069,
+      "invention_by_kind": {
+       "unreadable_fill": 1,
+       "boundary": 1
+      },
+      "pages_with_invention": 2
+     },
+     "O-PLAIN": {
+      "n": 29,
+      "fidelity": 4.345,
+      "ci_by_work": [
+       4.0,
+       4.621
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 4,
+      "acc_spans_per_page": 1.103,
+      "major_acc_spans_per_page": 0.241,
+      "omission_spans_per_page": 0.103,
+      "invention_per_page": 0.069,
+      "invention_by_kind": {
+       "unreadable_fill": 2
+      },
+      "pages_with_invention": 2
+     },
+     "O-CUR2": {
+      "n": 10,
+      "fidelity": 4.0,
+      "ci_by_work": [
+       3.3,
+       4.6
+      ],
+      "reversal_pages": 1,
+      "omission_pages": 1,
+      "acc_spans_per_page": 1.3,
+      "major_acc_spans_per_page": 0.3,
+      "omission_spans_per_page": 0.1,
+      "invention_per_page": 0.0,
+      "invention_by_kind": {},
+      "pages_with_invention": 0
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 29,
+     "mean": 0.345,
+     "ci_by_work": [
+      0.0,
+      0.69
+     ],
+     "wins": 12,
+     "losses": 6,
+     "ties": 11
+    },
+    "floor CUR2-CUR": {
+     "n": 10,
+     "mean": -0.1,
+     "ci_by_work": [
+      -0.7,
+      0.5
+     ],
+     "wins": 3,
+     "losses": 3,
+     "ties": 4
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 10,
+     "mean": 0.1,
+     "ci_by_work": [
+      -0.5,
+      0.7
+     ]
+    }
+   },
+   "pooled": {
+    "arms": {
+     "O-CUR": {
+      "n": 131,
+      "fidelity": 4.076,
+      "ci_by_work": [
+       3.924,
+       4.229
+      ],
+      "reversal_pages": 6,
+      "omission_pages": 35,
+      "acc_spans_per_page": 1.458,
+      "major_acc_spans_per_page": 0.244,
+      "omission_spans_per_page": 0.443,
+      "invention_per_page": 0.176,
+      "invention_by_kind": {
+       "gloss": 7,
+       "boundary": 7,
+       "added_fact": 8,
+       "unreadable_fill": 1
+      },
+      "pages_with_invention": 16
+     },
+     "O-PLAIN": {
+      "n": 131,
+      "fidelity": 4.382,
+      "ci_by_work": [
+       4.229,
+       4.519
+      ],
+      "reversal_pages": 6,
+      "omission_pages": 15,
+      "acc_spans_per_page": 0.962,
+      "major_acc_spans_per_page": 0.176,
+      "omission_spans_per_page": 0.206,
+      "invention_per_page": 0.053,
+      "invention_by_kind": {
+       "boundary": 4,
+       "added_fact": 1,
+       "unreadable_fill": 2
+      },
+      "pages_with_invention": 7
+     },
+     "O-CUR2": {
+      "n": 49,
+      "fidelity": 4.102,
+      "ci_by_work": [
+       3.898,
+       4.306
+      ],
+      "reversal_pages": 2,
+      "omission_pages": 6,
+      "acc_spans_per_page": 1.367,
+      "major_acc_spans_per_page": 0.163,
+      "omission_spans_per_page": 0.163,
+      "invention_per_page": 0.224,
+      "invention_by_kind": {
+       "gloss": 2,
+       "boundary": 3,
+       "unreadable_fill": 4,
+       "added_fact": 2
+      },
+      "pages_with_invention": 9
+     }
+    },
+    "PLAIN-CUR": {
+     "n": 131,
+     "mean": 0.305,
+     "ci_by_work": [
+      0.13,
+      0.473
+     ],
+     "wins": 57,
+     "losses": 28,
+     "ties": 46
+    },
+    "floor CUR2-CUR": {
+     "n": 49,
+     "mean": -0.02,
+     "ci_by_work": [
+      -0.245,
+      0.224
+     ],
+     "wins": 13,
+     "losses": 13,
+     "ties": 23
+    },
+    "PLAIN-CUR on floor pages": {
+     "n": 49,
+     "mean": 0.245,
+     "ci_by_work": [
+      -0.041,
+      0.551
+     ]
+    }
+   }
+  },
+  "plants": {
+   "n": 10,
+   "located": 10,
+   "rows": [
+    {
+     "item": "O-031",
+     "lang": "Chinese",
+     "kind": "negation",
+     "how": "\\bdoes not\\b → does",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "O-035",
+     "lang": "Greek",
+     "kind": "number",
+     "how": "first → second",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "O-067",
+     "lang": "Persian",
+     "kind": "name",
+     "how": "\\bI ((?:have|had|said|say|declare|explain|ask|teach|will|shall|did|can|must|should|would|know|see|state|maintain|hold|accept|assert|claim|think))\\b → you $1",
+     "located": true,
+     "fid": 2.0
+    },
+    {
+     "item": "O-075",
+     "lang": "Persian",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "O-080",
+     "lang": "Hebrew",
+     "kind": "number",
+     "how": "three → five",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "O-086",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "how": "thirty → sixty",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "O-092",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "O-093",
+     "lang": "Chinese",
+     "kind": "number",
+     "how": "thousand → hundred",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "O-122",
+     "lang": "Greek",
+     "kind": "negation",
+     "how": "\\bare\\b → are not",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "O-132",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "how": "\\bis\\b → is not",
+     "located": true,
+     "fid": 3.0
+    }
+   ]
+  }
+ }
+}

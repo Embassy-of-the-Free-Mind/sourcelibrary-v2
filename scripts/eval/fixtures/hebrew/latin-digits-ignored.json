@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "latin-digits-ignored",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "12 בראשית ברא אלהים Gen. 1:1 את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "Latin letters and digits are not Hebrew letters: not scored"
+}

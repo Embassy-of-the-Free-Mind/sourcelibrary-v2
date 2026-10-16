@@ -244,7 +244,7 @@ export async function mergedGalleryBrowse(
       pageId: d.page_id, bookId: d.book_id, pageNumber: d.page_number, detectionIndex: d.detection_index,
       imageUrl: d.image_url, bookTitle: d.book_title, author: d.book_author, year: d.book_year,
       description: d.description, type: d.type, bbox: d.bbox, rotation: d.rotation, aspect,
-      extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, galleryQuality: d.gallery_quality,
+      extractedUrl: d.extracted_url, thumbnailUrl: d.thumbnail_url, cardUrl: d.card_url || undefined, galleryQuality: d.gallery_quality,
       museumDescription: d.museum_description, metadata: d.metadata, source: 'illustration' as const,
       likeCount: likesMap[key]?.count ?? 0, likedByVisitor: likesMap[key]?.liked ?? false,
     };

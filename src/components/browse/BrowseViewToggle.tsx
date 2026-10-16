@@ -20,12 +20,16 @@ interface BrowseBook {
   language?: string | null;
   published?: string | null;
   pages_count?: number;
+  pages_ocr?: number;
   pages_translated?: number;
   thumbnail?: string | null;
   thumbnail_blob?: string | null;
   thumbnail_frame?: unknown;
   is_first_translation?: boolean;
   ft_disposition?: string | null;
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
 }
 
 interface BrowseViewToggleProps {
@@ -116,6 +120,7 @@ export default function BrowseViewToggle({ books, renderListItem }: BrowseViewTo
                 author: book.author || '',
                 year: book.year || 0,
                 pages_count: book.pages_count,
+                pages_ocr: book.pages_ocr,
                 pages_translated: book.pages_translated,
                 thumbnail: book.thumbnail || undefined,
                 thumbnail_blob: book.thumbnail_blob || undefined,
@@ -123,6 +128,7 @@ export default function BrowseViewToggle({ books, renderListItem }: BrowseViewTo
                 language: book.language || undefined,
                 is_first_translation: book.is_first_translation,
                 ft_disposition: book.ft_disposition || undefined,
+                preview: book.preview,
               }}
               priority={i < 10}
             />

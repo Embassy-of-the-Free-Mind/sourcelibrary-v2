@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "sefaria-markup",
+ "reference": "<b>בראשית</b> - אין המקרא הזה אומר אלא דרשני<sup class=\"footnote-marker\">1</sup><i class=\"footnote\">הערה של המהדיר</i> כמו שדרשוהו רבותינו",
+ "hypothesis": "בראשית אין המקרא הזה אומר אלא דרשני כמו שדרשוהו רבותינו",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": true,
+ "why": "Sefaria markup: tags dropped, footnote marker and inline footnote dropped WITH their text"
+}

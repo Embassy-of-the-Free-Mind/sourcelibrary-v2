@@ -115,6 +115,9 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     waited = (0, 0)
     if add_dir:
         waited = wait_for_gap(os.path.dirname(add_dir), gap_wait)
+    # Gemini only: Claude runs through the Claude subscription (claude -p), never through agy (Derek, 2026-10-14)
+    if not str(model).startswith('gemini-'):
+        raise SystemExit(f'run-cli-arm: refusing --model {model!r}: agy runs Gemini models only; use claude -p for Claude')
     args = ['agy', '-p', prompt, '--model', model] + (['--mode', mode] if mode else []) + ['--print-timeout', f'{timeout - 60}s', '--output-format', 'json']
     if json_schema:
         args += ['--json-schema', json_schema]

@@ -38,6 +38,19 @@ describe('dehyphenateLineBreaks', () => {
     expect(dehyphenateLineBreaks('non¬\ncommissioned')).toBe('noncommissioned');
   });
 
+  it('keeps hyphenated number words as printed (#4784), but still joins syllable breaks into them', () => {
+    expect(dehyphenateLineBreaks('aged twenty-\nfive years')).toBe('aged twenty-\nfive years');
+    expect(dehyphenateLineBreaks('Thirty-\none days')).toBe('Thirty-\none days');
+    expect(dehyphenateLineBreaks('one-\nfourth of it')).toBe('one-\nfourth of it');
+    expect(dehyphenateLineBreaks('three-\nquarters, one-\nhalf')).toBe('three-\nquarters, one-\nhalf');
+    expect(dehyphenateLineBreaks('the twenty-\nfirst day')).toBe('the twenty-\nfirst day');
+    // A number word on the right alone is not a compound: these are syllable breaks.
+    expect(dehyphenateLineBreaks('on be-\nhalf of the ca-\nnine')).toBe('on behalf of the canine');
+    expect(dehyphenateLineBreaks('seven-\nteen and twen-\nty')).toBe('seventeen and twenty');
+    // A tens word inside a longer word is not a tens word.
+    expect(dehyphenateLineBreaks('weighty-\nish')).toBe('weightyish');
+  });
+
   it('KNOWN FALSE JOIN: a real compound whose second half is lowercase is joined too', () => {
     expect(dehyphenateLineBreaks('self-\npreservation')).toBe('selfpreservation');
   });
@@ -54,6 +67,7 @@ describe('dehyphenateLineBreaks', () => {
 describe('countLineBreakHyphens', () => {
   it('counts exactly the joins the rule would make', () => {
     expect(countLineBreakHyphens('am-\nmunition, Anglo-\nSaxon, ex-\npositions')).toBe(2);
+    expect(countLineBreakHyphens('twenty-\nfive, one-\nhalf, be-\nhalf')).toBe(1);
     expect(countLineBreakHyphens('')).toBe(0);
   });
 });

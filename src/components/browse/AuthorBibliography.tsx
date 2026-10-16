@@ -31,6 +31,9 @@ interface AuthorBook {
   is_first_translation?: boolean;
   ft_disposition?: string;
   ft_claim?: 'confirmed' | 'candidate';
+  /** True when this is a partial scan / preview of a larger work — shows the
+   *  "Preview" badge on the cover. Mirrors `books.preview`. */
+  preview?: boolean;
   publisher?: string;
   place_of_publication?: string;
   publication_place?: string;
@@ -100,12 +103,14 @@ export default function AuthorBibliography({ books }: { books: AuthorBook[] }) {
                 author: book.author || '',
                 year: book.year || 0,
                 pages_count: book.pages_count,
+                pages_ocr: book.pages_ocr,
                 pages_translated: book.pages_translated,
                 thumbnail: book.thumbnail || undefined,
                 thumbnail_blob: book.thumbnail_blob || undefined,
                 language: book.language || undefined,
                 is_first_translation: book.is_first_translation,
                 ft_disposition: book.ft_disposition || undefined,
+                preview: book.preview,
               }}
               priority={i < 10}
             />

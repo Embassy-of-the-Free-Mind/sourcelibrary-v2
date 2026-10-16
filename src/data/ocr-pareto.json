@@ -3421,7 +3421,7 @@
      },
      "frontier": true,
      "noise": null,
-     "date": "2026-10-09",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/greek-2026-09-21.json",
       "scripts/eval/results/benchmark/greek-ext-2026-09-21.json",
@@ -3430,9 +3430,9 @@
       "scripts/eval/results/engine-wave1-6011/scored/greek-ext-2026-10-06.json",
       "scripts/eval/results/engine-wave2-6011/scored/greek-ext-2026-10-07.json",
       "scripts/eval/results/engine-wave2-6011/scored/greek-ext2-2026-10-07.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/greek-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/greek-ext-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/greek-ext2-2026-10-09.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/greek-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/greek-ext-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/greek-ext2-2026-10-14.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-ext-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-ext2-2026-10-03.json",
@@ -3885,11 +3885,11 @@
      },
      "frontier": true,
      "noise": null,
-     "date": "2026-10-09",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/greek-2026-09-21.json",
       "scripts/eval/results/engine-wave1-6011/scored/greek-2026-10-06.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/greek-2026-10-09.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/greek-2026-10-14.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored/greek-2026-10-03.json"
      ],
@@ -4511,7 +4511,7 @@
      },
      "frontier": true,
      "noise": null,
-     "date": "2026-10-09",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
@@ -4521,9 +4521,9 @@
       "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-cohort-5547-2026-10-07.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-ext-2026-10-07.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-cohort-5547-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-ext-2026-10-09.json"
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-cohort-5547-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-ext-2026-10-14.json"
      ],
      "placed": [
       {
@@ -4870,12 +4870,12 @@
      },
      "frontier": true,
      "noise": null,
-     "date": "2026-10-09",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-09.json"
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-14.json"
      ],
      "placed": [
       {
@@ -5394,7 +5394,7 @@
      },
      "frontier": true,
      "noise": null,
-     "date": "2026-10-09",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
@@ -5404,9 +5404,9 @@
       "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-cohort-5547-2026-10-07.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-ext-2026-10-07.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-cohort-5547-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-ext-2026-10-09.json"
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-cohort-5547-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-ext-2026-10-14.json"
      ],
      "placed": [
       {
@@ -5803,9 +5803,41 @@
        "on_frontier": true
       }
      ],
-     "no_cost": [],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "mean_cer": 0.203,
+       "accuracy": 0.797,
+       "accuracy_ci95": [
+        0.779,
+        0.812
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 148,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": 0.139,
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)",
+       "vs_in_use": {
+        "diff": 0.001,
+        "ci95": [
+         -0.005,
+         0.007
+        ],
+        "n_pages": 148,
+        "n_works": 101
+       },
+       "verdict": "same"
+      }
+     ],
      "role": "secondary",
-     "heading": "148 pages drawn at random, with Gemini 3.7 Flash (CLI) and Gemini 3.6 Flash (CLI)",
+     "heading": "148 pages drawn at random, with Gemini 3.7 Flash (CLI) and Gemini 3.6 Flash (CLI) and Gemini 4 Argon low (CLI)",
      "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     }
    ]
@@ -5845,7 +5877,7 @@
       "band": null,
       "n": 12
      },
-     "date": "2026-10-09",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
@@ -5853,8 +5885,8 @@
       "scripts/eval/results/engine-wave1-6011/scored/chinese-ext-2026-10-06.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
       "scripts/eval/results/engine-wave2-6011/scored/chinese-ext-2026-10-07.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-09.json",
-      "scripts/eval/results/ocr-pareto-6293/scored/chinese-ext-2026-10-09.json"
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-2026-10-14.json",
+      "scripts/eval/results/ocr-pareto-6293/scored/chinese-ext-2026-10-14.json"
      ],
      "placed": [
       {
@@ -6271,7 +6303,38 @@
        "on_frontier": false
       }
      ],
-     "no_cost": [],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "mean_cer": 0.162,
+       "accuracy": 0.838,
+       "accuracy_ci95": [
+        0.789,
+        0.886
+       ],
+       "fail_share": 0,
+       "did_not_read": {
+        "k": 0,
+        "n": 12,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": 0.099,
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)",
+       "vs_in_use": {
+        "diff": 0.017,
+        "ci95": [
+         0.007,
+         0.028
+        ],
+        "n_pages": 12,
+        "n_works": 11
+       }
+      }
+     ],
      "role": "primary",
      "heading": null,
      "verdict": "No verdict."
@@ -6990,6 +7053,30 @@
        }
       },
       {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "mean_cer": 0.658,
+       "accuracy": 0.342,
+       "accuracy_ci95": null,
+       "fail_share": 0.85,
+       "did_not_read": {
+        "k": 0,
+        "n": 40,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)",
+       "vs_in_use": {
+        "diff": 0.217,
+        "ci95": null,
+        "n_pages": 40,
+        "n_works": 2
+       }
+      },
+      {
        "engine": "qoruyo-estrangela",
        "label": "Kraken (Qoruyo Estrangela)",
        "production": false,
@@ -7094,7 +7181,7 @@
      },
      "frontier": false,
      "noise": null,
-     "date": "2026-10-08",
+     "date": "2026-10-14",
      "files": [
       "scripts/eval/results/syriac-pareto-6295/ocr-summary.json"
      ],
@@ -7347,6 +7434,36 @@
         "ci95": [
          -0.064,
          -0.01
+        ],
+        "n_pages": 20,
+        "n_works": 18
+       }
+      },
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "mean_cer": 0.311,
+       "accuracy": 0.689,
+       "accuracy_ci95": [
+        0.62,
+        0.749
+       ],
+       "fail_share": 0.1,
+       "did_not_read": {
+        "k": 0,
+        "n": 20,
+        "kinds": {}
+       },
+       "unplaced": 0,
+       "words_not_in_ref": null,
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)",
+       "vs_in_use": {
+        "diff": -0.184,
+        "ci95": [
+         -0.255,
+         -0.119
         ],
         "n_pages": 20,
         "n_works": 18

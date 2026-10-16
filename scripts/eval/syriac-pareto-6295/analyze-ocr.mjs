@@ -47,8 +47,9 @@ const full = ARMS.filter((a) => scored.every((p) => has(p, a)));
 const shared = scored;
 // Seeds follow the panel's original arm order; an arm added later (the CLI arms) takes the next seeds, so adding
 // one never moves the intervals already published. CLI arms take seeds in the order they were added, not by name.
-const LATER = (a) => /^C\d/.test(a);
-const CLI_ORDER = ['C38-ocr', 'C38-ocr-b', 'C37-ocr', 'C37-ocr-b', 'C36-ocr', 'C36-ocr-b'];
+// G4L-syr-print: Gemini 4 Argon low through the CLI (#6707, Amendment 4.1), added after the C tiers.
+const LATER = (a) => /^(C\d|G4)/.test(a);
+const CLI_ORDER = ['C38-ocr', 'C38-ocr-b', 'C37-ocr', 'C37-ocr-b', 'C36-ocr', 'C36-ocr-b', 'G4L-syr-print'];
 const laterRank = (a) => (CLI_ORDER.includes(a) ? CLI_ORDER.indexOf(a) : CLI_ORDER.length);
 const seedOrder = [...full.filter((a) => !LATER(a)), ...full.filter(LATER).sort((x, y) => laterRank(x) - laterRank(y) || x.localeCompare(y))];
 const panel = full.map((a) => arm(a, shared, 6295 + seedOrder.indexOf(a)));

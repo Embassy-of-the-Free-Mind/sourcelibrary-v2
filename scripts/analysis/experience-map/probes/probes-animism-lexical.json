@@ -1,0 +1,15 @@
+{
+ "_note": "Fourth layer of the aliveness atlas (#6652): the inhabited world (animism). The world layer's rubric counts only matter itself said to be alive and rejected spirit-inhabited nature by design (421 judged rejections cited spirits, gods or personification), and its probes were learned European vitalist vocabulary. These phrases are what translators write for places, waters, mountains, trees, animals and the land treated as persons or as the homes of persons, and for the relations people keep with them (offerings, appeasement, offence). Matched as FTS5 phrases over the mirror's English translations (pages_en). Ambiguous phrases are kept on purpose (\"fetish\" is also Victorian polemic, \"kami\" also a Japanese word for paper or hair): the screen and the judge decide, and the outsider register is recorded, not dropped.",
+ "dimensions": {
+  "place_spirits": ["nature spirits", "spirits of nature", "local deities", "local deity", "lord of the place", "spirit of the place", "genius of the place", "genius loci", "land spirit", "spirits of the land", "earth spirit", "sadag", "spirits of the locality", "guardian deity of the"],
+  "waters": ["the river god", "god of the river", "spirit of the river", "water spirit", "spirits of the waters", "nymph of the", "naiad", "naga king", "nāga king", "dragon king", "nāgas"],
+  "mountains": ["the mountain god", "god of the mountain", "spirit of the mountain", "spirits of the mountains", "mountain spirit", "mountain deity"],
+  "trees_forest": ["tree spirit", "spirit of the tree", "tree deity", "dryad", "sacred grove", "sacred tree", "forest spirit", "spirits of the forest"],
+  "animals": ["master of the animals", "lord of the animals", "guardian spirit", "totem"],
+  "ancestors": ["ancestral spirits", "spirits of the ancestors", "ancestor spirits"],
+  "dwelling": ["spirits dwell", "spirit dwells in", "inhabited by spirits", "dwelling place of the gods", "abode of the gods"],
+  "relation": ["offerings to the spirits", "propitiate the spirits", "appease the spirits", "offend the spirits", "angered the spirits", "offerings to the nāgas", "offerings to the local"],
+  "earth_kin": ["mother earth", "earth mother", "our mother the earth", "the earth is our mother", "the sky is our father"],
+  "named_systems": ["kami", "manitou", "animism", "animist", "fetish", "yaksha"]
+ }
+}

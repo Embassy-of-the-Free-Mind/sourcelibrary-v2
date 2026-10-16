@@ -1,0 +1,782 @@
+[
+{
+"book_id": "69b65a0b18b87551bfcfffba",
+"gold_edition": 1579,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a5837d96701425b993051ba",
+"gold_edition": 1875,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "69ef2f7972c1376fdf2af491",
+"gold_edition": 1876,
+"imprint_form": "arabic",
+"language": "French"
+},
+{
+"book_id": "6a94381b45a4780cb83da6f5",
+"gold_edition": 1657,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a26c1c4aad44c98627c0aa4",
+"gold_edition": 1621,
+"imprint_form": "roman",
+"language": "German"
+},
+{
+"book_id": "6a41ae3934fb35db3a75bf91",
+"gold_edition": 1580,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b664b0b3f4fc04415515f3",
+"gold_edition": 1590,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b18669c4be2cdd0edc648b",
+"gold_edition": 1651,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69c806756c6f3cc53c845548",
+"gold_edition": 1678,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a4305b64e06bc233ecff98c",
+"gold_edition": 1602,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a4e40b97eab4a625dd0508e",
+"gold_edition": 1570,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a26c670aad44c98627ded2c",
+"gold_edition": 1689,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a08fd6325e3a402b23b3e15",
+"gold_edition": 1633,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6ab229a9277b509c83e8f2f9",
+"gold_edition": 1867,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a42d32be76baa13aa85a81a",
+"gold_edition": 1610,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a26cca85ac5aecc53cf1348",
+"gold_edition": 1726,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a90a6e319b0108536a7feab",
+"gold_edition": 1631,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b525bf2f891867c1ae4682",
+"gold_edition": 1706,
+"imprint_form": "arabic",
+"language": "Dutch"
+},
+{
+"book_id": "6a4fd17b67dbb523ea0f55de",
+"gold_edition": 1603,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a487453aca0617e53613be0",
+"gold_edition": 1655,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a9434297e41ac2763182c2f",
+"gold_edition": 1619,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a905c74785d9b40577fa66b",
+"gold_edition": 1572,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b51d91efd8df28f2da9370",
+"gold_edition": 1619,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6aa1d27577169abff161c18e",
+"gold_edition": 1892,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a504c7c78825bd7fdd9390b",
+"gold_edition": 1667,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69bd9e066120d54bd037a8ad",
+"gold_edition": 1613,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a26d36ef5273a8d907a9785",
+"gold_edition": 1753,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a8ee22f90f5a0e4155eab08",
+"gold_edition": 1897,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a429a1a8e351c27eb8591c0",
+"gold_edition": 1615,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69a68228d5bf106c72bb878b",
+"gold_edition": 1628,
+"imprint_form": "arabic",
+"language": "Italian"
+},
+{
+"book_id": "6a9417dca4ed5935447a7c81",
+"gold_edition": 1577,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6aa1d56677169abff1623600",
+"gold_edition": 1881,
+"imprint_form": "roman",
+"language": "English"
+},
+{
+"book_id": "69c22988b82ba5d5bed9ac2c",
+"gold_edition": 1804,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a437f9557a09c2c0fcb8b87",
+"gold_edition": 1643,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a26cbcd5ac5aecc53ced3c6",
+"gold_edition": 1723,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69dc5601cb6f7429748b9a60",
+"gold_edition": 1481,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b185e9c4be2cdd0edc464c",
+"gold_edition": 1718,
+"imprint_form": "arabic",
+"language": "Dutch"
+},
+{
+"book_id": "6a90e7d1544007b776b37eb3",
+"gold_edition": 1678,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69af2362f98f6eff774ce011",
+"gold_edition": 1889,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a90c0943822dc24e5402afd",
+"gold_edition": 1586,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a42556edfbbb4d07aa506c7",
+"gold_edition": 1627,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a93fd882bb66652f9fcab4f",
+"gold_edition": 1555,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a42a24ddec0f9e2ecca28d5",
+"gold_edition": 1630,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a42667edfbbb4d07aa6edb1",
+"gold_edition": 1599,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a42cb57e76baa13aa84e815",
+"gold_edition": 1614,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a9068b5eb8fb726ee3ba6b1",
+"gold_edition": 1581,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a908bb2582ccd8b63f8dc30",
+"gold_edition": 1695,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a908e3a2952c03b57ebd8ab",
+"gold_edition": 1679,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a7c1d977fbf2dd065f98879",
+"gold_edition": 1856,
+"imprint_form": "roman",
+"language": "Greek"
+},
+{
+"book_id": "69afdd0e56ce5b958fcfc511",
+"gold_edition": 1806,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a90addf2764d973ba12e05b",
+"gold_edition": 1659,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b51ec7768235dc65998a7b",
+"gold_edition": 1722,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b656d218b87551bfce36aa",
+"gold_edition": 1573,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a26bb814045b346e6ad1cef",
+"gold_edition": 1547,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a9082d64e70467f3523490e",
+"gold_edition": 1700,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a9405a3a4ad12cb35ec8841",
+"gold_edition": 1585,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a424f31c1f44d759e6d2ea7",
+"gold_edition": 1583,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b21d51ddb4fa7c305b4d6e",
+"gold_edition": 1665,
+"imprint_form": "arabic",
+"language": "Dutch"
+},
+{
+"book_id": "6a940cf76a658890e28d2abb",
+"gold_edition": 1600,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a906e0532545072610bd111",
+"gold_edition": 1598,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b4cd58d5b6c3815e1a5b29",
+"gold_edition": 1737,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a44ece85b5e91925b2acba8",
+"gold_edition": 1689,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a42a0fd831988adcb76c198",
+"gold_edition": 1565,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b667e5b3f4fc044156422b",
+"gold_edition": 1592,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69c2c410b82ba5d5bedac7a5",
+"gold_edition": 1846,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6959106fecb01322b306752b",
+"gold_edition": 1712,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a51e5fd2d94f05f3e40821e",
+"gold_edition": 1660,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a9066c1eb8fb726ee3b664b",
+"gold_edition": 1608,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69aff9a03346b1fdd94b326d",
+"gold_edition": 1605,
+"imprint_form": "arabic",
+"language": "Greek"
+},
+{
+"book_id": "69c22eacb82ba5d5bed9b867",
+"gold_edition": 1805,
+"imprint_form": "arabic",
+"language": "French"
+},
+{
+"book_id": "6a48aba563fa349186cdc1bf",
+"gold_edition": 1658,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a26cc865ac5aecc53cefc12",
+"gold_edition": 1725,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b66622b3f4fc0441558f5a",
+"gold_edition": 1591,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a08528e15c643eb1af4d283",
+"gold_edition": 1569,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a26d048f5273a8d9079859b",
+"gold_edition": 1738,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a08c685e4e4b7b8793ea941",
+"gold_edition": 1883,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "69b662c7b3f4fc04415452af",
+"gold_edition": 1588,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a9075747f9d520dd42de1d0",
+"gold_edition": 1613,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b51de3261c58d63664c791",
+"gold_edition": 1714,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a4fd009e036985f1d57bc62",
+"gold_edition": 1832,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a26bbbcd6b178e5aad7efc1",
+"gold_edition": 1556,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a267f4688f11913ee9c8c1d",
+"gold_edition": 1735,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6952722eab34727b1f04805e",
+"gold_edition": 1621,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a429c708e351c27eb85e226",
+"gold_edition": 1617,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6ab2368661b5fd3232b80063",
+"gold_edition": 1854,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "69b51df447b06ecd58187a30",
+"gold_edition": 1755,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a42b39e5207af7c42f5b8bf",
+"gold_edition": 1628,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b6aa41080b19f98fd3e098",
+"gold_edition": 1665,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a08553115c643eb1af5530e",
+"gold_edition": 1581,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6ab6e649a354a6f18a3dab9e",
+"gold_edition": 1890,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6ab23b1861b5fd3232b89642",
+"gold_edition": 1897,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a4a3eecf0f4a3b75e90ed68",
+"gold_edition": 1819,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a4252fe343d756d34e346e5",
+"gold_edition": 1591,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a06f4c24dcc6d5d8f036f9c",
+"gold_edition": 1534,
+"imprint_form": "arabic",
+"language": "Greek"
+},
+{
+"book_id": "6a90b016cef468fc07edbac0",
+"gold_edition": 1663,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a483adf0278a71dd775692b",
+"gold_edition": 1645,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b6629ab3f4fc04415451ad",
+"gold_edition": 1588,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a58f536c6cd8f9871069ccb",
+"gold_edition": 1875,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a9059947f6818cc17cda772",
+"gold_edition": 1590,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a9090830f0bff48dccbbbe6",
+"gold_edition": 1700,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b8750413506fe62959baed",
+"gold_edition": 1892,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a502faaaa0858eae415e591",
+"gold_edition": 1632,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b6673bb3f4fc04415611eb",
+"gold_edition": 1592,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a08557415c643eb1af55fa5",
+"gold_edition": 1550,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a9432477680120fac24a192",
+"gold_edition": 1603,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a905fe7785d9b40578007af",
+"gold_edition": 1669,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a26c5efaad44c98627db71b",
+"gold_edition": 1681,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a08fd6925e3a402b23b3e60",
+"gold_edition": 1594,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a4371f10dc50ef3af261f62",
+"gold_edition": 1581,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b69812080b19f98fcf5a17",
+"gold_edition": 1639,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b661c8b3f4fc044153e8df",
+"gold_edition": 1587,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6991d64b8c1030b12444a9d0",
+"gold_edition": 1735,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a9058ae7f6818cc17cd57d7",
+"gold_edition": 1545,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a42a33fdec0f9e2ecca5a38",
+"gold_edition": 1650,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a90cc48bfd42d368ffa96d4",
+"gold_edition": 1696,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a267fa788f11913ee9c9565",
+"gold_edition": 1670,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a940887a4ad12cb35ec8ea4",
+"gold_edition": 1666,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a940a81a4ad12cb35ecaeb8",
+"gold_edition": 1546,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a42ff5f4e06bc233ecf5270",
+"gold_edition": 1683,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "69938dbad5a98fd66f42e937",
+"gold_edition": 1517,
+"imprint_form": "arabic",
+"language": "Greek"
+},
+{
+"book_id": "6a26d384f5273a8d907a9ee7",
+"gold_edition": 1753,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "6a9408611cd9a117d308b1f6",
+"gold_edition": 1556,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a26d9b6863cf28d8f649e20",
+"gold_edition": 1787,
+"imprint_form": "arabic",
+"language": "German"
+},
+{
+"book_id": "69b51e8d47b06ecd58193167",
+"gold_edition": 1757,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "6a42f00406e6ead3ac54bb0f",
+"gold_edition": 1671,
+"imprint_form": "roman",
+"language": "Latin"
+},
+{
+"book_id": "69b660e2b3f4fc04415350b9",
+"gold_edition": 1586,
+"imprint_form": "arabic",
+"language": "French"
+},
+{
+"book_id": "6a4927c01bbf4176e1e88175",
+"gold_edition": 1599,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "69b6839570c69d645a72ff5d",
+"gold_edition": 1615,
+"imprint_form": "arabic",
+"language": "Latin"
+},
+{
+"book_id": "6a76d4d66ba8d6d1d3f8e71d",
+"gold_edition": 1698,
+"imprint_form": "arabic",
+"language": "English"
+},
+{
+"book_id": "6a26c0ed0e247ebad6df2bd5",
+"gold_edition": 1619,
+"imprint_form": "roman",
+"language": "German"
+}
+]

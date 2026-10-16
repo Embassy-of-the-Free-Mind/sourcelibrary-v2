@@ -1,0 +1,6804 @@
+[
+ {
+  "uid": "rashi|1de08b-p484",
+  "work": "Zohar (1558, 548 pp.)",
+  "book": "6990630be7b7642c081de08b",
+  "page": 484,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 2103120,
+    "share": 0.354
+   },
+   {
+    "k": "C38L",
+    "pos": 2103128,
+    "share": 0.283
+   },
+   {
+    "k": "OPUS",
+    "pos": 2103128,
+    "share": 0.394
+   },
+   {
+    "k": "PROD",
+    "pos": 2103072,
+    "share": 0.426
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 2103003,
+    "we": 2105069,
+    "len": 2066,
+    "cer": 0.078,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 2103003,
+    "we": 2105069,
+    "len": 2066,
+    "cer": 0.101,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 2103003,
+    "we": 2105069,
+    "len": 2066,
+    "cer": 0.077,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 2103025,
+    "we": 2105075,
+    "len": 2050,
+    "cer": 0.163,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   2103003,
+   2105069
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Zohar Pekudei 40:52",
+   "Zohar Pekudei 42:5"
+  ],
+  "ref_text_sha": "7c20766cbf02",
+  "cells": {
+   "G4L": {
+    "cer": 0.07792836398838335,
+    "ref_letters": 2066,
+    "read_letters": 1935,
+    "secs": 41.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.10116166505324298,
+    "ref_letters": 2066,
+    "read_letters": 1931,
+    "secs": 60.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.07744433688286544,
+    "ref_letters": 2066,
+    "read_letters": 1934,
+    "secs": 40.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.1665053242981607,
+    "ref_letters": 2066,
+    "read_letters": 2009,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|1de08b-p269",
+  "work": "Zohar (1558, 548 pp.)",
+  "book": "6990630be7b7642c081de08b",
+  "page": 269,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1645720,
+    "share": 0.192
+   },
+   {
+    "k": "C38L",
+    "pos": 1645672,
+    "share": 0.033
+   },
+   {
+    "k": "OPUS",
+    "pos": 1645720,
+    "share": 0.22
+   },
+   {
+    "k": "PROD",
+    "pos": 1645704,
+    "share": 0.119
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1645663,
+    "we": 1647775,
+    "len": 2112,
+    "cer": 0.135,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1645663,
+    "we": 1646651,
+    "len": 988,
+    "cer": 0.42,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1645663,
+    "we": 1647775,
+    "len": 2112,
+    "cer": 0.125,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1645663,
+    "we": 1647775,
+    "len": 2112,
+    "cer": 0.218,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1645663,
+   1647775
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Zohar Terumah 12:10",
+   "Zohar Terumah 12:19"
+  ],
+  "ref_text_sha": "e28f4627c683",
+  "cells": {
+   "G4L": {
+    "cer": 0.13494318181818182,
+    "ref_letters": 2112,
+    "read_letters": 1964,
+    "secs": 43.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.46638257575757575,
+    "ref_letters": 2112,
+    "read_letters": 1954,
+    "secs": 30,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.12547348484848486,
+    "ref_letters": 2112,
+    "read_letters": 1975,
+    "secs": 45.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2168560606060606,
+    "ref_letters": 2112,
+    "read_letters": 1974,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|1de08b-p139",
+  "work": "Zohar (1558, 548 pp.)",
+  "book": "6990630be7b7642c081de08b",
+  "page": 139,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1363104,
+    "share": 0.211
+   },
+   {
+    "k": "C38L",
+    "pos": 1363112,
+    "share": 0.034
+   },
+   {
+    "k": "OPUS",
+    "pos": 1363096,
+    "share": 0.216
+   },
+   {
+    "k": "PROD",
+    "pos": 1363000,
+    "share": 0.269
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1362946,
+    "we": 1364983,
+    "len": 2037,
+    "cer": 0.131,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1362946,
+    "we": 1364989,
+    "len": 2043,
+    "cer": 0.362,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1362946,
+    "we": 1364983,
+    "len": 2037,
+    "cer": 0.116,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1362946,
+    "we": 1364991,
+    "len": 2045,
+    "cer": 0.222,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1362946,
+   1364986
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Zohar Yitro 1:18",
+   "Zohar Yitro 1:28"
+  ],
+  "ref_text_sha": "f93c7097a528",
+  "cells": {
+   "G4L": {
+    "cer": 0.13405088062622308,
+    "ref_letters": 2044,
+    "read_letters": 1842,
+    "secs": 67.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.361545988258317,
+    "ref_letters": 2044,
+    "read_letters": 1848,
+    "secs": 24.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.11937377690802348,
+    "ref_letters": 2044,
+    "read_letters": 1851,
+    "secs": 42.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.22211350293542073,
+    "ref_letters": 2044,
+    "read_letters": 1989,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|1de08b-p413",
+  "work": "Zohar (1558, 548 pp.)",
+  "book": "6990630be7b7642c081de08b",
+  "page": 413,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1951240,
+    "share": 0.246
+   },
+   {
+    "k": "C38L",
+    "pos": 1951248,
+    "share": 0.088
+   },
+   {
+    "k": "OPUS",
+    "pos": 1951240,
+    "share": 0.23
+   },
+   {
+    "k": "PROD",
+    "pos": 1951256,
+    "share": 0.17
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1951246,
+    "we": 1953481,
+    "len": 2235,
+    "cer": 0.159,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1951246,
+    "we": 1953481,
+    "len": 2235,
+    "cer": 0.291,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1951247,
+    "we": 1953481,
+    "len": 2234,
+    "cer": 0.152,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1951246,
+    "we": 1953481,
+    "len": 2235,
+    "cer": 0.221,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1951246,
+   1953481
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Zohar Vayakhel 17:2",
+   "Zohar Vayakhel 17:11"
+  ],
+  "ref_text_sha": "c30ace1b8436",
+  "cells": {
+   "G4L": {
+    "cer": 0.15838926174496645,
+    "ref_letters": 2235,
+    "read_letters": 2004,
+    "secs": 42.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2890380313199105,
+    "ref_letters": 2235,
+    "read_letters": 2013,
+    "secs": 27.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.15167785234899328,
+    "ref_letters": 2235,
+    "read_letters": 2033,
+    "secs": 43.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2196868008948546,
+    "ref_letters": 2235,
+    "read_letters": 2142,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|1de08b-p339",
+  "work": "Zohar (1558, 548 pp.)",
+  "book": "6990630be7b7642c081de08b",
+  "page": 339,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1794688,
+    "share": 0.264
+   },
+   {
+    "k": "C38L",
+    "pos": 1794704,
+    "share": 0.005
+   },
+   {
+    "k": "OPUS",
+    "pos": 1794688,
+    "share": 0.257
+   },
+   {
+    "k": "PROD",
+    "pos": 1794680,
+    "share": 0.125
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1794685,
+    "we": 1796793,
+    "len": 2108,
+    "cer": 0.114,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1794902,
+    "we": 1795336,
+    "len": 434,
+    "cer": 0.406,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1794686,
+    "we": 1796793,
+    "len": 2107,
+    "cer": 0.106,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1794694,
+    "we": 1796793,
+    "len": 2099,
+    "cer": 0.22,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1794690,
+   1796793
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Zohar Terumah 79:13",
+   "Zohar Terumah 80:4"
+  ],
+  "ref_text_sha": "5f423f2acb36",
+  "cells": {
+   "G4L": {
+    "cer": 0.11406844106463879,
+    "ref_letters": 2104,
+    "read_letters": 1954,
+    "secs": 34.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.5052281368821293,
+    "ref_letters": 2104,
+    "read_letters": 1958,
+    "secs": 26,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.10646387832699619,
+    "ref_letters": 2104,
+    "read_letters": 1958,
+    "secs": 45,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.219106463878327,
+    "ref_letters": 2104,
+    "read_letters": 2014,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|80b312-p81",
+  "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+  "book": "69924401bc722ec0ee80b312",
+  "page": 81,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Rashi on Psalms",
+   "Radak on Psalms",
+   "Ibn Ezra on Psalms",
+   "Rashi on Proverbs",
+   "Ralbag on Proverbs",
+   "Ibn Ezra on Proverbs"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 430528,
+    "share": 0.068
+   },
+   {
+    "k": "C38L",
+    "pos": 430288,
+    "share": 0.012
+   },
+   {
+    "k": "OPUS",
+    "pos": 430808,
+    "share": 0.036
+   },
+   {
+    "k": "PROD",
+    "pos": 430888,
+    "share": 0.011
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 432619,
+    "we": 435292,
+    "len": 2673,
+    "cer": 0.45,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 432631,
+    "we": 432861,
+    "len": 230,
+    "cer": 0.496,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 432619,
+    "we": 432689,
+    "len": 70,
+    "cer": 0.043,
+    "aligns": false
+   },
+   "PROD": {
+    "ws": 432612,
+    "we": 432715,
+    "len": 103,
+    "cer": 0.165,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   432619,
+   432861
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Psalms 78 32:1",
+   "Radak on Psalms 78 34:1"
+  ],
+  "ref_text_sha": "5aac723dae7c",
+  "cells": {
+   "G4L": {
+    "cer": 0.25206611570247933,
+    "ref_letters": 242,
+    "read_letters": 5049,
+    "secs": 90,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.5041322314049587,
+    "ref_letters": 242,
+    "read_letters": 5477,
+    "secs": 53.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.4793388429752066,
+    "ref_letters": 242,
+    "read_letters": 2582,
+    "secs": 72.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5,
+    "ref_letters": 242,
+    "read_letters": 4953,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|80b312-p46",
+  "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+  "book": "69924401bc722ec0ee80b312",
+  "page": 46,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Rashi on Psalms",
+   "Radak on Psalms",
+   "Ibn Ezra on Psalms",
+   "Rashi on Proverbs",
+   "Ralbag on Proverbs",
+   "Ibn Ezra on Proverbs"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 346088,
+    "share": 0.03
+   },
+   {
+    "k": "C38L",
+    "pos": 346104,
+    "share": 0.009
+   },
+   {
+    "k": "OPUS",
+    "pos": 346592,
+    "share": 0.031
+   },
+   {
+    "k": "PROD",
+    "pos": 346472,
+    "share": 0.011
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 348883,
+    "we": 351612,
+    "len": 2729,
+    "cer": 0.487,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 349468,
+    "we": 350556,
+    "len": 1088,
+    "cer": 0.54,
+    "aligns": false
+   },
+   "OPUS": {
+    "ws": 348883,
+    "we": 350336,
+    "len": 1453,
+    "cer": 0.473,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 348842,
+    "we": 348883,
+    "len": 41,
+    "cer": 0.146,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   348883,
+   351612
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "G4L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Radak on Psalms 43 3:4",
+   "Radak on Psalms 44 23:3"
+  ],
+  "ref_text_sha": "f2134e9336bc",
+  "cells": {
+   "G4L": {
+    "cer": 0.4862587028215464,
+    "ref_letters": 2729,
+    "read_letters": 5955,
+    "secs": 99.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.6511542689629901,
+    "ref_letters": 2729,
+    "read_letters": 6035,
+    "secs": 60.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.5236350311469403,
+    "ref_letters": 2729,
+    "read_letters": 4551,
+    "secs": 92.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7185782337852693,
+    "ref_letters": 2729,
+    "read_letters": 2713,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|80b312-p31",
+  "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+  "book": "69924401bc722ec0ee80b312",
+  "page": 31,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Rashi on Psalms",
+   "Radak on Psalms",
+   "Ibn Ezra on Psalms",
+   "Rashi on Proverbs",
+   "Ralbag on Proverbs",
+   "Ibn Ezra on Proverbs"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 276272,
+    "share": 0.078
+   },
+   {
+    "k": "C38L",
+    "pos": 276168,
+    "share": 0.037
+   },
+   {
+    "k": "OPUS",
+    "pos": 276112,
+    "share": 0.072
+   },
+   {
+    "k": "PROD",
+    "pos": 279608,
+    "share": 0.011
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 277419,
+    "we": 281589,
+    "len": 4170,
+    "cer": 0.206,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 277419,
+    "we": 281150,
+    "len": 3731,
+    "cer": 0.491,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 277419,
+    "we": 281579,
+    "len": 4160,
+    "cer": 0.23,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 279976,
+    "we": 280048,
+    "len": 72,
+    "cer": 0.069,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   277419,
+   281579
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Radak on Psalms 27 9:1",
+   "Radak on Psalms 28 9:4"
+  ],
+  "ref_text_sha": "cb7d73379843",
+  "cells": {
+   "G4L": {
+    "cer": 0.20600961538461537,
+    "ref_letters": 4160,
+    "read_letters": 5423,
+    "secs": 97.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.5084134615384616,
+    "ref_letters": 4160,
+    "read_letters": 5606,
+    "secs": 65.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.2300480769230769,
+    "ref_letters": 4160,
+    "read_letters": 5309,
+    "secs": 107.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5927884615384615,
+    "ref_letters": 4160,
+    "read_letters": 5225,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|80b312-p122",
+  "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+  "book": "69924401bc722ec0ee80b312",
+  "page": 122,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Rashi on Psalms",
+   "Radak on Psalms",
+   "Ibn Ezra on Psalms",
+   "Rashi on Proverbs",
+   "Ralbag on Proverbs",
+   "Ibn Ezra on Proverbs"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 549504,
+    "share": 0.039
+   },
+   {
+    "k": "C38L",
+    "pos": 549504,
+    "share": 0.019
+   },
+   {
+    "k": "OPUS",
+    "pos": 549496,
+    "share": 0.04
+   },
+   {
+    "k": "PROD",
+    "pos": 831328,
+    "share": 0.003
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 551108,
+    "we": 553904,
+    "len": 2796,
+    "cer": 0.477,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 551108,
+    "we": 553565,
+    "len": 2457,
+    "cer": 0.6,
+    "aligns": false
+   },
+   "OPUS": {
+    "ws": 551108,
+    "we": 553904,
+    "len": 2796,
+    "cer": 0.477,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 551868,
+    "we": 551997,
+    "len": 129,
+    "cer": 0.341,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   551108,
+   553904
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Psalms 119 21:1",
+   "Radak on Psalms 119 48:1"
+  ],
+  "ref_text_sha": "a6680eeb89a2",
+  "cells": {
+   "G4L": {
+    "cer": 0.4760371959942775,
+    "ref_letters": 2796,
+    "read_letters": 5446,
+    "secs": 93.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.6165951359084406,
+    "ref_letters": 2796,
+    "read_letters": 5463,
+    "secs": 105.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.47567954220314734,
+    "ref_letters": 2796,
+    "read_letters": 5384,
+    "secs": 119.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.727110157367668,
+    "ref_letters": 2796,
+    "read_letters": 5327,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|80b312-p146",
+  "work": "Mikraot Gedolot, Psalms and Proverbs (Venice 1517)",
+  "book": "69924401bc722ec0ee80b312",
+  "page": 146,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Rashi on Psalms",
+   "Radak on Psalms",
+   "Ibn Ezra on Psalms",
+   "Rashi on Proverbs",
+   "Ralbag on Proverbs",
+   "Ibn Ezra on Proverbs"
+  ],
+  "located": [
+   {
+    "k": "C38L",
+    "pos": 619048,
+    "share": 0.019
+   },
+   {
+    "k": "OPUS",
+    "pos": 619032,
+    "share": 0.034
+   },
+   {
+    "k": "PROD",
+    "pos": 619064,
+    "share": 0.012
+   }
+  ],
+  "spans": {
+   "C38L": {
+    "ws": 620390,
+    "we": 620684,
+    "len": 294,
+    "cer": 0.279,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 620390,
+    "we": 620453,
+    "len": 63,
+    "cer": 0.032,
+    "aligns": false
+   },
+   "PROD": {
+    "ws": 620390,
+    "we": 621054,
+    "len": 664,
+    "cer": 0.494,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   620390,
+   621054
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "C38L",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Psalms 148 11:1",
+   "Radak on Psalms 148 13:1"
+  ],
+  "ref_text_sha": "166708c233dd",
+  "cells": {
+   "G4L": {
+    "failure": "copy_filter",
+    "why": "<warning>Also contains Aramaic (Targum). Small stained/darkened patch at the bottom of the left upper column (Targum to Psalm 150). Vowel points (nikkud) omitte",
+    "secs": 177.2,
+    "gate_denials": 0
+   },
+   "C38L": {
+    "cer": 0.43946188340807174,
+    "ref_letters": 669,
+    "read_letters": 5094,
+    "secs": 49.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.7204783258594918,
+    "ref_letters": 669,
+    "read_letters": 1571,
+    "secs": 47.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.4947683109118087,
+    "ref_letters": 669,
+    "read_letters": 5027,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|baad92-p85",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "book": "699ef9f2c2bcb75dbdbaad92",
+  "page": 85,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Sha'arei Orah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 98992,
+    "share": 0.109
+   },
+   {
+    "k": "C38L",
+    "pos": 98840,
+    "share": 0.103
+   },
+   {
+    "k": "OPUS",
+    "pos": 101416,
+    "share": 0.163
+   },
+   {
+    "k": "PROD",
+    "pos": 101344,
+    "share": 0.221
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 101329,
+    "we": 103520,
+    "len": 2191,
+    "cer": 0.093,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 101329,
+    "we": 103520,
+    "len": 2191,
+    "cer": 0.102,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 101328,
+    "we": 105458,
+    "len": 4130,
+    "cer": 0.162,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 101328,
+    "we": 103524,
+    "len": 2196,
+    "cer": 0.095,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   101329,
+   103522
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Sha'arei Orah Third and Fourth Gates, Seventh and Eight Sefirah 2",
+   "Sha'arei Orah Third and Fourth Gates, Seventh and Eight Sefirah 10"
+  ],
+  "ref_text_sha": "d912aeb19ac5",
+  "cells": {
+   "G4L": {
+    "cer": 0.09430523917995444,
+    "ref_letters": 2195,
+    "read_letters": 4528,
+    "secs": 65.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.10387243735763098,
+    "ref_letters": 2195,
+    "read_letters": 4525,
+    "secs": 127.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.0929384965831435,
+    "ref_letters": 2195,
+    "read_letters": 4082,
+    "secs": 76.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.09476082004555808,
+    "ref_letters": 2195,
+    "read_letters": 2167,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|baad92-p15",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "book": "699ef9f2c2bcb75dbdbaad92",
+  "page": 15,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Sha'arei Orah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1192,
+    "share": 0.098
+   },
+   {
+    "k": "C38L",
+    "pos": 1200,
+    "share": 0.102
+   },
+   {
+    "k": "OPUS",
+    "pos": 1240,
+    "share": 0.367
+   },
+   {
+    "k": "PROD",
+    "pos": 1240,
+    "share": 0.155
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1199,
+    "we": 2459,
+    "len": 1260,
+    "cer": 0.129,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1203,
+    "we": 2458,
+    "len": 1255,
+    "cer": 0.152,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1199,
+    "we": 3094,
+    "len": 1895,
+    "cer": 0.115,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1253,
+    "we": 2460,
+    "len": 1207,
+    "cer": 0.146,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1201,
+   2460
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Sha'arei Orah Introduction 5",
+   "Sha'arei Orah Introduction 10"
+  ],
+  "ref_text_sha": "81b32ba34b8d",
+  "cells": {
+   "G4L": {
+    "cer": 0.13005551149881048,
+    "ref_letters": 1261,
+    "read_letters": 5157,
+    "secs": 85.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.15543219666931007,
+    "ref_letters": 1261,
+    "read_letters": 5316,
+    "secs": 133.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.09674861221252974,
+    "ref_letters": 1261,
+    "read_letters": 1872,
+    "secs": 47.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.17922283901665345,
+    "ref_letters": 1261,
+    "read_letters": 2398,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|baad92-p183",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "book": "699ef9f2c2bcb75dbdbaad92",
+  "page": 183,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Sha'arei Orah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 261144,
+    "share": 0.174
+   },
+   {
+    "k": "C38L",
+    "pos": 263480,
+    "share": 0.159
+   },
+   {
+    "k": "OPUS",
+    "pos": 263416,
+    "share": 0.205
+   },
+   {
+    "k": "PROD",
+    "pos": 263408,
+    "share": 0.408
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 263375,
+    "we": 264983,
+    "len": 1608,
+    "cer": 0.076,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 263376,
+    "we": 266639,
+    "len": 3263,
+    "cer": 0.262,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 263376,
+    "we": 266644,
+    "len": 3268,
+    "cer": 0.222,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 263376,
+    "we": 264983,
+    "len": 1607,
+    "cer": 0.085,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   263376,
+   265811
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Sha'arei Orah Sixth Gate, Fifth Sefirah 107",
+   "Sha'arei Orah Seventh Gate, Fourth Sefirah 4"
+  ],
+  "ref_text_sha": "d988ef0b2425",
+  "cells": {
+   "G4L": {
+    "cer": 0.34673779236766517,
+    "ref_letters": 2437,
+    "read_letters": 3898,
+    "secs": 53.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.28190398030365205,
+    "ref_letters": 2437,
+    "read_letters": 3698,
+    "secs": 106.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.23963890028723842,
+    "ref_letters": 2437,
+    "read_letters": 3137,
+    "secs": 77.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.35576528518670497,
+    "ref_letters": 2437,
+    "read_letters": 1630,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|baad92-p13",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "book": "699ef9f2c2bcb75dbdbaad92",
+  "page": 13,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Sha'arei Orah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": -552,
+    "share": 0.288
+   },
+   {
+    "k": "C38L",
+    "pos": 24,
+    "share": 0.281
+   },
+   {
+    "k": "OPUS",
+    "pos": -544,
+    "share": 0.215
+   },
+   {
+    "k": "PROD",
+    "pos": 237264,
+    "share": 0.025
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 0,
+    "we": 1158,
+    "len": 1158,
+    "cer": 0.072,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 4,
+    "we": 1158,
+    "len": 1154,
+    "cer": 0.116,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 0,
+    "we": 1158,
+    "len": 1158,
+    "cer": 0.092,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   0,
+   1158
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Sha'arei Orah Introduction 1",
+   "Sha'arei Orah Introduction 5"
+  ],
+  "ref_text_sha": "e442183742a0",
+  "cells": {
+   "G4L": {
+    "cer": 0.07167530224525043,
+    "ref_letters": 1158,
+    "read_letters": 2070,
+    "secs": 65.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.11917098445595854,
+    "ref_letters": 1158,
+    "read_letters": 1502,
+    "secs": 23.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.09153713298791019,
+    "ref_letters": 1158,
+    "read_letters": 2057,
+    "secs": 53.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7590673575129534,
+    "ref_letters": 1158,
+    "read_letters": 561,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|baad92-p114",
+  "work": "Sha'arei Orah / Gates of Light (1715)",
+  "book": "699ef9f2c2bcb75dbdbaad92",
+  "page": 114,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Sha'arei Orah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 153304,
+    "share": 0.213
+   },
+   {
+    "k": "C38L",
+    "pos": 153328,
+    "share": 0.199
+   },
+   {
+    "k": "OPUS",
+    "pos": 155480,
+    "share": 0.276
+   },
+   {
+    "k": "PROD",
+    "pos": 157616,
+    "share": 0.258
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 155397,
+    "we": 157619,
+    "len": 2222,
+    "cer": 0.077,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 155397,
+    "we": 157619,
+    "len": 2222,
+    "cer": 0.085,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 155397,
+    "we": 159570,
+    "len": 4173,
+    "cer": 0.091,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 157614,
+    "we": 159570,
+    "len": 1956,
+    "cer": 0.081,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   155397,
+   158595
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Sha'arei Orah Fifth Gate, Sixth Sefirah 73",
+   "Sha'arei Orah Fifth Gate, Sixth Sefirah 85"
+  ],
+  "ref_text_sha": "ec60d319e75f",
+  "cells": {
+   "G4L": {
+    "cer": 0.3588621444201313,
+    "ref_letters": 3199,
+    "read_letters": 4307,
+    "secs": 55.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.36417630509534227,
+    "ref_letters": 3199,
+    "read_letters": 4280,
+    "secs": 28.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.08690215692403876,
+    "ref_letters": 3199,
+    "read_letters": 4164,
+    "secs": 73.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7095967489840576,
+    "ref_letters": 3199,
+    "read_letters": 2147,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|b1ebd9-p221",
+  "work": "Shenei Luchot ha-Berit (1698)",
+  "book": "699ef9fd15618a982bb1ebd9",
+  "page": 221,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shenei Luchot HaBerit"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 971152,
+    "share": 0.106
+   },
+   {
+    "k": "C38L",
+    "pos": 971120,
+    "share": 0.25
+   },
+   {
+    "k": "OPUS",
+    "pos": 975720,
+    "share": 0.272
+   },
+   {
+    "k": "PROD",
+    "pos": 975960,
+    "share": 0.114
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 972720,
+    "we": 979987,
+    "len": 7267,
+    "cer": 0.194,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 975768,
+    "we": 975850,
+    "len": 82,
+    "cer": 0.159,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 975908,
+    "we": 976023,
+    "len": 115,
+    "cer": 0.009,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 975582,
+    "we": 979990,
+    "len": 4408,
+    "cer": 0.149,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   975675,
+   978005
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Birkot HaNehenin 13:3",
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Birkot HaNehenin 13:12"
+  ],
+  "ref_text_sha": "83a39665bc40",
+  "cells": {
+   "G4L": {
+    "cer": 0.17223650385604114,
+    "ref_letters": 2334,
+    "read_letters": 8113,
+    "secs": 111.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.8299057412167952,
+    "ref_letters": 2334,
+    "read_letters": 553,
+    "secs": 21.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.8658954584404456,
+    "ref_letters": 2334,
+    "read_letters": 374,
+    "secs": 26.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.149528706083976,
+    "ref_letters": 2334,
+    "read_letters": 3948,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|b1ebd9-p885",
+  "work": "Shenei Luchot ha-Berit (1698)",
+  "book": "699ef9fd15618a982bb1ebd9",
+  "page": 885,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shenei Luchot HaBerit"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 4246520,
+    "share": 0.287
+   },
+   {
+    "k": "C38L",
+    "pos": 4246624,
+    "share": 0.076
+   },
+   {
+    "k": "OPUS",
+    "pos": 4251688,
+    "share": 0.168
+   },
+   {
+    "k": "PROD",
+    "pos": 4251208,
+    "share": 0.1
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 4250815,
+    "we": 4255102,
+    "len": 4287,
+    "cer": 0.135,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 4250815,
+    "we": 4255069,
+    "len": 4254,
+    "cer": 0.417,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 4251787,
+    "we": 4251826,
+    "len": 39,
+    "cer": 0,
+    "aligns": false
+   },
+   "PROD": {
+    "ws": 4250815,
+    "we": 4255091,
+    "len": 4276,
+    "cer": 0.326,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   4250815,
+   4255091
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shenei Luchot HaBerit Asara Hillulim, Shaar Avodat Elohim 3",
+   "Shenei Luchot HaBerit Asara Hillulim, Shaar Yichud HaMaaseh 5"
+  ],
+  "ref_text_sha": "5d79fd21aae6",
+  "cells": {
+   "G4L": {
+    "cer": 0.13514145429039046,
+    "ref_letters": 4277,
+    "read_letters": 8560,
+    "secs": 151.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.41524433013794715,
+    "ref_letters": 4277,
+    "read_letters": 8460,
+    "secs": 183.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.9532382511105916,
+    "ref_letters": 4277,
+    "read_letters": 202,
+    "secs": 24.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.3172784662146364,
+    "ref_letters": 4277,
+    "read_letters": 3903,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|b1ebd9-p581",
+  "work": "Shenei Luchot ha-Berit (1698)",
+  "book": "699ef9fd15618a982bb1ebd9",
+  "page": 581,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shenei Luchot HaBerit"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 2741232,
+    "share": 0.071
+   },
+   {
+    "k": "C38L",
+    "pos": 2745416,
+    "share": 0.034
+   },
+   {
+    "k": "OPUS",
+    "pos": 2690208,
+    "share": 0.087
+   },
+   {
+    "k": "PROD",
+    "pos": 2741104,
+    "share": 0.147
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 2742063,
+    "we": 2751203,
+    "len": 9140,
+    "cer": 0.285,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 2746889,
+    "we": 2749795,
+    "len": 2906,
+    "cer": 0.372,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 2742063,
+    "we": 2746250,
+    "len": 4187,
+    "cer": 0.222,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   2742063,
+   2749795
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shenei Luchot HaBerit Torah Shebikhtav, Bereshit, Torah Ohr 21",
+   "Shenei Luchot HaBerit Torah Shebikhtav, Bereshit, Torah Ohr 42"
+  ],
+  "ref_text_sha": "ecb38f03112f",
+  "cells": {
+   "G4L": {
+    "cer": 0.30906504590715117,
+    "ref_letters": 7733,
+    "read_letters": 9909,
+    "secs": 151.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.6511056511056511,
+    "ref_letters": 7733,
+    "read_letters": 10028,
+    "secs": 205,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.9903013060907798,
+    "ref_letters": 7733,
+    "read_letters": 75,
+    "secs": 19.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5718349928876245,
+    "ref_letters": 7733,
+    "read_letters": 5123,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|b1ebd9-p178",
+  "work": "Shenei Luchot ha-Berit (1698)",
+  "book": "699ef9fd15618a982bb1ebd9",
+  "page": 178,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shenei Luchot HaBerit"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 771512,
+    "share": 0.092
+   },
+   {
+    "k": "C38L",
+    "pos": 771616,
+    "share": 0.023
+   },
+   {
+    "k": "OPUS",
+    "pos": 779584,
+    "share": 0.067
+   },
+   {
+    "k": "PROD",
+    "pos": 771200,
+    "share": 0.143
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 771351,
+    "we": 780749,
+    "len": 9398,
+    "cer": 0.187,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 771441,
+    "we": 780377,
+    "len": 8936,
+    "cer": 0.497,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 779690,
+    "we": 779704,
+    "len": 14,
+    "cer": 0,
+    "aligns": false
+   },
+   "PROD": {
+    "ws": 771346,
+    "we": 775809,
+    "len": 4463,
+    "cer": 0.237,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   771351,
+   780377
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Maachalot Asurot 2:16",
+   "Shenei Luchot HaBerit Shaar HaOtiyot, Kedushat HaAchilah, Maachalot Asurot 2:53"
+  ],
+  "ref_text_sha": "a79b8653d858",
+  "cells": {
+   "G4L": {
+    "cer": 0.18837852794687326,
+    "ref_letters": 9035,
+    "read_letters": 8691,
+    "secs": 154.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4961815163254012,
+    "ref_letters": 9035,
+    "read_letters": 8858,
+    "secs": 87.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.9861649142224682,
+    "ref_letters": 9035,
+    "read_letters": 125,
+    "secs": 26.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6194798007747648,
+    "ref_letters": 9035,
+    "read_letters": 4545,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|b1ebd9-p753",
+  "work": "Shenei Luchot ha-Berit (1698)",
+  "book": "699ef9fd15618a982bb1ebd9",
+  "page": 753,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shenei Luchot HaBerit"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 3629712,
+    "share": 0.057
+   },
+   {
+    "k": "C38L",
+    "pos": 3629672,
+    "share": 0.019
+   },
+   {
+    "k": "OPUS",
+    "pos": 3636000,
+    "share": 0.399
+   },
+   {
+    "k": "PROD",
+    "pos": 3634832,
+    "share": 0.088
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 3639768,
+    "we": 3645188,
+    "len": 5420,
+    "cer": 0.161,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 3639772,
+    "we": 3644014,
+    "len": 4242,
+    "cer": 0.423,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 3636075,
+    "we": 3636171,
+    "len": 96,
+    "cer": 0.063,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 3634910,
+    "we": 3639774,
+    "len": 4864,
+    "cer": 0.171,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   3637922,
+   3641894
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shenei Luchot HaBerit Torah Shebikhtav, Sh'lach, Torah Ohr 12",
+   "Shenei Luchot HaBerit Torah Shebikhtav, Sh'lach, Torah Ohr 26"
+  ],
+  "ref_text_sha": "c63407d97b41",
+  "cells": {
+   "G4L": {
+    "cer": 0.5432813286361349,
+    "ref_letters": 3974,
+    "read_letters": 9675,
+    "secs": 141.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.6504781077000503,
+    "ref_letters": 3974,
+    "read_letters": 9849,
+    "secs": 142,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.9516859587317564,
+    "ref_letters": 3974,
+    "read_letters": 194,
+    "secs": 21.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6149974836436839,
+    "ref_letters": 3974,
+    "read_letters": 4765,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|278c50-p59",
+  "work": "Twelve Prophets with commentary (1539)",
+  "book": "69b2f3b821208ea9dc278c50",
+  "page": 59,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Radak on Hosea",
+   "Rashi on Hosea",
+   "Ibn Ezra on Hosea",
+   "Radak on Joel",
+   "Rashi on Joel",
+   "Ibn Ezra on Joel",
+   "Radak on Amos",
+   "Rashi on Amos",
+   "Ibn Ezra on Amos",
+   "Radak on Obadiah",
+   "Rashi on Obadiah",
+   "Ibn Ezra on Obadiah",
+   "Radak on Jonah",
+   "Rashi on Jonah",
+   "Ibn Ezra on Jonah",
+   "Radak on Micah",
+   "Rashi on Micah",
+   "Ibn Ezra on Micah",
+   "Radak on Nahum",
+   "Rashi on Nahum",
+   "Ibn Ezra on Nahum",
+   "Radak on Habakkuk",
+   "Rashi on Habakkuk",
+   "Ibn Ezra on Habakkuk",
+   "Radak on Zephaniah",
+   "Rashi on Zephaniah",
+   "Ibn Ezra on Zephaniah",
+   "Radak on Haggai",
+   "Rashi on Haggai",
+   "Ibn Ezra on Haggai",
+   "Radak on Zechariah",
+   "Rashi on Zechariah",
+   "Ibn Ezra on Zechariah",
+   "Radak on Malachi",
+   "Rashi on Malachi",
+   "Ibn Ezra on Malachi"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 64944,
+    "share": 0.507
+   },
+   {
+    "k": "C38L",
+    "pos": 64848,
+    "share": 0.251
+   },
+   {
+    "k": "OPUS",
+    "pos": 64952,
+    "share": 0.247
+   },
+   {
+    "k": "PROD",
+    "pos": 64952,
+    "share": 0.294
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 64961,
+    "we": 66578,
+    "len": 1617,
+    "cer": 0.089,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 64961,
+    "we": 66582,
+    "len": 1621,
+    "cer": 0.159,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 64961,
+    "we": 66578,
+    "len": 1617,
+    "cer": 0.115,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 64961,
+    "we": 66582,
+    "len": 1621,
+    "cer": 0.16,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   64961,
+   66580
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Hosea 12 2:1",
+   "Radak on Hosea 12 4:2"
+  ],
+  "ref_text_sha": "ab9ee742783b",
+  "cells": {
+   "G4L": {
+    "cer": 0.09130166563849476,
+    "ref_letters": 1621,
+    "read_letters": 1741,
+    "secs": 39.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.1591610117211598,
+    "ref_letters": 1621,
+    "read_letters": 1738,
+    "secs": 33.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.11721159777914868,
+    "ref_letters": 1621,
+    "read_letters": 1759,
+    "secs": 41,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.16039481801357186,
+    "ref_letters": 1621,
+    "read_letters": 1735,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|278c50-p100",
+  "work": "Twelve Prophets with commentary (1539)",
+  "book": "69b2f3b821208ea9dc278c50",
+  "page": 100,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Radak on Hosea",
+   "Rashi on Hosea",
+   "Ibn Ezra on Hosea",
+   "Radak on Joel",
+   "Rashi on Joel",
+   "Ibn Ezra on Joel",
+   "Radak on Amos",
+   "Rashi on Amos",
+   "Ibn Ezra on Amos",
+   "Radak on Obadiah",
+   "Rashi on Obadiah",
+   "Ibn Ezra on Obadiah",
+   "Radak on Jonah",
+   "Rashi on Jonah",
+   "Ibn Ezra on Jonah",
+   "Radak on Micah",
+   "Rashi on Micah",
+   "Ibn Ezra on Micah",
+   "Radak on Nahum",
+   "Rashi on Nahum",
+   "Ibn Ezra on Nahum",
+   "Radak on Habakkuk",
+   "Rashi on Habakkuk",
+   "Ibn Ezra on Habakkuk",
+   "Radak on Zephaniah",
+   "Rashi on Zephaniah",
+   "Ibn Ezra on Zephaniah",
+   "Radak on Haggai",
+   "Rashi on Haggai",
+   "Ibn Ezra on Haggai",
+   "Radak on Zechariah",
+   "Rashi on Zechariah",
+   "Ibn Ezra on Zechariah",
+   "Radak on Malachi",
+   "Rashi on Malachi",
+   "Ibn Ezra on Malachi"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 177296,
+    "share": 0.438
+   },
+   {
+    "k": "C38L",
+    "pos": 177296,
+    "share": 0.321
+   },
+   {
+    "k": "OPUS",
+    "pos": 177296,
+    "share": 0.479
+   },
+   {
+    "k": "PROD",
+    "pos": 177288,
+    "share": 0.313
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 177351,
+    "we": 178457,
+    "len": 1106,
+    "cer": 0.213,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 177351,
+    "we": 178457,
+    "len": 1106,
+    "cer": 0.283,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 177351,
+    "we": 178457,
+    "len": 1106,
+    "cer": 0.25,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 177351,
+    "we": 178458,
+    "len": 1107,
+    "cer": 0.304,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   177351,
+   178457
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Amos 2 4:1",
+   "Radak on Amos 2 6:1"
+  ],
+  "ref_text_sha": "356937bf67c7",
+  "cells": {
+   "G4L": {
+    "cer": 0.20433996383363473,
+    "ref_letters": 1106,
+    "read_letters": 1338,
+    "secs": 37.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.2640144665461121,
+    "ref_letters": 1106,
+    "read_letters": 1364,
+    "secs": 99.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.23236889692585896,
+    "ref_letters": 1106,
+    "read_letters": 1332,
+    "secs": 44,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.2875226039783002,
+    "ref_letters": 1106,
+    "read_letters": 1354,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|278c50-p109",
+  "work": "Twelve Prophets with commentary (1539)",
+  "book": "69b2f3b821208ea9dc278c50",
+  "page": 109,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Radak on Hosea",
+   "Rashi on Hosea",
+   "Ibn Ezra on Hosea",
+   "Radak on Joel",
+   "Rashi on Joel",
+   "Ibn Ezra on Joel",
+   "Radak on Amos",
+   "Rashi on Amos",
+   "Ibn Ezra on Amos",
+   "Radak on Obadiah",
+   "Rashi on Obadiah",
+   "Ibn Ezra on Obadiah",
+   "Radak on Jonah",
+   "Rashi on Jonah",
+   "Ibn Ezra on Jonah",
+   "Radak on Micah",
+   "Rashi on Micah",
+   "Ibn Ezra on Micah",
+   "Radak on Nahum",
+   "Rashi on Nahum",
+   "Ibn Ezra on Nahum",
+   "Radak on Habakkuk",
+   "Rashi on Habakkuk",
+   "Ibn Ezra on Habakkuk",
+   "Radak on Zephaniah",
+   "Rashi on Zephaniah",
+   "Ibn Ezra on Zephaniah",
+   "Radak on Haggai",
+   "Rashi on Haggai",
+   "Ibn Ezra on Haggai",
+   "Radak on Zechariah",
+   "Rashi on Zechariah",
+   "Ibn Ezra on Zechariah",
+   "Radak on Malachi",
+   "Rashi on Malachi",
+   "Ibn Ezra on Malachi"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 187712,
+    "share": 0.512
+   },
+   {
+    "k": "C38L",
+    "pos": 187712,
+    "share": 0.046
+   },
+   {
+    "k": "OPUS",
+    "pos": 187704,
+    "share": 0.383
+   },
+   {
+    "k": "PROD",
+    "pos": 187688,
+    "share": 0.291
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 187760,
+    "we": 189075,
+    "len": 1315,
+    "cer": 0.09,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 187760,
+    "we": 188946,
+    "len": 1186,
+    "cer": 0.455,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 187760,
+    "we": 189075,
+    "len": 1315,
+    "cer": 0.128,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 187760,
+    "we": 189075,
+    "len": 1315,
+    "cer": 0.15,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   187760,
+   189075
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Amos 4 4:1",
+   "Radak on Amos 4 7:1"
+  ],
+  "ref_text_sha": "ccf443ce9468",
+  "cells": {
+   "G4L": {
+    "cer": 0.08973384030418251,
+    "ref_letters": 1315,
+    "read_letters": 1519,
+    "secs": 49.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.467680608365019,
+    "ref_letters": 1315,
+    "read_letters": 1511,
+    "secs": 23.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.12775665399239544,
+    "ref_letters": 1315,
+    "read_letters": 1525,
+    "secs": 40.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.14980988593155894,
+    "ref_letters": 1315,
+    "read_letters": 1531,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|278c50-p58",
+  "work": "Twelve Prophets with commentary (1539)",
+  "book": "69b2f3b821208ea9dc278c50",
+  "page": 58,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Radak on Hosea",
+   "Rashi on Hosea",
+   "Ibn Ezra on Hosea",
+   "Radak on Joel",
+   "Rashi on Joel",
+   "Ibn Ezra on Joel",
+   "Radak on Amos",
+   "Rashi on Amos",
+   "Ibn Ezra on Amos",
+   "Radak on Obadiah",
+   "Rashi on Obadiah",
+   "Ibn Ezra on Obadiah",
+   "Radak on Jonah",
+   "Rashi on Jonah",
+   "Ibn Ezra on Jonah",
+   "Radak on Micah",
+   "Rashi on Micah",
+   "Ibn Ezra on Micah",
+   "Radak on Nahum",
+   "Rashi on Nahum",
+   "Ibn Ezra on Nahum",
+   "Radak on Habakkuk",
+   "Rashi on Habakkuk",
+   "Ibn Ezra on Habakkuk",
+   "Radak on Zephaniah",
+   "Rashi on Zephaniah",
+   "Ibn Ezra on Zephaniah",
+   "Radak on Haggai",
+   "Rashi on Haggai",
+   "Ibn Ezra on Haggai",
+   "Radak on Zechariah",
+   "Rashi on Zechariah",
+   "Ibn Ezra on Zechariah",
+   "Radak on Malachi",
+   "Rashi on Malachi",
+   "Ibn Ezra on Malachi"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 63752,
+    "share": 0.557
+   },
+   {
+    "k": "C38L",
+    "pos": 63752,
+    "share": 0.499
+   },
+   {
+    "k": "OPUS",
+    "pos": 63752,
+    "share": 0.534
+   },
+   {
+    "k": "PROD",
+    "pos": 63776,
+    "share": 0.387
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 63842,
+    "we": 64954,
+    "len": 1112,
+    "cer": 0.113,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 63841,
+    "we": 64966,
+    "len": 1125,
+    "cer": 0.157,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 63842,
+    "we": 64966,
+    "len": 1124,
+    "cer": 0.121,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 63841,
+    "we": 64966,
+    "len": 1125,
+    "cer": 0.182,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   63842,
+   64966
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Hosea 11 11:1",
+   "Radak on Hosea 12 2:1"
+  ],
+  "ref_text_sha": "07c3cc8c3455",
+  "cells": {
+   "G4L": {
+    "cer": 0.11911111111111111,
+    "ref_letters": 1125,
+    "read_letters": 1369,
+    "secs": 52.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.15733333333333333,
+    "ref_letters": 1125,
+    "read_letters": 1363,
+    "secs": 17.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.12177777777777778,
+    "ref_letters": 1125,
+    "read_letters": 1362,
+    "secs": 35.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.18222222222222223,
+    "ref_letters": 1125,
+    "read_letters": 1362,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|278c50-p218",
+  "work": "Twelve Prophets with commentary (1539)",
+  "book": "69b2f3b821208ea9dc278c50",
+  "page": 218,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Radak on Hosea",
+   "Rashi on Hosea",
+   "Ibn Ezra on Hosea",
+   "Radak on Joel",
+   "Rashi on Joel",
+   "Ibn Ezra on Joel",
+   "Radak on Amos",
+   "Rashi on Amos",
+   "Ibn Ezra on Amos",
+   "Radak on Obadiah",
+   "Rashi on Obadiah",
+   "Ibn Ezra on Obadiah",
+   "Radak on Jonah",
+   "Rashi on Jonah",
+   "Ibn Ezra on Jonah",
+   "Radak on Micah",
+   "Rashi on Micah",
+   "Ibn Ezra on Micah",
+   "Radak on Nahum",
+   "Rashi on Nahum",
+   "Ibn Ezra on Nahum",
+   "Radak on Habakkuk",
+   "Rashi on Habakkuk",
+   "Ibn Ezra on Habakkuk",
+   "Radak on Zephaniah",
+   "Rashi on Zephaniah",
+   "Ibn Ezra on Zephaniah",
+   "Radak on Haggai",
+   "Rashi on Haggai",
+   "Ibn Ezra on Haggai",
+   "Radak on Zechariah",
+   "Rashi on Zechariah",
+   "Ibn Ezra on Zechariah",
+   "Radak on Malachi",
+   "Rashi on Malachi",
+   "Ibn Ezra on Malachi"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 381056,
+    "share": 0.497
+   },
+   {
+    "k": "C38L",
+    "pos": 381064,
+    "share": 0.345
+   },
+   {
+    "k": "OPUS",
+    "pos": 381064,
+    "share": 0.431
+   },
+   {
+    "k": "PROD",
+    "pos": 381064,
+    "share": 0.38
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 381184,
+    "we": 382525,
+    "len": 1341,
+    "cer": 0.135,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 381184,
+    "we": 382525,
+    "len": 1341,
+    "cer": 0.229,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 381184,
+    "we": 382525,
+    "len": 1341,
+    "cer": 0.175,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 381184,
+    "we": 382525,
+    "len": 1341,
+    "cer": 0.205,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   381184,
+   382525
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Radak on Habakkuk 2 7:3",
+   "Radak on Habakkuk 2 12:1"
+  ],
+  "ref_text_sha": "370661333d25",
+  "cells": {
+   "G4L": {
+    "cer": 0.13497390007457122,
+    "ref_letters": 1341,
+    "read_letters": 1522,
+    "secs": 54.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.22893363161819538,
+    "ref_letters": 1341,
+    "read_letters": 1517,
+    "secs": 23.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.17524235645041014,
+    "ref_letters": 1341,
+    "read_letters": 1520,
+    "secs": 39.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.20507084265473527,
+    "ref_letters": 1341,
+    "read_letters": 1517,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|173817-p43",
+  "work": "Zohar Chadash (1702)",
+  "book": "69c7a0a892b884e4f8173817",
+  "page": 43,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Zohar Chadash"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 164600,
+    "share": 0.165
+   },
+   {
+    "k": "C38L",
+    "pos": 164600,
+    "share": 0.003
+   },
+   {
+    "k": "OPUS",
+    "pos": 162192,
+    "share": 0.307
+   },
+   {
+    "k": "PROD",
+    "pos": 162016,
+    "share": 0.002
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 164614,
+    "we": 167129,
+    "len": 2515,
+    "cer": 0.15,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 165534,
+    "we": 165640,
+    "len": 106,
+    "cer": 0.396,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 162035,
+    "we": 167126,
+    "len": 5091,
+    "cer": 0.113,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 162033,
+    "we": 162124,
+    "len": 91,
+    "cer": 0.264,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   163325,
+   166383
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Zohar Chadash Noach 49",
+   "Zohar Chadash Noach 66"
+  ],
+  "ref_text_sha": "c3cb8f3ab05c",
+  "cells": {
+   "G4L": {
+    "cer": 0.5022875816993464,
+    "ref_letters": 3060,
+    "read_letters": 4735,
+    "secs": 117.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.7173202614379085,
+    "ref_letters": 3060,
+    "read_letters": 4953,
+    "secs": 50.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.11045751633986928,
+    "ref_letters": 3060,
+    "read_letters": 4856,
+    "secs": 87,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.826797385620915,
+    "ref_letters": 3060,
+    "read_letters": 7789,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|173817-p115",
+  "work": "Zohar Chadash (1702)",
+  "book": "69c7a0a892b884e4f8173817",
+  "page": 115,
+  "prod_model": "sefaria/Zohar Chadash",
+  "sefaria": [
+   "Zohar Chadash"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 540264,
+    "share": 0.106
+   },
+   {
+    "k": "C38L",
+    "pos": 540232,
+    "share": 0.017
+   },
+   {
+    "k": "OPUS",
+    "pos": 540216,
+    "share": 0.282
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 540275,
+    "we": 545365,
+    "len": 5090,
+    "cer": 0.164,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 540274,
+    "we": 544814,
+    "len": 4540,
+    "cer": 0.484,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 540270,
+    "we": 545360,
+    "len": 5090,
+    "cer": 0.125,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   540274,
+   545360
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Zohar Chadash Shir HaShirim 477",
+   "Zohar Chadash Shir HaShirim 508"
+  ],
+  "ref_text_sha": "1447d0e0faf0",
+  "cells": {
+   "G4L": {
+    "cer": 0.1644400785854617,
+    "ref_letters": 5090,
+    "read_letters": 4863,
+    "secs": 92.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.48978388998035366,
+    "ref_letters": 5090,
+    "read_letters": 4875,
+    "secs": 41.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.12455795677799607,
+    "ref_letters": 5090,
+    "read_letters": 5031,
+    "secs": 97.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "failure": "not_ocr",
+    "why": "stored text is sefaria/Zohar Chadash (#5560), not an OCR",
+    "secs": null,
+    "gate_denials": 0
+   }
+  }
+ },
+ {
+  "uid": "rashi|173817-p71",
+  "work": "Zohar Chadash (1702)",
+  "book": "69c7a0a892b884e4f8173817",
+  "page": 71,
+  "prod_model": "sefaria/Zohar Chadash",
+  "sefaria": [
+   "Zohar Chadash"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 312032,
+    "share": 0.185
+   },
+   {
+    "k": "C38L",
+    "pos": 312040,
+    "share": 0.111
+   },
+   {
+    "k": "OPUS",
+    "pos": 312040,
+    "share": 0.161
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 312045,
+    "we": 317582,
+    "len": 5537,
+    "cer": 0.155,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 312070,
+    "we": 317563,
+    "len": 5493,
+    "cer": 0.37,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 312025,
+    "we": 317571,
+    "len": 5546,
+    "cer": 0.139,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   312045,
+   317571
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Zohar Chadash Yitro 450",
+   "Zohar Chadash Yitro 482"
+  ],
+  "ref_text_sha": "ee296f1820dc",
+  "cells": {
+   "G4L": {
+    "cer": 0.1550850524791893,
+    "ref_letters": 5526,
+    "read_letters": 5287,
+    "secs": 79,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.37115454216431415,
+    "ref_letters": 5526,
+    "read_letters": 5257,
+    "secs": 140.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1375316684762939,
+    "ref_letters": 5526,
+    "read_letters": 5262,
+    "secs": 98.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "failure": "not_ocr",
+    "why": "stored text is sefaria/Zohar Chadash (#5560), not an OCR",
+    "secs": null,
+    "gate_denials": 0
+   }
+  }
+ },
+ {
+  "uid": "rashi|173817-p140",
+  "work": "Zohar Chadash (1702)",
+  "book": "69c7a0a892b884e4f8173817",
+  "page": 140,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Zohar Chadash"
+  ],
+  "located": [
+   {
+    "k": "C38L",
+    "pos": 666808,
+    "share": 0.001
+   },
+   {
+    "k": "OPUS",
+    "pos": 666960,
+    "share": 0.072
+   },
+   {
+    "k": "PROD",
+    "pos": 666536,
+    "share": 0.001
+   }
+  ],
+  "spans": {
+   "C38L": {
+    "ws": 670896,
+    "we": 671144,
+    "len": 248,
+    "cer": 0.423,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 666539,
+    "we": 671909,
+    "len": 5370,
+    "cer": 0.195,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 666539,
+    "we": 666566,
+    "len": 27,
+    "cer": 0.222,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   666539,
+   671909
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Zohar Chadash Midrash Rut 605",
+   "Zohar Chadash Midrash Rut 638"
+  ],
+  "ref_text_sha": "dd6338c671b3",
+  "cells": {
+   "G4L": {
+    "failure": "copy_filter",
+    "why": "CLI: blocked by Gemini's filters",
+    "secs": 57.9,
+    "gate_denials": 1
+   },
+   "C38L": {
+    "cer": 0.5897244973938943,
+    "ref_letters": 5372,
+    "read_letters": 6875,
+    "secs": 68.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1950856291883842,
+    "ref_letters": 5372,
+    "read_letters": 4885,
+    "secs": 106.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.774385703648548,
+    "ref_letters": 5372,
+    "read_letters": 19024,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|173817-p66",
+  "work": "Zohar Chadash (1702)",
+  "book": "69c7a0a892b884e4f8173817",
+  "page": 66,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Zohar Chadash"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 285176,
+    "share": 0.484
+   },
+   {
+    "k": "C38L",
+    "pos": 285152,
+    "share": 0.121
+   },
+   {
+    "k": "OPUS",
+    "pos": 285184,
+    "share": 0.483
+   },
+   {
+    "k": "PROD",
+    "pos": 285200,
+    "share": 0
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 285177,
+    "we": 287804,
+    "len": 2627,
+    "cer": 0.104,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 285176,
+    "we": 287816,
+    "len": 2640,
+    "cer": 0.319,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 285176,
+    "we": 287804,
+    "len": 2628,
+    "cer": 0.121,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 287912,
+    "we": 287932,
+    "len": 20,
+    "cer": 0.3,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   285176,
+   287804
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Zohar Chadash Yitro 290",
+   "Zohar Chadash Yitro 305"
+  ],
+  "ref_text_sha": "7032dc0bb6eb",
+  "cells": {
+   "G4L": {
+    "cer": 0.10388127853881278,
+    "ref_letters": 2628,
+    "read_letters": 2570,
+    "secs": 73.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3184931506849315,
+    "ref_letters": 2628,
+    "read_letters": 3418,
+    "secs": 28.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.12100456621004566,
+    "ref_letters": 2628,
+    "read_letters": 2556,
+    "secs": 56,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.741248097412481,
+    "ref_letters": 2628,
+    "read_letters": 19602,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p-65",
+  "work": "Pardes Rimmonim (1786)",
+  "book": "69c7b18425ec2ba5ccd7f44e",
+  "page": -65,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Pardes Rimmonim"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 588472,
+    "share": 0.163
+   },
+   {
+    "k": "C38L",
+    "pos": 605320,
+    "share": 0.024
+   },
+   {
+    "k": "OPUS",
+    "pos": 596232,
+    "share": 0.133
+   },
+   {
+    "k": "PROD",
+    "pos": 1093904,
+    "share": 0
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 596274,
+    "we": 600460,
+    "len": 4186,
+    "cer": 0.18,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 602228,
+    "we": 602244,
+    "len": 16,
+    "cer": 0,
+    "aligns": false
+   },
+   "OPUS": {
+    "ws": 596275,
+    "we": 596516,
+    "len": 241,
+    "cer": 0.232,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 596311,
+    "we": 596337,
+    "len": 26,
+    "cer": 0.308,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   596274,
+   600460
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "G4L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Pardes Rimmonim 11:6:3",
+   "Pardes Rimmonim 11:6:7"
+  ],
+  "ref_text_sha": "b6a989d1554b",
+  "cells": {
+   "G4L": {
+    "cer": 0.1801909307875895,
+    "ref_letters": 4190,
+    "read_letters": 12960,
+    "secs": 183.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.7797136038186158,
+    "ref_letters": 4190,
+    "read_letters": 2410,
+    "secs": 263.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.8773269689737471,
+    "ref_letters": 4190,
+    "read_letters": 591,
+    "secs": 33.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.926491646778043,
+    "ref_letters": 4190,
+    "read_letters": 8198,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p291",
+  "work": "Pardes Rimmonim (1786)",
+  "book": "69c7b18425ec2ba5ccd7f44e",
+  "page": 291,
+  "prod_model": "sefaria/Pardes Rimonim",
+  "sefaria": [
+   "Pardes Rimmonim"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1364912,
+    "share": 0.131
+   },
+   {
+    "k": "C38L",
+    "pos": 1364920,
+    "share": 0.036
+   },
+   {
+    "k": "OPUS",
+    "pos": 1364912,
+    "share": 0.119
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1364842,
+    "we": 1369989,
+    "len": 5147,
+    "cer": 0.144,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1365109,
+    "we": 1369052,
+    "len": 3943,
+    "cer": 0.386,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1364842,
+    "we": 1369989,
+    "len": 5147,
+    "cer": 0.105,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1364842,
+   1369989
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Pardes Rimmonim 24:5:1",
+   "Pardes Rimmonim 24:6:5"
+  ],
+  "ref_text_sha": "c9a25b750b61",
+  "cells": {
+   "G4L": {
+    "cer": 0.14413364413364413,
+    "ref_letters": 5148,
+    "read_letters": 4963,
+    "secs": 72.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.43065268065268064,
+    "ref_letters": 5148,
+    "read_letters": 4787,
+    "secs": 39.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.10450660450660451,
+    "ref_letters": 5148,
+    "read_letters": 4941,
+    "secs": 87,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "failure": "not_ocr",
+    "why": "stored text is sefaria/Pardes Rimonim (#5560), not an OCR",
+    "secs": null,
+    "gate_denials": 0
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p21",
+  "work": "Pardes Rimmonim (1786)",
+  "book": "69c7b18425ec2ba5ccd7f44e",
+  "page": 21,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Pardes Rimmonim"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 64432,
+    "share": 0.678
+   },
+   {
+    "k": "C38L",
+    "pos": 64512,
+    "share": 0.154
+   },
+   {
+    "k": "OPUS",
+    "pos": 64440,
+    "share": 0.722
+   },
+   {
+    "k": "PROD",
+    "pos": 64432,
+    "share": 0.001
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 64465,
+    "we": 69315,
+    "len": 4850,
+    "cer": 0.085,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 66340,
+    "we": 68560,
+    "len": 2220,
+    "cer": 0.299,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 64464,
+    "we": 69315,
+    "len": 4851,
+    "cer": 0.078,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 64500,
+    "we": 64570,
+    "len": 70,
+    "cer": 0.229,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   64465,
+   69315
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Pardes Rimmonim 1:10:1",
+   "Pardes Rimmonim 2:1:8"
+  ],
+  "ref_text_sha": "079bb21d819c",
+  "cells": {
+   "G4L": {
+    "cer": 0.08534322820037106,
+    "ref_letters": 4851,
+    "read_letters": 4879,
+    "secs": 65.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.422180993609565,
+    "ref_letters": 4851,
+    "read_letters": 4795,
+    "secs": 185.4,
+    "gate_denials": 2,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.07812822098536384,
+    "ref_letters": 4851,
+    "read_letters": 4872,
+    "secs": 93.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7895279323850752,
+    "ref_letters": 4851,
+    "read_letters": 10148,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p203",
+  "work": "Pardes Rimmonim (1786)",
+  "book": "69c7b18425ec2ba5ccd7f44e",
+  "page": 203,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Pardes Rimmonim"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 955904,
+    "share": 0.143
+   },
+   {
+    "k": "C38L",
+    "pos": 957496,
+    "share": 0.071
+   },
+   {
+    "k": "OPUS",
+    "pos": 955904,
+    "share": 0.159
+   },
+   {
+    "k": "PROD",
+    "pos": 956160,
+    "share": 0.004
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 956148,
+    "we": 960161,
+    "len": 4013,
+    "cer": 0.168,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 957509,
+    "we": 960132,
+    "len": 2623,
+    "cer": 0.24,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 956145,
+    "we": 960161,
+    "len": 4016,
+    "cer": 0.176,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 957203,
+    "we": 957851,
+    "len": 648,
+    "cer": 0.404,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   956676,
+   960147
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Pardes Rimmonim 21:16:9",
+   "Pardes Rimmonim 22:1:4"
+  ],
+  "ref_text_sha": "50d4dc79238d",
+  "cells": {
+   "G4L": {
+    "cer": 0.13903281519861832,
+    "ref_letters": 3474,
+    "read_letters": 4135,
+    "secs": 87.2,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.41738629821531376,
+    "ref_letters": 3474,
+    "read_letters": 3929,
+    "secs": 107.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.15112262521588946,
+    "ref_letters": 3474,
+    "read_letters": 4093,
+    "secs": 84.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.671272308578008,
+    "ref_letters": 3474,
+    "read_letters": 16924,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f44e-p-39",
+  "work": "Pardes Rimmonim (1786)",
+  "book": "69c7b18425ec2ba5ccd7f44e",
+  "page": -39,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Pardes Rimmonim"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 342024,
+    "share": 0.089
+   },
+   {
+    "k": "C38L",
+    "pos": 327192,
+    "share": 0.004
+   },
+   {
+    "k": "OPUS",
+    "pos": 338064,
+    "share": 0.214
+   },
+   {
+    "k": "PROD",
+    "pos": 335928,
+    "share": 0.004
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 337033,
+    "we": 339514,
+    "len": 2481,
+    "cer": 0.195,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 336813,
+    "we": 337051,
+    "len": 238,
+    "cer": 0.441,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 338125,
+    "we": 338181,
+    "len": 56,
+    "cer": 0.125,
+    "aligns": false
+   },
+   "PROD": {
+    "ws": 338125,
+    "we": 338163,
+    "len": 38,
+    "cer": 0.079,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   336813,
+   339514
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "G4L",
+   "C38L"
+  ],
+  "ref_refs": [
+   "Pardes Rimmonim 8:2:7",
+   "Pardes Rimmonim 8:3:2"
+  ],
+  "ref_text_sha": "61cfe2b08196",
+  "cells": {
+   "G4L": {
+    "cer": 0.2391706775268419,
+    "ref_letters": 2701,
+    "read_letters": 9890,
+    "secs": 174.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.7486116253239541,
+    "ref_letters": 2701,
+    "read_letters": 10838,
+    "secs": 163,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.9552017771195853,
+    "ref_letters": 2701,
+    "read_letters": 123,
+    "secs": 23.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7326915957052943,
+    "ref_letters": 2701,
+    "read_letters": 3498,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f5be-p175",
+  "work": "Tikkunei ha-Zohar (1706)",
+  "book": "69c7b45e25ec2ba5ccd7f5be",
+  "page": 175,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Tikkunei Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 191024,
+    "share": 0.024
+   },
+   {
+    "k": "C38L",
+    "pos": 191040,
+    "share": 0.016
+   },
+   {
+    "k": "OPUS",
+    "pos": 191024,
+    "share": 0.406
+   },
+   {
+    "k": "PROD",
+    "pos": 190968,
+    "share": 0.001
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 191052,
+    "we": 191340,
+    "len": 288,
+    "cer": 0.267,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 191135,
+    "we": 191340,
+    "len": 205,
+    "cer": 0.298,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 191052,
+    "we": 191340,
+    "len": 288,
+    "cer": 0.222,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 191090,
+    "we": 191206,
+    "len": 116,
+    "cer": 0.457,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   191071,
+   191340
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Tikkunei Zohar 100 7",
+   "Tikkunei Zohar 100 10"
+  ],
+  "ref_text_sha": "661189eff6fa",
+  "cells": {
+   "G4L": {
+    "cer": 0.25925925925925924,
+    "ref_letters": 270,
+    "read_letters": 5784,
+    "secs": 137.7,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3851851851851852,
+    "ref_letters": 270,
+    "read_letters": 5578,
+    "secs": 82.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.21851851851851853,
+    "ref_letters": 270,
+    "read_letters": 395,
+    "secs": 21.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6370370370370371,
+    "ref_letters": 270,
+    "read_letters": 16364,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f5be-p-83",
+  "work": "Tikkunei ha-Zohar (1706)",
+  "book": "69c7b45e25ec2ba5ccd7f5be",
+  "page": -83,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Tikkunei Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 137928,
+    "share": 0.034
+   },
+   {
+    "k": "C38L",
+    "pos": 144392,
+    "share": 0.103
+   },
+   {
+    "k": "OPUS",
+    "pos": 141712,
+    "share": 0.268
+   },
+   {
+    "k": "PROD",
+    "pos": 448752,
+    "share": 0.001
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 144527,
+    "we": 145898,
+    "len": 1371,
+    "cer": 0.152,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 141585,
+    "we": 142636,
+    "len": 1051,
+    "cer": 0.368,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 141836,
+    "we": 141975,
+    "len": 139,
+    "cer": 0.18,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 143008,
+    "we": 143027,
+    "len": 19,
+    "cer": 0.263,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   141836,
+   142636
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Tikkunei Zohar 75 1",
+   "Tikkunei Zohar 75 8"
+  ],
+  "ref_text_sha": "c939e7c526a7",
+  "cells": {
+   "G4L": {
+    "cer": 0.12625,
+    "ref_letters": 800,
+    "read_letters": 11314,
+    "secs": 246.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.26875,
+    "ref_letters": 800,
+    "read_letters": 2799,
+    "secs": 85.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.77125,
+    "ref_letters": 800,
+    "read_letters": 334,
+    "secs": 28.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.73125,
+    "ref_letters": 800,
+    "read_letters": 11132,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f5be-p188",
+  "work": "Tikkunei ha-Zohar (1706)",
+  "book": "69c7b45e25ec2ba5ccd7f5be",
+  "page": 188,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Tikkunei Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 218280,
+    "share": 0.032
+   },
+   {
+    "k": "C38L",
+    "pos": 217896,
+    "share": 0.022
+   },
+   {
+    "k": "OPUS",
+    "pos": 218256,
+    "share": 0.326
+   },
+   {
+    "k": "PROD",
+    "pos": 158600,
+    "share": 0
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 218351,
+    "we": 218887,
+    "len": 536,
+    "cer": 0.123,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 218351,
+    "we": 218886,
+    "len": 535,
+    "cer": 0.181,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 218351,
+    "we": 218888,
+    "len": 537,
+    "cer": 0.158,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   218351,
+   218887
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Tikkunei Zohar 114 4",
+   "Tikkunei Zohar 114 10"
+  ],
+  "ref_text_sha": "c7573213cc39",
+  "cells": {
+   "G4L": {
+    "cer": 0.12777777777777777,
+    "ref_letters": 540,
+    "read_letters": 5755,
+    "secs": 111.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.18888888888888888,
+    "ref_letters": 540,
+    "read_letters": 5844,
+    "secs": 69.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.16111111111111112,
+    "ref_letters": 540,
+    "read_letters": 669,
+    "secs": 27.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7722222222222223,
+    "ref_letters": 540,
+    "read_letters": 18219,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f5be-p65",
+  "work": "Tikkunei ha-Zohar (1706)",
+  "book": "69c7b45e25ec2ba5ccd7f5be",
+  "page": 65,
+  "prod_model": null,
+  "sefaria": [
+   "Tikkunei Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1848,
+    "share": 0.026
+   },
+   {
+    "k": "C38L",
+    "pos": 1808,
+    "share": 0.02
+   },
+   {
+    "k": "OPUS",
+    "pos": 1840,
+    "share": 0.332
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1869,
+    "we": 2273,
+    "len": 404,
+    "cer": 0.257,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1921,
+    "we": 2264,
+    "len": 343,
+    "cer": 0.277,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1869,
+    "we": 2277,
+    "len": 408,
+    "cer": 0.221,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1869,
+   2273
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Tikkunei Zohar 2 2",
+   "Tikkunei Zohar 2 3"
+  ],
+  "ref_text_sha": "aeb480195465",
+  "cells": {
+   "G4L": {
+    "cer": 0.25735294117647056,
+    "ref_letters": 408,
+    "read_letters": 6017,
+    "secs": 154.8,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3602941176470588,
+    "ref_letters": 408,
+    "read_letters": 5497,
+    "secs": 58.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.22058823529411764,
+    "ref_letters": 408,
+    "read_letters": 542,
+    "secs": 29.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "failure": "empty",
+    "why": null,
+    "secs": null,
+    "gate_denials": 0
+   }
+  }
+ },
+ {
+  "uid": "rashi|d7f5be-p201",
+  "work": "Tikkunei ha-Zohar (1706)",
+  "book": "69c7b45e25ec2ba5ccd7f5be",
+  "page": 201,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Tikkunei Zohar"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 162744,
+    "share": 0.046
+   },
+   {
+    "k": "C38L",
+    "pos": 162752,
+    "share": 0.014
+   },
+   {
+    "k": "OPUS",
+    "pos": 162744,
+    "share": 0.321
+   },
+   {
+    "k": "PROD",
+    "pos": 162776,
+    "share": 0.001
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 162787,
+    "we": 163225,
+    "len": 438,
+    "cer": 0.094,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 162787,
+    "we": 163212,
+    "len": 425,
+    "cer": 0.398,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 162787,
+    "we": 163225,
+    "len": 438,
+    "cer": 0.116,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 162790,
+    "we": 162935,
+    "len": 145,
+    "cer": 0.462,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   162787,
+   163219
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Tikkunei Zohar 85 25",
+   "Tikkunei Zohar 86 3"
+  ],
+  "ref_text_sha": "73137c0fffdf",
+  "cells": {
+   "G4L": {
+    "cer": 0.09360730593607305,
+    "ref_letters": 438,
+    "read_letters": 5885,
+    "secs": 130.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.408675799086758,
+    "ref_letters": 438,
+    "read_letters": 5638,
+    "secs": 89.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.11643835616438356,
+    "ref_letters": 438,
+    "read_letters": 601,
+    "secs": 24.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6666666666666666,
+    "ref_letters": 438,
+    "read_letters": 15052,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p276",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "book": "69d5ac5f4dc55b8478ddd6b5",
+  "page": 276,
+  "prod_model": "gemini-3.1-flash-lite",
+  "sefaria": [
+   "Rashi on Shabbat",
+   "Rashi on Eruvin",
+   "Rashi on Pesachim",
+   "Rashi on Yoma",
+   "Rashi on Sukkah",
+   "Rashi on Beitzah",
+   "Rashi on Rosh Hashanah",
+   "Rashi on Taanit",
+   "Rashi on Megillah",
+   "Rashi on Moed Katan",
+   "Rashi on Chagigah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1783568,
+    "share": 0.191
+   },
+   {
+    "k": "C38L",
+    "pos": 1781968,
+    "share": 0.005
+   },
+   {
+    "k": "OPUS",
+    "pos": 1786928,
+    "share": 0.173
+   },
+   {
+    "k": "PROD",
+    "pos": 1786984,
+    "share": 0.007
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1788300,
+    "we": 1789639,
+    "len": 1339,
+    "cer": 0.026,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1788511,
+    "we": 1789550,
+    "len": 1039,
+    "cer": 0.459,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1788299,
+    "we": 1789643,
+    "len": 1344,
+    "cer": 0.068,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1787884,
+    "we": 1787910,
+    "len": 26,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1788300,
+   1789639
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Sukkah 85 1:1",
+   "Rashi on Sukkah 85 12:1"
+  ],
+  "ref_text_sha": "a9aff8957ab0",
+  "cells": {
+   "G4L": {
+    "cer": 0.026138909634055265,
+    "ref_letters": 1339,
+    "read_letters": 6166,
+    "secs": 92.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.48693054518297235,
+    "ref_letters": 1339,
+    "read_letters": 8066,
+    "secs": 56.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.06646751306945482,
+    "ref_letters": 1339,
+    "read_letters": 5604,
+    "secs": 125.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7147124719940254,
+    "ref_letters": 1339,
+    "read_letters": 3627,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p163",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "book": "69d5ac5f4dc55b8478ddd6b5",
+  "page": 163,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Shabbat",
+   "Rashi on Eruvin",
+   "Rashi on Pesachim",
+   "Rashi on Yoma",
+   "Rashi on Sukkah",
+   "Rashi on Beitzah",
+   "Rashi on Rosh Hashanah",
+   "Rashi on Taanit",
+   "Rashi on Megillah",
+   "Rashi on Moed Katan",
+   "Rashi on Chagigah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 2081608,
+    "share": 0.016
+   },
+   {
+    "k": "C38L",
+    "pos": 2083232,
+    "share": 0.008
+   },
+   {
+    "k": "OPUS",
+    "pos": 2084944,
+    "share": 0.063
+   },
+   {
+    "k": "PROD",
+    "pos": 2083552,
+    "share": 0.009
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 2084976,
+    "we": 2085200,
+    "len": 224,
+    "cer": 0.125,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 2084973,
+    "we": 2085108,
+    "len": 135,
+    "cer": 0.326,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 2084978,
+    "we": 2085200,
+    "len": 222,
+    "cer": 0.149,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 2083651,
+    "we": 2083663,
+    "len": 12,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   2084976,
+   2085200
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Rosh Hashanah 59 16:1",
+   "Rashi on Rosh Hashanah 59 17:1"
+  ],
+  "ref_text_sha": "8872b49d0a4a",
+  "cells": {
+   "G4L": {
+    "cer": 0.13274336283185842,
+    "ref_letters": 226,
+    "read_letters": 9486,
+    "secs": 200.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4778761061946903,
+    "ref_letters": 226,
+    "read_letters": 6121,
+    "secs": 104.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.16371681415929204,
+    "ref_letters": 226,
+    "read_letters": 2297,
+    "secs": 50.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7079646017699115,
+    "ref_letters": 226,
+    "read_letters": 1711,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p319",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "book": "69d5ac5f4dc55b8478ddd6b5",
+  "page": 319,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Rashi on Shabbat",
+   "Rashi on Eruvin",
+   "Rashi on Pesachim",
+   "Rashi on Yoma",
+   "Rashi on Sukkah",
+   "Rashi on Beitzah",
+   "Rashi on Rosh Hashanah",
+   "Rashi on Taanit",
+   "Rashi on Megillah",
+   "Rashi on Moed Katan",
+   "Rashi on Chagigah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1708424,
+    "share": 0.108
+   },
+   {
+    "k": "C38L",
+    "pos": 1708584,
+    "share": 0.019
+   },
+   {
+    "k": "OPUS",
+    "pos": 1708664,
+    "share": 0.107
+   },
+   {
+    "k": "PROD",
+    "pos": 1712416,
+    "share": 0.008
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1712763,
+    "we": 1714110,
+    "len": 1347,
+    "cer": 0.108,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1712763,
+    "we": 1713933,
+    "len": 1170,
+    "cer": 0.482,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1712763,
+    "we": 1714110,
+    "len": 1347,
+    "cer": 0.089,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1712844,
+    "we": 1713457,
+    "len": 613,
+    "cer": 0.406,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1712763,
+   1714022
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Rashi on Sukkah 42 1:1",
+   "Rashi on Sukkah 42 13:1"
+  ],
+  "ref_text_sha": "2b535b91dc50",
+  "cells": {
+   "G4L": {
+    "cer": 0.10881652104845115,
+    "ref_letters": 1259,
+    "read_letters": 5750,
+    "secs": 138.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4980142970611596,
+    "ref_letters": 1259,
+    "read_letters": 5529,
+    "secs": 67.4,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.09451945988880063,
+    "ref_letters": 1259,
+    "read_letters": 5707,
+    "secs": 114.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.5091342335186656,
+    "ref_letters": 1259,
+    "read_letters": 5791,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p146",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "book": "69d5ac5f4dc55b8478ddd6b5",
+  "page": 146,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Shabbat",
+   "Rashi on Eruvin",
+   "Rashi on Pesachim",
+   "Rashi on Yoma",
+   "Rashi on Sukkah",
+   "Rashi on Beitzah",
+   "Rashi on Rosh Hashanah",
+   "Rashi on Taanit",
+   "Rashi on Megillah",
+   "Rashi on Moed Katan",
+   "Rashi on Chagigah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1617008,
+    "share": 0.026
+   },
+   {
+    "k": "C38L",
+    "pos": 1615440,
+    "share": 0.011
+   },
+   {
+    "k": "OPUS",
+    "pos": 1610272,
+    "share": 0.12
+   },
+   {
+    "k": "PROD",
+    "pos": 780024,
+    "share": 0
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1617136,
+    "we": 1617869,
+    "len": 733,
+    "cer": 0.24,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1617136,
+    "we": 1617641,
+    "len": 505,
+    "cer": 0.311,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1617761,
+    "we": 1617801,
+    "len": 40,
+    "cer": 0.25,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1617136,
+   1617869
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "G4L",
+   "C38L"
+  ],
+  "ref_refs": [
+   "Rashi on Yoma 163 1:1",
+   "Rashi on Yoma 163 3:4"
+  ],
+  "ref_text_sha": "3b6c1cb08f58",
+  "cells": {
+   "G4L": {
+    "cer": 0.24010914051841747,
+    "ref_letters": 733,
+    "read_letters": 8089,
+    "secs": 110.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.38472032742155526,
+    "ref_letters": 733,
+    "read_letters": 7134,
+    "secs": 116.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.6807639836289222,
+    "ref_letters": 733,
+    "read_letters": 978,
+    "secs": 33.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7598908594815825,
+    "ref_letters": 733,
+    "read_letters": 14307,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|ddd6b5-p269",
+  "work": "Talmud Bavli, Seder Moed volume (Vilna 1884)",
+  "book": "69d5ac5f4dc55b8478ddd6b5",
+  "page": 269,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Shabbat",
+   "Rashi on Eruvin",
+   "Rashi on Pesachim",
+   "Rashi on Yoma",
+   "Rashi on Sukkah",
+   "Rashi on Beitzah",
+   "Rashi on Rosh Hashanah",
+   "Rashi on Taanit",
+   "Rashi on Megillah",
+   "Rashi on Moed Katan",
+   "Rashi on Chagigah"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 1795296,
+    "share": 0.098
+   },
+   {
+    "k": "C38L",
+    "pos": 1796832,
+    "share": 0.011
+   },
+   {
+    "k": "OPUS",
+    "pos": 1799728,
+    "share": 0.12
+   },
+   {
+    "k": "PROD",
+    "pos": 1800656,
+    "share": 0.016
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 1799958,
+    "we": 1801789,
+    "len": 1831,
+    "cer": 0.138,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 1800271,
+    "we": 1800834,
+    "len": 563,
+    "cer": 0.456,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 1799777,
+    "we": 1801404,
+    "len": 1627,
+    "cer": 0.216,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 1801799,
+    "we": 1801818,
+    "len": 19,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   1799958,
+   1801404
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Sukkah 92 1:7",
+   "Rashi on Sukkah 92 11:1"
+  ],
+  "ref_text_sha": "43bcc581130e",
+  "cells": {
+   "G4L": {
+    "cer": 0.17219917012448133,
+    "ref_letters": 1446,
+    "read_letters": 6619,
+    "secs": 126.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.553941908713693,
+    "ref_letters": 1446,
+    "read_letters": 6290,
+    "secs": 42.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.23858921161825727,
+    "ref_letters": 1446,
+    "read_letters": 4309,
+    "secs": 109.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7247579529737206,
+    "ref_letters": 1446,
+    "read_letters": 2192,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p120",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "book": "69d5ac824dc55b8478dddb9a",
+  "page": 120,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Berakhot"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 38096,
+    "share": 0.022
+   },
+   {
+    "k": "C38L",
+    "pos": 38480,
+    "share": 0.003
+   },
+   {
+    "k": "OPUS",
+    "pos": 38984,
+    "share": 0.049
+   },
+   {
+    "k": "PROD",
+    "pos": 119312,
+    "share": 0.001
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 40394,
+    "we": 40645,
+    "len": 251,
+    "cer": 0.12,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 40394,
+    "we": 40429,
+    "len": 35,
+    "cer": 0.171,
+    "aligns": false
+   },
+   "OPUS": {
+    "ws": 40393,
+    "we": 40645,
+    "len": 252,
+    "cer": 0.099,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 40329,
+    "we": 40342,
+    "len": 13,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   40393,
+   40645
+  ],
+  "ref_rule": "union",
+  "aligning": [
+   "G4L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Berakhot 33 8:1",
+   "Rashi on Berakhot 33 9:1"
+  ],
+  "ref_text_sha": "0bb860238187",
+  "cells": {
+   "G4L": {
+    "cer": 0.12598425196850394,
+    "ref_letters": 254,
+    "read_letters": 6992,
+    "secs": 100.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.6535433070866141,
+    "ref_letters": 254,
+    "read_letters": 6724,
+    "secs": 45.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1062992125984252,
+    "ref_letters": 254,
+    "read_letters": 3644,
+    "secs": 72,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7165354330708661,
+    "ref_letters": 254,
+    "read_letters": 19305,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p102",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "book": "69d5ac824dc55b8478dddb9a",
+  "page": 102,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Berakhot"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 21568,
+    "share": 0.016
+   },
+   {
+    "k": "C38L",
+    "pos": 17472,
+    "share": 0.004
+   },
+   {
+    "k": "OPUS",
+    "pos": 22232,
+    "share": 0.06
+   },
+   {
+    "k": "PROD",
+    "pos": 75528,
+    "share": 0
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 23180,
+    "we": 23437,
+    "len": 257,
+    "cer": 0.191,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 23180,
+    "we": 23420,
+    "len": 240,
+    "cer": 0.412,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 23180,
+    "we": 23439,
+    "len": 259,
+    "cer": 0.17,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 30509,
+    "we": 30517,
+    "len": 8,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   23180,
+   23437
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Berakhot 21 15:1",
+   "Rashi on Berakhot 21 15:4"
+  ],
+  "ref_text_sha": "2686bd1fa199",
+  "cells": {
+   "G4L": {
+    "cer": 0.1969111969111969,
+    "ref_letters": 259,
+    "read_letters": 6749,
+    "secs": 93.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.42084942084942084,
+    "ref_letters": 259,
+    "read_letters": 6717,
+    "secs": 112.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.16988416988416988,
+    "ref_letters": 259,
+    "read_letters": 2220,
+    "secs": 60,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7567567567567568,
+    "ref_letters": 259,
+    "read_letters": 14575,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p190",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "book": "69d5ac824dc55b8478dddb9a",
+  "page": 190,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Berakhot"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 140576,
+    "share": 0.029
+   },
+   {
+    "k": "C38L",
+    "pos": 140384,
+    "share": 0.016
+   },
+   {
+    "k": "OPUS",
+    "pos": 143920,
+    "share": 0.101
+   },
+   {
+    "k": "PROD",
+    "pos": 142296,
+    "share": 0.002
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 144183,
+    "we": 144395,
+    "len": 212,
+    "cer": 0.042,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 141651,
+    "we": 141819,
+    "len": 168,
+    "cer": 0.185,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 144183,
+    "we": 144399,
+    "len": 216,
+    "cer": 0.037,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 144208,
+    "we": 144248,
+    "len": 40,
+    "cer": 0.15,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   144183,
+   144395
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Berakhot 107 10:1",
+   "Rashi on Berakhot 107 13:3"
+  ],
+  "ref_text_sha": "4deb63952e2e",
+  "cells": {
+   "G4L": {
+    "cer": 0.04245283018867924,
+    "ref_letters": 212,
+    "read_letters": 5735,
+    "secs": 109.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.45754716981132076,
+    "ref_letters": 212,
+    "read_letters": 5263,
+    "secs": 140.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.03773584905660377,
+    "ref_letters": 212,
+    "read_letters": 1745,
+    "secs": 41.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6462264150943396,
+    "ref_letters": 212,
+    "read_letters": 16910,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p218",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "book": "69d5ac824dc55b8478dddb9a",
+  "page": 218,
+  "prod_model": "gemini-3.1-flash-lite",
+  "sefaria": [
+   "Rashi on Berakhot"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 156664,
+    "share": 0.035
+   },
+   {
+    "k": "C38L",
+    "pos": 152856,
+    "share": 0.008
+   },
+   {
+    "k": "OPUS",
+    "pos": 153456,
+    "share": 0.046
+   },
+   {
+    "k": "PROD",
+    "pos": 153904,
+    "share": 0.007
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 156665,
+    "we": 157258,
+    "len": 593,
+    "cer": 0.243,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 156758,
+    "we": 157105,
+    "len": 347,
+    "cer": 0.435,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 156663,
+    "we": 157258,
+    "len": 595,
+    "cer": 0.203,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 156833,
+    "we": 156863,
+    "len": 30,
+    "cer": 0.067,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   156665,
+   157258
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Berakhot 117 7:5",
+   "Rashi on Berakhot 117 13:2"
+  ],
+  "ref_text_sha": "48d56898194d",
+  "cells": {
+   "G4L": {
+    "cer": 0.2453781512605042,
+    "ref_letters": 595,
+    "read_letters": 5528,
+    "secs": 97,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.5260504201680672,
+    "ref_letters": 595,
+    "read_letters": 5302,
+    "secs": 45,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.20336134453781513,
+    "ref_letters": 595,
+    "read_letters": 5519,
+    "secs": 103,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6890756302521008,
+    "ref_letters": 595,
+    "read_letters": 3639,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddb9a-p208",
+  "work": "Ein Yaakov, Berakhot (Vilna 1883)",
+  "book": "69d5ac824dc55b8478dddb9a",
+  "page": 208,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Berakhot"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 148064,
+    "share": 0.025
+   },
+   {
+    "k": "C38L",
+    "pos": 147976,
+    "share": 0.001
+   },
+   {
+    "k": "OPUS",
+    "pos": 149840,
+    "share": 0.156
+   },
+   {
+    "k": "PROD",
+    "pos": 119312,
+    "share": 0
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 149948,
+    "we": 150179,
+    "len": 231,
+    "cer": 0.026,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 149945,
+    "we": 150174,
+    "len": 229,
+    "cer": 0.445,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 149945,
+    "we": 150179,
+    "len": 234,
+    "cer": 0.017,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   149945,
+   150179
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Berakhot 112 5:1",
+   "Rashi on Berakhot 112 8:2"
+  ],
+  "ref_text_sha": "7440f174a381",
+  "cells": {
+   "G4L": {
+    "cer": 0.03829787234042553,
+    "ref_letters": 235,
+    "read_letters": 8062,
+    "secs": 124.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.451063829787234,
+    "ref_letters": 235,
+    "read_letters": 8109,
+    "secs": 55.2,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.02127659574468085,
+    "ref_letters": 235,
+    "read_letters": 1374,
+    "secs": 39.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7489361702127659,
+    "ref_letters": 235,
+    "read_letters": 17267,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddcab-p161",
+  "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+  "book": "69d5ac8c4dc55b8478dddcab",
+  "page": 161,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shulchan Arukh, Choshen Mishpat"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 375624,
+    "share": 0.231
+   },
+   {
+    "k": "OPUS",
+    "pos": 375168,
+    "share": 0.194
+   },
+   {
+    "k": "PROD",
+    "pos": 375200,
+    "share": 0.174
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 375690,
+    "we": 378307,
+    "len": 2617,
+    "cer": 0.091,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 375688,
+    "we": 378311,
+    "len": 2623,
+    "cer": 0.111,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 375882,
+    "we": 378311,
+    "len": 2429,
+    "cer": 0.173,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   375690,
+   378311
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shulchan Arukh, Choshen Mishpat 145 6",
+   "Shulchan Arukh, Choshen Mishpat 146 10"
+  ],
+  "ref_text_sha": "8af426237c51",
+  "cells": {
+   "G4L": {
+    "cer": 0.09233117130866082,
+    "ref_letters": 2621,
+    "read_letters": 3125,
+    "secs": 62,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 1,
+    "ref_letters": 0,
+    "read_letters": 0,
+    "secs": 65.3,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.11064479206409768,
+    "ref_letters": 2621,
+    "read_letters": 3160,
+    "secs": 65.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.21556657764212134,
+    "ref_letters": 2621,
+    "read_letters": 3127,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddcab-p279",
+  "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+  "book": "69d5ac8c4dc55b8478dddcab",
+  "page": 279,
+  "prod_model": "gemini-3.1-flash-lite",
+  "sefaria": [
+   "Shulchan Arukh, Choshen Mishpat"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 699704,
+    "share": 0.637
+   },
+   {
+    "k": "C38L",
+    "pos": 699728,
+    "share": 0.023
+   },
+   {
+    "k": "OPUS",
+    "pos": 699792,
+    "share": 0.385
+   },
+   {
+    "k": "PROD",
+    "pos": 699864,
+    "share": 0.054
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 699893,
+    "we": 702898,
+    "len": 3005,
+    "cer": 0.068,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 700312,
+    "we": 702564,
+    "len": 2252,
+    "cer": 0.473,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 699899,
+    "we": 702898,
+    "len": 2999,
+    "cer": 0.137,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 700074,
+    "we": 702889,
+    "len": 2815,
+    "cer": 0.412,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   699987,
+   702894
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shulchan Arukh, Choshen Mishpat 273 16",
+   "Shulchan Arukh, Choshen Mishpat 275 15"
+  ],
+  "ref_text_sha": "04fca4fefe26",
+  "cells": {
+   "G4L": {
+    "cer": 0.06600206256445514,
+    "ref_letters": 2909,
+    "read_letters": 3205,
+    "secs": 59.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.5001718803712616,
+    "ref_letters": 2909,
+    "read_letters": 3165,
+    "secs": 32.6,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.1251289102784462,
+    "ref_letters": 2909,
+    "read_letters": 3090,
+    "secs": 71.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.41285665177036784,
+    "ref_letters": 2909,
+    "read_letters": 2763,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddcab-p159",
+  "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+  "book": "69d5ac8c4dc55b8478dddcab",
+  "page": 159,
+  "prod_model": "gemini-3.1-flash-lite",
+  "sefaria": [
+   "Shulchan Arukh, Choshen Mishpat"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 370520,
+    "share": 0.268
+   },
+   {
+    "k": "C38L",
+    "pos": 370368,
+    "share": 0.215
+   },
+   {
+    "k": "OPUS",
+    "pos": 370456,
+    "share": 0.257
+   },
+   {
+    "k": "PROD",
+    "pos": 371024,
+    "share": 0.127
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 370634,
+    "we": 373167,
+    "len": 2533,
+    "cer": 0.078,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 370634,
+    "we": 373167,
+    "len": 2533,
+    "cer": 0.13,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 370634,
+    "we": 373167,
+    "len": 2533,
+    "cer": 0.089,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 371693,
+    "we": 373167,
+    "len": 1474,
+    "cer": 0.32,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   370634,
+   373167
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shulchan Arukh, Choshen Mishpat 141 13",
+   "Shulchan Arukh, Choshen Mishpat 142 3"
+  ],
+  "ref_text_sha": "ba4575db0ce3",
+  "cells": {
+   "G4L": {
+    "cer": 0.07777339123568891,
+    "ref_letters": 2533,
+    "read_letters": 2729,
+    "secs": 39.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.12949072246348203,
+    "ref_letters": 2533,
+    "read_letters": 2893,
+    "secs": 102.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.08922226608764311,
+    "ref_letters": 2533,
+    "read_letters": 2714,
+    "secs": 52.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.42163442558231345,
+    "ref_letters": 2533,
+    "read_letters": 2145,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddcab-p115",
+  "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+  "book": "69d5ac8c4dc55b8478dddcab",
+  "page": 115,
+  "prod_model": "gemini-3-flash-preview",
+  "sefaria": [
+   "Shulchan Arukh, Choshen Mishpat"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 251952,
+    "share": 0.293
+   },
+   {
+    "k": "C38L",
+    "pos": 251976,
+    "share": 0.225
+   },
+   {
+    "k": "OPUS",
+    "pos": 251944,
+    "share": 0.286
+   },
+   {
+    "k": "PROD",
+    "pos": 251944,
+    "share": 0.276
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 252018,
+    "we": 254580,
+    "len": 2562,
+    "cer": 0.069,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 252018,
+    "we": 254580,
+    "len": 2562,
+    "cer": 0.145,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 252023,
+    "we": 254580,
+    "len": 2557,
+    "cer": 0.085,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 252018,
+    "we": 254585,
+    "len": 2567,
+    "cer": 0.136,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   252018,
+   254580
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shulchan Arukh, Choshen Mishpat 93 4",
+   "Shulchan Arukh, Choshen Mishpat 93 13"
+  ],
+  "ref_text_sha": "659dcbe20a42",
+  "cells": {
+   "G4L": {
+    "cer": 0.06908665105386416,
+    "ref_letters": 2562,
+    "read_letters": 3652,
+    "secs": 65.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.1448087431693989,
+    "ref_letters": 2562,
+    "read_letters": 3576,
+    "secs": 119.9,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.0858704137392662,
+    "ref_letters": 2562,
+    "read_letters": 3373,
+    "secs": 69.9,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.13544106167056988,
+    "ref_letters": 2562,
+    "read_letters": 3638,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dddcab-p181",
+  "work": "Shulchan Arukh, Choshen Mishpat (1565)",
+  "book": "69d5ac8c4dc55b8478dddcab",
+  "page": 181,
+  "prod_model": "gemini-3.1-flash-lite",
+  "sefaria": [
+   "Shulchan Arukh, Choshen Mishpat"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 437576,
+    "share": 0.458
+   },
+   {
+    "k": "C38L",
+    "pos": 437600,
+    "share": 0.094
+   },
+   {
+    "k": "OPUS",
+    "pos": 437592,
+    "share": 0.379
+   },
+   {
+    "k": "PROD",
+    "pos": 437664,
+    "share": 0.096
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 437635,
+    "we": 440407,
+    "len": 2772,
+    "cer": 0.07,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 437634,
+    "we": 440379,
+    "len": 2745,
+    "cer": 0.392,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 437635,
+    "we": 440407,
+    "len": 2772,
+    "cer": 0.092,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 437638,
+    "we": 440413,
+    "len": 2775,
+    "cer": 0.352,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   437635,
+   440407
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Shulchan Arukh, Choshen Mishpat 158 6",
+   "Shulchan Arukh, Choshen Mishpat 161 1"
+  ],
+  "ref_text_sha": "36dbc65cd108",
+  "cells": {
+   "G4L": {
+    "cer": 0.06998556998556998,
+    "ref_letters": 2772,
+    "read_letters": 2825,
+    "secs": 50.7,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.3943001443001443,
+    "ref_letters": 2772,
+    "read_letters": 2733,
+    "secs": 26.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.09235209235209235,
+    "ref_letters": 2772,
+    "read_letters": 2800,
+    "secs": 53.1,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.35209235209235207,
+    "ref_letters": 2772,
+    "read_letters": 2599,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p1626",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "book": "69d5ad004dc55b8478dde8b5",
+  "page": 1626,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Genesis",
+   "Rashi on Exodus",
+   "Rashi on Leviticus",
+   "Rashi on Numbers",
+   "Rashi on Deuteronomy"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 358136,
+    "share": 0.069
+   },
+   {
+    "k": "C38L",
+    "pos": 357136,
+    "share": 0.047
+   },
+   {
+    "k": "OPUS",
+    "pos": 358536,
+    "share": 0.265
+   },
+   {
+    "k": "PROD",
+    "pos": 359560,
+    "share": 0.025
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 359262,
+    "we": 359778,
+    "len": 516,
+    "cer": 0.114,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 359262,
+    "we": 359778,
+    "len": 516,
+    "cer": 0.19,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 359262,
+    "we": 359778,
+    "len": 516,
+    "cer": 0.074,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 359887,
+    "we": 359925,
+    "len": 38,
+    "cer": 0.105,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   359262,
+   359778
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Leviticus 11 27:2",
+   "Rashi on Leviticus 11 34:1"
+  ],
+  "ref_text_sha": "cbae435eb73f",
+  "cells": {
+   "G4L": {
+    "cer": 0.11434108527131782,
+    "ref_letters": 516,
+    "read_letters": 2802,
+    "secs": 161.6,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.18992248062015504,
+    "ref_letters": 516,
+    "read_letters": 2654,
+    "secs": 65.1,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.07364341085271318,
+    "ref_letters": 516,
+    "read_letters": 1332,
+    "secs": 48.8,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.6569767441860465,
+    "ref_letters": 516,
+    "read_letters": 892,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2270",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "book": "69d5ad004dc55b8478dde8b5",
+  "page": 2270,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Genesis",
+   "Rashi on Exodus",
+   "Rashi on Leviticus",
+   "Rashi on Numbers",
+   "Rashi on Deuteronomy"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 481040,
+    "share": 0.004
+   },
+   {
+    "k": "C38L",
+    "pos": 482136,
+    "share": 0.019
+   },
+   {
+    "k": "OPUS",
+    "pos": 482736,
+    "share": 0.02
+   },
+   {
+    "k": "PROD",
+    "pos": 484056,
+    "share": 0.015
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 484181,
+    "we": 484325,
+    "len": 144,
+    "cer": 0.389,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 484197,
+    "we": 484325,
+    "len": 128,
+    "cer": 0.188,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 484181,
+    "we": 484338,
+    "len": 157,
+    "cer": 0.248,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 484197,
+    "we": 484325,
+    "len": 128,
+    "cer": 0.43,
+    "aligns": true
+   }
+  },
+  "kept": false,
+  "dropped": "reference 136 letters < 150",
+  "ref_span": [
+   484189,
+   484325
+  ],
+  "cells": {
+   "G4L": {
+    "unscored": "page dropped"
+   },
+   "C38L": {
+    "unscored": "page dropped"
+   },
+   "OPUS": {
+    "unscored": "page dropped"
+   },
+   "PROD": {
+    "unscored": "page dropped"
+   }
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2105",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "book": "69d5ad004dc55b8478dde8b5",
+  "page": 2105,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Genesis",
+   "Rashi on Exodus",
+   "Rashi on Leviticus",
+   "Rashi on Numbers",
+   "Rashi on Deuteronomy"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 445808,
+    "share": 0.078
+   },
+   {
+    "k": "C38L",
+    "pos": 445856,
+    "share": 0.07
+   },
+   {
+    "k": "OPUS",
+    "pos": 445864,
+    "share": 0.079
+   },
+   {
+    "k": "PROD",
+    "pos": 445968,
+    "share": 0.011
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 446544,
+    "we": 446942,
+    "len": 398,
+    "cer": 0.103,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 446545,
+    "we": 446942,
+    "len": 397,
+    "cer": 0.146,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 446544,
+    "we": 446942,
+    "len": 398,
+    "cer": 0.095,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 446601,
+    "we": 446942,
+    "len": 341,
+    "cer": 0.314,
+    "aligns": true
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   446545,
+   446942
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS",
+   "PROD"
+  ],
+  "ref_refs": [
+   "Rashi on Numbers 7 23:1",
+   "Rashi on Numbers 7 24:1"
+  ],
+  "ref_text_sha": "b7e1652d7fbf",
+  "cells": {
+   "G4L": {
+    "cer": 0.10301507537688442,
+    "ref_letters": 398,
+    "read_letters": 3602,
+    "secs": 57.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.14824120603015076,
+    "ref_letters": 398,
+    "read_letters": 3615,
+    "secs": 103.5,
+    "gate_denials": 1,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.09547738693467336,
+    "ref_letters": 398,
+    "read_letters": 3560,
+    "secs": 74.5,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.37185929648241206,
+    "ref_letters": 398,
+    "read_letters": 9717,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2384",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "book": "69d5ad004dc55b8478dde8b5",
+  "page": 2384,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Genesis",
+   "Rashi on Exodus",
+   "Rashi on Leviticus",
+   "Rashi on Numbers",
+   "Rashi on Deuteronomy"
+  ],
+  "located": [
+   {
+    "k": "G4L",
+    "pos": 512248,
+    "share": 0.113
+   },
+   {
+    "k": "C38L",
+    "pos": 513112,
+    "share": 0.003
+   },
+   {
+    "k": "OPUS",
+    "pos": 512248,
+    "share": 0.115
+   },
+   {
+    "k": "PROD",
+    "pos": 433984,
+    "share": 0.002
+   }
+  ],
+  "spans": {
+   "G4L": {
+    "ws": 513629,
+    "we": 514134,
+    "len": 505,
+    "cer": 0.055,
+    "aligns": true
+   },
+   "C38L": {
+    "ws": 513629,
+    "we": 513907,
+    "len": 278,
+    "cer": 0.432,
+    "aligns": true
+   },
+   "OPUS": {
+    "ws": 513629,
+    "we": 514134,
+    "len": 505,
+    "cer": 0.053,
+    "aligns": true
+   },
+   "PROD": {
+    "ws": 515893,
+    "we": 515902,
+    "len": 9,
+    "cer": 0,
+    "aligns": false
+   }
+  },
+  "kept": true,
+  "ref_span": [
+   513629,
+   514134
+  ],
+  "ref_rule": "median",
+  "aligning": [
+   "G4L",
+   "C38L",
+   "OPUS"
+  ],
+  "ref_refs": [
+   "Rashi on Numbers 26 16:1",
+   "Rashi on Numbers 26 24:1"
+  ],
+  "ref_text_sha": "33d128644d91",
+  "cells": {
+   "G4L": {
+    "cer": 0.05731225296442688,
+    "ref_letters": 506,
+    "read_letters": 3375,
+    "secs": 55.4,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "C38L": {
+    "cer": 0.4762845849802372,
+    "ref_letters": 506,
+    "read_letters": 3238,
+    "secs": 32.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "OPUS": {
+    "cer": 0.05533596837944664,
+    "ref_letters": 506,
+    "read_letters": 3360,
+    "secs": 68.3,
+    "gate_denials": 0,
+    "nudged": false
+   },
+   "PROD": {
+    "cer": 0.7252964426877471,
+    "ref_letters": 506,
+    "read_letters": 2604,
+    "secs": null,
+    "gate_denials": 0,
+    "nudged": false
+   }
+  }
+ },
+ {
+  "uid": "rashi|dde8b5-p2428",
+  "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+  "book": "69d5ad004dc55b8478dde8b5",
+  "page": 2428,
+  "prod_model": "gemini-3.1-flash-lite-preview",
+  "sefaria": [
+   "Rashi on Genesis",
+   "Rashi on Exodus",
+   "Rashi on Leviticus",
+   "Rashi on Numbers",
+   "Rashi on Deuteronomy"
+  ],
+  "located": [
+   {
+    "k": "C38L",
+    "pos": 522640,
+    "share": 0.004
+   },
+   {
+    "k": "OPUS",
+    "pos": 523776,
+    "share": 0.01
+   },
+   {
+    "k": "PROD",
+    "pos": 523976,
+    "share": 0.003
+   }
+  ],
+  "spans": {
+   "C38L": {
+    "ws": 524793,
+    "we": 524810,
+    "len": 17,
+    "cer": 0,
+    "aligns": false
+   },
+   "OPUS": {
+    "ws": 524646,
+    "we": 524677,
+    "len": 31,
+    "cer": 0.032,
+    "aligns": false
+   },
+   "PROD": {
+    "ws": 524646,
+    "we": 524675,
+    "len": 29,
+    "cer": 0.034,
+    "aligns": false
+   }
+  },
+  "kept": false,
+  "dropped": "no read aligns (letter CER < 0.5 over >= 80 letters)",
+  "cells": {
+   "G4L": {
+    "failure": "copy_filter"
+   },
+   "C38L": {
+    "unscored": "page dropped"
+   },
+   "OPUS": {
+    "unscored": "page dropped"
+   },
+   "PROD": {
+    "unscored": "page dropped"
+   }
+  }
+ }
+]

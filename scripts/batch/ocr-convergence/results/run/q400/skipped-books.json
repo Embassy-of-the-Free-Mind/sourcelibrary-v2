@@ -1,0 +1,112 @@
+[
+ {
+  "rank": 304,
+  "book_id": "6992ca86d4d545ae73fee46f",
+  "slug": "huangdi-neijing-lingshu-commentary-vol-1-huangdi",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 86,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 305,
+  "book_id": "6a0a4ef57cd8e1e3d0f49d6d",
+  "slug": "huangji-jingshi-shu-juan-slice-16-of-24-shao-yong-neo-yong",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 86,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-excluded"
+ },
+ {
+  "rank": 306,
+  "book_id": "6992cf3e27dcac3f8ca1b835",
+  "slug": "illustrated-compendium-of-materia-medica-vol-18",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 86,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 329,
+  "book_id": "6992cdd6c8c0c1ab515dcc7a",
+  "slug": "sancai-tuhui-juan-56",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 84,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 342,
+  "book_id": "6992cd13ae978f7d4159839a",
+  "slug": "sancai-tuhui-juan-3",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 83,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 345,
+  "book_id": "6992cd9843713c66ea637791",
+  "slug": "wubei-zhi-vol-17",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 83,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 346,
+  "book_id": "6992cda143713c66ea637bc4",
+  "slug": "wubei-zhi-vol-19",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 83,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 363,
+  "book_id": "6992cdd281c9d7efb84d065f",
+  "slug": "sancai-tuhui-juan-55",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 81,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 383,
+  "book_id": "6992ced8673ee1e40e321a8b",
+  "slug": "wubei-zhi-treatise-on-armament-technology-5",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 79,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 385,
+  "book_id": "6992cea0673ee1e40e32134f",
+  "slug": "essential-compendium-of-sericulture-vol-2",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 78,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ },
+ {
+  "rank": 392,
+  "book_id": "6992cc03018b80967354caf2",
+  "slug": "suanfa-tongzong-systematic-treatise-on-arithmetic-vol-10-dawei",
+  "group": "chinese",
+  "language": "Chinese",
+  "views": 78,
+  "lane_block": null,
+  "skip": "held: paddle-zh-6388-ocr-only"
+ }
+]
