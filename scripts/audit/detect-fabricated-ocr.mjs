@@ -272,6 +272,32 @@ async function walkSelfDeclaredBlank() {
   console.log('\nNothing was written to the database (#4149).');
 }
 
+/** The printed page number the OCR recorded (<page-num>), as an integer, or null (roman numerals are ignored). */
+export function printedPageNumber(data) {
+  const m = (data || '').match(/<page-num>\s*(\d{1,4})\s*<\/page-num>/);
+  return m ? Number(m[1]) : null;
+}
+
+/**
+ * Pages that sit right after an illustration/plate leaf where the nearest printed page numbers before and after are
+ * consecutive (n, n+1): the leaf in between is not a printed page, so text on it is not the book's (#6783).
+ * `rows` need { page, type, num }. Returns a Set of page numbers.
+ */
+export function plateBackPages(rows) {
+  const byPage = [...rows].sort((a, b) => a.page - b.page);
+  const out = new Set();
+  for (let i = 1; i < byPage.length - 1; i++) {
+    const r = byPage[i];
+    if (r.type === 'illustration' || r.type === 'blank') continue;
+    if (byPage[i - 1].type !== 'illustration' || byPage[i - 1].page !== r.page - 1) continue;
+    let before = null, after = null;
+    for (let j = i - 1; j >= 0 && j >= i - 6; j--) if (byPage[j].num != null && byPage[j].type !== 'illustration') { before = byPage[j].num; break; }
+    for (let j = i + 1; j < byPage.length && j <= i + 6; j++) if (byPage[j].num != null) { after = byPage[j].num; break; }
+    if (before != null && after === before + 1) out.add(r.page);
+  }
+  return out;
+}
+
 /** Weak signals. Any one of them makes a page worth photographing. */
 function screen(book, docs) {
   const counts = new Map();
@@ -285,7 +311,8 @@ function screen(book, docs) {
       tagged++;
       for (const l of langs) counts.set(l, (counts.get(l) || 0) + 1);
     }
-    rows.push({ page: d.page_number, langs, text, model: d.ocr?.model, source: d.ocr?.source, img: d.display_photo || d.archived_photo || d.photo });
+    rows.push({ page: d.page_number, langs, text, model: d.ocr?.model, source: d.ocr?.source, img: d.display_photo || d.archived_photo || d.photo,
+      type: d.page_type || null, num: printedPageNumber(d.ocr?.data) });
   }
 
   const bookLangs = new Set(parseLanguageField(book.language).map(languageFamily));
@@ -297,6 +324,7 @@ function screen(book, docs) {
     byPrefix.get(k).push(r.page);
   }
 
+  const plateBacks = plateBackPages(rows);
   const flagged = [];
   for (const r of rows) {
     if (r.text.length < MIN_BODY) continue;
@@ -311,6 +339,14 @@ function screen(book, docs) {
       const share = tagged ? Math.min(...r.langs.map((l) => (counts.get(l) || 0) / tagged)) : 1;
       if (share <= 0.20) { reasons.push('language_absent_from_catalogue'); primary = true; }
     }
+
+    // SUPPORTING signal `plate_back_sequence` (#6783, 2026-10-15): a text page right after a plate whose printed
+    // neighbours run straight across it (page 50 before, page 51 after) is not a printed page. Curtin 1909 carried
+    // invented English on all 10 such leaves, in the book's own language, where the language signal above is blind.
+    // MEASURED corpus-wide on the local mirror: 662 pages in 252 books; of a seeded 80 read by eye, 0 were invented
+    // (4 were tissue guards carrying the NEXT page's show-through text, the rest real but faint pages). So it is a
+    // supporting signal like the two below, never a trigger on its own.
+    if (plateBacks.has(r.page)) reasons.push('plate_back_sequence');
 
     // SUPPORTING signals. Neither fires usefully on its own — measured
     // 0 confirmed of 316 for repeated openings and 0 of 135 for minority
@@ -367,7 +403,7 @@ async function main() {
   const allFlagged = [];
   for (const b of list) {
     const docs = await pages.find({ book_id: b.id, 'ocr.data': { $type: 'string' } },
-      { projection: { page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, display_photo: 1, archived_photo: 1, photo: 1 } })
+      { projection: { page_number: 1, page_type: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, display_photo: 1, archived_photo: 1, photo: 1 } })
       .maxTimeMS(90000).toArray();
     for (const f of screen(b, docs).flagged) allFlagged.push({ ...f, book: b });
   }
