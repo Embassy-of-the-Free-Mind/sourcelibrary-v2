@@ -4,15 +4,17 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 const LEAD_IMAGE = 'https://images.sourcelibrary.org/artwork/art-tree-of-life-fludd-1.jpg';
+// Crops cut from the library's page images and artworks for this post.
+const IMG = '/blog/trees-of-life';
 
 export const metadata: Metadata = {
   title: 'Trees of Life Across the Traditions - Research Notes - Source Library',
   description:
-    'The world tree in Kabbalah, Norse myth, Assyria, Mesoamerica, Christianity, alchemy, Llull and Buddhism, shown in the plates and pages Source Library holds.',
+    'World trees, sacred trees and tree diagrams from Kabbalah, Norse and Prussian myth, Assyria, Mesoamerica, Christianity, Islam, Java, Tibet, alchemy, logic and Darwin, shown in the plates and pages Source Library holds.',
   openGraph: {
     title: 'Trees of Life Across the Traditions',
     description:
-      'The world tree in Kabbalah, Norse myth, Assyria, Mesoamerica, Christianity, alchemy, Llull and Buddhism, shown in the plates and pages Source Library holds.',
+      'World trees, sacred trees and tree diagrams from twelve traditions, shown in the plates and pages Source Library holds.',
     images: [{ url: LEAD_IMAGE, width: 600, height: 1024 }],
   },
   twitter: {
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
 };
 
 const linkClass = 'text-accent-rust hover:text-accent-rust underline';
+const captionLinkClass = 'text-accent-rust hover:text-accent-rust';
 
 function Plate({
   src,
@@ -45,7 +48,7 @@ function Plate({
   children: React.ReactNode;
 }) {
   return (
-    <figure className={wide ? 'mb-10' : 'mb-10 max-w-md mx-auto'}>
+    <figure className={wide ? 'mb-10' : 'mb-10 max-w-md mx-auto w-full'}>
       <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
         <Link href={href}>
           <Image src={src} alt={alt} width={width} height={height} className="w-full h-auto" unoptimized />
@@ -53,12 +56,20 @@ function Plate({
       </div>
       <figcaption className="text-xs text-muted mt-2 text-center">
         {children}{' '}
-        <Link href={href} className="text-accent-rust hover:text-accent-rust">
+        <Link href={href} className={captionLinkClass}>
           View in collection →
         </Link>
       </figcaption>
     </figure>
   );
+}
+
+function Pair({ children }: { children: React.ReactNode }) {
+  return <div className="grid sm:grid-cols-2 gap-6 items-start">{children}</div>;
+}
+
+function Section({ children }: { children: React.ReactNode }) {
+  return <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">{children}</h2>;
 }
 
 export default function TreesOfLifePage() {
@@ -67,11 +78,11 @@ export default function TreesOfLifePage() {
       header={
         <ContentHeader
           title="Trees of Life Across the Traditions"
-          subtitle="Kabbalah, Yggdrasil, the Assyrian sacred tree, Mesoamerican codices, the Tree of Jesse, the alchemists’ tree, Llull and the Bodhi tree, in the library’s own plates"
+          subtitle="World trees, sacred trees and tree diagrams from Kabbalah to Darwin, in the library’s own plates and pages"
           image={LEAD_IMAGE}
           imageAlt="Robert Fludd’s inverted sefirotic tree, 1621: roots in a crowned light above, branches spreading below"
         >
-          <p className="text-stone-400 text-sm mt-4">15 October 2026 &middot; 9 min read</p>
+          <p className="text-stone-400 text-sm mt-4">15 October 2026 &middot; 14 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -92,11 +103,12 @@ export default function TreesOfLifePage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Many traditions place a tree at the centre of the world. It does one of three jobs. It is an axis joining
           heaven, earth and the underworld. It is a diagram of how the divine branches out into creation. Or it bears a
-          fruit that gives life or knowledge. This note collects the versions Source Library holds as plates, woodcuts
-          and manuscript pages, with links to the books they come from.
+          fruit that gives life or knowledge. Later the tree became a way of drawing any order that branches: kinship,
+          logic, the sciences, and in 1859 the descent of species. This note collects the versions Source Library holds
+          as plates, woodcuts, manuscript pages and paintings, with links to the books they come from.
         </p>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Kabbalah: the ten sefirot</h2>
+        <Section>Kabbalah: the ten sefirot</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           In Kabbalah the Tree of Life (<em>Etz Chaim</em>) is a figure of ten <em>sefirot</em>, the attributes
@@ -116,28 +128,28 @@ export default function TreesOfLifePage() {
           sefirah is a wheel of divine names; the side panels count the 613 commandments.
         </Plate>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <Pair>
           <Plate
-            src="https://images.sourcelibrary.org/archived/69c71c28da9771c716316924/91.jpg"
+            src={`${IMG}/evoli-sefirot.jpg`}
             alt="Woodcut tree of the ten sefirot with planetary signs, Venice 1573"
             href="/book/69c71c28da9771c716316924?page=91"
-            width={1200}
-            height={1660}
+            width={640}
+            height={1290}
           >
             Cesare Evoli, <em>De divinis attributis, quae Sephirot ab Hebraeis nuncupata</em> (Venice, 1573), with a
             planetary sign in each sefirah.
           </Plate>
           <Plate
-            src="https://images.sourcelibrary.org/pages/698255f1ca3a4ca551f8e747/0504-full.jpg"
+            src={`${IMG}/hackspan-arbor-cabbalistica.jpg`}
             alt="Arbor Cabbalistica: the ten sefirot labelled in Hebrew"
             href="/book/698255f1ca3a4ca551f8e747?page=504"
-            width={1466}
-            height={2000}
+            width={701}
+            height={1400}
           >
             <em>Arbor Cabbalistica</em>, in Theodor Hackspan’s treatise on the Jewish Kabbalah (Altdorf, 1660),
             labelled only in Hebrew.
           </Plate>
-        </div>
+        </Pair>
 
         <p className="text-secondary leading-relaxed mb-8">
           Older still is the hand-drawn tree in a fifteenth-century copy of Isaac of Acre’s{' '}
@@ -152,7 +164,7 @@ export default function TreesOfLifePage() {
           (1677).
         </p>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">The inverted tree</h2>
+        <Section>The inverted tree</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           Robert Fludd drew the same ten sefirot as a tree growing downwards: the root is the crown, Keter, set in
@@ -173,7 +185,7 @@ export default function TreesOfLifePage() {
           trunk.
         </Plate>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Norse: Yggdrasil</h2>
+        <Section>Norse: Yggdrasil</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           In the Eddas, Yggdrasil is an ash that holds the worlds together. An eagle sits in its crown, the serpent
@@ -182,28 +194,49 @@ export default function TreesOfLifePage() {
           a spear, and took up the runes.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <Pair>
           <Plate
-            src="https://images.sourcelibrary.org/archived/699249aca2d53df4853be568/149.jpg"
+            src={`${IMG}/bray-odin.jpg`}
             alt="Odin among the branches of a tree, holding a spear, beneath the heading The Sayings of the High One"
             href="/book/699249aca2d53df4853be568?page=149"
-            width={1449}
-            height={2000}
+            width={1092}
+            height={1400}
           >
             Odin on the tree, heading the <em>Hávamál</em> in Olive Bray’s <em>Elder or Poetic Edda</em> (1908).
           </Plate>
           <Plate
-            src="https://images.sourcelibrary.org/cropped/69c874af6c6f3cc53c857cd4/69f6a1722d87bc4548d51b21.jpg"
+            src={`${IMG}/hall-yggdrasil.jpg`}
             alt="Painted plate of Yggdrasil: deer in the crown, Midgard in the middle, a red serpent around the trunk, roots in darkness"
             href="/book/69c874af6c6f3cc53c857cd4?page=147"
-            width={730}
-            height={900}
+            width={914}
+            height={1400}
           >
             “The Yggdrasil Tree,” colour plate in Manly P. Hall’s <em>Secret Teachings of All Ages</em> (1928).
           </Plate>
-        </div>
+        </Pair>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Assyria: the sacred tree</h2>
+        <Section>Prussia: the oak at Romowe</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The pagan Prussians and Lithuanians kept sacred groves into the thirteenth and fourteenth centuries. Early modern historians
+          described their chief sanctuary, Romowe, as an evergreen oak holding the images of three gods, with a fire
+          kept burning before it. Christoph Hartknoch engraved the scene in 1684. His source was the
+          sixteenth-century chronicler Simon Grunau, whose account historians treat as largely invented, so the
+          picture records what Prussian scholars believed rather than what the sanctuary looked like.
+        </p>
+
+        <Plate
+          src={`${IMG}/hartknoch-romowe.jpg`}
+          alt="Engraving of a great oak behind a wooden screen with three idols in niches, a fire burning before it, a village around"
+          href="/book/6a209d5c89e8715c5947a6ac?page=87"
+          width={1400}
+          height={1198}
+          wide
+        >
+          The oak of Romowe with its three idols. Christoph Hartknoch, <em>Alt und Neues Preussen</em> (1684).
+        </Plate>
+
+        <Section>Assyria: the sacred tree</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           A stylised palm flanked by winged figures or rearing animals is among the commonest motifs in the reliefs of
@@ -212,26 +245,32 @@ export default function TreesOfLifePage() {
           elaborately and tastefully formed; and is one of the most conspicuous ornaments of Assyrian sculpture.”
         </p>
 
-        <Plate
-          src="https://images.sourcelibrary.org/archived/69b632c766ab51b501d93dfd/328.jpg"
-          alt="Two ibexes kneeling on either side of a stylised sacred tree, from the North-West Palace at Nimrud"
-          href="/book/69b632c766ab51b501d93dfd?page=328"
-          width={1199}
-          height={2000}
-        >
-          Ibexes flanking the sacred tree, North-West Palace, Nimrud. Layard, <em>Nineveh and Its Remains</em> (1849).
-          More examples on{' '}
-          <Link href="/book/69b632c766ab51b501d93dfd?page=329" className="text-accent-rust hover:text-accent-rust">
-            the next page
-          </Link>{' '}
-          and in J. G. R. Forlong’s{' '}
-          <Link href="/book/69c887606c6f3cc53c85a05c?page=403" className="text-accent-rust hover:text-accent-rust">
-            <em>Rivers of Life</em>
-          </Link>{' '}
-          (1883).
-        </Plate>
+        <Pair>
+          <Plate
+            src={`${IMG}/layard-sacred-tree.jpg`}
+            alt="Line drawing of the Assyrian sacred tree: a trunk bound with bands, palmettes on every branch"
+            href="/book/69b632c766ab51b501d93dfd?page=329"
+            width={638}
+            height={1400}
+          >
+            The sacred tree, North-West Palace, Nimrud. Layard, <em>Nineveh and Its Remains</em> (1849).
+          </Plate>
+          <Plate
+            src={`${IMG}/layard-ibexes.jpg`}
+            alt="Two ibexes kneeling on either side of a stylised sacred tree"
+            href="/book/69b632c766ab51b501d93dfd?page=328"
+            width={1026}
+            height={534}
+          >
+            Ibexes flanking the tree, from the same palace. See also J. G. R. Forlong’s{' '}
+            <Link href="/book/69c887606c6f3cc53c85a05c?page=403" className={captionLinkClass}>
+              <em>Rivers of Life</em>
+            </Link>{' '}
+            (1883).
+          </Plate>
+        </Pair>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Mesoamerica: trees in the Codex Laud</h2>
+        <Section>Mesoamerica: trees in the Codex Laud</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           Across Mesoamerica a tree stood at the centre of the world and one at each of the four directions, holding up
@@ -241,35 +280,60 @@ export default function TreesOfLifePage() {
           deity before a tree recurs across the codices of the Borgia group.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <Pair>
           <Plate
-            src="https://images.sourcelibrary.org/archived/69b3e684abb796bfd9de428e/25.jpg"
+            src={`${IMG}/codex-laud-25.jpg`}
             alt="A deity seated before a blue tree with flowering branches, day signs below"
             href="/book/69b3e684abb796bfd9de428e?page=25"
-            width={510}
-            height={644}
+            width={454}
+            height={433}
           >
-            Codex Laud, a deity before a flowering tree.
+            Codex Laud: a deity before a flowering tree.
           </Plate>
           <Plate
-            src="https://images.sourcelibrary.org/archived/69b3e684abb796bfd9de428e/24.jpg"
+            src={`${IMG}/codex-laud-24.jpg`}
             alt="A deity enthroned before a brown tree, with a parrot and day signs below"
             href="/book/69b3e684abb796bfd9de428e?page=24"
-            width={510}
-            height={644}
+            width={432}
+            height={433}
           >
-            Codex Laud, a deity enthroned before a tree, with a parrot.
+            Codex Laud: a deity enthroned before a tree, with a parrot.
           </Plate>
-        </div>
+        </Pair>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Eden, the Cross and the Tree of Jesse</h2>
+        <Section>Eden, the Cross and the Tree of Jesse</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           Genesis puts two trees in the garden, the tree of life and the tree of the knowledge of good and evil.
-          Medieval legend held that the wood of the Cross came from the tree of life, and Revelation 22 returns it to
-          the end of the Bible, beside the river of the heavenly city. The Tree of Jesse makes a family tree out of
-          Isaiah 11:1, “a rod out of the stem of Jesse”: a vine rises from the sleeping Jesse through the kings of
-          Israel to the Virgin and Child.
+          Medieval artists often gave the serpent a woman’s face. Legend held that the wood of the Cross came from the
+          tree of life, and Revelation 22 returns it to the end of the Bible, beside the river of the heavenly city.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/speculum-fall.jpg`}
+            alt="Woodcut: Adam and Eve holding fruit on either side of a tree whose trunk is a serpent with a woman’s head"
+            href="/book/69dbcc131040d1d5e20bc94f?page=9"
+            width={1216}
+            height={1004}
+          >
+            The Fall, with a woman-headed serpent for a trunk. <em>Spiegel menschlicher Behaltnuss</em> (1476).
+          </Plate>
+          <Plate
+            src={`${IMG}/saenredam-adam-eve.jpg`}
+            alt="Engraving: Adam and Eve standing beside the tree of knowledge, Eve pointing upward"
+            href="/artwork/saenredam-adam-and-eve-before-the-tree-of-knowledge"
+            width={1069}
+            height={1400}
+          >
+            Jan Saenredam, <em>Adam and Eve before the Tree of Knowledge</em>, engraving.
+          </Plate>
+        </Pair>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Tree of Jesse makes a family tree out of Isaiah 11:1, “a rod out of the stem of Jesse”: a vine rises
+          from the sleeping Jesse through the kings of Israel to the Virgin and Child. The religious orders borrowed
+          the form to draw their own descent from a founder.
         </p>
 
         <Plate
@@ -284,6 +348,27 @@ export default function TreesOfLifePage() {
           plays the harp at the centre.
         </Plate>
 
+        <Pair>
+          <Plate
+            src={`${IMG}/speculum-jesse-coloured.jpg`}
+            alt="Hand-coloured woodcut: Jesse asleep, a flowering stem with birds rising from him"
+            href="/book/69dbcc190f8c5edf20f4589f?page=54"
+            width={1318}
+            height={840}
+          >
+            The rod of Jesse, hand-coloured woodcut. <em>Speculum humanae salvationis</em> (Augsburg, 1473).
+          </Plate>
+          <Plate
+            src={`${IMG}/callot-st-francis.jpg`}
+            alt="Etching: a great tree spreading over a crowd of friars, the Trinity in the clouds above"
+            href="/artwork/callot-de-boom-van-de-heilige-franciscus"
+            width={1369}
+            height={1400}
+          >
+            Jacques Callot, <em>The Tree of Saint Francis</em> (1621): the Franciscan order as a tree.
+          </Plate>
+        </Pair>
+
         <p className="text-secondary leading-relaxed mb-8">
           See also the river and tree of life in a{' '}
           <Link href="/book/697718b37e1d5a07ae945888?page=633" className={linkClass}>
@@ -296,89 +381,256 @@ export default function TreesOfLifePage() {
           .
         </p>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Alchemy: the philosophical tree</h2>
+        <Section>Islam: the Waqwaq tree</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Alchemists described the growth of metals as the growth of a tree, the <em>arbor philosophica</em>. In the
-          German <em>Pandora</em> of 1588, a tree of the Sun and a tree of the Moon, gold and silver, stand on either
-          side of the Rebis, the two-headed figure of the united opposites; their blossoms are suns and moons with
-          faces.
+          Arabic and Persian geographers placed the island of Waqwaq at the eastern edge of the world. On it grew a
+          tree whose fruit were human figures, said to call out “waq waq” before they fell. The <em>Kitāb al-Bulhān</em>,
+          a book of divination and wonders compiled in Baghdad around 1400, paints the tree hung with its human
+          fruit. The Qur’an’s own trees, the lote tree of the boundary in the seventh heaven and Ṭūbā in
+          paradise, are not yet among the library’s pictures.
         </p>
 
-        <div className="grid sm:grid-cols-2 gap-6">
-          <Plate
-            src="https://images.sourcelibrary.org/archived/69bd9d4a6120d54bd0374b10/260.jpg"
-            alt="Woodcut: a winged two-headed figure on a dragon between a tree of suns and a tree of moons"
-            href="/book/69bd9d4a6120d54bd0374b10?page=260"
-            width={1363}
-            height={2000}
-          >
-            The Rebis between the trees of the Sun and Moon. Hieronymus Reusner, <em>Pandora</em> (Basel, 1588).
-          </Plate>
-          <Plate
-            src="https://images.sourcelibrary.org/archived/69bd9d4a6120d54bd0374b10/246.jpg"
-            alt="Woodcut: a crowned woman standing on furnaces beneath a fruiting tree with an eagle, between sun and moon"
-            href="/book/69bd9d4a6120d54bd0374b10?page=246"
-            width={1350}
-            height={2000}
-          >
-            A crowned woman on the furnaces beneath a fruiting tree, the eagle in its branches. Same book.
-          </Plate>
-        </div>
-
         <Plate
-          src="https://images.sourcelibrary.org/artwork/art-azoth-the-alchemical-mandala.jpg"
-          alt="Title page of Azoth, 1659: a tree bearing the planetary stars between the sun and moon, two men below"
-          href="/book/art-azoth-the-alchemical-mandala"
-          width={548}
-          height={850}
+          src={`${IMG}/kitab-al-bulhan-waqwaq.jpg`}
+          alt="Manuscript painting of a tree whose fruit are small human figures hanging by their hair"
+          href="/book/6953b56577f38f6761bd979d?page=88"
+          width={1012}
+          height={1400}
         >
-          Title page of Basil Valentine’s <em>Azoth</em> (Paris, 1659): the tree carries the signs of the planets,
-          with the Sun and Moon at the ends of its branches.
+          The Waqwaq tree. <em>Kitāb al-Bulhān</em>, Bodleian Library MS. Bodl. Or. 133 (c. 1400).
         </Plate>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Llull: the tree of knowledge as a diagram</h2>
+        <Section>Java: the kayon</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          In the Javanese shadow play (<em>wayang kulit</em>) the first and last figure on the screen is not a
+          character but a tree. The <em>kayon</em> or <em>gunungan</em> (“mountain”), a leaf-shaped puppet carved with
+          a tree, animals and often a gateway, is planted in the centre before the play begins, waved to mark a change
+          of scene, and planted again at the end. It stands for the world in which the story takes place.
+        </p>
+
+        <Plate
+          src={`${IMG}/kayon.jpg`}
+          alt="Leaf-shaped shadow puppet: a tree trunk rising above a gated house with steps"
+          href="/book/69e75aefa953ec232ce8d610?page=154"
+          width={606}
+          height={946}
+        >
+          A <em>kayon</em>, from <em>Kilatbuwana</em>, the text of a Javanese wayang kulit performance (1984).
+        </Plate>
+
+        <Section>Tibet: the refuge tree</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Tibetan Buddhist schools paint their whole lineage as a tree. A single trunk rises from a lake; on its
+          branches sit the teachers of the lineage, the buddhas, the meditational deities, the protectors and the
+          scriptures. Practitioners visualise this assembly when they recite the refuge prayer at the start of
+          practice.
+        </p>
+
+        <Plate
+          src={`${IMG}/kagyu-refuge-tree.jpg`}
+          alt="Thangka: a tree rising from a lake, its branches crowded with seated teachers and deities"
+          href="/artwork/kagyurefugetree"
+          width={800}
+          height={1134}
+        >
+          Refuge tree of the Kagyu lineage, Tibetan thangka.
+        </Plate>
+
+        <Section>Alchemy: the philosophical tree</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Alchemists described the growth of metals as the growth of a tree, the <em>arbor philosophica</em>. One
+          picture shows how the images travelled. The <em>Buch der heiligen Dreifaltigkeit</em>, a German manuscript
+          of the early fifteenth century, paints a crowned woman with a fruiting tree growing from her head between
+          the Sun and Moon. The printed <em>Pandora</em> of 1588 cut the same composition in wood.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/dreifaltigkeit-tree.jpg`}
+            alt="Manuscript painting: a crowned woman with a red-fruited tree growing from her head, Sun and Moon beside her, furnaces below"
+            href="/book/6991c5853074a1745a41199b?page=10"
+            width={900}
+            height={1026}
+          >
+            <em>Buch der heiligen Dreifaltigkeit</em>, John Rylands Library, German MS 1 (fifteenth century).
+          </Plate>
+          <Plate
+            src={`${IMG}/pandora-246.jpg`}
+            alt="Woodcut of the same composition: a crowned woman on the furnaces beneath a fruiting tree with an eagle"
+            href="/book/69bd9d4a6120d54bd0374b10?page=246"
+            width={758}
+            height={990}
+          >
+            The same image in Hieronymus Reusner’s <em>Pandora</em> (Basel, 1588).
+          </Plate>
+        </Pair>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <em>Pandora</em> also sets a tree of the Sun and a tree of the Moon, gold and silver, on either side of the
+          Rebis, the two-headed figure of the united opposites; their blossoms are suns and moons with faces. A
+          German compilation of 1667, the <em>Dreyfaches hermetisches Kleeblat</em>, turned the tree into a chart:
+          each band on the trunk is a named operation of the work, from putrefaction to the Stone.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/pandora-260.jpg`}
+            alt="Woodcut: a winged two-headed figure on a dragon between a tree of suns and a tree of moons"
+            href="/book/69bd9d4a6120d54bd0374b10?page=260"
+            width={1014}
+            height={1400}
+          >
+            The Rebis between the trees of the Sun and Moon. <em>Pandora</em> (1588).
+          </Plate>
+          <Plate
+            src={`${IMG}/nuysement-313.jpg`}
+            alt="Engraving of a tree whose trunk carries labelled bands for each alchemical operation, the Stone in a circle at the top"
+            href="/book/697b079957403b932c4a76b3?page=313"
+            width={751}
+            height={1400}
+          >
+            A branch of the philosophical tree, from <em>Dreyfaches hermetisches Kleeblat</em> (Nuremberg, 1667).
+          </Plate>
+        </Pair>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/aureum-vellus.jpg`}
+            alt="Hand-coloured woodcut: a tree growing from the neck of a glass flask, figures bathing inside it, the Sun beside"
+            href="/book/69bd9d7b6120d54bd0376fac?page=1067"
+            width={668}
+            height={940}
+          >
+            A tree growing out of the flask. Salomon Trismosin, <em>Aureum vellus</em> (Rorschach, 1598).
+          </Plate>
+          <Plate
+            src="https://images.sourcelibrary.org/artwork/art-azoth-the-alchemical-mandala.jpg"
+            alt="Title page of Azoth, 1659: a tree bearing the planetary stars between the sun and moon, two men below"
+            href="/book/art-azoth-the-alchemical-mandala"
+            width={548}
+            height={850}
+          >
+            Title page of Basil Valentine’s <em>Azoth</em> (Paris, 1659): the tree carries the signs of the planets.
+          </Plate>
+        </Pair>
+
+        <Section>Trees of knowledge, logic and kinship</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The tree also became a way to draw an argument. Porphyry’s <em>Isagoge</em> (third century) divides
+          substance step by step, body, living thing, animal, rational animal, down to a single man. Medieval scribes
+          drew the division as a tree, and the figure travelled wherever Aristotle’s logic was taught. An Arabic
+          logic manuscript in the library runs it from substance (<em>al-jawhar</em>) through body, living thing and
+          animal to man (<em>al-insān</em>), and at the root one man, Buṭrus: Peter.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/arabic-porphyrian-tree.jpg`}
+            alt="Red-ink tree of circles in Arabic, from substance at the top to the individual Butrus at the bottom"
+            href="/book/69c1b8c68522835be844b1b3?page=112"
+            width={611}
+            height={1400}
+          >
+            The Porphyrian tree in Arabic, <em>Kitāb al-Manṭiq</em> (Arabic MS 829).
+          </Plate>
+          <Plate
+            src={`${IMG}/porphyry-greek.jpg`}
+            alt="Branching division diagrams in brown ink with Greek labels"
+            href="/book/69b4c09f86a5921d5bc44c9f?page=13"
+            width={1264}
+            height={1400}
+          >
+            Division diagrams in a Greek manuscript of Porphyry and Ammonius on Aristotle’s <em>Categories</em>.
+          </Plate>
+        </Pair>
 
         <p className="text-secondary leading-relaxed mb-6">
           Ramon Llull’s <em>Arbor scientiae</em> (1295–96) arranges all knowledge as a forest of sixteen trees, from
-          the elemental to the divine, each with roots, trunk, branches, leaves, flowers and fruit. It is one of the
-          ancestors of the tree diagram used for classification today.
+          the elemental to the divine, each with roots, trunk, branches, leaves, flowers and fruit. Isidore of
+          Seville’s <em>Etymologies</em> carries the <em>arbor consanguinitatis</em>, a tree for counting degrees of
+          kinship, which canon lawyers later used to decide who might marry whom.
         </p>
 
-        <Plate
-          src="https://images.sourcelibrary.org/archived/69522ff2ab34727b1f044362/13.jpg"
-          alt="Woodcut of a tree with round fruit, a monk and Raymundus holding scrolls at its foot, Gloria and Poena at the top"
-          href="/book/69522ff2ab34727b1f044362?page=13"
-          width={648}
-          height={900}
-        >
-          The opening woodcut of the Lyon edition of 1515: Llull (“Raymundus”) and a monk at the foot of the tree. The
-          library also holds its{' '}
-          <Link href="/book/69522ff2ab34727b1f044362?page=137" className="text-accent-rust hover:text-accent-rust">
-            Moral Tree
-          </Link>
-          .
-        </Plate>
-
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Buddhism: the Bodhi tree</h2>
+        <Pair>
+          <Plate
+            src={`${IMG}/llull-arbor-scientiae.jpg`}
+            alt="Woodcut of a tree with round fruit, a monk and Raymundus holding scrolls at its foot, Gloria and Poena at the top"
+            href="/book/69522ff2ab34727b1f044362?page=13"
+            width={1123}
+            height={1400}
+          >
+            The opening woodcut of Llull’s <em>Arbor scientiae</em> (Lyon, 1515): Llull and a monk at the foot of the
+            tree. See also its{' '}
+            <Link href="/book/69522ff2ab34727b1f044362?page=137" className={captionLinkClass}>
+              Moral Tree
+            </Link>
+            .
+          </Plate>
+          <Plate
+            src={`${IMG}/isidore-consanguinity.jpg`}
+            alt="Woodcut tree of consanguinity: labelled compartments for each degree of kinship, roots and banners below"
+            href="/book/699065dc726f64800c10c3f8?page=108"
+            width={941}
+            height={1400}
+          >
+            The tree of consanguinity, Isidore of Seville, <em>Etymologiae</em> (1483).
+          </Plate>
+        </Pair>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The Buddha reached enlightenment under a fig tree at Bodh Gaya. The earliest Buddhist sculpture does not
-          show him in human form; the tree, an empty seat or a pair of footprints stands in his place.
+          The only illustration in Darwin’s <em>On the Origin of Species</em> is a branching diagram. In chapter four
+          he wrote: “The affinities of all the beings of the same class have sometimes been represented by a great
+          tree. I believe this simile largely speaks the truth.”
         </p>
 
         <Plate
-          src="https://images.sourcelibrary.org/archived/69907d035f855ec553e78b49/14.jpg"
-          alt="Engraving of a pillar capital: worshippers before the Bodhi tree and the Buddha’s footprints"
-          href="/book/69907d035f855ec553e78b49?page=14"
-          width={1092}
-          height={2000}
+          src={`${IMG}/darwin-diagram.jpg`}
+          alt="Darwin’s diagram: lines branching upward from eleven species A to L through fourteen horizontal levels"
+          href="/book/69e8b1842ff2a8dc09e76141?page=141"
+          width={1400}
+          height={949}
+          wide
         >
-          “Early worship of Buddha’s footprints and the Bodhi tree,” pillar capital from the Kanheri caves, in Albert
-          Grünwedel’s <em>Buddhist Art in India</em> (English edition, 1901).
+          Charles Darwin, <em>On the Origin of Species</em> (1859), the diagram of divergence (contrast raised for
+          legibility).
         </Plate>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Trees the library does not yet show</h2>
+        <Section>Living sacred trees</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Some sacred trees are living trees. The Buddha reached enlightenment under a fig tree at Bodh Gaya, and the
+          earliest Buddhist sculpture shows the tree, an empty seat or a pair of footprints in his place. In West
+          Africa, R. E. Dennett photographed a tree planted over a grave, which then became sacred.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/kanheri-bodhi.jpg`}
+            alt="Engraving of a pillar capital: worshippers before the Bodhi tree and the Buddha’s footprints"
+            href="/book/69907d035f855ec553e78b49?page=14"
+            width={800}
+            height={1400}
+          >
+            Worship of the Buddha’s footprints and the Bodhi tree, pillar capital from the Kanheri caves. Albert
+            Grünwedel, <em>Buddhist Art in India</em> (1901).
+          </Plate>
+          <Plate
+            src={`${IMG}/yoruba-grave-tree.jpg`}
+            alt="Photograph: a young tree in a village compound, a figure and stones at its foot"
+            href="/book/69907c5a5f855ec553e74a1c?page=59"
+            width={1091}
+            height={1400}
+          >
+            “Tree planted over grave which then becomes sacred.” R. E. Dennett, <em>Nigerian Studies</em> (1910).
+          </Plate>
+        </Pair>
+
+        <Section>Trees the library does not yet show</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
           A search of the library’s images on 15 October 2026 found no usable picture of these:
@@ -402,8 +654,8 @@ export default function TreesOfLifePage() {
             <strong>Iran:</strong> Gaokerena, the white haoma tree of immortality growing in the cosmic sea.
           </li>
           <li>
-            <strong>Islam:</strong> the lote tree of the boundary (<em>Sidrat al-Muntahā</em>) in the seventh heaven,
-            and Ṭūbā, the tree of paradise.
+            <strong>Islam:</strong> the lote tree of the boundary (<em>Sidrat al-Muntahā</em>) and Ṭūbā, the tree of
+            paradise.
           </li>
           <li>
             <strong>Siberia and Central Asia:</strong> the notched birch the shaman climbs to reach the upper world.
