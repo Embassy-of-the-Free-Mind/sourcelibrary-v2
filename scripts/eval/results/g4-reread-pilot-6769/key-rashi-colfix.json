@@ -1,0 +1,590 @@
+{
+ "at": "2026-10-16T15:03:01.398Z",
+ "seed": 6769,
+ "book": "69c7a0a892b884e4f8173817",
+ "tag": "colfix",
+ "frame": 23,
+ "reads": 23,
+ "key": {
+  "a9ace35571b8": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66e0880c7a291ec4c22bf",
+   "page_number": 182,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66e0880c7a291ec4c22bf.jpg",
+    "w": 2000,
+    "h": 2284,
+    "sha256": "31f530ea188f20060b6518482be93486d0c33d53943f7f563934de240a0f586f"
+   },
+   "g4l_letters": 5336,
+   "served_letters": 18347,
+   "read_hash": "102ff22f02a2306ef2a9d978cb235f3b3669f710d261c57299b861f7687b67fd"
+  },
+  "9b667745723d": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66e0480c7a291ec4c22b6",
+   "page_number": 177,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66e0480c7a291ec4c22b6.jpg",
+    "w": 2000,
+    "h": 1835,
+    "sha256": "d4b45a57fe5b3166d71116c6654555a123b7468a0fe25f988bb2dd75609a3adb"
+   },
+   "g4l_letters": 4807,
+   "served_letters": 17992,
+   "read_hash": "cbdbe81201e27cea82e473dc8caf65145024e4f12ba72e5fcc7746fbe3412c4e"
+  },
+  "508af80dc704": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dda80c7a291ec4c2261",
+   "page_number": 96,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "sefaria/Zohar Chadash",
+   "served_source": "sefaria",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dda80c7a291ec4c2261.jpg",
+    "w": 2000,
+    "h": 2433,
+    "sha256": "a263aa5384a8cad6fe5a097c3902deef934a7aa2ee66058145b2221a3478e5ef"
+   },
+   "g4l_letters": 5145,
+   "served_letters": 5334,
+   "read_hash": "642ee8020b5594b9248217074d1ee9cf5e2f2dfaa6ec400fc94e04b9d0f366db"
+  },
+  "495294325eb1": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66de580c7a291ec4c2278",
+   "page_number": 115,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "sefaria/Zohar Chadash",
+   "served_source": "sefaria",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66de580c7a291ec4c2278.jpg",
+    "w": 2000,
+    "h": 2432,
+    "sha256": "a0030d6c1d8a58ab18c4abdc3747b2296f7f61aec7d0a8f45d3b7c0c7f3cf640"
+   },
+   "g4l_letters": 4854,
+   "served_letters": 5090,
+   "read_hash": "385578cfee3abaee9eca00d6a85328cd14b33781ba43b5273ca1d15bb03409af"
+  },
+  "261aa0b223d2": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66e0380c7a291ec4c22b0",
+   "page_number": 171,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66e0380c7a291ec4c22b0.jpg",
+    "w": 2000,
+    "h": 2370,
+    "sha256": "27397863b8c652f5b187e41858ecb8910ccc76275f21d7e43cf74ed63e499754"
+   },
+   "g4l_letters": 4336,
+   "served_letters": 848,
+   "read_hash": "7364d84170009436f55cf0d136e87f0e343eef72d245a9a9d9646cd94a1d5b0d"
+  },
+  "e91ef6f14027": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dd280c7a291ec4c2257",
+   "page_number": 84,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dd280c7a291ec4c2257.jpg",
+    "w": 2000,
+    "h": 1814,
+    "sha256": "b4a94f37a8e7855033f97311639bd170bc6e9dad2b24baf3cfd989dd4540cf7a"
+   },
+   "g4l_letters": 5101,
+   "served_letters": 3072,
+   "read_hash": "5288b4a1f3f78341e79636d0563928e30f41a9b8ab72e31fd4a72fc708c8ff4c"
+  },
+  "2a32f7bd1af1": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dfb80c7a291ec4c22a0",
+   "page_number": 157,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dfb80c7a291ec4c22a0.jpg",
+    "w": 2000,
+    "h": 2373,
+    "sha256": "6a13deb41220ca2638571a8763e99bbb9ba32e5d4fd75acd1ecfbe47271eaebd"
+   },
+   "g4l_letters": 5727,
+   "served_letters": 2550,
+   "read_hash": "35dbe55c1ed69ab9f52b3b34057f370ff7b968d69ef1169f311fa7af4e2f812f"
+  },
+  "29cc4ad0ca58": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dce80c7a291ec4c224e",
+   "page_number": 73,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dce80c7a291ec4c224e.jpg",
+    "w": 2000,
+    "h": 2180,
+    "sha256": "a286504d95e2677818b04b0fe6223e90a52c26e911a1a6ebd2ece25f7fd467fb"
+   },
+   "g4l_letters": 5353,
+   "served_letters": 4498,
+   "read_hash": "037e936d38a49ad333058d49e65adac3d8e26129ee20893286f172b7c5cdd0f2"
+  },
+  "2d9e69b25f4d": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66db880c7a291ec4c2227",
+   "page_number": 36,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66db880c7a291ec4c2227.jpg",
+    "w": 2000,
+    "h": 2162,
+    "sha256": "55aab16575fb135c0100513f430b56bc5ebe270d0aed83804075c6b81b677cfb"
+   },
+   "g4l_letters": 5164,
+   "served_letters": 4401,
+   "read_hash": "3d4015378b435722316e252a8384681640dbec654d1b84d843b2c4c8e621d454"
+  },
+  "1e0c53acf858": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66db880c7a291ec4c2224",
+   "page_number": 33,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66db880c7a291ec4c2224.jpg",
+    "w": 2000,
+    "h": 2553,
+    "sha256": "8d4f53f7c88beae5bd3e372411123bd5b3192b4821a7c7e75b0fe387182e9beb"
+   },
+   "g4l_letters": 5050,
+   "served_letters": 20414,
+   "read_hash": "05a56a401eb66dcab8b65e3b6675e8edab02cfa68021a632d7e7e730c67b2d26"
+  },
+  "8100e04c8461": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66db280c7a291ec4c221c",
+   "page_number": 25,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66db280c7a291ec4c221c.jpg",
+    "w": 2000,
+    "h": 2078,
+    "sha256": "212d8fe9d344e6816ca43d2cf94242190b8c6b09e3d9139e2a8286eebe2903bf"
+   },
+   "g4l_letters": 5177,
+   "served_letters": 19534,
+   "read_hash": "66683c10f4d0e79337f51bfce0083b88a750a1346c5f6dd35a2ad2f09f8e8c63"
+  },
+  "a7652a663e88": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66db880c7a291ec4c222b",
+   "page_number": 34,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "sefaria/Zohar Chadash",
+   "served_source": "sefaria",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66db880c7a291ec4c222b.jpg",
+    "w": 2000,
+    "h": 2148,
+    "sha256": "aad75f41615cf80f3e5ace98288cae57518808d724fbc0c8afe49ebd397e591b"
+   },
+   "g4l_letters": 5111,
+   "served_letters": 5397,
+   "read_hash": "4258faa9a1dfa3fdcf251ac3f04475ab94335dad79167f7965760df3e504bdd7"
+  },
+  "61626840ca22": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66df580c7a291ec4c2294",
+   "page_number": 147,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66df580c7a291ec4c2294.jpg",
+    "w": 2000,
+    "h": 2375,
+    "sha256": "4e7f15d62a4cd67f4b11b004385f1a2fc6fd1f61753277db9d503ccb790b0255"
+   },
+   "g4l_letters": 3950,
+   "served_letters": 1828,
+   "read_hash": "62ae806b0c14a7e4c12dff5c1f32c19fed7a8a5a844bc7e75dc6cdaf639efd12"
+  },
+  "a60656042909": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dfa80c7a291ec4c229c",
+   "page_number": 155,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dfa80c7a291ec4c229c.jpg",
+    "w": 2000,
+    "h": 2322,
+    "sha256": "b9c76deed83a231dbc3c63159c808d094bad8a9bbb830a9e0ea766e1bf1f1443"
+   },
+   "g4l_letters": 5133,
+   "served_letters": 1673,
+   "read_hash": "cc6d4723274e10e8eda4dbe5cbe0ec4bd31894aaec3bfd79a64cdfb98f0530a7"
+  },
+  "f95546063fcd": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dd380c7a291ec4c225b",
+   "page_number": 86,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dd380c7a291ec4c225b.jpg",
+    "w": 2000,
+    "h": 2202,
+    "sha256": "1c363f544776c934f80bef89eb006d08ae7fe7e806f0d67b08f68961a42222eb"
+   },
+   "g4l_letters": 5214,
+   "served_letters": 20369,
+   "read_hash": "ebebfbfebc3a552f23f20c7ef21103cc2a3379159103608de0cb80ea019c5d94"
+  },
+  "9f719110f631": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dfa80c7a291ec4c229d",
+   "page_number": 154,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dfa80c7a291ec4c229d.jpg",
+    "w": 2000,
+    "h": 2304,
+    "sha256": "1c2574f9bfc3be5d2aed2b3702efee0513fb6d906c06c324794f86db77fb004e"
+   },
+   "g4l_letters": 4888,
+   "served_letters": 4043,
+   "read_hash": "e249f36e50fdfde176e06048b1927cf8ece7e14b91340f229b565d057bab9e0c"
+  },
+  "1eb47100191f": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66df080c7a291ec4c228d",
+   "page_number": 134,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66df080c7a291ec4c228d.jpg",
+    "w": 2000,
+    "h": 1792,
+    "sha256": "b7f0298528e9cf713904cd0792059457bd85748638d823d352d1192480e065c8"
+   },
+   "g4l_letters": 5086,
+   "served_letters": 3828,
+   "read_hash": "7052691291d943ccf1cf5a8f03fc18655fade4e5b62bc87f1cfd871d6d09fdbf"
+  },
+  "c20cc06defb7": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66df080c7a291ec4c228c",
+   "page_number": 135,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66df080c7a291ec4c228c.jpg",
+    "w": 2000,
+    "h": 3206,
+    "sha256": "70447e9452b2deb20844f31e0a94425b5082288fa5032097dd95704c742ad5a3"
+   },
+   "g4l_letters": 3611,
+   "served_letters": 4232,
+   "read_hash": "1d6d6a2cd1935c7a984b34768715088a54f37560e82ddb28a170fd78a57ef0fa"
+  },
+  "2f19f7eb4302": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dae80c7a291ec4c2213",
+   "page_number": 12,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dae80c7a291ec4c2213.jpg",
+    "w": 2000,
+    "h": 2201,
+    "sha256": "c7dd3e148cba4a10fc15a68c848c50565d548a0db38e9485af8ab532a4b010a7"
+   },
+   "g4l_letters": 5432,
+   "served_letters": 17223,
+   "read_hash": "be8fbc040fbdc08f02e2e1c0e4aa0f931a699bba4c5d828dc4d908a953695cf8"
+  },
+  "d43c3ff2df14": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dda80c7a291ec4c2266",
+   "page_number": 93,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dda80c7a291ec4c2266.jpg",
+    "w": 2000,
+    "h": 1790,
+    "sha256": "1588e24f67693554163b922e6e91059dd0fdffb0db215d6e91eaa0b1de6124b3"
+   },
+   "g4l_letters": 7493,
+   "served_letters": 16304,
+   "read_hash": "bcae8650907435f6f4517a09d632822b10f11ebe1df4128d79869a55b177854e"
+  },
+  "a57a1eaae7c7": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dbc80c7a291ec4c222c",
+   "page_number": 47,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dbc80c7a291ec4c222c.jpg",
+    "w": 2000,
+    "h": 2315,
+    "sha256": "9d3fd1c4d6bf7b3b449d849ae7cf68d554b928b60e030dd1f7264e6a6e9582c3"
+   },
+   "g4l_letters": 4933,
+   "served_letters": 2418,
+   "read_hash": "f645ff79f44060a48d8140600afcb8c21805c4270ac60ae36671fda974566452"
+  },
+  "a854c5450c52": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66de580c7a291ec4c2275",
+   "page_number": 116,
+   "A": "served",
+   "B": "g4l",
+   "served_model": "sefaria/Zohar Chadash",
+   "served_source": "sefaria",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66de580c7a291ec4c2275.jpg",
+    "w": 2000,
+    "h": 2207,
+    "sha256": "d4d50298176e4cd538b90548fa3a8f31b3e4407e9dba70b0e4ccf1dbe6e2a517"
+   },
+   "g4l_letters": 5112,
+   "served_letters": 5237,
+   "read_hash": "579805b25ce3c08ced10b4ebbad22844ff570a70dbe3d3ae8f4677cc36cf2a60"
+  },
+  "4be7033868a0": {
+   "kind": "sample",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66de480c7a291ec4c2272",
+   "page_number": 113,
+   "A": "g4l",
+   "B": "served",
+   "served_model": "sefaria/Zohar Chadash",
+   "served_source": "sefaria",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66de480c7a291ec4c2272.jpg",
+    "w": 2000,
+    "h": 2135,
+    "sha256": "e5e1dc1f413d280eaa050c2662305d4046d4bf3f194294cc2ffa63555fda080d"
+   },
+   "g4l_letters": 4995,
+   "served_letters": 5054,
+   "read_hash": "5c2f7a98cacb65e15461ad88d62ab893731a31937daa74ad6a04fd799d10e713"
+  },
+  "eae80cf8324b": {
+   "kind": "control",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dfa80c7a291ec4c229d",
+   "page_number": 154,
+   "A": "clean",
+   "B": "planted",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dfa80c7a291ec4c229d.jpg",
+    "w": 2000,
+    "h": 2304,
+    "sha256": "1c2574f9bfc3be5d2aed2b3702efee0513fb6d906c06c324794f86db77fb004e"
+   },
+   "plant": {
+    "swapped": 86,
+    "dropped_line": 58
+   },
+   "g4l_letters": 4888,
+   "served_letters": 4043,
+   "read_hash": "e249f36e50fdfde176e06048b1927cf8ece7e14b91340f229b565d057bab9e0c"
+  },
+  "79455baf3866": {
+   "kind": "control",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dfa80c7a291ec4c229c",
+   "page_number": 155,
+   "A": "clean",
+   "B": "planted",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dfa80c7a291ec4c229c.jpg",
+    "w": 2000,
+    "h": 2322,
+    "sha256": "b9c76deed83a231dbc3c63159c808d094bad8a9bbb830a9e0ea766e1bf1f1443"
+   },
+   "plant": {
+    "swapped": 94,
+    "dropped_line": 56
+   },
+   "g4l_letters": 5133,
+   "served_letters": 1673,
+   "read_hash": "cc6d4723274e10e8eda4dbe5cbe0ec4bd31894aaec3bfd79a64cdfb98f0530a7"
+  },
+  "41d904ee4323": {
+   "kind": "control",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66de480c7a291ec4c2272",
+   "page_number": 113,
+   "A": "clean",
+   "B": "planted",
+   "served_model": "sefaria/Zohar Chadash",
+   "served_source": "sefaria",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66de480c7a291ec4c2272.jpg",
+    "w": 2000,
+    "h": 2135,
+    "sha256": "e5e1dc1f413d280eaa050c2662305d4046d4bf3f194294cc2ffa63555fda080d"
+   },
+   "plant": {
+    "swapped": 83,
+    "dropped_line": 10
+   },
+   "g4l_letters": 4995,
+   "served_letters": 5054,
+   "read_hash": "5c2f7a98cacb65e15461ad88d62ab893731a31937daa74ad6a04fd799d10e713"
+  },
+  "5eb6346d7c57": {
+   "kind": "control",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66db880c7a291ec4c2224",
+   "page_number": 33,
+   "A": "clean",
+   "B": "planted",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66db880c7a291ec4c2224.jpg",
+    "w": 2000,
+    "h": 2553,
+    "sha256": "8d4f53f7c88beae5bd3e372411123bd5b3192b4821a7c7e75b0fe387182e9beb"
+   },
+   "plant": {
+    "swapped": 96,
+    "dropped_line": 52
+   },
+   "g4l_letters": 5050,
+   "served_letters": 20414,
+   "read_hash": "05a56a401eb66dcab8b65e3b6675e8edab02cfa68021a632d7e7e730c67b2d26"
+  },
+  "15cc3425a0c7": {
+   "kind": "control",
+   "tag": "colfix",
+   "book_id": "69c7a0a892b884e4f8173817",
+   "page_id": "69f66dce80c7a291ec4c224e",
+   "page_number": 73,
+   "A": "planted",
+   "B": "clean",
+   "served_model": "gemini-3.1-flash-lite-preview",
+   "served_source": "batch_api",
+   "image": {
+    "url": "https://images.sourcelibrary.org/pages/69c7a0a892b884e4f8173817/sp69f66dce80c7a291ec4c224e.jpg",
+    "w": 2000,
+    "h": 2180,
+    "sha256": "a286504d95e2677818b04b0fe6223e90a52c26e911a1a6ebd2ece25f7fd467fb"
+   },
+   "plant": {
+    "swapped": 100,
+    "dropped_line": null
+   },
+   "g4l_letters": 5353,
+   "served_letters": 4498,
+   "read_hash": "037e936d38a49ad333058d49e65adac3d8e26129ee20893286f172b7c5cdd0f2"
+  }
+ }
+}

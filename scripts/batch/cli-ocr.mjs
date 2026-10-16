@@ -40,6 +40,19 @@
  * check for it, and every change the check did not confirm is put back to the draft before the write. The write
  * stamps `ocr.pipeline` with the lane id and keeps the draft's `language` and `verdict`; the draft read is named in
  * `engine.input.draft`.
+ *
+ * RE-READ LANE GATE (#6769, Gemini 4 Argon low over Greek manuscripts and Rashi books): `apply --lane=ID
+ * --lane-gate=FILE` replaces the 40% shared-words floor — which compares the read with the bad read it replaces — by a
+ * per-BOOK verdict (scripts/batch/reread-gate.mjs: 30 random pages judged blind against the image by Opus through
+ * `claude -p`, 0 worse, 5/5 planted controls caught). A failed or mismatched gate writes nothing; every other guard
+ * stays. The write stamps `ocr.pipeline` with the lane and the gate (verdict, sample, judge run, file hashes) in
+ * `engine.input.lane_gate`. `read --instruction-file=F` appends F's text to the prompt; it is kept as
+ * prompt-extra.txt and is part of the prompt hashed. (Tried on #6769 with a Hebrew right-column-first rule: G4L then
+ * read the left column first on 15/23 two-column pages, against 6/23 without it. Measure an instruction before using it.)
+ *
+ * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
+ * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
+ * (#6560: Kannada in a Tibetan correction) is refused.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -59,6 +72,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { markTranslationsStale } from '../lib/syriac-kraken-lane.mjs';
 import { liveOcrPrompt } from '../lib/live-ocr-prompt.mjs';
 import { diffSyllables, yatagsHits, revertHits } from '../lib/tibetan-yatags-guard.mjs';
+import { fittedTextReason, foreignScriptReason, bookLanguages, gateUsable, gateProvenance, sha256 } from '../lib/reread-lane-gate.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-ocr.mjs';
 const STAGE = process.argv[2];
@@ -68,6 +82,10 @@ const MODEL = arg('model') || 'gemini-3.8-flash-low';
 const APPLY = process.argv.includes('--apply');
 const CORRECT_PROMPT = arg('correct-prompt');
 const LANE = arg('lane');
+const INSTRUCTION_FILE = arg('instruction-file');
+const LANE_GATE_FILE = arg('lane-gate');
+if (STAGE === 'read' && INSTRUCTION_FILE && CORRECT_PROMPT) { console.error('--instruction-file is for a plain read, not --correct-prompt'); process.exit(2); }
+if (STAGE === 'apply' && LANE_GATE_FILE && !LANE) { console.error('--lane-gate needs --lane=<id>: the lane the gate was made for and the pages are stamped with'); process.exit(2); }
 if (STAGE === 'read' && CORRECT_PROMPT && !LANE) { console.error('--correct-prompt needs --lane=<id>: the ocr.pipeline the corrected pages are stamped with'); process.exit(2); }
 if (!['read', 'apply'].includes(STAGE) || !OUT) { console.error('usage: cli-ocr.mjs read|apply --out=DIR ... (see the header)'); process.exit(2); }
 
@@ -114,6 +132,9 @@ if (STAGE === 'read') {
     ({ base, ref } = await liveOcrPrompt(db));
     fs.writeFileSync(path.join(OUT, 'prompt-base.txt'), base);
   }
+  // --instruction-file: text appended after the live prompt (e.g. #6769's right-column-first rule for Hebrew).
+  const extra = INSTRUCTION_FILE ? `\n\n${fs.readFileSync(INSTRUCTION_FILE, 'utf8').trim()}` : '';
+  if (extra) fs.writeFileSync(path.join(OUT, 'prompt-extra.txt'), extra);
   fs.writeFileSync(path.join(OUT, 'prompt-ref.json'), JSON.stringify(ref));
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
@@ -138,7 +159,7 @@ if (STAGE === 'read') {
     fs.mkdirSync(path.dirname(img), { recursive: true });
     fs.writeFileSync(img, buf);
     // Correct mode: the #6560 request exactly — template with the draft in its slot, then the attachment.
-    const sent = CORRECT_PROMPT ? `${base.split('{draft}').join(p.ocr.data)} @./${path.basename(img)}` : base + imageInstruction(img);
+    const sent = CORRECT_PROMPT ? `${base.split('{draft}').join(p.ocr.data)} @./${path.basename(img)}` : base + extra + imageInstruction(img);
     if (CORRECT_PROMPT) fs.writeFileSync(path.join(OUT, `${key}.prompt.txt`), sent);
     const gateLog = installToolGate(path.dirname(img));
     const t0 = new Date();
@@ -169,7 +190,7 @@ if (STAGE === 'read') {
       chars: text.length, nudged, rereads, calls, chatter: text ? ocrReadProblem(text, { header: !CORRECT_PROMPT }) : null,
       prompt_variant: PROMPT_VARIANT, wrapper, tool_calls: gateCalls(gateLog),
       image_url: src, image_bytes: buf.length, image_sha256: createHash('sha256').update(buf).digest('hex'),
-      prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err,
+      prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), stderr_tail: r.err, ...(extra && { prompt_extra_hash: contentHash(extra) }),
       ...(CORRECT_PROMPT && { mode: 'correct', lane: LANE, prompt_sent_file: `${key}.prompt.txt`, draft: { model: p.ocr.model, pipeline: p.ocr.pipeline ?? null, content_hash: p.ocr.content_hash ?? contentHash(p.ocr.data), text_hash: contentHash(p.ocr.data), updated_at: p.ocr.updated_at } }),
     }, null, 1));
     console.log(`  ${p.page_number} ${r.cls || 'ok'}${nudged ? ' (nudged)' : ''}${rereads ? ' (re-read)' : ''} ${text.length} chars ${Math.round((Date.now() - t0) / 1000)}s`);
@@ -208,8 +229,24 @@ const MAX_CORRECTED = 0.25;
 // --yatags-verdicts=FILE: the leaf checks of the ya-btags guard, one JSON row per page {page_id, hits, keep}.
 const YATAGS = new Map();
 if (arg('yatags-verdicts')) for (const l of fs.readFileSync(arg('yatags-verdicts'), 'utf8').split('\n')) if (l.trim()) { const r = JSON.parse(l); YATAGS.set(r.page_id, r); }
+// --lane-gate=FILE (#6769): the per-book verdict that stands in for the 40% floor. Checked once, before any page: a gate
+// for another lane, book or model, a failed gate, or a judged page whose read changed since writes NOTHING.
+const LANE_GATE = LANE_GATE_FILE ? JSON.parse(fs.readFileSync(LANE_GATE_FILE, 'utf8')) : null;
+if (LANE_GATE) {
+  const bookIds = new Set(metas.map((m) => m.book_id));
+  const models = new Set(metas.map((m) => m.model));
+  const why = bookIds.size !== 1 ? `the read directory holds ${bookIds.size} books; a gate is per book`
+    : models.size !== 1 ? `the read directory holds ${models.size} models`
+    : gateUsable(LANE_GATE, { lane: LANE, bookId: [...bookIds][0], model: [...models][0], readHash: (id) => { try { return sha256(fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8')); } catch { return null; } } });
+  if (why) { console.error(`lane gate refused, nothing written: ${why}`); fs.writeFileSync(path.join(OUT, `apply-summary-${APPLY ? 'refused' : 'dry'}.json`), JSON.stringify({ at: new Date().toISOString(), apply: APPLY, lane: LANE, gate_refused: why, written: 0 }, null, 1)); await client.close(); process.exit(1); }
+  console.log(`lane gate ${LANE}: PASS (${LANE_GATE.sample.better} better / ${LANE_GATE.sample.same} same / ${LANE_GATE.sample.worse} worse of ${LANE_GATE.sample.n}; controls ${LANE_GATE.controls.pass}/${LANE_GATE.controls.n}) — the 40% shared-words floor is lifted for this book`);
+}
+const EXTRA_PATH = path.join(OUT, 'prompt-extra.txt');
+const EXTRA = fs.existsSync(EXTRA_PATH) ? fs.readFileSync(EXTRA_PATH, 'utf8') : '';
+const bookCache = new Map();
+const bookOf = async (id) => { if (!bookCache.has(id)) bookCache.set(id, await db.collection('books').findOne({ id }, { projection: { id: 1, language: 1, original_language: 1, languages: 1 } })); return bookCache.get(id); };
 const tally0 = { held_yatags: 0, yatags_hits: 0, yatags_kept: 0, yatags_reverted: 0 };
-const tally = { written: 0, skipped: {}, ...tally0 };
+const tally = { written: 0, skipped: {}, ...tally0, written_page_ids: [] };
 const skip = (m, why) => { tally.skipped[why] = (tally.skipped[why] || 0) + 1; console.log(`  skip p.${m.page_number}: ${why}`); };
 const books = {};
 
@@ -231,9 +268,13 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   if (chatter) { skip(m, `chatter guard: ${chatter}`); continue; }
   const loop = loopVerdict(text);
   if (loop.refuse) { skip(m, 'repetition loop'); continue; }
-  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1 } });
+  const page = await db.collection('pages').findOne(m.page_id ? { id: m.page_id } : { book_id: m.book_id, page_number: m.page_number }, { projection: { id: 1, book_id: 1, page_number: 1, archived_photo: 1, 'ocr.edited_by': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.model': 1, 'ocr.data': 1, 'ocr.content_hash': 1, 'ocr.language': 1, 'ocr.pipeline': 1, 'ocr.verdict': 1, 'ocr.text_source': 1, 'ocr.text_edition': 1 } });
   if (!page) { skip(m, 'page not found'); continue; }
   if (page.ocr?.edited_by || page.ocr?.source === 'manual') { skip(m, 'human-edited page'); continue; }
+  const fitted = fittedTextReason(page.ocr);
+  if (fitted) { skip(m, fitted); continue; }
+  const foreign = foreignScriptReason(text, { languages: bookLanguages(await bookOf(page.book_id)), served: page.ocr?.data });
+  if (foreign) { skip(m, foreign.replace(/: .*/, '')); console.log(`    ${foreign}`); continue; }
   // A re-read of a page that already has text should mostly agree with it. Below 40% shared words it is a different
   // text (a summary, a neighbouring leaf, an invention) or the stored read was: either way a person looks first.
   let yat = null;
@@ -259,14 +300,15 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       yat = { hits: hits.length, kept: hits.filter((h) => keep.has(h.k)).length, checked_by: v.checked_by ?? null };
       yat.reverted = yat.hits - yat.kept;
     }
-  } else if (page.ocr?.data) {
+  } else if (page.ocr?.data && !LANE_GATE) {
     const was = longWords(page.ocr.data), now = longWords(text);
     const shared = [...now].filter((w) => was.has(w)).length / Math.max(1, now.size);
     if (was.size >= 40 && shared < MIN_SHARED) { skip(m, `only ${Math.round(shared * 100)}% of its words are in the stored read: check by eye`); continue; }
   }
   if (page.ocr?.updated_at && new Date(page.ocr.updated_at) > new Date(m.started_at)) { skip(m, `OCR was rewritten after this read (${page.ocr.model})`); continue; }
   // The prompt hashed is the prompt sent: rebuild it and require it to match what the read stage recorded.
-  const sent = m.prompt_sent_file ? fs.readFileSync(path.join(OUT, m.prompt_sent_file), 'utf8') : base != null ? base + imageInstruction(workspaceImage(m.key), m.prompt_variant || 'legacy') : '';
+  if (m.prompt_extra_hash && contentHash(EXTRA) !== m.prompt_extra_hash) { skip(m, 'prompt-extra.txt is not the instruction this read was sent'); continue; }
+  const sent = m.prompt_sent_file ? fs.readFileSync(path.join(OUT, m.prompt_sent_file), 'utf8') : base != null ? base + (m.prompt_extra_hash ? EXTRA : '') + imageInstruction(workspaceImage(m.key), m.prompt_variant || 'legacy') : '';
   if (contentHash(sent) !== m.prompt_sent_hash) { skip(m, 'prompt sent cannot be reconstructed (hash mismatch)'); continue; }
   const imageUrl = m.image_url || getPageSource(page);
   const engine = geminiEngine({
@@ -276,7 +318,8 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
     run: { job_id: runId, code_version: CODE_VERSION, host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
     input: { ...imageInput({ url: imageUrl, mime: 'image/jpeg', bytes: m.image_bytes }), image_sha256: m.image_sha256,
-      ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }) } }) },
+      ...(correct && { draft: { ...m.draft, ...(yat && { yatags_guard: yat }) } }),
+      ...(LANE_GATE && { lane_gate: gateProvenance(LANE_GATE) }) },
   });
   const tags = liftOcrTags(text);
   const detectedImages = parseDetectedImages(text);
@@ -291,7 +334,10 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
       ocr: { data: text, language: correct ? (page.ocr?.language ?? 'auto-detect') : 'auto-detect', model: m.model, updated_at: new Date(), source: 'ai', prompt_version: ref.version, prompt_id: ref.id, prompt_name: ref.name, ...ocrProvenance(text, engine),
         // A correction is stamped with its own lane, so the reader can tell it from the draft's lane and the hourly
         // withhold sweep (WITHHOLD_LANES) does not take the English down; --mark-stale queues it for re-translation.
-        ...(correct && { pipeline: m.lane, ...(page.ocr?.verdict && { verdict: page.ocr.verdict }) }) },
+        ...(correct && { pipeline: m.lane, ...(page.ocr?.verdict && { verdict: page.ocr.verdict }) }),
+        // A gated re-read is stamped with its lane: the stale-translation sweep (arm 1) then finds any page whose
+        // English was not redone after it (#6769).
+        ...(LANE_GATE && { pipeline: LANE }) },
       ...tags,
       ...(detectedImages.length > 0 && { detected_images: detectedImages }),
       updated_at: new Date(),
@@ -303,16 +349,17 @@ for (const m of metas.sort((a, b) => a.page_number - b.page_number)) {
   (books[page.book_id] ??= { nums: [], models: new Set() }).nums.push(page.page_number);
   books[page.book_id].models.add(m.model);
   tally.written++;
+  tally.written_page_ids.push(page.id);
 }
 
 if (APPLY) {
   for (const [bookId, { nums, models }] of Object.entries(books)) {
     // The one counter writer (#5325): three of these pages may have had no OCR before.
     await recountBook(db, bookId, { reason: 'cli-ocr' });
-    await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_reread', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [...models], pages: nums.length, page_numbers: nums.sort((a, b) => a - b), reason: REASON } });
+    await db.collection('book_events').insertOne({ book_id: bookId, type: 'ocr_reread', at: new Date(), source: CALL_SITE, details: { run: runId, api: 'cli', models: [...models], pages: nums.length, page_numbers: nums.sort((a, b) => a - b), reason: REASON, ...(LANE_GATE && { lane: LANE, lane_gate: gateProvenance(LANE_GATE) }) } });
   }
 }
 console.log(`\n${APPLY ? 'written' : 'would write'}: ${tally.written}   skipped: ${JSON.stringify(tally.skipped)}${APPLY ? `   run ${runId}` : '   (dry run; add --apply)'}`);
 if (metas.some((m) => m.mode === 'correct')) console.log(`ya-btags guard: ${tally.held_yatags} page(s) held (${tally.yatags_held_hits || 0} changes); checked ${tally.yatags_hits} changes, kept ${tally.yatags_kept}, put back ${tally.yatags_reverted}`);
-fs.writeFileSync(path.join(OUT, `apply-summary-${APPLY ? runId : 'dry'}.json`), JSON.stringify({ at: new Date().toISOString(), apply: APPLY, run: APPLY ? runId : null, reason: REASON, ...tally }, null, 1));
+fs.writeFileSync(path.join(OUT, `apply-summary-${APPLY ? runId : 'dry'}.json`), JSON.stringify({ at: new Date().toISOString(), apply: APPLY, run: APPLY ? runId : null, reason: REASON, ...(LANE && { lane: LANE }), ...tally }, null, 1));
 await client.close();

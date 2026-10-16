@@ -117,7 +117,10 @@ for (const m of metas.sort((x, y) => x.page_number - y.page_number)) {
   frame.push({ m, p, g, s });
 }
 const order = shuffle([...frame]);
-const sample = order.slice(0, N), controls = order.slice(N, N + NC);
+const sample = order.slice(0, N);
+// A book with fewer than N + NC pages in the frame takes its controls from the sample's pages (#6769 lane gate): a
+// control is G4L against a planted copy of itself, so it never shares a judgment with that page's A/B.
+const controls = order.length >= N + NC ? order.slice(N, N + NC) : shuffle([...sample]).slice(0, NC);
 console.log(`${TAG}: ${metas.length} reads, ${frame.length} pages in the frame (G4L read + served text); ${sample.length} drawn + ${controls.length} controls`);
 const key = {}, reqs = [];
 for (const [kind, set] of [['sample', sample], ['control', controls]]) {
@@ -127,7 +130,7 @@ for (const [kind, set] of [['sample', sample], ['control', controls]]) {
     let x, y, pl = null;
     if (kind === 'sample') { x = { who: 'g4l', text: g }; y = { who: 'served', text: s }; } else { pl = plant(g); x = { who: 'clean', text: g }; y = { who: 'planted', text: pl.text }; }
     const flip = rng() < 0.5; const [A, B] = flip ? [y, x] : [x, y];
-    key[uid] = { kind, tag: TAG, book_id: BOOK, page_id: p.id, page_number: p.page_number, A: A.who, B: B.who, served_model: p.ocr?.model ?? null, served_source: p.ocr?.source ?? null, image: { url: getPageSource(p), w: im.w, h: im.h, sha256: im.sha256 }, ...(pl && { plant: { swapped: pl.swapped, dropped_line: pl.dropped_line } }), g4l_letters: letters(g), served_letters: letters(s) };
+    key[uid] = { kind, tag: TAG, book_id: BOOK, page_id: p.id, page_number: p.page_number, A: A.who, B: B.who, served_model: p.ocr?.model ?? null, served_source: p.ocr?.source ?? null, image: { url: getPageSource(p), w: im.w, h: im.h, sha256: im.sha256 }, ...(pl && { plant: { swapped: pl.swapped, dropped_line: pl.dropped_line } }), g4l_letters: letters(g), served_letters: letters(s), read_hash: crypto.createHash('sha256').update(fs.readFileSync(path.join(READS, `${m.page_id}.txt`), 'utf8')).digest('hex') };
     reqs.push({ uid, dir: im.dir, files: im.files, prompt: PROMPT(im.layout, A.text, B.text) });
   }
 }
