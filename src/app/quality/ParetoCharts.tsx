@@ -484,7 +484,7 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number) {
     taken.push({ x0: q.x, y0: q.y - 1.5, x1: nx, y1: q.y + 1.5 });
     if (i + 1 < a.length) taken.push({ x0: nx - 1.5, y0: Math.min(q.y, a[i + 1].y), x1: nx + 1.5, y1: Math.max(q.y, a[i + 1].y) });
   });
-  const bounds: Box = { x0: 0, y0: Y0 - f * 0.4, x1: W, y1: Y1 - 1 };
+  const bounds: Box = { x0: X0 + 2, y0: Y0 - f * 0.4, x1: W, y1: Y1 - 1 };   // never over the y tick labels
   const inside = (b: Box) => b.x0 >= bounds.x0 && b.x1 <= bounds.x1 && b.y0 >= bounds.y0 && b.y1 <= bounds.y1;
   const order = [...pts].sort((a, b) => Number(b.production) - Number(a.production) || Number(allFr.includes(b)) - Number(allFr.includes(a)) || b.y - a.y);
   const labels: { p: Point; x: number; y: number; anchor: 'start' | 'end' | 'middle'; text: string; lead?: { x: number; y: number } }[] = [];
