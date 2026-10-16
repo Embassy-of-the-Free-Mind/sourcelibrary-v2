@@ -83,7 +83,7 @@ export const posts: BlogPost[] = [
     subtitle:
       'The Greeks placed a blessed people beyond the north wind and said amber came from the edge of the world. Herodotus doubted both. Prussian and Lithuanian historians later claimed them for the Baltic, and a nineteenth-century folklorist showed which parts of their pagan past had been invented.',
     date: '16 October 2026',
-    readTime: '13 min read',
+    readTime: '16 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg',
     imageAlt: 'Engraving after Hendrick Goltzius: the sisters of Phaethon turning into poplars by the river Eridanus',
