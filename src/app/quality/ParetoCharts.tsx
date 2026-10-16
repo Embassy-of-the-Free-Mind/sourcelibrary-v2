@@ -601,8 +601,8 @@ export function NotMeasured({ measures = [OCR, TRANSLATION] }: { measures?: Meas
                   {chart.caption && <p className="text-sm text-stone-600 max-w-3xl">{chart.caption}</p>}
                   {chart.storedNow && (
                     <p className="text-sm text-stone-600 max-w-3xl">
-                      The engine in use is the one new pages get. What readers have now: {chart.storedNow} A gain over the
-                      engine in use is not a gain over the stored text.
+                      The engine in use is the one new pages get. What readers have now: {chart.storedNow} Much of the stored
+                      text was written by an earlier engine, so a result against the engine in use applies to new pages.
                     </p>
                   )}
                   {chart.mentions.map(t => <p key={t} className="text-sm text-stone-600 max-w-3xl">{t}</p>)}

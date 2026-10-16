@@ -3,9 +3,9 @@
  "generated_by": "scripts/eval/build-ocr-pareto.mjs",
  "measure": "accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on the pages of the panel the engine read; a refused, empty, timed-out or copy-filtered read is not scored and is counted in did_not_read",
  "stored_now_census": {
-  "date": "2026-10-13",
-  "source": "Derek's parent session, notes to job ocr-routing-6688 (2026-10-13T17:42Z page-weighted, 17:41Z Tibetan, 16:11Z Chinese); posted on #6688",
-  "method": "Latin, German, English, Greek, Arabic: 150 random live books per language, every page, by ocr.model. Tibetan and Chinese: every page of the live books, counted. A one-page-per-book draw is biased toward the 25-page Gemini preview and is not used."
+  "date": "2026-10-16",
+  "source": "scripts/eval/ocr-routing/stored-census.mjs (output: scripts/eval/ocr-routing/stored-census-2026-10-16.json), run by job arb-public-cl. Chinese and Tibetan: Derek's count of 2026-10-13, posted on #6688",
+  "method": "Every page of every live book (visible, pages_count > 0), grouped by books.language and counted by the engine whose text the page carries now (ocr.model); a page with no text counts as no text yet. Chinese and Tibetan were counted the same way on 2026-10-13. The 2026-10-13 figures for Latin, German, English, Greek and Arabic came from 150 random books per language and are replaced: a few long books carry most of the pages, so two draws of 300 Latin books gave 22% and 29% with no text."
  },
  "production_rule": "the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns",
  "grade_rules": {
@@ -28,7 +28,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.",
-   "stored_now": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
+   "stored_now": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
    "panels": [
     {
      "kind": "primary",
@@ -1520,7 +1520,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.",
-   "stored_now": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
+   "stored_now": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
    "panels": [
     {
      "kind": "primary",
@@ -2012,7 +2012,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
-   "stored_now": "Mixed. In Latin books 48% of pages were read by Gemini 3 Flash, 33% by Flash-Lite and 19% have no text yet. German: 42%, 41% and 17%. English: 54%, 25% and 18%.",
+   "stored_now": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
    "panels": [
     {
      "kind": "primary",
@@ -2635,7 +2635,7 @@
    "production_engine": "gemini-3-flash-preview",
    "production_label": "Gemini 3 Flash",
    "caption": null,
-   "stored_now": "86% of pages were read by Gemini 3 Flash, 9% by Flash-Lite and 5% have no text yet.",
+   "stored_now": "495,404 pages: 418,469 (84%) read by Gemini 3 Flash, 38,638 (8%) by Flash-Lite, 37,376 (8%) with no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -4481,7 +4481,7 @@
    "production_engine": "paddleocr-vl-1.6",
    "production_label": "PaddleOCR-VL 1.6",
    "caption": "On many pages the reference runs longer than the page, so every engine carries some unavoidable error.",
-   "stored_now": "1,567,927 Chinese pages were read by PaddleOCR-VL. Across all Chinese books, 106,365 pages were read by Gemini 3 Flash, about 39,000 by Flash-Lite, and 330,855 have no text yet.",
+   "stored_now": "Counted 13 October 2026: 1,567,927 Chinese pages were read by PaddleOCR-VL. Across all Chinese books, 106,365 pages were read by Gemini 3 Flash, about 39,000 by Flash-Lite, and 330,855 have no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -5848,7 +5848,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
-   "stored_now": "Counted with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
+   "stored_now": "Counted 13 October 2026 with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
    "panels": [
     {
      "kind": "primary",
