@@ -56,6 +56,8 @@ def contrasts_of(cells):
 
 # ---------- 1. leave-one-out ----------
 files = sorted(glob.glob(f'{a.loo}/*.json'))
+skipped = [json.load(open(p))['skipped'] for p in files if 'skipped' in json.load(open(p))]
+files = [p for p in files if 'skipped' not in json.load(open(p))]
 loo = [json.load(open(p)) for p in files if not p.endswith('.nrm.json')]
 nrm = {json.load(open(p))['holdout']: json.load(open(p)) for p in files if p.endswith('.nrm.json')}
 rows = []
@@ -96,7 +98,7 @@ def block(cs):
 
 
 out['loo'] = dict(
-    per_experiment=rows, all=block(allc), v1_experiments=block(old), new_experiments=block(new),
+    per_experiment=rows, skipped=skipped, all=block(allc), v1_experiments=block(old), new_experiments=block(new),
     v1_on_v1_experiments=v1['loo']['all'],
     by_basis={b: block([c for c in allc if c['basis'] == b]) for b in ('measured', 'pooled')},
     by_instrument_class={k: block([c for c in allc if c['iclass'] == k]) for k in ('panel', 'packet', 'canon-ref')},
@@ -163,6 +165,9 @@ for lang in ix.langs:
     D = {e[2]: marginal_score(cell_eta(ix, post, e[0], e[1], lang, rng), post) for e in ENGINES}
     stack = np.stack([D[e[2]] for e in ENGINES])
     pbest = np.bincount(stack.argmax(0), minlength=len(ENGINES)) / stack.shape[1]
+    for e in ENGINES:   # the same cells under the cross-family judge, for the planner's two-family difference
+        D_all[f'{lang}|{e[2]}|gemini-3.1-pro'] = marginal_score(
+            cell_eta(ix, post, e[0], e[1], lang, rng, judge='gemini-3.1-pro'), post)
     for k, e in enumerate(ENGINES):
         D_all[f'{lang}|{e[2]}'] = D[e[2]]
         n = len(pages_of.get((lang, e[0]), ()))
