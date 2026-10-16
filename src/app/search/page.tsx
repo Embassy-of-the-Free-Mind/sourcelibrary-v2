@@ -48,6 +48,9 @@ import { getEffectiveByline } from '@/lib/byline';
 import CollectionCoverEditor from '@/components/collections/CollectionCoverEditor';
 import { cardFramingStyle, COVER_EVENT, type CardFraming, type CoverEventDetail } from '@/lib/collection-card-image';
 
+/** #5853: run the page-text lane for unquoted multi-word queries too. Off unless NEXT_PUBLIC_SEARCH_PASSAGES_MULTIWORD=on. */
+const SEARCH_PASSAGES_MULTIWORD = process.env.NEXT_PUBLIC_SEARCH_PASSAGES_MULTIWORD === 'on';
+
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
 const PREVIEW_INDEX = 5;
@@ -699,14 +702,19 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         // Use unquoted query for full-text search (finds pages with both words),
         // then try phrase search for exact contiguous matches and promote those.
         const isPhrase = /^".*"$/.test(q.trim());
-        if (isPhrase) {
-          const unquoted = q.trim().slice(1, -1);
+        // Plain multi-word queries get the same page-text lane only behind a build-time flag (#5853): it costs a
+        // request per search and is OFF until measured on scripts/eval/search-recall.
+        const multiWordPassages = !isPhrase && SEARCH_PASSAGES_MULTIWORD && q.trim().split(/\s+/).length >= 2;
+        if (isPhrase || multiWordPassages) {
+          const unquoted = isPhrase ? q.trim().slice(1, -1) : q.trim();
           setPassageLoading(true);
           Promise.all([
             // Full-text search (both words on same page)
             searchApi.search(unquoted, { limit: 15, search_content: 'true' }),
             // Phrase search (exact contiguous match)
-            searchApi.search(q, { limit: 10, search_content: 'true' }).catch(() => ({ results: [] })),
+            isPhrase
+              ? searchApi.search(q, { limit: 10, search_content: 'true' }).catch(() => ({ results: [] }))
+              : Promise.resolve({ results: [] as SearchResult[] }),
           ])
             .then(([fullData, phraseData]) => {
               const fullResults = fullData.results || [];

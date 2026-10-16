@@ -14,7 +14,9 @@
  *
  * Order of work:
  *  1. English lane, CANDIDATES rows. `match_semantic` returns at most
- *     `hnsw.ef_search` (40) rows whatever is asked, so that is the pool.
+ *     `hnsw.ef_search` rows whatever is asked: 100 in both branches since
+ *     #5853 (2026-10-16; the no-filter branch was the session default 40).
+ *     The pool stays 40 rows; the higher ef buys recall inside it.
  *  2. Original-text lane when it is switched on and deployed; otherwise
  *     nothing, and `lanes.untranslated` says which.
  *  3. Reciprocal-rank fusion. The lanes share no row (a page has a
@@ -47,7 +49,7 @@ import { loadBookFacets, type LoadedBookFacets } from '@/lib/search/diversity-fa
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { stripMarkupTags } from '@/lib/strip-markup-tags';
 
-/** What `match_semantic` can return in one call (hnsw.ef_search). */
+/** Rows asked of `match_semantic` (its ef_search is 100, #5853; 40 is the pool, not the ceiling). */
 const CANDIDATES = 40;
 const UNTRANSLATED_CANDIDATES = 20;
 /** Untranslated rows per screen of ten: found, but not most of what a reader of English sees. */
