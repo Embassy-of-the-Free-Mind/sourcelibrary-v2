@@ -37,6 +37,7 @@ function Plate({
   height,
   wide = false,
   small = false,
+  source,
   children,
 }: {
   src: string;
@@ -48,6 +49,8 @@ function Plate({
   wide?: boolean;
   // Low-resolution sources stay near their natural size instead of being blown up.
   small?: boolean;
+  // Set for pictures from outside the library: names where the link goes.
+  source?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -60,7 +63,7 @@ function Plate({
       <figcaption className="text-xs text-muted mt-2 text-center">
         {children}{' '}
         <Link href={href} className={captionLinkClass}>
-          View in collection →
+          {source ? `View at ${source} →` : 'View in collection →'}
         </Link>
       </figcaption>
     </figure>
@@ -85,7 +88,7 @@ export default function TreesOfLifePage() {
           image={LEAD_IMAGE}
           imageAlt="Robert Fludd’s inverted sefirotic tree, 1621: roots in a crowned light above, branches spreading below"
         >
-          <p className="text-stone-400 text-sm mt-4">15 October 2026 &middot; 17 min read</p>
+          <p className="text-stone-400 text-sm mt-4">15 October 2026 &middot; 20 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -218,6 +221,40 @@ export default function TreesOfLifePage() {
           </Plate>
         </Pair>
 
+        <Section>Siberia: the shaman’s tree</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Among the peoples of Siberia the world tree was something a shaman climbed. The Finnish scholar Uno
+          Holmberg, writing in 1927, gathered the evidence: the Yakuts set up rows of trees for the storeys of
+          heaven, one for each level the shaman passes, and the Dolgans raised a pole with crosspieces topped by a
+          two-headed bird, the Lord of the Birds, at the summit of the world.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/holmberg-yakut-trees.jpg`}
+            alt="Engraving of a row of young trees joined by a cord hung with rags on open grassland"
+            href="https://archive.org/details/finnougricsiberi0000unoh/page/n608/mode/1up"
+            width={1400}
+            height={924}
+            source="Internet Archive"
+          >
+            “Yakut trees representing the storeys of heaven.” Uno Holmberg, <em>Finno-Ugric, Siberian</em>,{' '}
+            <em>The Mythology of All Races</em> vol. IV (1927), plate XLVI.
+          </Plate>
+          <Plate
+            src={`${IMG}/holmberg-dolgan-world-tree.jpg`}
+            alt="Line drawing: carved wooden animals and fish beside a tall pole with crosspieces and a bird at the top"
+            href="https://archive.org/details/finnougricsiberi0000unoh/page/n776/mode/1up"
+            width={961}
+            height={1400}
+            source="Internet Archive"
+          >
+            “Dolgan shaman-attributes and the world-tree with the two-headed Lord of the Birds,” Holmberg (1927), fig.
+            20.
+          </Plate>
+        </Pair>
+
         <Section>Prussia: the oak at Romowe</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -301,6 +338,60 @@ export default function TreesOfLifePage() {
           The goddess in the sycamore, Papyrus of Ani. From E. A. Wallis Budge’s facsimile,{' '}
           <em>The Book of the Dead</em> (1895).
         </Plate>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A second Egyptian tree recorded time. On the <em>ished</em> or persea tree of Heliopolis, Thoth and the
+          goddess of writing, Seshat, wrote the king’s name on the leaves and fruit, one for each year of his reign.
+          The Ramesseum at Thebes shows Ramesses II seated before the tree while Atum, Seshat and Thoth write. John
+          Gardner Wilkinson drew the relief in 1841.
+        </p>
+
+        <Plate
+          src={`${IMG}/wilkinson-persea-54a.jpg`}
+          alt="Line drawing of an Egyptian relief: a seated king before a leafy tree, a goddess and ibis-headed Thoth writing on its fruit"
+          href="https://archive.org/details/secondseriesofma03wilk/page/n107/mode/1up"
+          width={1400}
+          height={1358}
+          wide
+          source="Internet Archive"
+        >
+          “Atmoo, Thoth, and the goddess of letters writing the name of Remeses on the fruit of the persea,”
+          Memnonium, Thebes. Wilkinson, <em>A Second Series of the Manners and Customs of the Ancient Egyptians</em>{' '}
+          (1841), plate 54a.
+        </Plate>
+
+        <Section>China: the sun tree and the money tree</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Chinese myth places Fusang, a giant mulberry, at the eastern edge of the world. Ten suns rested in it,
+          and one at a time rode out across the sky. The bronze trees buried at Sanxingdui in Sichuan around 1200
+          BCE, with birds perched on their branches, have been read as this sun tree. Over a thousand years later,
+          tombs in the same province held bronze “money trees” hung with coins and immortals, set on ceramic bases
+          shaped like mountains.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/sanxingdui-tree.jpg`}
+            alt="Tall bronze tree in a museum case, branches ending in fruit and perched birds"
+            href="https://commons.wikimedia.org/wiki/File:Bronze_Tree,_Sanxingdui_1a.jpg"
+            width={933}
+            height={1400}
+            source="Wikimedia Commons"
+          >
+            Bronze tree from Sanxingdui, c. 1200 BCE, Sanxingdui Museum. Photo: Gary Todd, CC0.
+          </Plate>
+          <Plate
+            src={`${IMG}/han-money-tree.jpg`}
+            alt="Bronze tree with openwork branches of coins and figures on a pale ceramic mountain base"
+            href="https://commons.wikimedia.org/wiki/File:Eastern_Han_Bronze_Money_Tree,_Sichuan_1a.jpg"
+            width={933}
+            height={1400}
+            source="Wikimedia Commons"
+          >
+            Money tree, Eastern Han dynasty (25–220 CE), Sichuan. Tokyo National Museum. Photo: Gary Todd, CC0.
+          </Plate>
+        </Pair>
 
         <Section>Mesoamerica: trees in the Codex Laud</Section>
 
@@ -420,8 +511,6 @@ export default function TreesOfLifePage() {
           tree whose fruit were human figures, said to call out “waq waq” before they fell. The <em>Kitāb al-Bulhān</em>,
           a book of divination and wonders compiled in Baghdad around 1400, paints the tree hung with its human
           fruit, and a copy of Zakariyā al-Qazwīnī’s cosmography, <em>The Wonders of Creation</em>, paints it twice.
-          The Qur’an’s own trees, the lote tree of the boundary in the seventh heaven and Ṭūbā in paradise, are not
-          yet among the library’s pictures.
         </p>
 
         <Plate
@@ -454,6 +543,26 @@ export default function TreesOfLifePage() {
             A second Waqwaq tree from the same manuscript.
           </Plate>
         </Pair>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Qur’an (53:14) names a tree at the edge of the seventh heaven, the lote tree of the boundary
+          (<em>Sidrat al-Muntahā</em>), which the Prophet passed on the night of his ascension. The books that
+          illustrate the ascension (<em>Miʿrājnāma</em>) paint it. In this fourteenth-century page the tree is
+          the great gold trunk on the right.
+        </p>
+
+        <Plate
+          src={`${IMG}/lote-tree-bilal.jpg`}
+          alt="Worn Persian painting: figures in a pavilion of paradise, a gold tree trunk filling the right side"
+          href="https://commons.wikimedia.org/wiki/File:Bilal_before_the_Lote_Tree_of_the_Limit.jpg"
+          width={1344}
+          height={856}
+          wide
+          source="Wikimedia Commons"
+        >
+          Bilal before the lote tree, <em>Miʿrājnāma</em>, c. 1317–35. Topkapı Palace Library, H. 2154, fol. 61r
+          (detail).
+        </Plate>
 
         <Section>Java: the kayon</Section>
 
@@ -746,6 +855,23 @@ export default function TreesOfLifePage() {
         </Plate>
 
         <p className="text-secondary leading-relaxed mb-6">
+          The gods’ paradise has its own tree, the wish-granting <em>kalpavṛkṣa</em> or <em>kalpataru</em>, which
+          yields whatever is asked of it. On the temples of central Java it is carved again and again: a stylised
+          tree under a parasol, birds in its crown, guarded by kinnaras, half-bird musicians of heaven.
+        </p>
+
+        <Plate
+          src={`${IMG}/prambanan-kalpataru.jpg`}
+          alt="Stone relief: a stylised tree under a parasol with birds above and two bird-bodied figures at its foot"
+          href="https://commons.wikimedia.org/wiki/File:Candi_Prambanan_-_041_Kalpataru_and_Kinnara_(12041745124).jpg"
+          width={1050}
+          height={1400}
+          source="Wikimedia Commons"
+        >
+          Kalpataru with kinnaras, Prambanan, ninth century. Photo: Photo Dharma, CC BY 2.0.
+        </Plate>
+
+        <p className="text-secondary leading-relaxed mb-6">
           The Buddha reached enlightenment under a pipal at Bodh Gaya, and the earliest Buddhist sculpture shows the
           tree, an empty seat or a pair of footprints in his place. In West Africa, R. E. Dennett photographed a tree
           planted over a grave, which then became sacred.
@@ -776,30 +902,22 @@ export default function TreesOfLifePage() {
         <Section>Trees the library does not yet show</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A search of the library’s images on 16 October 2026 found no usable picture of these:
+          A search of the library’s images, the Internet Archive and Wikimedia Commons on 16 October 2026 found no
+          usable public-domain picture of these:
         </p>
 
         <ul className="list-disc pl-6 text-secondary leading-relaxed mb-8 space-y-2">
           <li>
-            <strong>India:</strong> the wish-granting <em>kalpavṛkṣa</em> of the gods’ paradise.
-          </li>
-          <li>
-            <strong>Egypt:</strong> the <em>ished</em> tree on whose leaves Thoth writes the years of the king’s reign.
-          </li>
-          <li>
-            <strong>China:</strong> Fusang, the mulberry in the east where the ten suns rest, and Jianmu, the tree by
-            which the gods climb between heaven and earth. The bronze trees from Sanxingdui (c. 1200 BCE) have been
-            read as Fusang.
+            <strong>China:</strong> Jianmu, the tree by which the gods climb between heaven and earth.
           </li>
           <li>
             <strong>Iran:</strong> Gaokerena, the white haoma tree of immortality growing in the cosmic sea.
           </li>
           <li>
-            <strong>Islam:</strong> the lote tree of the boundary (<em>Sidrat al-Muntahā</em>) and Ṭūbā, the tree of
-            paradise.
+            <strong>Islam:</strong> Ṭūbā, the tree of paradise.
           </li>
           <li>
-            <strong>Siberia and Central Asia:</strong> the notched birch the shaman climbs to reach the upper world.
+            <strong>The Baltic:</strong> the Latvian sun tree (<em>Austras koks</em>) of the folk songs.
           </li>
         </ul>
 
