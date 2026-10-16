@@ -37,9 +37,8 @@ export default function ParetoPage() {
           </p>
           <h1 className="font-serif text-4xl md:text-5xl text-stone-900 mt-2">Which engine to run: quality against price and time</h1>
           <p className="text-lg text-stone-700 leading-relaxed mt-4">
-            Each dot is an engine we measured: higher reads or translates better, further left is faster or cheaper. The
-            line is the frontier, the engines nothing else beats on both. Filled dots are engines we can run today;
-            hollow ones we cannot.
+            Each dot is an engine we measured: higher is better, further left is faster or cheaper. The line is the
+            frontier, the engines nothing else beats on both.
           </p>
           <p className="text-base text-stone-600 mt-3">
             <a href="#ocr" className={LINK}>Transcription (OCR)</a> {'·'} <a href="#translation" className={LINK}>Translation</a>{' '}
@@ -74,7 +73,7 @@ export default function ParetoPage() {
           <h2 className="font-serif text-3xl md:text-4xl text-stone-900">Translation</h2>
           <p className="text-lg text-stone-700 mt-2 max-w-3xl">
             Turning that text into English, scored on the 1 to 5 fidelity scale by blind AI judges (Claude Opus) against
-            published translations.
+            published translations. No translation run timed its pages, so these charts are by price only.
           </p>
           <div className="mt-3"><ChartLegend m={TRANSLATION} /></div>
           <ParetoPresentation m={TRANSLATION} />

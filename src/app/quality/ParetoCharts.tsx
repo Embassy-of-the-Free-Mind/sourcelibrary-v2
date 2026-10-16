@@ -411,14 +411,14 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number, plo
   const cut = new Set(pts.filter(p => p.y < floorY));
   const loY = Math.min(...pts.filter(p => !cut.has(p)).map(p => p.y));
   const span = Math.max(hiY - loY, minSpan);
-  const yLo = loY - span * 0.12, yHi = hiY + span * 0.15;
+  const yLo = loY - span * 0.12, yHi = hiY + span * 0.25;
   const { ticks: yTicks, step: yStep } = niceTicks(yLo, yHi, Math.max(2, Math.floor(plotH / (f * (mini ? 2.4 : 2.8)))));
   const sy = (v: number) => rd(Y1 - ((Math.min(Math.max(v, yLo), yHi) - yLo) / (yHi - yLo)) * (Y1 - Y0));
 
-  // x: log, padded a fifth of a decade on the left and a third on the right, where names go
+  // x: log, padded a fifth of a decade on the left and nearly half of one on the right, where names go
   const xs = pts.map(p => xOf(p, axis)!);
   const one = Math.min(...xs) === Math.max(...xs);
-  const xLo = Math.min(...xs) / 10 ** (one ? 0.5 : 0.2), xHi = Math.max(...xs) * 10 ** (one ? 0.5 : 0.33);
+  const xLo = Math.min(...xs) / 10 ** (one ? 0.5 : 0.2), xHi = Math.max(...xs) * 10 ** (one ? 0.5 : W >= 500 ? 0.45 : 0.33);
   const lx0 = Math.log10(xLo), lx1 = Math.log10(xHi);
   const sx = (v: number) => rd(X0 + ((Math.log10(v) - lx0) / (lx1 - lx0)) * (X1 - X0));
   const xTicks = logTicks(xLo, xHi, Math.max(2, Math.floor((X1 - X0) / (fs * 4.5))));
@@ -618,7 +618,7 @@ function scatterParts(chart: Chart, panel: Panel, m: Measure) {
           <label className={pill}><input type="radio" name={name} defaultChecked={first === 'time'} className="axis-time sr-only" />Time a page</label>
           <label className={pill}><input type="radio" name={name} defaultChecked={first === 'price'} className="sr-only" />Price</label>
         </fieldset>
-      ) : (
+      ) : !m.charts.some(c => c.panels.some(x => x.points.some(p => p.secs))) ? null : (
         <p className="text-sm text-stone-600">
           Across: {first === 'price' ? 'price (no engine on this run timed its pages)' : 'time a page (no engine on this run has a price on record)'}.
         </p>
@@ -927,7 +927,7 @@ function PanelView({ chart, panel, m, sub, caption, others = [], title }: { char
 function Figure({ chart, m }: { chart: Chart; m: Measure }) {
   const [primary, ...rest] = chart.panels;
   return (
-    <figure id={anchorOf(m, chart)} className="py-6 border-b border-stone-200 scroll-mt-16 min-w-0">
+    <figure id={anchorOf(m, chart)} className="py-5 border-b border-stone-200 scroll-mt-16 min-w-0">
       <PanelView chart={chart} panel={primary} m={m} caption={chart.caption} others={rest} title={
         <h3 className="font-serif text-xl sm:text-2xl md:text-3xl text-stone-900 mb-1">
           {m.title(chart)}
