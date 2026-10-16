@@ -40,10 +40,13 @@ Cost: $0. Mongo and Atlas Search read-only; judging by Claude subagents.
   accented and plain spellings are both listed. CJK phrases match per character: 氣 counts every page that prints it.
 - **The book facet stops at 1,000 books.** Dates and traditions are computed over live books in that facet;
   `books_capped_at_1000` marks the nodes where the long tail is missing.
-- **Work dates, not edition dates, where the catalogue has one** — but `source_work_dates` is used only when it
-  holds a single composition and no compilation: an anthology's first treatise is not the date of the page a
-  passage sits on. `/root/aliveness/dated-works.jsonl` (#6652) had 5 rows when this was built (its run stopped on
-  quota); rebuild after it fills.
+- **Work dates, not edition dates.** Every book is dated by `books.source_work_dates_meta.work.year` (schema 2, #6721),
+  recorded as `work:<basis>`; the edition year stays beside it (`edition_year`, `by_century_edition`). A date is
+  *sourced* when its basis is wikidata, author_lifespan, title_page or colophon, and each strip's caption gives the
+  sourced share of its dated pages; the rest are model_knowledge. Re-date the existing measurements without
+  re-querying Atlas with `measure.mjs redate` (keeps candidate order, which the verdicts index by), then
+  `measure.mjs baseline` and `build.py`. The older chain (dated-works.jsonl, `source_work_dates`, edition year) is
+  only a fallback for a book without a schema-2 date.
 - **Earliest/latest attestation is fragile** (a modern editor's note in an edition of Homer dates "archeus" to
   800 BCE). The page shows the span holding 90% of dated pages and the peak century; `first`/`last` stay in the JSON
   with that caveat.

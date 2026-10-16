@@ -63,6 +63,18 @@ def cent_label(c):
     return f'{n}{suf} c.'
 
 
+# Work-date bases (books.source_work_dates_meta.work.basis, #6721) that cite a source; model_knowledge does not.
+SOURCED = {'wikidata', 'author_lifespan', 'title_page', 'colophon'}
+
+
+def basis_key(b):
+    return b.split(':', 1)[1] if b.startswith(('work:', 'dated-works:')) else b
+
+
+_bl = Counter({basis_key(k): v for k, v in (baseline or {}).get('basis', {}).items()})
+bl_sourced = round(100 * sum(v for k, v in _bl.items() if k in SOURCED) / (sum(_bl.values()) or 1))
+
+
 def yr(y):
     return f'{-y} BCE' if y < 0 else str(y)
 
@@ -74,10 +86,13 @@ for n in NODES:
     books = c.get('books', [])
     live = [b for b in books if b.get('live')]
     dated = [b for b in live if b.get('year') is not None and -1500 <= b['year'] <= 2030]
-    by_c, by_t, basis = Counter(), Counter(), Counter()
+    by_c, by_ce, by_t, basis = Counter(), Counter(), Counter(), Counter()
     for b in dated:
         by_c[(b['year'] // 100) * 100] += b['pages']
-        basis[b['basis'].split(':')[0] if b['basis'].startswith('dated-works') else b['basis']] += b['pages']
+        basis[basis_key(b['basis'])] += b['pages']
+    for b in live:
+        if b.get('edition_year') is not None and -1500 <= b['edition_year'] <= 2030:
+            by_ce[(b['edition_year'] // 100) * 100] += b['pages']
     for b in live:
         by_t[b.get('tradition') or (b.get('language') and f"{b['language']} (language)") or 'unclassified'] += b['pages']
     first = min(dated, key=lambda b: b['year']) if dated else None
@@ -103,6 +118,8 @@ for n in NODES:
         'live_books': len(live), 'live_pages': sum(b['pages'] for b in live),
         'dated_pages': sum(b['pages'] for b in dated), 'faceted_pages': faceted_pages,
         'by_century': {str(k): v for k, v in sorted(by_c.items())},
+        'by_century_edition': {str(k): v for k, v in sorted(by_ce.items())},
+        'sourced_pages': sum(v for k, v in basis.items() if k in SOURCED),
         'by_tradition': dict(by_t.most_common(8)), 'date_basis_pages': dict(basis),
         'span_90': span,
         'first_note': 'earliest/latest dated live book that prints a phrase; may be an editor\'s note in an edition of an older work',
@@ -212,9 +229,11 @@ ontology = {
         'counts': 'Pages that print any of a node\'s search phrases (Atlas Search phrase match, translation and OCR text, page_number > 0, '
                   'case-folded, not accent-folded). The book facet returns the top 1,000 books by matching pages; dates and traditions '
                   'are computed over live books in that facet. `pages_translation` counts the English translation alone.',
-        'work_dates': 'Per book, the first of: /root/aliveness/dated-works.jsonl (#6652; basis title_page | model_knowledge), '
-                      'books.source_work_dates when it holds exactly one composition and no compilation, books.original_work_year, '
-                      'the edition year. Each count records its basis.',
+        'work_dates': 'Per book, books.source_work_dates_meta.work.year (schema 2, #6721), the date the work was written; its basis '
+                      'is wikidata, author_lifespan, title_page or colophon (sourced) or model_knowledge. A book without one falls back to '
+                      '/root/aliveness/dated-works.jsonl, books.source_work_dates (one composition, no compilation), '
+                      'books.original_work_year, then the edition year. Each count records its basis; `sourced_pages` counts the dated '
+                      'pages with a sourced basis, and `by_century_edition` places the same pages by the printed edition.',
         'gloss_and_edges': f'Node glosses, traditions and eras, and every edge claim, are scholarly background written by {MODEL_BG}. '
                            'An edge is `passage` only when a judge found a page in the library that states it; the passage is quoted '
                            'verbatim and linked.',
@@ -229,7 +248,8 @@ ontology = {
                 'edges_by_type': dict(Counter(e['type'] for e in out_edges)), 'nodes_by_kind': dict(Counter(n['kind'] for n in out_nodes)),
                 'nodes_with_passages': sum(1 for n in out_nodes if n['passages']), 'passages': sum(len(n['passages']) for n in out_nodes)},
     'baseline': baseline and {'what': 'pages of live books by century of the work, same dating rule', 'books': baseline['books'],
-                              'by_century': baseline['by_century'], 'date_basis_pages': baseline['basis']},
+                              'by_century': baseline['by_century'], 'by_century_edition': baseline.get('by_century_edition'),
+                              'date_basis_pages': baseline['basis']},
     'nodes': out_nodes, 'edges': out_edges, 'chains': chains,
 }
 json.dump(ontology, open(os.path.join(HERE, 'ontology.json'), 'w'), ensure_ascii=False, indent=1)
@@ -299,7 +319,7 @@ def cite(p):
     when = ''
     if p.get('work_year') is not None:
         b = p.get('date_basis', '')
-        tag = 'work dated' if b.startswith('dated-works') or b in ('source_work_dates', 'original_work_year') else 'book dated'
+        tag = 'work dated' if b.startswith(('work:', 'dated-works')) or b in ('source_work_dates', 'original_work_year') else 'book dated'
         when = f' · {tag} {yr(p["work_year"])}'
     who = f'{E(p["author"].strip())}, ' if p.get('author', '').strip() else ''
     return f'{who}<i>{E(p["title"])}</i>{when} · <a href="{E(p["url"])}">page {p.get("page", "")}</a>' if 'page' in p else \
@@ -371,6 +391,8 @@ def node_html(n):
     trad = ', '.join(E(k) for k in list(c['by_tradition'])[:3])
     broad = ' <span title="the search phrases are common words; counts include every use">(broad phrase)</span>' if n['broad'] else ''
     share = f'{round(100 * c["dated_pages"] / c["faceted_pages"])}% of pages dated' if c['faceted_pages'] else ''
+    if c['dated_pages']:
+        share += f' · dated by when the work was written ({round(100 * c["sourced_pages"] / c["dated_pages"])}% sourced)'
     strip = f'<div class="strip">{strip_svg(c["by_century"])}<span>{stat}{span}{broad}<br>{share}{" · mostly " + trad if trad else ""}</span></div>' if c['pages'] else \
         '<div class="strip"><span>No page in the library prints these phrases.</span></div>'
     quotes = ''.join(f'<div class="ex"><q>{"… " if p["cut"][0] else ""}{quote_html(p["quote_marked"])}{" …" if p["cut"][1] else ""}</q><div class="cite">{cite(p)}</div></div>' for p in n['passages'][:3])
@@ -397,7 +419,7 @@ parts.append(f'''<div class="wrap"><header class="paper"><p class="eyebrow">An A
 </header>
 <p>The <a href="/aliveness">Atlas of Aliveness</a> collects passages in which something is felt or said to be alive. This page is its vocabulary. Each entry gives a word in the scripts the sources use, the tradition and century it belongs to, a short account of what it meant, a strip showing how many pages in the library use it by the date of the work, and two or three passages to read, each linked to its page.</p>
 <p>The entries are grouped by the five senses the atlas uses: feeling alive, the world as alive, made things as alive, the inhabited world, and prolonged life (more time in the life one has). Under each sense come the principles said to make things alive, the doctrines and schools that held them, the practices that cultivated them, the states they produced, and their opposites. An entry that belongs to more than one sense is listed under its first.</p>
-{('<div class="strip">' + strip_svg(baseline['by_century']) + '<span>The library itself: pages of ' + fmt(baseline['books']) + ' readable books by century of the work. Every strip below leans toward the 16th and 17th centuries partly because the library does.</span></div>') if baseline else ''}
+{('<div class="strip">' + strip_svg(baseline['by_century']) + '<span>The library itself: pages of ' + fmt(baseline['books']) + ' readable books by century of the work, dated by when the work was written (' + str(bl_sourced) + '% sourced). Every strip below leans toward the 16th and 17th centuries partly because the library does.</span></div>') if baseline else ''}
 <p>Each relation names its source. A small <sup style="color:var(--sage-dark);font-family:var(--ff-ui);font-size:10px">p</sup> means a page in the library states it, and the passage is quoted in the data. Relations without the mark are standard scholarly background and have not yet been found stated in the library's own books.</p>
 <nav class="toc" aria-label="Sections"><a href="#chains">Lines of descent</a>{"".join(f'<a href="#s-{s}">{E(seed["senses"][s])}</a>' for s in SENSE_ORDER)}<a href="#method">How this was made</a><a href="#data">Data</a></nav>
 <h2 id="chains">Lines of descent</h2>
@@ -440,13 +462,15 @@ for n in out_nodes:
     for k, v in n['counts']['date_basis_pages'].items():
         basis_tot[k] += v
 bt = sum(basis_tot.values()) or 1
-basis_line = ', '.join(f'{k.replace("_", " ")} {round(100 * v / bt)}%' for k, v in basis_tot.most_common())
+BASIS_LABEL = {'author_lifespan': "the author's lifespan", 'model_knowledge': "the model's knowledge (unsourced)", 'wikidata': 'Wikidata',
+               'title_page': 'the title page', 'colophon': 'the colophon'}
+basis_line = ', '.join(f'{BASIS_LABEL.get(k, k.replace("_", " "))} {round(100 * v / bt)}%' for k, v in basis_tot.most_common())
 parts.append(f'''<h2 id="method">How this was made</h2>
 <ul class="lim">
 <li><b>Concepts.</b> {T["nodes"]} entries were chosen by hand to cover the five senses ({", ".join(f"{v} {k}s" for k, v in T["nodes_by_kind"].items())}). The account of each, its tradition and its era are scholarly background written by {MODEL_BG}, not findings from the corpus.</li>
 <li><b>Words.</b> The spellings in original scripts are checked against the terms translators tagged on 5.56 million pages (the page-terms harvest). Other spellings and translations come from the library's curated concept list where one exists, or from terms that share a translator's gloss, judged one by one: a variant is the same word, an equivalent is another language's word for it, and a related term is a neighbour that is never merged with it.</li>
 <li><b>Counts.</b> A page counts if its text or translation prints one of the entry's search phrases (listed in the data). Broad phrases (death, vigour, longevity, Daoist, spiritus) count every use, including ones that have nothing to do with aliveness, and are marked. Chinese phrases match single characters, so 氣 counts every page that prints it.</li>
-<li><b>Dates.</b> The strips place pages by the date of the WORK, not the printed edition, where the catalogue gives one; otherwise by the edition. Across all entries the dates come from: {basis_line}. A 1950 edition of a Daoist classic with no work date counts in the 20th century. Only the 1,000 books with the most matching pages are dated for each entry.</li>
+<li><b>Dates.</b> The strips place pages by when the WORK was written, not when the edition was printed: a 1950 edition of a Daoist classic counts in the century the classic was composed. Each book's work date carries its basis. It is <i>sourced</i> when it comes from Wikidata, from the author's documented lifespan (the work placed within the author's adult life), or from the book's title page or colophon; otherwise it is the dating model's own knowledge of the work, unsourced. Across all entries the dates come from: {basis_line}. The edition year of every book is kept beside its work date in the data. Only the 1,000 books with the most matching pages are dated for each entry.</li>
 <li><b>Passages.</b> Candidate pages were drawn from live books, spread across centuries, and a reader chose the two to five that say what the concept is or what was done with it. Every quotation is word for word from the page's English translation; words in [brackets] are the translator's glosses.</li>
 <li><b>Relations.</b> {T["edges"]} relations of six kinds ({", ".join(f"{v} {k}" for k, v in T["edges_by_type"].items())}). For each, the library was searched for pages naming both ends, and a judge read up to six such pages to decide whether one states the relation. {pb} do; the remaining {T["edges"] - pb} rest on scholarly background, named as such in the data.</li>
 </ul>
