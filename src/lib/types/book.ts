@@ -276,6 +276,8 @@ export interface Book {
     run_id?: string;
     dated_at?: Date;
     edited_by?: string;
+    // quality flags the dating runs set, e.g. 'why_disagrees' (the reason would date the work >50 y away), 'outside_author_window'
+    checks?: string[];
   };
 
   // KDP publishing score
