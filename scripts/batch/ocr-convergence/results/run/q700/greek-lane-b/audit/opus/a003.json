@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6953a88d77f38f6761bd1a5a",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Texts are essentially identical; X correctly reads 'stereotyparum' where Y has 'stereotyporum', a trivial difference."
+ },
+ {
+  "item_id": "69938d895d28b693146d023a",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the full preface text ('Officio pietatis satisfeci ... usque ad verba') identically apart from line breaks and small-cap numerals."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1ec3",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads the apparatus 'v. 68. οὖν omitt.' as 'ἐν omitt.', the cross-reference 'cf. v. 37. 44.' as '57', and 'οὐκέτι' as 'ἐκέτι'; Y has these right (though it gives 'ἔμελλεν' for 'ἤμελλεν')."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee60f",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Same wording; Y mis-accents 'στύπτηρία' (printed 'στυπτηρία'), otherwise identical."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a9",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf is a chapter list on body parts (e.g. 'ε: περὶ τῶν μαγούλων', 'περὶ δέρματος'), which X roughly follows; Y makes up unrelated headings such as 'περὶ τῶν δούλων' and 'περὶ ἀγάπης'."
+ },
+ {
+  "item_id": "69938d705d28b693146cfa43",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Same text in both; X has 'adscendens' for printed 'asscendens', and Y adds a 'CAP. X.' heading to the Latin column that is not printed there; neither matters."
+ },
+ {
+  "item_id": "69b21f344522d8c1db3be246",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Same Plutarch text; Y also records the margin number '387' and X keeps the line numbers inline, both trivial."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f675ab",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X gives page '571' for printed 671, reads 'Ὅσης δὲ ὄλεθρος' for 'Ὅσος', and puts the ΛΟΓΟΣ ΠΕΜΠΤΟΣ section before the right column; Y keeps the reading order but has its own small slips ('ἐπιδείξασθαι' for 'ἐπιδεῖξαι', 'παραιγεῖ')."
+ },
+ {
+  "item_id": "69938d895d28b693146d03e4",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Identical Alexiad text and apparatus; the only difference is X's 'κουλά' against the printed 'κουλᾶ'."
+ },
+ {
+  "item_id": "69938d705d28b693146cfa76",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Both have scattered single-word misreadings of the cursive Greek (X 'ὑψέλυρος', 'αἴθεριος'; Y 'αὐτὰρ' for 'αὐτῷ', 'ἀράσσετο'), with no lines missing from either."
+ }
+]

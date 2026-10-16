@@ -1,0 +1,148 @@
+[
+ {
+  "item_id": "69938d705d28b693146cfa43",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "adds a '### CAP. X.' heading in the Latin column — image has only the spaced 'TESTIS' initial there",
+   "'voce.' placed at end of v.6 — image puts 'voce.' at start of the v.7 line"
+  ],
+  "b_errors": [
+   "'qua Christus dixit' — image reads 'quæ' (æ ligature), minor"
+  ],
+  "note": "Differences are ligature/ampersand conventions, marginal-mark glyphs and a heading placement; the text of both columns agrees with the image."
+ },
+ {
+  "item_id": "69938d705d28b693146cfa76",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "l.133 'ἐκτὸς κόσμου' — image 'ἔκτοθι κόσμου'",
+   "l.144 'ἐπ’ ἠῶ ὑψέλυρος' — image 'ἐπ’ ἠῢ ὑψ…μενος'"
+  ],
+  "b_errors": [
+   "'παρεστάμενος' — image 'παριστάμενος'",
+   "'ἐν ἄασι' — image 'ἐν οὔασι/ὤασι'",
+   "'αἴθελος ἠχώ' — image 'αἴθερος'",
+   "'ἀράσσετο' — image 'ἀράσσεται' (abbreviated)",
+   "l.137 'αὐτὰρ' — image 'αὐτῷ'"
+  ],
+  "note": "Checked each verse span: A misreads two words, B misreads five, so A is the better text overall."
+ },
+ {
+  "item_id": "69938d705d28b693146cfb35",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "note 16 lemma 'ἐξερέων ἀτρεκέως' — image 'τοῦτό σοι ἀτρεκέως'",
+   "note 20 'κερδέας' — image 'κεράσας'",
+   "note 22 'δι’ ὄγκου πατρὸς ἀειτόκου' — image 'δίχα πατρὸς ἀεξιτόκου'",
+   "note 36 drops 'καθαρσίο λοετροῦ' twice (end of quoted line and of 'Πνεύματος … πέλει')"
+  ],
+  "b_errors": [
+   "l.2 'κρίμα γαῖαν' — image 'κρίμα τοῦτον'",
+   "note 18 'ἢ δευτέρου' / 'ἢ ἐκ δευτέρου' — image 'ἐκ δευτέρου' / '& ἐκ δευτέρου'",
+   "notes 36–38 'ἀμεμφέϊ' (×3) — image 'ἀμειδ…/ἀμειλίκτῳ'-type word",
+   "last line 'ἀμεμφέϊ τινὶ τεκνοσύνῃ' — image '…οιο τεκούσης'",
+   "'τόντοιο' — image 'τόκοιο'"
+  ],
+  "note": "Each text has its own Greek misreadings that change the quoted lines (A drops a phrase, B invents a line ending), so neither is clearly better."
+ },
+ {
+  "item_id": "69938d705d28b693146cfbe8",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "note 28 first 'ἐπερχόμενα' — image 'ἐρχόμενα' (contrast with Theophylact's ἐπερχόμενα lost)",
+   "Dionysiaca l.1 'κέντρου ἀκωκῇ' — image 'κέντορι θυμῷ'",
+   "l.2 'μύθων ἀκοντιστῆρες' — image 'μύθῳ ἀκοντιστῆρι'",
+   "catchword 'εἶπε-' — image '43 — ἐπι-'"
+  ],
+  "b_errors": [
+   "'Sed ἀνεμοσκεπὴς tum legendum esset' — image 'ἀνεμόσκεπις' (changes the argument)",
+   "'τῷ ἄλσος' — image 'τῷ ἄλσει'",
+   "note 28 'ἐποχόμενα' — image 'ἐρχόμενα'",
+   "'ὅσα' — image 'ὅσσα'; 'Ἀρείας' — image 'Ἀρείης'",
+   "'στόμα θάρσυ' — image 'στόμα θοῦρον'"
+  ],
+  "note": "A errs mainly in the Dionysiaca quotation; B breaks the note-20 argument by reading the proposed emendation as the rejected form and has more Greek misreadings."
+ },
+ {
+  "item_id": "69938d705d28b693146cfc03",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "note 17 lemma and 'pro … νύκτα' 'καὶ νύκτα' — image 'κατὰ νύκτα' (abbr.); likewise 'νύκτα καὶ σκοτίην'",
+   "'φευγομένοις' — image 'φθεγγομένοις'",
+   "'ἔδευκτο' — image 'ἔδεκτο'",
+   "'λιθοώδεϊ' — image 'λιθώδεϊ'"
+  ],
+  "b_errors": [
+   "note 5 lemma 'μυχὰ θυρίστου' — image 'μοχλὰ θυρέτρ…'",
+   "'τῶν μνημείων' — image 'τοῦ μνημείου'",
+   "Homer quotation replaced by a different line ('μή νύ τοι οὐ χραίσμῃσιν…') — image 'οὐδέ κ’ ὀχῆας ῥεῖα μετοχλίσσειε θυράων ἡμετεράων'; also 'Iliados α' for 'ἰλ. ω'",
+   "note 16 lemma 'κενοῖο' — image 'κενεοῖο' (the note's point)",
+   "'ἀνδρῶν' — image 'ἀνδρεσσι'"
+  ],
+  "note": "B substitutes a different Homeric line and misreads the note-16 lemma; A's errors are smaller (abbreviation κατὰ read as καί, a few words)."
+ },
+ {
+  "item_id": "69938d705d28b693146cfc06",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'τοῦ κήπου … ἐκείνης' — image 'ἐκείνου'",
+   "'ἐρέειν φυτηκόμον' — image 'ἐρέεινε'",
+   "note 74 'ἔκδοθι τύμβου' — image 'ἔκτοθι'",
+   "'cultura plantarum' — image 'culturæ'"
+  ],
+  "b_errors": [
+   "note 58 lemma 'ὑπὲρ κεφαλῆς' — image 'ὑπὲρ Χριστοῖο καρήνου'",
+   "'Κοίρανε μὴ ἐλέησον' — image 'μου ἐλέησον' (reverses sense)",
+   "'ἐλάφελζε' (×2) — image 'ἐλάφριζε'",
+   "'ῥαίνει' — image 'ῥαίνων'"
+  ],
+  "note": "B rewrites the note-58 lemma and turns 'have mercy on me' into 'do not have mercy'; A has only small misreadings."
+ },
+ {
+  "item_id": "69938d705d28b693146cfc0a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "note 139 lemma 'καὶ πλέον ἦσθα ἄπιστος' — image 'καὶ τεὸν ἦθος ἄπιστον'",
+   "'Not. 1, 52' — image '11, 52'",
+   "'ἀνεμώδει γείνατο ὀδμῇ' — image '…γούνατος ὁρμῇ'",
+   "'ὡς κἀκεῖνος ὁ Κηφᾶς' — image 'ὥσπερ γὰρ ὁ Κηφᾶς'",
+   "'ἢν τάχα φάῃς' — image 'ἐν τάχα φαίης'"
+  ],
+  "b_errors": [
+   "Greek throughout stripped of breathings and polytonic accents (e.g. 'υποκάρδιον όγκον απλήστ.') — image is fully accented",
+   "note 147 lemma 'αλλά δ' παύρα' and 'sine δ'' — image 'ἀλλὰ δὲ θαύμ.' and 'sine ἦν'",
+   "'της ερμηνείας αυτής ο ονομαστής' — image '…ταύτης τοῦ ὀνόματος'",
+   "note 149 'θείην' — image 'θέατ.'",
+   "'ως δηλοί το όνομα' — image 'ὡς δηλοῖ καὶ τοὔνομα'"
+  ],
+  "note": "B degrades all of the Greek and misreads the note-147 lemma and its comment; A is mostly right but has a wrong note-139 lemma and a few misread words."
+ }
+]

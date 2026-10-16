@@ -1,0 +1,447 @@
+[
+ {
+  "item_id": "69b21d4addb4fa7c305b4ab0",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "margin begins 'tarent, quibus' — image 'tarint, quibus'"
+  ],
+  "b_errors": [
+   "entire text is page 26 (header PLATONIS, 'nam propter temporis longinquitatem...') — image is page 25 TIMAEVS ('ἤπειρον, τὴν περὶ τὸν ἀληθινὸν...')"
+  ],
+  "note": "Image is p. 25 TIMAEVS with Greek column, Latin column and commentary matching A; B transcribes a different page (26)."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4ab2",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "entire text is page 28 (PLATONIS, 'SECVNDA hypothesis...') — image is page 27 TIMAEVS ('λόγων, καὶ ἡσυχίαν ἄγοντα ἀκούειν')"
+  ],
+  "note": "Image is p. 27 TIMAEVS, sig. CCCC.ii, matching A; B is the text of the following page."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4add",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is page 71 TIMAEVS ('χίαν καὶ τὸ πᾶσι κοινῇ...') — image is page 70 PLATONIS ('que virorum seorsim sedem...')"
+  ],
+  "b_errors": [],
+  "note": "Image is p. 70 PLATONIS with Latin left and Greek right columns matching B; A is the next page."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b9038",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "35: 'τοῦ ὅρου θέσεως' — image 'τῶν ὅρων θέσεως'",
+   "12: 'Περὶ τῆς αὐτῆς' — image 'τοῦ αὐτοῦ'",
+   "14: 'συλλογισμός' — image 'συλλογισμόν'",
+   "15: 'Περὶ τῶν ἐξ' — image 'τοῦ ἐξ'",
+   "adds margin page numbers 650–675 from the facing leaf"
+  ],
+  "b_errors": [
+   "35: 'τῶν ἀναγκαίων' — image 'τοῦ ἀναγκαίου'",
+   "41: 'τὸν συλλογισμὸν' — image 'τοὺς συλλογισμοὺς'",
+   "42: 'κανόνες' — image 'κανόνος'",
+   "1: 'Τίνες' — image 'Τίνος'"
+  ],
+  "note": "Each text gets some abbreviated Greek endings right that the other gets wrong; numbers and entries otherwise agree."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b906b",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἀρχῆθεν' — image 'ἐξ ἀρχῆς'",
+   "'ἥντινα οὖν' — image differs (B's reading closer)",
+   "'δυνατόν ἐστιν εἰς' — image has no 'ἐστιν'",
+   "'αὐτῆς εἶναι' — image 'αὐτῶν'"
+  ],
+  "b_errors": [
+   "'Ἐπὶ δὲ τῶν τῶν ἐναντίων' — image 'Ἔτι ἐπὶ μὲν τῶν ἐναντίων'",
+   "'καὶ ἐκ λευκὸν' — image 'καὶ τὸ λευκὸν'",
+   "'ἔτε ψεῦδος' — image 'οὔτε'"
+  ],
+  "note": "Checked differing spans on the leaf; each has a few wrong words the other gets right."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b9072",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'λέγω, δ' οἷον προσσημαῖνον χρόνον' — image 'λέγω δ' ὅτι προσσημαίνει χρόνον'",
+   "'ἀεὶ τῆς καθ' ἑτέρου' — image 'τῶν καθ' ἑτέρου'",
+   "'οὐδὲ ἐν τῷ μῦς ὁ ῦς' — image 'οὐδὲ γὰρ ἐν τῷ μῦς τὸ ῦς'"
+  ],
+  "b_errors": [
+   "margin number 3 omitted and 1 misplaced"
+  ],
+  "note": "The differing Greek words match B on the image; A has several wrong words."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b90b3",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'κατηγορεῖται καθ' αὑτῶν' — image 'κατηγορεῖται. καὶ τούτων'",
+   "'μὴ τὰ ἑνὶ ἑπόμενα' — image 'τινὶ'",
+   "'διὰ γὰρ τῆς καθόλου προτάσεως' — image 'τῶν καθόλου προτάσεων'"
+  ],
+  "b_errors": [
+   "'οἷς δ' αὐτὸ μὴ ἐνδέχεται, ἐκκληπτέον' — image 'οὐκ ἐκληπτέον' (negation dropped)",
+   "'τὸ ἀρνητικόν' — image 'τὸ στερητικόν'",
+   "'ποτε λευκὸν' — image 'ποτε τὸ λευκὸν'"
+  ],
+  "note": "B drops 'οὐκ', reversing the sense, and has another wrong word; A has its own case and word errors."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b90d6",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'εἰ μὲν οὖν τοῖς' — image 'ἐν μὲν οὖν τοῖς'",
+   "'εἰ δὲ τοῖς ἀντιστρέφουσιν' — image 'ἐν δὲ τοῖς'",
+   "'ἀνάγκη καὶ τὸ α' — image 'ἀνάγκη τὸ α'"
+  ],
+  "b_errors": [
+   "'τῷ μέσῳ τὸ ἔσχατον' — image 'τὸ τρίτον'",
+   "'καὶ οὕτω τὸ α τῷ β' — 'οὕτω' not on image",
+   "'ἐν τῷ ἑτέρῳ' — image 'ἐν ἑτέρῳ'",
+   "'δείκνυσθαι', 'δειχθήτω' — image 'δεικνύναι', 'δεδείχθω'",
+   "'εἰ δὲ μὴ ὄντος' / 'εἴτε τῶν τι' — image 'εἰ οὖν', 'εἴτε τούτων τι'"
+  ],
+  "note": "Most differing spans follow A on the image; B adds words and changes several terms."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b90d7",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἡ ἑτέρα πρότασις' — image 'ἡ γ α πρότασις'",
+   "'δείκνυσθαι γίνεσθαι' — image 'ἐνδέχεται γίνεσθαι'",
+   "'δέοι συμπεράνασθαι' — image 'δεῖ'",
+   "'τῆς προτάσεως' — image 'τῶν προτάσεων'",
+   "'μένοις' — image 'μέναις'"
+  ],
+  "b_errors": [
+   "'ὥστε ταύτην' — image 'ὥστ' ἂν ταύτην'",
+   "'ἐὰν δὲ ληφθῇ' — image 'ἐὰν οὖν'",
+   "'ληφθέντος τὸ γ' — image 'τοῦ γ'"
+  ],
+  "note": "B matches the image on the substantive spans; A substitutes several words."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b918b",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'τὸν οὖν τὸν δὲ τόπον' — image 'τὸν αὐτὸν δὲ τρόπον'",
+   "'ὃ ἔν τις οὕτως, οὐκ ἔστι' — image 'ὁ τόπος οὗτος, οὐκ ἔστι'",
+   "'ἐπεὶ τὸ ζῆν ἔστιν ἴδιον ζώου ἢ τὸ αἰσθάνεσθαι' — image 'ἐπεὶ ἧττόν ἐστιν ἴδιον ζώου τὸ αἰσθάνεσθαι ἢ τὸ ζῆν'",
+   "'Ἐπεὶ δὲ ἐκ' — image 'Ἔπειτ' ἐκ'"
+  ],
+  "b_errors": [
+   "'τὸ αἰσθέσθαι' (twice) — image 'τὸ αἰσθητὸν'",
+   "'ἀνθρώπῳ τὸ ἐπίστασθαι' — image 'ἀνθρώπου'",
+   "'κατασκευάζοντε' — image 'κατασκευάζοντα'"
+  ],
+  "note": "A garbles two phrases and inverts an example; B's errors are fewer and smaller."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b920c",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'τοῦτο γὰρ ἦν ἴσον' — image 'τοῦτο γὰρ ἂν ἦν'",
+   "'αἴτιον τοῦδε μὴ ᾖ' — image 'ἄνευ τοῦδε'",
+   "'καὶ ὃ ἧττον' — image 'καὶ τὸ ἧττον'"
+  ],
+  "b_errors": [
+   "'ὑπερέχοντα δὲ αὐτῶν' — image 'τοῦ αὐτοῦ'",
+   "'ὑπερέχειν καὶ τὸ μεῖζον' — image 'τοῦ μείζονος'",
+   "'τοῦτο γὰρ αἴτιον' — image 'ἂν ἦν'",
+   "'οὗ γὰρ αἴτιον ἡ ἀρχὴ' — image 'ἄνευ γὰρ αἰτίου ἢ ἀρχῆς'",
+   "'καθ' ὃ ἐ-' garbled — image 'καθ' αὑτό'"
+  ],
+  "note": "A matches the image on most substantive spans; B has several sense-changing misreadings."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b924d",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἐπιβουλία γὰρ διὰ τὸρον' — image 'θατέρου'",
+   "'εἴ τις χείροσι τύχοι' — image 'γείτοσι'",
+   "'τῆς δόξης' — image 'τῶν δοξῶν'",
+   "'αἱ δὲ γνῶμαι' — image 'αἱ γὰρ'",
+   "garbled marginalia ('hyeligibilis', 'isantius')"
+  ],
+  "b_errors": [
+   "adds Greek marginal summaries not on the leaf ('πῶς δεῖ τὰς γνώμας θηρεύειν', 'ἠθικοὺς ποιεῖ τοὺς λόγους...')",
+   "'διὸ ὧδε' — image 'ἢ ὧδε'",
+   "'τίνα τρόπον' — image 'τόπον'",
+   "'περὶ τῆς προαιρέσεως' — image 'τῶν προαιρετῶν'",
+   "'τῶν τῆς διαλεκτικῆς' — image 'τῶν διαλεκτικῶν'"
+  ],
+  "note": "B is right on several key words but invents Greek margin notes; A has sense-changing errors such as 'χείροσι'."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b92e2",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'τοῦ τί ἐστιν εἶναι' (twice) — image 'τοῦ τί εἶναι'"
+  ],
+  "note": "The errata leaf reads 'τί εἶναι'; B inserts 'ἐστιν' into the quoted reading twice."
+ },
+ {
+  "item_id": "6953a88d77f38f6761bd19ec",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "'Matthaei' — image 'Matthaeii'"
+  ],
+  "note": "Differences are hyphenation and sig placement plus one spelling letter."
+ },
+ {
+  "item_id": "6953a88d77f38f6761bd1a5a",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'stereotyporum' — image 'stereotyparum'"
+  ],
+  "b_errors": [],
+  "note": "Only a one-letter difference and placement of the signature line; texts otherwise identical."
+ },
+ {
+  "item_id": "6953a88d77f38f6761bd1b1f",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'א* B*' — image shows a sigil and 'B*' (minor)"
+  ],
+  "b_errors": [
+   "v.16 'al fere³⁰' — image 'fere²⁰'",
+   "v.20 'al fere³⁰' — image 'fere⁵⁰'",
+   "v.20 'Chrmose c' — image 'Chrmosc 6'",
+   "v.21 'c corozain' — image 'c corozaim'"
+  ],
+  "note": "Apparatus numbers and sigla follow A on the image; B misreads several numbers."
+ },
+ {
+  "item_id": "6953a88d77f38f6761bd1b45",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "v.24 'BC א(sec. loc.)IKMSUVΔ' — image 'BC G(sec. loc.)IKMSUVΔ'",
+   "v.24 '-πον c. CEFGHKLMSUVXΔ' — image 'CEFGHIKLMSUVXΔ'",
+   "v.25 'EFGHKLMSVXΔ' — image 'EFGHIKLMSVXΔ'",
+   "'ut vditr' — image 'vdtr'"
+  ],
+  "b_errors": [
+   "'syr hb' — image 'syrhr'",
+   "'ff² ain' — image 'ff²· am'",
+   "'Chrmose' / 'c corozain' type misreadings of small sigla",
+   "v.23 'd μετα τρεις' — image 'D'"
+  ],
+  "note": "Small apparatus sigla split between the two; the fine superscripts are hard to read at this resolution."
+ },
+ {
+  "item_id": "6953a88d77f38f6761bd1b91",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'etmas μl' — image 'etmss pl'",
+   "'om υι. ει τ. θε.' — image 'om ει υι. ει τ. θε.'",
+   "'ch syrr syrhr' — image 'ch syr syrhr'",
+   "'א H al' — image 'AH al'"
+  ],
+  "b_errors": [
+   "'ADEFGIJKLMSUVA' — image 'ADEFGHKLMSUVA'",
+   "'Chrcd' — image 'Chred'",
+   "'plus⁶⁰' — image 'plus⁸⁰'"
+  ],
+  "note": "Main text agrees; apparatus sigla and superscripts have small errors in each text."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f67594",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ὑπνωτέρους' — image 'ὑπτιωτέρους'",
+   "'ἴδοις τις' — image 'ἴδοι τις'",
+   "'οὐκ εὑρίσκει' — image 'οὐχ'",
+   "footnote g 'Alii τρῶσαι' — image 'Unus'",
+   "'ἦ τοῦ πυρὸς' — image 'ἡ'"
+  ],
+  "b_errors": [
+   "'ἐκείνοις τις πόνοις' — image 'τοῖς πόνοις'",
+   "'διεειδὲς' — image 'διειδὲς'"
+  ],
+  "note": "B matches the image on more of the differing words; footnote placement is a convention difference."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f675ab",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "page numbers '571', '572' — image '671', '672'",
+   "reading order: places Λόγος Ε΄ heading and §α΄ before the second column of Book IV text",
+   "'Ὅσης δὲ ὄλεθρος' — image 'Ὅσος'"
+  ],
+  "b_errors": [
+   "'παραιγεῖ' — image 'παραινεῖ'",
+   "'ἐπιδείξασθαι' — image 'ἐπιδεῖξαι'"
+  ],
+  "note": "B has the right page numbers and reading order; A gets the page numbers wrong and puts the text out of order."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f675ce",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'(Luc. 6. 14)' — image 'Luc. 2. 14'",
+   "footnotes inserted mid-word ('di- ... ligentia')"
+  ],
+  "b_errors": [],
+  "note": "Other differences are æ/ae and hyphenation; the scripture reference reads 2. 14 on the image."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f67638",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "footnote 'cod. Colb. 3035' — image '3055'",
+   "'παρεξήμεθα' — image 'παρεξόμεθα'",
+   "'θάλασσαν' (col. 2) — image 'θάλατταν'",
+   "'οὐχὶ ὅπλοις', 'οὐχὶ ἁπλῶς' — image 'οὐχ'"
+  ],
+  "b_errors": [],
+  "note": "All checked spans, including the codex number, match B."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f6775b",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'Col. 467, l. 39' — image 'l. 59'; 'Col. 493' — image '495'; 'l. 33' — image 'l. 53' (several line/column numbers wrong)",
+   "'Ol. παλαχοῦ' — image 'πολλαχοῦ'",
+   "'Ἐπελάγετο. Ol. ἐπελάσσεται' — image 'Ἐνέπληστο. Ol. ἐμπέπλησται'",
+   "'Ζερεσί' — image 'Ζημιοῖ'-type reading",
+   "'Col. 523, l. 28' (Boisius) — image '525'"
+  ],
+  "b_errors": [
+   "'Καὶ θανόντος' — image 'θανούσης'",
+   "some tiny-type Greek variants still misread"
+  ],
+  "note": "B's column/line numbers and most Greek lemmata match the image; A has many wrong numbers."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f67764",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἅρματι κεκοσμημένῳ' — image 'ἅρματι πορφυρο-... χρυσοχαλίνων' (word invented)",
+   "'δικτυωτῶν θυρῶν' — image 'δικαστηρίου θυρῶν'",
+   "'Col. 1063' — image '1003'",
+   "'anno circiter 349' — image '369'",
+   "'XLII-LIV' — image 'LIII-LIV'"
+  ],
+  "b_errors": [
+   "'quoniam admodum' — image 'quemadmodum'",
+   "'καὶ τὰ τῶν πτωχῶν τέρπονται καὶ νεομηνίας' — image 'κατὰ τῶν ... τηρούντων τὰ νεομηνίας'",
+   "'ἐρᾶται, emendandum αἴρεται' — image 'Ἐρῶνται ... αἱρῶνται'",
+   "'Sequuntur ejus' — image 'Conciones ejus'",
+   "'XXIII-XXIV' — image 'XXII-XXIV'"
+  ],
+  "note": "Each has wrong numbers or words that the other gets right."
+ },
+ {
+  "item_id": "69938d895d28b693146d0238",
+  "pick": "cannot_tell",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The only difference is the handwritten date under MEMORIAE; the scrawl could read 1830, 1831 or 1850 and the image does not settle it."
+ }
+]

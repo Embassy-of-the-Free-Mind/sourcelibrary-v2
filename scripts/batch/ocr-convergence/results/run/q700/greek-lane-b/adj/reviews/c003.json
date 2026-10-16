@@ -1,0 +1,441 @@
+[
+ {
+  "item_id": "69938d895d28b693146d023a",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Checked the whole page: the only differences are line-break hyphenation and small-caps vs capital Roman numerals, both faithful."
+ },
+ {
+  "item_id": "69938d895d28b693146d035a",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 15: 'ἀποστόλων' — image 'ἀποστολέων'",
+   "header 'ΑΝΝΗΣ ΚΟΜΝΗΝΗΣ' is show-through from the facing page, not a header of this leaf"
+  ],
+  "b_errors": [
+   "line 11: 'αὑτοῦ' — image 'αὐτοῦ' (breathing only)"
+  ],
+  "note": "The image reads ἀποστολέων at line 15 as B has it; the rest is identical apart from line breaks."
+ },
+ {
+  "item_id": "69938d895d28b693146d03e4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "line 5: 'κουλά' — image 'κουλᾶ' (accent)",
+   "apparatus set as a table, but reads in the right order row by row"
+  ],
+  "note": "The text matches the image in both; differences are apostrophe forms, one accent and the layout of the apparatus."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a1",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "first column (damaged left edge) readings uncertain; several entries likely misread"
+  ],
+  "b_errors": [
+   "third column: 'περὶ γενέσεως κόσμου' — image 'περὶ θέσεως κόσμου'",
+   "replaces most legible entries of columns 2 and 3 with '...' or guessed generic titles not on the leaf (e.g. 'περὶ ἀρετῆς', 'περὶ κακίας')",
+   "drops entries such as 'περὶ νεότητος γήρως … ἀναπνοῆς ζωῆς θανάτου' and 'περὶ δαιμόνων' that are clearly visible",
+   "margin note rendered 'Συλλογὴ ἀρετῶν … μετὰ τὰ φυσικά' — image reads 'Συλλογὴ διαφόρων …'"
+  ],
+  "note": "A follows the visible entries of the third column line by line (θέσεως κόσμου, νεότητος γήρως, δαιμόνων). B's list is mostly placeholders or invented titles."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a2",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "gives one invented sentence plus an editorial summary ('The text continues with dense theological discourse…') in place of the ~45 lines of the page",
+   "stamp described as 'BIBLIOTECA VATICANA' — image shows a Bodleian oval stamp"
+  ],
+  "b_errors": [
+   "fluent letter text (Michael the bishop, completion of a book) that I could not match to the cursive on the image; almost every word tagged unclear and likely invented",
+   "line count and layout do not correspond to the leaf"
+  ],
+  "note": "The dense abbreviated cursive cannot be checked word by word. A is clearly a summary rather than a transcription. B's smooth letter does not match the visible letter shapes where I could test it."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a4",
+  "pick": "neither",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "gives no text at all, only a statement that the page is undecipherable",
+   "page number '9' — image shows '3' (folio 'b')"
+  ],
+  "b_errors": [
+   "text is Romans 12 copied verbatim from the New Testament, not this leaf",
+   "page number '6' — image shows '3'"
+  ],
+  "note": "The leaf is dense cursive commentary. A transcribes nothing, and B substitutes a known Bible chapter that does not match the page."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a7",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "mostly ellipses with fluent theological phrases (e.g. 'οὐκ ἔστιν ἡ βασιλεία τοῦ θεοῦ βρῶσις καὶ πόσις') that I could not find on the leaf",
+   "covers only fragments of ~40 lines of text"
+  ],
+  "b_errors": [
+   "degenerates into the phrase 'τῶν ἐν αὐταῖς ἀναφανέντων' repeated over a hundred times",
+   "describes a headpiece and two columns, which belong to the facing page, not this leaf"
+  ],
+  "note": "B is a repetition loop. A is fragmentary, and its few full sentences cannot be confirmed in the faded cursive."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a8",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "individual readings in the dense cursive are uncertain (e.g. opening 'Τῶν προούσης γνώσεως…' and the chapter list at the end)"
+  ],
+  "b_errors": [
+   "main text is a fluent preface that does not match the leaf: it omits the visible list 'ὁ μέγας Βασίλειος … Γρηγόριος ὁ Νύσσης … Χρυσόστομος'",
+   "adds a long second paragraph (soul, humours, brain as acropolis) that is not on the page",
+   "title 'ΣΥΝΟΨΙΣ ΜΕΝΗ ΠΕΡΙ ΤΗΣ ΑΝΘΡΩΠΟΥ' — image 'συνόψεως … περὶ τοῦ ἀνθρώπου'"
+  ],
+  "note": "The image shows the Basil–Gregory of Nyssa–Chrysostom passage and the closing 'καὶ τί τὸ προφορικὸς λόγος' lines, which A has. B's text is invented."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a9",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "α: 'περὶ τῆς τῶν κεφαλαίων ἐπιγραφῆς' — image 'περὶ τῆς κεφαλῆς … ὀστῶν καὶ ῥαφῶν'",
+   "ε: 'περὶ τῶν δούλων' — image 'περὶ μαγούλων'",
+   "ϛ: 'περὶ τῶν ὧδε γινομένων' — image 'περὶ τῶν ὀδόντων ἄνωθεν καὶ κάτωθεν'",
+   "most chapter titles are garbled and lose the anatomical sense"
+  ],
+  "b_errors": [
+   "last entries (κϛ–λα) are misnumbered and appear to drop 'περὶ δέρματος τοῦ ὅλου σώματος'",
+   "opening lines partly garbled ('λάκε(...)')"
+  ],
+  "note": "The visible chapter titles are anatomical (κεφαλή, μάγουλα, ὀδόντες, τράχηλος), matching B. A's titles are mostly misreadings."
+ },
+ {
+  "item_id": "69938f995d28b693146d10ad",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "invents a marginal note 'Οὐρανὸς καὶ γῆ καὶ θάλασσα…' that is not on the leaf",
+   "opening lines about Michael Psellos and Christ do not match the first lines of the page"
+  ],
+  "b_errors": [
+   "middle lines: 'ὀφθαλμὸς χολὴ ὀδόντες' — image has 'αἷμα … φλέγμα χολὴ ξανθὴ καὶ μέλαινα' (as A reads it)",
+   "'τῇ δὲ ἵσταται, τῇ δὲ μάχεται' — image 'πῆ μὲν ἵσταται, πῆ δὲ μάχεται'",
+   "much of the text reads as fluent filler rather than this page"
+  ],
+  "note": "Each text matches the leaf only in patches: B near the top, A around the humours passage. Both have long stretches that do not correspond to the cursive."
+ },
+ {
+  "item_id": "69938f995d28b693146d11b2",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "some words in the patched area (lines 19–22) are uncertain"
+  ],
+  "b_errors": [
+   "opening lines ('συναπέλθοιεν εἰς μεγάλας ταύτας ἐπιχειρήσεις βασιλεῖς…') do not match the leaf, which begins '… μεγάλου τούτου ἐπιμελησαμένου βασιλέως'",
+   "omits the visible 'Τηλέμαχον', 'τόξον αὐτοῦ' and 'ὡς ἀκεστοῦ' lines and replaces them with other text",
+   "treats the stamp in the margin as a line of text"
+  ],
+  "note": "The first line, the Telemachus/bow lines and the last line ('εἰ μήτι οἱ φίλοι τοῦ καλοῦ … αἰσχύνης') follow A. B's text does not track the leaf."
+ },
+ {
+  "item_id": "69938f995d28b693146d1222",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "rubricated title line is only described, not transcribed",
+   "many individual words in this dense cursive probably misread"
+  ],
+  "b_errors": [
+   "opening ('πολεμίων ἐξήνεγκεν ὀθνείας…') does not match the first line 'πόλεμος εὕρηται …'",
+   "inserts a centred rubric 'Οὗτος ἐστὶν ὁ υἱός μου ὁ ἀγαπητός…' that is not on the leaf",
+   "the homily text before the rubric reads as invented filler"
+  ],
+  "note": "The first words, the 'λογ(χ)οφόροις' line and the layout around the red rubric follow A. B substitutes fluent invented passages."
+ },
+ {
+  "item_id": "69938f995d28b693146d1439",
+  "pick": "neither",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "gives no text: three bracketed placeholders in place of three columns of ~38 lines each"
+  ],
+  "b_errors": [
+   "column 1 is invented: a repetitive hymn on 'φῶς' that degenerates into loops ('ὦ πᾶσι φῶς καὶ σωτηρία')",
+   "columns 2 and 3 replaced by one-line notes"
+  ],
+  "note": "A transcribes nothing. B's first column is generated text that does not match the visible cursive and drops the other two columns."
+ },
+ {
+  "item_id": "6993882874305116d72cf9fc",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "book 9: 'Διογένης' — image 'διόδωρος'",
+   "book 6: 'Ἱππαρχία' — image 'ἵππαρχος'",
+   "book 7: 'Παναιτίδος' — image 'παναίτιος'",
+   "line 2: omits 'ἐν' ('τῶν ἐν ἑκάστῃ αἱρέσει')",
+   "omits folio number 7"
+  ],
+  "b_errors": [
+   "line 2–3: 'οὕτω μὲν διῄρηται' — image 'συναγωγὴ διηρκ…' as A reads it",
+   "book 7: drops 'κήτων', visible before 'ποσειδώνιος'"
+  ],
+  "note": "I compared the name lists against the image. B gets Diodorus, Hipparchus and Panaetius right, while A keeps Ceton and the 'συναγωγή' phrase that B drops or rewrites."
+ },
+ {
+  "item_id": "6993882874305116d72cfa03",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "margin: 'Amm. marcell. lib. xix.' — image 'non marcell. in dictione …' and 'Lucilius lib. xix.'",
+   "'integros tabu' — image 'spargens tabo'",
+   "'Dionis' — image 'in Pisone'",
+   "'modo ferae Grecis' — image 'medio fere Graeciae'"
+  ],
+  "b_errors": [
+   "'Ham ad eam oralandam' — image 'Nam ad eam conlaudandam'",
+   "'de pluribus nostro … nostra sunt' — image 'pluries notavit … vera sunt'",
+   "'Testem' — image 'Iterum'",
+   "'nationibus semota' — image 'disiuncta gentibus'"
+  ],
+  "note": "The image supports A in some lines (Iterum, pluries, vera, gentibus) and B in others (Lucilii, spargens tabo, in Pisone, medio fere Graeciae)."
+ },
+ {
+  "item_id": "6993882874305116d72cfa08",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Φανόδικος δέ, παρὰ τῶν Ἀθηναίων ὀφθῆναι λαφύρων ἁρπάσαντα' — leaf reads 'περὶ τὴν Ἀθηναίων θάλασσαν ἀνευρεθῆναι'",
+   "invents 'ἦλθεν πρὸς Ἀλέξανδρον' and the oracle verses do not match the leaf",
+   "last line 'φρονέοντ’ ἀριθμητικὰ τάδε τε' — leaf 'σοφὸν ἀστρονόμημα. τὰ δ’ ἑξῆς'"
+  ],
+  "b_errors": [
+   "garbled stretches a reader cannot use ('προστῆσ λαι καί γε εἰς πον σκέπτης ριμαι χρυσεται', 'ληξένησ κρεμδητων', 'στέε φοιβογέρωτας')",
+   "'ἀσπίδὲ', 'ὁ γυμνὸς ὑπὸ βραὸς', 'βορρᾶν' — leaf 'διὰ τί δέ', 'ἀγόμενος ὑπὸ γραός', 'βόθρον'"
+  ],
+  "note": "The leaf is Diogenes Laertius 1.32–34. B tracks it more closely in places (Βίαντι πεμφθῆναι, λεβεδίων … ὠνησαμένων) but is unreadable elsewhere. A is fluent but rewrites several sentences."
+ },
+ {
+  "item_id": "6993882874305116d72cfa0b",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 2–3: drops 'ἐν Πρωταγόρᾳ' and reads 'ἐξορᾷ' for 'ἔφορος'",
+   "drops 'Σόλωνα' at the head of Hermippus's list",
+   "'παγκράτη σάμιον, χείλωνα, ἕρμιππον' — image 'ἢ σισυμβρίνου, ἢ ὡς Ἀριστόξενος χαβρίνου'",
+   "'κἀργεῖον ἢ σκάβρων' — image 'κάβα ἢ σκάβρα'"
+  ],
+  "b_errors": [
+   "lines 1–2: 'ἧι καὶ Ἐπιχάρμου … οἱ μὲν ἓν τοῦτον κριτά' — image 'ἢ ἐφέσιον ἐγκρίνει καὶ ἐπιμενίδην τὸν κρῆτα'",
+   "'Ἑρμοφάνη' — image 'ἑρμιονέα', and drops 'ἀναξαγόραν'",
+   "'μηδὲ μεθέξεις γνώσεως ἐς ὄχλον ἰόντες' — image 'θέλεις νέεσθαι λεσχηνώτης'",
+   "'ποθίη λαμβάνει', 'γνωχευματι πρόσκειται' — image 'ποθὴ ἴσχει', 'οἱ μηδὲν γράφοντες'"
+  ],
+  "note": "B is right on Plato in the Protagoras, Ephorus, Kabas/Skabras and Solon. A is right on the first line and the end of the letter. Each drops or invents names."
+ },
+ {
+  "item_id": "6993882874305116d72cfa0c",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'τῷ τε ἑλλαδικῷ ἀρέσκω' — image 'πῶ τε Ἑλλάδα καὶ Ἀσίην'",
+   "last line: 'τὴν νῆσον ἀποχωρήσασθαι περὶ κτήσεως ἀλλήλων' — image 'τὴν ἐν Θρᾴκῃ Χερρόνησον προσκτήσασθαι'"
+  ],
+  "b_errors": [
+   "'Μιλήσιοι τυραννέονται, ἔχθου γὰρ ἅπαντας, οἳ σύμπαντας' — image 'τυραννεόμεθα, ἐχθαίρεις γὰρ πάντας αἰσυμνήτας'",
+   "'ἔπειτα νόμους ἔκληθη, οὓς ἄξονας φαμέν, διὰ τὸ διαστρέφεσθαι…' — image 'οὗτος ὁ νόμος ἐκλήθη σεισάχθεια. φανερὸν δὲ διατί. ἔπειτα τοὺς λοιποὺς νόμους ἔθηκεν'",
+   "'μηκέτι συμβουλεῦσαί τι … ἢ χεῖσθαι' — image 'εἴ τις ἔτι συμβουλεύσοι … μάχεσθαι'"
+  ],
+  "note": "The σεισάχθεια, the axones and the Salamis decree lines on the image follow A. B rewrites them into a different sense."
+ },
+ {
+  "item_id": "6993882874305116d72cfa11",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'διπλῆ δὲ δύει δίχομος νόος … ἰαίνων' — image 'γλῶσσα δέ οἱ διχόμυθος … γεγωνῇ'",
+   "'καὶ οὗτός ἐστι νόμος αὐτῷ διηγορεύεσθαι' — image 'ἐπὶ δὲ τῆς εἰκόνος αὐτοῦ ἐπιγέγραπται'",
+   "'ἔγραψε μὲν οὖν περὶ τῶν τεσσαράκοντα … πρὲξ μὲν Ἀθηναίων, καθαρὴν στρωφᾶς' — image 'ἤκμαζε … τὴν τεσσαρακοστὴν ἕκτην ὀλυμπιάδα … ἦρξεν Ἀθηναίων καθά φησι Σωσικράτης'"
+  ],
+  "b_errors": [
+   "line 1: 'τῶι οὐκ ἐᾶν τ’ ἴσην μὴ ἀποδοκιμάζειν' — image 'κτῶ, οὓς δ’ ἂν κτήσῃ μὴ ἀποδοκίμαζε'",
+   "lines 4–8: invents 'μέτρον γράψαι τόδε … μοῖρα κέχρηται τοῦ σεβαστοῦ' in place of the Mimnermus exchange ('αἲ γὰρ ἄτερ νούσων … ἔξελε τοῦτον') that A partly preserves",
+   "drops 'ἔγχος'; 'κομίσαντας εἰς τὴν νῆσον' — image 'ἀποκομίσαι αὐτοῦ τὰ ὀστᾶ εἰς Σαλαμῖνα'"
+  ],
+  "note": "A matches the image in the opening maxims and the Mimnermus verses. B matches it in the epigram, the statue inscription and the floruit lines."
+ },
+ {
+  "item_id": "6993882874305116d72cfa60",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ὠφελιών δὲ καὶ Πλάτωνος εἴρηκασι … ἐν παραμεῖναι' — image 'εὐφορίων δὲ καὶ παναίτιος εἰρήκασι … ἐστραμμένην εὑρῆσθαι'",
+   "'ἐν πολιτείᾳ' — image 'ἣν πολιτείαν'",
+   "'προταγορείου' — image 'πρωταγόρου'; 'αἰτιάμεται' — image 'ἐπιμέμφεται'"
+  ],
+  "b_errors": [
+   "'οὐκ ἠκρίβωται περὶ τὰ ἔξω κλινῶν τῶι δεσμωτηρίωι' — image '… ἐν τῷ δεσμωτηρίῳ περὶ τῆς φυγῆς συμβουλεύ-' (closer in A)",
+   "'φαιδολυπία' — image 'ἀπολογίᾳ'",
+   "'ἐγκρατοῦς' — image 'ξενοκράτους'; 'ἁμιρακῶδές' — image 'μειρακιῶδές'",
+   "omits 'τὸν τρόπον' (visible)"
+  ],
+  "note": "B gets Euphorion, Panaetius, Protagoras and ἐπιμέμφεται right. A gets the Apology, Xenocrates, μειρακιῶδες and τὸν τρόπον right."
+ },
+ {
+  "item_id": "6993882874305116d72cfaaa",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'οἷς κρατεῖον ὁ ἱστορεῖ' — image 'ὃς καὶ τοιόνδε ἱστορεῖ'",
+   "'ἐκπεσὼν ἐκ τῆς φορείας ἐν τῷ ἱματίῳ ὤν' — image 'ἀκούσας τῆς ἐπιβοῆς ἐξέδυ τῶν ἱματίων'",
+   "'καὶ Ἔσοπος. ἑρμηνεύσας' — image 'καὶ Ἱππόβοτος. Ἕρμιππος'",
+   "invents 'καὶ οὐδὲν ὧν αὐτὸν … ἀργύριον τῷ θεῷ πρώτῳ φανουμένου' — image 'οὐδὲν ὤναντο οἱ πλασάμενοι αὐτόν. αὐτίκα γὰρ ἐν τῷ θεάτρῳ στεφανούμενος'"
+  ],
+  "b_errors": [
+   "'ταῦτα Διοκλῆς καὶ Ἑρμόδοτος. ἕρπει δὲ ὥς φασι' — image 'ταῦτα δέ φησι καὶ Ἱππόβοτος. Ἕρμιππος δὲ'",
+   "'εἰ Ἀθήνη μέντοι Ἡρακλείδης ὁ τοῦ Εὐφρονος' — image 'ἂν ζῶν μὲν Ἡρακλείδης ὁ Εὐθύφρονος'",
+   "'τρέφειν … ἀνερχόμενον' — image 'θρέψαι … αὐξηθέντα'"
+  ],
+  "note": "B follows the image better in the serpent and theatre episodes. A is better on θρέψαι/αὐξηθέντα, Euthyphron and the Pythia's death. Both get the cited authorities wrong."
+ },
+ {
+  "item_id": "6993882874305116d72cfaef",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'καὶ ἀργυρίαν, καὶ ἐπιθυμίαν' — image 'καὶ ἀτερπίαν(?) καὶ δυσθυμίαν'",
+   "'μήτε κλητέστι, ὠτεκνία' — image 'μικτὰ μέν ἐστιν, εὐτεκνία'",
+   "'καὶ ἃ μὲν παρόντα ὠφελεῖ … περιπατητικῶς' — image 'καὶ ἀεὶ μὲν παρόντα αἱ ἀρεταί … περιπάτησις'"
+  ],
+  "b_errors": [
+   "'καταστολὴν' — image 'κατάπληξιν'",
+   "'τελικὰ ἐπὶ τῶν περὶ ψυχὴν ἀγαθῶν, τὰ μάλιστα ἑξῆς' — image 'ἔτι τῶν περὶ ψυχὴν ἀγαθῶν τὰ μέν ἐστιν ἕξεις'",
+   "'ἀπελεῖν. τὸ καθῆκον μόνους ἀριθμεῖσθαι' — image 'ἀπέχειν τοὺς ἐπιζητουμένους ἀριθμούς'",
+   "'κατὰ καμίαν' — image 'κατὰ κακίαν'"
+  ],
+  "note": "The image confirms A on κατάπληξιν, ἔτι … ἕξεις and ἀπέχειν τοὺς ἐπιζητουμένους, and B on δυσθυμίαν, μικτὰ/εὐτεκνία and αἱ ἀρεταί/περιπάτησις."
+ },
+ {
+  "item_id": "69938d705d28b693146cf990",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Greek: 'ἐκηλακότος' — image 'ἐληλακότος'"
+  ],
+  "b_errors": [
+   "'quisque' — image 'quique'",
+   "long s misread as f: 'quaefo', 'ejuf-' — image 'quæſo', 'ejuſ-'",
+   "Greek 'διγλώττω' — image 'διγλώττου'"
+  ],
+  "note": "Checked each differing span on the image. A has one Greek misreading; B has quisque for quique plus some f-for-ſ slips. Otherwise the texts agree."
+ },
+ {
+  "item_id": "69938d705d28b693146cf998",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "heading 'Ἐκ τῶν Σκίδα' — image 'Σουΐδα'",
+   "'ὃς τὸν παρθένον' — image 'τὴν'",
+   "'μυθωδία μέλπων' — image 'μοῦσαν'",
+   "'βροτήσιον … γύεθλον' — image 'βιοτήσιον … γένεθλον'"
+  ],
+  "b_errors": [
+   "long s read as f throughout the Latin ('vicefimo fexto', 'effe', 'funt', 'impenfo')",
+   "'Χριστοῦ', 'αὖρε', 'μειλίδιον' — image 'Χριστοῖο', 'εὖρε', 'μαψίδιον'"
+  ],
+  "note": "The Greek epigrams split: B is right on Σουΐδα, μοῦσαν, βιοτήσιον and γένεθλον, A on Χριστοῖο, εὖρε and μαψίδιον. B's Latin has f-for-ſ errors."
+ },
+ {
+  "item_id": "69938d705d28b693146cfa09",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Both columns match the image. Differences are u/v and ae/æ conventions, the cross marker glyph, capitalisation and expanded abbreviations (ἔσοντ’/ἔσονται)."
+ }
+]

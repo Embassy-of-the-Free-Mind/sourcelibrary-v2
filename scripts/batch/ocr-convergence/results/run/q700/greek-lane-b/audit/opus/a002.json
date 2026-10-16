@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a0851bb49638a50931b92e2",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'καὶ τοῦ τί εἶναι συλλογισμόν' twice under Pagina 368, but X inserts 'ἐστιν' ('τοῦ τί ἐστιν εἶναι') both times, which corrupts the readings this errata page cites."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb7e6",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two have the same wording; X expands the tildes ('autem', 'pulchrum') where Y keeps them ('autẽ', 'pulchrũ'), and both differ only trivially elsewhere ('ineas' vs 'incas')."
+ },
+ {
+  "item_id": "6a0851bb49638a50931b920c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X misreads several phrases: 'δὲ αὐτῶν' for 'τοῦ αὐτοῦ', 'καὶ τὸ μεῖζον' for 'καὶ τοῦ μείζονος', 'οὗ γὰρ αἴτιον ἡ ἀρχὴ' for 'ἄνευ γὰρ αἰτίου ἢ ἀρχῆς', and 'βουλεύσαντος' for 'βουλευσαμένου'; Y reads all of these correctly."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4a97",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the same headings and the same list of seven dialogues; the only real difference is X's 'τὰ μετ' τὰ φυσικά' against Y's 'τὰ μετὰ τὰ φυσικά', which is trivial."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1ebe",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Each has errors: Y gives 'superfuerunt' in v. 12 where the leaf prints 'superaverunt', and 'ἐγεμισαν' in the apparatus where the leaf has 'ἐγεμησαν'; X's only error is '1530' for '1590' in the footnote."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1dd1",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The Greek, the Latin and the apparatus match in both; the only differences are line breaks and accents ('αὐτοῦ'/'αὑτοῦ', 'ἀλλὰ'/'ἄλλα')."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7c4",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y follows the print with 'τῶν περιττωμένων' and the misprint 'χεδὸν', where X normalizes to 'περιττωμάτων' and 'σχεδὸν'; otherwise the two texts agree."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee6b3",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The German paragraph is identical in both, word for word."
+ },
+ {
+  "item_id": "69938d705d28b693146cfa09",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both have the same Latin and Greek; they differ only in how abbreviations are rendered (X 'habentium' vs Y 'habentiu', and Y's 'ζήσετ’' and 'ἔσοντ’')."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb830",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The wording is the same; X expands the tildes and keeps 'futurum[annum', Y keeps the tildes and tags the catchwords, and they also differ in reading 'Agamēnon;' against 'Agamẽnoni'."
+ }
+]
