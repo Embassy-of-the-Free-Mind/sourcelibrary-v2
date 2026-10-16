@@ -39,7 +39,7 @@ export default function ParetoPage() {
           </p>
           <p className="text-base text-stone-600 mt-3">
             <a href="#ocr" className={LINK}>Reading in detail</a> {'·'} <a href="#translation" className={LINK}>Translating in detail</a> {'·'}{' '}
-            <a href="#not-measured" className={LINK}>Not measured yet</a> {'·'} <a href="#method" className={LINK}>Method and grades</a>
+            <a href="#not-measured" className={LINK}>Not enough evidence yet</a> {'·'} <a href="#method" className={LINK}>Method and grades</a>
           </p>
         </header>
 
@@ -60,7 +60,7 @@ export default function ParetoPage() {
         <ParetoPresentation m={TRANSLATION} />
 
         <section id="not-measured" className="mt-16 scroll-mt-16">
-          <h2 className="font-serif text-3xl text-stone-900 mb-3">Not measured well enough yet</h2>
+          <h2 className="font-serif text-3xl text-stone-900 mb-3">Not enough evidence yet</h2>
           <NotMeasured />
         </section>
 
@@ -85,7 +85,7 @@ export default function ParetoPage() {
             interval that resamples whole works, so the pages
             of one work count as one. Where the engine in use was run twice the same way, a difference must also be larger
             than the spread between its two runs (the shaded band on a plot); where the two runs disagree outright, the
-            verdict is withheld.
+            verdict is withheld. Every section says whether this rerun noise was measured.
             Only a Decide section calls an engine better or worse; a Directional one says what the evidence points toward.
             &ldquo;Within the margin&rdquo; means the whole interval lies within 1 point a page (reading) or 0.10 on the 1
             to 5 scale (translating) of the engine in use; one margin per measure, never tuned per chart.
@@ -93,9 +93,17 @@ export default function ParetoPage() {
           <p>
             <strong className="text-stone-900">Cost.</strong> Dollars billed per 1,000 pages: Gemini at its metered Batch
             rate, other APIs at their billed rate, rented GPUs at the whole rental shared by running time. A run through a
-            command-line tool on our subscription is billed nothing, so its row says &ldquo;$0 via subscription&rdquo;;
-            the table under each plot also gives the API price for the same requests. An engine with no billed price
-            on record says &ldquo;no price&rdquo;.
+            command-line tool on our subscription is billed nothing, so its row says &ldquo;$0 billed&rdquo;;
+            the plot gives the API price for the same requests beside it, for comparison only. An engine with no billed
+            price on record says &ldquo;no price&rdquo;.
+          </p>
+          <p>
+            <strong className="text-stone-900">Time.</strong> Many of these runs went through command-line tools on our
+            subscriptions, where a page costs time and quota rather than dollars. Switch a plot to
+            &ldquo;time a page&rdquo; to see the median seconds a page, taken from each run&rsquo;s own meter on those
+            pages. Where a run did not time its pages, the plot says &ldquo;not measured&rdquo;; no time is estimated.
+            The full table names each engine&rsquo;s route: billed through an API, a command-line tool on the
+            subscription, a rented GPU, or our own server.
           </p>
           <div>
             <p><strong className="text-stone-900">Grades.</strong></p>

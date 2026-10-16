@@ -112,7 +112,7 @@ describe('ParetoCharts.tsx holds no figures', () => {
     .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
   const RULES: [string, RegExp][] = [
     ['no percentages', /\b(?!95%)\d+(\.\d+)?\s?%/],
-    ['no money', /\$(?!0 via subscription)\d/], // the one fixed label: a subscription run bills nothing
+    ['no money', /\$(?!0 (via subscription|billed))\d/], // the fixed labels: a subscription run bills nothing
     ['no dates', /\b20\d\d-\d\d-\d\d\b/],
     ['no engine names', /\b(gemini|flash|paddle|surya|kraken|tesseract|olmocr|ndl)\b/i],
   ];
