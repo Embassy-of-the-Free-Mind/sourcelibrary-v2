@@ -166,7 +166,9 @@ async function candidates(out, maxJoins, days, { allJoins = false, topBooks = In
   fs.mkdirSync(out, { recursive: true });
   const file = path.join(out, 'candidates.jsonl'), booksFile = path.join(out, 'books-done.jsonl');
   // Top up to maxJoins PENDING joins (drawn, not yet sent to a repairer). A book cut off at the cap is resumed.
-  const doneBooks = new Set(readJsonl(booksFile).filter(b => b.complete).map(b => b.book));
+  // A book walked in tranche mode is not done for every-join mode (the nightly dir holds both; rows before the mode
+  // field are tranche walks).
+  const doneBooks = new Set(readJsonl(booksFile).filter(b => b.complete && (!allJoins || b.mode === 'all-joins')).map(b => b.book));
   const have = new Set(readJsonl(file).map(c => c.id)), processed = new Set(readJsonl(path.join(out, 'repairs.jsonl')).map(r => r.id));
   let got = [...have].filter(id => !processed.has(id)).length;
   // never re-propose a join the pilot (or an earlier night, or a run named in skipManifests) already wrote
@@ -213,7 +215,7 @@ async function candidates(out, maxJoins, days, { allJoins = false, topBooks = In
       for (const s of fired) if (RULES[s]) { const r = RULES[s]({ ...it, rawA: A.tr, rawB: B.tr, ocrA: A.ocr, ocrB: B.ocr }); it.rules[s] = r.repair ? { repair: r.repair } : { decline: r.decline }; }
       append(file, it); got++;
     }
-    append(booksFile, { book: b.id, rank, views: b.views, pages: rows.length, joins, prose, tranche, ...(keep ? { sampled: keep.size } : {}), complete: !cut });
+    append(booksFile, { book: b.id, rank, views: b.views, pages: rows.length, joins, prose, tranche, mode: allJoins ? 'all-joins' : 'tranche', ...(keep ? { sampled: keep.size } : {}), complete: !cut && !keep });
     if (rank % 25 === 0) process.stderr.write(`${rank} books, ${got} joins\n`);
   }
   await client.close();
