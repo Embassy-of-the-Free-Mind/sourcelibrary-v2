@@ -111,6 +111,18 @@ export function gradePanel({ works, unfit6304 = false, metrics = 1, productionAn
   return { level: 'decide', why: '20 or more works, independent reference, one measure' };
 }
 
+/** What a panel graded below decide would need to grade decide, by the same rules as gradePanel (#6776). */
+export function toDecide({ works, unfit6304 = false, metrics = 1, productionAnchored = false, famousShare = 0, modernEdition = false }) {
+  const need = [];
+  if (works < 20) need.push(`${20 - works} more work${20 - works === 1 ? '' : 's'} (20 needed)`);
+  if (unfit6304) need.push('references that fit the page');
+  if (metrics > 1) need.push('one error measure');
+  if (productionAnchored) need.push('a reference placed without our own engine’s reading');
+  if (famousShare > 0.5) need.push('mostly texts a model cannot know by heart');
+  if (modernEdition) need.push('a transcription of the page, not a modern edition');
+  return need.length ? need : null;
+}
+
 export const GRADE_RULES = {
   decide: '20 or more works, a reference made independently of the engine we use, one error measure, and no problem found by the sample check.',
   directional: 'Fit to read, but 10 to 19 works, or mostly famous texts a model may know by heart, or a modern edition as the reference rather than a transcription of the page.',

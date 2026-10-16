@@ -43,7 +43,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { wilson } from './lib/agreement-stats.mjs';
 import { getTranslateModelForBook } from '../lib/translate-core.mjs';
-import { r3, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { r3, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, toDecide, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.join(__dirname, '..', '..');
@@ -218,7 +218,8 @@ function buildPanel(chart, kind, items, arms, o) {
     return pt;
   });
   const works = new Set(items.map(it => it.cluster)).size;
-  const grade = gradePanel({ works, unfit6304: UNFIT_6304.has(`${chart.id}|${kind}`), productionAnchored: anchored, famousShare: famous });
+  const gradeIn = { works, unfit6304: UNFIT_6304.has(`${chart.id}|${kind}`), productionAnchored: anchored, famousShare: famous };
+  const grade = gradePanel(gradeIn);
   // a not_fit panel, or one whose engine in use did not reproduce itself, gives no verdict words
   if (grade.level === 'not_fit' || noise?.kind === 'not_reproduced') for (const pt of points) delete pt.verdict;
   const placed = points.filter(p => p.cost), noCost = points.filter(p => !p.cost);
@@ -227,7 +228,7 @@ function buildPanel(chart, kind, items, arms, o) {
   noCost.sort((a, b) => b.fidelity - a.fidelity || a.engine.localeCompare(b.engine));
   const p = {
     kind, heading, n_pages: items.length, n_works: works, n_books: new Set(items.map(it => it.book)).size, judges,
-    reference: references.map(r => r.reference).join('; '), references, grade,
+    reference: references.map(r => r.reference).join('; '), references, grade, to_decide: toDecide(gradeIn),
     frontier: grade.level !== 'not_fit' && placed.length >= FRONTIER_MIN, noise, date, files, notes, placed, no_cost: noCost,
   };
   p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
@@ -511,15 +512,56 @@ if (fs.existsSync(SYR_FILE)) {
         reversals: { pages: a.inversion_pages, n: s.n_pages, per_100: a.reversals_per_100, ci95: a.reversals_ci95 },
         cost: { usd_per_1k: a.usd_per_1k_batch, basis, detail: basis === 'quota' ? 'run through the Antigravity CLI on the subscription, $0 billed; placed at the API Batch price for the same requests' : 'billed tokens at the Batch rate', source: basis === 'quota' ? rel(SYR_CLI_COST) : SYR_WRITEUP } };
     });
-    const grade = gradePanel({ works: s.n_editions, productionAnchored: true });
+    const gradeIn = { works: s.n_editions, productionAnchored: true };
+    const grade = gradePanel(gradeIn);
     markFrontier(pts, p => p.fidelity, false);
     pts.sort((a, b) => b.fidelity - a.fidelity || a.engine.localeCompare(b.engine));
     const p = { kind: rd.kind, heading: rd.heading, n_pages: s.n_pages, n_works: s.n_editions, n_books: s.n_books, judges: 2,
       reference: 'the typed Syriac text of the same passage; the judges read the Syriac', references: [{ reference: 'the typed Syriac text (Digital Syriac Corpus)', pages: s.n_pages }],
-      grade, frontier: false, noise: null, date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(rd.file)], notes: [], placed: pts, no_cost: [] };
+      grade, to_decide: toDecide(gradeIn), frontier: false, noise: null, date: dateOf(SYR_WRITEUP), files: [SYR_WRITEUP, rel(rd.file)], notes: [], placed: pts, no_cost: [] };
     p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
     syr.panels.push(p);
   }
+}
+
+// #6729: Gemini 4 Argon low (agy), Claude Opus 5.5 (`claude -p`) and Gemini 3.8 Flash low (agy) on the #6545 panels,
+// one page per book, all three on the subscription ($0 billed, no API price). Plotted under the round's Opus judge, the
+// judge family of every other panel here; the Gemini 3.8 judge's figures are in the write-up. The engine in use was not
+// run on these pages, so the panel names no switch; the router's engine for these languages is elsewhere on the chart.
+const G4 = { writeup: 'scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md', file: path.join(RES, 'g4-translate-6729', 'scores.json') };
+if (fs.existsSync(G4.file)) {
+  const s = JSON.parse(fs.readFileSync(G4.file, 'utf8'));
+  const ARMS = [['G4L', 'gemini-4-argon-low+antigravity-cli', 'Gemini 4 Argon low (CLI)', 'Gemini subscription'],
+    ['OPUS', 'claude-opus-5-5+claude-cli', 'Claude Opus 5.5 (Claude CLI)', 'Claude subscription'],
+    ['C38S', 'gemini-3.8-flash-low+antigravity-cli', 'Gemini 3.8 Flash low (CLI)', 'Gemini subscription']];
+  for (const lang of s.langs) {
+    const pn = s.panels[lang], j = pn?.by_judge?.opus;
+    if (!j) continue;
+    let chart = chartOf(lang.toLowerCase());
+    if (!chart) {
+      const production = getTranslateModelForBook({ language: lang });
+      chart = { id: lang.toLowerCase(), title: lang, production_engine: production, production_label: LABEL[production], panels: [], mentions: [] };
+      charts.push(chart);
+    }
+    const pts = ARMS.map(([arm, engine, label, sub]) => {
+      const a = j.arms[arm];
+      return { engine, label, production: false, fidelity: a.fidelity, fidelity_ci95: a.ci_by_book,
+        reversals: { pages: Math.round((a.reversals_per_100 * a.n) / 100), n: a.n, per_100: a.reversals_per_100, ci95: null },
+        cost: null, no_price: `run on the ${sub}, $0 billed; no API price computed for these pages` };
+    }).sort((a, b) => b.fidelity - a.fidelity || a.engine.localeCompare(b.engine));
+    const works = pn.pages;   // one page per book (#6545)
+    const gradeIn = { works, famousShare: FAMOUS[lang] || 0 };
+    const grade = gradePanel(gradeIn);
+    for (const pt of pts) pt.on_frontier = false;
+    const p = { kind: 'g4-argon-6729', heading: 'Gemini 4 Argon low against Claude Opus 5.5, 15 Oct 2026 (#6729)', n_pages: pn.pages, n_works: works, n_books: works, judges: 2,
+      reference: REF_DEFAULT, references: [{ reference: REF_DEFAULT, pages: pn.pages }], grade, to_decide: toDecide(gradeIn), frontier: false, noise: null,
+      date: dateOf(G4.writeup), files: [G4.writeup, rel(G4.file)],
+      notes: ['Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps.'],
+      placed: [], no_cost: pts };
+    p.verdict = verdictSentence(p, { num: numFid, unit: 'a page on the 1 to 5 scale', verb: 'scores', margin: MARGIN.translation, marginText: '0.10 on the 1 to 5 scale' });
+    chart.panels.push(p);
+  }
+  TRACKS.push({ id: 'g4-argon-6729', writeup: G4.writeup, judges: 2 });
 }
 
 // One primary panel per language: the round with the most engines on shared pages, among the panels not graded
