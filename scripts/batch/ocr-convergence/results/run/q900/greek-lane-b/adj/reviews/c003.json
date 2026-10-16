@@ -1,0 +1,497 @@
+[
+ {
+  "item_id": "699388e60f04c37dcfa6001a",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "left column lines 1-~20 ('ἀμφισβητήσεως· τὸ δὲ πάντων μάλιστα ... τούτους τοὺς ὅρους') are Ol. 1.7-9 text not on this leaf; image begins 'ἀντίρροπον ... ' and has 'διὸ καὶ σφόδρα δεῖ τῶν λοιπῶν ὑμᾶς ... φροντίσαι'",
+   "top-margin scholion invented as a short summary"
+  ],
+  "b_errors": [
+   "left column first ~12 lines garbled ('ἄξιομαί γε παρομοιώσεως', 'συμπαρεμείνασθαι')",
+   "left col end: 'γέγονεν ἕκαστος ἡμῶν; τὸ μὲν ἀρχὰς ἀμφίπολιν' — image 'γέγονεν ἀσθενὴς ὢν τὸ κατ' ἀρχὰς φίλιππος· τὸ πρῶτον ἀμφίπο-'",
+   "right column lines 1-14 garbled ('μεθύην· μεθ' ἃ ταῦτα πύδναν', 'οὐ μὴν ὧν γε ὥρα θυμῷ') — image 'λιν λαβών, μετὰ ταῦτα πύδναν, πάλιν ποτίδαιαν, μεθώνην αὖθις ...'"
+  ],
+  "note": "B follows the leaf's left column (Ol. 1.10-12) but garbles much of it and the right column; A's right column is accurate but its left column substitutes earlier text not on the leaf."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa6001c",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "opening block 'παράδοξον ἂν εἴη ... τὸ δέον' invented, not on leaf",
+   "most of left column garbled ('σφόδροι καὶ μαγνησίαν', 'ὅρμον τέ τουτουὶ') — image 'Παγασὰς ἀπαιτεῖν αὐτόν εἰσιν ἐψηφισμένοι καὶ Μαγνησίαν κεκωλύκασι τειχίζειν'",
+   "right column opening garbled — image 'ἀπὸ τούτων δέοι διοικεῖν, οὐ Φίλιππον λαμβάνειν'",
+   "bottom block after '---' invented"
+  ],
+  "b_errors": [
+   "first 3 lines garbled ('πάντας σφοδρὰν μὲν / πολλὰ μὲν νομίζομεν ... οὐδὲ μάρτυρα γνώσεσθαι') — image differs"
+  ],
+  "note": "Image text is Ol. 1.21-24; B matches both columns apart from the first few lines, A is largely garbled or invented."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa6001f",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "left column middle garbled: 'διεξήλθομεν τὴν μὲν ἡμέραν συνθήκας καὶ ταρχάς' — image 'εὑρίσκω τὴν μὲν ἡμετέραν εὐήθειαν πρῶτον'",
+   "'μομάτας εὐνοίας' / 'ἡμᾶς ἀπαιτεῖ πῶς ποτε διαμοῦσαν' — image 'κατασκευάσαι ... τὴν δ' ὀλυνθίων φιλίαν μετὰ ταῦτα τῷ ποτείδαιαν οὖσαν'",
+   "right column garbled: 'ἡ γὰρ ἐμὴ θεωρῶν τίσμοὶ' — image 'ἢ παρελθών τις ἐμοὶ'"
+  ],
+  "b_errors": [
+   "adds 4 lines at end ('οὐ γὰρ ἔστιν οὐκ ἔστιν ... κτήσασθαι...') not on this leaf; column ends 'ἀνεχαίτισε καὶ διέλυσεν'",
+   "line 6 'καὶ παρ' οἷς αὐτῶν ἡλικία τῶν ταύτης με...' not matching image"
+  ],
+  "note": "B follows the Ol. 2.6-9 text on the leaf closely but appends lines from the next page; A is garbled through much of both columns."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa60020",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1 'οὐ γὰρ δήπου καθ' ἡμᾶς ἄνδρας' — image 'οὐ γὰρ ἔστιν οὐκ ἔστιν ὦ ἄνδρες'",
+   "left col ~lines 18-30 replaced with 'πανοῦργος ὢν καὶ δεινὸς ἄνθρωπος ... δυσμαχώτατόν' (another passage) — image 'πρὸς δὲ θετταλοὺς πρεσβείαν πέμπειν, ἣ τοὺς μὲν διδάξει ... παγασὰς ἀπαιτεῖν'",
+   "right col: 'μέγα νομίσαντας φρονήσαντας· ἐξ ὧν τὰς ἅπαντας ποιουμένους' — image 'μεταβολήν, εἰσφέροντας, ἐξιόντας, ἅπαντα ποιοῦντας'"
+  ],
+  "b_errors": [],
+  "note": "Checked the differing spans against the image: B reproduces Ol. 2.10-14 as printed, while A puts text from another passage in the middle of the left column."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa60022",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "long opening prose block and bottom 'commentary' paragraph are invented, not on leaf",
+   "right column garbled: 'ἀλλ' οἶμαι καὶ τὰ οἰκήματα οὐδὲν ποιοῦνται' — image 'ἀλλ' οἶμαι καθήμεθα οὐδὲν ποιοῦντες'",
+   "'καὶ πολλὰ ἰδίαν εἰσφέροντες οὐκ ὀκνήσατε ... μυρίοις μήτε' — garbled vs image"
+  ],
+  "b_errors": [
+   "left col lines 7-17 garbled: 'ἅπερ γὰρ ἐν τοῖς στόμασι τέως μὲν ἁμαρτανόμενος' — image 'ὥσπερ γὰρ ἐν τοῖς σώμασι τέως μὲν ἂν ἐρρωμένος ᾖ τις οὐδὲν ἐπαισθάνεται'",
+   "'ἕως ἂν μὲν ἔξω πολέμῳ συμμένῃ' — image 'ἕως μὲν ἂν ἔξω πολεμῶσιν, ἀφανῆ τὰ κακὰ τοῖς πολλοῖς ἐστιν'",
+   "'διὸ δεῖ σκοπεῖν ὑμᾶς' — image 'εἰ δέ τις ὑμῶν'"
+  ],
+  "note": "A reads the left-column body correctly but invents framing text and garbles the right column; B gets the right column (Ol. 2.22-24) right but garbles the middle of the left."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa60025",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἀλλ' εἰ καὶ ἀπορῶ τίνω' — image 'ἀλλ' ἐκεῖνο ἀπορῶ τίνι'",
+   "'φάσκειν, οἴομαι' — image 'εἰπεῖν· πέπεισμαι'",
+   "drops 'τῶν γεγενημένων πρῶτον ὑμᾶς' and garbles 'ὑπομνῆσαι· μέμνησθε'",
+   "'ποιεῖσθαί μου τοὺς λόγους, ἐπισκοποῦντας' — image 'ποιῶμαι τοὺς λόγους, ὑπομένειν, τοῦτο θεωροῦντας'"
+  ],
+  "b_errors": [
+   "right col line 3-4 'ἔχοντα λενὸς' — image 'ἔχοντα κενὰς'",
+   "marginal note text partly speculative"
+  ],
+  "note": "Checked the diff spans against the image (Ol. 3.3-7); B matches the leaf, while A has several wrong words and a dropped phrase."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa60026",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "first 5 lines partly garbled ('ἅλις ἔπειτα πρὸς πρόσωπον', 'ὑβριζομένους')",
+   "middle of left col garbled ('σύμβουλος οὗτος ἅμα μαλακίαν ποιήσηται', 'ἐξ ὧν ἁλοῦσιν')",
+   "right col 'ῥᾳδίως γὰρ ἴσασιν ὑμῖν' — image differs"
+  ],
+  "b_errors": [
+   "left col largely garbled ('ἀνασχε τὸ τῶν δὲ χρημάτων', 'ἐξὸν μὴν ἀθροίσαντα μο καθη') — image 'ἀπειρηκότων δὲ χρήμασι φωκέων'",
+   "right col nearly unusable ('μομον θέτας καὶ οἱ ῥήτορες· ἂν λαοῖνοις', 'ἐσι γὰρ ἣν μαμοι') — image 'νομοθέτας καθίσατε· ἐν δὲ τούτοις τοῖς νομοθέταις'",
+   "vocab labels it Κατὰ Μειδίου (wrong work)"
+  ],
+  "note": "The leaf is Ol. 3.8-12; A is imperfect but mostly readable and correct in the right column, B is garbled across both columns."
+ },
+ {
+  "item_id": "69f6a2a710cb4dac7f1698b3",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'καὶ οἱονεὶ νύκτωρ' — image 'καὶ συνὼν νύκτωρ'",
+   "'ἐκλαμπρότητι' — image 'ἐκλάμπρῳ γαληνότητι'",
+   "'ἤδη τὰ καθ' ἡμᾶς' — image 'ἧς δῆτα καθ' ἡμᾶς'",
+   "'ὁποίων ... σὺν' / 'οὐκ ἀριθμὸν' — image 'εὐποιϊῶν ... σὺν ἀναρίθμων'",
+   "'ἡ Μυσία μόνη, ἰὼ' — image 'ἡ τῇ Μυσίᾳ μονὴ, ἣν'"
+  ],
+  "b_errors": [
+   "'τὰς ... Καντακουζηνὰς' — image 'τοὺς ... Καντακουζηνοὺς'",
+   "'ὡς [καὶ] ζῶντι' — image 'ὡς ὑπὸ ζῶντι'",
+   "'οὐδ' ὅτε καὶ διπλασίας' — image 'ἀνθ' ὅτου καὶ διπλασίως'",
+   "'περικεομένων' — image 'προχεομένων'",
+   "sig ')( 7' and catchword 'Περὶ' — image 'I 7' / 'Πρὸς'"
+  ],
+  "note": "The two texts make different word-level errors across the dedication, and each is right where the other is wrong."
+ },
+ {
+  "item_id": "69f6a2bb10cb4dac7f1698e4",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1 'θὸς ἡμῶν τῆς οἰκονομίας' — image 'θὲς ἡμῶν τῆς οἰκουμένης'",
+   "'ἀπαγαγὼν' — image 'ἀπανιστῶν'",
+   "'ὡς ἐμέ γε' — image 'ὡς ἐμὲ γοῦν'"
+  ],
+  "b_errors": [
+   "'βασιλεὺς σάλπιγξ εἰρήνης τέτοιο' — image 'βασιλεὺς Σαλήμ, εἰρήνη δὲ τοῦτο'",
+   "'διὰ τὸν λαμπρότητος ἑωσφόρον, σκότος ... γενόμενον' — image 'ὁ διὰ τὴν λαμπρότητα ἑωσφόρος ... γενόμενος'",
+   "'ταῦτα μὲν ἐν ἐπιτομῇ' — image 'ταῦτα μὲν οὖν ἐπικοινὰ'",
+   "'θεότητι' — image 'θεότητος'; 'αὐτῶν τὰ πορρωτέρω' — image 'αὐτῶν ἔτι πορρωτέρω'"
+  ],
+  "note": "Most diff spans support A when checked on the image; B has several sense-changing misreadings, including the Salem passage."
+ },
+ {
+  "item_id": "69f6a2db10cb4dac7f169937",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'υἱὸς δὲ εἴ τι ἕτερόν ἐστιν' — image 'υἱὸς δὲ οὐδὲν ἕτερόν ἐστιν'",
+   "'ἀλλ' ἐκτός εἰσι τοῦ Θεοῦ' — image 'ἀλλ' οὐχ ὡς ὁ υἱός εἰσιν ἐκ τοῦ θεοῦ'",
+   "'ὥσπερ νομίσματι ... προσποιητὴν ἔχοντι' — image 'ὑποκρινάμενον ... πολέμιον ἡγησάμενον τὴν εὐσέβειαν'",
+   "'ὡς τυφλὸν' — image 'ὡς κέπφον'",
+   "page-num 277 — image 33"
+  ],
+  "b_errors": [
+   "'διὸ καὶ διὰ τὴν κτίσιν' — image 'διὸ οὐδὲ τὴν κτίσιν'",
+   "'ἀλλὰ τὰ τοῦ δυσσεβές' — image 'ἀλλὰ τοῦτο δυσσεβές'",
+   "'πρὸ πάντων αἱ γραφαὶ' — image 'πρὸ ἡμῶν λέγουσιν αἱ γραφαὶ'",
+   "'ἐκ μὲν γὰρ τοῦτο νόηστον ... περὶ τὸν πατέρα' — image 'τὸ γνήσιον ... πρὸς τὸν πατέρα'",
+   "'περὶ τὰς Πατέρας' — image 'πρὸς τοὺς Πατέρας'"
+  ],
+  "note": "Checked span by span: A and B each misread different theologically significant words, and neither is clearly better overall."
+ },
+ {
+  "item_id": "69f6a2ef10cb4dac7f169965",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'καὶ μεῖζον μὲν ἐν Υἱῷ, μεῖζον δὲ ἐν Πατρί' — image 'μεῖον μὲν ἐν υἱῷ, μεῖζον δὲ ἐν Πατρί'",
+   "'ἢ τελείως δὲ πάλιν οἱ δι' Υἱοῦ' — image 'οὐ τελείως δὲ'",
+   "'ἢ ἄρα ἐλάττων' — image 'οὐκ ἄρα ἐλάττων'",
+   "'ἀπελθῶσι, καὶ παρελθόντες' / 'σὺν εἶναι' — image 'ἀπειθοῦσι ... τὸ ἓν εἶναι'",
+   "'φοβούμενον λόγιζον' — image 'φόβῳ βαλλόμενον'"
+  ],
+  "b_errors": [
+   "'παρὰ ταῦτα τὸ εἰρημένον' — image 'πειρῶνται τὸ εἰρημένον'",
+   "'τὸ εὖ εἶναι' — image 'τὸ ἓν εἶναι'"
+  ],
+  "note": "The image confirms B's readings at the key spans, and A reverses the argument in several places (μεῖζον/μεῖον, dropped negations)."
+ },
+ {
+  "item_id": "69f6a2f310cb4dac7f16996d",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'τούτους τοὺς ὅρους ἡμῖν φαίνει' — image 'τοιοῦτος ὁ νοῦς ἐμοὶ φαίνεται'",
+   "'οὐ τοῦτον τὸν τρόπον ἡ φύσις' — image 'καὶ τοῦτον τὸν τρόπον' (negation added)",
+   "'ἐκδύρεσθαι γὰρ ἀπὸ δὲ τοῦ περιτομήματος' — image 'οὐχ εὑρίσκουσι γάρ· ἀπὸ δὲ τοῦ περισσεύματος ... ἐρευγόμενοι'",
+   "column break placed after 'Πατήρ.' — image column ends 'δυσφημού-'"
+  ],
+  "b_errors": [
+   "'καθ' ὅλως χωρισμὸς ἀνάρχοιτο' — image 'οὐδ' ὅλως χριστιανὸς ἀνάσχοιτο'",
+   "'ὅταν δὲ ὁ Παῦλος' — image 'οὕτω καὶ ὁ Παῦλος'",
+   "'διελέγχων πλευρὰν' — image 'τὴν τῶν ἀλόγων'",
+   "'καὶ υἱὸς Υἱοῦ Πατήρ' — image 'καὶ ἑνὸς υἱοῦ πατήρ'",
+   "'διὸ οὐδὲ δυνατὸν Υἱὸν μεριζόμενον' — image 'διὸ οὐδὲ γεννᾷ υἱὸν μεριζόμενος'"
+  ],
+  "note": "A and B each have sense-changing misreadings in different places, so neither is clearly better as a whole."
+ },
+ {
+  "item_id": "69f6a2fa10cb4dac7f16997e",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "right col 'ὡς ἡ δερμία τῶν εὐτελῶν φωνῶν καταλύσαι προθέσθην' — image 'ὡς οὐδεμία τῶν ἄλλων φωνῶν καταλύουσα προσίεσθαι'",
+   "'χριστικοῖς διασήμασι' — image 'χρονικοῖς διαστήμασι'",
+   "drops 'δέξαιντο, τοῦτο μὲν οὖν ἐστιν ὃ τὸν ἀκήρυκτον'",
+   "'αἰθωίας ἀπειχοίμην ... πολλὰ λόγον ... ἐπεδειξάμην' — image 'εὐθύνας ὑπείχομεν ... πολλοῦ λόγου ... ἐπεδεήθημεν'"
+  ],
+  "b_errors": [
+   "'ἑκαστόσελιν' — image 'ἕκαστον ἔστιν'",
+   "'ταῖς δὲ κακουργούνταις τ'' — image 'τοὺς δὲ κακουργοῦντας τὴν'",
+   "'ὅμως μέντοι ἴστως ὀψίμως τῆς σὺν φωνῆς ἀπαρχήσοιτο' — image 'ὅμως μέντοι οὕτως εὐφήμου τῆς σὺν φωνῆς ὑπαρχούσης'"
+  ],
+  "note": "Both have errors, but B is faithful through more of the leaf, especially the right column, where A garbles text and drops a clause."
+ },
+ {
+  "item_id": "69f6a31a10cb4dac7f1699c6",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἡμεῖς δὲ μίαν συνθέτην φύσιν τὸν Χριστὸν δογματίζομεν' — image 'ἡμεῖς δὲ οὐ μιᾶς συνθέτου φύσεως τὸν Χριστὸν δογματίζομεν' (reverses the doctrine)",
+   "'ἀλλὰ ποῦ τὸ ἔστι τὸ ποιεῖν τοὺς αἱρετικοὺς' — image 'ἀλλὰ τοῦτό ἐστι τὸ ποιοῦν τοῖς αἱρετικοῖς'",
+   "'ἐν τῇ δυσὶ τελέσῃς' — image 'καὶ ἐν δυσὶ τελούσης'",
+   "'καὶ ἡ τῶν δαιμονιωδῶς ὁμιληθείς' — image 'ἡ τούτων δαιμονιώδης ὁμήγυρις'"
+  ],
+  "b_errors": [
+   "'ὡς ἀναιροῦντες τὰ ἑνωθέντα' — image 'ἀγνοοῦντες'",
+   "'μεμερισμένως οἰόμενοι' — image 'εἰδότες'",
+   "'ὥστε μὴ ἐν θεότητι εἶναι' — image 'οὔτε μὴν ἐν θεότητί ἐστι'",
+   "'εἶδος κατηγορούμενον ὁ Χριστός. τίνος τοιαύτης' — image 'κατηγορούμενον εἶδος χριστότητος τοιαύτης'"
+  ],
+  "note": "A reverses the central doctrinal statement (μίαν συνθέτην for οὐ μιᾶς συνθέτου); B has scattered word errors but keeps the sense of the leaf."
+ },
+ {
+  "item_id": "69f6a31e10cb4dac7f1699d0",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'καὶ λέγομεν, ὅτι ἐπ' ἀληθείας διὰ πίστιν καθηρέθη' — image 'ἐπ' ἀληθείας οὐ διὰ πίστιν καθηρέθη' (drops negation)",
+   "'ἵνα μαθητευθῇ τὰ κατ' αὐτὸν' — image 'ἵνα μὴ ζητηθῇ τὰ κατ' αὐτόν'",
+   "'Τόσα τῶν μὲν ἐν ἁγίων χρήσεσι αὐταῖ' — image 'Τοσούτων μὲν οὖν ἁγίων χρήσεις αὗται'",
+   "'πολλοὶ πολλάκις μεταβάλλονταί τινας' — image 'μεταβάλλονται διά τινας'"
+  ],
+  "b_errors": [
+   "'ὁ γὰρ ὕψιστος' / 'καὶ διὰ τοῦτο ἀποβάλλονται' — image 'καὶ οὐ διὰ τοῦτο ἀποβάλλονται' (drops negation)",
+   "'ὅτι ἡ διὰ πίστιν καθηρέθη' — image 'οὐ διὰ πίστιν'",
+   "'ἐπιγεμούσης' — image 'ἐπινεμομένης'",
+   "'πῶς δὲ περὶ μὲν τοῦ Νεστορίου' — image 'πρὸ μὲν τοῦ Νεστορίου'"
+  ],
+  "note": "Each text drops or misreads negations and words in different places, and neither is clearly more faithful."
+ },
+ {
+  "item_id": "69f6a32210cb4dac7f1699d8",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'οὐχ ὡς τὸ ὅτι πεινῶν' — image 'οὐχ ὡς τῷ ὄντι πεινῶν'",
+   "'ἀμοιρήσουσαν' — image 'ἀμοιρείτωσαν'",
+   "'λύπη τῆς ψυχῆς' — image 'λύμη'",
+   "title 'ΤΙΤΛΟΣ ΙΒ' — image 'ΙΗ'"
+  ],
+  "b_errors": [
+   "drops clause 'τούτῳ ἂν εἰκότως προσγράφοιτο καὶ τὰ αὐτοῦ' (image: 'εἰ γὰρ ἴδιόν ἐστι τὸ σῶμα, τούτῳ ἂν εἰκότως προσγράφοιτο καὶ τὰ αὐτοῦ πάντα')",
+   "'εἰ δὲ ᾖν οἰκητήριον τὸ οἰκεῖον σῶμα τοῖς πάθεσιν' — image 'εἰ γὰρ καὶ οἰκειοῦται τοῦ οἰκείου σώματος τὰ πάθη'",
+   "'καθὸ θεόξεξί' — image 'καθὸ θεός ἐστι'",
+   "'ἀλλ' ἴσαν ... καταβαλόμενοι, τῷ ἁγίῳ Κυρίλλῳ' — image 'ἀλλ' ἦσαν ... καταβάλλοντες. τοῦ ἁγίου Κυρίλλου'"
+  ],
+  "note": "The last Cyril paragraph decides it: A matches the image there, while B drops a clause and garbles phrases; elsewhere both make only small slips."
+ },
+ {
+  "item_id": "69f6a33a10cb4dac7f169a16",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'τὴν θείαν μᾶλλον τελείωσιν' — image 'τὴν θρυλλουμένην τελείωσιν'",
+   "inserts 'ἆρον ταῦτα ἐντεῦθεν' — image 'ἐλέγχων ὁ Χριστὸς μὴ ποιεῖτε'",
+   "'Λέγουσι δὲ πᾶσι' — image 'Λέγουσιν ἐν πᾶσι'; 'διαλαλοῦντας' — image 'διαλαχόντας'",
+   "metadata 'handwritten' — page is printed"
+  ],
+  "b_errors": [
+   "'ὁ γὰρ ὕψιστος φασὶν ἐν χειροποιήτοις ναοῖς κατοικεῖ' — image 'οὐ γὰρ ὁ ὕψιστος' (negation lost)",
+   "'καὶ εἴ τω τελέσει, καὶ τελειώσει ... καταποντίσει' — image 'καὶ οὕτω τελοῦσι, καὶ τελειοῦσι ... καταποντίζουσι'",
+   "'εἰ δὲ τῆς αὐτῶν πανοργίας' — image 'εἰ δέ τις αὐτοὺς ὑπαγάγοι'",
+   "'γίνου βαττολογίαν ἐπὶ ταύτας μετὰ γονέας' — image 'εἰρημένην βαττολογίαν ἐπὶ ταύτας μετάγοντες'"
+  ],
+  "note": "The differing spans split between the two texts, and each has sense-changing errors the other avoids."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f5201",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'Πλάτωνι διακοντούτην' — image 'Πλάτωνι τριακοντούτην' (age 30)",
+   "'βεβίωκε γὰρ ἕνα μὲν πρὸς τοῖς ἑξήκοντα' — image 'τρία μὲν πρὸς τοῖς ἑξήκοντα' (63)",
+   "'ἐπλακαδήκετης' — image 'ἑπτακαιδεκέτης'",
+   "margin notes garbled/misplaced ('Mendosè vulgò, ἐπλακαδήκε ἔτι συνέστη')"
+  ],
+  "b_errors": [
+   "'ἐπινεικῶς αὐτῷ γεγενῆσθαι' — image 'ἐπιεικῶς αὐτῷ συγγεγονέναι'",
+   "'ἐν σιδηρᾷ πλέκτητο ... λέοντι ἀμβληθείς' — image 'περιήγετο ... παραβληθεὶς'",
+   "epigram 'ποτ' ἐκ ὁσίως ἀνίβασε ... ἄγγελον' — image 'ποτ' οὐχ ὁσίως παραβὰς ... ἁγνὴν'",
+   "'Γράψασθαι, Διὸς υἱὸς ὑὸς ὢν θεόπολος' — image 'Δηοῦς μύστιδος ὢν πρόπολος'",
+   "drops 'ὃν' before 'καὶ παρρησιαστικώτερον'"
+  ],
+  "note": "A matches the image's Greek prose and verse much better, though it misreads two numbers (30 and 63), which B partly gets right; the Latin column is comparable in both."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f522f",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "drops chapter subtitle 'περὶ τῶν ἐν αὐτῷ γινομένων συλλογιστικῶν τε καὶ ἀσυλλογίστων τρόπων'",
+   "garbled stretch 'ὅροι τοῦ παντὶ ὑπάρχειν, ζῶον, ἄνθρωπος, ζῶον, ἄνθρωπος· τοῦ δὲ μηδενὶ, ἂν ἔστι λαβεῖν ὄψεις ...'",
+   "'τὸ μὲν ὑπάρχειν, ζῶον ὅτι σήπει, ἄγριον' — image 'τοῦ δὲ μὴ ὑπάρχειν, ζῶον, ἐπιστήμη, ἄγριον'",
+   "omits marginal 'γρ.' variant note and the Latin 'At pro certo ac concesso habebatur nullum consequi'"
+  ],
+  "b_errors": [],
+  "note": "B reproduces the Prior Analytics I.6 text, the subtitle and the marginal γρ. note as printed, while A garbles the term lists and drops content."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f5282",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Greek: 'τοῦ ὁμωνύμου τὸ δὲ, καὶ τὸ λευκὸν τὸ ἐπὶ τοῦ σώματος πᾶν συμβλητὸν' — image 'ὥστε ὁμώνυμον τὸ ὀξὺ καὶ τὸ λευκόν· τὸ γὰρ συνώνυμον πᾶν συμβλητόν'",
+   "Greek: 'σκοπεῖν δὲ καὶ τὸ ἐπὶ τῶν ὀνομάτων ἐπιπλέκειν' — image 'χρήσιμον δὲ καὶ τὸ ἐπὶ τοῦ συντεθειμένου ... ἐπιβλέπειν'",
+   "Latin 'modò rectè' — image 'modò rectò'; 'dicitur' — image 'dicatur' (twice)"
+  ],
+  "b_errors": [
+   "Latin 'debetur' — image 'dicebatur'; 'cadidum' typo",
+   "Greek 'ἐνίοτε δὲ τὸ ποτέ' — image 'ἐνιαχοῦ δὲ'"
+  ],
+  "note": "The Latin columns differ mostly in spelling conventions; in the Greek column B preserves sense where A garbles two stretches."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f52b8",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "Greek: 'οὐδὲ τὸν λόγον ᾧ ἂν αὐτὸ ἐπιστήμην' — image 'οὐδὲ τοῦ λόγου ἡ αὐτὴ ἐπιτίμησις'",
+   "Greek opening 'Α ῏ι εἷν χείρω ἤδη ἐρωτηθέντων' and 'αὐτῶν τὰ μὲν ἄρχει' garbled",
+   "invents marginal labels (φιλοσόφημα, ἐπιχείρημα, σόφισμα, ἀπόρημα) not in margins on the image"
+  ],
+  "b_errors": [
+   "Latin 'Est etiā ψευδογράφημα ratiocinatio demonstratiua' — image 'φιλοσόφημα'",
+   "Latin and Greek 'ἐνθύμημα' — image 'ἀπόρημα'",
+   "Latin 'Sin precem prę se ferat' — image 'speciem'"
+  ],
+  "note": "A gets the Latin and the key technical terms right but garbles parts of the Greek; B's Greek is better but it substitutes the wrong technical terms in both languages."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f52df",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'καὶ τὸ * οὐλοφυὲς δὲ πρῶτον ἀνθρώπων ἦν' — image 'καὶ τὸ οὐλοφυὲς δὲ πρότερον σπέρμα ἦν'",
+   "invented margin '* γίγνεται, ἢ ὡς' and garbled margin 'γε. προϊοντα'",
+   "'ἐγ μέντοι γε' — image 'οὐ μέντοι γε'; 'ἕνεκα τὸ κρύπτειν' — image 'ἕνεκα τοῦ κρύπτειν'"
+  ],
+  "b_errors": [
+   "'τὸ δὲ ἀπὸ τύχης καὶ τὸ αὐτόματον οὐδέν' — image 'τῶν δ' ἀπὸ τύχης καὶ τοῦ αὐτομάτου οὐδέν'",
+   "'τὸ ὕστερον πρὸς τὸ πρότερον' — image 'τὰ ὕστερα πρὸς τὰ πρότερα'",
+   "'οὕτως ἀμπελόπρωρα; ἄτοπον' — drops 'ἐλαιόπρωρα, ἢ οὔ'",
+   "Empedocles margin 'ἥλιος αἶσαν' — image 'εἴδεος αἶσαν'"
+  ],
+  "note": "A is closer on more of the Physics II.8 spans, but its 'ἀνθρώπων' for 'σπέρμα' and invented margin need B's reading; the Latin is essentially the same in both."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f52e0",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Greek 'οἷον ὅτι ἡ πρίων' — image 'οἷον διὰ τί ὁ πρίων'",
+   "Greek 'σκεπτέον περιαρεῖσκαιμιδὼς' — image 'σκεπτέον προχειρισαμένοις'",
+   "margin 'pridem à doctis viris explicata' — image 'explosa'"
+  ],
+  "b_errors": [
+   "Greek 'ἀφύτου' — image 'φθιτοῦ'",
+   "Greek opens a bracket '[οὐδ' ἔσται ὅλως ταῦτα, ὅλως μὴ ὄντων, ὧν ἔστιν' — image '[οὐδ' ἔσται διὰ ταῦτα.] ὅλως μέντοι μὴ ὄντων, οὐκ ἔσται'",
+   "Latin 'effitieri' — image 'est, fieri'",
+   "Greek 'ἀνάγκη γὰρ' — image 'ἀναγκαῖον γὰρ'"
+  ],
+  "note": "Both are near-complete transcriptions of the Physics II.9/III.1 page, each with a few different misreadings and garbled words; the Latin differs mainly by long-s convention."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f5317",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "Latin 'vacarCalendar-partibus' — image 'vacaréque partibus'",
+   "Latin Cap. II title 'qui sit motus primi uirtus, quod sua sponte natura in orbim uertitur' — image 'reliquis omnibus præstantius, quod suapte natura in orbem vertitur'",
+   "Greek 'διορίζομεν δὲ' — image 'ἀποδίδομεν δὲ'; 'τοῦτο δ' ἐστὶ πᾶν' — image 'τὸ πᾶν'",
+   "Greek 'διχῇ δ' ὂν διαιρετὸν' — image 'τριχῇ'"
+  ],
+  "b_errors": [
+   "Greek 'πρὸς τὸ πλησίον γὰρ ἔχει τὰς διαστάσεις' — image 'πάσας γὰρ ἔχει τὰς διαστάσεις'",
+   "Greek 'τῶν μὲν οὖν μοριοειδῶν σωμάτων ἕκαστον τῷ λόγῳ' — image 'ἐν μορίου εἴδει ... κατὰ τὸν λόγον'",
+   "Greek ch.2 title 'καὶ ἀεὶ ἡμᾶς, ἕτερον καὶ θειότερον' — image 'καὶ περὶ ἡμᾶς, ἕτερον κεχωρισμένον'",
+   "'ἐπεὶ δὲ ᾗ ἂν διαιρετόν' — image 'τριχῇ δ' ὂν διαιρετὸν'"
+  ],
+  "note": "A has a corrupt Latin word and a wrong Latin chapter title, and B has sense-changing Greek misreadings and a wrong Greek chapter title, so each needs the other's reading in places."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f534d",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "margin variant notes moved to top and garbled ('χρ. ἀλλὸ πᾶν ἀμφ.', 'χρ. τὸ πῦρ πῦρ')",
+   "'οἷον λέγειν πάντα πῦρ, ἢ ὕδωρ, ἢ ἀήρ' — image 'οἷον ἀέρα πάντα, ἢ ὕδωρ, ἢ πῦρ'",
+   "'ἔστι γὰρ δὴ πῦρ καὶ γῆ μετ' ἐναντιότητος' — image 'ἔσται γὰρ ἀὴρ καὶ πῦρ ἐκεῖνο μετ' ἐναντιότητος'",
+   "'ἀλλὰ γὰρ τὸ ἕτερον τῇ ἐναντίαν· οἷς κεχρήσεται μονάδι τινὶ' — image 'ἀλλὰ στέρησις τὸ ἕτερον τῶν ἐναντίων· ὥστ' οὐκ ἐνδέχεται μονοῦσθαι'",
+   "Latin letter labels given as Greek (γ, υ, α, π) — image uses T, L, A, I"
+  ],
+  "b_errors": [
+   "chapter subtitle 'Ὅτι πέντε ταῦτα οὐκ εἰσὶ στοιχεῖα· πρῶτον μὲν ... τέλος δὲ ὅτι οὐ δύο' not on leaf (image: 'Ὅτι τέτταρα ἐστὶ τὰ στοιχεῖα· καὶ ὅτι ἀδύνατον ἀρχήν τινα εἶναι αὐτῶν')",
+   "'οἷον ἅπαντα ταῦτ', ἢ ὕδωρ, ἢ πῦρ, ἢ γῆλα' — garbled",
+   "Latin labels garbled ('Sit terra l, lympha seu aqua, aër, i ignis')"
+  ],
+  "note": "Neither transcription of the Gen. et Corr. II.5 page is reliable throughout: B invents a subtitle, A misplaces margins and swaps element names, and their correct readings complement each other."
+ }
+]

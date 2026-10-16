@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "696925044fa3b04c6de86f72",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both give the shelfmark 'Pl 71 cod 33' and page 'I'; they differ only in how the small red stamp's legend is rendered ('MEDICEA LAURENZIANA' vs 'MED. LAUR.'), which is too small to read with certainty."
+ },
+ {
+  "item_id": "69937a5eb0a84a5763968381",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The Greek text is identical in both, from 'οἵ σοι φράσουσ’' to 'λίμνη νὴ Δία'; they differ only in markup and in where the line numbers 165–180 are placed."
+ },
+ {
+  "item_id": "69b2fee065b9d6bf89925420",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X leaves out the printed clause 'οὐκ ᾐσχύνετο λέγειν περιιὼν ὡς αὐτὸς εἴη προστετριμμένος ἀλάστορα τῷ μετέλλῳ ξενοκτόνον. ἐκ τούτου' and garbles other readings, e.g. 'ἐπὶ δώδεκα λειπομένων ἡμερῶν' becomes 'ἔτι σώθη. λειπομένων ἡμερῶν, ἑνὶ'."
+ },
+ {
+  "item_id": "69924f3f09c5da0cf50d7bdf",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The text and apparatus are the same in both; Y adds line numbers, though it puts 150 and 160 a line too early, and X has 'ἐντὶ' where the page has 'ἐντι'."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1baf",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the contents entries λδ–λς and footnotes 19–20 ('In Arc. τίνες', 'Addidi e Ciz.') with the same wording; only the formatting differs."
+ },
+ {
+  "item_id": "69ad716ac5001c07fa84807e",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The page prints 'βαστάσητε', which X has and Y misreads as 'βαστάζητε'; Y's margin line numbers are also scrambled (e.g. '25' and '30' appear twice), but otherwise the wording matches."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1c76",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The main text, the heading 'Κ Ε Φ. κά.' and notes 8, 9 and 1 are the same in both; they differ only in where the margin numbers '(81)' and '96' are placed and in markup."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f78",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both list the same nine works in the same order, from 'Dialectica Magistri Petri Hispani' to 'Alcinoi introductio in platonem'; Y simply writes out abbreviations such as 'Aphrodisiensis'."
+ },
+ {
+  "item_id": "69924f3f09c5da0cf50d7dbf",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The lines 65–70 are identical apart from one breathing mark: X has 'ἀβρὸν' where the page has 'ἁβρὸν'."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1d68",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The text and notes 58–61 are identical in both, including 'ὁρῇ' and '(185)'; only the apostrophe characters and markup differ."
+ }
+]

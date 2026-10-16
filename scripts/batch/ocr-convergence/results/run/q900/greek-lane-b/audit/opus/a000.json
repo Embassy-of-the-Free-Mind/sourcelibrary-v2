@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f6a2ef10cb4dac7f169965",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y has sense-reversing misreadings, e.g. 'μεῖζον μὲν ἐν Υἱῷ' for printed 'μεῖον', 'ἢ ἄρα ἐλάττων' for 'οὐκ ἄρα ἐλάττων', 'ἐκεῖ γὰρ ἐλάττων ὁ Υἱός', plus invented 'φοβούμενον λόγιζον' for 'φόβῳ βαλλόμενον'; X follows the print much more closely."
+ },
+ {
+  "item_id": "69af453b004a024aaf2162a0",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reads 'ἱστοριῶν γοῦν τοῦ οἰκείου στέφανον' where the print has 'ἐλάχιστον γοῦν τοῦ οἰκείου ἔργου στέφανον', so it changes a word and drops 'ἔργου'; Y has that line right and keeps the printed 'hæc hæc', and otherwise the two are close."
+ },
+ {
+  "item_id": "69a5e5e385fa13e734e419e3",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X garbles key passages, e.g. 'τὸν δρόμον' for 'τὸν φθόνον', 'αἰτία'/'ἀλήθεια' for 'ἔνδεια'/'ἀσθένεια', 'οὐδὲ βίος' for 'οὐδὲ ἕξις', and 'ἀχώριστος' for the final 'ἄρα μόνος'; Y follows the hand far better, though it has its own errors in lines 1–4 ('αὐτονοῦς' for 'αὐτομονάς')."
+ },
+ {
+  "item_id": "69af453b004a024aaf216497",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops 'in hunc modum. Cum dixisset Hieronymus' (which breaks the sentence) and also drops 'vel ut cum doctis sic legam, vehhataim ladonai meod'; X is complete."
+ },
+ {
+  "item_id": "6993897cce15387065947122",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The shelfmark painted on the cover reads 'P. 69.' as in X; Y gives a wrong number, 'P. 62.'"
+ },
+ {
+  "item_id": "699388e60f04c37dcfa60025",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X leaves out 'τῶν γεγενημένων πρῶτον ὑμᾶς' and 'μέμνησθε' and misreads 'ἀλλ' ἐκεῖνο ἀπορῶ … πέπεισμαι … ὑπομένειν' (it has 'ἀλλ' εἰ καὶ ἀπορῶ … οἴομαι'); Y matches the manuscript text."
+ },
+ {
+  "item_id": "6993896474305116d72d19ba",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The first line reads 'εἶπεν δὲ αὐτῇ· ἀφέωνταί σου αἱ ἁμαρτίαι' as in Y; X invents 'ᾧ δὲ ἀφίενται αἱ πολλαὶ ἁμαρτίαι', and X also has 'μὴ βλέπωσι' where the leaf has 'μὴ ἴδωσι'."
+ },
+ {
+  "item_id": "6993897cce1538706594712c",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y omits the whole line 'καὶ οἱ πρεσβύτεροι αὐτοῖς τῶν εὐδαιμόνων διὰ τὸ ἁβροδίαιτον', has 'σταδιεῖς' where the leaf has 'ἀθληταί', and garbles the last lines."
+ },
+ {
+  "item_id": "6993896474305116d72d1924",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The opening lines read 'εἰ δὲ χωρίς ἐστε παιδείας ἧς μέτοχοι γεγόνασι πάντες, ἄρα νόθοι ἐστὲ καὶ οὐχ υἱοί… τοὺς μὲν τῆς σαρκός' as in Y; X turns them into nonsense ('κομιδῆ χοι νόμασι πεντάς… μόθοι ἄγε καὶ ἐχλοί… ποιοῦμεν')."
+ },
+ {
+  "item_id": "69924f3f09c5da0cf50d7ca1",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The print has 'ἤλυθον· ἔνθ’' and 'ἤλυθον· ἔνθα', which Y gives correctly; X has 'ἦλθον' twice and 'ἔνθ’ κελαινώπεσσι', small form errors that do not change the sense."
+ }
+]
