@@ -294,7 +294,7 @@ export default function TreesOfLifePage() {
             src={`${IMG}/codex-laud-24.jpg`}
             alt="A deity enthroned before a brown tree, with a parrot and day signs below"
             href="/book/69b3e684abb796bfd9de428e?page=24"
-            width={432}
+            width={416}
             height={433}
           >
             Codex Laud: a deity enthroned before a tree, with a parrot.
@@ -414,7 +414,7 @@ export default function TreesOfLifePage() {
           src={`${IMG}/kayon.jpg`}
           alt="Leaf-shaped shadow puppet: a tree trunk rising above a gated house with steps"
           href="/book/69e75aefa953ec232ce8d610?page=154"
-          width={606}
+          width={590}
           height={946}
         >
           A <em>kayon</em>, from <em>Kilatbuwana</em>, the text of a Javanese wayang kulit performance (1984).
