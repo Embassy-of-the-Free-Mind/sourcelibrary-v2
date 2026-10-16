@@ -1,6 +1,6 @@
 ---
 stage: ocr
-measure: [judged, detection]
+measure: [judged, agreement]
 languages: [la, de, zh, grc, ar, he]
 scripts: [Latn, Hani, Grek, Arab, Hebr]
 canons: []
