@@ -1,0 +1,35 @@
+{
+ "key": "v049_f2a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian (Uighur-Mongol script), with a Chinese marginal label</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上二</page-num>\n<header>大寶積經第二卷</header>\n<warning>The scan is clean and the printing is fully legible. However, the Mongolian woodblock text (red ink, about 23 vertical columns inside an ornamental double frame) could not be read reliably enough to transcribe word for word. A guessed transcription would put invented text into the edition, so the Mongolian columns are marked as not transcribed and need to be done by a reader of Classical Mongolian. The column count is approximate, worked out from the overlapping image strips. The Chinese marginal label is transcribed.</warning>\n<meta>Folio 2a. Red-ink woodblock print. The text block sits inside a double rule with a scrolling-vine ornamental border. There are side panels at the left and right ends of the frame. The left panel holds a short Mongolian label and the right panel holds the Chinese label. Column 1 ends with a four-dot ornamental punctuation mark. Brown stains and small losses appear in the outer margins, outside the text.</meta>\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Ornamental double frame of scrolling vine and cloud-scroll motifs around the whole text block. Narrow side panels at the left and right ends have cloud-scroll corner ornaments at the top and bottom.</image-desc>\n<margin><unclear>short Mongolian marginal label in the left side panel (about 4–5 words), not transcribed</unclear></margin>\n<unclear>about 23 columns of Classical Mongolian woodblock text in Uighur-Mongol script, not transcribed</unclear>\n<margin>大寶積經第二卷上二</margin>\n<vocab>大寶積經, Ratnakūṭa, Mahāratnakūṭa Sūtra, Mongolian Kanjur, Beijing Kanjur 1718–1720, woodblock print, red ink</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 43.923,
+  "usage": {
+   "input": 5,
+   "output": 3019
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Folio 2a, recto, of the second volume of the Mongolian Mahāratnakūṭa Sūtra. Red-ink woodblock print. The OCR did not transcribe the Mongolian text block, so it stays marked as unread. Only the Chinese marginal label has been translated.</meta>\n\n<note>An ornamental double frame of scrolling vines and cloud scrolls surrounds the whole text block. Narrow side panels at the left and right ends have cloud-scroll ornaments at their top and bottom corners. This style of decoration is typical of the imperial Mongolian Buddhist canon printed in Beijing.</note>\n\n<margin><unclear>short Mongolian marginal label in the left side panel (about 4–5 words), not transcribed</unclear></margin>\n\n<unclear>about 23 columns of Classical Mongolian woodblock text in Uighur-Mongol script, not transcribed</unclear>\n\n<margin>Great Heap of Jewels Sutra, Volume Two, upper folio two <note>original: \"大寶積經第二卷上二\". The <term>Mahāratnakūṭa Sūtra</term> <gloss>Great Heap of Jewels Sutra</gloss> is a large collection of Mahayana Buddhist scriptures. Bilingual Chinese labels like this one were added in the margins of Mongolian canon prints made in Beijing so that the Chinese-reading workshop staff could keep the leaves in order. \"Upper two\" marks this side as the front, or recto, of folio 2.</note></margin>\n\n<summary>This is the front side of folio 2 in the second volume of the Mongolian translation of the Mahāratnakūṭa Sūtra, printed in red ink inside a decorated frame. The Mongolian text has not yet been transcribed. Only the Chinese margin label giving the title, volume and folio number can be read here.</summary>\n<keywords>Mahāratnakūṭa Sūtra, Great Heap of Jewels Sutra, Mongolian Kanjur, Beijing Kanjur, Classical Mongolian, Uighur-Mongol script, woodblock print, red ink, Buddhist canon, Chinese marginal label, folio numbering</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 10.413
+ }
+}

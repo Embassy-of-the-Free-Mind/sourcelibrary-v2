@@ -1,0 +1,42 @@
+{
+ "key": "v087_f393a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>393a</page-num>\n<warning>Faded red woodblock print in several columns.</warning>\n<margin>ᠰᠠ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤ ᠶᠢᠷᠡᠨ ᠭᠤᠷᠪᠠᠨ ᠳᠡᠭᠡᠳᠦ</margin>\n<margin>諸品經第二十八卷上三百九十三</margin>\nᠦᠨᠡᠨ ᠦᠭᠡ ᠪᠡᠷ ᠨᠠᠳᠤᠷ ᠃ ᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠰᠠᠶᠢᠨ ᠵᠦᠭ\nᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠣᠷᠣᠰᠢᠲᠤᠭᠠᠢ ᠃ ᠴᠠᠭ ᠦᠭᠡᠢ ᠴᠢᠨᠠᠳᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ ᠬᠢᠷᠢ ᠦᠭᠡᠢ\nᠰᠡᠳᠬᠢᠯ ᠃ ᠲᠡᠭᠦᠨ ᠦ ᠬᠦᠴᠦᠨ ᠢᠶᠡᠷ ᠪᠦᠲᠦᠭᠰᠡᠨ ᠭᠡᠭᠡᠨ ᠪᠡᠷ\nᠪᠤᠶᠠᠨ ᠤ ᠴᠣᠭ ᠢᠶᠠᠷ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠬᠤᠲᠤᠭ ᠲᠠᠨ ᠨᠤᠭᠤᠳ\nᠰᠡᠳᠬᠢᠯ ᠢ ᠮᠠᠰᠢ ᠨᠣᠮᠣᠭᠠᠳᠬᠠᠭᠰᠠᠨ ᠬᠢᠭᠡᠳ ᠃ ᠬᠠᠮᠤᠭ\nᠡᠷᠳᠡᠮ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠃ ᠦᠨᠡᠨ ᠦ ᠬᠦᠴᠦᠨ ᠢᠶᠡᠷ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠃\nᠰᠠᠶᠢᠨ ᠡᠷᠳᠡᠮ ᠲᠡᠭᠦᠰᠦᠭᠰᠡᠨ ᠃ ᠲᠡᠭᠦᠨ ᠦ ᠦᠨᠡᠨ ᠦᠭᠡ ᠪᠡᠷ\nᠨᠠᠳᠤᠷ ᠃ ᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠰᠠᠶᠢᠨ ᠵᠦᠭ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠣᠷᠣᠰᠢᠲᠤᠭᠠᠢ ᠃\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠳᠠᠶᠢᠨ ᠢ\nᠳᠠᠷᠤᠭᠰᠠᠨ ᠦᠨᠡᠨ ᠲᠡᠭᠦᠰ ᠲᠤᠭᠤᠯᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠃ ᠡᠷᠳᠡᠮ ᠲᠡᠭᠦᠰ\nᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠲᠤᠰ᠎ᠠ ᠶᠢ ᠵᠣᠬᠢᠶᠠᠭᠴᠢ ᠃ ᠬᠠᠮᠤᠭ\nᠮᠡᠳᠡᠭᠳᠡᠬᠦᠨ ᠢ ᠮᠡᠳᠡᠭᠴᠢ ᠃ ᠠᠷᠪᠠᠨ ᠬᠦᠴᠦᠨ ᠯᠤᠭ᠎ᠠ ᠲᠡᠭᠦᠰᠦᠭᠰᠡᠨ ᠃\nᠲᠡᠭᠦᠨ ᠦ ᠦᠨᠡᠨ ᠦᠭᠡ ᠪᠡᠷ ᠨᠠᠳᠤᠷ ᠃ ᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠰᠠᠶᠢᠨ\nᠵᠦᠭ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠣᠷᠣᠰᠢᠲᠤᠭᠠᠢ ᠃ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠤᠨ ᠰᠢᠯᠦᠭ ᠲᠠᠭᠤᠰᠪᠠ ᠃ ᠃\nᠡᠨᠡᠳᠬᠡᠭ ᠦᠨ ᠬᠡᠯᠡ ᠪᠡᠷ ᠃ ᠷᠠᠳᠨ᠎ᠠ ᠲᠷᠠᠶ᠎ᠠ ᠰᠤᠸᠠᠰᠲᠢ ᠭᠠᠲ᠎ᠠ ᠃ ᠲᠥᠪᠡᠳ ᠦᠨ ᠬᠡᠯᠡ ᠪᠡᠷ\nᠭᠣᠨᠴᠣᠭ ᠭᠰᠤᠮ ᠭᠢ ᠪᠠᠭᠷᠠᠰᠢᠰ ᠺᠢ ᠴᠢᠭᠰᠤ ᠪᠴᠠᠳ ᠪᠠ ᠃ ᠮᠣᠩᠭᠣᠯ ᠤᠨ ᠬᠡᠯᠡ ᠪᠡᠷ ᠃ ᠭᠤᠷᠪᠠᠨ ᠡᠷᠳᠡᠨᠢ ᠶᠢᠨ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠤᠨ ᠰᠢᠯᠦᠭ ᠃\nᠭᠤᠷᠪᠠᠨ ᠡᠷᠳᠡᠨᠢ ᠳᠦ ᠮᠦᠷᠭᠦᠮᠦ ᠃ ᠶᠡᠬᠡ ᠶᠢᠨ ᠶᠡᠬᠡ ᠳᠡᠭᠡᠳᠦ\nᠦᠵᠦᠭᠦᠯᠦᠭᠴᠢ ᠲᠩᠷᠢ ᠨᠤᠭᠤᠳ ᠤᠨ ᠲᠩᠷᠢ ᠲᠠᠬᠢᠯ ᠤᠨ ᠣᠷᠣᠨ ᠃ ᠬᠠᠮᠤᠭ ᠢ\nᠠᠪᠤᠷᠠᠭᠴᠢ ᠪᠤᠷᠬᠠᠨ ᠡᠷᠳᠡᠨᠢ ᠶᠢᠨ ᠦᠨᠡᠨ ᠦᠭᠡ ᠪᠡᠷ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ\nᠣᠷᠣᠰᠢᠬᠤ ᠪᠣᠯᠲᠤᠭᠠᠢ ᠃ ᠮᠠᠭᠤ ᠵᠠᠶᠠᠭᠠᠨ ᠠᠴᠠ ᠭᠡᠲᠦᠯᠭᠡᠭᠴᠢ ᠃ ᠲᠣᠨᠢᠯᠬᠤᠢ ᠮᠥᠷ ᠲᠦ\nᠳᠡᠭᠡᠳᠦ ᠨᠣᠮ ᠡᠷᠳᠡᠨᠢ ᠶᠢᠨ ᠦᠨᠡᠨ ᠦᠭᠡ ᠪᠡᠷ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠣᠷᠣᠰᠢᠬᠤ\nᠪᠣᠯᠲᠤᠭᠠᠢ ᠃ ᠪᠤᠶᠠᠨ ᠤ ᠴᠣᠭ ᠲᠡᠭᠦᠰᠦᠭᠰᠡᠨ ᠃ ᠬᠤᠸᠠᠷᠠᠭ ᠡᠷᠳᠡᠨᠢ ᠶᠢᠨ ᠦᠨᠡᠨ ᠦᠭᠡ ᠪᠡᠷ\nᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠣᠯᠲᠤᠭᠠᠢ ᠃ ᠃ ᠭᠤᠷᠪᠠᠨ ᠡᠷᠳᠡᠨᠢ ᠶᠢᠨ ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ ᠤᠨ ᠰᠢᠯᠦᠭ ᠲᠠᠭᠤᠰᠪᠠ ᠃ ᠃\nᠡᠨᠡᠳᠬᠡᠭ ᠦᠨ ᠬᠡᠯᠡ ᠪᠡᠷ ᠃ ᠰᠤᠸᠠᠰᠲᠢ ᠠᠶᠠᠨ᠎ᠠ ᠭᠠᠲ᠎ᠠ ᠃ ᠲᠥᠪᠡᠳ ᠦᠨ\nᠬᠡᠯᠡ ᠪᠡᠷ ᠃ ᠪᠠᠭᠷᠠᠰᠢᠰ ᠺᠢ ᠴᠢᠭᠰᠤ ᠪᠴᠠᠳ ᠪᠠ ᠃ ᠮᠣᠩᠭᠣᠯ ᠤᠨ ᠬᠡᠯᠡ ᠪᠡᠷ ᠃\n<vocab>ᠥᠯᠵᠡᠢ ᠬᠤᠲᠤᠭ, ᠭᠤᠷᠪᠠᠨ ᠡᠷᠳᠡᠨᠢ, ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ, ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ, ᠪᠤᠷᠬᠠᠨ, ᠨᠣᠮ, ᠬᠤᠸᠠᠷᠠᠭ, ᠷᠠᠳᠨ᠎ᠠ ᠲᠷᠠᠶ᠎ᠠ ᠰᠤᠸᠠᠰᠲᠢ ᠭᠠᠲ᠎ᠠ, ᠰᠤᠸᠠᠰᠲᠢ ᠠᠶᠠᠨ᠎ᠠ ᠭᠠᠲ᠎ᠠ, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 516.694,
+  "usage": {
+   "input_tokens": 22697,
+   "output_tokens": 44378,
+   "thinking_tokens": 41802,
+   "cache_read_tokens": 29487,
+   "total_tokens": 67075
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page</meta>\n<warning>Faded red woodblock print in several columns.</warning>\n<margin><term>Sa</term> <gloss>Tibetan letter used as the volume signature for Volume Twenty-Eight</gloss>, three hundred ninety-three, upper <note>recto, folio 393a</note></margin>\n<margin><term>Zhupin jing</term> <gloss>Scriptures of Various Sections; original: \"諸品經\"</gloss>, Volume Twenty-Eight, upper <note>recto</note>, three hundred ninety-three</margin>\nby that word of truth, unto me, and for the good fortune of all sentient beings,\nmay <term>öljei qutug</term> <gloss>auspiciousness and blessings</gloss> abide! The immaculate, timelessly transcendent\nmind, and the radiance accomplished by its power:\nthe noble ones <note>the holy ones or saints, Sanskrit: ārya</note>, created by the splendor of merit,\nwho have thoroughly tamed the mind, and have reached\nthe furthest shore of all virtues, arisen through the power of truth,\nperfected in good qualities; by that word of truth,\nunto me, and for the good fortune of all sentient beings, may auspiciousness and blessings abide!\nThe <term>Ilaju tegüs nögčigsen</term> <gloss>Victoriously Passed Beyond, the Blessed One; Sanskrit: Bhagavān</gloss>, the <term>Tegünčilen iregsen</term> <gloss>Thus-Come One; Sanskrit: Tathāgata</gloss>, the Foe-Destroyer\n<note>Sanskrit: Arhat</note>, the Truly and Completely Awakened <term>Burqan</term> <gloss>Buddha</gloss>; perfected in virtues,\nthe Accomplisher of the Benefit of All Sentient Beings, the Knower of All\nThat Is to Be Known <note>the Omniscient One</note>, endowed with the ten powers <note>the ten cognitive powers of a Buddha</note>:\nby that word of truth, unto me, and for the good fortune of all sentient beings,\nmay auspiciousness and blessings abide! The Verses of Auspiciousness are concluded.\nIn the language of India <note>Sanskrit</note>: <term>Radna traya suwasti gata</term> <gloss>Ratnatraya-svasti-gāthā, Verses of Auspiciousness of the Three Jewels</gloss>. In the language of Tibet:\n<term>Gončog gsum gi bagrasis ki čigsu bčad ba</term> <gloss>dKon mchog gsum gyi bkra shis kyi tshigs su bcad pa, Verses of Auspiciousness of the Three Jewels</gloss>. In the language of Mongolia: Verses of Auspiciousness of the <term>Gurban Erdeni</term> <gloss>Three Jewels</gloss>.\nI bow down to the Three Jewels. Supreme Great of the Great,\nthe Guide, God of Gods, Worthy Object of Offering, Savior of All:\nby the word of truth of the Precious <term>Burqan</term> <gloss>Buddha Jewel</gloss>, may auspiciousness and blessings\nabide! Deliverer from Evil Rebirths, Leading on the Path of Liberation:\nby the word of truth of the Supreme Precious <term>Nom</term> <gloss>Dharma Jewel, the Buddhist teaching</gloss>, may auspiciousness and blessings\nabide! Perfected in the Splendor of Merit: by the word of truth of the Precious <term>Quwarag</term> <gloss>Sangha Jewel, the monastic community</gloss>,\nmay auspiciousness and blessings abide! The Verses of Auspiciousness of the Three Jewels are concluded.\nIn the language of India <note>Sanskrit</note>: <term>Suwasti ayana gata</term> <gloss>Svastyayana-gāthā, Verses Leading to Auspiciousness</gloss>. In the language of\nTibet: <term>Bagrasis ki čigsu bčad ba</term> <gloss>bKra shis kyi tshigs su bcad pa, Verses of Auspiciousness</gloss>. In the language of Mongolia: <note>text continues on the next folio</note>\n\n<summary>This folio from Volume 28 of the Mongolian Kanjur concludes a set of benedictory verses invoking the truth of the noble ones and the Buddha, presents the complete text of the Verses of Auspiciousness of the Three Jewels (Ratnatraya-svasti-gāthā), and opens the trilingual title heading for the Verses Leading to Auspiciousness (Svastyayana-gāthā).</summary>\n<keywords>Mongolian Kanjur, Verses of Auspiciousness, Three Jewels, Ratnatraya-svasti-gatha, Svastyayana-gatha, Buddha, Dharma, Sangha, benediction, act of truth</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 169.507
+ }
+}

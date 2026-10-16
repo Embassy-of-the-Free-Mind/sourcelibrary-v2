@@ -1,0 +1,41 @@
+{
+ "key": "v061_f2a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ᠬᠣᠶᠠᠷ 諸品經第二卷上二</page-num>\n<header>ᠸᠠ ᠡᠯ᠎ᠡ ᠵᠦᠢᠯ</header>\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Ornamental red-ink woodblock double-ruled border with floral scrollwork surrounding the text block and side marginalia cartouches.</image-desc>\n<margin>ᠸᠠ ᠡᠯ᠎ᠡ ᠵᠦᠢᠯ ᠬᠣᠶᠠᠷ</margin>\nᠬᠠᠭᠠᠭᠳᠠᠬᠤ ᠥᠭᠡᠢ ᠴᠢᠨᠠᠷ ᠲᠤ ᠃ ᠭᠠᠭᠴᠠ ᠦᠵᠦᠭᠦᠷ ᠲᠦ\nᠳᠤᠷᠠᠳᠬᠠᠯ ᠠᠭᠤᠯᠭᠠᠵᠤ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠷᠡᠭᠰᠡᠨ ᠢ\nᠦᠵᠡᠬᠦᠢ yin ᠰᠡᠳᠬᠢᠯ i ᠡᠭᠦᠰᠭᠡ ᠄\nᠢᠨᠠᠭᠰᠢ ᠢᠷᠡ ᠢᠵᠠᠭᠤᠷ ᠲᠠᠨ ᠤ ᠬᠦᠪᠡᠭᠦᠨ ᠎ᠠ\nᠴᠢ ᠨᠢᠭᠡᠨ ᠦᠵᠦᠭᠦᠷ ᠲᠦ ᠰᠡᠳᠬᠢᠯ ᠢᠶᠡᠷ\nᠰᠠᠢᠨ ᠵᠦᠭ ᠦᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠷᠡᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ i\nᠤᠷᠢᠳᠠ ᠨᠢᠭᠤᠷ un ᠡᠮᠦᠨ᠎ᠡ ᠦᠵᠡᠬᠦ ᠪᠣᠯᠤᠶᠤ ᠄\nᠡᠨᠡ ᠮᠡᠲᠦ ᠥᠪᠡᠷ i ᠰᠠᠬᠢᠬᠤ ᠬᠢᠭᠡᠳ\nᠢᠵᠠᠭᠤᠷ ᠲᠠᠨ ᠤ ᠬᠦᠪᠡᠭᠦᠨ ᠪᠤᠷᠬᠠᠨ u ᠵᠦᠭ tü\nᠣᠳᠬᠤ yin ᠴᠠᠭ tur ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠷᠡᠭᠰᠡᠨ\nᠦᠨᠡᠨ ᠲᠡᠭᠦᠰ ᠲᠤᠭᠤᠯᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠂ ᠠᠭᠤᠯᠠ\nᠬᠠᠳᠠ yi ᠪᠠ ᠂ ᠮᠥᠷᠡᠨ ᠤᠰᠤᠨ i ᠥᠭᠡᠢ\nᠪᠣᠯᠭᠠᠨ ᠂ ᠵᠣᠪᠠᠯᠠᠩ aca ᠠᠩᠭᠢᠵᠢᠷᠠᠭᠤᠯᠬᠤ ᠪᠣᠯᠤᠶᠤ ᠂\nᠲᠡᠭᠦᠨ dür ᠪᠤᠷᠬᠠᠨ u ᠢᠪᠡᠭᠡᠯ iyer ᠭᠠᠵᠠᠷ un\nᠲᠡᠭᠰᠢ ᠪᠤᠰᠤ yi ᠠᠷᠢᠯᠭᠠᠨ ᠂ ᠲᠡᠭᠰᠢ ᠪᠣᠯᠭᠠᠬᠤ\nᠪᠣᠯᠤᠶᠤ ᠂ ᠡᠨᠡ ᠮᠡᠲᠦ ᠠᠯᠢ ᠵᠦᠭ tür\nᠣᠳᠬᠤ ᠪᠣᠯᠪᠠᠰᠤ ᠂ ᠮᠥᠷ i ᠵᠢᠭᠠᠭᠴᠢ ᠭᠠᠵᠠᠷᠴᠢ\nᠦᠭᠡᠢ ᠪᠠ ᠂ ᠵᠢᠭᠠᠨ ᠥᠭᠬᠦ ᠦᠭᠡᠢ\nᠪᠣᠯᠪᠠᠴᠤ ᠂ ᠵᠥᠪ ᠮᠥᠷ tür ᠣᠷᠣᠵᠤ ᠂ ᠵᠥᠪ\n<margin>諸品經第二卷上二</margin>\n<vocab>ᠴᠢᠨᠠᠭᠰᠢ ᠢᠷᠡᠭᠰᠡᠨ, ᠢᠵᠠᠭᠤᠷ ᠲᠠᠨ ᠤ ᠬᠦᠪᠡᠭᠦᠨ, ᠦᠨᠡᠨ ᠲᠡᠭᠦᠰ ᠲᠤᠭᠤᠯᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ, ᠨᠢᠭᠡᠨ ᠦᠵᠦᠭᠦᠷ ᠲᠦ ᠰᠡᠳᠬᠢᠯ, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 122.786,
+  "usage": {
+   "input_tokens": 12301,
+   "output_tokens": 1732,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 38624,
+   "total_tokens": 14033
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page; folio 2 (Mongolian: qoyar; Chinese: Various Sutras, Scroll 2, Part 1, Folio 2); header: Wa, Various Kinds (Mongolian: Wa ele jüil)</meta>\n<note>Ornamental red-ink woodblock double-ruled border with floral scrollwork surrounding the text block and side marginalia cartouches.</note>\n<margin>Volume <term>Wa</term> <gloss>sixteenth volume marker in the Tibetan-Mongolian index</gloss>, Various Sutras, Two</margin>\nof an unobstructed nature. Holding single-pointed\nmindfulness, give rise to the thought of beholding\nthe <term>Tathāgata</term> <gloss>Thus-Come One, an epithet of the Buddha; Mongolian: činaγsi iregsen</gloss>.\nCome hither, O son of good family <note>original: \"ijaγur-tan-u kübegün\", translating Sanskrit \"kulaputra\"</note>!\nWith a single-pointed mind, you\nshall behold right before your eyes the <term>Tathāgata</term> <gloss>Thus-Come One</gloss>\nBuddha of the auspicious direction.\nIn this way, when guarding oneself and when\nthe son of good family goes toward the direction of\nthe Buddha, the <term>Tathāgata</term> <gloss>Thus-Come One</gloss>,\nthe Truly and Completely Enlightened Buddha <note>original: \"ünen tegüs tuγuluγsan burqan\", translating Sanskrit \"samyaksaṃbuddha\"</note>, shall make\nmountains and cliffs, as well as rivers and waters, disappear,\nand shall deliver him from suffering.\nTherein, through the blessing of the Buddha, the unevenness\nof the ground shall be cleared away and made level.\nIn this way, whichever direction\nhe may go, even though there be no guide to show\nthe path, and no one to give instruction,\nhe shall enter upon the right path, and rightly\n<margin>Various Sutras <note>original: \"諸品經\"</note>, Scroll Two, Upper Part, Folio Two</margin>\n\n<summary>This folio from the Mongolian Buddhist canonical collection \"Various Sutras\" (ele jüil) instructs a practitioner (\"son of good family\") on cultivating single-pointed mindfulness to behold the Buddha. Through the Buddha's blessing, physical obstacles such as mountains and rivers vanish, uneven ground is made level, and the practitioner finds the true path even without a guide.</summary>\n<keywords>Mongolian Buddhism, Tathagata, mindfulness, visualization, Samyaksambuddha, kulaputra, woodblock print, Various Sutras</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 68.353
+ }
+}

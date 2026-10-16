@@ -1,0 +1,40 @@
+{
+ "key": "v005_f150a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>299</page-num>\n<warning>Printed woodblock Buddhist sutra in vertical traditional Mongolian script with red ink (Kanjur format) and marginal Chinese volume/folio notation. The main Mongolian text is not reliably transcribable and is marked with unclear tags.</warning>\n\n<margin>naimadugar bölüg зуун тавин</margin>\n\n<unclear>28 vertical lines of Classical Mongolian script printed in red ink, not transcribed</unclear>\n\n<margin>秘密經第五卷上一百五十</margin>\n\n<vocab>Mongolian Kanjur, 秘密經, Buddhist sutra, woodblock print, Classical Mongolian script</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 34.482,
+  "usage": {
+   "input_tokens": 19141,
+   "output_tokens": 301,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 13801,
+   "total_tokens": 19442
+  },
+  "tool_calls": [
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Printed woodblock Buddhist sutra in vertical traditional Mongolian script with red ink (Kanjur format) and marginal Chinese volume/folio notation. The main Mongolian text is not reliably transcribable and is marked with unclear tags.</warning>\n\n<margin>Eighth section, one hundred and fifty <note>original: \"naimadugar bölüg зуун тавин\"; Mongolian marginal notation indicating the section and folio number 150</note></margin>\n\n<unclear>28 vertical lines of Classical Mongolian script printed in red ink, not transcribed</unclear>\n\n<margin>Secret Sutra, Volume Five, Part One, One Hundred and Fifty <note>original: \"秘密經第五卷上一百五十\"; Chinese woodblock marginal notation identifying the tantric section, fifth fascicle, upper part, folio 150</note></margin>\n\n<summary>This folio comes from a woodblock edition of the Mongolian Kanjur printed in red ink. The marginal notations in both Mongolian and Chinese identify it as folio 150 of the eighth section (Chinese: Secret Sutra, Volume 5, Part 1), while the 28 vertical lines of the main Classical Mongolian text remain untranscribed.</summary>\n<keywords>Mongolian Kanjur, Secret Sutra, Buddhist sutra, woodblock print, Classical Mongolian script, folio 150, bilingual marginalia</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 23.358
+ }
+}

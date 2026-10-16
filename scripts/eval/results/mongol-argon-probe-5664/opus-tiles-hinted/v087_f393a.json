@@ -1,0 +1,35 @@
+{
+ "key": "v087_f393a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The Mongolian woodblock text is printed in faded red ink and is legible on the scan, but I cannot read this Uighur-Mongol script reliably enough at this resolution to transcribe it letter by letter. To avoid inventing text, the body is marked as untranscribed. The column count is approximate because the four strips overlap. Near the middle of the page, two short lines and some blank space set off by thin rules seem to mark the end of one text and the start of another.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>393</page-num>\n<header>諸品經第二十八卷上三百九十三</header>\n<meta>The left margin has a short Mongolian label, probably the volume and folio number, which is not transcribed. The right margin has the Chinese label 諸品經第二十八卷上三百九十三 (\"Various Sutras, volume 28, upper, 393\"). Paper tabs or strips are attached to the upper right corner outside the printed frame. Two white paper slips show at the bottom edge, below the frame.</meta>\n<margin><unclear>short Mongolian marginal label (volume/folio designation), not transcribed</unclear></margin>\n\n<unclear>about 31 columns of Classical Mongolian text in Uighur-Mongol vertical script, read left to right, not transcribed</unclear>\n\n<vocab>諸品經, Beijing Mongolian Kanjur, Classical Mongolian, Uighur-Mongol script, folio 393, volume 28</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 36.424,
+  "usage": {
+   "input": 5,
+   "output": 3005
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The OCR contains no transcribed Mongolian body text. Only the Chinese margin label was read. The body is carried over as untranscribed, and none of its content has been reconstructed.</meta>\n<warning>The Classical Mongolian body text of this page was not transcribed, so there is nothing to translate. The untranscribed regions are reproduced below as they appear in the OCR.</warning>\n\n<note>Chinese margin label: \"Various Sutras, volume 28, upper part, folio 393\" <note>original: \"諸品經第二十八卷上三百九十三\"</note>. In Mongolian Kanjur editions, <term>諸品經</term> <gloss>Various Sutras</gloss> is the Chinese section label for the miscellaneous sutra division. Slips like this let binders and readers find a folio without reading the Mongolian script.</note>\n\n<margin><unclear>short Mongolian marginal label (volume/folio designation), not transcribed</unclear></margin>\n\n<unclear>about 31 columns of Classical Mongolian text in Uighur-Mongol vertical script, read left to right, not transcribed</unclear>\n\n<note>Near the middle of the page, two short lines and some blank space set off by thin rules seem to mark the end of one text and the start of another within the volume.</note>\n\n<summary>Folio 393 of volume 28 (upper part) of the \"Various Sutras\" section of a Mongolian Kanjur woodblock print in red ink. The Mongolian body text was not transcribed. Only the Chinese margin label can be translated; it gives the section, volume and folio number.</summary>\n<keywords>Mongolian Kanjur, Various Sutras, Classical Mongolian, Uighur-Mongol script, woodblock print, red ink, folio 393, volume 28, Chinese margin label, untranscribed page</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 10.035
+ }
+}

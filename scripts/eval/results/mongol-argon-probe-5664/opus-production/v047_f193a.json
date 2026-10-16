@@ -1,0 +1,35 @@
+{
+ "key": "v047_f193a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二百九十三</page-num>\n<header>諸般若經第一卷</header>\n<warning>The page is a woodblock print in red ink in vertical classical Mongolian (Uyghur-Mongolian) script, inside a ruled frame. The Mongolian body text was not transcribed because it could not be read reliably at this resolution. The Chinese marginal label at the right edge was read as 諸般若經第一卷二百九十三 (\"Various Prajñāpāramitā sūtras, volume 1, [leaf] 293\"); the second character is uncertain.</warning>\n<margin><unclear>1 short vertical line of Mongolian script in the left margin panel (marginal title/volume label), not transcribed</unclear></margin>\n\n<unclear>About 31 vertical lines of classical Mongolian script (Buddhist sūtra text, apparently Prajñāpāramitā literature), printed in red ink, not transcribed</unclear>\n\n<meta>A horizontal pothi-format leaf from a red-ink Mongolian Kanjur printed from woodblocks. The text is enclosed in a double-ruled border. Narrow margin panels on the right (Chinese label and leaf number) and on the left (Mongolian label) frame the main text.</meta>\n<vocab>Mongolian Kanjur, Prajñāpāramitā, 般若經, pothi format, red-ink woodblock print, Uyghur-Mongolian script</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 15.907,
+  "usage": {
+   "input": 4,
+   "output": 891
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Folio header (Chinese marginal label): \"Various Prajñāpāramitā Sūtras, volume 1, leaf 293\" <note>original: \"諸般若經第一卷二百九十三\"; the second character is an uncertain reading</note>. This is a red-ink woodblock leaf in pothi format, from a Mongolian Kanjur.</meta>\n\n<warning>The OCR did not transcribe the main Mongolian text, which is classical vertical Uyghur-Mongolian script. So there is nothing here to translate. The untranscribed areas are kept below as unclear tags.</warning>\n\n<margin><unclear>1 short vertical line of Mongolian script in the left margin panel (marginal title/volume label), not transcribed</unclear></margin>\n\n<unclear>About 31 vertical lines of classical Mongolian script (Buddhist sūtra text, apparently Prajñāpāramitā literature), printed in red ink, not transcribed</unclear>\n\n<summary>This leaf, numbered 293, comes from the first volume of the Prajñāpāramitā section of a Mongolian Kanjur printed in red ink from woodblocks. Only the Chinese marginal label could be read. The Mongolian sūtra text was not transcribed, so no translation is possible.</summary>\n<keywords>Mongolian Kanjur, Prajñāpāramitā, Perfection of Wisdom, Buddhist sūtra, red-ink woodblock print, pothi format, Uyghur-Mongolian script, Chinese marginal label</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.932
+ }
+}

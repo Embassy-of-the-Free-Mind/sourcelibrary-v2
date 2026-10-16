@@ -1,0 +1,35 @@
+{
+ "key": "v066_f2a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二</page-num>\n<header>諸品經第七卷上</header>\n<warning>The main text is in vertical Manchu script, printed in red ink inside a decorative frame. I can't transcribe it reliably, so it is marked as unclear rather than guessed. The Chinese margin label is legible. The upper left corner of the leaf is torn and the paper is stained.</warning>\n<meta>Pothi-format leaf printed in red ink. The Chinese margin label at the right reads 諸品經第七卷上二 (Zhupin jing, juan 7, folio 2 recto). A short Manchu label on the left margin, about 4 words, is probably the title and folio number.</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A double rectangular frame in red, filled with scrolling floral and cloud ornament, surrounds the text block. Narrow side panels at the left and right hold the margin labels.</image-desc>\n\n<margin>諸品經第七卷上二</margin>\n\n<unclear>About 22 vertical lines of Manchu script printed in red, not transcribed</unclear>\n\n<margin><unclear>Short Manchu margin label of about 4 words, probably the title and folio number, not transcribed</unclear></margin>\n\n<vocab>諸品經, Zhupin jing, Manchu Kanjur, Buddhist sutra, pothi, red-ink printing</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 13.951,
+  "usage": {
+   "input": 4,
+   "output": 859
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Source language: Manchu, not Mongolian as the request expected. Pothi-format leaf printed in red ink. Only the Chinese margin label is legible. The main Manchu text and the Manchu margin label were not transcribed, so they are kept as unclear.</meta>\n\n<note>Image description: a double rectangular frame in red, filled with scrolling floral and cloud ornament, surrounds the text block. Narrow side panels on the left and right hold the margin labels.</note>\n\n<margin>Sutra of All Categories, Volume Seven, Part One, folio 2 <note>original: \"諸品經第七卷上二\" (Zhupin jing, juan 7, upper part, leaf 2). This label was a running guide that helped binders and readers keep the loose pothi leaves in order.</note></margin>\n\n<unclear>About 22 vertical lines of Manchu script printed in red, not transcribed</unclear>\n\n<margin><unclear>Short Manchu margin label of about 4 words, probably the title and folio number, not transcribed</unclear></margin>\n\n<summary>This is folio 2 of the first part of volume seven of the Zhupin jing, a Buddhist scripture collection printed in Manchu with red ink. Only the Chinese margin label could be read. The main Manchu text was not transcribed.</summary>\n<keywords>Zhupin jing, Sutra of All Categories, Manchu Kanjur, Buddhist sutra, Manchu script, pothi format, red-ink printing, Qing dynasty imperial printing, margin label</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.437
+ }
+}

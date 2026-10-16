@@ -1,0 +1,35 @@
+{
+ "key": "v061_f2a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>2</page-num>\n<header>諸品經第二卷上</header>\n<warning>Oblong pothi-format leaf, xylograph printed in red ink. The main text is in vertical Mongolian (Uyghur-Mongolian) script, which cannot be transcribed reliably at this resolution. Only the Chinese margin label is transcribed. Some light staining and fading.</warning>\n<meta>Chinese margin label on the right reads 諸品經第二卷上二: Zhupin jing, juan 2, part 1 (上), leaf 2. A short Mongolian label in the left margin panel probably gives the volume/leaf numbering and is not transcribed.</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Double-ruled rectangular frame with a band of scrolling foliate ornament surrounds the text block. There are narrow framed side panels at left and right with cusped corner ornaments, and these carry the margin labels.</image-desc>\n\n<margin>諸品經第二卷上二</margin>\n\n<unclear>about 22 vertical lines of Mongolian-script text, not transcribed</unclear>\n\n<margin><unclear>short Mongolian-script label in the left margin panel (3–4 words, probably the volume and leaf number), not transcribed</unclear></margin>\n\n<vocab>諸品經, Zhupin jing, Mongolian script, Buddhist sutra collection, pothi, red-ink xylograph</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 17.573,
+  "usage": {
+   "input": 4,
+   "output": 1036
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The main Mongolian text block was not transcribed by OCR, so only the margin labels and the image description can be rendered. No content has been supplied for the unread region.</meta>\n\n<note>A large decorative border frames the text block. It has a double-ruled rectangular frame with a band of scrolling leaf ornament. Narrow framed panels at the left and right sides have cusped corner ornaments, and these panels hold the margin labels.</note>\n\n<margin>Sutra of All Classes <note>original: \"諸品經\" (Zhupin jing), a Chinese title for a collected Buddhist sutra volume</note>, Volume Two, Part One, leaf 2</margin>\n\n<unclear>about 22 vertical lines of Mongolian-script text, not transcribed</unclear>\n\n<margin><unclear>short Mongolian-script label in the left margin panel (3–4 words, probably the volume and leaf number), not transcribed</unclear></margin>\n\n<summary>This is leaf 2 of Volume Two, Part One, of a Mongolian Buddhist sutra collection called the Zhupin jing in its Chinese margin label. It was printed from woodblocks in red ink in the long, narrow pothi format. The main Mongolian text was not transcribed, so only the Chinese margin label and the decorative frame are recorded.</summary>\n<keywords>Zhupin jing, Sutra of All Classes, Mongolian Buddhist canon, Uyghur-Mongolian script, pothi format, red-ink xylograph, woodblock printing, bilingual margin labels, foliate border ornament</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.254
+ }
+}

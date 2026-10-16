@@ -1,0 +1,46 @@
+{
+ "key": "v061_f2a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "",
+  "problem": null,
+  "cls": "timeout",
+  "print_timeout": "900s",
+  "secs": 912.372,
+  "usage": {
+   "input_tokens": 37460,
+   "output_tokens": 30954,
+   "thinking_tokens": 30439,
+   "cache_read_tokens": 13861,
+   "total_tokens": 68414
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "",
+  "problem": "no read to translate",
+  "cls": null,
+  "secs": null
+ }
+}

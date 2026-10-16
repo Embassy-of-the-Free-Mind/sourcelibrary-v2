@@ -1,0 +1,42 @@
+{
+ "key": "v098_f3a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ᠭᠤᠷᠪᠠᠨ ᠳ᠋ᠡᠭᠡᠳᠦ / 上三 (3a)</page-num>\n<sig>ᠴᠠ / 第六卷</sig>\n<meta>Beijing Kanjur (1718–1720), Vinaya (Dulba) section, Volume 6 (ča), Folio 3a (recto); red woodblock print in pothi format, 25 vertical columns read left to right.</meta>\n\n<margin>ᠴᠠ ᠳ᠋ᠤᠯᠪᠠ ᠭᠤᠷᠪᠠᠨ ᠳ᠋ᠡᠭᠡᠳᠦ</margin>\n<margin>律師戒行經第六卷上三</margin>\nᠪᠢᠰᠢᠷᠡᠯ ᠢᠶᠡᠨ ᠃ ᠰᠠᠢᠨ ᠤ ᠠᠴᠢ ᠪᠠᠷ ᠬᠤᠪᠢᠯᠭᠠᠨ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠡᠳ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ\nᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠵᠦ ᠃ ᠠᠮᠢᠲᠠᠨ ᠢ ᠪᠣᠯᠪᠠᠰᠤᠷᠠᠭᠤᠯᠤᠭᠠᠳ ᠦᠢᠯᠡᠳᠪᠡᠢ ᠅ ᠲᠡᠨᠳᠡ ᠠᠴᠠ ᠪᠠᠰᠠ ᠰᠣᠨᠣᠰᠤᠭᠠᠳ\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠃ ᠲᠡᠭᠦᠨ ᠳᠦ ᠢᠯᠡᠳᠲᠡ ᠦᠵᠡᠭᠦᠯᠦᠨ\nᠪᠣᠯᠪᠠᠰᠤ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠃ ᠰᠠᠢᠲᠤᠷ ᠨᠣᠮᠯᠠᠭᠰᠠᠨ ᠳᠤ ᠪᠣᠯᠪᠠᠢ\nᠨᠢᠭᠡᠨ ᠴᠠᠭ ᠲᠤ ᠃ ᠪᠤᠷᠬᠠᠨ ᠬᠠᠮᠤᠭ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠦᠳ\nᠪᠣᠯᠪᠠᠢ ᠬᠡᠮᠡᠪᠡᠢ ᠅ ᠲᠡᠨᠳᠡ ᠠᠴᠠ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠦᠳ ᠲᠦ ᠡᠨᠡ\nᠢᠷᠡᠵᠦ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠃ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠦ ᠵᠠᠷᠯᠢᠭ ᠢ ᠰᠣᠨᠣᠰᠴᠤ\nᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠢ ᠂ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠦᠳ ᠰᠣᠨᠣᠰᠤᠭᠠᠳ ᠂\nᠦᠨᠡᠬᠡᠷ ᠪᠠᠶᠠᠰᠴᠤ ᠅ ᠲᠡᠨᠳᠡ ᠠᠴᠠ ᠪᠠᠰᠠ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ\nᠦᠢᠯᠡ ᠶᠢ ᠦᠢᠯᠡᠳᠬᠦᠢ ᠳᠦ ᠂ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ\nᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠪᠠᠢ ᠅ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠦᠳ ᠠᠴᠠ ᠠᠯᠢ ᠪᠠ\nᠰᠠᠬᠢᠯ ᠢ ᠠᠯᠳᠠᠭᠰᠠᠨ ᠃ ᠪᠤᠰᠤᠳ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ\n ᠦᠳ ᠲᠦ ᠂ ᠬᠡᠷᠪᠡ ᠲᠡᠷᠡ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠢ ᠦᠵᠡᠭᠡᠳ ᠅\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠢ ᠂ ᠮᠡᠳᠡᠭᠡᠳ ᠨᠣᠮ ᠤᠨ ᠶᠣᠰᠤᠭᠠᠷ\nᠦᠢᠯᠡᠳᠬᠦ ᠪᠣᠯᠪᠠᠰᠤ ᠂ ᠲᠡᠷᠡ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠢ\nᠨᠠᠮᠠᠨᠴᠢᠯᠠᠭᠤᠯᠵᠤ ᠂ ᠭᠡᠮ ᠠᠴᠠ ᠭᠠᠷᠭᠠᠬᠤ ᠪᠣᠯᠤᠮᠤᠢ ᠅\nᠬᠡᠷᠪᠡ ᠲᠡᠢᠮᠦ ᠪᠣᠯᠪᠠᠰᠤ ᠂ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠦᠳ\nᠰᠠᠢᠲᠤᠷ ᠰᠢᠨᠵᠢᠯᠡᠵᠦ ᠂ ᠨᠣᠮ ᠤᠨ ᠶᠣᠰᠤᠭᠠᠷ ᠦᠢᠯᠡᠳᠬᠦ\nᠪᠣᠯᠲᠤᠭᠠᠢ ᠬᠡᠮᠡᠪᠡᠢ ᠂ ᠅\nᠪᠠᠰᠠ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠳᠦ ᠂\nᠨᠠᠰᠤᠨ ᠠᠴᠠ ᠲᠡᠭᠦᠯᠳᠡᠷ ᠤᠫᠠᠯᠢ ᠡᠶᠢᠨ ᠬᠡᠮᠡᠨ ᠦᠴᠢᠪᠡᠢ ᠃\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠠ ᠂ ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠦᠳ\nᠴᠢᠨᠠᠭᠰᠢ ᠂ ᠰᠠᠬᠢᠯ ᠠᠴᠠ ᠠᠯᠳᠠᠭᠰᠠᠨ ᠢ ᠦᠵᠡᠪᠡᠰᠦ\nᠬᠡᠷ ᠦᠢᠯᠡᠳᠬᠦ ᠪᠣᠯᠤᠮᠤᠢ ᠬᠡᠮᠡᠨ ᠦᠴᠢᠭᠰᠡᠨ ᠳᠦ ᠃\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠨᠠᠰᠤᠨ ᠠᠴᠠ ᠲᠡᠭᠦᠯᠳᠡᠷ ᠤᠫᠠᠯᠢ ᠳᠤ ᠵᠠᠷᠯᠢᠭ ᠃\n\n<vocab>ᠳ᠋ᠤᠯᠪᠠ (Dulba / Vinaya), ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ (ilaju tegüs nögčigsen / Bhagavān), ᠠᠶᠠᠭ ᠬᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ (ayag-qa tegimlig / bhikṣu), ᠨᠠᠰᠤᠨ ᠠᠴᠠ ᠲᠡᠭᠦᠯᠳᠡᠷ ᠤᠫᠠᠯᠢ (nasun-ača tegülder Upali / Āyuṣmat Upāli), ᠰᠠᠬᠢᠯ (sakil / śīla), 律師戒行經 (Lǜshī jièxíng jīng)</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 223.432,
+  "usage": {
+   "input_tokens": 22936,
+   "output_tokens": 16884,
+   "thinking_tokens": 14708,
+   "cache_read_tokens": 29499,
+   "total_tokens": 39820
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page</meta>\n<meta>Beijing Kanjur, 1718 to 1720, Vinaya or Dulba section, Volume 6, ča, Folio 3a recto; red woodblock print in pothi format, 25 vertical columns read left to right.</meta>\n\n<margin>Volume <term>Ča</term> <gloss>the sixth volume letter in the Tibetan and Mongolian canonical sequence</gloss>, <term>Dulba</term> <gloss>Monastic Discipline, corresponding to the Sanskrit Vinaya</gloss>, Folio Three, Upper <note>original: \"ča dulba gurban degedü\", indicating Volume 6, Folio 3a recto</note></margin>\n<margin><term>Lǜshī jièxíng jīng</term> <gloss>Scripture on the Precepts and Conduct of Vinaya Masters</gloss>, Volume Six, Upper Three <note>original: \"律師戒行經第六卷上三\", the Chinese marginal volume and folio signature used by the Beijing printshop</note></margin>\ntheir devotion. Through the grace of wholesome merit, having displayed miraculous transformations and revealed the true nature of what had been enacted,\nhe brought sentient beings to spiritual maturity. Thereafter, having also heard this,\nthe Victoriously Transcendent One, the <term>Bhagavān</term> <gloss>Blessed Lord, standard Buddhist epithet rendered in Mongolian as ilaju tegüs nögčigsen</gloss>, clearly demonstrating this to them,\nbrought it about that all elements of the <term>Dharma</term> <gloss>the Buddhist teaching and law; Mongolian nom</gloss> were well expounded.\nAt one time, the Buddha and all the <term>bhikṣus</term> <gloss>fully ordained Buddhist monks; Mongolian ayaγ-qa tegimlig, literally \"worthy of reverence\"</gloss>\nwere gathered together, so it is said. Then, having come before the monks and listened to the pronouncement of the Victoriously Transcendent One,\nwhen the monks heard what had been proclaimed,\nthey truly rejoiced. Thereafter, moreover, when the monks\nwere performing the formal ecclesiastical acts, the Victoriously Transcendent One\nspoke thus: \"If any among the monks\nhas transgressed a <term>sakil</term> <gloss>monastic precept or vow, translating Sanskrit śīla</gloss>, and with respect to the other monks,\nif those monks observe that monk\nand know that he has gone beyond bounds into transgression, and if they act in accordance with the law of the teaching,\nthey shall cause that monk\nto make formal confession and thereby release him from the offense.\nIf such a case arises, the monks\nshould examine the matter thoroughly and act in accordance with the law of the teaching.\"\nSo he spoke.\nFurthermore, to the Victoriously Transcendent One,\nthe Venerable <term>Āyuṣmat Upāli</term> <gloss>the foremost disciple of the Buddha in monastic discipline; rendered in Mongolian as nasun-ača tegülder Upali, \"Upāli Possessed of Long Life\"</gloss> respectfully addressed these words:\n\"O Victoriously Transcendent One, if the monks\nsubsequently observe someone who has fallen away from a precept,\nhow should they proceed?\" When he had thus inquired,\nthe Victoriously Transcendent One addressed his word to the Venerable Upāli <note>the sentence concludes on the following page, Folio 3b</note>\n\n<summary>This folio from the sixth volume of the Vinaya section of the Beijing Mongolian Kanjur records the Buddha's instructions on communal monastic procedure when a monk transgresses a precept. The Buddha directs the community to investigate offenses according to monastic law and restore the offender through formal confession, followed by a query from the disciple Upāli on how monks should handle observed breaches of discipline.</summary>\n<keywords>Beijing Kanjur, Classical Mongolian, Vinaya, Dulba, monastic discipline, Bhagavān, bhikṣu, Upāli, precepts, śīla, confession, ecclesiastical procedure</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 91.586
+ }
+}

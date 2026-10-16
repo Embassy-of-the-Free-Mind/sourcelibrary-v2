@@ -1,0 +1,41 @@
+{
+ "key": "v005_f150a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>299</page-num>\n<warning>Red woodblock print has low contrast against the paper; marginal text is partially faint.</warning>\n\n<margin>ᠨᠢᠭᠤᠴᠠ  ᠶᠢᠨ ᠲᠠᠪᠤᠳᠤᠭᠠᠷ ᠵᠠᠭᠤᠨ ᠲᠠᠪᠢᠨ</margin>\nᠬᠤᠪᠢ  ᠶᠢᠨ ᠴᠢᠨᠠᠷ  ᠢ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠦᠨ ᠦᠢᠯᠡᠳᠪᠡᠢ\nᠮᠦᠨ  ᠦ ᠬᠣᠶᠢᠨ᠎ᠠ ᠡᠨᠡ ᠮᠡᠲᠦ ᠬᠡᠮᠡᠨ ᠦᠵᠡᠭᠦᠯ  ᠦᠨ\nᠦᠢᠯᠡᠳᠪᠡᠢ ᠄ ᠭᠡᠭᠡᠨ ᠢᠯᠡᠳᠡ ᠢᠯᠭᠠᠵᠤ ᠮᠡᠳᠡᠨ  ᠦ\nᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠪᠣᠯᠤᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠢᠯᠡᠳᠡ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠳᠡ\nᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠮᠦᠨ  ᠦ ᠬᠣᠶᠢᠨ᠎ᠠ ᠦᠵᠡᠭᠦᠯ  ᠦᠨ\nᠦᠢᠯᠡᠳᠪᠡᠢ ᠂ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ  ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠣᠯᠤᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠢᠯᠡᠳᠡ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠂ ᠮᠦᠨ  ᠦ\nᠬᠣᠶᠢᠨ᠎ᠠ ᠦᠵᠡᠭᠦᠯ  ᠦᠨ ᠦᠢᠯᠡᠳᠪᠡᠢ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠳᠡ ᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ\nᠮᠡᠳᠡᠬᠦᠢ ᠄ ᠭᠡᠭᠡᠨ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠂\nᠢᠯᠭᠠᠵᠤ ᠮᠡᠳᠡᠨ  ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ\nᠪᠣᠯᠤᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠢᠯᠡᠳᠡ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠳᠡ ᠭᠠᠷᠭᠠᠨ\nᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠮᠦᠨ  ᠦ ᠬᠣᠶᠢᠨ᠎ᠠ ᠦᠵᠡᠭᠦᠯ  ᠦᠨ ᠦᠢᠯᠡᠳᠪᠡᠢ ᠂ ᠬᠤᠪᠢ  ᠶᠢᠨ\nᠴᠢᠨᠠᠷ  ᠢ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠂ ᠭᠡᠭᠡᠨ ᠢᠯᠡᠳᠡ\nᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠂ ᠢᠯᠭᠠᠵᠤ ᠮᠡᠳᠡᠨ  ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠂ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ  ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠮᠡᠳᠡᠬᠦᠢ ᠪᠣᠯᠤᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠢᠯᠡᠳᠡ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠮᠦᠨ  ᠦ\nᠬᠣᠶᠢᠨ᠎ᠠ ᠦᠵᠡᠭᠦᠯ  ᠦᠨ ᠦᠢᠯᠡᠳᠪᠡᠢ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠳᠡ ᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ\n ᠶᠢ ᠮᠡᠳᠡᠬᠦᠢ ᠂ ᠬᠤᠪᠢ  ᠶᠢᠨ ᠴᠢᠨᠠᠷ  ᠢ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠄\nᠭᠡᠭᠡᠨ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠂ ᠢᠯᠭᠠᠵᠤ ᠮᠡᠳᠡᠨ  ᠦ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠮᠡᠳᠡᠬᠦᠢ ᠂ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ  ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠮᠡᠳᠡᠬᠦᠢ ᠄ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠳᠡ ᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂\nᠮᠡᠳᠡᠬᠦᠢ ᠪᠣᠯᠤᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠢᠯᠡᠳᠡ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠂ ᠬᠤᠪᠢ\n ᠶᠢᠨ ᠴᠢᠨᠠᠷ  ᠢ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠬᠦ  ᠶᠢ ᠮᠦᠨ  ᠦ ᠬᠣᠶᠢᠨ᠎ᠠ\nᠦᠵᠡᠭᠦᠯ  ᠦᠨ ᠦᠢᠯᠡᠳᠪᠡᠢ ᠄ ᠭᠡᠭᠡᠨ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠬᠦ ᠂\nᠢᠯᠭᠠᠵᠤ ᠮᠡᠳᠡᠨ  ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠦᠵᠡᠭᠦᠯᠬᠦ ᠂ ᠢᠯᠡᠳᠡ ᠮᠡᠳᠡᠨ  ᠦ\nᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂ ᠮᠦᠨ  ᠦ ᠬᠣᠶᠢᠨ᠎ᠠ ᠦᠵᠡᠭᠦᠯ  ᠦᠨ ᠦᠢᠯᠡᠳᠪᠡᠢ\nᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠳᠡ ᠂ ᠭᠠᠷᠭᠠᠨ ᠦᠢᠯᠡᠳᠬᠦ  ᠶᠢ ᠮᠡᠳᠡᠨ ᠦᠵᠡᠭᠦᠯᠬᠦ\n<margin>秘密經第五卷上一百五十</margin>\n\n<vocab>ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ, ᠢᠯᠡᠳᠡ ᠪᠦᠲᠦᠭᠡᠵᠦ, ᠭᠡᠭᠡᠨ ᠢᠯᠡᠳᠡ, ᠢᠯᠭᠠᠵᠤ ᠮᠡᠳᠡᠨ, 秘密經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 50.423,
+  "usage": {
+   "input_tokens": 37027,
+   "output_tokens": 2467,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 13879,
+   "total_tokens": 39494
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: translating folio 150 of the Fifth Volume of the Secret Tantra (Guhyasamāja / Secret Scripture), with repetitive Buddhist scholastic enumerations of modes of cognition and wisdom.</meta>\n<warning>Red woodblock print has low contrast against the paper; marginal text is partially faint.</warning>\n\n<margin>The Secret <note>original: \"niguča-yin\", short for the Secret Scripture or Guhyasamāja</note>, Fifth <note>Volume</note>, one hundred and fifty</margin>\nHaving known and revealed the nature of the aspect <note>original: \"qubi-yin činar\"</note>,\nthereafter it was revealed thus:\nhaving manifestly accomplished <term>iledte bütügejü</term> <gloss>manifestly realizing or actualizing</gloss> that which reveals the bringing forth of the wisdom <term>belge bilig</term> <gloss>primordial wisdom or gnosis, Sanskrit jñāna</gloss> of luminous, manifest <term>gegen iledte</term> <gloss>luminous and clear manifestation</gloss> discerning cognition <term>ilγaju meden</term> <gloss>analytical or discriminating awareness, Sanskrit pratyavekṣaṇā</gloss>,\nthe further manifest bringing forth was revealed thereafter;\nhaving manifestly accomplished that which reveals the bringing forth of the wisdom of manifest cognition,\nit was revealed thereafter:\nthe cognition of further manifest bringing forth:\nhaving manifestly accomplished the cognition that reveals luminous, manifest cognition,\nand the cognition that reveals the wisdom of discerning cognition:\nthe further manifest bringing forth was revealed thereafter;\nhaving manifestly accomplished the cognition that knows and reveals the nature of the aspect,\nthe cognition that reveals luminous, manifest cognition,\nthe cognition that reveals the wisdom of discerning cognition,\nand the cognition that reveals the wisdom of manifest cognition:\nit was revealed thereafter;\nthe cognition of further manifest bringing forth,\nthe cognition that knows and reveals the nature of the aspect:\nthe cognition that reveals luminous, manifest cognition,\nthe cognition that reveals discerning cognition,\nand the cognition that reveals the wisdom of manifest cognition:\nhaving manifestly accomplished the cognition and the revealing of the further manifest bringing forth,\nthe knowing and revealing of the nature of the aspect was revealed thereafter:\nrevealing luminous, manifest cognition,\nrevealing the wisdom of discerning cognition,\nand having revealed the wisdom of manifest cognition,\nit was revealed thereafter:\nknowing and revealing the further manifest bringing forth\n<margin>Scripture of the Secret <note>original Chinese: \"秘密經\" (Mìmì jīng)</note>, Fifth Scroll, Upper Part, one hundred and fifty</margin>\n\n<summary>This page from the fifth volume of the Mongolian Buddhist \"Secret Scripture\" (Mìmì jīng) presents a rhythmic, scholastic enumeration of stages of meditative realization, focusing on how luminous, discerning, and manifest wisdoms are successively actualized and revealed.</summary>\n<keywords>Classical Mongolian, Buddhist philosophy, Secret Scripture, Mimi jing, belge bilig, primordial wisdom, discerning cognition, manifest realization, woodblock print</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 28.081
+ }
+}

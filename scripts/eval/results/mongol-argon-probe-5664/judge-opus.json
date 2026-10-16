@@ -1,0 +1,500 @@
+{
+ "argon-high-production/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The reading gives only margin labels (the Chinese foliation \"秘密經第一卷上二百八十\", folio 280) and placeholders saying the 30 lines of Mongolian text were \"not transcribed\", so there is no content to compare with the Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: The reading gives only margin labels (the Chinese foliation \"秘密經第一卷上二百八十\", folio 280) and placeholders saying the 30 lines of Mongolian text were \"not transcribed\", so there is no content to compare with the Tibetan.",
+  "cls": null
+ },
+ "argon-high-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The machine reading never transcribed the 30 lines of Mongolian body text, so it can't be compared with the Tibetan; all it contains is the Chinese margin label (秘密經, volume 5, recto of folio 150) and placeholder notes.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading never transcribed the 30 lines of Mongolian body text, so it can't be compared with the Tibetan; all it contains is the Chinese margin label (秘密經, volume 5, recto of folio 150) and placeholder notes.",
+  "cls": null
+ },
+ "argon-high-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The reading contains only margin labels (volume 11, folio 224) and marks the 25 columns of main text \"not transcribed,\" so there is nothing to check against the Vajrapāṇi maṇḍala, nāga-subduing mantra or recitation content of D501.",
+  "raw": "VERDICT: unreadable\nWHY: The reading contains only margin labels (volume 11, folio 224) and marks the 25 columns of main text \"not transcribed,\" so there is nothing to check against the Vajrapāṇi maṇḍala, nāga-subduing mantra or recitation content of D501.",
+  "cls": null
+ },
+ "argon-high-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The main Mongolian text was never transcribed; the only content is a placeholder plus margin labels (\"Various Perfection of Wisdom Sutras, Volume 1, Folio 193 recto\"), so none of the Vajracchedikā content (Śrāvastī setting, Subhūti's question, giving without abiding, the marks of the Tathāgata) can be checked.",
+  "raw": "VERDICT: unreadable\nWHY: The main Mongolian text was never transcribed; the only content is a placeholder plus margin labels (\"Various Perfection of Wisdom Sutras, Volume 1, Folio 193 recto\"), so none of the Vajracchedikā content (Śrāvastī setting, Subhūti's question, giving without abiding, the marks of the Tathāgata) can be checked.",
+  "cls": null
+ },
+ "argon-high-production/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has only margin/folio labels and a placeholder saying the main text was \"not transcribed\", so none of the Tibetan content (the Saddharmapuṇḍarīka title, the list of śrāvakas or the list of bodhisattvas) can be compared.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has only margin/folio labels and a placeholder saying the main text was \"not transcribed\", so none of the Tibetan content (the Saddharmapuṇḍarīka title, the list of śrāvakas or the list of bodhisattvas) can be compared.",
+  "cls": null
+ },
+ "argon-high-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The reading gives only the margin labels (Eldeb, vol. 18, folio 392) and a note that the main text was \"not transcribed,\" so none of the Lokānusamāvatāra verses (e.g. the buddhas washing their feet, bathing, chewing tooth-sticks, \"this is conformity with the world\") can be compared.",
+  "raw": "VERDICT: unreadable\nWHY: The reading gives only the margin labels (Eldeb, vol. 18, folio 392) and a note that the main text was \"not transcribed,\" so none of the Lokānusamāvatāra verses (e.g. the buddhas washing their feet, bathing, chewing tooth-sticks, \"this is conformity with the world\") can be compared.",
+  "cls": null
+ },
+ "argon-high-production/v049_f2a": {
+  "verdict": "partial",
+  "why": "The setting (Rājagṛha, Vulture Peak) and the arhat epithets (defeated the foe, outflows exhausted, mind and wisdom well liberated, burden laid down, fetters of existence exhausted, liberated through right knowledge) follow Tibetan 1b in order, but these are stock opening formulas, and the one distinguishing detail, the number of monks, disagrees: the English has 1,800 where the Tibetan has 1,250 (stong nyis brgya lnga bcu).",
+  "raw": "VERDICT: partial\nWHY: The setting (Rājagṛha, Vulture Peak) and the arhat epithets (defeated the foe, outflows exhausted, mind and wisdom well liberated, burden laid down, fetters of existence exhausted, liberated through right knowledge) follow Tibetan 1b in order, but these are stock opening formulas, and the one distinguishing detail, the number of monks, disagrees: the English has 1,800 where the Tibetan has 1,250 (stong nyis brgya lnga bcu).",
+  "cls": null
+ },
+ "argon-low-hinted/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The English mostly loops the same few words (\"accomplish\", \"beyond\", \"nature\", \"reality\") and has none of the specific Tibetan content, such as the chakra petal counts, the sets of four, the mantra list, or the rain, cloud-splitting and enemy rituals.",
+  "raw": "VERDICT: unreadable\nWHY: The English mostly loops the same few words (\"accomplish\", \"beyond\", \"nature\", \"reality\") and has none of the specific Tibetan content, such as the chakra petal counts, the sets of four, the mantra list, or the rain, cloud-splitting and enemy rituals.",
+  "cls": null
+ },
+ "argon-low-hinted/v011_f224a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent Vinaya-style list of offering types, entering and leaving formal monastic acts, and ways of settling disputes, and none of it is in this Tibetan passage, which covers Vajrapāṇi maṇḍala drawing, the nāga-subduing mantra (buddha buddha… nāgānāṃ), self-generation from hūṃ, and the sixteen kinds of recitation.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent Vinaya-style list of offering types, entering and leaving formal monastic acts, and ways of settling disputes, and none of it is in this Tibetan passage, which covers Vajrapāṇi maṇḍala drawing, the nāga-subduing mantra (buddha buddha… nāgānāṃ), self-generation from hūṃ, and the sixteen kinds of recitation.",
+  "cls": null
+ },
+ "argon-low-hinted/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The English mostly loops the same few phrases (\"luminous, manifest cognition\", \"discerning cognition\", \"further manifest bringing forth\") and contains none of the passage's content: no end of chapter 12, no \"e ma'o\" praise verses, and no recitations of body, speech and mind, wrath, delusion, desire, hatred or neuter, or the five heart-mandala visualizations.",
+  "raw": "VERDICT: unreadable\nWHY: The English mostly loops the same few phrases (\"luminous, manifest cognition\", \"discerning cognition\", \"further manifest bringing forth\") and contains none of the passage's content: no end of chapter 12, no \"e ma'o\" praise verses, and no recitations of body, speech and mind, wrath, delusion, desire, hatred or neuter, or the five heart-mandala visualizations.",
+  "cls": null
+ },
+ "argon-low-hinted/v047_f193a": {
+  "verdict": "wrong text",
+  "why": "In the English, the Buddha speaks to Śāriputra about \"ever-abiding\" bodhisattvas whose marks are emptiness, signlessness, wishlessness and the unconstructed, none of which appears in the Tibetan, which instead covers the Vajracchedikā opening scene, Subhūti's question, the vow to liberate all classes of beings, giving without abiding, the space of the ten directions and the marks of the Tathāgata.",
+  "raw": "VERDICT: wrong text\nWHY: In the English, the Buddha speaks to Śāriputra about \"ever-abiding\" bodhisattvas whose marks are emptiness, signlessness, wishlessness and the unconstructed, none of which appears in the Tibetan, which instead covers the Vajracchedikā opening scene, Subhūti's question, the vow to liberate all classes of beings, giving without abiding, the space of the ten directions and the marks of the Tathāgata.",
+  "cls": null
+ },
+ "argon-low-hinted/v049_f2a": {
+  "verdict": "wrong text",
+  "why": "The reading gives the title for Ratnakūṭa chapter 5, the \"Chapter of Supplication\" (ཞུས་པའི་ལེའུ་ ... ལེའུ་ལྔ་པ), but the Derge passage opens chapter 6, the Akṣobhyatathāgatasya vyūha; only the generic Ratnakūṭa \"100,000 chapters\" title formula and the homage line overlap, and nothing from the Gṛdhrakūṭa assembly of 1,250 monks or Śāriputra's request appears.",
+  "raw": "VERDICT: wrong text\nWHY: The reading gives the title for Ratnakūṭa chapter 5, the \"Chapter of Supplication\" (ཞུས་པའི་ལེའུ་ ... ལེའུ་ལྔ་པ), but the Derge passage opens chapter 6, the Akṣobhyatathāgatasya vyūha; only the generic Ratnakūṭa \"100,000 chapters\" title formula and the homage line overlap, and nothing from the Gṛdhrakūṭa assembly of 1,250 monks or Śāriputra's request appears.",
+  "cls": null
+ },
+ "argon-low-hinted/v061_f2a": {
+  "verdict": "wrong text",
+  "why": "The English tells a son of good family to behold the Tathāgata with single-pointed mindfulness, and says the Buddha will make mountains and rivers vanish and level the ground; the Tibetan instead lists the monks (Kauṇḍinya, Śāriputra and others) and bodhisattvas (Maitreya and others) at Śrāvastī and describes the Buddha being honored there, so none of the specific content matches.",
+  "raw": "VERDICT: wrong text\nWHY: The English tells a son of good family to behold the Tathāgata with single-pointed mindfulness, and says the Buddha will make mountains and rivers vanish and level the ground; the Tibetan instead lists the monks (Kauṇḍinya, Śāriputra and others) and bodhisattvas (Maitreya and others) at Śrāvastī and describes the Buddha being honored there, so none of the specific content matches.",
+  "cls": null
+ },
+ "argon-low-hinted/v066_f2a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent hymn to Vajrapani, about a sun-like decree that dispels the darkness of kleshas across the trichiliocosm, while the Tibetan is the Saddharmapuṇḍarīka opening at Vulture Peak: the 12,000 arhats, the list of śrāvakas (Ājñāta-Kauṇḍinya, Śāriputra, etc.) and the list of bodhisattvas (Mañjuśrī, Avalokiteśvara, etc.). None of these names or lists appear in the English.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent hymn to Vajrapani, about a sun-like decree that dispels the darkness of kleshas across the trichiliocosm, while the Tibetan is the Saddharmapuṇḍarīka opening at Vulture Peak: the 12,000 arhats, the list of śrāvakas (Ājñāta-Kauṇḍinya, Śāriputra, etc.) and the list of bodhisattvas (Mañjuśrī, Avalokiteśvara, etc.). None of these names or lists appear in the English.",
+  "cls": null
+ },
+ "argon-low-hinted/v077_f392a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent prose story about a Brahmin's dream of the sun entering his house, which a narrator named \"Veda\" reads as the Buddha coming to visit; the Tibetan is verse refrains about the Buddha conforming to the world (\"འདི་ནི་འཇིག་རྟེན་འཐུན་འཇུག་ཡིན\", e.g. washing feet, eating, wearing robes) and contains neither the dream nor its interpretation.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent prose story about a Brahmin's dream of the sun entering his house, which a narrator named \"Veda\" reads as the Buddha coming to visit; the Tibetan is verse refrains about the Buddha conforming to the world (\"འདི་ནི་འཇིག་རྟེན་འཐུན་འཇུག་ཡིན\", e.g. washing feet, eating, wearing robes) and contains neither the dream nor its interpretation.",
+  "cls": null
+ },
+ "argon-low-hinted/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English reads as generic didactic verses on the bodhisattva path (emptiness, two accumulations, Three Jewels, bodhicitta), and none of its content matches the Tibetan passage: it has nothing on the gaṇḍī time measurements, the Kuśinagara sāla grove setting, or the Buddha's reply to Ānanda that spiritual friendship is the whole of the holy life rather than half.",
+  "raw": "VERDICT: wrong text\nWHY: The English reads as generic didactic verses on the bodhisattva path (emptiness, two accumulations, Three Jewels, bodhicitta), and none of its content matches the Tibetan passage: it has nothing on the gaṇḍī time measurements, the Kuśinagara sāla grove setting, or the Buddha's reply to Ānanda that spiritual friendship is the whole of the holy life rather than half.",
+  "cls": null
+ },
+ "argon-low-hinted/v098_f3a": {
+  "verdict": "wrong text",
+  "why": "The English is a repetitive Vinaya story frame (monks report deeds to the Buddha, he assembles them and issues decrees), but the Tibetan has none of this; it has the verses praising the prātimokṣa, the poṣadha announcement and confession questions, and the four pārājika rules (sex, theft, killing, false claims of attainment).",
+  "raw": "VERDICT: wrong text\nWHY: The English is a repetitive Vinaya story frame (monks report deeds to the Buddha, he assembles them and issues decrees), but the Tibetan has none of this; it has the verses praising the prātimokṣa, the poṣadha announcement and confession questions, and the four pārājika rules (sex, theft, killing, false claims of attainment).",
+  "cls": null
+ },
+ "argon-low-production/v001_f280a": {
+  "verdict": "wrong text",
+  "why": "The English is a repetitive passage about the devaputra Mañjuśrī practising skillful means within his own body, but the Tibetan covers the four chakras, moments, truths and joys, Hevajra mantras, and rituals for bringing rain, splitting clouds and the vajra chopper, with no mention of Mañjuśrī.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a repetitive passage about the devaputra Mañjuśrī practising skillful means within his own body, but the Tibetan covers the four chakras, moments, truths and joys, Hevajra mantras, and rituals for bringing rain, splitting clouds and the vajra chopper, with no mention of Mañjuśrī.",
+  "cls": null
+ },
+ "argon-low-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The reading has only margin labels (section 8, folio 150, \"Secret Sutra, vol. 5\") and marks all 28 lines of the main text as not transcribed, so nothing can be checked against the Guhyasamāja passage on the recitations of body, speech and mind.",
+  "raw": "VERDICT: unreadable\nWHY: The reading has only margin labels (section 8, folio 150, \"Secret Sutra, vol. 5\") and marks all 28 lines of the main text as not transcribed, so nothing can be checked against the Guhyasamāja passage on the recitations of body, speech and mind.",
+  "cls": null
+ },
+ "argon-low-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The reading contains only the margin labels (Mongolian title and the Chinese \"祕密經第十一卷上二百二十四\") and a note that the 31 lines of body text were not transcribed, so there is nothing to compare with the Tibetan passage (no Vajrapāṇi maṇḍala, nāga-subduing mantra or recitation lists).",
+  "raw": "VERDICT: unreadable\nWHY: The reading contains only the margin labels (Mongolian title and the Chinese \"祕密經第十一卷上二百二十四\") and a note that the 31 lines of body text were not transcribed, so there is nothing to compare with the Tibetan passage (no Vajrapāṇi maṇḍala, nāga-subduing mantra or recitation lists).",
+  "cls": null
+ },
+ "argon-low-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The reading has only the margin and page labels (Perfection of Wisdom, first volume, folio 93/193) and says the main 31 lines of Mongolian text were \"not transcribed\", so there is nothing to compare with the Vajracchedikā passage.",
+  "raw": "VERDICT: unreadable\nWHY: The reading has only the margin and page labels (Perfection of Wisdom, first volume, folio 93/193) and says the main 31 lines of Mongolian text were \"not transcribed\", so there is nothing to compare with the Vajracchedikā passage.",
+  "cls": null
+ },
+ "argon-low-production/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The reading has only margin and header labels (the Ratnakūṭa title, scroll/folio markers) and says the 19 lines of main text were \"not transcribed\", so none of the Tibetan content (Gṛdhrakūṭa, the 1,250 monks, Ānanda, Śāradvatīputra's request) can be checked.",
+  "raw": "VERDICT: unreadable\nWHY: The reading has only margin and header labels (the Ratnakūṭa title, scroll/folio markers) and says the 19 lines of main text were \"not transcribed\", so none of the Tibetan content (Gṛdhrakūṭa, the 1,250 monks, Ānanda, Śāradvatīputra's request) can be checked.",
+  "cls": null
+ },
+ "argon-low-production/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading includes only the margin label (\"Sutras of Various Sections, Volume Two, Upper Part, Folio Two\") and a note that the 22 lines of main Mongolian text were not transcribed, so no content can be compared with the Lalitavistara opening (the monk names, the 32,000 bodhisattvas, or the Śrāvastī assembly).",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading includes only the margin label (\"Sutras of Various Sections, Volume Two, Upper Part, Folio Two\") and a note that the 22 lines of main Mongolian text were not transcribed, so no content can be compared with the Lalitavistara opening (the monk names, the 32,000 bodhisattvas, or the Śrāvastī assembly).",
+  "cls": null
+ },
+ "argon-low-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The reading gives only the Chinese margin label (諸品經, volume 18, folio 392) and placeholders for 29 untranscribed lines of Mongolian, so nothing can be checked against the Lokānusamāvatāra verses about the Buddha appearing to act \"in conformity with the world.\"",
+  "raw": "VERDICT: unreadable\nWHY: The reading gives only the Chinese margin label (諸品經, volume 18, folio 392) and placeholders for 29 untranscribed lines of Mongolian, so nothing can be checked against the Lokānusamāvatāra verses about the Buddha appearing to act \"in conformity with the world.\"",
+  "cls": null
+ },
+ "argon-low-production/v066_f2a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent Vinaya-style teaching on eating mindfully (proper time, stomach, meal, food as medicine for the bodily organs), and none of it appears in the Tibetan, which contains the Saddharmapuṇḍarīka opening: the Gṛdhrakūṭa setting, the list of arhats (Ājñāta-Kauṇḍinya, Śāriputra and others), and the lists of bodhisattvas and the sixteen satpuruṣas.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent Vinaya-style teaching on eating mindfully (proper time, stomach, meal, food as medicine for the bodily organs), and none of it appears in the Tibetan, which contains the Saddharmapuṇḍarīka opening: the Gṛdhrakūṭa setting, the list of arhats (Ājñāta-Kauṇḍinya, Śāriputra and others), and the lists of bodhisattvas and the sixteen satpuruṣas.",
+  "cls": null
+ },
+ "argon-low-production/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent Perfection of Wisdom passage in which the Buddha speaks to Subhūti about dedication (pariṇāmanā), omniscience and dhyāna, but the Tibetan has the Buddha speaking to Ānanda at Kuśinagara about spiritual friends as the whole of the holy life, and the end of the Gaṇḍī-time sūtra, and none of this appears in the English.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent Perfection of Wisdom passage in which the Buddha speaks to Subhūti about dedication (pariṇāmanā), omniscience and dhyāna, but the Tibetan has the Buddha speaking to Ānanda at Kuśinagara about spiritual friends as the whole of the holy life, and the end of the Gaṇḍī-time sūtra, and none of this appears in the English.",
+  "cls": null
+ },
+ "argon-low-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The body text was never transcribed (it is only an <unclear> placeholder), and the output contains just margin labels, so none of the Prātimokṣa content is there to compare: no verses on the rarity of a Buddha, no poṣadha announcement, no pārājika rules.",
+  "raw": "VERDICT: unreadable\nWHY: The body text was never transcribed (it is only an <unclear> placeholder), and the output contains just margin labels, so none of the Prātimokṣa content is there to compare: no verses on the rarity of a Buddha, no poṣadha announcement, no pārājika rules.",
+  "cls": null
+ },
+ "opus-hinted/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has only a Chinese margin label (\"Secret Scriptures vol. 5, upper, folio 290\") and says the Mongolian body was not transcribed, so there is no content to compare with the Guhyasamāja passage on the vajra recitations (body, speech and mind; the anger, delusion and desire recitations).",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has only a Chinese margin label (\"Secret Scriptures vol. 5, upper, folio 290\") and says the Mongolian body was not transcribed, so there is no content to compare with the Guhyasamāja passage on the vajra recitations (body, speech and mind; the anger, delusion and desire recitations).",
+  "cls": null
+ },
+ "opus-hinted/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The main Mongolian text was never transcribed, so there's nothing to compare with the Tibetan; only the Chinese margin label (秘密經第一卷上, folio 280?) and the archival number 559 were read, and those give no Hevajra content such as the mantras, the cakra petal counts or the rain-making rite.",
+  "raw": "VERDICT: unreadable\nWHY: The main Mongolian text was never transcribed, so there's nothing to compare with the Tibetan; only the Chinese margin label (秘密經第一卷上, folio 280?) and the archival number 559 were read, and those give no Hevajra content such as the mantras, the cakra petal counts or the rain-making rite.",
+  "cls": null
+ },
+ "opus-hinted/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no Mongolian body text, only the Chinese margin label (秘密經第十一本上二百二十四) and a note saying the page was not transcribed, so nothing can be checked against the Tibetan passage (the Vajrapāṇi maṇḍala, the nāga-taming mantra or the sixteen kinds of recitation).",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no Mongolian body text, only the Chinese margin label (秘密經第十一本上二百二十四) and a note saying the page was not transcribed, so nothing can be checked against the Tibetan passage (the Vajrapāṇi maṇḍala, the nāga-taming mantra or the sixteen kinds of recitation).",
+  "cls": null
+ },
+ "opus-hinted/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English has only a Chinese margin label (\"Various Prajñāpāramitā Sutras\", folio 193 or 293) and placeholders saying the Mongolian text wasn't transcribed, so nothing in it can be checked against the Vajracchedikā opening (Śrāvastī, the 1,250 monks, Subhūti's question, giving without dwelling).",
+  "raw": "VERDICT: unreadable\nWHY: The English has only a Chinese margin label (\"Various Prajñāpāramitā Sutras\", folio 193 or 293) and placeholders saying the Mongolian text wasn't transcribed, so nothing in it can be checked against the Vajracchedikā opening (Śrāvastī, the 1,250 monks, Subhūti's question, giving without dwelling).",
+  "cls": null
+ },
+ "opus-hinted/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The main text was not transcribed at all and only the Chinese margin label (\"Great Jewel-Heap Sutra, vol. 2, upper folio 3\") and a description of the frame are given, so nothing can be checked against the Tibetan content (Śāradvatīputra's request, the 1,250 monks, Ānanda, etc.).",
+  "raw": "VERDICT: unreadable\nWHY: The main text was not transcribed at all and only the Chinese margin label (\"Great Jewel-Heap Sutra, vol. 2, upper folio 3\") and a description of the frame are given, so nothing can be checked against the Tibetan content (Śāradvatīputra's request, the 1,250 monks, Ānanda, etc.).",
+  "cls": null
+ },
+ "opus-hinted/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no Mongolian body text at all, only a Chinese margin label (諸品經 vol. 2, folio 2) and a description of the frame, so none of the Lalitavistara content (Śrāvastī, Jetavana, the list of monks such as Kauṇḍinya and Śāriputra, the bodhisattvas Maitreya and others) can be compared.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no Mongolian body text at all, only a Chinese margin label (諸品經 vol. 2, folio 2) and a description of the frame, so none of the Lalitavistara content (Śrāvastī, Jetavana, the list of monks such as Kauṇḍinya and Śāriputra, the bodhisattvas Maitreya and others) can be compared.",
+  "cls": null
+ },
+ "opus-hinted/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "None of the body text was transcribed, since every column is an <unclear> placeholder, so the only readable content is the Chinese margin label \"諸品經第七卷上二\"; nothing can be compared with the Tibetan homage, the list of disciples, or the list of bodhisattvas in D113.",
+  "raw": "VERDICT: unreadable\nWHY: None of the body text was transcribed, since every column is an <unclear> placeholder, so the only readable content is the Chinese margin label \"諸品經第七卷上二\"; nothing can be compared with the Tibetan homage, the list of disciples, or the list of bodhisattvas in D113.",
+  "cls": null
+ },
+ "opus-hinted/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "Only the Chinese margin label was transcribed (諸品經, volume 18, folio 392); the main Mongolian text was not, so none of the Lokānusamāvatāra verses (e.g., the \"this is conformity with the world\" refrain) can be checked.",
+  "raw": "VERDICT: unreadable\nWHY: Only the Chinese margin label was transcribed (諸品經, volume 18, folio 392); the main Mongolian text was not, so none of the Lokānusamāvatāra verses (e.g., the \"this is conformity with the world\" refrain) can be checked.",
+  "cls": null
+ },
+ "opus-hinted/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has only the Chinese margin label (\"Various Sūtras, vol. 88, folio 393\") and says the main Mongolian text wasn't transcribed, so there is nothing to compare with the Tibetan (no Kuśinagara setting, no talk with Ānanda about good friends being the whole of the holy life).",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has only the Chinese margin label (\"Various Sūtras, vol. 88, folio 393\") and says the main Mongolian text wasn't transcribed, so there is nothing to compare with the Tibetan (no Kuśinagara setting, no talk with Ānanda about good friends being the whole of the holy life).",
+  "cls": null
+ },
+ "opus-hinted/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "Only the Chinese margin label (律師戒行經第六卷上三, Vinaya volume, folio 3) was read and the Mongolian body text was not transcribed, so nothing can be compared with the Prātimokṣa verses, the poṣadha announcement or the pārājika rules in the Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: Only the Chinese margin label (律師戒行經第六卷上三, Vinaya volume, folio 3) was read and the Mongolian body text was not transcribed, so nothing can be compared with the Prātimokṣa verses, the poṣadha announcement or the pārājika rules in the Tibetan.",
+  "cls": null
+ },
+ "opus-production/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "Only the Chinese margin title (\"Tantra Section, Volume One, Folio 380\") and a \"559\" shelf label were translated, and the main text was explicitly left untranscribed, so nothing can be compared with the Hevajra passage (the chakra petals, the sets of four, the mantra list or the rain ritual).",
+  "raw": "VERDICT: unreadable\nWHY: Only the Chinese margin title (\"Tantra Section, Volume One, Folio 380\") and a \"559\" shelf label were translated, and the main text was explicitly left untranscribed, so nothing can be compared with the Hevajra passage (the chakra petals, the sets of four, the mantra list or the rain ritual).",
+  "cls": null
+ },
+ "opus-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The reading has no Mongolian body text, only a Chinese side label (\"Secret Tantra, vol. 11, leaf 224\"), an archival number, and notes saying the text was not transcribed, so none of it can be checked against the Tibetan (the Vajrapāṇi maṇḍala, the nāga-subduing mantra, the recitation types).",
+  "raw": "VERDICT: unreadable\nWHY: The reading has no Mongolian body text, only a Chinese side label (\"Secret Tantra, vol. 11, leaf 224\"), an archival number, and notes saying the text was not transcribed, so none of it can be checked against the Tibetan (the Vajrapāṇi maṇḍala, the nāga-subduing mantra, the recitation types).",
+  "cls": null
+ },
+ "opus-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The machine reading transcribed no body text and gives only a Chinese marginal header (\"Secret Sutra, juan 5\", leaf 290) and notes about the page, so nothing can be compared with the Guhyasamāja passage on the vajra recitations (body, speech and mind; anger, delusion, desire, hatred) and the meditations at the centre of the heart.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading transcribed no body text and gives only a Chinese marginal header (\"Secret Sutra, juan 5\", leaf 290) and notes about the page, so nothing can be compared with the Guhyasamāja passage on the vajra recitations (body, speech and mind; anger, delusion, desire, hatred) and the meditations at the centre of the heart.",
+  "cls": null
+ },
+ "opus-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The reading has only a Chinese margin label (\"Various Prajñāpāramitā Sūtras, vol. 1, leaf 293\") and notes saying the Mongolian text wasn't transcribed, so there's nothing to compare with the Vajracchedikā Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: The reading has only a Chinese margin label (\"Various Prajñāpāramitā Sūtras, vol. 1, leaf 293\") and notes saying the Mongolian text wasn't transcribed, so there's nothing to compare with the Vajracchedikā Tibetan.",
+  "cls": null
+ },
+ "opus-production/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The body text was not transcribed and is marked as a placeholder; only the margin title \"Da Baoji Jing, Volume Two, upper, leaf three\" (Mahāratnakūṭa) was read, so there is no content to compare against the Akṣobhya passage (Śāriputra's request, the 1,250 monks, Ānanda).",
+  "raw": "VERDICT: unreadable\nWHY: The body text was not transcribed and is marked as a placeholder; only the margin title \"Da Baoji Jing, Volume Two, upper, leaf three\" (Mahāratnakūṭa) was read, so there is no content to compare against the Akṣobhya passage (Śāriputra's request, the 1,250 monks, Ānanda).",
+  "cls": null
+ },
+ "opus-production/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The main Mongolian text was not transcribed; the English has only a margin label (\"Sutra of All Classes, Volume Two, Part One, leaf 2\") and a description of the frame, so nothing can be checked against the Lalitavistara opening (the list of monks such as Ājñātakauṇḍinya, the 32,000 bodhisattvas, or the offerings made in Śrāvastī).",
+  "raw": "VERDICT: unreadable\nWHY: The main Mongolian text was not transcribed; the English has only a margin label (\"Sutra of All Classes, Volume Two, Part One, leaf 2\") and a description of the frame, so nothing can be checked against the Lalitavistara opening (the list of monks such as Ājñātakauṇḍinya, the 32,000 bodhisattvas, or the offerings made in Śrāvastī).",
+  "cls": null
+ },
+ "opus-production/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The main text was never transcribed (it is marked \"unclear\"), so there is nothing but a Chinese margin label (\"諸品經第七卷上二\") and a description of the page image to compare with the Tibetan opening of the Saddharmapuṇḍarīka.",
+  "raw": "VERDICT: unreadable\nWHY: The main text was never transcribed (it is marked \"unclear\"), so there is nothing but a Chinese margin label (\"諸品經第七卷上二\") and a description of the page image to compare with the Tibetan opening of the Saddharmapuṇḍarīka.",
+  "cls": null
+ },
+ "opus-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "Only the Chinese margin label was read (\"Miscellaneous Sutras, Volume 18, leaf 392\"), and the main Mongolian text was not transcribed, so nothing can be compared with the Lokānusamāvatāra verses (for example, the refrain \"this is conforming to the world\" about washing feet, bathing or taking medicine).",
+  "raw": "VERDICT: unreadable\nWHY: Only the Chinese margin label was read (\"Miscellaneous Sutras, Volume 18, leaf 392\"), and the main Mongolian text was not transcribed, so nothing can be compared with the Lokānusamāvatāra verses (for example, the refrain \"this is conforming to the world\" about washing feet, bathing or taking medicine).",
+  "cls": null
+ },
+ "opus-production/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The English has only a Chinese margin label (\"諸品經\", folio 393) and a note that the Mongolian body text wasn't transcribed, so none of the Tibetan content (Gaṇḍī timing, Ānanda's claim about good friends being half the holy life) can be checked.",
+  "raw": "VERDICT: unreadable\nWHY: The English has only a Chinese margin label (\"諸品經\", folio 393) and a note that the Mongolian body text wasn't transcribed, so none of the Tibetan content (Gaṇḍī timing, Ānanda's claim about good friends being half the holy life) can be checked.",
+  "cls": null
+ },
+ "opus-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The main text was not transcribed, and only a marginal label (a Vinaya title, juan 6, leaf 3 recto) and descriptions of the page's appearance were translated, so nothing can be compared with the Prātimokṣa verses or the pārājika rules in the Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: The main text was not transcribed, and only a marginal label (a Vinaya title, juan 6, leaf 3 recto) and descriptions of the page's appearance were translated, so nothing can be compared with the Prātimokṣa verses or the pārājika rules in the Tibetan.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "Only the Chinese margin label (\"秘密經第一卷上二百八十\", folio 280) was transcribed, and the Mongolian body text is marked as not transcribed, so nothing can be compared with the Hevajra passage on chakra petals, the four joys, the mantras or the rain ritual.",
+  "raw": "VERDICT: unreadable\nWHY: Only the Chinese margin label (\"秘密經第一卷上二百八十\", folio 280) was transcribed, and the Mongolian body text is marked as not transcribed, so nothing can be compared with the Hevajra passage on chakra petals, the four joys, the mantras or the rain ritual.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The reading only gives the Chinese folio label (秘密經 vol. 5, folio 150) and says the Mongolian main text wasn't transcribed, so there's no content to check against the Tibetan (no Chapter 12 colophon, no vajra-recitation verses, no heart-centre visualizations of wheel, vajra, jewel, lotus or sword).",
+  "raw": "VERDICT: unreadable\nWHY: The reading only gives the Chinese folio label (秘密經 vol. 5, folio 150) and says the Mongolian main text wasn't transcribed, so there's no content to check against the Tibetan (no Chapter 12 colophon, no vajra-recitation verses, no heart-centre visualizations of wheel, vajra, jewel, lotus or sword).",
+  "cls": null
+ },
+ "opus-tiles-hinted/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The English has only the Chinese margin label (\"Secret Scriptures, volume eleven, folio 224\") and a placeholder saying the main text wasn't transcribed, so nothing in it can be checked against the Tibetan maṇḍala, nāga-subduing mantra or recitation content.",
+  "raw": "VERDICT: unreadable\nWHY: The English has only the Chinese margin label (\"Secret Scriptures, volume eleven, folio 224\") and a placeholder saying the main text wasn't transcribed, so nothing in it can be checked against the Tibetan maṇḍala, nāga-subduing mantra or recitation content.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The Mongolian body text was never transcribed and appears only as a placeholder, so all that was translated is the Chinese margin label (\"Various Perfection of Wisdom Sutras, Volume One, upper side, 193\"), and none of the Vajracchedikā content (Subhūti's question, beings born from eggs and wombs, giving without dwelling, the marks of the Tathāgata) can be compared.",
+  "raw": "VERDICT: unreadable\nWHY: The Mongolian body text was never transcribed and appears only as a placeholder, so all that was translated is the Chinese margin label (\"Various Perfection of Wisdom Sutras, Volume One, upper side, 193\"), and none of the Vajracchedikā content (Subhūti's question, beings born from eggs and wombs, giving without dwelling, the marks of the Tathāgata) can be compared.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no transcription of the Mongolian text block, only a Chinese margin label (\"大寶積經第二卷上二\") and a description of the frame, so nothing can be compared with the Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no transcription of the Mongolian text block, only a Chinese margin label (\"大寶積經第二卷上二\") and a description of the frame, so nothing can be compared with the Tibetan.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The English has no Mongolian body text, only a Chinese margin label (\"諸品經\", volume two, folio two) and placeholders, so none of the Lalitavistara content (the Śrāvastī setting, the list of monks such as Ājñāta-Kauṇḍinya and Śāriputra, or the bodhisattvas Maitreya and others) can be compared.",
+  "raw": "VERDICT: unreadable\nWHY: The English has no Mongolian body text, only a Chinese margin label (\"諸品經\", volume two, folio two) and placeholders, so none of the Lalitavistara content (the Śrāvastī setting, the list of monks such as Ājñāta-Kauṇḍinya and Śāriputra, or the bodhisattvas Maitreya and others) can be compared.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The English contains only the Chinese margin label (\"諸品經第七卷上二\") and layout notes, while the body is marked as not transcribed, so no content can be checked against the Tibetan (no arhat epithets, no list of śrāvakas such as Ājñāta-Kauṇḍinya or Śāriputra, no bodhisattva names).",
+  "raw": "VERDICT: unreadable\nWHY: The English contains only the Chinese margin label (\"諸品經第七卷上二\") and layout notes, while the body is marked as not transcribed, so no content can be checked against the Tibetan (no arhat epithets, no list of śrāvakas such as Ājñāta-Kauṇḍinya or Śāriputra, no bodhisattva names).",
+  "cls": null
+ },
+ "opus-tiles-hinted/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The body text was not transcribed, so only a Chinese margin label (諸品經 vol. 18, f. 392) and a guessed \"emptiness\" formula with recurring words survive, and none of the Tibetan verses on the Buddha conforming to the world (washing feet, eating, taking medicine, showing old age, the refrain འཇིག་རྟེན་འཐུན་འཇུག་ཡིན) appear in it.",
+  "raw": "VERDICT: unreadable\nWHY: The body text was not transcribed, so only a Chinese margin label (諸品經 vol. 18, f. 392) and a guessed \"emptiness\" formula with recurring words survive, and none of the Tibetan verses on the Buddha conforming to the world (washing feet, eating, taking medicine, showing old age, the refrain འཇིག་རྟེན་འཐུན་འཇུག་ཡིན) appear in it.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no Mongolian body text, only the Chinese margin label (\"諸品經第二十八卷上三百九十三\") and placeholders saying the text was not transcribed, so there is nothing to compare against the Gaṇḍī-sūtra colophon or the Kalyāṇamitrasevana-sūtra passage about Ānanda and spiritual friends (its note about a text break mid-page fits 304b, but that is layout, not meaning).",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no Mongolian body text, only the Chinese margin label (\"諸品經第二十八卷上三百九十三\") and placeholders saying the text was not transcribed, so there is nothing to compare against the Gaṇḍī-sūtra colophon or the Kalyāṇamitrasevana-sūtra passage about Ānanda and spiritual friends (its note about a text break mid-page fits 304b, but that is layout, not meaning).",
+  "cls": null
+ },
+ "opus-tiles-hinted/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The machine reading left the Mongolian body text untranscribed and gives only the Chinese margin label (律師戒行經第六卷上三), so none of the Tibetan content can be compared, such as the verses praising the prātimokṣa or the four pārājika rules.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading left the Mongolian body text untranscribed and gives only the Chinese margin label (律師戒行經第六卷上三), so none of the Tibetan content can be compared, such as the verses praising the prātimokṣa or the four pārājika rules.",
+  "cls": null
+ },
+ "opus-tiles-production/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The English has only margin labels (\"Secret Scriptures, volume one, leaf 281\") and a description of the frame, and it says plainly that the Mongolian body text was not transcribed, so nothing can be compared with the Tibetan passage (the four wheels, four joys, mantra chapter or rain-making rite).",
+  "raw": "VERDICT: unreadable\nWHY: The English has only margin labels (\"Secret Scriptures, volume one, leaf 281\") and a description of the frame, and it says plainly that the Mongolian body text was not transcribed, so nothing can be compared with the Tibetan passage (the four wheels, four joys, mantra chapter or rain-making rite).",
+  "cls": null
+ },
+ "opus-tiles-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The body text was never transcribed and only the Chinese margin label (\"Secret Scriptures, volume five, folio 150 recto\") was translated, so nothing can be checked against the Tibetan on vajra recitation (bzlas pa) of body, speech and mind or the mandala visualizations.",
+  "raw": "VERDICT: unreadable\nWHY: The body text was never transcribed and only the Chinese margin label (\"Secret Scriptures, volume five, folio 150 recto\") was translated, so nothing can be checked against the Tibetan on vajra recitation (bzlas pa) of body, speech and mind or the mandala visualizations.",
+  "cls": null
+ },
+ "opus-tiles-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The reading gives only margin and label content (the Chinese title \"秘密經第十一卷上二百二十四\", the label 447) and says the main Mongolian text was not transcribed, so there is nothing to compare with the Tibetan passage about the Vajrapāṇi maṇḍala, the nāga-taming mantra or the recitations.",
+  "raw": "VERDICT: unreadable\nWHY: The reading gives only margin and label content (the Chinese title \"秘密經第十一卷上二百二十四\", the label 447) and says the main Mongolian text was not transcribed, so there is nothing to compare with the Tibetan passage about the Vajrapāṇi maṇḍala, the nāga-taming mantra or the recitations.",
+  "cls": null
+ },
+ "opus-tiles-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The main text was never transcribed, and only the Chinese margin label (\"Various Prajñāpāramitā Sūtras, vol. 1, folio 193\") was translated, so nothing in it can be checked against the Vajracchedikā passage (the setting at Śrāvastī, Subhūti's question, giving without dwelling).",
+  "raw": "VERDICT: unreadable\nWHY: The main text was never transcribed, and only the Chinese margin label (\"Various Prajñāpāramitā Sūtras, vol. 1, folio 193\") was translated, so nothing in it can be checked against the Vajracchedikā passage (the setting at Śrāvastī, Subhūti's question, giving without dwelling).",
+  "cls": null
+ },
+ "opus-tiles-production/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "None of the body text was transcribed; the English only describes the frame and gives a Chinese margin label (\"大寶積經第二卷上二\", Ratnakūṭa vol. 2, folio 2), so none of the Tibetan content can be checked against it, such as the Vulture Peak assembly of 1,250 monks or Śāriputra's request.",
+  "raw": "VERDICT: unreadable\nWHY: None of the body text was transcribed; the English only describes the frame and gives a Chinese margin label (\"大寶積經第二卷上二\", Ratnakūṭa vol. 2, folio 2), so none of the Tibetan content can be checked against it, such as the Vulture Peak assembly of 1,250 monks or Śāriputra's request.",
+  "cls": null
+ },
+ "opus-tiles-production/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no Mongolian body text, only a Chinese volume/folio label (諸品經 第二卷, 上二) and layout notes, so there is nothing to compare with the Lalitavistara's lists of monks and bodhisattvas or its description of the audience at Śrāvastī.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no Mongolian body text, only a Chinese volume/folio label (諸品經 第二卷, 上二) and layout notes, so there is nothing to compare with the Lalitavistara's lists of monks and bodhisattvas or its description of the audience at Śrāvastī.",
+  "cls": null
+ },
+ "opus-tiles-production/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The main Mongolian text was not transcribed, and only a Chinese margin label (\"諸品經第七卷上二\") was translated, so nothing in it can be checked against the Tibetan opening of the Saddharmapuṇḍarīka (the assembly of arhats, the list of śrāvakas, the list of bodhisattvas).",
+  "raw": "VERDICT: unreadable\nWHY: The main Mongolian text was not transcribed, and only a Chinese margin label (\"諸品經第七卷上二\") was translated, so nothing in it can be checked against the Tibetan opening of the Saddharmapuṇḍarīka (the assembly of arhats, the list of śrāvakas, the list of bodhisattvas).",
+  "cls": null
+ },
+ "opus-tiles-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "Only the margin labels were rendered (\"Miscellaneous Sūtras, Volume Eighteen, folio 392\"), and the main text is marked as not transcribed, so none of the Lokānusamāvatāra verses (e.g., \"this is conforming to the world\" refrains about washing feet, bathing, taking medicine) can be compared.",
+  "raw": "VERDICT: unreadable\nWHY: Only the margin labels were rendered (\"Miscellaneous Sūtras, Volume Eighteen, folio 392\"), and the main text is marked as not transcribed, so none of the Lokānusamāvatāra verses (e.g., \"this is conforming to the world\" refrains about washing feet, bathing, taking medicine) can be compared.",
+  "cls": null
+ },
+ "opus-tiles-production/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The machine reading gives only the Chinese margin label (諸品經 vol. 28, folio 393) and a layout note, with no transcribed Mongolian body text to compare against the Tibetan on good friends (dge ba'i bshes gnyen) or the end of the Gaṇḍī sūtra.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading gives only the Chinese margin label (諸品經 vol. 28, folio 393) and a layout note, with no transcribed Mongolian body text to compare against the Tibetan on good friends (dge ba'i bshes gnyen) or the end of the Gaṇḍī sūtra.",
+  "cls": null
+ },
+ "opus-tiles-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no body text and only translates a Chinese margin label (\"律師戒行經\", vol. 6, folio 3), so nothing can be checked against the Prātimokṣa verses or the pārājika rules in the Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no body text and only translates a Chinese margin label (\"律師戒行經\", vol. 6, folio 3), so nothing can be checked against the Prātimokṣa verses or the pārājika rules in the Tibetan.",
+  "cls": null
+ },
+ "argon-high-production/v061_f2a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent passage about samādhis such as \"Bliss and Radiant Joy\" and \"Manifestly Revealing All the Radiant Bodies and Lights of the Buddha\", and its margins name a different sūtra (\"Sutra of Various Chapters\", fascicle 2), while the Tibetan opens the Lalitavistara at Śrāvastī with the list of named monks and bodhisattvas, the people of the city honouring the Buddha, and his epithets, none of which appears in the English.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent passage about samādhis such as \"Bliss and Radiant Joy\" and \"Manifestly Revealing All the Radiant Bodies and Lights of the Buddha\", and its margins name a different sūtra (\"Sutra of Various Chapters\", fascicle 2), while the Tibetan opens the Lalitavistara at Śrāvastī with the list of named monks and bodhisattvas, the people of the city honouring the Buddha, and his epithets, none of which appears in the English.",
+  "cls": null
+ },
+ "argon-high-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The machine reading has no main text: the 25 Mongolian lines are marked \"not transcribed\", and it gives only margin labels (the Chinese title \"律師戒行經第六卷上三\"), so nothing can be compared with the Prātimokṣa verses or the pārājika rules in the Tibetan.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading has no main text: the 25 Mongolian lines are marked \"not transcribed\", and it gives only margin labels (the Chinese title \"律師戒行經第六卷上三\"), so nothing can be compared with the Prātimokṣa verses or the pārājika rules in the Tibetan.",
+  "cls": null
+ },
+ "argon-high-production/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English gives a list of Buddha epithets followed by the thirty-two great compassions (all dharmas without self, without abode, etc.), and none of it appears in the Tibetan, which covers the end of the Gaṇḍī-time sūtra and the Kalyāṇamitrasevana-sūtra (Ānanda's claim that good friends are half the holy life, and the Buddha's reply that they are the whole of it).",
+  "raw": "VERDICT: wrong text\nWHY: The English gives a list of Buddha epithets followed by the thirty-two great compassions (all dharmas without self, without abode, etc.), and none of it appears in the Tibetan, which covers the end of the Gaṇḍī-time sūtra and the Kalyāṇamitrasevana-sūtra (Ānanda's claim that good friends are half the holy life, and the Buddha's reply that they are the whole of it).",
+  "cls": null
+ },
+ "control:argon-low-hinted/v047_f193a->v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent Prajñāpāramitā passage in which the Buddha tells Śāriputra that \"ever-abiding\" bodhisattvas are non-abiding because their nature is emptiness, signlessness, wishlessness and the unconstructed, but the Tibetan has the end of the Gaṇḍī sūtra and the Kalyāṇamitrasevana-sūtra (the Buddha tells Ānanda that good friends are the whole of the holy life), so the specific content is different.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent Prajñāpāramitā passage in which the Buddha tells Śāriputra that \"ever-abiding\" bodhisattvas are non-abiding because their nature is emptiness, signlessness, wishlessness and the unconstructed, but the Tibetan has the end of the Gaṇḍī sūtra and the Kalyāṇamitrasevana-sūtra (the Buddha tells Ānanda that good friends are the whole of the holy life), so the specific content is different.",
+  "cls": null
+ },
+ "control:argon-high-production/v049_f2a->v098_f3a": {
+  "verdict": "wrong text",
+  "why": "The English is a sūtra opening (\"Thus have I heard\", Rājagṛha, Vulture Peak, 1,800 arhat monks with standard arhat epithets) from a Ratnakūṭa text, while the Tibetan passage is the Prātimokṣa's verses praising the prātimokṣa, the poṣadha announcement and the first pārājika rules, none of which appears in the English.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a sūtra opening (\"Thus have I heard\", Rājagṛha, Vulture Peak, 1,800 arhat monks with standard arhat epithets) from a Ratnakūṭa text, while the Tibetan passage is the Prātimokṣa's verses praising the prātimokṣa, the poṣadha announcement and the first pārājika rules, none of which appears in the English.",
+  "cls": null
+ },
+ "control:argon-low-production/v087_f393a->v047_f193a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent passage about the bodhisattva's mind of dedication (pariṇāmanā) toward omniscience, avoiding the śrāvaka and pratyekabuddha levels, and a dhyāna called \"Revealing the Marks of All Dharmas\", but none of this appears in the Vajracchedikā opening (Śrāvastī setting, Subhūti's question, the four kinds of birth, giving without abiding, the ten directions of space, the marks of the Tathāgata).",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent passage about the bodhisattva's mind of dedication (pariṇāmanā) toward omniscience, avoiding the śrāvaka and pratyekabuddha levels, and a dhyāna called \"Revealing the Marks of All Dharmas\", but none of this appears in the Vajracchedikā opening (Śrāvastī setting, Subhūti's question, the four kinds of birth, giving without abiding, the ten directions of space, the marks of the Tathāgata).",
+  "cls": null
+ },
+ "argon-high-hinted/v011_f224a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent philosophical passage on the nature of mind, tathāgata heart-essence, non-arising from self or other and emptiness, but the Tibetan is a ritual text about drawing the Vajrapāṇi maṇḍala with 24 vajras, a nāga-subduing mantra, the chapter colophon on subduing the underworld, and a list of sixteen recitation types; none of that specific content appears in the English.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent philosophical passage on the nature of mind, tathāgata heart-essence, non-arising from self or other and emptiness, but the Tibetan is a ritual text about drawing the Vajrapāṇi maṇḍala with 24 vajras, a nāga-subduing mantra, the chapter colophon on subduing the underworld, and a list of sixteen recitation types; none of that specific content appears in the English.",
+  "cls": null
+ },
+ "argon-high-hinted/v005_f150a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent discourse to the Lord of Secrets about six distinctions of \"portion\" and \"beyond\", manifest/unmanifest, coarse/subtle, hand-signs, wind and mind, but none of it is in this Tibetan, which covers the end of chapter 12, the vajra recitations of body, speech and mind, and the visualization of the wheel, vajra, jewel, lotus and sword at the heart.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent discourse to the Lord of Secrets about six distinctions of \"portion\" and \"beyond\", manifest/unmanifest, coarse/subtle, hand-signs, wind and mind, but none of it is in this Tibetan, which covers the end of chapter 12, the vajra recitations of body, speech and mind, and the visualization of the wheel, vajra, jewel, lotus and sword at the heart.",
+  "cls": null
+ },
+ "argon-high-hinted/v001_f280a": {
+  "verdict": "wrong text",
+  "why": "The English just repeats generic phrases about the \"nature of mind\", dharmatā and the primordial wisdom of the Tathāgatas, and none of it matches this passage: the wheel-petal counts, the four moments, truths, realities, joys and schools, the mantras for each number of arms and for the rites, or the Ananta nāga rain ritual and the khaṭikā and vajra-chopper rites.",
+  "raw": "VERDICT: wrong text\nWHY: The English just repeats generic phrases about the \"nature of mind\", dharmatā and the primordial wisdom of the Tathāgatas, and none of it matches this passage: the wheel-petal counts, the four moments, truths, realities, joys and schools, the mantras for each number of arms and for the rites, or the Ananta nāga rain ritual and the khaṭikā and vajra-chopper rites.",
+  "cls": null
+ },
+ "argon-high-hinted/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English of the machine reading is empty, so nothing can be checked against the Vajracchedikā passage in Derge 121a–122a.",
+  "raw": "VERDICT: unreadable\nWHY: The English of the machine reading is empty, so nothing can be checked against the Vajracchedikā passage in Derge 121a–122a.",
+  "cls": null
+ },
+ "argon-high-hinted/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading is empty, so it has no content to compare with the Tibetan Lalitavistara opening (the list of monks such as Ājñātakauṇḍinya and Śāriputra, the bodhisattvas Maitreya and others, or the epithets of the Buddha).",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading is empty, so it has no content to compare with the Tibetan Lalitavistara opening (the list of monks such as Ājñātakauṇḍinya and Śāriputra, the bodhisattvas Maitreya and others, or the epithets of the Buddha).",
+  "cls": null
+ },
+ "argon-high-hinted/v049_f2a": {
+  "verdict": "wrong text",
+  "why": "The title is \"Inexhaustible Gate to the Ultimate Limit\" (Anantamukhapariśodhananirdeśa, Ratnakūṭa 2), not Akṣobhya's vyūha; the shared setting (Rājagṛha, Vulture Peak, 1,250 monks) is a stock sūtra opening, and the English skips this passage's distinctive arhat epithets and Ānanda exception.",
+  "raw": "VERDICT: wrong text\nWHY: The title is \"Inexhaustible Gate to the Ultimate Limit\" (Anantamukhapariśodhananirdeśa, Ratnakūṭa 2), not Akṣobhya's vyūha; the shared setting (Rājagṛha, Vulture Peak, 1,250 monks) is a stock sūtra opening, and the English skips this passage's distinctive arhat epithets and Ānanda exception.",
+  "cls": null
+ },
+ "argon-high-hinted/v066_f2a": {
+  "verdict": "wrong text",
+  "why": "None of the English bodhisattva names (\"Subduer of Adversaries\", \"Illuminator with the Jewel of Dhāraṇī\", \"Radiant as the Sun\") appear in the D113 list (Avalokiteśvara, Mahāsthāmaprāpta, Bhaiṣajyarāja, Maitreya…), and the Buddha lighting the whole trichiliocosm with his body, smiling and speaking an udāna is not in this Tibetan, which lists śrāvakas, bodhisattvas and the sixteen good men led by Bhadrapāla.",
+  "raw": "VERDICT: wrong text\nWHY: None of the English bodhisattva names (\"Subduer of Adversaries\", \"Illuminator with the Jewel of Dhāraṇī\", \"Radiant as the Sun\") appear in the D113 list (Avalokiteśvara, Mahāsthāmaprāpta, Bhaiṣajyarāja, Maitreya…), and the Buddha lighting the whole trichiliocosm with his body, smiling and speaking an udāna is not in this Tibetan, which lists śrāvakas, bodhisattvas and the sixteen good men led by Bhadrapāla.",
+  "cls": null
+ },
+ "argon-high-hinted/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent reading of benedictory verses: the end of a set of auspiciousness verses, the Ratnatraya-svasti-gāthā, and the opening title of the Svastyayana-gāthā. None of that is in the Tibetan, which ends the Gaṇḍī-time sūtra and then gives the Kalyāṇamitrasevana-sūtra, where the Buddha corrects Ānanda that good friends are the whole of the holy life, not half.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent reading of benedictory verses: the end of a set of auspiciousness verses, the Ratnatraya-svasti-gāthā, and the opening title of the Svastyayana-gāthā. None of that is in the Tibetan, which ends the Gaṇḍī-time sūtra and then gives the Kalyāṇamitrasevana-sūtra, where the Buddha corrects Ānanda that good friends are the whole of the holy life, not half.",
+  "cls": null
+ },
+ "argon-high-hinted/v077_f392a": {
+  "verdict": "wrong text",
+  "why": "The English is general prose about wisdom, the emptiness of phenomena and the ripening of beings, whereas the Tibetan is verses that each end with the refrain \"this is conforming to the world\" (Buddhas washing their feet, using tooth-sticks, taking medicine, showing old age, wearing rag robes, living in grass huts), and none of that refrain or imagery appears.",
+  "raw": "VERDICT: wrong text\nWHY: The English is general prose about wisdom, the emptiness of phenomena and the ripening of beings, whereas the Tibetan is verses that each end with the refrain \"this is conforming to the world\" (Buddhas washing their feet, using tooth-sticks, taking medicine, showing old age, wearing rag robes, living in grass huts), and none of that refrain or imagery appears.",
+  "cls": null
+ },
+ "argon-high-hinted/v098_f3a": {
+  "verdict": "wrong text",
+  "why": "The English is a coherent narrative about the Buddha teaching how monks should confess and be absolved after breaking a precept, with Upāli asking how to proceed, but none of it is in this Tibetan; the passage has the Prātimokṣa verses on rare and happy things, the poṣadha announcement, and the four pārājika rules on sex, theft, killing and false claims of attainment.",
+  "raw": "VERDICT: wrong text\nWHY: The English is a coherent narrative about the Buddha teaching how monks should confess and be absolved after breaking a precept, with Upāli asking how to proceed, but none of it is in this Tibetan; the passage has the Prātimokṣa verses on rare and happy things, the poṣadha announcement, and the four pārājika rules on sex, theft, killing and false claims of attainment.",
+  "cls": null
+ }
+}

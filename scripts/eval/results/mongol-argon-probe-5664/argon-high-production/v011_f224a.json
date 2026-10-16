@@ -1,0 +1,41 @@
+{
+ "key": "v011_f224a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Faded red/vermilion ink in the central 25 vertical columns of Manchu script, with fine diacritical dots and circles largely indistinct; handwritten Chinese and Manchu marginal notations in the right margin.</warning>\n<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<page-num>447</page-num>\n<meta>Pothi-format leaf from the Qianlong Manchu Kanjur (Secret/Tantra division, Volume 11, Upper part, folio 224a, numbered 447 on a pasted archival label at upper left), printed/written in red ink within a double-ruled red border, with a handwritten Chinese volume and folio citation inside the right marginal box and a faint cursive Manchu folio note outside the right border.</meta>\n\n<margin>ᠰᠣᠮᡳᠰᡥᡡᠨ ᠨᠣᠮᡠᠨ ᡳ ᠵᡠᠸᠠᠨ ᡝᠮᡠᠴᡳ ᡩᡝᠪᡨᡝᠯᡳᠨ ᠂ ᡩᡝᡵᡤᡳ ᠂ ᠵᡠᠸᡝ ᡨᠠᠩᡤᡡ ᠣᡵᡳᠨ ᡩᡠᡳᠨ (somishūn nomun i juwan emuci debtelin, dergi, juwe tanggū orin duin)</margin>\n<margin>秘密經第十一卷上二百二十四</margin>\n<margin><unclear>ᠣᡵᡳᠨ ᡩᡠᡳᠨ (orin duin)</unclear></margin>\n<unclear>25 vertical columns of Manchu script in faded red ink, not transcribed</unclear>\n\n<vocab>秘密經, 第十一卷, 二百二十四, somishūn nomun, debtelin, dergi, juwe tanggū orin duin, Manchu Kanjur, Mongolian script, Tantra</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 282.545,
+  "usage": {
+   "input_tokens": 23530,
+   "output_tokens": 20492,
+   "thinking_tokens": 19381,
+   "cache_read_tokens": 29380,
+   "total_tokens": 44022
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Faded red and vermilion ink in the central 25 vertical columns of Manchu script, with fine diacritical dots and circles largely indistinct; handwritten Chinese and Manchu marginal notations appear in the right margin.</warning>\n<meta>Although the request header lists Mongolian as the source language, this manuscript leaf is in Manchu, written in the Manchu script adapted from the vertical Mongolian alphabet, with a parallel Chinese marginal citation. It is a pothi-format leaf from the Qianlong Manchu Kanjur, Secret or Tantra division, Volume 11, Upper part, folio 224a, numbered 447 on a pasted archival label at the upper left, printed in red ink within a double-ruled red border.</meta>\n\n<margin>Secret Scripture <term>somishūn nomun</term> <gloss>Esoteric Sutra, the Tantra division of the Manchu Buddhist canon</gloss>, eleventh volume <term>debtelin</term> <gloss>volume or fascicle</gloss>, upper part <term>dergi</term> <gloss>upper or first section of a divided volume</gloss>, folio two hundred twenty-four <term>juwe tanggū orin duin</term> <gloss>two hundred twenty-four</gloss> <note>original Manchu: \"ᠰᠣᠮᡳᠰᡥᡡᠨ ᠨᠣᠮᡠᠨ ᡳ ᠵᡠᠸᠠᠨ ᡝᠮᡠᠴᡳ ᡩᡝᠪᡨᡝᠯᡳᠨ ᠂ ᡩᡝᡵᡤᡳ ᠂ ᠵᡠᠸᡝ ᡨᠠᠩᡤᡡ ᠣᡵᡳᠨ ᡩᡠᡳᠨ\"; romanized: \"somishūn nomun i juwan emuci debtelin, dergi, juwe tanggū orin duin\"</note></margin>\n<margin>Secret Scripture, Volume Eleven, Upper part, folio two hundred twenty-four <note>original Chinese: \"秘密經第十一卷上二百二十四\", a handwritten cataloging citation in the right marginal box recording the division, volume, part, and folio number</note></margin>\n<margin><unclear>ᠣᡵᡳᠨ ᡩᡠᡳᠨ (orin duin)</unclear> <note>Faint cursive Manchu marginal note outside the right border meaning \"twenty-four\", an abbreviated reference to folio 224.</note></margin>\n<unclear>25 vertical columns of Manchu script in faded red ink, not transcribed</unclear>\n\n<summary>This leaf is folio 224a from the upper part of Volume 11 in the Secret Scripture, or Tantra division, of the Qianlong-era Manchu Kanjur, bearing archival page number 447. While the 25 vertical columns of vermilion Manchu main text are too faded for transcription, the right margin preserves the Manchu volume signature along with handwritten Chinese and Manchu cataloging notations.</summary>\n<keywords>Manchu Kanjur, Qianlong canon, Secret Scripture, Tantra division, somishūn nomun, Volume 11, folio 224, bilingual marginalia, Buddhist manuscript</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 73.765
+ }
+}

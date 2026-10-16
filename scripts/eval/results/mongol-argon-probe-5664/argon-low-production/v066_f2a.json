@@ -1,0 +1,41 @@
+{
+ "key": "v066_f2a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ja doloɣan degedü qoyar / 諸品經第七卷上二</page-num>\n<meta>Woodblock-printed Buddhist canonical pothi leaf in red ink (cinnabar) with ornamental floral double-line border, containing 23 vertical lines of Classical Mongolian text with Mongolian and Chinese marginal volume/folio markers.</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Rectangular red-ink woodblock frame with scrolling floral and vine border surrounding the main text block and flanked by narrow vertical marginal boxes on both left and right sides.</image-desc>\n\n<margin>ja doloɣan degedü qoyar</margin>\n\n᠁ ᠸᠢᠨᠠᠶ᠎ᠠ ᠳ᠋ᠤ ᠨᠣᠮᠯᠠᠭᠰᠠᠨ ᠂ ᠬᠡᠵᠢᠶ᠎ᠡ\nᠴᠠᠭ ᠢ ᠢᠯᠭᠠᠨ ᠤᠬᠠᠭᠳᠠᠬᠤᠢ ᠄\nᠭᠡᠰᠦ ᠢ ᠢᠯᠭᠠᠨ ᠤᠬᠠᠭᠳᠠᠬᠤᠢ ᠄\nᠵᠣᠭᠣᠭ ᠢ ᠢᠯᠭᠠᠨ ᠤᠬᠠᠭᠳᠠᠬᠤᠢ ᠂ ᠭᠡᠰᠡᠨ\nᠡᠳᠡ ᠭᠤᠷᠪᠠᠨ ᠢ ᠮᠡᠳᠡᠵᠦ ᠢᠳᠡᠭᠡᠨ ᠢ\nᠢᠳᠡ ᠬᠡᠮᠡᠨ ᠨᠣᠮᠯᠠᠪᠠ ᠄\nᠡᠨᠡ ᠮᠡᠳᠡᠬᠦ ᠭᠡᠰᠡᠨ ᠂\nᠶᠠᠮᠠᠷ ᠴᠢᠨᠠᠷ ᠢ ᠮᠡᠳᠡᠬᠦ ᠄\nᠥ᠍ᠪᠡᠷ ᠦᠨ ᠪᠡᠶ᠎ᠡ ᠳ᠋ᠤ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠢ ᠤ\nᠴᠢᠨᠠᠷ ᠢ ᠄ ᠮᠦᠨ ᠡᠨᠡ ᠪᠡᠶ᠎ᠡ\nᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠮᠢᠬ᠎ᠠ ᠴᠢᠰᠤ ᠵᠢᠴᠢ ᠂\nᠶᠠᠰᠤ ᠵᠢᠷᠦᠭᠡ ᠡᠯᠢᠭᠡ ᠠᠭᠤᠰᠬᠢ\nᠭᠡᠳᠡᠰᠦ ᠭᠦᠵᠡ ᠭᠡᠰᠡᠨ ᠡᠳᠡ ᠨᠤᠭᠤᠳ ᠄\nᠠᠮᠢᠨ ᠢ ᠲᠡᠵᠢᠶᠡᠬᠦ ᠳ᠋ᠤ ᠢᠳᠡᠭᠡᠨ ᠢ ᠥ᠍ᠭᠭᠦᠭᠡᠳ ᠂\nᠡᠪᠡᠳᠴᠢᠨ ᠢ ᠠᠷᠢᠯᠭᠠᠬᠤ ᠲᠤ ᠡᠮ\nᠵᠢᠴᠢ ᠂ ᠪᠡᠶ᠎ᠡ ᠳ᠋ᠤ ᠬᠡᠷᠡᠭᠯᠡᠬᠦ ᠡᠳ᠋\nᠮᠡᠳᠡᠵᠦ ᠢᠳᠡᠭᠡᠨ ᠢ ᠢᠳᠡᠬᠦ ᠪᠣᠯᠪᠠᠰᠤ\nᠠᠮᠢ ᠪᠡᠶ᠎ᠡ ᠂ ᠨᠠᠰᠤ ᠢ ᠤᠷᠲᠤᠳᠬᠠᠵᠤ\nᠴᠢᠳᠠᠬᠤ ᠪᠣᠯᠤᠮᠤᠢ ᠂ ᠬᠡᠮᠡᠨ ᠡᠨᠡ\nᠨᠢᠭᠡ ᠢ ᠮᠡᠳᠡᠵᠦ ᠢᠳᠡᠭᠡᠨ ᠢ ᠢᠳᠡ ᠄\nᠳ᠋ᠠᠷᠠᠭ᠎ᠠ ᠨᠢ ᠵᠣᠭᠣᠭ ᠤᠨ ᠢᠳᠡᠭᠡᠨ ᠢ\nᠮᠡᠳᠡᠵᠦ ᠢᠳᠡ ᠭᠡᠰᠡᠨ ᠪᠣᠯᠪᠠᠰᠤ ᠂\n<unclear>ᠢᠳᠡᠭᠡᠨ ᠦ</unclear> ᠴᠢᠨᠠᠷ ᠢ ᠮᠡᠳᠡᠵᠦ ᠢᠳᠡᠬᠦ ᠂\n\n<margin>諸品經第七卷上二</margin>\n\n<vocab>ᠸᠢᠨᠠᠶ᠎ᠠ, Vinaya, ᠢᠳᠡᠭᠡᠨ, ᠵᠣᠭᠣᠭ, ᠴᠢᠨᠠᠷ, ᠪᠡᠶ᠎ᠡ, 诸品经, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 65.391,
+  "usage": {
+   "input_tokens": 12043,
+   "output_tokens": 1483,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 38479,
+   "total_tokens": 13526
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Woodblock-printed Buddhist canonical pothi leaf in red ink (cinnabar) with ornamental floral double-line border, containing 23 vertical lines of Classical Mongolian text with Mongolian and Chinese marginal volume and folio markers. The text begins with a birga ornamental mark on Folio 2 of the upper part of Volume 7.</meta>\n\n<note>A rectangular red-ink woodblock frame with a scrolling floral and vine border surrounds the main text block, flanked by narrow vertical marginal boxes on both the left and right sides.</note>\n\n<margin><term>ja doloɣan degedü qoyar</term> <gloss>Section Ja, Volume Seven, Upper Part, Folio Two</gloss></margin>\n\nIt is taught in the <term>Vinaya</term> <gloss>monastic discipline</gloss>:\n\"Distinguish and understand the proper time;\ndistinguish and understand the belly <note>original: \"gesü\", meaning the stomach or digestive capacity</note>;\ndistinguish and understand the meal <note>original: \"joɣoɣ\"</note>;\nknowing these three, partake of food,\" thus it was taught.\nAs for this \"knowing,\"\nwhat nature <note>original: \"činar\"</note> is to be known?\nKnowing the nature of what abides within one's own body:\nnamely, the flesh and blood that constitute this very body, as well as\nthe bones, heart, liver, lungs,\nintestines, and stomach <note>original: \"güje\"</note>; all of these.\nBy giving food to nourish life,\nand by knowing food as medicine to dispel illness\nand as a substance necessary for the body, if one partakes of food in this manner,\none will be able to prolong one's life, body, and years of age.\nKnowing this first point, partake of food.\nNext, as for the teaching \"know the food of the meal and eat,\"\nit means knowing the nature of <unclear>ᠢᠳᠡᠭᠡᠨ ᠦ</unclear> and eating,\n\n<margin>The Sutra of Various Sections, Volume Seven, Upper Part, Folio Two <note>original: \"諸品經第七卷上二\"</note></margin>\n\n<summary>This folio from the seventh volume of a Mongolian Buddhist canonical collection presents instructions from the Vinaya on mindful eating. It explains that a practitioner must understand the proper time, the capacity of the stomach, and the nature of the meal, viewing food as medicine to sustain the physical organs and prolong life.</summary>\n<keywords>Vinaya, monastic discipline, mindful eating, Buddhist medicine, bodily organs, Classical Mongolian, sutra, food as medicine</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 23.829
+ }
+}

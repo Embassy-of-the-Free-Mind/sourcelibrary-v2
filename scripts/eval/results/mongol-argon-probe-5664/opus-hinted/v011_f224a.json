@@ -1,0 +1,35 @@
+{
+ "key": "v011_f224a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The image is rotated 90° (the Chinese margin label reads from top to bottom on the right edge). The woodblock print is in faint red ink, and the image was shown to me at reduced resolution. At that size I could not reliably read the individual Uighur-Mongol letterforms. I did not guess at the text, to avoid inventing readings. The body needs to be transcribed again from a full-resolution, correctly rotated image.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>224a</page-num>\n<header>秘密經第十一本上二百二十四</header>\n<meta>Chinese margin label: 秘密經第十一本上二百二十四 (Tantra section, vol. 11, folio 224 recto). A modern red label reading \"447\" sits outside the printed frame, likely an archival image or sequence number. There is a short line of text at the bottom of the frame (left side of the rotated image), possibly a column-end or colophon line.</meta>\n<unclear>About 24 columns of woodblock-printed Uighur-Mongol script inside a double-ruled frame, not transcribed because the letterforms cannot be read reliably at the available resolution</unclear>\n<vocab>Kanjur, 秘密經 (Tantra section), Beijing Mongolian Kanjur 1718–20, volume 11, folio 224</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 16.673,
+  "usage": {
+   "input": 4,
+   "output": 813
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<warning>The OCR for this page contains no transcribed body text. The transcriber could not read the woodblock-printed Uighur-Mongol script because the image was rotated, faintly printed in red ink, and provided at reduced resolution. Nothing has been translated from the body of the page, and no content has been supplied for the unread region. The page should be transcribed again from a full-resolution, correctly rotated image.</warning>\n\n<meta>Chinese margin label: 秘密經第十一本上二百二十四. A modern red label reading \"447\" lies outside the printed frame and is probably an archival image or sequence number. A short line of text appears at the bottom of the frame and may mark a column-end or colophon line; it was not transcribed.</meta>\n\nSecret Scriptures <note>original: \"秘密經\", the Chinese name for the Tantra section of the Kanjur</note>, volume eleven, part one <note>original: \"上\", literally \"upper\"; this may mark the first part of the volume or the recto side of the folio</note>, folio two hundred twenty-four\n\n<unclear>About 24 columns of woodblock-printed Uighur-Mongol script inside a double-ruled frame, not transcribed because the letterforms cannot be read reliably at the available resolution</unclear>\n\n<summary>This is folio 224 recto of volume 11 of the Tantra section of a Mongolian Kanjur, probably the Beijing edition of 1718–20. Only the Chinese margin label could be read. The Mongolian body text was not transcribed and so has not been translated.</summary>\n<keywords>Mongolian Kanjur, Tantra section, Secret Scriptures, Beijing Kanjur 1718–20, volume 11, folio 224, Uighur-Mongol script, woodblock print, red ink, untranscribed page</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.604
+ }
+}

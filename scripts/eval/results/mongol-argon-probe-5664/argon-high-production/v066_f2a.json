@@ -1,0 +1,40 @@
+{
+ "key": "v066_f2a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上二</page-num>\n<header>諸品經第七卷</header>\n<meta>Pothi (pecha) leaf from the Kangxi imperial woodblock edition of the Mongolian Kanjur, printed in red (vermilion) ink within an ornate floral border frame; bilingual marginal volume and folio signatures in Classical Mongolian (left) and Chinese (right).</meta>\n<warning>Main text consists of 22 vertical lines of woodblock-printed Classical Mongolian script (Hudum Mongol bichig) in red ink that cannot be reliably transcribed without reconstruction; slight fading of ink in lines 5–8 from the left.</warning>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Rectangular woodcut border frame printed in red ink enclosing the central text panel and two narrow vertical marginal compartments on the left and right, decorated with continuous scrolling floral and foliate motifs.</image-desc>\n\n<margin><unclear>ᠴᠠ ᠳᠣᠯᠣᠳᠤᠭᠠᠷ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ (ca dolodugar degedü qoyar)</unclear></margin>\n<margin>諸品經第七卷上二</margin>\n\n<unclear>22 vertical lines of Classical Mongolian script (Hudum Mongol bichig) printed in red ink, not transcribed</unclear>\n\n<vocab>諸品經, 第七卷, 上二, Mongolian Kanjur, Hudum Mongol bichig, dolodugar, degedü, qoyar, xylograph</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 125.84,
+  "usage": {
+   "input_tokens": 19549,
+   "output_tokens": 8948,
+   "thinking_tokens": 8459,
+   "cache_read_tokens": 13803,
+   "total_tokens": 28497
+  },
+  "tool_calls": [
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Pothi <term>pecha</term> <gloss>Tibetan-style loose-leaf book format</gloss> leaf from the Kangxi imperial woodblock edition of the Mongolian Kanjur, printed in red vermilion ink within an ornate floral border frame; bilingual marginal volume and folio signatures appear in Classical Mongolian on the left and Chinese on the right, marking Sutras of Various Sections, Volume 7, Upper Part, Folio 2.</meta>\n<warning>Main text consists of 22 vertical lines of woodblock-printed Classical Mongolian script, <term>Hudum Mongol bichig</term> <gloss>traditional vertical Mongolian script</gloss>, in red ink that cannot be reliably transcribed without reconstruction; slight fading of ink in lines 5 to 8 from the left.</warning>\n\n<note>A rectangular woodcut border frame printed in red ink encloses the central text panel and two narrow vertical marginal compartments on the left and right, decorated with continuous scrolling floral and foliate motifs.</note>\n\n<margin><unclear>ᠴᠠ ᠳᠣᠯᠣᠳᠤᠭᠠᠷ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ (ca dolodugar degedü qoyar)</unclear> <note>Left marginal signature in Classical Mongolian: section marker <term>ca</term> <gloss>sixth letter of the Mongolian index sequence</gloss>, <term>dolodugar</term> <gloss>seventh</gloss>, <term>degedü</term> <gloss>upper</gloss>, <term>qoyar</term> <gloss>two</gloss>; indicating Volume 7, Upper Part, Folio 2.</note></margin>\n<margin>Sutras of Various Sections, Volume Seven, Upper Part, Folio Two <note>original: \"諸品經第七卷上二\"; Chinese marginal signature used by block carvers and printers to assemble the folios in sequence.</note></margin>\n\n<unclear>22 vertical lines of Classical Mongolian script (Hudum Mongol bichig) printed in red ink, not transcribed</unclear>\n\n<summary>This folio is the second leaf of the upper part of Volume 7 in the Sutras of Various Sections division from the Kangxi imperial woodblock edition of the Mongolian Kanjur. It preserves bilingual marginal folio signatures in Classical Mongolian and Chinese alongside 22 vertical lines of untranscribed Classical Mongolian script printed in vermilion ink.</summary>\n<keywords>Mongolian Kanjur, Kangxi woodblock edition, Classical Mongolian script, Hudum Mongol bichig, Sutras of Various Sections, bilingual marginalia, vermilion xylograph, pothi leaf</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 92.001
+ }
+}

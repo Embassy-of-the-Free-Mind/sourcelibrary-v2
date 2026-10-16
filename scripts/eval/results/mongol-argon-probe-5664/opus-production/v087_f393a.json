@@ -1,0 +1,35 @@
+{
+ "key": "v087_f393a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Pothi-format leaf written in red ink in vertical Mongolian script. The script is too small and faded at this resolution to transcribe reliably, so the Mongolian body text is not transcribed. Only the Chinese margin label is transcribed. The reading of its numerals 六十八 is not certain.</warning>\n<warning>Handwritten Mongolian (Uyghur-Mongolian) script, red ink</warning>\n<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>393</page-num>\n<meta>Leaf with a double-ruled red frame. The right margin strip has a Chinese volume and folio label. The left margin strip has a short Mongolian folio notation. Paper is aged, and there are repair strips at the upper right edge.</meta>\n\n<margin>諸品經第<unclear>六十八</unclear>卷上三百九十三</margin>\n\n<unclear>about 21 vertical lines of Mongolian script in red ink, not transcribed</unclear>\n\n<margin><unclear>short Mongolian folio notation in the left margin (about 4 words), not transcribed</unclear></margin>\n\n<vocab>諸品經 (Zhupin jing, \"Sūtras of various categories\"), Mongolian Kanjur, pothi leaf, folio 393, red ink manuscript</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 17.081,
+  "usage": {
+   "input": 4,
+   "output": 903
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The Mongolian body text was not transcribed because of the image resolution and faded red ink. Only the Chinese margin label was transcribed, and its volume numeral is uncertain. The volume number stays inside an unclear tag and is not interpreted.</meta>\n\n<margin>Sūtras of Various Categories <note>original: \"諸品經\" (Zhupin jing), the Chinese label for the miscellaneous sūtra section of the Mongolian Kanjur</note>, volume <unclear>六十八</unclear>, upper, three hundred ninety-three <note>The label gives the leaf as folio 393. \"Upper\" probably marks the front side of the leaf.</note></margin>\n\n<unclear>about 21 vertical lines of Mongolian script in red ink, not transcribed</unclear>\n\n<margin><unclear>short Mongolian folio notation in the left margin (about 4 words), not transcribed</unclear></margin>\n\n<summary>This is leaf 393 of a red-ink Mongolian manuscript in pothi format. Its Chinese margin label places it in the \"Sūtras of Various Categories\" section of the Mongolian Kanjur. The main Mongolian text was not transcribed, so only the folio label can be translated.</summary>\n<keywords>Mongolian Kanjur, Zhupin jing, Sūtras of Various Categories, pothi leaf, folio 393, red ink manuscript, Uyghur-Mongolian script, Chinese margin label, Buddhist canon</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 10.635
+ }
+}

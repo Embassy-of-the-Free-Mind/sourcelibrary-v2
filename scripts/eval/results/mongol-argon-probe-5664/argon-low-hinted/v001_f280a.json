@@ -1,0 +1,41 @@
+{
+ "key": "v001_f280a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>559 | ᠵᠠ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠨᠠᠶᠠᠨ | 二百八十</page-num>\n<header>ᠨᠢᠭᠤᠴᠠ  хураiyanggui | 秘密經第一卷上</header>\n<warning>Faint red woodblock ink throughout, with slight fading along the bottom edge of several columns.</warning>\n<margin>559</margin>\n<margin>ᠸ ᠨᠢᠭᠤᠴᠠ ᠵᠠ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠨᠠᠶᠠᠨ</margin>\nᠳ᠋ᠤᠷ ᠣᠷᠣᠰᠢᠪᠠᠢ ᠂ ᠴᠢᠨᠠᠷ ᠤᠨ ᠴᠢᠨᠠᠳᠤ ᠬᠢᠵᠠᠭᠠᠷ ᠲᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ ᠢ\nᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠢᠯᠡᠰ ᠲᠡᠢ ᠂ ᠴᠢᠨᠠᠳᠤ ᠡᠴᠡ ᠢᠷᠡᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠄\nᠴᠢᠨᠠᠷ ᠢ ᠴᠢᠨᠠᠳᠤ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠴᠢᠨᠠᠷ ᠤᠨ ᠴᠢᠨᠠᠳᠤ ᠂ ᠨᠢᠭᠤᠴᠠ\nᠪᠡᠶ᠎ᠡ ᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠪᠡᠶ᠎ᠡ ᠂ ᠴᠢᠨᠠᠳᠤ ᠳ᠋ᠤᠷ\nᠪᠡᠶ᠎ᠡ ᠴᠢᠨᠠᠳᠤ ᠡᠴᠡ ᠢᠷᠡᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠂ ᠨᠢᠭᠤᠴᠠ\nᠪᠡᠶ᠎ᠡ ᠢ ᠴᠢᠨᠠᠳᠤ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡ ᠂ ᠴᠢᠨᠠᠳᠤ ᠳ᠋ᠤᠷ\nᠵᠣᠬᠢᠶᠠᠨ ᠪᠦᠢ ᠂ ᠴᠢᠨᠠᠳᠤ ᠬᠦᠰᠡᠯ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡ ᠂\nᠮᠡᠳᠡᠭᠦᠯᠦᠨ ᠦᠢᠯᠡᠳᠦᠭᠴᠢ ᠂ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠴᠢᠨᠠᠷ\nᠦᠢᠯᠡᠳᠦᠨ ᠪᠦᠢ ᠂ ᠴᠢᠨᠠᠳᠤ ᠦᠢᠯᠡ ᠢ ᠪᠦᠲᠦᠭᠡᠨ ᠪᠦᠢ\nᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠂ ᠴᠢᠨᠠᠷ ᠤᠨ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠴᠢᠨᠠᠷ ᠪᠦᠢ\nᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠂ ᠴᠢᠨᠠᠷ ᠤᠨ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠄\nᠱᠠស្តir ᠨᠤᠭᠤᠳ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠪᠦᠢ ᠂ ᠪᠦᠲᠦᠭᠡᠬᠦ\nᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠨ ᠪᠣᠯᠪᠠᠢ ᠂ ᠡᠨᠡ ᠮᠦᠨ ᠢ ᠣᠷᠣᠰᠢᠪᠠᠢ\nᠪᠣᠯᠠᠢ ᠬᠡᠮᠡᠨ ᠂ ᠴᠢᠨᠠᠳᠤ ᠳ᠋ᠤᠷ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠤᠭᠠᠳ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠄\nᠮᠦᠨ ᠢ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠪᠣᠯᠬᠤ ᠪᠦᠢ ᠂ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠢ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠪᠦᠢ\nᠪᠦᠲᠦᠭᠡᠨ ᠪᠦᠢ ᠂ ᠴᠢᠨᠠᠷ ᠤᠨ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡ ᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ\nᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠪᠦᠲᠦᠭᠡ ᠴᠢᠨᠠᠷ ᠪᠦᠢ ᠂ ᠬᠣᠣᠰᠣᠨ ᠴᠢᠨᠠᠷ ᠢ\nᠮᠦᠨ ᠴᠢᠨᠠᠷ ᠢ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠂ ᠪᠦᠲᠦᠭᠡ ᠴᠢᠨᠠᠷ ᠢ ᠪᠦᠲᠦᠭᠡ ᠳ᠋ᠤᠷ\nᠴᠢᠨᠠᠷ ᠂ ᠴᠢᠨᠠᠳᠤ ᠴᠢᠨᠠᠷ ᠢ ᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ ᠂ ᠴᠢᠨᠠᠷ\nᠴᠢᠨᠠᠷ ᠢ ᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ ᠣᠷᠣᠰᠢᠪᠠᠢ ᠂ ᠪᠦᠢ ᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ\nᠵᠣᠬᠢᠶᠠᠨ ᠪᠦᠲᠦᠭᠡᠨ ᠪᠦᠢ ᠂ ᠂ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡᠬᠦ\nᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠂ ᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ\nᠪᠣᠯᠠᠢ ᠂ ᠳ᠋ᠤᠷ ᠴᠢᠨᠠᠷ ᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠢ ᠪᠦᠢ ᠄ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ\nᠴᠢᠨᠠᠷ ᠪᠦᠲᠦᠭᠡ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠂ ᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ ᠪᠦᠢ ᠴᠢᠨᠠᠷ\nᠪᠦᠢ ᠂ ᠪᠦᠲᠦᠭᠡ ᠴᠢᠨᠠᠷ ᠪᠦᠲᠦᠭᠡ ᠢ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠪᠠᠢ ᠂ ᠮᠦᠨ ᠪᠦᠢ\nᠮᠦᠨ ᠳ᠋ᠤᠷ ᠤᠬᠠᠭᠠᠨ ᠪᠦᠢ ᠄ ᠪᠦᠢ ᠬᠡᠮᠡᠨ ᠮᠦᠨ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠢ ᠂\nᠡᠨᠡ ᠮᠦᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠂ ᠡᠨᠡ ᠳ᠋ᠤᠷ ᠤᠬᠠᠭᠠᠨ ᠂ ᠮᠦᠨ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠨ ᠳ᠋ᠤᠷ\nᠪᠦᠲᠦᠭᠡᠨ ᠤ ᠴᠢᠨᠠᠷ ᠢ ᠂ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠪᠠᠢ ᠂\nᠴᠢᠨᠠᠷ ᠢ ᠪᠦᠢ ᠂ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠴᠢᠨᠠᠷ ᠪᠦᠢ ᠳ᠋ᠤᠷ ᠴᠢᠨᠠᠳᠤ ᠪᠣᠯᠪᠠᠢ ᠂\nᠪᠦᠲᠦᠭᠡ ᠴᠢᠨᠠᠷ ᠴᠢᠨᠠᠳᠤ ᠪᠦᠲᠦᠭᠡ ᠴᠢᠨᠠᠷ ᠳ᠋ᠤᠷ ᠪᠦᠲᠦᠭᠡᠨ ᠪᠣᠯᠪᠠᠢ ᠂\n<margin>秘密經第一卷上二百八十</margin>\n<vocab>ᠨᠢᠭᠤᠴᠠ, ᠴᠢᠨᠠᠷ, ᠴᠢᠨᠠᠳᠤ, ᠪᠦᠲᠦᠭᠡᠬᠦ, ᠢᠯᠠᠭᠤᠭᠰᠠᠨ, ᠬᠣᠣᠰᠣᠨ ᠴᠢᠨᠠᠷ, 秘密經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 91.017,
+  "usage": {
+   "input_tokens": 21892,
+   "output_tokens": 2472,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 29004,
+   "total_tokens": 24364
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: the sentence begins with the dative-locative suffix -dur (\"in/within\"), indicating continuation from the preceding folio of the Guhyasamāja Tantra (Secret Assembly Tantra), Volume 1, Upper Part, folio 280 (page 559).</meta>\n<warning>Faint red woodblock ink throughout, with slight fading along the bottom edge of several columns. The OCR exhibits some repetitive phrasing around philosophical terms like \"nature\" (činar), \"beyond\" (činadu), and \"accomplishing\" (bütüge-), characteristic of literal Tibetan-to-Mongolian canonical translations of Esoteric Buddhist verse.</warning>\n<margin>559</margin>\n<margin>Wa. Secret <note>short title for the Guhyasamāja Tantra, Mongolian: Niguča quriyanggui</note>, Volume <term>Ja</term> <gloss>the seventh volume marker in the Tibetan-Mongolian canonical ordering</gloss>, two hundred and eighty</margin>\ndwelt therein; possessing the deeds that accomplish the arrival at the yonder limit of reality <note>Mongolian: \"činar-un činadu kijagar\", corresponding to Sanskrit bhūtakoṭi or pāramitā, the ultimate limit of reality</note>, accomplished by coming from the beyond <note>an epithet of the Tathāgata, \"One Thus Come\" from ultimate reality</note>:\nHaving conquered reality beyond, the beyond of accomplished nature, the secret\nbody is the body accomplished within true nature; in the beyond,\nthe body accomplished by coming from the beyond. Accomplish the secret\nbody in the beyond! In the beyond\nit is arranged; accomplish it in transcendent aspiration!\nThe one who causes realization creates the nature of transcendent accomplishment,\nand accomplishes transcendent deeds.\nHaving accomplished, it is the nature that accomplishes the beyond of reality.\nThe Victorious One <term>Ilagugsan</term> <gloss>Bhagavān or Jina, a title of the Buddha</gloss> accomplished within the accomplishment of the beyond of reality:\nIn the <term>śāstras</term> <gloss>treatises and canonical commentaries</gloss>, it is accomplished through accomplishment; in the accomplishment of\naccomplishing, it has come to be. Saying, \"This very truth has dwelt herein,\"\nhaving become reality in the beyond, it was accomplished therein:\nIt shall accomplish that very truth, and it shall accomplish the accomplishing;\nit is accomplishing. In the nature that accomplishes the beyond of reality, within the accomplishing\nnature, there is the accomplished nature of accomplishment. To accomplish the true\nnature of <term>śūnyatā</term> <gloss>emptiness, Mongolian: qoosan činar, the absence of independent inherent existence</gloss>, within the accomplishment of the accomplishing nature,\nreality, within the accomplishment of the transcendent nature, reality\ndwelt within reality itself; within existing nature\nit arranges and accomplishes. Transcendent accomplishing\nwas accomplished beyond; in the accomplishment, within the transcendent accomplishment\nit is; within reality, it is the accomplishing in the accomplishment: the abiding\nnature accomplished the accomplishment; in reality, there is the existing nature,\nand the accomplishing nature has become the reality of accomplishment; that very truth is,\nand within that very truth is wisdom <term>uqagan</term> <gloss>vidyā or prajñā, spiritual intelligence and insight</gloss>: as FOR that which abides as \"it is,\"\nthis very truth was accomplished; herein is wisdom, and within the accomplishment in that very truth,\nthe nature of accomplishment has become the accomplishing nature;\npossessing reality, in the existing accomplishing nature it has become transcendent,\nand the accomplishing nature has been accomplished within the transcendent accomplishing nature,\n<margin>Secret Sutra <note>Chinese: Mimi jing, referring to the Guhyasamāja Tantra</note>, Volume One, Upper Part, two hundred and eighty</margin>\n\n<summary>This folio from a bilingual Mongolian-Chinese woodblock edition of the Guhyasamāja Tantra (Secret Assembly Sutra, Volume 1, Upper Part, folio 280) presents dense esoteric Buddhist verse on ultimate reality (činar), emptiness (qoosan činar), and ritual-meditative accomplishment (bütüge-). The passage meditates on how the \"secret body\" of the Victorious One (Buddha) is realized through transcendent wisdom and the union of emptiness and accomplishment.</summary>\n<keywords>Guhyasamaja Tantra, Secret Sutra, Mongolian Buddhism, Vajrayana, emptiness, sunyata, secret body, Tathagata, Victorious One, accomplishment, ultimate reality, woodblock print</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 32.132
+ }
+}

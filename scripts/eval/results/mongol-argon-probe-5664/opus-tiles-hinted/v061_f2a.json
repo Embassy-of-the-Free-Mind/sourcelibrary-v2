@@ -1,0 +1,35 @@
+{
+ "key": "v061_f2a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The text is printed in faded red ink, and the page was supplied as four overlapping strips. I could not read the Uighur-Mongol script column by column with enough confidence to transcribe it without guessing, so the Mongolian body text is marked as unclear rather than reconstructed. The Chinese margin label is clearly legible and is transcribed.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>2</page-num>\n<header>諸品經第二卷上二</header>\n<meta>Beijing Kanjur woodblock print in red ink. The page has an ornamental double frame of scrollwork. The right margin panel carries the Chinese label 諸品經第二卷上二 (Zhu pin jing, volume 2, upper, folio 2). The left margin panel carries a short Mongolian label of about 3–4 words, which I could not read with confidence.</meta>\n<margin><unclear>Mongolian margin label of about 3–4 words (section title and folio number), not transcribed</unclear></margin>\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">An ornamental rectangular border of scrolling foliate and cloud motifs frames the text block. At each end is a narrow margin panel with cloud-scroll corner ornaments: the Chinese label is on the right and the Mongolian label is on the left.</image-desc>\n<unclear>About 22 columns of Classical Mongolian text in Uighur-Mongol vertical script, read left to right. The text is printed in faded red ink and includes several double-punctuation marks (᠄) at column ends. Not transcribed.</unclear>\n<vocab>諸品經, Zhu pin jing, gzungs bsdus, dhāraṇī collection, Beijing Kanjur, Mongolian Kanjur, Uighur-Mongol script, red-ink woodblock print</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 36.729,
+  "usage": {
+   "input": 5,
+   "output": 3017
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The OCR transcribed no Mongolian body text. Only the Chinese margin label was read. Every unread region is kept as unclear and has not been reconstructed.</meta>\n\n<warning>The OCR transcriber reported that the text is printed in faded red ink and the page came as four overlapping strips. The Uighur-Mongol body text could not be read with confidence, so it was not transcribed. This translation therefore carries no body text.</warning>\n\nCollected Sutras <note>original: \"諸品經\" (Zhu pin jing), the Chinese title used in the Beijing Kanjur for the section of collected dhāraṇī texts, in Tibetan <term>gzungs bsdus</term> <gloss>collected dhāraṇīs</gloss></note>, Volume Two, Upper Part, Folio Two\n\n<margin><unclear>Mongolian margin label of about 3–4 words (section title and folio number), not transcribed</unclear></margin>\n\n<note>A large ornamental border frames the text block with scrolling leaf and cloud motifs. At each end is a narrow margin panel with cloud-scroll ornaments in the corners. The Chinese label sits in the right panel and the Mongolian label in the left.</note>\n\n<unclear>About 22 columns of Classical Mongolian text in Uighur-Mongol vertical script, read left to right. The text is printed in faded red ink and includes several double-punctuation marks (᠄) at column ends. Not transcribed.</unclear>\n\n<summary>This is folio two of the upper part of volume two of the Collected Sutras (Zhu pin jing), the dhāraṇī collection of the red-ink Beijing Mongolian Kanjur woodblock edition. Only the Chinese margin label could be read. The roughly 22 columns of Mongolian text were not transcribed.</summary>\n<keywords>Zhu pin jing, Collected Sutras, gzungs bsdus, dhāraṇī collection, Beijing Kanjur, Mongolian Kanjur, Uighur-Mongol script, red-ink woodblock print, folio label, untranscribed text</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 10.808
+ }
+}

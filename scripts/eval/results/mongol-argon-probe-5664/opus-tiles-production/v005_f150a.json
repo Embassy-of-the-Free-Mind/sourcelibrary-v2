@@ -1,0 +1,35 @@
+{
+ "key": "v005_f150a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>150</page-num>\n<header>秘密經第五卷上一百五十</header>\n<meta>A modern red label reading \"299\" is attached in the upper left, outside the printed frame. The right margin, inside the frame, has a Chinese marginal title giving the section and folio: 秘密經第五卷上一百五十 (Secret Scriptures, volume 5, recto, folio 150). The left margin, also inside the frame, has a short Mongolian marginal label.</meta>\n<warning>The page is printed in faded red ink in vertical Uighur-Mongolian script, about 30 lines read from left to right. At this resolution the body text cannot be transcribed reliably, so it has been left untranscribed and not approximated. Only the Chinese marginal title is transcribed.</warning>\n<warning>The page has an even yellowish tone and some foxing in the outer margins. The text block is otherwise undamaged.</warning>\n\n<margin><unclear>short Mongolian marginal label (about 3–4 words, likely section title and folio number), not transcribed</unclear></margin>\n\n<unclear>about 30 vertical lines of Uighur-Mongolian script printed in red ink inside a double-ruled frame, not transcribed</unclear>\n\n<margin>秘密經第五卷上一百五十</margin>\n\n<vocab>秘密經, Secret Scriptures (Tantra section), Mongolian Kanjur, Uighur-Mongolian script, red-ink xylograph, folio 150</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 22.333,
+  "usage": {
+   "input": 5,
+   "output": 1542
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The body text and the Mongolian marginal label were not transcribed in the OCR, so they cannot be translated. Only the Chinese marginal title is translated. A modern red label reading \"299\" sits outside the printed frame and is not part of the original text.</meta>\n\n<margin><unclear>short Mongolian marginal label (about 3–4 words, likely section title and folio number), not transcribed</unclear></margin>\n\n<unclear>about 30 vertical lines of Uighur-Mongolian script printed in red ink inside a double-ruled frame, not transcribed</unclear>\n\n<margin>Secret Scriptures, volume five, recto, folio one hundred fifty <note>original: \"秘密經第五卷上一百五十\". \"Secret Scriptures\" is the Chinese name for the Tantra section of the Buddhist canon. \"Recto\" renders 上, \"upper,\" which marks the front side of the leaf. Bilingual marginal titles like this one helped printers and binders keep the leaves of Mongolian xylograph editions in order.</note></margin>\n\n<summary>This folio, 150 recto, comes from the fifth volume of the Tantra section of a Mongolian Buddhist canon printed in red ink. Its body text was not transcribed, so only the Chinese marginal title, which gives the section, volume and folio number, is translated.</summary>\n<keywords>Mongolian Kanjur, Tantra section, Secret Scriptures, Uighur-Mongolian script, red-ink xylograph, Chinese marginal title, folio 150, Buddhist canon</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.042
+ }
+}

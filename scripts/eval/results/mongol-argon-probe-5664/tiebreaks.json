@@ -1,0 +1,17 @@
+{
+ "argon-high-production/v049_f2a": {
+  "verdict": "wrong text",
+  "by": "job (read both)",
+  "why": "The English is the stock sūtra opening plus the stock arhat-epithet formula, which does follow Derge 1b in order, but with 1,800 monks for 1,250; the same model on the hinted prompt gives a DIFFERENT opening for the same page (a Ratnakūṭa-2 title, 1,250 monks, no epithets), and both name the text the Chinese margin \"大寶積經第二卷\" suggests. Two incompatible reads of one page = recall from the margin, not a reading."
+ },
+ "argon-low-hinted/v001_f280a": {
+  "verdict": "unreadable",
+  "by": "job (read both)",
+  "why": "Word-level loop: ~10 words (činar, činadu, bütüge-) recombined over 37 lines, below the 6-gram loop threshold but a loop by eye; the rubric puts looped fragments under unreadable. Neither reading is a match."
+ },
+ "argon-low-hinted/v005_f150a": {
+  "verdict": "unreadable",
+  "by": "job (read both)",
+  "why": "Looped scholastic enumeration of a few terms; unreadable under the rubric. Neither reading is a match."
+ }
+}

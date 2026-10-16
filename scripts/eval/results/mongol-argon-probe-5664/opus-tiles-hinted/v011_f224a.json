@@ -1,0 +1,35 @@
+{
+ "key": "v011_f224a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The Uighur-Mongol woodblock text is faint and low-contrast (pale red ink on toned paper). At this resolution the letterforms could not be read word by word with enough confidence for an edition. The main text is therefore not transcribed and is marked as one unclear region rather than guessed. The Chinese margin label is legible and is given below. A modern red label reading \"447\" is attached outside the frame at the upper left. It is probably an archival sequence number, not part of the print.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>224</page-num>\n<header>秘密經 第十一卷 上 二百二十四</header>\n<meta>Beijing Mongolian Kanjur woodblock print, rectangular ruled frame. A narrow Mongolian margin label (volume/folio label) is printed inside the left border, and the Chinese section/volume/folio label is inside the right border: 秘密經 (Tantra section), vol. 11, recto (上), folio 224. Modern red label \"447\" outside the frame at upper left. About 33 columns of main text, read left to right.</meta>\n\n<margin><unclear>Mongolian margin label, 1 short column (section/volume/folio label), not transcribed</unclear></margin>\n\n<unclear>about 33 columns of Classical Mongolian text in Uighur-Mongol vertical script (woodblock print), not transcribed: too faint at this resolution for a reliable reading</unclear>\n\n<vocab>Beijing Kanjur, 秘密經, Tantra section, volume 11, folio 224 recto, Classical Mongolian, Uighur-Mongol script</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 34.232,
+  "usage": {
+   "input": 5,
+   "output": 2242
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Beijing Mongolian Kanjur woodblock print, Tantra section, volume 11, folio 224 recto. The main text was not transcribed because the print is too faint, so nothing is translated here. Only the Chinese header label and the structural markers are rendered.</meta>\n\n<warning>The Uighur-Mongol woodblock text is faint and low-contrast (pale red ink on toned paper). At this resolution the transcriber could not read it word by word with enough confidence for an edition. The main text is therefore marked as one unclear region rather than guessed. A modern red label reading \"447\" sits outside the frame at the upper left. It is probably an archival sequence number and not part of the print.</warning>\n\nSecret Scriptures <note>original: \"秘密經\", the Tantra section of the canon</note>, volume eleven, recto, folio two hundred twenty-four\n\n<margin><unclear>Mongolian margin label, 1 short column (section/volume/folio label), not transcribed</unclear></margin>\n\n<unclear>about 33 columns of Classical Mongolian text in Uighur-Mongol vertical script (woodblock print), not transcribed: too faint at this resolution for a reliable reading</unclear>\n\n<summary>This is folio 224 recto of volume 11 in the Tantra section of the Beijing Mongolian Kanjur, the Mongolian translation of the Buddhist canon. The main text was too faint to transcribe, so only the Chinese margin label, which gives the section, volume and folio, can be rendered.</summary>\n<keywords>Beijing Kanjur, Mongolian Kanjur, Tantra section, Secret Scriptures, volume 11, folio 224, Classical Mongolian, Uighur-Mongol script, woodblock print, Buddhist canon</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.732
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "key": "v098_f3a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The whole page is printed in faded red ink on toned paper. I could not reliably read the woodblock Uighur-Mongol script at the resolution of these tiles, so the Mongolian body text is not transcribed: a letter-by-letter reconstruction would probably contain invented readings. Only the Chinese margin label is transcribed. The page needs re-imaging at higher resolution or a reader of Classical Mongolian.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>3</page-num>\n<header>律師戒行經第六卷上三</header>\n<meta>Woodblock print in red ink inside a double-ruled frame. On the right is a narrow margin panel with the Chinese label 律師戒行經第六卷上三 (Vinaya scripture, volume 6, folio 3 recto). On the left is a narrow margin panel with a short Mongolian label in three small groups, probably the Mongolian section and folio designation. The text block has about 28–30 vertical columns. One short column in the right half ends in a punctuation ornament, which marks a section end mid-page.</meta>\n\n<margin><unclear>short Mongolian label in the left margin panel (3 small word-groups, probably section and folio designation), not transcribed</unclear></margin>\n\n<unclear>about 28–30 vertical columns of Classical Mongolian text in Uighur-Mongol script, printed in red ink (Beijing Kanjur, Vinaya section, vol. 6, fol. 3a), not transcribed</unclear>\n\n<vocab>律師戒行經, Vinaya, Beijing Kanjur, Mongolian Kanjur, red-ink print, folio 3a</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 28.724,
+  "usage": {
+   "input": 5,
+   "output": 2273
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<warning>The Mongolian body text of this page was not transcribed. The OCR stage reports faded red ink and low resolution. Only the Chinese margin label could be translated. The page needs re-imaging at higher resolution or a reader of Classical Mongolian.</warning>\n\n<meta>Woodblock print in red ink inside a double-ruled frame. The page number is 3. The Chinese header reads 律師戒行經第六卷上三.</meta>\n\n<margin>Scripture on the Precepts and Conduct of the Vinaya Masters, Volume Six, folio three, front side <note>original: \"律師戒行經第六卷上三\". The Chinese label is a cataloguing aid for the binders and readers of the block print. \"律\" (vinaya) is the Buddhist monastic discipline. \"上\" (upper) marks the front side, or recto, of the folio.</note></margin>\n\n<margin><unclear>short Mongolian label in the left margin panel (3 small word-groups, probably section and folio designation), not transcribed</unclear></margin>\n\n<unclear>about 28–30 vertical columns of Classical Mongolian text in Uighur-Mongol script, printed in red ink (Beijing Kanjur, Vinaya section, vol. 6, fol. 3a), not transcribed</unclear>\n\n<summary>This is folio 3 recto of volume six of the Vinaya, the Buddhist monastic discipline, in a red-ink woodblock edition of the Mongolian Kanjur. Only the Chinese margin label could be read and translated; the Mongolian text was not transcribed.</summary>\n<keywords>Vinaya, monastic discipline, Mongolian Kanjur, Beijing Kanjur, red-ink woodblock print, Uighur-Mongol script, Chinese margin label, folio 3a, volume 6</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 9.826
+ }
+}

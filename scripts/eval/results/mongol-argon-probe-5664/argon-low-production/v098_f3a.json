@@ -1,0 +1,41 @@
+{
+ "key": "v098_f3a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>f. 3a (三)</page-num>\n<warning>Printed in red ink (cinnabar blockprint) in classical vertical Mongolian script (Uighur-Mongolian script) from the Mongolian Kanjur (Vinaya section), with marginal folio markers in both Mongolian (left) and Chinese (right). Following the critical instructions for scripts that cannot be reliably transcribed line-by-line into standard characters without approximation, the vertical Mongolian body text is marked with an unclear tag while the legible marginal apparatus is transcribed.</warning>\n\n<margin>nigen ǰaɣun naiman · ɣurban</margin>\n\n<unclear>28 vertical lines of classical Mongolian text in Uighur-Mongolian script (Vinaya / Dulva section of the Mongolian Kanjur), not transcribed</unclear>\n\n<margin>律師戒行經第六卷上三</margin>\n\n<vocab>律師戒行經, Vinaya, Mongolian Kanjur, ɣurban, ǰaɣun naiman</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 54.619,
+  "usage": {
+   "input_tokens": 21738,
+   "output_tokens": 780,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 28874,
+   "total_tokens": 22518
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Folio 3a (recto) of a cinnabar woodblock print from the Vinaya section of the Mongolian Kanjur. The vertical Mongolian body text is untranscribed in the OCR and preserved in an unclear tag, while the bilingual Mongolian and Chinese marginal folio markers are translated.</meta>\n<warning>Printed in red ink (cinnabar blockprint) in classical vertical Mongolian script (Uighur-Mongolian script) from the Mongolian Kanjur (Vinaya section), with marginal folio markers in both Mongolian (left) and Chinese (right). The vertical Mongolian body text was not transcribed in the OCR and remains untranslated inside an unclear tag.</warning>\n\n<margin>One hundred and eight · three <note>original: \"nigen ǰaɣun naiman · ɣurban\"; Mongolian marginal signature and folio number</note></margin>\n\n<unclear>28 vertical lines of classical Mongolian text in Uighur-Mongolian script (Vinaya / Dulva section of the Mongolian Kanjur), not transcribed</unclear>\n\n<margin>Sutra on the Precepts and Conduct of the Vinaya Master, Fascicle Six, Upper Part, Folio Three <note>original: \"律師戒行經第六卷上三\"; Chinese marginal volume and folio marker</note></margin>\n\n<summary>This page is folio 3a from the sixth fascicle (upper part) of the Vinaya section of the Mongolian Kanjur, printed in red cinnabar ink. The bilingual marginal signatures in Mongolian and Chinese identify the volume number (108), the Chinese title of the Vinaya text, and the folio number (3), while the twenty-eight vertical lines of classical Mongolian body text remain untranscribed.</summary>\n<keywords>Mongolian Kanjur, Vinaya, Dulva, Uighur-Mongolian script, cinnabar blockprint, Buddhist monastic code, bilingual marginalia, Sutra on the Precepts and Conduct of the Vinaya Master</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 18.532
+ }
+}

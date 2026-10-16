@@ -1,0 +1,35 @@
+{
+ "key": "v061_f2a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>諸品經 第二卷</header>\n<page-num>上二</page-num>\n<warning>Woodblock print in red ink in vertical Mongolian (Uyghur-Mongolian) script, pothi format. The Mongolian body text cannot be reliably transcribed character by character, so it is marked as unclear rather than approximated. The Chinese volume and folio label in the right-hand margin panel is transcribed in the metadata tags.</warning>\n<meta>Page is laid out horizontally with the Mongolian lines running vertically, and has an ornamental double frame. The edges of the leaf are stained and slightly damaged, but the text area is clean.</meta>\n\n<margin><unclear>short Mongolian marginal label (volume/folio indication, about 4 words) in left-hand framed panel, not transcribed</unclear></margin>\n\n<unclear>about 22 vertical lines of Mongolian script text, not transcribed</unclear>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Ornamental double-ruled frame around the whole text block, with scrolling cloud and floral scrollwork in the border band. At each end is a narrow framed side panel decorated with cloud-motif corner ornaments. The left panel holds a short Mongolian label and the right panel holds a Chinese label.</image-desc>\n\n<vocab>Mongolian Kanjur, 諸品經 (Various sutras), red-ink woodblock print, pothi format, Uyghur-Mongolian script</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 19.901,
+  "usage": {
+   "input": 5,
+   "output": 1446
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Header (Chinese): 諸品經 第二卷, \"Various Sutras, Volume Two\". Folio label: 上二, \"upper two\", probably the front side of folio 2. The page is laid out horizontally, with the Mongolian lines running vertically inside an ornamental double frame. The edges of the leaf are stained and slightly damaged, but the text area is clean.</meta>\n\n<warning>This is a woodblock print in red ink, in vertical Mongolian (Uyghur-Mongolian) script, in pothi format. The Mongolian body text was not transcribed, so there is no text to translate. Only the Chinese volume and folio label could be rendered.</warning>\n\n<margin><unclear>short Mongolian marginal label (volume/folio indication, about 4 words) in left-hand framed panel, not transcribed</unclear></margin>\n\n<unclear>about 22 vertical lines of Mongolian script text, not transcribed</unclear>\n\n<note>An ornamental double-ruled frame surrounds the whole text block. Its border band is filled with scrolling cloud and floral patterns. At each end is a narrow framed side panel with cloud-motif ornaments in the corners. The left panel holds a short Mongolian label, and the right panel holds a Chinese label giving the volume and folio. Labels in two languages like this are typical of Mongolian Buddhist canonical prints made in Beijing during the Qing period. They helped printers and binders keep the loose leaves in order.</note>\n\n<summary>This is folio 2 (front side) of Volume Two of the \"Various Sutras\" section of a red-ink woodblock edition of the Mongolian Buddhist canon. The Mongolian text was not transcribed, so only the frame, layout, and the Chinese volume and folio label are recorded.</summary>\n<keywords>Mongolian Kanjur, Various Sutras, 諸品經, red-ink woodblock print, pothi format, Uyghur-Mongolian script, Buddhist canon, Chinese marginal label, ornamental frame</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 14.322
+ }
+}

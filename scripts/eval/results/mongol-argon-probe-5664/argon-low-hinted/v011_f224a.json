@@ -1,0 +1,41 @@
+{
+ "key": "v011_f224a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>447</page-num>\n<margin>ᠸᠢ ᠨᠠ ᠶᠠ ‍ᠶᠢᠨ ᠠᠷᠪᠠᠨ ᠨᠢᠭᠡᠳᠦᠭᠡᠷ ᠂ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠬᠣᠷᠢᠨ ᠳᠥᠷᠪᠡᠨ</margin>\n<margin>ᠶᠢ</margin>\nᠪᠠᠷᠢᠮ ‍ᠠ ᠭᠡᠵᠦ ᠥᠭ᠍ᠬᠦᠢ ‍ᠶᠢ ᠂ ᠨᠠᠮᠠᠶᠢ ᠵᠠᠭᠠᠨ ᠥᠭ᠍ᠬᠦ ‍ᠢᠨ\nᠦᠢᠯᠡ ‍ᠳᠦ ᠥᠭ᠍ᠬᠦᠢ ‍ᠶᠢ ᠂ ᠠᠮᠢᠨ ‍ᠤ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠥᠭ᠍ᠬᠦᠢ ᠂\nᠡᠳ᠋ ‍ᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢᠨ ᠬᠤᠪᠢ ‍ᠳᠤ ᠂ ᠬᠣᠶᠠᠷ ‍ᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ‍ᠳᠤ ᠂\nᠬᠣᠶᠠᠭᠤᠯᠠ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ‍ᠳᠤ ᠂ ᠬᠣᠶᠠᠭᠤᠯᠠ ᠪᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ‍ᠳᠤ ᠂\nᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ᠪᠤᠰᠤ ‍ᠶᠢ ᠂ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ\nᠬᠤᠪᠢ ᠪᠤᠰᠤ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ‍ᠶᠢ ᠂ ᠬᠣᠶᠠᠭᠤᠯᠠ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ\nᠬᠤᠪᠢ ‍ᠶᠢ ᠂ ᠬᠣᠶᠠᠭᠤᠯᠠ ᠪᠠ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠬᠤᠪᠢ ᠪᠤᠰᠤ ‍ᠶᠢ ᠂\nᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠬᠦ ‍ᠶᠢ ᠂ ᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠤᠰᠤ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠬᠦ ‍ᠶᠢ ᠂\nᠬᠣᠶᠠᠭᠤᠯᠠ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠬᠦ ‍ᠶᠢ ᠂ ᠬᠣᠶᠠᠭᠤᠯᠠ ᠪᠠ ‍ᠶᠢ\nᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠤᠰᠤ ᠪᠡᠷ ᠦᠢᠯᠡᠳᠬᠦ ‍ᠶᠢ ᠂ ᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠤᠰᠤ\nᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠤᠰᠤ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂\nᠪᠠᠷᠢᠮ ‍ᠠ ‍ᠶᠢ ᠪᠠᠷᠢᠮ ‍ᠠ ᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠤᠰᠤ ‍ᠶᠢ\nᠪᠠᠷᠢᠮ ‍ᠠ ᠪᠤᠰᠤ ᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠦᠢᠯᠡ ‍ᠳᠦ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠂ ᠦᠢᠯᠡ ‍ᠡᠴᠡ\nᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠂ ᠦᠢᠯᠡ ‍ᠳᠦ ᠣᠷᠣᠭᠠᠳ ᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠂ ᠦᠢᠯᠡ ‍ᠡᠴᠡ ᠭᠠᠷᠴᠤ\nᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠂ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠭᠠᠷᠬᠤ ᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠣᠷᠣᠬᠤ\nᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠣᠷᠣᠬᠤ ᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠭᠠᠷᠬᠤ ‍ᠶᠢ\nᠭᠠᠷᠬᠤ ᠬᠡᠮᠡᠨ ᠮᠡᠳᠡᠬᠦ ‍ᠶᠢ ᠂ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢ ᠂ ᠮᠠᠰᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢ ᠂\nᠲᠡᠭᠦᠰ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢ ᠂ ᠪᠦᠬᠦ ‍ᠶᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢ ᠂ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ\nᠦᠢᠯᠡ ‍ᠶᠢ ᠂ ᠮᠠᠰᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠶᠢ ᠂ ᠲᠡᠭᠦᠰ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ\nᠦᠢᠯᠡ ‍ᠶᠢ ᠂ ᠪᠦᠬᠦ ‍ᠶᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠶᠢ ᠂ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ\nᠦᠢᠯᠡ ‍ᠳᠦ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠂ ᠮᠠᠰᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠳᠦ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠂\nᠲᠡᠭᠦᠰ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠳᠦ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠂ ᠪᠦᠬᠦ ‍ᠶᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ\nᠦᠢᠯᠡ ‍ᠳᠦ ᠣᠷᠣᠬᠤ ‍ᠶᠢ ᠂ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠡᠴᠡ ᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠂ ᠮᠠᠰᠢ\nᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠡᠴᠡ ᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠂ ᠲᠡᠭᠦᠰ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ\nᠦᠢᠯᠡ ‍ᠡᠴᠡ ᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠂ ᠪᠦᠬᠦ ‍ᠶᠢ ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ ‍ᠶᠢᠨ ᠦᠢᠯᠡ ‍ᠡᠴᠡ ᠭᠠᠷᠬᠤ ‍ᠶᠢ ᠂\n<margin>秘密經第十一卷上二百二十四</margin>\n<margin>ᠸᠢ ᠨᠠ ᠶᠠ</margin>\n<vocab>ᠸᠢ ᠨᠠ ᠶᠠ, 秘密經, ᠪᠠᠷᠢᠮ ‍ᠠ, ᠠᠮᠤᠷᠯᠢᠭᠤᠯᠬᠤ, ᠦᠢᠯᠡ</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 48.06,
+  "usage": {
+   "input_tokens": 21738,
+   "output_tokens": 2335,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 29006,
+   "total_tokens": 24073
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: enumeration of monastic disciplinary procedures and classifications in the Vinaya</meta><margin>Eleventh volume of the <term>Vinaya</term> <gloss>monastic discipline</gloss>, two hundred and twenty-four <note>original: \"ᠸᠢ ᠨᠠ ᠶᠠ ᠶᠢᠨ ᠠᠷᠪᠠᠨ ᠨᠢᠭᠡᠳᠦᠭᠡᠷ ᠂ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠬᠣᠷᠢᠨ ᠳᠥᠷᠪᠡᠨ\"</note></margin>\n<margin><term>yi</term> <gloss>volume marker syllable</gloss></margin>\ngiving as an <term>barim-a</term> <gloss>offering or gift</gloss>, giving for the sake of instructing me,\ngiving an offering of life,\nfor the portion of an offering of goods, for the portion of an offering of two,\nfor the portion of an offering of both, for the portion of both,\nan offering as a portion and an offering as a non-portion, an offering as a\nnon-portion and an offering as a portion, both as a portion of an offering,\nand both as a non-portion of an offering,\nacting by way of an offering, acting by way of a non-offering,\nacting with both by way of an offering, and acting with both\nby way of a non-offering, knowing an offering as a non-offering,\nknowing a non-offering as an offering,\nknowing an offering as an offering, knowing a non-offering as a\nnon-offering, entering into a <term>üile</term> <gloss>formal monastic act or karma</gloss>, emerging from\nan act, entering into an act and emerging, emerging from an act and\nentering, knowing entering as emerging, knowing emerging as entering,\nknowing entering as entering, knowing emerging as\nemerging, <term>amurlighulkhu</term> <gloss>pacifying or settling a dispute</gloss>, thoroughly pacifying,\nperfectly pacifying, pacifying all, the act of pacifying,\nthe act of thoroughly pacifying, the act of perfectly pacifying,\nthe act of pacifying all, entering into the act of pacifying,\nentering into the act of thoroughly pacifying,\nentering into the act of perfectly pacifying, entering into the act of pacifying all,\nemerging from the act of pacifying, emerging from the act of thoroughly\npacifying, emerging from the act of perfectly pacifying,\nemerging from the act of pacifying all,\n<margin>Secret Sutra, Volume Eleven, Part One, two hundred and twenty-four <note>original: \"秘密經第十一卷上二百二十四\"; Chinese block-carver's folio signature</note></margin>\n<margin><term>Vinaya</term> <gloss>monastic discipline</gloss></margin>\n\n<summary>This folio from the eleventh volume of the Mongolian Vinaya continues a scholastic enumeration of monastic legal categories. It details permutations of offerings, valid and invalid perceptions of formal monastic acts, and the fourfold classification of settling monastic disputes.</summary>\n<keywords>Vinaya, monastic discipline, offerings, formal monastic acts, dispute settlement, Buddhist canon, Mongolian Kanjur</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 21.129
+ }
+}

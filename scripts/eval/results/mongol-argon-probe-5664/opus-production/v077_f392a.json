@@ -1,0 +1,35 @@
+{
+ "key": "v077_f392a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>392</page-num>\n<header>諸品經第十八卷上三百九十二</header>\n<warning>Pothi-format leaf in vertical Classical Mongolian (Uighur-Mongolian) script, printed in faded red-brown ink on speckled, discoloured paper. The Mongolian script cannot be reliably transcribed at this resolution, so the main text block is not transcribed. Only the Chinese marginal label has been read. The image is rotated, with the text columns running vertically across the leaf.</warning>\n<meta>The Chinese margin label on the right gives the section title (諸品經, \"Miscellaneous Sutras\"), volume 18, and leaf 392. The left margin carries a short vertical Mongolian label, probably the matching Mongolian title and foliation. There is a small mark in the upper left corner of the text frame.</meta>\n\n<margin>諸品經第十八卷上三百九十二</margin>\n\n<margin><unclear>short vertical Mongolian marginal label (about 5–6 words, probably title and leaf number), not transcribed</unclear></margin>\n\n<unclear>about 33 vertical lines of Classical Mongolian script (Buddhist sutra text), not transcribed</unclear>\n\n<vocab>諸品經, Miscellaneous Sutras, Mongolian Kanjur, Classical Mongolian script, pothi leaf, volume 18, folio 392</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 15.675,
+  "usage": {
+   "input": 4,
+   "output": 953
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Only the Chinese marginal label was transcribed. The main Classical Mongolian text block and the Mongolian marginal label were not read in the OCR, so they appear here as unclear spans and are not translated.</meta>\n\n<margin>Miscellaneous Sutras, Volume 18, upper side of leaf 392 <note>original: \"諸品經第十八卷上三百九十二\"; 諸品經 <term>Zhupin jing</term> <gloss>\"Sutras of Various Categories\"</gloss> is the Chinese section label used in the Mongolian Kanjur for its miscellaneous sutra division. 上 marks the front (recto) side of the leaf.</note></margin>\n\n<margin><unclear>short vertical Mongolian marginal label (about 5–6 words, probably title and leaf number), not transcribed</unclear></margin>\n\n<unclear>about 33 vertical lines of Classical Mongolian script (Buddhist sutra text), not transcribed</unclear>\n\n<summary>This is the recto of leaf 392 in volume 18 of the Miscellaneous Sutras section of a Mongolian Kanjur, printed in pothi format. Only the Chinese margin label, which gives the section, volume and leaf number, could be read. The Mongolian sutra text on the page was not transcribed.</summary>\n<keywords>Miscellaneous Sutras, Zhupin jing, Mongolian Kanjur, Classical Mongolian script, pothi leaf, volume 18, folio 392, Buddhist canon, bilingual marginal label</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.357
+ }
+}

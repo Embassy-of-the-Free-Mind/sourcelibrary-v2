@@ -1,0 +1,42 @@
+{
+ "key": "v011_f224a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>224</page-num>\n<sig>ᠳᠠ</sig>\n<meta>Beijing Kanjur (1718–1720), Tantra (Dandra / 祕密經) section, Volume 11 (da / 第十一卷), folio 224 recto (上二百二十四); library pagination label 447 at upper left.</meta>\n<warning>Slight fading of the red woodblock ink in a few columns on the right half of the folio; faint handwritten note in the outer right margin.</warning>\n\n<margin>447</margin>\n<margin>ᠳ᠋ᠠᠨᠳᠷᠠ ᠳᠠ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠬᠣᠷᠢᠨ ᠳᠦᠷᠪᠡᠨ ᠳᠡᠭᠡᠷ᠎ᠡ</margin>\n<margin>ᠳᠠ</margin>\n\nᠵᠣᠬᠢᠶᠠᠨ ᠦᠭᠡᠢ ᠦᠢᠯᠡᠳᠦᠭᠴᠢ ᠶᠢᠨ ᠂ ᠰᠡᠳᠬᠢᠯ ᠴᠢᠨᠠᠷ ᠦᠵᠡᠭᠡᠳ ᠢᠨᠤ\nᠡᠨᠡ ᠦᠭᠡᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠣᠯᠪᠠᠰᠤ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠦ ᠃\nᠵᠠᠷᠯᠢᠭ ACA ᠢᠨᠠᠭᠰᠢ ᠦᠵᠡᠭᠡᠳ ᠪᠤᠷᠬᠠᠨ ᠤ ᠵᠢᠷᠦᠬᠡᠨ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠳᠤ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠤ ᠪᠤᠷᠬᠠᠨ ᠤ ᠵᠢᠷᠦᠬᠡᠨ ᠂\nᠡᠨᠳᠡ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠨᠤᠭᠤᠳ ᠢ ᠤᠬᠠᠭᠳᠠᠬᠤᠢ\nᠮᠦᠨ ACA ᠴᠤ ᠪᠤᠰᠤ ᠪᠤᠰᠤᠳ ACA ᠴᠤ ᠪᠤᠰᠤ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠃ ᠰᠡᠳᠬᠢᠯ ᠴᠢᠨᠠᠷ ᠦᠭᠡᠢ\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠃ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠵᠢᠷᠦᠬᠡᠨ\nᠦᠵᠡᠭᠰᠡᠨ ᠂ ᠨᠢᠭᠤᠴᠠ ACA ᠭᠠᠷᠤᠭᠰᠠᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠢᠨᠤ ᠃\nᠭᠠᠵᠠᠷ ᠢᠶᠠᠷ ᠬᠦᠷᠦᠭᠰᠡᠨ ᠢᠨᠤ ᠴᠢᠨᠠᠷ ᠃ ᠨᠢᠭᠤᠴᠠ ACA ᠭᠠᠷᠤᠭᠰᠠᠨ ᠢᠨᠤ ᠴᠢᠨᠠᠷ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠢᠨᠤ ᠮᠠᠰᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂\nᠢᠨᠠᠭᠰᠢ ᠳᠤ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ACA ᠬᠠᠮᠤᠭ ᠦᠵᠡᠭᠳᠡᠯ ᠢ ᠠᠷᠢᠯᠭᠠᠭᠴᠢ ᠂\nᠴᠢᠨᠠᠷ ᠢᠨᠤ ᠳᠤ ᠢᠯᠡ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ACA ᠪᠤᠰᠤ\nᠪᠣᠯᠪᠠᠰᠤ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ACA ᠬᠠᠭᠠᠴᠠᠭᠰᠠᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ\nᠣᠷᠣ ACA ᠴᠤ ᠠᠩᠭᠢᠳᠠ ᠪᠤᠰᠤ ACA ᠬᠠᠮᠤᠭ ᠦᠢᠯᠡᠳᠦᠭᠴᠢ ᠃ ᠬᠣᠣᠰᠠᠨ ᠴᠢᠨᠠᠷ\nᠰᠡᠳᠬᠢᠯ ACA ᠭᠠᠷᠤᠭᠰᠠᠨ ACA ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠃ ᠬᠠᠮᠤᠭ ACA\nᠪᠤᠷᠬᠠᠨ ᠤ ACA ᠭᠠᠷᠤᠭᠰᠠᠨ ᠢᠨᠤ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠃ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ\nᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠴᠢᠨᠠᠷ ᠢᠨᠤ ᠮᠠᠰᠢ ᠠᠷᠢᠭᠤᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠃ ᠦᠨᠡᠬᠡᠷ ᠲᠡᠭᠦᠰ\nᠡᠭᠦᠨ ACA ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠢᠨᠤ ᠦᠭᠡᠢ ᠃ ᠨᠢᠭᠤᠴᠠ ᠴᠢᠨᠠᠷ ACA\nᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠃ ᠰᠡᠳᠬᠢᠯ ACA ᠭᠠᠷᠤᠭᠰᠠᠨ ACA ᠪᠤᠰᠤ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ACA ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠤᠨ ᠴᠢᠨᠠᠷ\nᠦᠨᠡᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠢᠨᠤ ᠃ ᠮᠠᠰᠢ ᠠᠷᠢᠭᠤᠨ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ\nᠣᠷᠣᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠢᠨᠤ ᠃ ᠦᠨᠡᠬᠡᠷ ACA ᠰᠡᠳᠬᠢᠯ ACA ᠴᠤ ᠪᠤᠰᠤ\nᠰᠡᠳᠬᠢᠯ ᠦᠭᠡᠢ ᠂ ᠦᠭᠡ ᠦᠭᠡᠢ ᠨᠣᠮ ᠤᠬᠠᠭᠠᠨ ᠦᠭᠡᠢ ᠂ ᠴᠢᠨᠠᠷ\nᠴᠢᠨᠠᠷ ᠢᠨᠤ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠢ\nᠴᠢᠨᠠᠷ ACA ᠭᠡᠲᠦᠯᠦᠭᠰᠡᠨ ᠤ ᠪᠡᠯᠭᠡ ᠃ ᠰᠡᠳᠬᠢᠯ ᠦᠭᠡᠢ ACA ᠭᠠᠷᠤᠭᠰᠠᠨ\n\n<margin>祕密經第十一卷上二百二十四</margin>\n<margin><unclear>ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ</unclear></margin>\n\n<vocab>ᠳ᠋ᠠᠨᠳᠷᠠ, ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ, ᠪᠤᠷᠬᠠᠨ, ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ, ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ, ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ, ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ, ᠬᠣᠣᠰᠠᠨ ᠴᠢᠨᠠᠷ, ᠰᠡᠳᠬᠢᠯ, ᠨᠢᠭᠤᠴᠠ, 祕密經</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 287.222,
+  "usage": {
+   "input_tokens": 22603,
+   "output_tokens": 19742,
+   "thinking_tokens": 17334,
+   "cache_read_tokens": 29605,
+   "total_tokens": 42345
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Beijing Kanjur, 1718 to 1720, <term>Dandra</term> <gloss>Tantra</gloss> or Secret Scriptures <note>original: \"祕密經\"</note> section, Volume 11, <term>da</term> <gloss>eleventh volume; original: \"第十一卷\"</gloss>, folio 224 recto <note>original: \"上二百二十四\"</note>; library pagination label 447 at upper left. Continues from previous page.</meta>\n<warning>Slight fading of the red woodblock ink in a few columns on the right half of the folio; faint handwritten note in the outer right margin.</warning>\n\n<margin>447</margin>\n<margin><term>Dandra</term> <gloss>Tantra</gloss>, volume <term>Da</term> <gloss>eleven</gloss>, two hundred twenty-four, upper <note>recto; original: \"dandra da qoyar jagun qorin dörben degere\"</note></margin>\n<margin><term>Da</term> <gloss>volume eleven</gloss></margin>\n\nof the uncontrived agent <note>original: \"jokiyan ügei üiledügči-yin\"; continues a clause from folio 223 verso</note>, having beheld the <term>sedkil činar</term> <gloss>nature of mind; cittatā</gloss>,\nwhen this is shown as free of concrete existence, it belongs to the <term>Ilaju Tegüs Nögčigsen</term> <gloss>Victoriously Transcendent Lord; Bhagavān</gloss>.\nWhen beheld prior to the spoken word, it is the heart-essence of the <term>Burqan</term> <gloss>Buddha; Awakened One</gloss>,\nand beyond the <term>bodisaduva</term> <gloss>bodhisattva; awakening being</gloss>, it is the heart-essence of the Buddha;\nherein, all phenomena are to be understood\nas taught to arise neither from self nor from another <note>a foundational Madhyamaka and tantric formula denying inherent production from self or other</note>. Devoid of an intrinsic mind-nature\nis the Victoriously Transcendent Lord. The heart-essence of the <term>Tegünčilen Iregsen</term> <gloss>Thus-Gone One; Tathāgata</gloss>,\nwhich is beheld, has arisen from the <term>niguča</term> <gloss>secret; mystery</gloss>.\nIts nature is that which is reached through the spiritual grounds <note>translating \"gajar\", corresponding to Sanskrit \"bhūmi\"</note>. The nature of that which has arisen from the secret\nhas been revealed, and the <term>nom-un činar</term> <gloss>true nature of phenomena; dharmatā</gloss> of all things has been thoroughly revealed;\nthrough accomplishment on this side <note>in proximate practice</note>, it purifies all appearances,\nand becomes manifest within its own nature; although it is not other than the manifestation of all phenomena,\nit is free from all phenomena, and <term>belge bilig</term> <gloss>primordial wisdom; jñāna</gloss>,\nbeing not separate even from the sphere of objects, is the maker of all things. <term>Qoosan činar</term> <gloss>emptiness; śūnyatā</gloss>,\nhaving arisen from <term>sedkil</term> <gloss>mind; citta</gloss>, manifests all phenomena. Above all,\nits arising from the Buddha has been shown. The Victoriously Transcendent\nnature has become utterly pure. Truly perfect,\nthere is nothing accomplished apart from this. From the secret nature\nit has come into being and been accomplished. Accomplished not as something other than what has arisen from mind,\nand accomplished through what is revealed, the nature of all phenomena\nhas become the truth. The utterly pure true nature of phenomena\nhas become the foundational abode. In ultimate reality, it is not from mind,\nit is without mind, without words, and without conceptual cognition of phenomena; its very nature\nhaving been revealed, it is the mark of having transcended the conditional nature\nof all phenomena. Having arisen from non-mind <note>sentence continues onto folio 224 verso</note>\n\n<margin>Secret Scriptures <note>original: \"祕密經\", the Chinese title for the Tantra section</note>, Volume Eleven, upper <note>recto</note>, two hundred twenty-four <note>original: \"祕密經第十一卷上二百二十四\"</note></margin>\n<margin><unclear>ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ</unclear></margin>\n\n<summary>This folio recto from Volume 11 of the Tantra section of the Beijing Kanjur expounds the nature of mind, the heart-essence of the Tathāgata, and primordial wisdom. It teaches that all phenomena are empty of self-nature, arise neither from self nor from other, and are grounded in the pure secret nature beyond conceptual thought and verbal expression.</summary>\n<keywords>Beijing Kanjur, Classical Mongolian, Tantra, heart-essence of the Buddha, tathagatagarbha, nature of mind, dharmata, primordial wisdom, emptiness, non-conceptual reality</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 144.93
+ }
+}

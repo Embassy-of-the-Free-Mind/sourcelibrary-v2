@@ -1,0 +1,35 @@
+{
+ "key": "v001_f280a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>281</page-num>\n<header>秘密經第一卷上二百八十一</header>\n<warning>The image is rotated 90°. The page is a red-ink woodblock print in classical Mongolian (Uyghur-Mongolian) vertical script, in pothi (long, narrow leaf) format. The ink is faded pink, and some areas near the top edge are stained. I can't reliably transcribe the Mongolian text at this resolution, so I've marked the whole body unclear and haven't reconstructed it. The Chinese margin label reads 秘密經第一卷上二百八十一, which I've put in the header tag. It names the Tantra (秘密經) section, volume 1, and gives the leaf number 281 (二百八十一). The 上 most likely marks the recto. A modern red label at the top left reads \"559\", which is probably a sequential image or archive number.</warning>\n<margin>559</margin>\n<margin><unclear>short vertical marginal label in Mongolian script, probably giving the section, volume and leaf number, not transcribed</unclear></margin>\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A double-ruled red frame runs around the text block. A narrow panel at each short end is separated off by vertical rules. The left panel holds a small Mongolian marginal label and the right panel holds the Chinese label.</image-desc>\n<unclear>about 30 lines of printed classical Mongolian vertical script in red ink, not transcribed</unclear>\n<meta>Woodblock print in red ink, in the style of the Beijing Mongolian Kanjur. A number of tiny circles appear at the start of the text block, and doubled dots (Mongolian punctuation) mark the ends of sections.</meta>\n<vocab>Mongolian Kanjur, 秘密經 (Tantra section), xylograph, pothi format, red-ink print, Uyghur-Mongolian script</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 26.537,
+  "usage": {
+   "input": 5,
+   "output": 1319
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Header in the Chinese margin label: \"Secret Scriptures <note>original: \"秘密經\", the Tantra section of the Kanjur</note>, volume one, recto, leaf two hundred eighty-one.\" The page is a red-ink woodblock print in classical Mongolian vertical script, in pothi format. The Mongolian body text was not transcribed, so it is not translated here.</meta>\n\n<margin>559</margin>\n\n<margin><unclear>short vertical marginal label in Mongolian script, probably giving the section, volume and leaf number, not transcribed</unclear></margin>\n\n<note>A double-ruled red frame runs around the text block. A narrow panel at each short end is set off by vertical rules. The left panel holds a small marginal label in Mongolian, and the right panel holds the Chinese label giving the section and leaf number. This layout is typical of the Beijing xylograph editions of the Mongolian Kanjur, the Buddhist canon translated into Mongolian.</note>\n\n<unclear>about 30 lines of printed classical Mongolian vertical script in red ink, not transcribed</unclear>\n\n<summary>This is leaf 281 (recto) of the first volume of the Tantra section of a red-ink Mongolian Kanjur woodblock print. Only the frame and the marginal labels can be described. The Mongolian body text was not transcribed and so cannot be translated.</summary>\n<keywords>Mongolian Kanjur, Tantra section, secret scriptures, xylograph, woodblock print, red-ink print, pothi format, Uyghur-Mongolian script, Beijing edition, Buddhist canon</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.164
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "key": "v001_f280a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>559</page-num>\n<warning>Red woodblock print is faded and low-contrast against the paper in several columns; column 16 contains an unprinted blank interval in the middle of the line.</warning>\n<margin>ᠨᠢᠭᠤᠴᠠ ᠲᠡᠷᠢᠭᠦᠨ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠨᠠᠶᠠᠨ ᠳᠡᠭᠡᠳᠦ</margin>\n<margin>秘密經第一卷上二百八十</margin>\nᠳᠤᠷ ᠬᠤᠪᠢᠯᠭᠠᠬᠤ ᠂ ᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠢ ᠣᠷᠣᠰᠢᠭᠤᠯᠬᠤᠢ ᠰᠡᠳᱠᠢᠯ ᠦᠨ\nᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠄\nᠰᠠᠶᠢᠨ ᠦᠨ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠤᠭᠠᠳ ᠳᠤ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ\nᠰᠠᠶᠢᠲᠤᠷ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠂ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠪᠣᠯᠤᠮᠤᠢ\nᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠢ ᠣᠯᠤᠭᠰᠠᠨ ᠂ ᠬᠠᠮᠤᠭ ᠪᠤᠷᠬᠠᠨ ᠤ ᠴᠢᠨᠠᠷ ᠲᠤ ᠂\nᠳᠡᠭᠡᠳᠦ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠂ ᠬᠠᠮᠤᠭ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠴᠢᠨᠠᠷ ᠰᠡᠳᱠᠢᠯ\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠪᠤᠶᠤ\nᠴᠢᠨᠠᠷ ᠦᠭᠡᠢ ᠂ ᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠢ ᠣᠷᠣᠰᠢᠭᠤᠯᠤᠭᠰᠠᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠄\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠂ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠴᠢᠨᠠᠷ ᠢ ᠣᠯᠤᠭᠰᠠᠨ\nᠨᠣᠮ ᠤ ᠴᠢᠨᠠᠷ ᠂ ᠬᠠᠮᠤᠭ ᠪᠤᠷᠬᠠᠨ ᠤ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠂ ᠳᠤ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ\nᠬᠠᠮᠤᠭ ᠢ ᠮᠡᠳᠡᠭᠴᠢ ᠂ ᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠄\nᠪᠣᠯᠠᠢ ᠬᠡᠮᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠤᠮᠤᠢ\nᠢᠯᠡ ᠪᠣᠯᠭᠠᠨ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂ ᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠢ ᠣᠨᠣᠭᠰᠠᠨ ᠪᠤᠶᠤ\nᠬᠠᠮᠤᠭ ᠲᠡᠭᠦᠰ ᠴᠢᠨᠠᠷ ᠂ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠤᠭᠰᠠᠨ\nᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠬᠡᠮᠡᠨ\nᠬᠠᠮᠤᠭ ᠢ ᠮᠡᠳᠡᠭᠴᠢ ᠂ ᠂ ᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠲᠤ\nᠵᠢᠷᠭᠤᠭᠠᠨ ᠴᠢᠨᠠᠷ ᠂ ᠬᠠᠮᠤᠭ ᠪᠤᠷᠬᠠᠨ ᠤ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠢ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ\nᠬᠣᠣᠰ ᠦᠭᠡᠢ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂\nᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠂ ᠦᠨᠡᠨ ᠴᠢᠨᠠᠷ ᠲᠤ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠪᠣᠯᠤᠮᠤᠢ\nᠪᠣᠯᠠᠢ ᠂ ᠬᠠᠮᠤᠭ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠨᠢᠭᠤᠴᠠ ᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠤᠶᠤ\nᠢᠯᠡ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠂ ᠬᠠᠮᠤᠭ ᠪᠤᠷᠬᠠᠨ ᠤ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠲᠤ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠂\nᠡᠭᠦᠨ ᠦ ᠴᠢᠨᠠᠷ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠪᠤᠶᠤ\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠴᠢᠨᠠᠷ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠂\nᠰᠠᠶᠢᠲᠤᠷ ᠴᠢᠨᠠᠷ ᠢ ᠣᠯᠤᠭᠰᠠᠨ ᠂ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠤᠮᠤᠢ ᠂\n<vocab>ᠨᠢᠭᠤᠴᠠ, ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ, ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ, ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ, ᠰᠡᠳᱠᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ, 秘密經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 281.927,
+  "usage": {
+   "input_tokens": 22700,
+   "output_tokens": 18251,
+   "thinking_tokens": 15991,
+   "cache_read_tokens": 29365,
+   "total_tokens": 40951
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page; page 559, Mongolian woodblock print</meta>\n<warning>Red woodblock print is faded and low-contrast against the paper in several columns; column 16 contains an unprinted blank interval in the middle of the line.</warning>\n<margin><term>Niγuča</term> <gloss>Secret Scripture</gloss>, First Volume, two hundred and eighty, upper <note>recto folio marker in Mongolian: \"ᠨᠢᠭᠤᠴᠠ ᠲᠡᠷᠢᠭᠦᠨ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ ᠨᠠᠶᠠᠨ ᠳᠡᠭᠡᠳᠦ\"</note></margin>\n<margin>Secret Scripture, First Fascicle, upper part, folio two hundred and eighty <note>original Chinese marginal signature: \"秘密經第一卷上二百八十\"</note></margin>\nto transform into, and of the mind that establishes the <term>sedkil-ün činar</term> <gloss>nature of mind</gloss>,\nthe <term>tegünčilen iregsen</term> <gloss>Thus-Come One, Sanskrit Tathāgata</gloss>, who has revealed the <term>nom-un činar</term> <gloss>true nature of phenomena, Sanskrit dharmatā</gloss> of all things:\nhaving become the nature of goodness and abiding therein, the nature of all phenomena\nis well-established, and is the <term>belge bilig</term> <gloss>primordial wisdom, Sanskrit jñāna</gloss> of the Thus-Come One.\nHaving attained the nature of mind, within the nature of all Buddhas,\nthe supreme primordial wisdom, the essential mind of all Thus-Come Ones,\nthe <term>ilaju tegüs nögčigsen</term> <gloss>Victoriously Transcended One, Sanskrit Bhagavān</gloss>, is the nature of all phenomena.\nWithout inherent nature <note>devoid of independent self-existence, Sanskrit svabhāva</note>, having established and revealed the nature of mind:\nthe Victoriously Transcended One, who has attained the nature of the Thus-Come One,\nthe nature of phenomena, abiding in the primordial wisdom of all Buddhas,\nthe All-Knowing One, who has revealed the nature of mind:\nthus it is declared, and it is the nature of all Thus-Come Ones.\nMade manifest and revealed, it is the realization of the nature of mind.\nThe all-perfect nature, having become the nature of primordial wisdom,\ntranscendently victorious, is called the nature of all phenomena.\nThe All-Knowing One, <note>unprinted blank interval in the woodblock between two punctuation marks</note> within the nature of mind,\nhaving established the six natures <note>the six elements or six sense-bases in Buddhist tantric cosmology</note> and the primordial wisdom of all Buddhas,\nnon-dual primordial wisdom, which has revealed the nature of all phenomena,\nthe nature of mind, abides in the true nature <note>ultimate reality, Sanskrit bhūtakoṭi</note>.\nSo it is, for it has revealed the <term>niγuča</term> <gloss>secret</gloss> nature of all Thus-Come Ones.\nHaving become manifest, and abiding in the primordial wisdom of all Buddhas,\nthe nature of this is the nature of all phenomena.\nThe Victoriously Transcended One, in whom the nature of all Thus-Come Ones abides,\nhaving thoroughly attained the true nature, is the nature of primordial wisdom,\n\n<summary>This folio from the first volume of the Mongolian Kanjur tantra section, identified in the bilingual Mongolian and Chinese marginalia as the Secret Scripture, expounds the identity between the nature of mind, the true nature of all phenomena, and the non-dual primordial wisdom of all Buddhas and Thus-Come Ones.</summary>\n<keywords>Secret Scripture, Guhyasamaja, Mongolian Kanjur, nature of mind, dharmata, primordial wisdom, Tathagata, Bhagavan, non-dual wisdom, Esoteric Buddhism</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 109.199
+ }
+}

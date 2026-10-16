@@ -1,0 +1,41 @@
+{
+ "key": "v066_f2a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>nigen qoyar / 二</page-num>\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Red woodblock-printed double-line rectangular frame with a floral scrollwork border enclosing the text panel and marginal cartouches.</image-desc>\n<margin>ᠨᠢᠭᠡ ᠳ᠋ᠦᠭᠡᠷ ᠨᠢᠭᠡᠨ ᠬᠤᠶᠠᠷ</margin>\nᠸᠴᠢᠷ ᠎ᠠ ᠪᠠᠨᠢ ᠎ᠶᠢᠨ ᠂ ᠴᠢᠭᠤᠯᠭᠠᠨ\nᠨᠢ ᠴᠢᠨᠦ ᠪᠢᠰᠢᠷᠡᠯ ᠎ᠢᠶᠡᠷ\nᠭᠦᠨ ᠎ᠡ ᠮᠦᠷᠭᠦᠨ ᠨᠠᠮᠠᠨᠴᠢᠯᠠᠮᠤᠢ ᠃\nᠸᠴᠢᠷ ᠎ᠠ ᠪᠠᠨᠢ ᠂ ᠴᠢᠨᠦ\nᠢᠷᠠᠭᠤ ᠎ᠠ ᠠᠶᠠᠯᠭᠤ ᠵᠠᠷᠯᠢᠭ ᠨᠢ\nᠨᠠᠷᠠᠨ ᠎ᠤ ᠭᠡᠷᠡᠯ ᠮᠡᠲᠦ ᠄\nᠮᠠᠨ ᠎ᠤ ᠰᠡᠳᠬᠢᠯ ᠎ᠢ ᠂ \nᠭᠡᠶᠢᠭᠦᠯ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠎ᠦ\nᠵᠠᠷᠯᠢᠭ ᠄ ᠨᠠᠢ ᠎ᠦᠭᠡᠢ ᠶᠡᠬᠡ\nᠨᠢᠭүүлᠡᠰᠬᠦᠢ ᠪᠦᠷᠢᠨ ᠲᠡᠭᠦᠰ ᠂\nᠢᠯᠡᠳᠡ ᠰᠡᠷᠡᠭᠦᠯᠦᠭᠴᠢ ᠪᠠᠭᠰᠢ\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ ᠎ᠦ ᠂ ᠵᠠᠷᠯᠢᠭ\nᠨᠢᠭᠡᠨ ᠶᠡᠬᠡ ᠨᠠᠷᠠᠨ ᠭᠡᠷᠡᠯ ᠄\nᠨᠢᠰᠪᠠᠨᠢᠰ ᠎ᠤᠨ ᠬᠠᠷᠠᠩᠭᠤᠢ ᠎ᠶᠢ\nᠠᠷᠢᠯᠭᠠ ᠎ᠠ ᠂ ᠵᠦᠭ ᠎ᠦᠨ ᠲᠡᠳᠡ ᠂\nᠭᠤᠷᠪᠠᠨ ᠮᠢᠩᠭᠠᠨ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠎ᠳᠦ\nᠮᠠᠨᠳᠠᠯ ᠳᠡᠯᠭᠡᠷᠡᠨ ᠂ ᠴᠢᠭᠤᠯᠭᠠᠨ ᠪᠦᠭᠦᠳᠡ\nᠮᠡᠳᠡᠭᠡ ᠦᠭᠡᠢ ᠂ ᠨᠠᠮᠠᠢ ᠵᠢᠷᠭᠠᠭᠤᠯ\nᠴᠢᠭᠤᠯᠭᠠᠨ ᠎ᠤ ᠪᠢᠰᠢᠷᠡᠯ ᠎ᠢᠶᠡᠷ ᠂\nᠭᠦᠨ ᠎ᠡ ᠮᠦᠷᠭᠦᠨ ᠨᠠᠮᠠᠨᠴᠢᠯᠠᠮᠤᠢ\nᠴᠢᠭᠤᠯᠭᠠᠨ ᠎ᠤ ᠨᠦᠬᠦᠳ ᠎ᠦᠨ ᠠᠬᠠᠯᠠᠭᠴᠢ ᠂\n<margin>諸品經第七卷上 二</margin>\n<vocab>ᠸᠴᠢᠷ ᠎ᠠ ᠪᠠᠨᠢ, Vajrapani, ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠦᠭᠴᠢᠭᠰᠡᠨ, Bhagavan, ᠨᠢᠰᠪᠠᠨᠢᠰ, klesha, ᠭᠤᠷᠪᠠᠨ ᠮᠢᠩᠭᠠᠨ ᠶᠢᠷᠲᠢᠨᠴᠦ, trichiliocosm, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 51.074,
+  "usage": {
+   "input_tokens": 21842,
+   "output_tokens": 1467,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 28983,
+   "total_tokens": 23309
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Page number: nigen qoyar / 二 (First volume, folio two)</meta>\n<note>Red woodblock-printed double-line rectangular frame with a floral scrollwork border enclosing the text panel and marginal cartouches.</note>\n<margin>First volume, folio two <note>original: \"ᠨᠢᠭᠡ ᠳ᠋ᠦᠭᠡᠷ ᠨᠢᠭᠡᠨ ᠬᠤᠶᠠᠷ\"</note></margin>\nOf <term>Vajrapani</term> <gloss>the Thunderbolt-Holder, a protective bodhisattva embodying the power of all Buddhas</gloss>, the assembly,\nthrough devotion to you,\ndeeply bows and confesses in reverence.\nO <term>Vajrapani</term> <gloss>Thunderbolt-Holder</gloss>, your\nmelodious voice and decree\nare like the light of the sun:\nour minds,\nilluminate them! The decree of the <term>Bhagavan</term> <gloss>the Victoriously Passed Beyond, an epithet of the Buddha; Mongolian: ilaju tegüs nögčigsen</gloss>:\nendowed with peerless, great\ncompassion in full perfection,\nthe manifestly awakening teacher,\nthe decree of the <term>Bhagavan</term> <gloss>Blessed One</gloss>,\nis a single great sunlight:\ndispel the darkness of <term>klesha</term> <gloss>mental afflictions and defilements; Mongolian: nisvanis</gloss>,\nand in those directions,\nthroughout the <term>trichiliocosm</term> <gloss>the three-thousandfold great thousand world system of Buddhist cosmology; Mongolian: gurban minggan yirtinčü</gloss>,\nmay the <term>mandala</term> <gloss>sacred cosmogram or sphere of awakening</gloss> flourish; without the entire assembly\neven knowing, grant me bliss!\nThrough the devotion of the assembly,\nwe deeply bow and confess in reverence;\nO leader of the companions of the assembly,\n<margin>Scripture of Various Chapters, Scroll Seven, Part One, Folio Two <note>original: \"諸品經第七卷上 二\"</note></margin>\n\n<summary>A devotional Buddhist hymn in Mongolian addressed to the bodhisattva Vajrapani, praising his enlightening speech and the compassionate decree of the Bhagavan as a great sun that dispels the darkness of mental afflictions across the three-thousandfold universe.</summary>\n<keywords>Vajrapani, Bhagavan, klesha, mental afflictions, trichiliocosm, mandala, Buddhist liturgy, Mongolian woodblock print, Scripture of Various Chapters</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 24.121
+ }
+}

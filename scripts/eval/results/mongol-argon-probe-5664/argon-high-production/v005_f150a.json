@@ -1,0 +1,40 @@
+{
+ "key": "v005_f150a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Faded red woodblock print (xylograph) of a Mongolian Kanjur pothi folio; the main body text (30 vertical lines) and left marginalia are in vertical Classical Mongolian (Hudum) script and cannot be reliably transcribed, while the right margin contains vertical Chinese foliation.</warning>\n<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>299</page-num>\n<meta>Pothi-style leaf (folio 150a, recto) from Volume 5 of the Tantra (秘密經) section of the woodblock edition of the Mongolian Kanjur, printed in red ink within a double-ruled border with left and right marginal ear-boxes.</meta>\n\n<margin><unclear>1 vertical line of faded Classical Mongolian marginal foliation, not transcribed</unclear></margin>\n<margin>秘密經第五卷上一百五十</margin>\n<unclear>30 vertical lines of Classical Mongolian text, not transcribed</unclear>\n\n<vocab>秘密經, 第五卷, 上一百五十, Mongolian Kanjur, Tantra</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 113.29,
+  "usage": {
+   "input_tokens": 19477,
+   "output_tokens": 6826,
+   "thinking_tokens": 6441,
+   "cache_read_tokens": 13808,
+   "total_tokens": 26303
+  },
+  "tool_calls": [
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Faded red woodblock print of a Mongolian Kanjur folio in palm-leaf format; the main body text of 30 vertical lines and the left marginalia are in vertical Classical Mongolian script and cannot be reliably transcribed, while the right margin contains vertical Chinese foliation.</warning>\n<meta>Recto of folio 150, a <term>pothi</term> <gloss>palm-leaf style</gloss> leaf from Volume 5 of the <term>Tantra</term> <gloss>esoteric scripture</gloss> section of the woodblock edition of the Mongolian <term>Kanjur</term> <gloss>translated words of the Buddha</gloss>, printed in red ink within a double-ruled border with left and right marginal ear-boxes.</meta>\n\n<margin><unclear>1 vertical line of faded Classical Mongolian marginal foliation, not transcribed</unclear></margin>\n<margin>Esoteric Scripture <note>original: \"秘密經\", the Chinese marginal title corresponding to the <term>Tantra</term> <gloss>esoteric ritual and liturgical texts</gloss> division of the Mongolian <term>Kanjur</term> <gloss>canon of translated Buddhist scriptures</gloss></note>, Volume 5 <note>original: \"第五卷\"</note>, recto, folio 150 <note>original: \"上一百五十\"; the character for upper marks the recto side of the leaf</note></margin>\n<unclear>30 vertical lines of Classical Mongolian text, not transcribed</unclear>\n\n<summary>This page is the recto side of folio 150 from Volume 5 of the Tantra division of the woodblock Mongolian Kanjur, printed in red ink. The thirty vertical lines of Classical Mongolian main text and the left Mongolian marginal signature are too faded to transcribe, while the right margin preserves the Chinese foliation recording Esoteric Scripture, Volume 5, recto 150.</summary>\n<keywords>Mongolian Kanjur, Tantra, Esoteric Scripture, Volume 5, folio 150 recto, Classical Mongolian, Chinese foliation, woodblock print, pothi leaf</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 68.617
+ }
+}

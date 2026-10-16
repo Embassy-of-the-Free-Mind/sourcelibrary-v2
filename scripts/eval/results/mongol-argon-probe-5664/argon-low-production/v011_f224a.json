@@ -1,0 +1,41 @@
+{
+ "key": "v011_f224a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>447</page-num>\n<warning>Traditional vertical Mongolian (Uighur-Mongolian) script in red xylographic blockprint (Peking Kanjur / Dandjur format) with Chinese and Mongolian marginal volume/folio markers; main body text consists of 31 vertical lines of classical Mongolian Buddhist scripture that cannot be reliably transcribed line-by-line into Unicode/Latin without character-level errors.</warning>\n<margin>᠑᠑ ‍ᠦᠨ ᠎ᠠ ᠨᠢᠭᠤᠴᠠ ᠴᠢᠨᠠᠳᠤ ᠬᠢᠵᠠᠭᠠᠷ ‍ᠠ ᠬᠦᠷᠦᠭᠰᠡᠨ</margin>\n<margin>祕密經第十一卷上二百二十四</margin>\n\n<unclear>31 vertical lines of classical Mongolian blockprint text in red ink, not transcribed</unclear>\n\n<vocab>祕密經, ᠨᠢᠭᠤᠴᠠ, Mongolian Kanjur, xylograph, Buddhist sutra</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 65.272,
+  "usage": {
+   "input_tokens": 12242,
+   "output_tokens": 953,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 38514,
+   "total_tokens": 13195
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Page 447 of a red xylographic blockprint edition of the Mongolian Kanjur or Dandjur. Only the bilingual Mongolian and Chinese marginal folio markers are transcribed in the OCR; the thirty-one vertical lines of the main body text were not transcribed.</meta>\n<warning>Traditional vertical Mongolian (Uighur-Mongolian) script in red xylographic blockprint (Peking Kanjur / Dandjur format) with Chinese and Mongolian marginal volume/folio markers; main body text consists of 31 vertical lines of classical Mongolian Buddhist scripture that cannot be reliably transcribed line-by-line into Unicode/Latin without character-level errors.</warning>\n<margin>11, Upper part: Having Reached the Other Shore of the Secret <note>original: \"᠑᠑ ᠦᠨ ᠠ ᠨᠢᠭᠤᠴᠠ ᠴᠢᠨᠠᠳᠤ ᠬᠢᠵᠠᠭᠠᠷ ᠠ ᠬᠦᠷᠦᠭᠰᠡᠨ\"; a Mongolian marginal title and volume marker for Volume 11, first section, of the Tantra or Secret Perfection section of the Kanjur</note></margin>\n<margin>Secret Sutra, Volume 11, Upper Part, Folio 224 <note>original: \"祕密經第十一卷上二百二十四\"; Chinese blockprint folio marker corresponding to the Mongolian marginal title</note></margin>\n\n<unclear>31 vertical lines of classical Mongolian blockprint text in red ink, not transcribed</unclear>\n\n<summary>This folio from Volume 11 (Upper Part, Folio 224) of the Secret Sutra section of the Peking Mongolian Kanjur features bilingual Mongolian and Chinese marginal markers. The thirty-one vertical lines of classical Mongolian scripture in red blockprint are not transcribed in the source OCR.</summary>\n<keywords>Mongolian Kanjur, Secret Sutra, Tantra, Peking blockprint, xylograph, Buddhist scripture, bilingual marginalia, Uighur-Mongolian script</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 25.743
+ }
+}

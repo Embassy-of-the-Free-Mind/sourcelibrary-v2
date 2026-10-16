@@ -1,0 +1,35 @@
+{
+ "key": "v077_f392a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The image is rotated 90° (the text columns appear as horizontal lines), and the ink is very faint and low-contrast on mottled paper. At the available resolution the Uighur-Mongol letterforms cannot be read reliably, so the main text is not transcribed rather than guessed. A higher-resolution or contrast-enhanced scan, correctly rotated, is needed.</warning>\n<scan-quality>poor</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>392</page-num>\n<header>諸品經第十八卷上三百九十二</header>\n<meta>Woodblock print folio in a double-ruled frame. A Chinese section/volume/folio label in the side margin reads 諸品經第十八卷上三百九十二 (Miscellaneous sutras, vol. 18, upper, folio 392). A narrow framed margin strip on the opposite side holds a short Mongolian label of about 5 words, which is not legible at this resolution.</meta>\n<margin><unclear>short Mongolian marginal label (about 5 words), not transcribed</unclear></margin>\n\n<unclear>about 27 columns of Classical Mongolian text in Uighur-Mongol script, too faint and low-resolution to transcribe reliably; not transcribed</unclear>\n\n<vocab>諸品經, Beijing Kanjur, Classical Mongolian, folio 392, volume 18</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 15.126,
+  "usage": {
+   "input": 4,
+   "output": 830
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<warning>The main text of this page was not transcribed. The image is rotated 90 degrees, the ink is very faint, and the resolution is too low to read the Uighur-Mongol letterforms reliably. Only the Chinese margin label can be translated. A higher-resolution or contrast-enhanced scan, correctly rotated, is needed.</warning>\n<meta>Woodblock print folio in a double-ruled frame. The Chinese side-margin label gives the section, volume and folio number. The Mongolian label in the opposite margin and the main text are not legible in the OCR source.</meta>\n\nMiscellaneous Sutras, Volume 18, upper part, folio 392 <note>original: \"諸品經第十八卷上三百九十二\"; 諸品經 is the Chinese name for the \"Miscellaneous Sutras\" section of the Mongolian Buddhist canon (Kanjur)</note>\n\n<margin><unclear>short Mongolian marginal label (about 5 words), not transcribed</unclear></margin>\n\n<unclear>about 27 columns of Classical Mongolian text in Uighur-Mongol script, too faint and low-resolution to transcribe reliably; not transcribed</unclear>\n\n<summary>This is folio 392 of volume 18 (upper part) of the Miscellaneous Sutras section of a woodblock-printed Mongolian Kanjur. Only the Chinese margin label is legible; the roughly 27 columns of Classical Mongolian text could not be transcribed from the available scan.</summary>\n<keywords>Miscellaneous Sutras, 諸品經, Mongolian Kanjur, Beijing Kanjur, Classical Mongolian, Uighur-Mongol script, woodblock print, folio 392, volume 18, illegible scan</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 9.422
+ }
+}

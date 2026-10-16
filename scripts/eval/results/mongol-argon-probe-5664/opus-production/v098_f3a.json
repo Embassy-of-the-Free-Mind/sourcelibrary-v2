@@ -1,0 +1,35 @@
+{
+ "key": "v098_f3a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<header>律師戒行經第六卷上</header>\n<page-num>三</page-num>\n<warning>Handwritten Manchu script in red (vermilion) ink, pothi-format leaf in a ruled double frame. The ink is faded and pale, and the script cannot be read reliably at this resolution, so the main text is not transcribed. The Chinese marginal label on the right is legible. It reads 律師戒行經 (title), 第六卷 (sixth juan), 上 (upper/recto side) and 三 (leaf 3).</warning>\n<margin>律師戒行經第六卷上三</margin>\n\n<unclear>about 24 vertical lines of handwritten Manchu text in red ink, read left to right, not transcribed</unclear>\n\n<margin><unclear>3 short vertical Manchu marginal words in the left margin (probably the volume and leaf designation), not transcribed</unclear></margin>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A double-ruled rectangular frame in red ink surrounds the text block. Narrow ruled side panels hold the Chinese title label on the right and short Manchu marginal labels on the left.</image-desc>\n\n<vocab>律師戒行經, Vinaya, Manchu Kanjur, pothi leaf, vermilion ink, juan 6</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 18.96,
+  "usage": {
+   "input": 4,
+   "output": 878
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Source language was given as Mongolian, but the OCR identifies the script as handwritten Manchu in red ink. The main text was not transcribed, so only the legible Chinese marginal label and the editorial descriptions are translated here.</meta>\n<warning>The handwritten Manchu script is in red (vermilion) ink on a pothi-format leaf inside a ruled double frame. The ink is faded and pale, and the script cannot be read reliably at this resolution, so the main text was not transcribed. The Chinese marginal label on the right can be read. It gives the title 律師戒行經, then \"sixth juan,\" then \"upper side\" (the front of the leaf), then \"leaf 3.\"</warning>\n\n<margin>Sutra on the Precepts and Conduct of the Vinaya Masters <note>original: \"律師戒行經\"</note>, Sixth Volume <note>original: \"第六卷\"; a <term>juan</term> <gloss>scroll or fascicle</gloss> is a traditional Chinese unit of book division</note>, front side <note>original: \"上\", the upper or recto face of the leaf</note>, leaf 3</margin>\n\n<unclear>about 24 vertical lines of handwritten Manchu text in red ink, read left to right, not transcribed</unclear>\n\n<margin><unclear>3 short vertical Manchu marginal words in the left margin (probably the volume and leaf designation), not transcribed</unclear></margin>\n\n<note>A rectangular frame of two ruled lines in red ink surrounds the text block. Narrow ruled panels on each side hold the Chinese title label on the right and short Manchu marginal labels on the left. Red or vermilion ink was used for prestigious imperial copies of Buddhist scripture, such as the Manchu Kanjur produced under the Qianlong Emperor.</note>\n\n<summary>This is leaf 3, front side, of the sixth volume of a Manchu manuscript of a Vinaya text on monastic precepts and conduct, written in faded red ink. Only the Chinese marginal label could be read. The roughly 24 lines of Manchu text were not transcribed.</summary>\n<keywords>Vinaya, monastic discipline, Buddhist precepts, Manchu Kanjur, Manchu script, vermilion ink, pothi leaf, juan 6, 律師戒行經, Qing dynasty Buddhist manuscripts</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 13.025
+ }
+}

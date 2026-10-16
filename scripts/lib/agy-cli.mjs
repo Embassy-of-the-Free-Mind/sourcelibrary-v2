@@ -64,7 +64,7 @@ export function assertGeminiModel(args) {
 }
 
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
-export function agyCall(args, cwd) {
+export function agyCall(args, cwd, { killAfterMs = 360_000 } = {}) {
   assertGeminiModel(args);
   return new Promise((resolve) => {
     const t0 = Date.now();
@@ -72,7 +72,7 @@ export function agyCall(args, cwd) {
     let out = '', err = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { err += d; });
-    const timer = setTimeout(() => child.kill('SIGKILL'), 360_000);
+    const timer = setTimeout(() => child.kill('SIGKILL'), killAfterMs); // past --print-timeout: a caller raising it raises this too
     child.on('close', (code) => {
       clearTimeout(timer);
       let j = {};

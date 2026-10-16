@@ -1,0 +1,40 @@
+{
+ "key": "v061_f2a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>諸品經第二卷上二</page-num>\n<warning>Traditional vertical Mongolian woodblock print in red ink (Kanjur/Buddhist sutra pothi leaf) with Chinese volume and folio markers in the right margin and small Mongolian folio markers in the left margin. The main Mongolian script body is not transcribed to avoid fabrication.</warning>\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Rectangular red-ink woodblock-printed decorative floral border framing the pothi leaf text block, with narrow vertical marginal boxes on the left and right ends.</image-desc>\n<margin>᠎‍‌‌‌‍‌᠎‍‌‌‌‍‌<unclear>Mongolian marginal volume/folio marker in left border box, 4 words</unclear></margin>\n<margin>諸品經第二卷上二</margin>\n\n<unclear>22 vertical lines of traditional Mongolian script printed in red ink, not transcribed</unclear>\n\n<vocab>諸品經, Mongolian Kanjur, pothi leaf, woodblock print</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 34.118,
+  "usage": {
+   "input_tokens": 19137,
+   "output_tokens": 387,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 13800,
+   "total_tokens": 19524
+  },
+  "tool_calls": [
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Traditional vertical Mongolian woodblock print in red ink (Kanjur/Buddhist sutra pothi leaf) with Chinese volume and folio markers in the right margin and small Mongolian folio markers in the left margin. The main Mongolian script body is not transcribed to avoid fabrication.</warning>\n<note>Rectangular red-ink woodblock-printed decorative floral border framing the <term>pothi</term> <gloss>palm-leaf format</gloss> leaf text block, with narrow vertical marginal boxes on the left and right ends.</note>\n<margin><unclear>Mongolian marginal volume/folio marker in left border box, 4 words</unclear></margin>\n<margin>Sutras of Various Sections, Volume Two, Upper Part, Folio Two <note>original: \"諸品經第二卷上二\"</note></margin>\n\n<unclear>22 vertical lines of traditional Mongolian script printed in red ink, not transcribed</unclear>\n\n<summary>A woodblock-printed folio leaf from the Mongolian Kanjur printed in red ink. The right margin carries the Chinese title \"Sutras of Various Sections\" (Zhupin jing), Volume Two, Upper Part, Folio Two, while the main vertical Mongolian text remains untranscribed.</summary>\n<keywords>Sutras of Various Sections, Zhupin jing, Mongolian Kanjur, pothi leaf, woodblock print, Buddhist scripture</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 27.085
+ }
+}

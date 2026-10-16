@@ -1,0 +1,42 @@
+{
+ "key": "v066_f2a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上二</page-num>\n<margin>ᠵᠠ ᠡᠯᠳᠡᠪ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ</margin>\n<margin>諸品經第七卷上二</margin>\n᠀ ᠴᠢᠨᠠᠳᠤᠰ ᠢ ᠳᠠᠷᠤᠭᠴᠢ ᠂ ᠳᠠᠷᠠᠨᠢ\nᠡᠷᠳᠡᠨᠢ ᠪᠡᠷ ᠭᠡᠶᠢᠭᠦᠯᠦᠭᠴᠢ ᠂ ᠯᠠᠭᠱᠠᠨ\nᠴᠣᠭ ᠢ ᠵᠣᠬᠢᠶᠠᠭᠴᠢ ᠂ ᠡᠯᠳᠡᠪ\nᠴᠢᠮᠡᠭ ᠦᠨ ᠭᠡᠷᠡᠯ ᠲᠦ ᠂ ᠪᠠ ᠂\nᠬᠠᠮᠤᠭ ᠠ ᠲᠦᠭᠡᠮᠡᠯ ᠭᠡᠷᠡᠯ ᠲᠦ\nᠨᠠᠷᠠᠨ ᠭᠡᠷᠡᠯ ᠲᠦ ᠂\nᠮᠠᠨᠵᠤᠱᠷᠢ ᠲᠡᠷᠢᠭᠦᠲᠡᠨ ᠂\nᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ ᠨᠠᠷ ᠯᠤᠭ᠎ᠠ\nᠬᠠᠮᠲᠤ ᠃ ᠲᠡᠷᠡ ᠴᠠᠭ ᠲᠤ\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ ᠂\nᠥᠪᠡᠷ ᠦᠨ ᠪᠡᠶ᠎ᠡ ᠡᠴᠡ ᠷᠢᠳᠢ\nᠢᠯᠡᠳᠲᠡ ᠪᠦᠲᠦᠭᠡᠭᠰᠡᠨ ᠭᠡᠷᠡᠯ ᠢ\nᠮᠠᠰᠢ ᠭᠠᠷᠭᠠᠵᠤ ᠂ ᠲᠡᠷᠡ ᠭᠡᠷᠡᠯ\nᠢᠶᠡᠷ ᠡᠨᠡ ᠭᠤᠷᠪᠠᠨ ᠮᠢᠩᠭᠠᠨ\nᠶᠡᠬᠡ ᠮᠢᠩᠭᠠᠨ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠣᠷᠣᠨ\nᠢ ᠭᠡᠶᠢᠭᠦᠯᠵᠦ ᠂ ᠭᠡᠷᠡᠯ ᠦᠨ\nᠵᠢᠪᠬᠤᠯᠠᠩ ᠢᠶᠠᠷ ᠲᠡᠭᠦᠰ ᠪᠣᠯᠭᠠᠨ\nᠦᠢᠯᠡᠳᠴᠦ ᠂ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ\nᠪᠤᠷᠬᠠᠨ ᠮᠢᠰᠢᠶᠡᠨ ᠵᠣᠬᠢᠶᠠᠵᠤ ᠂\nᠡᠨᠡ ᠮᠡᠲᠦ ᠵᠣᠷᠢᠭ ᠤᠨ\nᠵᠠᠷᠯᠢᠭ ᠢ ᠨᠣᠮᠯᠠᠨ ᠵᠣᠬᠢᠶᠠᠪᠠᠢ ᠂\n<vocab>ᠮᠠᠨᠵᠤᠱᠷᠢ, ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ, ᠮᠠᠬᠠᠰᠠᠳᠤᠸᠠ, ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ, ᠷᠢᠳᠢ, ᠭᠤᠷᠪᠠᠨ ᠮᠢᠩᠭᠠᠨ ᠶᠡᠬᠡ ᠮᠢᠩᠭᠠᠨ ᠶᠢᠷᠲᠢᠨᠴᠦ, ᠵᠣᠷᠢᠭ ᠤᠨ ᠵᠠᠷᠯᠢᠭ, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 606.379,
+  "usage": {
+   "input_tokens": 21141,
+   "output_tokens": 47402,
+   "thinking_tokens": 45877,
+   "cache_read_tokens": 31903,
+   "total_tokens": 68543
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page</meta>\n<margin>Volume <term>Ja</term> <gloss>Seventh</gloss>, Miscellaneous <note>Sutras, original: \"ja eldeb\"</note>, Upper <note>Part</note>, Folio Two</margin>\n<margin>Sutras of Various Categories, Volume Seven, Upper Part, Folio Two <note>original: \"諸品經第七卷上二\"; Chinese catalog marker for the Miscellaneous Sutras section of the Mongolian Kanjur</note></margin>\nSubduer of Adversaries <note>original: \"činadus-i daruγči\"</note>, Illuminator with\nthe Jewel of <term>Dhāraṇī</term> <gloss>sacred mnemonic formula; Mongolian: darani</gloss>, Creator of\nthe Splendor of <term>Lakṣaṇa</term> <gloss>auspicious bodily marks of a Buddha; Mongolian: laγšan</gloss>, Radiant with Manifold\nOrnaments, and\nRadiant with All-Pervading Light,\nRadiant as the Sun,\nheaded by <term>Manjušri</term> <gloss>Mañjuśrī, Gentle Glory, the bodhisattva of transcendent wisdom</gloss>,\ntogether with <note>all those</note> <term>bodisaduva</term> <gloss>bodhisattvas, awakening beings</gloss> and <term>maqasaduva</term> <gloss>mahāsattvas, great spiritual beings</gloss>\nin assembly. At that time,\nthe Victoriously Transcendent Buddha <note>original: \"ilaju tegüs nögčigsen burqan\", translating Tibetan \"bcom ldan 'das\" and Sanskrit \"Bhagavān\", the Blessed One</note>\nsent forth in abundance from his own body a light\nmanifestly produced by <term>ridi</term> <gloss>miraculous power, from Sanskrit ṛddhi</gloss>;\nand by that light\nhe illuminated this three-thousandfold\ngreat thousandfold world-system <note>original: \"γurban mingγan yeke mingγan yirtinčü-yin oron\", translating Sanskrit \"trisāhasramahāsāhasralokadhātu\", a Buddhist cosmos of a billion worlds</note>,\nmaking it perfect with the majesty\nof light; and having done so, the Victoriously Transcendent\nBuddha graciously smiled,\nand proclaimed this inspired\nutterance <note>original: \"joriγ-un jarliγ\", translating Tibetan \"ched du brjod pa\" and Sanskrit \"udāna\", a solemn, spontaneous pronouncement</note> as follows:\n\n<summary>This folio from the Miscellaneous Sutras section of the Mongolian Kanjur concludes the opening assembly list of bodhisattvas, headed by Mañjuśrī. It then describes the Buddha emitting a miraculous light that illuminates the entire billion-world cosmos before smiling and delivering a solemn pronouncement.</summary>\n<keywords>Mongolian Kanjur, Miscellaneous Sutras, Zhupin jing, Manjusri, bodhisattva, mahasattva, Bhagavan, miraculous light, rddhi, trichiliocosm, udana</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 136.438
+ }
+}
