@@ -14,6 +14,8 @@
  *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low]
  *          Builds translate-core's single-page prompt from the stored OCR, asks the CLI, saves DIR/<page_id>.txt + .meta.json.
  *          Writes NOTHING to the database. Skips pages already read, pages with no translatable OCR, and blank pages.
+ *          [--instructions-file=F]: JSON { page_id: "one line" } appended to that page's prompt (#6559: a Maya numeral the
+ *          first read got wrong, named with its value from Beltrán's table). Recorded as `instruction` in the meta.
  *
  *   apply  node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *          Dry run unless --apply. Per page refuses: a CLI failure, an empty read, chatter or a refusal in place of a
@@ -65,6 +67,7 @@ const PROMPT_VARIANT = 'sentinels-6523';
 const CLI_SUFFIX = TRANSLATE_SUFFIX;
 const PAGE_PROJECTION = { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1 };
 const logCall = (rec) => { try { fs.appendFileSync(CALL_LOG, JSON.stringify({ ts: new Date().toISOString(), job: JOB, model: MODEL, ...rec }) + '\n'); } catch { /* the box has the log dir; a laptop need not */ } };
+const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
 const readOf = (id) => { try { return fs.readFileSync(path.join(OUT, `${id}.txt`), 'utf8').trim(); } catch { return ''; } };
 
 const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 60000 });
@@ -97,7 +100,8 @@ if (STAGE === 'read') {
     const prevRead = prev ? readOf(prev.id) : '';
     const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
     const built = buildTranslationPrompt({ prompts, book, ocrText: p.ocr.data, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
-    const sent = built.prompt + CLI_SUFFIX;
+    const instruction = INSTRUCTIONS[id] || null;
+    const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + CLI_SUFFIX;
     const t0 = new Date();
     // Plan mode, never auto-approve, the tool gate in an empty workspace, up to 3 calls on an empty or failed reply.
     const r = await gatedTextCall(sent, { model: MODEL, task: 'translate', onCall: (c) => logCall({ kind: 'translate', seconds: Math.round(c.secs), ok: !c.cls, error_class: c.cls }) });
@@ -111,7 +115,7 @@ if (STAGE === 'read') {
       started_at: t0.toISOString(), finished_at: new Date().toISOString(), exit: r.code === null ? -9 : r.code, error_class: r.cls, attempts: r.calls, chars: text.length,
       prompt_variant: PROMPT_VARIANT, wrapper: r.cls ? null : r.problem, tool_calls: r.tool_calls,
       ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null, prompt_ref: built.promptRef, is_english_book: built.isEnglish,
-      prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent),
+      prompt_sent_chars: sent.length, prompt_sent_hash: contentHash(sent), ...(instruction && { instruction }),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped' },
       stderr_tail: r.err,
     }, null, 1));
