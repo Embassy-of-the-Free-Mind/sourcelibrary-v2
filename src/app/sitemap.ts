@@ -275,7 +275,7 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
         pages_count: { $gt: 0 },
       },
       {
-        projection: { slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 },
+        projection: { slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, human_read_count: 1 },
         sort: { _id: 1 },
         skip: chunkIndex * BOOKS_PER_CHUNK,
         limit: BOOKS_PER_CHUNK,
@@ -297,7 +297,8 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
         let priority = 0.5;
         if (book.pages_translated > 0) priority = 0.7;
         if (book.is_first_translation) priority = 0.85;
-        if (book.read_count >= 10) priority = Math.max(priority, 0.85);
+        // Reading visits by people (#5048); read_count is inflated by proxy pools. 5 visits ≈ 990 live books.
+        if (book.human_read_count >= 5) priority = Math.max(priority, 0.85);
         if (book.is_first_translation && book.pages_translated > 0) priority = 0.9;
 
         return {

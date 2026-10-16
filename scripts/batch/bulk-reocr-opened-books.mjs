@@ -135,7 +135,7 @@ async function run() {
       language: 1, original_language: 1,
       job: 1, read_count: 1
     }
-  }).sort({ read_count: -1 }).toArray();
+  }).sort({ human_read_count: -1, read_count: -1 }).toArray();
 
   console.log(`Found ${books.length} candidate book(s)\n`);
 

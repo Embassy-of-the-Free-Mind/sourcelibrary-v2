@@ -115,6 +115,8 @@ function transformBook(book, previewColumn) {
     quality_score: book.quality_score || 0,
     photo: book.photo || null,
     read_count: book.read_count || 0,
+    // Reading visits by people (#5048) — what the "popular" sort orders by. read_count is legacy.
+    human_read_count: book.human_read_count || 0,
     last_translation_at: book.last_translation_at || null,
     last_processed: book.updated_at || book.created_at || null,
     created_at: book.created_at || null,
@@ -272,7 +274,7 @@ if (FULL_MODE) {
 const projection = {
   id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
-  read_count: 1, pages_blank: 1,
+  read_count: 1, human_read_count: 1, pages_blank: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, pages_translatable: 1,
   'translation_state.rung': 1, 'translation_state.english_original': 1, 'translation_state.version': 1,
   is_first_translation: 1, visible: 1, quality_score: 1,

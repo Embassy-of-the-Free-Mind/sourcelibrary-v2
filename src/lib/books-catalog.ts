@@ -215,7 +215,9 @@ function applySortKeys(query: any, sort: SortOption) {
     case 'last_translated': return query.order('last_translation_at', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
     case 'quality': return query.order('quality_score', { ascending: false }).order('title', { ascending: true });
     case 'popular':
-    default: return query.order('read_count', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+    // human_read_count: reading visits by people (#5048). read_count is the legacy counter, inflated by proxy
+    // pools, and only breaks ties.
+    default: return query.order('human_read_count', { ascending: false, nullsFirst: false }).order('read_count', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
   }
 }
 

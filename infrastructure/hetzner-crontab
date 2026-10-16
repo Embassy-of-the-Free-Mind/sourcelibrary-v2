@@ -171,6 +171,10 @@
 
 # warm-author-pages.mjs retired (#4753): 15.7K author renders a day into a Vercel ISR cache that empties on every production deploy (~19/day). Readers and crawlers fill it on demand.
 
+# Human-only read counter (#5048): recompute books.human_read_count from classified analytics_events and
+# mirror it to books_catalog. What "popular", the sitemap and the OCR queues sort by. ~1 min, no paid calls.
+55 4 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/rebuild-human-read-count-5048.mjs ] && flock -n /tmp/sl-human-reads.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/rebuild-human-read-count-5048.mjs --apply" >> /var/log/sourcelibrary/human-reads.log 2>&1
+
 # Browse pre-warm + homepage stats (daily 5:15am)
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 

@@ -1,0 +1,22 @@
+{
+  "_comment": [
+    "PRIOR ART: none — the write-time classifier (src/lib/analytics-ingest.ts) drops crawlers by user agent but has no",
+    "rule for fleets that send browser user agents; this file is the rule for books.human_read_count (#5048).",
+    "Read by scripts/maintenance/rebuild-human-read-count-5048.mjs (nightly). Measured 2026-10-16 on 2.08M events.",
+    "since: the first event with a stored user_agent and traffic_class (#3405). Earlier events cannot be classified.",
+    "window_ms: a reading visit counts once, at its SECOND human read event (book_read or page_read) for the same",
+    "  book from the same /24 within this window. Pools that rotate one request per address count at 0.1-0.4% of",
+    "  their events; Firefox and other browsers at 4.7-13.6%.",
+    "max_books_per_ip_day: a /24 that sends read events for this many distinct books or more in one UTC day is a",
+    "  crawler for that day (one walked 618 books on 2026-07-30..08-03). 3,990 of 1.07M ip-days, 468K events.",
+    "pool_user_agents: fleets that hold a few addresses and walk many pages: Lightpanda (207K events Aug-Sep, #4543)",
+    "  and a Windows UA rotation over Chrome 103-124 (~3.5K events per version per fortnight, evenly spread)."
+  ],
+  "since": "2026-07-29T12:00:00Z",
+  "window_ms": 3600000,
+  "max_books_per_ip_day": 20,
+  "pool_user_agents": [
+    "Lightpanda",
+    "Windows NT.*Chrome/1(0[3-9]|1[0-9]|2[0-4])\\."
+  ]
+}
