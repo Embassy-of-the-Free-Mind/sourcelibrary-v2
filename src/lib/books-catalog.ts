@@ -233,6 +233,8 @@ export async function browseBooks(opts: {
    *  (see getProviderKeys in library-partners.ts). */
   provider?: string | string[];
   library?: string;
+  /** Exact `contributing_library` value: the institution holding the books. */
+  holder?: string;
   firstTranslation?: boolean;
   hasTranslation?: boolean;
   hasPages?: boolean;
@@ -286,6 +288,7 @@ export async function browseBooks(opts: {
       : query.eq('image_source_provider', opts.provider);
   }
   if (opts.library === 'bhutan') query = query.ilike('source_url', '%eap.bl.uk%');
+  if (opts.holder) query = query.eq('contributing_library', opts.holder);
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);

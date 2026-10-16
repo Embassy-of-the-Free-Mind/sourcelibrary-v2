@@ -625,10 +625,20 @@ export function getPartnerByProvider(provider: string): LibraryPartner | undefin
 
 // Placeholder values importers wrote into contributing_library (measured
 // 2026-10-11: "IIIF Source" 830 visible books, "unknown library" 342).
-const NOT_A_HOLDER = new Set(['iiif source', 'unknown library', 'unknown', 'null', 'undefined', '[object object]']);
+// "Servants of Knowledge" is an Internet Archive scanning project, not a library.
+const NOT_A_HOLDER = new Set(['iiif source', 'unknown library', 'unknown', 'null', 'undefined', '[object object]', 'servants of knowledge']);
 const PLATFORM_NAMES = new Set(
   Object.values(LIBRARY_PARTNERS).filter(p => p.kind === 'platform').flatMap(p => [p.name.toLowerCase(), p.shortName.toLowerCase()]),
 );
+/** A platform name, including importer variants that add a gloss
+ *  ("e-rara (Swiss libraries)", 3,373 books; "e-codices (Virtual Manuscript
+ *  Library of Switzerland)") or a "via …" note naming the route, not the holder. */
+function isPlatformName(name: string): boolean {
+  const n = name.toLowerCase();
+  if (PLATFORM_NAMES.has(n) || n.startsWith('via ')) return true;
+  const bare = n.replace(/\s*\(.*\)\s*$/, '').trim();
+  return bare !== n && PLATFORM_NAMES.has(bare);
+}
 
 /** The institution that physically HOLDS the book, for display. Prefers the
  *  per-book `contributing_library`; otherwise the provider itself when it is a
@@ -642,9 +652,12 @@ export function resolveHoldingLibrary(
   // Some importers stored a serialized object here; that is a data bug, not a name.
   if (contributing && !contributing.startsWith('{') && !contributing.startsWith('[')
       && !NOT_A_HOLDER.has(contributing.toLowerCase())
-      && !PLATFORM_NAMES.has(contributing.toLowerCase())) return contributing;
+      && !isPlatformName(contributing)) return contributing;
   const partner = imageSource.provider ? getPartnerByProvider(imageSource.provider) : undefined;
   if (partner && partner.kind !== 'platform') return partner.name;
+  // Museums of India records name the museum (National Museum, New Delhi; …)
+  // as the provider name, not as contributing_library: 19,856 books.
+  if (imageSource.provider === 'museumsofindia' && imageSource.provider_name?.trim()) return imageSource.provider_name.trim();
   return undefined;
 }
 
