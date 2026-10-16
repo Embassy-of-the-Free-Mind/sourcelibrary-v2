@@ -371,6 +371,11 @@ export interface ReaderStrings {
     /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
     /**
+     * Printed pages absent between two scans, shown on the scans either side of the gap (#6675). `last` is null
+     * when one page is missing. Derek's wording (2026-10-15): "Pages 41–44 are missing from this scan."
+     */
+    missingPages: (first: string, last: string | null) => string;
+    /**
      * Quality warnings from stored checks (#6199). Voice: .claude/docs/quality-statements.md — what was found, by
      * whom, when; no softening, no verdict adjectives. Each `qualityKinds` value is a clause that follows "found that".
      */
@@ -947,6 +952,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      missingPages: (first, last) => (last ? `Pages ${first}–${last} are missing from this scan.` : `Page ${first} is missing from this scan.`),
       qualityKinds: {
         wrong_page: 'the scan and the text are from different pages',
         english_other_page: 'the English belongs to a different page',
@@ -1426,6 +1432,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
       machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      missingPages: (first, last) => (last ? `Faltan en este escaneo las páginas ${first}–${last}.` : `Falta en este escaneo la página ${first}.`),
       qualityKinds: {
         wrong_page: 'la imagen y el texto son de páginas distintas',
         english_other_page: 'la traducción corresponde a otra página',
@@ -1930,6 +1937,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Textus: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Textus: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'Conversio intellegentiae artificialis, a docto nondum recensita.',
+      missingPages: (first, last) => (last ? `Paginae ${first}–${last} in hac imagine desunt.` : `Pagina ${first} in hac imagine deest.`),
       // Latin has no neat "found that X, and that Y": each kind is a full
       // clause and the sentence frames them after a colon.
       qualityKinds: {
@@ -2410,6 +2418,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `Tekst: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Tekst: ${name}${version ? ` (${version})` : ''}, ${license}`,
       machineDraftNotice: 'AI-vertaling, nog niet door een wetenschapper nagekeken.',
+      missingPages: (first, last) => (last ? `Pagina's ${first}–${last} ontbreken in deze scan.` : `Pagina ${first} ontbreekt in deze scan.`),
       // Each kind is a subordinate clause (verb last): it follows "vond dat".
       qualityKinds: {
         wrong_page: 'de scan en de tekst van verschillende pagina’s zijn',
@@ -2891,6 +2900,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipTextSource: (shortName, license) => `文本：${shortName}，${license}`,
       textSourceTranscript: (name, license, version) => `文本：${name}${version ? `（${version}）` : ''}，${license}`,
       machineDraftNotice: 'AI 译文，尚未经学者审校。',
+      missingPages: (first, last) => (last ? `本扫描件缺第 ${first}–${last} 页。` : `本扫描件缺第 ${first} 页。`),
       qualityKinds: {
         wrong_page: '扫描图和文本来自不同的页面',
         english_other_page: '英文属于另一页',

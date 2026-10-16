@@ -50,11 +50,12 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine, QualityWarningLine, MissingPagesLine,
 } from './ReaderV2Bits';
 import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, KRAKEN_EVIDENCE_URL } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { QualityWarnings } from '@/lib/book-warnings';
+import type { ScanGaps } from '@/lib/scan-gaps';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 import { displayTranscription } from '@/lib/esukhia-apparatus';
@@ -183,6 +184,8 @@ interface Reader2CProps {
   initialPageList: Page[];
   /** Warnings from stored quality checks of this book (#6199); the whole book's, so client page turns need no refetch. */
   qualityWarnings?: QualityWarnings;
+  /** Printed pages missing between scans of this book (#6675); the whole book's, like qualityWarnings. */
+  scanGaps?: ScanGaps;
 }
 
 /** Desktop tool rail button (the rail is the desktop navigation). */
@@ -2527,7 +2530,7 @@ function PanelContent({
   );
 }
 
-export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings }: Reader2CProps) {
+export default function Reader2C({ initialBook, initialPage, initialPageList, qualityWarnings, scanGaps }: Reader2CProps) {
   const siteLocale = useLocale();
   // On the Latin site the Latin text is what the reader came for: open on the
   // scan and the transcription, with the English translation off until asked
@@ -3999,6 +4002,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   <div key={r.currentPage.id} className="rv2-page-in" data-page-pending={pagePending ? '' : undefined}>
                     {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
+                    <MissingPagesLine gaps={scanGaps} pageNumber={r.currentPage.page_number} />
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
@@ -4372,6 +4376,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 )}
                 {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
+                    <MissingPagesLine gaps={scanGaps} pageNumber={r.currentPage.page_number} />
                 {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
