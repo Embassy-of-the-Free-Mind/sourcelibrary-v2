@@ -7,8 +7,8 @@ canons: []
 n_books: 114
 n_pages: 122
 verdict: "Post hoc, with PR #5299's footnote step MinerU's catastrophic rate falls 2.6% to 0.0% and median delta vs lite to +0.08 pp, so the rule says PEER; lite still wins page by page 34-10."
-status: undecided
-decision: null
+status: adopted
+decision: "MinerU with the footnote step is the tier-3 refusal fallback for English print from 1820, not a peer lane (routing row refused-pages; ops default in DECISIONS.md, PR #5299). Closed in #6688"
 superseded_by: null
 issue: [5182, 5299]
 ---

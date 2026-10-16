@@ -2,7 +2,12 @@
  "issue": 6386,
  "generated_by": "scripts/eval/build-ocr-pareto.mjs",
  "measure": "accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on the pages of the panel the engine read; a refused, empty, timed-out or copy-filtered read is not scored and is counted in did_not_read",
- "production_rule": "the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script",
+ "stored_now_census": {
+  "date": "2026-10-16",
+  "source": "scripts/eval/ocr-routing/stored-census.mjs (output: scripts/eval/ocr-routing/stored-census-2026-10-16.json), run by job arb-public-cl. Chinese and Tibetan: Derek's count of 2026-10-13, posted on #6688",
+  "method": "Every page of every live book (visible, pages_count > 0), grouped by books.language and counted by the engine whose text the page carries now (ocr.model); a page with no text counts as no text yet. Chinese and Tibetan were counted the same way on 2026-10-13. The 2026-10-13 figures for Latin, German, English, Greek and Arabic came from 150 random books per language and are replaced: a few long books carry most of the pages, so two draws of 300 Latin books gave 22% and 29% with no text."
+ },
+ "production_rule": "the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns",
  "grade_rules": {
   "decide": "20 or more works, a reference made independently of the engine we use, one error measure, and no problem found by the sample check.",
   "directional": "Fit to read, but 10 to 19 works, or mostly famous texts a model may know by heart, or a modern edition as the reference rather than a transcription of the page.",
@@ -23,6 +28,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.",
+   "stored_now": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
    "panels": [
     {
      "kind": "primary",
@@ -1514,6 +1520,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.",
+   "stored_now": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
    "panels": [
     {
      "kind": "primary",
@@ -2005,6 +2012,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
+   "stored_now": "Mixed. Latin, 2,982,628 pages: 1,332,271 (45%) read by Gemini 3 Flash, 867,865 (29%) by Flash-Lite, 777,553 (26%) with no text yet. In the same order, German, 810,137 pages: 308,713 (38%), 367,961 (45%), 127,097 (16%). English, 991,532 pages: 489,831 (49%), 285,225 (29%), 122,272 (12%), and 81,718 (8%) with the Internet Archive's own text. French, 347,226 pages: 183,206 (53%), 129,656 (37%), 31,076 (9%). Italian, 180,651 pages: 113,688 (63%), 40,299 (22%), 26,471 (15%).",
    "panels": [
     {
      "kind": "primary",
@@ -2627,6 +2635,7 @@
    "production_engine": "gemini-3-flash-preview",
    "production_label": "Gemini 3 Flash",
    "caption": null,
+   "stored_now": "495,404 pages: 418,469 (84%) read by Gemini 3 Flash, 38,638 (8%) by Flash-Lite, 37,376 (8%) with no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -4469,9 +4478,10 @@
   {
    "id": "chinese-manuscript",
    "title": "Chinese manuscript",
-   "production_engine": "gemini-3.1-flash-lite",
-   "production_label": "Gemini 3.1 Flash-Lite",
+   "production_engine": "paddleocr-vl-1.6",
+   "production_label": "PaddleOCR-VL 1.6",
    "caption": "On many pages the reference runs longer than the page, so every engine carries some unavoidable error.",
+   "stored_now": "Counted 13 October 2026: 1,567,927 Chinese pages were read by PaddleOCR-VL. Across all Chinese books, 106,365 pages were read by Gemini 3 Flash, about 39,000 by Flash-Lite, and 330,855 have no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -4519,7 +4529,7 @@
       {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
-       "production": false,
+       "production": true,
        "mean_cer": 0.21,
        "accuracy": 0.79,
        "accuracy_ci95": [
@@ -4542,16 +4552,6 @@
         "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
         "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
        },
-       "vs_in_use": {
-        "diff": 0.09,
-        "ci95": [
-         0.059,
-         0.124
-        ],
-        "n_pages": 497,
-        "n_works": 261
-       },
-       "verdict": "better",
        "on_frontier": true
       },
       {
@@ -4579,15 +4579,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.079,
+        "diff": -0.01,
         "ci95": [
-         0.053,
-         0.11
+         -0.02,
+         -0.002
         ],
-        "n_pages": 498,
+        "n_pages": 497,
         "n_works": 261
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -4615,15 +4615,15 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "vs_in_use": {
-        "diff": 0.064,
+        "diff": -0.026,
         "ci95": [
-         0.044,
-         0.088
+         -0.047,
+         -0.01
         ],
-        "n_pages": 498,
+        "n_pages": 497,
         "n_works": 261
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -4651,15 +4651,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.062,
+        "diff": -0.027,
         "ci95": [
-         0.044,
-         0.085
+         -0.047,
+         -0.014
         ],
-        "n_pages": 498,
+        "n_pages": 497,
         "n_works": 261
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -4691,15 +4691,15 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": 0.048,
+        "diff": -0.028,
         "ci95": [
-         0.029,
-         0.069
+         -0.045,
+         -0.015
         ],
-        "n_pages": 460,
+        "n_pages": 459,
         "n_works": 250
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -4727,21 +4727,21 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.041,
+        "diff": -0.049,
         "ci95": [
-         0.024,
-         0.06
+         -0.071,
+         -0.03
         ],
-        "n_pages": 498,
+        "n_pages": 497,
         "n_works": 261
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
+       "production": false,
        "mean_cer": 0.3,
        "accuracy": 0.7,
        "accuracy_ci95": [
@@ -4762,6 +4762,16 @@
         "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
+       "vs_in_use": {
+        "diff": -0.09,
+        "ci95": [
+         -0.125,
+         -0.06
+        ],
+        "n_pages": 497,
+        "n_works": 261
+       },
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -4789,15 +4799,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0,
+        "diff": -0.09,
         "ci95": [
-         -0.022,
-         0.024
+         -0.113,
+         -0.069
         ],
-        "n_pages": 498,
+        "n_pages": 497,
         "n_works": 261
        },
-       "verdict": "same",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -4825,12 +4835,12 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.251,
+        "diff": -0.342,
         "ci95": [
-         -0.282,
-         -0.217
+         -0.395,
+         -0.29
         ],
-        "n_pages": 498,
+        "n_pages": 497,
         "n_works": 261
        },
        "verdict": "worse",
@@ -4840,7 +4850,7 @@
      "no_cost": [],
      "role": "primary",
      "heading": null,
-     "verdict": "The evidence points toward PaddleOCR-VL 1.6 over Gemini 3.1 Flash-Lite, the engine we use (+9.0 points a page, 95% interval +5.9 to +12.4); directional only."
+     "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     },
     {
      "kind": "primary-more-engines",
@@ -4859,11 +4869,7 @@
       "why": "19 works; a decision needs 20"
      },
      "frontier": true,
-     "noise": {
-      "kind": "identical",
-      "band": null,
-      "n": 21
-     },
+     "noise": null,
      "date": "2026-10-14",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
@@ -4897,15 +4903,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.086,
+        "diff": 0.005,
         "ci95": [
-         0.028,
-         0.169
+         -0.017,
+         0.027
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "better",
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -4933,21 +4939,21 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.086,
+        "diff": 0.005,
         "ci95": [
-         0.033,
-         0.166
+         -0.014,
+         0.023
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "better",
+       "verdict": "same",
        "on_frontier": true
       },
       {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
-       "production": false,
+       "production": true,
        "mean_cer": 0.178,
        "accuracy": 0.822,
        "accuracy_ci95": [
@@ -4968,16 +4974,6 @@
         "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
         "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
        },
-       "vs_in_use": {
-        "diff": 0.081,
-        "ci95": [
-         0.023,
-         0.161
-        ],
-        "n_pages": 21,
-        "n_works": 19
-       },
-       "verdict": "better",
        "on_frontier": true
       },
       {
@@ -5005,15 +5001,15 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "vs_in_use": {
-        "diff": 0.08,
+        "diff": -0.001,
         "ci95": [
-         0.027,
-         0.155
+         -0.018,
+         0.014
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "better",
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -5043,15 +5039,15 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": 0.061,
+        "diff": 0.004,
         "ci95": [
-         0.011,
-         0.139
+         -0.004,
+         0.013
         ],
         "n_pages": 19,
         "n_works": 17
        },
-       "verdict": "better",
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -5079,15 +5075,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.074,
+        "diff": -0.007,
         "ci95": [
-         0.017,
-         0.151
+         -0.025,
+         0.011
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "better",
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -5115,15 +5111,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.061,
+        "diff": -0.02,
         "ci95": [
-         0.012,
-         0.13
+         -0.048,
+         -0.003
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5151,21 +5147,21 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.006,
+        "diff": -0.075,
         "ci95": [
-         -0.054,
-         0.088
+         -0.114,
+         -0.038
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "same",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
+       "production": false,
        "mean_cer": 0.259,
        "accuracy": 0.741,
        "accuracy_ci95": [
@@ -5186,6 +5182,16 @@
         "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
+       "vs_in_use": {
+        "diff": -0.081,
+        "ci95": [
+         -0.157,
+         -0.023
+        ],
+        "n_pages": 21,
+        "n_works": 19
+       },
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5213,15 +5219,15 @@
         "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md"
        },
        "vs_in_use": {
-        "diff": -0.007,
+        "diff": -0.088,
         "ci95": [
-         -0.079,
-         0.07
+         -0.133,
+         -0.054
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "same",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5249,10 +5255,10 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.169,
+        "diff": -0.25,
         "ci95": [
-         -0.299,
-         -0.057
+         -0.383,
+         -0.134
         ],
         "n_pages": 21,
         "n_works": 19
@@ -5283,15 +5289,15 @@
        "cost": null,
        "no_price": "no billed price on record",
        "vs_in_use": {
-        "diff": 0.072,
+        "diff": -0.009,
         "ci95": [
-         0.018,
-         0.151
+         -0.029,
+         0.009
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "better"
+       "verdict": "same"
       },
       {
        "engine": "surya2",
@@ -5314,15 +5320,15 @@
        "cost": null,
        "no_price": "priced on inference time only; no billed rental on record",
        "vs_in_use": {
-        "diff": 0.02,
+        "diff": -0.061,
         "ci95": [
-         -0.063,
-         0.102
+         -0.147,
+         -0.008
         ],
         "n_pages": 21,
         "n_works": 19
        },
-       "verdict": "same"
+       "verdict": "worse"
       },
       {
        "engine": "tesseract-chi_tra_vert",
@@ -5345,10 +5351,10 @@
        "cost": null,
        "no_price": "runs on our own servers; no billed price on record",
        "vs_in_use": {
-        "diff": -0.474,
+        "diff": -0.555,
         "ci95": [
-         -0.562,
-         -0.363
+         -0.606,
+         -0.5
         ],
         "n_pages": 21,
         "n_works": 19
@@ -5358,7 +5364,7 @@
      ],
      "role": "secondary",
      "heading": "Typed editions of the text: more engines, fewer pages",
-     "verdict": "The evidence points toward Claude Opus 5.5 over Gemini 3.1 Flash-Lite, the engine we use (+8.6 points a page, 95% interval +2.8 to +16.9); directional only."
+     "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     },
     {
      "kind": "cli-subsample",
@@ -5406,7 +5412,7 @@
       {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
-       "production": false,
+       "production": true,
        "mean_cer": 0.203,
        "accuracy": 0.797,
        "accuracy_ci95": [
@@ -5427,16 +5433,6 @@
         "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
         "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
        },
-       "vs_in_use": {
-        "diff": 0.094,
-        "ci95": [
-         0.048,
-         0.146
-        ],
-        "n_pages": 148,
-        "n_works": 101
-       },
-       "verdict": "better",
        "on_frontier": true
       },
       {
@@ -5464,15 +5460,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.077,
+        "diff": -0.017,
         "ci95": [
-         0.04,
-         0.114
+         -0.041,
+         0.004
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "better",
+       "verdict": "same",
        "on_frontier": false
       },
       {
@@ -5503,15 +5499,15 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.7-flash.json"
        },
        "vs_in_use": {
-        "diff": 0.063,
+        "diff": -0.029,
         "ci95": [
-         0.033,
-         0.094
+         -0.055,
+         -0.008
         ],
         "n_pages": 146,
         "n_works": 101
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5543,15 +5539,15 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost.json"
        },
        "vs_in_use": {
-        "diff": 0.055,
+        "diff": -0.022,
         "ci95": [
-         0.028,
-         0.086
+         -0.042,
+         -0.006
         ],
         "n_pages": 136,
         "n_works": 95
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5579,15 +5575,15 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "vs_in_use": {
-        "diff": 0.064,
+        "diff": -0.03,
         "ci95": [
-         0.041,
-         0.089
+         -0.072,
+         -0.002
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5615,15 +5611,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.058,
+        "diff": -0.036,
         "ci95": [
-         0.036,
-         0.083
+         -0.078,
+         -0.009
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5651,21 +5647,21 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": 0.036,
+        "diff": -0.058,
         "ci95": [
-         0.017,
-         0.055
+         -0.099,
+         -0.023
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "better",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
+       "production": false,
        "mean_cer": 0.297,
        "accuracy": 0.703,
        "accuracy_ci95": [
@@ -5686,6 +5682,16 @@
         "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
+       "vs_in_use": {
+        "diff": -0.094,
+        "ci95": [
+         -0.144,
+         -0.047
+        ],
+        "n_pages": 148,
+        "n_works": 101
+       },
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5713,15 +5719,15 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.003,
+        "diff": -0.097,
         "ci95": [
-         -0.036,
-         0.028
+         -0.135,
+         -0.06
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "same",
+       "verdict": "worse",
        "on_frontier": false
       },
       {
@@ -5749,10 +5755,10 @@
         "source": "scripts/eval/results/ocr-pareto-6293/cli-cost-gemini-3.6-flash.json"
        },
        "vs_in_use": {
-        "diff": -0.048,
+        "diff": -0.143,
         "ci95": [
-         -0.089,
-         -0.01
+         -0.185,
+         -0.094
         ],
         "n_pages": 148,
         "n_works": 101
@@ -5785,10 +5791,10 @@
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "vs_in_use": {
-        "diff": -0.243,
+        "diff": -0.337,
         "ci95": [
-         -0.295,
-         -0.19
+         -0.429,
+         -0.251
         ],
         "n_pages": 148,
         "n_works": 101
@@ -5819,20 +5825,20 @@
        "cost": null,
        "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6707)",
        "vs_in_use": {
-        "diff": 0.095,
+        "diff": 0.001,
         "ci95": [
-         0.051,
-         0.142
+         -0.005,
+         0.007
         ],
         "n_pages": 148,
         "n_works": 101
        },
-       "verdict": "better"
+       "verdict": "same"
       }
      ],
      "role": "secondary",
      "heading": "148 pages drawn at random, with Gemini 3.7 Flash (CLI) and Gemini 3.6 Flash (CLI) and Gemini 4 Argon low (CLI)",
-     "verdict": "The evidence points toward Gemini 4 Argon low (CLI) over Gemini 3.1 Flash-Lite, the engine we use (+9.5 points a page, 95% interval +5.1 to +14.2); directional only."
+     "verdict": "No engine stands out from PaddleOCR-VL 1.6, the engine we use."
     }
    ]
   },
@@ -5842,6 +5848,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
+   "stored_now": "Counted 13 October 2026 with all Chinese books: 106,365 pages read by Gemini 3 Flash, about 39,000 by Flash-Lite, 330,855 with no text yet.",
    "panels": [
     {
      "kind": "primary",
@@ -6340,6 +6347,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": null,
+   "stored_now": null,
    "panels": [
     {
      "kind": "primary",
@@ -6736,6 +6744,7 @@
    "production_engine": "gemini-3.1-flash-lite",
    "production_label": "Gemini 3.1 Flash-Lite",
    "caption": "Two manuscripts only. The command-line reads here are scored as returned, with the route’s preamble left in.",
+   "stored_now": null,
    "panels": [
     {
      "kind": "primary",
@@ -7152,6 +7161,7 @@
    "production_engine": "omnisyr",
    "production_label": "Kraken (OmniSyr)",
    "caption": "Error is counted on consonants: vowel points and Syriac punctuation are folded, and a Latin column is ignored.",
+   "stored_now": null,
    "panels": [
     {
      "kind": "primary",

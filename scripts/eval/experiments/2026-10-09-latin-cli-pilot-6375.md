@@ -8,7 +8,7 @@ n_books: 299
 n_pages: 299
 verdict: "On real Latin queue pages readers prefer 3.7 Flash CLI over flash-lite on 14/15 gothic and 17/22 roman pages; lite loops on 4/46 gothic and reads long-s as f; gothic is about 7% of the queue."
 status: undecided
-decision: null
+decision: "No routing change. For Derek on #6688, default: Latin print stays on Flash-Lite (routing row latin-script-print); gothic type is re-tested on 3.8 Flash CLI with the fixed route (#6523) before any move, since 3.7 was withdrawn from agy on 2026-10-12"
 superseded_by: null
 issue: 6375
 ---

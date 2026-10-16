@@ -7,8 +7,8 @@ canons: []
 n_books: 114
 n_pages: 114
 verdict: "MinerU is neither peer nor tier-3 fallback, narrowly: catastrophic 2.6% (bar 2%), refused-page pooled CER 2.25x lite (bar 2x), mostly from dropped footnotes; median delta +0.19 pp."
-status: undecided
-decision: null
+status: rejected
+decision: "MinerU is not a peer of Flash-Lite; it stays a refusal fallback only, after the footnote fix (routing row refused-pages, PR #5299). Closed in #6688"
 superseded_by: null
 issue: [5182, 3389]
 ---

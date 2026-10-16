@@ -7,8 +7,8 @@ canons: []
 n_books: null
 n_pages: 80
 verdict: "Paddle invents on table pages, so the Chinese lane stopped; a $0 first-OCR guard cuts served Yigdzin invention from 28% to 3% of a random one-per-book draw (by eye)."
-status: undecided
-decision: null
+status: adopted
+decision: "scripts/lib/first-ocr-guard.mjs shipped (PR #6007); Paddle's table invention is handled by the table rule and Opus correction (routing row chinese-tables). Closed in #6688"
 superseded_by: null
 issue: [5660]
 ---

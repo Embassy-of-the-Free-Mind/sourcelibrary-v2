@@ -25,6 +25,7 @@
  * tests/unit/translate-core-parity.test.ts.
  */
 
+import { createRequire } from 'node:module';
 import { LATIN_SCRIPT_LANGUAGES, MODEL_FLASH, MODEL_LITE } from './translate-core.mjs';
 import { toLanguageCodes, codeFamily } from './language-normalize.mjs';
 
@@ -161,4 +162,25 @@ export function getOcrModelForBook(book, { liteOnly = OCR_LITE_ONLY } = {}) {
   const lang = (book?.language || '').toLowerCase().trim();
   if (!lang || !LATIN_SCRIPT_LANGUAGES.has(lang)) return OCR_MODEL_FLASH;
   return OCR_MODEL_LITE;
+}
+
+/**
+ * The routing table by PAGE KIND (#6688): which reader reads which kind of page, why, and the
+ * experiment behind it. One lookup for a session about to OCR a book, and the source of the
+ * "Who reads which page" section on /quality. The rows live in ocr-routing-table.json beside this
+ * file and nowhere else: the table in scripts/eval/ocr-routing/README.md is generated from it
+ * (scripts/eval/build-routing-table.mjs) and tests/unit/ocr-routing-table.test.ts checks each row's
+ * `code` claim against getOcrModelForBook above or the lane file it names.
+ *
+ * It RECORDS what the evidence settled; it does not route. getOcrModelForBook stays the only
+ * Gemini router, and the specialist lanes select their own books. A row with `routed: 'no'` is
+ * evidence production has not acted on, which is a decision for Derek, not a bug to fix here.
+ */
+export const OCR_ROUTING_TABLE = Object.freeze(createRequire(import.meta.url)('./ocr-routing-table.json'));
+
+/** The row for a page kind (`latin-script-print`, `manuscripts`, `tibetan` …). Throws on an unknown id. */
+export function ocrRouteForKind(id) {
+  const row = OCR_ROUTING_TABLE.rows.find((r) => r.id === id);
+  if (!row) throw new Error(`ocr-routing: no page kind "${id}" (known: ${OCR_ROUTING_TABLE.rows.map((r) => r.id).join(', ')})`);
+  return row;
 }

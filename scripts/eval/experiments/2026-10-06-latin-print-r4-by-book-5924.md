@@ -7,8 +7,8 @@ canons: []
 n_books: 97
 n_pages: 237
 verdict: "No open engine beats the flash models on Latin print: 1500s lite+longs and flash+cal tie (0.076), 1600s flash+cal and 3.8-flash (0.068), lite 0.093; GLM trails."
-status: undecided
-decision: "No routing change and Latin stays off the GPU box; the lite long-s post-pass and flash routing are posed to Derek in the PR (#5924)"
+status: rejected
+decision: "No open engine adopted for Latin print and Latin stays off the GPU box (routing row latin-script-print, not-adopted list). The long-s post-pass is part of the one Latin decision for Derek on #6688"
 superseded_by: null
 issue: [5924, 5660]
 ---

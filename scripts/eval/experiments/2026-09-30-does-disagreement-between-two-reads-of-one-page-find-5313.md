@@ -7,8 +7,8 @@ canons: []
 n_books: 327
 n_pages: 327
 verdict: "A fresh second read finds most garbled pages but imprecisely (P 0.3-0.45 vs the judge, gate 0.8 not met); the same reads separate wrong-leaf pages cleanly, 7 of 7."
-status: undecided
-decision: null
+status: rejected
+decision: "Not used as a reader-note or garble detector (gate P >= 0.8 not met). Disagreement is used only to pick pages for Opus to adjudicate against the image (routing row two-reads-disagree, #6420). Closed in #6688"
 superseded_by: null
 issue: [5313, 5376]
 ---

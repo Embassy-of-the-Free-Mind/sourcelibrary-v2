@@ -1,0 +1,181 @@
+{
+ "date": "2026-10-16",
+ "languages": {
+  "Arabic": {
+   "books": 264,
+   "pages": 60503,
+   "by_model": {
+    "gemini-3-flash-preview": 31542,
+    "gemini-3.1-flash-lite-preview": 19622,
+    "gemini-3.1-flash-lite": 6612,
+    "no_text": 2618,
+    "claude-opus-5-5": 74,
+    "gemini-2.5-flash": 31,
+    "gemini-3.7-flash-low": 2,
+    "gemini-3.8-flash-low": 2
+   }
+  },
+  "Pali": {
+   "books": 25,
+   "pages": 8540,
+   "by_model": {
+    "gemini-3.1-flash-lite": 6347,
+    "gemini-3.1-flash-lite-preview": 973,
+    "gemini-3-flash-preview": 968,
+    "no_text": 249,
+    "gemini-2.5-flash": 3
+   }
+  },
+  "Persian": {
+   "books": 55,
+   "pages": 15596,
+   "by_model": {
+    "gemini-3-flash-preview": 7515,
+    "gemini-3.1-flash-lite-preview": 3900,
+    "gemini-3.1-flash-lite": 2528,
+    "no_text": 1646,
+    "gemini-2.5-flash": 7
+   }
+  },
+  "Sanskrit": {
+   "books": 352,
+   "pages": 115121,
+   "by_model": {
+    "gemini-3-flash-preview": 62287,
+    "gemini-3.1-flash-lite-preview": 36928,
+    "gemini-3.1-flash-lite": 9635,
+    "no_text": 6243,
+    "gemini-2.5-flash": 22,
+    "human": 5,
+    "ia-legacy-ocr": 1
+   }
+  },
+  "Greek": {
+   "books": 1091,
+   "pages": 495404,
+   "by_model": {
+    "gemini-3-flash-preview": 418469,
+    "no_text": 37376,
+    "gemini-3.1-flash-lite-preview": 33965,
+    "gemini-3.1-flash-lite": 4673,
+    "gemini-2.5-flash": 636,
+    "mineru-pipeline": 144,
+    "gemini-3.8-flash-low": 70,
+    "claude-opus-5-5": 63,
+    "claude-opus-4-6": 3,
+    "claude-sonnet-4-6": 2,
+    "gemini-3.7-flash-low": 2,
+    "manual": 1
+   }
+  },
+  "Italian": {
+   "books": 577,
+   "pages": 180651,
+   "by_model": {
+    "gemini-3-flash-preview": 113688,
+    "gemini-3.1-flash-lite-preview": 29120,
+    "no_text": 26471,
+    "gemini-3.1-flash-lite": 11179,
+    "gemini-2.5-flash": 103,
+    "ia-ocr/0.0.16": 86,
+    "ia-ocr/ABBYY FineReader 11.0": 2,
+    "ia-ocr/0.0.21": 1,
+    "ia-ocr/ABBYY FineReader 9.0": 1
+   }
+  },
+  "French": {
+   "books": 882,
+   "pages": 347226,
+   "by_model": {
+    "gemini-3-flash-preview": 183206,
+    "gemini-3.1-flash-lite-preview": 109506,
+    "no_text": 31076,
+    "gemini-3.1-flash-lite": 20150,
+    "gemini-2.5-flash": 3245,
+    "ia-ocr/0.0.14": 38,
+    "ia-ocr/ABBYY FineReader 8.0": 3,
+    "manual": 2
+   }
+  },
+  "German": {
+   "books": 2694,
+   "pages": 810137,
+   "by_model": {
+    "gemini-3-flash-preview": 308713,
+    "gemini-3.1-flash-lite-preview": 296440,
+    "no_text": 127097,
+    "gemini-3.1-flash-lite": 71521,
+    "gemini-2.5-flash": 2891,
+    "ia-ocr/0.0.14": 2099,
+    "ia-ocr/0.0.21": 689,
+    "claude-opus-5-5": 579,
+    "gemini-3.8-flash-low": 77,
+    "gemini-3.7-flash-low": 12,
+    "claude-sonnet-4-6": 9,
+    "manual": 4,
+    "gemini": 2,
+    "ia-ocr/0.0.15": 2,
+    "claude-opus-4": 2
+   }
+  },
+  "English": {
+   "books": 3015,
+   "pages": 991532,
+   "by_model": {
+    "gemini-3-flash-preview": 489831,
+    "gemini-3.1-flash-lite-preview": 175369,
+    "no_text": 122272,
+    "gemini-3.1-flash-lite": 109856,
+    "ia-ocr/0.0.14": 47457,
+    "ia-ocr/0.0.21": 17964,
+    "gemini-2.5-flash": 10276,
+    "ia-ocr/0.0.18": 9057,
+    "ia-ocr/unknown": 2179,
+    "mineru-pipeline": 1853,
+    "ia-ocr/ABBYY FineReader 8.0": 1844,
+    "ia-ocr/0.0.6": 710,
+    "ia-ocr/0.0.17": 696,
+    "ia-ocr/0.0.15": 582,
+    "ia-ocr/0.0.13": 530,
+    "zai-org/GLM-OCR": 272,
+    "ia-legacy-ocr": 190,
+    "ia-ocr/0.0.16": 186,
+    "ia-ocr/0.0.11": 150,
+    "ia-ocr/ABBYY FineReader 11.0 (Extended OCR) 0.0.14": 88,
+    "claude-sonnet-4-6": 58,
+    "ia-ocr/ABBYY FineReader 9.0": 53,
+    "ia-ocr/0.0.12": 26,
+    "claude-opus-4": 12,
+    "claude-opus-5-5": 10,
+    "ia-ocr/ABBYY FineReader 11.0 (Extended OCR)": 6,
+    "claude-opus-4-6": 4,
+    "manual": 1
+   }
+  },
+  "Latin": {
+   "books": 15774,
+   "pages": 2982628,
+   "by_model": {
+    "gemini-3-flash-preview": 1332271,
+    "no_text": 777553,
+    "gemini-3.1-flash-lite-preview": 678339,
+    "gemini-3.1-flash-lite": 189526,
+    "claude-opus-5-5": 2274,
+    "gemini-2.5-flash": 1515,
+    "ia-ocr/0.0.12": 627,
+    "ia-ocr/ABBYY FineReader 8.0": 205,
+    "gemini-3.8-flash-low": 91,
+    "ia-ocr/0.0.14": 85,
+    "gemini-3.7-flash-low": 49,
+    "ia-ocr/unknown": 29,
+    "ia-ocr/0.0.16": 27,
+    "ia-ocr/0.0.21": 26,
+    "manual": 6,
+    "human": 2,
+    "claude-sonnet-4-6": 1,
+    "manual-correction": 1,
+    "claude-opus-4": 1
+   }
+  }
+ }
+}

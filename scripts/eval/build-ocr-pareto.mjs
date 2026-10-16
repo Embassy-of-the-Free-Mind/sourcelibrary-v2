@@ -18,7 +18,8 @@
  *   works      results/pareto-works.json (build-pareto-works.mjs: book → work_id), for the intervals
  *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (metered Batch spend); self-hosted and
  *              other APIs: ocr-engine-gpu-costs.json (each entry quotes its run's write-up); CLI arms: cli-cost*.json
- *   production scripts/lib/ocr-routing.mjs, the router that picks the model for new pages
+ *   production scripts/lib/ocr-routing.mjs, the router that picks the model for new pages; a chart a specialist lane
+ *              reads takes that lane's engine from scripts/lib/ocr-routing-table.json (`pareto`, #6688)
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
@@ -50,7 +51,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readBenchmarkRows, BENCHMARK_DIR } from './lib/benchmark-rows.mjs';
-import { getOcrModelForBook } from '../lib/ocr-routing.mjs';
+import { getOcrModelForBook, OCR_ROUTING_TABLE } from '../lib/ocr-routing.mjs';
 import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
 import { readFailure, READ_FAILURE_KINDS } from '../lib/read-failure.mjs';
 import { extractTranscription } from '../lib/cli-chatter.mjs';
@@ -113,9 +114,16 @@ const SCRIPTS = [
   { id: 'armenian', title: 'Armenian', language: 'Armenian', match: r => r.script === 'Armenian' },
   { id: 'hebrew', title: 'Hebrew', language: 'Hebrew', match: r => r.script === 'Hebrew' },
   { id: 'syriac', title: 'Syriac manuscript', language: 'Syriac', source: 'syriac' },
-  // Production for printed Syriac is the Kraken lane (scripts/workers/syriac-kraken-lane.mjs, #4883), not the router.
-  { id: 'syriac-print', title: 'Syriac print', language: 'Syriac', source: 'syriac-print', production: 'omnisyr' },
+  { id: 'syriac-print', title: 'Syriac print', language: 'Syriac', source: 'syriac-print' },
 ];
+// Where a specialist lane reads the script, the engine in use is that lane's, not the Gemini router's: the rows of
+// scripts/lib/ocr-routing-table.json name it (`pareto: { chart, engine }`; #6688). Printed Syriac is the Kraken lane
+// (#4883) and the Siku Quanshu manuscripts are PaddleOCR-VL (#5600). Every other chart asks the router.
+const LANE_ENGINE = new Map(OCR_ROUTING_TABLE.rows.filter(r => r.pareto).map(r => [r.pareto.chart, r.pareto.engine]));
+// The other baseline (#6688): "the engine in use" is what NEW pages get, and the text readers have now was mostly
+// written earlier by other engines. Each chart carries its row's dated census so a win over the engine in use is
+// not read as a reason to re-read stored pages.
+const STORED_NOW = new Map(OCR_ROUTING_TABLE.rows.filter(r => r.stored && r.charts).flatMap(r => r.charts.map(c => [c, r.stored])));
 // #6304's verdicts: these charts' references were judged not fit to rank engines.
 const UNFIT_6304 = new Set(['chinese-print', 'armenian']);
 // Scripts with OCR runs but no typed reference the charts could score against.
@@ -469,7 +477,7 @@ for (const script of SCRIPTS) {
   const rows = script.source === 'syriac-print' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
   chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, failure: r.failure, failure_why: r.failure_why }));
   const byEngine = pagesOf(rows);
-  const production = script.production || getOcrModelForBook({ language: script.language, visible: true });
+  const production = LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true });
   const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
   if (nProd < MIN_PAGES) {
     noChart.push({ title: script.title, why: nProd ? `${nProd} page${nProd === 1 ? '' : 's'} with a typed reference; at least ${MIN_PAGES} are needed` : 'no page with a typed reference yet', source: 'scripts/eval/results/benchmark/' });
@@ -515,14 +523,15 @@ for (const script of SCRIPTS) {
     if (ps.size >= MIN_PAGES) panels.push(panel(script, 'cli-subsample', bySub, [...primarySets[script.id].engines, ...sub.engines], ps, production, repeat,
       { role: 'secondary', heading: `${ps.size} pages drawn at random, with ${sub.engines.map(e => LABEL[e]).join(' and ')}` }));
   }
-  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, panels });
+  charts.push({ id: script.id, title: script.title, production_engine: production, production_label: LABEL[production] || production, caption: CAPTION[script.id] || null, stored_now: STORED_NOW.get(script.id) || null, panels });
 }
 
 const out = {
   issue: 6386,
   generated_by: 'scripts/eval/build-ocr-pareto.mjs',
   measure: 'accuracy: 1 − mean character error rate (each page capped at 100% error) against a typed reference, on the pages of the panel the engine read; a refused, empty, timed-out or copy-filtered read is not scored and is counted in did_not_read',
-  production_rule: 'the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script',
+  stored_now_census: OCR_ROUTING_TABLE.census,
+  production_rule: 'the engine that reads new pages in the script: the specialist lane scripts/lib/ocr-routing-table.json names for the chart, else the model scripts/lib/ocr-routing.mjs assigns',
   grade_rules: GRADE_RULES,
   cost_sources: { metered: `scripts/eval/results/ocr-cost/${costFile}`, other: 'scripts/eval/ocr-engine-gpu-costs.json', usd_per_eur: gpu.usd_per_eur },
   charts,
