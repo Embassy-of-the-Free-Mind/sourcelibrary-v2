@@ -36,6 +36,7 @@ function Plate({
   width,
   height,
   wide = false,
+  small = false,
   children,
 }: {
   src: string;
@@ -45,10 +46,12 @@ function Plate({
   height: number;
   // Tall plates are capped so one picture does not fill several screens.
   wide?: boolean;
+  // Low-resolution sources stay near their natural size instead of being blown up.
+  small?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <figure className={wide ? 'mb-10' : 'mb-10 max-w-md mx-auto w-full'}>
+    <figure className={wide ? 'mb-10' : small ? 'mb-10 max-w-xs mx-auto w-full' : 'mb-10 max-w-md mx-auto w-full'}>
       <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
         <Link href={href}>
           <Image src={src} alt={alt} width={width} height={height} className="w-full h-auto" unoptimized />
@@ -293,6 +296,7 @@ export default function TreesOfLifePage() {
           href="/book/699209afbed8f4b5ff5b23f8?page=386"
           width={250}
           height={310}
+          small
         >
           The goddess in the sycamore, Papyrus of Ani. From E. A. Wallis Budge’s facsimile,{' '}
           <em>The Book of the Dead</em> (1895).
