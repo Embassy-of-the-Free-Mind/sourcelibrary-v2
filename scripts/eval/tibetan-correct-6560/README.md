@@ -105,6 +105,9 @@ scripts/eval/tibetan-correct-6560/pass/run-volume.sh <book_id> [--no-apply]
 4. **gate** (first volume only): `leafcheck.mjs audit-req` samples 40 pages that apply would write. A fresh Opus
    judges every changed span (draft vs written, A/B blind). A page is worse when the leaf shows the draft at more
    spans than the correction. GO if at most 2 of 40 are worse.
+Another corrector through the same gate: `MODEL=<agy model> JOB=<job> run-volume.sh <book_id> --no-apply`. Gemini 4
+Argon low ran it on 2026-10-16 (NO-GO: `experiments/2026-10-15-tibetan-g4l-pass-gate-6560.md`).
+
 ## Gemini 4 Argon low arm (#6560, 2026-10-15)
 
 `prep.py --root <scratch> --reuse-plants`, then `scripts/eval/run-cli-arm.py --model gemini-4-argon-low --kind ocr
