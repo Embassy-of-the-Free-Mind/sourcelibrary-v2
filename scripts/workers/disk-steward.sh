@@ -43,6 +43,27 @@ if [ -f "$SL/scripts/maintenance/reap-worktrees.mjs" ]; then
   (cd "$SL" && node scripts/maintenance/reap-worktrees.mjs --merged-only ${APPLY:+--apply} 2>&1 | grep -E '^ *removed |would remove|^Reaped|^DRY-RUN' )
 fi
 
+# 1b. Shrink the Antigravity CLI's SQLite write-ahead log. agy never checkpoints it while calls keep a reader
+#     open, and on 2026-10-16 it had reached 15 GB of a 150 GB root disk (conversation_summaries.db-wal).
+#     A checkpoint is SQLite's own operation: it copies committed pages into the database and drops nothing.
+#     TRUNCATE only succeeds in a moment with no reader, so retry for a few minutes, then say so.
+for W in "$ROOT"/.gemini/antigravity-cli/*.db-wal; do
+  [ -f "$W" ] || continue
+  DB=${W%-wal}; mb=$(( $(stat -c %s "$W") / 1048576 ))
+  [ "$mb" -ge 256 ] || continue
+  if [ -z "$APPLY" ]; then echo "  would checkpoint $(basename "$DB") (WAL ${mb} MB)"; continue; fi
+  python3 - "$DB" <<'PY'
+import sqlite3, sys, time
+db = sys.argv[1]
+for i in range(int(180)):
+    c = sqlite3.connect(db, timeout=5)
+    r = c.execute('PRAGMA wal_checkpoint(TRUNCATE)').fetchone(); c.close()
+    if r[0] == 0: print(f'  checkpointed {db}: WAL truncated after {i} s'); break
+    time.sleep(1)
+else: print(f'  checkpointed {db}: WAL still held by a reader after 180 s (pages copied, file not shrunk)')
+PY
+done
+
 # 2. Move idle /root folders to the volume.
 if [ ! -d "$VOL" ]; then echo "$(now) no volume at $VOL: step 2 skipped"; exit 0; fi
 mkdir -p "$DEST"
