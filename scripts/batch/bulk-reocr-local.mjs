@@ -15,7 +15,7 @@
  * Usage (run on Hetzner — large File-API uploads fail from a residential Mac, #3974):
  *   node scripts/batch/bulk-reocr-local.mjs --page-ids-file=pages.json --reason="..." --dry-run
  *
- * Targeting (at most one of the first three; without them, a sweep over books by read_count):
+ * Targeting (at most one of the first three; without them, a sweep over books by human_read_count, #5048):
  *   --page-ids-file=F  An explicit page list (JSON). A bare array of ids, or objects carrying
  *                      `page_id` under `confirmed` / `suspected` / `pages` — the same shapes
  *                      realtime-ocr.mjs takes. The list IS the decision: no OCR-state filter.
@@ -304,7 +304,7 @@ const PAGE_PROJECTION = {
 };
 const BOOK_PROJECTION = {
   _id: 0, id: 1, title: 1, display_title: 1, language: 1, original_language: 1, visible: 1, created_at: 1,
-  read_count: 1, pages_count: 1, image_source: 1, 'pipeline_auto.status': 1,
+  read_count: 1, human_read_count: 1, pages_count: 1, image_source: 1, 'pipeline_auto.status': 1,
   'pipeline_auto.hold': 1, 'pipeline_auto.ocr_generation': 1,
 };
 const HAS_IMAGE = { $or: [{ photo: { $exists: true, $ne: null } }, { photo_original: { $exists: true, $ne: null } }] };
@@ -370,7 +370,7 @@ async function resolveTargets(db, promptVersion) {
     }
 
     let cursor = db.collection('books').find(bookFilter, { projection: BOOK_PROJECTION })
-      .sort({ read_count: -1, pages_count: -1 });
+      .sort({ human_read_count: -1, read_count: -1, pages_count: -1 });
     if (!BOOK_IDS && !SINGLE_BOOK) cursor = cursor.skip(OFFSET).limit(LIMIT + 50);
     const books = await cursor.toArray();
     if (BOOK_IDS && books.length < BOOK_IDS.length) {

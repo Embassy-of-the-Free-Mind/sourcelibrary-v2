@@ -82,11 +82,11 @@ export async function GET(request: NextRequest) {
     const books = await db.collection('books').find(bookFilter, {
       projection: {
         _id: 0, id: 1, title: 1, display_title: 1,
-        language: 1, original_language: 1, read_count: 1,
+        language: 1, original_language: 1, read_count: 1, human_read_count: 1,
         'image_source.provider': 1, // getModelForBook reads it (BPH → flash)
       }
     })
-      .sort({ read_count: -1, pages_ocr: -1 })
+      .sort({ human_read_count: -1, read_count: -1, pages_ocr: -1 })
       .skip(offset)
       .limit(limit + 50) // Fetch extra since some will have 0 eligible pages
       .toArray();

@@ -95,7 +95,7 @@ async function run() {
   // Find all visible archive_complete books
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'archive_complete', hidden: { $ne: true } })
-    .sort({ read_count: -1 })
+    .sort({ human_read_count: -1, read_count: -1 })
     .project({ id: 1, title: 1, pages_count: 1, pages_ocr: 1 })
     .limit(LIMIT)
     .toArray();
