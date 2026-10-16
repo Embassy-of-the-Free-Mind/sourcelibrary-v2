@@ -95,7 +95,7 @@ describe('ocr-pareto.json', () => {
       const expected = withheld ? undefined
         : ci && ci[0] > 0 && x.vs_in_use.diff > band ? 'better' : ci && ci[1] < 0 && -x.vs_in_use.diff > band ? 'worse' : 'same';
       expect(x.verdict, `${id}/${p.kind}/${x.engine}`).toBe(expected);
-      if (expected === 'better') expect(p.verdict, id).toMatch(p.grade.level === 'decide' ? /better/ : /points toward/);
+      if (expected === 'better') expect(p.verdict, id).toMatch(p.grade.level === 'decide' ? /better/ : /points toward|not runnable today/);
     }
     for (const [id, p] of panels) {
       if (p.grade.level === 'not_fit') expect(p.verdict, id).toMatch(/^No verdict/);
@@ -112,7 +112,7 @@ describe('ParetoCharts.tsx holds no figures', () => {
     .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '').replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
   const RULES: [string, RegExp][] = [
     ['no percentages', /\b(?!95%)\d+(\.\d+)?\s?%/],
-    ['no money', /\$(?!0 via subscription)\d/], // the one fixed label: a subscription run bills nothing
+    ['no money', /\$(?!0 (via subscription|billed))\d/], // the fixed labels: a subscription run bills nothing
     ['no dates', /\b20\d\d-\d\d-\d\d\b/],
     ['no engine names', /\b(gemini|flash|paddle|surya|kraken|tesseract|olmocr|ndl)\b/i],
   ];
@@ -131,12 +131,14 @@ describe('the summary table agrees with each verdict sentence (#6524)', async ()
     if (r.state === 'not_fit') return void expect(verdict).toMatch(/^No verdict/);
     expect(verdict).toContain(r.inUse);
     if (r.state === 'withheld') expect(verdict).toMatch(/^Verdicts withheld/);
-    else if (r.state === 'none') expect(verdict).toMatch(/^No engine (is clearly better than|stands out from) /);
+    else if (r.state === 'none') expect(verdict).toMatch(/^No engine (we can run today )?(is clearly better than|stands out from) /);
     else {
       expect(verdict.startsWith(r.state === 'switch' ? `${r.best} ` : `The evidence points toward ${r.best} over `), verdict).toBe(true);
       expect(verdict).toContain(`${r.gain} `);
       expect(verdict).toContain(`95% interval ${r.interval})`);
       for (const also of r.also.slice(0, 2)) expect(verdict.split('Also better: ')[1]).toContain(also.label);
+      // no engine we cannot run is ever the one offered (#6776)
+      for (const x of r.cannotRun) expect(verdict.split('not runnable today: ')[1] ?? '', `${chart.id}: ${x}`).toContain(x);
       if (r.also.length > 2) expect(verdict).toContain(`and ${r.also.length - 2} more`);
     }
   });

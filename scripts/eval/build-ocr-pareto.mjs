@@ -20,6 +20,11 @@
  *              other APIs: ocr-engine-gpu-costs.json (each entry quotes its run's write-up); CLI arms: cli-cost*.json
  *   production scripts/lib/ocr-routing.mjs, the router that picks the model for new pages; a chart a specialist lane
  *              reads takes that lane's engine from scripts/lib/ocr-routing-table.json (`pareto`, #6688)
+ *   time       seconds a page, the median of each arm's own meter on the panel's pages: the #6293 CLI meters
+ *              (ocr-pareto-6293/meter-*.jsonl), the #6707 Gemini 4 Argon reads (g4-hard-6707/raw) and the #6731 cells.
+ *              An engine with no per-page meter is "not measured", never estimated (#6776)
+ *   hard hands #6731's Greek-manuscript and Rashi-type panels (results/hard-hands-6731/scored-*.json), graded by the
+ *              same rules (#6776)
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
@@ -45,14 +50,17 @@
  *     production engine's own reading get their own panel, graded not fit;
  *   - ONE COST BASIS: billed dollars (Gemini at its metered Batch rate; other APIs at their billed rate; GPU runs at
  *     the whole billed rental, shared by inference time); CLI runs at the API Batch price for the same requests,
- *     marked `quota` ($0 billed, subscription); an engine with no billed price sits on the "no price" strip.
+ *     marked `quota` ($0 billed, subscription); an engine with no billed price sits on the "no price" strip;
+ *   - every point names its ROUTE (#6776): `api` (billed per request), `subscription` (a CLI on the subscription, $0
+ *     billed), `gpu` (a rented GPU, billed whole) or `own` (our own server).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readBenchmarkRows, BENCHMARK_DIR } from './lib/benchmark-rows.mjs';
 import { getOcrModelForBook, OCR_ROUTING_TABLE } from '../lib/ocr-routing.mjs';
-import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { r3, median, mean, hash, clusterCI, pairedDiff, noiseOf, verdictOf, gradePanel, toDecide, GRADE_RULES, MARGIN, markFrontier, verdictSentence } from './lib/pareto-stats.mjs';
+import { canRunToday } from './lib/model-availability.mjs';
 import { readFailure, READ_FAILURE_KINDS } from '../lib/read-failure.mjs';
 import { extractTranscription } from '../lib/cli-chatter.mjs';
 
@@ -98,6 +106,12 @@ const STRATA = {
   armenian: { reference: 'TITUS e-texts keyed from the same edition', metric: 'whole' },
   'syriac-gt': { reference: 'line-by-line transcriptions of two manuscripts', metric: 'line' },
   'syriac-print-6295': { reference: 'Digital Syriac Corpus e-texts, located with our own reading', metric: 'consonant', anchored: true, edition: true },
+  // #6731: CER by fitting alignment (text read outside the reference passage is free), a measure of its own
+  'greek-ms-6731': { reference: 'Schneider and Berthelot–Ruelle editions, the span fitted to the page with Kraken', metric: 'fitting', edition: true },
+  'greek-ms-6731-anchored': { reference: 'Schneider and Berthelot–Ruelle editions, the span fitted with our own reading', metric: 'fitting', anchored: true, edition: true },
+  // the span is the median of every read that aligns, the stored production read among them: anchored on every page
+  // (splitting on whether production's read aligned would split on production's own error)
+  'rashi-6731': { reference: 'Sefaria texts, the span placed with every engine’s reads, our own among them', metric: 'fitting', anchored: true, edition: true },
 };
 const stratumOf = page => page.split('|')[0];
 const fallbackStratum = s => STRATA[s] || { reference: `references sealed with ${s}`, metric: 'whole' };
@@ -114,7 +128,11 @@ const SCRIPTS = [
   { id: 'armenian', title: 'Armenian', language: 'Armenian', match: r => r.script === 'Armenian' },
   { id: 'hebrew', title: 'Hebrew', language: 'Hebrew', match: r => r.script === 'Hebrew' },
   { id: 'syriac', title: 'Syriac manuscript', language: 'Syriac', source: 'syriac' },
-  { id: 'syriac-print', title: 'Syriac print', language: 'Syriac', source: 'syriac-print' },
+  // Production for printed Syriac is the Kraken lane (scripts/workers/syriac-kraken-lane.mjs, #4883), not the router.
+  { id: 'syriac-print', title: 'Syriac print', language: 'Syriac', source: 'syriac-print', production: 'omnisyr' },
+  // #6731: compared against the production OCR stored for these pages, not a fresh read by the router's engine
+  { id: 'greek-manuscript', title: 'Greek manuscript', language: 'Greek', source: 'greek-ms', production: 'production-stored' },
+  { id: 'rashi', title: 'Hebrew in Rashi type', language: 'Hebrew', source: 'rashi', production: 'production-stored' },
 ];
 // Where a specialist lane reads the script, the engine in use is that lane's, not the Gemini router's: the rows of
 // scripts/lib/ocr-routing-table.json name it (`pareto: { chart, engine }`; #6688). Printed Syriac is the Kraken lane
@@ -145,8 +163,9 @@ const metered = JSON.parse(fs.readFileSync(path.join(costDir, costFile), 'utf8')
 const gpu = JSON.parse(fs.readFileSync(path.join(__dirname, 'ocr-engine-gpu-costs.json'), 'utf8'));
 const COST = {};      // engine → [{ charts|null, usd_per_1k, basis, detail, source }]
 const NO_PRICE = {};  // engine → why it has no price
+const NO_PRICE_ROUTE = {}; // engine → route of an engine priced on inference time only
 for (const [engine, m] of Object.entries(metered.models)) COST[engine] = [{
-  charts: null, usd_per_1k: r3(m.usd_per_1k_pages), basis: 'billed',
+  charts: null, usd_per_1k: r3(m.usd_per_1k_pages), basis: 'billed', route: 'api',
   detail: `Gemini Batch, ${m.pages.toLocaleString('en-US')} pages metered ${metered.window.from.slice(0, 10)} to ${metered.window.to.slice(0, 10)}`,
   source: `scripts/eval/results/ocr-cost/${costFile}`,
 }];
@@ -156,12 +175,12 @@ for (const [engine, entries] of Object.entries(gpu.engines)) {
   for (const g of entries) {
     const text = flat(fs.readFileSync(path.join(REPO, g.source), 'utf8'));
     for (const part of g.quote.split(' … ')) if (!text.includes(flat(part))) throw new Error(`ocr-engine-gpu-costs.json: ${engine}'s quote "${part}" is not in ${g.source}`);
-    if (g.basis === 'compute') { NO_PRICE[engine] = 'priced on inference time only; no billed rental on record'; continue; }
+    if (g.basis === 'compute') { NO_PRICE[engine] = 'priced on inference time only; no billed rental on record'; NO_PRICE_ROUTE[engine] = /Scaleway/.test(g.hardware) ? 'gpu' : 'own'; continue; }
     const eurPerPage = g.eur_per_page ?? (g.eur != null && g.pages ? g.eur / g.pages : null);
     const usd = g.usd_per_1k ?? (eurPerPage != null ? eurPerPage * 1000 * gpu.usd_per_eur.value : null);
     if (usd == null) throw new Error(`ocr-engine-gpu-costs.json: ${engine} entry has no eur+pages, eur_per_page or usd_per_1k`);
     billed.push({
-      charts: g.charts ?? null, usd_per_1k: r3(usd), basis: 'billed',
+      charts: g.charts ?? null, usd_per_1k: r3(usd), basis: 'billed', route: g.basis === 'metered-api' ? 'api' : 'gpu',
       detail: `${g.hardware}; ${g.basis === 'metered-api' ? 'billed API spend, realtime rate' : 'whole billed rental'}, measured ${g.measured_on}`,
       source: g.source,
     });
@@ -172,8 +191,20 @@ function costOf(engine, chartId) {
   const es = COST[engine] || [];
   const e = es.find(x => x.charts?.includes(chartId)) || es.find(x => !x.charts);
   if (!e) return null;
-  const { charts, ...rest } = e;
+  const { charts, route, ...rest } = e;
   return rest;
+}
+const isCli = e => /\+(antigravity|claude)-cli$/.test(e);
+const OWN_SERVER = e => /^(kraken|tesseract|omnisyr|qoruyo|sophro)/.test(e) || ['omnisyr-nosplit', 'mineru'].includes(e);
+/** How the engine was run for this chart: what a page costs in money or in time and quota (#6776). */
+function routeOf(engine, chartId) {
+  if (isCli(engine)) return 'subscription';
+  const es = COST[engine] || [];
+  const e = es.find(x => x.charts?.includes(chartId)) || es.find(x => !x.charts);
+  if (e) return e.route;
+  if (engine === STORED) return 'api';
+  // an API arm priced only for other charts ran by the same route here; an engine of unknown route says so (null)
+  return NO_PRICE_ROUTE[engine] || es[0]?.route || (OWN_SERVER(engine) ? 'own' : null);
 }
 
 // ── works: the unit the intervals resample ───────────────────────────────────────────────────
@@ -233,10 +264,14 @@ const RESCORED = new Map(JSON.parse(fs.readFileSync(path.join(__dirname, 'result
 // The CLI arms' replies and meters are committed (outputs-*.jsonl, meter-*.jsonl), so a CLI read's failure is told
 // from its own words; every other engine's from what its scored cell recorded (finishReason, refusal, text length).
 const CLI_REPLY = new Map();
+// Seconds a page (#6776): page|engine → { secs, file }, from each arm's own meter only.
+const SECS = new Map();
+const meterSecs = (page, engine, secs, file) => { if (typeof secs === 'number') SECS.set(`${page}|${engine}`, { secs, file: path.relative(REPO, file) }); };
 for (const f of fs.readdirSync(path.join(__dirname, 'results', 'ocr-pareto-6293')).filter(f => /^(outputs|meter)-.*\.jsonl$/.test(f) && !f.includes('-rep'))) {
   for (const line of fs.readFileSync(path.join(__dirname, 'results', 'ocr-pareto-6293', f), 'utf8').split('\n').filter(Boolean)) {
     const o = JSON.parse(line), k = `${o.stratum}|${o.slug}|${o.engine}`;
     CLI_REPLY.set(k, { ...CLI_REPLY.get(k), ...(f.startsWith('outputs') ? { text: o.text } : { finishReason: o.finishReason, error: o.error }) });
+    if (f.startsWith('meter')) meterSecs(`${o.stratum}|${o.slug}`, o.engine, o.secs, path.join(__dirname, 'results', 'ocr-pareto-6293', f));
   }
 }
 // ONE FAILURE RULE (#6523, Derek 2026-10-11: "Count them but don't score them. We only want to know quality when it
@@ -294,7 +329,7 @@ if (syriacCliTiers.length) {
   const cc = JSON.parse(fs.readFileSync(SYRIAC_CLI_COST_FILE, 'utf8'));
   for (const t of syriacCliTiers) {
     const c = t.T === 'C38' ? cc : cc.tiers[t.T];
-    COST[t.engine] = [...(COST[t.engine] || []), { charts: ['syriac-print'], usd_per_1k: r3(c.ocr.usd_per_1k_batch), basis: 'quota',
+    COST[t.engine] = [...(COST[t.engine] || []), { charts: ['syriac-print'], usd_per_1k: r3(c.ocr.usd_per_1k_batch), basis: 'quota', route: 'subscription',
       detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${c.model}'s API Batch price for the same requests`,
       source: path.relative(REPO, SYRIAC_CLI_COST_FILE) }];
   }
@@ -305,6 +340,55 @@ if (syriacPrint) for (const pg of syriacPrint.per_page) for (const [arm, engine]
   syriacPrintRows.push({ page: `syriac-print-6295|${pg.slug}`, stratum: 'syriac-print-6295', engine, cer: Math.min(1, pg.cer[arm]), failure: null, failure_why: null, invented: null,
     date: syriacPrint.date, file: path.relative(REPO, SYRIAC_PRINT_FILE), work: `edition:${pg.edition || pg.slug.split('_')[0]}` });
 }
+
+// #6707: Gemini 4 Argon's own meter on the Syriac manuscript and print panels (its other panels are in the #6293 meter).
+const ARGON = 'gemini-4-argon-low+antigravity-cli';
+for (const [f, prefix] of [['G4L-syr-ms.raw.jsonl', ''], ['G4L-syr-print.raw.jsonl', 'syriac-print-6295|']]) {
+  const file = path.join(__dirname, 'results', 'g4-hard-6707', 'raw', f);
+  if (!fs.existsSync(file)) continue;
+  for (const line of fs.readFileSync(file, 'utf8').split('\n').filter(Boolean)) { const o = JSON.parse(line); meterSecs(`${prefix}${o.uid}`, ARGON, o.secs, file); }
+}
+
+// The hard hands (#6731, PR #6754): Greek manuscripts and Rashi-type Hebrew print, each read by Gemini 4 Argon low, 3.8
+// Flash low and Opus 5.5 through a CLI, beside the production OCR stored for the page (and Kraken on the Greek). Scored
+// by fitting alignment against an edition or Sefaria span. Pages split by how their reference was placed, as for every
+// chart: the 4 Greek pages fitted with the production read are `anchored`, and so is every Rashi page (STRATA).
+const STORED = 'production-stored';
+LABEL[STORED] = 'Production OCR as stored';
+LABEL['claude-opus-5-5+claude-cli'] = 'Claude Opus 5.5 (Claude CLI)';
+const HARD_DIR = path.join(__dirname, 'results', 'hard-hands-6731');
+const HARD_DATE = '2026-10-15'; // scripts/eval/experiments/2026-10-15-gemini-4-argon-hard-hands-greek-ms-rashi-6731.md
+const HARD_ARMS = { G4L: ARGON, C38L: 'gemini-3.8-flash+antigravity-cli', OPUS: 'claude-opus-5-5+claude-cli', PROD: STORED, KRAKEN: 'kraken-greek-cllg' };
+const HARD_KIND = { not_ocr: 'other' }; // the stored text on 3 Rashi pages is Sefaria's, not an OCR: counted, never scored
+const hardRows = { 'greek-ms': [], rashi: [] }, hardProd = { 'greek-ms': {}, rashi: {} };
+for (const [src, f] of [['greek-ms', 'scored-greek.json'], ['rashi', 'scored-rashi.json']]) {
+  const file = path.join(HARD_DIR, f);
+  if (!fs.existsSync(file)) continue;
+  for (const p of JSON.parse(fs.readFileSync(file, 'utf8')).filter(x => x.kept)) {
+    const stratum = `${src}-6731${src === 'greek-ms' && p.fit !== 'kraken' ? '-anchored' : ''}`;
+    const page = `${stratum}|${p.uid.split('|')[1]}`;
+    hardProd[src][p.prod_model] = (hardProd[src][p.prod_model] || 0) + 1;
+    for (const [arm, c] of Object.entries(p.cells)) {
+      const engine = HARD_ARMS[arm];
+      if (!engine || c.unscored) continue;
+      const failure = c.failure ? (HARD_KIND[c.failure] || c.failure) : typeof c.cer === 'number' ? null : 'other';
+      hardRows[src].push({ page, stratum, engine, cer: failure ? null : Math.min(1, c.cer), failure, failure_why: c.why ?? null, invented: null,
+        date: HARD_DATE, file: path.relative(REPO, file), work: `work:${p.work}` });
+      meterSecs(page, engine, c.secs, file);
+    }
+  }
+}
+// The Rashi memorisation control: each arm asked to write out the reference passage with no image.
+const MEMO_FILE = path.join(HARD_DIR, 'scored-memo.json');
+const memo = fs.existsSync(MEMO_FILE) ? JSON.parse(fs.readFileSync(MEMO_FILE, 'utf8')) : [];
+const memoAcc = Object.values(memo.reduce((m, r) => {
+  const a = (m[r.arm] ||= { recall: [], image: [] });
+  if (typeof r.recall?.cer === 'number') a.recall.push(Math.min(1, r.recall.cer));
+  if (typeof r.image?.cer === 'number') a.image.push(Math.min(1, r.image.cer));
+  return m;
+}, {})).filter(a => a.recall.length).map(a => ({ recall: 1 - mean(a.recall), image: 1 - mean(a.image) }));
+const pctRange = xs => `${Math.round(Math.min(...xs) * 100)}% to ${Math.round(Math.max(...xs) * 100)}%`;
+const prodModels = src => Object.entries(hardProd[src]).sort((a, b) => b[1] - a[1]);
 
 // #6293's CLI arms: a chart keeps one only if it read every page of the chart's frozen set (minus the #6304 drops);
 // placed at the API's Batch price for the same requests (cli-cost*.json), basis 'quota'.
@@ -319,7 +403,7 @@ for (const t of CLI_6293_TIERS) {
   const cc = JSON.parse(fs.readFileSync(t.costFile, 'utf8'));
   LABEL[t.engine] = t.label;
   for (const [chart, c] of Object.entries(cc.charts)) (COST[t.engine] ||= []).push({
-    charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'quota',
+    charts: [chart], usd_per_1k: r3(c.usd_per_1k_batch), basis: 'quota', route: 'subscription',
     detail: `run through the Antigravity CLI on the Google subscription, $0 billed; placed at ${cc.model}'s API Batch price by the #6293 preregistered formula (output scaled ×${c.r_out} by this arm's text length)`
       + ((cc.charts_reread_6523 || []).includes(chart) ? `; these pages re-read with the #6523 route config (${ROUTE_6523})` : ''),
     source: path.relative(REPO, t.costFile) });
@@ -361,6 +445,12 @@ function greedy(byEngine, start, floor, within) {
     if (!best) return { engines: set, pages: shared };
     set.push(best.e); shared = best.s;
   }
+}
+
+function secsOf(engine, pages) {
+  const xs = pages.map(p => SECS.get(`${p}|${engine}`)).filter(Boolean);
+  if (xs.length < MIN_PAGES) return null;
+  return { median: Math.round(median(xs.map(x => x.secs)) * 10) / 10, n: xs.length, files: [...new Set(xs.map(x => x.file))].sort() };
 }
 
 const numPts = d => `${d >= 0 ? '+' : '−'}${Math.abs(d * 100).toFixed(1)}`;
@@ -413,8 +503,13 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
       // share of the engine's words absent from the reference; only where the scorer computes it on most of the pages
       words_not_in_ref: inv.length >= Math.max(MIN_PAGES, rs.length / 2) ? r3(median(inv)) : null,
       cost: costOf(e, script.id),
+      route: routeOf(e, script.id),
+      // median seconds a page from the arm's own meter, on this panel's pages (failed reads too: the time was spent)
+      secs_per_page: secsOf(e, ps),
     };
-    if (!pt.cost) pt.no_price = NO_PRICE[e] || (/^(kraken|tesseract|omnisyr|qoruyo|sophro)/.test(e) || ['omnisyr-nosplit', 'mineru'].includes(e) ? 'runs on our own servers; no billed price on record' : 'no billed price on record');
+    if (!pt.cost) pt.no_price = NO_PRICE[e] || (e === STORED ? 'the stored reads come from more than one model, so no one price applies'
+      : isCli(e) ? 'run through a command-line tool on the subscription, $0 billed; no API price computed for these pages'
+        : OWN_SERVER(e) ? 'runs on our own servers; no billed price on record' : 'no billed price on record');
     if (prodRows && e !== production) {
       const pairs = all.flatMap((r, i) => (r.failure || prodRows[i].failure ? [] : [{ d: prodRows[i].cer - r.cer, cluster: work(ps[i]) }]));
       pt.vs_in_use = pairs.length ? pairedDiff(pairs, hash(`${script.id}|${kind}|vs|${e}`)) : null;
@@ -424,10 +519,11 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
   });
   const metricSet = new Set([...strata.keys()].map(s => fallbackStratum(s).metric));
   const editionPages = [...strata].filter(([s]) => fallbackStratum(s).edition).reduce((n, [, k]) => n + k, 0);
-  const grade = gradePanel({
+  const gradeIn = {
     works: works.size, unfit6304: UNFIT_6304.has(script.id), metrics: metricSet.size,
     productionAnchored: [...strata.keys()].some(s => fallbackStratum(s).anchored), modernEdition: editionPages > ps.length / 2,
-  });
+  };
+  const grade = gradePanel(gradeIn);
   // a not_fit panel, or one whose engine in use did not reproduce itself, gives no verdict words
   if (grade.level === 'not_fit' || noise?.kind === 'not_reproduced') for (const pt of points) delete pt.verdict;
   const placed = points.filter(p => p.cost), noCost = points.filter(p => !p.cost);
@@ -439,11 +535,11 @@ function panel(script, kind, byEngine, engines, pages, production, repeat, extra
   const p = {
     kind, n_pages: ps.length, n_works: works.size,
     reference: [...new Set(refs.map(r => r.reference))].slice(0, 2).join('; '),
-    references: refs, grade, frontier, noise,
+    references: refs, grade, to_decide: grade.level === 'decide' ? null : toDecide(gradeIn), frontier, noise,
     date: dates.filter(Boolean).sort().at(-1) || null, files: [...files].filter(Boolean).sort(),
     placed, no_cost: noCost, ...extra,
   };
-  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page' });
+  p.verdict = verdictSentence(p, { num: numPts, unit: 'points a page', verb: 'reads', margin: MARGIN.ocr, marginText: '1 point a page', canRun: canRunToday });
   return p;
 }
 
@@ -459,6 +555,7 @@ const familyOf = page => { const s = fallbackStratum(stratumOf(page)); return `$
 const FAMILY_HEADING = {
   'windowed|independent': 'Transcriptions of the page', 'whole|independent': 'Typed editions of the text', 'line|independent': 'Line-by-line transcriptions',
   'whole|anchored': 'References located with our own reading', 'consonant|anchored': 'References located with our own reading',
+  'fitting|independent': 'Editions fitted to the page', 'fitting|anchored': 'References located with our own reading',
 };
 // Per-chart caption: only what is specific to that chart, 40 words at most.
 const CAPTION = {
@@ -468,16 +565,19 @@ const CAPTION = {
   // #6523: the route config of the 3.7 / 3.8 command-line reads on these two charts, and the scoring change
   latin: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
   english: 'Gemini 3.7 and 3.8 command-line reads: answer between markers, tools refused by a hook (#6523); 1 of 573 retried after an empty reply. Every engine is scored with chat around the transcription removed.',
+  // #6731: the engine in use is the stored production OCR; which models wrote it is read from the scored file
+  'greek-manuscript': `The engine in use is the production OCR stored for these pages (${prodModels('greek-ms').map(([m, n]) => `${LABEL[m.replace(/-preview$/, '')] || LABEL[m] || m} on ${n}`).join(', ')} of the ${prodModels('greek-ms').reduce((a, [, n]) => a + n, 0)} pages read). The edition's notes and other witnesses' readings count as error for every engine.`,
+  rashi: memoAcc.length ? `Memorisation control: asked with no image, the engines recalled ${memo.filter(r => r.arm === memo[0].arm).length} of these passages at ${pctRange(memoAcc.map(a => a.recall))} accuracy, against ${pctRange(memoAcc.map(a => a.image))} when reading them, so these scores measure reading, not recitation.` : null,
 };
 
 const charts = [], noChart = [], primarySets = {}, chartRows = {};
 for (const script of SCRIPTS) {
-  const rows0 = (script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : accRows.filter(r => script.match(r.row)))
+  const rows0 = (script.source === 'syriac' ? syriacRows : script.source === 'syriac-print' ? syriacPrintRows : hardRows[script.source] || accRows.filter(r => script.match(r.row)))
     .filter(r => !EXCLUDE.has(r.page));
-  const rows = script.source === 'syriac-print' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
+  const rows = script.source && script.source !== 'syriac' ? rows0 : keepCli6293(script.id, rows0, EXCLUDE);
   chartRows[script.id] = rows0.map(r => ({ page: r.page, engine: r.engine, cer: r.cer, failure: r.failure, failure_why: r.failure_why }));
   const byEngine = pagesOf(rows);
-  const production = LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true });
+  const production = script.production || LANE_ENGINE.get(script.id) || getOcrModelForBook({ language: script.language, visible: true });
   const nProd = byEngine.has(production) ? byEngine.get(production).size : 0;
   if (nProd < MIN_PAGES) {
     noChart.push({ title: script.title, why: nProd ? `${nProd} page${nProd === 1 ? '' : 's'} with a typed reference; at least ${MIN_PAGES} are needed` : 'no page with a typed reference yet', source: 'scripts/eval/results/benchmark/' });

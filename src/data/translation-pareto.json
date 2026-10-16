@@ -42,6 +42,10 @@
   {
    "track": "g4-xl-6750",
    "writeup": "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+  },
+  {
+   "track": "g4-argon-6729",
+   "writeup": "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md"
   }
  ],
  "charts": [
@@ -69,6 +73,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -377,7 +382,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.7 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.46 a page on the 1 to 5 scale (95% interval +0.30 to +0.63). Also better: Gemini 3.8 Flash, Gemini 3.1 Pro (thinking 128) and 2 more.",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.41 a page on the 1 to 5 scale (95% interval +0.21 to +0.61). Measured better, not runnable today: Gemini 3.7 Flash, Gemini 3.1 Pro (thinking 128), Gemini 3.6 Flash and Gemini 3.5 Flash.",
      "role": "primary"
     },
     {
@@ -398,6 +403,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -558,6 +564,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -686,6 +693,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -818,6 +826,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-03",
@@ -892,7 +901,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.22 a page on the 1 to 5 scale (95% interval +0.09 to +0.38).",
+     "verdict": "No engine we can run today is clearly better than Gemini 3.1 Flash-Lite, the engine we use. Measured better, not runnable today: Gemini 3 Flash.",
      "role": "secondary"
     }
    ],
@@ -924,6 +933,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -1232,7 +1242,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.35 a page on the 1 to 5 scale (95% interval +0.17 to +0.53). Also better: Gemini 3.7 Flash and Gemini 3.1 Pro (thinking 128).",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.35 a page on the 1 to 5 scale (95% interval +0.17 to +0.53). Measured better, not runnable today: Gemini 3.7 Flash and Gemini 3.1 Pro (thinking 128).",
      "role": "primary"
     },
     {
@@ -1253,6 +1263,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -1413,6 +1424,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -1541,6 +1553,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -1656,6 +1669,98 @@
      "role": "secondary"
     },
     {
+     "kind": "g4-argon-6729",
+     "heading": "Gemini 4 Argon low against Claude Opus 5.5, 15 Oct 2026 (#6729)",
+     "n_pages": 25,
+     "n_works": 25,
+     "n_books": 25,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 25
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md",
+      "scripts/eval/results/g4-translate-6729/scores.json"
+     ],
+     "notes": [
+      "Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps."
+     ],
+     "placed": [],
+     "no_cost": [
+      {
+       "engine": "claude-opus-5-5+claude-cli",
+       "label": "Claude Opus 5.5 (Claude CLI)",
+       "production": false,
+       "fidelity": 4.7,
+       "fidelity_ci95": [
+        4.52,
+        4.88
+       ],
+       "reversals": {
+        "pages": 1,
+        "n": 25,
+        "per_100": 2,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Claude subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.44,
+       "fidelity_ci95": [
+        4.26,
+        4.62
+       ],
+       "reversals": {
+        "pages": 0,
+        "n": 25,
+        "per_100": 0,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-low+antigravity-cli",
+       "label": "Gemini 3.8 Flash low (CLI)",
+       "production": false,
+       "fidelity": 3.96,
+       "fidelity_ci95": [
+        3.62,
+        4.26
+       ],
+       "reversals": {
+        "pages": 3,
+        "n": 25,
+        "per_100": 12,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      }
+     ],
+     "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
      "kind": "track-T2",
      "heading": "The #5695 reference round, 3 Oct 2026",
      "n_pages": 68,
@@ -1673,6 +1778,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-03",
@@ -1781,6 +1887,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -2089,7 +2196,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.1 Pro (thinking 128) scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.48 a page on the 1 to 5 scale (95% interval +0.20 to +0.73). Also better: Gemini 3.8 Flash, Gemini 3.5 Flash and 2 more.",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.48 a page on the 1 to 5 scale (95% interval +0.23 to +0.73). Measured better, not runnable today: Gemini 3.1 Pro (thinking 128), Gemini 3.5 Flash, Gemini 3 Flash and Gemini 3.6 Flash.",
      "role": "primary"
     },
     {
@@ -2110,6 +2217,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -2238,6 +2346,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -2370,6 +2479,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-03",
@@ -2481,7 +2591,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.39 a page on the 1 to 5 scale (95% interval +0.18 to +0.59). Also better: Gemini 3 Flash (thinking).",
+     "verdict": "No engine we can run today is clearly better than Gemini 3.1 Flash-Lite, the engine we use. Measured better, not runnable today: Gemini 3 Flash and Gemini 3 Flash (thinking).",
      "role": "secondary"
     }
    ],
@@ -2514,6 +2624,9 @@
       "level": "directional",
       "why": "14 works; a decision needs 20"
      },
+     "to_decide": [
+      "6 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": {
       "kind": "not_reproduced",
@@ -2835,6 +2948,9 @@
       "level": "directional",
       "why": "14 works; a decision needs 20"
      },
+     "to_decide": [
+      "6 more works (20 needed)"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -2963,6 +3079,9 @@
       "level": "directional",
       "why": "14 works; a decision needs 20"
      },
+     "to_decide": [
+      "6 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -3095,6 +3214,9 @@
       "level": "directional",
       "why": "14 works; a decision needs 20"
      },
+     "to_decide": [
+      "6 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-03",
@@ -3238,6 +3360,9 @@
       "level": "directional",
       "why": "10 works; a decision needs 20"
      },
+     "to_decide": [
+      "10 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": {
       "kind": "identical",
@@ -3540,7 +3665,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "The evidence points toward Gemini 3.1 Pro (thinking 128) over Gemini 3.1 Flash-Lite, the engine we use (+0.65 a page on the 1 to 5 scale, 95% interval +0.20 to +1.15); directional only.",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3.1 Flash-Lite, the engine we use (+0.60 a page on the 1 to 5 scale, 95% interval +0.10 to +1.10); directional only. Measured ahead, not runnable today: Gemini 3.1 Pro (thinking 128), Gemini 3.7 Flash, Gemini 3.5 Flash and Gemini 3 Flash.",
      "role": "primary"
     },
     {
@@ -3561,6 +3686,9 @@
       "level": "directional",
       "why": "10 works; a decision needs 20"
      },
+     "to_decide": [
+      "10 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -3693,6 +3821,9 @@
       "level": "directional",
       "why": "10 works; a decision needs 20"
      },
+     "to_decide": [
+      "10 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-03",
@@ -3804,7 +3935,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "The evidence points toward Gemini 3 Flash (thinking) over Gemini 3.1 Flash-Lite, the engine we use (+0.55 a page on the 1 to 5 scale, 95% interval +0.05 to +1.10); directional only.",
+     "verdict": "No engine we can run today stands out from Gemini 3.1 Flash-Lite, the engine we use. Measured ahead, not runnable today: Gemini 3 Flash (thinking).",
      "role": "secondary"
     }
    ],
@@ -3837,6 +3968,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": true,
      "noise": {
       "kind": "not_reproduced",
@@ -4158,6 +4292,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -4301,6 +4438,100 @@
      "role": "secondary"
     },
     {
+     "kind": "g4-argon-6729",
+     "heading": "Gemini 4 Argon low against Claude Opus 5.5, 15 Oct 2026 (#6729)",
+     "n_pages": 29,
+     "n_works": 29,
+     "n_books": 29,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 29
+      }
+     ],
+     "grade": {
+      "level": "directional",
+      "why": "mostly famous texts, which a model may know by heart"
+     },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md",
+      "scripts/eval/results/g4-translate-6729/scores.json"
+     ],
+     "notes": [
+      "Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps."
+     ],
+     "placed": [],
+     "no_cost": [
+      {
+       "engine": "claude-opus-5-5+claude-cli",
+       "label": "Claude Opus 5.5 (Claude CLI)",
+       "production": false,
+       "fidelity": 4.552,
+       "fidelity_ci95": [
+        4.345,
+        4.724
+       ],
+       "reversals": {
+        "pages": 0,
+        "n": 29,
+        "per_100": 0,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Claude subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.224,
+       "fidelity_ci95": [
+        3.983,
+        4.448
+       ],
+       "reversals": {
+        "pages": 1,
+        "n": 29,
+        "per_100": 3.4,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-low+antigravity-cli",
+       "label": "Gemini 3.8 Flash low (CLI)",
+       "production": false,
+       "fidelity": 4.086,
+       "fidelity_ci95": [
+        3.759,
+        4.379
+       ],
+       "reversals": {
+        "pages": 2,
+        "n": 29,
+        "per_100": 6.9,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      }
+     ],
+     "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-4-cli-6750",
      "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
      "n_pages": 28,
@@ -4318,6 +4549,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -4446,6 +4680,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -4578,6 +4815,10 @@
       "level": "directional",
       "why": "13 works; a decision needs 20"
      },
+     "to_decide": [
+      "7 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-03",
@@ -4721,6 +4962,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -5050,6 +5292,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -5210,6 +5453,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -5342,6 +5586,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -5470,6 +5715,9 @@
       "level": "directional",
       "why": "16 works; a decision needs 20"
      },
+     "to_decide": [
+      "4 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-03",
@@ -5613,6 +5861,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -5942,6 +6191,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -6085,6 +6335,98 @@
      "role": "secondary"
     },
     {
+     "kind": "g4-argon-6729",
+     "heading": "Gemini 4 Argon low against Claude Opus 5.5, 15 Oct 2026 (#6729)",
+     "n_pages": 23,
+     "n_works": 23,
+     "n_books": 23,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 23
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md",
+      "scripts/eval/results/g4-translate-6729/scores.json"
+     ],
+     "notes": [
+      "Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps."
+     ],
+     "placed": [],
+     "no_cost": [
+      {
+       "engine": "claude-opus-5-5+claude-cli",
+       "label": "Claude Opus 5.5 (Claude CLI)",
+       "production": false,
+       "fidelity": 4.522,
+       "fidelity_ci95": [
+        4.239,
+        4.761
+       ],
+       "reversals": {
+        "pages": 1,
+        "n": 23,
+        "per_100": 4.3,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Claude subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.087,
+       "fidelity_ci95": [
+        3.826,
+        4.326
+       ],
+       "reversals": {
+        "pages": 1,
+        "n": 23,
+        "per_100": 6.5,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-low+antigravity-cli",
+       "label": "Gemini 3.8 Flash low (CLI)",
+       "production": false,
+       "fidelity": 3.739,
+       "fidelity_ci95": [
+        3.413,
+        4.043
+       ],
+       "reversals": {
+        "pages": 4,
+        "n": 23,
+        "per_100": 17.4,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      }
+     ],
+     "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-4-cli-6750",
      "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
      "n_pages": 22,
@@ -6102,6 +6444,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -6230,6 +6573,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -6362,6 +6706,9 @@
       "level": "directional",
       "why": "11 works; a decision needs 20"
      },
+     "to_decide": [
+      "9 more works (20 needed)"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-03",
@@ -6505,6 +6852,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -6813,7 +7161,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "Gemini 3.1 Pro (thinking 128) scores better than Gemini 3 Flash, the engine we use, by +0.44 a page on the 1 to 5 scale (95% interval +0.11 to +0.78). Also better: Gemini 3.8 Flash.",
+     "verdict": "Gemini 3.8 Flash scores better than Gemini 3 Flash, the engine we use, by +0.39 a page on the 1 to 5 scale (95% interval +0.13 to +0.68). Measured better, not runnable today: Gemini 3.1 Pro (thinking 128).",
      "role": "primary"
     },
     {
@@ -6834,6 +7182,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -6977,6 +7326,98 @@
      "role": "secondary"
     },
     {
+     "kind": "g4-argon-6729",
+     "heading": "Gemini 4 Argon low against Claude Opus 5.5, 15 Oct 2026 (#6729)",
+     "n_pages": 30,
+     "n_works": 30,
+     "n_books": 30,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 30
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md",
+      "scripts/eval/results/g4-translate-6729/scores.json"
+     ],
+     "notes": [
+      "Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps."
+     ],
+     "placed": [],
+     "no_cost": [
+      {
+       "engine": "claude-opus-5-5+claude-cli",
+       "label": "Claude Opus 5.5 (Claude CLI)",
+       "production": false,
+       "fidelity": 4.667,
+       "fidelity_ci95": [
+        4.417,
+        4.867
+       ],
+       "reversals": {
+        "pages": 0,
+        "n": 30,
+        "per_100": 0,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Claude subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.283,
+       "fidelity_ci95": [
+        4.05,
+        4.517
+       ],
+       "reversals": {
+        "pages": 2,
+        "n": 30,
+        "per_100": 6.7,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-low+antigravity-cli",
+       "label": "Gemini 3.8 Flash low (CLI)",
+       "production": false,
+       "fidelity": 3.867,
+       "fidelity_ci95": [
+        3.667,
+        4.05
+       ],
+       "reversals": {
+        "pages": 2,
+        "n": 30,
+        "per_100": 6.7,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      }
+     ],
+     "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-4-cli-6750",
      "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
      "n_pages": 27,
@@ -6994,6 +7435,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -7122,6 +7564,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -7254,6 +7697,7 @@
       "level": "decide",
       "why": "20 or more works, independent reference, one measure"
      },
+     "to_decide": null,
      "frontier": false,
      "noise": null,
      "date": "2026-10-03",
@@ -7360,6 +7804,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": true,
      "noise": {
       "kind": "spread",
@@ -7668,7 +8115,7 @@
       }
      ],
      "no_cost": [],
-     "verdict": "The evidence points toward Gemini 3.1 Pro (thinking 128) over Gemini 3 Flash, the engine we use (+0.43 a page on the 1 to 5 scale, 95% interval +0.20 to +0.65); directional only.",
+     "verdict": "The evidence points toward Gemini 3.8 Flash over Gemini 3 Flash, the engine we use (+0.36 a page on the 1 to 5 scale, 95% interval +0.12 to +0.59); directional only. Measured ahead, not runnable today: Gemini 3.1 Pro (thinking 128) and Gemini 3.7 Flash.",
      "role": "primary"
     },
     {
@@ -7689,6 +8136,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -7849,6 +8299,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -7977,6 +8430,9 @@
       "level": "directional",
       "why": "mostly famous texts, which a model may know by heart"
      },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -8109,6 +8565,10 @@
       "level": "directional",
       "why": "14 works; a decision needs 20"
      },
+     "to_decide": [
+      "6 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-03",
@@ -8215,6 +8675,10 @@
       "level": "directional",
       "why": "18 works; a decision needs 20"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -8358,6 +8822,100 @@
      "role": "primary"
     },
     {
+     "kind": "g4-argon-6729",
+     "heading": "Gemini 4 Argon low against Claude Opus 5.5, 15 Oct 2026 (#6729)",
+     "n_pages": 25,
+     "n_works": 25,
+     "n_books": 25,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 25
+      }
+     ],
+     "grade": {
+      "level": "directional",
+      "why": "mostly famous texts, which a model may know by heart"
+     },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md",
+      "scripts/eval/results/g4-translate-6729/scores.json"
+     ],
+     "notes": [
+      "Judged blind by Claude Opus in both orders; a Gemini 3.8 judge, also in the write-up, agreed on the order of the three engines but not on the size of the gaps."
+     ],
+     "placed": [],
+     "no_cost": [
+      {
+       "engine": "claude-opus-5-5+claude-cli",
+       "label": "Claude Opus 5.5 (Claude CLI)",
+       "production": false,
+       "fidelity": 4.8,
+       "fidelity_ci95": [
+        4.66,
+        4.92
+       ],
+       "reversals": {
+        "pages": 0,
+        "n": 25,
+        "per_100": 0,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Claude subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.14,
+       "fidelity_ci95": [
+        3.94,
+        4.32
+       ],
+       "reversals": {
+        "pages": 0,
+        "n": 25,
+        "per_100": 0,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash-low+antigravity-cli",
+       "label": "Gemini 3.8 Flash low (CLI)",
+       "production": false,
+       "fidelity": 4.1,
+       "fidelity_ci95": [
+        3.88,
+        4.34
+       ],
+       "reversals": {
+        "pages": 3,
+        "n": 25,
+        "per_100": 12,
+        "ci95": null
+       },
+       "cost": null,
+       "no_price": "run on the Gemini subscription, $0 billed; no API price computed for these pages",
+       "on_frontier": false
+      }
+     ],
+     "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-4-cli-6750",
      "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
      "n_pages": 21,
@@ -8375,6 +8933,10 @@
       "level": "directional",
       "why": "18 works; a decision needs 20"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-15",
@@ -8503,6 +9065,10 @@
       "level": "directional",
       "why": "18 works; a decision needs 20"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": true,
      "noise": null,
      "date": "2026-10-08",
@@ -8635,6 +9201,10 @@
       "level": "directional",
       "why": "18 works; a decision needs 20"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-03",
@@ -8730,6 +9300,11 @@
       "level": "not_fit",
       "why": "the sample check (#6304) found its references do not fit"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "references that fit the page",
+      "mostly texts a model cannot know by heart"
+     ],
      "frontier": false,
      "noise": {
       "kind": "spread",
@@ -9063,6 +9638,9 @@
       "level": "not_fit",
       "why": "8 works; at least 10 are needed"
      },
+     "to_decide": [
+      "12 more works (20 needed)"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -9224,6 +9802,9 @@
       "level": "not_fit",
       "why": "2 works; at least 10 are needed"
      },
+     "to_decide": [
+      "18 more works (20 needed)"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-07",
@@ -9365,6 +9946,9 @@
       "level": "not_fit",
       "why": "8 works; at least 10 are needed"
      },
+     "to_decide": [
+      "12 more works (20 needed)"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -9495,6 +10079,9 @@
       "level": "not_fit",
       "why": "8 works; at least 10 are needed"
      },
+     "to_decide": [
+      "12 more works (20 needed)"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-03",
@@ -9593,6 +10180,9 @@
       "level": "not_fit",
       "why": "2 works; at least 10 are needed"
      },
+     "to_decide": [
+      "18 more works (20 needed)"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-07",
@@ -9687,6 +10277,10 @@
       "level": "not_fit",
       "why": "reference located with the engine in use's own reading"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "a reference placed without our own engine’s reading"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -9827,6 +10421,10 @@
       "level": "not_fit",
       "why": "reference located with the engine in use's own reading"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "a reference placed without our own engine’s reading"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -9967,6 +10565,10 @@
       "level": "not_fit",
       "why": "reference located with the engine in use's own reading"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "a reference placed without our own engine’s reading"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",
@@ -10107,6 +10709,10 @@
       "level": "not_fit",
       "why": "reference located with the engine in use's own reading"
      },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "a reference placed without our own engine’s reading"
+     ],
      "frontier": false,
      "noise": null,
      "date": "2026-10-08",

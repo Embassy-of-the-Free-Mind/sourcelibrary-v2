@@ -11,7 +11,7 @@ import { EXPERIMENTS } from '@/lib/experiments-index';
 import { listExperiments, latestCanonStatus, sampleAudit, typedPages, type DropReason, type Of } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
 import { GRADES, LEAF, leafHref, MONTH_NOTE, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
-import ParetoCharts, { TRANSLATION } from './ParetoCharts';
+import ParetoCharts, { RosterLine, TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -629,41 +629,53 @@ export default function QualityCenterPage() {
             </>
           )}
 
-          <Sub>Cost against agreement with a typed text, by script</Sub>
-          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            For each script: is any OCR engine clearly better or cheaper than the one we use, judged on the same pages
-            against a typed text, and how far can that answer be trusted (<a href="#chart-limits" className={LINK}>limits</a>)?
-            The charts, tables and method are on{' '}
-            <Link href="/quality/pareto" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
-              the cost and quality page
-            </Link>
-            .
-          </p>
-          <ParetoCharts />
-          <Source>
-            Generated from the benchmark results by{' '}
-            <A href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`}>scripts/eval/build-ocr-pareto.mjs</A> whenever
-            the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the Gemini meter</A> and{' '}
-            <A href={`${GH}blob/main/scripts/eval/ocr-engine-gpu-costs.json`}>each self-hosted run&rsquo;s record</A>.
-            Testing the engines not yet tried is separate, priced work (<IssueLink num={5983} />).
-          </Source>
+          <div id="ocr" className="scroll-mt-24">
+            <Sub>OCR · Cost against agreement with a typed text, by script</Sub>
+            <p className="text-stone-700 leading-relaxed mb-2 max-w-3xl">
+              Transcription (OCR): reading the page image into text, scored as character accuracy against a typed
+              transcription. For each script: is any OCR engine we can run today clearly better or cheaper than the one we
+              use, judged on the same pages, and how far can that answer be trusted (<a href="#chart-limits" className={LINK}>limits</a>)?
+              Each dot is an engine; higher reads better, further left is faster (or, where no run was timed, cheaper). Price
+              and time views, tables and method are on{' '}
+              <Link href="/quality/pareto#ocr" className={LINK}>
+                the cost and quality page
+              </Link>
+              .
+            </p>
+            <p className="text-sm text-stone-600 leading-relaxed mb-4 max-w-3xl">
+              <Link href="/quality/pareto#roster" className={LINK}>What we can run today</Link>: <RosterLine />. Engines
+              we cannot run are drawn hollow and never named as the one to run.
+            </p>
+            <ParetoCharts />
+            <Source>
+              Generated from the benchmark results by{' '}
+              <A href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`}>scripts/eval/build-ocr-pareto.mjs</A> whenever
+              the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the Gemini meter</A> and{' '}
+              <A href={`${GH}blob/main/scripts/eval/ocr-engine-gpu-costs.json`}>each self-hosted run&rsquo;s record</A>.
+              What we can run: <A href={`${GH}blob/main/scripts/eval/build-model-roster.mjs`}>scripts/eval/build-model-roster.mjs</A>.
+              Testing the engines not yet tried is separate, priced work (<IssueLink num={5983} />).
+            </Source>
+          </div>
 
-          <Sub>Translation cost against fidelity, by language</Sub>
-          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
-            For each language: is any engine clearly better or cheaper than the one we use? Fidelity is model-judged, not
-            human-scored: blind AI judges compare our English with a published translation of the same page and grade it
-            from 1 to 5. The charts, tables and method are on{' '}
-            <Link href="/quality/pareto#translation" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
-              the cost and quality page
-            </Link>
-            .
-          </p>
-          <ParetoCharts m={TRANSLATION} />
-          <Source>
-            Generated from the per-page results of the translation-against-reference write-ups (<IssueLink num={5695} />,{' '}
-            <IssueLink num={5497} />) by{' '}
-            <A href={`${GH}blob/main/scripts/eval/build-translation-pareto.mjs`}>scripts/eval/build-translation-pareto.mjs</A>.
-          </Source>
+          <div id="translation" className="scroll-mt-24">
+            <Sub>Translation · Cost against fidelity, by language</Sub>
+            <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+              Translation: turning that text into English, scored on the 1 to 5 fidelity scale by blind judges against
+              published translations. The judges are AI models, not people: they compare our English with a published
+              translation of the same page. For each language: is any engine we can run today clearly better or cheaper
+              than the one we use? Price and time views, tables and method are on{' '}
+              <Link href="/quality/pareto#translation" className={LINK}>
+                the cost and quality page
+              </Link>
+              .
+            </p>
+            <ParetoCharts m={TRANSLATION} />
+            <Source>
+              Generated from the per-page results of the translation-against-reference write-ups (<IssueLink num={5695} />,{' '}
+              <IssueLink num={5497} />) by{' '}
+              <A href={`${GH}blob/main/scripts/eval/build-translation-pareto.mjs`}>scripts/eval/build-translation-pareto.mjs</A>.
+            </Source>
+          </div>
           <Figure
             title={`One error and its fix: ${WORKED_FIX.title}`}
             caption={

@@ -111,6 +111,18 @@ export function gradePanel({ works, unfit6304 = false, metrics = 1, productionAn
   return { level: 'decide', why: '20 or more works, independent reference, one measure' };
 }
 
+/** What a panel graded below decide would need to grade decide, by the same rules as gradePanel (#6776). */
+export function toDecide({ works, unfit6304 = false, metrics = 1, productionAnchored = false, famousShare = 0, modernEdition = false }) {
+  const need = [];
+  if (works < 20) need.push(`${20 - works} more work${20 - works === 1 ? '' : 's'} (20 needed)`);
+  if (unfit6304) need.push('references that fit the page');
+  if (metrics > 1) need.push('one error measure');
+  if (productionAnchored) need.push('a reference placed without our own engine’s reading');
+  if (famousShare > 0.5) need.push('mostly texts a model cannot know by heart');
+  if (modernEdition) need.push('a transcription of the page, not a modern edition');
+  return need.length ? need : null;
+}
+
 export const GRADE_RULES = {
   decide: '20 or more works, a reference made independently of the engine we use, one error measure, and no problem found by the sample check.',
   directional: 'Fit to read, but 10 to 19 works, or mostly famous texts a model may know by heart, or a modern edition as the reference rather than a transcription of the page.',
@@ -132,8 +144,10 @@ const usd = x => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
  * The one sentence above a chart, from the paired comparisons, the noise and the grade. `num` writes a signed difference
  * in the measure's unit without the unit ("+1.2"); `unit` names it ("points"); `verb` is "reads" or "scores";
  * `margin` is the measure's non-inferiority margin, `marginText` how the page states it ("1 point").
+ * `canRun(engine)` says whether we can run an engine today (scripts/eval/lib/model-availability.mjs): the sentence
+ * recommends only engines we can run, and names the others as "measured better, not runnable today" (#6776).
  */
-export function verdictSentence(panel, { num, unit, verb, margin, marginText }) {
+export function verdictSentence(panel, { num, unit, verb, margin, marginText, canRun = () => true }) {
   if (panel.grade.level === 'not_fit') return 'No verdict.';   // the grade badge beside it says why
   const all = [...panel.placed, ...panel.no_cost];
   const prod = all.find(p => p.production);
@@ -143,7 +157,9 @@ export function verdictSentence(panel, { num, unit, verb, margin, marginText }) 
   }
   const decide = panel.grade.level === 'decide';
   const ci = v => `95% interval ${num(v.ci95[0])} to ${num(v.ci95[1])}`;
-  const better = all.filter(p => p.verdict === 'better').sort((a, b) => b.vs_in_use.diff - a.vs_in_use.diff);
+  const measuredBetter = all.filter(p => p.verdict === 'better').sort((a, b) => b.vs_in_use.diff - a.vs_in_use.diff);
+  const better = measuredBetter.filter(p => canRun(p.engine));
+  const notRunnable = measuredBetter.filter(p => !canRun(p.engine)).map(p => p.label);
   const out = [];
   if (better.length) {
     const b = better[0], v = b.vs_in_use;
@@ -158,10 +174,12 @@ export function verdictSentence(panel, { num, unit, verb, margin, marginText }) 
       out.push(`The evidence points toward ${b.label} over ${prod.label}, the engine we use (${num(v.diff)} ${unit}, ${ci(v)}); directional only.`);
     }
   } else {
-    out.push(decide ? `No engine is clearly better than ${prod.label}, the engine we use.` : `No engine stands out from ${prod.label}, the engine we use.`);
+    const we = notRunnable.length ? ' we can run today' : '';
+    out.push(decide ? `No engine${we} is clearly better than ${prod.label}, the engine we use.` : `No engine${we} stands out from ${prod.label}, the engine we use.`);
   }
+  if (notRunnable.length) out.push(`Measured ${decide ? 'better' : 'ahead'}, not runnable today: ${listOf(notRunnable)}.`);
   if (decide && prod.cost) {
-    const cheaper = panel.placed.filter(p => !p.production && p.verdict !== 'worse' && p.vs_in_use?.ci95 && p.vs_in_use.ci95[0] > -margin
+    const cheaper = panel.placed.filter(p => !p.production && canRun(p.engine) && p.verdict !== 'worse' && p.vs_in_use?.ci95 && p.vs_in_use.ci95[0] > -margin
       && p.cost.basis === 'billed' && p.cost.usd_per_1k < prod.cost.usd_per_1k).sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k);
     if (cheaper.length) out.push(`${listOf(cheaper.slice(0, 2).map(p => `${p.label} (${usd(p.cost.usd_per_1k)})`))} cost${cheaper.length === 1 ? 's' : ''} less than ${usd(prod.cost.usd_per_1k)} per 1,000 pages and ${cheaper.length === 1 ? 'is' : 'are'} within ${marginText} of it.`);
   }
