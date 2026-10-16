@@ -44,6 +44,7 @@ import { makePageDoc } from '../lib/book-docs.mjs';
 import { insertBookIfNew } from '../lib/acquire-book.mjs';
 import { holdBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { initialPublication } from '../lib/publication.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { validateR2Key, assertBookScopedKey } from '../lib/r2-key.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -500,7 +501,8 @@ for (const spec of BOOKS.filter((b) => !ONLY || String(b.item) === ONLY)) {
   }
   process.stdout.write('\n');
   await db.collection('pages').insertMany(docs, { ordered: false });
-  await db.collection('books').updateOne({ id: bookIdStr }, { $set: { thumbnail: docs[0].thumbnail, pages_archived: docs.length } });
+  await db.collection('books').updateOne({ id: bookIdStr }, { $set: { thumbnail: docs[0].thumbnail } });
+  await recountBook(db, bookIdStr, { reason: 'maya-mss-penn-6559 import' });
   const rows = await db.collection('pages').countDocuments({ book_id: bookIdStr });
   console.log(`  inserted ${bookIdStr} (${slug}) + ${rows} pages${rows === plan.length ? '' : ` — MISMATCH, expected ${plan.length}`}`);
   report.push({ item: spec.item, outcome: 'inserted', id: bookIdStr, slug, pages: plan.length, rows });
