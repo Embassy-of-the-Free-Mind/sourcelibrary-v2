@@ -451,7 +451,7 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number, plo
   for (const dy of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -7, 7]) for (const dx of [0, 1.5, 3.5, 6]) offsets.push([dx, dy]);
   offsets.sort((a, b) => Math.hypot(a[0] * 1.2, a[1]) - Math.hypot(b[0] * 1.2, b[1]));
   const place = (p: Point, text: string[]) => {
-    const q = at(p), w = Math.max(...text.map(t => t.length)) * fs * 0.55, h = text.length * lh;
+    const q = at(p), w = Math.max(...text.map(t => t.length)) * fs * 0.6, h = text.length * lh;
     const crosses = (x0: number, y0: number, x1: number, y1: number) => {
       for (let k = 1; k < 8; k++) {
         const bx = x0 + ((x1 - x0) * k) / 8, by = y0 + ((y1 - y0) * k) / 8;
@@ -566,7 +566,7 @@ function ScatterNotes({ chart, panel, axis, keyed }: { chart: Chart; panel: Pane
   const pts = panel.points.filter(p => xOf(p, axis) != null);
   const absent = panel.points.filter(p => xOf(p, axis) == null);
   const prod = panel.points.find(p => p.production);
-  const viaApi = panel.points.filter(p => p.roster?.measured_via && !p.production);
+  const viaApi = pts.filter(p => p.roster?.measured_via && !p.production);
   const newest = !panel.points.some(p => p.engine === ROSTER.newest.engine);
   const elsewhere = newest && chart.panels.some(x => x !== panel && x.points.some(p => p.engine === ROSTER.newest.engine));
   const parts: ReactNode[] = [
