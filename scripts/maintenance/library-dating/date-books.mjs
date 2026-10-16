@@ -11,6 +11,8 @@
  * `--lean tibetan` (#6721, 2026-10-16): Tibetan WORK readings from catalogue + opening + closing leaves (who the colophon
  * names, the words that state a year), default 10 a call; tibetan-work-dates.mjs verifies and resolves them.
  * `--lean role` (#6721, 2026-10-16): is `author_id` the work's author or a translator/editor (author-window-upgrade.mjs), 100 a call.
+ * `--lean why` (#6721, 2026-10-16): rows of export-why.mjs (one per WORK, with its stored date) → one short reason each
+ * (buildWhyPrompt), default 100 a call; output rows { book_id, why, year|null }.
  * `--lean work` (#6721, 2026-10-15): catalogue fields only, one short JSON line per book (buildLeanPrompt), default
  * 100 a call; `--lean edition`: the books no rule dates, with their leaves (buildLeanEditionPrompt), default 25 a call.
  * A lean claude call replaces the Claude Code system prompt with one line (`--system-prompt`) and runs at
@@ -34,14 +36,14 @@ import { spawn } from 'node:child_process';
 import { gatedTextCall } from '../../lib/agy-cli.mjs';
 import { buildPrompt, buildBatchPrompt, parseReply, parseBatchReply, PROMPT_VERSION, LEAN_PROMPT_VERSION, buildLeanPrompt, parseLeanReply,
   buildLeanEditionPrompt, parseLeanEditionReply, buildTibetanWorkPrompt, parseTibetanWorkReply, TIBETAN_PROMPT_VERSION,
-  buildRolePrompt, parseRoleReply, ROLE_PROMPT_VERSION } from '../../lib/date-works.mjs';
+  buildRolePrompt, parseRoleReply, ROLE_PROMPT_VERSION, WHY_PROMPT_VERSION, buildWhyPrompt, parseWhyReply } from '../../lib/date-works.mjs';
 
 const [IN, OUT] = process.argv.slice(2, 4);
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const ENGINE = arg('--engine', 'agy'); const MODEL = arg('--model', ENGINE === 'claude' ? 'haiku' : 'gemini-3.8-flash-low');
-const LEAN = arg('--lean', null); if (LEAN && !['work', 'edition', 'tibetan', 'role'].includes(LEAN)) { console.error('--lean work|edition|tibetan|role'); process.exit(2); }
+const LEAN = arg('--lean', null); if (LEAN && !['work', 'edition', 'tibetan', 'role', 'why'].includes(LEAN)) { console.error('--lean work|edition|tibetan|role|why'); process.exit(2); }
 const EFFORT = arg('--effort', LEAN ? 'low' : null);
-const BATCH = +arg('--batch', LEAN === 'work' ? 100 : LEAN === 'edition' ? 25 : LEAN === 'tibetan' ? 10 : LEAN === 'role' ? 100 : 15); const VARIANT = arg('--prompt-variant', null); const CONC = +arg('--conc', 4); const MAX = +arg('--max', 0); const PER_HOUR = +arg('--per-hour', 0);
+const BATCH = +arg('--batch', LEAN === 'work' || LEAN === 'why' ? 100 : LEAN === 'edition' ? 25 : LEAN === 'tibetan' ? 10 : LEAN === 'role' ? 100 : 15); const VARIANT = arg('--prompt-variant', null); const CONC = +arg('--conc', 4); const MAX = +arg('--max', 0); const PER_HOUR = +arg('--per-hour', 0);
 const [SH, NSH] = (arg('--shard', '0/1')).split('/').map(Number);
 if (!IN || !OUT) { console.error('usage: date-books.mjs <in.jsonl> <out.jsonl> [--engine agy|claude] [--model m] [--batch n] [--conc n] [--max n] [--shard i/n]'); process.exit(2); }
 const BAD = OUT.replace(/\.jsonl$/, '') + '.unparsed.jsonl';
@@ -121,9 +123,9 @@ async function worker() {
     if (!(await meterGate())) { stop = true; break; }
     const books = groups[g++];
     await pace();
-    const prompt = LEAN === 'work' ? buildLeanPrompt(books) : LEAN === 'edition' ? buildLeanEditionPrompt(books) : LEAN === 'tibetan' ? buildTibetanWorkPrompt(books) : LEAN === 'role' ? buildRolePrompt(books)
+    const prompt = LEAN === 'why' ? buildWhyPrompt(books) : LEAN === 'work' ? buildLeanPrompt(books) : LEAN === 'edition' ? buildLeanEditionPrompt(books) : LEAN === 'tibetan' ? buildTibetanWorkPrompt(books) : LEAN === 'role' ? buildRolePrompt(books)
       : BATCH === 1 ? buildPrompt(books[0]) : buildBatchPrompt(books, { variant: VARIANT });
-    const parse = (answer) => (LEAN === 'work' ? parseLeanReply(answer, books.length) : LEAN === 'edition' ? parseLeanEditionReply(answer, books) : LEAN === 'tibetan' ? parseTibetanWorkReply(answer, books) : LEAN === 'role' ? parseRoleReply(answer, books.length)
+    const parse = (answer) => (LEAN === 'why' ? parseWhyReply(answer, books.length) : LEAN === 'work' ? parseLeanReply(answer, books.length) : LEAN === 'edition' ? parseLeanEditionReply(answer, books) : LEAN === 'tibetan' ? parseTibetanWorkReply(answer, books) : LEAN === 'role' ? parseRoleReply(answer, books.length)
       : BATCH === 1 ? new Map(parseReply(answer, books[0]) ? [[0, parseReply(answer, books[0])]] : []) : parseBatchReply(answer, books));
     const res = await call(prompt); calls++;
     fs.appendFileSync(CALLS, JSON.stringify({ at: new Date().toISOString(), engine: ENGINE, model: MODEL, n: books.length, cls: res.cls, secs: res.secs, usage: res.usage || null, cost_usd: res.cost ?? null, prompt_chars: prompt.length, answer_chars: String(res.answer || '').length }) + '\n');
@@ -135,7 +137,7 @@ async function worker() {
     books.forEach((b, i) => {
       const r = parsed.get(i);
       if (!r) { bad++; fs.appendFileSync(BAD, JSON.stringify({ book_id: b.book_id, cls: res.cls, at: new Date().toISOString(), answer: String(res.answer || '').slice(0, 200) }) + '\n'); return; }
-      fs.appendFileSync(OUT, JSON.stringify({ book_id: b.book_id, engine: ENGINE, model: MODEL, batch: books.length, prompt_version: LEAN === 'tibetan' ? TIBETAN_PROMPT_VERSION : LEAN === 'role' ? ROLE_PROMPT_VERSION : LEAN ? `${LEAN_PROMPT_VERSION}-${LEAN}` : VARIANT ? `${PROMPT_VERSION}-${VARIANT}` : PROMPT_VERSION, dated_at: new Date().toISOString(),
+      fs.appendFileSync(OUT, JSON.stringify({ book_id: b.book_id, engine: ENGINE, model: MODEL, batch: books.length, prompt_version: LEAN === 'why' ? WHY_PROMPT_VERSION : LEAN === 'tibetan' ? TIBETAN_PROMPT_VERSION : LEAN === 'role' ? ROLE_PROMPT_VERSION : LEAN ? `${LEAN_PROMPT_VERSION}-${LEAN}` : VARIANT ? `${PROMPT_VERSION}-${VARIANT}` : PROMPT_VERSION, dated_at: new Date().toISOString(),
         catalogue: b.published ?? null, ...r }) + '\n');
       ok++;
     });
