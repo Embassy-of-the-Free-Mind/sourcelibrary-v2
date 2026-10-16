@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b630a21c1c21a373803505",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X adds a <margin> block taken from the facing leaf's text ('buf magnifid … c amerita') and misreads words such as 'fatam' for 'scitam', 'probidendiq' for 'prohibendiq', 'Cocitem' for 'Coclitem' and 'potem interfandi' for 'pontem interscindi'."
+ },
+ {
+  "item_id": "69b51db1ff09e4fe943a7280",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y follows the print ('beweget', 'vñ ist die Straßburgische', 'erschiene', 'verdrucken'), while X normalizes u/v, drops 'vñ', and reads 'bewogen', 'erschienen' and 'verzucken'."
+ },
+ {
+  "item_id": "699f11794a25938be76cca36",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts are the same apart from the page number, which is printed '111' as Y has it, not 'III' as in X."
+ },
+ {
+  "item_id": "69f51d75dbaebb8531ead40d",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y keeps the printed 'beßtem', 'gereichenden', 'gebracht/' and 'Getruckt zu Jtzstein', while X changes them to 'bestem', 'reichenden' and 'Gedruckt zu Idstein'."
+ },
+ {
+  "item_id": "69bda050f6d63c9197486039",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y keeps the printed 'Wurtzel'/'Holtz' and the catchword 'ser', while X modernizes them to 'Wurzel'/'Holz'; the wording is otherwise the same."
+ },
+ {
+  "item_id": "6984d9326e10813aed78a692",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y drops the 'XV.' heading and has OCR errors ('Aergten', 'Engenschafft', 'Arstneykunst', 'Schrifftimeister', and 'dieselbe rege' for 'dieselb erregt'), while X matches the print."
+ },
+ {
+  "item_id": "6992cbda018b80967354bea4",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X repeats the line '目成而後識之其與幾何萬', reads '物既號' where the leaf has '物段號' with a '數' gloss, and invents seal readings ('內閣文庫', '浅野家蔵'); Y is closer to the leaf ('天工開物巻序', '段', '免' glossed '既')."
+ },
+ {
+  "item_id": "6a500179e39653852101a3ed",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X is closer to the print ('baptizati', 'rursum crucifigentes', 'strennue'), while Y has 'baptizanti', 'rursus crucifigentes' and 'strenu-nue'; the wording is otherwise the same."
+ },
+ {
+  "item_id": "6a085a5a49638a50931c9309",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y reads the print correctly ('Seque … Iecit … cadere', 'Concinitur'), while X has 'Sequitur', 'Ieit', 'Concinatur' and the sense-changing 'caedere' for 'cadere'."
+ },
+ {
+  "item_id": "69906ffa245959b9547d5cda",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "In §11, X drops the clause 'hic uerò circulus aut est circulus sectionis, aut equidistans ei' and repeats '…transit per centrū residui glacialis. Et cum' in its place."
+ }
+]

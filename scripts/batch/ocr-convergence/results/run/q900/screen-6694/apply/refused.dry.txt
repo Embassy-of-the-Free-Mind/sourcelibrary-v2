@@ -1,0 +1,24 @@
+  skip p.2: only 38% of its words are in the stored read: check by eye
+  skip p.5: only 17% of its words are in the stored read: check by eye
+  skip p.5: only 38% of its words are in the stored read: check by eye
+  skip p.6: only 37% of its words are in the stored read: check by eye
+  skip p.10: only 19% of its words are in the stored read: check by eye
+  skip p.11: only 32% of its words are in the stored read: check by eye
+  skip p.13: only 24% of its words are in the stored read: check by eye
+  skip p.14: only 9% of its words are in the stored read: check by eye
+  skip p.14: only 25% of its words are in the stored read: check by eye
+  skip p.16: only 36% of its words are in the stored read: check by eye
+  skip p.20: only 35% of its words are in the stored read: check by eye
+  skip p.40: only 38% of its words are in the stored read: check by eye
+  skip p.50: only 3% of its words are in the stored read: check by eye
+  skip p.53: only 10% of its words are in the stored read: check by eye
+  skip p.82: only 28% of its words are in the stored read: check by eye
+  skip p.106: only 5% of its words are in the stored read: check by eye
+  skip p.107: only 27% of its words are in the stored read: check by eye
+  skip p.159: only 22% of its words are in the stored read: check by eye
+  skip p.169: only 39% of its words are in the stored read: check by eye
+  skip p.305: only 35% of its words are in the stored read: check by eye
+  skip p.493: only 34% of its words are in the stored read: check by eye
+  skip p.604: only 39% of its words are in the stored read: check by eye
+  skip p.631: only 35% of its words are in the stored read: check by eye
+would write: 517   skipped: {"only 38% of its words are in the stored read: check by eye":3,"only 17% of its words are in the stored read: check by eye":1,"only 37% of its words are in the stored read: check by eye":1,"only 19% of its words are in the stored read: check by eye":1,"only 32% of its words are in the stored read: check by eye":1,"only 24% of its words are in the stored read: check by eye":1,"only 9% of its words are in the stored read: check by eye":1,"only 25% of its words are in the stored read: check by eye":1,"only 36% of its words are in the stored read: check by eye":1,"only 35% of its words are in the stored read: check by eye":3,"only 3% of its words are in the stored read: check by eye":1,"only 10% of its words are in the stored read: check by eye":1,"only 28% of its words are in the stored read: check by eye":1,"only 5% of its words are in the stored read: check by eye":1,"only 27% of its words are in the stored read: check by eye":1,"only 22% of its words are in the stored read: check by eye":1,"only 39% of its words are in the stored read: check by eye":2,"only 34% of its words are in the stored read: check by eye":1}   (dry run; add --apply)

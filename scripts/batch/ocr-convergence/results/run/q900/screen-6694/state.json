@@ -1,0 +1,13 @@
+{
+ "set": "q900",
+ "prepared_at": "2026-10-16T06:18:18.315Z",
+ "decisions": 680,
+ "held_books_skipped": [
+  "69a5ef38bfd8cafd91e43e69"
+ ],
+ "pages_held_skipped": 8,
+ "to_screen": 670,
+ "write": 544,
+ "keep": 126,
+ "image_failed": []
+}

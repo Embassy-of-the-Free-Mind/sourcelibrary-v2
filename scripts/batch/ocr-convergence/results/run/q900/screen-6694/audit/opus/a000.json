@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f719292c0317a4c991556a",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X garbles the text throughout (e.g. 'Kindligkeit ein bund alles lieb aber da wollen' for 'findligkeit ein, und soll sich aber der Leser') and gives page-num 30 where the leaf shows '3'."
+ },
+ {
+  "item_id": "6992469fbc722ec0ee80f374",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The print reads 'ἀπίει', 'ὀγκοῦτο' and 'τὸ γὰρ ἐν αὐτῇ' as X has them; Y normalizes these to 'ἀπῄει', 'ὠγκοῦτο', 'τὰ γὰρ'."
+ },
+ {
+  "item_id": "6950051bf426a210d109dfb8",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Same text in both; X keeps the abbreviations ('differūt', 'cōueniunt') and Y expands them, which is a convention difference."
+ },
+ {
+  "item_id": "69af21fb7c27d4b637fee144",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X has 'causa omnium mutuum naturalium' where the print reads 'motuum'; Y is correct and also keeps the 'cœli' spelling."
+ },
+ {
+  "item_id": "69f69b71cec29ec5d5214978",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X drops abbreviation marks and gets forms wrong ('Xathippi cynotaphiu', 'boue', 'inspergeda', 'sub uite') where the print has 'Xāthippi cynotaphiū', 'bouē', 'inspergēda'; Y renders them correctly."
+ },
+ {
+  "item_id": "69f702032150a566a9f86aa3",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y misreads 'amplexandam' as 'amplectendam', 'Quā … nauarit' as 'Quae … nauit' and 'inserat' as 'inferat'; X follows the print."
+ },
+ {
+  "item_id": "69942e6ad607f8e57e4b914d",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The print reads 'ea ocia' and 'Billij', as in Y; X has 'otia' and 'Billy' (minor)."
+ },
+ {
+  "item_id": "69f70baeb8f2207734053c14",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y adds a whole commentary paragraph ('Es ist hier zu mercken / daß der Herr des Weinbergs…') that does not appear on this leaf."
+ },
+ {
+  "item_id": "69f69b2bcec29ec5d5214882",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Almost identical; Y has 'comeset' where the print reads 'comeßet' (X: 'comesset'), and Y adds the catchword 'ipsas' to the text."
+ },
+ {
+  "item_id": "697b4468a858b423756ab384",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The print reads 'Untzen', 'eintzelich', 'weisse' and 'Gieß-Puckel', as in X; Y modernizes these to 'Unzen', 'einzelich', 'weiße', 'Gieß-Buckel'."
+ }
+]
