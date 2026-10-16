@@ -76,6 +76,8 @@ const UNATTENDED = [
     note: 'reads the four Claude accounts\' usage meters (subscription quota, no paid API) (#6360)' },
   { match: 'edge-crawl-alert.mjs', spends: false, gated: false,
     note: 'reads Cloudflare GraphQL analytics (free) and pushes ntfy; no model call (#6398)' },
+  { match: 'agy-wal-checkpoint.py', spends: false, gated: false,
+    note: 'SQLite WAL checkpoint on the Gemini CLI\'s local db; no model call (#6223)' },
   { match: 'box.sh push-limits', spends: false, gated: false,
     note: 'copies the climits meter file to the other job boxes over the mesh; no model call (#6360)' },
   { match: 'pipeline-orchestrator.mjs', spends: true, gated: true,
