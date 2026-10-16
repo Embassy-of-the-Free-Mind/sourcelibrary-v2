@@ -14,6 +14,7 @@ import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTra
 import { tengyurNoteSentences, TENGYUR_METHOD_HREF } from '@/lib/tengyur-quality';
 import type { ReaderSettings } from './useReaderV2';
 import { qualityDate, type QualityWarnings } from '@/lib/book-warnings';
+import type { ScanGaps } from '@/lib/scan-gaps';
 import { issueUrl } from '@/lib/check-methods';
 import { PaneEmptyState, GatedPane, NoTextPageLine } from './PaneEmptyState';
 import { noContentMarkerType, isUngroundedTranslation } from '../../../scripts/lib/model-only-translation.mjs';
@@ -221,6 +222,22 @@ export function QualityWarningLine({ warnings, pageNumber, bookPath }: {
     <p role="note" data-quality-warning={page ? page.level : 'book'} className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
       {text}{' '}
       <a href={href} className="underline underline-offset-2" {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{link}</a>
+    </p>
+  );
+}
+
+/**
+ * Printed pages that are not in this scan (#6675), on the scan before the gap and the scan after it. A plain fact
+ * about the copy: no link, no hedge. Rows come from scan_gaps (src/lib/scan-gaps.ts).
+ */
+export function MissingPagesLine({ gaps, pageNumber }: { gaps: ScanGaps | undefined; pageNumber: number | null | undefined }) {
+  const locale = useLocale();
+  const t = getReaderStrings(locale).info;
+  const here = gaps && pageNumber != null ? gaps[pageNumber] : undefined;
+  if (!here?.length) return null;
+  return (
+    <p role="note" data-missing-pages="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
+      {here.map((g) => t.missingPages(g.first, g.last)).join(' ')}
     </p>
   );
 }

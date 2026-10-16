@@ -20,6 +20,7 @@ import { aldineVariables } from '@/lib/fonts/aldine';
 import { isAldineFount } from '@/lib/fonts/aldine-fount';
 import { READER_PAGE_PROJECTION } from '@/lib/reader-page-projection';
 import { getQualityWarnings } from '@/lib/book-warnings';
+import { getScanGaps } from '@/lib/scan-gaps';
 import { getSplitLeafId, isArchivedSplit } from '../page-data';
 
 // Schema.org structured data for a translated page, so it surfaces as a
@@ -171,7 +172,10 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
 
   // Warnings from stored quality checks (#6199): one indexed read of book_checks, for the whole book, so a client
   // page turn needs no second request. Never throws; most books have no rows. Partner rooms keep the old reader.
-  const qualityWarnings = ctx?.isEmbedded ? undefined : await getQualityWarnings(db, [scopedBookId]);
+  // Printed pages missing between two scans (#6675): one indexed read of scan_gaps, same shape and reason.
+  const [qualityWarnings, scanGaps] = ctx?.isEmbedded
+    ? [undefined, undefined]
+    : await Promise.all([getQualityWarnings(db, [scopedBookId]), getScanGaps(db, scopedBookId)]);
 
   // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
   const serializedPage = JSON.parse(JSON.stringify(currentPage)) as Page;
@@ -242,6 +246,7 @@ export default async function PageEditorPage({ params, allowHidden = false, lang
             initialPage={markedPage}
             initialPageList={serializedNavPages}
             qualityWarnings={qualityWarnings}
+            scanGaps={scanGaps}
           />
         )}
       </div>
