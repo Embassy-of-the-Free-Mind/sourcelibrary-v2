@@ -1,0 +1,10 @@
+{
+ "at": "2026-10-16T07:10:45.200Z",
+ "junctions": 300,
+ "kept": 254,
+ "dropped": {
+  "english-book": 40,
+  "N-soft-hidden": 1,
+  "english-page": 5
+ }
+}
