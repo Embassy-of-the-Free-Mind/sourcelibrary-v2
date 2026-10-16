@@ -295,6 +295,32 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
 
 N.setdefault('books_all', N['books']); N.setdefault('languages_all', N['languages'])  # without the fourth layer
 N.setdefault('baseline_any4', N['baseline_any'])
+# work dates (build/export-work-dates.mjs, from source_work_dates_meta schema 2, #6721): each point carries the date of
+# the WORK beside the date of the EDITION it was read in, with the basis of the work date, so the map can place it either way
+wd_path = os.path.join(D, 'work-dates.json')
+if os.path.exists(wd_path):
+    WD = json.load(open(wd_path))
+    for p in pts:
+        bid = p['u'].split('/book/')[1].split('?')[0]
+        w = WD.get(bid)
+        if w:
+            p['yw'] = w['y']; p['wd'] = w.get('display') or ''; p['wb'] = w.get('basis'); p['wc'] = w.get('confidence')
+    have = [p for p in pts if p.get('yw') is not None]
+    N['work_dates'] = {'points_with_work_date': len(have), 'points': len(pts),
+                       'by_basis': dict(C.Counter(p['wb'] for p in have)),
+                       'older_than_edition_100y': sum(1 for p in have if isinstance(p.get('y'), (int, float)) and p['y'] - p['yw'] >= 100)}
+    # where each sense sits by work date, by era
+    ERAS = [('before 500', -9999, 500), ('500–1399', 500, 1400), ('1400s–1500s', 1400, 1600), ('1600s', 1600, 1700), ('1700 on', 1700, 9999)]
+    N['work_eras'] = {'eras': [e[0] for e in ERAS], 'rows': {}}
+    for L in LAYERS + ['inhabited']:
+        for pole in ['alive', 'dead']:
+            sel = [p for p in have if p['l'] == L and p['p'] == pole]
+            if len(sel) < 10: continue
+            N['work_eras']['rows'][f'{L}_{pole}'] = {'n': len(sel),
+                'work': [round(100 * sum(1 for p in sel if lo <= p['yw'] < hi) / len(sel)) for _, lo, hi in ERAS],
+                'edition': [round(100 * sum(1 for p in sel if isinstance(p.get('y'), (int, float)) and lo <= p['y'] < hi) / len(sel)) for _, lo, hi in ERAS]}
+    print('work dates', json.dumps(N['work_dates']))
+
 N['points'] = len(pts)
 json.dump(pts, open(os.path.join(D, 'aliveness-data.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 json.dump(N, open(os.path.join(D, 'aliveness-numbers.json'), 'w'), ensure_ascii=False, indent=1)

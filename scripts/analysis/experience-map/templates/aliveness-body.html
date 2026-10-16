@@ -60,7 +60,7 @@ __INTRO__
 
 <div class="wide">
   <h2 id="map-h">The map</h2>
-  <p class="hint">Each mark is one passage, placed by the date of the edition it comes from. Filled marks say something is alive, or in the bottom lane that a place has a spirit; rings say something is dead or lifeless, or deny the spirit. The column at 1700 in the bottom lane is Tibetan: many of the library’s undated Tibetan and Bhutanese editions carry a placeholder year of 1700, not a real date (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3307">issue 3307</a>), so their passages stack there. Tap a mark to read it and open the page.</p>
+  <p class="hint">Each mark is one passage, placed by when the work was written; the switch below places it by the date of the edition the library holds instead. Filled marks say something is alive, or in the bottom lane that a place has a spirit; rings say something is dead or lifeless, or deny the spirit. Placed by edition, a column appears at 1700 in the bottom lane. It is Tibetan: many of the library’s undated Tibetan and Bhutanese editions carry a placeholder year of 1700, not a real date (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3307">issue 3307</a>), so their passages stack there. Tap a mark to read it and open the page.</p>
   <div class="controls" id="controls"></div>
   <svg id="map" role="img" aria-label="Timeline of passages on aliveness in four lanes"></svg>
   <p id="count"></p>
@@ -89,6 +89,11 @@ __ANIM_JEV__
 <p>__LEX_INTRO__</p>
 <div class="lexgrid" id="lex"></div>
 <p class="cap" id="cap-lex"></p>
+
+<h2 id="when">When the works were written</h2>
+__WHEN_INTRO__
+<div class="tablewrap"><table class="t" id="tbl-when"></table></div>
+<p class="cap" id="cap-when"></p>
 
 <h2 id="rates">How common each sense is</h2>
 <p>__RATES_INTRO__</p>
@@ -133,6 +138,7 @@ __DATA_NOTE__
     'deity-of-place':'deity of the place','nature-spirit':'nature spirit','naga-serpent-dragon':'nāga, serpent, dragon','animal-person':'animal as person','the-thing-itself':'the place itself','demon-harmful':'harmful spirit',
     'harm-fear':'fear, harm','address-greeting':'address, greeting','bargain-contract':'bargain','taming-binding':'taming, binding','taboo-offence':'taboo, offence','none':'none stated',
     'tibetan-buddhist':'Tibetan Buddhist','indian-buddhist':'Indian Buddhist','native-american':'Native American','greco-roman':'Greco-Roman','mongol-siberian':'Mongol and Siberian','chinese-folk':'Chinese folk','european-folk':'European folk','indian-folk':'Indian folk','hermetic-alchemical':'Hermetic and alchemical','natural-philosophy':'natural philosophy','christian-mystical':'Christian mystical','islamic-sufi':'Islamic and Sufi','folk-magical':'folk magic','architecture-art':'architecture and art'};
+  var BASIS = {wikidata:'from Wikidata', author_lifespan:'within the author’s lifetime, from Wikidata', title_page:'stated on the title page', colophon:'stated in the colophon', catalogue:'from the catalogue', model_knowledge:'estimated by a model'};
   function lbl(k){ return LBL[k] || String(k).replace(/[-_]/g,' '); }
   function trn(t){ t = lbl(t); return t.charAt(0).toUpperCase() + t.slice(1); }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -152,6 +158,7 @@ __DATA_NOTE__
   var ctl = document.getElementById('controls');
   ctl.innerHTML = LAY.map(function(l){ return '<label><input type="checkbox" data-l="'+l.id+'" checked> <span class="sw" style="background:'+l.col+'"></span>'+l.label+'</label>'; }).join('') +
     '<label><input type="checkbox" id="f-alive" checked> alive</label><label><input type="checkbox" id="f-dead" checked> <span class="sw ring" style="border-color:var(--text-muted)"></span>dead / lifeless</label>' +
+    '<label>Place by <select id="f-date" aria-label="Date to place passages by"><option value="w">date of the work</option><option value="e">date of this edition</option></select></label>' +
     '<select id="f-trad" aria-label="Tradition"><option value="">All traditions</option>'+trads.map(function(t){return '<option value="'+esc(t[0])+'">'+esc(trn(t[0]))+' ('+t[1]+')</option>';}).join('')+'</select>' +
     '<select id="f-lang" aria-label="Language"><option value="">All languages</option>'+langs.map(function(t){return '<option value="'+esc(t[0])+'">'+esc(t[0])+' ('+t[1]+')</option>';}).join('')+'</select>' +
     '<input type="search" id="f-q" placeholder="Search quotes and titles" aria-label="Search">';
@@ -185,9 +192,9 @@ __DATA_NOTE__
       l.y0 = y0; l.mid = mid;
     });
     var on = filt();
-    var pts = P.filter(function(d){ return d.y != null; });
+    var pts = P.filter(function(d){ return when(d) != null; });
     var dots = g.append('g').selectAll('circle').data(pts).join('circle')
-      .attr('cx', function(d){ return x(d.y) + (d.j2-.5)*6; })
+      .attr('cx', function(d){ return x(when(d)) + (d.j2-.5)*6; })
       .attr('cy', function(d){ var l = LC[d.l]; return d.p==='alive' ? l.mid - 6 - d.j1*(laneH*0.6-14) : l.mid + 6 + d.j1*(laneH*0.4-12); })
       .attr('r', W < 560 ? 2.6 : 3.2)
       .attr('fill', function(d){ return d.p==='alive' ? LC[d.l].hex : 'none'; })
@@ -196,9 +203,10 @@ __DATA_NOTE__
       .style('pointer-events', function(d){ return on(d) ? 'all' : 'none'; })
       .on('mouseenter click', function(ev,d){ show(d); d3.select(this).attr('r', 6).raise(); })
       .on('mouseleave', function(){ d3.select(this).attr('r', W < 560 ? 2.6 : 3.2); });
-    var shown = P.filter(on).length, nd = P.filter(function(d){ return on(d) && d.y==null; }).length;
+    var shown = P.filter(on).length, nd = P.filter(function(d){ return on(d) && when(d)==null; }).length;
     document.getElementById('count').textContent = fmt(shown)+' passages match'+(nd ? ' ('+nd+' undated, listed in the data file but not plotted)' : '')+'.';
   }
+  function when(d){ return document.getElementById('f-date').value === 'e' ? d.y : (d.yw != null ? d.yw : d.y); }
   function filt(){
     var ls = {}; ctl.querySelectorAll('input[data-l]').forEach(function(c){ ls[c.dataset.l] = c.checked; });
     var al = document.getElementById('f-alive').checked, de = document.getElementById('f-dead').checked;
@@ -206,7 +214,7 @@ __DATA_NOTE__
     return function(d){ return ls[d.l] && (d.p==='alive' ? al : de) && (!tr || d.tr===tr) && (!lg || d.lg===lg) && (!q || (d.q+' '+d.t+' '+d.a).toLowerCase().indexOf(q) >= 0); };
   }
   function show(d){
-    document.getElementById('detail').innerHTML = '<p class="q">“'+esc(d.q)+'”</p><div class="meta"><b>'+esc(d.t)+'</b>'+(d.a?' · '+esc(d.a):'')+' · '+yr(d.y)+' · '+esc(d.lg)+
+    document.getElementById('detail').innerHTML = '<p class="q">“'+esc(d.q)+'”</p><div class="meta"><b>'+esc(d.t)+'</b>'+(d.a?' · '+esc(d.a):'')+' · '+esc(d.lg)+'<br>Written '+(d.yw!=null ? esc(d.wd || yr(d.yw))+' <span class="cap">('+esc(BASIS[d.wb]||'estimated')+')</span>' : 'date unknown')+' · this edition '+yr(d.y)+
       '<br>'+(d.l==='inhabited'
         ? '<span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+(d.p==='alive'?'spirit present':'denied')+'</span><span class="tag">'+esc(trn(d.tr))+'</span><span class="tag">where: '+esc(lbl(d.c))+'</span><span class="tag">who: '+esc(lbl(d.s))+'</span><span class="tag">relation: '+esc(lbl(d.rel))+'</span><span class="tag">voice: '+esc(d.v)+'</span>'
         : '<span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+d.p+'</span><span class="tag">'+esc(trn(d.tr))+'</span><span class="tag">what: '+esc(d.c)+'</span><span class="tag">life from: '+esc(d.s)+'</span>'+(d.fp?'<span class="tag">first person</span>':''))+
@@ -290,6 +298,16 @@ __DATA_NOTE__
       A.phrases.slice(0, 30).map(function(p){ return '<tr><td>'+esc(p.ph)+'</td><td>'+esc(lbl(p.dim))+'</td><td class="num">'+fmt(p.pages)+'</td><td class="num">'+fmt(p.books)+'</td><td>'+p.langs.map(function(x){ return esc(x[0])+' '+fmt(x[1]); }).join(', ')+'</td></tr>'; }).join('')+'</tbody>';
     document.getElementById('tbl-anim-groups').innerHTML = '<thead><tr><th>Phrase group</th><th class="num">Pages drawn</th><th class="num">Screen flagged</th><th class="num">Confirmed</th><th class="num">95% CI</th></tr></thead><tbody>'+
       A.per_group.map(function(g){ return '<tr><td>'+esc(lbl(g.id))+'</td><td class="num">'+g.n+'</td><td class="num">'+g.screened+'</td><td class="num">'+g.rate[0]+'%</td><td class="num">'+g.rate[1]+'–'+g.rate[2]+'%</td></tr>'; }).join('')+'</tbody>';
+  }
+  // when: share of each sense's passages by era, by work date and by edition date
+  if (N.work_eras) {
+    var WE = N.work_eras, NMW = {felt_alive:'Feeling alive',felt_dead:'Feeling dead inside',world_alive:'The world as alive',world_dead:'Matter as dead',made_alive:'Made things as alive',made_dead:'Made things as lifeless',inhabited_alive:'The inhabited world',inhabited_dead:'Spirits of place denied'};
+    document.getElementById('tbl-when').innerHTML = '<thead><tr><th>Sense</th><th class="num">n</th><th>Dated by</th>'+WE.eras.map(function(e){ return '<th class="num">'+e+'</th>'; }).join('')+'</tr></thead><tbody>'+
+      Object.keys(WE.rows).map(function(k){ var r = WE.rows[k];
+        return '<tr><td rowspan="2">'+(NMW[k]||k)+'</td><td class="num" rowspan="2">'+r.n+'</td><td>the work</td>'+r.work.map(function(v){ return '<td class="num">'+v+'%</td>'; }).join('')+'</tr>'+
+               '<tr><td class="cap">this edition</td>'+r.edition.map(function(v){ return '<td class="num cap">'+v+'%</td>'; }).join('')+'</tr>'; }).join('')+'</tbody>';
+    var WB = N.work_dates.by_basis || {};
+    document.getElementById('cap-when').textContent = 'Share of each sense’s confirmed passages by era. Work dates: '+fmt(WB.author_lifespan||0)+' passages within the author’s lifetime (Wikidata), '+fmt(WB.wikidata||0)+' from a Wikidata record of the work, '+fmt(WB.title_page||0)+' from a title page, '+fmt(WB.model_knowledge||0)+' estimated by a model and checked against 318 Wikidata-dated works (85% within its range). Rows may not sum to 100 because of rounding and undated editions.';
   }
   // dims
   document.getElementById('tbl-dims').innerHTML = '<thead><tr><th>Search dimension</th><th>Sense</th><th class="num">Passages</th><th class="num">Confirmed for its own sense</th><th class="num">For any sense</th></tr></thead><tbody>'+
