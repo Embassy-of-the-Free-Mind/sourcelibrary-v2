@@ -9,7 +9,9 @@
  * and <why.jsonl> (date-books.mjs --lean why). A member is written only if, LIVE, its work date is still that stored
  * date with basis model_knowledge and no human has dated it: another job may have re-dated it since the export (the
  * author-lifespan upgrade on #6721), and a reason written against the old date would be wrong. The same test is in the
- * update's filter, so a change between the read and the write is not clobbered either.
+ * update's filter, so a change between the read and the write is not clobbered either. `why_year` / `why_disagrees` are
+ * set only where the model's year is more than 50 years from the stored year (the model does not always keep to that),
+ * and a `why_disagrees` left on a row whose reason another job has since removed (re-dated) is cleared.
  *
  * Every write is logged first: recordSweepActions(sweep 'library-dating-why', action 'why', detail.previous_why).
  * Batches of 500; resumable (a book whose stored reason is already this one is skipped). `--dry-run` writes nothing.
@@ -36,7 +38,7 @@ const todo = [];
 for (const w of readRows(WORKS)) {
   const r = why.get(w.book_id);
   if (!r) continue;
-  for (const id of w.members) todo.push({ book_id: id, work: w.work, why: r.why, year: r.year ?? null, model: r.model, prompt_version: r.prompt_version || WHY_PROMPT_VERSION });
+  for (const id of w.members) todo.push({ book_id: id, work: w.work, why: r.why, y: r.year ?? null, model: r.model, prompt_version: r.prompt_version || WHY_PROMPT_VERSION });
 }
 console.log(`${todo.length} books with a reason ready (${why.size} works)${DRY ? ' — DRY RUN' : ''}`);
 
@@ -54,7 +56,10 @@ for (let i = 0, nb = 0; i < todo.length && (!MAX_BATCHES || nb < MAX_BATCHES); i
     if (!d) { stats.missing++; continue; }
     if (m?.edited_by) { stats.human++; continue; }
     if (w?.basis !== 'model_knowledge' || w.year !== t.work.year || w.from !== t.work.from || w.to !== t.work.to) { stats.redated++; continue; }
-    if (w.why === t.why && w.why_prompt_version === t.prompt_version) { stats.already++; continue; }
+    // the model is asked for "y" only beyond 50 years but does not always keep to it: the test is applied here
+    t.year = t.y != null && Math.abs(t.y - w.year) > 50 ? t.y : null;
+    if (w.why === t.why && w.why_prompt_version === t.prompt_version && (w.why_year ?? null) === t.year
+      && (m.checks || []).includes('why_disagrees') === (t.year != null)) { stats.already++; continue; }
     go.push({ t, d });
   }
   stats.why_disagrees += go.filter(({ t }) => t.year != null).length;
@@ -73,6 +78,15 @@ for (let i = 0, nb = 0; i < todo.length && (!MAX_BATCHES || nb < MAX_BATCHES); i
     } } })), { ordered: false });
   stats.written += res.modifiedCount;
   if (nb % 10 === 0) console.log(`  batch ${nb + 1}: ${res.modifiedCount}/${go.length} written; totals ${JSON.stringify(stats)}`);
+}
+// a row another job has since re-dated to a sourced basis loses its `work` (and so its reason) but keeps `checks`: a
+// `why_disagrees` left there speaks about a date the row no longer carries
+const stale = { 'source_work_dates_meta.checks': 'why_disagrees', 'source_work_dates_meta.work.why': { $exists: false } };
+const staleIds = await db.collection('books').find(stale, { projection: { id: 1 } }).toArray();
+if (staleIds.length && !DRY) {
+  await recordSweepActions(db, staleIds.map((d) => ({ sweep: 'library-dating-why', book_id: String(d.id || d._id), action: 'clear_stale_flag', detail: { removed: 'why_disagrees' } })));
+  const r = await db.collection('books').updateMany({ _id: { $in: staleIds.map((d) => d._id) }, ...stale }, { $pull: { 'source_work_dates_meta.checks': 'why_disagrees' } });
+  stats.stale_flags_cleared = r.modifiedCount;
 }
 await client.close();
 console.log(`done ${JSON.stringify(stats)}`);
