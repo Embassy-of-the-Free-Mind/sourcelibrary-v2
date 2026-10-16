@@ -1,0 +1,21 @@
+  skip p.2: only 30% of its words are in the stored read: check by eye
+  skip p.3: only 30% of its words are in the stored read: check by eye
+  skip p.3: only 24% of its words are in the stored read: check by eye
+  skip p.4: only 37% of its words are in the stored read: check by eye
+  skip p.4: only 30% of its words are in the stored read: check by eye
+  skip p.5: only 36% of its words are in the stored read: check by eye
+  skip p.5: only 35% of its words are in the stored read: check by eye
+  skip p.5: only 27% of its words are in the stored read: check by eye
+  skip p.7: only 24% of its words are in the stored read: check by eye
+  skip p.8: only 18% of its words are in the stored read: check by eye
+  skip p.9: only 30% of its words are in the stored read: check by eye
+  skip p.10: only 15% of its words are in the stored read: check by eye
+  skip p.11: only 33% of its words are in the stored read: check by eye
+  skip p.11: only 17% of its words are in the stored read: check by eye
+  skip p.81: only 34% of its words are in the stored read: check by eye
+  skip p.82: only 32% of its words are in the stored read: check by eye
+  skip p.352: only 25% of its words are in the stored read: check by eye
+  skip p.650: only 26% of its words are in the stored read: check by eye
+  skip p.800: only 25% of its words are in the stored read: check by eye
+  skip p.1126: only 31% of its words are in the stored read: check by eye
+written: 541   skipped: {"only 30% of its words are in the stored read: check by eye":4,"only 24% of its words are in the stored read: check by eye":2,"only 37% of its words are in the stored read: check by eye":1,"only 36% of its words are in the stored read: check by eye":1,"only 35% of its words are in the stored read: check by eye":1,"only 27% of its words are in the stored read: check by eye":1,"only 18% of its words are in the stored read: check by eye":1,"only 15% of its words are in the stored read: check by eye":1,"only 33% of its words are in the stored read: check by eye":1,"only 17% of its words are in the stored read: check by eye":1,"only 34% of its words are in the stored read: check by eye":1,"only 32% of its words are in the stored read: check by eye":1,"only 25% of its words are in the stored read: check by eye":2,"only 26% of its words are in the stored read: check by eye":1,"only 31% of its words are in the stored read: check by eye":1}   run cli-ocr-20261016034151

@@ -1,0 +1,16 @@
+{
+ "set": "q700",
+ "prepared_at": "2026-10-15T23:50:36.933Z",
+ "decisions": 710,
+ "held_books_skipped": [
+  "695936143b43cb6630c916a6",
+  "6978ee3af4d5bdc7b3df604c",
+  "69ac5ef58efc70d51760769a",
+  "69bd9d3c6120d54bd037424c"
+ ],
+ "pages_held_skipped": 36,
+ "to_screen": 669,
+ "write": 572,
+ "keep": 97,
+ "image_failed": []
+}
