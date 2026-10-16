@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
-const HEADER_IMAGE = 'https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/423.jpg';
+const HEADER_IMAGE = 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg';
 
 export const metadata: Metadata = {
   title: 'Maya Ritual in the Colonial Dictionaries - Research Notes - Source Library',
@@ -45,6 +45,33 @@ function Entry({ maya, gloss, source }: { maya: React.ReactNode; gloss: React.Re
   );
 }
 
+function Fig({ book, page, src, alt, caption, wide = false }: { book: string; page: number; src: string; alt: string; caption: React.ReactNode; wide?: boolean }) {
+  return (
+    <figure className={wide ? 'my-10' : 'my-0'}>
+      <Link href={`/book/${book}?page=${page}`} className="block group">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} loading="lazy" className="w-full rounded-md shadow-md bg-stone-100 group-hover:shadow-lg transition-shadow" />
+      </Link>
+      <figcaption className="text-sm text-muted mt-2 leading-snug font-body">{caption}</figcaption>
+    </figure>
+  );
+}
+
+function FigRow({ children, cols = 2 }: { children: React.ReactNode; cols?: 2 | 3 }) {
+  return <div className={`grid grid-cols-1 ${cols === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} gap-6 my-10`}>{children}</div>;
+}
+
+function Cover({ book, page = 1, src, title, note }: { book: string; page?: number; src: string; title: React.ReactNode; note: string }) {
+  return (
+    <Link href={`/book/${book}?page=${page}`} className="block group">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt="" loading="lazy" className="w-full aspect-[3/4] object-cover object-top rounded-md shadow-md bg-stone-100 group-hover:shadow-lg transition-shadow" />
+      <p className="mt-2 text-sm text-primary leading-snug font-body group-hover:text-accent-rust">{title}</p>
+      <p className="text-xs text-muted font-body">{note}</p>
+    </Link>
+  );
+}
+
 export default function MayaRitualDictionariesPage() {
   return (
     <ContentPageLayout
@@ -53,7 +80,7 @@ export default function MayaRitualDictionariesPage() {
           title="Maya Ritual in the Colonial Dictionaries"
           subtitle="Dreaming, transformation, conjuring and the count of days, as the friars and the extirpators wrote them down"
           image={HEADER_IMAGE}
-          imageAlt="A leaf of the Spanish–Maya volume of the Diccionario de Motul, entries for Visión to Vmanidad, including Visiones ver como entre sueños: uay"
+          imageAlt="A page of the Dresden Codex with columns of glyphs and two descending serpents"
         >
           <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 10 min read</p>
         </ContentHeader>
@@ -76,6 +103,12 @@ export default function MayaRitualDictionariesPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           In 1639 Pedro Sánchez de Aguilar, dean of the cathedral of Mérida, printed a report urging harsher punishment for Maya &ldquo;idolaters.&rdquo; In the middle of it he describes a painted book he had taken from some of them, and writes down what he read in it before it disappeared.
         </p>
+
+        <FigRow cols={3}>
+          <Fig book="69dfd990220eedf04e13b0cf" page={40} src="https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg" alt="A page of the Dresden Codex with glyph columns and two descending serpents" caption={<>The Dresden Codex. Only four painted Maya books survive; this is the kind of book the extirpators took.</>} />
+          <Fig book="69dfdec78e5ccd1c891f0cd4" page={10} src="https://images.sourcelibrary.org/archived/69dfdec78e5ccd1c891f0cd4/10.jpg" alt="An opening of the Paris Codex, worn at the edges, with red and blue painted figures and glyphs" caption={<>The Paris Codex, worn to its centre.</>} />
+          <Fig book="6ad191a242debc96269252b6" page={11} src="https://images.sourcelibrary.org/pages/6ad191a242debc96269252b6/0011.jpg" alt="A ragged leaf of the Ritual of the Bacabs manuscript in Maya" caption={<>The <em>Ritual of the Bacabs</em>, Yucatec incantations copied in the eighteenth century. New to the library this week.</>} />
+        </FigRow>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           That pattern runs through the colonial record of Yucatán. The people who wrote to suppress Maya ritual had to name it, and the dictionaries they compiled to preach in Maya recorded its vocabulary along with everything else. Source Library has now read the two volumes of the <em>Diccionario de Motul</em>, Juan Pío Pérez&rsquo;s <em>Diccionario de la lengua maya</em> (1866) and Beltrán&rsquo;s <em>Arte</em> (1859) page by page. This note collects what they, and Sánchez de Aguilar, say about a few ritual words.
@@ -115,6 +148,8 @@ export default function MayaRitualDictionariesPage() {
           </p>
         </blockquote>
 
+        <Fig wide book={SANCHEZ} page={196} src="https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/196.jpg" alt="Printed page of Sánchez de Aguilar's Informe (1639) describing the confiscated book and listing the Maya months" caption={<>Sánchez de Aguilar, <em>Informe contra idolorum cultores</em> (Madrid, 1639): the confiscated book, and below it the eighteen months.</>} />
+
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The same page gives the eighteen months of the year, each set against a European date (&ldquo;A 12. de Enero llamauan Yaax, a primero de Febrero Çac, a 12. de Febrero Ceh&hellip;&rdquo;). It closes the year with &ldquo;Vayeab, por otro nombre Vtuç Kin Vlobol Kin, por seis dias que eran sus Caniculares&rdquo;: <strong>six</strong> closing days, under two further names. Pío Pérez, two centuries later, defines <em>uayeb-haab</em> as &ldquo;los cinco dias complementarios que intercalaban los indios al fin de año para completar los 365&rdquo; (<Leaf book={PIO_PEREZ} page={416}>p. 375</Leaf>): five.
         </p>
@@ -128,6 +163,11 @@ export default function MayaRitualDictionariesPage() {
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Epigraphers read the Classic Maya <em>way</em> glyph as a spirit companion or co-essence, an animal or being into which a person could transform (Houston and Stuart 1989). The colonial Yucatec entries for <em>uay</em> cluster around the same field: dream, vision, and changing shape by sorcery.
         </p>
+
+        <FigRow>
+          <Fig book={MOTUL_2} page={423} src="https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/423.jpg" alt="Manuscript leaf of the Spanish–Maya Motul dictionary with the entries for visión and visiones" caption={<>Motul, Spanish–Maya, f. 234: <em>Visiones ver como entre sueños: uay</em>.</>} />
+          <Fig book={PIO_PEREZ} page={416} src="https://images.sourcelibrary.org/archived/6acc3dfa230e9a56175cdd32/416.jpg" alt="Printed page of Pío Pérez's dictionary, entries UAYAB to UAYUN-AK" caption={<>Pío Pérez 1866, p. 375: <em>uayak</em>, <em>uayaz</em>, <em>uayinah</em>, <em>uaytal</em>, <em>uaytan</em>.</>} />
+        </FigRow>
 
         <ul className="space-y-3 mb-8 list-none pl-0">
           <Entry
@@ -181,6 +221,11 @@ export default function MayaRitualDictionariesPage() {
           />
         </ul>
 
+        <FigRow>
+          <Fig book={PIO_PEREZ} page={401} src="https://images.sourcelibrary.org/archived/6acc3dfa230e9a56175cdd32/401.jpg" alt="Printed page of Pío Pérez's dictionary, entries TZACAM to TZANTZANTAL" caption={<>Pío Pérez 1866, p. 360: <em>tzac-ik, tzac-kin</em>, &ldquo;conjuro idolátrico de los vientos&rdquo;, and <em>tzacomtah</em>.</>} />
+          <Fig book={MOTUL_2} page={132} src="https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/132.jpg" alt="Manuscript leaf of the Motul dictionary, entries Congregar to Consentir, including Conjurar nublados: tzac" caption={<>Motul, Spanish–Maya: <em>Conjurar nublados: tzac</em>, and the conjurings of deer and birds.</>} />
+        </FigRow>
+
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The Motul dictionary, two and a half centuries older, has a small cluster of conjurings on one leaf (<Leaf book={MOTUL_2} page={132}>Spanish–Maya volume</Leaf>): &ldquo;Conjurar nublados: tzac&rdquo; (to conjure clouds), &ldquo;Conjuro de hechizeros: cunyathan&rdquo; (sorcerers&rsquo; conjuring), &ldquo;Conjuro de venados: cunal ceh&rdquo; (conjuring of deer), &ldquo;Conjuros de aues: u cunal chich&rdquo; (conjurings of birds). The Maya–Spanish volume names the specialist: <em>ah cunal can, ceh, balam</em>, &ldquo;encantador, o hechizero, que encanta culebras, venados etcetera&rdquo; (<Leaf book={MOTUL_1} page={31}>Motul, Maya–Spanish volume, f. 12</Leaf>), and on the same leaf <em>ah cunal than</em>, &ldquo;encantador, o hechizero que sabe hechizos&rdquo;.
         </p>
@@ -197,7 +242,23 @@ export default function MayaRitualDictionariesPage() {
           &ldquo;Baño caliente de parida: pib&rdquo; (the hot bath of a woman who has given birth) (<Leaf book={MOTUL_2} page={90}>Motul, Spanish–Maya volume</Leaf>). The Maya–Spanish volume gives the other sense, &ldquo;pib: assar debaxo de tierra&rdquo; (to roast under the earth) (<Leaf book={MOTUL_1} page={758}>Motul, Maya–Spanish volume</Leaf>). The inner sanctuaries of the Cross Group at Palenque are named in their inscriptions as <em>pib naah</em>, &ldquo;sweatbath houses&rdquo;, and have been read as symbolic places of divine birth (Houston 1996).
         </p>
 
+        <FigRow>
+          <Fig book={MOTUL_2} page={90} src="https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/90.jpg" alt="Manuscript leaf of the Motul dictionary, entries baladron to barbar, including baño caliente de parida: pib" caption={<>Motul, Spanish–Maya: <em>baño caliente de parida: pib</em>.</>} />
+          <Fig book={KAUA} page={11} src="https://images.sourcelibrary.org/archived/6a878ac1d71f2514794f9e40/11.jpg" alt="Photograph of an opening of the Book of Chilam Balam of Kaua: day names beside saints' names" caption={<>Chilam Balam of Kaua, p. 11 (Teobert Maler&rsquo;s photograph): the day names beside the saints.</>} />
+        </FigRow>
+
         <h2 id="available" className="text-2xl md:text-3xl text-primary mt-16 mb-6">What you can read now</h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 my-8">
+          <Cover book="6ad191a242debc96269252b6" page={11} src="https://images.sourcelibrary.org/pages/6ad191a242debc96269252b6/0011.jpg" title={<em>Ritual of the Bacabs</em>} note="18th c., Yucatec" />
+          <Cover book="6ad191b742debc9626925415" page={8} src="https://images.sourcelibrary.org/pages/6ad191b742debc9626925415/0008.jpg" title="Caste War letters" note="1848–1850, Yucatec" />
+          <Cover book="6a87106327fd08cecf145caa" src="https://images.sourcelibrary.org/archived/6a87106327fd08cecf145caa/1.jpg" title={<><em>Popol Vuh</em> manuscript</>} note="c. 1701, K’iche’ and Spanish" />
+          <Cover book="6ad191c342debc962692561e" page={8} src="https://images.sourcelibrary.org/pages/6ad191c342debc962692561e/0008.jpg" title="Ebtún land papers" note="1561–1869, Yucatec" />
+          <Cover book="69dfd990220eedf04e13b0cf" page={10} src="https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/10.jpg" title="Dresden Codex" note="Maya painted book" />
+          <Cover book="6acc3d72230e9a56175ccc93" page={5} src="https://images.sourcelibrary.org/archived/6acc3d72230e9a56175ccc93/5.jpg" title={<>Saz, <em>Libro de pláticas</em></>} note="1662, Kaqchikel" />
+          <Cover book={PIO_PEREZ} page={12} src="https://images.sourcelibrary.org/archived/6acc3dfa230e9a56175cdd32/12.jpg" title={<>Pío Pérez, <em>Diccionario</em></>} note="1866, Yucatec–Spanish" />
+          <Cover book={SANCHEZ} page={196} src="https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/196.jpg" title={<>Sánchez de Aguilar, <em>Informe</em></>} note="1639, against the idolaters" />
+        </div>
 
         <p className="text-secondary leading-relaxed mb-4 font-body"><strong>Written by Maya authors</strong></p>
         <ul className="space-y-2 mb-6 list-disc pl-6 font-body text-secondary">

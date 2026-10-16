@@ -85,8 +85,8 @@ export const posts: BlogPost[] = [
     date: '16 October 2026',
     readTime: '10 min read',
     kind: 'tours',
-    image: 'https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/423.jpg',
-    imageAlt: 'A leaf of the Spanish–Maya Diccionario de Motul with the entry Visiones ver como entre sueños: uay',
+    image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg',
+    imageAlt: 'A page of the Dresden Codex with columns of glyphs and two descending serpents',
     imagePosition: 'center 30%',
   },
   {
