@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69938e26d5a98fd66f4309dd",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops about three lines after '& equi-' (from 'nis vel bubulis neruulis cōsuunt ... eæ nanq;' to 'leonum & par-'), splicing 'equi-nis immiffo peruiae funt' together, and also drops 'se' in 'ipse de se scriptū'."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b20af",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Where the leaf reads '& mundi constitutionem, quod σύστημα κοσμικὸν', X has '& tribuitur lunae. rationem', and X also misreads 'appellarunt' as 'appellant'."
+ },
+ {
+  "item_id": "69938de2d5a98fd66f42f80f",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X makes up the attribution 'Ἀντισθένους' where the leaf prints 'Ασυδωμαντος', and misreads 'μίζειν', 'κατὰ φύσιν', 'πιστεύοι' as 'μαχεῖν', 'καὶ φύσιν', 'πιστεύειν'."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5711",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The first line reads 'καὶ δυνάμει ἐπιτάσσει τοῖς ἀκα-', but X writes 'καὶ ἐπώμαζον ἐπὶ πάντας τοῖς ἀκα-' and repeats the red rubric line."
+ },
+ {
+  "item_id": "69938e26d5a98fd66f430af7",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y mangles 'Venerantur' into 'Venere', writes 'eam eam' for 'eam ędem', drops 'Anticyrā' from 'A templo Dictynnææ Anticyrā vsq;', and reads 'peruenit' for 'peruicit'."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7753e",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches the leaf's 'ταῖς μὲν ὑποστάσεσι', 'ἐπευφήμησε', 'τοῦτο γὰρ ὃ', 'σαρδώνιον', 'ἤγουν'; X reads singular 'ὑποστάσει', 'ὅπερ γὰρ ὁ', and 'ἤτοι τρισηλίου'."
+ },
+ {
+  "item_id": "6a357eaac6e2d5bb56a640cb",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y leaves out 'bereits' in 'auf mehr als 50000 Zetteln bereits gesammelt' and runs the 'Clemens III.' signature line into the last sentence."
+ },
+ {
+  "item_id": "6a357eaac6e2d5bb56a64186",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X leaves out 'μετὰ' in 'τῷ μετὰ τὴν μετάνοιαν χρόνῳ', which changes the sense, and misreads 'παρῳχημένων' as 'παρφῃημένων' and apparatus 'πολυέλεος ⟨ὃς⟩' and 'ἀνόητοι S'."
+ },
+ {
+  "item_id": "6a357eaac6e2d5bb56a641a3",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X leaves out the verb 'ammonet' in 'cum talibus ammonet eos qui non valent'; otherwise the two are essentially identical."
+ },
+ {
+  "item_id": "6a357eaac6e2d5bb56a64163",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches 'προεισκρίνουσι', 'παρουσίᾳ', 'ἐνηργήθησαν' and apparatus 'οἱ L', 'ἐνήργησαν Sy', where X errs; Y in turn has 'ἐγένετο' for the leaf's 'ἐγένοντο'."
+ }
+]

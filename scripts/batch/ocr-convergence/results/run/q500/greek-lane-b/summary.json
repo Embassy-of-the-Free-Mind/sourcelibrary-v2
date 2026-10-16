@@ -1,0 +1,25 @@
+{
+ "set": "q500g",
+ "threshold": 0.01,
+ "pages": 210,
+ "books": 21,
+ "actions": {
+  "keep": 47,
+  "residual": 91,
+  "write": 28,
+  "agree": 39,
+  "no-second-read": 4,
+  "contain": 1
+ },
+ "by_group": {
+  "greek": {
+   "keep": 47,
+   "residual": 91,
+   "write": 28,
+   "agree": 39,
+   "no-second-read": 4,
+   "contain": 1
+  }
+ },
+ "decided_at": "2026-10-16T02:09:37.319Z"
+}

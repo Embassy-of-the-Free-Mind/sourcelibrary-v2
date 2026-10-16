@@ -1,0 +1,430 @@
+[
+ {
+  "item_id": "69b300125545150b61b4b8a2",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'νωσε.' — image 'νασε.' (end of ἐπείνασε)"
+  ],
+  "b_errors": [
+   "line 1: 'γνάσε.' — image 'νασε.'",
+   "verse number 9 placed before 'Ταῦτα' — image has 9 at the 'σμου' line"
+  ],
+  "note": "Body text agrees with the image in both; differences are the hyphenated line fragment, line-joining and verse-number placement."
+ },
+ {
+  "item_id": "69b300125545150b61b4b916",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'νὸν τὸν ἀδελφὸν' — image 'νην' (end of Ἰωάννην)"
+  ],
+  "b_errors": [],
+  "note": "The only substantive difference is the opening fragment of Ἰωάννην, which B reads correctly; the rest differs only in line joins."
+ },
+ {
+  "item_id": "69b300125545150b61b4b949",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "catchword 'σύση-' — image 'σύσση-' (body text has it right)"
+  ],
+  "note": "Same text; differences are layout, punctuation, capitalisation and the ᾔδεσαν/ᾔδεισαν spelling."
+ },
+ {
+  "item_id": "69b300125545150b61b4b963",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "v.2: 'ὧν συντελεσθεισῶν' — image has the καί ligature ('καὶ συντελεσθεισῶν')",
+   "verse numbers 36–38 attached to the wrong lines"
+  ],
+  "b_errors": [
+   "chapter heading 'κ'. 4.' — image 'δ'. 4.'"
+  ],
+  "note": "A has a wrong word in v.2 and B has a wrong chapter numeral; otherwise the same."
+ },
+ {
+  "item_id": "69b300125545150b61b4b9da",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "adds a marginal 'Cap. 5.' and gutter warning not visible on the leaf"
+  ],
+  "b_errors": [],
+  "note": "Body text is identical apart from hyphenation and the accentuation of τι σοι."
+ },
+ {
+  "item_id": "69b300125545150b61b4baf1",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "omits the printed verse numbers 13–24"
+  ],
+  "b_errors": [
+   "catchword 'μοῦ' — image 'μετὰ' (μετ ligature)"
+  ],
+  "note": "Running text is the same in both; only the verse numbers and catchword differ."
+ },
+ {
+  "item_id": "69b300125545150b61b4bb3c",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "v.14: 'προσgrowthλώσας' — image 'προσηλώσας' (an English word inserted into the Greek)",
+   "line 1: 'πληρωμένοι' — image 'πεπληρωμένοι'"
+  ],
+  "b_errors": [],
+  "note": "A has a garbled word with English text inserted; B matches the image."
+ },
+ {
+  "item_id": "69b300125545150b61b4bb3e",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Latin 'o' substituted for Greek ο in several words (στόματoς, κτίσαντoς, Ἰουδαῖoς, etc.)"
+  ],
+  "b_errors": [
+   "marginal Eph./Gal. references not legible on the leaf (tagged unclear)"
+  ],
+  "note": "Same Greek text; A's homoglyph letters and B's uncertain margin notes don't change the reading."
+ },
+ {
+  "item_id": "69b300125545150b61b4bb7c",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "omits verse numbers 10–13 and 1–3"
+  ],
+  "b_errors": [
+   "chapter heading 'Κεφ. 9.' — image 'θ'. 9.'"
+  ],
+  "note": "Body text agrees; the differences are verse numbers and how the heading is rendered."
+ },
+ {
+  "item_id": "69b300125545150b61b4bbba",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "verse 13 placed one line late"
+  ],
+  "b_errors": [],
+  "note": "Text identical; only signature/heading rendering and verse-number placement differ."
+ },
+ {
+  "item_id": "69944b932aa4c20217a33f65",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'μετεσίαν εἰρήνης μὴ ἔχοντι' — image 'μετουσίαν εἰρήνης οὐκ ἔχοντι'",
+   "'δοξήσεσιν' — image 'οἰήσεσιν'",
+   "'ἀλλ' αὐτὴν τὴν σπουδὴν' — image 'ἀλλ' ἁπλῆν σπουδὴν'",
+   "margin 'ἀνέπαυσε τε' — image 'ἀνεμιοί τε'",
+   "'καὶ εἰσὶν ... Μωυσέως' — image 'ἢ γάρ εἰσιν ... Μωσεῖ'"
+  ],
+  "b_errors": [
+   "'καὶ ἀσάλευτοι' — image 'οὐδ' ἀσάλευτοι'",
+   "'μένουσα γὰρ' — image 'μένουσα δὲ'",
+   "'λεκτέον ἓν ... οὐχ ὡς' — image 'λεκτέον οὖν ... ὁ νοῦς'"
+  ],
+  "note": "In most of the differing Greek words B agrees with the image; A has several wrong words that change the reading."
+ },
+ {
+  "item_id": "69944b932aa4c20217a33fa9",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἱππικῶς' — image 'ἐπιεικῶς'",
+   "'οἰχομένους' — image 'ποιουμένους'",
+   "'συνθέτου', 'πρόβατον', 'τὸν θεσμοφύλακος' — image 'σύνθετον', 'προβάτων', 'τοῦ θεσμοφύλακος'",
+   "Latin 'gubernatorem' — image 'gubernare'; drops 'se' before 'abominationes'"
+  ],
+  "b_errors": [
+   "'Ἰοθὸρ ποιμνίων, εἴτ' αὖ δογμάτων' — image 'Ἰοθὸρ Ἰησαεῖ καὶ ἀφηγεῖται δογμάτων' (a reading not on this leaf)",
+   "margin 'ἐρημείαν' — image 'ἑρμηνείᾳ'",
+   "'τὰ μὴ ἀδικεῖν' — image 'τοῦ μὴ'",
+   "'ἢ πάλιν' — image 'καὶ πάλιν'"
+  ],
+  "note": "A has more wrong words, but B puts in a phrase that is not on the leaf, so each needs fixing from the other."
+ },
+ {
+  "item_id": "69944b932aa4c20217a340dc",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'οὐδὲ εἰκασία μόνον καὶ κατάληψιν ἐξίσου' — image 'οὐδὲ εἰκαζόμενον ἢ καταλαμβανόμενον'",
+   "'καὶ οἱ κατ' αὐτὰς ... ἐκύμονες' — image 'καὶ εἰ τὰ καθ' αὑτὰς ... ἐγκύμονες'",
+   "Latin 'multa' / 'fit absolutum' — image 'mulcta' / 'sit absoluturum'",
+   "'ἡ γὰρ ὕστερον' — image 'καὶ γὰρ ὕστερον'"
+  ],
+  "b_errors": [
+   "'ὅπως μὲν' — image 'ὅπου μὲν'",
+   "'ἐπεί τοι φυτὸν' — image 'ἐπεὶ τὸ φυτὸν'",
+   "'δικαζέσα' — image 'δικάζουσα'"
+  ],
+  "note": "A rewrites a Greek clause and has several wrong words; B's errors are fewer and smaller."
+ },
+ {
+  "item_id": "69944b932aa4c20217a341b1",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἐπάγεταί τε καὶ συνετρεφει' — image 'ἐπάγεται καὶ συνεπιστρέφει'",
+   "'συνάγονται' — image 'συναύξονται'",
+   "omits 'καὶ' in 'φθάνει δὲ καὶ πρὸς'"
+  ],
+  "b_errors": [
+   "Latin drops 'putantque tanto plus honoris suis accedere' (has 'putantes, quanto')",
+   "'οἱ ἔτος ἀγόμενοι' — image 'δι' ἔτους ἀγομένην'",
+   "'subterraneas' — image 'subventraneas'",
+   "'τὰς αἰγυπτίων ... τὰς τῶν' — image 'τοὺς'"
+  ],
+  "note": "A has wrong Greek words; B drops a Latin clause and has other errors, so neither is clean."
+ },
+ {
+  "item_id": "69944b932aa4c20217a3422f",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'οἰνοφαγίαις' — image 'ὀψοφαγίαις'",
+   "'δαδοφοροῦμοι' — image 'δαφνοφορούμενοι'",
+   "'ὑπὸ γαστέρα' — image 'μετὰ γαστέρα'",
+   "both: 'δάμαλιν κατασκευάσαι ξύλινον' — image 'δέρειον κατασκευάσαι βοῦν'"
+  ],
+  "b_errors": [
+   "'κακῷ τρόπῳ γεωργεῖ' — image 'κακοῦ τρόπον γεωργοῦ'",
+   "Latin 'insani libidine' — image 'infreni libidine'",
+   "'λυττῶντες' — image 'λυττᾶν καὶ'",
+   "both: 'δάμαλιν ... ξυλίνην' — image 'δέρειον ... βοῦν'"
+  ],
+  "note": "Each text gets different words right, and both replace the 'δέρειον ... βοῦν' phrase with one not on the leaf."
+ },
+ {
+  "item_id": "69944b932aa4c20217a34268",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Latin 'reqvisivit' — image 'reqvirit'",
+   "'ὑπὸ σελήνην' — image 'μετὰ σελήνην'",
+   "'ἔτι δὲ καὶ ἀέρος ... μερῶν' — image 'ἔπειτα ἀέρος ... μελῶν'"
+  ],
+  "b_errors": [
+   "'ὑπόχρη' — image 'ἀπόχρη'",
+   "'τὰ ἡγεμονικὰ τῶν ἑτέρω ... ἐνδιαιτωμένων' — image 'τοῦ ἡγεμονικοῦ τῷ ἑτέρῳ ... ἐνδιαιτωμένου'",
+   "drops 'καὶ' in 'ἐάν τε καὶ θῆλυ'"
+  ],
+  "note": "Each text has a few word-level errors the other avoids; both say the same thing overall."
+ },
+ {
+  "item_id": "69944b932aa4c20217a34357",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'γρέσεως' — image 'γενέσεως'",
+   "'ἧς τῶν κατασκόπων' — image 'καὶ τῶν κατασκόπων'"
+  ],
+  "b_errors": [
+   "'ἐξεγερθέντι' — image 'ἐξεγένετο'",
+   "'ὑποκνησάτω', 'ἐλπίδι' — image 'ἀποκνησάτω', 'ἐλπίδος'",
+   "drops 'καθ'' in 'καὶ καθ' εἶδος'",
+   "'συνέτιον, τὸ φρόνιμον' — image 'συνετὸν καὶ τὸ φρόνιμον'",
+   "Latin 'confiteri' — image 'constet'"
+  ],
+  "note": "In most of the differing spans A agrees with the image; B has several wrong or dropped words."
+ },
+ {
+  "item_id": "69944b932aa4c20217a343b4",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἐξελάζεσθαι' — image 'ἐξετάζεσθαι'",
+   "both: 'ἐκκεκώλυται'/'ἦ κεχώλυται' — image 'οὐ κεκώλυται'"
+  ],
+  "b_errors": [
+   "'κᾀκεῖς' — image 'καὶ οὓς'",
+   "margin letters fused into words ('ἀνθιD χυῶν', 'βλαE σάνειν')",
+   "Latin 'q;' rendered as 'que;' throughout"
+  ],
+  "note": "Latin column is the same; the Greek has scattered, different errors in each text."
+ },
+ {
+  "item_id": "69944b932aa4c20217a343c4",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Latin: 'domus quæ in his sunt eodem pacto' — image 'sunt non eodem pacto' (drops the negation)",
+   "Greek: 'οἰκίας τὸν αὐτὸν τρόπον' — image 'οἰκίας οὐ τὸν αὐτὸν τρόπον' (drops the negation)",
+   "'μὴ δὲ τὸν ἐνιαυτὸν' — image 'μετὰ δὲ τὸν ἐνιαυτὸν'",
+   "'τῆς πεντηκοστοῦ' — image 'τοῦ πεντηκοστοῦ'"
+  ],
+  "b_errors": [
+   "'βεβαίαν παρέχειν' — image 'βεβαίας παρασχεῖν'",
+   "'καὶ τὰς ἐν ἀγροῖς' — image 'κατὰ τὰς ἐν ἀγροῖς'"
+  ],
+  "note": "A drops the negation in both the Latin and the Greek, which reverses the law; B has it."
+ },
+ {
+  "item_id": "69944b932aa4c20217a343cf",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'δὲν ὄφελος' — image 'οὐδὲν ὄφελος'",
+   "'τῶν γεννημάτων' — image 'οὐ γεννημάτων'"
+  ],
+  "b_errors": [
+   "drops 'εἴδεσι καὶ', 'τε' and 'καὶ' (ὑψηλότερος)",
+   "'μὴ τὸν νόμον' — image 'μετὰ τὸν νόμον'",
+   "'καὶ τὸν Δαβὶδ' — image 'κατὰ τὸν Δαβὶδ'",
+   "'πᾶν τὸ γένος' — image 'τοῦτο τὸ γένος'",
+   "'κατὰ τὴν τῆς ζύμης' — image 'καθὸ καὶ ἡ τῆς ζύμης'"
+  ],
+  "note": "B drops several words and has wrong words that change the sense; A is close to the image apart from two slips."
+ },
+ {
+  "item_id": "699247034c402ed78ad696b0",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Both give the bookplate text correctly; they differ only in how they describe the image."
+ },
+ {
+  "item_id": "699247034c402ed78ad69756",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Latin drops 'quoniam¹⁵' before '*galeagra'",
+   "Ge'ez 'እሙንቱ፡ ነቢያት፤' — image 'እሙሴ፡ ነቢይ፤'",
+   "Ge'ez 'ትሐውር' — image 'ተሐውር'"
+  ],
+  "b_errors": [
+   "Ge'ez 'ወለእለ፡' — image 'ወለነቢያት፡'",
+   "Ge'ez 'ወኃይሁዳ' — image 'ወ³ይሁዳ'"
+  ],
+  "note": "Greek and footnotes are effectively the same; A drops a Latin word and B misreads some Ge'ez words."
+ },
+ {
+  "item_id": "699247034c402ed78ad69764",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "Ge'ez 'እምሰባዕ' — image 'እምሳብዕ'",
+   "Ge'ez 'ወዐረገኒ' — image 'ወዐረግነ'",
+   "footnote 2 'የውሃ፡' — image 'የውሃት፡'"
+  ],
+  "b_errors": [
+   "Ge'ez opening 'ሥጋከ፡ ወእምዝ፡ አዐርግከ፡' — image 'ገቢአ፡ ወጎበስ፡ አዐርገከ፡' (words not on the leaf)",
+   "Ge'ez 'ወአባሁኒ' — image 'ወአበሁኒ'",
+   "Latin hyphenation kept mid-line ('respon-dit')"
+  ],
+  "note": "The Latin columns agree; B makes up the opening Ge'ez words, while A has smaller Ge'ez slips."
+ },
+ {
+  "item_id": "699247034c402ed78ad69773",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Ge'ez 'እሳይያስ' — image 'ኢሳይያስ'",
+   "Ge'ez 'ዘከለአኒ፡ መመኑ' — image 'ዘከልአኒ፡ ወመኑ'",
+   "Ge'ez 'ወአዕረግነ', 'ሰብዐ' — image 'ወአዕረገኒ', 'ሳብዕ'",
+   "Ge'ez 'እግዚአከ' — image 'እግዚእከ'"
+  ],
+  "b_errors": [
+   "Ge'ez 'ትወርጽ' — image 'ትዐርግ'",
+   "Latin '[tua]' — image '⌜tua⌝'"
+  ],
+  "note": "Both Latin columns are faithful; in most of the differing Ge'ez words B agrees with the image."
+ },
+ {
+  "item_id": "69938e26d5a98fd66f4307ec",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'περιεῖσι γὰρ' — image 'προσῆν γὰρ'"
+  ],
+  "b_errors": [
+   "'Τὸ δὲ Κορινθίοις μόνον' — image 'Τὸ δὲ οὐ Κορινθίοις' (drops the negation)",
+   "'παρεσκεύασεν ἡμέσθαι' — image 'παρεσκεύασε γενέσθαι'",
+   "'ῥαφιῶα λέγουσι' — image 'ταφῆναι λέγουσι'",
+   "catchword 'θορ' — image 'ὑπὲρ'",
+   "drops 'οὐδενὶ' and reorders 'ἐπεφύκει'"
+  ],
+  "note": "B drops a negation, has garbled words and gets the catchword wrong; A is close to the image."
+ }
+]

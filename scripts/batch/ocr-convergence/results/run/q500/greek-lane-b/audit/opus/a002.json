@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a357eaac6e2d5bb56a640d6",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both are complete, but X has small misreadings ('ἀπηληγκότας' for 'ἀπηλγηκότας', 'διακελήρωνται' for 'διακεκλήρωνται', 'ἐξομοιοῦ' for 'ἐξομοιῶν') that Y gets right."
+ },
+ {
+  "item_id": "69aebfe651d30e6c1f6c908f",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X's apparatus note reads '7. παῖξαι cod. et ed.' where the leaf prints 'πέξαι cod. et ed.', which reverses what the note reports; X also has 'accubituun' for 'accubituum'."
+ },
+ {
+  "item_id": "69938e26d5a98fd66f430ab5",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X misreads 'Ac Aleæ quidem' as 'Alex', 'Archemorus' as 'achemorus', 'Cepheo' as 'Cepheu' and 'faciũt' as 'facit', and garbles the Greek 'Ἡγεμόνην'; Y has only minor slips ('Hippia', 'Quæ', 'iamdidum')."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7755b",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf is blank apart from mirrored show-through, which X records correctly; Y transcribes the title page from the other side as text and partly invents it ('ΚΑΙ ΤΑ ΝΟΗΜΑΤΑ', 'MEDITATIONE')."
+ },
+ {
+  "item_id": "6a3f02bb97e91e1768f683c5",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y misreads 'Aristotelei' as 'Aristoteli', 'Ἐρετριέα' as 'Ἐρέτρια', 'βράδην… βραδέα' as 'βράβην… βραβέα' and 'APOPHTHEGMATA', and drops 'ed.' before 'Schweigh.'; X matches the leaf."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2099",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'Numerus Ἐπιμήκης… seu προμήκης', but X gives 'Numerus Προμήκης', which removes the distinction between the two terms; otherwise the two texts agree."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5804",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y garbles the rubric ('συνήγοροι οἱ ἀφʹ' for 'συνήγαγον οἱ ἀρχ.'), leaves out 'ὁ Ἰησοῦς' after 'ἃ ἐποίησεν' and has 'πιστεύουσιν'; X follows the leaf."
+ },
+ {
+  "item_id": "69b6684db3f4fc04415690b6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "In the verses X reads 'terra sinum' and 'quoque sinus erat' where the leaf prints 'terra virum' and 'quoque vivus erat', which changes the epitaph's sense; X also has 'hianti' for 'hiati'."
+ },
+ {
+  "item_id": "69b4c07086a5921d5bc43d2e",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X invents wording from line 1 on ('βίοις καὶ πηγὴν νοερὰν' for 'λίμοις καὶ τὴν ὁμοειδῆ', 'ἀγαθοῖς καὶ φαύλοις' for 'αἰσθήσει καὶ φαντασίᾳ'); Y follows the hand much more closely, though it has errors of its own."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7730e",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The two are nearly identical; X has 'ὁ δὲ' for 'ὁ δ’', 'ἀμφιβάλων' and 'προσπίπτειν' where the leaf reads 'προσαπαντᾷν', none of which changes the meaning much."
+ }
+]

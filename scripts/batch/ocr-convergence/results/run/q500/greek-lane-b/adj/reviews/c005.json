@@ -1,0 +1,439 @@
+[
+ {
+  "item_id": "69b3006c5545150b61b4c73a",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ὡς ἢν ταῦτα γένηται εἶναι, μακρὰ' — image 'ὡς ὅταν γένηται εἶναι, ἢ μακρὰ'",
+   "'καὶ ἤν ἀσώματα ἐόντα, δυνατὰ φανῆναι' — image 'ἀδύνατα ἐόντα, δυνατὰ φῇ εἶναι'",
+   "'ὡς οὐκ ἔστι χρείη' — image 'ἢ ὅ,τι οὐ χρείη'",
+   "'σμικρὰ ἐς τὰ μεγάλα... πολλὰ ἐς τὰ ὀλίγα' — image 'καὶ'",
+   "drops the final 'ἐς ὕδρωπα' line"
+  ],
+  "b_errors": [
+   "'ἔμπυρον ἐν τῷ σώματι' — image 'ἔμπυρόν τι τοῦ σώματος'",
+   "'ὑποψύχοντος' — image 'ὑπερψύχοντος'",
+   "'ἀπολύονται ὑπὸ φλέγματος ἐπισείξαντος' — image unclear, differs"
+  ],
+  "note": "Checked many diff spans on the image: B matches the leaf more often (ὅταν, ἀδύνατα, φῇ εἶναι, ὅ,τι οὐ χρείη, final ἐς ὕδρωπα), while A has several wrong words and drops the last line."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c75d",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'θάνατος ἔσεται. ἢν δὲ πᾶσι πύσεσιν' — image 'ἕψεται. ἐν δὲ τῇσι πτύσεσιν'",
+   "'μὴ δύνηται ἀναπνεῖν' — image 'ἀποπτύειν'",
+   "'ἔστι' repeatedly — image 'οὕτω' (abbreviation)",
+   "'μὴ δύνηται πίνειν' / 'μήτε πίνῃ' — image 'πτύειν' / 'πτύῃ'",
+   "'ἄνευ δὲ ἐντὸς τῶν δέκα' line garbled vs image"
+  ],
+  "b_errors": [
+   "'μεθ' ἡμερίην' — image 'ἡμέρην'",
+   "'ἡσυχαίζειν' — image 'ἡσυχάζειν'",
+   "'προσεγαλγήθη' garbled — image 'προσηγάγετο'"
+  ],
+  "note": "The image shows ἕψεται, τῇσι πτύσεσιν, ἀποπτύειν, πτύειν and the οὕτω abbreviation; on all of these B is right and A misreads in ways that change the medical sense."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c7c0",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1 'χηνὸς' — image 'χλωὸς'",
+   "'βρωμέα' — image 'δριμέα'",
+   "'Χυλὸς ἐλαίου ... μίξας' — image 'Χλωὸς ἔλαιον ... μίσγειν'",
+   "'πᾶς τὰ αἰδοῖα' — image 'πρὸς'",
+   "'κεκερμημένου ἴδου' / 'ἐν κέδρω πρίσματα' — image 'κεκαυμένου ἰοῦ' / 'καὶ κέδρου πρίσματα'"
+  ],
+  "b_errors": [
+   "'ἀφελκωθῇ' — image 'ἀφθήσῃ'",
+   "line 29-30 'χοίρειον στέαρ ὡς ὠὸν' — image 'χηνὸς στέαρ ἢ ὠὸν'"
+  ],
+  "note": "Most differing spans (χλωὸς, δριμέα, μίσγειν, πρὸς, κεκαυμένου ἰοῦ, κέδρου) agree with B on the image; B has a few misreadings of its own."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c7d6",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'χελιδόνων κόπρον' — image 'πελιάδων'",
+   "'Ἑλίκας ἕλικας κατακαύσας' — image 'Ἐλάφου κέρας'",
+   "'ἀπόζοισι θερμοῖσι' — image 'σπόγγοισι'",
+   "'ἐκτὸς φύλλα' — image 'ἀκτῆς φύλλα'",
+   "'τρίψας' (twice) — image 'τριπτῷ'"
+  ],
+  "b_errors": [
+   "page number '185' — image '285'",
+   "'σελίδων κόπρον' — image 'πελιάδων'",
+   "'<term>ὀφθαλμῶν</term>' — image 'ὄξος'",
+   "'Ἐλαίας δὲ ἕρας' — image 'Ἐλάφου κέρας'",
+   "'τ' αὐτ'' — image 'παύει'"
+  ],
+  "note": "Each text gets different spans right (A: κνίδης, Ὄξος, ἐπιπάσσουσα, ἡμιόνου; B: τριπτῷ, λειχῆνας, ἐν οἴνῳ, σπόγγοισι, ἀκτῆς); both garble names and stretches."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c825",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ἐπὶ τὴν ... γινέσθω δ' ποτὲ' — image 'ἐν Ὀλύνθῳ ποτὲ' (place name lost)",
+   "'πτυελα' — image 'πουλλά'",
+   "'τὴν νύκτα πάλιν ἀγρυπνῶν' — image 'ἐν νύκτα πάλιν ἄγρυπνος'"
+  ],
+  "b_errors": [
+   "'ἀνόνητος' — image 'ἄνευ ἄσης'",
+   "'διψῶν ἰὼν ἀεί' — image 'δίψος ἦν ἀεί'",
+   "'ἵδρυμα μετώπου' — image 'δέρμα'",
+   "'ὀδύνη ἐς κρόταφον τὸν δεξιὸν ἔνθεν σιαγόνα' — image 'ἐγένετο δεινή'",
+   "'ἐμπεσόπτοτ' ἂν γλυκίαν το' garbled — image 'ἔμετοι ὁπότ' ἂν γίνοιντο'"
+  ],
+  "note": "A matches the image on most spans (ἄνευ ἄσης, δίψος ἦν, δέρμα, δεκα-line, ἔμετοι ὁπότ' ἂν γίνοιντο). B has several garbled and invented stretches, though A drops 'ἐν Ὀλύνθῳ'."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c83d",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ὁ ἱδρώς' — image 'ὁ καῦσος'",
+   "'ἢ ἁδροτέρη' — image 'ἀσθενεστέρη'",
+   "'προθεστικόν' — image 'περιεστικόν'",
+   "'ταῦτα ἓν ἕκαστα γινόμενα' — image 'ταῦτα οὖν καθαρὰ'",
+   "'τὰ σύδια οἰμώζοντος' — image 'τὰ στήθεα οἰμώζει. οὗτος'"
+  ],
+  "b_errors": [
+   "'κίνησιν ἔχωσι' — image 'ἡσυχίην ἔχωσι' (reverses sense)",
+   "'ἀναίσθητος ἐκ ὕπνου' — image 'ἀναΐσσει ἀπὸ τοῦ ὕπνου'",
+   "catchword 'ταχὺ' — image 'των, καὶ'",
+   "'ὅταν γινόμενος ἐξηγῆται' — image differs"
+  ],
+  "note": "B is right on καῦσος, ἀσθενεστέρη, περιεστικόν, καθαρά and the last line, while A is right on ἡσυχίην and ἀναΐσσει. Each has sense-changing errors the other lacks."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c862",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'Ἐν τοῖσι πυρετοῖσιν' — image 'ὕπνοισιν'",
+   "'πλευροδυνώδεα' — image 'φλεβοδονώδεα'",
+   "'αἱ ἐν πυρετῷ ἄνοιαι' — image 'ἀναυδίαι'",
+   "'ἀναθαρσυνόμενοι' (twice) — image 'ἀναθερμαινόμενοι'",
+   "'οὐδὲ τὴν αὔξησιν φέροντα' — image 'διὰ τὴν αὔριον φρίξαντα'"
+  ],
+  "b_errors": [
+   "'Ἐξ ἐμφυσίωσι πλεύμονος' — image 'ἐμπυήσιος'",
+   "'κρισίμως' — image 'χρησίμως'",
+   "'κληίδια σημαίνοντα' — image 'στηρίζοντα'",
+   "'ἐπισχῶσι' — image 'ἐπιστάζωσι'"
+  ],
+  "note": "Checked against the image: B has more of the key medical terms right (ὕπνοισιν, φλεβοδονώδεα, ἀναυδίαι, ἀναθερμαινόμενοι), but B also misreads ἐμπυήσιος and a few others."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c8b0",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'τὰ ὄργανα πάντα' — image 'τὰ ἔργα'",
+   "'πιεῖτω' — image 'ποιέτω'",
+   "'προσήντα γὰρ τὰ δὲ μὴ πόσον' garbled — image 'προσηναγκάσθαι δὲ μή. ἧσσον'",
+   "'ἀποξεφεύγει' — image 'ἀπόξεα φεύγει'"
+  ],
+  "b_errors": [
+   "'θέμιν ἐν ταὐτῷ νόμῳ' — image 'οἷσι μὲν οὖν ταῦτα νόμος'",
+   "'ὑπερκείμενα ... θρύπτεσθαι' — image 'ἐπικείμενα ... ἐρηρεῖσθαι'",
+   "'χαριζόμενον' — image 'χειριζόμενον'",
+   "'σιγώντων. ἀκουόντων' / 'εἰργασμένου' — image 'σιγῶντες ἀκούοντες' / 'εἰργασμένον'",
+   "'τὸ δὲ ἰλλόμενον μὴ ἀποπίπτειν ῥᾳδίως ἀρκεόντων' invented — image 'τὰ δὲ μέλλοντα ἀποπίπτειν κακίω ταχέως ἀποπεσόντων'"
+  ],
+  "note": "A is right on χειριζόμενον, σιγῶντες, δρῶν, νόμος and ἀποπεσόντων, and B on ἔργα, ποιέτω, δοκῇ, προσηναγκάσθαι and ἀπόξεα. Both garble different passages."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5612",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The wording of the two texts is identical and matches the leaf; A only wraps expanded abbreviations in gloss tags."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5679",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "marginal numbers 'τῆ β̅ τῆ γ̅' uncertain"
+  ],
+  "b_errors": [
+   "invented margin 'τῷ αὐτῷ καιρῷ ἅπασα ἡ Ἰουδαία' not on leaf",
+   "drops the red rubric at the foot 'τὸ αὐτὸ καὶ ἀνάγνωθι ...'",
+   "'καὶ ἦν ὁ Ἰωάννης' — image 'ἦν δὲ ὁ'"
+  ],
+  "note": "The leaf has the bottom rubric and reads 'ἦν δὲ ὁ'. B leaves out the rubric and adds a margin note that is not on the page."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c56d5",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "section number 'ρπ' — image 'ρο'"
+  ],
+  "b_errors": [],
+  "note": "The Gospel text is identical in both; the only differences are in the marginal section numerals and in how the abbreviated ποτήριον and the closing red mark are rendered."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5705",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "omits marginal 'κ'' beside the Ε initial"
+  ],
+  "note": "The texts agree word for word with the leaf; the only differences are the stamp description, nomina sacra expansion and marginal letters."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c570a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "reorders Luke 4:1 to 'Ἰησοῦς δὲ πλήρης Πνεύματος Ἁγίου' — image 'ἰς δὲ πνς / Ἁγίου πλήρης'",
+   "margin numbers 'ιγ/ιδ' — image 'ιε/ις'"
+  ],
+  "b_errors": [
+   "last genealogy cell 'τοῦ δὲ πνς' — image 'ἰς δὲ πνς' (makes Jesus part of the genealogy)",
+   "'Ἀνίου πλήρης' — image 'Ἁγίου'",
+   "title 'ΘΥ' — image 'Χ(ριστο)ῦ'"
+  ],
+  "note": "The genealogy is the same in both. At the transition A keeps the right words (Ἰησοῦς, Ἁγίου) but in a different order, while B misreads them into nonsense."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5711",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "first line 'καὶ ἐπώμαζον ἐπὶ πάντας' — image 'καὶ δυνάμει ἐπιτάσσει'",
+   "title rubrics run together/garbled ('ΠΤΗCΙΑΘΕΙCΗC...') — image 'Π(ερὶ) τῶν ἰαθέντων'",
+   "duplicates the lectionary rubric as both margin and centered line"
+  ],
+  "b_errors": [
+   "'ἐξήρχοντο' — image 'ἐξήρχετο'"
+  ],
+  "note": "The first line on the leaf reads 'δυνάμει ἐπιτάσσει' and the closing title reads 'τῶν ἰαθέντων'. B gets both; A invents the first line."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c571c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "bottom rubric 'ὧδε καὶ ἔστη ἐπὶ τόπου πεδινοῦ· καὶ ἔτι λοιπὸν ὡς ἐγράφη' — image '... ἐποίησεν ὁ Ἰς ... τὸ πε(δινὸν) ζήτει ... καὶ εἰς τὸ λοιπὸν ἕως ἱεράρχ(ου)'"
+  ],
+  "b_errors": [
+   "top rubric week 'ᾱʹ' — image 'β'",
+   "spurious margin glosses 'κεί. ζή.' / 'μετ. τοῦ ἰδ.' split into the text"
+  ],
+  "note": "Luke 6:11-17 has the same wording in both. B reads the bottom rubric better, while A reads the top rubric's week better and keeps the text unbroken."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c575d",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "line 1 'εἰσὶ ταμεῖα οὐδὲ ἀποθῆκαι' — image 'ἔστι ταμεῖον οὐδὲ ἀποθήκη'",
+   "'εἰ οὖν οὐδὲ' — image 'οὔτε'"
+  ],
+  "note": "On the leaf the first line has the singulars ἔστι ταμεῖον ... ἀποθήκη and later reads οὔτε, as in A; the rest is identical."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5776",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1 'ἐθύσατε τὸν μόσχον' — image 'ἔθυσας αὐτῷ τὸν μόσχον'",
+   "drops 'ἔλεγε δὲ καὶ' and pushes 'πρὸς τοὺς μαθητὰς αὐτοῦ· ἄνθρωπός' into a margin tag",
+   "invented gloss 'ἐζήτησε'"
+  ],
+  "b_errors": [
+   "duplicates 'ἄνθρωπός'",
+   "bottom rubric week 'ιδ' — image appears 'θ'"
+  ],
+  "note": "The leaf reads 'ἔθυσας αὐτῷ' and has 'ἔλεγε δὲ καὶ πρὸς τοὺς μαθητὰς' as running text. B has both; A changes the verb and leaves out the phrase."
+ },
+ {
+  "item_id": "69bfcc988ab50eb88e8c5804",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "header 'τῆς ἑβδ̈ ἰωάννου' — image 'τῆς ϛ' ἑβδ. τῷ καιρῷ'"
+  ],
+  "b_errors": [
+   "header 'ὠκαὶ συνήγοροι οἱ ἀφʹ' garbled — image 'τῷ καιρῷ συνήγαγον οἱ ἀρ(χιερεῖς)'",
+   "'ἃ ἐποίησεν,' drops 'ὁ Ἰς' visible on the leaf",
+   "'πιστεύουσιν' — image 'πιστεύσουσιν'",
+   "last line drops 'ὁ' before Ἰησοῦς"
+  ],
+  "note": "The leaf shows 'ἐποίησεν ὁ Ἰς', 'πιστεύσουσιν' and a readable rubric. A matches it, while B drops words and garbles the rubric."
+ },
+ {
+  "item_id": "69938d9dd5a98fd66f42dcdf",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The Greek, apparatus and Latin are identical in both; they differ only in where the marginal line numbers and sigla are placed."
+ },
+ {
+  "item_id": "69938d9dd5a98fd66f42dd70",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The two texts are identical to each other and to the leaf apart from the order of the metadata tags."
+ },
+ {
+  "item_id": "69938d9dd5a98fd66f42dda6",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "Latin 'Judae-rum' — image 'Judaeo-rum'"
+  ],
+  "b_errors": [
+   "'Ποντίου' — image 'Ποντόου'",
+   "'Ὀρόντου ποταμοῦ' — image 'Ὀρέντου' (the reading the footnote discusses)",
+   "footnote 'Ὀρόντου] Ὀρόντου' — image 'Ὀρέντου] Ὀρόντου Ch.'",
+   "Latin 'Pontium' — image 'Pontoum'"
+  ],
+  "note": "The leaf prints Ποντόου, Ὀρέντου and Pontoum, and the footnote corrects Ὀρέντου. B normalizes these names, which makes the apparatus meaningless."
+ },
+ {
+  "item_id": "69938d9dd5a98fd66f42de2c",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "Latin 'receptus Indictione' drops 'est' (image 'receptus est Indictione')"
+  ],
+  "b_errors": [],
+  "note": "The two texts differ only in breathing marks, hyphenation, margin placement and A's dropped 'est'."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b1fc5",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'Ἔστι δὴ καὶ αὕτη οὐχ᾽ ἁπλῶς' — image 'Ἔστι δὴ καὶ οὗτος οὐχ ἁπλοῦς'",
+   "catchword 'se' — image 'ξ'"
+  ],
+  "b_errors": [
+   "'Ἔστι δὲ οὗτος' drops 'καὶ' and has δὲ for δὴ",
+   "title 'ἥτις περιέχει τὸ' — image 'τ̃' (τῆς)"
+  ],
+  "note": "In the Greek sentence and the catchword B is closer to the leaf, while A is right on τῆς in the title and on δὴ καί. Both differences are small."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2017",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἑκάστῳ εἴδει τῶν πολυγώνων ... τὸ αὐτὸ ἀεὶ' — image 'ἑκάστου εἴδους τοῦ πολυγώνου ... τὸ αὐτὸ εἶδος'",
+   "'ἡ τετρὰς' — image 'ἡ τριάς' (wrong number)",
+   "'κατ᾽ ἰσόπλευρον' — image 'καὶ ἰσόπλευρον'",
+   "moves 'καὶ ἐπιπέδῳ' from the Greek into the Latin column"
+  ],
+  "b_errors": [
+   "series 'πρῶτον 1. εἶτα 3. γ' εἶτα 5. γ'. ε'' — image 'α' εἶτα α'. γ' εἶτα α'. γ'. ε''",
+   "'κατὰ μονάδα' — image 'μονάδος'",
+   "'τὸν ἀπολαμβάνειν' — image 'ἐν ἀπολαμβάνειν'",
+   "Latin 'gnominibus' — image 'gnomonibus'"
+  ],
+  "note": "B gets the opening clause and τριάς right, and A gets the number series, μονάδος and the Latin right. Each has errors in numbers or words that matter for the mathematics."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2019",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἐκ τῶν ἐφεξῆς ἀριθμῶν' — image 'ἐκ τοῦ ἐφεξῆς ἀριθμοῦ'",
+   "'ἑκάστη' / 'αὐτῶν' — image 'ἑκάστου' / 'αὐτοῦ'",
+   "'ἀπὸ τριγώνων' and drops 'καὶ' before κατὰ δυάδος",
+   "Latin 'tertiarius' — image 'ternarius'"
+  ],
+  "b_errors": [
+   "'στιχηδὸν' — image 'στοιχηδὸν'",
+   "drops 'καὶ' in 'αὐτῶν καὶ τὸν συνεχῆ'"
+  ],
+  "note": "On the leaf B matches more of the differing word forms (τοῦ ἀριθμοῦ, ἑκάστου, αὐτοῦ, τριγώνου, ternarius). A has more small grammatical misreadings."
+ }
+]
