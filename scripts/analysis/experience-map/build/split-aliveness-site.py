@@ -14,13 +14,15 @@ PRIOR ART: build/assemble-aliveness-page.py builds the page INTO the experience-
 import json, os, re, shutil, sys
 SITE, OUT, NEW = sys.argv[1], sys.argv[2], sys.argv[3].rstrip('/')
 OLD = 'https://experience-atlas.vercel.app'
+# the nav's sister link (Derek, 2026-10-16): the Map of Consciousness in the Source Library Atlas, not the older map above
+CONSCIOUSNESS = 'https://sourcelibrary-atlas.vercel.app/consciousness'
 os.makedirs(OUT, exist_ok=True)
 
 def nav(here):
     links = [('/', 'The atlas'), ('/vocabulary', 'Vocabulary')]
     inner = '\n  '.join(f'<a href="{h}"{" aria-current=\"page\"" if h == here else ""}>{t}</a>' for h, t in links)
     return ('<nav class="site"><div class="inner">\n  <a class="brand" href="/">An Atlas of Aliveness</a>\n  ' + inner +
-            '\n  <span class="spacer"></span>\n  <a href="' + OLD + '">A Map of Conscious Experiences&nbsp;↗</a>\n'
+            '\n  <span class="spacer"></span>\n  <a href="' + CONSCIOUSNESS + '">A Map of Consciousness&nbsp;↗</a>\n'
             '  <a href="https://sourcelibrary.org">Source Library&nbsp;↗</a>\n</div></nav>')
 
 def standalone(src, here):
