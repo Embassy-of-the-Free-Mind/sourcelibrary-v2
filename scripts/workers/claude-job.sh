@@ -613,5 +613,7 @@ case "${1:-status}" in
     can_run_bash || why="$why,no-bash-permission"
     ready=yes; [ -n "$why" ] && ready="no:${why#,}"
     wk=$(weekly_pct); [ -n "$wk" ] && [ "$wk" -ge "$MAX_WEEKLY_PCT" ] && ready="no:weekly-${wk}pct"
-    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} ready=$ready" ;;
+    # account= lets job-where.sh look up this box's 5-hour and weekly headroom (#6751); logins change.
+    acct=$(python3 -c 'import json;print(json.load(open("/root/.claude.json"))["oauthAccount"]["emailAddress"])' 2>/dev/null)
+    echo "host=$HOST cores=$cores load1=$load load5=$load5 mem_free_mb=$mem job_disk_free_gb=$disk root_free_gb=$(root_free_gb) live_jobs=$live weekly_pct=${wk:-?} account=${acct:-?} ready=$ready" ;;
 esac
