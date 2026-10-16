@@ -1,4 +1,44 @@
 {
+ "maya-argon-gemini|gemini-3.8-flash-high": {
+  "x": "argon",
+  "y": "gemini",
+  "n": 19,
+  "fx": 3.6315789473684212,
+  "fy": 3.0,
+  "d": 0.631578947368421,
+  "lo": 0.13157894736842105,
+  "hi": 1.105263157894737,
+  "nx": [
+   15,
+   31,
+   76
+  ],
+  "ny": [
+   46,
+   52,
+   123
+  ]
+ },
+ "maya-argon-gemini|claude opus": {
+  "x": "argon",
+  "y": "gemini",
+  "n": 20,
+  "fx": 3.975,
+  "fy": 3.25,
+  "d": 0.725,
+  "lo": 0.425,
+  "hi": 1.025,
+  "nx": [
+   4,
+   29,
+   80
+  ],
+  "ny": [
+   27,
+   30,
+   153
+  ]
+ },
  "maya-lite-gemini|gemini-3.8-flash-high": {
   "x": "gemini",
   "y": "lite",
@@ -117,6 +157,46 @@
    28,
    26,
    156
+  ]
+ },
+ "maya-opus1-gemini|gemini-3.8-flash-high": {
+  "x": "gemini",
+  "y": "opus1",
+  "n": 20,
+  "fx": 4.35,
+  "fy": 2.225,
+  "d": 2.125,
+  "lo": 1.675,
+  "hi": 2.5,
+  "nx": [
+   10,
+   12,
+   43
+  ],
+  "ny": [
+   68,
+   70,
+   238
+  ]
+ },
+ "maya-opus1-gemini|claude opus": {
+  "x": "gemini",
+  "y": "opus1",
+  "n": 20,
+  "fx": 3.55,
+  "fy": 2.95,
+  "d": 0.6,
+  "lo": 0.0,
+  "hi": 1.15,
+  "nx": [
+   8,
+   21,
+   120
+  ],
+  "ny": [
+   36,
+   42,
+   177
   ]
  },
  "maya-sonnet-gemini|gemini-3.8-flash-high": {
