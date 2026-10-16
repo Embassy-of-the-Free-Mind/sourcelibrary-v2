@@ -44,7 +44,7 @@ async function bookRows(ids, labelOf) {
   const counts = new Map((await db.collection('pages').aggregate([
     { $match: { book_id: { $in: ids }, page_number: { $gt: 0 } } },
     { $group: { _id: '$book_id', pages: { $sum: 1 },
-      ocr: { $sum: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, 1, 0] } },
+      ocr: { $sum: { $cond: [{ $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }] }, 1, 0] } },
       tr: { $sum: { $cond: [{ $and: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }] }, 1, 0] } } } },
   ]).toArray()).map((c) => [c._id, c]));
   // REAL_TRANSLATION_FILTER is a regex filter: count it with a find per book set (placeholders like "[Blank page]" out).
