@@ -176,9 +176,20 @@ export function edgeRefusal(it, rep) {
  *  to mapProjected. */
 export function mapOntoRaw(raw, side, oldSpan, newSpan) {
   const exact = mapExact(raw, side, oldSpan, newSpan);
-  if (!exact.refuse || !/not-in-stored-text/.test(exact.refuse)) return exact;
-  const p = mapProjected(raw, side, oldSpan, newSpan);
-  return p.refuse ? { refuse: `${exact.refuse}+${p.refuse}` } : p;
+  const res = !exact.refuse || !/not-in-stored-text/.test(exact.refuse) ? exact : (() => { const p = mapProjected(raw, side, oldSpan, newSpan); return p.refuse ? { refuse: `${exact.refuse}+${p.refuse}` } : p; })();
+  return res.refuse ? res : structureRefusal(raw, res.text, side) || res;
+}
+
+/** A seam repair never edits a table row — the lines the change touches must not be `| … |` rows (lean dry run 2026-10-16
+ *  removed "[price missing]" and "Special" from Korean ledger tables) — and the changed stretch never starts or ends
+ *  against an emphasis / heading mark (an insertion after "- **" landed inside the bold: "- **1 seok 5 du\n- Fourth…"). */
+export function structureRefusal(raw, text, side) {
+  let p = 0; while (p < raw.length && raw[p] === text[p]) p++;
+  let s = 0; while (s < raw.length - p && s < text.length - p && raw[raw.length - 1 - s] === text[text.length - 1 - s]) s++;
+  const a = raw.lastIndexOf('\n', p - 1) + 1, e = raw.indexOf('\n', raw.length - s); const lines = raw.slice(a, e < 0 ? raw.length : e);
+  if (/^\s*\|.*\|\s*$/m.test(lines)) return { refuse: `${side}-edit-in-table-row` };
+  if (/[*_`#]/.test(raw[p - 1] || '') || /[*_`]/.test(raw[raw.length - s] || '')) return { refuse: `${side}-edit-against-markup` };
+  return null;
 }
 
 function mapExact(raw, side, oldSpan, newSpan) {
@@ -247,7 +258,8 @@ export function mapProjected(raw, side, oldSpan, newSpan) {
   let a = rawA, b = rawB;
   if (oB === oA) { a = b = oA > at ? R.idx[oA - 1] + 1 : R.idx[oA]; }  // a pure insertion goes after the last kept character
   const cut = raw.slice(a, b);
-  if (/[<>*_#`~|]/.test(cut) || /<\/?[a-zA-Z]|[*_#`]/.test(ins)) return { refuse: `${side}-projected-edit-touches-markup` };
+  // nor may it sit against one: an insertion right after "- **" lands inside the bold (dry run, "Fourth Category")
+  if (/[<>*_#`~|]/.test(cut) || /<\/?[a-zA-Z]|[*_#`]/.test(ins) || /[*_#`~|>]/.test(raw[a - 1] || '') || /[*_`~|<]/.test(raw[b] || '')) return { refuse: `${side}-projected-edit-touches-markup` };
   const text = raw.slice(0, a) + ins + raw.slice(b);
   // the projected result must equal the projected excerpt edit
   const want = R.text.slice(0, at) + N.text + R.text.slice(at + O.text.length);
@@ -384,7 +396,7 @@ export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude',
   const cliVersion = String(cli !== 'claude' || fs.existsSync(CLI) ? (await new Promise(res => { const c = spawn(bin, ['--version']); let o = ''; c.stdout.on('data', d => { o += d; }); c.on('error', () => res('unknown')); c.on('close', () => res(o.trim().split(' ')[0] || 'unknown')); })) : 'unknown');
   const cv = await codeVersion();
   const tally = { run: runId, apply: doApply, written: 0, pagesWritten: 0, refused: {} };
-  const refuse = (r, why, extra = {}) => { tally.refused[why] = (tally.refused[why] || 0) + 1; append(refusals, { join: r.id, book: r.it.book, why, ...extra, at: new Date().toISOString() }); };
+  const refuse = (r, why, extra = {}) => { tally.refused[why] = (tally.refused[why] || 0) + 1; append(refusals, { join: r.id, book: r.it.book, why, run: runId, apply: doApply, ...extra, at: new Date().toISOString() }); };
   const books = {};
   for (const r of accepted) {
     const { it, x } = r;

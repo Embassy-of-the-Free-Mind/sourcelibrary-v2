@@ -37,6 +37,18 @@ describe('mapProjected', () => {
     expect(r.refuse).toMatch(/markup/);
   });
 
+  it('refuses an insertion that would land inside a bold heading (lean dry run, Korean ledger)', () => {
+    const raw = '- **Fourth Category: Junior Second Rank**\n  ';
+    const r = mapOntoRaw(raw, 'head', 'Fourth Category: Junior Second Rank', '1 seok 5 du\n- Fourth Category: Junior Second Rank');
+    expect(r.refuse).toMatch(/against-markup/);
+  });
+
+  it('refuses an edit on a table row (lean dry run, "[price missing]")', () => {
+    const raw = '3 boxes | price per 8 boxes: 2 [taels] |\n| Yams | 3 boxes | [price missing] |';
+    const r = mapOntoRaw(raw, 'tail', '| Yams | 3 boxes | [price missing] |', '| Yams | 3 boxes | |');
+    expect(r.refuse).toMatch(/table-row/);
+  });
+
   it('refuses a span that is not at the stored edge', () => {
     const r = mapProjected(DAEMONS, 'head', 'The Daemons , whom Theologians call angels', 'The Daemons , whom theologians call angels');
     expect(r.refuse).toMatch(/not-at-edge/);

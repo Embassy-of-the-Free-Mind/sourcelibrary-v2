@@ -16,6 +16,7 @@
  *   $N $S run        --out=DIR [--max-joins=N] [--repairer=gemini|opus] [--pack=1|30] [--conc=4] [--verify-rate=0.07]
  *                    [--max-weekly=60] [--apply]                 dry run (no writes) unless --apply
  *   $N $S night      --out=DIR --max-joins=N [--apply]          candidates (topped up to N pending) + run: the cron entry
+ *   $N $S write      --out=DIR --run=ID [--apply]                re-plan / write a finished run's placed repairs, no model call
  *   $N $S report     --out=DIR
  *   $N seam-repair.mjs undo --out=DIR [--apply]                 the pilot's undo reads this DIR's manifest.jsonl
  *
@@ -250,15 +251,7 @@ async function run(out, o) {
   if (guardTripped) tally.guard = `stopped mid-run: ${guardTripped}`;
 
   // placement
-  const cands = new Map(todo.map(c => [c.id, c]));
-  const reps = readJsonl(repFile).filter(x => x.run === runId);
-  const placedRows = [], refusals = {};
-  for (const x of reps) {
-    const it = cands.get(x.id);
-    const why = !x.parsed ? 'reply-not-parsed' : x.label === 'ok' ? 'labelled-ok' : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
-    if (why) { refusals[why] = (refusals[why] || 0) + 1; continue; }
-    placedRows.push({ id: x.id, it, x, arm: x.arm, fixed: applyRepair(it, x.repair) });
-  }
+  const { placedRows, refusals } = placeRun(out, runId);
   tally.placed = placedRows.length; tally.placementRefused = refusals;
 
   // verification sample: seeded 7% (≥ 20) of placed repairs, both orders in different calls, + 2 A/A pairs
@@ -278,24 +271,13 @@ async function run(out, o) {
     for (const p of pk) { const v = byPair.get(p.pair); append(verFile, { run: runId, pair: p.pair, id: p.id, order: p.order, better: v?.better ?? null, note: v?.note }); }
     return { ok: byPair.size > 0, cls: r.cls };
   });
-  const vs = {}; for (const v of readJsonl(verFile).filter(v => v.run === runId)) (vs[v.id] ||= {})[v.order] = v.better;
-  const judged = sample.filter(r => vs[r.id]?.['cur-first'] && vs[r.id]?.['rep-first']);
-  const prefers = judged.filter(r => vs[r.id]['cur-first'] === 'Q' && vs[r.id]['rep-first'] === 'P');
-  const worse = new Set(judged.filter(r => vs[r.id]['cur-first'] === 'P' && vs[r.id]['rep-first'] === 'Q').map(r => r.id));
-  const aaVerdicts = aa.length ? [vs[aa[0].id]?.['aa-1'], vs[aa[0].id]?.['aa-2']] : [];
-  tally.verify = { sampled: sample.length, judged: judged.length, prefersBothOrders: prefers.length, worseBothOrders: worse.size, rate: judged.length ? +(prefers.length / judged.length).toFixed(3) : null, aa: aaVerdicts };
-  if (!judged.length || prefers.length / judged.length < PREFER_FLOOR) {
-    tally.stopped = `verification sample: ${prefers.length}/${judged.length} preferred in both orders, below ${PREFER_FLOOR * 100}% — nothing written`;
-    tally.decision = `DECISION: seam-repair lean run ${runId} stopped — the blind Opus sample preferred ${prefers.length}/${judged.length} repairs (< ${PREFER_FLOOR * 100}%); inspect ${out}/verify.jsonl before the next night — default: keep the runner paused (#6742)`;
-  } else {
-    // write: every placed repair except those the sample judged worse (a split verdict is kept: the judge could not separate them)
-    const accepted = placedRows.filter(r => !worse.has(r.id)).map(r => ({ ...r, verdict: vs[r.id] ? { sampled: true, ...vs[r.id] } : { sampled: false } }));
-    const { client, db } = await mongo();
-    tally.write = await writeRepairs(db, accepted, { out, doApply: o.apply, cli: o.repairer === 'opus' ? 'claude' : 'agy', model,
-      promptName: `seam-repair-6742 lean: label+minimal edge repair (opus-reference PROMPT, tight windows, ${o.repairer})`, sentHash: sha(o.pack > 1 ? PACK_HEAD + PROMPT : PROMPT),
-      accepted: `placement-checked; the night's ${VERIFY_RATE * 100}% blind Opus sample preferred ${prefers.length}/${judged.length} in both orders` });
-    await client.close();
-  }
+  const sv = sampleVerdicts(out, runId);
+  const aaVerdicts = aa.length ? [sv.vs[aa[0].id]?.['aa-1'], sv.vs[aa[0].id]?.['aa-2']] : [];
+  tally.verify = { sampled: sample.length, ...sv.summary, aa: aaVerdicts };
+  if (sv.belowFloor) {
+    tally.stopped = `verification sample: ${sv.summary.prefersBothOrders}/${sv.summary.judged} preferred in both orders, below ${PREFER_FLOOR * 100}% — nothing written`;
+    tally.decision = `DECISION: seam-repair lean run ${runId} stopped — the blind Opus sample preferred ${sv.summary.prefersBothOrders}/${sv.summary.judged} repairs (< ${PREFER_FLOOR * 100}%); inspect ${out}/verify.jsonl before the next night — default: keep the runner paused (#6742)`;
+  } else tally.write = await writeRun(out, runId, o, placedRows, sv);
   tally.usageEnd = claudeUsage();
   const runCalls = readJsonl(calls).filter(c => c.run === runId);
   tally.calls = runCalls.reduce((a, c) => { const k = `${c.stage}:${c.arm}`; a[k] = (a[k] || 0) + 1; return a; }, {});
@@ -303,7 +285,55 @@ async function run(out, o) {
   append(path.join(out, 'runs.jsonl'), tally);
   status(tally);
   console.log(JSON.stringify(tally, null, 1));
-  if (tally.decision) console.log(tally.decision);
+  if (tally.decision) {
+    console.log(tally.decision);
+    // a cron run has no wrapper to collect it: put it where the morning digest reads DECISION lines
+    if (fs.existsSync('/root/claude-jobs')) fs.appendFileSync('/root/claude-jobs/decisions.txt', `${new Date().toISOString().slice(0, 10)} | seam-lean-6742-cron | ${tally.decision}\n`);
+  }
+}
+
+/** Placement for one run's repairs: edgeRefusal + the content-conservation guard. */
+function placeRun(out, runId) {
+  const cands = new Map(readJsonl(path.join(out, 'candidates.jsonl')).map(c => [c.id, c]));
+  const placedRows = [], refusals = {};
+  for (const x of readJsonl(path.join(out, 'repairs.jsonl')).filter(r => r.run === runId)) {
+    const it = cands.get(x.id);
+    const why = !x.parsed ? 'reply-not-parsed' : x.label === 'ok' ? 'labelled-ok' : edgeRefusal(it, x.repair) || (lostWords(it, x.repair).length > MAX_LOST ? 'drops-content-words' : null);
+    if (why) { refusals[why] = (refusals[why] || 0) + 1; continue; }
+    placedRows.push({ id: x.id, it, x, arm: x.arm, fixed: applyRepair(it, x.repair) });
+  }
+  return { placedRows, refusals };
+}
+/** The run's verification sample, from verify.jsonl: per-join verdicts, the both-orders tallies, and the floor test. */
+function sampleVerdicts(out, runId) {
+  const vs = {}; for (const v of readJsonl(path.join(out, 'verify.jsonl')).filter(v => v.run === runId)) (vs[v.id] ||= {})[v.order] = v.better;
+  const ids = Object.keys(vs).filter(id => vs[id]['cur-first'] && vs[id]['rep-first']);
+  const prefers = ids.filter(id => vs[id]['cur-first'] === 'Q' && vs[id]['rep-first'] === 'P');
+  const worse = new Set(ids.filter(id => vs[id]['cur-first'] === 'P' && vs[id]['rep-first'] === 'Q'));
+  const summary = { judged: ids.length, prefersBothOrders: prefers.length, worseBothOrders: worse.size, rate: ids.length ? +(prefers.length / ids.length).toFixed(3) : null };
+  return { vs, worse, summary, belowFloor: !ids.length || prefers.length / ids.length < PREFER_FLOOR };
+}
+/** Write (or, without --apply, plan) every placed repair of a run except those the sample judged worse. A split verdict
+ *  is kept: the judge could not separate the two. */
+async function writeRun(out, runId, o, placedRows, sv) {
+  const repairer = placedRows[0]?.arm === 'opus' ? 'opus' : 'gemini';
+  const accepted = placedRows.filter(r => !sv.worse.has(r.id)).map(r => ({ ...r, verdict: sv.vs[r.id] ? { sampled: true, ...sv.vs[r.id] } : { sampled: false } }));
+  const { client, db } = await mongo();
+  try {
+    return await writeRepairs(db, accepted, { out, doApply: o.apply, cli: repairer === 'opus' ? 'claude' : 'agy', model: repairer === 'opus' ? 'claude-opus-5-5' : GEMINI,
+      promptName: `seam-repair-6742 lean: label+minimal edge repair (opus-reference PROMPT, tight windows, ${repairer})`, sentHash: sha(repairer === 'opus' ? PACK_HEAD + PROMPT : PROMPT),
+      accepted: `placement-checked; the night's ${VERIFY_RATE * 100}% blind Opus sample preferred ${sv.summary.prefersBothOrders}/${sv.summary.judged} in both orders` });
+  } finally { await client.close(); }
+}
+/** Re-plan (or with --apply, write) a finished run's placed repairs — no model calls. Refuses a run below the floor. */
+async function writeOnly(out, runId, o) {
+  const sv = sampleVerdicts(out, runId);
+  if (sv.belowFloor) { console.log(JSON.stringify({ run: runId, refused: `sample below the ${PREFER_FLOOR * 100}% floor`, ...sv.summary })); return; }
+  const { placedRows, refusals } = placeRun(out, runId);
+  const write = await writeRun(out, runId, o, placedRows, sv);
+  const row = { run: runId, rewrite: true, at: new Date().toISOString(), placed: placedRows.length, placementRefused: refusals, verify: sv.summary, write };
+  append(path.join(out, 'writes.jsonl'), row);
+  console.log(JSON.stringify(row, null, 1));
 }
 
 // ── report ───────────────────────────────────────────────────────────────────
@@ -321,7 +351,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const repairer = arg('repairer', 'gemini');
   const o = { maxJoins: Number(arg('max-joins', 2000)), repairer, pack: Number(arg('pack', repairer === 'opus' ? OPUS_PACK : 1)), conc: Number(arg('conc', 4)),
     verifyRate: Number(arg('verify-rate', VERIFY_RATE)), maxWeekly: Number(arg('max-weekly', MAX_WEEKLY)), apply: process.argv.includes('--apply') };
-  const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60))), run: () => run(out, o), report: async () => report(out),
+  const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60))), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), o),
     // the cron entry: top the candidates up to --max-joins pending, then run them (the guard is checked first)
     night: async () => { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60))); return run(out, o); } }[cmd];
   if (!go || !out) { console.error('usage: see the header'); process.exit(2); }
