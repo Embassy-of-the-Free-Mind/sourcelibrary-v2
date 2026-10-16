@@ -1,0 +1,339 @@
+{
+ "arbiter": "claude-opus (claude-opus-5-5), job serve-6561",
+ "at": "2026-10-15",
+ "rule": "withhold only a page whose text is not on the leaf (Derek 2026-10-15: the Gemini review is a second opinion, not a gate)",
+ "withheld": [],
+ "rows": [
+  {
+   "uid": "g004",
+   "page_id": "6a3c5fc8879008ba7e157cec",
+   "link": "https://sourcelibrary.org/book/6a3c5fc8879008ba7e157ce5?page=7",
+   "title": "圖書編·卷一百二十七 (vol 97)",
+   "flagged": [
+    "風雨",
+    "飄風"
+   ],
+   "reviewer_note": "The transcription invents headwords before the glosses for 風雨 and 飄風, and omits the second 紛 in 雨雪紛紛.",
+   "kanripo": "disagrees (count inflated by the vocab line)",
+   "arbiter_reading": "opened: the small 風雨 at the foot of the 風雨 column opens the gloss 風雨淒淒…; the small 飄 風 at the foot of the 飄風 column opens 飄風自南…. Both printed.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g014",
+   "page_id": "6a3c654eaf3c49b59c5cb659",
+   "link": "https://sourcelibrary.org/book/6a3c654eaf3c49b59c5cb5f3?page=102",
+   "title": "御定子史精華·卷四十一~卷四十三 (vol 13)",
+   "flagged": [
+    "丨"
+   ],
+   "reviewer_note": "A repetition mark is duplicated across the line break, the character 於 is omitted before 隋書髙祖紀, and two repetition marks are omitted from the song.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place (知丨/丨猶; leaf has 2 more 丨 in 民歌之曰, an omission, not an addition)",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g016",
+   "page_id": "6a3c654e39b4508b04e2db91",
+   "link": "https://sourcelibrary.org/book/6a3c654e39b4508b04e2db7e?page=19",
+   "title": "御定子史精華·卷三十五~卷三十七 (vol 11)",
+   "flagged": [
+    "宋書",
+    "丨",
+    "丨",
+    "丨"
+   ],
+   "reviewer_note": "The transcription adds '宋書' before '樂志' and writes extra repetition strokes (丨) in the first and sixth entries.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place (宋書樂志 at each entry; 丨 runs identical)",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g019",
+   "page_id": "6a3c662439b4508b04e32569",
+   "link": "https://sourcelibrary.org/book/6a3c662439b4508b04e32465?page=106",
+   "title": "御定子史精華·卷九十三~卷九十六 (vol 132)",
+   "flagged": [
+    "賜",
+    "史記信陵君傳如姬果盜晉鄙兵符與公子公子"
+   ],
+   "reviewer_note": "The transcription misreads 子 as 于, inserts 賜, and invents an unprinted 19-character sentence before 行侯生曰.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; also opened by eye on 2026-10-14 (eye-check-invented.json)",
+   "decided_by": "kanripo+image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g021",
+   "page_id": "6a3c653539b4508b04e2d01d",
+   "link": "https://sourcelibrary.org/book/6a3c653539b4508b04e2cfa6?page=119",
+   "title": "御製增訂清文鑑·卷十八 (vol 17)",
+   "flagged": [
+    "時尼"
+   ],
+   "reviewer_note": "The transcription invents the Chinese characters 時尼 (transcribing the Manchu script word sini as Chinese), writing four small gloss characters where the page only prints two.",
+   "kanripo": "no Kanripo work (Manchu dictionary)",
+   "arbiter_reading": "opened: beside 額 two half-size columns print 額伊 and 時尼 (時 could be 昕), four characters; Opus marked both pairs unclear. Printed.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g024",
+   "page_id": "6a3c652c39b4508b04e2cb02",
+   "link": "https://sourcelibrary.org/book/6a3c652c39b4508b04e2cab0?page=82",
+   "title": "御製增訂清文鑑·卷九 (vol 8)",
+   "flagged": [
+    "斡"
+   ],
+   "reviewer_note": "The character 斡 in the phonetic gloss for 雲梯 is written in the transcription but not printed on the page.",
+   "kanripo": "no Kanripo work (Manchu dictionary)",
+   "arbiter_reading": "opened: the 雲梯 gloss prints 圖基/烏伊 and 斡/阿安; 斡 is printed.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g041",
+   "page_id": "6a3c663439b4508b04e32e88",
+   "link": "https://sourcelibrary.org/book/6a3c663439b4508b04e32e5f?page=41",
+   "title": "御定子史精華·卷一百四十一~卷一百四十二 (vol 150)",
+   "flagged": [
+    "不以法則"
+   ],
+   "reviewer_note": "The transcription interpolates '不以法則' before '能化去', which is not printed on the page.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; also opened by eye on 2026-10-14",
+   "decided_by": "kanripo+image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g042",
+   "page_id": "6a3c661a39b4508b04e31e63",
+   "link": "https://sourcelibrary.org/book/6a3c661a39b4508b04e31e58?page=10",
+   "title": "御定子史精華·卷七十~卷七十一 (vol 124)",
+   "flagged": [
+    "漢書"
+   ],
+   "reviewer_note": "The transcription invents the characters 漢書 before 五行志, where the page only prints 五行志.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place (鑄鼎刻書(漢/書) 五行志: 漢書 is the small double line at the foot)",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g043",
+   "page_id": "6a3c656139b4508b04e2e61d",
+   "link": "https://sourcelibrary.org/book/6a3c656139b4508b04e2e5ed?page=48",
+   "title": "御定子史精華·卷一百五~卷一百六 (vol 33)",
+   "flagged": [
+    "律宋孝武問永以太極殿前丨丨丨永答鐘"
+   ],
+   "reviewer_note": "The transcription prepends 17 characters from the preceding page that do not appear on this page.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; also opened by eye on 2026-10-14",
+   "decided_by": "kanripo+image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g054",
+   "page_id": "6a3c660d39b4508b04e315fd",
+   "link": "https://sourcelibrary.org/book/6a3c660d39b4508b04e315d1?page=44",
+   "title": "御定子史精華·卷二十一~卷二十三 (vol 109)",
+   "flagged": [
+    "梁書昭明太子傳爰初敬業離經斷句奠爵崇師"
+   ],
+   "reviewer_note": "The transcription invents the 19-character passage 梁書昭明太子傳爰初敬業離經斷句奠爵崇師 under the heading 饜飫膏腴含咀肴核, which does not appear on the page.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place in variant forms (昭眀太子𫝊, so the folded match missed it)",
+   "arbiter_reading": "not invented; also opened by eye on 2026-10-14",
+   "decided_by": "kanripo+image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g055",
+   "page_id": "6a3c652a39b4508b04e2c9bb",
+   "link": "https://sourcelibrary.org/book/6a3c652a39b4508b04e2c984?page=55",
+   "title": "御製增訂清文鑑·卷六 (vol 5)",
+   "flagged": [
+    "捏姑",
+    "伊阿阿"
+   ],
+   "reviewer_note": "The transcription invents the phonetic gloss characters 捏姑 and 伊阿阿, which are not printed on the page.",
+   "kanripo": "no Kanripo work (Manchu dictionary)",
+   "arbiter_reading": "opened: the 金黃八人轎 gloss prints 揑沽/阿烏恩 and 尼鴉勒瑪/伊阿?阿 (one small character Opus dropped). Printed; 沽→姑 and the dropped character are misreads/omissions inside <unclear>, not invention.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g063",
+   "page_id": "6a3cc247f9474f825c176562",
+   "link": "https://sourcelibrary.org/book/6a3cc247f9474f825c1764dd?page=133",
+   "title": "易漢學·卷一~卷三 (vol 1)",
+   "flagged": [
+    "夜"
+   ],
+   "reviewer_note": "The character 夜 is printed once in the gloss 坎月夜 but transcribed twice (in both the main text 為隂夜 and the gloss), and 夷 is misread as 洟.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g066",
+   "page_id": "6a3c655239b4508b04e2dce3",
+   "link": "https://sourcelibrary.org/book/6a3c655239b4508b04e2dcda?page=9",
+   "title": "御定子史精華·卷五十一~卷五十四 (vol 16)",
+   "flagged": [
+    "丨 (after 寒暑必)",
+    "丨 (before 治事凡十年)",
+    "丨 (before 無倦)"
+   ],
+   "reviewer_note": "The transcription invents an extra repetition mark after 寒暑必 (written 1, printed 0) and an extra repetition mark before 治事凡十年 and before 無倦 (each written 3, printed 2).",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place (寒暑必丨/丨丨丨; 雖盛丨猶 + 6 丨 before 無倦, split differently across lines)",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g068",
+   "page_id": "6a3c661a39b4508b04e31f44",
+   "link": "https://sourcelibrary.org/book/6a3c661a39b4508b04e31e59?page=114",
+   "title": "御定子史精華·卷六十七~卷六十九 (vol 123)",
+   "flagged": [
+    "丨丨歎曰此兒後當復有大名嘗書壁為"
+   ],
+   "reviewer_note": "The transcription prepends text from the preceding page (丨丨歎曰此兒後當復有大名嘗書壁為) not printed on this page, and misreads 釘 as 訂.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; also opened by eye on 2026-10-14",
+   "decided_by": "kanripo+image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g069",
+   "page_id": "6a3cb92c3dce6cfad7493484",
+   "link": "https://sourcelibrary.org/book/6a3cb92c3dce6cfad749340c?page=120",
+   "title": "春秋分記·卷一~卷三 (vol 1)",
+   "flagged": [
+    "十三"
+   ],
+   "reviewer_note": "The transcription invents '十三' in row 10 where the right-column cell is printed blank, and misreads multiple two-digit numerals that are printed with transposed characters.",
+   "kanripo": "no Kanripo alignment (春秋分記 table)",
+   "arbiter_reading": "opened: row 10 prints 十三 | 十四 (and row 13 again); no cell is blank. Printed.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g073",
+   "page_id": "6a3c65c239b4508b04e2f5e1",
+   "link": "https://sourcelibrary.org/book/6a3c65c239b4508b04e2f5c1?page=32",
+   "title": "御定子史精華·卷二十~卷二十二 (vol 57)",
+   "flagged": [
+    "啟靈篇兮"
+   ],
+   "reviewer_note": "The transcription invents the four-character phrase 啟靈篇兮 in the Bai Zhi entry, which does not appear on the page.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place in variant form (啓靈篇兮)",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g077",
+   "page_id": "6a3c652f39b4508b04e2cd6f",
+   "link": "https://sourcelibrary.org/book/6a3c652f39b4508b04e2ccf4?page=123",
+   "title": "御製增訂清文鑑·卷十二 (vol 11)",
+   "flagged": [
+    "烏補 烏"
+   ],
+   "reviewer_note": "The Chinese phonetic gloss 烏補 烏 is transcribed twice but printed only once in the leftmost column.",
+   "kanripo": "no Kanripo work (Manchu dictionary)",
+   "arbiter_reading": "opened: 烏補/烏 is printed twice, mid-page and at the foot of the leftmost columns. Printed.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g078",
+   "page_id": "6a3ced114701a906f10dd458",
+   "link": "https://sourcelibrary.org/book/6a3ced114701a906f10dd359?page=89",
+   "title": "韻府羣玉·卷五 (vol 5)",
+   "flagged": [
+    "宋",
+    "功名"
+   ],
+   "reviewer_note": "The transcription repeats '宋' under the '人名' heading and invents '功名' at the end of the Bai Juyi quotation.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g082",
+   "page_id": "6a3c65fe39b4508b04e30c97",
+   "link": "https://sourcelibrary.org/book/6a3c65fe39b4508b04e30bea?page=3",
+   "title": "御定子史精華·卷一百二十八~卷一百三十 (vol 93)",
+   "flagged": [
+    "俗惡俊異世疵文雅"
+   ],
+   "reviewer_note": "The entry heading 俗惡俊異世疵文雅 is printed only once spanning columns 3 and 4 but transcribed twice (once after 所謂 and once as a standalone heading), and 陵 is misread as 陸.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place (所謂俗惡俊異世疵文雅 ends the gloss, then the heading 俗惡俊異世疵文雅(見上))",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g084",
+   "page_id": "6a3c652a39b4508b04e2ca26",
+   "link": "https://sourcelibrary.org/book/6a3c652a39b4508b04e2ca0a?page=28",
+   "title": "御製增訂清文鑑·卷七 (vol 6)",
+   "flagged": [
+    "烏翁"
+   ],
+   "reviewer_note": "The phonetic gloss in the final entry invents an extra repeat of the characters 烏翁, which are printed only once on the page in the preceding entry.",
+   "kanripo": "no Kanripo work (trilingual dictionary)",
+   "arbiter_reading": "opened: both 應鼓 glosses print a cluster with 烏 and 額 (阿烏額 / 烏…額恩); Opus read 烏翁 inside <unclear>. A misread of a printed cluster, not invention.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g087",
+   "page_id": "6a3c654baf3c49b59c5cb5d8",
+   "link": "https://sourcelibrary.org/book/6a3c654baf3c49b59c5cb576?page=98",
+   "title": "御定子史精華·卷二十四~卷二十七 (vol 8)",
+   "flagged": [
+    "歲"
+   ],
+   "reviewer_note": "The transcription duplicates the character 歲 in the line 歲何曾捨逸遨 (writing 歲歲何曾捨逸遨), whereas it is printed only once on the page.",
+   "kanripo": "Kanripo leaf (own) prints the span in the same place",
+   "arbiter_reading": "not invented; Kanripo agrees",
+   "decided_by": "kanripo",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g091",
+   "page_id": "6a3c6b2739b4508b04e412b6",
+   "link": "https://sourcelibrary.org/book/6a3c6b2739b4508b04e41283?page=51",
+   "title": "六書統·卷十三 (vol 9)",
+   "flagged": [
+    "古文"
+   ],
+   "reviewer_note": "The transcription writes the label 古文 twice in the entry for 怨, but it is printed only once on the page as part of 古文从宛.",
+   "kanripo": "disagrees (leaf text is scrambled around the seal forms)",
+   "arbiter_reading": "opened: the 怨 column prints 古文从宛 after the first seal form and 古文 again after the second. Printed twice.",
+   "decided_by": "image",
+   "verdict": "serve"
+  },
+  {
+   "uid": "g099",
+   "page_id": "6a3c6527af3c49b59c5cb2dc",
+   "link": "https://sourcelibrary.org/book/6a3c6527af3c49b59c5cb27a?page=98",
+   "title": "御製增訂清文鑑·卷二 (vol 2)",
+   "flagged": [
+    "倭呵 額額"
+   ],
+   "reviewer_note": "The phonetic gloss 倭呵 額額 for the Manchu word wehe is transcribed after each of the four entries but does not appear anywhere on the page.",
+   "kanripo": "no Kanripo work (Manchu dictionary)",
+   "arbiter_reading": "opened: 倭呵/額額 is printed beside the second Manchu word of all four entries. Printed.",
+   "decided_by": "image",
+   "verdict": "serve"
+  }
+ ]
+}

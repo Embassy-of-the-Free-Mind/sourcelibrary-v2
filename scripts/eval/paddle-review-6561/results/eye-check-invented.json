@@ -1,0 +1,45 @@
+{
+ "checked_by": "Claude (job table-review-6561) with the page image open, 2026-10-14",
+ "rows": [
+  {
+   "uid": "g043",
+   "link": "https://sourcelibrary.org/book/6a3c656139b4508b04e2e5ed?page=48",
+   "reviewer_span": "律宋孝武問永以太極殿前丨丨丨永答鐘",
+   "reviewer_says": "prepended from the preceding page",
+   "by_eye": "printed: the first (rightmost) column of this page reads 律宋孝武問永以太極殿前丨丨丨永答鐘",
+   "reviewer_right": false
+  },
+  {
+   "uid": "g019",
+   "link": "https://sourcelibrary.org/book/6a3c662439b4508b04e32465?page=106",
+   "reviewer_span": "史記信陵君傳如姬果盜晉鄙兵符與公子公子 ; 賜",
+   "reviewer_says": "an unprinted 19-character sentence; 賜 inserted",
+   "by_eye": "printed: the column under the heading 公子 reads 史記信陵君傳如姬果盜晉鄙兵符與公子公子; 賜 stands at the foot of the 金以與父 column (得伍胥者賜)",
+   "reviewer_right": false
+  },
+  {
+   "uid": "g054",
+   "link": "https://sourcelibrary.org/book/6a3c660d39b4508b04e315d1?page=44",
+   "reviewer_span": "梁書昭明太子傳爰初敬業離經斷句奠爵崇師",
+   "reviewer_says": "does not appear on the page",
+   "by_eye": "printed: the small-character column after the heading 饜飫膏腴含咀肴核 reads 梁書昭明太子傳爰初敬業離經斷句奠爵崇師",
+   "reviewer_right": false
+  },
+  {
+   "uid": "g068",
+   "link": "https://sourcelibrary.org/book/6a3c661a39b4508b04e31e59?page=114",
+   "reviewer_span": "丨丨歎曰此兒後當復有大名嘗書壁為",
+   "reviewer_says": "prepended from the preceding page",
+   "by_eye": "printed: the first (rightmost) column reads 丨丨歎曰此兒後當復有大名嘗書壁為",
+   "reviewer_right": false
+  },
+  {
+   "uid": "g041",
+   "link": "https://sourcelibrary.org/book/6a3c663439b4508b04e32e5f?page=41",
+   "reviewer_span": "不以法則",
+   "reviewer_says": "interpolated before 能化去",
+   "by_eye": "printed: the third column from the right begins 不以法 則, then 能化去",
+   "reviewer_right": false
+  }
+ ]
+}
