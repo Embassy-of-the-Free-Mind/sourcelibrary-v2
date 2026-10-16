@@ -295,6 +295,11 @@ export type SummaryRow = {
   also: { label: string; cost: string }[];
   /** whether we can run the engine in use and the best switch today (null: not known) */
   inUseRuns: boolean | null; bestRuns: boolean | null;
+  /** what the table offers as the switch: the first engine marked better that we can run today, with its own figures.
+   *  No engine we cannot run is ever offered as the switch (#6776, Derek 2026-10-16). */
+  switchTo: Pick<SummaryRow, 'best' | 'gain' | 'interval' | 'multiple' | 'cost'> | null;
+  /** engines marked better that we cannot run today, in the verdict sentence's order */
+  cannotRun: string[];
 };
 
 /** The engines the data file marks better than the engine in use, largest paired difference first: the same
@@ -307,20 +312,26 @@ export function summaryRow(chart: Chart, m: Measure): SummaryRow {
   const row: SummaryRow = {
     id: chart.id, title: chart.title, anchor: anchorOf(m, chart), grade: p.grade, inUse: chart.production_label,
     state: 'none', best: null, gain: null, interval: null, multiple: null, cost: null, also: [], inUseRuns: prod ? canRun(prod) : null, bestRuns: null,
+    switchTo: null, cannotRun: [],
   };
   if (p.grade.level === 'not_fit' || !prod) return { ...row, state: 'not_fit' };
   row.inUse = prod.label;
   if (p.noise?.kind === 'not_reproduced') return { ...row, state: 'withheld' };
-  const [b, ...rest] = betterOf(p);
+  const better = betterOf(p);
+  const [b, ...rest] = better;
   if (!b) return row;
   const multiple = (x: Point) => (x.cost?.basis === 'billed' && prod.cost?.basis === 'billed'
     ? `${(r => (r >= 10 ? r.toFixed(0) : r.toFixed(1)))(x.cost.usd_per_1k / prod.cost.usd_per_1k)}×` : null);
+  const figures = (x: Point) => ({
+    best: x.label, gain: m.fmtDiff(x.vs!.diff), interval: x.vs!.ci95 ? ciText(m, x.vs!.ci95) : null, multiple: multiple(x),
+    cost: multiple(x) ? `${usd(x.cost!.usd_per_1k)} against ${usd(prod.cost!.usd_per_1k)} per 1,000 pages` : costText(x),
+  });
+  const runs = better.find(x => canRun(x) !== false);
   return {
-    ...row, state: p.grade.level === 'decide' ? 'switch' : 'toward', best: b.label, bestRuns: canRun(b),
-    gain: m.fmtDiff(b.vs!.diff), interval: b.vs!.ci95 ? ciText(m, b.vs!.ci95) : null,
-    multiple: multiple(b),
-    cost: multiple(b) ? `${usd(b.cost!.usd_per_1k)} against ${usd(prod.cost!.usd_per_1k)} per 1,000 pages` : costText(b),
+    ...row, ...figures(b), state: p.grade.level === 'decide' ? 'switch' : 'toward', bestRuns: canRun(b),
     also: p.grade.level === 'decide' ? rest.map(x => ({ label: x.label, cost: multiple(x) ?? priceText(x) })) : [],
+    switchTo: runs ? figures(runs) : null,
+    cannotRun: better.filter(x => canRun(x) === false).map(x => x.label),
   };
 }
 
@@ -330,6 +341,10 @@ function GradeLabel({ g }: { g: Grade }) {
   return <span className="uppercase tracking-wider text-[0.75rem] font-semibold whitespace-nowrap" style={{ color: GRADE_COLOR[g.level] }} title={g.why}>{GRADE_LABEL[g.level]}</span>;
 }
 const CantRun = () => <span className="block text-sm text-stone-600">not available today</span>;
+/** The engines measured better that we cannot run: named, never offered as the switch. */
+const NotToday = ({ labels }: { labels: string[] }) => (
+  <span className="block text-sm text-stone-600">Measured better, not available today: {listOf(labels)}</span>
+);
 
 /** The summary table at the head of each half. A table from the sm breakpoint up; on a phone each row stacks,
  *  with the column name written before each value. Not-fit rows are left to the "Not enough evidence yet" list. */
@@ -344,7 +359,7 @@ export function ParetoSummary({ m = OCR }: { m?: Measure }) {
         <tr className="text-left text-sm text-stone-600 border-b border-stone-300 align-bottom">
           <th className={th}>{m.key === 'ocr' ? 'Script' : 'Language'}</th>
           <th className={th}>Engine in use</th>
-          <th className={th}>Best clear switch</th>
+          <th className={th}>Best clear switch we can run today</th>
           <th className={th}>{m.gainHead} (95% interval)</th>
           <th className={th}>Cost against the engine in use</th>
           <th className="font-normal py-2">Grade</th>
@@ -362,9 +377,12 @@ export function ParetoSummary({ m = OCR }: { m?: Measure }) {
               <td colSpan={3} className={`${td} text-stone-600`}>
                 {r.state === 'withheld' ? 'Verdict withheld: two runs of the engine in use disagreed.' : `Not enough evidence yet: ${r.grade.why}.`}
               </td>
-            ) : r.state === 'none' ? (
+            ) : r.state === 'none' || !r.switchTo ? (
               <>
-                <td className={`${td} text-stone-700`}>{lab('Best clear switch')}None</td>
+                <td className={`${td} text-stone-700`}>
+                  {lab('Best clear switch')}None{r.state !== 'none' && ' we can run today'}
+                  {r.cannotRun.length > 0 && <NotToday labels={r.cannotRun} />}
+                </td>
                 <td className="hidden sm:table-cell sm:py-2 sm:pr-4 text-stone-600">{'–'}</td>
                 <td className="hidden sm:table-cell sm:py-2 sm:pr-4 text-stone-600">{'–'}</td>
               </>
@@ -372,21 +390,25 @@ export function ParetoSummary({ m = OCR }: { m?: Measure }) {
               <>
                 <td className={td}>
                   {lab(r.state === 'switch' ? 'Best clear switch' : 'Points toward')}
-                  <span className="text-stone-900 font-semibold">{r.best}</span>
-                  {r.bestRuns === false && <CantRun />}
+                  <span className="text-stone-900 font-semibold">{r.switchTo.best}</span>
                   {r.state === 'toward' && <span className="hidden sm:block text-sm text-stone-600">points toward; directional only</span>}
-                  {r.also.length > 0 && <span className="block text-sm text-stone-600">Also better: {r.also.map(a => `${a.label} (${a.cost})`).join(', ')}</span>}
+                  {r.also.some(a => a.label !== r.switchTo!.best && !r.cannotRun.includes(a.label)) && (
+                    <span className="block text-sm text-stone-600">
+                      Also better: {r.also.filter(a => a.label !== r.switchTo!.best && !r.cannotRun.includes(a.label)).map(a => `${a.label} (${a.cost})`).join(', ')}
+                    </span>
+                  )}
+                  {r.cannotRun.length > 0 && <NotToday labels={r.cannotRun} />}
                 </td>
                 <td className={`${td} tabular-nums`}>
                   {lab('Gain')}
-                  <span className="text-stone-900 font-semibold">{r.gain}</span>
+                  <span className="text-stone-900 font-semibold">{r.switchTo.gain}</span>
                   <span className="sm:hidden text-stone-900"> {m.diffUnit}</span>
-                  {r.interval && <span className="text-stone-600 whitespace-nowrap"> ({r.interval})</span>}
+                  {r.switchTo.interval && <span className="text-stone-600 whitespace-nowrap"> ({r.switchTo.interval})</span>}
                 </td>
                 <td className={`${td} tabular-nums`}>
                   {lab('Cost')}
-                  {r.multiple && <span className="text-stone-900 font-semibold">{r.multiple} </span>}
-                  <span className={r.multiple ? 'sm:block text-sm text-stone-600' : 'text-stone-700'}>{r.cost}</span>
+                  {r.switchTo.multiple && <span className="text-stone-900 font-semibold">{r.switchTo.multiple} </span>}
+                  <span className={r.switchTo.multiple ? 'sm:block text-sm text-stone-600' : 'text-stone-700'}>{r.switchTo.cost}</span>
                 </td>
               </>
             )}
@@ -438,12 +460,12 @@ const hit = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y
 /** One scatter: quality up, price or time across (log). Every plotted engine gets its name beside its dot where it
  *  fits without touching another name or dot; where none fits, a number, keyed under the plot. Engines with no x
  *  value on this axis are returned in `absent`, for the list under the plot. */
-function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number) {
+function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number, minH = 290) {
   const pts = panel.points.filter(p => xOf(p, axis) != null);
   const absent = panel.points.filter(p => xOf(p, axis) == null);
   const fs = rd(f * 0.85), r = rd(Math.max(3.5, f * 0.36));
   const padL = rd(f * 3.4), padR = rd(f * 0.8), top = rd(f * 3.1), bottom = rd(f * 3.2);
-  const plotH = Math.round(Math.min(Math.max(W * 0.48, 290), 400));
+  const plotH = Math.round(Math.min(Math.max(W * 0.48, minH), 400));
   const H = Math.ceil(top + plotH + bottom);
   const X0 = padL, X1 = W - padR, Y0 = top, Y1 = top + plotH;
   if (!pts.length) return { H: 0, body: null, absent, keyed: [] as [number, Point][], cut: [] as Point[] };
@@ -1001,20 +1023,109 @@ export function GradeRules({ m = OCR }: { m?: Measure }) {
   );
 }
 
-/** The list on /quality: one line per script or language, its grade and its verdict, linking to /quality/pareto. */
-export default function ParetoCharts({ m = OCR }: { m?: Measure }): ReactNode {
+/** The short version of the roster, for /quality: the routes we can run today, in one sentence. */
+export function RosterLine() {
+  const groups = ROSTER.groups.filter(g => g.id !== 'production' && ROSTER.engines.some(r => r.group === g.id && r.available));
+  return <>{listOf(groups.map(g => `${g.title} (${g.cost_basis})`))}</>;
+}
+
+/** What /quality says under one small scatter: the frontier of what we can run, the clear switch we can run, and the
+ *  engines measured better that we cannot. Never a recommendation of an engine we cannot run (#6776). */
+function OverviewLines({ chart, panel, m, axis }: { chart: Chart; panel: Panel; m: Measure; axis: Axis }) {
+  const r = summaryRow(chart, m);
+  const prod = panel.points.find(p => p.production);
+  const pts = panel.points.filter(p => xOf(p, axis) != null);
+  const runFr = pts.length >= 3 ? frontierOf(pts.filter(p => canRun(p)), p => xOf(p, axis)!, p => p.y) : [];
   return (
-    <ul className="divide-y divide-stone-200 border-y border-stone-200 max-w-4xl">
-      {m.charts.map(chart => {
-        const p = chart.panels[0];
-        return (
-          <li key={chart.id} id={anchorOf(m, chart)} className="py-3 scroll-mt-24">
-            <a href={`/quality/pareto#${anchorOf(m, chart)}`} className="font-serif text-lg text-stone-900 hover:text-amber-800">{m.title(chart)}</a>
-            <span className="text-sm ml-2"><GradeBadge g={p.grade} /></span>
-            <p className="text-stone-700 leading-snug mt-1">{p.verdict}</p>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="text-sm text-stone-700 mt-1 space-y-1">
+      {r.switchTo && (
+        <p>
+          <span className="text-stone-900 font-semibold">{r.switchTo.best}</span>{' '}
+          {r.state === 'switch' ? `${m.key === 'ocr' ? 'reads' : 'scores'} clearly better than the engine in use and runs today` : 'is where the evidence points, and runs today'}:{' '}
+          {r.switchTo.gain} {m.diffUnit}{r.switchTo.interval ? ` (95% interval ${r.switchTo.interval})` : ''}.
+        </p>
+      )}
+      {!r.switchTo && r.state !== 'withheld' && prod && <p>No engine we can run today is clearly better than {prod.label}, the engine in use.</p>}
+      {r.state === 'withheld' && <p>Verdict withheld: two runs of the engine in use disagreed.</p>}
+      {runFr.length > 0 && <p className="text-stone-600">Frontier of what we can run today, by {axis === 'price' ? 'price' : 'time a page'}: {runFr.map(p => p.label).join(' → ')}.</p>}
+      {r.cannotRun.length > 0 && <p className="text-stone-600">Measured better, not available today: {listOf(r.cannotRun)}.</p>}
+      {prod && canRun(prod) === false && <p className="text-stone-600">The engine in use, {prod.label}, is not available today: {prod.roster?.why_not}.</p>}
+    </div>
+  );
+}
+
+/** One small scatter on /quality: the chart's primary panel at a phone's width and a half column's, on price (or on
+ *  time where nothing has a price), linking to its full section on /quality/pareto. */
+function SmallScatter({ chart, m }: { chart: Chart; m: Measure }) {
+  const panel = chart.panels[0];
+  const axis: Axis = panel.points.some(p => xOf(p, 'price') != null) ? 'price' : 'time';
+  const sizes: [string, number, number][] = [['md:hidden', 360, 12], ['hidden md:block', 420, 12]];
+  const label = `${m.title(chart)}, quality against ${axis}. ${sample(panel)}.`;
+  let keyed: [number, Point][] = [];
+  let phoneKeyed: [number, Point][] = [];
+  const svgs = sizes.map(([cls, W, f]) => {
+    const s = scatter(panel, m, axis, W, f, 230);
+    if (cls === 'md:hidden') phoneKeyed = s.keyed; else keyed = s.keyed;
+    return s.body && <svg key={cls} viewBox={`0 0 ${W} ${s.H}`} className={`w-full h-auto mt-1 ${cls}`} style={{ maxWidth: W }} role="img" aria-label={label}>{s.body}</svg>;
+  });
+  const keyLine = (k: [number, Point][]) => k.length > 0 && <>{k.map(([n, p]) => `${n} ${p.label}`).join(' · ')}</>;
+  const absent = panel.points.filter(p => xOf(p, axis) == null);
+  return (
+    <li id={anchorOf(m, chart)} className="scroll-mt-24 min-w-0">
+      <a href={`/quality/pareto#${anchorOf(m, chart)}`} className="font-serif text-lg text-stone-900 hover:text-amber-800">{m.title(chart)}</a>
+      {svgs}
+      <p className="text-sm text-stone-600 md:hidden">{keyLine(phoneKeyed)}</p>
+      <p className="text-sm text-stone-600 hidden md:block">{keyLine(keyed)}</p>
+      {absent.length > 0 && <p className="text-sm text-stone-600">Not on this view ({axis === 'price' ? 'no price on record' : 'time not measured'}): {listOf(absent.map(p => p.label))}.</p>}
+      <OverviewLines chart={chart} panel={panel} m={m} axis={axis} />
+    </li>
+  );
+}
+
+/** The key for the small scatters, once per half. */
+function OverviewKey({ m }: { m: Measure }) {
+  const item = 'inline-flex items-center gap-1';
+  const sw = (filled: boolean, ring = false) => (
+    <svg width="16" height="12" aria-hidden="true">
+      {ring && <circle cx="8" cy="6" r="5.5" fill="none" stroke={PRODUCTION} strokeWidth="1.25" />}
+      <circle cx="8" cy="6" r="3.5" fill={filled ? (ring ? PRODUCTION : INK) : PAPER} stroke={ring ? PRODUCTION : INK} strokeWidth="1.25" />
+    </svg>
+  );
+  const line = (c: string, w: number) => <svg width="18" height="10" aria-hidden="true"><path d="M1 8 H8 V2 H17" fill="none" stroke={c} strokeWidth={w} /></svg>;
+  return (
+    <p className="text-sm text-stone-600 flex flex-wrap gap-x-4 gap-y-1 mb-4">
+      <span className={item}>{sw(true)}available today</span>
+      <span className={item}>{sw(false)}not available today</span>
+      <span className={item}>{sw(true, true)}engine in use</span>
+      <span className={item}><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill={BETTER} /></svg>measured better than the engine in use</span>
+      <span className={item}>{line(INK, 2)}frontier of what we can run</span>
+      <span className={item}>{line(FAINT, 1.25)}frontier of everything measured</span>
+      {m.charts.some(c => c.panels[0].points.some(isSub)) && <span>† run on a subscription, $0 billed: placed at the API price</span>}
+    </p>
+  );
+}
+
+/** The summary on /quality: one small scatter per script or language whose primary panel is fit to read, then the
+ *  ones that are not, by name. Every anchor the old list carried (#pareto-latin, #pareto-translation-latin, …) is
+ *  still on this page, on the scatter or on the name. */
+export default function ParetoCharts({ m = OCR }: { m?: Measure }): ReactNode {
+  const thin = m.charts.filter(c => !fit(c));
+  return (
+    <div>
+      <OverviewKey m={m} />
+      <ul className="grid gap-x-8 gap-y-10 md:grid-cols-2">
+        {m.charts.filter(fit).map(chart => <SmallScatter key={chart.id} chart={chart} m={m} />)}
+      </ul>
+      {thin.length > 0 && (
+        <p className="text-sm text-stone-600 mt-6 max-w-3xl">
+          Not enough evidence yet to draw a frontier:{' '}
+          {thin.map((c, i) => (
+            <span key={c.id} id={anchorOf(m, c)} className="scroll-mt-24">
+              {i ? ', ' : ''}<a href={`/quality/pareto#${anchorOf(m, c)}`} className="text-stone-800 hover:text-amber-800 underline decoration-stone-300">{m.title(c)}</a> ({plural(c.panels[0].n_works, 'work')})
+            </span>
+          ))}.
+        </p>
+      )}
+    </div>
   );
 }
