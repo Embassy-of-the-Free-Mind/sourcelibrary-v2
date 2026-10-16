@@ -99,6 +99,8 @@ export type Measure = {
 const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '–' : `${(x * 100).toFixed(d)}%`);
 const signed = (s: string, d: number) => `${d >= 0 ? '+' : '−'}${s}`;
 const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
+/** Coordinates to a tenth of a pixel: the page carries hundreds of plots, and float noise doubled its weight. */
+const rd = (v: number) => Math.round(v * 10) / 10;
 const decimals = (step: number) => Math.max(0, -Math.floor(Math.log10(step) + 1e-9));
 
 // ── the roster ───────────────────────────────────────────────────────────────────────────────
@@ -439,8 +441,8 @@ const hit = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y
 function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number) {
   const pts = panel.points.filter(p => xOf(p, axis) != null);
   const absent = panel.points.filter(p => xOf(p, axis) == null);
-  const fs = f * 0.85, r = Math.max(3.5, f * 0.36);
-  const padL = f * 3.4, padR = f * 0.8, top = f * 3.1, bottom = f * 3.2;
+  const fs = rd(f * 0.85), r = rd(Math.max(3.5, f * 0.36));
+  const padL = rd(f * 3.4), padR = rd(f * 0.8), top = rd(f * 3.1), bottom = rd(f * 3.2);
   const plotH = Math.round(Math.min(Math.max(W * 0.48, 290), 400));
   const H = Math.ceil(top + plotH + bottom);
   const X0 = padL, X1 = W - padR, Y0 = top, Y1 = top + plotH;
@@ -458,13 +460,13 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number) {
   const ySpan = hiY - loY || 0.01;
   const { ticks: yTicks, step: yStep } = niceTicks(loY - ySpan * 0.05, hiY + ySpan * 0.05, Math.max(3, Math.floor(plotH / (f * 3))));
   const yLo = Math.min(loY - ySpan * 0.05, yTicks[0]), yHi = Math.max(hiY + ySpan * 0.05, yTicks.at(-1)!);
-  const sy = (v: number) => Y1 - ((Math.min(Math.max(v, yLo), yHi) - yLo) / (yHi - yLo)) * (Y1 - Y0);
+  const sy = (v: number) => rd(Y1 - ((Math.min(Math.max(v, yLo), yHi) - yLo) / (yHi - yLo)) * (Y1 - Y0));
 
   // x: log, padded a quarter of a decade each side
   const xs = pts.map(p => xOf(p, axis)!);
   const xLo = Math.min(...xs) / 10 ** 0.25, xHi = Math.max(...xs) * 10 ** 0.25;
   const lx0 = Math.log10(xLo), lx1 = Math.log10(xHi);
-  const sx = (v: number) => X0 + ((Math.log10(v) - lx0) / (lx1 - lx0)) * (X1 - X0);
+  const sx = (v: number) => rd(X0 + ((Math.log10(v) - lx0) / (lx1 - lx0)) * (X1 - X0));
   const xTicks = logTicks(xLo, xHi, Math.max(3, Math.floor((X1 - X0) / (fs * 4.5))));
 
   // the frontier, twice: every engine plotted, and the ones we can run today; never on a panel not fit to rank
@@ -499,7 +501,7 @@ function scatter(panel: Panel, m: Measure, axis: Axis, W: number, f: number) {
       const b = { x0, y0: y - h / 2, x1: x0 + w, y1: y + h / 2 };
       if (!inside(b) || taken.some(t => hit(t, b))) continue;
       taken.push(b);
-      return { x, y, anchor, far: Math.abs(y - q.y) > h };
+      return { x: rd(x), y: rd(y), anchor, far: Math.abs(y - q.y) > h };
     }
     return null;
   };
@@ -682,13 +684,13 @@ function forestScale(rows: Row[], band: number, maxTicks = 5) {
 function forest(panel: Panel, m: Measure, W: number, f: number, stacked: boolean): { H: number; body: ReactNode } {
   const rows = forestRows(panel);
   const band = panel.noise?.kind === 'spread' && panel.noise.band ? panel.noise.band : 0;
-  const fs = f * 0.92, r = Math.max(3.5, f * 0.3), gap = f * 0.9;
+  const fs = rd(f * 0.92), r = rd(Math.max(3.5, f * 0.3)), gap = rd(f * 0.9);
   const quota = rows.some(x => x.p.cost?.basis === 'quota');
   const diffW = f * 13.2, priceW = f * (quota ? 13.2 : 11.2);
-  const x0 = stacked ? r + 2 : f * 17.7 + gap;
-  const x1 = stacked ? W - diffW - gap : W - priceW - diffW - gap * 2;
+  const x0 = rd(stacked ? r + 2 : f * 17.7 + gap);
+  const x1 = rd(stacked ? W - diffW - gap : W - priceW - diffW - gap * 2);
   const { lo, hi, ticks } = forestScale(rows, band, Math.floor((x1 - x0) / (fs * 4.2)));
-  const sx = (v: number) => x0 + ((Math.min(Math.max(v, lo), hi) - lo) / (hi - lo)) * (x1 - x0);
+  const sx = (v: number) => rd(x0 + ((Math.min(Math.max(v, lo), hi) - lo) / (hi - lo)) * (x1 - x0));
   const head = f * 2.3, rh = stacked ? f * 3.4 : f * 2;
   const H = Math.ceil(head + rows.length * rh + 2);
   const decide = panel.grade.level === 'decide';
@@ -700,9 +702,9 @@ function forest(panel: Panel, m: Measure, W: number, f: number, stacked: boolean
       {ticks.map(t => <text key={t} x={sx(t)} y={stacked ? f * 1.5 : f} textAnchor="middle" fontSize={fs} fill={MUTED}>{t === 0 ? '0' : m.fmtDiff(t)}</text>)}
       <line x1={0} x2={W} y1={head - f * 0.5} y2={head - f * 0.5} stroke={GRID} strokeWidth={1} />
       {rows.map(({ p, diff, ci }, i) => {
-        const top = head + i * rh;
-        const cy = stacked ? top + f * 2.35 : top + rh / 2;
-        const y0 = stacked ? top + f * 1.5 : top, y1 = stacked ? top + f * 3.2 : top + rh;
+        const top = rd(head + i * rh);
+        const cy = rd(stacked ? top + f * 2.35 : top + rh / 2);
+        const y0 = rd(stacked ? top + f * 1.5 : top), y1 = rd(stacked ? top + f * 3.2 : top + rh);
         const c = p.production ? PRODUCTION : p.verdict === 'better' ? BETTER : INK;
         const strong = p.production || p.verdict === 'better';
         const off = Math.min(diff, ...(ci ?? [])) < lo;
@@ -878,8 +880,11 @@ function Table({ panel, m }: { panel: Panel; m: Measure }) {
 function PanelView({ chart, panel, m, sub }: { chart: Chart; panel: Panel; m: Measure; sub?: boolean }) {
   const id = chart.panels.indexOf(panel) > 0 ? anchorOf(m, chart, panel) : undefined;
   const provenance = panel.notes.join(' ');
-  const rows = forestRows(panel);
+  // the forest plot for each script's or language's primary run; another run's differences are in its table
+  const rows = sub ? [] : forestRows(panel);
   const notFit = panel.grade.level === 'not_fit';
+  // a slide figure for each script's or language's primary run only: the other runs would double the page's weight
+  const exportable = !sub && !notFit;
   const sizes: [string, number, number, boolean][] = [['sm:hidden', 350, 12, true], ['hidden sm:block', 820, 13, false]];
   const label = `${m.title(chart)}: each engine's difference from the engine in use, for ${rows.length} engines. ${sample(panel)}. ${panel.verdict}`;
   return (
@@ -905,10 +910,10 @@ function PanelView({ chart, panel, m, sub }: { chart: Chart; panel: Panel; m: Me
           )}
           <div className="mt-4"><Table panel={panel} m={m} /></div>
           {provenance && <p className="text-sm text-stone-600 mt-2 max-w-3xl">{provenance}</p>}
-          <div className="text-sm text-stone-600 mt-2"><ParetoDownload svgId={svgId(m, chart, panel)} name={anchorOf(m, chart, panel)} /></div>
+          {exportable && <div className="text-sm text-stone-600 mt-2"><ParetoDownload svgId={svgId(m, chart, panel)} name={anchorOf(m, chart, panel)} /></div>}
         </div>
       </details>
-      <div hidden aria-hidden="true"><ExportSvg chart={chart} panel={panel} m={m} /></div>
+      {exportable && <div hidden aria-hidden="true"><ExportSvg chart={chart} panel={panel} m={m} /></div>}
     </div>
   );
 }
