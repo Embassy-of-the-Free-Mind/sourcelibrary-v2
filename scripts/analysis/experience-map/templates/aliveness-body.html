@@ -1,5 +1,7 @@
 <style>
   .wide { max-width:1120px; margin:0 auto; padding:0 26px; }
+  .wide > h2:first-child { margin-top:28px; }
+  .wrap.intro { padding-bottom:8px; }  /* the site's .wrap ends a page with 96px; above the map that is a gap */
   .statrow { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--border-light);
     border:1px solid var(--border-light); margin:28px 0 8px; }
   .statrow div { background:var(--cream); padding:14px 16px; }
@@ -47,7 +49,7 @@
   @media (max-width:640px) { body { font-size:17px; } .wrap, .wide { padding-left:16px; padding-right:16px; } .controls input[type=search] { width:100%; } }
 </style>
 
-<div class="wrap">
+<div class="wrap intro">
 <header class="paper">
   <p class="eyebrow">Source Library · working paper · draft</p>
   <h1>An Atlas of Aliveness</h1>
@@ -60,10 +62,11 @@ __INTRO__
 
 <div class="wide">
   <h2 id="map-h">The map</h2>
-  <p class="hint">Each mark is one passage, placed by when the work was written; the switch below places it by the date of the edition the library holds instead. Filled marks say something is alive, or in the bottom lane that a place has a spirit; rings say something is dead or lifeless, or deny the spirit. Placed by edition, a column appears at 1700 in the bottom lane. It is Tibetan: many of the library’s undated Tibetan and Bhutanese editions carry a placeholder year of 1700, not a real date (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3307">issue 3307</a>), so their passages stack there. Tap a mark to read it and open the page.</p>
+  <p class="hint">Each mark is one passage, placed by when the work was written. Filled marks: something is alive, or in the bottom lane a place has a spirit. Rings: something is dead or lifeless, or the spirit is denied. Tap a mark to read it.</p>
   <div class="controls" id="controls"></div>
   <svg id="map" role="img" aria-label="Timeline of passages on aliveness in four lanes"></svg>
   <p id="count"></p>
+  <p class="hint" id="map-note" hidden>Placed by edition, a column appears at 1700 in the bottom lane: many of the library’s undated Tibetan and Bhutanese editions carry a placeholder year of 1700, not a real date (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3307">issue 3307</a>).</p>
   <div id="detail"><p class="hint">Tap or hover a mark to read the passage.</p></div>
 </div>
 
@@ -164,8 +167,9 @@ __DATA_NOTE__
     '<input type="search" id="f-q" placeholder="Search quotes and titles" aria-label="Search">';
 
   // map
-  var svg = d3.select('#map'), M = {t:16,r:14,b:34,l:14}, laneH = 170, H = M.t + laneH*LAY.length + M.b;
-  var xd = [-2100, 0, 1000, 1400, 1600, 1800, 2030], xr = [0, .10, .22, .34, .56, .80, 1];
+  var svg = d3.select('#map'), M = {t:16,r:14,b:44,l:14}, laneH = 170, H = M.t + laneH*LAY.length + M.b;
+  // two linear scales, not seven: before 1400 each century is drawn narrower (the shaded band says so), after 1400 at full width
+  var xd = [-1000, 1400, 2030], xr = [0, .34, 1];
   function rnd(i){ var x = Math.sin(i*12.9898)*43758.5453; return x - Math.floor(x); }
   P.forEach(function(d,i){ d.j1 = rnd(i+1); d.j2 = rnd(i+7); });
   var sel = null;
@@ -175,10 +179,12 @@ __DATA_NOTE__
     svg.attr('viewBox','0 0 '+W+' '+H).attr('height', H);
     svg.selectAll('*').remove();
     var g = svg.append('g');
-    [-2000,0,500,1000,1200,1400,1500,1600,1700,1800,1900,2000].forEach(function(t){
-      if (W < 560 && [0,500,1200,1500,1700,1900].indexOf(t) >= 0) return;
+    g.append('rect').attr('x', x(-1000)).attr('y', M.t).attr('width', x(1400) - x(-1000)).attr('height', H - M.t - M.b).attr('fill', 'var(--fig-well)').attr('opacity', .5);
+    g.append('text').attr('x', (x(-1000) + x(1400)) / 2).attr('y', H - M.b + 30).attr('text-anchor', 'middle').attr('class', 'pole').text(W < 560 ? 'before 1400, compressed' : 'before 1400: each century drawn at about a seventh of the width');
+    [-1000,-500,0,500,1000,1400,1500,1600,1700,1800,1900,2000].forEach(function(t){
+      if (W < 560 && [-500,500,1500,1700,1900].indexOf(t) >= 0) return;
       g.append('line').attr('x1',x(t)).attr('x2',x(t)).attr('y1',M.t).attr('y2',H-M.b).attr('stroke','var(--fig-grid)').attr('stroke-width',.6);
-      g.append('text').attr('x',x(t)).attr('y',H-M.b+16).attr('text-anchor','middle').text(t<0?(-t)+' BCE':t);
+      g.append('text').attr('x',x(t)).attr('y',H-M.b+16).attr('text-anchor','middle').text(t<0?(-t)+' BCE':t===-1000?'':t);
     });
     LAY.forEach(function(l,k){
       var y0 = M.t + k*laneH, mid = y0 + laneH*0.6;
@@ -194,7 +200,7 @@ __DATA_NOTE__
     var on = filt();
     var pts = P.filter(function(d){ return when(d) != null; });
     var dots = g.append('g').selectAll('circle').data(pts).join('circle')
-      .attr('cx', function(d){ return x(when(d)) + (d.j2-.5)*6; })
+      .attr('cx', function(d){ return x(spread(d)) + (d.j2-.5)*4; })
       .attr('cy', function(d){ var l = LC[d.l]; return d.p==='alive' ? l.mid - 6 - d.j1*(laneH*0.6-14) : l.mid + 6 + d.j1*(laneH*0.4-12); })
       .attr('r', W < 560 ? 2.6 : 3.2)
       .attr('fill', function(d){ return d.p==='alive' ? LC[d.l].hex : 'none'; })
@@ -203,10 +209,19 @@ __DATA_NOTE__
       .style('pointer-events', function(d){ return on(d) ? 'all' : 'none'; })
       .on('mouseenter click', function(ev,d){ show(d); d3.select(this).attr('r', 6).raise(); })
       .on('mouseleave', function(){ d3.select(this).attr('r', W < 560 ? 2.6 : 3.2); });
+    document.getElementById('map-note').hidden = document.getElementById('f-date').value !== 'e';
     var shown = P.filter(on).length, nd = P.filter(function(d){ return on(d) && when(d)==null; }).length;
     document.getElementById('count').textContent = fmt(shown)+' passages match'+(nd ? ' ('+nd+' undated, listed in the data file but not plotted)' : '')+'.';
   }
   function when(d){ return document.getElementById('f-date').value === 'e' ? d.y : (d.yw != null ? d.yw : d.y); }
+  // a work dated "c. 1460–1499" sits somewhere in that range, not on one year: spread the mark across the range (at
+  // most 60 years), so many estimates on the same conventional year do not stack into a false column
+  function spread(d){
+    var y = when(d);
+    if (document.getElementById('f-date').value === 'e' || d.yw == null || d.wf == null || d.wt == null || d.wt <= d.wf) return y;
+    var half = Math.min(d.wt - d.wf, 60) / 2;
+    return Math.max(d.wf, Math.min(d.wt, y + (d.j2 - .5) * 2 * half));
+  }
   function filt(){
     var ls = {}; ctl.querySelectorAll('input[data-l]').forEach(function(c){ ls[c.dataset.l] = c.checked; });
     var al = document.getElementById('f-alive').checked, de = document.getElementById('f-dead').checked;
