@@ -261,12 +261,21 @@ export interface Book {
 
   // Source work compositional timeline
   source_work_dates?: SourceWorkDateLayer[];
+  // schema 1 (ai_enrichment, 2026): enriched_at + source. schema 2 (#6721): a work and an edition date, each with a basis.
   source_work_dates_meta?: {
-    enriched_at: Date;
+    enriched_at?: Date;
     model: string;
     confidence: 'high' | 'medium' | 'low';
-    source: 'ai_enrichment' | 'manual';
+    source?: 'ai_enrichment' | 'manual';
     reasoning?: string;
+    schema?: 2;
+    work?: SourceWorkDate;
+    edition?: SourceWorkDate;
+    catalogue_note?: string;
+    prompt_version?: string;
+    run_id?: string;
+    dated_at?: Date;
+    edited_by?: string;
   };
 
   // KDP publishing score
@@ -346,6 +355,26 @@ export interface SourceWorkDateLayer {
   work_title?: string;
   language?: string;
   notes?: string;
+  // #6721: what the date rests on. title_page = the opening leaves print it (evidence is their verbatim words);
+  // colophon = the closing leaves state it (evidence is their verbatim words; a cycle year converted to CE);
+  // catalogue = the holding library's record; model_knowledge = a scholarly estimate; wikidata = the work's Wikidata
+  // item, stored only where a model's estimate agrees with it (evidence "Q… P571"); author_lifespan = the work falls
+  // in the author's dated window (Wikidata or BDRC; evidence "Q… lifespan" / "bdr:P… floruit").
+  // Absent on schema-1 layers.
+  basis?: SourceWorkDateBasis;
+  evidence?: string;
+}
+
+export type SourceWorkDateBasis = 'title_page' | 'colophon' | 'catalogue' | 'model_knowledge' | 'wikidata' | 'author_lifespan';
+
+export interface SourceWorkDate {
+  year: number | null;
+  from: number | null;
+  to: number | null;
+  display: string;
+  precision?: string | null;
+  basis: SourceWorkDateBasis;
+  evidence?: string;
 }
 
 // Provenance entry for a single metadata field

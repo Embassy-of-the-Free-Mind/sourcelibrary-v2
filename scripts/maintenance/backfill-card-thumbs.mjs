@@ -113,7 +113,8 @@ async function main() {
     const key = cardKeyFrom(srcUrl);
     if (!key) throw new Error(`unmappable url: ${srcUrl.slice(0, 60)}`);
     const src = await fetchBuffer(srcUrl);
-    const card = await sharp(src).resize(600, null, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 72 }).toBuffer();
+    // Height floored at 300 so wide banners don't become slivers (#3229); mirrors galleryVariant() in src/lib/gallery-image-gen.ts.
+    const card = await sharp(src).resize(600, 300, { fit: 'outside', withoutEnlargement: true }).jpeg({ quality: 72 }).toBuffer();
     const cardUrl = (await putR2(key, card)) + `?v=${startTime}`;
 
     // gallery_images is the render-facing view + the idempotency key, so write

@@ -141,3 +141,11 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 4. What is left is stamped, and that stamp is the "recorded reason" the definition of done
    asks for. Do not reach for a writer in the GAP row to close the last 1%.
 5. Say in the report what reads each write: released books are actuated, held books are not.
+6. **Gate a new reader against what the reader gets now, not against an absolute score.** On a page
+   with NO text the alternative is nothing, so the gate is the harms only: no invented text, the
+   planted errors caught, the script's letters kept. A fidelity mean is reported beside it, never
+   used as the bar. An absolute bar belongs only where the read REPLACES stored text, and there it
+   is paired against that stored text on the same pages. Set the gate before the fan-out and run
+   it first, so a pass writes as it reads. #6559 (2026-10-12/13): Opus read 11,843 empty Nahuatl
+   and Mayan-language pages, 0 invented, 3 of 3 plants caught, then wrote nothing for a day because
+   one weak judge scored 3.80 on 15 pages against a 4.0 bar.

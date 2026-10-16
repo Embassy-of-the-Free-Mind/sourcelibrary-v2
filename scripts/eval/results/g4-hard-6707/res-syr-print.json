@@ -1,0 +1,177 @@
+{
+ "panel": "syr-print",
+ "chart": "syriac-print",
+ "n_pages": 20,
+ "noise_floor": 0.018,
+ "comparators": {
+  "chart": "syriac-print",
+  "thr": 0.018,
+  "ref38": "gemini-3.8-flash+antigravity-cli",
+  "best": "omnisyr",
+  "flash3": null,
+  "prod": "omnisyr"
+ },
+ "arms": {
+  "omnisyr": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.873,
+   "ci95": [
+    0.847,
+    0.897
+   ],
+   "failures": {},
+   "median_cer": 0.1299
+  },
+  "omnisyr-nosplit": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.867,
+   "ci95": [
+    0.838,
+    0.894
+   ],
+   "failures": {},
+   "median_cer": 0.1405
+  },
+  "qoruyo-eastern": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.838,
+   "ci95": [
+    0.805,
+    0.871
+   ],
+   "failures": {},
+   "median_cer": 0.14
+  },
+  "qoruyo-estrangela": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.835,
+   "ci95": [
+    0.792,
+    0.878
+   ],
+   "failures": {},
+   "median_cer": 0.1555
+  },
+  "gemini-4-argon-low+antigravity-cli": {
+   "n_read": 20,
+   "n_scored": 18,
+   "accuracy": 0.72,
+   "ci95": [
+    0.664,
+    0.769
+   ],
+   "failures": {
+    "copy_filter": 2
+   },
+   "median_cer": 0.2805
+  },
+  "sophro-mhiro": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.659,
+   "ci95": [
+    0.468,
+    0.83
+   ],
+   "failures": {},
+   "median_cer": 0.1931
+  },
+  "gemini-3.7-flash+antigravity-cli": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.488,
+   "ci95": [
+    0.367,
+    0.589
+   ],
+   "failures": {},
+   "median_cer": 0.4259
+  },
+  "gemini-3.8-flash+antigravity-cli": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.451,
+   "ci95": [
+    0.317,
+    0.563
+   ],
+   "failures": {},
+   "median_cer": 0.4326
+  },
+  "gemini-3.6-flash+antigravity-cli": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.396,
+   "ci95": [
+    0.286,
+    0.49
+   ],
+   "failures": {},
+   "median_cer": 0.5202
+  },
+  "gemini-3.1-flash-lite": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0.318,
+   "ci95": [
+    0.271,
+    0.355
+   ],
+   "failures": {},
+   "median_cer": 0.6834
+  },
+  "mineru": {
+   "n_read": 20,
+   "n_scored": 20,
+   "accuracy": 0,
+   "ci95": [
+    0,
+    0
+   ],
+   "failures": {},
+   "median_cer": 1.0
+  }
+ },
+ "paired": {
+  "ref38:gemini-3.8-flash+antigravity-cli": {
+   "n": 18,
+   "wins": 18,
+   "losses": 0,
+   "ties": 0,
+   "median_delta": -0.1277,
+   "median_delta_ci95": [
+    -0.3122,
+    -0.0807
+   ],
+   "mean_delta": -0.2529,
+   "mean_delta_ci95": [
+    -0.3765,
+    -0.1436
+   ],
+   "sign_p": 0.0,
+   "verdict": "better"
+  },
+  "best:omnisyr": {
+   "n": 18,
+   "wins": 3,
+   "losses": 15,
+   "ties": 0,
+   "median_delta": 0.1578,
+   "median_delta_ci95": [
+    0.1054,
+    0.2248
+   ],
+   "mean_delta": 0.1521,
+   "mean_delta_ci95": [
+    0.1,
+    0.2008
+   ],
+   "sign_p": 0.0075,
+   "verdict": "worse"
+  }
+ }
+}

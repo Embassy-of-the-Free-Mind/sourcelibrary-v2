@@ -13,6 +13,9 @@
  * it does not fit because this lane searches the English translation for translators' phrasing, and needs per-phrase
  * century/language counts that the v5 lane does not produce.
  *   node retrieve/retrieve-aliveness-lexical.mjs [--per 40]
+ *   node retrieve/retrieve-aliveness-lexical.mjs --probes probes/probes-animism-lexical.json --tag animism --per 60
+ * With --tag the outputs are lexical-counts-<tag>.json / hits-lex-<tag>.jsonl and the draw uses makeRng (integer PRNG);
+ * without it the script reproduces the original 2026-10-13 draw exactly.
  */
 import fs from 'node:fs'; import path from 'node:path'; import { createRequire } from 'node:module';
 const HOME = process.env.HOME; const SL = path.join(HOME, 'sourcelibrary');
@@ -20,10 +23,12 @@ const CORPUS = process.env.SL_CORPUS || path.join(HOME, 'sl-corpus');
 const OUT = process.env.ALIVE_OUT || path.join(SL, 'scripts', 'output', 'experience-map', 'aliveness');
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const PER = +arg('--per', 40);
+const TAG = arg('--tag', null); const sfx = TAG ? `-${TAG}` : '';
+const PROBES = arg('--probes', 'probes/probes-aliveness-lexical.json');
 const { stripEditorialWrappers } = await import(path.join(SL, 'scripts', 'lib', 'strip-editorial-wrappers.mjs'));
 const Database = createRequire(path.join(HOME, 'sourcelibrary-atlas', 'package.json'))('better-sqlite3');
 const db = new Database(path.join(CORPUS, 'corpus.sqlite'), { readonly: true });
-const { dimensions } = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'probes', 'probes-aliveness-lexical.json'), 'utf8'));
+const { dimensions } = JSON.parse(fs.readFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), '..', PROBES), 'utf8'));
 
 // catalogue + denominators
 const cat = new Map(); for (const r of db.prepare('SELECT id, display_title, title, author, language, year_num, visible FROM catalog').iterate()) cat.set(r.id, r);
@@ -32,7 +37,8 @@ const denom = {}; for (const r of db.prepare('SELECT book_id, count(*) n FROM pa
 
 // seeded shuffle. This lossy double-arithmetic LCG made the published 2026-10-13 draw and is frozen in
 // tests/unit/paired-stats-prng.test.ts so that draw stays reproducible; a NEW draw should use an integer PRNG.
-let seed = 6652; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+let seed = 6652; const lcg = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+const rnd = TAG ? (await import(path.join(SL, 'scripts', 'eval', 'lib', 'paired-stats.mjs'))).makeRng(6652) : lcg;
 const q = db.prepare('SELECT p.book_id, p.p FROM pages_en e JOIN pages p ON p.rowid = e.rowid WHERE pages_en MATCH ?');
 const counts = {}; const zero = []; const picked = new Map();
 for (const [dim, phrases] of Object.entries(dimensions)) {
@@ -49,14 +55,14 @@ for (const [dim, phrases] of Object.entries(dimensions)) {
 
 // attach text, one read per book
 const byBook = new Map(); for (const [id, h] of picked) { if (!byBook.has(h.book_id)) byBook.set(h.book_id, []); byBook.get(h.book_id).push([id, h]); }
-const out = fs.createWriteStream(path.join(OUT, 'hits-lex.jsonl')); let kept = 0, miss = 0;
+const out = fs.createWriteStream(path.join(OUT, `hits-lex${sfx}.jsonl`)); let kept = 0, miss = 0;
 for (const [b, list] of byBook) {
   const f = path.join(CORPUS, 'books', `${b}.jsonl`); if (!fs.existsSync(f)) { miss += list.length; continue; }
   const want = new Map(list.map(([id, h]) => [h.p, [id, h]])); const c = cat.get(b) || {};
   for (const line of fs.readFileSync(f, 'utf8').split('\n')) { if (!line) continue; const pg = JSON.parse(line); const w = want.get(pg.p); if (!w || !pg.tr) continue; const [id, h] = w;
     const text = stripEditorialWrappers(pg.tr).trim(); if (text.length < 150) continue;
-    out.write(JSON.stringify({ page_id: id, book_id: b, page_number: pg.p, book_title: c.display_title || c.title || '', book_author: c.author || '', book_language: c.language || '', book_year: c.year_num ?? null, visible: !!c.visible, dim: h.dim, probe: h.phrase, slice: 'lexical', similarity: null, lane: 'lexical', text: text.slice(0, 3000) }) + '\n'); kept++; }
+    out.write(JSON.stringify({ page_id: id, book_id: b, page_number: pg.p, book_title: c.display_title || c.title || '', book_author: c.author || '', book_language: c.language || '', book_year: c.year_num ?? null, visible: !!c.visible, dim: h.dim, probe: h.phrase, slice: 'lexical', similarity: null, lane: TAG || 'lexical', text: text.slice(0, 3000) }) + '\n'); kept++; }
 }
 out.end();
-fs.writeFileSync(path.join(OUT, 'lexical-counts.json'), JSON.stringify({ built: new Date().toISOString(), per_phrase_sample: PER, translated_pages_by_century: denom, zero_hit: zero, phrases: counts }, null, 1));
+fs.writeFileSync(path.join(OUT, `lexical-counts${sfx}.json`), JSON.stringify({ built: new Date().toISOString(), per_phrase_sample: PER, translated_pages_by_century: denom, zero_hit: zero, phrases: counts }, null, 1));
 console.log(`${Object.keys(counts).length} phrases (${zero.length} zero-hit: ${zero.join('; ')}); sampled ${picked.size} pages → ${kept} with text (${miss} no mirror file)`);

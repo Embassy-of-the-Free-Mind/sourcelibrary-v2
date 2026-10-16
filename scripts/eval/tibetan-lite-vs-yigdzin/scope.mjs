@@ -1,10 +1,10 @@
 // yigdzin-527 step 1 (#4523). PRIOR ART: /root/tib-step2/build-todo.mjs (per-book page scan); this one selects books, not pages.
 // Out: /root/yig527/books-527.jsonl, one row per book with page counts by page_type and by ocr.model.
-// Scope: held under specialist-ocr-lane-4523 / tibetan-unverified-gemini-ocr-4523, >=1 lite page (either model id, see
-// lane-lib.mjs), 0 bdrc-yigdzin-v1 pages. YIG_DIR overrides the state dir for a later run.
+// Scope: held under specialist-ocr-lane-4523 / tibetan-unverified-gemini-ocr-4523, >=1 Gemini Flash-family page (lite or
+// Flash, any stamp: isGeminiFlashModel in lane-lib.mjs; `lite` below counts them all), 0 bdrc-yigdzin-v1 pages. YIG_DIR overrides the state dir for a later run.
 import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
-import { isLiteModel } from './lane-lib.mjs';
+import { isGeminiFlashModel } from './lane-lib.mjs';
 const DIR = process.env.YIG_DIR || '/root/yig527';
 const m = new MongoClient(process.env.MONGODB_URI); await m.connect();
 const db = m.db('bookstore');
@@ -23,7 +23,7 @@ for (const b of books) {
   for (const r of agg) {
     total += r.n; const t = r._id.t ?? 'null'; const mo = r._id.m ?? 'none';
     byType[t] = (byType[t] || 0) + r.n; byModel[mo] = (byModel[mo] || 0) + r.n;
-    if (isLiteModel(mo)) lite += r.n;
+    if (isGeminiFlashModel(mo)) lite += r.n;
     if (mo === 'bdrc-yigdzin-v1') yig += r.n;
   }
   if (lite > 0 && yig === 0) out.push({ book: bid, title: b.title, visible: b.visible, hold: b.pipeline_auto?.hold?.reason, pages_count: b.pages_count, total, lite, byType, byModel });

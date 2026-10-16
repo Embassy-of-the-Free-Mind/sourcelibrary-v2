@@ -1,0 +1,757 @@
+{
+ "rule": "visible && pages_count>0 && Hebrew|Aramaic in language/original_language/languages; not a manuscript by title/date (MS|manuscript|codex|Gaster|Rylands|century|scroll|ms.|Kaufmann); first 4-digit year in published within 1470-1950",
+ "at": "2026-10-14",
+ "n": 107,
+ "pages": 39143,
+ "books": [
+  {
+   "id": "6a42a1e1dec0f9e2ecca1420",
+   "year": 1666,
+   "pages_count": 166,
+   "title": "Joann. Buxtorfii Epitome grammaticæ Hebrææ, brevitèr & methodicè ad publicum scholarum usum proposita. Adjecta succincta de mutatione punctorum vocalium instructio, & textuum Psalmorúmque aliquot Hebraicorum Latina interpretatio. Vt prompta sit juventuti, & ad manum posita lectionis & exercitationes materies. Aucta & emendata per Iohannem Buxtorfium filium. Cui tandem accessit Christiani Schotani appendix ad pleniorem etymologiæ [Greek characters].",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6a357f1ac6e2d5bb56a64539",
+   "year": 1922,
+   "pages_count": 736,
+   "title": "Talmud Yerushalmi",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6a26bf4e0e247ebad6debeb4",
+   "year": 1605,
+   "pages_count": 406,
+   "title": "Otto, Julius Conrad: Galî rāzyâ",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6a26bbb54045b346e6ad3a35",
+   "year": 1555,
+   "pages_count": 86,
+   "title": "Maimonides, Moses: De Astrologia Rabbi Mosis Filii Meimon Epistola elegans, & cum Christiana religione congruens, Hebr[a]ea",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12",
+   "year": 1685,
+   "pages_count": 249,
+   "title": "ספר תהלים (Sepher Tehillim / Psalms)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69e7490485f786e884a4d186",
+   "year": 1500,
+   "pages_count": 33,
+   "title": "שיר השירים (Shīr ha-Shīrīm / Song of Songs)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b2f4a2f9f1ad2b3b1548b3",
+   "year": 1548,
+   "pages_count": 1637,
+   "title": "Pagnini Hebrew Dictionary",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c866316c6f3cc53c856381",
+   "year": 1894,
+   "pages_count": 93,
+   "title": "Aesch mezareph or purifying fire. A chymico-kabalistic treatise collected from the Kabala denudata of Knorr von Rosenroth. Translated by a lover of Philalethes, 1714",
+   "language": "English"
+  },
+  {
+   "id": "699ef9fe16733aa5a290e3d6",
+   "year": 1714,
+   "pages_count": 266,
+   "title": "A Short Enquiry Concerning the Hermetic Art",
+   "language": "English"
+  },
+  {
+   "id": "697c8e137aeb5769e4cf1a26",
+   "year": 1729,
+   "pages_count": 100,
+   "title": "The Secret of the Decay and Combustion of All Things",
+   "language": "Hebrew-German"
+  },
+  {
+   "id": "69b3e612304c1c6b3950b1a3",
+   "year": 1476,
+   "pages_count": 76,
+   "title": "Astronomical and Astrological Treatises",
+   "language": "Hebrew"
+  },
+  {
+   "id": "695285cdab34727b1f04c25a",
+   "year": 1914,
+   "pages_count": 192,
+   "title": "The Key of Solomon",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c1b7d48522835be844a136",
+   "year": 1590,
+   "pages_count": 100,
+   "title": "Treatise on Astronomy (Sefer Ha-Tekhuna) by Hayyim Vital",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525942379d2fed6c29135",
+   "year": 1629,
+   "pages_count": 190,
+   "title": "Sefer ʼElim : ... šaʼal ... Zeraḥ bar Natan ... meha-rav Yosef Šelomoh Delmedigo. ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd36d5b6c3815e1a4e66",
+   "year": 1629,
+   "pages_count": 89,
+   "title": "Joseph Solomon Delmedigo: Sefer Elim (1629)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6984e8507eb10d325a7aac61",
+   "year": 1587,
+   "pages_count": 155,
+   "title": "Commentary on the Song of Songs",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69e9617a2beefe2f6f72ba14",
+   "year": 1840,
+   "pages_count": 319,
+   "title": "The Itinerary of Benjamin of Tudela",
+   "language": "Hebrew-English"
+  },
+  {
+   "id": "69d5ad004dc55b8478dde8b5",
+   "year": 1899,
+   "pages_count": 3170,
+   "title": "תורה מקראות גדולות (Rabbinic Bible, Vilna 1899)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69d5acb04dc55b8478dde57f",
+   "year": 1882,
+   "pages_count": 332,
+   "title": "מחזור קרבן אהרן (Holiday Prayer Book, Vilna 1882)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69d5aca44dc55b8478dddf51",
+   "year": 1914,
+   "pages_count": 1579,
+   "title": "סידור אוצר התפילות (Treasury of Prayers, Vilna 1914)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69d5ac824dc55b8478dddb9a",
+   "year": 1883,
+   "pages_count": 270,
+   "title": "עין יעקב (Well of Jacob, Aggadic Talmud, Vilna 1883)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69d5ac5f4dc55b8478ddd6b5",
+   "year": 1884,
+   "pages_count": 764,
+   "title": "תלמוד בבלי (Babylonian Talmud, Vilna Romm Edition, 1884)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7e216295ea01b70c8d7d2",
+   "year": 1711,
+   "pages_count": 172,
+   "title": "[Hebrew: Seder olam raba ve seder olam suta]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c734076a0f3d112faf750d",
+   "year": 1552,
+   "pages_count": 136,
+   "title": "[Hebrew: Ayelet ahavim. Perush al shir ha-shirim]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c731f56a0f3d112faf73d7",
+   "year": 1551,
+   "pages_count": 292,
+   "title": "[Hebrew:] Ma'yenei ha-yesh'ua",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b632cf66ab51b501d94024",
+   "year": 1872,
+   "pages_count": 582,
+   "title": "Samaritan Pentateuch (Pentateuchus Samaritanus)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525d06be6046083032b72",
+   "year": 1726,
+   "pages_count": 96,
+   "title": "Seder parašiyot we-hafṭarot kol ha-šanah ... = Quinque libri Mosis ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525cc6be6046083032827",
+   "year": 1712,
+   "pages_count": 41,
+   "title": "880-01 Seder hagadah šel pesaḥ : ... be-viʼurim u-ferušim ... ha-peruš ha...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525b56be6046083030af0",
+   "year": 1705,
+   "pages_count": 418,
+   "title": "Seder ha-tefilot : mi-kol ha-šanah ʻim peruš bi-lešon ʾAškenaz.",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525ac29577f283b57a775",
+   "year": 1687,
+   "pages_count": 744,
+   "title": "Seder berak̲ot = Orden de bendiciones. Y las ocaziones en que se deven dezir .... ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525a729577f283b579f0c",
+   "year": 1666,
+   "pages_count": 350,
+   "title": "Tiqun qeriʼah le-k̲ol laylah we-yom ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b5259a95677df8153c62c0",
+   "year": 1652,
+   "pages_count": 400,
+   "title": "880-01 Sefer Toldot ʼAharon : marʼeh maqom mi-kol ha-pesuqim šeba-Torah u-ne...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525962379d2fed6c29517",
+   "year": 1635,
+   "pages_count": 117,
+   "title": "Sefer tehilim.",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b52596cced70d8e6d72a41",
+   "year": 1635,
+   "pages_count": 43,
+   "title": "Zek̲er rav : yizkor yeme ʻolam we-šoreš davar nimz̲a bi-lešonenu ha-qedošah le-zikaron ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525922379d2fed6c28f13",
+   "year": 1627,
+   "pages_count": 27,
+   "title": "Sefer maʻaneh lašon ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b5258eea48bdf05847e18e",
+   "year": 1604,
+   "pages_count": 34,
+   "title": "Paršegen ništewan ... / ʻal yede Hugo Brugṭon ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b5258e2379d2fed6c28eb9",
+   "year": 1606,
+   "pages_count": 33,
+   "title": "Paršegen ništewan ... / ʻal yede Hugo Brugṭon ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd4bd5b6c3815e1a5565",
+   "year": 1635,
+   "pages_count": 481,
+   "title": "Menasseh ben Israel: Ḥamišah ḥumše Torah / Pentateuch (1635) (1635)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd49d5b6c3815e1a5454",
+   "year": 1634,
+   "pages_count": 271,
+   "title": "Menasseh ben Israel: Tehilim / Psalterium (1634)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd46d5b6c3815e1a53f2",
+   "year": 1634,
+   "pages_count": 96,
+   "title": "Menasseh ben Israel: Sidur berakah (1634)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd44d5b6c3815e1a52de",
+   "year": 1633,
+   "pages_count": 274,
+   "title": "Menasseh ben Israel: Misnaioth (1633)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd3dd5b6c3815e1a504b",
+   "year": 1631,
+   "pages_count": 311,
+   "title": "Menasseh ben Israel: Ḥamišah ḥumše Torah (1631) (1631)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd3ad5b6c3815e1a4f1b",
+   "year": 1630,
+   "pages_count": 302,
+   "title": "Menasseh ben Israel: Ḥamišah ḥumše Torah (1630) (1630)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b4cd38d5b6c3815e1a4ec1",
+   "year": 1628,
+   "pages_count": 83,
+   "title": "Menasseh ben Israel: Sefer pene rabah (1628)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e677304c1c6b3950b41f",
+   "year": 1526,
+   "pages_count": 752,
+   "title": "The Book of Splendor on Genesis and Exodus",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e675304c1c6b3950b1fa",
+   "year": 1501,
+   "pages_count": 546,
+   "title": "The Book of Splendor: Exodus",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e5af304c1c6b39509880",
+   "year": 1591,
+   "pages_count": 378,
+   "title": "Zohar (Parashat Bereshit, with Moses Cordovero commentary Or yakar)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b30091e5d6d64d8e199898",
+   "year": 1527,
+   "pages_count": 203,
+   "title": "Compound Hebrew Words and Names",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b2f3b821208ea9dc278c50",
+   "year": 1539,
+   "pages_count": 341,
+   "title": "The Twelve Prophets (Hebrew text)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "699ef9fd15618a982bb1ebd9",
+   "year": 1698,
+   "pages_count": 992,
+   "title": "The Two Tablets of the Covenant",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69924727d263adc1aa7b0c35",
+   "year": 1899,
+   "pages_count": 204,
+   "title": "The Wisdom of Ben Sira",
+   "language": "English"
+  },
+  {
+   "id": "6992470ad263adc1aa7b0180",
+   "year": 1918,
+   "pages_count": 176,
+   "title": "The Apocalypse of Abraham",
+   "language": "English"
+  },
+  {
+   "id": "69924401bc722ec0ee80b312",
+   "year": 1517,
+   "pages_count": 202,
+   "title": "First Rabbinic Bible (Mikraot Gedolot)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "699243fabc722ec0ee80b251",
+   "year": 1526,
+   "pages_count": 89,
+   "title": "Prague Haggadah (1526)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "697a7fc5e680cef7cedae391",
+   "year": 1670,
+   "pages_count": 52,
+   "title": "The Tradition of Tradition: A Philological Dissertation on the Masorah",
+   "language": "Hebrew-Latin"
+  },
+  {
+   "id": "697711607e1d5a07ae945879",
+   "year": 1635,
+   "pages_count": 301,
+   "title": "The Five Books of Moses",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6952e50877f38f6761bc95bb",
+   "year": 1901,
+   "pages_count": 710,
+   "title": "Hexaglot Bible: Hebrew, Septuagint, Vulgate, Syriac, English, German, French",
+   "language": "Multiple (Hebrew, Greek, Latin, Syriac, Arabic, Ethiopic)"
+  },
+  {
+   "id": "6952e4bc77f38f6761bc7db1",
+   "year": 1720,
+   "pages_count": 1766,
+   "title": "The Hebrew Bible",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69520c0fab34727b1f043e63",
+   "year": 1526,
+   "pages_count": 732,
+   "title": "The Book of Splendor: Genesis",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6992469abc722ec0ee80efa9",
+   "year": 1663,
+   "pages_count": 940,
+   "title": "Mamusse Wunneetupanatamwe Up-Biblium God (Eliot Indian Bible)",
+   "language": "Hebrew-Greek"
+  },
+  {
+   "id": "69924669bc722ec0ee80bafa",
+   "year": 1913,
+   "pages_count": 886,
+   "title": "Apocrypha and Pseudepigrapha of the Old Testament, Vol. 2: Pseudepigrapha",
+   "language": "Hebrew-Greek"
+  },
+  {
+   "id": "6953af0577f38f6761bd92a5",
+   "year": 1913,
+   "pages_count": 437,
+   "title": "Aramaic Incantation Texts from Nippur",
+   "language": "Aramaic"
+  },
+  {
+   "id": "69c8552d6c6f3cc53c853a69",
+   "year": 1710,
+   "pages_count": 53,
+   "title": "[Hebrew: Mafteach ha-Zohar]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7f4546c6f3cc53c841836",
+   "year": 1575,
+   "pages_count": 476,
+   "title": "[Hebrew: Sefer neveh shalom]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7b45e25ec2ba5ccd7f5be",
+   "year": 1706,
+   "pages_count": 352,
+   "title": "[Hebrew: Sefer shiv'im tikunei ha-zohar]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7b2da25ec2ba5ccd7f49a",
+   "year": 1786,
+   "pages_count": 386,
+   "title": "[Hebrew: Sefer eshel Avraham]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7b18425ec2ba5ccd7f44e",
+   "year": 1786,
+   "pages_count": 348,
+   "title": "[Hebrew: Sefer pardes rimmonim]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7b0ec25ec2ba5ccd7f3f3",
+   "year": 1623,
+   "pages_count": 148,
+   "title": "[Hebrew: Sefer asis rimmonim]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7a1c492b884e4f817382f",
+   "year": 1709,
+   "pages_count": 216,
+   "title": "[Hebrew: Sefer me'orot natan]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c7a0a892b884e4f8173817",
+   "year": 1702,
+   "pages_count": 188,
+   "title": "Zohar chadash",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c79fed92b884e4f817374f",
+   "year": 1561,
+   "pages_count": 202,
+   "title": "[Hebrew: Sefer sha'arei orah]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c79f1492b884e4f817372f",
+   "year": 1651,
+   "pages_count": 44,
+   "title": "[Hebrew: Sefer ha-bahir]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c79e8492b884e4f81736f3",
+   "year": 1766,
+   "pages_count": 254,
+   "title": "[Hebrew: Sefer hadrat melech]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c736b46a0f3d112faf76b0",
+   "year": 1610,
+   "pages_count": 208,
+   "title": "Jesuitici templi stupenda",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c734936a0f3d112faf7595",
+   "year": 1703,
+   "pages_count": 104,
+   "title": "[Hebrew:] Sefer me'ulefet sapirim",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c734846a0f3d112faf755c",
+   "year": 1705,
+   "pages_count": 328,
+   "title": "[Hebrew: Sefer me'il Shemu'el]",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69c1b7d28522835be844a132",
+   "year": 1548,
+   "pages_count": 2,
+   "title": "Just measure (Kav ha-Yashar) and Orchard of pomegranates (Pardes Rimonim)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525af95677df8153c70aa",
+   "year": 1683,
+   "pages_count": 25,
+   "title": "Sefer refuʼat ha-nefeš / ... ʼElyaqim bhrʺr Yaʻaqov Šaz̲ ... mi-sefer ha-qadoš Šene luh...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b5259b2f891867c1ae3d2f",
+   "year": 1646,
+   "pages_count": 178,
+   "title": "Sefer meqor ḥayim : we-huʼ ḥeleq rʼišon mi-ṭur ʼOraḥ ḥayim / Y. Qaro .....",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525992379d2fed6c299da",
+   "year": 1651,
+   "pages_count": 190,
+   "title": "Sefer nišmat ḥayyim : kōlel derūšīm yeqarīm weniśegavīm ʻal ʻinyan hanešamah haṭ...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b525932379d2fed6c29089",
+   "year": 1628,
+   "pages_count": 171,
+   "title": "Sefer ʼimre noʻam : seder širim u-fizmonim u-teḥinot ... / liqṭo ... Yosef...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e679304c1c6b3950b712",
+   "year": 1635,
+   "pages_count": 174,
+   "title": "Kabbalistic Compendium",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e5c1304c1c6b3950a0a3",
+   "year": 1720,
+   "pages_count": 264,
+   "title": "New Rectifications and Short Discourses on Kabbalah",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e5bd304c1c6b39509eb8",
+   "year": 1501,
+   "pages_count": 488,
+   "title": "Collection of Kabbalistic and Philosophical Writings",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e5ba304c1c6b39509ddb",
+   "year": 1476,
+   "pages_count": 218,
+   "title": "Collected Kabbalistic Works of Abraham Abulafia",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e5b8304c1c6b39509cc0",
+   "year": 1475,
+   "pages_count": 280,
+   "title": "Collection of Kabbalistic Texts",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b3e5b5304c1c6b395099fd",
+   "year": 1706,
+   "pages_count": 704,
+   "title": "Commentary on the Zohar of Genesis",
+   "language": "Hebrew"
+  },
+  {
+   "id": "699ef9f2c2bcb75dbdbaad92",
+   "year": 1715,
+   "pages_count": 246,
+   "title": "Gates of Light",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6990633def12272ffdc907b0",
+   "year": 1558,
+   "pages_count": 612,
+   "title": "The Book of Splendor",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6990630be7b7642c081de08b",
+   "year": 1558,
+   "pages_count": 548,
+   "title": "The Book of Splendor",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6988a5a3d8fdf4cf94c34930",
+   "year": 1660,
+   "pages_count": 189,
+   "title": "Book of the Unleavened Bread of Watchfulness",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6988a5a0a23e0a8ef27fec91",
+   "year": 1562,
+   "pages_count": 231,
+   "title": "The Book of Formation",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6988a59fa4de5da34fd130e0",
+   "year": 1561,
+   "pages_count": 126,
+   "title": "Gates of Righteousness",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6985ca7194b042cd03912166",
+   "year": 1701,
+   "pages_count": 106,
+   "title": "The Book of the Angel Raziel",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6984e84e45b45b78e8d48ab4",
+   "year": 1708,
+   "pages_count": 235,
+   "title": "The Bell and the Pomegranate",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6976db51097b3607ee4be2f9",
+   "year": 1578,
+   "pages_count": 288,
+   "title": "The Holy Service",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6911cf678cb6d2ae494a1061",
+   "year": 1651,
+   "pages_count": 62,
+   "title": "The Book of Brightness",
+   "language": "Hebrew"
+  },
+  {
+   "id": "fec0b295-0795-440f-a467-434e17ba2a8e",
+   "year": 1575,
+   "pages_count": 156,
+   "title": "Essence of Pomegranates",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69d5ac8c4dc55b8478dddcab",
+   "year": 1565,
+   "pages_count": 368,
+   "title": "שולחן ערוך חושן המשפט (Code of Jewish Law, Civil Section)",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69b52593cced70d8e6d72941",
+   "year": 1627,
+   "pages_count": 121,
+   "title": "880-01 Sefer ha-Yirʼah we-sod ha-tešuvah we-ʼigeret ha-tešuvah / leha-ḥasi...",
+   "language": "Hebrew"
+  },
+  {
+   "id": "69920bb1e0a548a13d884da7",
+   "year": 1918,
+   "pages_count": 563,
+   "title": "The Hebrew Pentateuch of the Samaritans",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6a08e2eb50bd891addfb5666",
+   "year": 1535,
+   "pages_count": 316,
+   "title": "The Notebooks of Immanuel",
+   "language": "Hebrew"
+  },
+  {
+   "id": "6a1ab4e2bf7a13be0eb53710",
+   "year": 1730,
+   "pages_count": 137,
+   "title": "De arte cabalistica",
+   "language": "Latin, some Hebrew and Greek"
+  },
+  {
+   "id": "6992540a59cdabeb78f1b209",
+   "year": 1904,
+   "pages_count": 678,
+   "title": "The Authorised Daily Prayer Book",
+   "language": "Hebrew"
+  },
+  {
+   "id": "699246babc722ec0ee8120e8",
+   "year": 1850,
+   "pages_count": 908,
+   "title": "The Holy Bible (Wycliffe), Vol. 2",
+   "language": "Hebrew-Greek"
+  },
+  {
+   "id": "699246b3bc722ec0ee81144f",
+   "year": 1850,
+   "pages_count": 770,
+   "title": "The Holy Bible (Wycliffe), Vol. 1",
+   "language": "Hebrew-Greek"
+  },
+  {
+   "id": "699243ebbc722ec0ee80a9d1",
+   "year": 1903,
+   "pages_count": 464,
+   "title": "Midrash Bereshit Rabbah (Theodor-Albeck Critical Edition)",
+   "language": "Hebrew"
+  }
+ ]
+}

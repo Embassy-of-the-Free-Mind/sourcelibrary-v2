@@ -1,0 +1,373 @@
+{
+ "note": "Journal of the Polynesian Society vols. 1-33 (1892-1924), issue #6768. One scan per volume from the Internet Archive periodicals series (collection pub_journal-of-the-polynesian-society, UIC copies), not access-restricted. Holdings-checked 2026-10-15: no volume held. The journal printed most transcribed Maori and Polynesian chants with translations, often in Maori (or Hawaiian, Tahitian, Rarotongan) with English. Vols. 34-39 (1925-30) are not in this IA series.",
+ "campaign": "polynesian-chants-6768-jps",
+ "collections": [
+  "polynesian",
+  "oceania"
+ ],
+ "BOOKS": [
+  {
+   "id": "journal-of-the-polynesian-society_1892_1",
+   "title": "The Journal of the Polynesian Society, Vol. 1 (1892)",
+   "author": "The Polynesian Society",
+   "year": 1892,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1893_2",
+   "title": "The Journal of the Polynesian Society, Vol. 2 (1893)",
+   "author": "The Polynesian Society",
+   "year": 1893,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1894_3",
+   "title": "The Journal of the Polynesian Society, Vol. 3 (1894)",
+   "author": "The Polynesian Society",
+   "year": 1894,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1895_4",
+   "title": "The Journal of the Polynesian Society, Vol. 4 (1895)",
+   "author": "The Polynesian Society",
+   "year": 1895,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1896_5",
+   "title": "The Journal of the Polynesian Society, Vol. 5 (1896)",
+   "author": "The Polynesian Society",
+   "year": 1896,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1897_6",
+   "title": "The Journal of the Polynesian Society, Vol. 6 (1897)",
+   "author": "The Polynesian Society",
+   "year": 1897,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1898_7",
+   "title": "The Journal of the Polynesian Society, Vol. 7 (1898)",
+   "author": "The Polynesian Society",
+   "year": 1898,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1899_8",
+   "title": "The Journal of the Polynesian Society, Vol. 8 (1899)",
+   "author": "The Polynesian Society",
+   "year": 1899,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1900_9",
+   "title": "The Journal of the Polynesian Society, Vol. 9 (1900)",
+   "author": "The Polynesian Society",
+   "year": 1900,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1901_10",
+   "title": "The Journal of the Polynesian Society, Vol. 10 (1901)",
+   "author": "The Polynesian Society",
+   "year": 1901,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1902_11",
+   "title": "The Journal of the Polynesian Society, Vol. 11 (1902)",
+   "author": "The Polynesian Society",
+   "year": 1902,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1903_12",
+   "title": "The Journal of the Polynesian Society, Vol. 12 (1903)",
+   "author": "The Polynesian Society",
+   "year": 1903,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1904_13",
+   "title": "The Journal of the Polynesian Society, Vol. 13 (1904)",
+   "author": "The Polynesian Society",
+   "year": 1904,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1905_14",
+   "title": "The Journal of the Polynesian Society, Vol. 14 (1905)",
+   "author": "The Polynesian Society",
+   "year": 1905,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1906_15",
+   "title": "The Journal of the Polynesian Society, Vol. 15 (1906)",
+   "author": "The Polynesian Society",
+   "year": 1906,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1907_16",
+   "title": "The Journal of the Polynesian Society, Vol. 16 (1907)",
+   "author": "The Polynesian Society",
+   "year": 1907,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1908_17",
+   "title": "The Journal of the Polynesian Society, Vol. 17 (1908)",
+   "author": "The Polynesian Society",
+   "year": 1908,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1909_18",
+   "title": "The Journal of the Polynesian Society, Vol. 18 (1909)",
+   "author": "The Polynesian Society",
+   "year": 1909,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1910_19",
+   "title": "The Journal of the Polynesian Society, Vol. 19 (1910)",
+   "author": "The Polynesian Society",
+   "year": 1910,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1911_20",
+   "title": "The Journal of the Polynesian Society, Vol. 20 (1911)",
+   "author": "The Polynesian Society",
+   "year": 1911,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1912_21",
+   "title": "The Journal of the Polynesian Society, Vol. 21 (1912)",
+   "author": "The Polynesian Society",
+   "year": 1912,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1913_22",
+   "title": "The Journal of the Polynesian Society, Vol. 22 (1913)",
+   "author": "The Polynesian Society",
+   "year": 1913,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1914_23",
+   "title": "The Journal of the Polynesian Society, Vol. 23 (1914)",
+   "author": "The Polynesian Society",
+   "year": 1914,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1915_24",
+   "title": "The Journal of the Polynesian Society, Vol. 24 (1915)",
+   "author": "The Polynesian Society",
+   "year": 1915,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1916_25",
+   "title": "The Journal of the Polynesian Society, Vol. 25 (1916)",
+   "author": "The Polynesian Society",
+   "year": 1916,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1917_26",
+   "title": "The Journal of the Polynesian Society, Vol. 26 (1917)",
+   "author": "The Polynesian Society",
+   "year": 1917,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1918_27",
+   "title": "The Journal of the Polynesian Society, Vol. 27 (1918)",
+   "author": "The Polynesian Society",
+   "year": 1918,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1919_28",
+   "title": "The Journal of the Polynesian Society, Vol. 28 (1919)",
+   "author": "The Polynesian Society",
+   "year": 1919,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1920_29",
+   "title": "The Journal of the Polynesian Society, Vol. 29 (1920)",
+   "author": "The Polynesian Society",
+   "year": 1920,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1921_30",
+   "title": "The Journal of the Polynesian Society, Vol. 30 (1921)",
+   "author": "The Polynesian Society",
+   "year": 1921,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1922_31",
+   "title": "The Journal of the Polynesian Society, Vol. 31 (1922)",
+   "author": "The Polynesian Society",
+   "year": 1922,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1923_32",
+   "title": "The Journal of the Polynesian Society, Vol. 32 (1923)",
+   "author": "The Polynesian Society",
+   "year": 1923,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  },
+  {
+   "id": "journal-of-the-polynesian-society_1924_33",
+   "title": "The Journal of the Polynesian Society, Vol. 33 (1924)",
+   "author": "The Polynesian Society",
+   "year": 1924,
+   "lang": "English",
+   "languages": [
+    "English",
+    "Maori"
+   ]
+  }
+ ]
+}

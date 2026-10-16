@@ -1,0 +1,607 @@
+{
+ "greek": {
+  "tag": "greek",
+  "reads": 355,
+  "frame": 354,
+  "sample": {
+   "better": 29,
+   "same": 1,
+   "worse": 0,
+   "unjudged": 0,
+   "n": 30
+  },
+  "controls": {
+   "pass": 5,
+   "same": 0,
+   "fail": 0,
+   "unjudged": 0,
+   "n": 5
+  },
+  "columns": [],
+  "pages": [
+   {
+    "uid": "86f455b76043",
+    "kind": "sample",
+    "page": 254,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "492 line 1: image reads ἀπὸ ἀμερίστου οὐσιωμένον μεθέξεις; A has περὶ ἀρχῶν ἐσομένης μάλιστα ἡ ἀπορία; B has ἀπὸ ἀμερίστου οὐσιωμένον, μεθέξεις",
+     "492 line 4: image has κρατῶν ἰάμβλιχος; A has nothing like it; B has κρατῶν Ἰάμβλιχος",
+     "492 lemma lines (marked in margin): image reads ἡμέρας γὰρ καὶ νύκτας καὶ μῆνας καὶ ἐνιαυτοὺς; A omits them; B has them",
+     "493 line 1: image reads ὑποθέσεις καὶ ταῦτ' ἐπάγων ... ἡμέρα μὲν καὶ νὺξ; A has νοητά; καὶ ταῦτ' ἐξαίρω; B has ὑποθέσεις, καὶ ταῦτα ἐπάγων",
+     "493 near the end: image reads μάτην ἄρα λέγουσιν οἱ περὶ Ἀττικὸν; A has repeated invented text; B has it correctly"
+    ]
+   },
+   {
+    "uid": "7914e74361b5",
+    "kind": "sample",
+    "page": 148,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "Left page, line 1: image reads 'μένει δ' ὅπου εἴπερ ἐκινεῖτο, κύκλῳ ἂν ἐκινεῖτο'; A has this; B has 'μᾶλλον δ' ἔστιν ἐπέκεινα κύκλῳ δὲ ἐκεῖνον'",
+     "Page numbers: image reads 280 / 28[1]; A has 280, 281; B has 260, 261",
+     "Right page, line 1: image reads 'γὰρ ἐν μέσῳ δεῖ τινα ἀμφοῖν συναγωγὸν γίνεσθαι δεσμῶν'; A has this; B has 'γὰρ ὁ δεσμὸς διὰ τίνα ἀμφεῖν ζωα ἔσω'",
+     "Last line of the left page: image reads 'Δύο δὲ μόνω καλῶς συνίστασθαι τρίτου χωρὶς, οὐ δυνατὸν· δεσμὸν'; A has this; B has 'ὑπὸ δὲ μόνον καθ' αὑτὸ συνδεθέν'",
+     "Mid right page: image reads 'ἐκ τῶν ἡμικυκλίων ὁ κύκλος ὑφέστηκεν'; A has this; B has unrelated invented text"
+    ]
+   },
+   {
+    "uid": "d64d826f523a",
+    "kind": "sample",
+    "page": 198,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "Page numbers: the image reads 380 and 381. A has 150 and 151. B has 380, 381.",
+     "Start of the left page: the image reads 'κρίσις τῶν μερῶν. λάβοι δ' ἂν ἐκ τούτων, καὶ ὅτι καὶ πάντων'. A has 'ἐπειδὴ τὸ φανερὸν λαβὼν διὰ αὐτῶν'. B matches the image.",
+     "Start of the right page: the image reads 'ἔδοξεν αὐτοῖς εἶναι σύμφωνον εἶναι ὅτι ἐν πολλαπλασιεπιμερεῖ λόγῳ συνίσταται τῷ τοῦ ὀκτὼ πρὸς τὸν τρία'. A has 'ἐν τῷ αὐτῷ εἶναι συμμετοχίαν'. B matches the image.",
+     "Last line of the right page: the image reads 'διατόνων δὲ ἢ χρωματικῶν οὐδεὶς πώποτε ἑώρακεν'. A has 'καὶ γοῦν διὰ γραμματικοῦ, νόμον τε αὐτὸν εἶναι'. B matches the image.",
+     "Middle of the left page: the image reads 'θεωρῆσαι ἄξιον ὅτι κατατέμνων τὴν οὐσίαν'. B matches. A's text there is largely invented, garbled Greek."
+    ]
+   },
+   {
+    "uid": "55a8dcc68e06",
+    "kind": "sample",
+    "page": 122,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "p.232 line 5: image reads 'σοφιστῇ ἐν οἷς ἀπαντᾷ πρὸς τὴν Παρμενίδου'; B has this; A has 'τὸ φῶς οὐκ ἀποτελεῖ ποτὲ τὸν τῶν πολλῶν βίον'",
+     "p.232 line 11: image reads 'δι’ ὃ Ἀθηναῖος ξένος, σφαίρας ᾧ τόρνου πε-'; B matches; A has 'ὅτε ὁ ἀθανατ᾿ ἐκείνῳ, σφαίρας ἐν τῷ νοητῷ'",
+     "p.232 line 13: image reads 'τύποις κοροπλαστικοῖς ἐοικέναι φασί'; B matches; A has 'ψυχαῖς κεκολασμένοις φασίν'",
+     "p.233 line 9: image reads 'τοῖς ὀργάνοις χρώμενοι, πρὸς τὸ οἰκεῖον ποιεῖν τὴν ὕλην'; B matches; A has unrelated 'τινὶ οὐ ταὐτον ἐκείνῳ...'",
+     "p.233 lines near the end: image lists body parts (ὀστᾶ, πνεύμονα, ἧπαρ, αἷμα, φλέγμα, χολήν); B has them; A has none and invents text"
+    ]
+   },
+   {
+    "uid": "0469649b8fa1",
+    "kind": "sample",
+    "page": 23,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "The page numbers read 36 and 37. A has 16 and 17; B has 36, 37.",
+     "The first lemma on the left page reads 'αὐτὸν κὴ ἐγὼ πέπονθα πρὸς τὴν πόλιν ἣν διήλθομεν'. A has 'αὐτὸς κὴ ὁ Ἱππίας θ' ὅθεν πρὸς τὴν πόλιν'; B has 'Ταὐτὸν καὶ ἐγὼ πέπονθα πρὸς τὴν πόλιν, ἣν διήλθομεν'.",
+     "The second lemma reads 'ταῦτ' οὖν ὦ κριτία κὴ ἑρμόκρατ' ἐμαυτοῦ μὲν αὐτὸς κατέγνωκα'. A has 'αὐτὸν οὖν ὦ κριτία κὴ δημοκρατῇ ἥκασιν'; B matches the image.",
+     "The first line of the right page reads 'γε Σωκράτ' κὴ ἐν Δηλίῳ κὴ ἐν Ποτιδαίᾳ στρατευσάμενος'. A has 'γε (παρὰ τῇ αὐτοῦ πόλει κὴ τῇ πολιτικῇ στρατολμή'; B matches the image.",
+     "The lemma on the right page reads 'καὶ τὸ μὲν ἐμὸν οὐδὲν θαυμαστόν, ἀλλὰ τὴν αὐτὴν δόξαν εἴληφα'. A has 'ταῦτα μὲν ἐμοῦ ἢ τοῦ θαυμάζειν'; B matches the image. A is mostly invented text."
+    ]
+   },
+   {
+    "uid": "982b67ae1c2d",
+    "kind": "sample",
+    "page": 302,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Page numbers: the image reads 582 and 583. A has 180 and 181. B has 582 and 583.",
+     "Last line of the right page: the image reads 'κ(αὶ) εἴπεν ἐν τῷ κρατύλῳ σαφῶς ὁ θεῖος ἰάμβλιχος παραδίδωσι τ θε-'. B matches. A has a different line about Iamblichus with no Kratylos.",
+     "Right page, line 2: the image reads 'ὅλον ὠκεανὸν ἀποκαλεῖ τὸν δὲ τρίτον ... Τηθύν'. B has this. A has unrelated text ('εἶναι ὁμοίως· ἀλλὰ παρὰ τοῖς δόξασι').",
+     "Left page, lines 5-6: the image reads 'ἀγαθότητα τὴν ἑαυτῶν παράγουσιν ὠκεανὸν καὶ Τηθὺν' and 'δύο μονάδες καὶ δύο τριάδες'. B has these. A has text about Plato and the Pythagoreans that is not on the page.",
+     "Left page, near the end: the image reads 'ὁ δέ γε θεόδωρος'. B has this. A has no Theodorus. A's text looks largely invented throughout."
+    ]
+   },
+   {
+    "uid": "0164b146df35",
+    "kind": "sample",
+    "page": 293,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "The page numbers in the image read 564 and 565. A has 564/565; B has 164/165.",
+     "The left page opens 'αὐτὴν ἑκάστης τῶν κινήσεων … βούλησιν θᾶττον'. A matches this; B opens with unrelated text, 'ποιοῦσι ἐξἀνάγκης πᾶν ἀκριβές'.",
+     "The right page opens 'ρεσθαι καὶ περὶ τὰ οἰκεῖα κέντρα … σφαιρικοῦ οὐ μεμιγμένην'. A matches this; B has 'λοντας οὐ παρὰ τὸ τὰ οἰκεῖα πρᾶξαι'.",
+     "Mid-right page reads 'ὡς φησὶν ὁ ἐν Φαίδρῳ Σωκράτης'. A has this; B has nothing like it.",
+     "The right page ends 'ποιοῦσι γὰρ ἀμ-'. A ends the same way; B ends 'ὀργῆς', and most of B's text does not appear on the page."
+    ]
+   },
+   {
+    "uid": "3100fef927f1",
+    "kind": "sample",
+    "page": 147,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "image page numbers read 278 / 279; A has 278, 279; B has 172 / 173",
+     "first line of left page reads προϊόντος ἀπὸ τοῦ ἀϋλοτέρου καὶ καθαρωτέρου καὶ ἀσωματωτέρου μέχρι; A matches; B has προσήκειν αὐτοῦ ἀμελέτω καὶ καταφρονεῖν",
+     "line 3 reads πυρὸς ὡς ποῦ φησι καὶ Ἐμπεδοκλῆς πολλὰ δὲ ἔνερθεν οὔδεος πυρὰ καίεται; A matches; B has αἰτίου ὡς τ’ ἐν τῇ ἐκκλησιαστικῇ τάξει",
+     "first line of right page reads στερεὸν μὲν γάρ μοι λεγέτω τις ὅτι ἡ γῆ τὸ στερεὸν ἀλλαχόθεν εἴληφεν; A matches; B has κυρίως μὲν βαπτισμάτων",
+     "right page has Πορφύριος, Ἰταλίας and σκώληκας γεννᾶν; A matches; B has unrelated text plus extra lines like τὰ τέσσαρα στοιχεῖα"
+    ]
+   },
+   {
+    "uid": "d517a0b07f7d",
+    "kind": "sample",
+    "page": 142,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "p.270 line 1: image reads 'τῇ ἀποδείξει τοῦ πλάτωνος χρῆσθαι καὶ ἐπὶ πάσας τὰς ἀρχάς'; A has 'Τὸ ἀποτέλεσμα τοῦ παντελοῦς χρῆσθαι τῆ ἐπιστάσει'; B matches",
+     "p.270 line 2: image reads 'γὰρ μόνον ἐν διανοίᾳ δείκνυται τὸ ἓν ἐκ τοῦ ζώου ἀλλὰ καὶ εἷς ὁ δημι-'; A has 'τὸ διὰ ταύτην ἔχοντες τὸ νοητὸν ἴδιον'; B matches",
+     "p.270 line 11: image reads 'ὁ δὲ μονογενὴς οὐρανὸς γεγονώς, ἔστι δὲ καὶ ἔσται'; A has 'δότα μονογενές· αὐτὸν γὰρ οὖν'; B matches",
+     "p.271 line 1: image reads 'Τὸν κόσμον ἄλλως μὲν ὁ λόγος θεωρεῖ κατὰ τὴν ὁλότητα τὴν ἐν αὐτῷ'; A has 'ὅμως καὶ ὁ λόγος θεωρεῖ πρὸς τὸν οὐρανὸν'; B has 'ὁ μὲν ἡμέτερος λόγος ... κατὰ τὴν ὁλότητα' (closer)",
+     "p.271 line 3: image reads 'κατὰ τὴν ἐν αὐτῷ διαίρεσιν, ὡς πρῶτον τὴν ψυχὴν ἀπὸ τοῦ σώματος'; B matches; A has 'καὶ τὸ αὐτὸ ἐπείπερ αὐτὸ τὸ Πᾶν'"
+    ]
+   },
+   {
+    "uid": "da576ac70231",
+    "kind": "sample",
+    "page": 152,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "288 line 2: image reads 'ἀμφοῖν· ἀπὸ μὲν τῶν αἰτίων προϊὼν, τῶν δὲ μεριστῶν περὶ σῶμα δυνά-'; A matches closely; B has the unrelated 'εμφανῆ, ἀλλὰ δὲ τὰς αἰτίας'",
+     "288 line 4: image reads 'διὰ πάντων τεταμένος, καὶ ὑπὸ τῆς χρυσῆς σειρᾶς συνεχόμενος'; A matches; B has the unrelated 'διὰ τί πάντα τὰ σώματα...'",
+     "289 last line: image reads 'νίαν. καὶ ἐπὶ τούτοις γελᾷ μὲν ὁ Ἀπόλλων, γελᾷ δὲ ὁ Ἑρμῆς, γελᾷ'; A matches; B has the garbled 'ται κ', ὧδ' ὁ τοιοῦτος λέγει μὲν ὁ αἰώνιος'",
+     "289 lines 8-10: the image repeats the 'οὕτω δὴ καὶ ταῦτα προελθόντα ἀπὸ τοῦ δημιουργοῦ' line itself; A reproduces this with only minor wording slips; B has unrelated text",
+     "Overall: A is a close reading of the Proclus text with small letter errors; B is largely invented text that does not match the page"
+    ]
+   },
+   {
+    "uid": "d093c84a5274",
+    "kind": "sample",
+    "page": 337,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "n/a",
+    "checked": [
+     "Folio numbers read 652 / 653; A has 612 / 613; B has 652, 653",
+     "Left page line 1 reads 'ἄρα τὴν καθαρτικὴν ἀρετὴν μόνην προσληπτέον τῇ ψυχῇ'; A has 'ἡ μὲν κατασκευὴ αὕτη…'; B matches",
+     "Left page line 3 reads 'ἐνύλους φύσεις καὶ τὰς ἐκ τῆς γενέσεως'; A has nothing similar; B matches",
+     "Right page line 1 reads 'τὴν ἄλογον πρὸ τοῦδε τοῦ σώματος… θορυβώδης'; A has 'ἡ δὲ πρὸς τὸν νοῦν ψυχῆς ἐπιστροφὴ'; B matches",
+     "Right page last line reads 'τῶν προκειμένων ῥημάτων τοιοῦτος· αὐτὸν δὲ ἐπὶ τὸν δημιουργικὸν θεὸν'; B matches; A does not"
+    ]
+   },
+   {
+    "uid": "743aa2985c79",
+    "kind": "sample",
+    "page": 274,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "Page numbers: image reads 532 / 533; A has 532, 533; B has 132, 133",
+     "Left page line 1: image reads οἰκεῖος γὰρ ὁ καθ' ἑκάστην τάξιν ἀριθμός καὶ ὁ μὲν ἐλάττων; A matches; B has οἷος γὰρ καὶ δίκαιον, τῷ τῆς ἀριθμὸν",
+     "Left page, the hymn lines: image reads μονάδος ἐκ κευθμῶνος ἀκηράτου ... τετράδα ἐπὶ ζαθέην; A has them; B has unrelated text (ὡς φασιν οἱ παλαιότεροι...)",
+     "Right page line 1: image reads ...εἴτε ἀγγέλων εἴτε δαιμονίων· τὸ δὲ ἀεροπόρον πάντων τῶν ὁπωσοῦν ἐν; A close; B has ἐπ' εἰς τὴν ἀρχὴν ἐπανερχόμεθα",
+     "Right page last line: image reads ...πόρου, καὶ διὰ πάντων προϊόν· ἐν δὲ τοῖς θνητοῖς, τὸ μὲν πτηνὸν, τὴν; A matches; B has παρεῖναι. καὶ διὰ ταύτ' προϊόν... θείας"
+    ]
+   },
+   {
+    "uid": "fdbcd1724720",
+    "kind": "sample",
+    "page": 335,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "648 line 1: image reads 'τὴν χείρον(α) ζωὴν ἀντὶ τῆς ἀμείνον(ος) ἀγαπ...· ταῦτα μὲν ... κοινῇ περὶ'; A has 'τοῖς θεοῖς· ὥσπερ ἀπὸ τῶν ἀνάκτων...', which is not on the page; B matches",
+     "648 line 3: image reads 'ὁ μὲν οὖν προσήκων χρόνος ὁ οἷον αὐτὸς ἀφώρισεν ἐν Φαίδρῳ'; A has 'ὅμ' οἷον πασχούσῃ τῇ χείρονι'; B matches",
+     "649 line 2: image reads 'κουφισθεῖσαν ... ἀξίαν οὗ ... ἐβίωσεν βίον. ἢ γὰρ τοῦτο ἐν τῷ'; A has 'κυρίως δὲ τοῦ ἀγαθοῦ τὸ κάλλος'; B matches",
+     "649 line 3: image reads 'Φαίδρῳ χίλια ... φιλοσόφων ψυχῶν ... εἰς τὸ αὐτὸ πάλιν'; A has 'φαύλου πλεῖον· καὶ τὸ μὲν Φιλοσόφου ψυχὴ'; B is close",
+     "649 last line: image reads 'ἀπὸ τῶν ἐν Συμποσίῳ κειμένων συνάπτειν ἐν τῷ Ἀριστοφάνους μύθῳ'; B matches; A's ending is unrelated text"
+    ]
+   },
+   {
+    "uid": "43fa89a9006c",
+    "kind": "sample",
+    "page": 79,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "p.148 line 1: image reads 'ὁμοίως ἴδιος αὖ τὸ μὲν ἀσαφέστερον· τὸ δὲ γνωριμώτερον'; A has 'ἴσοις ἐν τομεῦ ἀσαφέστερον', which is close; B has 'ἰδίῳ αὖ τὸ μὲν ἀποφάσκειν', which is wrong",
+     "p.148 line 6: image reads 'τίου χωριζόμενον, ἀδύνατόν ἐστι καὶ ἀσθενές· ἑαυτὸ γὰρ σώζειν'; A matches; B has 'μὴ ἀληθὲς εἶναι διὰ τί ἐστὶν ὃν', which is invented",
+     "p.148 'ὀρθῶς οὖν εἴρηται καὶ ἐν Φιλήβῳ ὅτι τὸ γιγνόμενον ποιούμενόν ἐστι'; A matches; B has 'οὐδεὶς γὰρ ἥρηται καὶ ὃν φύλῃθεν', which is garbled",
+     "p.149 line 1: image reads 'ἐν πολλῷ πρότερον αὐτῶν μονοειδὲς εἶναι καὶ συνεκτικὸν τῶν πλήθων'; A is close; B has 'μοναχὰς εἶναι ὡς ἔοικεν· ἢ τ' ἐκ τῶν'",
+     "p.149 last line: image reads 'μηδὲ ἐπεισοδιῶδες ἐν τῷ παντί· δεῖ γὰρ τὰ ὄντα πολιτεύεσθαι'; A matches; B has 'μηδὲ ἰδιοειδοῦς εἴη πᾶσι … ποικιλία'"
+    ]
+   },
+   {
+    "uid": "242e7620e564",
+    "kind": "sample",
+    "page": 196,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "page numbers: image reads 376 / 377; A has 272 / 273; B has 376, 377",
+     "left page line 1: image reads συνέχειν πάσας τὰς ἐγκοσμίους οὐσίας ὅπως μὲν τῇ αὐτῇ ἁρμονίᾳ; A has 'πᾶσαν γὰρ ἐμποίησιν ἐκ τοῦ ὄντος'; B matches the image",
+     "left page line 3: image reads τὰ εἴδη καὶ τὰ σχήματα περιέχῃ τὰ κοσμικά· τίνα δὲ τρόπον; A has 'μερικά. τὰ δὲ κοσμικὰ τινὰ δὲ τούτων'; B matches the image",
+     "right page line 1: image reads (σα)μένου μῖξιν· ὡς ἔχομεν ... ταὐτότητος καὶ ἑτερότητος; A has 'ταμεῖον κἄξειν ... ταυτοτάτου'; B has μῖξιν ... ταὐτότητος καὶ ἑτερότητος",
+     "left page lines 7–8: image reads οὐκ εἶπε τὴν ψυχὴν μέσην νοῦ καὶ αἰσθήσεως; A has garbled text; B matches the image"
+    ]
+   },
+   {
+    "uid": "e90f3def3376",
+    "kind": "sample",
+    "page": 108,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "Page numbers: image reads 204 / 205; A has 204, 205; B has 202 / 203",
+     "Left page opening: image reads ἀπορεῖ· τὴν δὲ σύμπασαν φύσιν ... σύνταξιν; A matches; B has 'αὐτοῖς. Περὶ δὲ τῶν λοιπῶν ζώων', which is not on the page",
+     "Right page opening: image reads τοῦτον τὸν τόπον. μὴ γὰρ οἰηθῶμεν ὅτι τῶν γινωσκομένων φύσεσιν; A matches; B has 'τούτω δὲ τοῦ ζώου: μὴ γὰρ ἐνοήσωμεν'",
+     "Lemma on the left page: image reads Ἀλλ' ἐὰν ἄρα μηδενὸς ἧττον παρεχώμεθα εἰκότας ... μεμνημένους; A matches; B has invented text instead (Μεθ' ὃ δὴ ἀναγκαῖόν ἐστιν ...)",
+     "Right page ending: image reads ἀεὶ γὰρ ἐσμὲν καὶ ἐν σώ-; A has ἀεὶ γὰρ ἐσμὲν καὶ ἐν σώματι; B ends with unrelated text"
+    ]
+   },
+   {
+    "uid": "707eae07cde6",
+    "kind": "sample",
+    "page": 16,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "p22 l1: image 'δουμα ἑκάστῃ τέχνῃ τοῦτ πρὸ πάντων ἔδοξε πολεμ'; A matches; B 'τούτηι πρὸς κἂν ἔδει καλῶς ἐργαζο-' not on page",
+     "p22 l2: image 'πρῶτον μὲν τὴν πόλιν διχῇ'; A matches; B 'μηδ' ἄλλ' ἐπιτηδεύειν' invented",
+     "p23 l2: image 'οἷς βούλει τοὺς φύλακας καὶ ἐπικούρους δικάσαιμεν ἂν'; A close; B substitutes Plato Republic dialogue text",
+     "p23 end: image ends '...ἢ πλημμε-'; A ends same; B ends 'οἱ μὲν ἀληθεῖς' not on page"
+    ]
+   },
+   {
+    "uid": "61f452a21cce",
+    "kind": "sample",
+    "page": 136,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Page numbers: image reads 258 and 259; A has 458/459; B has 258, 259",
+     "First line of 258: image reads 'περιειλῆφθαι πολλαχοῦ μὲν γὰρ αὐτὸς ὁ Πλάτ(ων) ἀμφιβάλλει τίς ὁ τρόπ(ος)'; A has 'τῃ̃ ἀληθείᾳ ... ἀμετάβατόν τινα'; B matches the image",
+     "Lemma: image reads 'Πότερον οὖν ὀρθῶς ἕνα οὐρανὸν προσειρήκαμεν ἢ πολλοὺς καὶ ἀπείρους λέγειν ἦν ὀρθότερον'; A has 'Ὅ γε μὴν ὀρθω̃ς εἴπε σιωπῃ̃ τετιμημένος'; B matches the image",
+     "First line of 259: image reads 'ἀξιῶ καὶ ὑπομνῆσαι εἰ ἔστιν ὅτι ὁ κόσμος εἷς· οἱ γὰρ τῶν φυσικῶν οἱ μὲν ἄπειρα ποιοῦσιν'; A has 'ὑπομονήν εἶναι ἢν ἐπόμεθα ... οὐ μόνον αὐτὸν ἄρα ποιου̃σι'; B is close to the image",
+     "Line 4 of 258: image reads 'κόσμον οἷα διαιρετὴν φύσιν ... τῶν μὲν φυσικῶν εἰδῶν μετέχειν'; A has 'ποίησιν οὐκ ἀδιάκριτον φάσκει'; most of A's text is not on the page"
+    ]
+   },
+   {
+    "uid": "2f21f463e482",
+    "kind": "sample",
+    "page": 203,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Line 1 on p.390: the image reads 'λόγον ἔχουσι πρὸς ἀλλήλους οἷα σνϛ πρὸς τὰ σμγ. ἔστω γὰρ ἐπί-'. A has 'οἱ ια ϛις πρὸς τὰ ϛμγ ... ἐπί-', which is close. B has 'οὕτω καὶ τὰ μέρη ταύτης πρὸς τὰ μέρη', which is not on the page.",
+     "Line 2 on p.390: the image reads 'τριτος ὁ αβ τοῦ γ καὶ ἀφῃρήσθω ὁ μὲν γ ἐπόγδοος'. A matches. B has 'συνίσταται δὲ τὰ ἐν τοῖς α β γ ἀριθμοῖς', which is invented.",
+     "Line 1 on p.391: the image reads 'διὰ τὴν αἰτίαν ταύτην. ἐπεὶ ὅτι γε πᾶς ἐπιμόριος ἀδιαίρετος εἰς ἴσους'. A matches. B starts the same way, then gives 'τὸ μὲν πᾶν ἐστι μερικὸν', which is wrong.",
+     "Line 3 on p.391: the image reads 'φιλοκαλίας χάριν ὅτι τῶν Πυθαγορείων μήτε ἡμιτόνιον εἶναι λεγόντων'. A matches. B has 'λήγον οὖν τὸ πυθαγόρειον καὶ τὸ τυπικόν', which is wrong.",
+     "Last line on p.391: the image reads 'γεγόνασιν. οὕτως γὰρ διπλασίου διαστήματος ἐν τῷ τπδ καὶ τῷ'. A matches. B has 'γίγνοιτο. οὕτω γὰρ γιγνώσκει διαστήματος τὸ πᾶν'. The page numbers in the image are 390 and 391, but B gives 190-191."
+    ]
+   },
+   {
+    "uid": "fda109416f7f",
+    "kind": "sample",
+    "page": 49,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "page numbers read 88 / 89; A has 88/89; B has 18/19",
+     "line 1 of p.88 reads οἱ μὲν αἰνιγματωδέστερον τὴν ἑαυτῶν γνώμην ἀναγράφουσιν; A matches; B has the unrelated οὐ μὴν ἧττον δὲ καὶ τοὺς διττοὺς γνώμην ἐκπαιδευοῦσιν",
+     "line 3 of p.88 reads Πορφύριος ἐν σελήνῃ τὴν Ἀθηνᾶν ὑποθέμενος ψυχὰς ἐκεῖθεν κατιέναι; A matches; B has text that is not on the page (ποιητὴς εὐκόλοις κρητῆρσι...)",
+     "line 1 of p.89 reads οὖσα πρὸς τὰς ἀπογεννήσεις καὶ ἀπὸ τῶν ἐξῃρημένων δυνάμεων ἀμιγῆ τὴν ἑνάδα; A matches; B has οὕτω πρὸς τὰ αὐτὰ γυμνάζομεν...",
+     "the Homeric quotation on p.89 reads πέπλον μὲν κατέχευεν ἑανὸν ... ποικίλον, ὅν ῥ' αὐτὴ ποιήσατο; A largely matches (ἑαυτῆς for ἑανόν); B is mostly invented text"
+    ]
+   },
+   {
+    "uid": "0f3d3ca7129d",
+    "kind": "sample",
+    "page": 18,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "Left page, line 1: the image reads 'τελειότης αὐτάρκης οὖσα καὶ πρὸς ἑαυτὸν ἐστραμμένη'. B has this. A has 'ἑκουσίως κινεῖσθαι οὐκ ἐᾷ', which is not on the page.",
+     "Left page, line 10: the image reads 'λέγεται οὖν ἡλίῳ μὲν ὁ χρυσός· σελήνης δὲ ὁ ἄργυρος· κρόνου δὲ μόλιβδος'. B matches. A has 'λέγεται γὰρ κλήρων ἔκγονόν τι σῆμα'.",
+     "Lemma A (marginal letter): the image reads 'Ἀλλ' ὡς ἐπικούρους μισθὸν λαμβάνοντας τῆς φυλακῆς'. B matches. A has 'Αλλὰς ἀδικουμένῳ μισθὸν λαμβανοντα'.",
+     "Right page, line 1: the image reads 'καὶ τὰς εἰς τὸ ὁμοούσιον ἡλίου ἐπιστροφάς'. B matches. A has 'κἀκεῖ πίστει μεμονωμένα'.",
+     "Last lemma: the image reads 'Πλάτωνι μὲν ἑαυτὸν ἤρεσεν εἶδος ἀποφαινομένῳ'. B matches. A has 'Λοιπὸν δὲ καὶ περὶ ἔρωτος', and most of A's text is made-up wording that is not on the page."
+    ]
+   },
+   {
+    "uid": "502799ae2eca",
+    "kind": "sample",
+    "page": 101,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "page numbers: image reads 190 / 191; A has 130 / 131; B has 190, 191",
+     "left page line 1: image reads ἑτεροκίνητ. ἃ δὴ τεκμήρια ... γενητῆς φύσεως; A has ἐξηρήκασι δὲ τὰ τοιάδε ... γεννητῶν φθόνων; B matches the image",
+     "left page line 2: image reads ἐν τῷ μὲν ἀγενήτῳ καὶ ἀφθάρτῳ τὸν κόσμον γενητὸν καὶ ἄφθαρτον; A has οὐδὲν μὲν ἀγέννητον ... φθαρτόν; B matches",
+     "right page line 1: image reads γὸς ἀγαθὸς κρατῇ τῆς οἰκείας ὕλης καὶ τὸ εἶδος ἐπιτίθησιν ὃ βούλεται; A has γεῖ ἀγαθόν· κρατεῖ γὰρ τὸ εἰκὸς ὕλην; B is close (γὸς ἀγαθὸς κρατῇ ... τὸ εἶδος)",
+     "right page last line: image reads πάλιν τοίνυν εἰ τὸ δημιουργικὸν αἴτιον ἀγαθόν ἐστι, πρὸς τὸ; B matches; A ends with a garbled line"
+    ]
+   },
+   {
+    "uid": "5c37985a1d68",
+    "kind": "sample",
+    "page": 312,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "Page numbers: image reads 602 / 603; A has 602, 603; B has 502 / 503",
+     "Heading line: image reads 'ὁ μὲν οὖν δὴ δεθὲν πᾶν λυτόν'; A has 'Τὸ μὲν οὖν δεθὲν πᾶν, λυτόν'; B has 'ὁμοῦ οἴει δὴ ἀεὶ τὰ λυτά'",
+     "Line after heading: image reads 'ὅ γε μὴν καλῶς ἁρμοσθὲν καὶ ἔχον εὖ λύειν ἐθέλειν κακοῦ'; A matches; B has 'ὁ γοῦν νοῦς κατ' ἀμφότερα...'",
+     "Start of 603: image reads 'αὐτῶν αἱ διαφορότητες ... θαυμαστὸν ... λυτὸν καὶ ἄλυτον'; A matches; B has 'πᾶσιν αἰτίαν ἀρετῆς...'",
+     "Last line of 603: image reads 'εἰ δὲ ἐκεῖνος ὁ τῆς φύσεως'; A matches; B has 'οὐδὲ γὰρ οὐ τοῦ φύσεως'"
+    ]
+   },
+   {
+    "uid": "a1ca33581126",
+    "kind": "sample",
+    "page": 113,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "p.214 line 1: image reads 'κουσ· ὥσπερ γάρ φησιν ἀττικός, ὁ τέκτων μὲν πάντα τεκτονικὰ ποιεῖ'; A has 'κοινόν· οὐχ ὡς γὰρ ὁ θεὸς ἄπταιστ''; B matches the image",
+     "p.214 line 2: image reads 'ὁ μὲν βάθρον, ὁ δὲ κλίνην'; A has 'ὁ μὲν βουλόμενος ὅθεν πλείω'; B matches the image",
+     "p.214 lines 5-6: image reads 'ὁ δὲ πορφύριος καὶ ταῦτα προσέμενος'; A has 'τινα οὖν ἀποτέλεσμα καὶ ἔμψυχα'; B matches the image",
+     "p.215 line 1: image reads 'καὶ τὸ πῦρ θερμαίνει· κατ' οὐσίαν γὰρ ὁ μὲν γὰρ φωτιστικός'; A has 'αὐτὸ τὸ θεραπείαν καρποῦσι γάρ'; B matches the image",
+     "p.215 last line: image reads 'κόσμου ὥσπερ εἴρηται καὶ πρότερον, τὴν μεταξὺ τῆς ὕλης καὶ τῆς'; A has 'κόσμον μὲν καὶ εὔταξιν...'; B matches the image"
+    ]
+   },
+   {
+    "uid": "f55ad7bd509d",
+    "kind": "sample",
+    "page": 98,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "p.184 l.2: image reads 'ου γαρ μονον ολον εξ ολων ποιει το παν'; A has 'οὐ γὰρ μόνον ὅλον ἐξ ὅλων ἐστὶ τὸ πᾶν' (close); B has 'κόσμου μόνον ὅλον ἐξ ὅλων ποιεῖ' with a garbled l.1",
+     "p.185 l.1: image reads 'εστι νοερου αμεθεκτον ολικον· ηδη δ' ουν μετεισι επι το παραδειγμα'; A matches; B has 'ἔμφατον ὑλικόν ... χρεῖται'",
+     "p.185 l.2: image reads 'παντος αναζητων οποιον εστι, ποτερον γενητον η αιωνιον'; A close; B has 'ὡδί δὲ οἷον ὑπόθεσιν χρῶνται'",
+     "p.184 l.4-5: image reads 'πηγαιαν αιτιαν... πηγαιαν ψυχην'; A matches; B is incoherent",
+     "last line p.185: image reads 'αποδεικνυσι πολλ.. οτι δει το παραδειγμα του κοσμου προυφεσταναι και'; A matches; B differs"
+    ]
+   },
+   {
+    "uid": "f890feab64ff",
+    "kind": "sample",
+    "page": 2,
+    "served_model": "gemini-3-flash-preview",
+    "result": "same",
+    "confidence": "medium",
+    "columns": 1,
+    "order_g4l": "n/a",
+    "order_served": "n/a",
+    "checked": [
+     "image reads ET PUBLIERAIENT (underlined, no asterisk); A has PUBLIERAIENT*; B has PUBLIERAIENT",
+     "image reads DANS L'INTÉRÊT DE LA RECHERCHE LA; A and B identical",
+     "image reads A L'AIDE DE CE DOCUMENT.; A and B identical",
+     "image reads QU'ELLE CONSERVE.; A and B identical"
+    ]
+   },
+   {
+    "uid": "229ecfcedf77",
+    "kind": "sample",
+    "page": 289,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Page numbers in the image are 556 and 557. A has 556, 557; B has 116, 117.",
+     "The left page begins 'ὁ δ' ... τὴν γῆν εἶναι φαμὲν ... περὶ τῆς κυκλοφορίας διειλέχθαι'. A matches this; B has 'οὐδὲ γὰρ τῷ θεῷ εἶναι φαμὲν αὐτὸν ἐν τῷ παντὶ κεκαλυμμένως', which is not on the page.",
+     "The right page begins 'ἐπὶ μέρους τὰ φυτὰ ζῆν ... ἢ νεκροῦσθαι'. A matches closely; B has 'ἐκ μέρους τοῦ φωτὸς ἀποτεμνομένης τῆς σκιᾶς', which is not on the page.",
+     "The right page ends with 'ἰλλομένας τὰς τρίχας ... εἴσω τοῦ δέρματος· ὥστε εἶναι καὶ τοῦτο δῆλον'. A matches; B ends with 'τὸ τῆς Νύμφης', which is not on the page.",
+     "The left page has 'Θεόφραστος' and 'πλάτων' throughout and the right page has 'Φαίδωνι' and 'Τίμαιος'. A has them; B's text appears to be largely invented and doesn't match the image."
+    ]
+   },
+   {
+    "uid": "89afb055173e",
+    "kind": "sample",
+    "page": 310,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Left page, line 1: the image reads 'ἐνδέχεσθαι τοῖς πολλοῖς· εἰκότως μιᾶς γὰρ καὶ θείας νοήσεως'. A has this. B has 'ἐπιξανθὸν μὲν οὐ πολλοῖς· εἰκασθὲν ... θέαν σώματος', which is not on the page.",
+     "Page numbers: the image reads 598 and 599. A has 598/599. B has 198/199.",
+     "Right page, line 1: the image reads 'θεῶν ῥητέον. πρὸς ἅπαντας λέγεσθαι τῶν ἐγκοσμίων ... συμπλοκή'. A has this. B has 'πρὸς ἑτέρους πρὸς ἅπαντας λυσιτελεῖ, τῆ ἐρωμένου', which is invented.",
+     "Right page, last line: the image reads 'τῶν ψυχῶν. ἐκεῖνα γὰρ ἀγάλματά ... πέφυκεν ἀμέσως ... μετέχειν'. A has this. B has 'τὴν ψυχήν· ἐκείνη γὰρ ἀγαπήσει...', which is wrong.",
+     "Mid-right page: the image has 'ἐν φαίδρῳ θεῶν καὶ δαιμόνων ... τῶν δώδεκα θεῶν'. A has this. B has unrelated text about eros throughout."
+    ]
+   },
+   {
+    "uid": "ef0a9aef96df",
+    "kind": "sample",
+    "page": 228,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Page numbers: the image reads 440 and 441. A has 440, 441. B has 444, 445.",
+     "First line: the image reads roughly 'τῆς τοῦ ἀπείρου φύσεως γνωρίσματα'. A matches it. B has 'τῆς τοῦ κόσμου φύσεως συνέστησεν'.",
+     "Lemma: the image reads 'Κράτος δὲ ἔδωκε τῇ ταυτοῦ καὶ ὁμοίου περιφορᾷ· μίαν γὰρ αὐτὴν ἄσχιστον εἴασε'. A matches it. B has 'κράσιν δὲ ἔδωκε... μέρει... ἀμέσως εἴασεν'.",
+     "Commentary opening: the image reads 'Ὁ ὅρος οὗτος ὁ δημιουργικὸς...'. A has 'Ὁρμὸς οὗτος ὁ δημιουργικὸς'. B has 'ὥσπερ οὖν ἐν τῇ δημιουργίᾳ...', and the rest of B looks largely invented.",
+     "Last line of p.441: the image reads 'ζώων ἔχειν τὰς νοερὰς αἰτίας, ἀλλὰ καὶ πρὸ τούτων τῶν ὅλων τοῦ κόσμου μερίδων'. A matches it. B ends with unrelated text."
+    ]
+   },
+   {
+    "uid": "adc4e5a5fd61",
+    "kind": "sample",
+    "page": 182,
+    "served_model": "gemini-3-flash-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 1,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "page numbers: image reads 348 / 349; A has 348, 349; B has 148 / 149",
+     "first line of left page: image reads ἐξηγούμενος τοῖς δ' αὐτὸν. ἀμφότερα δὲ ... ψυχὴν ἀληθῆ; A matches; B has the unrelated line ἐπιθυμητικόν τοῦ θνητοῦ μέρος...",
+     "lemma on right page: image reads τῆς ἀμερίστου καὶ ἀεὶ κατὰ ταὐτὰ ἐχούσης οὐσίας καὶ τῆς αὖ περὶ τὰ σώματα γινομένης μεριστῆς; A matches; B has τό μερικόν· καὶ αἱ κατὰ αὐτὰ ἐχούσης ... σχήματα",
+     "last line on right page: image reads χιόνος. χαλάζης, ἃ δὴ ... μετεώρων ἀπολογίᾳ τῆς; A matches; B has φύσεως χαρίτως ... μητέρας ἀποκαλεῖ τὴν",
+     "right page line about Theophrastus: image reads τοιαῦτα μὲν ὁ Θεόφραστος; A has Θεόφραστος; B has Θαλάσσιος. Most of B's text is not on the page"
+    ]
+   },
+   {
+    "uid": "50b26a7632fa",
+    "kind": "control",
+    "page": 78,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "3a37a500376e",
+    "kind": "control",
+    "page": 29,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "0a0c7e30c24c",
+    "kind": "control",
+    "page": 106,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "4f456e4b1109",
+    "kind": "control",
+    "page": 60,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "68b7574d8ed8",
+    "kind": "control",
+    "page": 50,
+    "result": "clean",
+    "confidence": "high"
+   }
+  ],
+  "summary": {
+   "better": "29/30 = 97% [83, 99]",
+   "same": "1/30 = 3% [1, 17]",
+   "worse": "0/30 = 0% [0, 11]",
+   "unjudged": 0,
+   "controls": "5/5 clean copy chosen (0 same, 0 planted chosen, 0 unjudged)",
+   "multi_column_pages": 0,
+   "g4l_order": [],
+   "served_order": []
+  }
+ }
+}

@@ -1,0 +1,246 @@
+{
+ "panel": "greekalt",
+ "chart": "greek",
+ "n_pages": 109,
+ "noise_floor": 0.01,
+ "comparators": {
+  "chart": "greek",
+  "thr": 0.01,
+  "ref38": "gemini-3.8-flash+antigravity-cli",
+  "best": "gemini-3.7-flash+antigravity-cli",
+  "flash3": "gemini-3-flash-preview",
+  "prod": "gemini-3-flash-preview"
+ },
+ "arms": {
+  "gemini-4-argon-low+antigravity-cli": {
+   "n_read": 109,
+   "n_scored": 108,
+   "accuracy": 0.908,
+   "ci95": [
+    0.896,
+    0.92
+   ],
+   "failures": {
+    "copy_filter": 1
+   },
+   "median_cer": 0.0735
+  },
+  "gemini-3.7-flash+antigravity-cli": {
+   "n_read": 109,
+   "n_scored": 106,
+   "accuracy": 0.906,
+   "ci95": [
+    0.894,
+    0.917
+   ],
+   "failures": {
+    "copy_filter": 3
+   },
+   "median_cer": 0.082
+  },
+  "gemini-3-flash-preview": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.901,
+   "ci95": [
+    0.889,
+    0.913
+   ],
+   "failures": {},
+   "median_cer": 0.085
+  },
+  "kraken-greek-cllg": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.9,
+   "ci95": [
+    0.888,
+    0.911
+   ],
+   "failures": {},
+   "median_cer": 0.082
+  },
+  "gemini-3.8-flash+antigravity-cli": {
+   "n_read": 109,
+   "n_scored": 102,
+   "accuracy": 0.868,
+   "ci95": [
+    0.83,
+    0.899
+   ],
+   "failures": {
+    "copy_filter": 6,
+    "timeout": 1
+   },
+   "median_cer": 0.0815
+  },
+  "gemini-3.1-flash-lite": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.847,
+   "ci95": [
+    0.827,
+    0.866
+   ],
+   "failures": {},
+   "median_cer": 0.142
+  },
+  "gemini-3.6-flash+antigravity-cli": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.783,
+   "ci95": [
+    0.728,
+    0.831
+   ],
+   "failures": {},
+   "median_cer": 0.109
+  },
+  "chandra-ocr-2": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.745,
+   "ci95": [
+    0.721,
+    0.767
+   ],
+   "failures": {},
+   "median_cer": 0.266
+  },
+  "mistral-ocr-4-1": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.736,
+   "ci95": [
+    0.707,
+    0.765
+   ],
+   "failures": {},
+   "median_cer": 0.271
+  },
+  "qwen3-vl-8b": {
+   "n_read": 109,
+   "n_scored": 109,
+   "accuracy": 0.665,
+   "ci95": [
+    0.616,
+    0.709
+   ],
+   "failures": {},
+   "median_cer": 0.305
+  },
+  "olmocr-2-7b-fp8": {
+   "n_read": 109,
+   "n_scored": 100,
+   "accuracy": 0.515,
+   "ci95": [
+    0.458,
+    0.57
+   ],
+   "failures": {
+    "empty": 9
+   },
+   "median_cer": 0.4275
+  },
+  "paddleocr-vl-1.6": {
+   "n_read": 109,
+   "n_scored": 108,
+   "accuracy": 0.497,
+   "ci95": [
+    0.452,
+    0.545
+   ],
+   "failures": {
+    "empty": 1
+   },
+   "median_cer": 0.498
+  },
+  "deepseek-ocr": {
+   "n_read": 109,
+   "n_scored": 68,
+   "accuracy": 0.42,
+   "ci95": [
+    0.343,
+    0.495
+   ],
+   "failures": {
+    "empty": 41
+   },
+   "median_cer": 0.5005
+  }
+ },
+ "paired": {
+  "ref38:gemini-3.8-flash+antigravity-cli": {
+   "n": 101,
+   "wins": 64,
+   "losses": 30,
+   "ties": 7,
+   "median_delta": -0.003,
+   "median_delta_ci95": [
+    -0.006,
+    -0.001
+   ],
+   "mean_delta": -0.0396,
+   "mean_delta_ci95": [
+    -0.0755,
+    -0.0129
+   ],
+   "sign_p": 0.0006,
+   "verdict": "same"
+  },
+  "best:gemini-3.7-flash+antigravity-cli": {
+   "n": 105,
+   "wins": 58,
+   "losses": 36,
+   "ties": 11,
+   "median_delta": -0.001,
+   "median_delta_ci95": [
+    -0.005,
+    0.0
+   ],
+   "mean_delta": -0.0042,
+   "mean_delta_ci95": [
+    -0.0088,
+    0.0002
+   ],
+   "sign_p": 0.0298,
+   "verdict": "same"
+  },
+  "flash3:gemini-3-flash-preview": {
+   "n": 108,
+   "wins": 64,
+   "losses": 36,
+   "ties": 8,
+   "median_delta": -0.003,
+   "median_delta_ci95": [
+    -0.007,
+    -0.001
+   ],
+   "mean_delta": -0.0077,
+   "mean_delta_ci95": [
+    -0.0119,
+    -0.0036
+   ],
+   "sign_p": 0.0066,
+   "verdict": "same"
+  },
+  "prod:gemini-3-flash-preview": {
+   "n": 108,
+   "wins": 64,
+   "losses": 36,
+   "ties": 8,
+   "median_delta": -0.003,
+   "median_delta_ci95": [
+    -0.007,
+    -0.001
+   ],
+   "mean_delta": -0.0077,
+   "mean_delta_ci95": [
+    -0.0119,
+    -0.0036
+   ],
+   "sign_p": 0.0066,
+   "verdict": "same"
+  }
+ }
+}

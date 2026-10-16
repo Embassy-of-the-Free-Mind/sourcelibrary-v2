@@ -21,7 +21,7 @@ export const framingEvent = (slot: string) => `framing:${slot}`;
 export default function ParallaxImage({
   src, srcMobile, mobileBreakpoint = 768,
   alt = '', className = '', strength = 0.12, loading = 'lazy',
-  oversize = 0.15, objectPosition = 'center', framing, frameSlot,
+  oversize = 0.15, objectPosition = 'center', framing, frameSlot, fetchPriority, reveal = false,
 }: {
   src: string;
   /** Narrow-viewport variant, served below `mobileBreakpoint` via <picture>.
@@ -42,8 +42,23 @@ export default function ParallaxImage({
   framing?: Framing;
   /** Identifier so the admin editor can target this image's framing. */
   frameSlot?: string;
+  /** 'high' for a hero that is the page's largest paint. */
+  fetchPriority?: 'high' | 'low' | 'auto';
+  /** Fade + settle in once the image has loaded (globals.css `[data-reveal]`). */
+  reveal?: boolean;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const pictureRef = useRef<HTMLPictureElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Reveal on load. Set on the DOM rather than in state: the hero image is
+  // eager and often finishes before hydration, when onLoad has already fired,
+  // so the effect checks `complete` as well. A failed load reveals too, so the
+  // hero never stays blank.
+  const showImage = () => { if (pictureRef.current) pictureRef.current.dataset.reveal = 'in'; };
+  useEffect(() => {
+    if (reveal && imgRef.current?.complete) showImage();
+  }, [reveal]);
 
   // Framing lives in state so admin edits (dispatched as events) survive parent
   // re-renders (e.g. the quote band re-rendering every cycle) without a server refresh.
@@ -100,13 +115,17 @@ export default function ParallaxImage({
 
   return (
     <div ref={wrapRef} className="absolute inset-x-0" style={{ willChange: 'transform', top: `${-oversize * 100}%`, height: `${100 + oversize * 200}%` }}>
-      <picture className="block w-full h-full">
+      <picture ref={pictureRef} data-reveal={reveal ? '' : undefined} className="block w-full h-full">
         {srcMobile && <source media={`(max-width: ${mobileBreakpoint - 1}px)`} srcSet={srcMobile} />}
         <img
+          ref={imgRef}
+          onLoad={reveal ? showImage : undefined}
+          onError={reveal ? showImage : undefined}
           data-frame-slot={frameSlot}
           src={src}
           alt={alt}
           loading={loading}
+          fetchPriority={fetchPriority}
           className={`w-full h-full object-cover ${className}`}
           style={{ objectPosition: op, transformOrigin: op, transform: `scale(${scale})` }}
         />

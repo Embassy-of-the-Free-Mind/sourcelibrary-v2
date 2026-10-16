@@ -8,7 +8,7 @@
 // #6561 batch, step 2: Opus correct over pages.jsonl. Files only, NOTHING is written to production.
 //
 // Usage (cwd = scratch dir holding pages.jsonl + prompt.json from prep.mjs):
-//   node run.mjs [--limit=N] [--par=2] [--max-weekly=85]
+//   node run.mjs [--limit=N] [--par=2] [--max-weekly=85] [--run=NAME]
 // Checkpoint: out.jsonl, one row per attempt {page_id, book_id, page_number, outcome, corrected_sha, text, …}.
 //   outcome 'ok' = a closed sentinel reply that passed the guard. A page is retried (other outcomes) up to 3 times.
 // Ends by writing runner.done (JSON summary) when no page is left to try; a `runner.stop` file stops it cleanly.
@@ -21,7 +21,8 @@ import { correctPrompt, sha } from './prompt.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const LIMIT = Number(ARG('--limit', Infinity)), PAR = Number(ARG('--par', 2)), MAX_WEEKLY = Number(ARG('--max-weekly', 85));
-const MAX_TRIES = 3, OUT = 'out.jsonl', RUN = 'opus-correct-6561-tables';
+// --run names the run in every out.jsonl row (default: the table batch; #6561 item 1 runs it as opus-correct-6561-stale).
+const MAX_TRIES = 3, OUT = 'out.jsonl', RUN = ARG('--run', 'opus-correct-6561-tables');
 // cron's PATH has no ~/.local/bin
 const CLAUDE = process.env.CLAUDE_BIN || (fs.existsSync('/root/.local/bin/claude') ? '/root/.local/bin/claude' : 'claude');
 let CLI_VERSION = null; try { CLI_VERSION = execFileSync(CLAUDE, ['--version'], { encoding: 'utf8', timeout: 30000 }).trim(); } catch { /* recorded as null */ }
@@ -84,7 +85,9 @@ async function one(pg) {
     const raw = j.result || '';
     if (code !== 0 || j.is_error) return { ...row, outcome: /usage limit|rate limit|quota|limit reached|overloaded/i.test(tail + raw) ? 'limit' : 'error', error: tail, raw: raw.slice(0, 2000) };
     // The reply must come from Opus and from a call that opened the image (the Read turn + the answer turn).
-    if (!/opus/.test(row.model || '')) return { ...row, outcome: 'wrong_model', raw };
+    // Opus 5.x, the arm the experiment measured: a stale CLI resolves `opus` to Opus 4.5 (main's ~/.local/bin/claude
+    // 2.1.31 did, 2026-10-15), so a bare /opus/ is not enough. Set CLAUDE_BIN to the current CLI on such a box.
+    if (!/opus-5/.test(row.model || '')) return { ...row, outcome: 'wrong_model', raw };
     if ((j.num_turns ?? 0) < 2) return { ...row, outcome: 'image_not_opened', raw };
     const r = parseReply(raw);
     if (r.status !== 'ok') return { ...row, outcome: r.status, raw };

@@ -1199,3 +1199,25 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
     );
   }
 }
+
+/* Collection hero load-in (mycology, slime-moulds). The collage fades up from
+   the dark ground and settles from a slight zoom once it has actually loaded
+   (ParallaxImage sets data-reveal="in"); the hero text rises in, one line after
+   another. `backwards` so nothing keeps a transform after the animation ends.
+   Reduced motion is handled by the global rule above. */
+[data-reveal] {
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.9s ease-out, transform 1.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+[data-reveal="in"] { opacity: 1; transform: none; }
+@keyframes hero-rise {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.hero-load-in > * { animation: hero-rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+.hero-load-in > :nth-child(1) { animation-delay: 0.3s; }
+.hero-load-in > :nth-child(2) { animation-delay: 0.4s; }
+.hero-load-in > :nth-child(3) { animation-delay: 0.5s; }
+.hero-load-in > :nth-child(4) { animation-delay: 0.6s; }
+.hero-load-in > :nth-child(n+5) { animation-delay: 0.7s; }

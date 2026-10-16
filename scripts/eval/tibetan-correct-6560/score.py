@@ -29,9 +29,16 @@ from alignpairs import syllables, align, matches  # noqa: E402
 REPO = os.path.abspath(os.path.join(HERE, '../../..'))
 RES = os.path.join(REPO, 'scripts/eval/results/tibetan-correct-6560')
 MANIFEST = os.path.join(REPO, 'scripts/eval/results/tibetan-proofread-2026-10/manifest.jsonl')
-ARMS = ['opus-corr', 'pro-corr', 'opus-redo', 'pro-redo', 'sonnet-corr', 'haiku-corr']  # #6667 added the last two
-ANCHOR_ARMS = ['opus-corr-anchor', 'pro-corr-anchor', 'sonnet-corr-anchor', 'haiku-corr-anchor']
+ARMS = ['opus-corr', 'pro-corr', 'opus-redo', 'pro-redo', 'sonnet-corr', 'haiku-corr',  # #6667 added sonnet, haiku
+        'flash-low-corr', 'flash-high-corr',  # Gemini 3.8 Flash at low and high thinking (agy -p), same CORR prompt
+        'g4l-corr']  # Gemini 4 Argon at low thinking (agy -p), same CORR prompt (2026-10-15)
+ANCHOR_ARMS = ['opus-corr-anchor', 'pro-corr-anchor', 'sonnet-corr-anchor', 'haiku-corr-anchor',
+               'flash-low-corr-anchor', 'flash-high-corr-anchor', 'g4l-corr-anchor']
 FAMILY = {'opus': 'claude', 'pro': 'gemini'}
+# who reads off whose toward-Derge changes: always the other family. The Flash arms get their own Opus key so the
+# committed opus-settles key (Pro's arms) is not rebuilt.
+SETTLERS = {'pro-settles': ['opus-corr', 'opus-redo'], 'opus-settles': ['pro-corr', 'pro-redo'],
+            'opus-settles-flash': ['flash-low-corr', 'flash-high-corr'], 'opus-settles-g4l': ['g4l-corr']}
 TIB = re.compile('[ཀ-ྼ]')
 REFUSAL = re.compile(r"\bI (?:cannot|can't|am unable to)|content (?:safety )?filter|blocked by Gemini", re.I)
 
@@ -177,19 +184,19 @@ READOFF = ('You are checking a transcription of a Tibetan Kangyur manuscript aga
 def readoff_prep(a):
     man = load_manifest()
     win = json.load(jopen(os.path.join(RES, 'derge-windows.json')))['windows']
-    reqs = {'opus-settles': [], 'pro-settles': []}
+    reqs = {k: [] for k in SETTLERS}
     key = {}
     for pid, m in man.items():
         rng = random.Random(f'6560|{a.settler}|{pid}')
         w = win[pid]['syllables']
         base, base_line = syllables_by_line(m['served_text'])
-        items = {'opus-settles': [], 'pro-settles': []}  # opus settles Pro's changes; Pro settles Opus's
-        for arm in ARMS:
+        items = {k: [] for k in SETTLERS}  # opus settles Pro's changes; Pro settles Opus's
+        for arm in SETTLERS[a.settler]:
             r = load_arm(a.root, arm).get(pid)
             text, prob = extract((r or {}).get('text', ''))
             if not text:
                 continue
-            settler = 'pro-settles' if arm.startswith('opus') else 'opus-settles'
+            settler = a.settler
             xs, xl = syllables_by_line(text)
             for sp in toward_derge(base, xs, w, xl):
                 same = next((x for x in items[settler] if x['j0'] == sp['j0'] and x['j1'] == sp['j1'] and x['base'] == sp['base']), None)
@@ -316,7 +323,7 @@ def score(a):
         anchoring[arm] = {'n': len(res), **cnt, 'survival': round(cnt['survived'] / max(1, len(res) - cnt['did_not_read']), 3), 'detail': res}
     # recitation read-offs
     recitation = {}
-    for settler in ('opus-settles', 'pro-settles'):
+    for settler in SETTLERS:
         f = jopen(os.path.join(a.root or '', f'readoff-key-{settler}.json')) or jopen(os.path.join(RES, f'readoff-key-{settler}.json'))
         if not f:
             continue
@@ -388,7 +395,11 @@ def score(a):
     # Pro-correct against Opus-correct, paired on the same folios
     # (#6667: the same for Sonnet and Haiku, on all 30 folios and on the 10 planted ones, with folios better / worse)
     for arm, ref in [('pro-corr', 'opus-corr'), ('sonnet-corr', 'opus-corr'), ('haiku-corr', 'opus-corr'), ('sonnet-corr', 'haiku-corr'),
-                     ('sonnet-corr-anchor', 'opus-corr-anchor'), ('haiku-corr-anchor', 'opus-corr-anchor')]:
+                     ('sonnet-corr-anchor', 'opus-corr-anchor'), ('haiku-corr-anchor', 'opus-corr-anchor'),
+                     ('flash-low-corr', 'opus-corr'), ('flash-high-corr', 'opus-corr'), ('flash-high-corr', 'flash-low-corr'),
+                     ('flash-low-corr', 'pro-corr'), ('flash-high-corr', 'pro-corr'),
+                     ('flash-low-corr-anchor', 'opus-corr-anchor'), ('flash-high-corr-anchor', 'opus-corr-anchor'),
+                     ('g4l-corr', 'flash-low-corr'), ('g4l-corr', 'opus-corr'), ('g4l-corr-anchor', 'flash-low-corr-anchor')]:
         both = [p for p in ids if pages[p].get(arm, {}).get('status') == 'read' and pages[p].get(ref, {}).get('status') == 'read']
         if both:
             fp, fo = pooled(arm, both), pooled(ref, both)
@@ -425,7 +436,7 @@ def score(a):
                 t[span_type(it)][it['verdict']] += 1
             summary[arm]['toward_derge_by_type'] = {k: dict(v) for k, v in t.items()}
     # settler test-retest: a folio read off twice (two runner rows for one uid) — answer agreement per item
-    for settler in ('opus-settles', 'pro-settles'):
+    for settler in SETTLERS:
         p_ = os.path.join(a.root or '', 'out', f'readoff-{settler}.jsonl')
         f = jopen(p_) or jopen(os.path.join(RES, 'out', f'readoff-{settler}.jsonl'))
         if not f:
@@ -456,7 +467,7 @@ def main():
     ap.add_argument('cmd', choices=['readoff-prep', 'score'])
     ap.add_argument('--root', default=os.environ.get('JOB_SCRATCH'))
     ap.add_argument('--out')
-    ap.add_argument('--settler', choices=['opus-settles', 'pro-settles'], help='readoff-prep: Opus settles Pro\'s changes, Pro settles Opus\'s')
+    ap.add_argument('--settler', choices=list(SETTLERS), help='readoff-prep: Opus settles Pro\'s (and Flash\'s) changes, Pro settles Opus\'s')
     a = ap.parse_args()
     (readoff_prep if a.cmd == 'readoff-prep' else score)(a)
 

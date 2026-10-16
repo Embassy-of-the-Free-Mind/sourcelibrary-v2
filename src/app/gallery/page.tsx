@@ -227,6 +227,7 @@ async function fetchInitialGalleryData(tenantId: string | null, bookId?: string)
       rotation: doc.rotation,
       extractedUrl: doc.extracted_url as string | undefined,
       thumbnailUrl: doc.thumbnail_url as string | undefined,
+      cardUrl: (doc.card_url || undefined) as string | undefined,
       galleryQuality: doc.gallery_quality as number | undefined,
       confidence: doc.confidence as number | undefined,
       museumDescription: doc.museum_description as string | undefined,

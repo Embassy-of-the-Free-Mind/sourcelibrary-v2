@@ -1,0 +1,1032 @@
+[
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abd75f1a22ab19a9f388-p185",
+  "failure": null,
+  "why": null,
+  "secs": 35.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2099,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:06:44.437599+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aaee5f1a22ab19a8fca5-p201",
+  "failure": null,
+  "why": null,
+  "secs": 39.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2122,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:06:48.035808+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aafd5f1a22ab19a90f73-p115",
+  "failure": null,
+  "why": null,
+  "secs": 41.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 1834,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:06:50.713280+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac045f1a22ab19aa24b0-p199",
+  "failure": null,
+  "why": null,
+  "secs": 33.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2183,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:07:17.669242+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab205f1a22ab19a93586-p110",
+  "failure": null,
+  "why": null,
+  "secs": 46.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2114,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:07:37.509221+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab4c5f1a22ab19a9622c-p310",
+  "failure": null,
+  "why": null,
+  "secs": 39.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2399,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:07:57.416087+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abf75f1a22ab19aa12e0-p164",
+  "failure": null,
+  "why": null,
+  "secs": 74.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "write_to_file:deny"
+  ],
+  "chars": 2013,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:08:02.394140+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac0c5f1a22ab19aa2c4f-p156",
+  "failure": null,
+  "why": null,
+  "secs": 42.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2248,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:08:19.768653+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aaf45f1a22ab19a90424-p290",
+  "failure": null,
+  "why": null,
+  "secs": 40.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2070,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:08:37.812555+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aad45f1a22ab19a8e058-p265",
+  "failure": null,
+  "why": null,
+  "secs": 37.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2396,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:08:40.162140+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac275f1a22ab19aa4797-p174",
+  "failure": null,
+  "why": null,
+  "secs": 31.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2043,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:08:51.565518+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab3c5f1a22ab19a9514b-p346",
+  "failure": null,
+  "why": null,
+  "secs": 36.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2121,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:09:14.444875+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abdd5f1a22ab19a9fade-p410",
+  "failure": null,
+  "why": null,
+  "secs": 36.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2194,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:09:16.703164+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac1b5f1a22ab19aa3b51-p109",
+  "failure": null,
+  "why": null,
+  "secs": 39,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2067,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:09:30.574223+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aadc5f1a22ab19a8e86d-p183",
+  "failure": null,
+  "why": null,
+  "secs": 31.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2013,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:09:45.852103+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab535f1a22ab19a96a78-p220",
+  "failure": null,
+  "why": null,
+  "secs": 47.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2302,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:10:03.910029+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abe95f1a22ab19aa030c-p241",
+  "failure": null,
+  "why": null,
+  "secs": 40.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2298,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:10:26.445766+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab685f1a22ab19a98430-p142",
+  "failure": null,
+  "why": null,
+  "secs": 37.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2255,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:10:41.549270+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab5a5f1a22ab19a9729e-p404",
+  "failure": null,
+  "why": null,
+  "secs": 26.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2075,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:10:52.637601+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab1b5f1a22ab19a93040-p355",
+  "failure": null,
+  "why": null,
+  "secs": 88.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "write_to_file:deny"
+  ],
+  "chars": 2204,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:10:59.014322+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab9e5f1a22ab19a9b03b-p269",
+  "failure": null,
+  "why": null,
+  "secs": 31.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2219,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:11:13.305302+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abf95f1a22ab19aa14b2-p315",
+  "failure": null,
+  "why": null,
+  "secs": 36.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2244,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:11:28.952307+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab485f1a22ab19a95e06-p223",
+  "failure": null,
+  "why": null,
+  "secs": 31.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2259,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:11:30.858194+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab325f1a22ab19a94758-p121",
+  "failure": null,
+  "why": null,
+  "secs": 33.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2309,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:11:46.513270+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab4a5f1a22ab19a96014-p249",
+  "failure": null,
+  "why": null,
+  "secs": 31.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2180,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:12:00.525338+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aafc5f1a22ab19a90d9c-p104",
+  "failure": null,
+  "why": null,
+  "secs": 31.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2000,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:12:18.390208+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abc55f1a22ab19a9dcfd-p270",
+  "failure": null,
+  "why": null,
+  "secs": 48,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1889,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:12:18.888824+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac065f1a22ab19aa262c-p312",
+  "failure": null,
+  "why": null,
+  "secs": 25.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2108,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:12:44.673544+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab235f1a22ab19a938ee-p275",
+  "failure": null,
+  "why": null,
+  "secs": 43.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2219,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:13:01.514974+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab5f5f1a22ab19a978df-p319",
+  "failure": null,
+  "why": null,
+  "secs": 74.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2210,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:13:15.289105+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab0f5f1a22ab19a92347-p308",
+  "failure": null,
+  "why": null,
+  "secs": 40.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1962,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:13:24.944210+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aad55f1a22ab19a8e1f6-p210",
+  "failure": null,
+  "why": null,
+  "secs": 36.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2172,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:13:38.038012+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abec5f1a22ab19aa0707-p354",
+  "failure": null,
+  "why": null,
+  "secs": 25.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1008,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:13:50.746129+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab455f1a22ab19a95aa3-p344",
+  "failure": null,
+  "why": null,
+  "secs": 38.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2235,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:13:54.189097+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac255f1a22ab19aa45d5-p215",
+  "failure": null,
+  "why": null,
+  "secs": 31.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2067,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:14:22.240191+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aaeb5f1a22ab19a8f91f-p188",
+  "failure": null,
+  "why": null,
+  "secs": 47.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2111,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:14:25.506186+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab515f1a22ab19a96860-p280",
+  "failure": null,
+  "why": null,
+  "secs": 33.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2156,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:14:27.760234+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abf45f1a22ab19aa0f4e-p116",
+  "failure": null,
+  "why": null,
+  "secs": 28.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2123,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:14:55.951189+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aad95f1a22ab19a8e519-p163",
+  "failure": null,
+  "why": null,
+  "secs": 30.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2161,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:14:56.101004+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aaf25f1a22ab19a9026c-p285",
+  "failure": null,
+  "why": null,
+  "secs": 46.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2213,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:15:08.545639+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abb25f1a22ab19a9c827-p310",
+  "failure": null,
+  "why": null,
+  "secs": 44.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "write_to_file:deny"
+  ],
+  "chars": 2123,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:15:40.405391+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aade5f1a22ab19a8ea42-p312",
+  "failure": null,
+  "why": null,
+  "secs": 45.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2390,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:15:41.402602+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab0a5f1a22ab19a91dd5-p125",
+  "failure": null,
+  "why": null,
+  "secs": 50.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 2084,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:15:59.403163+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab625f1a22ab19a97d1a-p114",
+  "failure": null,
+  "why": null,
+  "secs": 27.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1924,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:16:07.677738+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aada5f1a22ab19a8e68d-p172",
+  "failure": null,
+  "why": null,
+  "secs": 36.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2229,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:16:35.699569+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abf15f1a22ab19aa0c01-p88",
+  "failure": null,
+  "why": null,
+  "secs": 29.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1953,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:16:36.899491+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab0d5f1a22ab19a92183-p192",
+  "failure": null,
+  "why": null,
+  "secs": 61.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2113,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:16:42.584381+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aae25f1a22ab19a8ef93-p144",
+  "failure": null,
+  "why": null,
+  "secs": 38.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2712,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:17:13.967375+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac325f1a22ab19aa53a1-p236",
+  "failure": null,
+  "why": null,
+  "secs": 43.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2271,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:17:20.181943+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab0c5f1a22ab19a91faa-p305",
+  "failure": null,
+  "why": null,
+  "secs": 38.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2322,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:17:21.337880+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac095f1a22ab19aa2934-p112",
+  "failure": null,
+  "why": null,
+  "secs": 35.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2242,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:17:49.863387+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7abee5f1a22ab19aa0921-p135",
+  "failure": null,
+  "why": null,
+  "secs": 35,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2046,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:17:56.386461+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aab880b52390feb197a8-p153",
+  "failure": null,
+  "why": null,
+  "secs": 59.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2329,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:18:20.143843+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac075f1a22ab19aa27bc-p95",
+  "failure": null,
+  "why": null,
+  "secs": 31.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2196,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:18:21.324672+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab605f1a22ab19a97afe-p336",
+  "failure": null,
+  "why": null,
+  "secs": 35.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2201,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:18:31.499498+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac205f1a22ab19aa3fa6-p306",
+  "failure": null,
+  "why": null,
+  "secs": 31.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1925,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:19:03.349943+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aac65f1a22ab19a8d2bc-p200",
+  "failure": null,
+  "why": null,
+  "secs": 53.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2400,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:19:14.731754+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7aaff5f1a22ab19a9115d-p345",
+  "failure": null,
+  "why": null,
+  "secs": 54.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 2171,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:19:14.893813+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ac3a5f1a22ab19aa5bbf-p61",
+  "failure": null,
+  "why": null,
+  "secs": 32.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1865,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:19:35.662048+00:00"
+ },
+ {
+  "uid": "tibetan-kangyur-4523|tib-69e7ab585f1a22ab19a970a0-p149",
+  "failure": null,
+  "why": null,
+  "secs": 97.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2213,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:20:52.135817+00:00"
+ }
+]

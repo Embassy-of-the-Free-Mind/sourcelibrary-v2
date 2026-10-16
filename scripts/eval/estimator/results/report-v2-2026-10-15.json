@@ -1,0 +1,3608 @@
+{
+ "loo": {
+  "per_experiment": [
+   {
+    "experiment": "5606-ab",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 6,
+    "v1_coverage90": 1.0,
+    "v2_coverage90": 1.0,
+    "v1_mae": 0.22,
+    "v2_mae": 0.24,
+    "v1_width": 0.93,
+    "v2_width": 1.0,
+    "measured_cells": 6,
+    "v2_coverage90_measured": 1.0,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "3/3",
+    "v2_best": "3/3",
+    "v1_contrast_coverage90": 1.0,
+    "v2_contrast_coverage90": 1.0,
+    "contrast_pairs": 3,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 6,
+    "max_rhat": 1.014,
+    "min_ess": 239,
+    "secs": 4873
+   },
+   {
+    "experiment": "6182-claude-xl",
+    "iclass": "panel",
+    "kind": "page-level",
+    "cells": 58,
+    "v1_coverage90": 0.83,
+    "v2_coverage90": 0.83,
+    "v1_mae": 0.21,
+    "v2_mae": 0.22,
+    "v1_width": 0.65,
+    "v2_width": 0.66,
+    "measured_cells": 33,
+    "v2_coverage90_measured": 0.97,
+    "pooled_cells": 25,
+    "v2_coverage90_pooled": 0.64,
+    "v1_best": "12/14",
+    "v2_best": "12/14",
+    "v1_contrast_coverage90": 0.67,
+    "v2_contrast_coverage90": 0.67,
+    "contrast_pairs": 92,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.031,
+    "min_ess": 185,
+    "secs": 4277
+   },
+   {
+    "experiment": "6182-xl",
+    "iclass": "panel",
+    "kind": "page-level",
+    "cells": 138,
+    "v1_coverage90": 0.95,
+    "v2_coverage90": 0.95,
+    "v1_mae": 0.12,
+    "v2_mae": 0.13,
+    "v1_width": 0.6,
+    "v2_width": 0.62,
+    "measured_cells": 68,
+    "v2_coverage90_measured": 0.94,
+    "pooled_cells": 70,
+    "v2_coverage90_pooled": 0.96,
+    "v1_best": "12/14",
+    "v2_best": "13/14",
+    "v1_contrast_coverage90": 0.94,
+    "v2_contrast_coverage90": 0.95,
+    "contrast_pairs": 614,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.021,
+    "min_ess": 201,
+    "secs": 4656
+   },
+   {
+    "experiment": "6331-cli38-tib58",
+    "iclass": "panel",
+    "kind": "page-level",
+    "cells": 3,
+    "v1_coverage90": 0.33,
+    "v2_coverage90": 0.67,
+    "v1_mae": 0.13,
+    "v2_mae": 0.12,
+    "v1_width": 0.2,
+    "v2_width": 0.25,
+    "measured_cells": 3,
+    "v2_coverage90_measured": 0.67,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "1/1",
+    "v2_best": "1/1",
+    "v1_contrast_coverage90": 0.33,
+    "v2_contrast_coverage90": 0.33,
+    "contrast_pairs": 3,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.028,
+    "min_ess": 137,
+    "secs": 3709
+   },
+   {
+    "experiment": "6331-cli38-xl",
+    "iclass": "panel",
+    "kind": "page-level",
+    "cells": 44,
+    "v1_coverage90": 1.0,
+    "v2_coverage90": 1.0,
+    "v1_mae": 0.08,
+    "v2_mae": 0.08,
+    "v1_width": 0.47,
+    "v2_width": 0.52,
+    "measured_cells": 44,
+    "v2_coverage90_measured": 1.0,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "4/14",
+    "v2_best": "4/14",
+    "v1_contrast_coverage90": 0.85,
+    "v2_contrast_coverage90": 0.83,
+    "contrast_pairs": 48,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.023,
+    "min_ess": 133,
+    "secs": 4505
+   },
+   {
+    "experiment": "6545-r1s1",
+    "iclass": "packet",
+    "kind": "cell-mean",
+    "cells": 30,
+    "v1_coverage90": null,
+    "v2_coverage90": 0.9,
+    "v1_mae": null,
+    "v2_mae": 0.23,
+    "v1_width": null,
+    "v2_width": 0.86,
+    "measured_cells": 24,
+    "v2_coverage90_measured": 0.88,
+    "pooled_cells": 6,
+    "v2_coverage90_pooled": 1.0,
+    "v1_best": null,
+    "v2_best": "6/6",
+    "v1_contrast_coverage90": null,
+    "v2_contrast_coverage90": 0.91,
+    "contrast_pairs": 54,
+    "nrm_coverage90": 0.9,
+    "nrm_mae": 0.22,
+    "divergences": 0,
+    "max_rhat": 1.013,
+    "min_ess": 203,
+    "secs": 2885
+   },
+   {
+    "experiment": "6545-r1s2",
+    "iclass": "packet",
+    "kind": "cell-mean",
+    "cells": 45,
+    "v1_coverage90": null,
+    "v2_coverage90": 0.87,
+    "v1_mae": null,
+    "v2_mae": 0.19,
+    "v1_width": null,
+    "v2_width": 0.74,
+    "measured_cells": 45,
+    "v2_coverage90_measured": 0.87,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": null,
+    "v2_best": "9/9",
+    "v1_contrast_coverage90": null,
+    "v2_contrast_coverage90": 0.84,
+    "contrast_pairs": 63,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.019,
+    "min_ess": 262,
+    "secs": 2785
+   },
+   {
+    "experiment": "6545-r2s1",
+    "iclass": "packet",
+    "kind": "cell-mean",
+    "cells": 16,
+    "v1_coverage90": null,
+    "v2_coverage90": 0.94,
+    "v1_mae": null,
+    "v2_mae": 0.2,
+    "v1_width": null,
+    "v2_width": 0.8,
+    "measured_cells": 16,
+    "v2_coverage90_measured": 0.94,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": null,
+    "v2_best": "4/4",
+    "v1_contrast_coverage90": null,
+    "v2_contrast_coverage90": 0.8,
+    "contrast_pairs": 20,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.029,
+    "min_ess": 96,
+    "secs": 2726
+   },
+   {
+    "experiment": "6559-nah",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 2,
+    "v1_coverage90": null,
+    "v2_coverage90": 0.5,
+    "v1_mae": null,
+    "v2_mae": 0.73,
+    "v1_width": null,
+    "v2_width": 1.36,
+    "measured_cells": 0,
+    "v2_coverage90_measured": null,
+    "pooled_cells": 2,
+    "v2_coverage90_pooled": 0.5,
+    "v1_best": null,
+    "v2_best": "0/1",
+    "v1_contrast_coverage90": null,
+    "v2_contrast_coverage90": 1.0,
+    "contrast_pairs": 1,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.019,
+    "min_ess": 116,
+    "secs": 5206
+   },
+   {
+    "experiment": "6690-o1",
+    "iclass": "packet",
+    "kind": "cell-mean",
+    "cells": 5,
+    "v1_coverage90": null,
+    "v2_coverage90": 1.0,
+    "v1_mae": null,
+    "v2_mae": 0.28,
+    "v1_width": null,
+    "v2_width": 1.24,
+    "measured_cells": 5,
+    "v2_coverage90_measured": 1.0,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": null,
+    "v2_best": "0/0",
+    "v1_contrast_coverage90": null,
+    "v2_contrast_coverage90": null,
+    "contrast_pairs": 0,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.022,
+    "min_ess": 158,
+    "secs": 3651
+   },
+   {
+    "experiment": "xlref-t1",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 5,
+    "v1_coverage90": 1.0,
+    "v2_coverage90": 1.0,
+    "v1_mae": 0.1,
+    "v2_mae": 0.07,
+    "v1_width": 0.55,
+    "v2_width": 0.64,
+    "measured_cells": 5,
+    "v2_coverage90_measured": 1.0,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "1/1",
+    "v2_best": "1/1",
+    "v1_contrast_coverage90": 1.0,
+    "v2_contrast_coverage90": 1.0,
+    "contrast_pairs": 10,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.025,
+    "min_ess": 200,
+    "secs": 6001
+   },
+   {
+    "experiment": "xlref-t2",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 5,
+    "v1_coverage90": 0.8,
+    "v2_coverage90": 0.8,
+    "v1_mae": 0.2,
+    "v2_mae": 0.19,
+    "v1_width": 0.68,
+    "v2_width": 0.71,
+    "measured_cells": 5,
+    "v2_coverage90_measured": 0.8,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "1/1",
+    "v2_best": "1/1",
+    "v1_contrast_coverage90": 0.4,
+    "v2_contrast_coverage90": 0.5,
+    "contrast_pairs": 10,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.04,
+    "min_ess": 141,
+    "secs": 4982
+   },
+   {
+    "experiment": "xlref-t3",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 17,
+    "v1_coverage90": 0.94,
+    "v2_coverage90": 1.0,
+    "v1_mae": 0.13,
+    "v2_mae": 0.13,
+    "v1_width": 0.56,
+    "v2_width": 0.64,
+    "measured_cells": 17,
+    "v2_coverage90_measured": 1.0,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "5/5",
+    "v2_best": "5/5",
+    "v1_contrast_coverage90": 0.7,
+    "v2_contrast_coverage90": 0.7,
+    "contrast_pairs": 23,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.011,
+    "min_ess": 146,
+    "secs": 5054
+   },
+   {
+    "experiment": "xlref-t4",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 16,
+    "v1_coverage90": 0.56,
+    "v2_coverage90": 0.75,
+    "v1_mae": 0.28,
+    "v2_mae": 0.26,
+    "v1_width": 0.73,
+    "v2_width": 0.81,
+    "measured_cells": 16,
+    "v2_coverage90_measured": 0.75,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "4/4",
+    "v2_best": "4/4",
+    "v1_contrast_coverage90": 0.7,
+    "v2_contrast_coverage90": 0.7,
+    "contrast_pairs": 27,
+    "nrm_coverage90": 0.75,
+    "nrm_mae": 0.252,
+    "divergences": 0,
+    "max_rhat": 1.016,
+    "min_ess": 190,
+    "secs": 2275
+   },
+   {
+    "experiment": "xlref-t5",
+    "iclass": "packet",
+    "kind": "page-level",
+    "cells": 13,
+    "v1_coverage90": 1.0,
+    "v2_coverage90": 1.0,
+    "v1_mae": 0.14,
+    "v2_mae": 0.15,
+    "v1_width": 0.68,
+    "v2_width": 0.77,
+    "measured_cells": 13,
+    "v2_coverage90_measured": 1.0,
+    "pooled_cells": 0,
+    "v2_coverage90_pooled": null,
+    "v1_best": "3/3",
+    "v2_best": "3/3",
+    "v1_contrast_coverage90": 0.82,
+    "v2_contrast_coverage90": 0.77,
+    "contrast_pairs": 22,
+    "nrm_coverage90": null,
+    "nrm_mae": null,
+    "divergences": 0,
+    "max_rhat": 1.034,
+    "min_ess": 138,
+    "secs": 4273
+   }
+  ],
+  "skipped": [
+   "6182-claude-tib: not re-run in v2 (CPU cap); no new data in its language and no non-Claude judge; v1's coverage stands",
+   "6182-tib: not re-run in v2 (CPU cap); no new data in its language and no non-Claude judge; v1's coverage stands",
+   "6331-canon-ref: not re-run in v2 (CPU cap); no new data in its language and no non-Claude judge; v1's coverage stands",
+   "6331-cli38-tib113: not re-run in v2 (CPU cap); no new data in its language and no non-Claude judge; v1's coverage stands"
+  ],
+  "all": {
+   "cells": 403,
+   "coverage90": 0.92,
+   "coverage50": 0.59,
+   "mae": 0.165,
+   "width": 0.68
+  },
+  "v1_experiments": {
+   "cells": 305,
+   "coverage90": 0.92,
+   "coverage50": 0.63,
+   "mae": 0.147,
+   "width": 0.64
+  },
+  "new_experiments": {
+   "cells": 98,
+   "coverage90": 0.89,
+   "coverage50": 0.44,
+   "mae": 0.221,
+   "width": 0.82
+  },
+  "v1_on_v1_experiments": {
+   "cells": 330,
+   "v1_coverage90": 0.92,
+   "v0_coverage90": 0.9,
+   "v1_coverage50": 0.64,
+   "v1_mae": 0.143,
+   "v1_width": 0.6
+  },
+  "by_basis": {
+   "measured": {
+    "cells": 300,
+    "coverage90": 0.93,
+    "coverage50": 0.59,
+    "mae": 0.15,
+    "width": 0.65
+   },
+   "pooled": {
+    "cells": 103,
+    "coverage90": 0.87,
+    "coverage50": 0.57,
+    "mae": 0.208,
+    "width": 0.77
+   }
+  },
+  "by_instrument_class": {
+   "panel": {
+    "cells": 243,
+    "coverage90": 0.93,
+    "coverage50": 0.65,
+    "mae": 0.139,
+    "width": 0.61
+   },
+   "packet": {
+    "cells": 160,
+    "coverage90": 0.9,
+    "coverage50": 0.49,
+    "mae": 0.204,
+    "width": 0.8
+   },
+   "canon-ref": {
+    "cells": 0,
+    "coverage90": null,
+    "coverage50": null,
+    "mae": null,
+    "width": null
+   }
+  },
+  "by_judge_family": {
+   "claude": {
+    "cells": 363,
+    "coverage90": 0.92,
+    "coverage50": 0.6,
+    "mae": 0.154,
+    "width": 0.65
+   },
+   "gemini": {
+    "cells": 40,
+    "coverage90": 0.85,
+    "coverage50": 0.45,
+    "mae": 0.263,
+    "width": 0.94
+   }
+  },
+  "by_arm_maker": {
+   "claude": {
+    "cells": 73,
+    "coverage90": 0.81,
+    "coverage50": 0.62,
+    "mae": 0.22,
+    "width": 0.65
+   },
+   "gemini": {
+    "cells": 330,
+    "coverage90": 0.94,
+    "coverage50": 0.58,
+    "mae": 0.153,
+    "width": 0.69
+   }
+  },
+  "best_match": "66/80",
+  "contrast": {
+   "pairs": 990,
+   "coverage90": 0.885,
+   "cross_maker_pairs": 261,
+   "cross_maker_coverage90": 0.851,
+   "sign_right_when_obs_gap_ge_0_1": "753/814"
+  },
+  "max_pred": 5.0,
+  "misses": [
+   {
+    "language": "ar",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 24,
+    "n": 48,
+    "observed": 3.521,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 2.774,
+    "lo": 2.332,
+    "hi": 3.25,
+    "q25": 2.583,
+    "q75": 2.958,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "de",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 22,
+    "n": 44,
+    "observed": 4.295,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 3.314,
+    "lo": 2.818,
+    "hi": 3.795,
+    "q25": 3.114,
+    "q75": 3.523,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "es",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 6,
+    "n": 12,
+    "observed": 4.083,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 3.429,
+    "lo": 2.917,
+    "hi": 4.0,
+    "q25": 3.229,
+    "q75": 3.667,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "fr",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 14,
+    "n": 28,
+    "observed": 4.571,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 3.567,
+    "lo": 3.036,
+    "hi": 4.071,
+    "q25": 3.357,
+    "q75": 3.786,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "grc",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 69,
+    "n": 137,
+    "observed": 3.124,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 2.443,
+    "lo": 2.0,
+    "hi": 2.898,
+    "q25": 2.263,
+    "q75": 2.628,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "it",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 10,
+    "n": 20,
+    "observed": 3.95,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 3.126,
+    "lo": 2.6,
+    "hi": 3.65,
+    "q25": 2.9,
+    "q75": 3.35,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "la",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 71,
+    "n": 142,
+    "observed": 3.852,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 2.925,
+    "lo": 2.415,
+    "hi": 3.423,
+    "q25": 2.738,
+    "q75": 3.127,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "lzh",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 25,
+    "n": 50,
+    "observed": 3.16,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 2.573,
+    "lo": 2.079,
+    "hi": 3.08,
+    "q25": 2.36,
+    "q75": 2.76,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "nl",
+    "model": "claude-haiku-4.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 7,
+    "n": 14,
+    "observed": 3.714,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 2.889,
+    "lo": 2.357,
+    "hi": 3.429,
+    "q25": 2.643,
+    "q75": 3.143,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "nl",
+    "model": "gemini-3.8-flash",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 7,
+    "n": 14,
+    "observed": 4.929,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 4.626,
+    "lo": 4.286,
+    "hi": 4.857,
+    "q25": 4.5,
+    "q75": 4.786,
+    "experiment": "6182-claude-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3.1-flash-lite",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 24,
+    "n": 32,
+    "observed": 4.156,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 3.777,
+    "lo": 3.469,
+    "hi": 4.062,
+    "q25": 3.656,
+    "q75": 3.906,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "arc",
+    "model": "gemini-3.5-flash-lite",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 5,
+    "n": 5,
+    "observed": 2.2,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 2.872,
+    "lo": 2.4,
+    "hi": 3.4,
+    "q25": 2.6,
+    "q75": 3.0,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 23,
+    "n": 60,
+    "observed": 4.0,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 3.672,
+    "lo": 3.367,
+    "hi": 3.951,
+    "q25": 3.567,
+    "q75": 3.783,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3-flash-preview",
+    "route": "stored",
+    "judge": "claude-opus-5.5",
+    "pages": 23,
+    "n": 30,
+    "observed": 4.1,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 3.711,
+    "lo": 3.4,
+    "hi": 4.002,
+    "q25": 3.6,
+    "q75": 3.833,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3.7-flash",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 23,
+    "n": 30,
+    "observed": 4.267,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 3.891,
+    "lo": 3.533,
+    "hi": 4.2,
+    "q25": 3.767,
+    "q75": 4.033,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "fr",
+    "model": "gemini-3.5-flash-lite",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 14,
+    "n": 17,
+    "observed": 4.412,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 4.751,
+    "lo": 4.471,
+    "hi": 4.941,
+    "q25": 4.647,
+    "q75": 4.824,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "lzh",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 25,
+    "n": 60,
+    "observed": 4.183,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 3.896,
+    "lo": 3.6,
+    "hi": 4.167,
+    "q25": 3.783,
+    "q75": 4.017,
+    "experiment": "6182-xl",
+    "iclass": "panel"
+   },
+   {
+    "language": "bo",
+    "model": "gemini-3-flash-preview",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 58,
+    "n": 116,
+    "observed": 4.267,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 4.483,
+    "lo": 4.31,
+    "hi": 4.629,
+    "q25": 4.422,
+    "q75": 4.552,
+    "experiment": "6331-cli38-tib58",
+    "iclass": "panel"
+   },
+   {
+    "language": "fa",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "arm": "OPUS",
+    "judge": "gemini-3.1-pro",
+    "pages": 23,
+    "n": 23,
+    "observed": 4.217,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.588,
+    "lo": 4.304,
+    "hi": 4.828,
+    "q25": 4.478,
+    "q75": 4.696,
+    "experiment": "6545-r1s1",
+    "iclass": "packet"
+   },
+   {
+    "language": "sa",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38",
+    "judge": "claude-opus-5.5",
+    "pages": 30,
+    "n": 30,
+    "observed": 3.833,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.265,
+    "lo": 3.867,
+    "hi": 4.633,
+    "q25": 4.1,
+    "q75": 4.433,
+    "experiment": "6545-r1s1",
+    "iclass": "packet"
+   },
+   {
+    "language": "sa",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38",
+    "judge": "claude-fable-5.1",
+    "pages": 18,
+    "n": 18,
+    "observed": 3.667,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.149,
+    "lo": 3.722,
+    "hi": 4.556,
+    "q25": 4.0,
+    "q75": 4.333,
+    "experiment": "6545-r1s1",
+    "iclass": "packet"
+   },
+   {
+    "language": "he",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38",
+    "judge": "claude-opus-5.5",
+    "pages": 29,
+    "n": 29,
+    "observed": 4.207,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.552,
+    "lo": 4.241,
+    "hi": 4.793,
+    "q25": 4.448,
+    "q75": 4.655,
+    "experiment": "6545-r1s2",
+    "iclass": "packet"
+   },
+   {
+    "language": "he",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38S",
+    "judge": "claude-opus-5.5",
+    "pages": 29,
+    "n": 29,
+    "observed": 4.172,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.55,
+    "lo": 4.274,
+    "hi": 4.793,
+    "q25": 4.448,
+    "q75": 4.655,
+    "experiment": "6545-r1s2",
+    "iclass": "packet"
+   },
+   {
+    "language": "he",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "arm": "OPUS",
+    "judge": "claude-opus-5.5",
+    "pages": 29,
+    "n": 29,
+    "observed": 4.552,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.781,
+    "lo": 4.621,
+    "hi": 4.897,
+    "q25": 4.724,
+    "q75": 4.862,
+    "experiment": "6545-r1s2",
+    "iclass": "packet"
+   },
+   {
+    "language": "he",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38",
+    "judge": "gemini-3.1-pro",
+    "pages": 29,
+    "n": 29,
+    "observed": 3.724,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.386,
+    "lo": 4.0,
+    "hi": 4.724,
+    "q25": 4.241,
+    "q75": 4.552,
+    "experiment": "6545-r1s2",
+    "iclass": "packet"
+   },
+   {
+    "language": "he",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38S",
+    "judge": "gemini-3.1-pro",
+    "pages": 29,
+    "n": 29,
+    "observed": 3.966,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.379,
+    "lo": 4.0,
+    "hi": 4.69,
+    "q25": 4.241,
+    "q75": 4.526,
+    "experiment": "6545-r1s2",
+    "iclass": "packet"
+   },
+   {
+    "language": "he",
+    "model": "gemini-3.8-flash",
+    "route": "cli",
+    "arm": "C38S2",
+    "judge": "gemini-3.1-pro",
+    "pages": 29,
+    "n": 29,
+    "observed": 3.966,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 4.386,
+    "lo": 4.0,
+    "hi": 4.724,
+    "q25": 4.241,
+    "q75": 4.552,
+    "experiment": "6545-r1s2",
+    "iclass": "packet"
+   },
+   {
+    "language": "sa",
+    "model": "gemini-3-flash-preview",
+    "route": "stored",
+    "arm": "FP",
+    "judge": "gemini-3.1-pro",
+    "pages": 25,
+    "n": 25,
+    "observed": 3.04,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "cell-mean",
+    "pred": 3.635,
+    "lo": 3.2,
+    "hi": 4.08,
+    "q25": 3.44,
+    "q75": 3.84,
+    "experiment": "6545-r2s1",
+    "iclass": "packet"
+   },
+   {
+    "language": "nah",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "judge": "gemini-3.8-flash-high",
+    "pages": 30,
+    "n": 60,
+    "observed": 3.583,
+    "model_seen": true,
+    "basis": "pooled",
+    "kind": "page-level",
+    "pred": 4.682,
+    "lo": 3.983,
+    "hi": 5.0,
+    "q25": 4.55,
+    "q75": 4.933,
+    "experiment": "6559-nah",
+    "iclass": "packet"
+   },
+   {
+    "language": "grc",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 10,
+    "n": 10,
+    "observed": 4.0,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 4.564,
+    "lo": 4.3,
+    "hi": 4.8,
+    "q25": 4.5,
+    "q75": 4.7,
+    "experiment": "xlref-t2",
+    "iclass": "packet"
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3-flash-preview",
+    "route": "stored",
+    "judge": "claude-opus-5.5",
+    "pages": 7,
+    "n": 14,
+    "observed": 3.643,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 4.134,
+    "lo": 3.711,
+    "hi": 4.504,
+    "q25": 4.0,
+    "q75": 4.286,
+    "experiment": "xlref-t4",
+    "iclass": "packet"
+   },
+   {
+    "language": "ar",
+    "model": "gemini-3.1-flash-lite",
+    "route": "stored",
+    "judge": "claude-opus-5.5",
+    "pages": 13,
+    "n": 26,
+    "observed": 3.423,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 3.976,
+    "lo": 3.538,
+    "hi": 4.385,
+    "q25": 3.808,
+    "q75": 4.154,
+    "experiment": "xlref-t4",
+    "iclass": "packet"
+   },
+   {
+    "language": "fa",
+    "model": "claude-opus-5.5",
+    "route": "api",
+    "judge": "claude-opus-5.5",
+    "pages": 5,
+    "n": 10,
+    "observed": 5.0,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 4.519,
+    "lo": 4.1,
+    "hi": 4.9,
+    "q25": 4.4,
+    "q75": 4.7,
+    "experiment": "xlref-t4",
+    "iclass": "packet"
+   },
+   {
+    "language": "fa",
+    "model": "gemini-3.1-flash-lite",
+    "route": "stored",
+    "judge": "claude-opus-5.5",
+    "pages": 8,
+    "n": 16,
+    "observed": 2.688,
+    "model_seen": true,
+    "basis": "measured",
+    "kind": "page-level",
+    "pred": 3.221,
+    "lo": 2.75,
+    "hi": 3.75,
+    "q25": 3.0,
+    "q75": 3.438,
+    "experiment": "xlref-t4",
+    "iclass": "packet"
+   }
+  ]
+ },
+ "xlref_t4": [
+  {
+   "language": "ar",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "observed": 4.857,
+   "v1": [
+    4.847,
+    4.571,
+    5.0
+   ],
+   "v2_judge_only": [
+    4.808,
+    4.5,
+    5.0
+   ],
+   "v2": [
+    4.807,
+    4.5,
+    5.0
+   ]
+  },
+  {
+   "language": "ar",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "observed": 3.726,
+   "v1": [
+    4.111,
+    3.774,
+    4.419
+   ],
+   "v2_judge_only": [
+    4.073,
+    3.726,
+    4.435
+   ],
+   "v2": [
+    4.082,
+    3.677,
+    4.452
+   ]
+  },
+  {
+   "language": "ar",
+   "model": "gemini-3-flash-preview",
+   "route": "stored",
+   "observed": 3.643,
+   "v1": [
+    4.159,
+    3.786,
+    4.5
+   ],
+   "v2_judge_only": [
+    4.119,
+    3.714,
+    4.5
+   ],
+   "v2": [
+    4.134,
+    3.711,
+    4.504
+   ]
+  },
+  {
+   "language": "ar",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "observed": 3.6,
+   "v1": [
+    3.939,
+    3.592,
+    4.267
+   ],
+   "v2_judge_only": [
+    3.894,
+    3.517,
+    4.267
+   ],
+   "v2": [
+    3.907,
+    3.508,
+    4.3
+   ]
+  },
+  {
+   "language": "ar",
+   "model": "gemini-3.1-flash-lite",
+   "route": "stored",
+   "observed": 3.423,
+   "v1": [
+    4.005,
+    3.615,
+    4.348
+   ],
+   "v2_judge_only": [
+    3.957,
+    3.538,
+    4.348
+   ],
+   "v2": [
+    3.976,
+    3.538,
+    4.385
+   ]
+  },
+  {
+   "language": "arc",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "observed": 2.875,
+   "v1": [
+    3.002,
+    2.562,
+    3.438
+   ],
+   "v2_judge_only": [
+    2.957,
+    2.5,
+    3.438
+   ],
+   "v2": [
+    2.977,
+    2.5,
+    3.438
+   ]
+  },
+  {
+   "language": "arc",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "observed": 2.767,
+   "v1": [
+    2.749,
+    2.333,
+    3.167
+   ],
+   "v2_judge_only": [
+    2.711,
+    2.298,
+    3.2
+   ],
+   "v2": [
+    2.72,
+    2.267,
+    3.2
+   ]
+  },
+  {
+   "language": "fa",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "observed": 5.0,
+   "v1": [
+    4.466,
+    4.0,
+    4.9
+   ],
+   "v2_judge_only": [
+    4.573,
+    4.1,
+    4.9
+   ],
+   "v2": [
+    4.519,
+    4.1,
+    4.9
+   ]
+  },
+  {
+   "language": "fa",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "observed": 3.318,
+   "v1": [
+    3.77,
+    3.386,
+    4.114
+   ],
+   "v2_judge_only": [
+    3.697,
+    3.295,
+    4.114
+   ],
+   "v2": [
+    3.718,
+    3.295,
+    4.136
+   ]
+  },
+  {
+   "language": "fa",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "observed": 2.778,
+   "v1": [
+    3.189,
+    2.806,
+    3.556
+   ],
+   "v2_judge_only": [
+    3.143,
+    2.722,
+    3.556
+   ],
+   "v2": [
+    3.164,
+    2.722,
+    3.612
+   ]
+  },
+  {
+   "language": "fa",
+   "model": "gemini-3.1-flash-lite",
+   "route": "stored",
+   "observed": 2.688,
+   "v1": [
+    3.249,
+    2.812,
+    3.688
+   ],
+   "v2_judge_only": [
+    3.194,
+    2.75,
+    3.688
+   ],
+   "v2": [
+    3.221,
+    2.75,
+    3.75
+   ]
+  },
+  {
+   "language": "he",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "observed": 4.429,
+   "v1": [
+    4.447,
+    4.071,
+    4.714
+   ],
+   "v2_judge_only": [
+    4.379,
+    4.071,
+    4.643
+   ],
+   "v2": [
+    4.365,
+    4.071,
+    4.643
+   ]
+  },
+  {
+   "language": "he",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "observed": 3.636,
+   "v1": [
+    3.653,
+    3.318,
+    3.97
+   ],
+   "v2_judge_only": [
+    3.607,
+    3.242,
+    3.97
+   ],
+   "v2": [
+    3.618,
+    3.227,
+    3.985
+   ]
+  },
+  {
+   "language": "he",
+   "model": "gemini-3-flash-preview",
+   "route": "stored",
+   "observed": 3.75,
+   "v1": [
+    3.941,
+    3.562,
+    4.25
+   ],
+   "v2_judge_only": [
+    3.895,
+    3.5,
+    4.25
+   ],
+   "v2": [
+    3.905,
+    3.5,
+    4.312
+   ]
+  },
+  {
+   "language": "he",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "observed": 3.712,
+   "v1": [
+    3.919,
+    3.576,
+    4.242
+   ],
+   "v2_judge_only": [
+    3.87,
+    3.5,
+    4.258
+   ],
+   "v2": [
+    3.879,
+    3.47,
+    4.258
+   ]
+  },
+  {
+   "language": "he",
+   "model": "gemini-3.1-flash-lite",
+   "route": "stored",
+   "observed": 3.857,
+   "v1": [
+    3.79,
+    3.357,
+    4.214
+   ],
+   "v2_judge_only": [
+    3.728,
+    3.286,
+    4.143
+   ],
+   "v2": [
+    3.742,
+    3.286,
+    4.214
+   ]
+  }
+ ],
+ "judge_terms": {
+  "points_per_logit": [
+   0.171,
+   0.188,
+   0.203
+  ],
+  "judge_offset_points": {
+   "claude-opus-5.5": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "claude-sonnet-5.5": [
+    -0.105,
+    -0.032,
+    0.039
+   ],
+   "claude-fable-5.1": [
+    -0.131,
+    -0.077,
+    -0.024
+   ],
+   "gemini-3.1-pro": [
+    -0.235,
+    -0.074,
+    0.137
+   ],
+   "gemini-3.8-flash-high": [
+    -0.298,
+    -0.019,
+    0.259
+   ]
+  },
+  "gemini_judge_x_arm_family_points": {
+   "claude-haiku": [
+    -0.301,
+    0.005,
+    0.321
+   ],
+   "claude-opus": [
+    -0.33,
+    -0.094,
+    0.059
+   ],
+   "claude-sonnet": [
+    -0.306,
+    0.006,
+    0.351
+   ],
+   "gemini-flash": [
+    -0.299,
+    -0.088,
+    0.068
+   ],
+   "gemini-lite": [
+    -0.334,
+    0.007,
+    0.368
+   ],
+   "gemini-pro": [
+    -0.023,
+    0.15,
+    0.404
+   ]
+  },
+  "tau_jf_logit": [
+   0.332,
+   0.912,
+   1.82
+  ],
+  "tau_jfl_logit": [
+   0.077,
+   0.397,
+   0.812
+  ],
+  "tau_rdm_logit": {
+   "panel": [
+    0.031,
+    0.238,
+    0.588
+   ],
+   "packet": [
+    0.209,
+    0.568,
+    0.953
+   ],
+   "canon-ref": [
+    0.022,
+    0.25,
+    0.796
+   ]
+  },
+  "round_x_gemini_maker_points": {
+   "5606-ab": [
+    -0.045,
+    0.094,
+    0.228
+   ],
+   "r6182a": [
+    -0.032,
+    0.016,
+    0.088
+   ],
+   "r6182c": [
+    -0.03,
+    0.017,
+    0.087
+   ],
+   "r6182ct": [
+    -0.015,
+    0.041,
+    0.141
+   ],
+   "r6182t": [
+    -0.03,
+    0.018,
+    0.106
+   ],
+   "r6331c": [
+    -0.081,
+    -0.01,
+    0.039
+   ],
+   "r6331t113": [
+    -0.044,
+    0.005,
+    0.088
+   ],
+   "r6331t58": [
+    -0.11,
+    -0.031,
+    0.025
+   ],
+   "r6331xl": [
+    -0.053,
+    0.0,
+    0.061
+   ],
+   "r6545r1s1": [
+    -0.184,
+    -0.071,
+    0.039
+   ],
+   "r6545r1s2": [
+    -0.199,
+    -0.092,
+    0.017
+   ],
+   "r6545r2s1": [
+    -0.227,
+    -0.106,
+    0.006
+   ],
+   "r6559nah": [
+    -0.089,
+    0.069,
+    0.282
+   ],
+   "r6690": [
+    -0.192,
+    0.002,
+    0.192
+   ],
+   "xlref-t1": [
+    -0.141,
+    -0.036,
+    0.07
+   ],
+   "xlref-t2": [
+    -0.101,
+    0.008,
+    0.153
+   ],
+   "xlref-t3": [
+    -0.142,
+    -0.035,
+    0.062
+   ],
+   "xlref-t4": [
+    -0.278,
+    -0.145,
+    -0.02
+   ],
+   "xlref-t5": [
+    -0.069,
+    0.036,
+    0.135
+   ]
+  },
+  "round_effect_points": {
+   "5606-ab": [
+    -0.044,
+    0.06,
+    0.216
+   ],
+   "r6182a": [
+    -0.02,
+    0.02,
+    0.095
+   ],
+   "r6182c": [
+    -0.019,
+    0.022,
+    0.103
+   ],
+   "r6182ct": [
+    -0.033,
+    0.016,
+    0.108
+   ],
+   "r6182t": [
+    -0.044,
+    0.006,
+    0.085
+   ],
+   "r6331c": [
+    -0.107,
+    -0.01,
+    0.061
+   ],
+   "r6331t113": [
+    -0.057,
+    0.003,
+    0.079
+   ],
+   "r6331t58": [
+    -0.135,
+    -0.031,
+    0.026
+   ],
+   "r6331xl": [
+    -0.05,
+    0.0,
+    0.065
+   ],
+   "r6545r1s1": [
+    -0.189,
+    -0.074,
+    0.013
+   ],
+   "r6545r1s2": [
+    -0.156,
+    -0.048,
+    0.035
+   ],
+   "r6545r2s1": [
+    -0.172,
+    -0.053,
+    0.039
+   ],
+   "r6559nah": [
+    -0.208,
+    -0.015,
+    0.107
+   ],
+   "r6690": [
+    -0.115,
+    0.013,
+    0.188
+   ],
+   "xlref-t1": [
+    -0.111,
+    -0.006,
+    0.089
+   ],
+   "xlref-t2": [
+    -0.225,
+    -0.062,
+    0.028
+   ],
+   "xlref-t3": [
+    -0.111,
+    -0.006,
+    0.093
+   ],
+   "xlref-t4": [
+    -0.077,
+    0.026,
+    0.153
+   ],
+   "xlref-t5": [
+    -0.047,
+    0.044,
+    0.153
+   ]
+  },
+  "self_preference_points": {
+   "ar": [
+    -0.33,
+    -0.069,
+    0.211
+   ],
+   "arc": [
+    -0.384,
+    -0.029,
+    0.313
+   ],
+   "bo": [
+    -0.229,
+    0.001,
+    0.23
+   ],
+   "de": [
+    -0.219,
+    -0.062,
+    0.066
+   ],
+   "es": [
+    -0.259,
+    -0.072,
+    0.092
+   ],
+   "fa": [
+    -0.274,
+    -0.105,
+    0.066
+   ],
+   "fr": [
+    -0.222,
+    -0.067,
+    0.061
+   ],
+   "grc": [
+    -0.213,
+    -0.018,
+    0.195
+   ],
+   "he": [
+    -0.336,
+    -0.132,
+    0.044
+   ],
+   "it": [
+    -0.273,
+    -0.068,
+    0.117
+   ],
+   "la": [
+    -0.279,
+    -0.053,
+    0.176
+   ],
+   "lzh": [
+    -0.16,
+    0.01,
+    0.22
+   ],
+   "nah": [
+    -0.107,
+    0.15,
+    0.576
+   ],
+   "nl": [
+    -0.283,
+    -0.073,
+    0.138
+   ],
+   "pi": [
+    -0.313,
+    -0.106,
+    0.107
+   ],
+   "sa": [
+    -0.269,
+    -0.116,
+    0.029
+   ]
+  }
+ },
+ "what_we_know": [
+  {
+   "language": "ar",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.84,
+   "lo": 3.63,
+   "hi": 4.03,
+   "p_best": 0.0,
+   "pages": 27,
+   "script_family_pages": 62,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "ar",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.12,
+   "lo": 3.93,
+   "hi": 4.29,
+   "p_best": 0.0,
+   "pages": 27,
+   "script_family_pages": 62,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "ar",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.49,
+   "lo": 4.33,
+   "hi": 4.62,
+   "p_best": 0.0,
+   "pages": 24,
+   "script_family_pages": 58,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "ar",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.36,
+   "lo": 4.16,
+   "hi": 4.54,
+   "p_best": 0.0,
+   "pages": 24,
+   "script_family_pages": 58,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "ar",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.48,
+   "lo": 4.23,
+   "hi": 4.69,
+   "p_best": 0.0,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "ar",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.3,
+   "lo": 4.1,
+   "hi": 4.49,
+   "p_best": 0.0,
+   "pages": 24,
+   "script_family_pages": 58,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "ar",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.81,
+   "lo": 4.69,
+   "hi": 4.9,
+   "p_best": 1.0,
+   "pages": 7,
+   "script_family_pages": 47,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.17,
+   "lo": 2.73,
+   "hi": 3.6,
+   "p_best": 0.0,
+   "pages": 5,
+   "script_family_pages": 62,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 3.5,
+   "lo": 3.08,
+   "hi": 3.92,
+   "p_best": 0.0,
+   "pages": 5,
+   "script_family_pages": 62,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 3.86,
+   "lo": 3.45,
+   "hi": 4.24,
+   "p_best": 0.0,
+   "pages": 5,
+   "script_family_pages": 58,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 3.77,
+   "lo": 3.31,
+   "hi": 4.21,
+   "p_best": 0.0,
+   "pages": 5,
+   "script_family_pages": 58,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 3.91,
+   "lo": 3.41,
+   "hi": 4.37,
+   "p_best": 0.0,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 3.67,
+   "lo": 3.22,
+   "hi": 4.08,
+   "p_best": 0.0,
+   "pages": 5,
+   "script_family_pages": 58,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "arc",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.4,
+   "lo": 4.02,
+   "hi": 4.72,
+   "p_best": 1.0,
+   "pages": 1,
+   "script_family_pages": 47,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.92,
+   "lo": 3.64,
+   "hi": 4.18,
+   "p_best": 0.0,
+   "pages": 171,
+   "script_family_pages": 171,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.37,
+   "lo": 4.14,
+   "hi": 4.58,
+   "p_best": 0.0,
+   "pages": 171,
+   "script_family_pages": 171,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.67,
+   "lo": 4.51,
+   "hi": 4.81,
+   "p_best": 0.06,
+   "pages": 171,
+   "script_family_pages": 171,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.45,
+   "lo": 4.22,
+   "hi": 4.65,
+   "p_best": 0.0,
+   "pages": 171,
+   "script_family_pages": 171,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.54,
+   "lo": 4.28,
+   "hi": 4.76,
+   "p_best": 0.02,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.32,
+   "lo": 4.08,
+   "hi": 4.54,
+   "p_best": 0.0,
+   "pages": 171,
+   "script_family_pages": 171,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "bo",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.74,
+   "lo": 4.59,
+   "hi": 4.85,
+   "p_best": 0.91,
+   "pages": 171,
+   "script_family_pages": 171,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 4.29,
+   "lo": 4.1,
+   "hi": 4.47,
+   "p_best": 0.0,
+   "pages": 22,
+   "script_family_pages": 59,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.61,
+   "lo": 4.46,
+   "hi": 4.74,
+   "p_best": 0.0,
+   "pages": 22,
+   "script_family_pages": 59,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.81,
+   "lo": 4.72,
+   "hi": 4.89,
+   "p_best": 0.0,
+   "pages": 22,
+   "script_family_pages": 59,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.78,
+   "lo": 4.65,
+   "hi": 4.89,
+   "p_best": 0.0,
+   "pages": 22,
+   "script_family_pages": 59,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.83,
+   "lo": 4.69,
+   "hi": 4.93,
+   "p_best": 0.02,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.64,
+   "lo": 4.49,
+   "hi": 4.78,
+   "p_best": 0.0,
+   "pages": 22,
+   "script_family_pages": 59,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "de",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.95,
+   "lo": 4.88,
+   "hi": 4.98,
+   "p_best": 0.98,
+   "pages": 7,
+   "script_family_pages": 20,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 4.34,
+   "lo": 4.06,
+   "hi": 4.59,
+   "p_best": 0.0,
+   "pages": 6,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.53,
+   "lo": 4.27,
+   "hi": 4.75,
+   "p_best": 0.0,
+   "pages": 6,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.76,
+   "lo": 4.59,
+   "hi": 4.89,
+   "p_best": 0.0,
+   "pages": 6,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.75,
+   "lo": 4.56,
+   "hi": 4.9,
+   "p_best": 0.0,
+   "pages": 6,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.81,
+   "lo": 4.6,
+   "hi": 4.93,
+   "p_best": 0.02,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.58,
+   "lo": 4.32,
+   "hi": 4.79,
+   "p_best": 0.0,
+   "pages": 6,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "es",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.93,
+   "lo": 4.84,
+   "hi": 4.99,
+   "p_best": 0.98,
+   "pages": 2,
+   "script_family_pages": 20,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.17,
+   "lo": 2.95,
+   "hi": 3.37,
+   "p_best": 0.0,
+   "pages": 24,
+   "script_family_pages": 24,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 3.83,
+   "lo": 3.63,
+   "hi": 4.03,
+   "p_best": 0.0,
+   "pages": 24,
+   "script_family_pages": 24,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.19,
+   "lo": 4.01,
+   "hi": 4.37,
+   "p_best": 0.0,
+   "pages": 23,
+   "script_family_pages": 23,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.03,
+   "lo": 3.8,
+   "hi": 4.25,
+   "p_best": 0.0,
+   "pages": 23,
+   "script_family_pages": 23,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.17,
+   "lo": 3.94,
+   "hi": 4.41,
+   "p_best": 0.0,
+   "pages": 23,
+   "script_family_pages": 23,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 3.73,
+   "lo": 3.5,
+   "hi": 3.96,
+   "p_best": 0.0,
+   "pages": 23,
+   "script_family_pages": 23,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fa",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.71,
+   "lo": 4.57,
+   "hi": 4.83,
+   "p_best": 1.0,
+   "pages": 32,
+   "script_family_pages": 32,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 4.62,
+   "lo": 4.45,
+   "hi": 4.77,
+   "p_best": 0.0,
+   "pages": 14,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.63,
+   "lo": 4.47,
+   "hi": 4.78,
+   "p_best": 0.0,
+   "pages": 14,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.82,
+   "lo": 4.71,
+   "hi": 4.9,
+   "p_best": 0.0,
+   "pages": 14,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.81,
+   "lo": 4.66,
+   "hi": 4.91,
+   "p_best": 0.0,
+   "pages": 14,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.86,
+   "lo": 4.7,
+   "hi": 4.95,
+   "p_best": 0.01,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.69,
+   "lo": 4.51,
+   "hi": 4.83,
+   "p_best": 0.0,
+   "pages": 14,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "fr",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.97,
+   "lo": 4.92,
+   "hi": 4.99,
+   "p_best": 0.99,
+   "pages": 5,
+   "script_family_pages": 20,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.53,
+   "lo": 3.38,
+   "hi": 3.68,
+   "p_best": 0.0,
+   "pages": 75,
+   "script_family_pages": 146,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 3.86,
+   "lo": 3.72,
+   "hi": 3.99,
+   "p_best": 0.0,
+   "pages": 75,
+   "script_family_pages": 146,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.26,
+   "lo": 4.13,
+   "hi": 4.37,
+   "p_best": 0.0,
+   "pages": 69,
+   "script_family_pages": 140,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.12,
+   "lo": 3.96,
+   "hi": 4.26,
+   "p_best": 0.0,
+   "pages": 69,
+   "script_family_pages": 140,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.24,
+   "lo": 4.0,
+   "hi": 4.47,
+   "p_best": 0.01,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.09,
+   "lo": 3.93,
+   "hi": 4.23,
+   "p_best": 0.0,
+   "pages": 69,
+   "script_family_pages": 140,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "grc",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.57,
+   "lo": 4.43,
+   "hi": 4.7,
+   "p_best": 0.99,
+   "pages": 42,
+   "script_family_pages": 62,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.89,
+   "lo": 3.69,
+   "hi": 4.08,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 62,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.28,
+   "lo": 4.1,
+   "hi": 4.43,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 62,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.54,
+   "lo": 4.4,
+   "hi": 4.67,
+   "p_best": 0.0,
+   "pages": 29,
+   "script_family_pages": 58,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.41,
+   "lo": 4.21,
+   "hi": 4.59,
+   "p_best": 0.0,
+   "pages": 29,
+   "script_family_pages": 58,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.51,
+   "lo": 4.25,
+   "hi": 4.71,
+   "p_best": 0.01,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.27,
+   "lo": 4.07,
+   "hi": 4.44,
+   "p_best": 0.0,
+   "pages": 29,
+   "script_family_pages": 58,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "he",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.78,
+   "lo": 4.67,
+   "hi": 4.88,
+   "p_best": 0.99,
+   "pages": 39,
+   "script_family_pages": 47,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 4.17,
+   "lo": 3.89,
+   "hi": 4.42,
+   "p_best": 0.0,
+   "pages": 10,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.44,
+   "lo": 4.2,
+   "hi": 4.64,
+   "p_best": 0.0,
+   "pages": 10,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.71,
+   "lo": 4.53,
+   "hi": 4.85,
+   "p_best": 0.0,
+   "pages": 10,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.68,
+   "lo": 4.47,
+   "hi": 4.85,
+   "p_best": 0.0,
+   "pages": 10,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.75,
+   "lo": 4.53,
+   "hi": 4.9,
+   "p_best": 0.02,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.49,
+   "lo": 4.23,
+   "hi": 4.7,
+   "p_best": 0.0,
+   "pages": 10,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "it",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.91,
+   "lo": 4.8,
+   "hi": 4.97,
+   "p_best": 0.98,
+   "pages": 4,
+   "script_family_pages": 20,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 4.12,
+   "lo": 3.99,
+   "hi": 4.24,
+   "p_best": 0.0,
+   "pages": 71,
+   "script_family_pages": 146,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.31,
+   "lo": 4.19,
+   "hi": 4.43,
+   "p_best": 0.0,
+   "pages": 71,
+   "script_family_pages": 146,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.62,
+   "lo": 4.52,
+   "hi": 4.71,
+   "p_best": 0.0,
+   "pages": 71,
+   "script_family_pages": 140,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.52,
+   "lo": 4.38,
+   "hi": 4.64,
+   "p_best": 0.0,
+   "pages": 71,
+   "script_family_pages": 140,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.61,
+   "lo": 4.43,
+   "hi": 4.77,
+   "p_best": 0.01,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.48,
+   "lo": 4.35,
+   "hi": 4.6,
+   "p_best": 0.0,
+   "pages": 71,
+   "script_family_pages": 140,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "la",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.83,
+   "lo": 4.74,
+   "hi": 4.9,
+   "p_best": 0.99,
+   "pages": 20,
+   "script_family_pages": 62,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.53,
+   "lo": 3.37,
+   "hi": 3.7,
+   "p_best": 0.0,
+   "pages": 25,
+   "script_family_pages": 25,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.02,
+   "lo": 3.88,
+   "hi": 4.17,
+   "p_best": 0.0,
+   "pages": 25,
+   "script_family_pages": 25,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.35,
+   "lo": 4.23,
+   "hi": 4.48,
+   "p_best": 0.0,
+   "pages": 100,
+   "script_family_pages": 100,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.28,
+   "lo": 4.08,
+   "hi": 4.46,
+   "p_best": 0.0,
+   "pages": 25,
+   "script_family_pages": 25,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.39,
+   "lo": 4.11,
+   "hi": 4.63,
+   "p_best": 0.0,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.22,
+   "lo": 4.1,
+   "hi": 4.36,
+   "p_best": 0.0,
+   "pages": 100,
+   "script_family_pages": 100,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "lzh",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.79,
+   "lo": 4.69,
+   "hi": 4.87,
+   "p_best": 1.0,
+   "pages": 34,
+   "script_family_pages": 34,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "nah",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.08,
+   "lo": 2.29,
+   "hi": 3.84,
+   "p_best": 0.0,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": true
+  },
+  {
+   "language": "nah",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 3.69,
+   "lo": 3.01,
+   "hi": 4.31,
+   "p_best": 0.0,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "nah",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.09,
+   "lo": 3.49,
+   "hi": 4.62,
+   "p_best": 0.43,
+   "pages": 30,
+   "script_family_pages": 30,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "nah",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 3.76,
+   "lo": 3.0,
+   "hi": 4.44,
+   "p_best": 0.01,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": true
+  },
+  {
+   "language": "nah",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 3.89,
+   "lo": 3.14,
+   "hi": 4.55,
+   "p_best": 0.14,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": true
+  },
+  {
+   "language": "nah",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 3.59,
+   "lo": 2.82,
+   "hi": 4.33,
+   "p_best": 0.02,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": true
+  },
+  {
+   "language": "nah",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.08,
+   "lo": 3.49,
+   "hi": 4.6,
+   "p_best": 0.4,
+   "pages": 30,
+   "script_family_pages": 30,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 4.1,
+   "lo": 3.79,
+   "hi": 4.4,
+   "p_best": 0.0,
+   "pages": 7,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.3,
+   "lo": 4.0,
+   "hi": 4.57,
+   "p_best": 0.0,
+   "pages": 7,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.63,
+   "lo": 4.42,
+   "hi": 4.81,
+   "p_best": 0.0,
+   "pages": 7,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.55,
+   "lo": 4.27,
+   "hi": 4.79,
+   "p_best": 0.0,
+   "pages": 7,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.64,
+   "lo": 4.36,
+   "hi": 4.86,
+   "p_best": 0.02,
+   "pages": 0,
+   "script_family_pages": 0,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.28,
+   "lo": 3.97,
+   "hi": 4.57,
+   "p_best": 0.0,
+   "pages": 7,
+   "script_family_pages": 59,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "nl",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.87,
+   "lo": 4.72,
+   "hi": 4.96,
+   "p_best": 0.98,
+   "pages": 2,
+   "script_family_pages": 20,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.8,
+   "lo": 3.61,
+   "hi": 3.98,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 60,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 4.19,
+   "lo": 4.02,
+   "hi": 4.34,
+   "p_best": 0.0,
+   "pages": 65,
+   "script_family_pages": 107,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.57,
+   "lo": 4.44,
+   "hi": 4.69,
+   "p_best": 0.0,
+   "pages": 70,
+   "script_family_pages": 123,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.62,
+   "lo": 4.48,
+   "hi": 4.75,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 60,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.69,
+   "lo": 4.52,
+   "hi": 4.84,
+   "p_best": 0.0,
+   "pages": 0,
+   "script_family_pages": 30,
+   "basis": "pooled",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.5,
+   "lo": 4.35,
+   "hi": 4.63,
+   "p_best": 0.0,
+   "pages": 70,
+   "script_family_pages": 123,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "pi",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.91,
+   "lo": 4.85,
+   "hi": 4.96,
+   "p_best": 1.0,
+   "pages": 6,
+   "script_family_pages": 45,
+   "basis": "thin",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "Flash-Lite 3.1",
+   "model": "gemini-3.1-flash-lite",
+   "route": "api",
+   "est": 3.45,
+   "lo": 3.28,
+   "hi": 3.63,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 60,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "3 Flash",
+   "model": "gemini-3-flash-preview",
+   "route": "api",
+   "est": 3.85,
+   "lo": 3.7,
+   "hi": 4.01,
+   "p_best": 0.0,
+   "pages": 42,
+   "script_family_pages": 107,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "3.8 Flash CLI",
+   "model": "gemini-3.8-flash",
+   "route": "cli",
+   "est": 4.28,
+   "lo": 4.15,
+   "hi": 4.42,
+   "p_best": 0.0,
+   "pages": 53,
+   "script_family_pages": 123,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "3.1 Pro t128",
+   "model": "gemini-3.1-pro-t128",
+   "route": "api",
+   "est": 4.28,
+   "lo": 4.12,
+   "hi": 4.44,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 60,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "3.1 Pro high CLI",
+   "model": "gemini-3.1-pro-high",
+   "route": "cli",
+   "est": 4.39,
+   "lo": 4.21,
+   "hi": 4.57,
+   "p_best": 0.0,
+   "pages": 30,
+   "script_family_pages": 30,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "Sonnet 5.5",
+   "model": "claude-sonnet-5.5",
+   "route": "api",
+   "est": 4.0,
+   "lo": 3.84,
+   "hi": 4.16,
+   "p_best": 0.0,
+   "pages": 53,
+   "script_family_pages": 123,
+   "basis": "measured",
+   "untested_family": false
+  },
+  {
+   "language": "sa",
+   "engine": "Opus 5.5",
+   "model": "claude-opus-5.5",
+   "route": "api",
+   "est": 4.77,
+   "lo": 4.66,
+   "hi": 4.86,
+   "p_best": 1.0,
+   "pages": 39,
+   "script_family_pages": 45,
+   "basis": "measured",
+   "untested_family": false
+  }
+ ],
+ "fit": {
+  "diagnostics": {
+   "chains": 3,
+   "draws_per_chain": 400,
+   "divergences": 0,
+   "max_rhat": 1.062,
+   "max_rhat_at": "tau_fl[0]",
+   "min_ess": 115,
+   "min_ess_at": "tau_ml[0]",
+   "hyper": {
+    "cut": {
+     "rhat": [
+      1.002,
+      1.002,
+      1.002,
+      1.002
+     ],
+     "ess": [
+      582,
+      575,
+      572,
+      573
+     ]
+    },
+    "tau_fam": {
+     "rhat": [
+      1.005
+     ],
+     "ess": [
+      566
+     ]
+    },
+    "tau_fl": {
+     "rhat": [
+      1.062
+     ],
+     "ess": [
+      129
+     ]
+    },
+    "tau_fs": {
+     "rhat": [
+      1.009
+     ],
+     "ess": [
+      378
+     ]
+    },
+    "tau_jf": {
+     "rhat": [
+      1.001
+     ],
+     "ess": [
+      1173
+     ]
+    },
+    "tau_jfl": {
+     "rhat": [
+      1.006
+     ],
+     "ess": [
+      514
+     ]
+    },
+    "tau_lang": {
+     "rhat": [
+      1.002
+     ],
+     "ess": [
+      573
+     ]
+    },
+    "tau_ml": {
+     "rhat": [
+      1.053
+     ],
+     "ess": [
+      115
+     ]
+    },
+    "tau_model": {
+     "rhat": [
+      1.005
+     ],
+     "ess": [
+      422
+     ]
+    },
+    "tau_p": {
+     "rhat": [
+      1.007
+     ],
+     "ess": [
+      231
+     ]
+    },
+    "tau_rdm": {
+     "rhat": [
+      1.002,
+      1.002,
+      1.0
+     ],
+     "ess": [
+      571,
+      632,
+      1558
+     ]
+    },
+    "tau_round": {
+     "rhat": [
+      1.005,
+      0.999,
+      1.0
+     ],
+     "ess": [
+      480,
+      388,
+      1055
+     ]
+    },
+    "tau_sf": {
+     "rhat": [
+      1.015
+     ],
+     "ess": [
+      389
+     ]
+    },
+    "tau_w": {
+     "rhat": [
+      1.005
+     ],
+     "ess": [
+      343
+     ]
+    }
+   }
+  },
+  "rows": 19391,
+  "summary_cells": 96
+ },
+ "loo_diagnostics": {
+  "fits": 17,
+  "divergences_total": 6,
+  "max_rhat": 1.04,
+  "min_ess": 91
+ }
+}

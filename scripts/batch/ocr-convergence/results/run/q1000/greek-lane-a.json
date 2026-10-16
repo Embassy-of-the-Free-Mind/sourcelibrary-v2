@@ -1,0 +1,168 @@
+{
+ "built_at": "2026-10-14T19:32:43.103Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 903,
+   "book_id": "6a0853c415c643eb1af50cbf",
+   "slug": "in-hoc-libro-haec-habentur-constantini-lascaris-byzantini-de-2",
+   "group": "greek",
+   "language": "Greek",
+   "views": 55,
+   "lane_block": null
+  },
+  {
+   "rank": 908,
+   "book_id": "6a3f024e97e91e1768f66d4b",
+   "slug": "musici-scriptores-graeci-aristoteles-euclides-nicomachus-jan",
+   "group": "greek",
+   "language": "Greek",
+   "views": 55,
+   "lane_block": null
+  },
+  {
+   "rank": 925,
+   "book_id": "69557474f63a7571091734e4",
+   "slug": "commentarius-in-platonis-timaeum-diadochus",
+   "group": "greek",
+   "language": "Greek/Latin",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 931,
+   "book_id": "69aec0e11f4011b58bb53c7b",
+   "slug": "historiae-byzantinae-scriptores-tres-trebizond",
+   "group": "greek",
+   "language": "Greek",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 939,
+   "book_id": "69b2ff82e5d6d64d8e196fab",
+   "slug": "opera-nyssa",
+   "group": "greek",
+   "language": "Greek",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 940,
+   "book_id": "69942f6fb2f6748db4ac0db5",
+   "slug": "pal-gr-39-confessor",
+   "group": "greek",
+   "language": "Greek",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 942,
+   "book_id": "69b21e0f94025df5d290b2a7",
+   "slug": "plutarchi-chaeronensis-moralia-vol-3-bernardakis-teubner-bernardakis",
+   "group": "greek",
+   "language": "Greek",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 943,
+   "book_id": "69b21e3194025df5d290b90a",
+   "slug": "plutarchi-chaeronensis-moralia-vol-6-bernardakis-teubner-bernardakis",
+   "group": "greek",
+   "language": "Greek",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 944,
+   "book_id": "5ddd6b40-5a26-4994-86ea-e2dfd4957597",
+   "slug": "pseudo-dionysius-opera-1516-areopagite",
+   "group": "greek",
+   "language": "Greek",
+   "views": 54,
+   "lane_block": null
+  },
+  {
+   "rank": 956,
+   "book_id": "699388e61075be7d32054f2f",
+   "slug": "aristotle-rhetoric-and-poetics-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 963,
+   "book_id": "69b00962c7a61612f0103bbc",
+   "slug": "claudii-galeni-opera-omnia-vol-13-ed",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 964,
+   "book_id": "69942a5a045dfc482ad76926",
+   "slug": "clemens-alexandrinus-iii-stromata-vii-viii-excerpta-quis-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 969,
+   "book_id": "69b2ffb05545150b61b491d9",
+   "slug": "fabulae-aesop",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 980,
+   "book_id": "69937716b0a84a5763962d53",
+   "slug": "luciani-samosatensis-opera-vol-1-lucian",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 983,
+   "book_id": "69b21cf8429e087c6f866456",
+   "slug": "novum-testamentum-greek-latin-2nd-froben-edition-erasmus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 986,
+   "book_id": "69938dd7d5a98fd66f42f463",
+   "slug": "orphica-abel-edition-with-proclus-hymns-hymn-to-isis-abel",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 988,
+   "book_id": "699438416879ff0184cb8300",
+   "slug": "patrologia-graeca-vol-40-evagrius-ponticus-migne",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  },
+  {
+   "rank": 998,
+   "book_id": "6952e4b477f38f6761bc7d4c",
+   "slug": "vetus-testamentum-graecum-septuagint-with-latin-translation-septuagint",
+   "group": "greek",
+   "language": "Greek",
+   "views": 53,
+   "lane_block": null
+  }
+ ]
+}

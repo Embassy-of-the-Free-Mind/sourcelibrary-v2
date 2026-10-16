@@ -1,0 +1,135 @@
+{
+ "all": {
+  "script": "rashi",
+  "n_pages": 58,
+  "n_works": 12,
+  "arms": {
+   "G4L": {
+    "n_scored": 56,
+    "accuracy": 0.8288,
+    "ci95": [
+     0.7963,
+     0.8567
+    ],
+    "median_cer": 0.1345,
+    "failures": {
+     "copy_filter": 2
+    },
+    "secs_median": 91.2,
+    "secs_iqr": [
+     57.4,
+     126.2
+    ],
+    "gate_denials": 20,
+    "pages_with_denials": 20
+   },
+   "C38L": {
+    "n_scored": 58,
+    "accuracy": 0.5762,
+    "ci95": [
+     0.5252,
+     0.6251
+    ],
+    "median_cer": 0.4264,
+    "failures": {},
+    "secs_median": 65.19999999999999,
+    "secs_iqr": [
+     33.2,
+     106.1
+    ],
+    "gate_denials": 28,
+    "pages_with_denials": 26
+   },
+   "OPUS": {
+    "n_scored": 58,
+    "accuracy": 0.7243,
+    "ci95": [
+     0.6449,
+     0.7958
+    ],
+    "median_cer": 0.1266,
+    "failures": {},
+    "secs_median": 51.5,
+    "secs_iqr": [
+     39.6,
+     77.6
+    ],
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   },
+   "PROD": {
+    "n_scored": 54,
+    "accuracy": 0.482,
+    "ci95": [
+     0.4192,
+     0.5455
+    ],
+    "median_cer": 0.6172,
+    "failures": {
+     "not_ocr": 3,
+     "empty": 1
+    },
+    "secs_median": null,
+    "secs_iqr": null,
+    "gate_denials": 0,
+    "pages_with_denials": 0
+   }
+  },
+  "paired": {
+   "C38L": {
+    "n": 56,
+    "wins": 55,
+    "losses": 1,
+    "ties": 0,
+    "median_delta": -0.2398,
+    "ci95": [
+     -0.3114,
+     -0.1436
+    ],
+    "mean_delta": -0.2493,
+    "sign_p": 0,
+    "verdict": "better"
+   },
+   "OPUS": {
+    "n": 56,
+    "wins": 30,
+    "losses": 26,
+    "ties": 0,
+    "median_delta": -0.0118,
+    "ci95": [
+     -0.024,
+     0.0057
+    ],
+    "mean_delta": -0.0981,
+    "sign_p": 0.6889,
+    "verdict": "same"
+   },
+   "PROD": {
+    "n": 52,
+    "wins": 51,
+    "losses": 1,
+    "ties": 0,
+    "median_delta": -0.3454,
+    "ci95": [
+     -0.4623,
+     -0.2417
+    ],
+    "mean_delta": -0.343,
+    "sign_p": 0,
+    "verdict": "better"
+   }
+  }
+ },
+ "dropped": [
+  {
+   "uid": "rashi|dde8b5-p2270",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "dropped": "reference 136 letters < 150"
+  },
+  {
+   "uid": "rashi|dde8b5-p2428",
+   "work": "Mikraot Gedolot, Torah (Vilna 1899)",
+   "dropped": "no read aligns (letter CER < 0.5 over >= 80 letters)"
+  }
+ ]
+}

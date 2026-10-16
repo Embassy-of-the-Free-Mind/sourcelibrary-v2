@@ -1,0 +1,712 @@
+[
+ {
+  "uid": "syriac-gt|jerusalem36-0008_SMMJ_00036__013",
+  "failure": null,
+  "why": null,
+  "secs": 60.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2760,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:01:57.171308+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0005_SMMJ_00036__010",
+  "failure": null,
+  "why": null,
+  "secs": 71.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 3035,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:02:08.048335+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0003_SMMJ_00036__008",
+  "failure": null,
+  "why": null,
+  "secs": 86.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2236,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:02:23.727751+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0009_SMMJ_00036__014",
+  "failure": null,
+  "why": null,
+  "secs": 69.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2132,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:03:06.623888+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0029_SMMJ_00036__034",
+  "failure": null,
+  "why": null,
+  "secs": 71.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2960,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:03:19.292489+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0030_SMMJ_00036__035",
+  "failure": null,
+  "why": null,
+  "secs": 60.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2885,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:03:24.669208+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0031_SMMJ_00036__036",
+  "failure": null,
+  "why": null,
+  "secs": 48.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 3544,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:03:55.511972+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0054_SMMJ_00036__059",
+  "failure": null,
+  "why": null,
+  "secs": 76.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2889,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:04:35.640568+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0086_SMMJ_00036__091",
+  "failure": null,
+  "why": null,
+  "secs": 97.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 3991,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:05:02.251450+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0088_SMMJ_00036__093",
+  "failure": null,
+  "why": null,
+  "secs": 87.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2548,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:05:22.599366+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0091_SMMJ_00036__096",
+  "failure": null,
+  "why": null,
+  "secs": 64.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 3005,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:05:39.957120+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0094_SMMJ_00036__099",
+  "failure": null,
+  "why": null,
+  "secs": 59.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 3484,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:06:01.578305+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0102_SMMJ_00036__107",
+  "failure": null,
+  "why": null,
+  "secs": 71.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 3882,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:06:34.422056+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0105_SMMJ_00036__110",
+  "failure": null,
+  "why": null,
+  "secs": 59.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2952,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:06:39.598851+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0129_SMMJ_00036__134",
+  "failure": null,
+  "why": null,
+  "secs": 70.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2816,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:07:11.819288+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0206_SMMJ_00036__211",
+  "failure": null,
+  "why": null,
+  "secs": 65,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 3609,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:07:44.691602+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0139_SMMJ_00036__144",
+  "failure": null,
+  "why": null,
+  "secs": 75.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2739,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:07:49.876281+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0211_SMMJ_00036__216",
+  "failure": null,
+  "why": null,
+  "secs": 58.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2776,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:08:09.966109+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0227_SMMJ_00036__232",
+  "failure": null,
+  "why": null,
+  "secs": 82.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 2305,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:09:07.268395+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0009_00000024",
+  "failure": "copy_filter",
+  "why": "CLI: blocked by Gemini's filters",
+  "secs": 60.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": "reply cut before <<<END>>>",
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1036,
+  "blocked": true,
+  "error": null,
+  "date": "2026-10-14T01:09:10.125708+00:00"
+ },
+ {
+  "uid": "syriac-gt|jerusalem36-0264_SMMJ_00036__269",
+  "failure": null,
+  "why": null,
+  "secs": 87.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 4297,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:09:17.828481+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0026_00000041",
+  "failure": null,
+  "why": null,
+  "secs": 32.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 840,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:09:39.892916+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0033_00000048",
+  "failure": null,
+  "why": null,
+  "secs": 27.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 860,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:09:45.507204+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0029_00000044",
+  "failure": null,
+  "why": null,
+  "secs": 52,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 2,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny",
+   "search_web:deny"
+  ],
+  "chars": 905,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:10:02.166533+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0082_00000097",
+  "failure": "copy_filter",
+  "why": "CLI: blocked by Gemini's filters",
+  "secs": 31.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": "reply cut before <<<END>>>",
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1339,
+  "blocked": true,
+  "error": null,
+  "date": "2026-10-14T01:10:16.886384+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0046_00000061",
+  "failure": null,
+  "why": null,
+  "secs": 38.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 978,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:10:18.505471+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0085_00000100",
+  "failure": null,
+  "why": null,
+  "secs": 34.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 960,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:10:36.344170+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0086_00000101",
+  "failure": null,
+  "why": null,
+  "secs": 38.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1355,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:10:55.331946+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0088_00000103",
+  "failure": null,
+  "why": null,
+  "secs": 36.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 927,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:10:55.394229+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0107_00000122",
+  "failure": "copy_filter",
+  "why": "CLI: blocked by Gemini's filters",
+  "secs": 36.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": "reply cut before <<<END>>>",
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1052,
+  "blocked": true,
+  "error": null,
+  "date": "2026-10-14T01:11:13.147603+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0127_00000142",
+  "failure": null,
+  "why": null,
+  "secs": 33.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 927,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:11:29.018157+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0133_00000148",
+  "failure": null,
+  "why": null,
+  "secs": 51.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 975,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:12:04.757562+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0157_00000172",
+  "failure": null,
+  "why": null,
+  "secs": 37.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 1079,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:12:06.709669+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0131_00000146",
+  "failure": null,
+  "why": null,
+  "secs": 74.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 939,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:12:09.806483+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0179_00000194",
+  "failure": null,
+  "why": null,
+  "secs": 34.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 981,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:12:40.942810+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0161_00000176",
+  "failure": null,
+  "why": null,
+  "secs": 41.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 870,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:12:45.887982+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0235_00000250",
+  "failure": null,
+  "why": null,
+  "secs": 41.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 939,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:12:51.756202+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0260_00000275",
+  "failure": null,
+  "why": null,
+  "secs": 48.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "run_command:deny"
+  ],
+  "chars": 1010,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:13:34.588824+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0261_00000276",
+  "failure": null,
+  "why": null,
+  "secs": 46.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1158,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:13:38.582210+00:00"
+ },
+ {
+  "uid": "syriac-gt|onb-syr1-0258_00000273",
+  "failure": null,
+  "why": null,
+  "secs": 80.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 1,
+  "gate_calls": [
+   "view_file",
+   "search_web:deny"
+  ],
+  "chars": 1055,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:14:01.094491+00:00"
+ }
+]

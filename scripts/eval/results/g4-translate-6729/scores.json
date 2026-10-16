@@ -1,0 +1,1993 @@
+{
+ "langs": [
+  "Persian",
+  "Sanskrit",
+  "Chinese",
+  "Greek",
+  "Hebrew"
+ ],
+ "arms": [
+  "G4L",
+  "OPUS",
+  "C38S"
+ ],
+ "judged_items": {
+  "opus": 308,
+  "g38": 310
+ },
+ "items": 310,
+ "failed_reads": {},
+ "failed_reads_detail": {},
+ "panels": {
+  "Persian": {
+   "pages": 23,
+   "by_judge": {
+    "opus": {
+     "arms": {
+      "G4L": {
+       "n": 23,
+       "fidelity": 4.087,
+       "ci_by_book": [
+        3.826,
+        4.326
+       ],
+       "reversals_per_100": 6.5,
+       "omission_per_100": 2.2
+      },
+      "OPUS": {
+       "n": 23,
+       "fidelity": 4.522,
+       "ci_by_book": [
+        4.239,
+        4.761
+       ],
+       "reversals_per_100": 4.3,
+       "omission_per_100": 4.3
+      },
+      "C38S": {
+       "n": 23,
+       "fidelity": 3.739,
+       "ci_by_book": [
+        3.413,
+        4.043
+       ],
+       "reversals_per_100": 17.4,
+       "omission_per_100": 8.7
+      }
+     },
+     "G4L-OPUS": {
+      "n": 23,
+      "mean": -0.435,
+      "ci_by_book": [
+       -0.652,
+       -0.196
+      ],
+      "wins": 2,
+      "losses": 14,
+      "ties": 7
+     },
+     "G4L-C38S": {
+      "n": 23,
+      "mean": 0.348,
+      "ci_by_book": [
+       0.087,
+       0.609
+      ],
+      "wins": 12,
+      "losses": 3,
+      "ties": 8
+     },
+     "OPUS-C38S": {
+      "n": 23,
+      "mean": 0.783,
+      "ci_by_book": [
+       0.478,
+       1.087
+      ],
+      "wins": 16,
+      "losses": 1,
+      "ties": 6
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 23,
+       "mean": -0.522
+      },
+      "ORD2": {
+       "n": 22,
+       "mean": -0.364
+      }
+     }
+    },
+    "g38": {
+     "arms": {
+      "G4L": {
+       "n": 23,
+       "fidelity": 4.217,
+       "ci_by_book": [
+        4.0,
+        4.435
+       ],
+       "reversals_per_100": 2.2,
+       "omission_per_100": 6.5
+      },
+      "OPUS": {
+       "n": 23,
+       "fidelity": 4.304,
+       "ci_by_book": [
+        3.978,
+        4.587
+       ],
+       "reversals_per_100": 4.3,
+       "omission_per_100": 4.3
+      },
+      "C38S": {
+       "n": 23,
+       "fidelity": 3.565,
+       "ci_by_book": [
+        3.283,
+        3.87
+       ],
+       "reversals_per_100": 23.9,
+       "omission_per_100": 19.6
+      }
+     },
+     "G4L-OPUS": {
+      "n": 23,
+      "mean": -0.087,
+      "ci_by_book": [
+       -0.37,
+       0.239
+      ],
+      "wins": 6,
+      "losses": 9,
+      "ties": 8
+     },
+     "G4L-C38S": {
+      "n": 23,
+      "mean": 0.652,
+      "ci_by_book": [
+       0.304,
+       0.978
+      ],
+      "wins": 16,
+      "losses": 4,
+      "ties": 3
+     },
+     "OPUS-C38S": {
+      "n": 23,
+      "mean": 0.739,
+      "ci_by_book": [
+       0.37,
+       1.087
+      ],
+      "wins": 16,
+      "losses": 4,
+      "ties": 3
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 23,
+       "mean": 0.043
+      },
+      "ORD2": {
+       "n": 23,
+       "mean": -0.217
+      }
+     }
+    }
+   }
+  },
+  "Sanskrit": {
+   "pages": 30,
+   "by_judge": {
+    "opus": {
+     "arms": {
+      "G4L": {
+       "n": 30,
+       "fidelity": 4.283,
+       "ci_by_book": [
+        4.05,
+        4.517
+       ],
+       "reversals_per_100": 6.7,
+       "omission_per_100": 3.3
+      },
+      "OPUS": {
+       "n": 30,
+       "fidelity": 4.667,
+       "ci_by_book": [
+        4.417,
+        4.867
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 3.3
+      },
+      "C38S": {
+       "n": 30,
+       "fidelity": 3.867,
+       "ci_by_book": [
+        3.667,
+        4.05
+       ],
+       "reversals_per_100": 6.7,
+       "omission_per_100": 20.0
+      }
+     },
+     "G4L-OPUS": {
+      "n": 30,
+      "mean": -0.383,
+      "ci_by_book": [
+       -0.6,
+       -0.167
+      ],
+      "wins": 2,
+      "losses": 15,
+      "ties": 13
+     },
+     "G4L-C38S": {
+      "n": 30,
+      "mean": 0.417,
+      "ci_by_book": [
+       0.2,
+       0.633
+      ],
+      "wins": 16,
+      "losses": 2,
+      "ties": 12
+     },
+     "OPUS-C38S": {
+      "n": 30,
+      "mean": 0.8,
+      "ci_by_book": [
+       0.5,
+       1.067
+      ],
+      "wins": 23,
+      "losses": 1,
+      "ties": 6
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 30,
+       "mean": -0.333
+      },
+      "ORD2": {
+       "n": 29,
+       "mean": -0.448
+      }
+     }
+    },
+    "g38": {
+     "arms": {
+      "G4L": {
+       "n": 30,
+       "fidelity": 4.45,
+       "ci_by_book": [
+        4.2,
+        4.667
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 3.3
+      },
+      "OPUS": {
+       "n": 30,
+       "fidelity": 4.45,
+       "ci_by_book": [
+        4.183,
+        4.683
+       ],
+       "reversals_per_100": 1.7,
+       "omission_per_100": 11.7
+      },
+      "C38S": {
+       "n": 30,
+       "fidelity": 4.083,
+       "ci_by_book": [
+        3.817,
+        4.333
+       ],
+       "reversals_per_100": 5.0,
+       "omission_per_100": 18.3
+      }
+     },
+     "G4L-OPUS": {
+      "n": 30,
+      "mean": 0.0,
+      "ci_by_book": [
+       -0.283,
+       0.267
+      ],
+      "wins": 10,
+      "losses": 7,
+      "ties": 13
+     },
+     "G4L-C38S": {
+      "n": 30,
+      "mean": 0.367,
+      "ci_by_book": [
+       0.033,
+       0.683
+      ],
+      "wins": 19,
+      "losses": 7,
+      "ties": 4
+     },
+     "OPUS-C38S": {
+      "n": 30,
+      "mean": 0.367,
+      "ci_by_book": [
+       -0.05,
+       0.783
+      ],
+      "wins": 15,
+      "losses": 7,
+      "ties": 8
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 30,
+       "mean": -0.067
+      },
+      "ORD2": {
+       "n": 30,
+       "mean": 0.067
+      }
+     }
+    }
+   }
+  },
+  "Chinese": {
+   "pages": 25,
+   "by_judge": {
+    "opus": {
+     "arms": {
+      "G4L": {
+       "n": 25,
+       "fidelity": 4.14,
+       "ci_by_book": [
+        3.94,
+        4.32
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 2.0
+      },
+      "OPUS": {
+       "n": 25,
+       "fidelity": 4.8,
+       "ci_by_book": [
+        4.66,
+        4.92
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 2.0
+      },
+      "C38S": {
+       "n": 25,
+       "fidelity": 4.1,
+       "ci_by_book": [
+        3.88,
+        4.34
+       ],
+       "reversals_per_100": 12.0,
+       "omission_per_100": 10.0
+      }
+     },
+     "G4L-OPUS": {
+      "n": 25,
+      "mean": -0.66,
+      "ci_by_book": [
+       -0.86,
+       -0.46
+      ],
+      "wins": 0,
+      "losses": 17,
+      "ties": 8
+     },
+     "G4L-C38S": {
+      "n": 25,
+      "mean": 0.04,
+      "ci_by_book": [
+       -0.22,
+       0.28
+      ],
+      "wins": 8,
+      "losses": 6,
+      "ties": 11
+     },
+     "OPUS-C38S": {
+      "n": 25,
+      "mean": 0.7,
+      "ci_by_book": [
+       0.46,
+       0.94
+      ],
+      "wins": 19,
+      "losses": 1,
+      "ties": 5
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 25,
+       "mean": -0.64
+      },
+      "ORD2": {
+       "n": 25,
+       "mean": -0.68
+      }
+     }
+    },
+    "g38": {
+     "arms": {
+      "G4L": {
+       "n": 25,
+       "fidelity": 4.34,
+       "ci_by_book": [
+        4.12,
+        4.56
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 2.0
+      },
+      "OPUS": {
+       "n": 25,
+       "fidelity": 4.72,
+       "ci_by_book": [
+        4.54,
+        4.88
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 6.0
+      },
+      "C38S": {
+       "n": 25,
+       "fidelity": 3.84,
+       "ci_by_book": [
+        3.56,
+        4.14
+       ],
+       "reversals_per_100": 20.0,
+       "omission_per_100": 12.0
+      }
+     },
+     "G4L-OPUS": {
+      "n": 25,
+      "mean": -0.38,
+      "ci_by_book": [
+       -0.64,
+       -0.12
+      ],
+      "wins": 3,
+      "losses": 11,
+      "ties": 11
+     },
+     "G4L-C38S": {
+      "n": 25,
+      "mean": 0.5,
+      "ci_by_book": [
+       0.16,
+       0.82
+      ],
+      "wins": 15,
+      "losses": 6,
+      "ties": 4
+     },
+     "OPUS-C38S": {
+      "n": 25,
+      "mean": 0.88,
+      "ci_by_book": [
+       0.56,
+       1.18
+      ],
+      "wins": 20,
+      "losses": 2,
+      "ties": 3
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 25,
+       "mean": -0.28
+      },
+      "ORD2": {
+       "n": 25,
+       "mean": -0.48
+      }
+     }
+    }
+   }
+  },
+  "Greek": {
+   "pages": 25,
+   "by_judge": {
+    "opus": {
+     "arms": {
+      "G4L": {
+       "n": 25,
+       "fidelity": 4.44,
+       "ci_by_book": [
+        4.26,
+        4.62
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 2.0
+      },
+      "OPUS": {
+       "n": 25,
+       "fidelity": 4.7,
+       "ci_by_book": [
+        4.52,
+        4.88
+       ],
+       "reversals_per_100": 2.0,
+       "omission_per_100": 4.0
+      },
+      "C38S": {
+       "n": 25,
+       "fidelity": 3.96,
+       "ci_by_book": [
+        3.62,
+        4.26
+       ],
+       "reversals_per_100": 12.0,
+       "omission_per_100": 26.0
+      }
+     },
+     "G4L-OPUS": {
+      "n": 25,
+      "mean": -0.26,
+      "ci_by_book": [
+       -0.48,
+       -0.04
+      ],
+      "wins": 4,
+      "losses": 12,
+      "ties": 9
+     },
+     "G4L-C38S": {
+      "n": 25,
+      "mean": 0.48,
+      "ci_by_book": [
+       0.24,
+       0.76
+      ],
+      "wins": 12,
+      "losses": 1,
+      "ties": 12
+     },
+     "OPUS-C38S": {
+      "n": 25,
+      "mean": 0.74,
+      "ci_by_book": [
+       0.48,
+       1.02
+      ],
+      "wins": 18,
+      "losses": 2,
+      "ties": 5
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 25,
+       "mean": -0.12
+      },
+      "ORD2": {
+       "n": 25,
+       "mean": -0.4
+      }
+     }
+    },
+    "g38": {
+     "arms": {
+      "G4L": {
+       "n": 25,
+       "fidelity": 4.42,
+       "ci_by_book": [
+        4.2,
+        4.62
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 4.0
+      },
+      "OPUS": {
+       "n": 25,
+       "fidelity": 4.58,
+       "ci_by_book": [
+        4.38,
+        4.76
+       ],
+       "reversals_per_100": 2.0,
+       "omission_per_100": 10.0
+      },
+      "C38S": {
+       "n": 25,
+       "fidelity": 3.72,
+       "ci_by_book": [
+        3.34,
+        4.08
+       ],
+       "reversals_per_100": 12.0,
+       "omission_per_100": 32.0
+      }
+     },
+     "G4L-OPUS": {
+      "n": 25,
+      "mean": -0.16,
+      "ci_by_book": [
+       -0.46,
+       0.12
+      ],
+      "wins": 7,
+      "losses": 10,
+      "ties": 8
+     },
+     "G4L-C38S": {
+      "n": 25,
+      "mean": 0.7,
+      "ci_by_book": [
+       0.42,
+       1.02
+      ],
+      "wins": 15,
+      "losses": 1,
+      "ties": 9
+     },
+     "OPUS-C38S": {
+      "n": 25,
+      "mean": 0.86,
+      "ci_by_book": [
+       0.46,
+       1.28
+      ],
+      "wins": 17,
+      "losses": 4,
+      "ties": 4
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 25,
+       "mean": -0.28
+      },
+      "ORD2": {
+       "n": 25,
+       "mean": -0.04
+      }
+     }
+    }
+   }
+  },
+  "Hebrew": {
+   "pages": 29,
+   "by_judge": {
+    "opus": {
+     "arms": {
+      "G4L": {
+       "n": 29,
+       "fidelity": 4.224,
+       "ci_by_book": [
+        3.983,
+        4.448
+       ],
+       "reversals_per_100": 3.4,
+       "omission_per_100": 5.2
+      },
+      "OPUS": {
+       "n": 29,
+       "fidelity": 4.552,
+       "ci_by_book": [
+        4.345,
+        4.724
+       ],
+       "reversals_per_100": 0.0,
+       "omission_per_100": 15.5
+      },
+      "C38S": {
+       "n": 29,
+       "fidelity": 4.086,
+       "ci_by_book": [
+        3.759,
+        4.379
+       ],
+       "reversals_per_100": 6.9,
+       "omission_per_100": 20.7
+      }
+     },
+     "G4L-OPUS": {
+      "n": 29,
+      "mean": -0.328,
+      "ci_by_book": [
+       -0.569,
+       -0.103
+      ],
+      "wins": 2,
+      "losses": 12,
+      "ties": 15
+     },
+     "G4L-C38S": {
+      "n": 29,
+      "mean": 0.138,
+      "ci_by_book": [
+       -0.103,
+       0.414
+      ],
+      "wins": 11,
+      "losses": 7,
+      "ties": 11
+     },
+     "OPUS-C38S": {
+      "n": 29,
+      "mean": 0.466,
+      "ci_by_book": [
+       0.241,
+       0.69
+      ],
+      "wins": 17,
+      "losses": 2,
+      "ties": 10
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 29,
+       "mean": -0.31
+      },
+      "ORD2": {
+       "n": 29,
+       "mean": -0.345
+      }
+     }
+    },
+    "g38": {
+     "arms": {
+      "G4L": {
+       "n": 29,
+       "fidelity": 4.345,
+       "ci_by_book": [
+        4.086,
+        4.586
+       ],
+       "reversals_per_100": 1.7,
+       "omission_per_100": 6.9
+      },
+      "OPUS": {
+       "n": 29,
+       "fidelity": 4.397,
+       "ci_by_book": [
+        4.103,
+        4.655
+       ],
+       "reversals_per_100": 5.2,
+       "omission_per_100": 17.2
+      },
+      "C38S": {
+       "n": 29,
+       "fidelity": 4.034,
+       "ci_by_book": [
+        3.724,
+        4.31
+       ],
+       "reversals_per_100": 10.3,
+       "omission_per_100": 13.8
+      }
+     },
+     "G4L-OPUS": {
+      "n": 29,
+      "mean": -0.052,
+      "ci_by_book": [
+       -0.414,
+       0.31
+      ],
+      "wins": 9,
+      "losses": 12,
+      "ties": 8
+     },
+     "G4L-C38S": {
+      "n": 29,
+      "mean": 0.31,
+      "ci_by_book": [
+       0.0,
+       0.638
+      ],
+      "wins": 12,
+      "losses": 7,
+      "ties": 10
+     },
+     "OPUS-C38S": {
+      "n": 29,
+      "mean": 0.362,
+      "ci_by_book": [
+       0.086,
+       0.655
+      ],
+      "wins": 12,
+      "losses": 4,
+      "ties": 13
+     },
+     "G4L-OPUS_by_order": {
+      "ORD1": {
+       "n": 29,
+       "mean": -0.069
+      },
+      "ORD2": {
+       "n": 29,
+       "mean": -0.034
+      }
+     }
+    }
+   }
+  }
+ },
+ "pooled": {
+  "opus": {
+   "G4L-OPUS": {
+    "n": 132,
+    "mean": -0.409,
+    "ci_by_book": [
+     -0.515,
+     -0.318
+    ],
+    "wins": 10,
+    "losses": 70,
+    "ties": 52
+   },
+   "G4L-C38S": {
+    "n": 132,
+    "mean": 0.284,
+    "ci_by_book": [
+     0.159,
+     0.398
+    ],
+    "wins": 59,
+    "losses": 19,
+    "ties": 54
+   },
+   "OPUS-C38S": {
+    "n": 132,
+    "mean": 0.693,
+    "ci_by_book": [
+     0.576,
+     0.814
+    ],
+    "wins": 93,
+    "losses": 7,
+    "ties": 32
+   },
+   "position": {
+    "mean_by_slot": {
+     "T1": 4.324,
+     "T2": 4.271,
+     "T3": 4.252
+    },
+    "first_minus_last_same_text": 0.073,
+    "n_first_last": 260,
+    "order_swing_mean_abs": 0.169,
+    "order_disagree_share": 0.169
+   }
+  },
+  "g38": {
+   "G4L-OPUS": {
+    "n": 132,
+    "mean": -0.129,
+    "ci_by_book": [
+     -0.277,
+     0.011
+    ],
+    "wins": 35,
+    "losses": 49,
+    "ties": 48
+   },
+   "G4L-C38S": {
+    "n": 132,
+    "mean": 0.492,
+    "ci_by_book": [
+     0.333,
+     0.64
+    ],
+    "wins": 77,
+    "losses": 25,
+    "ties": 30
+   },
+   "OPUS-C38S": {
+    "n": 132,
+    "mean": 0.621,
+    "ci_by_book": [
+     0.451,
+     0.795
+    ],
+    "wins": 80,
+    "losses": 21,
+    "ties": 31
+   },
+   "position": {
+    "mean_by_slot": {
+     "T1": 4.326,
+     "T2": 4.163,
+     "T3": 4.227
+    },
+    "first_minus_last_same_text": 0.098,
+    "n_first_last": 264,
+    "order_swing_mean_abs": 0.22,
+    "order_disagree_share": 0.217
+   }
+  }
+ },
+ "reliability": {
+  "Opus–Gemini 3.8 fidelity": {
+   "alpha": 0.6492858467842542,
+   "ci": [
+    0.5836961153091299,
+    0.7072149773322348
+   ],
+   "n_units": 786,
+   "level": "ordinal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 fidelity (ordinal): α 0.65 [0.58, 0.71], 786 page×arm×order units — not settled"
+  },
+  "Opus–Gemini 3.8 fidelity, Persian": {
+   "alpha": 0.7188848351101765,
+   "ci": [
+    0.5830870666653626,
+    0.8115358217105482
+   ],
+   "n_units": 135,
+   "level": "ordinal",
+   "verdict": "tentative",
+   "line": "Opus–Gemini 3.8 fidelity, Persian (ordinal): α 0.72 [0.58, 0.81], 135 page×arm×order units — tentative"
+  },
+  "Opus–Gemini 3.8 fidelity, Sanskrit": {
+   "alpha": 0.587582948047647,
+   "ci": [
+    0.4373682408951235,
+    0.7178714789683734
+   ],
+   "n_units": 177,
+   "level": "ordinal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 fidelity, Sanskrit (ordinal): α 0.59 [0.44, 0.72], 177 page×arm×order units — not settled"
+  },
+  "Opus–Gemini 3.8 fidelity, Chinese": {
+   "alpha": 0.6034091812291196,
+   "ci": [
+    0.4586624286156292,
+    0.7222315276821374
+   ],
+   "n_units": 150,
+   "level": "ordinal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 fidelity, Chinese (ordinal): α 0.60 [0.46, 0.72], 150 page×arm×order units — not settled"
+  },
+  "Opus–Gemini 3.8 fidelity, Greek": {
+   "alpha": 0.65366518524495,
+   "ci": [
+    0.4906017314559401,
+    0.78576548290119
+   ],
+   "n_units": 150,
+   "level": "ordinal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 fidelity, Greek (ordinal): α 0.65 [0.49, 0.79], 150 page×arm×order units — not settled"
+  },
+  "Opus–Gemini 3.8 fidelity, Hebrew": {
+   "alpha": 0.6673776206300672,
+   "ci": [
+    0.48733444481060406,
+    0.7967501198571549
+   ],
+   "n_units": 174,
+   "level": "ordinal",
+   "verdict": "tentative",
+   "line": "Opus–Gemini 3.8 fidelity, Hebrew (ordinal): α 0.67 [0.49, 0.80], 174 page×arm×order units — tentative"
+  },
+  "opus test–retest (two orders) fidelity": {
+   "alpha": 0.7976280898029401,
+   "ci": [
+    0.7342052198651727,
+    0.855477059629052
+   ],
+   "n_units": 390,
+   "level": "ordinal",
+   "verdict": "tentative",
+   "line": "opus test–retest (two orders) fidelity (ordinal): α 0.80 [0.73, 0.86], 390 page×arm units — tentative"
+  },
+  "g38 test–retest (two orders) fidelity": {
+   "alpha": 0.8045183838448496,
+   "ci": [
+    0.7531635728738614,
+    0.850171955232478
+   ],
+   "n_units": 396,
+   "level": "ordinal",
+   "verdict": "reliable",
+   "line": "g38 test–retest (two orders) fidelity (ordinal): α 0.80 [0.75, 0.85], 396 page×arm units — reliable"
+  },
+  "Opus–Gemini 3.8 reversal": {
+   "alpha": 0.6644091934016376,
+   "ci": [
+    0.48064110250715664,
+    0.8153062433360976
+   ],
+   "n_units": 786,
+   "level": "nominal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 reversal (nominal): α 0.66 [0.48, 0.82], 786 page×arm×order units — not settled"
+  },
+  "Opus–Gemini 3.8 reversal, Persian": {
+   "alpha": 0.713001066910532,
+   "ci": [
+    0.33809055118110243,
+    0.9435016111707841
+   ],
+   "n_units": 135,
+   "level": "nominal",
+   "verdict": "tentative",
+   "line": "Opus–Gemini 3.8 reversal, Persian (nominal): α 0.71 [0.34, 0.94], 135 page×arm×order units — tentative"
+  },
+  "Opus–Gemini 3.8 reversal, Sanskrit": {
+   "alpha": 0.3118908382066278,
+   "ci": [
+    -0.04204204204204198,
+    0.833306175655858
+   ],
+   "n_units": 177,
+   "level": "nominal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 reversal, Sanskrit (nominal): α 0.31 [−0.04, 0.83], 177 page×arm×order units — not settled"
+  },
+  "Opus–Gemini 3.8 reversal, Chinese": {
+   "alpha": 0.7367957746478873,
+   "ci": [
+    -0.010135135135135087,
+    1
+   ],
+   "n_units": 150,
+   "level": "nominal",
+   "verdict": "tentative",
+   "line": "Opus–Gemini 3.8 reversal, Chinese (nominal): α 0.74 [−0.01, 1.00], 150 page×arm×order units — tentative"
+  },
+  "Opus–Gemini 3.8 reversal, Greek": {
+   "alpha": 0.8506493506493507,
+   "ci": [
+    -0.003355704697986628,
+    1
+   ],
+   "n_units": 150,
+   "level": "nominal",
+   "verdict": "reliable",
+   "line": "Opus–Gemini 3.8 reversal, Greek (nominal): α 0.85 [−0.00, 1.00], 150 page×arm×order units — reliable"
+  },
+  "Opus–Gemini 3.8 reversal, Hebrew": {
+   "alpha": 0.6080572289156627,
+   "ci": [
+    -0.020588235294117574,
+    0.9032348020078081
+   ],
+   "n_units": 174,
+   "level": "nominal",
+   "verdict": "not settled",
+   "line": "Opus–Gemini 3.8 reversal, Hebrew (nominal): α 0.61 [−0.02, 0.90], 174 page×arm×order units — not settled"
+  },
+  "opus test–retest (two orders) reversal": {
+   "alpha": 0.8947297297297298,
+   "ci": [
+    0.7449710814448365,
+    1
+   ],
+   "n_units": 390,
+   "level": "nominal",
+   "verdict": "reliable",
+   "line": "opus test–retest (two orders) reversal (nominal): α 0.89 [0.74, 1.00], 390 page×arm units — reliable"
+  },
+  "g38 test–retest (two orders) reversal": {
+   "alpha": 0.8352818682135952,
+   "ci": [
+    0.6930777588080087,
+    0.9394132815890929
+   ],
+   "n_units": 396,
+   "level": "nominal",
+   "verdict": "reliable",
+   "line": "g38 test–retest (two orders) reversal (nominal): α 0.84 [0.69, 0.94], 396 page×arm units — reliable"
+  }
+ },
+ "plants": {
+  "opus": {
+   "n": 46,
+   "located": 43,
+   "by_kind": {
+    "clause": [
+     10,
+     12
+    ],
+    "name": [
+     3,
+     3
+    ],
+    "negation": [
+     24,
+     25
+    ],
+    "number": [
+     6,
+     6
+    ]
+   },
+   "rows": [
+    {
+     "item": "r1-002",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-014",
+     "lang": "Chinese",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-022",
+     "lang": "Persian",
+     "kind": "name",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-025",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": false,
+     "fid": 2.0
+    },
+    {
+     "item": "r1-028",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-033",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-036",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "located": false,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-040",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-045",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-053",
+     "lang": "Greek",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-070",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-073",
+     "lang": "Chinese",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-081",
+     "lang": "Persian",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-082",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-084",
+     "lang": "Greek",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-088",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-092",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-098",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-100",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-110",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-112",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-124",
+     "lang": "Persian",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-141",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-143",
+     "lang": "Hebrew",
+     "kind": "clause",
+     "located": false,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-147",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-162",
+     "lang": "Persian",
+     "kind": "name",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-170",
+     "lang": "Hebrew",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-181",
+     "lang": "Chinese",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-208",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 2.0
+    },
+    {
+     "item": "r1-210",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-219",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-221",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-222",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-229",
+     "lang": "Chinese",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-235",
+     "lang": "Hebrew",
+     "kind": "name",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-246",
+     "lang": "Persian",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-247",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-249",
+     "lang": "Persian",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-255",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-260",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-262",
+     "lang": "Persian",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-266",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-287",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-292",
+     "lang": "Persian",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-297",
+     "lang": "Greek",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-298",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    }
+   ]
+  },
+  "g38": {
+   "n": 46,
+   "located": 43,
+   "by_kind": {
+    "clause": [
+     10,
+     12
+    ],
+    "name": [
+     3,
+     3
+    ],
+    "negation": [
+     24,
+     25
+    ],
+    "number": [
+     6,
+     6
+    ]
+   },
+   "rows": [
+    {
+     "item": "r1-002",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-014",
+     "lang": "Chinese",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-022",
+     "lang": "Persian",
+     "kind": "name",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-025",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": false,
+     "fid": 2.0
+    },
+    {
+     "item": "r1-028",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-033",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-036",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "located": false,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-040",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-045",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-053",
+     "lang": "Greek",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-070",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-073",
+     "lang": "Chinese",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-081",
+     "lang": "Persian",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-082",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-084",
+     "lang": "Greek",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-088",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-092",
+     "lang": "Sanskrit",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-098",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-100",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-110",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-112",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-124",
+     "lang": "Persian",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-141",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-143",
+     "lang": "Hebrew",
+     "kind": "clause",
+     "located": false,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-147",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-162",
+     "lang": "Persian",
+     "kind": "name",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-170",
+     "lang": "Hebrew",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-181",
+     "lang": "Chinese",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-208",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 2.0
+    },
+    {
+     "item": "r1-210",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-219",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-221",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-222",
+     "lang": "Greek",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-229",
+     "lang": "Chinese",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-235",
+     "lang": "Hebrew",
+     "kind": "name",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-246",
+     "lang": "Persian",
+     "kind": "number",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-247",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-249",
+     "lang": "Persian",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-255",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-260",
+     "lang": "Sanskrit",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-262",
+     "lang": "Persian",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-266",
+     "lang": "Chinese",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-287",
+     "lang": "Sanskrit",
+     "kind": "clause",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-292",
+     "lang": "Persian",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    },
+    {
+     "item": "r1-297",
+     "lang": "Greek",
+     "kind": "clause",
+     "located": true,
+     "fid": 4.0
+    },
+    {
+     "item": "r1-298",
+     "lang": "Hebrew",
+     "kind": "negation",
+     "located": true,
+     "fid": 3.0
+    }
+   ]
+  }
+ },
+ "recitation": {
+  "Persian": {
+   "G4L": {
+    "n": 23,
+    "median": 7,
+    "max": 13,
+    "flagged_gt12": 1,
+    "flagged_pages": [
+     "6a09fcc5edaf0f8bef57ba2f_00022"
+    ]
+   },
+   "OPUS": {
+    "n": 23,
+    "median": 6,
+    "max": 10,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   },
+   "C38S": {
+    "n": 23,
+    "median": 5,
+    "max": 9,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   }
+  },
+  "Sanskrit": {
+   "G4L": {
+    "n": 30,
+    "median": 5,
+    "max": 10,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   },
+   "OPUS": {
+    "n": 30,
+    "median": 5,
+    "max": 10,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   },
+   "C38S": {
+    "n": 30,
+    "median": 5,
+    "max": 12,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   }
+  },
+  "Chinese": {
+   "G4L": {
+    "n": 25,
+    "median": 5,
+    "max": 10,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   },
+   "OPUS": {
+    "n": 25,
+    "median": 5,
+    "max": 11,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   },
+   "C38S": {
+    "n": 25,
+    "median": 5,
+    "max": 8,
+    "flagged_gt12": 0,
+    "flagged_pages": []
+   }
+  },
+  "Greek": {
+   "G4L": {
+    "n": 25,
+    "median": 9,
+    "max": 16,
+    "flagged_gt12": 6,
+    "flagged_pages": [
+     "6952e4b477f38f6761bc7d4c_00296",
+     "69938e35d5a98fd66f430c9c_00153",
+     "69942ffcbb14908bbd9a1123_00426",
+     "699437c36879ff0184cb7381_00164",
+     "69a956dc65ddd05bbcd3d160_00285",
+     "69afd4147e835c55c61b4e3d_00089"
+    ]
+   },
+   "OPUS": {
+    "n": 25,
+    "median": 8,
+    "max": 16,
+    "flagged_gt12": 4,
+    "flagged_pages": [
+     "6952e4b477f38f6761bc7d4c_00296",
+     "699437c36879ff0184cb7381_00164",
+     "69a956dc65ddd05bbcd3d160_00285",
+     "69bfccd88ab50eb88e8c69fd_00521"
+    ]
+   },
+   "C38S": {
+    "n": 25,
+    "median": 8,
+    "max": 15,
+    "flagged_gt12": 2,
+    "flagged_pages": [
+     "6952e4b477f38f6761bc7d4c_00296",
+     "69942ffcbb14908bbd9a1123_00426"
+    ]
+   }
+  },
+  "Hebrew": {
+   "G4L": {
+    "n": 29,
+    "median": 14,
+    "max": 80,
+    "flagged_gt12": 16,
+    "flagged_pages": [
+     "697711607e1d5a07ae945879_00073",
+     "69920bb1e0a548a13d884da7_00342",
+     "69b2f3b821208ea9dc278c50_00277",
+     "69b4cd44d5b6c3815e1a52de_00215",
+     "69b52593cced70d8e6d72941_00037",
+     "69b525b56be6046083030af0_00213",
+     "69c1ba9b8522835be8459ac5_00042",
+     "69c1bac18522835be845a172_00225",
+     "69c1bad18522835be845aabc_00251",
+     "69c1bae08522835be845b1f6_00067",
+     "69c1bb558522835be845f021_00073",
+     "69c1bc708522835be84634e8_00067",
+     "69c1bc788522835be84637be_00003",
+     "69c7e216295ea01b70c8d7d2_00039",
+     "69d5ad004dc55b8478dde8b5_01455",
+     "69e7518610ee9075bcdcde12_00071"
+    ]
+   },
+   "OPUS": {
+    "n": 29,
+    "median": 13,
+    "max": 44,
+    "flagged_gt12": 15,
+    "flagged_pages": [
+     "697711607e1d5a07ae945879_00073",
+     "69920bb1e0a548a13d884da7_00342",
+     "69b2f3b821208ea9dc278c50_00277",
+     "69b4cd44d5b6c3815e1a52de_00215",
+     "69b52593cced70d8e6d72941_00037",
+     "69b525b56be6046083030af0_00213",
+     "69c1bac18522835be845a172_00225",
+     "69c1bad18522835be845aabc_00251",
+     "69c1bae08522835be845b1f6_00067",
+     "69c1bb558522835be845f021_00073",
+     "69c1bbd28522835be8460a78_00032",
+     "69c1bc6b8522835be8463238_00270",
+     "69c1bc708522835be84634e8_00067",
+     "69c1bc788522835be84637be_00003",
+     "69d5ad004dc55b8478dde8b5_01455"
+    ]
+   },
+   "C38S": {
+    "n": 29,
+    "median": 12,
+    "max": 27,
+    "flagged_gt12": 14,
+    "flagged_pages": [
+     "697711607e1d5a07ae945879_00073",
+     "69920bb1e0a548a13d884da7_00342",
+     "69920befebe5b0fa6be5d569_00199",
+     "69b2f3b821208ea9dc278c50_00277",
+     "69b4cd44d5b6c3815e1a52de_00215",
+     "69b52593cced70d8e6d72941_00037",
+     "69b525b56be6046083030af0_00213",
+     "69c1bad18522835be845aabc_00251",
+     "69c1bae08522835be845b1f6_00067",
+     "69c1bb558522835be845f021_00073",
+     "69c1bbc68522835be8460774_00281",
+     "69c1bbd28522835be8460a78_00032",
+     "69c1bc708522835be84634e8_00067",
+     "69d5ad004dc55b8478dde8b5_01455"
+    ]
+   }
+  }
+ },
+ "rule": {
+  "Persian": {
+   "G4L_failed": 0,
+   "recitation_excess_by_count": false,
+   "verdict": "Opus stays"
+  },
+  "Sanskrit": {
+   "G4L_failed": 0,
+   "recitation_excess_by_count": false,
+   "verdict": "Opus stays"
+  },
+  "Chinese": {
+   "G4L_failed": 0,
+   "recitation_excess_by_count": false,
+   "verdict": "Opus stays"
+  },
+  "Greek": {
+   "G4L_failed": 0,
+   "recitation_excess_by_count": false,
+   "verdict": "Opus stays"
+  },
+  "Hebrew": {
+   "G4L_failed": 0,
+   "recitation_excess_by_count": false,
+   "verdict": "Opus stays"
+  }
+ }
+}

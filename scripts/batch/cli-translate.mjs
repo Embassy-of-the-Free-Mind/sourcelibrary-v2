@@ -21,6 +21,9 @@
  *          read that fails the health check. Writes through writePageTranslation (translate-core: snapshot to
  *          page_revisions, provenance block with api 'cli', the CLI name and version, model and prompt hash), leaves a
  *          sweep_log row per page and one book_events row per book, and recounts the book.
+ *          It also writes the reads of scripts/batch/claude-translate.mjs (Opus through the Claude CLI, #6559): their meta
+ *          says `cli: 'claude'`, so the engine block is recorded as 'anthropic', and the exact prompt each call sent is
+ *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused.
  *
  * THE CALL (#6523, the OCR runner's config, shared code in scripts/lib/agy-cli.mjs): the prompt asks for the translation
  * between <<<BEGIN>>> / <<<END>>> markers and nothing outside them; a PreToolUse hook in the call's empty workspace
@@ -41,7 +44,7 @@ import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
 import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
-import { geminiEngine, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
+import { geminiEngine, engineNameForCli, translationInput, notRecorded, codeVersion, host } from '../lib/write-provenance.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const CALL_SITE = 'scripts/batch/cli-translate.mjs';
@@ -140,14 +143,17 @@ for (const m of metas) {
   if (contentHash(page.ocr?.data || '') !== m.ocr_hash) { skip(m, 'OCR changed since the read'); continue; }
   const book = await db.collection('books').findOne({ id: page.book_id });
   const sentHash = m.prompt_sent_hash;
+  // A claude-translate.mjs read names the file holding the exact prompt its call sent: hash that, not the meta's word.
+  if (m.prompt_sent_file && contentHash(fs.readFileSync(path.join(OUT, m.prompt_sent_file), 'utf8')) !== sentHash) { skip(m, 'prompt sent does not match its recorded hash'); continue; }
   console.log(`  ${APPLY ? 'WRITE' : 'would write'} p.${page.page_number} (${page.translation?.model ?? 'no translation'} -> ${m.model}, ${text.length} chars)`);
   if (!APPLY) { tally.written++; continue; }
   // The door builds an engine block from `call`, which has no CLI field; build it here so the CLI's name and version are recorded.
   const engine = geminiEngine({
-    call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
+    // `cli: 'claude'` is Anthropic's model through the Claude CLI on the subscription (scripts/batch/claude-translate.mjs).
+    name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { id: m.prompt_ref?.id, name: m.prompt_ref?.name, version: m.prompt_ref?.version, hash: m.prompt_ref?.content_hash, sent_hash: sentHash, sent_chars: m.prompt_sent_chars },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, reason: REASON },
+    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
     input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.context }),
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });

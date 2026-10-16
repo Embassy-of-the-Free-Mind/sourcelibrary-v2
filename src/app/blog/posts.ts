@@ -78,6 +78,30 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'shipwrecks-and-buried-treasure',
+    title: 'Shipwrecks and Buried Treasure',
+    subtitle:
+      'Six chests of Charles V’s gold off Cadiz, a king’s revenues in the Baltic, an Armada ship in Tobermory Bay, a sexton’s pot of Saxon silver, digging money in Luoyang and a Tibetan guide that says where to dig.',
+    date: '16 October 2026',
+    readTime: '8 min read',
+    kind: 'tours',
+    image: '/blog/shipwrecks-and-buried-treasure/baixos-de-iudia.jpg',
+    imageAlt: 'Woodcut of the São Tiago broken on the Bassas da India shoals, 1598',
+    imagePosition: 'center 40%',
+  },
+  {
+    slug: 'trees-of-life',
+    title: 'Trees of Life Across the Traditions',
+    subtitle:
+      'Sefirot, Yggdrasil, the Prussian oak, the Assyrian palm, the Codex Laud, Eden and Jesse, the Waqwaq tree, the wayang kayon, the Tibetan refuge tree, the alchemists’ trees and the trees of logic, kinship and descent, in the plates and pages the library holds.',
+    date: '15 October 2026',
+    readTime: '14 min read',
+    kind: 'tours',
+    image: 'https://images.sourcelibrary.org/artwork/art-tree-of-life-fludd-1.jpg',
+    imageAlt: 'Robert Fludd’s inverted sefirotic tree, 1621: roots in a crowned light above, branches spreading below',
+    imagePosition: 'center 20%',
+  },
+  {
     slug: 'one-sentence-of-hermes',
     title: 'One Sentence of Hermes, Copied for Sixteen Hundred Years',
     subtitle:

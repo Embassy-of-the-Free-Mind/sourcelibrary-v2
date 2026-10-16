@@ -1,0 +1,2518 @@
+[
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1530c9-p47",
+  "failure": null,
+  "why": null,
+  "secs": 20.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 157,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:20:53.529102+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-156da2-p35",
+  "failure": null,
+  "why": null,
+  "secs": 48.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 142,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:21:22.136106+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-11ad17-p51",
+  "failure": null,
+  "why": null,
+  "secs": 61.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 135,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:21:34.941541+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-15ecc4-p70",
+  "failure": null,
+  "why": null,
+  "secs": 17.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 223,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:21:39.409336+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-158d4c-p41",
+  "failure": null,
+  "why": null,
+  "secs": 54.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 330,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:21:47.926188+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-162a08-p78",
+  "failure": null,
+  "why": null,
+  "secs": 22.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 392,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:21:57.787609+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1636e8-p48",
+  "failure": null,
+  "why": null,
+  "secs": 20.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 390,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:21:59.656164+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-165e45-p31",
+  "failure": null,
+  "why": null,
+  "secs": 17.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 433,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:22:05.792286+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1687bf-p98",
+  "failure": null,
+  "why": null,
+  "secs": 17.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 168,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:22:17.121201+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1670d3-p111",
+  "failure": null,
+  "why": null,
+  "secs": 20.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 182,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:22:18.407876+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1af91e-p34",
+  "failure": null,
+  "why": null,
+  "secs": 21.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 185,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:22:27.666563+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1b0128-p54",
+  "failure": null,
+  "why": null,
+  "secs": 18.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 158,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:22:35.938470+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1c037f-p153",
+  "failure": null,
+  "why": null,
+  "secs": 27.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 182,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:22:54.804602+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1bc725-p30",
+  "failure": null,
+  "why": null,
+  "secs": 45.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 280,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:23:03.659251+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1c9230-p58",
+  "failure": null,
+  "why": null,
+  "secs": 33.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 154,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:23:09.813030+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1c9345-p9",
+  "failure": null,
+  "why": null,
+  "secs": 23.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 174,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:23:18.299446+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1c98a7-p64",
+  "failure": null,
+  "why": null,
+  "secs": 17.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 142,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:23:21.225181+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1cf530-p73",
+  "failure": null,
+  "why": null,
+  "secs": 17.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 126,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:23:26.904196+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1da8f2-p64",
+  "failure": null,
+  "why": null,
+  "secs": 18.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 138,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:23:36.399310+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1e30b7-p31",
+  "failure": null,
+  "why": null,
+  "secs": 29.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 198,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:24:06.201513+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1dcb3f-p44",
+  "failure": null,
+  "why": null,
+  "secs": 58.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 179,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:24:25.091263+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1e37f3-p113",
+  "failure": null,
+  "why": null,
+  "secs": 25.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 166,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:24:31.315748+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1e6e3d-p90",
+  "failure": null,
+  "why": null,
+  "secs": 22.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 161,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:24:53.718828+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1e38be-p142",
+  "failure": null,
+  "why": null,
+  "secs": 35.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 113,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:00.703707+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1eb63b-p113",
+  "failure": null,
+  "why": null,
+  "secs": 23.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 176,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:17.362744+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1ed188-p29",
+  "failure": null,
+  "why": null,
+  "secs": 18.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 170,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:19.139363+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1dba23-p65",
+  "failure": null,
+  "why": null,
+  "secs": 122.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 153,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:24.070648+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1ed838-p30",
+  "failure": null,
+  "why": null,
+  "secs": 16.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 187,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:34.171285+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1edd9a-p18",
+  "failure": null,
+  "why": null,
+  "secs": 19.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 188,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:38.611076+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1eface-p53",
+  "failure": null,
+  "why": null,
+  "secs": 16,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 352,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:40.098835+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1f060d-p42",
+  "failure": null,
+  "why": null,
+  "secs": 18.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 155,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:52.825214+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1f58c4-p7",
+  "failure": null,
+  "why": null,
+  "secs": 16.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 148,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:56.644376+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1f233d-p118",
+  "failure": null,
+  "why": null,
+  "secs": 19.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 298,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:25:58.367577+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1f8ad7-p27",
+  "failure": null,
+  "why": null,
+  "secs": 15.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 287,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:08.524573+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1f9c80-p112",
+  "failure": null,
+  "why": null,
+  "secs": 16.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 176,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:15.101204+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1f98fe-p119",
+  "failure": null,
+  "why": null,
+  "secs": 25.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 162,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:22.110057+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1fea07-p49",
+  "failure": null,
+  "why": null,
+  "secs": 24.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 124,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:33.400608+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-1feade-p20",
+  "failure": null,
+  "why": null,
+  "secs": 19.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 212,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:34.224987+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-209a36-p35",
+  "failure": null,
+  "why": null,
+  "secs": 13.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 146,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:47.796307+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-2014eb-p50",
+  "failure": null,
+  "why": null,
+  "secs": 27.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 177,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:49.293572+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-201f9d-p24",
+  "failure": null,
+  "why": null,
+  "secs": 17.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 162,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:26:51.304273+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-20b4a4-p24",
+  "failure": null,
+  "why": null,
+  "secs": 15.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 154,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:03.163212+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-20f11b-p48",
+  "failure": null,
+  "why": null,
+  "secs": 17.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 146,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:08.840855+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-20d0ad-p34",
+  "failure": null,
+  "why": null,
+  "secs": 21.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 162,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:10.810275+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-21136b-p141",
+  "failure": null,
+  "why": null,
+  "secs": 17.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 187,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:21.117978+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-21b338-p25",
+  "failure": null,
+  "why": null,
+  "secs": 15.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 159,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:26.120395+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48261a-p85",
+  "failure": null,
+  "why": null,
+  "secs": 13.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 129,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:34.558015+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-485101-p171",
+  "failure": null,
+  "why": null,
+  "secs": 15.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 355,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:49.889052+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48361c-p30",
+  "failure": null,
+  "why": null,
+  "secs": 27.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 161,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:27:53.753581+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48625f-p23",
+  "failure": null,
+  "why": null,
+  "secs": 17.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 163,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:06.975149+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-213ec8-p79",
+  "failure": null,
+  "why": null,
+  "secs": 58.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 353,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:07.138498+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48671c-p105",
+  "failure": null,
+  "why": null,
+  "secs": 20.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:14.116982+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48798e-p89",
+  "failure": null,
+  "why": null,
+  "secs": 16.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 180,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:23.632982+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-487174-p24",
+  "failure": null,
+  "why": null,
+  "secs": 18.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 186,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:25.515627+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-4884f8-p75",
+  "failure": null,
+  "why": null,
+  "secs": 18,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 173,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:32.165469+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48d48e-p51",
+  "failure": null,
+  "why": null,
+  "secs": 18.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 65,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:44.500852+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48860f-p67",
+  "failure": null,
+  "why": null,
+  "secs": 22.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 185,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:46.443088+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-48e219-p74",
+  "failure": null,
+  "why": null,
+  "secs": 24.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 120,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:28:56.856963+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-4933b1-p51",
+  "failure": null,
+  "why": null,
+  "secs": 20.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 189,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:05.128242+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-4993a4-p150",
+  "failure": null,
+  "why": null,
+  "secs": 16,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 272,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:12.910879+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49605b-p43",
+  "failure": null,
+  "why": null,
+  "secs": 30,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 132,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:16.446561+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49bd9d-p134",
+  "failure": null,
+  "why": null,
+  "secs": 18,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 178,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:23.148524+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49e094-p67",
+  "failure": null,
+  "why": null,
+  "secs": 17.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 166,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:30.368124+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49e771-p110",
+  "failure": null,
+  "why": null,
+  "secs": 23.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 190,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:39.955923+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49f1f1-p25",
+  "failure": null,
+  "why": null,
+  "secs": 17.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 173,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:48.298149+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49f12b-p94",
+  "failure": null,
+  "why": null,
+  "secs": 25.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 264,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:29:48.402121+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49f2e3-p55",
+  "failure": null,
+  "why": null,
+  "secs": 23.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 257,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:03.508117+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5caf81-p113",
+  "failure": null,
+  "why": null,
+  "secs": 17.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 435,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:05.495018+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-49f991-p114",
+  "failure": null,
+  "why": null,
+  "secs": 23.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 296,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:11.829898+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5d1c59-p53",
+  "failure": null,
+  "why": null,
+  "secs": 17.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 184,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:29.526301+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5ce26a-p43",
+  "failure": null,
+  "why": null,
+  "secs": 25.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:31.248527+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5ce05f-p9",
+  "failure": null,
+  "why": null,
+  "secs": 34.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 161,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:38.442907+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5d1d7e-p55",
+  "failure": null,
+  "why": null,
+  "secs": 16.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 176,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:46.068776+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5d1ecb-p24",
+  "failure": null,
+  "why": null,
+  "secs": 18.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 172,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:49.465284+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5d204a-p18",
+  "failure": null,
+  "why": null,
+  "secs": 17.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 171,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:30:56.401345+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5d514f-p40",
+  "failure": null,
+  "why": null,
+  "secs": 26.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 118,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:31:12.519078+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5d9761-p104",
+  "failure": null,
+  "why": null,
+  "secs": 52.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 115,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:31:41.628828+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5dfe7a-p126",
+  "failure": null,
+  "why": null,
+  "secs": 18.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 155,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:32:00.308820+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5dbb39-p31",
+  "failure": null,
+  "why": null,
+  "secs": 74.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 127,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:32:10.825015+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5dbe2e-p116",
+  "failure": null,
+  "why": null,
+  "secs": 62.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 179,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:32:15.184050+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5e4028-p33",
+  "failure": null,
+  "why": null,
+  "secs": 22,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 181,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:32:32.878721+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5e523f-p7",
+  "failure": null,
+  "why": null,
+  "secs": 27.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:32:42.518642+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5e8f07-p22",
+  "failure": null,
+  "why": null,
+  "secs": 18.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 169,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:00.769340+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5e3c79-p35",
+  "failure": null,
+  "why": null,
+  "secs": 73.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 166,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:14.199063+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5e9c24-p60",
+  "failure": null,
+  "why": null,
+  "secs": 20.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 162,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:21.096649+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5ea245-p70",
+  "failure": null,
+  "why": null,
+  "secs": 20.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 153,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:35.168048+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-71e496-p25",
+  "failure": null,
+  "why": null,
+  "secs": 15.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 190,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:36.605320+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-5e81c4-p36",
+  "failure": null,
+  "why": null,
+  "secs": 76.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 130,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:49.539165+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-8e3bb5-p42",
+  "failure": null,
+  "why": null,
+  "secs": 20.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 410,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:55.697053+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-8efc51-p69",
+  "failure": null,
+  "why": null,
+  "secs": 22,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 331,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:33:58.573255+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-8f62fc-p25",
+  "failure": null,
+  "why": null,
+  "secs": 70,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 423,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:35:05.713128+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-9cfca4-p58",
+  "failure": null,
+  "why": null,
+  "secs": 71.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 331,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:35:10.327302+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-8f36f3-p41",
+  "failure": null,
+  "why": null,
+  "secs": 88,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 427,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:35:17.560814+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-c08784-p43",
+  "failure": null,
+  "why": null,
+  "secs": 64.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:36:14.591049+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-c0a0d9-p39",
+  "failure": null,
+  "why": null,
+  "secs": 68.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 136,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:36:26.421276+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-9d00fa-p37",
+  "failure": null,
+  "why": null,
+  "secs": 90,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 183,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:36:35.716684+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-c0b3fa-p60",
+  "failure": null,
+  "why": null,
+  "secs": 21.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 271,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:36:36.443823+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-c4a3f4-p74",
+  "failure": null,
+  "why": null,
+  "secs": 18.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 147,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:36:53.943246+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-c47994-p45",
+  "failure": null,
+  "why": null,
+  "secs": 29.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 167,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:36:55.879322+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-debd3a-p47",
+  "failure": null,
+  "why": null,
+  "secs": 33.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 315,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:10.278511+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-deddcc-p30",
+  "failure": null,
+  "why": null,
+  "secs": 19.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 184,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:15.173187+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-def1cb-p23",
+  "failure": null,
+  "why": null,
+  "secs": 20,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 157,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:30.295260+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-df40ed-p23",
+  "failure": null,
+  "why": null,
+  "secs": 18.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 122,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:33.847000+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-decc7d-p50",
+  "failure": null,
+  "why": null,
+  "secs": 53,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 303,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:46.970601+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-dfe0e4-p22",
+  "failure": null,
+  "why": null,
+  "secs": 18.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 181,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:49.093378+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-dfebb8-p51",
+  "failure": null,
+  "why": null,
+  "secs": 20.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 174,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:37:54.119151+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e05774-p46",
+  "failure": null,
+  "why": null,
+  "secs": 16.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:03.711774+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e2341d-p107",
+  "failure": null,
+  "why": null,
+  "secs": 20.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 396,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:09.208750+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e25a23-p78",
+  "failure": null,
+  "why": null,
+  "secs": 21.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 412,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:15.713924+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e25c68-p73",
+  "failure": null,
+  "why": null,
+  "secs": 18.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 369,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:21.895141+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e29319-p34",
+  "failure": null,
+  "why": null,
+  "secs": 19.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 417,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:29.143192+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e2a41e-p50",
+  "failure": null,
+  "why": null,
+  "secs": 29.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 438,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:45.679036+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e33911-p76",
+  "failure": null,
+  "why": null,
+  "secs": 19.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 186,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:38:48.438552+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e39665-p88",
+  "failure": null,
+  "why": null,
+  "secs": 18.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 160,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:04.430342+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e2ee51-p64",
+  "failure": null,
+  "why": null,
+  "secs": 44.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 336,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:06.432755+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e3f40c-p66",
+  "failure": null,
+  "why": null,
+  "secs": 20.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 336,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:09.328050+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e43b2b-p78",
+  "failure": null,
+  "why": null,
+  "secs": 15.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 186,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:21.613800+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e44f88-p29",
+  "failure": null,
+  "why": null,
+  "secs": 15.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:25.253355+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e44fd9-p209",
+  "failure": null,
+  "why": null,
+  "secs": 17.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 148,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:39.410534+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e47148-p11",
+  "failure": null,
+  "why": null,
+  "secs": 19.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 314,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:44.805869+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e40bde-p10",
+  "failure": null,
+  "why": null,
+  "secs": 42,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 157,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:46.443626+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e47197-p50",
+  "failure": null,
+  "why": null,
+  "secs": 19.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 146,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:39:59.002615+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e4c75a-p64",
+  "failure": null,
+  "why": null,
+  "secs": 16.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 173,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:03.256360+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e4bd15-p22",
+  "failure": null,
+  "why": null,
+  "secs": 25.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 178,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:10.021211+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e4ef56-p45",
+  "failure": null,
+  "why": null,
+  "secs": 21.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 172,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:20.386623+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e4f967-p53",
+  "failure": null,
+  "why": null,
+  "secs": 19.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 176,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:22.954272+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e506a9-p46",
+  "failure": null,
+  "why": null,
+  "secs": 15.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 175,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:25.586051+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e50dfb-p101",
+  "failure": null,
+  "why": null,
+  "secs": 18,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 148,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:38.398068+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e5208e-p21",
+  "failure": null,
+  "why": null,
+  "secs": 17.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 163,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:40.865309+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e52939-p24",
+  "failure": null,
+  "why": null,
+  "secs": 18.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 165,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:43.686306+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e53d11-p56",
+  "failure": null,
+  "why": null,
+  "secs": 13.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 180,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:40:54.800479+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e5e3e8-p122",
+  "failure": null,
+  "why": null,
+  "secs": 18.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 136,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:02.006615+00:00"
+ },
+ {
+  "uid": "chinese-cohort-5547|chinese-cohort-5547-e5352f-p19",
+  "failure": null,
+  "why": null,
+  "secs": 25.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 174,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:03.522141+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-1daf5d-p62",
+  "failure": null,
+  "why": null,
+  "secs": 22.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 172,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:25.620327+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-0f0237-p77",
+  "failure": null,
+  "why": null,
+  "secs": 37.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 186,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:32.592469+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-15e88e-p63",
+  "failure": null,
+  "why": null,
+  "secs": 31.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 186,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:33.653621+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-214948-p48",
+  "failure": null,
+  "why": null,
+  "secs": 21.9,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 304,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:47.494635+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-350724-p66",
+  "failure": null,
+  "why": null,
+  "secs": 18.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 395,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:51.118958+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-487512-p49",
+  "failure": null,
+  "why": null,
+  "secs": 20.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 323,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:41:54.322980+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-499f9f-p91",
+  "failure": null,
+  "why": null,
+  "secs": 16.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 133,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:03.648274+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-5d00b1-p132",
+  "failure": null,
+  "why": null,
+  "secs": 27.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 174,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:18.413711+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-e50556-p31",
+  "failure": null,
+  "why": null,
+  "secs": 24.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 136,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:18.614370+00:00"
+ },
+ {
+  "uid": "chinese|chinese-0db3cb-p118",
+  "failure": null,
+  "why": null,
+  "secs": 21.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 155,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:25.472006+00:00"
+ },
+ {
+  "uid": "chinese|chinese-1ba275-p97",
+  "failure": null,
+  "why": null,
+  "secs": 23.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 286,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:41.515229+00:00"
+ },
+ {
+  "uid": "chinese|chinese-2077da-p41",
+  "failure": null,
+  "why": null,
+  "secs": 31.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 158,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:50.256342+00:00"
+ },
+ {
+  "uid": "chinese|chinese-20f2c7-p71",
+  "failure": null,
+  "why": null,
+  "secs": 29.8,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 116,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:55.247871+00:00"
+ },
+ {
+  "uid": "chinese|chinese-5dd970-p110",
+  "failure": null,
+  "why": null,
+  "secs": 15.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 126,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:42:56.837290+00:00"
+ },
+ {
+  "uid": "chinese|chinese-e5addb-p100",
+  "failure": null,
+  "why": null,
+  "secs": 21.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 153,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T01:43:11.817526+00:00"
+ }
+]

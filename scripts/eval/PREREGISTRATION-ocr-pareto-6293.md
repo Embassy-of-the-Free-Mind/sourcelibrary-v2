@@ -214,3 +214,158 @@ refused or empty page counts as read). C38L-rep is a noise floor and is not char
 
 **Not run.** 3.8 Flash on the API (paid; ruled out 2026-10-08), so route and effort cannot be fully separated: a C38H
 that closes the gap shows effort is enough through this route, not that the API at low effort would also close it.
+
+## Amendment 4 (2026-10-14, job `g4-hard-6707`, #6707): Gemini 4 Argon through the CLI, on the panels where our readers fail
+
+Committed and pushed 2026-10-14 before any read of these arms on these panels. Everything in Amendments 1–3 holds
+except what this section changes. **This text replaces an earlier Amendment 4** (commit `23ae16a`, job `g4-ocr-6707`)
+that put G4 on Latin and Early English first. Derek, 2026-10-13: "Latin and Early English is a lame test, most things
+do well on those" (the best engines read Latin print at 0.99; there is no headroom to see). That job was stopped after
+**one** read: G4L (`gemini-4-argon-low`) on `eebo-tcp-5488|ed-0425b5da276941ae93dd76624ba8236a-p86`, 2026-10-14
+00:06:54Z, 18.1 s, a clean reply between the markers (`jobs/g4-ocr-6707/pareto/G4L-smoke.raw.jsonl`). Two more smoke
+calls (`…-p26`, `…-p342`) were killed in flight and left no row. That read stays in its raw file and is named here; it
+is not scored or charted. Latin and Early English are not run by this amendment.
+
+**Question (Derek, 2026-10-13).** Gemini 4 Argon appeared in `agy models` on 2026-10-13 (`gemini-4-argon-low`,
+`-medium`, `-high`). Does it move the needle where our readers fail: the panels where 3.8 Flash through the CLI trails
+the best engine? $0: subscription CLI only, no paid API for any model.
+
+**Panels (accuracy = 1 − median CER, `src/data/ocr-pareto.json` on main, 2026-10-12).**
+
+| # | panel (chart / panel kind) | pages read | 3.8 Flash CLI | best engine | scorer |
+|---|---|---|---|---|---|
+| 1 | Syriac manuscript (`syriac` / primary) | 40 (`syriac-gt`, 2 manuscripts) | 0.243 | Kraken Sophro 0.590 | `score-syriac-retest.py` (CER, N2), as Amendment 1 |
+| 2 | Syriac print (`syriac-print` / primary) | 24 sealed, 20 scored | 0.451 | Kraken OmniSyr 0.873 | `syriac-pareto-6295/score-ocr.mjs --fixed-refs` (consonantal CER) |
+| 3 | Chinese manuscript (`chinese-manuscript` / `cli-subsample`) | 148 | 0.770 | PaddleOCR-VL 1.6 0.797 | `benchmark-score.mjs` |
+| 4 | Greek (`greek` / `family-whole-independent`) | 109 (`greek-ext` 91, `greek` 10, `greek-ext2` 8) | 0.868 | 3.7 Flash CLI 0.906 | `benchmark-score.mjs` |
+| 5 | Chinese print (`chinese-print` / primary) | 12 | 0.828 | Qwen3-VL 8B 0.839 | `benchmark-score.mjs` |
+| 6 | Tibetan (engine-wave1-6011 `tibetan-kangyur-4523`) | 60 | not read | BDRC Yigdzin (served) 0.949 identity | `kanjur_align.py score`, unchanged |
+
+The pages of panels 3–5 are exactly the pages where the stored `gemini-3.8-flash+antigravity-cli` has a row on that
+panel in `build-ocr-pareto.mjs --dump-rows` on main (`fb2e1e7`). **Tibetan is reported separately**, as syllable
+identity against the Derge e-text (higher is better), and is never put on the CER chart.
+
+**Request: the same as the stored reads, byte for byte.** Same sealed image files and same prompt per stratum:
+- panels 1, 3, 4, 5: the rows of `requests-capped.jsonl` (`cli-queue-b-6293`, md5 `98dec8af…`) for those uids
+  (generic transcription prompt on every one of these strata);
+- panel 2: `cli-queue-6293/syriac/ocr-req.jsonl` (24 sealed images) with `--prompt-file
+  syriac-pareto-6295/cli-export/ocr-prompt.txt`, the request of the stored C38/C37/C36 reads;
+- panel 6: the 60 images of `engine-wave1-6011/bench/tibetan-kangyur-4523` with the generic transcription prompt of
+  `benchmark-run-api.mjs`, the request every wave-1 Tibetan arm was sent.
+
+The runner appends the #6523 marker sentence to each prompt (as for every CLI read since #6523).
+
+**Arms.** Both through `scripts/eval/run-cli-arm.py --kind ocr` as on main after #6523 (plan mode, the
+`agy-tool-gate.py` hook, the `<<<BEGIN>>>`/`<<<END>>>` markers, at most 2 attempts with the one-turn nudge, never
+auto-approve), at most 4 image calls in parallel in total (2 per arm).
+- **G4H:** `gemini-4-argon-high`, engine id `gemini-4-argon-high+antigravity-cli`, `--print-timeout 300`. Goes first on
+  every panel: hard pages are where thinking should help.
+- **G4L:** `gemini-4-argon-low`, engine id `gemini-4-argon-low+antigravity-cli`, `--print-timeout 300`.
+
+**Order and interleaving.** Panels in the order Syriac manuscript, Syriac print, Chinese manuscript, Greek, Chinese
+print, Tibetan. G4H reads the panels in that order. G4L reads a panel as soon as G4H has finished it, so the two arms
+run at the same time (2 + 2 calls) with G4L one panel behind. `-medium` is not run.
+
+**Smoke and stop.** Before the full run: G4H on the first 5 Syriac-manuscript requests. If most of the 5 error, refuse
+or hit quota, the job posts one BLOCKED comment on #6707 with the error text and stops. The 5 smoke reads count as the
+first 5 rows of the G4H Syriac-manuscript run (same request, same protocol).
+
+**Quota.** `run-cli-arm.py` exits 3 on a quota error: sleep to the quoted reset (60 min if none is quoted), resume (a
+page with text is never re-read), at most 3 times, then report what was read. Each quota event is reported with time
+and arm. Other jobs share this account.
+
+**Route caveat.** The stored 3.8 Flash CLI reads on these panels were made before #6523 (no markers, no tool gate,
+`--print-timeout 120`). So G4 vs 3.8 CLI here compares route as well as model, and is labelled so. Against every other
+comparator (3 Flash API, lite, Kraken, PaddleOCR-VL, Qwen3-VL, Yigdzin, Opus) the comparison is the model as the CLI
+serves it, on the same image and prompt. 3.8 is not re-read here (not asked; the quota is shared).
+
+**Comparators (stored, not re-read).** Per panel: stored 3.8 Flash CLI (`gemini-3.8-flash+antigravity-cli`; on
+Syriac print the `C38-ocr` arm), the panel's best engine (table above), 3 Flash on the API (`gemini-3-flash-preview`;
+not read on Syriac print or Tibetan, said so), and production (`gemini-3.1-flash-lite` on panels 1, 3, 5; Kraken
+OmniSyr on Syriac print, the lane; 3 Flash on Greek; BDRC Yigdzin on Tibetan). On Tibetan there is no stored 3.8 read;
+G4 is compared with Yigdzin and Claude Opus 5.5 (the best model read), and G4H with G4L.
+
+**Scoring.** Unchanged instruments, every stored cell reproducing its committed score before a G4 cell is read:
+- panels 3–5: `ocr-pareto-6293/import-cli-arm.py` into a copy of the bench, `benchmark-score.mjs`, rows from
+  `build-ocr-pareto.mjs --dump-rows` with the two G4 engines added to its CLI arm list, so every row rule is the chart's:
+  the #6304 drops, the #6523 extractor and the #6523 ONE FAILURE RULE (a failed read — copy filter, other refusal,
+  empty, timeout, chat with no transcription — is counted as a failure and not scored; an unplaced read is a scored 1.0);
+- panel 1: `score-syriac-retest.py` (`cer_n2`) on each G4 row's `text` (the reply between the markers, as
+  `run-cli-arm.py` writes it), as the chart's Syriac rows; a failed read under the ONE FAILURE RULE is counted, not scored;
+- panel 2: `syriac-pareto-6295/import-cli-arm.py` then `score-ocr.mjs --fixed-refs`: the 20 reference windows already
+  voted are frozen; a G4 read never moves a window. The 4 unscored pages stay unscored;
+- panel 6: `kanjur_align.py score --index etext-index-full.pkl` exactly as `engine-wave1-6011/tib/score.sh`, on each
+  row's `text` (between the markers). The off-index rule (a page where no engine reaches 0.5) is the wave-1 rule over the
+  wave-1 arms; G4 does not change which pages are off-index.
+
+**Reported per panel.** Accuracy per arm with page-bootstrap 95 % CI (2,000 resamples, seeded as
+`analyze-cli-effort.py`; by edition on Syriac print as #6295, by book on Tibetan), beside 3.8 CLI, the best engine,
+3 Flash and production. Paired, on the pages both answered: median Δ CER (G4 − other; negative = G4 reads better;
+on Tibetan Δ identity, positive = better) with by-page bootstrap 95 % CI, W/L/T, for G4H and G4L each vs 3.8 CLI and vs
+the panel's best engine, and G4H vs G4L; vs 3 Flash and production as a secondary table. Per arm: failures by kind
+(refusal / copy filter, empty, timeout, chat), wrapper share, nudged share, median seconds per call, quota events. The
+five worst G4H pages on Syriac (manuscript and print) and on Chinese manuscript, read against the page image and
+labelled `read-from-image`, naming the kind of error.
+
+**Decision rule, per panel and comparator.** G4 (H or L) **beats** a comparator when its paired median Δ CI excludes 0
+on the better side **and** |median Δ| exceeds that panel's noise floor. It **loses** under the mirror condition.
+Anything else is **same** (no detectable difference at this n). Failure counts are reported beside the verdict and
+never folded into it. Noise basis per panel, fixed now:
+
+| panel | floor | basis |
+|---|---|---|
+| Syriac manuscript | 0.010 | none measured on this panel (no repeat arm): eval-design §10.2 minimum CER effect, 1 pp |
+| Syriac print | 0.018 | the route's measured A-vs-A on these 20 pages (`ocr-score.json`, paired median Δ of a repeat against its first read): C38 −0.004, C37 +0.003, C36 +0.018, lite +0.005; the largest, C36 |
+| Chinese manuscript | 0.010 | no CLI repeat on this panel; the chart's lite repeat is identical (temperature 0), so §10.2's 1 pp |
+| Greek | 0.010 | no repeat on this panel: §10.2's 1 pp |
+| Chinese print | 0.010 | the chart's lite repeat is identical (0); §10.2's 1 pp |
+| Tibetan | 0.010 identity | no repeat on this set: §10.2's 1 pp, read on the identity scale |
+
+Grades: every panel is under 30 books except Chinese manuscript (148 pages) and Greek (109 pages), and is labelled
+directional or exploratory under §3.1. The one-line verdict per panel names 3.8 Flash low (CLI) as "3.8 Flash". It is
+a statement about this route, these pages, this date. No routing changes on this evidence; a panel that moves becomes
+a proposal on its own issue.
+
+**Chart.** A G4 arm is added to a panel in `src/data/ocr-pareto.json` only where it read that panel's whole set (the
+shared-page rule; a failed read counts as read). Tibetan is not a CER chart and gets no point. Cost axis: Gemini 4
+Argon has no API price in `model-pricing.mjs`; if none is published by the wrap-up, the arm is listed unplaced ("no API
+list price; $0 billed on the subscription"), never placed at a guessed price.
+
+**Not run.** Any paid API read (ruled out), `-medium`, a G4 A-vs-A repeat, a #6523-route re-read of 3.8, Latin and
+Early English.
+
+## Amendment 4.1 (2026-10-14, job `g4-hard2-6707`, #6707): G4L only, on all six panels; G4H decided afterwards
+
+Committed and pushed 2026-10-14 before any read under this amendment. Everything in Amendment 4 holds (panels and
+their order, requests byte for byte, comparators, scoring instruments, the ONE FAILURE RULE, the decision rule and
+noise floors per panel, the worst-page reads, Tibetan on its own measure, the chart rule) except what this section
+changes.
+
+**Why (the smoke, job `g4-hard-6707`, 2026-10-14 00:23–00:54Z).** G4H (`gemini-4-argon-high`, `--print-timeout 300`)
+on Amendment 4's 5 smoke pages (Syriac manuscript): 5 of 5 failed, 10 of 10 calls timed out with 0 characters
+(`[agy] print timeout after 5m0s with turn in progress`), each after 2–6 refused tool calls (`run_command`,
+`search_web`). At that rate G4H on the six panels would hold the shared subscription for about 40 hours.
+Derek, 2026-10-14: "just try low first" — G4L on every panel; G4H is decided after the G4L results.
+
+**Arm.** G4L only: `gemini-4-argon-low`, engine id `gemini-4-argon-low+antigravity-cli`, `--print-timeout 300`, through
+`run-cli-arm.py --kind ocr` exactly as Amendment 4. At most 3 image calls in parallel (shared account). Panels in
+Amendment 4's order: Syriac manuscript, Syriac print, Chinese manuscript, Greek, Chinese print, Tibetan. Quota (exit 3):
+sleep to the quoted reset (60 min if none), resume, at most 3 times, then report what was read.
+
+**G4H is not run in this job.** Amendment 4's G4H rows, G4H-vs-G4L comparisons and G4H worst-page reads do not apply;
+the five worst pages on Syriac (manuscript and print) and Chinese manuscript are read for **G4L** instead. Whether G4H
+runs, and at what time limit, is decided after these results.
+
+**Reads before this amendment, named and not charted.**
+- G4H smoke: 5 Syriac-manuscript pages (`jerusalem36-0003/0005/0008/0009/0029`), all timeouts, 0 text
+  (`jobs/g4-hard-6707/raw/G4H-syr-ms.raw.jsonl`). Amendment 4 said these would be the first G4H rows; G4H is not run,
+  so they are not scored.
+- Diagnostic G4H at `--print-timeout 900`, 1 page (`jerusalem36-0003_SMMJ_00036__008`): text after 768 s
+  (`jobs/g4-hard-6707/diag/G4H-diag900.raw.jsonl`). Not scored, not charted.
+- Diagnostic G4L at 300 s on the same 5 smoke pages: 5 of 5 read, 53–102 s (`jobs/g4-hard-6707/diag/G4L-diag.raw.jsonl`).
+  Not scored, not charted. These 5 pages are **re-read** in this run with the full panel, into a fresh raw file, so the
+  run is one protocol from its first page; the diagnostic text is never substituted for a run read.
+- The one Early English G4L read of job `g4-ocr-6707` stays as named in Amendment 4.
+
+**Also reported per arm** (in addition to Amendment 4's list): refused tool calls per page (`gate_denials`, median and
+distribution, and by tool), and seconds per call (median and IQR).

@@ -134,12 +134,14 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
   //   -card.jpg  (600px) — grid card slots (324–443px CSS → ~650–880px @2x
   //                        DPR); 300px can't fill those sharply (#2401)
   const extractedBuffer = await pipeline.jpeg({ quality: 85, progressive: true }).toBuffer();
+  // Height floored at width/2 so wide banners don't become slivers (#3229);
+  // mirrors galleryVariant() in src/lib/gallery-image-gen.ts.
   const thumbnailBuffer = await sharp(extractedBuffer)
-    .resize(300, null, { fit: 'inside', withoutEnlargement: true })
+    .resize(300, 150, { fit: 'outside', withoutEnlargement: true })
     .jpeg({ quality: 70 })
     .toBuffer();
   const cardBuffer = await sharp(extractedBuffer)
-    .resize(600, null, { fit: 'inside', withoutEnlargement: true })
+    .resize(600, 300, { fit: 'outside', withoutEnlargement: true })
     .jpeg({ quality: 72 })
     .toBuffer();
 

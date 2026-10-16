@@ -1,0 +1,478 @@
+{
+ "note": "Gemini 3.8 Flash (agy) labelled these joins \"other\" and said one side is not a translation of its source. Model claims from tight text windows, NOT checked against the page images; leads for a containment check, not findings.",
+ "n": 59,
+ "flags": [
+  {
+   "book": "6952dac677f38f6761bc683a",
+   "title": "Utriusque Cosmi Historia Vol. 1",
+   "p": 7,
+   "pB": 8,
+   "url": "https://sourcelibrary.org/book/6952dac677f38f6761bc683a/page/6952dac677f38f6761bc6842",
+   "evidence": "SOURCE N+1 is marked '[This page is blank.]', but ENGLISH N+1 contains text ('- To God, the Best and Greatest <-') that does not correspond to the source."
+  },
+  {
+   "book": "6952dac677f38f6761bc683a",
+   "title": "Utriusque Cosmi Historia Vol. 1",
+   "p": 227,
+   "pB": 228,
+   "url": "https://sourcelibrary.org/book/6952dac677f38f6761bc683a/page/6952dac677f38f6761bc691e",
+   "evidence": "English N+1 contains spurious text (\"storms, 100. The production of Venus, 144...\") after the work ends with \"FINIS\" / \"THE END\", while Source N+1 is completely blank."
+  },
+  {
+   "book": "6952dac677f38f6761bc683a",
+   "title": "Utriusque Cosmi Historia Vol. 1",
+   "p": 522,
+   "pB": 523,
+   "url": "https://sourcelibrary.org/book/6952dac677f38f6761bc683a/page/6952dac677f38f6761bc6a45",
+   "evidence": "English N+1 ('the same is accomplished by our parallelogram...') is not a translation of Source N+1 ('TRACTATUS SECUNDI / PARS IV. / De optica scientia'); the source heading is omitted and replaced with unrelated text."
+  },
+  {
+   "book": "6952dac677f38f6761bc683a",
+   "title": "Utriusque Cosmi Historia Vol. 1",
+   "p": 698,
+   "pB": 699,
+   "url": "https://sourcelibrary.org/book/6952dac677f38f6761bc683a/page/6952dac677f38f6761bc6af5",
+   "evidence": "ENGLISH N+1 (\"according to the proportion, whose round cavities...\") does not translate SOURCE N+1 (\"*Macrocosmi Tractatus Secundus.*\"), rendering completely unrelated material."
+  },
+  {
+   "book": "6952dac677f38f6761bc683a",
+   "title": "Utriusque Cosmi Historia Vol. 1",
+   "p": 1032,
+   "pB": 1033,
+   "url": "https://sourcelibrary.org/book/6952dac677f38f6761bc683a/page/6952dac677f38f6761bc6c43",
+   "evidence": "SOURCE N+1 is blank, but ENGLISH N+1 translates errata text beginning with \"Let the kind reader correct the errors here\"; ENGLISH N+1 is not a translation of SOURCE N+1."
+  },
+  {
+   "book": "69aebfc3e997cc01b0caafe3",
+   "title": "Lettere di M. Pietro Aretino (vol. 3)",
+   "p": 152,
+   "pB": 153,
+   "url": "https://sourcelibrary.org/book/69aebfc3e997cc01b0caafe3/page/69aebfc3e997cc01b0cab07c",
+   "evidence": "English N omits 'AL RONCHELLO DA BERGAMO' and English N+1 translates an unrelated letter 'TO M. ANTONIO CAVALLINO' instead of continuing with 'cittadinanza Aretina'."
+  },
+  {
+   "book": "69f33df1876dd827cbc5cb4c",
+   "title": "Choya chibyo, 29-kwŏn",
+   "p": 109,
+   "pB": 110,
+   "url": "https://sourcelibrary.org/book/69f33df1876dd827cbc5cb4c/page/69f33df1876dd827cbc5cbba",
+   "evidence": "ENGLISH N ('His descendant, the Chakbang Inspector named Jeok...') is not a translation of SOURCE N ('...之興自有天命...太祖壬申七月開國'), leaving the source text untranslated at the turn."
+  },
+  {
+   "book": "69f33df1876dd827cbc5cb4c",
+   "title": "Choya chibyo, 29-kwŏn",
+   "p": 113,
+   "pB": 114,
+   "url": "https://sourcelibrary.org/book/69f33df1876dd827cbc5cb4c/page/69f33df1876dd827cbc5cbbe",
+   "evidence": "English N renders unrelated text about 'Heo Geum' instead of translating Source N's '道村李集字浩然。父唐有五子。俱登科。公第三也。以直', leaving Yi Jip omitted."
+  },
+  {
+   "book": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autumn Annals with Zuo Commentary)",
+   "p": 41,
+   "pB": 42,
+   "url": "https://sourcelibrary.org/book/6992596b3d2d40d1b058df2b/page/6992596b3d2d40d1b058df55",
+   "evidence": "English N substitutes unrelated Kuh-lëang commentary not found in Source N, omitting the source text ('A man may adopt it when the censure... preserve himself')."
+  },
+  {
+   "book": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autumn Annals with Zuo Commentary)",
+   "p": 125,
+   "pB": 126,
+   "url": "https://sourcelibrary.org/book/6992596b3d2d40d1b058df2b/page/6992596b3d2d40d1b058dfa9",
+   "evidence": "ENGLISH N ends with unrelated Year 4 text (\"- Fourth year. <-\") rather than translating SOURCE N's concluding commentary (Par. 5, 7) or the Fifth year text."
+  },
+  {
+   "book": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autumn Annals with Zuo Commentary)",
+   "p": 198,
+   "pB": 199,
+   "url": "https://sourcelibrary.org/book/6992596b3d2d40d1b058df2b/page/6992596b3d2d40d1b058dff2",
+   "evidence": "ENGLISH N (\"Măng-ming bowed his head...\") does not translate SOURCE N (\"...王殺子上\"); the English text is from an entirely different passage."
+  },
+  {
+   "book": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autumn Annals with Zuo Commentary)",
+   "p": 332,
+   "pB": 333,
+   "url": "https://sourcelibrary.org/book/6992596b3d2d40d1b058df2b/page/6992596b3d2d40d1b058e078",
+   "evidence": "ENGLISH N ends with unrelated text (\"In the state of Ts'e...\") that does not translate SOURCE N (\"The Chuen says: — 'Shoo-k'e of Choo...\"), leaving the turn clause omitted."
+  },
+  {
+   "book": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autumn Annals with Zuo Commentary)",
+   "p": 415,
+   "pB": 416,
+   "url": "https://sourcelibrary.org/book/6992596b3d2d40d1b058df2b/page/6992596b3d2d40d1b058e0cb",
+   "evidence": "ENGLISH N (\"In winter, the tenth month, Poo-yu How killed...\") is not a translation of SOURCE N (\"The death of the viscount of Keu... reside in Yun...']\"), omitting SOURCE N's text entirely."
+  },
+  {
+   "book": "6992596b3d2d40d1b058df2b",
+   "title": "The Chinese Classics Vol. 5: The Ch'un Ts'ew with the Tso Chuen (Spring and Autumn Annals with Zuo Commentary)",
+   "p": 479,
+   "pB": 480,
+   "url": "https://sourcelibrary.org/book/6992596b3d2d40d1b058df2b/page/6992596b3d2d40d1b058e10b",
+   "evidence": "Neither English page translates the source text at the turn ('made word [suddenly] be / brought that the army of Tsin was coming'); the English represents an entirely different passage."
+  },
+  {
+   "book": "699246babc722ec0ee8120e8",
+   "title": "The Holy Bible (Wycliffe), Vol. 2",
+   "p": 557,
+   "pB": 558,
+   "url": "https://sourcelibrary.org/book/699246babc722ec0ee8120e8/page/699246babc722ec0ee812316",
+   "evidence": "ENGLISH N translates 1 Esdras 2:27-29 (\"Therefore I commanded...\"), not SOURCE N (verses 18-20: \"And now 18 be it knowen...\"). English N is not a translation of its source."
+  },
+  {
+   "book": "69b6476a18b87551bfc4c2c2",
+   "title": "Supplementum summae Pisanellae",
+   "p": 23,
+   "pB": 24,
+   "url": "https://sourcelibrary.org/book/69b6476a18b87551bfc4c2c2/page/69b6476a18b87551bfc4c2da",
+   "evidence": "ENGLISH N translates SOURCE N+1, while ENGLISH N+1 ('If she will receive absolution...') is not a translation of SOURCE N+1 ('rij vel supposito: si inuenerint...')."
+  },
+  {
+   "book": "69b6476a18b87551bfc4c2c2",
+   "title": "Supplementum summae Pisanellae",
+   "p": 325,
+   "pB": 326,
+   "url": "https://sourcelibrary.org/book/69b6476a18b87551bfc4c2c2/page/69b6476a18b87551bfc4c408",
+   "evidence": "English N does not translate Source N (\"Nunquid homines de terra interdicta...\"), presenting unrelated text instead; English N+1 begins mid-clause (\"outside of it\") resulting in broken syntax across the turn."
+  },
+  {
+   "book": "69b6476a18b87551bfc4c2c2",
+   "title": "Supplementum summae Pisanellae",
+   "p": 497,
+   "pB": 498,
+   "url": "https://sourcelibrary.org/book/69b6476a18b87551bfc4c2c2/page/69b6476a18b87551bfc4c4b4",
+   "evidence": "ENGLISH N translates unrelated text rather than SOURCE N; SOURCE N's end ('habitus nouitiorum est indistinctus... vt') is entirely omitted."
+  },
+  {
+   "book": "6a909543ac1fcc717ba30057",
+   "title": "Angeli de Clavasio Summa de casibus conscientiae",
+   "p": 207,
+   "pB": 208,
+   "url": "https://sourcelibrary.org/book/6a909543ac1fcc717ba30057/page/6a909543ac1fcc717ba30127",
+   "evidence": "ENGLISH N ('wheaten bread... Scotus') does not translate SOURCE N ('minozu ozdinu... suspelus... a col'); content is completely unrelated and source text omitted."
+  },
+  {
+   "book": "6a909543ac1fcc717ba30057",
+   "title": "Angeli de Clavasio Summa de casibus conscientiae",
+   "p": 306,
+   "pB": 307,
+   "url": "https://sourcelibrary.org/book/6a909543ac1fcc717ba30057/page/6a909543ac1fcc717ba3018a",
+   "evidence": "ENGLISH N+1 translates an unrelated entry on 'Oeconomus' rather than SOURCE N+1's text on pride and mortal sin."
+  },
+  {
+   "book": "6a909543ac1fcc717ba30057",
+   "title": "Angeli de Clavasio Summa de casibus conscientiae",
+   "p": 562,
+   "pB": 563,
+   "url": "https://sourcelibrary.org/book/6a909543ac1fcc717ba30057/page/6a909543ac1fcc717ba3028a",
+   "evidence": "ENGLISH N+1 (\"Restitution.i. the office of the disposition of law...\") does not translate SOURCE N+1 (\"titio.e.pcedat.o obligator.o iusta perit receptione p erroze soluti...\") at all; it translates completely unrelated text."
+  },
+  {
+   "book": "6a3a3bcc862ce9a5b4d7658d",
+   "title": "Summa confessorum",
+   "p": 324,
+   "pB": 325,
+   "url": "https://sourcelibrary.org/book/6a3a3bcc862ce9a5b4d7658d/page/6a3a3bcc862ce9a5b4d766d2",
+   "evidence": "English N translates Source N+1 (\"entirely reprobated and cursed\" / \"sed ista hodie in totum reprobata\"), not Source N; English N+1 starts Question 3. English N is not a translation of its source."
+  },
+  {
+   "book": "6a3a3bcc862ce9a5b4d7658d",
+   "title": "Summa confessorum",
+   "p": 439,
+   "pB": 440,
+   "url": "https://sourcelibrary.org/book/6a3a3bcc862ce9a5b4d7658d/page/6a3a3bcc862ce9a5b4d76745",
+   "evidence": "English N replaces source text ('circa hoc sunt diverse opiniones... infirmitate') with unrelated text ('Also, note that a priest ought always...'), leaving the source unrendered and the sentence across the turn broken."
+  },
+  {
+   "book": "69f33e5f876dd827cbc5e35c",
+   "title": "Yŏho Sŏnsaeng munjip, v.1-9,11-16",
+   "p": 1006,
+   "pB": 1007,
+   "url": "https://sourcelibrary.org/book/69f33e5f876dd827cbc5e35c/page/69f33e5f876dd827cbc5e74b",
+   "evidence": "ENGLISH N is not a translation of SOURCE N (\"### 答李仲謙\"), omitting the letter heading and opening greeting (\"窮秋氣凄...亦已休 / 歇否仰慮區區\") before N+1's \"周昨緩移家\"."
+  },
+  {
+   "book": "6a3a3b6882a064363d359f64",
+   "title": "Summa de casibus conscientiae (Summa Pisanella)",
+   "p": 365,
+   "pB": 366,
+   "url": "https://sourcelibrary.org/book/6a3a3b6882a064363d359f64/page/6a3a3b6882a064363d35a0d2",
+   "evidence": "ENGLISH N translates public offices/Hostiensis/revenues, whereas SOURCE N discusses dining/living with Jews/Moors and foods sacrificed to idols; ENGLISH corresponds to a completely different passage."
+  },
+  {
+   "book": "6a3a3b6882a064363d359f64",
+   "title": "Summa de casibus conscientiae (Summa Pisanella)",
+   "p": 620,
+   "pB": 621,
+   "url": "https://sourcelibrary.org/book/6a3a3b6882a064363d359f64/page/6a3a3b6882a064363d35a1d1",
+   "evidence": "ENGLISH N+1 begins \"receive . Answer: According to Bernard...\" which does not translate SOURCE N+1 (\"ce. extra. de elec. si laicus...\"); the source words are omitted and replaced with unrelated text."
+  },
+  {
+   "book": "69f339a3876dd827cbc55802",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 15-16",
+   "p": 18,
+   "pB": 19,
+   "url": "https://sourcelibrary.org/book/69f339a3876dd827cbc55802/page/69f339a4876dd827cbc55815",
+   "evidence": "ENGLISH N+1 is completely unrelated to SOURCE N+1 (Antonius de Butrio, Liber Sextus vs Aphrica, et Persis, et Oriens, et India unam Christum adorant)"
+  },
+  {
+   "book": "69f339a3876dd827cbc55802",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 15-16",
+   "p": 227,
+   "pB": 228,
+   "url": "https://sourcelibrary.org/book/69f339a3876dd827cbc55802/page/69f339a4876dd827cbc558e6",
+   "evidence": "ENGLISH N+1 (\"he benefices that are vacant by law...\") does not translate SOURCE N+1 (\"# Summarium. 1 Reservatio operatur...\"), appearing to be from an entirely different passage."
+  },
+  {
+   "book": "69f339a3876dd827cbc55802",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 15-16",
+   "p": 595,
+   "pB": 596,
+   "url": "https://sourcelibrary.org/book/69f339a3876dd827cbc55802/page/69f339a4876dd827cbc55a56",
+   "evidence": "English N+1 (\"A bishop may reach a settlement...\") is not a translation of Source N+1 (\"sto fiat particulariter...\"), leaving the text untranslated."
+  },
+  {
+   "book": "69f339a3876dd827cbc55802",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 15-16",
+   "p": 661,
+   "pB": 662,
+   "url": "https://sourcelibrary.org/book/69f339a3876dd827cbc55802/page/69f339a4876dd827cbc55a98",
+   "evidence": "ENGLISH N+1 begins \"Those who make them profit...\", which is not a translation of SOURCE N+1 (\"sunt nec his quilibet fide per baptismum acceperunt...\"), leaving the source text at the turn unrendered."
+  },
+  {
+   "book": "69f339a3876dd827cbc55802",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 15-16",
+   "p": 845,
+   "pB": 846,
+   "url": "https://sourcelibrary.org/book/69f339a3876dd827cbc55802/page/69f339a4876dd827cbc55b50",
+   "evidence": "ENGLISH N+1 does not translate SOURCE N+1 ('Sed veni foras. et statim prodiit qui mortuus fuerat'); it begins with unrelated text ('one of the devil, who acts as a deceiver')."
+  },
+  {
+   "book": "69f339a3876dd827cbc55802",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 15-16",
+   "p": 963,
+   "pB": 964,
+   "url": "https://sourcelibrary.org/book/69f339a3876dd827cbc55802/page/69f339a4876dd827cbc55bc6",
+   "evidence": "ENGLISH N+1 does not translate SOURCE N+1 (\"motheum. capitulo .ij. ideo ipse predicator veritatis...\"); instead, it provides completely unrelated text (\"distance to understand the pronouncement...\")."
+  },
+  {
+   "book": "6992c88d4f3a879124230200",
+   "title": "天工開物 (Tiangong Kaiwu) - Exploitation of the Works of Nature",
+   "p": 482,
+   "pB": 483,
+   "url": "https://sourcelibrary.org/book/6992c88d4f3a879124230200/page/6992c88d4f3a8791242303e3",
+   "evidence": "SOURCE N+1 contains English text unrelated to SOURCE N's '这类船都是', and ENGLISH N+1 abruptly jumps to 'Chapter 15: Boats and Carts ...and Tianjin', indicating discontinuous or mismatched pages."
+  },
+  {
+   "book": "699209c4bed8f4b5ff5b2c6b",
+   "title": "Biblia Polyglotta Complutensis",
+   "p": 2143,
+   "pB": 2144,
+   "url": "https://sourcelibrary.org/book/699209c4bed8f4b5ff5b2c6b/page/699209c4bed8f4b5ff5b34cb",
+   "evidence": "SOURCE N+1 is blank while ENGLISH N+1 contains unrelated interlinear text ('[Whoever wishes to be] great...'), failing to translate or continue the source text across the turn."
+  },
+  {
+   "book": "699209c4bed8f4b5ff5b2c6b",
+   "title": "Biblia Polyglotta Complutensis",
+   "p": 2704,
+   "pB": 2705,
+   "url": "https://sourcelibrary.org/book/699209c4bed8f4b5ff5b2c6b/page/699209c4bed8f4b5ff5b36fc",
+   "evidence": "SOURCE N+1 contains only \"盒\", while ENGLISH N+1 provides unrelated text: \"Hebrew / Latin Lexicon Column 1 Following the form of feminine nouns.\""
+  },
+  {
+   "book": "699209c4bed8f4b5ff5b2c6b",
+   "title": "Biblia Polyglotta Complutensis",
+   "p": 2868,
+   "pB": 2869,
+   "url": "https://sourcelibrary.org/book/699209c4bed8f4b5ff5b2c6b/page/699209c4bed8f4b5ff5b37a0",
+   "evidence": "SOURCE N+1 is completely blank, but ENGLISH N+1 introduces unrelated text from a Hebrew lexicon not present in the source excerpt."
+  },
+  {
+   "book": "6a3a3ba8862ce9a5b4d75da1",
+   "title": "Enchiridion sive Manuale confessariorum et poenitentium",
+   "p": 156,
+   "pB": 157,
+   "url": "https://sourcelibrary.org/book/6a3a3ba8862ce9a5b4d75da1/page/6a3a3ba8862ce9a5b4d75e3e",
+   "evidence": "ENGLISH N is not a translation of SOURCE N; it discusses Luther and Trent, while SOURCE N concerns modes of participation in crime ('principalem delinquentem vel adiuuat... Nunc autem dicimus, peccare mor-')."
+  },
+  {
+   "book": "6a3a3ba8862ce9a5b4d75da1",
+   "title": "Enchiridion sive Manuale confessariorum et poenitentium",
+   "p": 520,
+   "pB": 521,
+   "url": "https://sourcelibrary.org/book/6a3a3ba8862ce9a5b4d75da1/page/6a3a3ba8862ce9a5b4d75faa",
+   "evidence": "English N and N+1 do not translate the source turn (\"An omnis incestus... appellare incestum solum...\"); the English at the turn is not a translation of its source."
+  },
+  {
+   "book": "6a3a3ba8862ce9a5b4d75da1",
+   "title": "Enchiridion sive Manuale confessariorum et poenitentium",
+   "p": 658,
+   "pB": 659,
+   "url": "https://sourcelibrary.org/book/6a3a3ba8862ce9a5b4d75da1/page/6a3a3ba8862ce9a5b4d76034",
+   "evidence": "English N (\"...daily and singular conclusion.\") is not a translation of Source N (\"V. Est quod non teneatur... propter multos pueros\"), leaving the end of page N untranslated."
+  },
+  {
+   "book": "6a3a3b80862ce9a5b4d75782",
+   "title": "Summa casuum conscientiae (Summa Rosella)",
+   "p": 174,
+   "pB": 175,
+   "url": "https://sourcelibrary.org/book/6a3a3b80862ce9a5b4d75782/page/6a3a3b80862ce9a5b4d75831",
+   "evidence": "ENGLISH N+1 (\"What if he cannot be expelled?...\") does not translate SOURCE N+1 (\"manu in clericus; seu religiosum turbante diuina officia; excommunicat? no est...\"), hallucinating unrelated text and omitting the continuation."
+  },
+  {
+   "book": "6a3a3b80862ce9a5b4d75782",
+   "title": "Summa casuum conscientiae (Summa Rosella)",
+   "p": 533,
+   "pB": 534,
+   "url": "https://sourcelibrary.org/book/6a3a3b80862ce9a5b4d75782/page/6a3a3b80862ce9a5b4d75998",
+   "evidence": "ENGLISH N ('Otherwise, it is different...') is not a translation of SOURCE N ('Quinto. Pone q deposui pecunia...'); the source text at the turn is completely omitted."
+  },
+  {
+   "book": "69ac9bb499d9a0170d090bb2",
+   "title": "Confessions",
+   "p": 135,
+   "pB": 136,
+   "url": "https://sourcelibrary.org/book/69ac9bb499d9a0170d090bb2/page/69ac9bb499d9a0170d090c3a",
+   "evidence": "ENGLISH N ('…I deferred living in You…') does not correspond to SOURCE N ('…Great hope has risen upon us the Catholic faith…')"
+  },
+  {
+   "book": "69ac9bb499d9a0170d090bb2",
+   "title": "Confessions",
+   "p": 133,
+   "pB": 134,
+   "url": "https://sourcelibrary.org/book/69ac9bb499d9a0170d090bb2/page/69ac9bb499d9a0170d090c38",
+   "evidence": "English does not translate the source text at the turn; source describes Alypius and the senator ('to whose favours'), while English renders an unrelated passage ('meat in due season')."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 142,
+   "pB": 143,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc5537f",
+   "evidence": "ENGLISH N+1 (\"in ancient times held the text...\") is not a translation of SOURCE N+1 (\"Liceat ipse copiosius tradit...\")."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 156,
+   "pB": 157,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc5538d",
+   "evidence": "ENGLISH N+1 (\"is the judicial web invented for the evils of men...\") is not a translation of SOURCE N+1 (\"tionis Balbus in volumine consiliorum...\")."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 164,
+   "pB": 165,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc55395",
+   "evidence": "ENGLISH N+1 starts with unrelated text (\"honored in the Arbor Bellorum...\") not translating SOURCE N+1 (\"nos si incompetenter...\"), while ENGLISH N invents \"chapter [remainder].\""
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 517,
+   "pB": 518,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc554f6",
+   "evidence": "ENGLISH N+1 (\"...as is said in the aforementioned chapter...\") is completely unrelated and does not translate SOURCE N+1 (\"ita in proposito, licet non valeat stat ut quod naturales succedant...\")."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 630,
+   "pB": 631,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc55567",
+   "evidence": "ENGLISH N+1 ('the beginning of the law regarding legacies...') is completely unrelated to SOURCE N+1 ('rem.ut.d.cle.ij.facit.l.legitimos...'), leaving SOURCE N+1 untranslated."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 701,
+   "pB": 702,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc555ae",
+   "evidence": "ENGLISH N+1 (\"Flower of Testaments by Lord Rolandus...\") is not a translation of SOURCE N+1 (\"Additio. Nota quod omnes he persone supradicte enumerantur...\")."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 930,
+   "pB": 931,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc55693",
+   "evidence": "English N+1 ('and it will be necessary for us to supply...') is completely unrelated text and does not translate Source N+1 ('est non esse etiam tum locum iuri accrescendi...')."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 885,
+   "pB": 886,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc55666",
+   "evidence": "English N+1 ('has a son under age...') does not translate Source N+1 ('stitutione pupillari, ubi si pater testatur...'); the source text is omitted and replaced with unrelated text."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 1000,
+   "pB": 1001,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc556d9",
+   "evidence": "ENGLISH N+1 begins \"Immediate and substance...\" translating index entries, whereas SOURCE N+1 begins \"Secundus articulus principalis\"; ENGLISH N+1 does not correspond to SOURCE N+1."
+  },
+  {
+   "book": "69f3399a876dd827cbc552f0",
+   "title": "Primum volumen[-volumen XVII] tractatuum ex variis iuris interpretibus collectorum, Vols. 6-7",
+   "p": 999,
+   "pB": 1000,
+   "url": "https://sourcelibrary.org/book/69f3399a876dd827cbc552f0/page/69f3399a876dd827cbc556d8",
+   "evidence": "ENGLISH N+1 begins with unrelated text (\"estament. , according to Petrus and Bartolus...\") instead of translating SOURCE N+1 (\"eo sive civili naturalis tantum succedit...\")."
+  },
+  {
+   "book": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "p": 122,
+   "pB": 123,
+   "url": "https://sourcelibrary.org/book/6aa94ead98dd95a320803eed/page/6aa94ead98dd95a320803f68",
+   "evidence": "ENGLISH N ('If, however, he neglected to make a will...') does not translate SOURCE N ('sed vero domino est restituenda... hec ray.'). Page N's English is not a translation of its source."
+  },
+  {
+   "book": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "p": 482,
+   "pB": 483,
+   "url": "https://sourcelibrary.org/book/6aa94ead98dd95a320803eed/page/6aa94ead98dd95a3208040d0",
+   "evidence": "ENGLISH N ('...I answer that it can. Yet Peter distinguishes...') is not a translation of SOURCE N ('...ideo divisio fit in speciebus: non in corpore Christi.')."
+  },
+  {
+   "book": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "p": 664,
+   "pB": 665,
+   "url": "https://sourcelibrary.org/book/6aa94ead98dd95a320803eed/page/6aa94ead98dd95a320804186",
+   "evidence": "N ends with split word 'dispen-fationem' translated whole as 'dispensation.', but N+1 has hallucinated chatter '[Translation of the Latin text] VI. ...the manner of questioning.'"
+  },
+  {
+   "book": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "p": 733,
+   "pB": 734,
+   "url": "https://sourcelibrary.org/book/6aa94ead98dd95a320803eed/page/6aa94ead98dd95a3208041cb",
+   "evidence": "SOURCE N (\"quoniam in quantum. In his etiam casibus...\") does not correspond to ENGLISH N (\"Second, out of contempt...\"); English N is not a translation of its source."
+  },
+  {
+   "book": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "p": 829,
+   "pB": 830,
+   "url": "https://sourcelibrary.org/book/6aa94ead98dd95a320803eed/page/6aa94ead98dd95a32080422b",
+   "evidence": "ENGLISH N does not translate SOURCE N (\"ecclesie et clerici sunt immunes... de emunitate ecclesiarum\"); it renders an unrelated passage on currency, leaving SOURCE N omitted and creating an impossible join with N+1's \"soluat\"."
+  },
+  {
+   "book": "6aa94ead98dd95a320803eed",
+   "title": "Summa de casibus conscientiae",
+   "p": 982,
+   "pB": 983,
+   "url": "https://sourcelibrary.org/book/6aa94ead98dd95a320803eed/page/6aa94ead98dd95a3208042c4",
+   "evidence": "ENGLISH N does not translate SOURCE N (\"Robertus... non est vis in verbis dummodo constet de consensu\"); its text (\"Nor marriage, because since...\") discusses unrelated material, omitting the end of page N entirely."
+  }
+ ]
+}

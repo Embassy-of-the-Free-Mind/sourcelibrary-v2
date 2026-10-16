@@ -36,13 +36,15 @@ const OCR_REFUSAL = /\bI (cannot|can't|am unable to) (provide|transcribe|reprodu
  * refusal or summary, no <page-type> tag, restarted read (two headers), duplicated reply (the same long block twice),
  * conversational opener before the tags.
  */
-export function ocrReadProblem(text) {
+// `header: false` is for a reply that is plain text by design (cli-ocr.mjs correct mode, #6560: the draft it corrects
+// has no <page-type> header, and the prompt asks for none).
+export function ocrReadProblem(text, { header = true } = {}) {
   const t = String(text || '').trim();
   if (t.length < 5) return 'empty';
   if (OCR_PLAN.test(t)) return 'plan-mode reply';
   if (OCR_REFUSAL.test(t)) return 'refusal or summary';
   const headers = (t.match(/<page-type>/g) || []).length;
-  if (headers === 0) return 'no <page-type> tag';
+  if (headers === 0 && header) return 'no <page-type> tag';
   if (headers > 1 || (t.match(/<scan-quality>/g) || []).length > 1) return 'restarted read';
   const head = t.slice(0, t.indexOf('<')).trim();
   if (head.length > 0 && /^(sure|okay|ok|certainly|of course|here(?:'s| is| are)|let me|i(?:'ll| will| need| am| have)|i'm|understood|the image|this (?:page|image))\b/i.test(head)) return 'conversational opener';

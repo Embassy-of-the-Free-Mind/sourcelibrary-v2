@@ -924,10 +924,11 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
   const isArtwork = item.source === 'artwork';
   const cropUrl = !isArtwork && item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
   // Prefer the 600px gallery `-card.jpg` for grid cards (sharp on retina; #2401),
-  // falling back to the 300px thumb if its card variant isn't backfilled yet.
-  // Extracted images (~2MB) are the last resort. Artwork thumbs are already
-  // 600px, so toGalleryCardUrl returns null for them and blobUrl stays the thumb.
-  const cardUrl = !cardFailed ? toGalleryCardUrl(item.thumbnailUrl) : null;
+  // but only when the row says it exists (item.cardUrl): deriving it blind cost
+  // one guaranteed 404 per un-backfilled crop per render (#4465). onError still
+  // falls back to the 300px thumb, then the extracted image (~2MB). Artwork
+  // thumbs are already 600px, so toGalleryCardUrl returns null for them.
+  const cardUrl = !cardFailed && item.cardUrl ? toGalleryCardUrl(item.thumbnailUrl) : null;
   const blobUrl = cardUrl || item.thumbnailUrl || item.extractedUrl;
 
   const displayUrl = useCropFallback
@@ -963,7 +964,7 @@ function GalleryCard({ item, priority = false, tenantPrefix = '', collectionScop
               }
             }}
             onError={() => {
-              // Card variant missing (not yet backfilled) → retry with the thumb.
+              // Card variant unreadable despite card_url → retry with the thumb.
               if (cardUrl) setCardFailed(true);
               else if (!useCropFallback && cropUrl) setUseCropFallback(true);
               else setImageError(true);
