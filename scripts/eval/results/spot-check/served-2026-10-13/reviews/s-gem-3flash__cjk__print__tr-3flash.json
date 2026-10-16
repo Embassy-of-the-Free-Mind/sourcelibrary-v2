@@ -1,0 +1,274 @@
+[
+  {
+    "book_id": "69f324ba52a77bb28fdb376d", "slot": 112, "title": "Sasong yuchʻwi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A Joseon legal compendium on litigation; the page is statutes of limitation for slave and land suits, as the title implies.",
+    "rights_flag": null,
+    "structure_note": "Counts are consistent (82 records, 82 OCR, 72 translated); no printed numbers read. Nothing stands out.",
+    "on_sight_defect": false,
+    "page_verdict": "show",
+    "pages": [
+      {
+        "page_number": 11,
+        "right_page": "yes",
+        "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "允相訟 / 允冒占 / 允訟事 / 允訟田民", "image": "凡相訟 / 凡冒占 / 凡訟事 / 凡訟田民", "problem": "凡 ('all/whenever') read as 允 at every occurrence (four times); the translation reads it correctly as a general rule", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "第合執及擅賣者外", "image": "除合執及擅賣者外 (the first character is 除 in a cursive-leaning form)", "problem": "the first character is misread; the translation still gives 'except for', so the sense survives", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "或稱祖上逃奴婢爭訟而非當身現存事在六十年以前者勿許聽理", "english": "if the person in question is not currently living or if the matter occurred more than sixty years ago, the case shall not be heard", "problem": "the source joins the two conditions (not the person now living AND more than sixty years ago); 'or' makes the bar broader than the statute says", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "宣頭案 / 丙子", "english": "Seontuan / Byung-ja", "problem": "mixed or nonstandard romanization (Korean is Seondu-an, Byeongja)", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A careful fair-copy manuscript, transcribed almost completely. Apart from 凡 read as 允 throughout, the OCR is right, and the English is faithful except for one 'and' turned into 'or' in a limitation rule."
+  },
+  {
+    "book_id": "69f3258d52a77bb28fdb49dc", "slot": 113, "title": "Yŏllyŏsil kisul, 17-kwŏn pyŏlchip", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Yi Kŭng-ik's history; the page is the chronology of Ming envoys under Seonjo (1601–1603), with names of receiving officials written in the margin.",
+    "rights_flag": null,
+    "structure_note": "2,893 records, but only 2,020 have OCR and 1,907 are translated, so about 30% of this multi-volume set is untranscribed. Printed numbers were read on only 54 pages; the 21 backsteps and 38 repeats are most likely volume restarts or misread leaf numerals, not a broken order.",
+    "on_sight_defect": false,
+    "page_verdict": "show_with_caveat",
+    "pages": [
+      {
+        "page_number": 673,
+        "right_page": "yes",
+        "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "芳晉奉蕩平寧夏詔書", "image": "芳賫奉蕩平寧夏詔書", "problem": "賫 ('carried') read as 晉; the translation then invents a person 'Fang Jin'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "備李恒福徒李 / 黃慎申致", "image": "儐李恒福 從李 / 黃慎 申欽", "problem": "in the margin note, 儐 (receiving officer) read as 備, 從 as 徒 and the name 申欽 as 申致", "severity": "moderate", "class": "O12", "kind": "misread" },
+          { "ocr": "備李好旼 … 都曄", "image": "儐李好閔 … 鄭曄", "problem": "names in the upper margin misread (李好閔 → 李好旼, 鄭曄 → 都曄)", "severity": "moderate", "class": "O12", "kind": "misread" },
+          { "ocr": "備李廷龜 … 有東權錄", "image": "儐 李廷龜 … 有東槎錄", "problem": "in the interlinear note, 儐 read as 備 and the title 東槎錄 as 東權錄", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "芳晉奉", "english": "Fang Jin brought the imperial edict", "problem": "invented a personal name from the misread 賫", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "<gloss>院 埈</gloss> (two stray interlinear characters)", "english": "Officials: Gwon Jun.", "problem": "an official 'Gwon Jun' is invented from two loose characters; nothing on the leaf says this", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "備(儐)李恒福 … 備(儐)李廷龜", "english": "Provisions: Yi Hang-bok … Provisions: Yi Jeong-gu", "problem": "the role of reception officer (儐使) is rendered as 'Provisions'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "有東權錄 (東槎錄)", "english": "There are records by Gwon.", "problem": "the title of a travel record (Dongsarok) becomes 'records by Gwon'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "趙挺 / 懿仁王后", "english": "Cho Jeon / Queen Uiuin", "problem": "names misromanized (Jo Jeong; Uiin)", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The main column text is right and the English of it is sound, with correct years. The handwritten marginal and interlinear annotations are badly misread: officials' roles and names are wrong, a 'Fang Jin' and an official 'Gwon Jun' are invented, and a record title becomes 'records by Gwon'. Usable with a caveat on the annotations."
+  },
+  {
+    "book_id": "69f3238994b37280d9a32e2e", "slot": 114, "title": "Chwahae tappʻyŏllok", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A Korean historical miscellany; the page narrates the 1575–84 East/West factional split, as the catalogue implies.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "page_verdict": "show",
+    "pages": [
+      {
+        "page_number": 109,
+        "right_page": "yes",
+        "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "其思孟", "image": "具思孟", "problem": "the surname 具 (Ku) read as 其; the translation then gives 'Ki Sa-maeng' for Ku Sa-maeng", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "衆怒剛興", "image": "衆怒朋興", "problem": "朋 ('rising together') read as 剛; minor effect on sense", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "仁順王大妃", "english": "Queen Ingun, the Great Dowager", "problem": "the queen's name is wrong (Insun)", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "其思孟", "english": "Ki Sa-maeng", "problem": "the OCR misread carried through (should be Ku Sa-maeng)", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A clean manuscript, accurately transcribed and translated. Only two personal names are wrong in the English (Ku Sa-maeng given as Ki Sa-maeng; Queen Insun as Ingun)."
+  },
+  {
+    "book_id": "6a3c5e40879008ba7e151a94", "slot": 115, "title": "沙彌十戒威儀錄要", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Zhixu's manual on the novice's ten precepts; the page is precepts 8–9 (high beds; eating at the wrong time).",
+    "rights_flag": "The scan is a modern typeset reprint (a sans-serif movable-type face with modern punctuation 。、：and Arabic-free page number 一四), probably a 20th-century Taiwanese Buddhist reprint. The text itself is by Zhixu (1599–1655); no copyright page was seen on this leaf. Low concern, but the edition is modern.",
+    "structure_note": "The 7 backsteps and 6 repeats in printed numbers over 61 numbered pages are more than a reprint pamphlet should show; they may be front matter numbered separately or misread numerals. Worth checking against the scan order.",
+    "on_sight_defect": false,
+    "page_verdict": "show",
+    "pages": [
+      {
+        "page_number": 16,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "錫糖", "image": "餳糖", "problem": "餳 (malt sugar) normalized to the lookalike 錫", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "錫糖(餳糖)", "english": "rock sugar", "problem": "should be malt sugar or maltose", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A modern typeset reprint, transcribed essentially perfectly and translated faithfully. The scan is a recent edition of a public-domain text, which is noted as a soft rights flag."
+  },
+  {
+    "book_id": "69f33bab876dd827cbc590c5", "slot": 116, "title": "Ŭirye munhae", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Kim Chang-saeng's ritual questions and answers; the spread is the diagram of the five-frame palace house and hall (殿屋五架圖 / 厦屋五架圖), with the commentary.",
+    "rights_flag": null,
+    "structure_note": "The image is an unsplit two-page spread stored as one page (I3). The faint left-hand diagram (後寢) and its labels are not transcribed. The 23 printed backsteps over 70 numbered pages are likely misread small leaf numbers in the fold.",
+    "on_sight_defect": true,
+    "page_verdict": "do_not_show",
+    "pages": [
+      {
+        "page_number": 27,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "為之東面其後為西夾室奕 / 此地之盤也其棟則中三間此", "image": "為東西堂其後為東西夾室夾 / 外之廣為側階房後為北階此 / 六地之盤也其棟則中三間為 (approximately)", "problem": "the small double-column commentary under the diagram is scrambled: columns are merged, words dropped or misread (東西堂 lost, a whole column on the side steps and north steps dropped), and the order is broken", "severity": "serious", "class": "O5", "kind": "omission" },
+          { "ocr": "雷脊 … 雷為同屋名 … 謂之雷", "image": "霤脊 … 霤 …", "problem": "霤 (eaves-drip, eaves) read as 雷 (thunder) throughout. This is the key architectural term of the passage, and the translation builds 'thunder ridge' and '\"Thunder\" is a name for the same roof' on it", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "之當此屋下半之制也 / 屋下則其下半之制也", "image": "one line (堂下周屋也其下半之制也)", "problem": "the line is duplicated in garbled form", "severity": "moderate", "class": "O4", "kind": "layout" },
+          { "ocr": "# 疑", "image": "the fragment 疑 of the running title 疑禮問解 in the fold", "problem": "the running title is made a heading", "severity": "moderate", "class": "O11", "kind": "layout" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "garbled OCR of the diagram commentary", "english": "\"...the cover connects to this ridgepole above and meets the lower 'thunder ridge'... This is the system for the upper bays, called the 'four-sloped roof'\"", "problem": "fluent, confident English over a scrambled source, with no mark of doubt; the architectural description a reader gets is not what the commentary says", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "雷(霤)", "english": "Thunder", "problem": "the eaves term becomes 'thunder' throughout", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "source": "# 疑", "english": "# Doubts", "problem": "a heading invented from a running-title fragment", "severity": "moderate", "class": "T16", "kind": "layout" }
+        ],
+        "other": [
+          { "note": "The unsplit spread puts two pages' worth of diagram and text under one page number.", "severity": "moderate", "class": "I3", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The large-print text on the left (後寢 paragraph) and the diagram title are right. The small commentary under the diagram is scrambled, with columns dropped and duplicated, and 霤 (eaves) is misread as 'thunder' throughout. The English presents this garble as a fluent architectural explanation, so a reader would be misled."
+  },
+  {
+    "book_id": "69f3244f52a77bb28fdb2f14", "slot": 117, "title": "Yi Tae-bong chŏn", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A vernacular Korean tale (chŏn) in Hangul cursive, as catalogued.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "page_verdict": "show_with_caveat",
+    "pages": [
+      {
+        "page_number": 148,
+        "right_page": "yes",
+        "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "효순지예를 바리나이다 젼휘", "image": "효슌지예을 바리난니다 ᄒᆞᆫ대 황", "problem": "the line end 'ᄒᆞᆫ대 황(졔)' ('when [she said this], the Emperor') becomes a name-like '젼휘'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "왕회난 부인드려 거토하시고 서연을 벽셜드려 안침하시니", "image": "왕회난 무ᄉᆞ도로 졔거ᄒᆞ라ᄒᆞ시고 셕연을 벽셜도로 안침ᄒᆞ라ᄒᆞ신니", "problem": "the command forms (~ᄒᆞ라 ᄒᆞ시고) and the object words are misread, which changes what the Emperor orders", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "뎨상호민니보다 / 산호신민니보다", "image": "며 상ᄒᆞ 인민니 모다 / 상ᄒᆞ 인민니 모다", "problem": "'상하 인민이 모두' ('all people high and low') is garbled twice", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "부인을 위로하야 환희와 난항의 말을", "image": "부인을 위로ᄒᆞ야 왕회와 난향의 말을", "problem": "the name 왕회 is read as 환희 ('joy'); the translation then speaks of 'past joys and sorrows'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "하 (throughout)", "image": "ᄒᆞ (arae-a)", "problem": "the archaic arae-a is silently modernized to 하 throughout", "severity": "minor", "class": "O8" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "환희와 난항의 말을 설화하시니", "english": "shared stories of their past joys and sorrows", "problem": "rests on the misread name; the source says they told the words (story) of Wang-hoe and Nan-hyang", "severity": "moderate", "class": "T7", "kind": "misread" },
+          { "source": "왕회난 부인드려 거토하시고 서연을 벽셜드려 안침하시니", "english": "He ordered that the consort be spared and returned to her lady-in-waiting status, and he provided a quiet place for her to reside", "problem": "a smoothed guess over garbled OCR; the specific orders in the source are not recoverable from this English", "severity": "moderate", "class": "T7", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The text is the right leaf and the story's outline (the Emperor praises the King of Chu's couple, the banquet ends, a filial wife is honoured) comes through. But about half the lines of the cursive Hangul are misread, and the English smooths over them, turning a name into 'joys'. Usable as a gist, with a caveat."
+  },
+  {
+    "book_id": "6992f412c8c6ac61574e753f", "slot": 118, "title": "臺灣番社風俗 (Taiwan Fanshe Fengsu: Customs of Taiwans Indigenous People)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A Qing album of Taiwanese indigenous customs; the spread shows indigenous people threshing and storing grain in a raised granary, captioned 収貯.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "page_verdict": "do_not_show",
+    "pages": [
+      {
+        "page_number": 10,
+        "right_page": "yes",
+        "form": "plate",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "# 収貯 (the only text on the leaf)", "english": "<margin>Reaping Grain <note>original: \"刈禾\" (yì hé). Followed by two red artist seals.</note></margin> -># Reaping the Grain<-", "problem": "a second caption '刈禾 / Reaping the Grain', quoted as 'original', is not on the leaf; the only caption is 収貯", "severity": "serious", "class": "T10", "kind": "confabulation" },
+          { "source": "(the image)", "english": "\"groups of farmers are bent low over the golden stalks, using hand sickles … laborers utilize shoulder poles … the water buffalo, shown here pulling the heavy cart … a small wooden bridge crossing a quiet stream\"", "problem": "none of this is in the picture. It shows four people threshing with long paddles on a mat, two men loading a cart by hand, a resting (not pulling) buffalo, and a raised granary; there are no sickles, shoulder poles, bridge or stream", "severity": "serious", "class": "T10", "kind": "confabulation" },
+          { "source": "(the album)", "english": "\"a quintessential example of the Pictures of Tilling and Weaving (Gengzhi Tu) … this new section transitions to a different classical work\"", "problem": "it misidentifies the album; this is the Taiwan indigenous-customs album, not a Gengzhi tu", "severity": "serious", "class": "T15", "kind": "confabulation" }
+        ],
+        "other": [
+          { "note": "The English pane is an invented essay (with bullet points and a 'food security' framing) on a plate whose only text is a two-character caption.", "severity": "serious", "class": "T10", "kind": "confabulation" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The English gives a caption '刈禾 / Reaping the Grain' as 'original' and describes farmers with sickles, shoulder-pole porters, a buffalo pulling the cart and a bridge over a stream. The leaf carries only the caption 収貯 and shows threshing with paddles, hand-loading of a cart, a resting buffalo and a granary.",
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The transcription (the caption 収貯 and a fair image description) is right, but the English is a confabulated essay. It has an invented second caption, scenes not in the picture, and the album is misidentified as a Gengzhi tu. A reader would be misled about what the painting shows."
+  },
+  {
+    "book_id": "6a06ce519a48d5139995b4bb", "slot": 119, "title": "校註婦人良方大全 Furen Daquan Liangfang, Vol. 4", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A Japanese kunten-marked edition (1636) of Xue Ji's annotated Furen liangfang; the page is case notes and the formulas 桑螵蛸散 and 縮泉丸.",
+    "rights_flag": null,
+    "structure_note": "Only 25 of 142 pages have OCR (24 translated), so the volume is mostly untranscribed.",
+    "on_sight_defect": false,
+    "page_verdict": "show",
+    "pages": [
+      {
+        "page_number": 15,
+        "right_page": "yes",
+        "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "益智仁<gloss>分等</gloss>", "image": "益智仁 等分 (small double-column note)", "problem": "the two-column note is read in the wrong order (分等 for 等分); the translation is right", "severity": "minor", "class": "O12", "kind": "layout" },
+          { "ocr": "(kunten)", "image": "kaeriten marks (レ, 一, 二) and okurigana", "problem": "only some of the okurigana are kept, as <gloss>, and the kaeriten are dropped. This is acceptable for a reader of the Chinese, but the kana are tagged as glosses", "severity": "minor", "class": "O10" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "鹿茸炙", "english": "Deer Antler honey-toasted", "problem": "炙 alone does not specify honey", "severity": "minor", "class": "T10", "kind": "added_gloss" },
+          { "source": "泥屬於火", "english": "Other doctors, stubbornly believing it was caused by fire", "problem": "'other doctors' is supplied; it is a reasonable inference", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "The text and doses are transcribed correctly (三十枚, 二兩, 二三錢, 七十丸) and translated faithfully. There are only small liberties ('honey-toasted'). Sound for a reader."
+  },
+  {
+    "book_id": "6992cdb543713c66ea63818d", "slot": 120, "title": "三才圖會(四十七)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A juan of the Sancai tuhui; the leaf is the left half of a woodcut of a ceremonial carriage.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "page_verdict": "show_with_caveat",
+    "pages": [
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "form": "plate",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "(no text on the leaf)", "english": "<header>Collected Illustrations of the Three Realms, Utensils Volume Five</header>", "problem": "a running header that is not on the leaf; the leaf has no text at all", "severity": "moderate", "class": "T10", "kind": "added_gloss" },
+          { "source": "(no text on the leaf)", "english": "\"The right side of this illustration is missing from this specific folio; in the original complete work, the right-hand page would have shown … the mechanical 'South-Pointing' figure\"", "problem": "speculation stated as fact. The other half is on the facing page of the spread, not missing, and its content is guessed. The identification as the Jade Chariot is bracketed, but the note asserts it", "severity": "moderate", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "A plate with no text gets a written 'translation' (a bulleted visual description) in the English pane.", "severity": "minor", "class": "T16" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "book_verdict": "A textless woodcut plate, correctly marked as such in the transcription. The English pane adds an invented running header and states speculation about the missing half as fact. It is harmless but should be flagged as editorial."
+  }
+]

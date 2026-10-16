@@ -1,0 +1,248 @@
+[
+  {
+    "book_id": "6952603cab34727b1f04647b", "slot": 22, "title": "De signatura rerum", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Böhme's De signatura rerum in German, 1635 Amsterdam; matches catalogue.",
+    "rights_flag": null,
+    "structure_note": "45 backsteps / 42 repeats in 391 printed numbers. On this page the stored <page-num> is 121 where the leaf shows '12', so the counts look like misread page numbers from OCR, not a disordered scan.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 12, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<page-num>121</page-num>", "image": "12", "problem": "printed page number misread", "severity": "minor", "class": "O7", "kind": "misread" },
+          { "ocr": "nach dem wird dʒ", "image": "nach deme wird dʒ", "problem": "small spelling normalisation", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "RERVM, CAP. I.", "english": "OF THE NATURE OF THINGS, CHAPTER I.", "problem": "running head 'RERVM' (of things) expanded to 'of the nature of things'", "severity": "minor", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean transcription of the Fraktur. The translation is faithful and its notes are reasonable. The only slips are a misread page number and a running head that the translation expands."
+  },
+  {
+    "book_id": "69529012b184004c526a1455", "slot": 23, "title": "De claris mulieribus (c.1474-75 Strasbourg incunabulum)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Boccaccio incunabulum. The page is the end of the Rhea Ilia chapter, which is consistent with the work.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 68, "right_page": "yes", "form": "print",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "(transcription begins) cluſiones ignomioſe·fugeq;·", "image": "the leaf has about 25 lines above this, from 'crimē ( q̄tumcunq; regia fuerit femina ) instituto veteri regio iussu exposititi filij·et ipa viua in fossa est' down to 'necari·ex-'", "problem": "first ~25 of ~35 lines dropped; only the last ten lines are transcribed", "severity": "serious", "class": "O5", "kind": "omission" },
+          { "ocr": "Line 27: `tas opť alere ...` … Wait, line 26: `excluſiones` - the 'clu' is on the next line? No, it's one word. Line 26: `nec", "image": "plain text lines", "problem": "model working notes ('Line 27:', backticks, 'Wait, line 26 …') stored as the transcription and shown to readers", "severity": "serious", "class": "O15", "kind": "other" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "Sen:|ciant ergo demētes", "english": "Seneca <note>Lucius Annaeus Seneca, the Roman Stoic philosopher…</note> says: let the madmen know", "problem": "'Sen-ciant' (sentiant, a word split across the line) read as an abbreviation of Seneca, with an invented attribution and an invented note", "severity": "serious", "class": "T10", "kind": "added_gloss" },
+          { "source": "dehonestas opť alere q̄s honestas potuissz auar⁹ cōiugib⁹ iungē", "english": "a dishonorable state seeks to nourish those whom integrity might have sustained; or the greedy man seeks to join them to husbands", "problem": "garbled: the sense is that the dishonest, out of avarice, choose to keep [in cloisters] the girls they could honestly have married off; the English makes the greedy man the one who marries them off", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "(lines 1–25 of the leaf)", "english": "(absent; English begins '...ignominious exclusions')", "problem": "translation covers only the fragment the OCR kept; most of the page's argument against forced cloistering is missing", "severity": "serious", "class": "T9", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "Leaked reasoning ('Wait, line 26: … No, it's one word.') and 'Line NN:' prefixes in the reader's transcription pane", "severity": "serious", "class": "O15", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The page is broken. The OCR stored the model's line-by-line working notes and dropped about three-quarters of the leaf. The translation covers only the tail, and it turns 'Sen-ciant' into a fabricated quotation from Seneca, complete with a note. Re-OCR is needed."
+  },
+  {
+    "book_id": "6970a31cd0c3aedc9cf10a92", "slot": 24, "title": "50 Homilien oft verclaringhen", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Dutch Macarius homilies, Antwerp 1580; the page is Homily XIV.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 115, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Godt hertelic bidden", "image": "Godt hertelick bidden", "problem": "letter dropped", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "<margin>Ioan. 15. a</margin>", "english": "<margin>John 15:5</margin>", "problem": "section letter normalised to a verse number (correct verse, but not what the margin prints)", "severity": "minor", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "Catchword repeated as a <meta> tag at the end of the English text", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "An accurate transcription of black-letter Dutch, with a faithful, readable translation."
+  },
+  {
+    "book_id": "6976f5fb7b4366f057e0e974", "slot": 25, "title": "Basilica chymica", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "The page is from Crollius's Tractatus de signaturis internis rerum, which is bound with the Basilica chymica (p. 33 of that treatise).",
+    "rights_flag": null,
+    "structure_note": "892 page records against pages_count 884, so the field is stale. The 362 printed repeats fit separately paginated treatises bound in one volume (this page is p. 33 of De signaturis), not a defect.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 759, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "ſemper igitur fuit (& hoc eſt nomen Eſſentiale", "image": "ſemper igitur יהוה ( & hoc eſt nomen Eſſentiale", "problem": "Hebrew Tetragrammaton printed in the line replaced by Latin 'fuit'", "severity": "moderate", "class": "O10", "kind": "misread" },
+          { "ocr": "τετραγράμματον", "image": "τετραγράμματον (printed with a blot)", "problem": "fine", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<margin>Nihil Diuinum. Al ph. te-nebroſum. Lux tene-broſa.</margin>", "english": "Nothing Divine is dark. The dark Beginning. The Dark Light.", "problem": "'is dark' added to the first gloss; 'Aleph tenebrosum' (the dark Aleph) rendered as 'the dark Beginning'", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "ſemper igitur [יהוה]", "english": "Therefore He always was", "problem": "follows the OCR's 'fuit'; the Hebrew name the sentence turns on is lost", "severity": "minor", "kind": "omission" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Sound OCR and translation of a dense Paracelsian passage. Caveat: the Hebrew Tetragrammaton printed in the last lines was silently replaced by 'fuit', and the margin gloss 'Aleph tenebrosum' is mistranslated."
+  },
+  {
+    "book_id": "6a7c1da87fbf2dd065f98b08", "slot": 26, "title": "Alfarabi, Über den Ursprung der Wissenschaften (De ortu scientiarum)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Baeumker's 1916 edition (Beiträge XIX.3); this page is the publisher's series advertisement at the back.",
+    "rights_flag": null,
+    "structure_note": "38 of 50 pages translated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 41, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Hans Lelsegang", "image": "Hans Leisegang", "problem": "i read as l in a name (the translation corrects it)", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A publisher's back-list page, transcribed and translated accurately, including prices and pagination. The book is 1916; its editor Baeumker died in 1924, so no rights concern."
+  },
+  {
+    "book_id": "69f33160876dd827cbc48b8b", "slot": 27, "title": "Statuta Nova 1 Edward III to 9 Henry VI, mid 15th century", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Law French manuscript statute book. This leaf is 1 Henry IV, cc. 7–8 (liveries; grants by letters patent).",
+    "rights_flag": null,
+    "structure_note": "The packet stratum says 'print', but this is a manuscript. 96 printed numbers in a manuscript are probably chapter or folio numerals, so the backsteps are not meaningful.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 293, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "ount este oistez et possessions des terres et tenementz par leur droit et title tant par disseisin oue force sur le Roi d'Engleterre que par suggestion", "image": "ount este seisez & possessionez des terres & tentz p lo[ur] droit & title tanq a darrein venu n[ost]re dit s[eigneu]r le Roi en Englet[er]re que p[ar] suggestion", "problem": "'seised and possessed … until the last coming of our lord the King into England' misread as 'ousted … by disseisin with force upon the King of England'; this invents a forcible disseisin the statute does not state", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "Item pour nourir maintenat … <margin>Item</margin>", "image": "marginal chapter numerals '¶ vii' and '¶ viij' in red/blue", "problem": "chapter numbers vii/viii rendered as 'Item' margins; 'vii' placed mid-text", "severity": "moderate", "class": "O12", "kind": "layout" },
+          { "ocr": "Curant tous foitz … Et amant uncore une mesme unre sur le Roi doigne", "image": "Sauant tous foitz … Et sauant auxi que mesme n[ost]re s[eigneu]r le Roi doigne", "problem": "the 'saving' provisos misread as nonsense words", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Et si aucun face la contraire a ceo dnement pour quil face", "image": "Et si ascun s[eigneu]r face la contrarie & de ceo duement p[ro]ve q[u]il face", "problem": "'lord' dropped, so the fine-and-ransom clause loses who it applies to", "severity": "moderate", "class": "O5", "kind": "omission" },
+          { "ocr": "par son dit livere a forface come fee", "image": "p[er]de son dit livere & forface son fee", "problem": "penalty misread: 'lose his livery and forfeit his fee' becomes 'by his said livery forfeits as fee'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "sans du proces de loi considerant", "image": "& n[ost]re dit s[eigneu]r le Roi considerant (reading uncertain)", "problem": "'without due process of law' appears to be a fill where the hand reads 'our said lord the King'", "severity": "moderate", "class": "O1", "kind": "illegible_fill" },
+          { "ocr": "ravissez de lui ou lautre loys", "image": "appreez/apprisez de lun ou lautre ley", "problem": "'learned in the one law or the other' misread", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "tant par disseisin oue force sur le Roi d'Engleterre", "english": "as much by disseisin with force upon the King of England", "problem": "carries the OCR misread: the statute concerns those seised until Henry IV's arrival in England, not a forcible disseisin", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "source": "a forface come fee pour toutz iours", "english": "he shall forfeit his said livery as a fee forever", "problem": "penalty wrong: he loses the livery and forfeits his fee (annuity) forever", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "ceux que ne ount pas Signez de moliere lessez", "english": "those who have not signed of their own will", "problem": "fluent sense given to a garbled reading at the top of the leaf", "severity": "moderate", "class": "T7", "kind": "illegible_fill" },
+          { "source": "et ceux qui sont de leur conseil … ravissez de lui ou lautre loys", "english": "those who are of their counsel, both spiritual and temporal", "problem": "'learned in either law' dropped", "severity": "minor", "class": "T9", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "<page-num>1</page-num> invented for the heading 'Primo'; the translation's opening <note> asserts content of the previous leaf", "severity": "minor", "class": "O16", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The page gives the gist of 1 Hen. IV cc. 7–8 (the livery statute) correctly, but many abbreviations are misread. One misread invents a 'disseisin with force upon the King' in place of 'until the King's last coming into England'. The penalty clause is also wrong, so a legal historian would be misled. Readings are judged at screen resolution, so confidence is medium."
+  },
+  {
+    "book_id": "697c8e11f81f9680d27f6347", "slot": 28, "title": "Farmaceutica mercuriale", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Lancilotti's iatrochemical recipes, Modena 1683.",
+    "rights_flag": null,
+    "structure_note": "257 records against pages_count 253, so the field is stale.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 147, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "in stussa", "image": "in ſtuffa", "problem": "long-s/ff misread", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The translation's <meta> says 'the catchword provided from the previous page was \"Hor\"' and that 'de' completes 'alcalisade'. 'Hor' is this page's own catchword, and 'alcalisade' is a guess.", "severity": "minor", "class": "T15", "kind": "added_gloss" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Accurate recipe text, and quantities and apparatus are rendered correctly. The only fault is a muddled continuity note in the metadata."
+  },
+  {
+    "book_id": "6984e8498a2f054f912420cb", "slot": 29, "title": "Pandora, das ist Die edleste Gab Gottes", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Reusner's Pandora, Basel 1582, the alchemical classic.",
+    "rights_flag": null,
+    "structure_note": "366 records against pages_count 358, so the field is stale.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 173, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "das wesen der metallen nie verkehren", "image": "das wesen der metallen nit verkehren", "problem": "nit → nie (same sense)", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "English kept in the short source line-breaks, so prose reads as broken verse", "severity": "minor", "class": "T16", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A faithful transcription and translation, including the pseudo-Aristotelian 'Sciant artifices' dictum. Its only flaw is a cosmetic line-break carryover in the English."
+  },
+  {
+    "book_id": "697704f48434ac5a1c2d966d", "slot": 30, "title": "Bespiegelingen van Godt en godtsdienst", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Vondel's didactic poem, Amsterdam 1662; Book V on the Trinity.",
+    "rights_flag": null,
+    "structure_note": "257 records against pages_count 244, so the field is stale.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 227, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Gelyck teelt", "image": "Gelijck teelt", "problem": "spelling normalised", "severity": "minor", "class": "O8", "kind": "misread" },
+          { "ocr": "eenvouwigkeit", "image": "eenvouwigheit", "problem": "letter slip", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "toch anders dan den Geest der liefde", "english": "if not the Spirit of love", "problem": "free rendering of 'yet other than'; sense acceptable", "severity": "minor", "kind": "mistranslation" },
+          { "source": "in geen vermenging treden", "english": "enter into no mingling <note>…rejection of 'Modalism'…</note>", "problem": "note names the wrong error: 'no mingling' guards against confusion of the persons, and the note's gloss of modalism is loose", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A clean transcription of the alexandrines, and a line-by-line translation that keeps the verse form. A theological note is slightly off."
+  }
+]

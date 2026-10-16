@@ -1,0 +1,639 @@
+[
+ {
+  "book_id": "69b52bd6d6bd9f58edb24d5e",
+  "slot": 172,
+  "title": "De mundanis apotelesmatibus excerptum ex libro Albumasaris",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "A Greek astrological manuscript; this leaf is a table of contents of astrological chapters (καταρχαί, Hermes, Julian of Laodicea, Heliodorus), consistent with the catalogue.",
+  "rights_flag": null,
+  "structure_note": "The page is a recto with the stamped modern foliation '195', and the stored page-num is 195. 25 backsteps and 27 repeats are what you would expect from a mix of chapter numerals and foliation read as printed numbers. That points to an instrument artefact, not a scan splice.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 393,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "Ἄτροποι <term>χρόνοι</term> κατὰ ζῴδιον, ὁποῖα ἑκάστῳ συμβήσεται",
+      "image": "Ἄτροφοι χρό(νοι) κατὰ ζώδιον, ἐπ' αὐ(τ)ὴ(ν) (καὶ) κατ' αὐτ(ὴν) γέν(εσιν) (approx.; the second half begins ἐπαυ… and ends …γενή…)",
+      "problem": "the second half of the last chapter title is a fluent phrase ('what will happen to each') that is not on the leaf; also Ἄτροφοι read as Ἄτροποι",
+      "severity": "serious",
+      "class": "O1",
+      "kind": "illegible_fill"
+     },
+     {
+      "ocr": "περὶ σφαγίων",
+      "image": "περὶ στηριγμῶν",
+      "problem": "'on (planetary) stations' read as 'on sacrificial victims'; this changes the chapter's subject",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "σχόλιά γε τὸ περὶ <term>χρόνων</term> διαιρεῖται ἐκ τῶν Ἡλιοδώρου:",
+      "image": "σχόλιά γε τὸ περὶ χρ(όνων) διαιρεῖ ἐκ τ(ῶν) Ἡλιοδώρου οἰωνοῦ(?)",
+      "problem": "final word of the entry dropped",
+      "severity": "minor",
+      "kind": "omission"
+     },
+     {
+      "ocr": "Καταρχαὶ ἀναγκαῖαι ἀπὸ τυχὸν πλάνης, καὶ μετὰ τὴν δίκην",
+      "image": "Καταρχὴ ἀναγκαία δέον ἀπέτυχον πλάνη, ἡ κατὰ τὴν δίκην",
+      "problem": "the opening of a hard, abbreviated heading has been normalised",
+      "severity": "moderate",
+      "class": "O8",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "περὶ σφαγίων",
+      "english": "On sacrificial victims",
+      "problem": "faithful to the OCR, but it carries the misread (the leaf says 'on stations')",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "source": "ὁποῖα ἑκάστῳ συμβήσεται",
+      "english": "what will happen to each",
+      "problem": "translates the invented tail of the last heading",
+      "severity": "serious",
+      "class": "O1",
+      "kind": "illegible_fill"
+     }
+    ],
+    "other": [],
+    "confidence": "medium",
+    "not_this_leaf": true,
+    "not_this_leaf_evidence": "The last entry is stored as 'Ἄτροποι χρόνοι κατὰ ζῴδιον, ὁποῖα ἑκάστῳ συμβήσεται' ('…what will happen to each'). After 'κατὰ ζώδιον,' the leaf reads 'ἐπαυ… κατ' αὐτ… γενή…'. No 'ὁποῖα ἑκάστῳ συμβήσεται' is written there."
+   }
+  ],
+  "book_verdict": "Right leaf. The table of contents is mostly read and faithfully translated, with the folio and the chapter numerals correct. One chapter title is misread (σφαγίων for στηριγμῶν), and the tail of the last title is a fluent invention not on the leaf.",
+  "page_verdict": "do_not_show"
+ },
+ {
+  "book_id": "69bfcc988ab50eb88e8c5589",
+  "slot": 173,
+  "title": "Bodleian Library MS. Barocci 29",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "A Greek Gospel lectionary or Gospel book (Mark 10:20–24 with a lectionary rubric), consistent with 'Greek Liturgical Manuscript'.",
+  "rights_flag": null,
+  "structure_note": "The stored page-num is 119, but the ink foliation at top right looks like '149' (low confidence). This is probably a misread leaf numeral, not a structural fault.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 301,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "<margin>ἐν τῷ <unclear>ι</unclear></margin> (twice)",
+      "image": "marginal section numerals 'ϙη'/'ρο' with a red Ammonian-canon mark (εμ / C)",
+      "problem": "the marginal section numbers are rendered as an invented phrase 'ἐν τῷ ι' twice",
+      "severity": "moderate",
+      "class": "O12",
+      "kind": "misread"
+     },
+     {
+      "ocr": "ἐφύλαξα",
+      "image": "ἐφυλαξάμην",
+      "problem": "verb form normalised to the modern critical text",
+      "severity": "minor",
+      "class": "O8",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "<margin>ἐν τῷ ι</margin>",
+      "english": "in the 10th (×2)",
+      "problem": "translates the misread marginalia, and the three margins are moved out of place into a cluster mid-text",
+      "severity": "minor",
+      "kind": "layout"
+     }
+    ],
+    "other": [],
+    "confidence": "high",
+    "not_this_leaf": false
+   }
+  ],
+  "book_verdict": "Right leaf. The Mark 10:20–24 text and the red lectionary rubric ('τῇ παρασκευῇ τῆς ι' ἑβδομάδος…') are read and translated correctly. The only weakness is the marginal section numerals, which became an invented 'in the 10th'.",
+  "page_verdict": "show_with_caveat"
+ },
+ {
+  "book_id": "6993837f50654cbbe2916cba",
+  "slot": 174,
+  "title": "Thucydides, Histories (MS, 11th c.)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Vat. gr. 126, Thucydides book 5 (5.46–47); matches the catalogue.",
+  "rights_flag": "The scan carries a burned-in 'Copyright © Biblioteca Apostolica Vaticana' banner and a diagonal 'Biblioteca Apostolica Vaticana © ALL RIGHTS RESERVED' watermark. The work is medieval; the flag concerns the image licence, not the text.",
+  "structure_note": "Large backstep and repeat counts in a manuscript usually reflect misread folio numerals. Nothing on this page suggests a splice.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 250,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "σεισμοῦ γὰρ γενομένου περὶ τὴν Κύπρον ἡνίκα ἡ ἐκκλησία αὐτῶν ἐβλάβη, τῇ δὲ ὑστεραίᾳ ἐκκλησίαν νικῶσαν Λακεδαιμονίων αὐτῶν ἡ πόλις",
+      "image": "σεισμοῦ γενομένου πρίν τι ἐπικυρωθῆναι, ἡ ἐκκλησία αὕτη ἀνεβλήθη. τῇ δ' ὑστεραίᾳ ἐκκλησίᾳ ὁ Νικίας, καίπερ τῶν Λακεδαιμονίων αὐτῶν ἠπατημένων",
+      "problem": "an earthquake 'around Cyprus' and an assembly 'harmed' are invented; Nicias disappears; the first ~20 lines (Thuc. 5.45.4–46.3) are a fluent pseudo-Thucydides with only scattered words from the leaf",
+      "severity": "serious",
+      "class": "O1",
+      "kind": "confabulation"
+     },
+     {
+      "ocr": "ἐψηφίσατο δὲ πάντων πειθομένων δοῦναι αὐτοῖς τὴν κολασιν Λακεδαιμονίων ... ἀμφὶ πολλὰ καὶ τοῖς ξυμμάχοις εἶναι",
+      "image": "ἔπεισέ τε πέμψαι πρέσβεις, ὧν καὶ αὐτὸς ἦν, κελεύσοντας Λακεδαιμονίους … Πάνακτόν τε ὀρθὸν ἀποδιδόναι καὶ Ἀμφίπολιν, καὶ τὴν Βοιωτῶν ξυμμαχίαν ἀνεῖναι",
+      "problem": "the embassy's demands (Panactum, Amphipolis, the Boeotian alliance) become an invented vote to 'punish the Lacedaemonians'; Ἀμφίπολιν read as 'ἀμφὶ πολλὰ'",
+      "severity": "serious",
+      "class": "O1",
+      "kind": "confabulation"
+     },
+     {
+      "ocr": "σπονδὰς ἐποιήσαντο κατὰ Ἀθηναίους καὶ Λακεδαιμονίους καὶ Μαντινεῖς καὶ Ἠλείους πρὸς αὑτοὺς",
+      "image": "σπονδὰς ἐποιήσαντο ρ' (ἔτη) Ἀθηναῖοι καὶ Ἀργεῖοι καὶ Μαντινῆς καὶ Ἠλεῖοι ὑπὲρ σφῶν αὐτῶν",
+      "problem": "Sparta is inserted as a party to the Athens–Argos–Mantinea–Elis treaty and Argos is dropped from the parties, which inverts the treaty's point",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "<margin>σπονδαὶ αὐτῶν ἐν ἐνιαυτῷ τεταγμέναι</margin>",
+      "image": "σπονδαὶ ἀθην(αίων) ὑπὲρ ἑκατὸν (ἐτῶν) ταχθ(εῖσαι)",
+      "problem": "a hundred-year treaty is glossed as 'set within a year'",
+      "severity": "moderate",
+      "class": "O7",
+      "kind": "misread"
+     },
+     {
+      "ocr": "λύειν δὲ μὴ ἐξεῖναι τὴν πόλιν τὴν ταύτην τὴν πόλιν",
+      "image": "καταλύειν δὲ μὴ ἐξεῖναι τὸν πόλεμον πρὸς ταύτην τὴν πόλιν",
+      "problem": "'end the war against this city' garbled into 'dissolve the city'",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "σεισμοῦ γὰρ γενομένου περὶ τὴν Κύπρον…",
+      "english": "For an earthquake having occurred around Cyprus at the time their assembly was harmed…",
+      "problem": "a fluent English rendering of the confabulated Greek; the reader gets a narrative Thucydides never wrote",
+      "severity": "serious",
+      "class": "T7",
+      "kind": "confabulation"
+     },
+     {
+      "source": "σπονδὰς ἐποιήσαντο κατὰ Ἀθηναίους καὶ Λακεδαιμονίους",
+      "english": "They made treaties according to the Athenians and Lacedaemonians and Mantineans and Eleans",
+      "problem": "carries the inserted Lacedaemonians into the treaty text",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "source": "ἴσοι μοι ἦσαν αὐτοῖς πρὸς τὰς ὀργὰς",
+      "english": "<note>i.e., their mutual grievances</note>",
+      "problem": "an unmarked explanatory note added to invented text",
+      "severity": "minor",
+      "class": "T10",
+      "kind": "added_gloss"
+     }
+    ],
+    "other": [
+     {
+      "note": "<summary> and <keywords> blocks are stored at the end of the translation; minor if the reader strips them",
+      "severity": "minor",
+      "class": "D1",
+      "kind": "other"
+     }
+    ],
+    "confidence": "high",
+    "not_this_leaf": true,
+    "not_this_leaf_evidence": "The stored Greek reads 'σεισμοῦ γὰρ γενομένου περὶ τὴν Κύπρον ἡνίκα ἡ ἐκκλησία αὐτῶν ἐβλάβη'. The leaf, legibly, reads 'σεισμοῦ γενομένου πρίν τι ἐπικυρωθῆναι, ἡ ἐκκλησία αὕτη ἀνεβλήθη. τῇ δ' ὑστεραίᾳ ἐκκλησίᾳ ὁ Νικίας…' (Thuc. 5.45.4–46.1). The top half of the page is invented over the real text, which is legible."
+   }
+  ],
+  "book_verdict": "Right leaf, but the top half of the transcription (Thuc. 5.45–46) is a fluent invention: an earthquake 'around Cyprus', a vote to punish Sparta. The legible manuscript has Nicias's embassy instead. In the treaty below, Sparta is wrongly listed as a party. Do not show.",
+  "page_verdict": "do_not_show"
+ },
+ {
+  "book_id": "69bfcd228ab50eb88e8c7d27",
+  "slot": 175,
+  "title": "Bodleian Library MS. Barocci 50.2",
+  "tradition": null,
+  "shelf_fit": "wrong",
+  "shelf_note": "The display title says 'Arabic Grammar', but the leaf is a Greek grammatical and etymological lexicon (entries Ἡλικιώτης, Ἥττων/ἥσσων, Ἥσυχος, Ἤιεσαν, discussing Attic forms and accents). Nothing on it is Arabic.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 68,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "ἀπὸ μάλου γὰρ ταχέως τῆς ἀρατιάτης ἡλικιώτης· ἀπὸ ἀμφικαθαρίδου εἰρημένου ὁ δὲ ἀπὸ τῆς τοξότης πόλης τοῦ δυσμήτης",
+      "image": "ἀπὸ μεγάλου γὰρ … ταξεώτης στρατιώτης ἡλικιώτης· ἐν (δὲ) μὴ καθαρ(εύουσι) … ὁ δεσπότης τοξότης πολίτης …",
+      "problem": "the lexicon's list of example nouns in -της (στρατιώτης, δεσπότης, πολίτης) is garbled into non-words and a phrase ('the archer city')",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "καὶ ὅσα ἀπὸ τοῦ ῡς ἦς ἀρσενικὰ ἐκφέρονται",
+      "image": "καὶ ὅσα ἀπὸ τοῦ ας ἢ ος ἀρσενικῶν μετασχηματ(ίζεται)",
+      "problem": "the grammatical rule (masculines in -ας/-ος) is misread",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "ὁμόρροιχος",
+      "image": "ὁμόφωνος(?)",
+      "problem": "a recurring term is read as a non-word",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "ἀπὸ ἀμφικαθαρίδου … τοξότης πόλης τοῦ δυσμήτης",
+      "english": "from amphikatharidou (thoroughly cleansed) … the toxotēs (archer) city of the dysmētēs (one who sets/sunsets)",
+      "problem": "confident glosses are invented for misread non-words; the English reads as nonsense with no mark of doubt",
+      "severity": "serious",
+      "class": "T7",
+      "kind": "added_gloss"
+     },
+     {
+      "source": "Ηλικιώτης χῡ θυσίαν",
+      "english": "Hēlikiōtēs (peer) [is] chū (of the) sacrifice",
+      "problem": "an abbreviation (χωρὶς) is glossed as 'of the' and the result is not sense",
+      "severity": "moderate",
+      "class": "T7",
+      "kind": "mistranslation"
+     }
+    ],
+    "other": [
+     {
+      "note": "The display title 'Arabic Grammar' misdescribes a Greek lexicon",
+      "severity": "serious",
+      "class": "I7",
+      "kind": "other"
+     }
+    ],
+    "confidence": "medium",
+    "not_this_leaf": false
+   }
+  ],
+  "book_verdict": "Right leaf of a Greek etymological and grammatical lexicon, catalogued as 'Arabic Grammar'. The OCR follows the entries but garbles most of the technical content. The translation adds confident glosses to the garble ('the archer city of the one who sets'). Do not show.",
+  "page_verdict": "do_not_show"
+ },
+ {
+  "book_id": "69b52c5c3dd6d9423027f9f2",
+  "slot": 176,
+  "title": "Galeni Anatomicae aggressiones",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "The leaf holds pharmacological recipes (salves, honey, wine, frogs, mouse), not anatomy. Galenic manuscripts often bind several works together, so this does not show the catalogue is wrong; left as fits.",
+  "rights_flag": null,
+  "structure_note": "146 backsteps and 169 repeats out of 438 numbered pages is high. The stored page-num 44 matches a modern pencil '44' at the foot, but the red marginal recipe numerals (ρλγ…) are probably also being read as page numbers. That points to an instrument artefact, not a splice.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 101,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {
+      "ocr": "ἡ μελισσόφυλλος εὐώδης ἐστὶν ὁ δὲ οἶνος μετ' αὐτῆς ἐψηθεὶς ἐκμυστηρίζει τὰ λιχηνώδη σὺν ὁμιλίᾳ.",
+      "image": "Κ(αὶ) μέλι· καὶ ἡ ῥίζα … ἐν οἴνῳ ἢ λεανθεῖσα ἐν μέλιτι· τ(οὺς) λιχῆνας σὺν ὠμηλύσει",
+      "problem": "the opening line is invented ('lemon balm is fragrant'); 'with raw barley-meal' (σὺν ὠμηλύσει) becomes 'with conversation' (σὺν ὁμιλίᾳ)",
+      "severity": "serious",
+      "class": "O1",
+      "kind": "illegible_fill"
+     },
+     {
+      "ocr": "ἡ δὲ ῥητίνη εὐώδης ἐστὶ σὺν ὠδίνι· μίξον σὺν κηρωτῇ",
+      "image": "… σὺν μέλιτι … σὺν κηρωτῇ· ὀξυμέλιτι … ἑφθή",
+      "problem": "'resin is fragrant, with labour-pains' is not on the leaf",
+      "severity": "serious",
+      "class": "O1",
+      "kind": "illegible_fill"
+     },
+     {
+      "ocr": "<margin>ρξγ</margin> … <margin>ρπβ</margin> (ten numerals)",
+      "image": "seven red marginal numerals, about ρλγ–ρμ",
+      "problem": "recipe numbers misread and multiplied",
+      "severity": "moderate",
+      "class": "O7",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {
+      "source": "σὺν ὁμιλίᾳ",
+      "english": "when applied with conversation <note>likely referring to a specific social or rhythmic application of the poultice</note>",
+      "problem": "an invented note explains a misread as a medical practice",
+      "severity": "serious",
+      "class": "T10",
+      "kind": "added_gloss"
+     },
+     {
+      "source": "ζωοφύτων",
+      "english": "inflammations of living plants <note>likely meaning 'raw' or 'fresh' herbs</note>",
+      "problem": "a speculative unmarked note on garbled text",
+      "severity": "moderate",
+      "class": "T10",
+      "kind": "added_gloss"
+     },
+     {
+      "source": "<margin>ρπ</margin>",
+      "english": "<margin>180</margin>",
+      "problem": "the sequence jumps from 169 to 180",
+      "severity": "minor",
+      "kind": "misread"
+     }
+    ],
+    "other": [
+     {
+      "note": "<summary> and <keywords> blocks are stored in the translation; minor if the reader strips them",
+      "severity": "minor",
+      "class": "D1",
+      "kind": "other"
+     }
+    ],
+    "confidence": "medium",
+    "not_this_leaf": true,
+    "not_this_leaf_evidence": "The stored first line reads 'ἡ μελισσόφυλλος εὐώδης ἐστὶν … σὺν ὁμιλίᾳ'. The leaf's first line begins 'Κ(αὶ) μέλι· καὶ ἡ ῥίζα …' and ends 'σὺν ὠμηλύσει'. There is no lemon balm and no 'fragrant' on the leaf, and the second line's 'ῥητίνη εὐώδης … σὺν ὠδίνι' is not there either."
+   }
+  ],
+  "book_verdict": "Right leaf, a damaged page of pharmacological recipes. The OCR opens with invented recipe lines and misreads 'raw barley-meal' as 'conversation'. The translation then adds a note explaining 'conversation' as a poultice technique. Do not show.",
+  "page_verdict": "do_not_show"
+ },
+ {
+  "book_id": "69bfcdae8ab50eb88e8c837e",
+  "slot": 177,
+  "title": "Bodleian Library MS. Canon. Gr. 110",
+  "tradition": null,
+  "shelf_fit": "doubtful",
+  "shelf_note": "The display title is 'The Epistle of Saint James', but this leaf is the opening of Philippians ('ΠΡΟΣ ΦΙΛΙΠΠΗΣΙΟΥΣ', Phil 1:1–2). The title may name only part of a 13-image Pauline/Catholic-epistles selection.",
+  "rights_flag": null,
+  "structure_note": "This 13-page record is probably a selection of images from the manuscript, not the whole manuscript. The image is a close detail photograph, not a full leaf.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 13,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {
+      "ocr": "### $\\overset{\\alpha}{\\text{ἐυχαριστίά ὑπὲρ τῶν φιλιππησίων ἀρετῆς}}$",
+      "image": "α' εὐχαριστία ὑπὲρ τῶν Φιλιππησίων ἀρετῆς καὶ ἐπ' εὐ(?) τελειώσεως",
+      "problem": "LaTeX markup in the transcription heading, with stray accents (ἐυχαριστίά)",
+      "severity": "moderate",
+      "class": "D1",
+      "kind": "layout"
+     }
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {
+      "source": "## :: ΠΡΟΣ ΦΙΛΙΠ :: / ## :: ΠΗΣΙΟΥΣ ::",
+      "english": "TO THE PHILIP :: PIANS",
+      "problem": "the title's line break is kept as two headings",
+      "severity": "minor",
+      "kind": "layout"
+     }
+    ],
+    "other": [
+     {
+      "note": "The description of the illuminated headpiece is shown in the translation as a <note> as if it were text, and the chapter heading is wrapped in <note>",
+      "severity": "moderate",
+      "class": "O15",
+      "kind": "other"
+     },
+     {
+      "note": "Catalogue title 'The Epistle of Saint James' does not match the Philippians opening on this leaf",
+      "severity": "moderate",
+      "class": "I7",
+      "kind": "other"
+     }
+    ],
+    "confidence": "high",
+    "not_this_leaf": false
+   }
+  ],
+  "book_verdict": "Right leaf, and the text (Phil 1:1–2 and its kephalaion title) is correctly read and translated. The caveat is display: LaTeX in the heading and an image description shown as a note. The book is titled for James while the page opens Philippians.",
+  "page_verdict": "show_with_caveat"
+ },
+ {
+  "book_id": "69938e38d5a98fd66f430d70",
+  "slot": 178,
+  "title": "Geography (11th Century Palimpsest, MS Grec 1397)",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Strabo, Geography book 9 (Malian Gulf, Spercheios, Phthia, Pindus); matches.",
+  "rights_flag": null,
+  "structure_note": "The image is a full opening (two leaves, both stamped 227) stored as one page (I3). The OCR runs both columns as a single text. The bottom margins of both leaves carry later-hand notes that are not transcribed.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 236,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "καὶ πᾶσα ἡ ἡμετέρα ἡρακλειώτι καὶ τὴν δυνοίω δευτέραν πολοῦτε … μητρόπολιν δὲ λοπορμήσει δρυνοπορμοζομένην",
+      "image": "… Ἡρακλειῶται καὶ τὴν Δρυοπίδα … μητρόπολιν δὲ … Δρυοπίδος …",
+      "problem": "the right column has many non-words and misreads (Dryopis lost; 'ἡ ἡμετέρα' 'our' invented)",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "(none)",
+      "image": "multi-line marginal notes at the foot of both leaves",
+      "problem": "later-hand marginalia not transcribed",
+      "severity": "minor",
+      "class": "O12",
+      "kind": "omission"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "καὶ πᾶσα ἡ ἡμετέρα ἡρακλειώτι",
+      "english": "and all our Heracleotis",
+      "problem": "'our' comes from the misread, not from Strabo",
+      "severity": "moderate",
+      "class": "T7",
+      "kind": "misread"
+     },
+     {
+      "source": "<margin>στρ.</margin>",
+      "english": "<margin>Strab.</margin>",
+      "problem": "the marginal mark is expanded to an author abbreviation",
+      "severity": "minor",
+      "class": "T10",
+      "kind": "added_gloss"
+     }
+    ],
+    "other": [
+     {
+      "note": "An uncut two-leaf spread is served as one page",
+      "severity": "moderate",
+      "class": "I3",
+      "kind": "layout"
+     }
+    ],
+    "confidence": "medium",
+    "not_this_leaf": false
+   }
+  ],
+  "book_verdict": "Right opening of a damaged Strabo manuscript. The left column is honestly fragmentary, with gaps marked. The right column has many misreads, which the translation mostly marks with ellipses. Usable with a caveat that it is an unsplit spread and partly garbled.",
+  "page_verdict": "show_with_caveat"
+ },
+ {
+  "book_id": "69b3e5e7304c1c6b3950a83c",
+  "slot": 179,
+  "title": "Harmonica",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "Ptolemy, Harmonics II (on the number of tonoi), matching.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 87,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ἢ πάντας ἴσας πάντων ὑπεροχὰς ἀλλήλων ἢ συγχωρητέον, ἐπὶ μηδὲ σκοπεῖν, ἅπαν τὸ πιθανὸν ἀξίαν",
+      "image": "ἢ κατ' ἴσας πάντων ὑπεροχὰς ἀλλήλων οὐ συγχωρητέον, ἐπειδὴ μηδὲ ἔχουσιν … πιθανὴν αἰτίαν",
+      "problem": "the sentence's main verb 'one must NOT concede' loses its negation, and 'since they have no persuasive cause' becomes 'nor consider all probability worthy'; Ptolemy's rejection is turned into a neutral list",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "ἢ πλείους τῶν ἁπάντων τοῦ διὰ πασῶν ἀριθμῶν καὶ λόγον",
+      "image": "ἢ πλείους τῶν ἑπτὰ τοῦ διὰ πασῶν ὅλων τε καὶ λόγον",
+      "problem": "'more than the seven' (the seven species of the octave, the point of the argument) becomes 'more than all'",
+      "severity": "moderate",
+      "class": "O7",
+      "kind": "misread"
+     },
+     {
+      "ocr": "<margin>ἡ γὰρ πασῶν συμφωνία ἡ πρὸς φωνὴν ἡ πρὸς τὸν τόνον τὸ φαινόμενον</margin>",
+      "image": "ἡ τ(οῦ) διὰ τεσσάρων … φωνὴν … τὸ φαινόμενον",
+      "problem": "the marginal note is partly misread",
+      "severity": "minor",
+      "class": "O12",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "ἢ συγχωρητέον, ἐπὶ μηδὲ σκοπεῖν",
+      "english": "or who concede … or [those who] do not even consider",
+      "problem": "carries the lost negation, so the English never says Ptolemy rejects these views",
+      "severity": "serious",
+      "class": "O6",
+      "kind": "misread"
+     }
+    ],
+    "other": [],
+    "confidence": "medium",
+    "not_this_leaf": false
+   }
+  ],
+  "book_verdict": "Right leaf, in a legible humanist hand. The OCR follows Ptolemy's text but misreads 'οὐ συγχωρητέον' as 'ἢ συγχωρητέον' and 'ἑπτὰ' as 'ἁπάντων'. As a result the English loses the claim the paragraph exists to make. Do not show.",
+  "page_verdict": "do_not_show"
+ },
+ {
+  "book_id": "69bfccf78ab50eb88e8c7275",
+  "slot": 180,
+  "title": "Bodleian Library MS. Barocci 17",
+  "tradition": null,
+  "shelf_fit": "fits",
+  "shelf_note": "The leaf carries a short anecdote about Alexander and a statue (Phidias). That is plausible inside a Byzantine miscellany; I can't test the catalogue's 'Encyclopedia of Law' title from one leaf.",
+  "rights_flag": null,
+  "structure_note": "A damaged leaf: the upper half is lost or blank, with a modern '10' and '109' pencilled, and the stored page-num 109 matches the pencil.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 231,
+    "right_page": "yes",
+    "form": "manuscript",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {
+      "ocr": "ἀπὸ τῆς εἰς οὐρανὸν ἀρχομένην ὑπ’ ἀγωγῆς",
+      "image": "ἀπὸ γῆς εἰς οὐρανὸν ἀρχόμενον ὑπ' ἀετῶν βί(ᾳ)(?)",
+      "problem": "'raised from earth to heaven by eagles' (Alexander's flight) misread as 'by training'",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     },
+     {
+      "ocr": "διάπλαστος εἶχεν τὴν ἐμβαίρειαν ταῖς προσόψεσιν",
+      "image": "(ἀνδρ)ιάντος εἶχεν τὴν ἐμφέρειαν τοῖς προσώποις",
+      "problem": "'the statue had the likeness of the faces' garbled",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     }
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {
+      "source": "σὺν τῷ φειδίᾳ",
+      "english": "with the pheidia (thrifty/restrained one)",
+      "problem": "the sculptor Phidias is glossed as 'thrifty one'",
+      "severity": "moderate",
+      "class": "T10",
+      "kind": "added_gloss"
+     },
+     {
+      "source": "ἀπὸ τῆς εἰς οὐρανὸν ἀρχομένην ὑπ’ ἀγωγῆς",
+      "english": "beginning from the heaven upwards by training",
+      "problem": "carries the misread",
+      "severity": "moderate",
+      "class": "O6",
+      "kind": "misread"
+     }
+    ],
+    "other": [],
+    "confidence": "medium",
+    "not_this_leaf": false
+   }
+  ],
+  "book_verdict": "Right leaf, nine lines on a damaged page, all transcribed, with doubt marked. Two misreads (eagles become 'training', statue becomes 'διάπλαστος') and a wrong gloss on Phidias make the English unreliable. Usable only with that caveat.",
+  "page_verdict": "show_with_caveat"
+ }
+]

@@ -1,0 +1,245 @@
+[
+  {
+    "book_id": "69b6e5d0f8a84d859cddaf05", "slot": 162, "title": "Fratris Rogeri Bacon ... opus maius ... ex MS. codice Dubliniensi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Jebb's 1733 edition of Bacon's Opus Majus; the page is the perspectiva section on refraction and the moon illusion.",
+    "rights_flag": null,
+    "structure_note": "7 printed backsteps and 16 repeats over 487 printed numbers in a 524-page book. These are probably plates and misread numerals, not a splice; nothing on this page suggests a problem. Translated 523 vs the pages_translated field 512: the counter is stale.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 387, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "fed folo quando eft prope medium cœli vel in medio", "image": "fed fol quando eft prope medium cœli vel ʳ in medio", "problem": "'sol' read as 'folo' and the footnote cue r dropped here; the r cue is then put on 'Et fi' where the image has s", "severity": "minor", "class": "O12", "kind": "misread" },
+          { "ocr": "<margin>s Mag.</margin>", "image": "ˢ Mag. dicatur.", "problem": "the second line of the footnote ('dicatur.') is dropped", "severity": "minor", "class": "O12", "kind": "omission" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "q Mag. a profundo.", "english": "q Magnified from the bottom.", "problem": "'Mag.' is a manuscript siglum in the variant apparatus (reading 'a profundo'), not 'magnified'; 'p Har.' loses its siglum and 's Mag.' becomes 'Magnitude'. The apparatus is mistranslated throughout", "severity": "moderate", "class": "T13", "kind": "mistranslation" },
+          { "source": "concurfus radii vifualis cum catheto", "english": "meets the perpendicular <note>a line drawn from the object at a right angle to the surface</note>", "problem": "unmarked editorial gloss added inline", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Faithful transcription and translation of the main text. The variant-reading footnotes are mistranslated: 'Mag.' and 'Har.' sigla are read as words ('Magnified', 'Magnitude')."
+  },
+  {
+    "book_id": "69f33423876dd827cbc4c52d", "slot": 163, "title": "Epistolarum Domini Leonardi liber primus incipit", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Humanist manuscript of Leonardo Bruni's letters; the page ends one letter (notaries and secretaries) and opens the letter to Guarino.",
+    "rights_flag": null,
+    "structure_note": "Only 9 of 212 pages have printed numbers in a manuscript, so 3 backsteps among them mean nothing. 9 pages are untranslated.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 153, "right_page": "yes", "form": "manuscript", "not_this_leaf": false,
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Alteriorem fuisse ammu.", "image": "Alieniorem fuisse animum.", "problem": "a key word misread, producing nonsense that the translation carries ('That it was deeper')", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "factum esse nescio te ut", "image": "factum esse inscio te ut", "problem": "'inscio te' (without your knowledge) read as 'nescio' (I do not know)", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "facere carissimum soleo", "image": "facere carissimis soleo", "problem": "case ending misread", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "pontifici affatus exipere ... Eonardus. s. d.", "image": "pontificis affatus excipere ... Eonardus. sal. d.", "problem": "small slips", "severity": "minor", "kind": "misread" },
+          { "ocr": "nihil primum nisi mos", "image": "nihil p(o)t(i)us nisi mos", "problem": "abbreviation expanded wrongly (potius → primum)", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "Alteriorem fuisse ammu.", "english": "That it was deeper.", "problem": "Bruni anticipates the excuse 'that my mind had grown estranged from you' and then denies it. The English is meaningless and loses the turn of the argument", "severity": "moderate", "class": "T7", "kind": "misread" },
+          { "source": "factum esse nescio te ut quidam homines", "english": "I do not know how it happened that certain men", "problem": "the source says this happened without Guarino's knowledge, which is an exculpation of Guarino. The English carries the OCR misread", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "quod in ceteris facere carissimum soleo", "english": "what I am accustomed to do to others, my dearest friend", "problem": "should be 'to my other dearest friends'", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [ { "note": "'<meta>A blue decorative initial L.</meta>' sits inside the translation text", "severity": "minor", "class": "D1", "kind": "other" } ],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf, and the gist of both letters comes through. Several meaning-changing misreads in the Guarino letter ('alteriorem' for 'alieniorem', 'nescio' for 'inscio') are carried into a fluent but partly wrong English."
+  },
+  {
+    "book_id": "69f33d3c876dd827cbc5bc0e", "slot": 164, "title": "catalogue of the curious and valuable library of Ebenezer Mussel, Esq; of Bethnal Green, lately deceas'd ...", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "18th-century English auction catalogue; this is the third day's sale, lots 200–217.",
+    "rights_flag": null,
+    "structure_note": "26 pages, 7 untranslated. One backstep is likely a misread numeral. Nothing stands out.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 19, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "(no prices)", "image": "handwritten prices '0 6 0' and '0 5 6' in the right margin by lots 216–217", "problem": "manuscript prices dropped", "severity": "minor", "class": "O12", "kind": "omission" },
+          { "ocr": "<note>The names \"Barnton\" and \"Raldif\" appear to be handwritten annotations...</note>", "image": "buyer names in red ink", "problem": "a descriptive note inside the OCR", "severity": "minor", "class": "O15", "kind": "other" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<insert>Barnton</insert> <insert>Raldif</insert>", "english": "Bainton ... Ratcliff", "problem": "the hand-written buyer names are silently 'corrected' to guessed names in the English pane", "severity": "minor", "class": "T12", "kind": "misread" }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Accurate transcription of an English sale catalogue. The 'translation' is the same English with expanded Latin titles, which is helpful. The handwritten prices are dropped and the buyer names are guessed."
+  },
+  {
+    "book_id": "69f331b5876dd827cbc493ea", "slot": 165, "title": "Commonplace book, of poetry", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Harvard MS Lat 146; this page is only the Harvard bookplate on the pastedown, so the contents cannot be judged from it.",
+    "rights_flag": null,
+    "structure_note": "The bookplate is page 2. 23 'printed' numbers in a 56-page manuscript are probably folio and shelf marks, so the 3 backsteps are noise.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 2, "right_page": "yes", "form": "plate", "not_this_leaf": false,
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "MS Lat 146, 248, Ktc 60", "image": "'MS Lat 146', '£48', 'KIC 60' in pencil", "problem": "the pencilled price '£48' is read as '248'", "severity": "minor", "class": "O7", "kind": "misread" },
+          { "ocr": "<page-type>title-page</page-type>", "image": "a bookplate on a pastedown", "problem": "page type wrong", "severity": "minor", "class": "O16", "kind": "other" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "<image-desc ...>The seal of Harvard University</image-desc>", "english": "<note>A woodcut depicts the seal...</note>", "problem": "'woodcut' is unsupported; the seal is a printed bookplate", "severity": "minor", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A Harvard bookplate, transcribed correctly apart from the pencilled price. Nothing misleading."
+  },
+  {
+    "book_id": "6ac3ade7864e04424c0432a5", "slot": 166, "title": "Correspondance de Rubens ... (Codex diplomaticus Rubenianus), Tome cinquième", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Rooses' 1907 edition of Rubens' correspondence; the page quotes Peiresc to Dupuy, 3 Feb 1629. Its 'americana' collection tag looks wrong, but the work is what the catalogue says.",
+    "rights_flag": null,
+    "structure_note": "40 pages without OCR (449 of 489), probably blanks and plates in a Google scan. A few backsteps and repeats are consistent with misread numerals.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 39, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "toujours seray-je", "image": "tousjours seray-je", "problem": "one early-modern spelling silently modernised", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "3 février 1629. rencontres de rimes", "english": "3 February 1629. <note>He is referring to</note> accidental rhymes", "problem": "an unmarked, empty editorial note is inserted", "severity": "minor", "class": "T10", "kind": "added_gloss" },
+          { "source": "son frère luy prestant le collet ... pour luy faire donner le temps, et prester le collet", "english": "with his brother lending him the collar ... lend the collar", "problem": "the idiom (sitting for or obliging the painter) is rendered literally as 'lending the collar'", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "qu'il se laissast porter à des suppositions", "english": "that he would let himself be led to suppositions", "problem": "'suppositions' here means deceptions or substitutions (passing off a work), so the sense is lost", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean transcription. The translation is faithful apart from a literal 'lending the collar' and a stray inserted note. The 'americana' collection tag on a Rubens correspondence is doubtful."
+  },
+  {
+    "book_id": "69aea30d6016d4db42d3b0e7", "slot": 167, "title": "The Greek Manuscripts in the Old Seraglio at Constantinople", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Gaselee 1916 pamphlet (UC Berkeley copy); the page is the library's date-due slip.",
+    "rights_flag": null,
+    "structure_note": "28 pages translated against a pages_translated field of 18: the counter is stale.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 26, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "Due end of FALL Quarter", "image": "Due end of FALL Quarter / subject to recall after —", "problem": "a faint second stamp line is dropped", "severity": "minor", "kind": "omission" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "(the slip)", "english": "[This page contains a library circulation record for the book.]", "problem": "an English slip is described rather than rendered, which is acceptable for an English source", "severity": "minor", "kind": "other" }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "A Berkeley date-due slip, transcribed correctly. Nothing to flag."
+  },
+  {
+    "book_id": "69bf60f6065df5d87d778aa2", "slot": 168, "title": "The Books of the Vaudois: The Waldensian Manuscripts", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Todd and Bradshaw, 1865, on the Waldensian manuscripts at Dublin and Cambridge; this is Appendix p. 102.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 125, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "tents are very similar in many respects, but which does not contain those treatises) is dated at the end 1523.*", "english": "(missing)", "problem": "the opening clause, carrying the date 1523 and footnote *, is dropped from the English. Footnote * ('See above, p. 54, Volume No. VI.') is lost too", "severity": "moderate", "class": "T9", "kind": "omission" },
+          { "source": "remises entre‡ les mains ... ‡ Leger, \"Histoire Generale,\" p. 21.", "english": "...in August 1658. <note>Leger, \"Histoire Generale,\" p. 21.</note>", "problem": "the ‡ note is moved from the French quotation to the Cambridge sentence, so it attributes the wrong claim to Leger", "severity": "minor", "class": "T13", "kind": "layout" },
+          { "source": "New Learning", "english": "\"New Learning\" (the Reformation)", "problem": "an unmarked gloss is added to an English source that is rewritten into English", "severity": "minor", "class": "T12", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Perfect OCR of an English book. The English 'translation' pane is a paraphrase that drops the opening clause (the date 1523) and a footnote, so a reader should use the transcription."
+  },
+  {
+    "book_id": "69e747d985f786e884a499a6", "slot": 169, "title": "Beowulf (Cotton MS Vitellius A.xv)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A facsimile of the Beowulf manuscript (Cotton Vitellius A.xv); this leaf holds lines 827–849, the end of fitt XII and the opening of fitt XIII.",
+    "rights_flag": null,
+    "structure_note": "32 backsteps and 30 repeats come from the several competing foliations on each leaf: this leaf shows 148, 151 and 153 in different hands. This is not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 313, "right_page": "yes", "form": "manuscript", "not_this_leaf": true,
+        "not_this_leaf_evidence": "The first line is stored as 'mīne þeode se þe ellen mærþo', but the clearly legible leaf reads '[ni]hte weorce gefeh ellen mærþum' (Beowulf 827: rejoiced in his night-work). The stored words are not on the leaf, and the translation renders them as 'my people, he who had attained the glory of courage'.",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "mīne þeode se þe ellen mærþo", "image": "nde niht weorce gefeh ellen mær[þum]", "problem": "the first line is invented: none of 'mīne þeode se þe' is on the leaf", "severity": "serious", "class": "O1", "kind": "confabulation" },
+          { "ocr": "geat maga leod ge- gelæred", "image": "geat mecga leod gilp gelæsted", "problem": "'gilp gelæsted' (had fulfilled his boast) read as 'gelæred' (taught)", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "geador wendles snape under geapne h", "image": "geador grendles grape under geapne h[rof]", "problem": "'Grendles grape' (Grendel's grip, the arm hung under the roof) read as 'wendles snape'. The monster's name is lost", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "ge-wrid songe þe hie ær þurh gon", "image": "ge-inwid sorge þe hie ær drugon", "problem": "'inwidsorge ... drugon' (malicious sorrow they had endured) misread", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "scolde ... on þes banon wida ofen ... bæh", "image": "scoldon ... on weg þanon niða ofer[cumen] ... bær", "problem": "several further letter misreads", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "mīne þeode se þe ellen mærþo hæfde", "english": "my people, he who had attained the glory of courage", "problem": "translates invented text; the leaf says he rejoiced in his night-work and deed of courage", "severity": "serious", "class": "O1", "kind": "confabulation" },
+          { "source": "geat maga leod ge-gelæred", "english": "the prince of the Geats had taught this", "problem": "the leaf says the Geat prince had fulfilled his boast to the East-Danes; 'taught' is wrong", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "source": "geador wendles snape under geapne h", "english": "the Geat had placed it under the curved roof", "problem": "Grendel's grip (the trophy arm) becomes 'the Geat had placed it'; the subject is invented", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "gewrid songe", "english": "the song", "problem": "'inwidsorge' (grief from malice) rendered as 'song'", "severity": "moderate", "class": "T7", "kind": "misread" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Right leaf, but the opening line of the stored text is invented ('mīne þeode se þe' where the leaf reads 'nihtweorce gefeh'), and key misreads ('gelæred' for 'gilp gelæsted', 'wendles snape' for 'Grendles grape') produce a fluent but wrong English for the most famous text on the shelf. The second half (fitt XIII) is close."
+  },
+  {
+    "book_id": "69de1f66a297dce7d44bfb6b", "slot": 170, "title": "Vitae et sententiae philosophorum. Tr: Ambrosius Traversarius", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Traversari's Latin Diogenes Laertius, 1472 incunable (BAV Inc.III.83); the page is from Book III (Plato's divisions).",
+    "rights_flag": "The scan carries a burned-in diagonal watermark 'ALL RIGHTS RESERVED © Biblioteca Apostolica Vaticana' and the footer 'Copyright © Biblioteca Apostolica Vaticana'. This is a digitisation licence on a 1472 book, not a modern edition, but the reuse terms should be checked.",
+    "structure_note": "39 backsteps and 31 repeats among 172 'printed' numbers. An incunable has no printed pagination; these are pencilled leaf numbers and misreads, not a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 97, "right_page": "yes", "form": "print", "not_this_leaf": false,
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Tertio ut pclaris consuetudinibus diisq; uiuatur", "image": "Tertio ut pclaris cõsuetudinibus stu/diisq; uiuatur", "problem": "'stu-' at the line end dropped, turning 'studiis' (pursuits) into 'diis' (gods)", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Diuiduorum uero que sunt alia finitum ptium", "image": "Diuiduorum uero alia sunt similium ptium", "problem": "'similium partium' (homoeomerous) read as 'finitum'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Substantia uero que", "image": "Substantialia uero que", "problem": "a word truncated", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "fessio ... pollunt ... babenda", "image": "fessio ... possunt ... habenda", "problem": "minor letter slips", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "ut pclaris consuetudinibus diisq; uiuatur", "english": "that one lives according to excellent customs and gods", "problem": "the source says 'customs and pursuits'; 'gods' is introduced into Plato's division of law", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "alia finitum ptium", "english": "some have a finite part", "problem": "should be 'of like parts' versus 'of unlike parts'; the distinction is lost", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "Aliud si bis que sunt minime obtemperetur", "english": "another if those which are the least followed are not obeyed", "problem": "garbled: it should say 'if the laws that exist are not obeyed'", "severity": "moderate", "class": "T7", "kind": "mistranslation" },
+          { "source": "Animata qdem animatium", "english": "Animate is indeed vocal", "problem": "should be 'animate voice is that of living beings'", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "alia enim ex his haberi: alia participari: alia subsistere", "english": "some exist to be held, others to be shared, others to subsist", "problem": "a loose rendering of 'some can be possessed, some participated in, some subsist'", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf and mostly right text, but a cluster of moderate misreads ('diis' for 'studiis', 'finitum' for 'similium') and loose renderings distort several of Plato's divisions. Usable with care. The scan bears a Vatican 'All rights reserved' watermark."
+  }
+]

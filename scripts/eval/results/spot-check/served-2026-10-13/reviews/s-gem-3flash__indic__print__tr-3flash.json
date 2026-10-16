@@ -1,0 +1,246 @@
+[
+  {
+    "book_id": "69907c415f855ec553e72b1b", "slot": 142, "title": "Sutikadhyaya of Varahamihira", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Devanagari jyotiṣa/ritual manuscript from the Dharmartha Trust (eGangotri) collection; this leaf opens a short ritual invocation.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 8, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "स्वर्गे दृतभते राज्यं", "image": "स्वर्गे वृ/शतमते(?) राज्यं — a ligature read loosely", "problem": "uncertain akṣaras in line 1 rendered as a non-word without an <unclear> mark", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "मानवा । रुद्र", "image": "मानवा । १ रुद्र", "problem": "verse number १ dropped", "severity": "minor", "class": "O5", "kind": "omission" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "स्वर्गे दृतभते राज्यं", "english": "In heaven, sovereignty is held", "problem": "the garbled word (likely an epithet of Indra, the holder of heaven's sovereignty) is silently dropped", "severity": "minor", "class": "T7", "kind": "omission" },
+          { "source": "विवाहोद्यापनात्तथा", "english": "[blessings flow] from the marriage and the ritual completion of Rudra, Chandi, and Ganesha", "problem": "bracketed supply is marked, but the construal (marriage of the deities) is a guess; probably the udyāpana rites of marriage for Rudra/Caṇḍī/Gaṇeśa", "severity": "minor", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Three-line Devanagari invocation transcribed close to the leaf (the large blurred block below is show-through, correctly ignored); the translation is a reasonable reading with one dropped word."
+  },
+  {
+    "book_id": "6a09e95c2111a8b71cc38738", "slot": 143, "title": "Mānava Śrauta-Sūtra (containing Mānava Śulba Sūtra), Bibliotheca Indica", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Knauer's 1900 St Petersburg edition of the Mānava Śrautasūtra; this page is the end of his German preface.",
+    "rights_flag": null,
+    "structure_note": "92 records, 89 translated; 3 backsteps and 2 repeats among 66 printed numbers are consistent with roman/arabic preface pagination restarting, not a splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 19, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "Maitrayaniya Karika", "image": "Maitrayaṇiya Karika", "problem": "underdot on ṇ dropped", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "The stored <summary> describes content not on this page: 'details the manuscript sources and commentaries… preference for older manuscripts over those influenced by the rival Āpastamba school, and defends his work against the criticisms of scholar Willem Caland'. This page contains only acknowledgements (Weber, v. Schröder, Marie von Bradke, Baroda, libraries, the St Petersburg Academy).", "severity": "moderate", "class": "T5", "kind": "carry_over" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Clean German transcription and a faithful English translation of the preface's acknowledgements; only the page summary drifts to content from earlier preface pages."
+  },
+  {
+    "book_id": "69906d5364d44bd0a0ef5344", "slot": 144, "title": "Graha Kaumudi", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Short Devanagari karaṇa manual of planetary constants.",
+    "rights_flag": null,
+    "structure_note": "5 records; the one backstep is likely a misread folio numeral.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 3, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "शाकेधभ्रशराभ हीरहितो", "image": "शाकोऽभ्रशरमहीरहितो", "problem": "epoch subtraction (abhra-śara-mahī = 150) garbled", "severity": "moderate", "class": "O7", "kind": "misread" },
+          { "ocr": "स्वरै स्ता उय निनि जैर्गुणकैः", "image": "…स्तांताउयेन्निजनिजैर्गुणकैः", "problem": "line 2 broken into non-words", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "ज्येष्ठो ण श षट् ८ र्यु सु तै र्प दिट्ट", "image": "ज्येबाणेशषट्१२ गुसुतयोर्दि", "problem": "numerals and bhūta-saṅkhyā words — the actual constants of the page — misread throughout lines 9–13; most lines are syllable soup", "severity": "serious", "class": "O7", "kind": "misread" }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "(garbled lines 5–13)", "english": "| Mars | Calculated through the \"Veda\" (4) and \"Agni\" (3) factors | … | Venus | Associated with the \"Shashi\" (1) and \"Vidhu\" (1) cycles | Saturn | … \"Shriti\" (5) and \"Ishvo\" (5)", "problem": "a table of planetary constants invented over unreadable OCR; there is no table on the leaf and the pairings are not supported by the transcription", "severity": "serious", "class": "T7", "kind": "illegible_fill" },
+          { "source": "(no corresponding text)", "english": "For Mars, the value of four-thousand and fifty is used.", "problem": "a specific numerical constant with no basis in the transcription or the leaf", "severity": "serious", "class": "T7", "kind": "confabulation" },
+          { "source": "(no corresponding text)", "english": "ensuring that the planetary masses (pinda) are correctly aligned with the observed heavens", "problem": "invented closing sentence; 'pinda' rendered as 'planetary masses'", "severity": "moderate", "class": "T7", "kind": "confabulation" }
+        ],
+        "other": [
+          { "note": "Invented table structure presented as the page's content", "severity": "moderate", "class": "O17", "kind": "layout" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The English gives a planet table ('Mars | Veda (4) and Agni (3)', 'Venus | Shashi (1) and Vidhu (1)') and 'For Mars, the value of four-thousand and fifty'; the leaf is 13 lines of running verse (numbered १–५) with bhūta-saṅkhyā words, no table, and the transcription it was made from is mostly non-words.",
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The opening of the planetary-constants verses is legible on the leaf but the OCR reduces most of it to syllable soup, and the translation fills the gap with an invented table of constants; a reader would take fabricated numbers for the text."
+  },
+  {
+    "book_id": "6a3579b882bf3ff3f867b0a1", "slot": 145, "title": "Śārṅgadhara Saṃhitā (Madhya-khaṇḍa)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Āyurvedic compendium, kalka (paste) chapter.",
+    "rights_flag": "Modern digital typeset edition: running head 'MAHARISHI UNIVERSITY OF MANAGEMENT VEDIC LITERATURE COLLECTION' with a computer Devanagari font; a recent (c. 2000s) institutional publication of a classical text — check its terms, though the Sanskrit text itself is ancient.",
+    "structure_note": "84 records, 83 with OCR/translation; printed numbers run cleanly.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 32, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "विष्णुक्रान्ताकल्कः परिणामशूले", "english": "Viṣṇukrāntā-kalka for Peptic Ulcer", "problem": "pariṇāma-śūla (pain at digestion) rendered as a modern diagnosis in the headings, while the body says 'pain during digestion'", "severity": "minor", "class": "T12", "kind": "added_gloss" },
+          { "source": "आमवात", "english": "rheumatoid arthritis", "problem": "modern equation of āmavāta, unmarked", "severity": "minor", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Near-perfect transcription of verses 16–23 and a faithful translation, with modern disease names in the headings; the source is a modern digital typeset edition worth a rights check."
+  },
+  {
+    "book_id": "69907c485f855ec553e73532", "slot": 146, "title": "Siddhanta Sarvabhauma Uttarardha", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Munīśvara's astronomical siddhānta, manuscript copy.",
+    "rights_flag": null,
+    "structure_note": "29 backsteps and 27 repeats among 143 read numbers: likely mostly misread manuscript folio numerals (this leaf carries both a top-left ink number and a pencil १२५), not a splice; not verified beyond this leaf.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 250, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "आद्य संप्त ग्रहोः", "image": "आद्यान्यतरग्रहयोः-like dual form (…स्तग्रहयोः)", "problem": "a dual 'of the two planets' read as 'seven planets' (सप्तग्रह), a reading repeated through the page and carried into the translation", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "कोत्तापो त्रद्दक्षिरागेल वशन्म जाता", "image": "क्रोतापोत्र दक्षिणगोलवशान्जाता", "problem": "whole page split into broken syllable groups; most words are not recoverable from the transcription", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "आद्य संप्त ग्रहोः … सप्त ग्रह स्पष्ट क्रांति ज्या", "english": "the observation of the seven planets (Sun, Moon, Mars, Mercury, Jupiter, Venus, and Saturn)… the true sine of declination for the seven planets", "problem": "fluent technical prose built on the misread; the procedure concerns two bodies, and the glossed list of seven planets is the model's addition", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "(fragmentary OCR)", "english": "From the southern direction, the calculation is produced… if the value exceeds nine", "problem": "fluent-over-garble with no uncertainty marks across most of the page", "severity": "moderate", "class": "T7", "kind": "illegible_fill" }
+        ],
+        "other": [
+          { "note": "'<insert>RAM</insert>' left in the English: a scribal margin insertion mark (राम.) rendered as a tagged word in mid-sentence", "severity": "moderate", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "low"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "A legible cursive astronomical leaf transcribed as fragmented syllables; the translation turns that into confident trigonometry about 'the seven planets' that the leaf does not appear to support. Confidence limited by my reading of the cursive hand."
+  },
+  {
+    "book_id": "6a09ff1dfa20006dbaba89aa", "slot": 147, "title": "Dhātukathā Prakaraṇa with Commentary (PTS Pali)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "PTS 1892 edition of an Abhidhamma text, per the catalogue.",
+    "rights_flag": null,
+    "structure_note": "The book holds a single page record (pages_count 1): only the Google Books generic red cover. The edition's text is not here — a stub presented as a book.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "form": "plate",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [
+          { "note": "The <vocab> list is repeated as a bare line of body text in the English ('Dhātu Elements, kathā pakaraṇa Discourse Treatise, commentary, Pali literature, Abhidhamma Higher Teaching')", "severity": "minor", "class": "D1", "kind": "other" },
+          { "note": "Google Books' generated cover treated as a 'title page'; the summary asserts it 'marks the beginning of the 1892 Pali Text Society edition edited by E. R. Gooneratne', facts not on the leaf (from catalogue metadata)", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The page itself is read correctly, but it is Google's placeholder cover and is the book's only page: a reader opening this 'book' finds no Pali text at all."
+  },
+  {
+    "book_id": "69907c4c4d10d3398523719b", "slot": 148, "title": "Shatapanchashika of Prithuyashas", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Ṣaṭpañcāśikā, horary astrology; this leaf is the Raghunath library catalogue slip on the cloth cover.",
+    "rights_flag": null,
+    "structure_note": "24 records; 2 backsteps among 4 printed numbers are too few to judge.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 1, "right_page": "yes", "form": "plate",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "**Extent** <insert>७</insert>", "image": "६ (written like a Latin '6')", "problem": "extent misread 7 for 6", "severity": "moderate", "class": "O7", "kind": "misread" },
+          { "ocr": "**Age** <insert>१७८०</insert>", "image": "१?८० — second digit uncertain", "problem": "age digit uncertain; could be correct", "severity": "minor", "class": "O7", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Age १७८०", "english": "This date most likely follows the Vikrama Samvat calendar, which would place the manuscript's creation around 1723–1724 CE", "problem": "conversion asserted on an uncertain reading; plausible but unmarked as the model's inference", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Catalogue slip read correctly apart from the folio count (६ read as ७); the explanatory notes are reasonable."
+  },
+  {
+    "book_id": "69907d93aee9f4aa58592f45", "slot": 149, "title": "Vriddha Gargi Samhita", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Garga saṃhitā on omens; this leaf covers saṅkrānti prognostics.",
+    "rights_flag": null,
+    "structure_note": "pages_count field says 53 but there are 197 page records (all OCR'd and translated): the count fields are stale or a second scan was appended; worth checking.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "थयितात्तजनपीठाव्याधिर्भादत्तामावहेत्त", "image": "…जनपीडाव्याधिदुर्भिक्षमावहेत्", "problem": "दुर्भिक्ष (famine) lost in a misread", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "मेमेनवधमशुक्केवा गरेवापरिसंक्रमेत्", "image": "मेषे न बुध शुक्रे वा गुरौ वा परिसंक्रमेत्", "problem": "planet names (Mercury, Venus, Jupiter) garbled", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "शीत रष्मिदिनेमोक्ता धौत्ती", "image": "शीतरश्मिदिने प्रोक्ता ध्वांक्षी(?)", "problem": "Monday's saṅkrānti name misread", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "मेषे … बुध शुक्रे वा गुरौ वा परिसंक्रमेत्", "english": "When the transit occurs in Aries during the bright fortnight or during the day, there will be an abundance of crops", "problem": "the conditions (Mercury, Venus or Jupiter) replaced by an invented 'bright fortnight or during the day'", "severity": "moderate", "class": "T7", "kind": "misread" },
+          { "source": "बुधे मन्दाकिनी ज्ञेया सर्वसस्य…यंकरी बृहस्पति…", "english": "Wednesday/Thursday: Known as the path of the celestial Ganges; when associated with Jupiter, it produces an abundance of all crops", "problem": "Wednesday's Mandākinī merged with Thursday; the leaf's '-यंकरी' looks like kṣayaṃkarī/layaṃkarī (destroying), so 'abundance' may reverse the sense", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "भौममहोदरी … राजाग्नि…", "english": "Tuesday: Influenced by Mars, it brings distress from the king and constant restlessness", "problem": "the saṅkrānti's name (Mahodarī) dropped", "severity": "minor", "class": "T9", "kind": "omission" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The right text in broad outline (saṅkrānti omens by season and weekday), but OCR slips on planet names and the weekday list produce wrong conditions and a possibly reversed crop omen; usable as a gist, not for citation."
+  },
+  {
+    "book_id": "69907d89aee9f4aa58591e0e", "slot": 150, "title": "Lomash Samhita", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Lomaśa Saṃhitā, jyotiṣa; this leaf is a Raghunath Temple library slip on a cloth cover, apparently the start of a second bundle within the book (page 24 of 46).",
+    "rights_flag": null,
+    "structure_note": "A catalogue slip at page 24 suggests two manuscript bundles bound into one record (1st utthāna, 2nd adhyāya begins here); not a defect if intentional.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 24, "right_page": "yes", "form": "plate",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "**Title** लोमश संहिता १म उद्यान २ अध्याय", "image": "लोमश संहिता १म उत्थान २ अध्याय", "problem": "उत्थान read as उद्यान", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "**Extent** ७", "image": "६", "problem": "extent misread 7 for 6 (same glyph confusion as the Ṣaṭpañcāśikā slip)", "severity": "moderate", "class": "O7", "kind": "misread" },
+          { "ocr": "**No.** ४०८८", "image": "४०… (last digits smudged by a stain)", "problem": "illegible digits supplied without an unclear mark", "severity": "minor", "class": "O1", "kind": "illegible_fill" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "Age व", "english": "a shorthand classification used by the library staff to categorize the age or material type", "problem": "unmarked speculative gloss on an unclear mark", "severity": "minor", "class": "T10", "kind": "added_gloss" },
+          { "source": "(none)", "english": "This catalog slip follows entry No. 4024 P", "problem": "continuity claim about a neighbouring page in the reader text", "severity": "minor", "class": "T15", "kind": "other" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Catalogue slip read adequately; a misread extent and a smudged accession number filled in without doubt marks."
+  }
+]
