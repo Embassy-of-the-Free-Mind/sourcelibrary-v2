@@ -78,6 +78,18 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'shipwrecks-and-buried-treasure',
+    title: 'Shipwrecks and Buried Treasure',
+    subtitle:
+      'Six chests of Charles V’s gold off Cadiz, a king’s revenues in the Baltic, an Armada ship in Tobermory Bay, a sexton’s pot of Saxon silver, digging money in Luoyang and a Tibetan guide that says where to dig.',
+    date: '16 October 2026',
+    readTime: '8 min read',
+    kind: 'tours',
+    image: '/blog/shipwrecks-and-buried-treasure/baixos-de-iudia.jpg',
+    imageAlt: 'Woodcut of the São Tiago broken on the Bassas da India shoals, 1598',
+    imagePosition: 'center 40%',
+  },
+  {
     slug: 'trees-of-life',
     title: 'Trees of Life Across the Traditions',
     subtitle:
