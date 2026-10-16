@@ -22,6 +22,7 @@
 // src/lib/clip.ts + scripts/workers/clip-server.mjs — the plain-HTTP-plus-token service shape.
 import http from 'node:http';
 import fs from 'node:fs';
+import path from 'node:path';
 import { timingSafeEqual } from 'node:crypto';
 import { DIM, indexConfigFor, readState, writeJsonAtomic, STATE_PATH, indexPath, rowsPath, loadUsearch, RowStore, log } from './lib.mjs';
 
@@ -37,6 +38,8 @@ if (!TOKEN || TOKEN.length < 32) { console.error('VECTOR_SEARCH_TOKEN missing or
 const { Index } = loadUsearch();
 const state = readState();
 if (!state) { console.error(`no ${STATE_PATH} — run bootstrap.sh first`); process.exit(3); }
+// A save interrupted by a restart leaves its *.tmp files (up to 7 GB); state.json never points at them.
+for (const f of fs.readdirSync(path.dirname(STATE_PATH))) if (f.endsWith('.tmp') || /\.tmp-\d+$/.test(f)) fs.unlinkSync(path.join(path.dirname(STATE_PATH), f));
 let t0 = Date.now();
 const index = new Index({ ...indexConfigFor(state), expansion_search: EF });
 index.load(indexPath(state.generation));
