@@ -23,8 +23,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = 'force-dynamic';
-
 const MOTUL_1 = '6acc3d5f230e9a56175cc731';
 const MOTUL_2 = '6acc3d6c230e9a56175ccae2';
 const PIO_PEREZ = '6acc3dfa230e9a56175cdd32';
