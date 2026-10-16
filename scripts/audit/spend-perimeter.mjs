@@ -157,6 +157,7 @@ const UNATTENDED = [
     note: 'decision queue drainer: reads decision_answers, runs safe-merge.sh / gh pr comment for answers Derek gave on /platform/admin/decisions; no model call (#6258)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
+  { match: 'rebuild-human-read-count-5048.mjs', spends: false, gated: false, note: 'Mongo/Postgres recompute of books.human_read_count (#5048), no model calls' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'build-gallery-subject-index.mjs', spends: false, gated: false,
     note: 'counts over gallery_images, writes one system_config doc; no model call (#4856)' },
