@@ -203,3 +203,5 @@
 7 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
 # Crawl-protection canary (weekly, Mon 06:13): 70 book loads must hit the Cloudflare rate-limit challenge, and the edge detector must see traffic. ntfy only on failure. See .claude/docs/crawl-register.md.
 13 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs --canary" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
+# agy (Gemini CLI) SQLite WAL checkpoint, hourly (#6223). The WAL reached 20 GB on 2026-10-16 and filled root. Source: scripts/workers/agy-wal-checkpoint.py, copied to /root/bin.
+17 * * * * python3 /root/bin/agy-wal-checkpoint.py >> /var/log/sourcelibrary/agy-wal-checkpoint.log 2>&1 # agy WAL hit 20G and filled root (#6223)
