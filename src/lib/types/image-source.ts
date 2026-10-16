@@ -55,6 +55,7 @@ export type ImageSourceProvider =
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
   | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
   | 'byu'            // Brigham Young University, L. Tom Perry Special Collections
+  | 'princeton'      // Princeton University Library (DPUL / Figgy IIIF)
   | 'contentdm'      // OCLC CONTENTdm
   | 'goettingen'     // Göttingen State and University Library (SUB / GDZ)
   | 'slub_dresden'   // SLUB Dresden (Saxon State and University Library)
@@ -132,6 +133,10 @@ const LICENSE_ALIASES: Record<string, string> = {
   'http://rightsstatements.org/vocab/noc-nc/1.0/': 'No Copyright – Non-Commercial Use Only',
   'https://rightsstatements.org/vocab/inc/1.0/': 'In Copyright',
   'https://rightsstatements.org/vocab/und/1.0/': 'Copyright Undetermined',
+  // Princeton's manuscripts (#6559): the holder believes the item is free of
+  // copyright but could not make a conclusive determination.
+  'http://rightsstatements.org/vocab/nkc/1.0/': 'No Known Copyright',
+  'https://rightsstatements.org/vocab/nkc/1.0/': 'No Known Copyright',
 };
 
 /** Display name for a stored licence value, and whether the value is itself a link. */
