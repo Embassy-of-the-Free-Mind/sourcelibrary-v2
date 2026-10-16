@@ -1,0 +1,41 @@
+{
+ "key": "v077_f392a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Faded red (vermilion) woodblock print on yellowish paper; the 25 vertical columns of Classical Mongolian script (Hudum Mongol bichig) suffer from significant ink fading that obscures fine diacritical dots and medial tooth-strokes. The page contains two languages: Classical Mongolian in the main text and left marginal box, and Chinese in the right marginal box.</warning>\n<scan-quality>poor</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>392a</page-num>\n<header>諸品經第十八卷</header>\n<meta>Pothi-format xylograph leaf from the Kangxi imperial woodblock edition of the Mongolian Kanjur (Mongγol Ganjur), Volume 77 (諸品經第十八卷 / Eldeb arban naimatuγar), folio 392 recto (上三百九十二 / degedü γurban jaγun yiren qoyar), printed in red ink within a double-ruled rectangular frame with a small circular foliation mark at the upper left of the first column.</meta>\n\n<margin>ᠡᠯᠳᠡᠪ ᠠᠷᠪᠠᠨ ᠨᠠᠢᠮᠠᠳᠤᠭᠠᠷ ᠳᠡᠭᠡᠳᠦ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠢᠷᠡᠨ ᠬᠣᠶᠠᠷ (eldeb arban naimatuγar degedü γurban jaγun yiren qoyar)</margin>\n<margin>諸品經第十八卷上三百九十二</margin>\n<unclear>25 vertical lines of woodblock-printed Classical Mongolian (Hudum Mongol bichig) Buddhist canonical text in faded red ink, not transcribed</unclear>\n\n<vocab>諸品經, 第十八卷, 上三百九十二, eldeb, arban naimatuγar, degedü, γurban jaγun yiren qoyar, Mongolian Kanjur, Hudum Mongol bichig</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 124.611,
+  "usage": {
+   "input_tokens": 21749,
+   "output_tokens": 8481,
+   "thinking_tokens": 7321,
+   "cache_read_tokens": 31352,
+   "total_tokens": 30230
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Faded red vermilion woodblock print on yellowish paper; the 25 vertical columns of Classical Mongolian script, <term>Hudum Mongol bichig</term> <gloss>traditional vertical Mongolian script</gloss>, suffer from significant ink fading that obscures fine diacritical dots and medial tooth-strokes. The page contains two languages: Classical Mongolian in the main text and left marginal box, and Chinese in the right marginal box.</warning>\n<meta>Folio 392 recto from the Kangxi imperial woodblock edition of the <term>Mongγol Ganjur</term> <gloss>Mongolian Kanjur, the translated canon of the Buddha's words</gloss>, Volume 77, corresponding to the eighteenth volume of the <term>Eldeb</term> <gloss>Miscellaneous Sūtras</gloss> section, <term>Zhūpǐn jīng</term> <gloss>Sūtras of Various Classes</gloss>. This <term>pothi</term> <gloss>elongated loose-leaf format modeled on Indian palm-leaf manuscripts</gloss> xylograph leaf is printed in red ink within a double-ruled rectangular frame with a small circular foliation mark at the upper left of the first column.</meta>\n\n<margin>Miscellaneous <note>section of the Kanjur</note>, Eighteenth <note>Volume</note>, Upper <note>recto side of the folio</note>, Three Hundred Ninety-Two <note>original: \"ᠡᠯᠳᠡᠪ ᠠᠷᠪᠠᠨ ᠨᠠᠢᠮᠠᠳᠤᠭᠠᠷ ᠳᠡᠭᠡᠳᠦ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠢᠷᠡᠨ ᠬᠣᠶᠠᠷ\"; transliteration: <term>eldeb arban naimatuγar degedü γurban jaγun yiren qoyar</term> <gloss>Miscellaneous, eighteenth, upper, three hundred ninety-two</gloss></note>.</margin>\n<margin>Sūtras of Various Classes, Volume Eighteen, Upper <note>recto side of the folio</note>, Three Hundred Ninety-Two <note>original: \"諸品經第十八卷上三百九十二\"</note>.</margin>\n<unclear>25 vertical lines of woodblock-printed Classical Mongolian (Hudum Mongol bichig) Buddhist canonical text in faded red ink, not transcribed</unclear>\n\n<summary>Folio 392 recto from Volume 77 of the Kangxi imperial red-ink woodblock edition of the Mongolian Kanjur, belonging to the eighteenth volume of the Miscellaneous Sūtras section. The bilingual Mongolian and Chinese marginalia record the section title and folio number, while the 25 vertical columns of the main Classical Mongolian text remain untranscribed due to severe ink fading.</summary>\n<keywords>Mongolian Kanjur, Kangxi edition, Classical Mongolian, Hudum Mongol bichig, Miscellaneous Sutras, Eldeb, Zhupin jing, Buddhist canon, woodblock print, bilingual marginalia</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 78.906
+ }
+}

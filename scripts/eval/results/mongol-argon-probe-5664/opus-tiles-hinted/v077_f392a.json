@@ -1,0 +1,35 @@
+{
+ "key": "v077_f392a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The ink is faint and the paper is speckled throughout the scan. At this resolution, most individual words in the Mongolian body text cannot be read reliably. Some words recur, such as ᠬᠣᠭᠣᠰᠣᠨ, ᠦᠭᠡᠢ and the column-ending ᠪᠣᠢ᠃. However, I could not confirm whole columns, so the body is marked unclear and not reconstructed. The Chinese margin label is legible. The four strips overlap: column 6 of strip 1 is the same as column 1 of strip 2; the last column of strip 2 is the first of strip 3; and the last full column of strip 3 is the first of strip 4. This gives about 31 columns in total.</warning>\n<scan-quality>poor</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>392</page-num>\n<header>諸品經第十八卷上三百九十二</header>\n<meta>Left margin, inside the frame: a short Mongolian volume/section label, illegible in this scan. Right margin: Chinese label 諸品經第十八卷上三百九十二 (miscellaneous sūtras section, volume 18, folio 392, recto). A small mark appears at the head of the first text column. The page is framed by a double-ruled border.</meta>\n\n<margin><unclear>Mongolian marginal section/volume label, about 1 line, not transcribed</unclear></margin>\n\n<unclear>About 31 columns of woodblock-printed Uighur-Mongol script (ᠮᠣᠩᠭᠣᠯ ᠪᠢᠴᠢᠭ), not transcribed because the ink is too faint to read word by word at this resolution. The text appears to be a repeated formula about emptiness (ᠬᠣᠭᠣᠰᠣᠨ ... ᠦᠭᠡᠢ ... ᠪᠣᠢ᠃), with many columns ending in ᠪᠣᠢ᠃</unclear>\n\n<margin>諸品經第十八卷上三百九十二</margin>\n\n<vocab>諸品經, Beijing Kanjur, Mongolian Kanjur, ᠬᠣᠭᠣᠰᠣᠨ, ᠪᠣᠢ, folio 392a, volume 18</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 57.351,
+  "usage": {
+   "input": 5,
+   "output": 4730
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<warning>The scan is poor: the ink is faint and the paper is speckled. The OCR transcriber could not read the Mongolian body text word by word, so it stays marked as unclear and is not translated or reconstructed. Only the Chinese margin label could be read and translated.</warning>\n<meta>Page header and right-margin label, in Chinese: 諸品經第十八卷上三百九十二. The left margin has a short Mongolian volume or section label that cannot be read. A small mark appears at the head of the first text column. The page has a double-ruled border. The four scan strips overlap, giving about 31 columns in total. The OCR picked out a few recurring words, which suggest a repeated formula on emptiness: ᠬᠣᠭᠣᠰᠣᠨ \"empty,\" ᠦᠭᠡᠢ \"without, not,\" and ᠪᠣᠢ \"is,\" which closes many columns. These words are recorded here only and are not supplied as translated content.</meta>\n\nMiscellaneous Sūtras, Volume 18, folio 392, recto <note>original: \"諸品經第十八卷上三百九十二.\" In Chinese marginal labels of Beijing-printed Mongolian Kanjur volumes, 諸品經 (\"sūtras of various classes\") names the miscellaneous sūtra section. 上 marks the front side (recto) of the leaf.</note>\n\n<margin><unclear>Mongolian marginal section/volume label, about 1 line, not transcribed</unclear></margin>\n\n<unclear>About 31 columns of woodblock-printed Uighur-Mongol script (ᠮᠣᠩᠭᠣᠯ ᠪᠢᠴᠢᠭ), not transcribed because the ink is too faint to read word by word at this resolution. The text appears to be a repeated formula about emptiness (ᠬᠣᠭᠣᠰᠣᠨ ... ᠦᠭᠡᠢ ... ᠪᠣᠢ᠃), with many columns ending in ᠪᠣᠢ᠃</unclear>\n\n<margin>Miscellaneous Sūtras, Volume 18, folio 392, recto</margin>\n\n<summary>This is folio 392 recto of volume 18 in the miscellaneous sūtras section of a woodblock-printed Mongolian Kanjur. The body text could not be read in this scan. A few recurring words suggest a repeated passage on emptiness, which is typical of Perfection of Wisdom literature.</summary>\n<keywords>Mongolian Kanjur, Beijing Kanjur, miscellaneous sūtras, 諸品經, volume 18, folio 392 recto, emptiness, Buddhist canon, woodblock print, Uighur-Mongol script, illegible scan</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 12.943
+ }
+}

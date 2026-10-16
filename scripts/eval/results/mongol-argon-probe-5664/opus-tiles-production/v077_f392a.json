@@ -1,0 +1,35 @@
+{
+ "key": "v077_f392a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>392</page-num>\n<header>諸品經第十八卷上三百九十二</header>\n<warning>The page is photographed rotated 90°, and the print is faint and brownish. The main text is in Uighur-Mongolian (classical Mongolian) vertical script, which can't be reliably transcribed from this image, so it is marked as not transcribed. Only the Chinese marginal title is transcribed.</warning>\n<meta>Leaf from a xylographic Mongolian Buddhist canon (Kanjur), in the section of miscellaneous sūtras (諸品經 / eldeb). The text block is printed in a double-ruled frame. A Chinese marginal title with the volume and folio number is printed on one side, and a short Mongolian marginal title on the other.</meta>\n\n<margin><unclear>short Mongolian marginal title with volume and folio number, in Uighur-Mongolian script, not transcribed</unclear></margin>\n\n<unclear>about 28 lines of vertical Uighur-Mongolian script text, not transcribed</unclear>\n\n<margin>諸品經第十八卷上三百九十二</margin>\n\n<vocab>諸品經, eldeb, Kanjur, Mongolian Buddhist canon, sūtra, xylograph, Uighur-Mongolian script</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 17.921,
+  "usage": {
+   "input": 5,
+   "output": 1154
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Leaf from a xylographic Mongolian Buddhist canon (Kanjur), in the section of miscellaneous sūtras (Chinese 諸品經, Mongolian eldeb). The text block is printed inside a double-ruled frame. The main text was not transcribed because the image is rotated and faint, so only the marginal titles can be rendered.</meta>\n\n<margin><unclear>short Mongolian marginal title with volume and folio number, in Uighur-Mongolian script, not transcribed</unclear></margin>\n\n<unclear>about 28 lines of vertical Uighur-Mongolian script text, not transcribed</unclear>\n\n<margin>Miscellaneous Sūtras <note>original: \"諸品經\" (Zhupin jing), the Chinese name for the Kanjur section called \"eldeb\" in Mongolian, meaning \"various\" or \"miscellaneous\"</note>, Volume Eighteen, upper part, folio three hundred ninety-two</margin>\n\n<summary>Folio 392 of volume eighteen in the Miscellaneous Sūtras section of a printed Mongolian Buddhist Kanjur. Only the Chinese marginal title giving the section, volume and folio number could be read. The main Uighur-Mongolian text was not transcribed.</summary>\n<keywords>Mongolian Kanjur, Miscellaneous Sūtras, eldeb, 諸品經, Buddhist canon, xylograph, Uighur-Mongolian script, folio 392, volume eighteen</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 9.102
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "key": "v087_f393a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>三百九十三</page-num>\n<header>諸品經第二十八卷上</header>\n<warning>Xylograph page in classical Mongolian (Uyghur-Mongolian) script, printed in red ink within a ruled double frame. The vertical Mongolian body text has not been transcribed, because it could not be rendered reliably letter by letter. The Chinese marginal label on the right edge was transcribed and placed in the header and page-number tags. Paper strips are pasted at the upper-right corner outside the frame. Two white tabs are at the bottom edge.</warning>\n<margin><unclear>short vertical Mongolian marginal label (likely volume title and folio number), 1 line, not transcribed</unclear></margin>\n\n<unclear>approximately 28 vertical lines of classical Mongolian script (Buddhist sūtra text) not transcribed. One section ends partway down a line in the middle of the page, followed by a short ruled break and the start of a new passage.</unclear>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Rectangular double-ruled frame printed in red around the text block. Narrow side panels at the left and right edges hold the marginal labels: Mongolian on the left, Chinese on the right.</image-desc>\n\n<vocab>諸品經 (Zhupin jing, \"Sūtras of Various Classes\"), Mongolian Kanjur, Mongolian Buddhist canon, red-ink xylograph, juan 28, folio 393</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 17.887,
+  "usage": {
+   "input": 5,
+   "output": 1301
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Page header (Chinese): 諸品經第二十八卷上, \"Sūtras of Various Classes, Volume 28, Part One.\" Page number (Chinese): 三百九十三, \"three hundred ninety-three.\" The Mongolian body text was not transcribed, so there is no running text to connect with the previous page.</meta>\n<warning>The OCR provides no readable Mongolian text for this page. The vertical body text and the Mongolian marginal label were not transcribed. Only the Chinese marginal label (header and page number) could be translated.</warning>\n\n<margin><unclear>short vertical Mongolian marginal label (likely volume title and folio number), 1 line, not transcribed</unclear></margin>\n\n<unclear>approximately 28 vertical lines of classical Mongolian script (Buddhist sūtra text) not transcribed. One section ends partway down a line in the middle of the page, followed by a short ruled break and the start of a new passage.</unclear>\n\n<note>The text block sits inside a rectangular double-ruled frame printed in red. Narrow panels at the left and right edges carry the marginal labels: Mongolian on the left, Chinese on the right. Red-ink printing was used for prestigious editions of the Mongolian Buddhist canon.</note>\n\n<summary>This is folio 393 of Volume 28, Part One, of the \"Sūtras of Various Classes\" section of a red-ink xylograph Mongolian Kanjur. The Mongolian sūtra text was not transcribed, so only the Chinese marginal label can be translated. The page layout shows one passage ending and a new one beginning mid-page.</summary>\n<keywords>Mongolian Kanjur, Sūtras of Various Classes, Zhupin jing, Mongolian Buddhist canon, red-ink xylograph, classical Mongolian script, Volume 28, folio 393, untranscribed text</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.036
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "key": "v047_f193a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Manchu</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>193</page-num>\n<header>諸般般若經第一卷上 一百九十三</header>\n<warning>The main text is in vertical Manchu (or possibly Mongolian) script, printed from woodblocks in red ink inside a double-ruled frame. It is not transcribed here because a reliable letter-by-letter reading into Unicode could not be guaranteed. The red ink and the Chinese margin title suggest the Qianlong-era Manchu Kanjur, but this is an inference. The Chinese characters in the right margin are transcribed.</warning>\n<meta>The page is a landscape pothi leaf with a double-ruled red border. The left margin has a short vertical label in the same script, probably the volume title and folio. The right margin has the Chinese title and folio number. Some ink faults appear along the top border on the right.</meta>\n\n<margin><unclear>short vertical marginal label in Manchu/Mongolian script (about 5 words), not transcribed</unclear></margin>\n\n<unclear>about 30 vertical lines of Manchu/Mongolian-script text in red ink, read left to right, not transcribed</unclear>\n\n<margin>諸般般若經第一卷上 一百九十三</margin>\n\n<vocab>Prajñāpāramitā, 般若經, Manchu Kanjur, woodblock print, red ink, pothi leaf</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 27.511,
+  "usage": {
+   "input": 5,
+   "output": 1508
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The source language is listed as Mongolian, but the OCR identifies the script as Manchu (possibly Mongolian). The main text was not transcribed, so only the Chinese margin title can be translated. The page header repeats the right-margin title.</meta>\n\n<margin><unclear>short vertical marginal label in Manchu/Mongolian script (about 5 words), not transcribed</unclear></margin>\n\n<unclear>about 30 vertical lines of Manchu/Mongolian-script text in red ink, read left to right, not transcribed</unclear>\n\n<margin>Various <term>Prajñāpāramitā</term> <gloss>Perfection of Wisdom</gloss> Sūtras, Volume One, Upper Part, folio 193 <note>original: \"諸般般若經第一卷上 一百九十三\". \"Various Prajñāpāramitā\" names a section of the Buddhist canon. The Chinese title in the margin let readers who did not read the main script find their place in the volume.</note></margin>\n\n<summary>This is folio 193 of the first volume of the \"Various Prajñāpāramitā\" section of a woodblock-printed Buddhist canon. The main text is in red ink, in Manchu or Mongolian script, and was not transcribed. Only the Chinese margin title, which gives the volume and folio number, could be translated.</summary>\n<keywords>Prajñāpāramitā, Perfection of Wisdom, Manchu Kanjur, Buddhist canon, woodblock print, red ink, pothi leaf, Chinese margin title, folio 193</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.11
+ }
+}

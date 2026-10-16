@@ -1,0 +1,41 @@
+{
+ "key": "v077_f392a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ᠭᠤᠴᠢᠨ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠡᠷᠡᠨ ᠬᠤᠶᠠᠷ / 諸品經第十八卷上三百九十二</page-num>\n<header>элдэв зүйл</header>\n<warning>Faint red woodblock print with low contrast and partial fading across several columns.</warning>\n<margin>элдэв зүйл ᠭᠤᠴᠢᠨ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠡᠷᠡᠨ ᠬᠤᠶᠠᠷ</margin>\nᠸᠧᠳ᠋ᠠ᠎ᠠ ᠴᠢ ᠢᠨᠠᠭᠰᠢ ᠢᠷᠡ ᠢᠨᠠᠭᠰᠢ ᠢᠷᠡ ᠬᠡᠮᠡᠨ ᠥᠭᠦᠯᠡᠪᠡᠢ ᠃ ᠪᠢ ᠴᠢᠨᠦ ᠦᠭᠡ\nᠰᠤᠨᠤᠰᠤᠭᠠᠳ ᠭᠡᠷ ᠡᠴᠡ ᠭᠠᠷᠴᠤ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠢᠨᠠᠭᠰᠢ ᠢᠷᠡ ᠬᠡᠮᠡᠨ\nᠥᠭᠦᠯᠡᠭᠰᠡᠨ ᠴᠢᠨᠦ ᠶᠠᠭᠤᠨ ᠪᠤᠢ ᠃ ᠡᠨᠡ ᠮᠡᠲᠦ ᠪᠢ ᠥᠭᠦᠯᠡᠭᠰᠡᠨ ᠳᠤᠷ ᠃\nᠲᠡᠷᠡ ᠪᠢᠷᠠᠮᠠᠨ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠪᠢ ᠴᠢᠮᠠᠳᠤ ᠨᠢᠭᠡᠨ ᠦᠭᠡ ᠥᠭᠦᠯᠡᠰᠦᠭᠡᠢ ᠃ ᠲᠡᠷᠡ\nᠦᠭᠡ ᠶᠢ ᠮᠢᠨᠦ ᠰᠤᠨᠤᠰ ᠃ ᠪᠢ ᠴᠢᠮᠠ ᠡᠴᠡ ᠭᠤᠶᠤᠮᠤᠢ ᠃ ᠴᠢ ᠨᠠᠳᠠ ᠡᠴᠡ ᠪᠤᠰᠤ\nᠬᠦᠮᠦᠨ ᠳᠦ ᠪᠦᠦ ᠥᠭᠦᠯᠡ ᠬᠡᠮᠡᠪᠡᠢ ᠃ ᠪᠢ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠴᠢ ᠶᠠᠭᠤᠨ ᠦᠭᠡ\nᠥᠭᠦᠯᠡᠬᠦ ᠪᠤᠢ ᠃ ᠲᠡᠷᠡ ᠪᠢᠷᠠᠮᠠᠨ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠪᠢ ᠡᠨᠡ ᠰᠦᠨᠢ ᠨᠢᠭᠡᠨ ᠵᠡүүдᠦᠨ\nᠵᠡүүдᠡᠯᠡᠪᠡᠢ ᠃ ᠲᠡᠷᠡ ᠵᠡүүдᠦᠨ ᠦ ᠦᠭᠡ ᠶᠢ ᠴᠢᠮᠠᠳᠤ ᠥᠭᠦᠯᠡᠰᠦᠭᠡᠢ ᠃\nᠴᠢ ᠰᠤᠨᠤᠰ ᠃ ᠪᠢ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠵᠡүүдᠦᠨ ᠦ ᠦᠭᠡ ᠶᠠᠭᠤᠨ ᠪᠤᠢ ᠃ ᠥᠭᠦᠯᠡ ᠃\nᠲᠡᠷᠡ ᠪᠢᠷᠠᠮᠠᠨ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠪᠢ ᠡᠨᠡ ᠰᠦᠨᠢ ᠵᠡүүдᠦᠨ ᠳᠦᠷ ᠢᠶᠡᠨ ᠦᠵᠡᠪᠡᠰᠦ ᠃\nᠨᠢᠭᠡᠨ ᠶᠡᠬᠡ ᠭᠠᠵᠠᠷ ᠠᠴᠠ ᠨᠠᠷᠠᠨ ᠤᠷᠭᠤᠵᠤ ᠢᠷᠡᠭᠡᠳ ᠃ ᠮᠢᠨᠦ ᠭᠡᠷ ᠲᠦᠷ\nᠣᠷᠣᠵᠤ ᠢᠷᠡᠪᠡᠢ ᠃ ᠲᠡᠷᠡ ᠨᠠᠷᠠᠨ ᠤ ᠭᠡᠷᠡᠯ ᠢᠶᠡᠷ ᠮᠢᠨᠦ ᠭᠡᠷ ᠪᠦگᠦᠳᠡ\nᠭᠡይᠢᠪᠡᠢ ᠃ ᠲᠡᠷᠡ ᠨᠠᠷᠠᠨ ᠤ ᠭᠡᠷᠡᠯ ᠢᠶᠡᠷ ᠪᠢ ᠪᠡᠷ ᠮᠠᠰᠢ ᠪᠠᠶᠠᠰᠴᠤ\nᠰᠠᠭᠤᠭᠰᠠᠨ ᠳᠤᠷ ᠃ ᠲᠡᠷᠡ ᠨᠠᠷᠠᠨ ᠮᠢᠨᠦ ᠭᠡᠷ ᠡᠴᠡ ᠭᠠᠷᠴᠤ ᠃ ᠪᠠᠰᠠ ᠨᠢᠭᠡᠨ\nᠭᠠᠵᠠᠷ ᠲᠤᠷ ᠣᠳᠪᠠᠢ ᠃ ᠲᠡᠷᠡ ᠭᠠᠵᠠᠷ ᠲᠤᠷ ᠣᠳᠤᠭᠰᠠᠨ ᠳᠤᠷ ᠃ ᠪᠢ ᠮᠠᠰᠢ\nᠭᠠᠰᠠܠᠠᠵᠤ ᠃ ᠤйᠢᠯᠠᠨ ᠰᠠᠭᠤᠭᠰᠠᠨ ᠳᠤᠷ ᠰᠡᠷᠢᠪᠡᠢ ᠃ ᠡᠨᠡ ᠵᠡүүдᠦᠨ ᠦ\nᠦᠭᠡ ᠶᠠᠭᠤᠨ ᠪᠤᠢ ᠃ ᠴᠢ ᠨᠠᠳᠠ  тайᠢᠯ ᠬᠡᠮᠡᠨ ᠥᠭᠦᠯᠡᠪᠡᠢ ᠃ ᠪᠢ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃\nᠲᠡᠷᠡ ᠵᠡүүдᠦᠨ ᠴᠢᠨᠦ ᠮᠠᠰᠢ ᠰᠠйᠢᠨ ᠪᠤйᠢ ᠃ ᠴᠢ ᠪᠦᠦ ᠠйᠢ ᠃ ᠴᠢᠮᠠᠳᠤ\nᠨᠢᠭᠡᠨ ᠶᠡᠬᠡ ᠪᠤᠶᠠᠨ ᠣᠷᠣᠬᠤ ᠪᠤйᠢ ᠃ ᠲᠡᠷᠡ ᠪᠢᠷᠠᠮᠠᠨ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠶᠠᠭᠤᠨ ᠤ\nᠲᠤᠯᠠ ᠨᠠᠳᠠ ᠪᠤᠶᠠᠨ ᠣᠷᠣᠬᠤ ᠪᠤйᠢ ᠃ ᠪᠢ ᠥᠭᠦᠯᠡᠷᠦᠨ ᠃ ᠨᠠᠷᠠᠨ ᠭᠡᠷ ᠲᠦᠷ\nᠣᠷᠣᠭᠰᠠᠨ ᠨᠢ ᠃ ᠪᠤᠷᠬᠠᠨ ᠴᠢᠨᠦ ᠭᠡᠷ ᠲᠦᠷ  залᠠᠷᠠᠵᠤ ᠢᠷᠡᠬᠦ ᠪᠤйᠢ ᠃\nᠭᠡᠷ ᠭᠡይᠢᠭᠰᠡᠨ ᠨᠢ ᠃ ᠴᠢ ᠪᠤᠷᠬᠠᠨ ᠤ ном ᠢ ᠰᠤᠨᠤᠰᠴᠤ ᠃ ᠮᠤᠩᠬᠠᠭ\n харангᠤй ᠠᠴᠠ  ангижᠢᠷᠠᠬᠤ ᠪᠤйᠢ ᠃ ᠨᠠᠷᠠᠨ ᠭᠠᠷᠴᠤ ᠣᠳᠤᠭᠰᠠᠨ ᠨᠢ ᠃\nᠪᠤᠷᠬᠠᠨ ᠴᠢᠮᠠᠳᠤ ном ᠦᠵᠡᠭᠦᠯᠵᠦ ᠃ ᠪᠤᠰᠤ ᠭᠠᠵᠠᠷ ᠲᠤᠷ залᠠᠷᠠᠬᠤ\nᠪᠤйᠢ ᠃ ᠡᠨᠡ ᠮᠡᠲᠦ ᠪᠢ ᠥᠭᠦᠯᠡᠭᠰᠡᠨ ᠳᠤᠷ ᠃ ᠲᠡᠷᠡ ᠪᠢᠷᠠᠮᠠᠨ ᠮᠠᠰᠢ\nᠪᠠᠶᠠᠰᠴᠤ ᠃ ᠮᠢᠨᠦ ᠦᠭᠡ ᠶᠢ ᠰᠤᠨᠤᠰᠤᠭᠠᠳ ᠃ ᠭᠡᠷ ᠲᠦᠷ ᠢᠶᠡᠨ ᠬᠠᠷᠢᠪᠠйᠢ ᠃\n<margin>諸品經第十八卷上三百九十二</margin>\n<vocab>ᠪᠢᠷᠠᠮᠠᠨ, ᠵᠡүүдᠦᠨ, ᠨᠠᠷᠠᠨ, ᠪᠤᠷᠬᠠᠨ, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 133.988,
+  "usage": {
+   "input_tokens": 12331,
+   "output_tokens": 2559,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 38640,
+   "total_tokens": 14890
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: a Brahmin calls out to the narrator, Veda</meta>\n<page-num>Thirty-six, Three hundred ninety-two / Sutra of Various Sections, Scroll Eighteen, Part One, Three hundred ninety-two <note>original: \"ᠭᠤᠴᠢᠨ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠡᠷᠡᠨ ᠬᠤᠶᠠᠷ / 諸品經第十八卷上三百九十二\"</note></page-num>\n<header>Various Sections <note>original: \"элдэв зүйл\", corresponding to the Sutra of the Wise and the Foolish, known in Chinese as Zhupin jing</note></header>\n<warning>Faint red woodblock print with low contrast and partial fading across several columns.</warning>\n<margin>Various Sections, thirty-six, three hundred ninety-two <note>original: \"элдэв зүйл ᠭᠤᠴᠢᠨ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠡᠷᠡᠨ ᠬᠤᠶᠠᠷ\"</note></margin>\n\"<term>Veda</term> <gloss>the narrator's name; literally, sacred knowledge</gloss>, come here, come here!\" he said. Hearing your <note>that is, his</note> words, I came out of the house and said: \"Why is it that you said, 'Come here'?\" When I had spoken thus, that <term>biraman</term> <gloss>Brahmin, a member of the priestly caste</gloss> said: \"I wish to speak a word to you. Listen to that word of mine. I beg of you, do not speak of it to any person other than me.\" I said: \"What word will you speak?\" That Brahmin said: \"Tonight I dreamed a dream. I wish to tell the account of that dream to you. Listen!\" I said: \"What is the account of the dream? Speak!\"\n\nThat Brahmin said: \"When I looked in my dream tonight, the sun rose up from a great land and entered into my house. By the light of that sun, my entire house was illuminated. While I sat rejoicing greatly in the light of that sun, that sun went out of my house and departed to another land. When it departed to that land, I grieved greatly, and as I sat weeping, I awoke. What is the meaning of this dream? Interpret it for me,\" he said.\n\nI said: \"That dream of yours is very auspicious. Do not be afraid. A great merit will come to you.\" That Brahmin said: \"For what reason will merit come to me?\" I said: \"That the sun entered your house means the <term>Burkhan</term> <gloss>Buddha</gloss> will graciously come to your house. That the house was illuminated means you will hear the <term>nom</term> <gloss>Dharma, or Buddhist teaching</gloss> of the Buddha and be liberated from the darkness of ignorance. That the sun went out and departed means the Buddha will reveal the teaching to you and then graciously proceed to another land.\" When I had spoken thus, that Brahmin rejoiced greatly, and having heard my words, returned to his house.\n<margin>Sutra of Various Sections, Scroll Eighteen, Part One, Three hundred ninety-two <note>original: \"諸品經第十八卷上三百九十二\"</note></margin>\n\n<summary>A Brahmin recounts a vivid dream to the narrator, Veda, in which the sun enters and illuminates his home before departing to another land. Veda interprets the dream as an auspicious omen foretelling that the Buddha will visit the Brahmin's home, dispel his ignorance with the Dharma, and then continue on his journey.</summary>\n<keywords>Mongolian Buddhist canon, Sutra of Various Sections, Zhupin jing, dream interpretation, Brahmin, Veda, Buddha, Dharma, sun metaphor</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 29.389
+ }
+}

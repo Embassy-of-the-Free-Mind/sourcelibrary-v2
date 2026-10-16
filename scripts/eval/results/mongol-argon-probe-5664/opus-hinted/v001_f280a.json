@@ -1,0 +1,35 @@
+{
+ "key": "v001_f280a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The image is rotated 90° (the columns run horizontally in the scan). The text is printed in faint red ink at low contrast. At this resolution the Uighur-Mongol letterforms cannot be read reliably enough to transcribe without guessing. The body text is not transcribed, so that no readings are invented.</warning>\n<scan-quality>poor</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>秘密經第一卷上<unclear>二</unclear>百八十</header>\n<page-num>280</page-num>\n<meta>The Chinese label in the margin gives the section (秘密經, Tantra), volume 1, and the folio number; the character before 百 is unclear (二 or 三). A modern red archival number \"559\" is in the outer corner. A faint narrow strip of small Mongolian text sits between the inner border lines on the opposite edge; it is illegible. The text block is framed by a double ruled border in red.</meta>\n\n<insert>559</insert>\n\n<margin><unclear>short line of small Mongolian text in the inner border strip, illegible</unclear></margin>\n\n<unclear>about 24 columns of red-printed Classical Mongolian in Uighur-Mongol script, too faint at this resolution to transcribe reliably; not transcribed</unclear>\n\n<vocab>秘密經, Tantra section, Beijing Kanjur, Classical Mongolian, Uighur-Mongol script, red-ink woodblock print</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 19.625,
+  "usage": {
+   "input": 4,
+   "output": 1047
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<warning>The image is rotated 90° in the scan. The text is printed in faint red ink with low contrast. At this resolution the Uighur-Mongol letters cannot be read reliably, so the main text was not transcribed and has not been translated. This prevents invented readings.</warning>\n\n<meta>Marginal header in Chinese: 秘密經第一卷上, folio <unclear>二</unclear>百八十. It names the Tantra section <note>original: \"秘密經\", literally \"Secret Scriptures\"</note>, volume one, first part, folio <unclear>two</unclear> hundred eighty. The character before 百 is unclear and may be 二 (two) or 三 (three). A modern red archival number \"559\" appears in the outer corner. A faint, illegible strip of small Mongolian text runs between the inner border lines. The text block has a double ruled red border.</meta>\n\nTantra Section, Volume One, Part One, folio <unclear>two</unclear> hundred eighty\n\n<insert>559</insert>\n\n<margin><unclear>short line of small Mongolian text in the inner border strip, illegible</unclear></margin>\n\n<unclear>about 24 columns of red-printed Classical Mongolian in Uighur-Mongol script, too faint at this resolution to transcribe reliably; not transcribed</unclear>\n\n<summary>This is folio 280 (or possibly 380) of volume one of the Tantra section of a Mongolian Kanjur, a red-ink woodblock print. The faint print and the rotated scan left the main text unread. Only the Chinese marginal label and a modern archival number are legible.</summary>\n<keywords>Tantra section, Mongolian Kanjur, Beijing Kanjur, Classical Mongolian, Uighur-Mongol script, red-ink woodblock print, Chinese marginal label, folio 280, archival number 559, illegible page</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 12.684
+ }
+}

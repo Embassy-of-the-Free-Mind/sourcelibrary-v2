@@ -1,0 +1,43 @@
+{
+ "key": "v047_f193a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Vermilion (red-ink) woodblock print in pothi format with moderate fading, particularly in the left marginal box. The 30 vertical lines of main text and the left marginal inscription are in Classical Mongolian vertical script (Hudum Mongol bichig) and cannot be reliably transcribed at the character level; the Chinese marginal inscription on the right is fully legible and transcribed below.</warning>\n<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上一百九十三</page-num>\n<header>諸般般若經第一卷</header>\n<meta>Pothi-format xylograph leaf from the Mongolian Kanjur printed in red ink within a double-ruled border; 30 vertical lines of Classical Mongolian text (read top-to-bottom, left-to-right) flanked by a left marginal box in Mongolian script and a right marginal box in Chinese characters (諸般般若經第一卷上一百九十三, Folio 193 recto of Volume 1).</meta>\n\n<margin><unclear>1 vertical line of Mongolian marginal text (running title, volume, and folio number), not transcribed</unclear></margin>\n<margin>諸般般若經第一卷上一百九十三</margin>\n<unclear>30 vertical lines of Classical Mongolian text in traditional Mongolian script, not transcribed</unclear>\n\n<vocab>諸般般若經, 第一卷, 上一百九十三, Prajñāpāramitā, Mongolian Kanjur, Classical Mongolian, Hudum Mongol bichig, xylograph</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 153.999,
+  "usage": {
+   "input_tokens": 23006,
+   "output_tokens": 7766,
+   "thinking_tokens": 7125,
+   "cache_read_tokens": 29211,
+   "total_tokens": 30772
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Vermilion red-ink woodblock print in pothi format with moderate fading, particularly in the left marginal box. The 30 vertical lines of main text and the left marginal inscription are in Classical Mongolian vertical script, known as Hudum Mongol bichig, and cannot be reliably transcribed at the character level; the Chinese marginal inscription on the right is fully legible and translated below.</warning>\n<meta>Pothi-format xylograph leaf from the Mongolian Kanjur printed in red ink within a double-ruled border; 30 vertical lines of Classical Mongolian text read top-to-bottom and left-to-right, flanked by a left marginal box in Mongolian script and a right marginal box in Chinese characters: 諸般般若經第一卷上一百九十三, meaning The Various Perfection of Wisdom Sutras, Volume 1, Folio 193 recto.</meta>\n\n<margin><unclear>1 vertical line of Mongolian marginal text (running title, volume, and folio number), not transcribed</unclear></margin>\n<margin>The Various Perfection of Wisdom Sutras <note>original: \"諸般般若經\"</note>, Volume 1 <note>original: \"第一卷\"</note>, Folio 193 recto <note>original: \"上一百九十三\"; literally \"upper one hundred ninety-three\", the Chinese block-carver's marginal signature marking the recto side of leaf 193 in the first volume of the <term>Prajñāpāramitā</term> <gloss>Perfection of Wisdom</gloss> section of the Mongolian <term>Kanjur</term> <gloss>translated canon of the Buddha's words</gloss></note></margin>\n<unclear>30 vertical lines of Classical Mongolian text in traditional Mongolian script, not transcribed</unclear>\n\n<summary>This vermilion woodblock leaf belongs to the first volume of the Perfection of Wisdom section of the Mongolian Kanjur, Folio 193 recto. While the thirty vertical lines of Classical Mongolian main text and the left Mongolian marginal signature remain untranscribed due to fading, the right marginal signature in Chinese records the sutra division, volume, and folio number used by the printers.</summary>\n<keywords>Mongolian Kanjur, Perfection of Wisdom, Prajnaparamita, Classical Mongolian, Hudum Mongol bichig, vermilion xylograph, pothi leaf, bilingual marginalia</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 50.785
+ }
+}

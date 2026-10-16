@@ -1,0 +1,41 @@
+{
+ "key": "v001_f280a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>559</page-num>\n<warning>Traditional vertical Mongolian block-printed Kanjur folio in red ink (cinnabar/vermilion), somewhat faded against the paper. Transcribed in Latin transliteration alongside the Chinese marginal signature.</warning>\n\n<margin>na ja-un naiman-duγar</margin>\n\nteyin bügesü : tngri-yin köbegün mañjuśrī tegün-ü\nülemji činar inu : ene kü yeke kölgen-ü nom-un\nyeke ubadis bolai kemegdeküi tere čaγ-tur yeke\nmañjuśrī tngri-yin köbegün mön kü bey-e-tür\nteyin kü öber-ün činar-un mör-tür orosiγsan :\nman-u ene ubadis-un mör-i üiledügči bügüde-yi\nteyin bügesü mör-tür orosiγul-un üiledügči bolai\nkemegsen-tür : tngri-yin köbegün mañjuśrī basa\nnarin-a ubadis-un mör-i üiledküi-yin tulada :\nmañjuśrī tngri-yin köbegün öber-ün bey-e-tür\nuran arγ-a-yin mör-i üiledügči kemen üiledbei :\nteyin bügesü tngri-yin köbegün mañjuśrī tere čaγ-tur\nöber-ün bey-e-yin mör-i üiledügči kemen üiledküi-tür :\nbasa öber-ün bey-e-yin mör-i üiledügči kemen\nüiledbei : tngri-yin köbegün mañjuśrī tere\nčaγ-tur öber-ün bey-e-tür : uran arγ-a-yin\nmör-i üiledügči bolai : öber-ün bey-e-tür uran\narγ-a-yin mör-i üiledügči kemen üiledbei ::\nteyin bügesü tngri-yin köbegün mañjuśrī öber-ün\nbey-e-tür uran arγ-a-yin mör-i üiledügči kemen\nüiledküi tere čaγ-tur : tngri-yin köbegün mañjuśrī\nöber-ün bey-e-tür : öber-ün činar-un mör-tür\norosiγsan-u tulada : tegünčilen iregsed-ün\nبügüde-yin bey-e-yin mör-tür orosiγsan bolai ::\n\n<margin>祕密經第一卷上二百八十</margin>\n\n<vocab>Mañjuśrī, tngri-yin köbegün, yeke kölgen, ubadis, uran arγ-a, tegünčilen iregsed, 祕密經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 61.098,
+  "usage": {
+   "input_tokens": 21687,
+   "output_tokens": 1215,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 28866,
+   "total_tokens": 22902
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: Classical Mongolian block-printed Kanjur folio 280 (page 559) from the First Volume of the Secret Sutra, continuing a discourse on Mañjuśrī and the path of secret instruction.</meta>\n<warning>Traditional vertical Mongolian block-printed Kanjur folio in red ink (cinnabar/vermilion), somewhat faded against the paper. Transcribed in Latin transliteration alongside the Chinese marginal signature.</warning>\n\n<margin>Left side, two hundred and eightieth <note>original: \"na ja-un naiman-duγar\", folio signature indicating the left side of folio 280</note></margin>\n\nTherefore, at that time when it was said that the supreme nature <note>original: \"ülemji činar\"</note> of the <term>tngri-yin köbegün</term> <gloss>son of heaven; divine prince, translating Sanskrit devaputra</gloss> <term>Mañjuśrī</term> <gloss> the Bodhisattva of transcendent wisdom</gloss> is this very great <term>ubadis</term> <gloss>esoteric instruction or precept, from Sanskrit upadeśa</gloss> of the Dharma of the <term>yeke kölgen</term> <gloss>Great Vehicle, Mahāyāna</gloss>; and when it was said that the great <term>Mañjuśrī</term>, the son of heaven, having thus abided within his very own body upon the path of intrinsic nature <note>original: \"öber-ün činar-un mör\", corresponding to Sanskrit svabhāva-mārga</note>, causes all who practice the path of this instruction of ours to thereby enter into and abide upon the path: because the son of heaven <term>Mañjuśrī</term> also practices the subtle path of instruction, <term>Mañjuśrī</term> the son of heaven acted within his own body as the practitioner of the path of <term>uran arγ-a</term> <gloss>skillful means, translating Sanskrit upāya-kauśalya</gloss>. Therefore, at that time when the son of heaven <term>Mañjuśrī</term> acted as the practitioner of the path of his own body, he also acted as the practitioner of the path of his own body. The son of heaven <term>Mañjuśrī</term> at that time was, within his own body, the practitioner of the path of skillful means; he acted as the practitioner of the path of skillful means within his own body. Therefore, at that time when the son of heaven <term>Mañjuśrī</term> acted as the practitioner of the path of skillful means within his own body, because the son of heaven <term>Mañjuśrī</term> abided within his own body upon the path of intrinsic nature, he abided upon the path of the body of all the <term>tegünčilen iregsed</term> <gloss>Thus-Gone Ones, Buddhas, translating Sanskrit Tathāgata</gloss>.\n\n<margin>Secret Sutra, First Scroll, Upper Part, Two Hundred and Eighty <note>original: \"祕密經第一卷上二百八十\", Chinese block-carver's marginal volume and folio marker</note></margin>\n\n<summary>This folio from the Mongolian Kanjur presents a repetition-rich Mahāyāna and Vajrayāna doctrinal exposition centered on the bodhisattva Mañjuśrī. By uniting the subtle path of esoteric instruction and skillful means within his own body and intrinsic nature, Mañjuśrī realizes and abides in the somatic path of all the Tathāgatas.</summary>\n<keywords>Mañjuśrī, son of heaven, devaputra, Great Vehicle, Mahāyāna, esoteric instruction, upadeśa, skillful means, upāya, intrinsic nature, Tathāgata, Secret Sutra, Mongolian Kanjur</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 26.274
+ }
+}

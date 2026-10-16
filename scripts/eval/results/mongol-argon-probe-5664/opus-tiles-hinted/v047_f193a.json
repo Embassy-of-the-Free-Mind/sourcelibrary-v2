@@ -1,0 +1,35 @@
+{
+ "key": "v047_f193a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The Mongolian body text (about 30 columns of woodblock Uighur-Mongol script, printed in red ink) and the short Mongolian margin label could not be read reliably at character level. They have been left untranscribed rather than reconstructed. The Chinese margin label is legible. The ink is faded red, but the print is clean.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>193</page-num>\n<meta>Chinese margin label (right): 諸般般若經第一卷上一百九十三. A Mongolian margin label runs in the left margin. The text block has a double-ruled frame.</meta>\n\n<margin><unclear>short Mongolian margin label in the left margin (title/volume/folio), not transcribed</unclear></margin>\n\n<unclear>approximately 30 columns of Classical Mongolian woodblock text (Uighur-Mongol script), read left to right, not transcribed</unclear>\n\n<margin>諸般般若經第一卷上一百九十三</margin>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A double-ruled rectangular frame encloses the text block, with narrow ruled side panels that hold the margin labels.</image-desc>\n\n<vocab>Beijing Kanjur, Prajñāpāramitā, 般若經, folio 193, Classical Mongolian</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 28.146,
+  "usage": {
+   "input": 5,
+   "output": 2141
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The OCR flagged that the Mongolian body text and the Mongolian margin label could not be read reliably. They are reproduced below as unread regions. Only the Chinese margin label has been translated.</meta>\n\n<margin><unclear>short Mongolian margin label in the left margin (title/volume/folio), not transcribed</unclear></margin>\n\n<unclear>approximately 30 columns of Classical Mongolian woodblock text (Uighur-Mongol script), read left to right, not transcribed</unclear>\n\n<margin>Various Perfection of Wisdom Sutras, Volume One, upper side, 193 <note>original: \"諸般般若經第一卷上一百九十三\". \"Various Perfection of Wisdom Sutras\" is the Chinese name for the miscellaneous Prajñāpāramitā section of the Kanjur, the Buddhist canon. The character 上, \"upper,\" most likely marks the front side of the leaf. 193 is the folio number.</note></margin>\n\n<note>A rectangle with a double-ruled border surrounds the block of text. Narrow ruled panels on either side hold the margin labels.</note>\n\n<summary>Folio 193 of the first volume of the Kanjur section of miscellaneous Perfection of Wisdom sutras, printed from woodblocks in Classical Mongolian with red ink. The Mongolian text was not transcribed, so only the Chinese margin label, which gives the section, volume and folio number, can be translated.</summary>\n<keywords>Perfection of Wisdom, Prajñāpāramitā, Kanjur, Beijing Kanjur, Classical Mongolian, Uighur-Mongol script, woodblock print, red ink, folio 193, Buddhist canon, Chinese margin label</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.839
+ }
+}

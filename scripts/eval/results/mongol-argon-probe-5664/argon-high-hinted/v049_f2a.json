@@ -1,0 +1,44 @@
+{
+ "key": "v049_f2a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上二</page-num>\n<meta>Beijing Kanjur woodblock print in red ink, pothi format, Mahāratnakūṭa-sūtra (Erdeni čogčalaγsan / 大寶積經), Volume 2 (qa / 第二卷), folio 2a (degedü qoyar / 上二), opening of the Ārya-anantamukha-pariśodhana-nirdeśa-parivarta (Činadu kijaγar barasi ügei egüden-i masi tegüs üjegülügči).</meta>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Woodblock-printed double red border frame with floral scrollwork motifs enclosing the central text panel and two vertical marginal cartouches on the left and right.</image-desc>\n\n<margin>ᠬᠠ ᠴᠣᠭᠴᠠᠯᠠᠭᠰᠠᠨ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ</margin>\n<margin>大寶積經第二卷上二</margin>\n\n᠀ ᠨᠠ ᠮᠠ ᠮᠠ ᠾᠠ ᠶᠠ ᠨᠠ ᠰᠤᠳᠤᠷ᠎ᠠ ᠅\nᠴᠢᠨᠠᠳᠤ ᠬᠢᠵᠠᠭᠠᠷ ᠂ ᠪᠠᠷᠠᠰᠢ\nᠦᠭᠡᠢ ᠡᠭᠦᠳᠡᠨ ᠢ ᠮᠠᠰᠢ ᠲᠡᠭᠦᠰ\nᠦᠵᠡᠭᠦᠯᠦᠭᠴᠢ ᠨᠡᠷᠡᠲᠦ ᠂ ᠶᠡᠬᠡ\nᠬᠥᠯᠭᠡᠨ ᠰᠤᠳᠤᠷ ᠅ ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ\nᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ ᠬᠠᠮᠤᠭ\nᠪᠣᠳᠢᠰᠠᠳᠣ᠎ᠠ ᠨᠠᠷ ᠯᠤᠭ᠎ᠠ ᠰᠡᠯᠲᠡ\nᠲᠡᠳᠡᠭᠡᠷ ᠲᠦ ᠮᠥᠷᠭᠦᠮᠦ ᠅ ᠡᠶᠢᠨ ᠬᠡᠮᠡᠨ\nᠮᠢᠨᠤ ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ ᠨᠢᠭᠡᠨ ᠴᠠᠭ ᠲᠤ ᠂\nᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ\nᠬᠠᠭᠠᠨ ᠤ ᠪᠠᠯᠭᠠᠰᠤᠨ ᠲᠠᠰ ᠴᠣᠭᠴᠠᠯᠠᠭᠰᠠᠨ\nᠠᠭᠤᠯᠠᠨ ᠳᠤ ᠠᠶᠠᠭ᠎ᠠ ᠲᠡᠬᠢᠮᠯᠢᠭ ᠦᠳ ᠦᠨ\nᠶᠡᠬᠡ ᠬᠤᠪᠠᠷᠠᠭ ᠮᠢᠩᠭᠠᠨ ᠬᠣᠶᠠᠷ ᠵᠠᠭᠤᠨ\nᠲᠠᠪᠢᠨ ᠠᠶᠠᠭ᠎ᠠ ᠲᠡᠬᠢᠮᠯᠢᠭ ᠦᠳ\nᠯᠤᠭ᠎ᠠ ᠬᠠᠮᠲᠤ ᠂ ᠴᠠᠭᠯᠠᠰᠢ ᠦᠭᠡᠢ ᠂\nᠲᠣᠭ᠎ᠠ ᠲᠣᠮᠰᠢ ᠦᠭᠡᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ᠎ᠠ\nᠨᠠᠷ ᠂ ᠣᠯᠠᠨ ᠲᠩᠷᠢ ᠨᠠᠷ ᠬᠦᠷᠢᠶᠡᠯᠡᠭᠦᠯᠦᠨ\n\n<vocab>ᠴᠣᠭᠴᠠᠯᠠᠭᠰᠠᠨ, 大寶積經, ᠪᠠᠷᠠᠰᠢ ᠦᠭᠡᠢ ᠡᠭᠦᠳᠡᠨ ᠢ ᠮᠠᠰᠢ ᠲᠡᠭᠦᠰ ᠦᠵᠡᠭᠦᠯᠦᠭᠴᠢ, ᠶᠡᠬᠡ ᠬᠥᠯᠭᠡᠨ ᠰᠤᠳᠤᠷ, ᠢᠯᠠᠵᠤ ᠲᠡᠭᠦᠰ ᠨᠥᠭᠴᠢᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ, ᠪᠣᠳᠢᠰᠠᠳᠣ᠎ᠠ, ᠬᠠᠭᠠᠨ ᠤ ᠪᠠᠯᠭᠠᠰᠤᠨ, ᠲᠠᠰ ᠴᠣᠭᠴᠠᠯᠠᠭᠰᠠᠨ ᠠᠭᠤᠯᠠ, ᠠᠶᠠᠭ᠎ᠠ ᠲᠡᠬᠢᠮᠯᠢᠭ, ᠬᠤᠪᠠᠷᠠᠭ, ᠲᠩᠷᠢ</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 348.533,
+  "usage": {
+   "input_tokens": 22536,
+   "output_tokens": 29469,
+   "thinking_tokens": 27671,
+   "cache_read_tokens": 29333,
+   "total_tokens": 52005
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Beijing Kanjur woodblock print in red ink, pothi format, Maharatnakuta Sutra, Volume 2, folio 2a, opening of the Noble Sutra Teaching the Complete Accomplishment of the Inexhaustible Gate to the Ultimate Limit. The final clause continues onto the next folio.</meta>\n\n<note>Woodblock-printed double red border frame with floral scrollwork motifs enclosing the central text panel and two vertical marginal cartouches on the left and right.</note>\n\n<margin>Volume <term>Qa</term> <gloss>second letter of the Mongolian alphabet, designating Volume Two</gloss>, <term>Čogčalaγsan</term> <gloss>Heap of Jewels</gloss>, Upper, Two <note>original: \"qa čogčalaγsan degedü qoyar\"; marginal signature marking Volume 2 of the Maharatnakuta section, folio 2 recto</note></margin>\n<margin>Great Heap of Jewels Sutra, Volume Two, Upper, Two <note>original: \"大寶積經第二卷上二\"</note></margin>\n\nHomage to the Great Vehicle <term>sutra</term> <gloss>discourse of the Buddha</gloss>! <note>original: \"na ma ma ha ya na sudur-a\", a Mongolian phonetic transcription of the Sanskrit invocation \"Namo Mahayanasutraya\"</note>\nThe Great Vehicle <term>Sutra</term> <gloss>Discourse</gloss>\nentitled Most Perfectly Revealing\nthe Inexhaustible Gate\nto the Ultimate Limit <note>original: \"Činadu kijaγar, barasi ügei egüden-i masi tegüs üjegülügči neretü, yeke kölgen sudur\"; corresponding to the Sanskrit \"Arya-anantamukha-parishodhana-nirdesha-parivarta-nama-mahayana-sutra\"</note>.\nTo the <term>Ilaju tegüs nögčigsen burqan</term> <gloss>Victoriously Transcendent Buddha, translating Sanskrit Bhagavan Buddha</gloss>\ntogether with all the\n<term>bodhisattvas</term> <gloss>awakening beings</gloss>,\nto them I bow in homage.\nThus have I heard\nat one time:\nthe Victoriously Transcendent Buddha\nwas at the Royal City <note>original: \"qaγan-u balγasun\", the standard Mongolian translation of Rajagriha, capital of Magadha</note>,\non Vulture Peak Mountain <note>original: \"tas čogčalaγsan aγulan-du\", literally \"Vulture-Heaped Mountain\", translating Sanskrit Gridhrakuta</note>,\ntogether with a great <term>qubarag</term> <gloss>monastic community, translating Sanskrit sangha</gloss>\nof <term>ayaγ-a tekimlig</term> <gloss>fully ordained monks, an Old Uyghur loanword meaning \"worthy of veneration\", translating Sanskrit bhikshu</gloss>\nnumbering one thousand two hundred\nand fifty monks,\nand encircled by immeasurable,\ninnumerable <term>bodhisattvas</term> <gloss>awakening beings</gloss>\nand by many <term>tngri</term> <gloss>celestial deities, translating Sanskrit deva</gloss>\n\n<summary>This folio from Volume 2 of the Beijing Mongolian Kanjur opens the Sutra Most Perfectly Revealing the Inexhaustible Gate to the Ultimate Limit, a section of the Great Heap of Jewels Sutra. Following a Sanskrit invocation and homage to the Buddha and bodhisattvas, it sets the scene on Vulture Peak Mountain near Rajagriha, where the Buddha is surrounded by 1,250 monks, countless bodhisattvas, and celestial deities.</summary>\n<keywords>Beijing Kanjur, Classical Mongolian, Maharatnakuta Sutra, Great Heap of Jewels Sutra, Anantamukha-parishodhana-nirdesha, Inexhaustible Gate, Victoriously Transcendent Buddha, bodhisattva, Rajagriha, Royal City, Vulture Peak Mountain, Gridhrakuta, bhikshu, sangha, deva, tngri</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 138.055
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "key": "v005_f150a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The page image is turned 90°, so the Mongolian text lines run across the image instead of down it. The woodblock ink is pale. I could not read the Uighur-Mongol script reliably letter by letter at this orientation and resolution, so the main text is not transcribed rather than guessed. The Chinese margin label is legible and is transcribed below.</warning>\n<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>150</page-num>\n<header>秘密經第五卷上一百五十</header>\n<meta>The folio label in the right margin reads 秘密經第五卷上一百五十 (Secret Tantra section, volume 5, recto, folio 150). The left margin has a short Mongolian folio label, probably the folio number written out in words (likely ᠨᠢᠭᠡᠨ ᠵᠠᠭᠤᠨ ᠲᠠᠪᠢᠨ, \"one hundred fifty\"); this reading is uncertain. A red archival sequence number, 299, is printed outside the frame at the upper left.</meta>\n\n<margin><unclear>Mongolian folio label of about 3–4 words, probably the folio number in words; not transcribed</unclear></margin>\n\n<unclear>About 25 lines of Classical Mongolian woodblock text in Uighur-Mongol script inside a double-ruled frame, with the last line shorter than the rest; not transcribed because the rotated, faint script could not be read reliably</unclear>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Double-ruled rectangular frame around the text block, with narrow side panels at the left and right edges that hold the folio labels.</image-desc>\n\n<vocab>秘密經 (Secret Tantra section of the Kanjur), Beijing Mongolian Kanjur, volume 5, folio 150</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 37.249,
+  "usage": {
+   "input": 5,
+   "output": 2573
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Folio header label in Chinese: 秘密經第五卷上一百五十, \"Secret Tantra section, volume 5, recto, folio 150.\" Red archival sequence number 299 sits outside the frame at upper left. The Mongolian main text was not transcribed by OCR, so no translation of it is given.</meta>\n\nSecret Tantra Section, Volume 5, Recto, Folio 150\n\n<margin><unclear>Mongolian folio label of about 3–4 words, probably the folio number in words; not transcribed</unclear></margin>\n\n<unclear>About 25 lines of Classical Mongolian woodblock text in Uighur-Mongol script inside a double-ruled frame, with the last line shorter than the rest; not transcribed because the rotated, faint script could not be read reliably</unclear>\n\n<note>A double-ruled rectangular frame surrounds the text block. Narrow side panels at the left and right edges hold the folio labels.</note>\n\n<warning>The page image is rotated 90° and the woodblock ink is faint. The Mongolian main text could not be transcribed, so only the Chinese margin label is translated here.</warning>\n\n<summary>This is folio 150 (recto) of volume 5 of the Secret Tantra section of a Mongolian Kanjur woodblock print, probably the Beijing edition. Only the Chinese folio label could be read. The roughly 25 lines of Mongolian text were not transcribed and remain untranslated.</summary>\n<keywords>Mongolian Kanjur, Secret Tantra section, tantra, woodblock print, Classical Mongolian, Uighur-Mongol script, folio 150, volume 5, Beijing edition</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 8.927
+ }
+}

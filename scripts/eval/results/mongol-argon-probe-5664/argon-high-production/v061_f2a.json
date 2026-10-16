@@ -1,0 +1,44 @@
+{
+ "key": "v061_f2a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上二 (qoyar / 2a)</page-num>\n<header>諸品經第二卷上</header>\n<meta>Pothi-format woodblock print (xylograph) in red ink with decorative floral border; 23 vertical columns of Classical Mongolian script reading top-to-bottom, left-to-right, flanked by a left cartouche in Mongolian script and a right cartouche in Chinese characters.</meta>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Rectangular double-lined frame in red ink filled with a continuous floral and foliate vine scroll border enclosing the central text panel and the left and right marginal foliation cartouches.</image-desc>\n\n<margin>ba nögüge degedü qoyar (ᠪᠠ ᠨᠥᠭᠦᠭᠡ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ)</margin>\n<margin>諸品經第二卷上二</margin>\n\ntegünčilen kü bügüde : tendeče basa\nburqan-u gegen beye qotala-a\nilete üjegden bütübei ::\nmön tegünčilen kü bügüde : tendeče basa\njirγalang ba gegen bayasqulang :\nneretü samadi olbai : tendeče\nbasa burqan-u gegen\ngerel-ün čoγ küčün bügüdeger-i :\nsayitur todoraγulun bügüdeger-ün\nčinar anu : yambar kemebesü\ntegünčilen iregsen-ü gegen\noron ba jokiyal kiged\nniγuča ba orošiγsan kiged\nčaγ ba oron kiged\nbuyan-u činar mön tegünčilen kü\nbügüde : tendeče basa burqan-u\ngegen beye gerel bügüdeger-i\nilete üjegülküi neretü\nsamadi olbai : tere kü\nsamadi-yin küčün-iyer burqan-u\ngegen beye mön tegünčilen\nkü bügüde : tendeče basa\nburqan-u : gegen gerel-ün\n\n---\n\nᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠬᠦ ᠪᠦᠭᠦᠳᠡ ∶ ᠲᠡᠨᠳᠡᠴᠡ ᠪᠠᠰᠠ\nᠪᠤᠷᠬᠠᠨ ᠤ ᠭᠡᠭᠡᠨ ᠪᠡᠶ᠎ᠡ ᠬᠣᠲᠠᠯᠠ ᠠ\nᠢᠯᠡᠲᠡ ᠦᠵᠡᠭᠳᠡᠨ ᠪᠦᠲᠦᠪᠡᠢ ∷\nᠮᠥᠨ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠬᠦ ᠪᠦᠭᠦᠳᠡ ∶ ᠲᠡᠨᠳᠡᠴᠡ ᠪᠠᠰᠠ\nᠵᠢᠷᠭᠠᠯᠠᠩ ᠪᠠ ᠭᠡᠭᠡᠨ ᠪᠠᠶᠠᠰᠬᠤᠯᠠᠩ ∶\nᠨᠡᠷᠡᠲᠦ ᠰᠠᠮᠠᠳᠢ ᠣᠯᠪᠠᠢ ∶ ᠲᠡᠨᠳᠡᠴᠡ\nᠪᠠᠰᠠ ᠪᠤᠷᠬᠠᠨ ᠤ ᠭᠡᠭᠡᠨ\nᠭᠡᠷᠡᠯ ᠦᠨ ᠴᠣᠭ ᠬᠦᠴᠦᠨ ᠪᠦᠭᠦᠳᠡᠭᠡᠷ ᠢ ∶\nᠰᠠᠶᠢᠲᠤᠷ ᠲᠣᠳᠣᠷᠠᠭᠤᠯᠤᠨ ᠪᠦᠭᠦᠳᠡᠭᠡᠷ ᠦᠨ\nᠴᠢᠨᠠᠷ ᠠᠨᠤ ∶ ᠶᠠᠮᠪᠠᠷ ᠬᠡᠮᠡᠪᠡᠰᠦ\nᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠭᠡᠭᠡᠨ\nᠣᠷᠣᠨ ᠪᠠ ᠵᠣᠬᠢᠶᠠᠯ ᠬᠢᠭᠡᠳ ○\nᠨᠢᠭᠤᠴᠠ ᠪᠠ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠬᠢᠭᠡᠳ\nᠴᠠᠭ ᠪᠠ ᠣᠷᠣᠨ ᠬᠢᠭᠡᠳ\nᠪᠤᠶᠠᠨ ᠤ ᠴᠢᠨᠠᠷ ᠮᠥᠨ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠬᠦ\nᠪᠦᠭᠦᠳᠡ ∶ ᠲᠡᠨᠳᠡᠴᠡ ᠪᠠᠰᠠ ᠪᠤᠷᠬᠠᠨ ᠤ\nᠭᠡᠭᠡᠨ ᠪᠡᠶ᠎ᠡ ᠭᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡᠭᠡᠷ ᠢ\nᠢᠯᠡᠲᠡ ᠦᠵᠡᠭᠦᠯᠬᠦᠢ ᠨᠡᠷᠡᠲᠦ\nᠰᠠᠮᠠᠳᠢ ᠣᠯᠪᠠᠢ ∶ ᠲᠡᠷᠡ ᠬᠦ\nᠰᠠᠮᠠᠳᠢ ᠶᠢᠨ ᠬᠦᠴᠦᠨ ᠢᠶᠡᠷ ᠪᠤᠷᠬᠠᠨ ᠤ\nᠭᠡᠭᠡᠨ ᠪᠡᠶ᠎ᠡ ᠮᠥᠨ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ\nᠬᠦ ᠪᠦᠭᠦᠳᠡ ∶ ᠲᠡᠨᠳᠡᠴᠡ ᠪᠠᠰᠠ\nᠪᠤᠷᠬᠠᠨ ᠤ ∶ ᠭᠡᠭᠡᠨ ᠭᠡᠷᠡᠯ ᠦᠨ\n\n<vocab>諸品經, burqan, tegünčilen iregsen, Tathāgata, samadi, gegen beye, gegen gerel, čoγ küčün, buyan-u činar, mön tegünčilen kü bügüde</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 351.039,
+  "usage": {
+   "input_tokens": 19382,
+   "output_tokens": 23321,
+   "thinking_tokens": 21927,
+   "cache_read_tokens": 13809,
+   "total_tokens": 42703
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny",
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page</meta>\n<meta>Pothi-format woodblock print in red ink with decorative floral border, folio 2a of the Sutra of Various Chapters, Second Fascicle, Upper Part; 23 vertical columns of Classical Mongolian script reading top-to-bottom, left-to-right, flanked by a left cartouche in Mongolian script and a right cartouche in Chinese characters. The OCR transcription presents the same 23 columns twice: first in Romanized transliteration and then in Classical Mongolian script.</meta>\n\n<note>A rectangular double-lined frame in red ink is filled with a continuous floral and foliate vine scroll border enclosing the central text panel and the left and right marginal foliation cartouches.</note>\n\n<margin>Volume <term>ba</term> <gloss>fifteenth volume letter in the Kanjur</gloss>, Second Fascicle, Upper Part, Folio Two <note>original: \"ba nögüge degedü qoyar / ᠪᠠ ᠨᠥᠭᠦᠭᠡ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ\"</note></margin>\n<margin><term>Zhupin jing</term> <gloss>Sutra of Various Chapters</gloss>, Second Fascicle, Upper Part, Folio Two <note>original: \"諸品經第二卷上二\"</note></margin>\n\nin that very same way, all of them <note>original: \"tegünčilen kü bügüde\"; a standard sutra abbreviation formula indicating that the full series of qualities previously stated is to be repeated</note>. Thereupon, furthermore,\nthe <term>gegen beye</term> <gloss>radiant body</gloss> of the <term>burqan</term> <gloss>Buddha</gloss>, universally and to all,\nwas manifestly seen and accomplished.\n<term>Mön tegünčilen kü bügüde</term> <gloss>All the rest is in that very same way</gloss>. Thereupon, furthermore,\nknown as \"Bliss and Radiant Joy\" <note>original: \"jirγalang ba gegen bayasqulang\"</note>,\nthat <term>samadi</term> <gloss>meditative absorption, Sanskrit samādhi</gloss> was attained. Thereupon,\nfurthermore, of the <term>burqan</term> <gloss>Buddha</gloss> and his <term>gegen gerel</term> <gloss>radiant light</gloss>,\nall of its <term>čoγ küčün</term> <gloss>glorious powers</gloss>\nbeing thoroughly illuminated, the nature of all of them:\nif one asks what that nature is, namely,\nit is the radiant realm of the <term>tegünčilen iregsen</term> <gloss>Thus-Come One, Sanskrit Tathāgata</gloss>\nand his enlightened deeds <note>original: \"jokiyal\"</note>, as well as\nhis secret mysteries and his abiding state <note>original: \"niγuča ba orošiγsan\"</note>, as well as\nthe time and the place, as well as\nthe <term>buyan-u činar</term> <gloss>nature of merit</gloss>, and in that very same way\nall the rest. Thereupon, furthermore, of the <term>burqan</term> <gloss>Buddha</gloss> and his\n<term>gegen beye</term> <gloss>radiant body</gloss> and lights, all of them,\nthe absorption named \"Manifestly Revealing\" <note>original: \"burqan-u gegen beye gerel bügüdeger-i ilete üjegülküi\", meaning \"Manifestly Revealing All the Radiant Bodies and Lights of the Buddha\"</note>,\nthat <term>samadi</term> <gloss>meditative absorption</gloss> was attained. Through that very\n<term>samadi</term>'s power, the <term>burqan</term> <gloss>Buddha</gloss> and his\n<term>gegen beye</term> <gloss>radiant body</gloss> were manifested, and in that very same way\nall the rest. Thereupon, furthermore,\nof the <term>burqan</term> <gloss>Buddha</gloss> and his <term>gegen gerel</term> <gloss>radiant light</gloss> <meta>continues on next page</meta>\n\n<summary>This folio from a red-ink Beijing woodblock print of the Mongolian Kanjur enumerates a sequence of Buddhist meditative absorptions, known as samadi, including \"Bliss and Radiant Joy\" and \"Manifestly Revealing All the Radiant Bodies and Lights of the Buddha.\" Through these absorptions, the radiant body, glorious light, enlightened deeds, secret mysteries, and nature of merit of the Tathāgata are made manifest.</summary>\n<keywords>Mongolian Kanjur, Zhupin jing, Sutra of Various Chapters, Buddha, Tathāgata, samādhi, meditative absorption, radiant body, radiant light, nature of merit, Beijing xylograph</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 168.157
+ }
+}

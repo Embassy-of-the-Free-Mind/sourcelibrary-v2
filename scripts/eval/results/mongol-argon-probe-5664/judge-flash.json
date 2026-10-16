@@ -1,0 +1,500 @@
+{
+ "argon-high-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The English transcription is a placeholder stating the main text was not transcribed, containing only marginal foliation and none of the Guhyasamāja-tantra passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription is a placeholder stating the main text was not transcribed, containing only marginal foliation and none of the Guhyasamāja-tantra passage.",
+  "cls": null
+ },
+ "argon-high-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The reading contains only marginal labels and metadata alongside an explicit placeholder stating the text was not transcribed, omitting the Vajrapāṇi ritual instructions, mantras, and narrative of the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The reading contains only marginal labels and metadata alongside an explicit placeholder stating the text was not transcribed, omitting the Vajrapāṇi ritual instructions, mantras, and narrative of the Tibetan passage.",
+  "cls": null
+ },
+ "argon-high-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English reading contains only marginal notations and placeholders stating that the main text was not transcribed, with none of the Tibetan text's content translated.",
+  "raw": "VERDICT: unreadable\nWHY: The English reading contains only marginal notations and placeholders stating that the main text was not transcribed, with none of the Tibetan text's content translated.",
+  "cls": null
+ },
+ "argon-high-production/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The transcription contains only metadata, marginal notes, and placeholders stating that the Mongolian text was not transcribed, with none of the Tibetan passage's content present.",
+  "raw": "VERDICT: unreadable\nWHY: The transcription contains only metadata, marginal notes, and placeholders stating that the Mongolian text was not transcribed, with none of the Tibetan passage's content present.",
+  "cls": null
+ },
+ "argon-high-production/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading contains only marginal signatures and physical descriptions with a placeholder stating the text is not transcribed, omitting the sutra passage entirely.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading contains only marginal signatures and physical descriptions with a placeholder stating the text is not transcribed, omitting the sutra passage entirely.",
+  "cls": null
+ },
+ "argon-high-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading contains only marginal labels and metadata, with the main canonical text left untranscribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading contains only marginal labels and metadata, with the main canonical text left untranscribed.",
+  "cls": null
+ },
+ "argon-high-production/v049_f2a": {
+  "verdict": "wrong text",
+  "why": "The English translation represents a different sūtra featuring an assembly of 1,800 monks rather than the Akṣobhyatathāgatavyūha (D50) passage with 1,250 monks, sharing only generic opening formulaic phrasing.",
+  "raw": "VERDICT: wrong text\nWHY: The English translation represents a different sūtra featuring an assembly of 1,800 monks rather than the Akṣobhyatathāgatavyūha (D50) passage with 1,250 monks, sharing only generic opening formulaic phrasing.",
+  "cls": null
+ },
+ "argon-low-hinted/v001_f280a": {
+  "verdict": "wrong text",
+  "why": "The English translates a passage from the Guhyasamāja Tantra concerning the secret body and ultimate reality, sharing none of the Hevajratantra's specific chakras, mantras, or magical rituals present in the Tibetan text.",
+  "raw": "VERDICT: wrong text\nWHY: The English translates a passage from the Guhyasamāja Tantra concerning the secret body and ultimate reality, sharing none of the Hevajratantra's specific chakras, mantras, or magical rituals present in the Tibetan text.",
+  "cls": null
+ },
+ "argon-low-hinted/v005_f150a": {
+  "verdict": "wrong text",
+  "why": "The English describes repetitive scholastic enumerations of luminous manifest cognition, discerning cognition, and the nature of the aspect, completely lacking the Tibetan passage's specific content regarding Guhyasamāja chapter twelve's conclusion, vajra recitations, and heart visualizations of the five wisdom emblems.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes repetitive scholastic enumerations of luminous manifest cognition, discerning cognition, and the nature of the aspect, completely lacking the Tibetan passage's specific content regarding Guhyasamāja chapter twelve's conclusion, vajra recitations, and heart visualizations of the five wisdom emblems.",
+  "cls": null
+ },
+ "argon-low-hinted/v047_f193a": {
+  "verdict": "wrong text",
+  "why": "The English text records a dialogue with Śāriputra regarding the characteristic marks of emptiness, the signless, the wishless, and the unconstructed, none of which appears in the provided Vajracchedikā passage featuring Subhūti, modes of birth, giving without abiding, and physical marks.",
+  "raw": "VERDICT: wrong text\nWHY: The English text records a dialogue with Śāriputra regarding the characteristic marks of emptiness, the signless, the wishless, and the unconstructed, none of which appears in the provided Vajracchedikā passage featuring Subhūti, modes of birth, giving without abiding, and physical marks.",
+  "cls": null
+ },
+ "argon-low-hinted/v049_f2a": {
+  "verdict": "wrong text",
+  "why": "The English text describes the conclusion of chapter four and opening of chapter five (the Chapter of Supplication), whereas the Tibetan passage contains the opening of chapter six (Akṣobhyatathāgatasya vyūha) featuring Śāriputra at Vulture Peak.",
+  "raw": "VERDICT: wrong text\nWHY: The English text describes the conclusion of chapter four and opening of chapter five (the Chapter of Supplication), whereas the Tibetan passage contains the opening of chapter six (Akṣobhyatathāgatasya vyūha) featuring Śāriputra at Vulture Peak.",
+  "cls": null
+ },
+ "argon-low-hinted/v061_f2a": {
+  "verdict": "wrong text",
+  "why": "The English describes cultivating mindfulness to behold the Buddha and having obstacles like mountains and rivers cleared away, none of which appears in the Tibetan passage's opening nidāna and disciple lists.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes cultivating mindfulness to behold the Buddha and having obstacles like mountains and rivers cleared away, none of which appears in the Tibetan passage's opening nidāna and disciple lists.",
+  "cls": null
+ },
+ "argon-low-hinted/v066_f2a": {
+  "verdict": "wrong text",
+  "why": "The English text is a devotional hymn and confession addressed to Vajrapāṇi, whereas the Tibetan passage contains the opening nidāna and lists of disciples and bodhisattvas from the Lotus Sūtra.",
+  "raw": "VERDICT: wrong text\nWHY: The English text is a devotional hymn and confession addressed to Vajrapāṇi, whereas the Tibetan passage contains the opening nidāna and lists of disciples and bodhisattvas from the Lotus Sūtra.",
+  "cls": null
+ },
+ "argon-low-hinted/v077_f392a": {
+  "verdict": "wrong text",
+  "why": "The English narrates a Brahmin recounting a dream of the sun entering his house to Veda, whereas the Tibetan text consists of verses describing the Buddha's conformity with the world.",
+  "raw": "VERDICT: wrong text\nWHY: The English narrates a Brahmin recounting a dream of the sun entering his house to Veda, whereas the Tibetan text consists of verses describing the Buddha's conformity with the world.",
+  "cls": null
+ },
+ "argon-low-hinted/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English text consists of didactic verses on the bodhisattva path from the compendium Ele jüil (Zhupin jing) rather than the dialogue on spiritual friendship (kalyāṇamitra) between the Buddha and Ānanda at Kuśinagara in the Tibetan passage.",
+  "raw": "VERDICT: wrong text\nWHY: The English text consists of didactic verses on the bodhisattva path from the compendium Ele jüil (Zhupin jing) rather than the dialogue on spiritual friendship (kalyāṇamitra) between the Buddha and Ānanda at Kuśinagara in the Tibetan passage.",
+  "cls": null
+ },
+ "argon-low-hinted/v098_f3a": {
+  "verdict": "wrong text",
+  "why": "The English describes monks reporting actions to the Buddha and the Buddha assembling the community to promulgate rules, none of which appears in this Tibetan Prātimokṣasūtra passage containing praise verses, the poṣadha liturgy, and the four pārājika rules.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes monks reporting actions to the Buddha and the Buddha assembling the community to promulgate rules, none of which appears in this Tibetan Prātimokṣasūtra passage containing praise verses, the poṣadha liturgy, and the four pārājika rules.",
+  "cls": null
+ },
+ "argon-low-production/v001_f280a": {
+  "verdict": "wrong text",
+  "why": "The English describes a doctrinal discourse on the devaputra Mañjuśrī and skillful means, whereas the Tibetan Hevajra Tantra passage contains mantra enumerations and practical rituals such as rainmaking, cloud-dispersal, and subjugation.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes a doctrinal discourse on the devaputra Mañjuśrī and skillful means, whereas the Tibetan Hevajra Tantra passage contains mantra enumerations and practical rituals such as rainmaking, cloud-dispersal, and subjugation.",
+  "cls": null
+ },
+ "argon-low-hinted/v011_f224a": {
+  "verdict": "wrong text",
+  "why": "The English describes Vinaya monastic legal procedures, formal monastic acts, and dispute settlement, whereas the Tibetan passage details Vajrapāṇi tantric mandalas, mantras, and visualizations for subduing nāgas.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes Vinaya monastic legal procedures, formal monastic acts, and dispute settlement, whereas the Tibetan passage details Vajrapāṇi tantric mandalas, mantras, and visualizations for subduing nāgas.",
+  "cls": null
+ },
+ "argon-low-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The English contains only marginal folio markers and placeholder notes stating the main text was not transcribed, containing none of the Tibetan passage's Vajrapāṇi mantras and ritual instructions.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains only marginal folio markers and placeholder notes stating the main text was not transcribed, containing none of the Tibetan passage's Vajrapāṇi mantras and ritual instructions.",
+  "cls": null
+ },
+ "argon-low-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The English contains no transcribed text from the Tibetan passage, providing only marginal folio notations and a placeholder indicating that the main text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains no transcribed text from the Tibetan passage, providing only marginal folio notations and a placeholder indicating that the main text was not transcribed.",
+  "cls": null
+ },
+ "argon-low-production/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The transcription provides only metadata and margin labels, explicitly stating that the main block of text is not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The transcription provides only metadata and margin labels, explicitly stating that the main block of text is not transcribed.",
+  "cls": null
+ },
+ "argon-low-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English consists only of marginalia, page labels, and a placeholder stating the text was not transcribed, lacking any specific content from the Tibetan passage such as the assembly at Śrāvasti or the dialogue with Subhūti.",
+  "raw": "VERDICT: unreadable\nWHY: The English consists only of marginalia, page labels, and a placeholder stating the text was not transcribed, lacking any specific content from the Tibetan passage such as the assembly at Śrāvasti or the dialogue with Subhūti.",
+  "cls": null
+ },
+ "argon-low-production/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The English consists only of marginal labels and placeholders stating the text was not transcribed, lacking any of the specific disciples, bodhisattvas, or narrative from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English consists only of marginal labels and placeholders stating the text was not transcribed, lacking any of the specific disciples, bodhisattvas, or narrative from the Tibetan passage.",
+  "cls": null
+ },
+ "argon-low-production/v066_f2a": {
+  "verdict": "wrong text",
+  "why": "The English translation discusses Vinaya teachings on mindful eating, digestion, and bodily organs, whereas the Tibetan passage contains the opening assembly list of arhats and bodhisattvas from the Lotus Sūtra.",
+  "raw": "VERDICT: wrong text\nWHY: The English translation discusses Vinaya teachings on mindful eating, digestion, and bodily organs, whereas the Tibetan passage contains the opening assembly list of arhats and bodhisattvas from the Lotus Sūtra.",
+  "cls": null
+ },
+ "argon-low-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The machine reading contains only marginal foliation labels and a refusal stating that the main text was untranscribed, containing none of the Tibetan passage's verses on worldly conformity.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading contains only marginal foliation labels and a refusal stating that the main text was untranscribed, containing none of the Tibetan passage's verses on worldly conformity.",
+  "cls": null
+ },
+ "argon-low-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The Mongolian body text was not transcribed, containing only marginal folio labels and placeholder notices with none of the Tibetan passage's text.",
+  "raw": "VERDICT: unreadable\nWHY: The Mongolian body text was not transcribed, containing only marginal folio labels and placeholder notices with none of the Tibetan passage's text.",
+  "cls": null
+ },
+ "argon-low-production/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English text translates a passage from the Aṣṭasāhasrikā Prajñāpāramitā concerning Subhūti and the dedication of merit toward omniscience, whereas the Tibetan text contains the conclusion of the Gaṇḍīsamaya-sūtra and the Kalyāṇamitrasevana-sūtra on spiritual friendship taught to Ānanda.",
+  "raw": "VERDICT: wrong text\nWHY: The English text translates a passage from the Aṣṭasāhasrikā Prajñāpāramitā concerning Subhūti and the dedication of merit toward omniscience, whereas the Tibetan text contains the conclusion of the Gaṇḍīsamaya-sūtra and the Kalyāṇamitrasevana-sūtra on spiritual friendship taught to Ānanda.",
+  "cls": null
+ },
+ "opus-hinted/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The English reading contains only marginal metadata and placeholders stating the text was not transcribed, with none of the Tibetan passage's Hevajra tantra doctrinal lists, rituals, or mantras present.",
+  "raw": "VERDICT: unreadable\nWHY: The English reading contains only marginal metadata and placeholders stating the text was not transcribed, with none of the Tibetan passage's Hevajra tantra doctrinal lists, rituals, or mantras present.",
+  "cls": null
+ },
+ "opus-hinted/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The reading contains only metadata, margin labels, and placeholders stating the text was not transcribed, with no translated content to compare against the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The reading contains only metadata, margin labels, and placeholders stating the text was not transcribed, with no translated content to compare against the Tibetan passage.",
+  "cls": null
+ },
+ "opus-hinted/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The English transcription contains no translated body text from the Tibetan passage, consisting entirely of Chinese margin labels and placeholder notices stating the page was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription contains no translated body text from the Tibetan passage, consisting entirely of Chinese margin labels and placeholder notices stating the page was not transcribed.",
+  "cls": null
+ },
+ "opus-hinted/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The reading contains no translated text from the Tibetan passage, consisting only of Chinese margin labels and placeholders stating that the Mongolian text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The reading contains no translated text from the Tibetan passage, consisting only of Chinese margin labels and placeholders stating that the Mongolian text was not transcribed.",
+  "cls": null
+ },
+ "opus-hinted/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The body text was not transcribed due to low image resolution, leaving only margin labels and placeholders rather than any content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The body text was not transcribed due to low image resolution, leaving only margin labels and placeholders rather than any content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-hinted/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading is an explicit placeholder stating the Mongolian text was not transcribed, containing only marginal labels and descriptive metadata rather than translated content.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading is an explicit placeholder stating the Mongolian text was not transcribed, containing only marginal labels and descriptive metadata rather than translated content.",
+  "cls": null
+ },
+ "opus-hinted/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading contains only metadata, margin labels, and placeholders stating the text was not transcribed, with none of the specific canonical text or assembly names from the Tibetan passage present.",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading contains only metadata, margin labels, and placeholders stating the text was not transcribed, with none of the specific canonical text or assembly names from the Tibetan passage present.",
+  "cls": null
+ },
+ "opus-hinted/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading is a placeholder and refusal stating the text was not transcribed, containing only marginal labels and metadata rather than content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading is a placeholder and refusal stating the text was not transcribed, containing only marginal labels and metadata rather than content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-hinted/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The English transcription contains only marginal labels and placeholder notices stating that the main Mongolian text was not transcribed due to low resolution.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription contains only marginal labels and placeholder notices stating that the main Mongolian text was not transcribed due to low resolution.",
+  "cls": null
+ },
+ "opus-production/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The main text was not transcribed, containing only marginal labels and placeholder notes rather than any content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The main text was not transcribed, containing only marginal labels and placeholder notes rather than any content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-hinted/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The English transcription is a refusal and placeholder stating that the body text was not transcribed, containing only margin labels and metadata with no content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription is a refusal and placeholder stating that the body text was not transcribed, containing only margin labels and metadata with no content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The transcription contains no translated text from the Tibetan passage, providing only metadata, marginal numbers, and placeholders stating the text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The transcription contains no translated text from the Tibetan passage, providing only metadata, marginal numbers, and placeholders stating the text was not transcribed.",
+  "cls": null
+ },
+ "opus-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The English transcription consists entirely of metadata, marginal labels, and placeholders stating that the text was not transcribed, containing no content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription consists entirely of metadata, marginal labels, and placeholders stating that the text was not transcribed, containing no content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English contains no translated content from the Tibetan passage, consisting only of Chinese marginal labels and placeholders stating that the Mongolian text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains no translated content from the Tibetan passage, consisting only of Chinese marginal labels and placeholders stating that the Mongolian text was not transcribed.",
+  "cls": null
+ },
+ "opus-production/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The main text was not transcribed and contains only margin labels and placeholders, lacking the Tibetan passage's specific assembly of disciples and bodhisattvas in Śrāvastī.",
+  "raw": "VERDICT: unreadable\nWHY: The main text was not transcribed and contains only margin labels and placeholders, lacking the Tibetan passage's specific assembly of disciples and bodhisattvas in Śrāvastī.",
+  "cls": null
+ },
+ "opus-production/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The body text was not transcribed and only marginal labels were provided, containing none of the specific narrative content (such as the assembly at Vulture Peak or Shariputra's inquiry) from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The body text was not transcribed and only marginal labels were provided, containing none of the specific narrative content (such as the assembly at Vulture Peak or Shariputra's inquiry) from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-production/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The transcription consists only of margin labels and placeholders stating the text was not transcribed, containing none of the specific names or narrative from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The transcription consists only of margin labels and placeholders stating the text was not transcribed, containing none of the specific names or narrative from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The English contains only marginal and volume labels with placeholders stating that the main text was not transcribed, offering no translation of the verses on the Buddha's worldly conformity.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains only marginal and volume labels with placeholders stating that the main text was not transcribed, offering no translation of the verses on the Buddha's worldly conformity.",
+  "cls": null
+ },
+ "opus-production/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The Mongolian body text was not transcribed, leaving only margin labels and placeholder notes without any content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The Mongolian body text was not transcribed, leaving only margin labels and placeholder notes without any content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The English transcription contains no translated body text from the Tibetan passage, consisting only of placeholders stating the text was not transcribed and marginal labels.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription contains no translated body text from the Tibetan passage, consisting only of placeholders stating the text was not transcribed and marginal labels.",
+  "cls": null
+ },
+ "opus-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The English reading is an explicit refusal and placeholder stating that the main text was not transcribed, providing only marginal labels and metadata without translating any of the Prātimokṣasūtra verses or monastic rules from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English reading is an explicit refusal and placeholder stating that the main text was not transcribed, providing only marginal labels and metadata without translating any of the Prātimokṣasūtra verses or monastic rules from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The English contains no translated content from the Tibetan ritual instructions or mantras, providing only folio metadata and placeholders stating the text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains no translated content from the Tibetan ritual instructions or mantras, providing only folio metadata and placeholders stating the text was not transcribed.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The machine reading contains only margin labels and placeholders stating the text was not transcribed, with none of the specific Tibetan passage translated.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading contains only margin labels and placeholders stating the text was not transcribed, with none of the specific Tibetan passage translated.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The transcription contains only metadata, margin labels, and placeholders stating that the Mongolian text was not transcribed, with none of the canonical passage's specific content present.",
+  "raw": "VERDICT: unreadable\nWHY: The transcription contains only metadata, margin labels, and placeholders stating that the Mongolian text was not transcribed, with none of the canonical passage's specific content present.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The Mongolian text was not transcribed and the output consists only of placeholder notices and marginal labels without any of the sutra text.",
+  "raw": "VERDICT: unreadable\nWHY: The Mongolian text was not transcribed and the output consists only of placeholder notices and marginal labels without any of the sutra text.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The English contains no transcribed body text from the Tibetan Lalitavistara passage, consisting only of margin labels, descriptions, and placeholders stating the text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains no transcribed body text from the Tibetan Lalitavistara passage, consisting only of margin labels, descriptions, and placeholders stating the text was not transcribed.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The English reading contains only margin labels and placeholders stating that the main text was not transcribed, without any content from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English reading contains only margin labels and placeholders stating that the main text was not transcribed, without any content from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The English transcription contains only marginal labels and placeholder refusal notes stating the body text was not transcribed, with none of the Tibetan passage on the Buddha's conformity with the world translated.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription contains only marginal labels and placeholder refusal notes stating the body text was not transcribed, with none of the Tibetan passage on the Buddha's conformity with the world translated.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The Mongolian body text was not transcribed, containing only margin labels and placeholders rather than any translation of the Tibetan sūtra text.",
+  "raw": "VERDICT: unreadable\nWHY: The Mongolian body text was not transcribed, containing only margin labels and placeholders rather than any translation of the Tibetan sūtra text.",
+  "cls": null
+ },
+ "opus-tiles-hinted/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The Mongolian body text was not transcribed, providing only a placeholder notice and margin labels rather than the canonical text.",
+  "raw": "VERDICT: unreadable\nWHY: The Mongolian body text was not transcribed, providing only a placeholder notice and margin labels rather than the canonical text.",
+  "cls": null
+ },
+ "opus-tiles-production/v001_f280a": {
+  "verdict": "unreadable",
+  "why": "The text contains only marginal labels and placeholders stating that the Mongolian body text was not transcribed, with none of the Tibetan passage's content translated.",
+  "raw": "VERDICT: unreadable\nWHY: The text contains only marginal labels and placeholders stating that the Mongolian body text was not transcribed, with none of the Tibetan passage's content translated.",
+  "cls": null
+ },
+ "opus-tiles-production/v005_f150a": {
+  "verdict": "unreadable",
+  "why": "The body text was not transcribed, containing only placeholders and marginal labels rather than any text from the Guhyasamāja-tantra passage.",
+  "raw": "VERDICT: unreadable\nWHY: The body text was not transcribed, containing only placeholders and marginal labels rather than any text from the Guhyasamāja-tantra passage.",
+  "cls": null
+ },
+ "opus-tiles-production/v011_f224a": {
+  "verdict": "unreadable",
+  "why": "The transcription contains only marginal metadata and placeholder text stating that the body was not transcribed, with none of the Tibetan passage translated.",
+  "raw": "VERDICT: unreadable\nWHY: The transcription contains only marginal metadata and placeholder text stating that the body was not transcribed, with none of the Tibetan passage translated.",
+  "cls": null
+ },
+ "opus-tiles-production/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English transcription contains only placeholders indicating the main text was not transcribed and marginal notes, with none of the Tibetan text translated.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription contains only placeholders indicating the main text was not transcribed and marginal notes, with none of the Tibetan text translated.",
+  "cls": null
+ },
+ "opus-tiles-production/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The English transcription contains only marginal labels and placeholders stating that the text was not transcribed, containing none of the names or narrative from the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English transcription contains only marginal labels and placeholders stating that the text was not transcribed, containing none of the names or narrative from the Tibetan passage.",
+  "cls": null
+ },
+ "opus-tiles-production/v049_f2a": {
+  "verdict": "unreadable",
+  "why": "The machine reading provides no translated sutra text from the Tibetan passage, containing only placeholders indicating the body text was not transcribed, frame notes, and marginal labels.",
+  "raw": "VERDICT: unreadable\nWHY: The machine reading provides no translated sutra text from the Tibetan passage, containing only placeholders indicating the body text was not transcribed, frame notes, and marginal labels.",
+  "cls": null
+ },
+ "opus-tiles-production/v066_f2a": {
+  "verdict": "unreadable",
+  "why": "The main text was not transcribed, providing only placeholders and marginal labels rather than any text corresponding to the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The main text was not transcribed, providing only placeholders and marginal labels rather than any text corresponding to the Tibetan passage.",
+  "cls": null
+ },
+ "opus-tiles-production/v077_f392a": {
+  "verdict": "unreadable",
+  "why": "The English reading consists only of marginal titles and placeholders stating that the main text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English reading consists only of marginal titles and placeholders stating that the main text was not transcribed.",
+  "cls": null
+ },
+ "opus-tiles-production/v087_f393a": {
+  "verdict": "unreadable",
+  "why": "The English contains no translated canonical text, providing only Chinese marginal labels and explicit placeholders stating that the Mongolian body text was not transcribed.",
+  "raw": "VERDICT: unreadable\nWHY: The English contains no translated canonical text, providing only Chinese marginal labels and explicit placeholders stating that the Mongolian body text was not transcribed.",
+  "cls": null
+ },
+ "opus-tiles-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The English reading contains no translated body text, consisting entirely of placeholders stating the text was not transcribed and translations of Chinese margin labels.",
+  "raw": "VERDICT: unreadable\nWHY: The English reading contains no translated body text, consisting entirely of placeholders stating the text was not transcribed and translations of Chinese margin labels.",
+  "cls": null
+ },
+ "argon-high-production/v061_f2a": {
+  "verdict": "wrong text",
+  "why": "The English text describes meditative absorptions such as \"Bliss and Radiant Joy\" and the manifestation of the Buddha's radiant body, whereas the Tibetan passage contains the opening nidāna of the Lalitavistara listing the assemblies of arhats and bodhisattvas in Śrāvastī.",
+  "raw": "VERDICT: wrong text\nWHY: The English text describes meditative absorptions such as \"Bliss and Radiant Joy\" and the manifestation of the Buddha's radiant body, whereas the Tibetan passage contains the opening nidāna of the Lalitavistara listing the assemblies of arhats and bodhisattvas in Śrāvastī.",
+  "cls": null
+ },
+ "argon-high-production/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English text discusses epithets of the Buddha and the thirty-two great compassions, whereas the Tibetan text contains the conclusion of the Gaṇḍī-sūtra and the Kalyāṇamitrasevana-sūtra regarding spiritual friendship.",
+  "raw": "VERDICT: wrong text\nWHY: The English text discusses epithets of the Buddha and the thirty-two great compassions, whereas the Tibetan text contains the conclusion of the Gaṇḍī-sūtra and the Kalyāṇamitrasevana-sūtra regarding spiritual friendship.",
+  "cls": null
+ },
+ "argon-high-production/v098_f3a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading contains only refusal notes, placeholders stating the text was not transcribed, and marginal labels, with no text corresponding to the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading contains only refusal notes, placeholders stating the text was not transcribed, and marginal labels, with no text corresponding to the Tibetan passage.",
+  "cls": null
+ },
+ "control:argon-low-hinted/v047_f193a->v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English text is from a Prajñāpāramitā sūtra featuring the Buddha instructing Śāriputra on non-abiding and emptiness, whereas the Tibetan passage contains the Kalyāṇamitrasevana-sūtra concerning Ānanda and spiritual friendship.",
+  "raw": "VERDICT: wrong text\nWHY: The English text is from a Prajñāpāramitā sūtra featuring the Buddha instructing Śāriputra on non-abiding and emptiness, whereas the Tibetan passage contains the Kalyāṇamitrasevana-sūtra concerning Ānanda and spiritual friendship.",
+  "cls": null
+ },
+ "control:argon-high-production/v049_f2a->v098_f3a": {
+  "verdict": "wrong text",
+  "why": "The English translates the opening nidāna of a Ratnakūṭa sūtra set on Vulture Peak in Rājagṛha with 1,800 arhats, whereas the Tibetan passage contains Prātimokṣasūtra verses on monastic discipline, the poṣadha ritual, and the four pārājika offenses.",
+  "raw": "VERDICT: wrong text\nWHY: The English translates the opening nidāna of a Ratnakūṭa sūtra set on Vulture Peak in Rājagṛha with 1,800 arhats, whereas the Tibetan passage contains Prātimokṣasūtra verses on monastic discipline, the poṣadha ritual, and the four pārājika offenses.",
+  "cls": null
+ },
+ "control:argon-low-production/v087_f393a->v047_f193a": {
+  "verdict": "wrong text",
+  "why": "The English translates a passage from Chapter 28 of the Aṣṭasāhasrikā Prajñāpāramitā concerning the dedication of merit toward omniscience and the dhyāna revealing marks of all dharmas, which shares none of the specific content of the Vajracchedikā passage covering the Śrāvastī opening, modes of birth, non-abiding generosity, and physical marks.",
+  "raw": "VERDICT: wrong text\nWHY: The English translates a passage from Chapter 28 of the Aṣṭasāhasrikā Prajñāpāramitā concerning the dedication of merit toward omniscience and the dhyāna revealing marks of all dharmas, which shares none of the specific content of the Vajracchedikā passage covering the Śrāvastī opening, modes of birth, non-abiding generosity, and physical marks.",
+  "cls": null
+ },
+ "argon-high-hinted/v011_f224a": {
+  "verdict": "wrong text",
+  "why": "The Tibetan passage details a Vajrapāṇi ritual with a 24-vajra mandala, a nāga-subjugating dhāraṇī, and sixteen recitation methods, whereas the English text expounds philosophical teachings on the nature of mind, tathāgatagarbha, and non-arising.",
+  "raw": "VERDICT: wrong text\nWHY: The Tibetan passage details a Vajrapāṇi ritual with a 24-vajra mandala, a nāga-subjugating dhāraṇī, and sixteen recitation methods, whereas the English text expounds philosophical teachings on the nature of mind, tathāgatagarbha, and non-arising.",
+  "cls": null
+ },
+ "argon-high-hinted/v001_f280a": {
+  "verdict": "wrong text",
+  "why": "The English presents a coherent philosophical discourse on the nature of mind and primordial wisdom from the Guhyasamāja Tantra, none of which matches the Tibetan Hevajratantra passage detailing cakras, fourfold sets, and ritual mantras.",
+  "raw": "VERDICT: wrong text\nWHY: The English presents a coherent philosophical discourse on the nature of mind and primordial wisdom from the Guhyasamāja Tantra, none of which matches the Tibetan Hevajratantra passage detailing cakras, fourfold sets, and ritual mantras.",
+  "cls": null
+ },
+ "argon-high-hinted/v047_f193a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading is empty, containing no text or specific content to correspond with the Tibetan passage.",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading is empty, containing no text or specific content to correspond with the Tibetan passage.",
+  "cls": null
+ },
+ "argon-high-hinted/v061_f2a": {
+  "verdict": "unreadable",
+  "why": "The English machine reading is empty, so none of the specific content from the Tibetan passage is present.",
+  "raw": "VERDICT: unreadable\nWHY: The English machine reading is empty, so none of the specific content from the Tibetan passage is present.",
+  "cls": null
+ },
+ "argon-high-hinted/v049_f2a": {
+  "verdict": "wrong text",
+  "why": "The English translates the title and opening of an entirely different text, the Inexhaustible Gate Sutra (Anantamukhapariśodhananirdeśa), rather than the Akṣobhyatathāgatasya-vyūha of the Tibetan passage.",
+  "raw": "VERDICT: wrong text\nWHY: The English translates the title and opening of an entirely different text, the Inexhaustible Gate Sutra (Anantamukhapariśodhananirdeśa), rather than the Akṣobhyatathāgatasya-vyūha of the Tibetan passage.",
+  "cls": null
+ },
+ "argon-high-hinted/v005_f150a": {
+  "verdict": "wrong text",
+  "why": "The English text discusses six distinctions of the beyond and non-beyond, coarse and subtle levels, bodhisattva mudrās, and vital wind addressed to the Lord of Secrets, none of which appears in the Tibetan passage on vajra recitation types and heart-center visualizations.",
+  "raw": "VERDICT: wrong text\nWHY: The English text discusses six distinctions of the beyond and non-beyond, coarse and subtle levels, bodhisattva mudrās, and vital wind addressed to the Lord of Secrets, none of which appears in the Tibetan passage on vajra recitation types and heart-center visualizations.",
+  "cls": null
+ },
+ "argon-high-hinted/v087_f393a": {
+  "verdict": "wrong text",
+  "why": "The English translates benedictory verses of auspiciousness for the Three Jewels (Ratnatraya-svasti-gāthā and Svastyayana-gāthā) rather than the Kalyāṇamitrasevana-sūtra on spiritual friendship.",
+  "raw": "VERDICT: wrong text\nWHY: The English translates benedictory verses of auspiciousness for the Three Jewels (Ratnatraya-svasti-gāthā and Svastyayana-gāthā) rather than the Kalyāṇamitrasevana-sūtra on spiritual friendship.",
+  "cls": null
+ },
+ "argon-high-hinted/v066_f2a": {
+  "verdict": "wrong text",
+  "why": "The English describes a different group of bodhisattvas followed by the Buddha emitting miraculous light, smiling, and uttering an udāna, none of which occurs in the provided Tibetan passage.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes a different group of bodhisattvas followed by the Buddha emitting miraculous light, smiling, and uttering an udāna, none of which occurs in the provided Tibetan passage.",
+  "cls": null
+ },
+ "argon-high-hinted/v077_f392a": {
+  "verdict": "wrong text",
+  "why": "The Tibetan passage consists of verses on the Buddha's worldly conformity detailing specific bodily acts like bathing, using a tooth-stick, taking medicine, and seeking rain shelter, none of which appear in the English text's generic discourse on transcendent wisdom and the nature of phenomena.",
+  "raw": "VERDICT: wrong text\nWHY: The Tibetan passage consists of verses on the Buddha's worldly conformity detailing specific bodily acts like bathing, using a tooth-stick, taking medicine, and seeking rain shelter, none of which appear in the English text's generic discourse on transcendent wisdom and the nature of phenomena.",
+  "cls": null
+ },
+ "argon-high-hinted/v098_f3a": {
+  "verdict": "wrong text",
+  "why": "The English describes the Buddha displaying miracles and Upāli questioning him about handling monastic offenses, which does not appear in the Tibetan passage's Prātimokṣasūtra verses, Poṣadha liturgy, or pārājika rules.",
+  "raw": "VERDICT: wrong text\nWHY: The English describes the Buddha displaying miracles and Upāli questioning him about handling monastic offenses, which does not appear in the Tibetan passage's Prātimokṣasūtra verses, Poṣadha liturgy, or pārājika rules.",
+  "cls": null
+ }
+}

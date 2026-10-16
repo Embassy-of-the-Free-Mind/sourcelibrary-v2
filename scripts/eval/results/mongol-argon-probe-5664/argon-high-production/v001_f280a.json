@@ -1,0 +1,41 @@
+{
+ "key": "v001_f280a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Faded vermilion woodblock print (xylograph) in vertical Classical Mongolian script (Hudum Mongol bichig) with abraded and low-contrast passages in the left margin and several central columns; Classical Mongolian vertical script region is not directly transcribable, while the Chinese marginal foliation and stamped page number are legible.</warning>\n<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>559</page-num>\n<meta>Oblong pothi-format xylograph folio (folio 280a / recto, stamped 559 at top left) from the Mongolian Kanjur, Volume 1 (秘密經第一卷上), printed in red ink within a double-ruled rectangular frame with left Mongolian and right Chinese marginal compartments.</meta>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Red double-ruled rectangular border framing the central text block and flanking left and right marginal compartments, with a small circular mark at the top of the left marginal compartment.</image-desc>\n\n<margin><unclear>1 vertical line of faded Classical Mongolian marginal text indicating volume title and folio number 280, not transcribed</unclear></margin>\n<margin>秘密經第一卷上二百八十</margin>\n<unclear>30 vertical lines of Classical Mongolian text in Hudum Mongol script printed in red ink, not transcribed</unclear>\n\n<vocab>秘密經, 第一卷上, 二百八十, Mongolian Kanjur, Guhyasamāja Tantra, Classical Mongolian, Hudum Mongol bichig, xylograph, pothi</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 199.889,
+  "usage": {
+   "input_tokens": 23613,
+   "output_tokens": 14017,
+   "thinking_tokens": 13098,
+   "cache_read_tokens": 31337,
+   "total_tokens": 37630
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Faded vermilion woodblock print in vertical Classical Mongolian script with abraded and low-contrast passages in the left margin and several central columns; the Classical Mongolian vertical script region is not directly transcribable, while the Chinese marginal foliation and stamped page number are legible.</warning>\n<meta>Oblong <term>pothi</term> <gloss>palm-leaf style loose-leaf book</gloss> woodblock folio, folio 280a recto, stamped 559 at top left, from the Mongolian <term>Kanjur</term> <gloss>translated words of the Buddha</gloss>, Volume 1, Secret Scripture, Volume One, Part One <note>original: \"秘密經第一卷上\"</note>, printed in red ink within a double-ruled rectangular frame with left Mongolian and right Chinese marginal compartments.</meta>\n\n<note>Red double-ruled rectangular border framing the central text block and flanking left and right marginal compartments, with a small circular mark at the top of the left marginal compartment.</note>\n\n<margin><unclear>1 vertical line of faded Classical Mongolian marginal text indicating volume title and folio number 280, not transcribed</unclear></margin>\n<margin>Secret Scripture, Volume One, Part One, Two Hundred and Eighty <note>original: \"秘密經第一卷上二百八十\"; Chinese marginal signature and folio number used by the imperial printing workshop to assemble the sheets of the first volume of the Tantra division in the Mongolian <term>Kanjur</term> <gloss>translated words of the Buddha</gloss>, which opens with the <term>Guhyasamāja Tantra</term> <gloss>Esoteric Community Tantra</gloss>.</note></margin>\n<unclear>30 vertical lines of Classical Mongolian text in Hudum Mongol script printed in red ink, not transcribed</unclear>\n\n<summary>This folio is leaf 280 recto from the first volume of the Tantra section in the red-ink woodblock edition of the Mongolian Kanjur. The thirty vertical lines of Classical Mongolian main text and the left Mongolian marginal title are not transcribed in the source, while the right margin preserves the Chinese printer signature for Secret Scripture, Volume One, Part One, Folio 280.</summary>\n<keywords>Mongolian Kanjur, Secret Scripture, Guhyasamaja Tantra, Classical Mongolian, Hudum Mongol bichig, woodblock print, xylograph, pothi folio, Chinese marginalia, Folio 280</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 58.352
+ }
+}

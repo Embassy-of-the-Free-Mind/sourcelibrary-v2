@@ -1,0 +1,35 @@
+{
+ "key": "v066_f2a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The page is legible and the woodblock print is clean. However, I could not read the Uighur-Mongol letterforms in these image strips reliably enough to give a letter-by-letter transcription without guessing. The main text is therefore marked as not transcribed instead of being reconstructed. Only the Chinese margin label has been read with confidence.</warning>\n<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>2</page-num>\n<header>諸品經第七卷上二</header>\n<meta>Red-ink woodblock print within a double frame with scrolling floral borders. The left marginal panel has a short Mongolian label of about four words, and the right marginal panel has the Chinese label 諸品經第七卷上二. The 22 text columns span four overlapping image strips. In the overlaps, the 4th column of strip 1 is the 1st column of strip 2, the last column of strip 2 is the 1st column of strip 3, and the last column of strip 3 is the 1st column of strip 4. A thin diagonal scratch crosses the upper part of the final columns. There are small paper cracks below the lower border.</meta>\n<margin><unclear>short Mongolian volume/folio label in the left margin panel, about 4 words, not transcribed</unclear></margin>\n<margin>諸品經第七卷上二</margin>\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Small head mark (birga-type sign) at the top of the first text column, marking the start of the page's text.</image-desc>\n<unclear>22 columns of Classical Mongolian text in Uighur-Mongol script, read left to right. They contain frequent ᠄ punctuation, and some columns end with four-dot ornamental marks. Not transcribed.</unclear>\n<vocab>諸品經, Eldeb (miscellaneous sutras section), Mongolian Kanjur, volume 7 (ja), folio 2 recto</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 62.007,
+  "usage": {
+   "input": 5,
+   "output": 5282
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<warning>The OCR transcription does not include the main Classical Mongolian text. The transcriber could not read the Uighur-Mongol letterforms reliably and marked the body of the page as not transcribed. This translation therefore gives only the Chinese margin label and keeps the unread regions as unclear.</warning>\n<meta>Red-ink woodblock print with a double frame and scrolling floral borders. There are 22 text columns spread across four overlapping image strips. The Chinese margin label identifies this page as part of the Eldeb (miscellaneous sutras) section of the Mongolian Kanjur, volume 7, folio 2.</meta>\n\n<margin><unclear>short Mongolian volume/folio label in the left margin panel, about 4 words, not transcribed</unclear></margin>\n<margin>Miscellaneous Sutras, Volume Seven, upper side, folio two <note>original: \"諸品經第七卷上二\". <term>Zhupin jing</term> <gloss>\"Sutras of All Categories\"</gloss> is the Chinese name for the Eldeb section of the Mongolian Kanjur, which collects sutras that do not belong to the larger named divisions. \"Upper\" (上) most likely refers to the front side (recto) of the leaf.</note></margin>\n\n<note>A small head mark, a sign of the <term>birga</term> type, appears at the top of the first text column. It marks where the page's text begins.</note>\n\n<unclear>22 columns of Classical Mongolian text in Uighur-Mongol script, read left to right. They contain frequent ᠄ punctuation, and some columns end with four-dot ornamental marks. Not transcribed.</unclear>\n\n<summary>This is folio 2 of volume 7 of the Eldeb (miscellaneous sutras) section of a red-ink woodblock Mongolian Kanjur. Only the Chinese margin label could be read; the 22 columns of Mongolian text were not transcribed, so they are not translated here.</summary>\n<keywords>Mongolian Kanjur, Eldeb, miscellaneous sutras, Zhupin jing, Buddhist canon, woodblock print, red ink, Uighur-Mongol script, Classical Mongolian, birga, volume 7, folio 2</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.523
+ }
+}

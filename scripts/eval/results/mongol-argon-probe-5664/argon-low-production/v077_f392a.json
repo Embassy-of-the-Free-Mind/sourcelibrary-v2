@@ -1,0 +1,40 @@
+{
+ "key": "v077_f392a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<warning>Traditional vertical Mongolian (Hudum Mongol bichig) woodblock print (pothi leaf) with faint red ink and glare in several columns; the Mongolian body text cannot be reliably transcribed into Unicode without introducing high error rates, while the Chinese marginal volume/folio marker on the right is transcribed.</warning>\n<margin>諸品經第十八卷上三百九十二</margin>\n<margin><unclear>1 vertical line of small Mongolian marginal text on the left border</unclear></margin>\n<unclear>29 vertical lines of Classical Mongolian text printed in red ink</unclear>\n<vocab>諸品經, Classical Mongolian, Kanjur, pothi</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 61.158,
+  "usage": {
+   "input_tokens": 19146,
+   "output_tokens": 305,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 13805,
+   "total_tokens": 19451
+  },
+  "tool_calls": [
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Traditional vertical Mongolian in <term>Hudum Mongol bichig</term> <gloss>Classical Mongolian script</gloss> woodblock print on a <term>pothi</term> <gloss>palm-leaf style oblong folio</gloss> leaf with faint red ink and glare in several columns; the Mongolian body text cannot be reliably transcribed into Unicode without introducing high error rates, while the Chinese marginal volume and folio marker on the right is transcribed.</warning>\n<margin>Sutras of Various Sections <note>original: \"諸品經\", <term>Zhupin jing</term>, corresponding to the Miscellaneous Sutras section of the Mongolian <term>Kanjur</term> <gloss>translated words of the Buddha</gloss></note>, Volume Eighteen, Upper Part, Folio Three Hundred Ninety-Two <note>original: \"第十八卷上三百九十二\"</note></margin>\n<margin><unclear>1 vertical line of small Mongolian marginal text on the left border</unclear></margin>\n<unclear>29 vertical lines of Classical Mongolian text printed in red ink</unclear>\n\n<summary>A woodblock-printed folio in red ink from the eighteenth volume of the Sutras of Various Sections in the Mongolian Kanjur. The main Classical Mongolian text is untranscribed due to faint ink and glare, leaving only the Chinese marginal foliation marker readable.</summary>\n<keywords>Classical Mongolian, Kanjur, Sutras of Various Sections, Zhupin jing, pothi leaf, woodblock print, red ink, Buddhist canon</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 23.2
+ }
+}

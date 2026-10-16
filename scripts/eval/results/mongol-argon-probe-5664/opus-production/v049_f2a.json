@@ -1,0 +1,35 @@
+{
+ "key": "v049_f2a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The body text is in Manchu script, printed in red ink from woodblocks, with some fading. It could not be transcribed reliably, so it is marked as not transcribed and has not been reconstructed. The Chinese title in the right-hand margin is legible. The short Manchu label in the left-hand margin could not be read with confidence.</warning>\n<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>大寶積經第二卷上三</header>\n<page-num>3</page-num>\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A long horizontal pothi-format leaf. The text area sits inside a double-ruled red frame with a scrolling floral border. Narrow margin panels with ornamental corner pieces sit at the left and right ends. The right panel holds the Chinese title. The left panel holds a short vertical Manchu label.</image-desc>\n\n<margin><unclear>Manchu marginal label of about 4 words (title and leaf number), not transcribed</unclear></margin>\n\n<unclear>About 22 vertical lines of Manchu text in red ink (part of the Mahāratnakūṭa Sūtra, juan 2), not transcribed</unclear>\n\n<vocab>大寶積經, Mahāratnakūṭa Sūtra, Manchu Kanjur, Manchu script, red-ink woodblock print, pothi format</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 16.883,
+  "usage": {
+   "input": 4,
+   "output": 878
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The source language was given as Mongolian, but the page is in Manchu script. The body text and the Manchu margin label were not transcribed, so only the Chinese margin title is translated here.</meta>\n\n<warning>The body text is in Manchu script, printed in red ink from woodblocks, with some fading. It could not be transcribed reliably, so it is marked as not transcribed and has not been reconstructed. The Chinese title in the right-hand margin is legible. The short Manchu label in the left-hand margin could not be read with confidence.</warning>\n\n<margin><term>Da Baoji Jing</term> <gloss>Great Heap of Jewels Sutra, the Mahāratnakūṭa Sūtra</gloss>, Volume Two, upper part, leaf three <note>original: \"大寶積經第二卷上三\". The Chinese margin title tells the binder which text, volume and leaf this is, so the loose leaves of the long pothi-format book could be kept in order.</note></margin>\n\n<note>This is a long horizontal leaf in the Tibetan-style pothi format. The text area sits inside a double red frame with a scrolling floral border. Narrow panels with ornamental corner pieces sit at each end. The right panel carries the Chinese title, and the left panel a short vertical Manchu label.</note>\n\n<margin><unclear>Manchu marginal label of about 4 words (title and leaf number), not transcribed</unclear></margin>\n\n<unclear>About 22 vertical lines of Manchu text in red ink (part of the Mahāratnakūṭa Sūtra, juan 2), not transcribed</unclear>\n\n<summary>Leaf three of the second volume of the Mahāratnakūṭa Sūtra, from a red-ink Manchu woodblock edition of Buddhist scripture. Only the Chinese margin title could be read. The Manchu body text and margin label were not transcribed.</summary>\n<keywords>Mahāratnakūṭa Sūtra, Great Heap of Jewels Sutra, Da Baoji Jing, Manchu Kanjur, Manchu script, red-ink woodblock print, pothi format, Buddhist scripture, Qing dynasty</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.776
+ }
+}

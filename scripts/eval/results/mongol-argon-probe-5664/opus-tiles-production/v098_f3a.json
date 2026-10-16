@@ -1,0 +1,35 @@
+{
+ "key": "v098_f3a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>三</page-num>\n<header>律師戒行經 第六卷 上</header>\n<warning>Red-ink xylograph in vertical Uyghur-Mongolian script; the page sits sideways in the image. The script is clear, but the Mongolian body text is not transcribed because a reliable reading cannot be made from this image. The Chinese margin label reads 律師戒行經 第六卷 上 三.</warning>\n<meta>Woodblock-printed pothi leaf in red ink, with a double-ruled frame around the text block. The Chinese title and folio number are printed in the right-hand margin column, and a short Mongolian margin title with a folio marker is printed in the left-hand margin column.</meta>\n<margin><unclear>short Mongolian marginal title and folio marker (about 3–4 words), not transcribed</unclear></margin>\n<unclear>about 30 vertical lines of classical Mongolian text in Uyghur-Mongolian script, not transcribed</unclear>\n<margin>律師戒行經 第六卷 上 三</margin>\n<vocab>律師戒行經, Vinaya, Mongolian Kanjur, red-ink xylograph, Uyghur-Mongolian script, 第六卷</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 21.109,
+  "usage": {
+   "input": 5,
+   "output": 1127
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The OCR transcribes no Mongolian body text. Only the Chinese margin label was read, so the translation keeps the unclear spans unchanged and translates only that label. The Chinese label is printed in the original margin and is not an editorial addition. Its title 律師戒行經 literally means \"Sutra of the Vinaya Master's Precepts and Conduct.\" It probably refers to a Vinaya (monastic discipline) volume of the Mongolian Kanjur.</meta>\n\n<warning>The main Mongolian text of this page was not transcribed in the OCR. No translation of the body text can be given.</warning>\n\n<margin><unclear>short Mongolian marginal title and folio marker (about 3–4 words), not transcribed</unclear></margin>\n\n<unclear>about 30 vertical lines of classical Mongolian text in Uyghur-Mongolian script, not transcribed</unclear>\n\n<margin>Sutra of the Vinaya Master's Precepts and Conduct <note>original: \"律師戒行經\"; a Chinese label for a text on <term>Vinaya</term> <gloss>Buddhist monastic discipline</gloss></note>, Volume Six, Part One <note>original: \"第六卷 上\"; 上 means \"upper\" or \"first part\" of the volume</note>, folio 3 <note>original: \"三\"</note></margin>\n\n<summary>This page is a leaf from a red-ink woodblock print of a Mongolian Buddhist Vinaya text on monastic discipline. The Chinese margin label places it in volume six, part one, folio 3. The Mongolian body text was not transcribed, so only the margin label is translated.</summary>\n<keywords>Vinaya, monastic discipline, Mongolian Kanjur, red-ink xylograph, Uyghur-Mongolian script, Chinese margin label, Buddhist precepts, volume six, folio 3</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 9.138
+ }
+}

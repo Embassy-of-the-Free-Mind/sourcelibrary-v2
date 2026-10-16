@@ -1,0 +1,40 @@
+{
+ "key": "v049_f2a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二</page-num>\n<header>大寶積經第二卷上</header>\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Ornamental red-printed double rectangular border with floral scrollwork enclosing the text block, with side panels on the left and right.</image-desc>\n<margin>ᠳᠡ ᠨᠢᠭᠡ ᠳᠡᠪᠲᠡᠷ ᠬᠣᠶᠠᠷ</margin>\n\n<unclear>19 vertical lines of Classical Mongolian script printed in red ink (Kangxi era Mongolian Kanjur, Qutug-tu yeke erdeni dabqurlagsan sudur / Mahāratnakūṭasūtra, Vol. 49, folio 2a), not transcribed</unclear>\n\n<vocab>大寶積經, Mongolian Kanjur, Mahāratnakūṭasūtra, ᠳᠡᠪᠲᠡᠷ</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 31.963,
+  "usage": {
+   "input_tokens": 19144,
+   "output_tokens": 367,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 13797,
+   "total_tokens": 19511
+  },
+  "tool_calls": [
+   "view_file"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Page number: 2 (Chinese: 二). Header in Chinese: 大寶積經第二卷上 (Great Heap of Jewels Sutra, Scroll 2, Part 1).</meta>\n<header>The Sutra of the Great Heap of Jewels <note>Chinese: \"大寶積經\"; Sanskrit: <term>Mahāratnakūṭasūtra</term> <gloss>Sutra of the Great Heap of Jewels</gloss>; Mongolian: <term>Qutug-tu yeke erdeni dabqurlagsan sudur</term> <gloss>Noble Sutra of the Great Heap of Jewels</gloss></note>, Scroll Two, Part One</header>\n<note>Ornamental red-printed double rectangular border with floral scrollwork enclosing the text block, with side panels on the left and right.</note>\n<margin>First <note>Mongolian: \"ᠳᠡ ᠨᠢᠭᠡ\" (<term>de nige</term> <gloss>section marker \"de\", one</gloss>), corresponding to the Chinese character <term>de</term> <gloss>virtue; used here as a volume index character from the Thousand Character Classic</gloss></note>, <term>debter</term> <gloss>volume or folio</gloss> two <note>original: \"ᠳᠡ ᠨᠢᠭᠡ ᠳᠡᠪᠲᠡᠷ ᠬᠣᠶᠠᠷ\"</note></margin>\n\n<unclear>19 vertical lines of Classical Mongolian script printed in red ink (Kangxi era Mongolian Kanjur, Qutug-tu yeke erdeni dabqurlagsan sudur / Mahāratnakūṭasūtra, Vol. 49, folio 2a), not transcribed</unclear>\n\n<summary>This folio is page 2a from the second scroll of the Sutra of the Great Heap of Jewels (Maharatnakutasutra) in the Kangxi-era red-printed Mongolian Kanjur. It includes bilingual Chinese and Mongolian marginal indexing markers, while the main block of nineteen vertical lines of Classical Mongolian text remains untranscribed in the source OCR.</summary>\n<keywords>Maharatnakutasutra, Sutra of the Great Heap of Jewels, Mongolian Kanjur, Kangxi edition, Classical Mongolian, Buddhist canon, red-ink printing</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 32.008
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "key": "v098_f3a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ᠨᠢ ᠵᠢᠷᠭᠤᠭ᠎ᠠ ᠭᠤᠷᠪᠠ ᠳᠡᠭᠡᠳᠦ</page-num>\n<margin>ni ᠵᠢᠷᠭᠤᠭ᠎ᠠ ᠭᠤᠷᠪᠠ ᠳᠡᠭᠡᠳᠦ</margin>\n<margin>律師戒行經第六卷上三</margin>\nᠪᠠᠷᠢᠭᠤᠯᠬᠤᠢ ᠳᠤ᠄ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠴᠠᠭᠠᠵᠠ ᠶᠢ ᠡᠪᠳᠡᠭᠰᠡᠨ ᠪᠤᠷᠤᠭᠤ ᠳᠤ ᠤᠨᠠᠭᠠᠭᠰᠠᠨ\nᠪᠣᠯᠬᠤ ᠪᠤᠢ ᠬᠡᠮᠡᠪᠡᠢ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠡᠨᠡ ᠮᠡᠲᠦ ᠪᠡᠷ ᠨᠢᠭᠡᠨ ᠨᠢᠭᠡᠨ\nᠦᠢᠯᠡᠰ ᠦᠨ ᠦе ᠪᠦᠷᠢ ᠳᠦ ᠪᠤᠷᠤᠭᠤ ᠳᠤ ᠤᠨᠠᠭᠠᠬᠤ ᠄ ᠢᠯᠠᠭᠤᠨ ᠲᠡᠭᠦᠰ\nᠦᠯᠡᠮᠵᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠮөн ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠵᠠᠬᠢᠷᠠᠭᠰᠠᠨ ᠳᠤ\nᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠂ ᠡᠨᠡ ᠳᠦ ᠦᠢᠯᠡ ᠶᠢ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠳᠦ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ\nᠪᠣᠯᠪᠠ ᠄ ᠭᠡᠯᠡᠩ ᠦᠳ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠠᠴᠠ ᠰᠣᠨᠣᠰᠴᠤ ᠂ ᠲᠡᠦᠨ ᠦ\nᠬᠣйin-a ᠮөн ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ ᠠᠴᠢ ᠂ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠠᠴᠠ\nᠠᠶᠠᠭ᠎ᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ ᠰᠣᠨᠣᠰᠴᠤ ᠂ ᠢᠯᠠᠭᠤᠨ ᠲᠡᠭᠦᠰ ᠦᠯᠡᠮᠵᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ\nᠪᠤᠷᠬᠠᠨ ᠳᠤ ᠂ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠠᠴᠠ ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ ᠢ ᠂\nᠪᠢ ᠪᠡᠷ ᠦᠨᠡᠬᠡᠷ ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ ᠢ ᠮᠡᠳᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂ ᠰᠣᠨᠣᠰ\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠦᠨᠡᠬᠡᠷ ᠠйiladqaqui ᠄ ᠭᠡᠯᠡᠩ ᠨᠦᠭᠦᠳ ᠦᠨ ᠦᠢᠯᠡ ᠦ\nᠰᠣᠨᠣᠰᠴᠤ ᠂ ᠭᠡᠯᠡᠩ ᠨᠦᠭᠦᠳ ᠲᠦ ᠦᠭүүлᠡᠭᠰᠡᠨ ᠢ ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ\nᠪᠣᠯᠪᠠᠰᠤ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠭᠡᠯᠡᠩ ᠦᠳ ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠄\nᠢᠯᠠᠭᠤᠨ ᠲᠡᠭᠦᠰ ᠦᠯᠡᠮᠵᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠂ ᠮөн ᠡᠨᠡ ᠦᠢᠯᠡ ᠶᠢ\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠰᠣᠨᠣᠰᠴᠤ ᠂ ᠭᠡᠯᠡᠩ ᠦᠳ ᠢ ᠬᠤᠷᠢᠶᠠᠵᠤ ᠄ ᠢᠯᠠᠭᠤᠨ\nᠲᠡᠭᠦᠰ ᠦᠯᠡᠮᠵᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠳᠤ ᠦᠢᠯᠡ ᠦ ᠰᠣᠨᠣᠰᠤᠭᠰᠠᠨ ᠄\nᠭᠡᠯᠡᠩ ᠦᠳ ᠮᠡᠳᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠢ ᠰᠣᠨᠣᠰᠴᠤ ᠂ ᠭᠡᠯᠡᠩ ᠨᠦᠭᠦᠳ ᠦᠨ\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠦᠢᠯᠡ ᠦ ᠵᠠᠬᠢᠷᠠᠭᠰᠠᠨ ᠢ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠦᠢᠯᠡ ᠦ ᠵᠠᠬᠢᠷᠠᠭᠰᠠᠨ ᠢ ᠂\nᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠂\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠂ ᠡᠨᠡ ᠪᠠ ᠨөгöge ᠦᠢᠯᠡ ᠶᠢ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠢ ᠂\nᠭᠡᠯᠡᠩ ᠦᠳ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠳᠤ ᠦᠭүүлᠡᠪᠡᠢ ᠂ ᠮөн\nᠦе ᠳᠦ ᠂ ᠡᠨᠡ ᠪᠠ ᠨөгöge ᠶᠢ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠣᠯᠬᠤ ᠪᠤᠢ\nᠬᠡᠮᠡᠨ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠᠨ ᠂ ᠡᠨᠡ ᠪᠠ ᠨөгöge ᠳᠦ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ\nᠪᠣᠯᠬᠤ ᠶᠢᠨ ᠲᠤᠯᠠ ᠳᠤ ᠭᠡᠯᠡᠩ ᠨᠦᠭᠦᠳ ᠲᠦ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠪᠠᠢ ᠄\nᠢᠯᠠᠭᠤᠭᠰᠠᠨ ᠪᠤᠷᠬᠠᠨ ᠭᠡᠯᠡᠩ ᠦᠳ ᠲᠦ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠳᠤ ᠂\n<vocab>ᠢᠯᠠᠭᠤᠨ ᠲᠡᠭᠦᠰ ᠦᠯᠡᠮᠵᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ, ᠪᠤᠷᠬᠠᠨ, ᠭᠡᠯᠡᠩ, ᠠᠶᠠᠭ᠎ᠠ ᠲᠡᠭᠢᠮᠯᠢᠭ, ᠵᠠᠷᠯᠢᠭ, 律師戒行經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 57.081,
+  "usage": {
+   "input_tokens": 21843,
+   "output_tokens": 2207,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 28996,
+   "total_tokens": 24050
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: Classical Mongolian Vinaya commentary corresponding to the Chinese marginal title \"Sutra on the Precepts and Conduct of the Vinaya Master, Fascicle 6, Part 1, Folio 3\"</meta>\n<page-num>ni, sixty-three, upper</page-num>\n<margin><term>ni</term> <gloss>volume marker corresponding to the Chinese character 泥 or the Tibetan syllable ni</gloss>, sixty-three, upper <note>original: \"ni ᠵᠢᠷᠭᠤᠭᠠ ᠭᠤᠷᠪᠠ ᠳᠡᠭᠡᠳᠦ\"</note></margin>\n<margin>Sutra on the Precepts and Conduct of the Vinaya Master, Fascicle Six, Upper Part, Folio Three <note>original: \"律師戒行經第六卷上三\"</note></margin>\nin causing <note>one</note> to hold to it: furthermore, it is said that one will have fallen into the offense of breaking the precept; furthermore, in this manner, at each and every stage of the actions, falling into an offense: it is the Victoriously Consummate, Supremely Victorious <term>Burkhan</term> <gloss>Buddha</gloss>; furthermore, in having commanded, he was victorious; in having performed the action here, he was victorious: the <term>gelengs</term> <gloss>fully ordained monks, Sanskrit bhikṣu</gloss> heard this from the Victorious <term>Burkhan</term> <gloss>Buddha</gloss>, and after that, by the grace of having heard it as well, the <term>ayag-a tegimlig</term> <gloss>venerable monk, Sanskrit bhadanta or bhikṣu</gloss> heard it from the Victorious <term>Burkhan</term> <gloss>Buddha</gloss>, and to the Victoriously Consummate, Supremely Victorious <term>Burkhan</term> <gloss>Buddha</gloss>, made known what was heard from the Victorious <term>Burkhan</term> <gloss>Buddha</gloss> and what I myself truly heard, and furthermore truly reports what was heard: having heard of the deeds of the <term>gelengs</term> <gloss>monks</gloss>, when one has heard what was spoken to the <term>gelengs</term> <gloss>monks</gloss>, furthermore the <term>gelengs</term> <gloss>monks</gloss> have heard it: the Victoriously Consummate, Supremely Victorious One <note>original: \"ᠢᠯᠠᠭᠤᠨ ᠲᠡᠭᠦᠰ ᠦᠯᠡᠮᠵᠢ ᠢᠯᠠᠭᠤᠭᠰᠠᠨ\", standard Mongolian translation of Bhagavān, the Blessed One</note>, furthermore having heard of this very matter, assembled the <term>gelengs</term> <gloss>monks</gloss>: having heard of the matter before the Victoriously Consummate, Supremely Victorious One: having heard what the <term>gelengs</term> <gloss>monks</gloss> reported, and the Victorious <term>Burkhan</term> <gloss>Buddha</gloss> having furthermore regulated the deeds of the <term>gelengs</term> <gloss>monks</gloss>, having furthermore regulated the deeds,\nfurthermore, the <term>gelengs</term> <gloss>monks</gloss> spoke to the Victorious <term>Burkhan</term> <gloss>Buddha</gloss> of having performed this and the other action; at that very time, saying that this and the other had been performed, furthermore, because this and the other had been performed, he issued a <term>jarlig</term> <gloss>royal or sacred decree, Buddha's pronouncement</gloss> to the <term>gelengs</term> <gloss>monks</gloss>: when the Victorious <term>Burkhan</term> <gloss>Buddha</gloss> issued the <term>jarlig</term> <gloss>decree</gloss> to the <term>gelengs</term> <gloss>monks</gloss>,\n\n<summary>This folio from a Classical Mongolian Buddhist canonical text (marked in the Chinese margin as the sixth fascicle of the Sutra on the Precepts and Conduct of the Vinaya Master) details monastic disciplinary procedures. It describes how transgressions of the precepts at each stage of an action are reported by the monks (gelengs) to the Buddha (Victorious Burkhan), who then convenes the assembly and issues authoritative decrees (jarlig) regulating monastic conduct.</summary>\n<keywords>Classical Mongolian, Vinaya, monastic discipline, Buddhist precepts, Burkhan, Buddha, Bhagavan, geleng, bhikshu, ayag-a tegimlig, jarlig, Sutra on the Precepts and Conduct of the Vinaya Master</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 37.76
+ }
+}

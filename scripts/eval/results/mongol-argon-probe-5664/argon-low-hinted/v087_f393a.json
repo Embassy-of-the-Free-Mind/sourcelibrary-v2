@@ -1,0 +1,41 @@
+{
+ "key": "v087_f393a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ᠭᠤᠴᠢᠨ ᠭᠤᠷᠪᠠᠨ · 三百九十三</page-num>\n<warning>Red woodblock print with moderate fading in several columns across the center of the folio.</warning>\n<margin>ᠸᠠ · ᠡᠯ᠎ᠡ ᠵᠦᠢᠯ · ᠭᠤᠴᠢᠨ ᠭᠤᠷᠪᠠᠨ · ᠳᠡᠭᠡᠳᠦ</margin>\nᠥᠪᠡᠷ ‍ᠦᠨ ᠴᠢᠨᠠᠷ ‍ᠢᠶᠠᠷ ᠬᠣᠭᠣᠰᠣᠨ ‍ᠢ ᠤᠬᠠᠭᠠᠳ ᠥᠨᠳegen ‍ᠦ ᠬᠠЛЬᠰᠤᠨ ‍ᠢ ᠡᠪᠳᠡᠵᠦ ᠭᠠᠷᠬᠤ ᠮᠡᠲᠦ ·\nᠰᠡᠳᠬᠢᠯ ‍ᠦᠨ ᠮᠦᠷ ‍ᠢ ᠲᠡᠭᠦᠰ ᠠᠷᠢᠯᠭᠠᠭᠰᠠᠨ ‍ᠢᠶᠠᠷ · ᠰᠡжиг ᠦᠭᠡᠢ ᠡрдэм ‍ᠦᠨ ᠴᠣᠭ ‍ᠢ ᠣᠯᠬᠤ ᠪᠣᠯᠤᠶᠤ ༎\nᠴᠢᠨᠠᠭᠰᠢ ‍ᠳᠠ ᠪᠠ ᠢᠯᠡ ‍ᠳᠡ ᠮᠡᠳᠡᠬᠦᠢ ‍ᠶᠢᠨ ᠡрдэм ‍ᠦᠳ ‍ᠢ ᠣᠯᠵᠤ · ᠴᠠᠭ ᠦᠭᠡᠢ ᠠᠮᠢᠲᠠᠨ ‍ᠤ ᠲᠤᠰᠠ ‍ᠶᠢ ᠦᠢᠯᠡᠳᠦᠭᠡᠳ ·\nᠴᠢᠨ ᠵᠣᠷᠢᠭ ‍ᠢᠶᠠᠷ ᠪᠤРХАН ‍ᠤ ᠬᠤТАГ ‍ᠲᠤ ᠬᠦᠷᠬᠦ ᠪᠣᠯᠤᠶᠤ · ᠴᠠᠭЛАШ ᠦᠭᠡᠢ ᠪУЯН ‍ᠤ ᠴУГЛАГ ‍ᠢ ᠲᠡᠭᠦᠰᠬᠡᠵᠦ ༎\nᠡᠯ᠎ᠡ ᠵᠦᠢᠯ ‍ᠦᠨ ᠠРГА ᠪᠢᠯᠢᠭ ‍ᠢ ᠬОСЛАН · ᠡНЭРЭХҮЙ  নিगүүлсэхүй ᠰᠡᠳᠬᠢᠯ ‍ᠢ ᠪᠢᠰИЛГАЖУ ·\nᠡГҮҮРД ‍ᠦᠨ амгалан ‍ᠢ ᠣᠯУЛХУ ‍ՅԻՆ ᠲУЛА · ᠡРХЭМ ᠪОДЬ ᠰᠡᠳᠬᠢᠯ ‍ᠢ ҮҮСГЭХҮЙ ᠪОЛБАСУ ·\nᠦНЭХЭЭР ‍ᠦᠨ утга ‍ՅԻ ᠣНОГСОН ᠪОДЬСАДОВА ᠨУГУУД · ᠦРГЭЛЖ ‍ᠳᠡ БУСДЫН ᠲУСЫГ ҮЙЛДЭН ·\nᠦЙЛ ‍ᠦᠨ ҮР ‍ᠢ ЭС ᠡНДЭЭРЭН ᠮЭДЭЭД · ᠦЛЭМЖ ᠪУЯН ‍ᠤ ᠴУГЛАГ ‍ᠢ ХУРААЮУ ༎\nᠬОЁР ᠴУГЛАГ ‍ᠢ ᠲЭГҮСХЭГСЭН ‍ᠦ ᠬҮЧ ‍ИЙЭР · ᠬОЦРОЛ ᠦГᠡᠢ ᠭЭМ ‍ҮД ‍ᠢ ᠲЭВЧИН ·\nᠬУТАГ ‍ᠲУ ᠪУРХАН ‍ᠤ ᠬУТАГ ‍ᠢ ᠣЛОХУ ‍ՅԻՆ ᠲУЛА · ᠬИЧЭЭНГҮЙ ‍БЭЭР ᠪИСИЛГАХУ ‍ՅԻ ҮЙЛДЭЮҮ ·\nᠭУРВАН ᠡРДЭНЭ ‍ДЭ БИШРЭХҮЙ ᠰᠡᠳᠬᠢᠯ ‍ИЙЭР · ᠭУТАГТУ ᠨОМ ‍ᠤ ЁС ‍ᠢ ᠰАХИН ·\nᠭАЙХАМШИГ ‍ᠲУ ᠪОДЬ ‍ՅԻՆ ᠮҮР ‍ᠲҮ ᠣРОЖУ · ᠭАСЛАН ‍ACA ᠨӨГЧИХҮЙ ‍ДЭ ᠬҮРЭЮҮ ༎\nᠮЭРГЭД ‍ᠦᠨ ᠨОМЛОГСОН ‍ᠢ ᠰОНСОЖУ · ᠮАГАД ‍ИЙАР ᠤТГА ‍ՅԻ ᠨᠢ ᠰАНААД ·\nᠮӨН ᠴИНАР ‍ᠢ ᠪИСИЛГАГСАН ‍ᠤ ᠬҮЧ ‍ИЙЭР · ᠮУНХАГ ‍ᠤ ХАРАНХУЙ ‍ՅԻ ᠠРИЛГАЮУ ༎\nᠲЭРЭГҮҮЛЭШ ᠦГᠡᠢ ‍ЭЭСЭЭ ᠬУРААГСАН · ᠲҮЙТГЭР ‍ᠦᠨ ᠬОР ‍ᠢ ᠠРИЛГАХУ ‍ՅԻՆ ᠲУЛА ·\nᠲЭГШ ᠰᠡᠳᠬᠢᠯ ‍ИЙЭР ᠪИСИЛГАЖУ · ᠲЭЭДҮ ᠪОДЬ ‍ՅԻՆ ᠬУТАГ ‍ᠢ ᠣЛМУЙ ༎\nᠠРИУН Шагшаабад ‍ᠢ ᠰАХИГСАН ‍ИЙАР · ᠠЛИВАА ᠨИГҮҮЛ ‍ҮД ‍ЭЭСЭЭ ᠬАГАЦАЖУ ·\nᠠМГАЛАН ‍ТАЙ ᠰАМАДИ ‍ДҮ ᠲЭГШ ᠠГУУЛААД · ᠠРИУН ᠪИЛИГ ‍ИЙЭР ᠦНЭН ‍ᠢ ᠦЗЭЮҮ ༎\nᠪУРХАН ‍ᠤ ᠨОМ ‍ᠤ ЁС ‍ᠢ ᠮЭДЭЭД · ᠪУСАД ᠠМИТАН ‍ДҮ ᠦЗҮҮЛЭН ҮЙЛДЭЖҮ ·\nᠪҮГҮДЭ ‍ՅԻ ᠪОДЬ ‍ՅԻՆ ᠮҮР ‍ᠲҮ ᠤДИРДАН · ᠪУЯН ‍ᠤ ҮНДЭСЭН ‍ᠢ ᠠРВИДХАЮУ ༎\nᠴИН ᠰҮСҮГ ‍ИЙЭР ᠪУРХАН ‍ᠢ ТАХИН · ᠴАГЛАШ ᠦГᠡᠢ ᠪУЯН ‍ᠢ ҮЙЛДЭЭД ·\nᠴУХАГ ᠳЭЭДҮ ᠪОДЬ ‍ՅԻ ᠣЛОХУ ‍ՅԻՆ ᠲУЛА · ᠴАГ ҮРГЭЛЖ ‍ДЭ ᠬИЧЭЭН ҮЙЛДЭЮҮ ༎\n<margin>諸品經第二十八卷上三百九十三</margin>\n<vocab>ᠪᠤᠷᠬᠠᠨ, ᠪᠣᠳᠢᠰᠠᠳᠤᠸᠠ, ᠪᠢᠯᠢᠭ, ᠰᠡᠳᠬᠢᠯ, ᠪᠤᠶᠠᠨ, 諸品經</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 63.274,
+  "usage": {
+   "input_tokens": 21921,
+   "output_tokens": 2363,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 29002,
+   "total_tokens": 24284
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Folio 33 (overall folio 393) of the Classical Mongolian Buddhist compendium \"Ele jüil\" (Chinese: \"Zhupin jing\", \"Scriptures of Various Sorts\"), fascicle 28, upper division. The OCR mixes traditional Uyghur-Mongolian script with Cyrillic, Armenian, and Bengali characters due to character-recognition errors; these have been resolved into standard Classical Mongolian readings for translation.</meta>\n<warning>Red woodblock print with moderate fading in several columns across the center of the folio.</warning>\n<page-num>Thirty-three · Three hundred ninety-three <note>original: \"ᠭᠤᠴᠢᠨ ᠭᠤᠷᠪᠠᠨ · 三百九十三\"</note></page-num>\n<margin><term>Wa</term> <gloss>the volume marker corresponding to the twenty-eighth letter of the Tibetan-Mongolian index</gloss> · Various Sorts · Thirty-three · Upper <note>original: \"ᠸᠠ · ᠡᠯᠡ ᠵᠦᠢᠯ · ᠭᠤᠴᠢᠨ ᠭᠤᠷᠪᠠᠨ · ᠳᠡᠭᠡᠳᠦ\"</note></margin>\n\nHaving realized emptiness by its own nature, like breaking through the shell of an egg and emerging,\nBy completely purifying the path of the mind, one will attain the splendor of unwavering virtue.\n\nHaving attained the virtues of transcendent and direct knowledge <note>the higher spiritual perceptions or superknowledges</note>, and having accomplished the benefit of limitless sentient beings,\nThrough resolute aspiration one will reach the sanctity of a <term>Burkhan</term> <gloss>Buddha, an awakened one</gloss>, bringing to perfection the accumulation of immeasurable merit.\n\nUniting the various kinds of skillful means and <term>bilig</term> <gloss>transcendental wisdom</gloss>, and meditating upon a mind of loving-kindness and compassion,\nIf, in order to cause all beings to attain eternal peace, one generates the supreme mind of <term>bodhi</term> <gloss>awakening</gloss>,\n\nThe <term>bodhisattvas</term> <gloss>awakening heroes dedicated to the enlightenment of all beings</gloss> who have realized the ultimate meaning always act for the benefit of others;\nKnowing without error the results of <term>karma</term> <gloss>intentional actions and their ripening</gloss>, they gather a vast accumulation of merit.\n\nBy the power of having perfected the two accumulations <note>the accumulations of merit and wisdom</note>, abandoning all faults without remainder,\nIn order to attain the sacred state of a <term>Burkhan</term> <gloss>Buddha</gloss>, they practice meditation with diligence.\n\nWith a mind of devotion toward the Three Jewels <note>the Buddha, the Dharma or teaching, and the Sangha or monastic community</note>, guarding the way of the sacred <term>nom</term> <gloss>Dharma, the Buddhist teaching</gloss>,\nEntering the wondrous path of <term>bodhi</term> <gloss>awakening</gloss>, they arrive at passing beyond sorrow <note>original: \"ᠭᠠСЛАН ACA ᠨӨГЧИХҮЙ\", the standard Mongolian translation of nirvana</note>.\n\nListening to what the wise have taught, and reflecting with certainty upon its meaning,\nBy the power of meditating on the true nature, they clear away the darkness of ignorance.\n\nIn order to clear away the poison of obscurations gathered since beginningless time,\nMeditating with an equanimous mind, they attain the sanctity of supreme <term>bodhi</term> <gloss>awakening</gloss>.\n\nBy keeping pure <term>shagshabad</term> <gloss>moral discipline, from Sanskrit śikṣāpada</gloss>, parting from all sinful deeds,\nAbiding evenly in peaceful <term>samadhi</term> <gloss>meditative absorption</gloss>, they behold the truth through pure <term>bilig</term> <gloss>wisdom</gloss>.\n\nKnowing the way of the <term>Burkhan</term> <gloss>Buddha</gloss>'s <term>nom</term> <gloss>Dharma</gloss>, and revealing it to other sentient beings,\nLeading all onto the path of <term>bodhi</term> <gloss>awakening</gloss>, they cause the roots of merit to flourish.\n\nVenerating the <term>Burkhan</term> <gloss>Buddha</gloss> with sincere faith, and performing immeasurable merit,\nIn order to attain rare and supreme <term>bodhi</term> <gloss>awakening</gloss>, they strive with diligence at all times.\n\n<margin>Scriptures of Various Sorts, Fascicle Twenty-Eight, Upper Part, Three Hundred Ninety-Three <note>original: \"諸品經第二十八卷上三百九十三\"</note></margin>\n\n<summary>This folio from the Mongolian Buddhist canonical text \"Ele jüil\" (Chinese: \"Zhupin jing\") presents didactic verses on the bodhisattva path. It outlines how realizing emptiness, uniting compassion with wisdom, keeping moral discipline, and perfecting the accumulations of merit and wisdom lead practitioners to Buddhahood and the liberation of all sentient beings.</summary>\n<keywords>Classical Mongolian, Buddhism, bodhisattva path, emptiness, bodhicitta, two accumulations, Three Jewels, moral discipline, samadhi, Zhupin jing, Ele jüil</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 31.424
+ }
+}

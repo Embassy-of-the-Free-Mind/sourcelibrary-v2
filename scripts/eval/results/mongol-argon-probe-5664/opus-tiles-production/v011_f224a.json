@@ -1,0 +1,35 @@
+{
+ "key": "v011_f224a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>224</page-num>\n<header>秘密經第十一卷上二百二十四</header>\n<meta>Xylograph pothi leaf printed in red ink. The page is photographed rotated 90°, so the vertical Mongolian lines run horizontally across the image. The text sits inside a double-ruled frame. The right margin panel has a Chinese marginal title (transcribed in the header tag), and the left margin panel has a short Mongolian marginal label. A modern red-numbered label reading \"447\" is attached at the upper left, outside the frame.</meta>\n<warning>The ink is faint red. The Mongolian text is in Uighur-Mongolian script and is photographed rotated, so it could not be transcribed reliably. Only the Chinese marginal title and the modern label are transcribed.</warning>\n\n447\n\n<margin><unclear>short Mongolian marginal label (volume and folio indication), not transcribed</unclear></margin>\n\n<unclear>about 30 lines of Mongolian text in Uighur-Mongolian script with frequent punctuation marks, not transcribed</unclear>\n\n<margin>秘密經第十一卷上二百二十四</margin>\n\n<vocab>秘密經, Secret Tantra section, Mongolian Kanjur, volume 11, folio 224 recto, xylograph, red ink</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 16.503,
+  "usage": {
+   "input": 5,
+   "output": 1296
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Xylograph leaf from the Mongolian Kanjur, Secret Tantra section, printed in red ink. The page image is rotated 90°. The main Mongolian text was not transcribed, so nothing from the body can be translated here.</meta>\n<warning>The main body of this page, about 30 lines of Uighur-Mongolian script, was not transcribed because the red ink is faint and the image is rotated. Only the Chinese marginal title and a modern library label could be read. No translation of the main text is given.</warning>\n\n447\n\n<margin><unclear>short Mongolian marginal label (volume and folio indication), not transcribed</unclear></margin>\n\n<unclear>about 30 lines of Mongolian text in Uighur-Mongolian script with frequent punctuation marks, not transcribed</unclear>\n\n<margin>Secret Tantra, Volume 11, folio 224 recto <note>original: \"秘密經第十一卷上二百二十四\". This Chinese marginal title is common on Beijing-printed Mongolian Kanjur leaves. It names the section, the Secret Tantras (Mongolian <term>Dandr-a</term> <gloss>Tantra</gloss>), the volume number, and the folio. The character \"上\" marks the front side of the leaf.</note></margin>\n\n<summary>This is folio 224 recto of volume 11 in the Tantra section of a red-ink xylograph Mongolian Kanjur. Only the Chinese marginal title and a modern label number, 447, can be read. The Mongolian body text was not transcribed.</summary>\n<keywords>Mongolian Kanjur, Secret Tantra section, Tantra, xylograph, red ink, Uighur-Mongolian script, Chinese marginal title, volume 11, folio 224, Buddhist canon, Beijing print</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.137
+ }
+}

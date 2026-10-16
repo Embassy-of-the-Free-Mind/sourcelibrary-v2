@@ -1,0 +1,35 @@
+{
+ "key": "v005_f150a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<page-num>二百九十</page-num>\n<header>秘密經第五卷上</header>\n<meta>Modern red library/sequence label \"299\" at upper left outside the frame. Folio is written in pale reddish-brown ink inside a ruled double frame. The Chinese marginal title reads 秘密經第五卷上二百九十 (Secret Sutra, juan 5, upper part, leaf 290). A narrow ruled side panel at the left edge carries a short vertical label in the same script, probably the volume and folio designation.</meta>\n<warning>Handwritten vertical Manchu script (Mongolian-derived alphabet with diacritical dots and circles), in pale red-brown ink on a light background. The ink is faint and low in contrast. Vertical Manchu script cannot be transcribed reliably at this resolution, so the body text is not transcribed and nothing has been reconstructed.</warning>\n<warning>Handwritten Manchu script</warning>\n\n<unclear>23 vertical lines of handwritten Manchu text (Buddhist sutra text with punctuation marks), not transcribed</unclear>\n\n<margin><unclear>short vertical Manchu label in the left side panel, about 3 words (probably the title and folio number), not transcribed</unclear></margin>\n\n<vocab>秘密經, Secret Sutra, Manchu Buddhist canon, juan 5, folio 290</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 17.547,
+  "usage": {
+   "input": 4,
+   "output": 869
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The source language was given as Mongolian, but the OCR identifies the script as handwritten Manchu. The header is in Chinese: 秘密經第五卷上 \"Secret Sutra, juan 5, upper part\"; page number 二百九十 \"290\". A modern library label reads \"299\". The body text was not transcribed, so nothing has been translated or reconstructed.</meta>\n<warning>The OCR did not transcribe the body text. It is handwritten vertical Manchu in faint red-brown ink and could not be read reliably. No translation of the main text is possible from this input.</warning>\n\n# Secret Sutra, Volume 5, Upper Part\n\n<unclear>23 vertical lines of handwritten Manchu text (Buddhist sutra text with punctuation marks), not transcribed</unclear>\n\n<margin><unclear>short vertical Manchu label in the left side panel, about 3 words (probably the title and folio number), not transcribed</unclear></margin>\n\n<note>The Chinese marginal title marks this as leaf 290 of the upper part of the fifth volume of the \"Secret Sutra.\" This was probably a tantric text in a Manchu Buddhist canon. Manchu translations of the Buddhist canon were made at the Qing court in the eighteenth century.</note>\n\n<summary>This is leaf 290 from volume 5 of a handwritten Manchu Buddhist \"Secret Sutra.\" The body text and the side label were not transcribed, so only the Chinese header and page number can be given.</summary>\n<keywords>Secret Sutra, Manchu Buddhist canon, Manchu script, tantric Buddhism, Qing dynasty, manuscript, volume 5, folio 290, untranscribed text</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 12.814
+ }
+}

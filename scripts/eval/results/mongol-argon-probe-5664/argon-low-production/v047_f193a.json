@@ -1,0 +1,41 @@
+{
+ "key": "v047_f193a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>一百九十三</page-num>\n<header>諸般般若經第一卷上</header>\n<meta>Red-ink xylographic pothi leaf from the Mongolian Kanjur (Bilig-ün činar-du kürügsen section), with marginal volume/folio title in Mongolian on the left and Chinese volume/folio signature on the right.</meta>\n\n<margin>ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠷ ᠳᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ ᠨᠢᠭᠡᠳᠦᠭᠡᠷ ᠪᠣᠳᠢ ᠶᠡᠷᠡᠨ ᠭᠤᠷᠪᠠᠨ</margin>\n\n<unclear>31 vertical lines of Classical Mongolian script, not transcribed</unclear>\n\n<margin>諸般般若經第一卷上一百九十三</margin>\n\n<vocab>諸般般若經, Prajñāpāramitā, ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠷ ᠳᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ, Mongolian Kanjur</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 33.387,
+  "usage": {
+   "input_tokens": 12344,
+   "output_tokens": 1067,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 38528,
+   "total_tokens": 13411
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<page-num>One hundred ninety-three <note>original: \"一百九十三\"</note></page-num>\n<header>The Various Perfection of Wisdom Sutras, First Fascicle, Upper Part <note>original: \"諸般般若經第一卷上\"</note></header>\n<meta>Red-ink xylographic pothi leaf from the Mongolian Kanjur (Bilig-ün činar-du kürügsen section), with marginal volume/folio title in Mongolian on the left and Chinese volume/folio signature on the right.</meta>\n\n<margin><term>Bilig-ün činar-du kürügsen</term> <gloss>Perfection of Wisdom; Sanskrit: Prajñāpāramitā</gloss>, First Volume, ninety-three <note>original: \"ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠷ ᠳᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ ᠨᠢᠭᠡᠳᠦᠭᠡᠷ ᠪᠣᠳᠢ ᠶᠡᠷᠡᠨ ᠭᠤᠷᠪᠠᠨ\"; the Mongolian marginalia records folio ninety-three, while the Chinese signature on the right records one hundred ninety-three</note></margin>\n\n<unclear>31 vertical lines of Classical Mongolian script, not transcribed</unclear>\n\n<margin>The Various Perfection of Wisdom Sutras, First Fascicle, Upper Part, one hundred ninety-three <note>original: \"諸般般若經第一卷上一百九十三\"</note></margin>\n\n<summary>This folio from the First Volume of the Perfection of Wisdom section of the Mongolian Kanjur features bilingual Mongolian and Chinese marginal signatures, while the main body of thirty-one vertical lines of Classical Mongolian text remains untranscribed.</summary>\n<keywords>Perfection of Wisdom, Prajnaparamita, Bilig-un cinar-du kurugsen, Mongolian Kanjur, Buddhist sutra, xylograph, bilingual marginalia</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 27.414
+ }
+}

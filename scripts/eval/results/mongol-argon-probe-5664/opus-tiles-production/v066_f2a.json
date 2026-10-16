@@ -1,0 +1,35 @@
+{
+ "key": "v066_f2a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>The main text block is in Uighur-Mongolian (classical Mongolian) script, printed in red ink. The lines are vertical, and the page is turned 90° in the image. This script cannot be reliably transcribed from this image, so the Mongolian text is marked as unclear rather than guessed. Only the Chinese marginal label is transcribed.</warning>\n<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>二</page-num>\n<header>諸品經第七卷上二</header>\n<meta>Pothi-format leaf, red-ink print. The text block sits inside a double-ruled frame with a scrolling floral border. A narrow panel at the left holds a short Mongolian label with cloud-scroll corner ornaments. A matching panel at the right holds the Chinese label \"諸品經第七卷上二\" (Zhu pin jing, juan 7, upper, leaf 2). The upper-left corner of the leaf has been cut off at an angle. There are small cracks in the lower margin.</meta>\n\n<margin><unclear>short Mongolian marginal label (about 4 words, likely title/volume/leaf designation), not transcribed</unclear></margin>\n\n<unclear>about 25 lines of Uighur-Mongolian script text, not transcribed</unclear>\n\n<margin>諸品經第七卷上二</margin>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A red-printed double-ruled frame encloses the text block. It has a continuous scrolling foliate (cloud and vine) border. Narrow side panels at the left and right carry the marginal labels, with cloud-scroll ornaments at the top and bottom of each panel.</image-desc>\n\n<vocab>諸品經, Zhu pin jing, Mongolian Kanjur, Uighur-Mongolian script, pothi, red-ink print, juan 7</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 25.967,
+  "usage": {
+   "input": 5,
+   "output": 1515
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Pothi-format leaf printed in red ink. The main Uighur-Mongolian text was not transcribed by OCR, so the only translatable text is the Chinese marginal label. The 諸品經 (Zhu pin jing, \"Sutra of the Various Sections\") is a Chinese designation used in Beijing-printed Mongolian Kanjur volumes for the miscellaneous sutra section. The upper-left corner of the leaf is cut off at an angle. There are small cracks in the lower margin.</meta>\n\n<margin><unclear>short Mongolian marginal label (about 4 words, likely title/volume/leaf designation), not transcribed</unclear></margin>\n\n<unclear>about 25 lines of Uighur-Mongolian script text, not transcribed</unclear>\n\n<margin>Sutra of the Various Sections, Volume Seven, Part One, Leaf 2 <note>original: \"諸品經第七卷上二\" (Zhu pin jing di qi juan shang er). In Beijing imprints of the Mongolian Kanjur, this Chinese label names the section, the volume and the leaf number so that binders and readers could keep the loose leaves in order.</note></margin>\n\n<note>A double-ruled frame printed in red surrounds the text block. Its border is a continuous scrolling design of clouds and vines. Narrow panels at the left and right edges hold the marginal labels, with cloud-scroll ornaments at the top and bottom of each panel.</note>\n\n<summary>This is leaf 2 of the first part of volume seven of the \"Sutra of the Various Sections,\" a section of a red-ink Mongolian Kanjur print. The main Mongolian text was not transcribed, so only the Chinese marginal label identifying the volume and leaf could be translated.</summary>\n<keywords>Zhu pin jing, Sutra of the Various Sections, Mongolian Kanjur, Uighur-Mongolian script, pothi format, red-ink print, Beijing imprint, marginal label, Buddhist canon, volume seven</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 10.296
+ }
+}

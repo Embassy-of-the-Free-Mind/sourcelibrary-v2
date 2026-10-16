@@ -1,0 +1,46 @@
+{
+ "key": "v005_f150a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>299</page-num>\n<meta>Beijing Kanjur (1718–1720), Tantra section (秘密經 / Dandar-a), Volume 5 (第五卷 / ᢌᠠ), folio 150 recto (上一百五十 / ᠵᠠᠭᠤᠨ ᠲᠠᠪᠢᠨ)</meta>\n<margin>ᢌᠠ ᠲᠠᠪᠤ ᠵᠠᠭᠤᠨ ᠲᠠᠪᠢᠨ</margin>\n<margin>秘密經第五卷上一百五十</margin>\nᠬᠤᠪᠢ ᠪᠣᠯᠤᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠁ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠢᠯᠭᠠᠯ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠪᠤᠢ ᠁ ᠲᠡᠳᠡ ᠪᠦᠭᠦᠳᠡ ᠢᠨᠦ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠠ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠶᠢᠨ\nᠢᠯᠭᠠᠯ ᠢᠨᠦ ᠄ ᠴᠢᠨᠠᠭᠰᠢ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠢᠯᠭᠠᠯ ᠢᠶᠠᠷ ᠢᠯᠭᠠᠬᠤ ᠳᠤ\nᠣᠨᠣᠭᠳᠠᠬᠤᠢ ᠪᠤᠢ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠤ ᠢᠯᠭᠠᠯ ᠢᠨᠦ ᠡᠭᠦᠨ ᠳᠦ ᠨᠢᠭᠤᠴᠠ ᠶᠢᠨ\nᠡᠷᠬᠡᠲᠦ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠦ ᠢᠯᠡᠷᠬᠡᠢ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ\nᠪᠦᠳᠦᠭᠦᠨ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠦ ᠄ ᠲᠡᠭᠦᠨ ᠳᠦ ᠪᠠᠰᠠ ᠨᠠᠷᠢᠨ ᠪᠠ\nᠪᠦᠳᠦᠭᠦᠨ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ ᠥᠨᠳᠦᠷ ᠪᠠ ᠪᠣᠭᠣᠨᠢ ᠁\nᠬᠤᠪᠢ ᠪᠣᠯᠤᠨ ᠪᠠ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ ᠥᠨᠳᠦᠷ ᠪᠤᠰᠤ ᠶᠢᠨ\nᠢᠯᠭᠠᠯ ᠪᠣᠯᠤᠮᠤᠢ ᠬᠡᠮᠡᠨ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠪᠠᠢ ᠄ ᠥᠨᠳᠦᠷ ᠢᠨᠦ ᠳᠡᠭᠡᠷ᠎ᠡ ᠪᠤᠢ ᠁\nᠥᠨᠳᠦᠷ ᠪᠤᠰᠤ ᠢᠨᠦ ᠳᠣᠷᠣᠭᠰᠢ ᠪᠤᠢ ᠄ ᠲᠡᠭᠦᠨ ᠳᠦ ᠪᠠᠰᠠ ᠣᠷᠣ ᠪᠠ ᠣᠷᠣ ᠪᠤᠰᠤ ᠶᠢᠨ\nᠢᠯᠭᠠᠯ ᠢᠶᠠᠷ ᠢᠯᠭᠠᠨ ᠣᠨᠣᠭᠳᠠᠬᠤᠢ ᠄ ᠲᠡᠭᠦᠨ ᠳᠦ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠁ ᠶᠠᠮᠪᠠᠷ ᠮᠡᠲᠦ\nᠲᠡᠮᠳᠡᠭ ᠪᠠ ᠪᠡᠯᠭᠡ ᠶᠢ ᠁ ᠣᠨᠣᠭᠳᠠᠬᠤᠢ ᠢᠨᠦ ᠲᠡᠭᠦᠨ ᠳᠦ ᠬᠤᠪᠢ ᠪᠣᠯᠤᠨ ᠴᠢᠨᠠᠭᠰᠢ\nᠢᠯᠭᠠᠯ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠶᠢᠨ ᠢᠨᠦ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠢᠯᠭᠠᠯ ᠪᠣᠯᠤᠨ ᠥᠨᠳᠦᠷ ᠪᠠ\nᠪᠣᠭᠣᠨᠢ ᠁ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠥᠨᠳᠦᠷ ᠪᠤᠰᠤ ᠄ ᠲᠡᠳᠡᠭᠡᠷ\nᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠦ ᠴᠠᠭ ᠦᠭᠡᠢ ᠄ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠶᠢᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ ᠁ ᠳᠦᠷᠰᠦ ᠦᠭᠡᠢ ᠄ ᠲᠡᠭᠦᠨ ᠦ\nᠪᠡᠯᠭᠡ ᠢᠨᠦ ᠭᠤᠷᠪᠠᠨ ᠪᠣᠳᠠᠲᠤ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ\nᠭᠠᠭᠴᠠ ᠁ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠤᠰᠤ ᠶᠢᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠯᠡᠷᠬᠡᠢ ᠶᠢᠨ ᠄ ᠲᠡᠳᠡ ᠪᠠ\nᠵᠢᠷᠭᠤᠭᠠᠨ ᠢᠯᠭᠠᠯ ᠢᠨᠦ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠁ ᠲᠡᠭᠦᠨ ᠳᠦ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠶᠠᠮᠪᠠᠷ\nᠭᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ ᠄ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠶᠢᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠶᠢᠨ ᠭᠠᠷ ᠤᠨ\nᠪᠡᠯᠭᠡ ᠢᠨᠦ ᠁ ᠪᠤᠰᠤ ᠶᠢᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠦ ᠭᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ ᠪᠣᠳᠠᠲᠤ ᠦᠭᠡᠢ ᠄\nᠭᠠᠭᠴᠠ ᠮᠤᠲᠤᠷ ᠢᠨᠦ ᠪᠤᠢ ᠁ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠶᠢᠨ ᠄ ᠣᠨᠣᠭᠳᠠᠬᠤᠢ\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠡᠯᠭᠡ ᠢᠨᠦ ᠪᠦᠳᠦᠭᠦᠨ ᠁ ᠬᠤᠪᠢ ᠪᠣᠯᠤᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠣᠯᠭᠠᠨ ᠬᠡᠢ\nᠦᠭᠡᠢ ᠄ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ ᠪᠤᠢ ᠁ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠶᠢᠨ ᠁\nᠣᠨᠣᠭᠳᠠᠬᠤᠢ ᠴᠢᠨᠠᠭᠰᠢ ᠴᠢᠨᠠᠭᠰᠢ ᠪᠤᠰᠤ ᠢᠨᠦ ᠬᠤᠪᠢ ᠁ ᠬᠤᠪᠢ ᠪᠣᠯᠤᠨ\nᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠦ ᠬᠡᠢ ᠄ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠢᠨᠦ ᠰᠡᠳᠬᠢᠯ ᠪᠤᠢ ᠬᠡᠮᠡᠨ\nᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠪᠠᠢ ᠥᠨᠳᠦᠷ ᠪᠠ ᠪᠣᠭᠣᠨᠢ ᠶᠢᠨ ᠢᠯᠭᠠᠯ ᠁ ᠲᠡᠭᠦᠨ ᠳᠦ ᠪᠠᠰᠠ\nᠪᠦᠳᠦᠭᠦᠨ ᠪᠠ ᠨᠠᠷᠢᠨ ᠢᠯᠭᠠᠯ ᠢᠨᠦ ᠁ ᠲᠡᠭᠦᠨ ᠦ ᠪᠠ ᠰᠠᠢᠲᠤᠷ\nᠰᠡᠳᠬᠢᠯ ᠢ ᠣᠨᠣᠭᠳᠠᠬᠤᠢ ᠪᠤᠢ ᠁ ᠢᠯᠡᠷᠬᠡᠢ ᠪᠤᠰᠤ ᠴᠢᠨᠠᠭᠰᠢ ᠬᠡᠮᠡᠨ\nᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠪᠠᠢ ᠁ ᠬᠤᠪᠢ ᠪᠣᠯᠤᠨ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠨᠦ ᠵᠢᠷᠭᠤᠭᠠᠨ ᠤ ᠢᠯᠭᠠᠯ ᠢᠶᠠᠷ\n<vocab>ᠨᠢᠭᠤᠴᠠ ᠶᠢᠨ ᠡᠷᠬᠡᠲᠦ, ᠪᠣᠳᠢᠰᠠᠳᠣ, ᠭᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ, ᠮᠤᠲᠤᠷ, ᠢᠯᠡᠷᠬᠡᠢ, ᠪᠦᠳᠦᠭᠦᠨ, ᠨᠠᠷᠢᠨ, ᠬᠡᠢ, ᠰᠡᠳᠬᠢᠯ, 秘密經</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 317.208,
+  "usage": {
+   "input_tokens": 22397,
+   "output_tokens": 24472,
+   "thinking_tokens": 21768,
+   "cache_read_tokens": 29314,
+   "total_tokens": 46869
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny",
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Beijing Kanjur, 1718 to 1720, Tantra section, Secret Scriptures, Volume 5, folio 150 recto; continues from previous page</meta>\n<margin><term>Ca</term> <gloss>fifth volume</gloss>, five, one hundred fifty <note>original: \"ᢌᠠ ᠲᠠᠪᠤ ᠵᠠᠭᠤᠨ ᠲᠠᠪᠢᠨ\"</note></margin>\n<margin>Secret Scriptures, Volume Five, recto, one hundred fifty <note>original: \"秘密經第五卷上一百五十\"</note></margin>\nthe portion <note>original: \"qubi\", translating Sanskrit kalā or bhāga, a part or aspect</note> and the beyond <note>original: \"činaγsi\", translating Sanskrit para, the transcendent</note>, has taught the six distinctions.\nAs for all of those, the distinction of the beyond and the non-beyond\nis to be understood when distinguishing by means of the six distinctions of the beyond.\nAs for the distinction of the six beyonds: herein, O Lord of\nSecrets <term>niγuča-yin erketü</term> <gloss>Lord of Secrets, an epithet of Vajrapāṇi</gloss>, the beyond is manifest <term>ilerkei</term> <gloss>manifest, evident</gloss>; the non-beyond is\ncoarse <term>büdügün</term> <gloss>coarse, gross</gloss>; as for the beyond of the beyond, within that, moreover, are the subtle <term>narin</term> <gloss>subtle, fine</gloss> and\nthe coarse; the beyond and non-beyond is high and low;\nand the portion as well as the non-beyond constitute the distinction of the non-high:\nthus He spoke. The high is above;\nthe non-high is below. Within that, moreover, by the distinction of place and non-place <note>original: \"oro ba oro busu\", locus and non-locus</note>,\nit is to be distinguished and understood. Therein, as for the <term>bodisado</term> <gloss>bodhisattvas, awakening beings</gloss>, how\nthe marks and signs are to be understood: therein, the distinction of the portion and the beyond,\nthe six distinctions of the beyond as well as the high and\nthe low, the non-beyond, the unmanifest, and the non-high. Those\nthat are beyond are timeless; the non-beyond of the unmanifest is formless; its\nsign is the beyond of three realities <note>original: \"γurban bodatu\", the three substantial realities</note>, while the unmanifest non-beyond is\nsingle. Of the manifest beyond that is not shown: those and\nthe six distinctions are the non-beyond. Therein, what are the\nhand-signs <term>γar-un belge</term> <gloss>hand-signs, ritual gestures</gloss> of the bodhisattvas? As for the hand-sign of the non-beyond of the unmanifest,\nthe hand-sign of the beyond of the other is without substantial reality:\nit is a single <term>mutur</term> <gloss>mudrā, ritual seal or hand gesture</gloss>. Of the unmanifest: the beyond\nsign that is to be understood is coarse; rendered as the portion and the beyond, it is without\nwind <term>kei</term> <gloss>wind, vital breath or prāṇa</gloss>: it is the non-beyond. Of the unmanifest,\nthe beyond and non-beyond that is to be understood is the portion; the portion and\nthe beyond is the wind; the unmanifest is the mind <term>sedkil</term> <gloss>mind, consciousness</gloss>: thus\nHe spoke. As for the distinction of high and low, and therein, moreover,\nthe distinction of coarse and subtle, of that too the mind\nis to be thoroughly understood. It is the unmanifest beyond: thus\nHe spoke. As for the portion and the beyond, through the distinction of the six <meta>continues on next page</meta>\n\n<summary>This folio from the fifth volume of the Tantra section of the Beijing Kanjur presents a Buddhist tantric discourse addressed to the Lord of Secrets, Vajrapāṇi, and the bodhisattvas. It classifies the sixfold distinctions of the transcendent beyond and the non-beyond in relation to manifest and unmanifest states, coarse and subtle levels, ritual hand-signs, vital wind, and mind.</summary>\n<keywords>Beijing Kanjur, Tantra, Classical Mongolian, Lord of Secrets, Vajrapani, bodhisattva, mudra, hand-sign, manifest and unmanifest, coarse and subtle, vital wind, mind</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 175.786
+ }
+}

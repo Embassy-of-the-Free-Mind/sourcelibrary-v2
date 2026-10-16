@@ -1,0 +1,35 @@
+{
+ "key": "v001_f280a",
+ "arm": "opus",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Woodblock print in red ink, written vertically in Manchu-Mongolian script (it is probably Manchu, but it could be Classical Mongolian). At this resolution the main text cannot be read reliably, so it is not transcribed. Only the Chinese marginal title and the added shelf number are transcribed.</warning>\n<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>559</page-num>\n<header>秘密經第一卷上三百八十</header>\n<meta>A modern red label reading \"559\" is pasted at the upper left, outside the frame. The Chinese marginal title on the right gives the section 秘密經 (Tantra), volume 1, folio 380 (recto, 上). A short line of vertical script in the left margin may be the title or folio label; it is too faint to read.</meta>\n\n<margin>秘密經第一卷上三百八十</margin>\n\n<unclear>about 24 vertical lines of Manchu (or Mongolian) script in red ink inside a ruled frame, not transcribed</unclear>\n\n<margin><unclear>a short vertical line of script in the left margin, not transcribed</unclear></margin>\n\n<insert>559</insert>\n\n<vocab>秘密經, Tantra section, Kanjur, Manchu script, red-ink xylograph, pothi format</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 21.221,
+  "usage": {
+   "input": 4,
+   "output": 1116
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>The source language is given as Mongolian, but the OCR identifies the script as probably Manchu, possibly Classical Mongolian. The main text was not transcribed, so only the Chinese marginal title and the shelf number are translated. A modern red label reading \"559\" is pasted at the upper left, outside the frame. The Chinese marginal title gives the section as Tantra, volume 1, folio 380 recto.</meta>\n\n<margin>Tantra Section <note>original: \"秘密經\", literally \"Secret Scriptures\", the Chinese name for the Tantra division of the Buddhist canon</note>, Volume One, Folio 380, Recto <note>original: \"上\", literally \"upper\", meaning the front side of the leaf</note></margin>\n\n<unclear>about 24 vertical lines of Manchu (or Mongolian) script in red ink inside a ruled frame, not transcribed</unclear>\n\n<margin><unclear>a short vertical line of script in the left margin, not transcribed</unclear></margin>\n\n<insert>559</insert>\n\n<summary>This page is folio 380 recto of the first volume of the Tantra section of a red-ink woodblock edition of the Buddhist canon, printed in Manchu or Mongolian script. Only the Chinese marginal title and a modern shelf number could be read. The main text was not transcribed.</summary>\n<keywords>Tantra section, Buddhist canon, Kanjur, Manchu script, Mongolian script, red-ink xylograph, woodblock print, pothi format, Chinese marginal title, folio 380</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.196
+ }
+}

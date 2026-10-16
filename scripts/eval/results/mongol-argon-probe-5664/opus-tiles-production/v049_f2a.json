@@ -1,0 +1,35 @@
+{
+ "key": "v049_f2a",
+ "arm": "opus-tiles",
+ "model": "opus",
+ "resolved_model": "claude-opus-5-5",
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Manchu</language>\n<script>printed</script>\n<page-type>text</page-type>\n<header>大寶積經第二卷上</header>\n<page-num>二</page-num>\n<warning>Xylograph printed in red ink in Manchu script, with a Chinese label in the right-hand frame panel. The Manchu body text and the small Manchu label in the left-hand frame panel are not transcribed, because a romanization could not be produced reliably from this image. The paper is stained and creased, and the ink is pale in places.</warning>\n<meta>Pothi-format leaf inside a double-ruled frame with a scrolling floral border. Narrow labelled panels at the left and right ends, each with cloud-scroll corner ornaments. Running Manchu text in vertical columns, read left to right. The left label panel and the first body column end with punctuation marks.</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">Printed red frame around the whole text block. A double rule encloses a band of continuous scrolling foliate ornament. At each end a narrow vertical panel is set off by rules and decorated with cloud-scroll (ruyi) corner motifs; these panels hold the volume and folio labels.</image-desc>\n\n<margin><unclear>Manchu marginal label in the left-hand panel, 4–5 words (title and folio reference), not transcribed</unclear></margin>\n\n<unclear>About 20 vertical columns of printed Manchu text (sutra text), not transcribed</unclear>\n\n<margin>大寶積經第二卷上二</margin>\n\n<vocab>Ratnakūṭa sūtra, 大寶積經, Manchu Kanjur, Buddhist sutra, xylograph, red-ink printing, pothi format</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 24.947,
+  "usage": {
+   "input": 5,
+   "output": 1769
+  },
+  "tool_calls": null
+ },
+ "translation": {
+  "text": "<meta>Source language is Manchu, not Mongolian as specified in the request. The Manchu body text and the left-hand Manchu label were not transcribed in the OCR, so only the frame description and the Chinese marginal label can be translated. No continuity with a previous page can be established.</meta>\n\n<warning>The OCR did not transcribe the main Manchu text of this page. It is kept as unread material below, and no translation is supplied for it.</warning>\n\n<note>A red printed frame surrounds the whole text block. A double rule encloses a band of continuous scrolling leaf ornament. At each end, a narrow vertical panel is marked off by rules and decorated at its corners with cloud-scroll motifs, known as ruyi. These panels hold the volume and folio labels.</note>\n\n<margin><unclear>Manchu marginal label in the left-hand panel, 4–5 words (title and folio reference), not transcribed</unclear></margin>\n\n<unclear>About 20 vertical columns of printed Manchu text (sutra text), not transcribed</unclear>\n\n<margin>Great Jewel-Heap Sutra, Volume Two, Part One, folio 2 <note>original: \"大寶積經第二卷上二\". This is the Chinese title of the <term>Ratnakūṭa Sūtra</term> <gloss>Heap of Jewels discourse</gloss>, a large Mahāyāna collection of 49 separate sutras. The final character 二 gives the folio number.</note></margin>\n\n<summary>This is folio 2 of Volume Two, Part One, of the Great Jewel-Heap Sutra (Ratnakūṭa), from a Manchu xylograph printed in red ink. The Manchu sutra text was not transcribed, so only the Chinese folio label and the decorative frame can be rendered.</summary>\n<keywords>Ratnakūṭa Sūtra, Great Jewel-Heap Sutra, Manchu Kanjur, Buddhist sutra, xylograph, red-ink printing, pothi format, folio label, ruyi ornament, Mahāyāna Buddhism</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 11.081
+ }
+}

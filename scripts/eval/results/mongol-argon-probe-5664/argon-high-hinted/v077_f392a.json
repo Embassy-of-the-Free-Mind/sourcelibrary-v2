@@ -1,0 +1,42 @@
+{
+ "key": "v077_f392a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>392a</page-num>\n<warning>Red woodblock print is faded and low-contrast in several areas, particularly along the bottom edge and the right-hand columns.</warning>\n<margin>ᠡᠯᠳᠡᠪ ᠳᠡᠭᠡᠳᠦ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠡᠷᠡᠨ ᠬᠣᠶᠠᠷ</margin>\n<margin>諸品經第十八卷上三百九十二</margin>\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠠ ᠴᠢᠨᠠᠳᠤ ᠦᠵᠦᠭᠦᠷ ᠦᠭᠡᠢ ᠣᠷᠴᠢᠯᠠᠩ ᠤᠨ ᠳᠠᠯᠠᠢ ᠳᠤ ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠃ ᠮᠥᠨ <unclear>ᠶᠠᠪᠤᠮᠤᠢ</unclear>\nᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠰᠡᠳᠭᠢᠯ ᠦᠨ ᠦᠢᠯᠡ ᠪᠠ ᠪᠢᠯᠢᠭ ᠦᠨ ᠭᠡᠷᠡᠯ ᠢᠶᠡᠷ ᠭᠡᠶᠢᠭᠦᠯᠦᠨ\nᠦᠢᠯᠡᠳᠦᠭᠡᠳ ᠂ ᠴᠠᠭ ᠦᠭᠡᠢ ᠭᠠᠯᠠᠪ ᠤᠳ ᠲᠤ ᠪᠣᠳᠢ ᠶᠠᠪᠤᠳᠠᠯ ᠢᠶᠠᠷ ᠶᠠᠪᠤᠵᠤ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠤ\nᠡᠭᠦᠰᠭᠡᠨ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠤᠶᠠᠨ ᠤ ᠴᠢᠭᠤᠯᠭᠠᠨ ᠢ ᠲᠡᠭᠦᠰᠭᠡᠵᠦ ᠃ ᠬᠠᠮᠤᠭ ᠪᠤᠢ ᠃\nᠴᠢᠨᠠᠳᠤ ᠬᠢᠵᠠᠭᠠᠷ ᠠ ᠬᠦᠷᠦᠭᠰᠡᠨ ᠪᠤᠷᠬᠠᠨ ᠤ ᠪᠢᠯᠢᠭ ᠢ ᠣᠯᠤᠭᠰᠠᠨ ᠬᠡᠮᠡᠨ ᠵᠠᠷᠯᠢᠭ\nᠪᠣᠯᠤᠭᠠᠳ ᠂ ᠪᠤᠰᠤᠳ ᠴᠠᠭ ᠠᠴᠠ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠠ ᠦᠯᠦ ᠮᠡᠳᠡᠭᠳᠡᠬᠦ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠢ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠰᠠᠶᠢᠲᠤᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠪᠠ ᠪᠤᠷᠬᠠᠨ ᠤ ᠣᠷᠣᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠃ ᠮᠥᠨ ᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ\nᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠢ ᠪᠣᠯᠪᠠᠰᠤᠷᠠᠭᠤᠯᠤᠭᠴᠢ ᠃ ᠪᠠᠰᠠ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠦᠵᠡᠭᠳᠡᠮᠦᠢ ᠃\nᠪᠣᠯᠤᠭᠠᠳ ᠂ ᠦᠨᠡᠬᠡᠷ ᠴᠢᠨᠠᠷ ᠦᠭᠡᠢ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠃ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠪᠤᠢ ᠃\nᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠃ ᠦᠨᠡᠬᠡᠷ ᠲᠡᠭᠦᠰᠦᠭᠰᠡᠨ ᠪᠤᠢ ᠃\nᠡᠭᠦᠨ ᠳᠦ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠠ ᠴᠢᠨᠠᠷ ᠪᠠ ᠪᠡᠯᠭᠡ ᠦᠭᠡᠢ ᠪᠣᠯᠤᠭᠰᠠᠨ\nᠴᠢᠨᠠᠭᠰᠢ ᠦᠵᠡᠭᠦᠯᠦᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠃ ᠲᠡᠭᠦᠨ ᠦ ᠲᠤᠯᠠ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ\nᠦᠨᠡᠬᠡᠷ ᠪᠤᠷᠬᠠᠨ ᠤ ᠪᠢᠯᠢᠭ ᠃ ᠮᠥᠨ ᠴᠢᠨᠠᠷ ᠢᠶᠠᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠰᠡᠳᠭᠢᠯ ᠦᠨ ᠦᠢᠯᠡ ᠪᠠ ᠶᠠᠪᠤᠳᠠᠯ ᠢ <unclear>ᠮᠡᠳᠡᠭᠦᠯᠦᠨ</unclear>\nᠪᠣᠯᠤᠭᠠᠳ ᠂ ᠮᠥᠨ ᠰᠡᠳᠭᠢᠯ ᠦᠨ ᠴᠢᠨᠠᠷ ᠢ <unclear>ᠣᠨᠣᠭᠤᠯᠤᠭᠴᠢ</unclear> ᠪᠤᠢ ᠃\nᠲᠡᠭᠦᠨ ᠦ ᠲᠤᠯᠠ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠢ ᠲᠡᠭᠰᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠴᠢ <unclear>ᠪᠣᠯᠤᠭᠰᠠᠨ</unclear>\nᠦᠵᠡᠭᠦᠯᠦᠨ ᠦᠢᠯᠡᠳᠦᠭᠴᠢ ᠂ ᠬᠠᠮᠤᠭ ᠠᠮᠢᠲᠠᠨ ᠤ ᠰᠡᠳᠭᠢᠯ ᠢ <unclear>ᠠᠷᠢᠯᠭᠠᠭᠴᠢ</unclear>\nᠴᠢᠨᠠᠭᠰᠢ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠃ ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠦ ᠪᠢᠯᠢᠭ ᠢᠶᠡᠷ <unclear>ᠦᠵᠡᠭᠦᠯᠦᠨ</unclear>\nᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠃ ᠬᠠᠮᠤᠭ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠠᠮᠢᠲᠠᠨ ᠳᠤ ᠲᠤᠰᠠ\nᠦᠢᠯᠡᠳᠦᠭᠴᠢ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠠ ᠂ ᠦᠨᠡᠬᠡᠷ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠤᠢ ᠃\nᠪᠣᠯᠤᠭᠰᠠᠨ ᠴᠠᠭ ᠠᠴᠠ ᠡᠬᠢᠯᠡᠨ ᠂ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠨ\nᠡᠨᠡ ᠮᠡᠲᠦ ᠬᠠᠮᠤᠭ ᠨᠣᠮ ᠤᠳ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠃ ᠪᠠᠰᠠ ᠬᠠᠮᠤᠭ\nᠠᠮᠢᠲᠠᠨ ᠤ ᠲᠤᠰᠠ ᠶᠢᠨ ᠲᠤᠯᠠ ᠨᠣᠮ ᠤᠨ <unclear>ᠬᠦᠷᠳᠦᠨ ᠢ ᠡᠷᠭᠢᠭᠦᠯᠦᠭᠴᠢ</unclear>\nᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠣᠯᠤᠭᠠᠳ ᠃ ᠮᠥᠨ ᠴᠢᠨᠠᠷ ᠲᠤ <unclear>ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠪᠣᠯᠪᠠᠢ</unclear> ᠃\n<vocab>ᠡᠯᠳᠡᠪ, 諸品經, ᠪᠤᠷᠬᠠᠨ, ᠨᠣᠮ ᠤᠨ ᠴᠢᠨᠠᠷ, ᠪᠢᠯᠢᠭ, ᠠᠮᠢᠲᠠᠨ, ᠲᠡᠭᠦᠨᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ</vocab>",
+  "problem": null,
+  "cls": null,
+  "print_timeout": "900s",
+  "secs": 247.68,
+  "usage": {
+   "input_tokens": 22465,
+   "output_tokens": 13442,
+   "thinking_tokens": 10901,
+   "cache_read_tokens": 29388,
+   "total_tokens": 35907
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Continues from previous page; Mongolian Kanjur woodblock print, folio 392a.</meta>\n<warning>Red woodblock print is faded and low-contrast in several areas, particularly along the bottom edge and the right-hand columns.</warning>\n<margin>Miscellaneous <note>original: \"Eldeb\", the Miscellaneous Sutras section of the Mongolian Kanjur</note>, upper, three hundred ninety-two</margin>\n<margin>Sutras of Various Sections <note>original: \"Zhupin jing\"</note>, Fascicle Eighteen, upper, three hundred ninety-two</margin>\nabided in the ocean of <term>orčilang</term> <gloss>cyclic existence, samsara</gloss>, boundless onward and beyond. Truly <unclear>ᠶᠠᠪᠤᠮᠤᠢ</unclear>\nilluminating the mental actions of all sentient beings with the light of <term>bilig</term> <gloss>transcendent wisdom, prajna</gloss>,\nand having practiced the conduct of <term>bodi</term> <gloss>awakening, bodhi</gloss> throughout measureless <term>galab</term> <gloss>cosmic eons, kalpas</gloss>,\nperfecting the accumulation of <term>buyan</term> <gloss>merit, punya</gloss> that was generated and cultivated. All are present.\nHaving proclaimed that he attained the wisdom of the <term>Burqan</term> <gloss>Buddha, the Awakened One</gloss> that has reached the further shore <note>a translation of the Sanskrit concept of paramita, perfection</note>,\nhaving revealed that which has arisen from other times and that which has become beyond ordinary comprehension,\nhaving thoroughly revealed the <term>nom-un činar</term> <gloss>true nature of phenomena, dharmata</gloss> of all phenomena\nand having become the realm of the Buddha. Having manifested the <term>mön činar</term> <gloss>intrinsic nature, svabhava</gloss>,\nhe is the one who brings all <term>amitan</term> <gloss>sentient beings</gloss> to maturity. Furthermore, all <term>nom-ud</term> <gloss>phenomena or teachings, dharmas</gloss> are perceived.\nHaving come to be, they are truly devoid of inherent nature. Such are all phenomena.\nAll phenomena that have abided and come into being: they are truly perfected.\nWhat is enacted herein, having become devoid of nature and <term>belge</term> <gloss>characteristic mark, lakshana</gloss>,\nhas been revealed beyond. Therefore, all phenomena\nare truly the wisdom of the Buddha. Revealed through intrinsic nature,\nthe mental actions and conduct of all sentient beings <unclear>ᠮᠡᠳᠡᠭᠦᠯᠦᠨ</unclear>\nhaving come to be, the true nature of the mind itself <unclear>ᠣᠨᠣᠭᠤᠯᠤᠭᠴᠢ</unclear> is.\nTherefore, the one who equally reveals all phenomena <unclear>ᠪᠣᠯᠤᠭᠰᠠᠨ</unclear>\nthe one who acts to reveal, the minds of all sentient beings <unclear>ᠠᠷᠢᠯᠭᠠᠭᠴᠢ</unclear>\nhas gone beyond. Through the wisdom of the <term>Tegünčilen Iregsen</term> <gloss>Thus-Gone One, Tathagata</gloss> <unclear>ᠦᠵᠡᠭᠦᠯᠦᠨ</unclear>\nhaving abided. To all sentient beings of the <term>yirtinčü</term> <gloss>world, loka</gloss>,\nhe has become a benefactor, and he has truly revealed it.\nBeginning from the time it came to be, revealing the true nature of all phenomena,\nthus he revealed all phenomena. Furthermore, for all\nsentient beings' benefit, of the teaching <unclear>ᠬᠦᠷᠳᠦᠨ ᠢ ᠡᠷᠭᠢᠭᠦᠯᠦᠭᠴᠢ</unclear>\nhaving enacted. In the intrinsic nature <unclear>ᠣᠷᠣᠰᠢᠭᠰᠠᠨ ᠪᠣᠯᠪᠠᠢ</unclear>.\n\n<summary>This folio recto from the Miscellaneous Sutras section of the Mongolian Kanjur expounds Mahayana Buddhist doctrine on the emptiness of phenomena and the illuminating wisdom of the Buddha. It describes how the Tathagata perfects merit across measureless eons to mature sentient beings and reveal the true nature of reality.</summary>\n<keywords>Mongolian Kanjur, Mahayana Buddhism, transcendent wisdom, true nature of phenomena, emptiness, Tathagata, accumulation of merit, cyclic existence, sentient beings</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 271.934
+ }
+}

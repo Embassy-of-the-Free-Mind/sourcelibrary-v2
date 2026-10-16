@@ -1,0 +1,41 @@
+{
+ "key": "v049_f2a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>ᠬᠣᠶᠠᠷ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ / 第二卷上二</page-num>\n<header>ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ / 大寶積經</header>\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Ornamental rectangular double border with floral and foliate scrollwork printed in red ink enclosing the text block and marginal panels.</image-desc>\n<margin>ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ ᠬᠣᠶᠠᠷ ᠳᠡᠭᠡᠳᠦ</margin>\n᠁ ᠥ ᠥ ᠥ ᠥ ᠬᠤᠲᠤᠭ ‍ᠲᠤ ᠄\nᠭᠡᠷᠡᠯ ‍ᠦᠨ ᠴᠣᠭ ‍ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠴᠢ\nᠨᠡᠷᠡᠲᠦ ᠶᠡᠬᠡ  хүлгэн сударын\nаймаг ‍ᠠᠴᠠ ᠥᠴᠢᠬᠦ ‍ᠢᠢᠨ ᠠᠶᠢᠮᠠᠭ ᠃\nтавдугаар бүлэг ᠄ ᠪᠤᠷᠬᠠᠨ ‍ᠤ ᠭᠡᠭᠡᠨ ‍ᠢ\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠨᠡᠷᠡᠲᠦ ᠵᠦᠢᠯ ᠪᠣᠯᠠᠢ\nᠡᠨᠡᠳᱠᠡᠭ ‍ᠦᠨ ᠬᠡᠯᠡᠨ ‍ᠳᠦ ᠄ ᠠᠷᠢᠶᠠ\nᠷᠠᠳᠨᠠ ᱠᠦᠳᠠ ᠮᠠᠬᠠ ᠶᠠᠨᠠ ᠰᠦᠳᠷᠠ ᠁\nᠲᠥᠪᠡᠳ ‍ᠦᠨ ᠬᠡᠯᠡᠨ ‍ᠳᠦ ᠄ འཕགས་ པ་\nདཀོན་ མཆོག་ བརྩེགས་ པ་ ཆེན་ པོའི་ ᠁\nཆོས་ ཀྱི་ རྣམ་ གྲངས་ ལེའུ་ སྟོང་ ཕྲག་\nབརྒྱ་ པ་ ལས་ ཞུས་ པའི་ ལེའུ་\nཞེས་ བྱ་ བ་ སྟེ་ ལེའུ་ ལྔ་\nཔའོ ᠁ ᠮᠣᠩᠭᠣᠯ ‍ᠤᠨ ᠬᠡᠯᠡᠨ ‍ᠳᠦ ᠄\nᠬᠤᠲᠤᠭ ‍ᠲᠤ ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ\nᠶᠡᠬᠡ ᠬᠥᠯᠭᠡᠨ ‍ᠦ ᠨᠣᠮ ‍ᠤᠨ ᠵᠦᠢᠯ\nᠵᠠᠭᠤᠨ ᠮᠢᠩᠭᠠᠨ ᠪᠦᠯᠦᠭ ‍ᠲᠦ ‍ᠡᠴᠡ ᠃ ᠥᠴᠢᠭᠰᠡᠨ\nᠪᠦᠯᠦᠭ ᠄ ᠬᠡᠮᠡGDᠡᠬᠦ ᠲᠠᠪᠤᠳᠤᠭᠠᠷ ᠪᠦᠯᠦᠭ ᠃\nᠬᠠᠮᠤᠭ ᠪᠤᠷᠬᠠᠨ ᠪᠣᠳᠢᠰᠠᠳᠤ ‍ᠨᠠᠷ ‍ᠠ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠁\n<margin>大寶積經第二卷上二</margin>\n<vocab>ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ, 大寶積經, ᠠᠷᠢᠶᠠ ᠷᠠᠳᠨᠠ ᱠᠦᠳᠠ ᠮᠠᠬᠠ ᠶᠠᠨᠠ ᠰᠦᠳᠷᠠ, ᠪᠤᠷᠬᠠᠨ, ᠪᠣᠳᠢᠰᠠᠳᠤ, ᠡᠨᠡᠳᱠᠡᠭ, ᠲᠥᠪᠡᠳ, ᠮᠣᠩᠭᠣᠯ</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 93.728,
+  "usage": {
+   "input_tokens": 21848,
+   "output_tokens": 1522,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 28977,
+   "total_tokens": 23370
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>Page number: ᠬᠣᠶᠠᠷ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠠᠷ / 第二卷上二 (Volume Two, Upper Part, Folio Two). Header: ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ / 大寶積經 (The Great Heap of Jewels Sutra / Maharatnakuta Sutra).</meta>\n<note>Ornamental rectangular double border with floral and foliate scrollwork printed in red ink enclosing the text block and marginal panels.</note>\n<margin>The Great Heap of Jewels <note>original: \"ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ\"</note>, Volume Two, Upper Part</margin>\n\n<meta>continues from previous page: concluding the fourth chapter of the Maharatnakuta Sutra and beginning the fifth chapter</meta>\nFrom the division of the Great Vehicle <term>sutra</term> <gloss>discourse</gloss> entitled The Noble Manifestation of the Splendor of Light <note>original: \"ᠬᠤᠲᠤᠭ ᠲᠤ ᠄ ᠭᠡᠷᠡᠯ ᠦᠨ ᠴᠣᠭ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠴᠢ\"; Sanskrit: Samantamukha-parivarta or Prabhasa-sri</note>, the Section of Supplication <note>original: \"ᠥᠴᠢᠬᠦ ᠢᠢᠨ ᠠᠶᠢᠮᠠᠭ\"</note>.\nThis is the fifth chapter, the section entitled The Manifestation of the Radiance of the Buddha <note>original: \"ᠪᠤᠷᠬᠠᠨ ᠤ ᠭᠡᠭᠡᠨ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠨᠡᠷᠡᠲᠦ ᠵᠦᠢᠯ\"</note>.\n\nIn the language of India <note>Sanskrit</note>: <term>Ārya Mahāratnakūṭa Mahāyāna Sūtra</term> <gloss>The Noble Great Heap of Jewels Great Vehicle Discourse</gloss> <note>original: \"ᠠᠷᠢᠶᠠ ᠷᠠᠳᠨᠠ ᱠᠦᠳᠠ ᠮᠠᠬᠠ ᠶᠠᠨᠠ ᠰᠦᠳᠷᠠ\"</note>.\n\nIn the language of Tibet: From the Noble Great Heap of Jewels Dharma Discourse in One Hundred Thousand Chapters, that which is called the Chapter of Supplication, the fifth chapter <note>original: \"འཕགས་ པ་ དཀོན་ མཆོག་ བརྩེགས་ པ་ ཆེན་ པོའི་ ᠁ ཆོས་ ཀྱི་ རྣམ་ གྲངས་ ལེའུ་ སྟོང་ ཕྲག་ བརྒྱ་ པ་ ལས་ ཞུས་ པའི་ ལེའུ་ ཞེས་ བྱ་ བ་ སྟེ་ ལེའུ་ ལྔ་ པའོ\"</note>.\n\nIn the language of Mongolia: From the Noble Great Heap of Jewels <note>original: \"ᠬᠤᠲᠤᠭ ᠲᠤ ᠶᠡᠬᠡ ᠡᠷᠳᠡᠨᠢ ᠳᠠᠪᠬᠤᠷᠯᠠᠭᠰᠠᠨ\"</note>, the Dharma Discourse of the Great Vehicle in One Hundred Thousand Chapters, the fifth chapter, called the Chapter of Supplication <note>original: \"ᠥᠴᠢᠭᠰᠡᠨ ᠪᠦᠯᠦᠭ\"</note>.\n\nHomage to all the Buddhas and <term>Bodhisattvas</term> <gloss>awakening beings</gloss>!\n\n<margin>The Great Heap of Jewels Sutra, Volume Two, Upper Part, Folio Two <note>original: \"大寶積經第二卷上二\"</note></margin>\n\n<summary>This folio from a multilingual Buddhist woodblock print of the Maharatnakuta Sutra (The Great Heap of Jewels Sutra) marks the conclusion of the fourth chapter and the opening of the fifth chapter, titled the Chapter of Supplication. It provides the formal title of the scripture in Sanskrit, Tibetan, and Mongolian, followed by a traditional salutation to all Buddhas and Bodhisattvas.</summary>\n<keywords>Maharatnakuta Sutra, Great Heap of Jewels, Mongolian Kangyur, Buddhist scripture, Mahayana, Chapter of Supplication, Sanskrit, Tibetan, Mongolian, Bodhisattva</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 26.711
+ }
+}

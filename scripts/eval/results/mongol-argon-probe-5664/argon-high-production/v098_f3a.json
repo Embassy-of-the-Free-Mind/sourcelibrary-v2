@@ -1,0 +1,41 @@
+{
+ "key": "v098_f3a",
+ "arm": "argon-high",
+ "model": "gemini-4-argon-high",
+ "resolved_model": null,
+ "prompt": "production",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "production auto-detect",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<warning>Faded red (vermilion) woodblock print; vertical Classical Mongolian script in the main text body and left margin cannot be reliably transcribed.</warning>\n<scan-quality>fair</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>上三</page-num>\n<meta>Pothi-format xylograph leaf from the Mongolian Kanjur printed in red ink within a double-ruled border; 25 vertical lines of Classical Mongolian text in the central panel, Mongolian foliation in the left marginal box, and Chinese title/foliation (律師戒行經第六卷上三) in the right marginal box.</meta>\n\n<margin><unclear>4 vertical Mongolian marginal entries (section, volume, and folio markers), not transcribed</unclear></margin>\n<margin>律師戒行經第六卷上三</margin>\n<unclear>25 vertical lines of Classical Mongolian text, not transcribed</unclear>\n\n<vocab>律師戒行經, 第六卷, 上三, Vinaya, Mongolian Kanjur, Classical Mongolian</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 161.053,
+  "usage": {
+   "input_tokens": 22765,
+   "output_tokens": 12038,
+   "thinking_tokens": 11111,
+   "cache_read_tokens": 29247,
+   "total_tokens": 34803
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<warning>Faded red vermilion woodblock print; vertical Classical Mongolian script in the main text body and left margin cannot be reliably transcribed.</warning>\n<meta>Pothi-format xylograph leaf from the Mongolian Kanjur printed in red ink within a double-ruled border; 25 vertical lines of Classical Mongolian text in the central panel, Mongolian foliation in the left marginal box, and Chinese title and foliation in the right marginal box.</meta>\n\n<margin><unclear>4 vertical Mongolian marginal entries (section, volume, and folio markers), not transcribed</unclear></margin>\n<margin>Sutra on the Precepts and Conduct of the <term>Vinaya</term> <gloss>monastic discipline</gloss> Masters, Volume 6, Upper Section, Folio 3 <note>original: \"律師戒行經第六卷上三\"; Chinese title and foliation marker printed in the right margin to guide bookbinders and printers when sorting Mongolian woodblock leaves</note></margin>\n<unclear>25 vertical lines of Classical Mongolian text, not transcribed</unclear>\n\n<summary>A vermilion woodblock leaf from the Mongolian Kanjur containing twenty-five vertical lines of untranscribed Classical Mongolian script. The right margin preserves a Chinese title and foliation marker identifying the text as the sixth volume, upper section, third folio of the Sutra on the Precepts and Conduct of the Vinaya Masters.</summary>\n<keywords>Mongolian Kanjur, Classical Mongolian, Vinaya, monastic discipline, Sutra on the Precepts and Conduct of the Vinaya Masters, woodblock print, xylograph, bilingual foliation</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 273.903
+ }
+}

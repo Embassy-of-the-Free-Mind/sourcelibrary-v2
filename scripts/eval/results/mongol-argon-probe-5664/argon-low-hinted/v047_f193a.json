@@ -1,0 +1,41 @@
+{
+ "key": "v047_f193a",
+ "arm": "argon-low",
+ "model": "gemini-4-argon-low",
+ "resolved_model": null,
+ "prompt": "hinted",
+ "ocr_prompt_ref": {
+  "id": "6ac02220413a82637da889bb",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+ "translation_prompt_ref": {
+  "name": "Standard Translation",
+  "version": 13
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>зуу ерэн гурав / 諸般般若經第一卷上一百九十三</page-num>\n<margin>элдэв билig-үн чанад хүрсэн тэргүүн зуун ерэн гурав</margin>\nᠬᠡᠮᠡᠨ ᠦᠭᠦᠯᠡᠭᠰᠡᠨ ᠳᠦ ᠂ ᠴᠢᠨᠠᠭᠰᠢ ᠢᠷᠡᠭᠰᠡᠨ ᠡᠭᠦᠨ ᠢ ᠵᠠᠷᠯᠢᠭ ᠪᠣᠯᠪᠠᠢ ᠃\nᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠨᠢ ᠂\nᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ 키ᠦᠷᠦᠭᠰᠡᠨ ᠦ ᠴᠢᠨᠠᠷ ᠢ ᠣᠨᠣᠵᠤ ᠂ ᠡᠭᠦᠨ ᠢ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ\nᠪᠣᠯᠪᠠᠰᠤ ᠂ ᠲᠡᠳᠡ ᠨᠢ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠤᠰᠤ ᠂ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠤᠰᠤ ᠂\nᠣᠷᠣᠰᠢᠬᠤ ᠶᠢᠨ ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠢ ᠣᠯᠬᠤ ᠪᠣᠯᠬᠤ ᠪᠤᠰᠤ ᠃ ᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂\nᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠨᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠦᠯᠦ\nᠣᠷᠣᠰᠢᠬᠤ ᠪᠣᠯᠪᠠᠢ ᠄ ᠢᠮᠠᠭᠲᠠ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ yin ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠢ\nᠣᠯᠬᠤ ᠪᠣᠯᠬᠤ ᠪᠤᠰᠤ ᠂ ᠦᠯᠦ ᠣᠯᠬᠤ ᠪᠣᠯᠬᠤ ᠪᠤᠰᠤ ᠃\nᠡᠭᠦᠨ ᠳᠦ ᠂ ᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ yin\nᠴᠢᠨᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ ᠨᠢ ᠂ ᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ yin\nᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠨᠢ ᠬᠣᠣᠰᠣᠨ ᠤ ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠪᠠᠢ ᠄\nᠬᠣᠣᠰᠣᠨ ᠤ ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠨᠢ ᠂ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠂ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠃\nᠡᠭᠦᠨ ᠦ ᠲᠤᠯᠠ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠨᠢ ᠂\nᠢᠮᠠᠭᠲᠠ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠣᠯᠪᠠᠢ ᠃ ᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ\nᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ yin ᠴᠢᠨᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ ᠨᠢ ᠂ ᠪᠡᠯᠭᠡ ᠦᠭᠡᠢ yin\nᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠪᠣᠯᠪᠠᠢ ᠄ ᠪᠡᠯᠭᠡ ᠦᠭᠡᠢ yin ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠨᠢ ᠂\nᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠂ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠃ ᠡᠭᠦᠨ ᠦ ᠲᠤᠯᠠ ᠂ ᠢᠮᠠᠭᠲᠠ\nᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠨᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ\nᠪᠣᠯᠪᠠᠢ ᠃ ᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ\nᠮᠠᠬᠠᠰᠠᠳᠣ yin ᠴᠢᠨᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ ᠨᠢ ᠂  хүсэл ᠦᠭᠡᠢ yin ᠪᠡᠯᠭᠡ\nᠴᠢᠨᠠᠷ ᠪᠣᠯᠪᠠᠢ ᠄ хүсэл ᠦᠭᠡᠢ yin ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠨᠢ ᠂ ᠣᠷᠣᠰᠢᠬᠤ\nᠪᠤᠰᠤ ᠂ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠃ ᠡᠭᠦᠨ ᠦ ᠲᠤᠯᠠ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ\nᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠨᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠣᠯᠪᠠᠢ ᠃\nᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ yin\nᠴᠢᠨᠠᠷ ᠤᠨ ᠪᠡᠯᠭᠡ ᠨᠢ ᠂ ᠢᠯᠡᠳᠦ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠤᠰᠤ yin ᠪᠡᠯᠭᠡ\nᠴᠢᠨᠠᠷ ᠪᠣᠯᠪᠠᠢ ᠄ ᠢᠯᠡᠳᠦ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠤᠰᠤ yin ᠪᠡᠯᠭᠡ ᠴᠢᠨᠠᠷ ᠨᠢ ᠂\nᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠂ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ ᠪᠤᠰᠤ ᠃ ᠡᠭᠦᠨ ᠦ ᠲᠤᠯᠠ ᠂ ᠢᠮᠠᠭᠲᠠ\nᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ ᠨᠤᠭᠤᠳ ᠨᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠦᠯᠦ ᠣᠷᠣᠰᠢᠬᠤ\nᠪᠣᠯᠪᠠᠢ ᠃ ᠠᠶᠠ ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ ᠂ ᠢᠮᠠᠭᠲᠠ ᠣᠷᠣᠰᠢᠭᠴᠢ ᠪᠣᠳᠢᠰᠠᠳᠣ ᠮᠠᠬᠠᠰᠠᠳᠣ yin\n<margin>諸般般若經第一卷上一百九十三</margin>\n<vocab>ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ, ᠪᠣᠳᠢᠰᠠᠳᠣ, ᠮᠠᠬᠠᠰᠠᠳᠣ, ᠰᠠᠷᠢᠪᠦᠳᠠᠷᠢ, 诸般般若经, Prajñāpāramitā, Śāriputra, Bodhisattva, Mahāsattva</vocab>",
+  "problem": null,
+  "cls": null,
+  "secs": 66.473,
+  "usage": {
+   "input_tokens": 21773,
+   "output_tokens": 2507,
+   "thinking_tokens": 0,
+   "cache_read_tokens": 28987,
+   "total_tokens": 24280
+  },
+  "tool_calls": [
+   "view_file",
+   "run_command:deny"
+  ]
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: The text begins mid-sentence following a statement made by a speaker, likely Śāriputra, in a Prajñāpāramitā sūtra.</meta>\n<page-num>One hundred ninety-three / The Sūtra of the Various Perfections of Wisdom, Scroll One, Part One, One Hundred Ninety-Three <note>original: \"зуу ерэн гурав / 諸般般若經第一卷上一百九十三\"</note></page-num>\n<margin>The First <note>Volume</note> of the Perfection of Various Wisdoms, one hundred ninety-three <note>original: \"элдэв билig-үн чанад хүрсэн тэргүүн зуун ерэн гурав\"</note></margin>\n\nWhen this had been spoken, the <term>Tathāgata</term> <gloss>Thus-Gone One; an epithet of the Buddha</gloss> <note>original: \"ᠴᠢᠨᠠᠭᠰᠢ ᠢᠷᠡᠭᠰᠡᠨ\" (činagsi iregsen)</note> decreed the following:\n\n\"O <term>Śāriputra</term> <gloss>one of the Buddha's principal disciples, renowned for wisdom</gloss>, as for the ever-abiding <term>bodhisattvas</term> <gloss>awakening beings</gloss> and <term>mahāsattvas</term> <gloss>great beings</gloss>, even if they comprehend the nature of the <term>Prajñāpāramitā</term> <gloss>Perfection of Wisdom</gloss> <note>original: \"ᠪᠢᠯᠢᠭ ᠦᠨ ᠴᠢᠨᠠᠳᠤ ᠬᠦᠷᠦᠭᠰᠡᠨ\" (bilig-ün činadu kürügsen)</note> and demonstrate this, they are neither abiding nor non-abiding, and they do not attain the characteristic mark of abiding. O <term>Śāriputra</term>, the ever-abiding <term>bodhisattvas</term> and <term>mahāsattvas</term> are ever non-abiding: they neither attain nor fail to attain the characteristic mark of ever non-abiding.\n\n\"Herein, O <term>Śāriputra</term>, the mark of the nature of an ever-abiding <term>bodhisattva</term> <term>mahāsattva</term> — O <term>Śāriputra</term>, the characteristic mark of a <term>bodhisattva</term> <term>mahāsattva</term> is the characteristic mark of <term>śūnyatā</term> <gloss>emptiness</gloss> <note>original: \"ᠬᠣᠣᠰᠣᠨ\" (qoosan)</note>: the characteristic mark of emptiness neither abides nor does not abide. Therefore, the ever-abiding <term>bodhisattvas</term> and <term>mahāsattvas</term> are ever non-abiding.\n\n\"O <term>Śāriputra</term>, the mark of the nature of an ever-abiding <term>bodhisattva</term> <term>mahāsattva</term> is the characteristic mark of the <term>animitta</term> <gloss>signless</gloss> <note>original: \"ᠪᠡᠯᠭᠡ ᠦᠭᠡᠢ\" (belge ügei)</note>: the characteristic mark of the signless neither abides nor does not abide. Therefore, the ever-abiding <term>bodhisattvas</term> and <term>mahāsattvas</term> are ever non-abiding.\n\n\"O <term>Śāriputra</term>, the mark of the nature of an ever-abiding <term>bodhisattva</term> <term>mahāsattva</term> is the characteristic mark of the <term>apraṇihita</term> <gloss>wishless or desireless</gloss> <note>original: \"хүсэл ᠦᠭᠡᠢ\" (küsel ügei)</note>: the characteristic mark of the wishless neither abides nor does not abide. Therefore, the ever-abiding <term>bodhisattvas</term> and <term>mahāsattvas</term> are ever non-abiding.\n\n\"O <term>Śāriputra</term>, the mark of the nature of an ever-abiding <term>bodhisattva</term> <term>mahāsattva</term> is the characteristic mark of the <term>anabhisaṃskāra</term> <gloss>unconstructed or not conditioned by volitional action</gloss> <note>original: \"ᠢᠯᠡᠳᠦ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠤᠰᠤ\" (iledü üiledügsen busu)</note>: the characteristic mark of the unconstructed neither abides nor does not abide. Therefore, the ever-abiding <term>bodhisattvas</term> and <term>mahāsattvas</term> are ever non-abiding.\n\n\"O <term>Śāriputra</term>, the <note>mark of the nature of</note> an ever-abiding <term>bodhisattva</term> <term>mahāsattva</term>\n\n<margin>The Sūtra of the Various Perfections of Wisdom, Scroll One, Part One, One Hundred Ninety-Three <note>original: \"諸般般若經第一卷上一百九十三\"</note></margin>\n\n<summary>In this folio from the first volume of a Mongolian Prajñāpāramitā sūtra, the Buddha explains to Śāriputra the paradox of \"ever-abiding\" bodhisattvas. Because their true nature is defined by the three doors of liberation (emptiness, signlessness, and wishlessness) as well as unconstructedness, they neither abide nor fail to abide in any fixed dharma, and are thus truly \"ever non-abiding.\"</summary>\n<keywords>Prajñāpāramitā, Perfection of Wisdom, Śāriputra, Bodhisattva, Mahāsattva, Tathāgata, emptiness, śūnyatā, signless, animitta, wishless, apraṇihita, unconstructed, non-abiding, Classical Mongolian Buddhism</keywords>",
+  "problem": null,
+  "cls": null,
+  "secs": 29.316
+ }
+}
