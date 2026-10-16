@@ -494,6 +494,62 @@ Each cell gives Mongolian-script lines emitted · script · loop / T/O = timeout
 
 Script: `scripts/eval/mongol-argon-probe-5664.mjs` (`read` / `judge` / `score`).
 
+## 2026-10-16 · Do the English translations of the Yucatec books state the numbers the Maya prints?
+
+**Why.** A spot check of *Coleccion de sermones* (1846) p.200 read *lahu oxkal cá tac oxpel haƀóob* as 53 by Beltrán's table (*Arte*, ed. 1859, `6a9f3fa4…` p.218: *Lahuyoxkal* 50, *Oxlahutukal* 33). The English said "thirty-three years". Yucatec counts in twenties, and a model that does not know this writes the number it expects.
+
+**Method.**
+- `scripts/lib/maya-numerals.mjs` reads number words by Beltrán's table (pp. 217–225):
+  - whole scores, *N-kal* = N × 20;
+  - a unit counted into a score, *U tu/y N-kal* = U + (N − 1) × 20;
+  - *bak* = 400 and *pic* = 1,000 (8,000 kept as an alternative);
+  - *catac* sums;
+  - units with a counting particle (*ox-pel*, *ca-tul*).
+  Unit tests cover every table row from 20 to 1,000 and the false positives found on the live run.
+- `scripts/audit/maya-numeral-scan.mjs` checks every page of every `language: 'Yucatec Maya'` book that has OCR and English. A phrase is a mismatch when its value is not among the numbers the English states (digits, number words, ordinals). These phrases are not judged:
+  - value 1;
+  - phrases with digits within 60 characters of them, i.e. numeral tables and printed glosses (369).
+
+**Result (after the Argon re-translation of 15 books, 13:19 UTC).**
+
+| | count |
+|---|---|
+| pages scanned / with a phrase | 3,932 / 1,482 |
+| phrases found / judged | 4,897 / 1,318 |
+| compound phrases judged / not in the English | 190 / **63** (52 pages, 11 books) |
+| small phrases (unit + particle) judged / not in the English | 1,128 / 69 |
+
+Of the 63 compound mismatches, 19 are in the *Coleccion* and 35 in the manuscript Chilam Balam books, where *pic* is often a verb and copyists' counts vary. The rest are in Motul, the *Maya legal documents* (land measures in *pic*), *Explicacion* and *Leti u ebanhelio*. On the same parser, the pre-Argon text had 76.
+
+**The positive control is flagged** (p.200, value 53, English 33). **But the author's numerals are not Beltrán's.** In the *Coleccion*, *lahu oxkal* fits 30 every time the referent is known:
+- **Abraham's bargain for Sodom (p.383, Gen 18).** The sequence is *cakáal cá tac lahun* (50), then *cakal cá tac hopel* (45), then *lahu oxkal*, then down to ten. The third number must be lower than 45, so it cannot be 50.
+- **Christ's 33 years** (pp. 200, 215, 225).
+- **John 5:5, "thirty and eight years"** (p.173, *lahu oxkal catac uaxac*).
+- **Bernard's 30 companions** (p.86).
+
+So "thirty-three" on p.200 is the author's number. Beltrán's 53 belongs in a note, not the text. This was not changed.
+
+**Confirmed and re-translated (5 pages).** Each numeral was read on the page image and its value taken from Beltrán's table. Each page was re-read once with the style line and one line naming the number, then written by `cli-translate.mjs apply` (run `cli-translate-20261016123500`):
+
+| page | Maya (image) | Beltrán | English before | after |
+|---|---|---|---|---|
+| Coleccion p.303 | *cakal catac lahun tzicbalóob* | 50 | "countless conversations" | "fifty conversations" |
+| Coleccion p.328 | *manal humbak cá tac lahunkal habóob* | 600 (St Anthony † 1231; 1846) | "more than 580 years" | "more than six hundred years" |
+| Coleccion p.345 | *hunkal cá tac capel horaóob* | 22 | "twenty-four hours" | "twenty-two hours" |
+| Explicacion p.41 | *Hokal ú tenel ti humpel* | 100 | "Twenty times" | "A hundred times" |
+| Explicacion p.179 | *cú topzic hokal tioklal humpel* | 100 | "sixty for one" | "a hundred for one" |
+
+**Open leads, not changed:**
+- Coleccion p.159, *lahu oxkal catac catul*: the English gives 62, which is neither 52 (Beltrán) nor 32 (the author's usage).
+- Coleccion p.415, *humƀak cátac kokáal*: 400 + (h)okal = 500, which matches 1 Cor 15:6; the English gives 120.
+- Coleccion p.318, *hokal cà tac cabak*.
+
+**Limits.**
+- Set membership: a number stated anywhere on the page counts as a match. A wrong English number can therefore hide behind a right one; p.383 passes this way.
+- False positives remain: *hupic* (the verb "insert"), *pic* as a verb in the Chilam Balam books, and a split phrase where the OCR has a typo (Motul p.307 *hotuc yoxbak*).
+
+*Replicated?* No.
+
 ## 2026-10-16 · Does Gemini 4 Argon, or Opus at one page per call, beat Gemini 3.8 Flash Low on Maya?
 
 **Why.** The 2026-10-14 test gave Maya to Gemini 3.8 Flash Low over Opus at 5 pages per call. Two questions were left: does a newer Gemini (`gemini-4-argon-low`, available on agy) do better, and was Opus's loss caused by the multi-page block rather than by the model? A dictionary check of *Coleccion de sermones* p. 247 (#6559, 2026-10-16 00:41 UTC) had Flash right on 4 of 5 disputed words and Opus on 1.
@@ -538,6 +594,11 @@ Speed (wall clock per call, from the logs): Argon 38 s a page on agy under that 
 **Decision.** Yucatec lane: **Gemini 4 Argon Low**. Applied by job `maya-route-6559` to the Yucatec prints of #6559 (the 11 books now on 3.8 Flash, and the 4 maya-modern imports on Opus). Kaqchikel stays on Opus. The Motul dictionary (Spanish glosses) is out of scope.
 
 **Artifacts.** `scripts/eval/results/paired-translate-maya-6559/`: `maya-argon-gemini/` and `maya-opus1-gemini/` (keys, judge outputs, `requests.jsonl.gz`), `reads/maya-argon.tar.gz`, `reads/maya-opus1.tar.gz`, and `score-all.txt` / `summary.json` regenerated by `score.py` over every packet.
+
+**Addendum, same day: what the judges did not measure.** The production run (job `maya-route-6559`) showed that Argon's English is hard to read. Its reads carried 5–22 inline `<term>/<gloss>` a page; 3.8 Flash carries under 1. The style compounds through the previous-page seed: the five consecutive test pages of Ripalda grew from 1,285 to 2,849 characters, and the production pages reached a median of 5× the OCR length. On Ripalda the notes also cite the Spanish original from memory ("translating '¿Y la caridad qué enseña?'"), which is text not on the leaf. The write door refused 9 of 20 pages of one catechism as `runaway`. The judges score fidelity side by side, so a translation buried in glosses still wins.
+- **Fix:** one style line appended to every page's prompt (`cli-translate.mjs read --instructions-file`, #6801): plain prose; no `<term>/<gloss>` on ordinary words; no text that is not printed on the page.
+- **Gate, 16 pages** (the Coleccion, Platicas and Ripalda test pages, plus Platicas p.20): 0–3 glosses a page on the prose books; on Ripalda only the K./N. labels remain. No recalled text. p.247 still scores 4/5 on the dictionary words.
+- **Rule for the lane:** Argon on Yucatec runs only with the style line, and a book is written only if its reads have a median of ≤ 4 glosses a page.
 
 *Replicated?* No.
 
