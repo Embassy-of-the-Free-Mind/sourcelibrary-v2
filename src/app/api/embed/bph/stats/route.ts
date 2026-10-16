@@ -70,7 +70,7 @@ export async function GET() {
           },
         },
       ]).toArray(),
-      supabase.from('bph_works').select('*', { count: 'exact', head: true }),
+      supabase.from('bph_works').select('*', { count: 'exact', head: true }).is('deleted_at', null),
     ]);
 
     const row = aggResult[0] || {

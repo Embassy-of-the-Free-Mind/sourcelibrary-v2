@@ -79,7 +79,19 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
     'author_entity_id, author_canonical_name, author_wikidata_qid, author_viaf_id,\n      ',
     '',
   );
-  const first = await supabase.from('bph_works').select(fullSelect).eq('ubn', ubn).maybeSingle();
+  // A deleted record (#6800) is not shown on the book page.
+  const first = await supabase.from('bph_works').select(fullSelect).eq('ubn', ubn).is('deleted_at', null).maybeSingle();
+  if (!first.error && !first.data) {
+    // The book's dc_identifier keeps the old number after a UBN correction
+    // (#6799); the record remembers it in previous_ubns.
+    const renamed = await supabase
+      .from('bph_works')
+      .select(fullSelect)
+      .contains('previous_ubns', [ubn])
+      .is('deleted_at', null)
+      .limit(1);
+    return ((renamed.data as unknown as BphWorkRow[] | null)?.[0]) ?? null;
+  }
   if (first.error) {
     const msg = (first.error.message || '').toLowerCase();
     if (msg.includes('does not exist') || msg.includes('could not find')) {

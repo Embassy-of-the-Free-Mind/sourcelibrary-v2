@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { BookMarked, ExternalLink, BookOpen, Search } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getReadDb, getDb } from '@/lib/mongodb';
@@ -10,11 +11,12 @@ import { getPartnerBySlug } from '@/lib/library-partners';
 import { buildSignInHref } from '@/lib/tenant-signin-url';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL, type Role } from '@/lib/auth';
-import type { BphContributor } from '@/lib/bph-catalog';
+import { findRenamedWorkKey, type BphContributor } from '@/lib/bph-catalog';
 import { normalizeStateShelfMark } from '@/lib/bph-state-shelfmark';
 import { AISection } from '@/components/embed/AISection';
 import CatalogEditorNav from '@/components/catalog/CatalogEditorNav';
-import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
+import CatalogAdminActions from '@/components/catalog/CatalogAdminActions';
+import { effectiveCatalogRole, isCatalogAdmin, normalizeCatalogRole } from '@/lib/catalog-role';
 import CatalogueUnavailable from '@/components/embed/CatalogueUnavailable';
 import GenericCatalogEntry, { generateGenericMetadata } from './GenericCatalogEntry';
 import { catalogKeyColumn } from '@/lib/bph-catalog-key';
@@ -132,6 +134,32 @@ interface BphWorkRow {
   sl_external_slug: string | null;
   sl_external_source: string | null;
   field_provenance: Record<string, FieldProvenance> | null;
+  // Scan identifiers (staff only, #6798) and catalogue-admin state (#6799, #6800).
+  picturae_barcode?: string | null;
+  memorix_files?: { name?: string | null }[] | null;
+  deleted_at?: string | null;
+  deleted_by?: string | null;
+  deleted_reason?: string | null;
+  previous_ubns?: string[] | null;
+}
+
+/**
+ * The RIT numbers that find a record's master scans on the BPH NAS (#6798).
+ *
+ * Read from the Memorix scan file names (`RIT001000921_0001` → RIT001000921),
+ * not from `picturae_barcode`: the files are what sits on the NAS, 123 records
+ * have more than one scan batch, and on 28 the stored barcode disagrees with
+ * the file names (measured 2026-10-16). The barcode is the fallback for the
+ * 740 records that carry one but list no files.
+ */
+function scanIdentifiers(work: BphWorkRow): { prefixes: { id: string; files: number }[]; barcodeOnly: string | null } {
+  const counts = new Map<string, number>();
+  for (const f of work.memorix_files || []) {
+    const m = /^(.+)_\d+$/.exec(f?.name || '');
+    if (m) counts.set(m[1], (counts.get(m[1]) || 0) + 1);
+  }
+  const prefixes = [...counts.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([id, files]) => ({ id, files }));
+  return { prefixes, barcodeOnly: prefixes.length === 0 ? work.picturae_barcode || null : null };
 }
 
 interface SlBook {
@@ -188,7 +216,8 @@ async function fetchWorkBy(col: 'ubn' | 'uuid' | 'id', ubn: string): Promise<Bph
       provenance, collection, impressum_original, contributors,
       ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
       sl_external_book_id, sl_external_slug, sl_external_source,
-      field_provenance
+      field_provenance,
+      picturae_barcode, memorix_files, deleted_at, deleted_by, deleted_reason, previous_ubns
     `;
   // Stacked fallbacks: drop newer columns (collection/impressum/contributors),
   // then external-link columns, then author-authority columns. Each migration
@@ -347,6 +376,14 @@ async function fetchSlBook(ubn: string): Promise<SlBook | null> {
   }
 }
 
+async function fetchSlBookByAny(ubns: string[] | null | undefined): Promise<SlBook | null> {
+  for (const u of ubns || []) {
+    const book = await fetchSlBook(u);
+    if (book) return book;
+  }
+  return null;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tenant, ubn: rawUbn } = await params;
   const ubn = normalizeUbn(rawUbn);
@@ -355,7 +392,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return generateGenericMetadata(tenant, ubn, partner) as Promise<Metadata>;
   }
   const work = await fetchWork(ubn);
-  if (!work) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
+  if (!work || work.deleted_at) return { title: 'Catalogue entry not found - BPH', robots: { index: false, follow: false } };
   const title = work.title || work.full_title || work.parallel_title || work.uniform_title || `BPH catalogue entry ${ubn}`;
   const author = work.author || work.variant_author || '';
   const description = `BPH catalogue entry. ${author ? author + '. ' : ''}${work.year ? `(${work.year}). ` : ''}Shelf mark: ${work.shelf_mark || '–'}.`;
@@ -374,7 +411,7 @@ export default async function CatalogEntryPage({ params }: Props) {
   }
 
   // Fetch BPH catalog row + live SL book + session in parallel
-  const [work, slBook, session] = await Promise.all([
+  const [work, slBookByUbn, session] = await Promise.all([
     fetchWork(ubn),
     fetchSlBook(ubn),
     auth(),
@@ -383,6 +420,10 @@ export default async function CatalogEntryPage({ params }: Props) {
   // reference (mis-typed UBN, re-catalogued, or an incomplete link), render a
   // graceful in-catalogue landing with a "New search" link — not a hard 404.
   if (!work) {
+    // A UBN that was corrected (#6799) still has links pointing at it: send
+    // them to the record's current address.
+    const renamedTo = catalogKeyColumn(ubn) === 'ubn' ? await findRenamedWorkKey(ubn) : null;
+    if (renamedTo) redirect(`/catalog/${encodeURIComponent(renamedTo)}`);
     return (
       <CatalogueUnavailable
         heading="Catalogue entry unavailable"
@@ -408,8 +449,25 @@ export default async function CatalogEntryPage({ params }: Props) {
 
   const platformRole = normalizeCatalogRole((session?.user as { role?: unknown } | undefined)?.role);
   const role = await effectiveCatalogRole(session?.user?.email, platformRole, tenant);
-  const showEditButton = ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
+  const isAdmin = await isCatalogAdmin(session?.user?.email, platformRole, tenant);
+
+  // A deleted record (#6800) exists only for catalogue admins, who see it with
+  // a Restore button. Everyone else gets the same landing as a missing record.
+  if (work.deleted_at && !isAdmin) {
+    return (
+      <CatalogueUnavailable
+        heading="Catalogue entry unavailable"
+        detail={`We couldn't find a catalogue record for reference “${ubn}”. It may have been re-catalogued, or the reference may be incomplete. Try a new search.`}
+      />
+    );
+  }
+
+  const showEditButton = !work.deleted_at && ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
   const editLabel = ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] ? 'Edit catalogue entry' : 'Propose a change';
+
+  // Source Library books are matched by the UBN in their dc_identifier, which
+  // keeps the OLD number after a UBN correction.
+  const slBook = slBookByUbn ?? (await fetchSlBookByAny(work.previous_ubns));
 
   // If the work has no BPH-native digitisation but does have a cross-provider
   // scan recorded, fetch that book so we can offer a "Read at [source]" panel.
@@ -447,7 +505,18 @@ export default async function CatalogEntryPage({ params }: Props) {
             New search
           </a>
         </div>
-        <CatalogEditorNav role={role} ubn={work.ubn || work.uuid || ubn} editLabel={editLabel} />
+        {!work.deleted_at && (
+          <CatalogEditorNav role={role} ubn={work.ubn || work.uuid || ubn} editLabel={editLabel} />
+        )}
+        {isAdmin && work.deleted_at && (
+          <CatalogAdminActions
+            tenant={tenant}
+            recordKey={work.ubn || work.uuid || ubn}
+            ubn={work.ubn}
+            title={displayTitle}
+            deleted={{ at: work.deleted_at, by: work.deleted_by ?? null, reason: work.deleted_reason ?? null }}
+          />
+        )}
         {/* Identity */}
         <h1 className="text-3xl sm:text-4xl text-primary font-display leading-tight mb-2">
           {displayTitle}
@@ -745,6 +814,28 @@ export default async function CatalogEntryPage({ params }: Props) {
 
         <Section title="Identifiers">
           <Field label="UBN" value={work.ubn} mono />
+          {/* Staff only (#6798): the number that finds the master scans on the
+              BPH NAS. Shown only when the record has scans. */}
+          {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] && (() => {
+            const scans = scanIdentifiers(work);
+            return (
+              <>
+                {scans.prefixes.length > 0 && (
+                  <Field
+                    label={scans.prefixes.length > 1 ? 'RIT numbers, NAS masters (staff only)' : 'RIT number, NAS master (staff only)'}
+                    value={scans.prefixes.map((p) => (scans.prefixes.length > 1 ? `${p.id} (${p.files} files)` : p.id)).join(' · ')}
+                    mono
+                  />
+                )}
+                {scans.barcodeOnly && (
+                  <Field label="RIT barcode, no scan files listed (staff only)" value={scans.barcodeOnly} mono />
+                )}
+              </>
+            );
+          })()}
+          {ROLE_LEVEL[role] >= ROLE_LEVEL['editor'] && work.previous_ubns && work.previous_ubns.length > 0 && (
+            <Field label="Earlier UBN (staff only)" value={work.previous_ubns.join(', ')} mono />
+          )}
           <Field label="USTC" value={work.ustc_sn} mono />
           {work.ia_identifier && (
             <FieldRaw label="Internet Archive">
@@ -760,6 +851,16 @@ export default async function CatalogEntryPage({ params }: Props) {
             </FieldRaw>
           )}
         </Section>
+
+        {isAdmin && !work.deleted_at && (
+          <CatalogAdminActions
+            tenant={tenant}
+            recordKey={work.ubn || work.uuid || ubn}
+            ubn={work.ubn}
+            title={displayTitle}
+            deleted={null}
+          />
+        )}
 
         <p className="text-xs text-muted border-t border-border-light pt-4 mt-2">
           Catalogue data sourced from the Bibliotheca Philosophica Hermetica (UBN {work.ubn}).

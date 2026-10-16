@@ -108,6 +108,16 @@ export default async function CatalogHelpPage({ params }: Props) {
             on any of these pages. It comes straight to us, and your hands-on notes shape the tool.
           </p>
           <p>
+            <strong>Correcting a UBN, or deleting a record</strong> is open to catalogue administrators only.
+            The panel is at the bottom of each record and of its edit page. A deleted record is hidden from
+            search, export and counts, but nothing is erased: an administrator can open it and restore it.
+            After a UBN correction, links to the old number lead to the record.
+          </p>
+          <p>
+            <strong>RIT numbers</strong> for scanned records are listed under Identifiers when you are signed
+            in. They are taken from the scan file names, so they match the master files on the NAS.
+          </p>
+          <p>
             Maybe start with a handful of records you know well. The editor is young and your feedback is
             exactly what makes it better.
           </p>

@@ -4,7 +4,8 @@ import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
 import { auth } from '@/lib/auth';
 import { ROLE_LEVEL } from '@/lib/auth';
-import { effectiveCatalogRole, normalizeCatalogRole } from '@/lib/catalog-role';
+import { effectiveCatalogRole, isCatalogAdmin, normalizeCatalogRole } from '@/lib/catalog-role';
+import CatalogAdminActions from '@/components/catalog/CatalogAdminActions';
 import { getDb } from '@/lib/mongodb';
 import { EDITABLE_BPH_FIELDS } from '@/lib/bph-catalog';
 import { catalogKeyColumn } from '@/lib/bph-catalog-key';
@@ -76,7 +77,7 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   // `record_type` and `full_title` are newer whitelist entries; drop them too
   // if their migration hasn't run on this environment.
   const maybeMissingCols = ['author_entity_id', 'author_canonical_name', 'author_wikidata_qid', 'collection', 'impressum_original', 'contributors', 'exhibition_history', 'record_type', 'full_title'];
-  const cols = ['ubn', 'uuid', ...EDITABLE_BPH_FIELDS, 'field_provenance', 'sl_book_id'].join(', ');
+  const cols = ['ubn', 'uuid', ...EDITABLE_BPH_FIELDS, 'field_provenance', 'sl_book_id', 'deleted_at'].join(', ');
   const fallbackCols = ['ubn', 'uuid', ...EDITABLE_BPH_FIELDS.filter((c) => !maybeMissingCols.includes(c)), 'field_provenance', 'sl_book_id'].join(', ');
   // Address by UBN or, for the 2,012 records that have none, by uuid — the same
   // shape rule the detail route uses. This page queried `ubn` unconditionally
@@ -106,6 +107,12 @@ export default async function EditCatalogEntryPage({ params }: Props) {
   // has zero of those (verified across all 29,881 rows, 2026-08-13).
   const workKey = work.ubn || work.uuid || ubn;
 
+  // A deleted record is not edited; its entry page carries the Restore button.
+  if (work.deleted_at) redirect(`/catalog/${encodeURIComponent(workKey)}`);
+  const isAdmin = await isCatalogAdmin(session.user.email, platformRole, tenant);
+  const displayTitle =
+    (work.title as string | null) || (work.full_title as string | null) || `(untitled, ${work.shelf_mark || workKey})`;
+
   return (
     <div className="bg-cream min-h-screen">
       <div className="max-w-2xl mx-auto px-6 py-8">
@@ -132,6 +139,12 @@ export default async function EditCatalogEntryPage({ params }: Props) {
           editorEmail={session.user.email || ''}
           mode={formMode}
         />
+
+        {isAdmin && (
+          <div className="mt-8">
+            <CatalogAdminActions tenant={tenant} recordKey={workKey} ubn={work.ubn} title={displayTitle} deleted={null} />
+          </div>
+        )}
       </div>
     </div>
   );

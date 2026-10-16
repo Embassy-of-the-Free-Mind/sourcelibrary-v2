@@ -481,7 +481,7 @@ export async function fetchTenantBphCatalogTotal(_tenantId: string): Promise<num
   try {
     // bph_works isn't tenant-scoped in Supabase today — return the global total.
     const { count } = await withTimeout(
-      supabase.from('bph_works').select('*', { count: 'exact', head: true }),
+      supabase.from('bph_works').select('*', { count: 'exact', head: true }).is('deleted_at', null),
       SUPABASE_CALL_TIMEOUT_MS,
       'fetchTenantBphCatalogTotal',
     );
