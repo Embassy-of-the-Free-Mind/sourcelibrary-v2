@@ -1,32 +1,56 @@
 [
   {
-    "issue": 5075,
-    "title": "Build the tenant index so /embed/bhutan stops failing (ensure-indexes.mjs --apply after PR #6461)",
-    "why": "A partner reading room logged 515 render errors in 7 days and pages DOWN about hourly; Found cannot work on a page that does not render.",
+    "issue": 6223,
+    "title": "Make the agy WAL checkpoint durable: put agy-wal-checkpoint.py and its hourly line in the repo (disk-steward step or hetzner-crontab) and on all three boxes",
+    "why": "Main's root disk filled twice on 2026-10-16 from a 20 GB agy SQLite WAL; the fix is a hand edit on main's live crontab only, and cloudlayer and l7a now run agy too. A full root disk kills every job on the box, including the $0 lanes that carry most verified pages. Skipped for the lane: a cron line is on the hold list.",
     "size": "S",
     "lane_ok": false,
-    "measure": "/embed/bhutan render errors per 7 days (515 on 2026-10-11); high-priority DOWN pages per day (7 in 12 h)"
-  },
-  {
-    "issue": 4599,
-    "title": "Confirm PR #6467 stopped the Phase 1.6 loop: read the 10-11 and 10-12 spend-daily rows and report on the issue",
-    "why": "The 'other' lane was $35.96 of $43.79 on 10-10 and wrote no pages; money that buys no readable text.",
-    "size": "S",
-    "lane_ok": true,
-    "measure": "share of the Gemini bill outside dial and envelopes (64% on 2026-10-10)"
+    "measure": "root GB free on main (8.5 at 07:03Z and ~0 at 14:10Z on 2026-10-16; 27 at 16:40Z); boxes with the checkpoint installed (1 of 3)"
   },
   {
     "issue": null,
-    "title": "Bot-merged PRs with 'Closes #n' leave the issue open (38 of 40 since 10-08): fix auto-merge and close the 38",
-    "why": "Every needs map and the lane picker read 'open'; finished work is re-offered and the backlog of 700 is overstated.",
+    "title": "Bot-merged PRs with 'Closes #n' leave the issue open: fix auto-merge (likely missing issues: write) and close what it left open",
+    "why": "39 of 42 closing links in PRs merged by github-actions since 2026-10-12 left the issue open, against 0 of 12 merged by a person; every map and picker that reads 'open' re-offers finished work. Skipped for the lane: workflow change (hold list).",
     "size": "S",
     "lane_ok": false,
-    "measure": "open issues whose closing PR has merged (38 on 2026-10-11)"
+    "measure": "open issues whose closing PR has merged (39 of 42 bot-merged links, 2026-10-12 to 10-16)"
+  },
+  {
+    "issue": 6359,
+    "title": "Report allowance unused at each weekly reset per account for the first week of headroom placement (#6784) and the audit fallback (#6785)",
+    "why": "This is the purpose measure's supply side: subscription capacity that lapses buys no verified pages. playpowerlabs went from ~43% due to lapse (10-15) to 91% used (10-16); derek@sourcelibrary sits at 15% with its reset on 10-22.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "weekly points unused at reset per account (target under 10); verified pages per point by lane"
+  },
+  {
+    "issue": null,
+    "title": "Give the laptop its own Claude headroom: main box and laptop share team@ since 2026-10-16; reserve a share of the 5-hour window in job-where/spare-lane, or move one of them",
+    "why": "Up to 10 main-box jobs and Derek's interactive sessions draw on one 5-hour window; stale-correct-6561-b GAVE-UP on that limit on 10-16. #6359's design reserved one account for the laptop. Skipped for the lane: account allocation is Derek's call.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "main-box jobs GAVE-UP on limits per week (1 on 2026-10-16); interactive sessions blocked (target 0)"
+  },
+  {
+    "issue": null,
+    "title": "Gemini CLI at its 5-hour ceiling: spread agy work across the three boxes now that all have it, and record agy pages per window",
+    "why": "The $0 CLI lanes (translation, Argon pilots, the #6420 audit) are now bound by the CLI window, not by money; capacity on the other two boxes is idle while main hits the ceiling. Skipped for the lane: changes running jobs on boxes it cannot reach.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "agy calls refused at the 5-hour ceiling per day; agy-written pages per box per day"
+  },
+  {
+    "issue": 4599,
+    "title": "Find and meter the Gemini caller the meters miss (booksplit key): billed ran $32 a day over metered on 10-13 and 10-15",
+    "why": "87% of the 10-15 bill was outside the dial and every envelope; half of that never reached any meter. Skipped by the lane on 10-13: needs Cloud Monitoring credentials that only the main box holds.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "share of the Gemini bill outside dial and envelopes (87% on 2026-10-15; 53% over 10-11 to 10-15); billed minus metered dollars per day"
   },
   {
     "issue": 4599,
     "title": "Review and merge PR #6499: per-project meter gap and repeat-ask checks in the daily ledger",
-    "why": "The soma loop ran ten days unseen; this check would have shown it in one.",
+    "why": "Derek's 10-11 default keeps the meter gap a FAIL; the check that would have shown the soma loop in a day is still unmerged. tier:hold.",
     "size": "S",
     "lane_ok": false,
     "measure": "days from an unmetered stream starting to its first FAIL (10 for soma)"
@@ -34,71 +58,95 @@
   {
     "issue": 6323,
     "title": "Apply the repo crontab on the main box, or stop saying it is auto-applied",
-    "why": "Merged checks for the other three areas (quality trends, page-vector truth, language-label guard, archive watchdog) do not run until a person installs a line.",
+    "why": "This week's three live crontab edits (embed-gemini hold 10-12, re-enable 10-13, agy checkpoint 10-16) are all by hand and unknown to the repo; merged checks for the other areas still wait for a person. Hold list (crons).",
     "size": "M",
     "lane_ok": false,
-    "measure": "merged cron lines not in the live crontab; 'install this cron line' decision lines (5 open)"
+    "measure": "live crontab lines not in infrastructure/hetzner-crontab, and merged lines not live"
   },
   {
-    "issue": 6276,
-    "title": "Collect or write off the 7 batch jobs the 10-10 ledger failed on (3 succeeded uncollected, 4 in no store)",
-    "why": "Paid OCR and translation that never reached a page is the purest waste; 143 pages on 10-10.",
-    "size": "S",
-    "lane_ok": false,
-    "measure": "paid-vs-got ledger FAIL lines per day (2 on 2026-10-10); measured waste % (24.3%)"
-  },
-  {
-    "issue": null,
-    "title": "Push the stranded cloudlayer worktrees to their own branches as they are (job-split-wave1-6114, job-embed-integrity-6175b, /root/wt-ia-5679)",
-    "why": "Work that exists only on one box disk is lost when the box is; split-wave1's HEAD is on no remote.",
+    "issue": 6358,
+    "title": "Report the week of job endings (10-09 to 10-16) across all three boxes against the landing measure and close it out",
+    "why": "It is the stated gate for the lane in #6359. Main box 10-12 to 10-16: 70 of 76 ok, 6 REPORT, 0 at risk. PR #6527 already says Closes, but the bot merge left it open.",
     "size": "S",
     "lane_ok": true,
-    "measure": "worktrees with commits or files on no remote (3 on cloudlayer, 2026-10-11)"
+    "measure": "job endings landed (main: 92%, n=76); work-at-risk pages per week (0)"
   },
   {
-    "issue": 5354,
-    "title": "Triage the seven jobs that gave up on 10-07: which landed elsewhere, which are superseded, which to re-run",
-    "why": "They include embedding repair and Tengyur evidence work for Found and Trustworthy; nobody has looked since 10-08.",
+    "issue": 6345,
+    "title": "Gemini CLI jobs: plan mode and no auto-approved tools as root, now on all three boxes",
+    "why": "agy now runs on every box and writes most $0 pages; auto-approved tools as root on boxes that serve the site widen with each install. Security (hold list).",
     "size": "M",
+    "lane_ok": false,
+    "measure": "boxes running CLI jobs with auto-approved tools as root (3 of 3, should be 0)"
+  },
+  {
+    "issue": 6628,
+    "title": "Confirm the embed-gemini incremental runs now skip (read the log's 'Already embedded… skipped' counts and worker/embed-gemini $/day since 10-13) and report on the issue",
+    "why": "About $250 was spent re-embedding the same pages from 10-07 to 10-12; the fix and the re-enabled cron are unverified on the record.",
+    "size": "S",
     "lane_ok": true,
-    "measure": "given-up jobs with no recorded outcome (7)"
+    "measure": "worker/embed-gemini dollars per day ($106.31 on 2026-10-11); pages skipped per run"
   },
   {
     "issue": 4528,
     "title": "Alarm from off the box when cron on the main box stops",
-    "why": "Every pipeline lane and every audit runs from that cron; a 25 h outage went unnoticed.",
+    "why": "Every pipeline lane, audit, the agy checkpoint and the spend check run from that cron; a 25 h outage went unnoticed. Hold list (crons).",
     "size": "M",
     "lane_ok": false,
     "measure": "hours from cron death to first page (25 last time; target under 1)"
   },
   {
-    "issue": 6360,
-    "title": "Stale-worker page: page once per process, and handle cron-started workers the restart script can never act on",
-    "why": "The same two pids paged 4 times in 12 h; a repeating page nobody can act on trains Derek to ignore the topic.",
-    "size": "S",
+    "issue": null,
+    "title": "Rebase the conflicting and needs-rebase tier:hold PRs and comment which are superseded",
+    "why": "24 tier:hold PRs wait on Derek (up from 16 on 10-11; oldest 10-04); 3 conflict and 4 are labelled needs-rebase, so a yes cannot merge them.",
+    "size": "M",
     "lane_ok": true,
-    "measure": "repeat pages for the same pid per day (4 in 12 h on 2026-10-11)"
+    "measure": "open tier:hold PRs that are CONFLICTING (3) or needs-rebase (4), 2026-10-16"
   },
   {
-    "issue": 6360,
-    "title": "Spare-lane jobs stop writing DECISION lines: comment the ask on the issue and label spare-skip (after PR #6507 lands)",
-    "why": "10 of 36 decision lines in two days came from a lane chartered to add none.",
-    "size": "S",
-    "lane_ok": true,
-    "measure": "DECISION lines from spare-* jobs per day (5); decisions per job (0.33)"
+    "issue": 5354,
+    "title": "Triage the five 10-07 give-ups not yet traced (two looked landed on 10-11): superseded, landed elsewhere, or re-run",
+    "why": "They include Tengyur evidence and judge work for Trustworthy. Skipped by the lane on 10-11: some re-runs spend paid API and need a re-dispatch call.",
+    "size": "M",
+    "lane_ok": false,
+    "measure": "given-up jobs with no recorded outcome (5 of 7)"
   },
   {
-    "issue": 6358,
-    "title": "Report one week of job endings against the landing measure (10-09 to 10-16) and close out the main-box backtest",
-    "why": "It is the stated gate for the dispatcher in #6359; 109 of 113 landed and 0 were at risk after three days.",
+    "issue": 6716,
+    "title": "Clear the 13 PENDING DECISIONS.md rows older than 14 days: take the stated default or mark each live",
+    "why": "Routing questions (MinerU tier, the SKQS held cohort, Tibetan retranslation) stay open for two weeks, and each blocks a lane that would verify hard pages. Decisions are Derek's.",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "PENDING decision rows older than 14 days (13 on 2026-10-16)"
+  },
+  {
+    "issue": 5743,
+    "title": "Give the two Scaleway makemode containers a lease or stop them, and set HCLOUD_TOKEN so the Hetzner machine check can read",
+    "why": "The machines check has failed every day since 10-02 for the same two names; a check that always fails stops being read. Money (hold list).",
+    "size": "S",
+    "lane_ok": false,
+    "measure": "spend-daily machines check FAIL days (14 of 14, 10-02 to 10-15); unleased machines (2, EUR 21/month)"
+  },
+  {
+    "issue": 5627,
+    "title": "claude-job.sh: check login and workspace trust before a job starts",
+    "why": "A 'Not logged in' job resumes and lands nothing; with accounts moving between boxes (main to team@ on 10-15), the check matters more. PR #6527 added the Bash-permission half.",
     "size": "S",
     "lane_ok": true,
-    "measure": "job endings landed (96%, n=113); work-at-risk pages per week (0)"
+    "measure": "jobs that end without one model turn"
+  },
+  {
+    "issue": null,
+    "title": "Recheck the stranded cloudlayer worktrees (split-wave1-6114 prep.sh, job-embed-integrity-6175b, /root/wt-ia-5679) and push what is uncommitted to its own branch",
+    "why": "Work that exists only on one disk is lost with the box; split-wave1's commit was pushed on 10-11, and the other two were not rechecked.",
+    "size": "S",
+    "lane_ok": true,
+    "measure": "worktrees with files on no remote (at least 1 confirmed on 2026-10-11; 2 unrechecked)"
   },
   {
     "issue": 5792,
     "title": "pr-tier: homepage copy must be tier:hold",
-    "why": "Public copy Derek has not read reaches readers by machine merge.",
+    "why": "Public copy Derek has not read reaches readers by machine merge. Doctrine/workflow (hold list).",
     "size": "S",
     "lane_ok": false,
     "measure": "tier:auto PRs touching home-i18n.ts or HomeView.tsx (should be 0)"
@@ -106,7 +154,7 @@
   {
     "issue": 5492,
     "title": "Brakes: one vocabulary for paused_phases, so pausing 'ocr' or 'images' pauses them",
-    "why": "A brake that does nothing is how a contained problem keeps spending and keeps writing.",
+    "why": "A brake that does nothing is how a contained problem keeps spending and keeps writing. Skipped by the lane (pipeline control).",
     "size": "M",
     "lane_ok": false,
     "measure": "pause names that stop no worker (2 known)"
@@ -114,63 +162,31 @@
   {
     "issue": 4600,
     "title": "Ship the OCR Lambda from CI when a fix merges",
-    "why": "An OCR fix merged to main does not reach the lane that reads pages; Readable waits on a hand deploy.",
+    "why": "An OCR fix merged to main does not reach the lane that reads pages; Readable waits on a hand deploy. Skipped by the lane (deploy path).",
     "size": "M",
     "lane_ok": false,
     "measure": "days between a Lambda fix merging and running in production"
   },
   {
-    "issue": null,
-    "title": "Give the two Scaleway containers a lease or stop them, and set HCLOUD_TOKEN so the Hetzner machine check can read",
-    "why": "The machines check has failed every day since 10-02 for the same two names; a check that always fails stops being read.",
-    "size": "S",
-    "lane_ok": false,
-    "measure": "spend-daily machines check FAIL days (9 of 9); unleased machines (2, EUR 21/month)"
-  },
-  {
     "issue": 5827,
-    "title": "Envelope expiry and one budget per lane",
-    "why": "$4,033.83 is authorised and unspent across 41 envelopes; a queue is stored spend, and it funds any lane.",
+    "title": "One budget per lane, and draw down or close idle envelopes",
+    "why": "Expiry (PR #6513) halved the envelopes to 27, but authorised and unspent rose to $4,290.54; $1,999.19 sits idle in stubs4719-ocr-2026-10. A queue is stored spend. Money (hold list).",
     "size": "L",
     "lane_ok": false,
-    "measure": "authorised and unspent dollars ($4,033.83 on 2026-10-10); idle or near-cap envelopes (27)"
+    "measure": "authorised and unspent dollars ($4,290.54 on 2026-10-15); envelopes near cap or idle (12)"
   },
   {
     "issue": 6205,
     "title": "Paid pipeline steps take an allowlist of approved books",
-    "why": "Asked for directly; it turns spend from 'anything not held' into 'only what was chosen for readers'.",
+    "why": "Asked for directly; it turns spend from 'anything not held' into 'only what was chosen for readers'. No activity since 10-09. Money (hold list).",
     "size": "L",
     "lane_ok": false,
     "measure": "dollars spent on books outside an approved list per day"
   },
   {
-    "issue": 5634,
-    "title": "Rebase the 5 open PRs labelled needs-rebase and report which are superseded",
-    "why": "16 tier:hold PRs wait on Derek; a conflicting one cannot be merged even when he says yes.",
-    "size": "M",
-    "lane_ok": true,
-    "measure": "open PRs labelled needs-rebase (5 on 2026-10-11); oldest tier:hold PR age (7 days)"
-  },
-  {
-    "issue": 5627,
-    "title": "claude-job.sh: check login and workspace trust before a job starts",
-    "why": "A 'Not logged in' job resumes eight times and lands nothing; the box looks busy and the work does not move.",
-    "size": "S",
-    "lane_ok": true,
-    "measure": "jobs that end without one model turn"
-  },
-  {
-    "issue": 6223,
-    "title": "Disk done-check: a week of root-free readings per box and what the steward moved",
-    "why": "A full root disk kills every job on the box without a word; main crossed 85% again on 10-11.",
-    "size": "S",
-    "lane_ok": true,
-    "measure": "root GB free on main (28 on 2026-10-11); disk alarms per week"
-  },
-  {
     "issue": 5709,
     "title": "claude-job.sh: memory admission and resume after an OOM death",
-    "why": "Seven jobs died silently on 10-02; the boxes share memory with the live public service.",
+    "why": "The boxes share memory with the live public service; with agy on every box, more concurrent jobs compete for 16 GB. Skipped for the lane: changes how every job starts.",
     "size": "M",
     "lane_ok": false,
     "measure": "jobs killed for memory per week"
@@ -178,25 +194,9 @@
   {
     "issue": 5710,
     "title": "auto-merge: rebase tier:auto PRs whose test failed before main went green",
-    "why": "Finished fixes for the other areas sit unmerged for hours behind a red that is not theirs.",
+    "why": "Finished fixes for the other areas sit unmerged for hours behind a red that is not theirs. Workflow (hold list).",
     "size": "M",
     "lane_ok": false,
     "measure": "tier:auto PRs open more than 8 h with a stale red test"
-  },
-  {
-    "issue": 6345,
-    "title": "Gemini CLI jobs: plan mode and no auto-approved tools as root",
-    "why": "The $0 CLI lane now writes most translated pages; it should not hold root on a box that serves the site.",
-    "size": "M",
-    "lane_ok": false,
-    "measure": "CLI jobs run with auto-approved tools (should be 0)"
-  },
-  {
-    "issue": 3645,
-    "title": "Vercel spend: stop invalidating our own cache 106 times a month",
-    "why": "Half the Vercel bill buys nothing a reader sees; the saving funds pages.",
-    "size": "L",
-    "lane_ok": false,
-    "measure": "Vercel dollars per month; cache invalidations per month (106)"
   }
 ]
