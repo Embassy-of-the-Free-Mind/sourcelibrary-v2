@@ -5,9 +5,12 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 
-export const CLI = process.env.CLAUDE_BIN || (fs.existsSync('/root/.local/bin/claude') ? '/root/.local/bin/claude' : 'claude');
+// The first claude CLI that has --restricted (the seal). A stale ~/.local/bin/claude (2.1.31 on main, 2026-10-16) lacks
+// it and failed every call in 2 s with "unknown option"; /usr/bin/claude is the current one there.
+export const CLI = [process.env.CLAUDE_BIN, '/root/.local/bin/claude', '/usr/bin/claude', 'claude'].filter(Boolean)
+  .find((b) => (b === 'claude' || fs.existsSync(b)) && /--restricted/.test(spawnSync(b, ['--help'], { encoding: 'utf8', timeout: 30e3 }).stdout || '')) || 'claude';
 const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of extra usage|rate.?limit|\b429\b|resets? (?:at )?\d/i;
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 
