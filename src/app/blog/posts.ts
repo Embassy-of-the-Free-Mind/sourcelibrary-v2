@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'preserved-by-enemies',
+    title: 'Preserved by Their Enemies',
+    subtitle:
+      'The books written to stamp out a religion are often the only record of it. Hippolytus and Epiphanius copied the Gnostics they refuted; in Mexico and Yucatán the friars who burned the books wrote down the spells, the omens and the alphabet.',
+    date: '16 October 2026',
+    readTime: '12 min read',
+    kind: 'stories',
+    // The omen painting from the Florentine Codex leaf the essay quotes (Book 5, ch. 1), cut from our scan.
+    image: '/blog/preserved-by-enemies/florentine-omen-jaguar.jpg',
+    imageAlt:
+      'Florentine Codex, Book 5, chapter 1: a spotted jaguar with a speech scroll at its mouth, and a man with a carrying bag who raises his hands to his head.',
+  },
+  {
     slug: 'hyperborea',
     title: 'Beyond the North Wind: Hyperborea and the Amber Coast',
     subtitle:
