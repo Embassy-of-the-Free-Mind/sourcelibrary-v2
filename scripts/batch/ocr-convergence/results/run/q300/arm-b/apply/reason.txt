@@ -1,0 +1,1 @@
+#6694 arm B: Opus (claude -p, subscription) corrected the stored transcription against the page image in place (run q300, opus-correct-6694); 40-write audit stopped at Gemini 3/40 worse (all Greek, disputed pages excluded): Derek 2026-10-14 override, #6694

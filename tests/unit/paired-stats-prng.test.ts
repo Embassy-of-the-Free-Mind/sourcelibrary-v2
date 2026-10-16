@@ -138,6 +138,8 @@ describe('the lossy LCG is not pasted into another script', () => {
     'scripts/eval/persian-ganjoor/sample.mjs',
     // GPU backlog Yigdzin shard draw (#5660, job gpu-resume-5660): drawn and judged 2026-10-06; verdicts committed under results/.
     'scripts/eval/gpu-backlog-5660/y527.mjs',
+    // Aliveness atlas lexical lane (#6652): 4,025-page phrase draw made and judged 2026-10-13; the published page is built on it.
+    'scripts/analysis/experience-map/retrieve/retrieve-aliveness-lexical.mjs',
   ]);
   const LOSSY = /[\w)\]]\s*\*\s*1103515245|1103515245\s*\*\s*[\w(]/;
   const root = path.resolve(__dirname, '../..');

@@ -1,0 +1,63 @@
+{
+ "set": "q300",
+ "threshold": 0.01,
+ "pages": 976,
+ "books": 99,
+ "actions": {
+  "keep": 331,
+  "residual": 336,
+  "write": 177,
+  "agree": 83,
+  "no-second-read": 23,
+  "contain": 12,
+  "pending-adjudication": 2,
+  "defer": 12
+ },
+ "by_group": {
+  "latin": {
+   "keep": 147,
+   "residual": 177,
+   "write": 106,
+   "agree": 40,
+   "no-second-read": 15,
+   "contain": 4,
+   "pending-adjudication": 1
+  },
+  "greek": {
+   "keep": 30,
+   "write": 12,
+   "residual": 44,
+   "agree": 9,
+   "no-second-read": 3,
+   "pending-adjudication": 1,
+   "contain": 1
+  },
+  "german": {
+   "keep": 64,
+   "write": 30,
+   "residual": 35,
+   "agree": 31
+  },
+  "chinese": {
+   "keep": 81,
+   "residual": 57,
+   "agree": 3,
+   "defer": 12,
+   "contain": 6,
+   "no-second-read": 5,
+   "write": 2
+  },
+  "arabic": {
+   "keep": 4,
+   "residual": 20,
+   "write": 25,
+   "contain": 1
+  },
+  "hebrew": {
+   "residual": 3,
+   "keep": 5,
+   "write": 2
+  }
+ },
+ "decided_at": "2026-10-13T21:20:47.509Z"
+}

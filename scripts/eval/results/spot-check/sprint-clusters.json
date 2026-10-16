@@ -1,18 +1,19 @@
 {
-  "rounds": 1,
-  "rows": 93,
+  "rounds": 2,
+  "rows": 153,
   "rule": "≥3 distinct books",
   "classes": [
     {
       "class": "O6",
-      "books": 2,
-      "serious": 11,
-      "candidate": false,
+      "books": 4,
+      "serious": 14,
+      "candidate": true,
       "forms": {
-        "print": 2
+        "print": 4
       },
       "frames": {
-        "canon": 2
+        "canon": 2,
+        "public": 2
       },
       "example": "https://sourcelibrary.org/book/69e13adf0dae29249d20bb57?page=209"
     },
@@ -59,6 +60,20 @@
       "example": "https://sourcelibrary.org/book/6990665a2ec9f7db5717a149?page=20"
     },
     {
+      "class": "O5",
+      "books": 2,
+      "serious": 3,
+      "candidate": false,
+      "forms": {
+        "print": 2
+      },
+      "frames": {
+        "canon": 1,
+        "public": 1
+      },
+      "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
+    },
+    {
       "class": "O1",
       "books": 2,
       "serious": 3,
@@ -71,6 +86,20 @@
         "canon": 2
       },
       "example": "https://sourcelibrary.org/book/6991d8ac8c1030b12444c781?page=149"
+    },
+    {
+      "class": "T8",
+      "books": 2,
+      "serious": 2,
+      "candidate": false,
+      "forms": {
+        "print": 2
+      },
+      "frames": {
+        "canon": 1,
+        "public": 1
+      },
+      "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
     },
     {
       "class": "O15",
@@ -113,32 +142,6 @@
       "example": "https://sourcelibrary.org/book/6a0f06c5900fb4799cef25f2?page=21"
     },
     {
-      "class": "O5",
-      "books": 1,
-      "serious": 1,
-      "candidate": false,
-      "forms": {
-        "print": 1
-      },
-      "frames": {
-        "canon": 1
-      },
-      "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
-    },
-    {
-      "class": "T8",
-      "books": 1,
-      "serious": 1,
-      "candidate": false,
-      "forms": {
-        "print": 1
-      },
-      "frames": {
-        "canon": 1
-      },
-      "example": "https://sourcelibrary.org/book/69b51dcacf111105c4290453?page=76"
-    },
-    {
       "class": "O16",
       "books": 1,
       "serious": 1,
@@ -163,6 +166,19 @@
         "canon": 1
       },
       "example": "https://sourcelibrary.org/book/6984e84db96022f6fa69b4c8?page=242"
+    },
+    {
+      "class": "other:measure-mistranslated",
+      "books": 1,
+      "serious": 1,
+      "candidate": false,
+      "forms": {
+        "MS": 1
+      },
+      "frames": {
+        "public": 1
+      },
+      "example": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2?page=57"
     }
   ]
 }

@@ -19,9 +19,9 @@ The first live shift (claude.ai, Latin) asked a non-Latinist for a blind verdict
 accounts to help with translation and quality control — its like what open source participation
 looks like in 2026." The sections below were written around the volunteer's *judgement*; the
 contribution is their **Claude** (a vision model on their own subscription), and the person is the
-operator: starts the shift, agrees once that findings are submitted, watches, asks, says
-"continue". The terms analysis below still holds: one person, their own unmodified client,
-interactive, one page per message.
+operator: starts the shift, agrees once that findings are submitted, chooses how many pages,
+watches, asks. The terms analysis below still holds: one person, their own unmodified client,
+in the conversation while it runs (never scheduled or scripted).
 
 Why this is worth more than it sounds: our transcriptions and translations are Gemini's. A Claude
 reading them against the scan is a reader from another model family (the family rule), which we
@@ -33,10 +33,10 @@ otherwise buy with our own subscription time.
 |---|---|---|
 | Who judges | the person (needs the language) / the volunteer's Claude, person optional | **Claude.** Fits the 95%; the person's own judgement stays as the blind lane. |
 | Unit | random pages across books / 2 pages × 3 books / **one book walked in order** | **Book run.** The model and the person keep the book's context (abbreviations, hand, argument); page-join defects (text carried across a page boundary, the commonest "invention" flag) are visible only across two pages; it reads as a book, which is what brings people back. Cost: pages of one book are one observation for corpus estimates, which the blind lane and our own audits supply. |
-| Pacing | five pages in one result / **one page, then "continue"** | One page: lighter on the volunteer's limits, every scan fits the inline cap, and the human stays in the loop per page. |
+| Pacing | five pages in one result / one page, then "continue" / **one page per call, a stretch of pages per turn** | One page per tool call keeps every scan under the inline cap. Stopping after every page was tried first (2026-10-11) and was wrong: the first real run took 12 hours for 6 pages, and Derek: "only let me read one page at a time. That doesn't seem right at all." Since 2026-10-13 Claude works through a stretch (10 pages unless the user says otherwise), retelling each page in a short paragraph and naming what it found, then pauses with a tally. One line per page was tried first and read as a log, not a reading. |
 | Selection | random pool / volunteer's choice / most-read / detector-flagged | Volunteer's choice if they name a book; else resume their last run; else start at a page the translation-check pool is waiting on (`nextCandidate`), so runs spread over the books the pool samples. Most-read and detector-flagged starts are next. |
 | Output | rating / correction | Both, per page: a `volunteer_ratings` row in its own queue `book-run` (never counted toward the human `translation-check` consensus) and span-edit proposals (`drafted_by:'assistant'`). |
-| Trust | trust each shift / redundancy and controls | Each run is one model reader of self-reported, unknown model and settings. **Not yet built:** apply a correction when two independent runs propose the same edit, or our own adjudicator confirms one; planted-error pages to weight each volunteer's setup by measured accuracy rather than claimed model. Until then corrections wait for a second reader as before. |
+| Trust | trust each shift / redundancy and controls | Each run is one model reader of self-reported, unknown model and settings. **Built:** a second reader (#6679: Opus and Gemini on the CLIs, both must accept an edit) and planted-error pages (#6682): about one page in ten of a book run carries one known error in its English (an antonym or a changed number, a word found nowhere else on the page), recorded in `review_plants`; a review of it is tagged `control_plant_id` and a fix on it is stored as `control`, never applied; `scripts/audit/book-run-plant-catch.mjs` gives each volunteer × model its catch rate, beside the second reader's accept/reject counts on its real fixes (the false-alarm side; no confirmed-clean page set exists). **Not yet built:** weighting a setup's evidence by those rates (#6557). |
 
 **What a book run returns per page:** the scan (proxied at 1,600 px so it fits the 1MB inline
 cap; the first live shift lost two of five scans to it), transcription and English with editorial
@@ -55,19 +55,20 @@ cannot answer, when nothing seems to happen, when it feels like busywork, or whe
 1. **Find it.** A "Lend your Claude" page on sourcelibrary.org: add the connector (one click from
    the Claude directory), open a new chat, say "start a review shift". *(page not built)*
 2. **Start.** Claude says in four lines what will happen: it checks one old book page by page
-   against the scans and sends what it finds; they can watch, ask or just say "continue"; fixes
+   against the scans, about 10 pages at a stretch, and sends what it finds; they can interrupt or ask; fixes
    are CC BY-SA 4.0 and change nothing until a second reader agrees. One yes. They get a volunteer
    code. Claude offers a book as a story, not a task: "Beroaldus, Paris 1500, 16 pages: three
    brothers argue which art earns their father's inheritance." They can ask for another book, a
    language or a subject instead. *(book offer by subject not built)*
-3. **Each page.** The scan, then three lines: what the page says, what Claude checked and found
-   ("six words misread, the old long s taken for f; a margin note slipped into the text; the English
-   is faithful"), and "sent: 1 review, 2 fixes. Continue?" Claude does **not** paste the full
+3. **Each page.** The scan, then a short paragraph: three or four plain sentences on what happens
+   on the page, so the stretch reads as a guided reading of the book, then one sentence on what Claude
+   found and sent ("six long-s misreadings and a margin note in the text; 1 review, 2 fixes").
+   Claude moves straight on to the next page. It does **not** paste the full
    transcription and translation: in the first live shift claude.ai shortened them with "…" when
    displaying them, which read as omissions in our English that the stored text does not have
    (checked 2026-10-11). The person can ask "show me" and Claude quotes the lines at issue.
-4. **Continue.** Next page, with the join to the previous one checked. Every five pages a progress
-   line: pages done, fixes sent. *(progress line not built)*
+4. **End of a stretch.** A short tally (pages, fixes sent, anything serious) and "another 10?".
+   Each page's join to the previous one is checked as it goes.
 5. **Stop.** Book finished, the person stops, or the plan's limit hits. Every page is already
    submitted, so nothing is lost. Claude closes with the tally, the book's link, and "say 'start a
    review shift' with your code to carry on". *(closing tally not built)*
@@ -76,8 +77,8 @@ cannot answer, when nothing seems to happen, when it feels like busywork, or whe
    tally; not built)*
 
 **Open:** the size of a run on a Pro account before its limit (measure on the first real runs);
-whether the volunteer's Claude follows the "no invented problems" line (planted clean pages test
-it); retiring `/contribute`.
+whether the volunteer's Claude follows the "no invented problems" line (the second reader's
+rejections measure it until a confirmed-clean page set exists); retiring `/contribute`.
 
 ## The question, reframed
 
@@ -247,9 +248,19 @@ Reviews are evidence; **corrections change the page**, so they take two steps.
    pair, closes the proposal. Dry run by default. **Actuation:** an OCR correction makes the
    page's machine translation stale, and the stale lane re-translates it under the spend dial.
 
-The second reader is us for now (Derek or a session reading the scan). Phase 2 can let trusted
-volunteers apply each other's proposals, Wikisource's two-person rule, or route proposals to a
-blind model check against the image first.
+The second reader is now our own model adjudicator (#6679,
+`scripts/maintenance/adjudicate-corrections.mjs`, run by hand; a cron is a separate decision).
+Per proposal it downloads the 1,600 px scan, builds a packet (each edit in ±150 chars of context,
+the proposer's reason, never the proposer's identity or model) with **one planted decoy edit**
+(a correct word changed to a near-miss) at a random position, and asks two readers from different
+families, Opus via `claude -p` and Gemini via `agy -p`, both on the subscriptions, for
+`correct | wrong | cant_tell` per edit. A translation edit is judged against the transcription
+and the scan. A reader that calls the decoy correct has its verdicts for that packet discarded.
+Both correct → accept; both wrong → reject; anything else → left. Accepted edits go through
+`apply-page-correction.mjs --accept-edits=…`, which marks the proposal `partially_applied` when
+some were dropped and copies the verdicts into the page's `correction` block; every verdict is
+stored on the proposal (`adjudication`) whether or not anything was applied. Phase 2 can still
+let trusted volunteers apply each other's proposals (Wikisource's two-person rule).
 
 ### Credit
 

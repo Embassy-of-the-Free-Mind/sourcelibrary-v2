@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "identical",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "the same text scores 0"
+}

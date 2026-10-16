@@ -9,6 +9,7 @@ import { processImageUpload } from '@/lib/uploads/processing';
 import { updateBookAfterUpload } from '@/lib/uploads/utils';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { normalizeTitle, normalizeAuthor } from '@/lib/dedup';
+import { initialPageCounters } from '@/lib/page-counts';
 
 async function handlePOST(request: NextRequest) {
   try {
@@ -43,7 +44,10 @@ async function handlePOST(request: NextRequest) {
       language: language || 'Unknown',
       published: published || 'Unknown',
       categories: [],
-      pages_count: 0,
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(0),
       image_source: {
         provider: 'user_upload',
         provider_name: 'Mobile Scan',

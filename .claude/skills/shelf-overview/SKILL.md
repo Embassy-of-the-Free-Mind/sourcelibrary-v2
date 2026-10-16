@@ -121,6 +121,9 @@ books for interest. First run: Eternity, 107 books, 2026-10-06
   person choosing what to show opens them:
   `curation-shelf.mjs --slug <private collection> --verdicts <dir>/verdicts [--apply]` (dry run by default; it
   refuses a public collection). `--list` prints the shelf.
+- **The record.** With `--apply` the same command writes one `book_checks` row per verdict (method `curation-check`;
+  `--meta <run-reviewers out_dir>/meta` for cost, `--no-record` to skip, `--print-rows` on a dry run to read them
+  first). A tier-3 row puts a book-level warning on the book for readers.
 
 Never quote its tier shares as quality: the books were chosen, two pages were read, and a tier-1 book can still hold
 bad pages. For a number, run the random draw above. What the curation check is good for is the worklist and new defect

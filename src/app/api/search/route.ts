@@ -359,6 +359,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         thumbnail: (typedBook as any).thumbnail,
         thumbnail_blob: (typedBook as any).thumbnail_blob,
         quality_score: (typedBook as any).quality_score,
+        preview: !!(typedBook as any).preview,
       };
       // Transient fields for work-level dedup (stripped before response)
       attachIdentity(result, typedBook as unknown as Record<string, unknown>);
@@ -412,7 +413,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         try {
           const matchingIds = await searchBookIds(query, { limit: limit * 2 });
           const bookFilters = buildBookFilters();
-          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
+          const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 };
 
           let books: any[] = [];
           if (matchingIds.length > 0) {
@@ -909,7 +910,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             // language / languages / exclude_languages, and since #5921
             // category, has_doi, has_translation, first_translation, library.
             { id: { $in: semanticBookIds }, ...buildBookFilters() },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1, preview: 1, pages_ocr: 1, 'translation_state.rung': 1, 'translation_state.english_original': 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -946,6 +947,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             thumbnail: book.thumbnail as string | undefined,
             thumbnail_blob: book.thumbnail_blob as string | undefined,
             quality_score: (book as any).quality_score,
+            preview: !!(book as any).preview,
           };
           attachIdentity(semResult, book as unknown as Record<string, unknown>);
           if ((book as any).text_role) (semResult as any)._text_role = (book as any).text_role;
@@ -1405,7 +1407,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       },
     }, {
       headers: {
-        'Cache-Control': 'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
+        // A lane that timed out is a cold-cache accident, not the answer: caching it
+        // served the same partial result for minutes after a deploy (#6613).
+        'Cache-Control': lanesDegraded
+          ? 'no-store'
+          : 'public, max-age=0, s-maxage=60, stale-while-revalidate=300',
       },
     });
   } catch (error) {

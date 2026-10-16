@@ -99,28 +99,71 @@ describe('convergent-audit-weekly.sh: a quota stop is retried, not scored as an 
   it('no quota trouble: one Gemini pass, then assemble and score', () => {
     const { calls } = run(0);
     // …and a review call never gets the OCR tool gate, whose denial tells the model to transcribe (#6571's default).
-    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.7-flash-low']);
+    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.8-flash-low']);
     expect(calls.at(-1)).toContain('convergent-audit-weekly.mjs score --run');
     expect(calls.at(-2)).toContain('cli-assemble');
   });
+  // The default list is one model since 3.7 was withdrawn (2026-10-12); the fallback is exercised with two.
+  const TWO = { AUDIT_GEMINI_MODELS: 'gemini-3.8-flash-low gemini-3.8-flash-medium' };
   it('quota on the first model tries the next before waiting', () => {
-    const { calls } = run(1);
-    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.7-flash-low', 'cli gemini-3.8-flash-low']);
+    const { calls } = run(1, TWO);
+    expect(calls.filter((c) => c.startsWith('cli '))).toEqual(['cli gemini-3.8-flash-low', 'cli gemini-3.8-flash-medium']);
   });
   it('quota on every model waits and resumes until the reads are in', () => {
-    const { out, calls } = run(4);
+    const { out, calls } = run(4, TWO);
     expect(calls.filter((c) => c.startsWith('cli '))).toHaveLength(5);
     expect(out).toContain('every model is out of quota: wait 0s (retry 1 of 8)');
     expect(out).toContain('(retry 2 of 8)');
     expect(calls.at(-1)).toContain('score');
   });
   it('gives up after the retries and still scores, so the report can say why', () => {
-    const { out, calls } = run(99, { AUDIT_QUOTA_RETRIES: '2' });
+    const { out, calls } = run(99, { ...TWO, AUDIT_QUOTA_RETRIES: '2' });
     expect(calls.filter((c) => c.startsWith('cli '))).toHaveLength(6);   // 3 passes × 2 models
     expect(out).toContain('quota still out after 2 waits: scoring without the Gemini reader');
     expect(calls.at(-1)).toContain('score');
   });
   it('a date argument finishes that run instead of starting today', () => {
     expect(run(0).calls.at(-1)).toContain('base/2099-01-05');
+  });
+  it('a spare-lane round (#6781): Opus only, the given seed, scored without posting', () => {
+    const { calls } = run(0, { AUDIT_OPUS_ONLY: '1', AUDIT_POST: '0', AUDIT_SEED: '424242' });
+    expect(calls[0]).toContain('draw --run');
+    expect(calls[0]).toContain('--seed 424242');
+    expect(calls.filter((c) => c.startsWith('cli ') || c.includes('cli-requests'))).toEqual([]);
+    expect(calls.at(-1)).toContain('score --run');
+    expect(calls.join('\n')).not.toContain('--post');
+  });
+  it('the weekly run still posts', () => {
+    expect(run(0).calls.at(-1)).toContain('--post');
+  });
+});
+
+describe('convergent-audit-pool.mjs: one account-week of spare-lane rounds, one comment (#6781)', () => {
+  // Two rounds; book A is drawn in both, so it counts once. B has a serious error; C is clean; round 2 lost C2's review.
+  const ocr = 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor';
+  const tr = 'The quick brown fox jumps over the lazy dog and keeps running down the road';
+  function round(root: string, name: string, seed: number, pages: { pk: string; book: string; review?: object }[]) {
+    const R = join(root, name);
+    mkdirSync(join(R, 'packets'), { recursive: true }); mkdirSync(join(R, 'readers/opus/reviews'), { recursive: true });
+    writeFileSync(join(R, 'draw.json'), JSON.stringify({ seed, pages: pages.map((p) => ({ packet: p.pk, stratum: 'random', exposure: 'served', book_id: p.book, page_number: 3, language: 'Latin' })) }));
+    for (const p of pages) {
+      writeFileSync(join(R, 'packets', `${p.pk}.json`), JSON.stringify([{ book_id: p.book, pages: [{ page_number: 3, ocr, translation: tr }] }]));
+      if (p.review) writeFileSync(join(R, 'readers/opus/reviews', `${p.pk}.json`), JSON.stringify([{ book_id: p.book, pages: [{ page_number: 3, ...p.review }] }]));
+    }
+    return R;
+  }
+  const clean = { right_page: 'yes', ocr_score: 5, tr_score: 5, ocr_errors: [], tr_errors: [] };
+  const bad = { right_page: 'yes', ocr_score: 2, tr_score: 2, ocr_errors: [], tr_errors: [{ severity: 'serious', class: 'T1', problem: 'negation flipped', english: 'keeps running down the road' }] };
+  it('pools by book across rounds and names every round', () => {
+    const root = mkdtempSync(join(tmpdir(), 'pool-'));
+    const r1 = round(root, 'spare-audit-20261016-1', 11, [{ pk: 'p000', book: 'A', review: clean }, { pk: 'p001', book: 'B', review: bad }]);
+    const r2 = round(root, 'spare-audit-20261016-2', 22, [{ pk: 'p000', book: 'A', review: clean }, { pk: 'p001', book: 'C' }]);
+    const out = execFileSync('node', ['scripts/audit/convergent-audit-pool.mjs', '--label', 'l7a, week to 2026-10-22', r1, r2], { encoding: 'utf8' });
+    expect(out).toContain('2 round(s), Opus only');
+    expect(out).toContain('3 of 4 drawn pages were read');
+    expect(out).toMatch(/serious error on 1 of 2 books/);
+    expect(out).toContain('`spare-audit-20261016-2` (seed 22, 1/2 read)');
+    expect(out).toContain('`B` p.3');
+    expect(out).toContain('nothing here is convergent');
   });
 });

@@ -85,6 +85,22 @@ export function pageEmbeddingInput(page) {
 }
 
 /**
+ * The text the embed worker (`scripts/workers/embed-gemini.mjs`) writes for a page, or null when the
+ * page has none worth embedding. `pageEmbeddingInput` plus the worker's 20-character floor: a stub
+ * translation falls back to the OCR (with an EMPTY translation column), and a page whose OCR is a
+ * stub too gets no row at all. Anything that predicts what the worker would write for a page — the
+ * #6221 enumerator, a "should this row exist?" audit — asks this, never `translation.data` non-empty:
+ * 9.4K rows were listed for a re-embed the worker then declined (#6221, 2026-10-11).
+ */
+export const MIN_EMBED_CHARS = 20;
+export function workerEmbeddingInput(page) {
+  const input = pageEmbeddingInput(page);
+  if (input && input.text.length >= MIN_EMBED_CHARS) return input;
+  const ocr = cleanPageText(page?.ocr?.data);
+  return ocr.length >= MIN_EMBED_CHARS ? { text: ocr, hasTranslation: false } : null;
+}
+
+/**
  * Build the `page_translations` row. Every column the table has, in one place,
  * so the two writers cannot disagree about the shape.
  *
@@ -94,9 +110,17 @@ export function pageEmbeddingInput(page) {
  * e5 signature says another model made it (#6175: 2026-04 e5-base vectors
  * labelled Gemini by a column DEFAULT, unreachable by search).
  */
+/**
+ * The source timestamp a page_translations row records as `mongo_updated_at`. A stored row whose
+ * value is at least this one already embeds the page's current text (embed-gemini skips it).
+ */
+export function pageEmbeddingRowTs(page) {
+  return page?.translation?.updated_at || page?.ocr?.updated_at || page?.updated_at || null;
+}
+
 export function buildPageEmbeddingRow({ page, book, text, hasTranslation, embedding, model }) {
   assertStoreVector(embedding, { model });
-  const mongoTs = page.translation?.updated_at || page.ocr?.updated_at || page.updated_at;
+  const mongoTs = pageEmbeddingRowTs(page);
   return {
     page_id: page.id,
     book_id: page.book_id,

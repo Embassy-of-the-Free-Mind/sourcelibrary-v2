@@ -1,0 +1,1013 @@
+{
+ "rows": [
+  {
+   "incumbent": "Flash-Lite 3.1",
+   "leader": "3 Flash",
+   "p_leader_beats_incumbent": 0.823,
+   "evidence_decides": false,
+   "p_not_best": 0.823,
+   "gap_if_not_best": 0.0473,
+   "el_per_page": 0.03897,
+   "pages": 561246,
+   "el": 21870.9,
+   "p_best": {
+    "3 Flash": 0.823,
+    "Flash-Lite 3.1": 0.177
+   },
+   "arms": [
+    "Flash-Lite 3.1",
+    "3 Flash"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.03370999917387962,
+   "value": 18919.69921875,
+   "cost": {
+    "calls": {
+     "claude": 13,
+     "gemini_thinking": 40
+    },
+    "usd": 0.04,
+    "quota_pct": 0.44
+   },
+   "value_per_quota": 42999.3984375,
+   "stage": "translation",
+   "decision": "translate Latin",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "Flash-Lite 3.1": "measured",
+    "3 Flash": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 1040524,
+   "not_feasible_at_this_volume": [
+    "3.8 Flash CLI",
+    "Sonnet 5.5",
+    "Opus 5.5"
+   ],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "Flash-Lite 3.1",
+   "leader": "3.8 Flash CLI",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.1283,
+   "el_per_page": 0.12826,
+   "pages": 146146,
+   "el": 18744.8,
+   "p_best": {
+    "3.8 Flash CLI": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "Flash-Lite 3.1",
+    "3.8 Flash CLI"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.1268399953842163,
+   "value": 18537.19921875,
+   "cost": {
+    "calls": {
+     "gemini_low": 20,
+     "claude": 13,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.45
+   },
+   "value_per_quota": 41193.80078125,
+   "stage": "translation",
+   "decision": "translate German",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "Flash-Lite 3.1": "measured",
+    "3.8 Flash CLI": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 171676,
+   "not_feasible_at_this_volume": [
+    "Sonnet 5.5",
+    "Opus 5.5"
+   ],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "gemini-3.1-flash-lite",
+   "leader": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.0737,
+   "el_per_page": 0.07369,
+   "pages": 342892,
+   "el": 25268.5,
+   "p_best": {
+    "gemini-3-flash-preview": 0.809,
+    "claude-sonnet-5-5": 0.171,
+    "gemini-3.8-flash-high+antigravity-cli": 0.011,
+    "gemini-3.8-flash+antigravity-cli": 0.005
+   },
+   "arms": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview",
+    "claude-sonnet-5-5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.06755000352859497,
+   "value": 23162.900390625,
+   "cost": {
+    "calls": {
+     "claude": 20,
+     "sonnet": 20
+    },
+    "usd": 0.16,
+    "quota_pct": 0.72,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": 32170.599609375,
+   "stage": "ocr",
+   "decision": "read latin (latin-script-print)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "gemini-3.1-flash-lite": "measured",
+    "gemini-3-flash-preview": "measured",
+    "claude-sonnet-5-5": "measured"
+   },
+   "sigma_paired": 0.1963,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "settled",
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "3.8 Flash CLI",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.0822,
+   "el_per_page": 0.08215,
+   "pages": 68250,
+   "el": 5607.0,
+   "p_best": {
+    "3.8 Flash CLI": 0.985,
+    "Sonnet 5.5": 0.015,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "3.8 Flash CLI"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.07946000248193741,
+   "value": 5423.2998046875,
+   "cost": {
+    "calls": {
+     "gemini_low": 20,
+     "claude": 13,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.45
+   },
+   "value_per_quota": 12051.7001953125,
+   "stage": "translation",
+   "decision": "translate Tibetan",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "3.8 Flash CLI": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 115343,
+   "not_feasible_at_this_volume": [
+    "Opus 5.5"
+   ],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.1825,
+   "el_per_page": 0.18248,
+   "pages": 58107,
+   "el": 10603.2,
+   "p_best": {
+    "Opus 5.5": 0.997,
+    "Sonnet 5.5": 0.003,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.18241000175476074,
+   "value": 10599.400390625,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 11777.099609375,
+   "stage": "translation",
+   "decision": "translate Greek",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Opus 5.5": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 57037,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "Flash-Lite 3.1",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.0926,
+   "el_per_page": 0.09256,
+   "pages": 84363,
+   "el": 7808.3,
+   "p_best": {
+    "Opus 5.5": 0.997,
+    "3.8 Flash CLI": 0.003,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "Flash-Lite 3.1",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.09007000178098679,
+   "value": 7599.0,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 8443.2998046875,
+   "stage": "translation",
+   "decision": "translate French",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "Flash-Lite 3.1": "thin",
+    "Opus 5.5": "thin"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 47736,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "gemini-3.1-flash-lite",
+   "leader": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 0.939,
+   "evidence_decides": false,
+   "p_not_best": 0.946,
+   "gap_if_not_best": 0.0212,
+   "el_per_page": 0.02004,
+   "pages": 150435,
+   "el": 3015.0,
+   "p_best": {
+    "gemini-3-flash-preview": 0.891,
+    "gemini-3.1-flash-lite": 0.054,
+    "gemini-3.8-flash+antigravity-cli": 0.035,
+    "claude-sonnet-5-5": 0.021
+   },
+   "arms": [
+    "gemini-3.1-flash-lite",
+    "gemini-3-flash-preview"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.019440000876784325,
+   "value": 2924.89990234375,
+   "cost": {
+    "calls": {
+     "claude": 20
+    },
+    "usd": 0.16,
+    "quota_pct": 0.49,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": 5969.2001953125,
+   "stage": "ocr",
+   "decision": "read latin-script-other (latin-script-print)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "gemini-3.1-flash-lite": "measured",
+    "gemini-3-flash-preview": "measured"
+   },
+   "sigma_paired": 0.03,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "settled",
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "Flash-Lite 3.1",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.1871,
+   "el_per_page": 0.1871,
+   "pages": 26062,
+   "el": 4876.1,
+   "p_best": {
+    "Opus 5.5": 0.992,
+    "3.8 Flash CLI": 0.008,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "Flash-Lite 3.1",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.18667000532150269,
+   "value": 4864.89990234375,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 5405.39990234375,
+   "stage": "translation",
+   "decision": "translate Italian",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "Flash-Lite 3.1": "thin",
+    "Opus 5.5": "pooled"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 33520,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.1493,
+   "el_per_page": 0.14932,
+   "pages": 26906,
+   "el": 4017.8,
+   "p_best": {
+    "Opus 5.5": 0.999,
+    "Sonnet 5.5": 0.001,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.1490900069475174,
+   "value": 4011.5,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 4457.2001953125,
+   "stage": "translation",
+   "decision": "translate Hebrew",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Opus 5.5": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 9713,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "gemini-3.1-flash-lite",
+   "leader": "chandra-ocr-2",
+   "p_leader_beats_incumbent": 0.756,
+   "evidence_decides": false,
+   "p_not_best": 0.971,
+   "gap_if_not_best": 0.0412,
+   "el_per_page": 0.04003,
+   "pages": 59082,
+   "el": 2365.0,
+   "p_best": {
+    "chandra-ocr-2": 0.186,
+    "gemini-3.8-flash-high+antigravity-cli": 0.165,
+    "claude-sonnet-5-5": 0.163,
+    "gemini-3-flash-preview": 0.144
+   },
+   "arms": [
+    "gemini-3.1-flash-lite",
+    "chandra-ocr-2",
+    "gemini-3.8-flash-high+antigravity-cli"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.02873999997973442,
+   "value": 1698.199951171875,
+   "cost": {
+    "calls": {
+     "claude": 20,
+     "gemini_thinking": 20
+    },
+    "usd": 0.16,
+    "quota_pct": 0.55,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": 3087.699951171875,
+   "stage": "ocr",
+   "decision": "read english (latin-script-print)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "gemini-3.1-flash-lite": "measured",
+    "chandra-ocr-2": "measured",
+    "gemini-3.8-flash-high+antigravity-cli": "measured"
+   },
+   "sigma_paired": 0.0366,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "settled",
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.1867,
+   "el_per_page": 0.18668,
+   "pages": 13297,
+   "el": 2482.2,
+   "p_best": {
+    "Opus 5.5": 0.998,
+    "3.8 Flash CLI": 0.003,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.1866600066423416,
+   "value": 2482.0,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 2757.699951171875,
+   "stage": "translation",
+   "decision": "translate Arabic",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Opus 5.5": "thin"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 4206,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "gemini-3.1-flash-lite",
+   "leader": "chandra-ocr-2",
+   "p_leader_beats_incumbent": 0.733,
+   "evidence_decides": false,
+   "p_not_best": 0.968,
+   "gap_if_not_best": 0.0885,
+   "el_per_page": 0.08566,
+   "pages": 21019,
+   "el": 1800.4,
+   "p_best": {
+    "chandra-ocr-2": 0.198,
+    "gemini-4-argon-low+antigravity-cli": 0.198,
+    "gemini-3.8-flash+antigravity-cli": 0.149,
+    "claude-opus-5-5": 0.148
+   },
+   "arms": [
+    "gemini-3.1-flash-lite",
+    "chandra-ocr-2",
+    "gemini-4-argon-low+antigravity-cli"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.06293000280857086,
+   "value": 1322.699951171875,
+   "cost": {
+    "calls": {
+     "claude": 20,
+     "gemini_thinking": 20
+    },
+    "usd": 0.16,
+    "quota_pct": 0.55,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": 2405.0,
+   "stage": "ocr",
+   "decision": "read chinese-print (chinese-print)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "gemini-3.1-flash-lite": "measured",
+    "chandra-ocr-2": "measured",
+    "gemini-4-argon-low+antigravity-cli": "measured"
+   },
+   "sigma_paired": 0.0662,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "open",
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.2475,
+   "el_per_page": 0.24746,
+   "pages": 5943,
+   "el": 1470.6,
+   "p_best": {
+    "Opus 5.5": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0,
+    "3.8 Flash CLI": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.2474599927663803,
+   "value": 1470.5999755859375,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 1634.0,
+   "stage": "translation",
+   "decision": "translate Sanskrit",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Opus 5.5": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 7230,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "paddleocr-vl-1.6",
+   "leader": "gemini-4-argon-low+antigravity-cli",
+   "p_leader_beats_incumbent": 0.579,
+   "evidence_decides": false,
+   "p_not_best": 0.779,
+   "gap_if_not_best": 0.0215,
+   "el_per_page": 0.01673,
+   "pages": 84075,
+   "el": 1406.3,
+   "p_best": {
+    "gemini-4-argon-low+antigravity-cli": 0.365,
+    "claude-opus-5-5": 0.247,
+    "paddleocr-vl-1.6": 0.221,
+    "dots-mocr": 0.133
+   },
+   "arms": [
+    "paddleocr-vl-1.6",
+    "gemini-4-argon-low+antigravity-cli",
+    "claude-opus-5-5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.009530000388622284,
+   "value": 801.5,
+   "cost": {
+    "calls": {
+     "claude": 40,
+     "gemini_thinking": 20
+    },
+    "usd": 0.08,
+    "quota_pct": 1.01,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": 793.5999755859375,
+   "stage": "ocr",
+   "decision": "read chinese-manuscript (chinese-siku-manuscript)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "paddleocr-vl-1.6": "measured",
+    "gemini-4-argon-low+antigravity-cli": "measured",
+    "claude-opus-5-5": "measured"
+   },
+   "sigma_paired": 0.1034,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "settled",
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.2385,
+   "el_per_page": 0.23854,
+   "pages": 2420,
+   "el": 577.3,
+   "p_best": {
+    "Opus 5.5": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0,
+    "3.8 Flash CLI": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.23853999376296997,
+   "value": 577.2999877929688,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 641.5,
+   "stage": "translation",
+   "decision": "translate Persian",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Opus 5.5": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 2350,
+   "not_feasible_at_this_volume": [],
+   "settled": false,
+   "why_below": ""
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "Opus 5.5",
+   "p_leader_beats_incumbent": 1.0,
+   "evidence_decides": true,
+   "p_not_best": 1.0,
+   "gap_if_not_best": 0.2004,
+   "el_per_page": 0.20036,
+   "pages": 258,
+   "el": 51.8,
+   "p_best": {
+    "Opus 5.5": 1.0,
+    "Flash-Lite 3.1": 0.0,
+    "3 Flash": 0.0,
+    "3.8 Flash CLI": 0.0
+   },
+   "arms": [
+    "3 Flash",
+    "Opus 5.5"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.20023000240325928,
+   "value": 51.70000076293945,
+   "cost": {
+    "calls": {
+     "claude": 33,
+     "gemini_thinking": 40
+    },
+    "usd": 0.0,
+    "quota_pct": 0.9
+   },
+   "value_per_quota": 57.5,
+   "stage": "translation",
+   "decision": "translate Pali",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Opus 5.5": "thin"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 741,
+   "not_feasible_at_this_volume": [],
+   "settled": true,
+   "why_below": "low volume: a test is worth under 1% of the top one; route on the estimate"
+  },
+  {
+   "incumbent": "3 Flash",
+   "leader": "3 Flash",
+   "p_leader_beats_incumbent": 0.0,
+   "evidence_decides": false,
+   "p_not_best": 0.023,
+   "gap_if_not_best": 0.0205,
+   "el_per_page": 0.00048,
+   "pages": 492501,
+   "el": 235.9,
+   "p_best": {
+    "3 Flash": 0.977,
+    "Flash-Lite 3.1": 0.023
+   },
+   "arms": [
+    "3 Flash",
+    "Flash-Lite 3.1"
+   ],
+   "n": 120,
+   "evsi_per_page": 0.0002500000118743628,
+   "value": 122.30000305175781,
+   "cost": {
+    "calls": {
+     "claude": 80,
+     "gemini_thinking": 240
+    },
+    "usd": 0.24,
+    "quota_pct": 2.62
+   },
+   "value_per_quota": 46.70000076293945,
+   "stage": "translation",
+   "decision": "translate Chinese",
+   "unit": "page-fraction (fidelity/4)",
+   "basis": {
+    "3 Flash": "measured",
+    "Flash-Lite 3.1": "measured"
+   },
+   "judges": "Opus + Gemini 3.8 Flash high (two families); alpha measured 0.60-0.63 on #6545: not settled",
+   "queue_pages": 1661855,
+   "not_feasible_at_this_volume": [
+    "3.8 Flash CLI",
+    "Sonnet 5.5",
+    "Opus 5.5"
+   ],
+   "settled": true,
+   "why_below": "the incumbent is best with P >= 0.90"
+  },
+  {
+   "incumbent": "Opus corrects a specialist draft",
+   "leader": "Opus corrects a specialist draft",
+   "p_leader_beats_incumbent": 0.0,
+   "evidence_decides": false,
+   "p_not_best": 0.249,
+   "gap_if_not_best": 0.0212,
+   "el_per_page": 0.00526,
+   "pages": 4379,
+   "el": 23.0,
+   "p_best": {
+    "Opus corrects a specialist draft": 0.751,
+    "Gemini 3.8 Flash high corrects a specialist draft": 0.249,
+    "Gemini 3.1 Pro corrects a specialist draft": 0.0,
+    "Haiku corrects a specialist draft": 0.0
+   },
+   "arms": [
+    "Opus corrects a specialist draft",
+    "Gemini 3.8 Flash high corrects a specialist draft"
+   ],
+   "n": 120,
+   "evsi_per_page": 0.00234,
+   "value": 10.2,
+   "cost": {
+    "calls": {
+     "claude": 120,
+     "gemini_thinking": 120
+    },
+    "quota_pct": 3.18,
+    "note": "scored against typed references (mechanical)"
+   },
+   "value_per_quota": 3.2,
+   "stage": "correction",
+   "decision": "correct chinese specialist drafts",
+   "unit": "page made worse",
+   "judges": "mechanical against a reference; planted errors in the draft",
+   "basis": {},
+   "settled": true,
+   "why_below": "low volume: a test is worth under 1% of the top one; route on the estimate"
+  },
+  {
+   "incumbent": "Gemini 3.8 Flash low corrects a specialist draft",
+   "leader": "Gemini 3.8 Flash low corrects a specialist draft",
+   "p_leader_beats_incumbent": 0.0,
+   "evidence_decides": false,
+   "p_not_best": 0.428,
+   "gap_if_not_best": 0.0135,
+   "el_per_page": 0.00577,
+   "pages": 5755,
+   "el": 33.2,
+   "p_best": {
+    "Gemini 3.8 Flash low corrects a specialist draft": 0.572,
+    "Opus corrects a specialist draft": 0.221,
+    "Sonnet corrects a specialist draft": 0.178,
+    "Gemini 3.8 Flash high corrects a specialist draft": 0.029
+   },
+   "arms": [
+    "Gemini 3.8 Flash low corrects a specialist draft",
+    "Opus corrects a specialist draft",
+    "Sonnet corrects a specialist draft"
+   ],
+   "n": 120,
+   "evsi_per_page": 0.00235,
+   "value": 13.5,
+   "cost": {
+    "calls": {
+     "gemini_low": 120,
+     "claude": 120,
+     "sonnet": 120
+    },
+    "quota_pct": 4.31,
+    "note": "scored against typed references (mechanical)"
+   },
+   "value_per_quota": 3.1,
+   "stage": "correction",
+   "decision": "correct tibetan specialist drafts",
+   "unit": "page made worse",
+   "judges": "mechanical against a reference; planted errors in the draft",
+   "basis": {},
+   "settled": true,
+   "why_below": "low volume: a test is worth under 1% of the top one; route on the estimate"
+  },
+  {
+   "incumbent": "omnisyr",
+   "leader": "omnisyr",
+   "p_leader_beats_incumbent": 0.0,
+   "evidence_decides": false,
+   "p_not_best": 0.607,
+   "gap_if_not_best": 0.0346,
+   "el_per_page": 0.02101,
+   "pages": 25,
+   "el": 0.5,
+   "p_best": {
+    "omnisyr": 0.393,
+    "omnisyr-nosplit": 0.343,
+    "qoruyo-estrangela": 0.135,
+    "qoruyo-eastern": 0.13
+   },
+   "arms": [
+    "omnisyr",
+    "omnisyr-nosplit",
+    "qoruyo-estrangela"
+   ],
+   "n": 20,
+   "evsi_per_page": 0.01607000082731247,
+   "value": 0.4000000059604645,
+   "cost": {
+    "calls": {
+     "claude": 20
+    },
+    "usd": 0.24,
+    "quota_pct": 0.49,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": 0.800000011920929,
+   "stage": "ocr",
+   "decision": "read syriac-print (syriac)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "omnisyr": "measured",
+    "omnisyr-nosplit": "measured",
+    "qoruyo-estrangela": "measured"
+   },
+   "sigma_paired": 0.0856,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "settled",
+   "settled": true,
+   "why_below": "low volume: a test is worth under 1% of the top one; route on the estimate"
+  },
+  {
+   "incumbent": "gemini-3-flash-preview",
+   "leader": "gemini-3-flash-preview",
+   "p_leader_beats_incumbent": 0.0,
+   "evidence_decides": false,
+   "p_not_best": 0.041,
+   "gap_if_not_best": 0.0073,
+   "el_per_page": 0.0003,
+   "pages": 24558,
+   "el": 7.4,
+   "p_best": {
+    "gemini-3-flash-preview": 0.959,
+    "gemini-4-argon-low+antigravity-cli": 0.025,
+    "claude-opus-5-5": 0.01,
+    "dots-mocr": 0.006
+   },
+   "arms": [
+    "gemini-3-flash-preview",
+    "gemini-4-argon-low+antigravity-cli"
+   ],
+   "n": 200,
+   "evsi_per_page": -0.0006099999882280827,
+   "value": -15.0,
+   "cost": {
+    "calls": {
+     "claude": 200,
+     "gemini_thinking": 200
+    },
+    "usd": 0.8,
+    "quota_pct": 5.38,
+    "note": "n new pages: an Opus by-eye reference per page, every arm reads it, CER scores it"
+   },
+   "value_per_quota": -2.799999952316284,
+   "stage": "ocr",
+   "decision": "read greek (greek-print)",
+   "unit": "page-fraction (CER)",
+   "basis": {
+    "gemini-3-flash-preview": "measured",
+    "gemini-4-argon-low+antigravity-cli": "measured"
+   },
+   "sigma_paired": 0.1837,
+   "judges": "mechanical (CER against a typed reference); planted-reference check per #6304",
+   "routing_status": "settled",
+   "settled": true,
+   "why_below": "the incumbent is best with P >= 0.90"
+  }
+ ],
+ "test_first": [
+  {
+   "stage": "translation",
+   "decision": "Syriac (print)",
+   "why": "language not in the estimator data"
+  },
+  {
+   "stage": "ocr",
+   "decision": "chinese-print: ndlkotenocr-v3",
+   "why": "untested family in this chart"
+  },
+  {
+   "stage": "ocr",
+   "decision": "chinese-print: surya2",
+   "why": "untested family in this chart"
+  },
+  {
+   "stage": "ocr",
+   "decision": "chinese-print: tesseract-chi_tra_vert",
+   "why": "untested family in this chart"
+  }
+ ],
+ "constants": {
+  "SIGMA_TR": 0.8,
+  "N_GRID": [
+   20,
+   30,
+   50,
+   80,
+   120,
+   200
+  ],
+  "WEEK": {
+   "claude": 4250.0,
+   "gemini_thinking": 33600.0,
+   "gemini_low": 151200.0
+  },
+  "CAP_Q": {
+   "claude": 82875.0,
+   "sonnet": 165750.0,
+   "gemini_low": 982800.0,
+   "gemini_thinking": 218400.0,
+   "api": Infinity,
+   "gpu": Infinity
+  },
+  "USD_PER_QUOTA_POINT": 10.0
+ }
+}

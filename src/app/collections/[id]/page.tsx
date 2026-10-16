@@ -640,6 +640,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           is_first_translation: b.is_first_translation,
           categories: b.categories,
           resource_type: b.resource_type,
+          preview: b.preview,
         }));
       }
 

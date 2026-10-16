@@ -19,7 +19,7 @@
 import http from 'http';
 import { pipeline } from '@xenova/transformers';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
-import { checkEmbedAuth, EMBED_KEY_HEADER } from './lib/embed-auth.mjs';
+import { checkEmbedAuth, createDenialLog, EMBED_KEY_HEADER } from './lib/embed-auth.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -28,10 +28,14 @@ const PORT = parseInt(process.env.EMBED_PORT || '3456');
 const MODEL = 'Xenova/multilingual-e5-base';
 
 // Shared-secret gate (#6206). Unset = rollout mode: allow everything, warn once. Never log the key.
+// The key comes from a drop-in on the box (scripts/workers/systemd/sl-embedding-server.service).
 const EMBED_SERVER_KEY = process.env.EMBED_SERVER_KEY;
 if (!EMBED_SERVER_KEY) {
   console.warn('WARNING: EMBED_SERVER_KEY is not set — embedding server is accepting unauthenticated requests (rollout mode).');
+} else {
+  console.log(`Shared-secret gate: enforcing ${EMBED_KEY_HEADER} on every route except /health.`);
 }
+const logDenial = createDenialLog();
 
 console.log('Loading model...');
 const t = Date.now();
@@ -48,6 +52,7 @@ const server = http.createServer(async (req, res) => {
 
   const auth = checkEmbedAuth({ key: EMBED_SERVER_KEY, headerValue: req.headers[EMBED_KEY_HEADER], path: req.url });
   if (!auth.ok) {
+    logDenial({ path: req.url, remote: req.socket.remoteAddress, userAgent: req.headers['user-agent'] });
     res.writeHead(401, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'unauthorized' }));
     return;

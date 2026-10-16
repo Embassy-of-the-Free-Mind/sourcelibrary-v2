@@ -2841,11 +2841,17 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
   /** A picker tap waiting for its pane to render before scrolling to it. */
   const pendingJump = useRef<PhonePane | null>(null);
 
+  // The RENDERED page, like the mobile turn below. Keyed on the id being
+  // navigated to, an uncached turn threw the outgoing page back to its top
+  // and replayed the arrival fade over it, and the new page then swapped in
+  // with no fade at all: "it flickers but is actually the same page" (#5952).
   useEffect(() => {
     ocrRef.current?.scrollTo({ top: 0 });
     enRef.current?.scrollTo({ top: 0 });
     setBarHidden(false);
-  }, [r.currentPageId]);
+  }, [r.currentPage.id]);
+  // The turn is waiting on a fetch: the page on screen is the one being left.
+  const pagePending = r.pageLoading && r.currentPage.id !== r.currentPageId;
 
   // Keyed on the page that is actually RENDERED, not the one being navigated
   // to: an uncached turn changes the id first and the content a fetch later,
@@ -3904,7 +3910,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   className="flex-1 min-h-0 overflow-y-auto px-[30px] py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
                 >
-                  <div key={r.currentPageId} className="rv2-page-in">
+                  <div key={r.currentPage.id} className="rv2-page-in" data-page-pending={pagePending ? '' : undefined}>
                     {!paired && <TextSourceLine page={r.currentPage} />}
                     <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />
                     {paired
@@ -3942,7 +3948,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                 className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]"
                 style={{ overscrollBehavior: 'contain' }}
               >
-                <div key={r.currentPageId} className="rv2-page-in">
+                <div key={r.currentPage.id} className="rv2-page-in" data-page-pending={pagePending ? '' : undefined}>
                   <TranslitBody text={translit} loading={translitLoading} error={translitError}
                     settings={r.settings} baseSize={16.5}
                     ocrLength={r.currentPage.ocr?.data?.length ?? 0} />
@@ -3990,7 +3996,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
                   className="flex-1 min-h-0 overflow-y-auto px-8 py-[26px]"
                   style={{ overscrollBehavior: 'contain' }}
                 >
-                  <div key={r.currentPageId} className="rv2-page-in">
+                  <div key={r.currentPage.id} className="rv2-page-in" data-page-pending={pagePending ? '' : undefined}>
                     {!paired && !showingSpanish && <MachineDraftLine page={displayPage} book={r.book} />}
                     {!paired && !showingSpanish && <QualityWarningLine warnings={qualityWarnings} pageNumber={r.currentPage.page_number} bookPath={r.book.slug || r.book.id} />}
                     {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}

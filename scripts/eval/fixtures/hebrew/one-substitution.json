@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "one-substitution",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "בדאשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "expected_cer": 0.017543859649122806,
+ "tolerance": 1e-09,
+ "ref_is_sefaria": false,
+ "why": "one letter misread (ר→ד) in 57 letters"
+}

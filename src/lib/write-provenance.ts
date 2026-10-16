@@ -53,7 +53,7 @@ export interface RunBlock { code_version: string; host: string; at: Date; job_id
 export interface ImageInput { image_url: string; image_mime?: string; image_bytes?: number; resized_to_px?: number }
 export interface TranslationInput { source_field: string; source_text_hash: string; source_text_chars: number; source_updated_at?: Date; context?: Record<string, unknown> }
 export interface GeminiEngine {
-  schema: typeof ENGINE_SCHEMA; name: 'gemini'; model: string;
+  schema: typeof ENGINE_SCHEMA; name: 'gemini' | 'anthropic'; model: string;
   model_version: string | null; model_version_source: string;
   api: 'realtime' | 'batch' | 'cli'; cli?: { name: string; version: string }; call_site: string;
   prompt: PromptBlock; generation: GenerationBlock | NotRecorded; run: RunBlock;
@@ -280,7 +280,8 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     // A restore of pre-#4613 text says so explicitly: a marker, not a gap.
     if (isNotRecorded(e)) { markers.push(`${field}.engine`); return { missing, markers }; }
     if (e.schema !== ENGINE_SCHEMA) missing.push(`${field}.engine.schema`);
-    if (e.name !== 'gemini') missing.push(`${field}.engine.name`);
+    // 'anthropic' only through a subscription CLI (scripts/batch/claude-ocr.mjs, #6559): see ENGINE_NAMES in the .mjs twin.
+    if (e.name !== 'gemini' && !(e.name === 'anthropic' && e.api === 'cli')) missing.push(`${field}.engine.name`);
     if (!e.model) missing.push(`${field}.engine.model`);
     if (e.api !== 'realtime' && e.api !== 'batch' && e.api !== 'cli') missing.push(`${field}.engine.api`);
     const cli = e.cli as { name?: string; version?: string } | undefined;

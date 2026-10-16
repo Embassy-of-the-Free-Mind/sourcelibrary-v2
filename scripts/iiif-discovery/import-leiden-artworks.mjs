@@ -38,6 +38,7 @@ import { ObjectId } from 'mongodb';
 import { getScriptClient } from '../lib/mongo.mjs';
 import { makeBookDoc } from '../lib/book-docs.mjs';
 import { iiifFullSizeUrl } from '../lib/iiif-utils.mjs';
+import { yearFromPublished } from '../lib/catalogue-year.mjs';
 
 const args = Object.fromEntries(
   process.argv.slice(2).filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; })
@@ -66,7 +67,6 @@ async function generateSlug(db, title) {
 }
 const imgBase = id => `${IMG_HOST}/hdl:1887.1%252Fitem:${id}`;
 const licenseFor = r => r === 'public-domain' ? 'publicdomain' : (r === 'cc-by' ? 'CC-BY-4.0' : 'unknown');
-function yearFrom(text) { const m = (text || '').match(/\b(1[0-9]{3}|20[0-2][0-9])\b/); return m ? parseInt(m[1]) : null; }
 
 const { client, db } = await getScriptClient({ noTimeout: true });
 const filter = { source: 'leiden', status: 'discovered' };
@@ -102,7 +102,8 @@ for (const c of cands) {
   const fullUrl = iiifFullSizeUrl(base);
   const displayUrl = `${base}/full/1200,/0/default.jpg`;
   const thumbUrl = `${base}/full/!400,400/0/default.jpg`;
-  const year = yearFrom(c.date_text);
+  // "1303 [1885]": the Hijri year comes first; store the bracketed CE year (#6057).
+  const year = yearFromPublished(c.date_text);
 
   if (DRY_RUN) {
     if (imported < 12) console.log(`  ${title.slice(0, 55)} | ${author.slice(0, 22)} | ${c.date_text || '?'} | ${RESOURCE_TYPE} | ${c.metadata?.shelfmark || ''}`);

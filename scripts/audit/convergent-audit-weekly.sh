@@ -7,6 +7,9 @@
 #   0 6 * * 1 /root/sourcelibrary/scripts/audit/convergent-audit-weekly.sh >> /var/log/sourcelibrary/convergent-audit-weekly.log 2>&1
 # Finish a run whose second reader did not read (every step skips what is done):
 #   scripts/audit/convergent-audit-weekly.sh 2026-10-12
+# A spare-lane round (#6781: an account's expiring week, no issue to spend it on): Opus only, a fresh seed, no post;
+# scripts/audit/convergent-audit-pool.mjs posts the account-week's rounds as one comment.
+#   AUDIT_OPUS_ONLY=1 AUDIT_POST=0 AUDIT_SEED=<n> AUDIT_BASE=<dir> AUDIT_LOCK=<file> scripts/audit/convergent-audit-weekly.sh <run>
 #
 # THE GEMINI READER AND QUOTA (#6203). On 2026-10-12 the account's quota ran out at 03:30 UTC (lane B's main200 reads
 # share it) and reset at 06:35; this ran at 06:00. run-cli-arm.py stops on the first quota error with exit 3, the
@@ -19,7 +22,9 @@ REPO="${REPO:-/root/sourcelibrary}"
 BASE="${AUDIT_BASE:-/mnt/HC_Volume_105839809/jobs/convergent-audit-6420}"
 RUN="$BASE/${1:-$(date -u +%F)}"
 ENV="${AUDIT_ENV:-$REPO/.env.production.local}"
-GEM_MODELS="${AUDIT_GEMINI_MODELS:-gemini-3.7-flash-low gemini-3.8-flash-low}"
+# 3.7 was withdrawn from agy on 2026-10-12 and now fails with exit 1, not the quota exit 3, so listing it first
+# would end the pass before 3.8 is tried.
+GEM_MODELS="${AUDIT_GEMINI_MODELS:-gemini-3.8-flash-low}"
 QUOTA_WAIT="${AUDIT_QUOTA_WAIT:-1800}"
 QUOTA_RETRIES="${AUDIT_QUOTA_RETRIES:-8}"
 # Appended, not prepended: cron's PATH is /usr/bin:/bin either way, and the test puts its stubs first.
@@ -28,9 +33,14 @@ mkdir -p "$BASE/tmp"
 exec 9>"${AUDIT_LOCK:-/tmp/sl-convergent-audit.lock}"; flock -n 9 || { echo "$(date -u +%FT%TZ) another audit is running"; exit 0; }
 cd "$REPO" || exit 1
 echo "== $(date -u +%FT%TZ) convergent audit $RUN"
-[ -d "$RUN/packets" ] || node --env-file="$ENV" scripts/audit/convergent-audit-weekly.mjs draw --run "$RUN" || exit 1
+[ -d "$RUN/packets" ] || node --env-file="$ENV" scripts/audit/convergent-audit-weekly.mjs draw --run "$RUN" ${AUDIT_SEED:+--seed "$AUDIT_SEED"} || exit 1
 # Opus: sealed folder per page, Read/Write only (run-readers.sh), 4 at a time, on the box's Claude account.
 scripts/eval/second-reader/run-readers.sh "$RUN" opus claude opus read 4
+if [ "${AUDIT_OPUS_ONLY:-0}" = 1 ]; then
+  node scripts/audit/convergent-audit-weekly.mjs score --run "$RUN"
+  echo "== $(date -u +%FT%TZ) done (Opus only, not posted)"
+  exit 0
+fi
 # Gemini through the CLI, one page per call, the #6338 tested path; logs to the shared agy call meter.
 node scripts/eval/second-reader/second-reader.mjs cli-requests --run "$RUN" --reader gemini37
 
@@ -61,5 +71,5 @@ while :; do
 done
 [ "$rc" -eq 0 ] || echo "$(date -u +%FT%TZ) Gemini reader ended with exit $rc"
 node scripts/eval/second-reader/second-reader.mjs cli-assemble --run "$RUN" --reader gemini37
-node scripts/audit/convergent-audit-weekly.mjs score --run "$RUN" --post
+node scripts/audit/convergent-audit-weekly.mjs score --run "$RUN" $([ "${AUDIT_POST:-1}" = 1 ] && echo --post)
 echo "== $(date -u +%FT%TZ) done"

@@ -1,0 +1,186 @@
+{
+ "built_at": "2026-10-14T19:32:42.678Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 802,
+   "book_id": "69a5e5e385fa13e734e41894",
+   "slug": "procli-opera-grec-1839-proclus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 58,
+   "lane_block": null
+  },
+  {
+   "rank": 809,
+   "book_id": "69b2fee065b9d6bf89925253",
+   "slug": "vitae-parallelae-plutarch",
+   "group": "greek",
+   "language": "Greek",
+   "views": 58,
+   "lane_block": null
+  },
+  {
+   "rank": 812,
+   "book_id": "6993896474305116d72d17e1",
+   "slug": "basel-universitatsbibliothek-an-iv-2-anonymous",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 817,
+   "book_id": "69ad716ac5001c07fa847f7d",
+   "slug": "clement-of-alexandria-miscellanies-stromata-book-vii-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 825,
+   "book_id": "69938d6d5d28b693146cf50c",
+   "slug": "dionysiaca-graefe-critical-edition-panopolis",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 826,
+   "book_id": "69938e685d28b693146d0737",
+   "slug": "dionysiaca-koechly-spiro-teubner-edition-panopolis",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 827,
+   "book_id": "696925034fa3b04c6de86f6b",
+   "slug": "e-dialectice-petri-hispani-ek-tes-dialektikes-petrou-tou-texts",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 829,
+   "book_id": "699379a0b0a84a576396590a",
+   "slug": "euripidis-tragoediae-alt-edition-euripides",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 837,
+   "book_id": "69de0cc580210ba13d79f4a5",
+   "slug": "lucian-vii-dialogues-of-the-dead-sea-gods-gods-courtesans-loeb",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 844,
+   "book_id": "69af453b004a024aaf21615d",
+   "slug": "sancti-eusebii-hieronymi-stridonensis-presbyteri-opera-jerome-migne-2",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 847,
+   "book_id": "69924f3f09c5da0cf50d7b8d",
+   "slug": "the-odes-of-pindar-sandys",
+   "group": "greek",
+   "language": "Greek",
+   "views": 57,
+   "lane_block": null
+  },
+  {
+   "rank": 856,
+   "book_id": "69937a5eb0a84a5763968246",
+   "slug": "aristophanes-ii-peace-birds-frogs-loeb-aristophanes",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 859,
+   "book_id": "699388e60f04c37dcfa6000f",
+   "slug": "demosthenes-complete-orations-demosthenes",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 866,
+   "book_id": "69c7ff506c6f3cc53c843b2c",
+   "slug": "greek-panoplia-dogmatike-euthymius",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 868,
+   "book_id": "69b62f671c1c21a3737f51f5",
+   "slug": "lt-aristotelous-tou-stageiritou-ta-sozomena-gt-operum-aristote",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 869,
+   "book_id": "6993830384cf5845c644c637",
+   "slug": "lucian-libanius-severus-alexandrinus-aelius-aristides-and-lucian",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 880,
+   "book_id": "69b2235a56715b0e324772cb",
+   "slug": "theodore-gaza-greek-grammar-with-manuel-moschopoulos-and-gaza",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 882,
+   "book_id": "6993897cce1538706594711f",
+   "slug": "thucydides-thoukudides-thucydides",
+   "group": "greek",
+   "language": "Greek",
+   "views": 56,
+   "lane_block": null
+  },
+  {
+   "rank": 892,
+   "book_id": "69938a88c564adf9fabebf28",
+   "slug": "bodleian-library-ms-barocci-87-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 55,
+   "lane_block": null
+  },
+  {
+   "rank": 897,
+   "book_id": "69d143e91c2a66dc094b1ba5",
+   "slug": "de-vita-pythagorica-liber-pars-2-kiessling-kiessling",
+   "group": "greek",
+   "language": "Greek",
+   "views": 55,
+   "lane_block": null
+  }
+ ]
+}

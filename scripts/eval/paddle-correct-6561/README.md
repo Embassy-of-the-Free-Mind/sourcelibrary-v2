@@ -20,3 +20,36 @@ Run from a scratch directory (`$JOB_SCRATCH/w`, `node_modules` symlinked) with
 6. `readoff.mjs build`, run `ro-req-gem.jsonl` on 3.8 Flash high and `ro-req-opus.jsonl` on Opus, `readoff.mjs score`
    → `results/readoff.json` (the recitation check).
 7. `coverage.mjs 200` (Kanripo screen coverage of the lane), `project.mjs` → `results/projection.json`.
+
+## Sonnet and Haiku arms (#6667)
+
+Same pages, drafts, plants and prompt as the Opus correct arm; write-up
+`scripts/eval/experiments/2026-10-13-sonnet-haiku-correct-vs-opus-6667.md`.
+
+1. `rebuild.mjs --dir=<kanripo cache dir>`: the #6561 scratch is gone, so this rebuilds `sets.json`, `anchors.json`
+   (with the planted drafts), `req-correct.jsonl` and the images from `results/draw.json`, `results/anchors.json`, the
+   pilot sample and the live OCR prompt (hash-checked against `results/prompt-ref.json`). Check it by scoring the
+   committed `out-*.jsonl.gz` (gunzipped into the scratch dir): the result must equal `results/score.json`.
+2. `opus.mjs req-correct.jsonl out-sonnet-correct.jsonl <cap> 1 sonnet` and the same with `haiku`: the fifth
+   argument is the model (default `opus`); each model keeps its own ledger and workspace.
+3. `score.mjs <dir holding the pilot's read-opus.jsonl as pil-read-opus.jsonl>`: now also scores `sonnet-correct` and
+   `haiku-correct` and adds `vs_opus_correct` (paired Δ CER, 95% bootstrap over books) to every arm's summary.
+   Output of that run with all arms: `results/score-6667.json.gz`. Meter readings: `results/meter-6667.json`.
+
+## The batch: Opus correct over all 4,379 withheld table pages (`batch/`, job table-correct-6561)
+
+Derek's "yes" of 2026-10-13 on #6561. Opus runs on cloudlayer (derek@playpowerlabs), files only; the review and the
+serve are a second job on main (`batch/review-brief.md`, written out in full).
+
+1. `batch/prep.mjs <flagged.jsonl.gz>`: the work list (`pages.jsonl`: every page still withheld with reason
+   `paddle_table_6388`, its image URL and the Paddle text from the withhold's snapshot) and `prompt.json`. It rebuilds
+   the correct prompt from the live OCR prompt and refuses to run unless it hashes to `results/prompt-ref.json`.
+2. `batch/run.mjs`: `claude -p --model opus`, one page per call, 2 in flight. Checkpoint `out.jsonl` (one row per
+   attempt: page_id, book_id, outcome, corrected text and its hash). A reply is accepted only if it came from Opus,
+   opened the image, has the three sentinels with nothing outside them and passes `ocrReadProblem`. Pauses above 85%
+   weekly use (`claude-job.sh where`), sleeps 30 min on a limit, tries a page 3 times, writes `runner.done` at the end.
+3. `batch/status.mjs [dir]`: progress, as markdown.
+4. `batch/upload.mjs [--apply]`: accepted corrections to Mongo `paddle_table_corrections_6561` (staging; nothing
+   reads it but the review job), read back and hash-checked.
+5. `batch/cron.sh` (hourly on cloudlayer, `DRY=1` to rehearse): restarts a dead runner, comments progress every 6 h,
+   and when the runner finishes uploads, starts `table-review-6561` on main through the box mesh, and removes itself.

@@ -1,0 +1,19 @@
+{"key": "ruh|translates|ruach", "verdict": "stated", "idx": 1, "reason": "'Spirit, Rūḥ (روح), Hebrew Ruach' gives one as the equivalent of the other", "judge": "claude-opus-5-5"}
+{"key": "ruh|translates|pneuma", "verdict": "stated", "idx": 0, "reason": "'ruh, evidently equal to pneuma, signifying both breath and spirit'", "judge": "claude-opus-5-5"}
+{"key": "montpellier|descends|stahlian-animism", "verdict": "not_stated", "reason": "only catalogue and chronology entries naming Stahl and Montpellier", "judge": "claude-opus-5-5"}
+{"key": "vital-force|descends|vital-principle", "verdict": "not_stated", "reason": "Hahnemann uses both terms; no passage says Lebenskraft physiology took up the Montpellier principle", "judge": "claude-opus-5-5"}
+{"key": "entelechy|descends|psyche", "verdict": "not_stated", "reason": "passages give Aristotle's definition of soul as entelechy, a definitional relation, not descent", "judge": "claude-opus-5-5"}
+{"key": "sober-life|descends|regimen", "verdict": "not_stated", "reason": "a bibliography list only", "judge": "claude-opus-5-5"}
+{"key": "water-of-life|descends|quintessence", "verdict": "stated", "idx": 2, "reason": "aqua vitae distilled until fiery: 'Thus you have the Quinta Essentia of the wine itself' -- quintessence drawn from aqua vitae", "judge": "claude-opus-5-5"}
+{"key": "golem|descends|breath-of-life", "verdict": "not_stated", "reason": "Adam lay as a golem; nothing ties the golem legend to Adam's animation", "judge": "claude-opus-5-5"}
+{"key": "vital-balsam|belongs|paracelsianism", "verdict": "not_stated", "reason": "Paracelsians are mentioned near 'natural balsam of remedies' (a remedy sense); no passage attributes the inner balsam to Paracelsian doctrine", "judge": "claude-opus-5-5"}
+{"key": "montpellier|belongs|vitalism", "verdict": "stated", "idx": 0, "reason": "the author learned his principium vitale at Montpellier from Barthez", "judge": "claude-opus-5-5"}
+{"key": "vital-force|belongs|vitalism", "verdict": "stated", "idx": 0, "reason": "'Vitalistic physiology also substituted a Lebenskraft for the soul'", "judge": "claude-opus-5-5"}
+{"key": "manitou|belongs|animism", "verdict": "not_stated", "reason": "Picart describes spirits in all things but no passage classes manitou under animism", "judge": "claude-opus-5-5"}
+{"key": "yangsheng|cultivates|longevity", "verdict": "stated", "idx": 1, "reason": "nourishing-life practitioners say guarding the Yellow Court attains longevity", "judge": "claude-opus-5-5"}
+{"key": "yangsheng|cultivates|qi", "verdict": "not_stated", "reason": "qi appears in daoyin and diet rules, but no passage says nourishing life conserves qi", "judge": "claude-opus-5-5"}
+{"key": "water-of-life|cultivates|longevity", "verdict": "not_stated", "reason": "long life is credited to tinctures prepared from 'our subject', not plainly to aqua vitae", "judge": "claude-opus-5-5"}
+{"key": "sober-life|cultivates|longevity", "verdict": "stated", "idx": 0, "reason": "those who lead a frugal and temperate life attain an easy longevity", "judge": "claude-opus-5-5"}
+{"key": "sober-life|cultivates|radical-moisture", "verdict": "not_stated", "reason": "temperance preserves life's period, and radical moisture is consumed in old age, but no passage says the sober life spares it", "judge": "claude-opus-5-5"}
+{"key": "death|opposes|innate-heat", "verdict": "stated", "idx": 4, "reason": "'Life consists in its preservation, and death in its extinction' of the innate heat", "judge": "claude-opus-5-5"}
+{"key": "death|opposes|longevity", "verdict": "not_stated", "reason": "passages set long life against deathlessness or astrological terms, not against death", "judge": "claude-opus-5-5"}

@@ -2,7 +2,7 @@
 // scripts/eval/tibetan-lite-vs-yigdzin/{scope,build-todo}.mjs until this file pinned them.
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — .mjs with no type declarations
-import { isLiteModel, scriptGate } from '../../scripts/eval/tibetan-lite-vs-yigdzin/lane-lib.mjs';
+import { isLiteModel, isGeminiFlashModel, scriptGate } from '../../scripts/eval/tibetan-lite-vs-yigdzin/lane-lib.mjs';
 
 /**
  * Two bugs found by tsongkhapa-4523 (2026-10-06) after yig527 had run:
@@ -23,6 +23,20 @@ describe('isLiteModel', () => {
   });
 });
 
+// yigdzin-rest-4523 (2026-10-13): isLiteModel still left 19,293 withheld `gemini-3-flash-preview` pages out of scope.
+// The scope matcher takes the Flash family by shape, so the next stamp is in scope without an edit here.
+describe('isGeminiFlashModel', () => {
+  it('accepts every Flash / Flash-Lite stamp, preview or GA, any version', () => {
+    for (const m of ['gemini-3.1-flash-lite', 'gemini-3.1-flash-lite-preview', 'gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-3.5-flash-lite'])
+      expect(isGeminiFlashModel(m)).toBe(true);
+  });
+  it('rejects Pro, non-Gemini engines and ids with anything after the family', () => {
+    for (const m of ['gemini-3-pro-preview', 'gemini-2.5-pro', 'bdrc-yigdzin-v1', 'bdrc-woodblock-easter2', 'gemini-3.1-flash-lite-preview-x',
+      'gemini-3-flash-image', 'models/gemini-3-flash-preview', 'gemini-flash', undefined, null, ''])
+      expect(isGeminiFlashModel(m)).toBe(false);
+  });
+});
+
 // A Tibetan page body (well over 50 letters) between a centred heading and a later tag, the shape lite writes.
 const TIB_BODY = 'དང་པོ་མདོ་སྡེ་དགོངས་འགྲེལ་ལ་བརྟེན་པའི་ཕྱོགས་ནི། ཇི་ལྟར་གསེར་ལ་བསྲེག་བཅད་བདར་བ་ལྟར། ཡོངས་སུ་གྲུབ་པའི་མཚན་ཉིད་ཀྱི་རྣམ་གཞག་བཤད་པ།';
 const NOTE = 'Printed from the Zhol blocks, volume pha, folio fifteen recto, margin';
@@ -40,6 +54,14 @@ describe('scriptGate', () => {
   it('still gates a Latin-dominant page, with or without heading markers', () => {
     expect(scriptGate(`->Introduction<-\n${ENG_BODY}\n<note>x</note>`)).toBe('gemini-latin-dominant');
     expect(scriptGate(ENG_BODY)).toBe('gemini-latin-dominant');
+  });
+  it("ignores the English inside lite's metadata blocks (tib4523f: 738 of 827 gated pages were Tibetan)", () => {
+    const desc = '<image-desc>A palm-leaf folio photographed on a dark board, with a red marginal number and a stain at the lower left edge</image-desc>';
+    const page = `${desc}\n<vocab>dgongs pa, mdo sde, rnam gzhag</vocab>\n${TIB_BODY}\n<warning>Some syllables at the right edge are unclear in the scan</warning>`;
+    expect(scriptGate(page)).toBeNull();
+    expect(scriptGate(page.replace(/<\/?(image-desc|vocab|warning)>/g, ' '))).toBe('gemini-latin-dominant'); // the old reading
+    // an English page stays gated even when it also carries a metadata block
+    expect(scriptGate(`${desc}\n${ENG_BODY}`)).toBe('gemini-latin-dominant');
   });
   it('gates a CJK-dominant page and leaves a plain Tibetan page alone', () => {
     expect(scriptGate('大正新脩大藏經'.repeat(10))).toBe('gemini-cjk-dominant');

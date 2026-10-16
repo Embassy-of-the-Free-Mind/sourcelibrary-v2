@@ -1,0 +1,316 @@
+<style>
+  .wide { max-width:1120px; margin:0 auto; padding:0 26px; }
+  .statrow { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--border-light);
+    border:1px solid var(--border-light); margin:28px 0 8px; }
+  .statrow div { background:var(--cream); padding:14px 16px; }
+  .statrow b { display:block; font-family:var(--ff-display); font-size:30px; font-weight:500; line-height:1.1; }
+  .statrow span { font-family:var(--ff-ui); font-size:12.5px; color:var(--text-muted); }
+  .controls { display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; font-family:var(--ff-ui); font-size:13.5px; margin:18px 0 10px; }
+  .controls label { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); cursor:pointer; }
+  .controls select, .controls input[type=search] { font:inherit; padding:6px 8px; border:1px solid var(--border-medium); background:#fff; border-radius:3px; max-width:100%; }
+  .controls input[type=search] { width:220px; }
+  .sw { width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .sw.ring { background:transparent !important; border:2px solid; width:11px; height:11px; }
+  #map { width:100%; display:block; touch-action:manipulation; }
+  #map text { font-family:var(--ff-ui); fill:var(--fig-mute); font-size:11px; }
+  #map .lane-label { font-family:var(--ff-display); font-size:17px; fill:var(--fig-ink); }
+  #map .pole { font-size:10px; letter-spacing:.08em; text-transform:uppercase; }
+  #map circle { cursor:pointer; }
+  #count { font-family:var(--ff-ui); font-size:12.5px; color:var(--text-muted); margin:4px 0 0; }
+  #detail { min-height:150px; border:1px solid var(--border-light); background:var(--warm); padding:18px 20px; margin:14px 0 0; }
+  #detail .q { font-family:var(--ff-body); font-size:19px; line-height:1.55; margin:0 0 12px; }
+  #detail .meta { font-family:var(--ff-ui); font-size:13px; color:var(--text-secondary); line-height:1.6; }
+  #detail .meta .tag { display:inline-block; border:1px solid var(--border-medium); border-radius:10px; padding:0 8px; margin:2px 4px 2px 0; font-size:12px; }
+  #detail .why { font-family:var(--ff-ui); font-size:12.5px; color:var(--text-muted); margin-top:8px; }
+  .hint { font-family:var(--ff-ui); font-size:13.5px; color:var(--text-muted); }
+  table.t { border-collapse:collapse; width:100%; font-family:var(--ff-ui); font-size:13.5px; margin:10px 0 6px; }
+  table.t th, table.t td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--border-light); vertical-align:top; }
+  table.t th { font-weight:600; color:var(--text-muted); font-size:12px; letter-spacing:.04em; }
+  table.t td.num, table.t th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .tablewrap { overflow-x:auto; }
+  .cap { font-family:var(--ff-ui); font-size:12.5px; color:var(--text-muted); line-height:1.55; }
+  .qgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px; margin:14px 0; }
+  .qgrid h3 { margin:0 0 6px; }
+  .bar { display:grid; grid-template-columns:96px 1fr 44px; gap:8px; align-items:center; font-family:var(--ff-ui); font-size:12.5px; margin:3px 0; }
+  .bar .track { height:12px; background:var(--fig-well); position:relative; }
+  .bar .fill { position:absolute; left:0; top:0; bottom:0; }
+  .bar .v { text-align:right; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+  .pairs { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px; }
+  blockquote.ex { margin:0 0 16px; padding:0 0 0 16px; border-left:3px solid var(--border-medium); }
+  blockquote.ex p { margin:0 0 4px; font-size:17px; }
+  blockquote.ex cite { font-family:var(--ff-ui); font-style:normal; font-size:12.5px; color:var(--text-muted); }
+  .lexgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px 22px; margin:16px 0 8px; }
+  .lexgrid h3 { margin:0 0 2px; font-size:13.5px; }
+  .lexgrid svg { width:100%; height:auto; display:block; }
+  .lexgrid svg text { font-family:var(--ff-ui); font-size:10px; fill:var(--fig-mute); }
+  .wrap h4 { font-family:var(--ff-ui); font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); margin:28px 0 8px; }
+  @media (max-width:640px) { body { font-size:17px; } .wrap, .wide { padding-left:16px; padding-right:16px; } .controls input[type=search] { width:100%; } }
+</style>
+
+<div class="wrap">
+<header class="paper">
+  <p class="eyebrow">Source Library · working paper · draft</p>
+  <h1>An Atlas of Aliveness</h1>
+  <p class="sub">Four ways the books in Source Library describe life: a person feeling alive, the world as alive, made things as alive, and places inhabited by spirits. Every passage links to its page.</p>
+  <div class="draftflag">__DRAFTFLAG__</div>
+  <div class="statrow" id="statrow"></div>
+</header>
+__INTRO__
+</div>
+
+<div class="wide">
+  <h2 id="map-h">The map</h2>
+  <p class="hint">Each mark is one passage, placed by when the work was written; the switch below places it by the date of the edition the library holds instead. Filled marks say something is alive, or in the bottom lane that a place has a spirit; rings say something is dead or lifeless, or deny the spirit. Placed by edition, a column appears at 1700 in the bottom lane. It is Tibetan: many of the library’s undated Tibetan and Bhutanese editions carry a placeholder year of 1700, not a real date (<a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/3307">issue 3307</a>), so their passages stack there. Tap a mark to read it and open the page.</p>
+  <div class="controls" id="controls"></div>
+  <svg id="map" role="img" aria-label="Timeline of passages on aliveness in four lanes"></svg>
+  <p id="count"></p>
+  <div id="detail"><p class="hint">Tap or hover a mark to read the passage.</p></div>
+</div>
+
+<div class="wrap">
+__FINDINGS__
+
+<h3 id="inhabited">4. The inhabited world</h3>
+__ANIM_INTRO__
+<div class="statrow" id="anim-stats"></div>
+<div class="pairs" id="anim-lists"></div>
+<h4>Who speaks, by century of edition</h4>
+<p class="cap">The insider passages in the 1700s are almost all from Tibetan and Bhutanese editions whose year of 1700 is a placeholder for an unknown date.</p>
+<div class="tablewrap"><table class="t" id="tbl-anim-cent"></table></div>
+<h4>By tradition</h4>
+<div class="tablewrap"><table class="t" id="tbl-anim-trad"></table></div>
+<h4>The phrases, counted</h4>
+<p class="cap">Pages of English translation containing each phrase, across the whole library, with the three edition languages that hold most of them. No model is involved in these counts. A phrase is not a confirmed passage; the second table gives the share of each group’s sample that was confirmed.</p>
+<div class="tablewrap"><table class="t" id="tbl-anim-ph"></table></div>
+<div class="tablewrap"><table class="t" id="tbl-anim-groups"></table></div>
+__ANIM_JEV__
+
+<h2 id="vocab">The vocabulary of life, by century</h2>
+<p>__LEX_INTRO__</p>
+<div class="lexgrid" id="lex"></div>
+<p class="cap" id="cap-lex"></p>
+
+<h2 id="when">When the works were written</h2>
+__WHEN_INTRO__
+<div class="tablewrap"><table class="t" id="tbl-when"></table></div>
+<p class="cap" id="cap-when"></p>
+
+<h2 id="rates">How common each sense is</h2>
+<p>__RATES_INTRO__</p>
+<div class="tablewrap"><table class="t" id="tbl-rates"></table></div>
+<p class="cap" id="cap-rates"></p>
+
+<h2 id="qualities">Qualities given to life</h2>
+<p>__QUAL_INTRO__</p>
+<div class="qgrid" id="qual"></div>
+
+<h2 id="what">What is said to be alive, and what gives it life</h2>
+<div class="pairs" id="carriers"></div>
+
+<h2 id="meet">Where the senses meet</h2>
+<p>__MEET_INTRO__</p>
+<div class="tablewrap"><table class="t" id="tbl-meet"></table></div>
+
+<h2 id="traditions">By tradition</h2>
+<div class="tablewrap"><table class="t" id="tbl-trad"></table></div>
+<p class="cap">Tradition is the classifier’s one-word tag for each passage, for the first three senses. These are counts of confirmed passages in a sample of 400 passages per search dimension, so they show where the material lies, not how common it is in each tradition.</p>
+
+<h2 id="method">Method</h2>
+__METHOD__
+<h3>How well each search found its own sense</h3>
+<div class="tablewrap"><table class="t" id="tbl-dims"></table></div>
+
+<h2 id="data">Data</h2>
+__DATA_NOTE__
+</div>
+
+<script id="pts" type="application/json">__POINTS__</script>
+<script id="nums" type="application/json">__NUMBERS__</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(function(){
+  var P = JSON.parse(document.getElementById('pts').textContent);
+  var N = JSON.parse(document.getElementById('nums').textContent);
+  var LAY = [{id:'felt',label:'Feeling alive',col:'var(--s1)',hex:'#2a78d6'},{id:'world',label:'The world as alive',col:'var(--s2)',hex:'#008300'},{id:'made',label:'Made things as alive',col:'var(--s3)',hex:'#c2457a'},{id:'inhabited',label:'The inhabited world',col:'var(--s4)',hex:'#c98600',up:'spirit',down:'denied'}];
+  var LAY3 = LAY.slice(0, 3); // the rates, qualities and overlap tables cover the first three layers; the fourth has its own section
+  var LC = {}; LAY.forEach(function(l){ LC[l.id]=l; });
+  var LBL = {'mountain-rock':'mountains, rocks','river-lake-sea':'rivers, lakes, sea','tree-grove-forest':'trees, groves, forest','earth-land':'earth, land','spring-well':'springs, wells','town-region':'town, region','house-hearth':'house, hearth','sky-weather':'sky, weather','field-crop':'fields, crops',
+    'deity-of-place':'deity of the place','nature-spirit':'nature spirit','naga-serpent-dragon':'nāga, serpent, dragon','animal-person':'animal as person','the-thing-itself':'the place itself','demon-harmful':'harmful spirit',
+    'harm-fear':'fear, harm','address-greeting':'address, greeting','bargain-contract':'bargain','taming-binding':'taming, binding','taboo-offence':'taboo, offence','none':'none stated',
+    'tibetan-buddhist':'Tibetan Buddhist','indian-buddhist':'Indian Buddhist','native-american':'Native American','greco-roman':'Greco-Roman','mongol-siberian':'Mongol and Siberian','chinese-folk':'Chinese folk','european-folk':'European folk','indian-folk':'Indian folk','hermetic-alchemical':'Hermetic and alchemical','natural-philosophy':'natural philosophy','christian-mystical':'Christian mystical','islamic-sufi':'Islamic and Sufi','folk-magical':'folk magic','architecture-art':'architecture and art'};
+  var BASIS = {wikidata:'from Wikidata', author_lifespan:'within the author’s lifetime, from Wikidata', title_page:'stated on the title page', colophon:'stated in the colophon', catalogue:'from the catalogue', model_knowledge:'estimated by a model'};
+  function lbl(k){ return LBL[k] || String(k).replace(/[-_]/g,' '); }
+  function trn(t){ t = lbl(t); return t.charAt(0).toUpperCase() + t.slice(1); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function fmt(n){ return Number(n).toLocaleString('en-US'); }
+  function yr(y){ return y==null ? 'n.d.' : (y<0 ? (-y)+' BCE' : String(y)); }
+
+  // stat row
+  var b = N.baseline_any;
+  document.getElementById('statrow').innerHTML = [
+    [fmt(N.points), 'confirmed passages on the map'], [fmt(N.books_all), 'books'], [fmt(N.languages_all), 'edition languages'],
+    [N.baseline_any4.rate[0]+'%', 'of '+fmt(N.baseline_n)+' random pages hold any of the four']
+  ].map(function(x){ return '<div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'; }).join('');
+
+  // controls
+  var trads = d3.rollups(P, function(v){return v.length;}, function(d){return d.tr;}).sort(function(a,b){return b[1]-a[1];});
+  var langs = d3.rollups(P, function(v){return v.length;}, function(d){return d.lg;}).sort(function(a,b){return b[1]-a[1];});
+  var ctl = document.getElementById('controls');
+  ctl.innerHTML = LAY.map(function(l){ return '<label><input type="checkbox" data-l="'+l.id+'" checked> <span class="sw" style="background:'+l.col+'"></span>'+l.label+'</label>'; }).join('') +
+    '<label><input type="checkbox" id="f-alive" checked> alive</label><label><input type="checkbox" id="f-dead" checked> <span class="sw ring" style="border-color:var(--text-muted)"></span>dead / lifeless</label>' +
+    '<label>Place by <select id="f-date" aria-label="Date to place passages by"><option value="w">date of the work</option><option value="e">date of this edition</option></select></label>' +
+    '<select id="f-trad" aria-label="Tradition"><option value="">All traditions</option>'+trads.map(function(t){return '<option value="'+esc(t[0])+'">'+esc(trn(t[0]))+' ('+t[1]+')</option>';}).join('')+'</select>' +
+    '<select id="f-lang" aria-label="Language"><option value="">All languages</option>'+langs.map(function(t){return '<option value="'+esc(t[0])+'">'+esc(t[0])+' ('+t[1]+')</option>';}).join('')+'</select>' +
+    '<input type="search" id="f-q" placeholder="Search quotes and titles" aria-label="Search">';
+
+  // map
+  var svg = d3.select('#map'), M = {t:16,r:14,b:34,l:14}, laneH = 170, H = M.t + laneH*LAY.length + M.b;
+  var xd = [-2100, 0, 1000, 1400, 1600, 1800, 2030], xr = [0, .10, .22, .34, .56, .80, 1];
+  function rnd(i){ var x = Math.sin(i*12.9898)*43758.5453; return x - Math.floor(x); }
+  P.forEach(function(d,i){ d.j1 = rnd(i+1); d.j2 = rnd(i+7); });
+  var sel = null;
+  function draw(){
+    var W = document.getElementById('map').parentNode.clientWidth;
+    var x = d3.scaleLinear().domain(xd).range(xr.map(function(f){ return M.l + 108 + f*(W-M.l-M.r-108); })).clamp(true);
+    svg.attr('viewBox','0 0 '+W+' '+H).attr('height', H);
+    svg.selectAll('*').remove();
+    var g = svg.append('g');
+    [-2000,0,500,1000,1200,1400,1500,1600,1700,1800,1900,2000].forEach(function(t){
+      if (W < 560 && [0,500,1200,1500,1700,1900].indexOf(t) >= 0) return;
+      g.append('line').attr('x1',x(t)).attr('x2',x(t)).attr('y1',M.t).attr('y2',H-M.b).attr('stroke','var(--fig-grid)').attr('stroke-width',.6);
+      g.append('text').attr('x',x(t)).attr('y',H-M.b+16).attr('text-anchor','middle').text(t<0?(-t)+' BCE':t);
+    });
+    LAY.forEach(function(l,k){
+      var y0 = M.t + k*laneH, mid = y0 + laneH*0.6;
+      g.append('rect').attr('x',M.l).attr('y',y0+2).attr('width',W-M.l-M.r).attr('height',laneH-4).attr('fill', k%2 ? 'transparent' : 'var(--fig-well)').attr('opacity',.55);
+      g.append('line').attr('x1',M.l+108).attr('x2',W-M.r).attr('y1',mid).attr('y2',mid).attr('stroke','var(--fig-grid)');
+      var words = l.label.split(' '), half = Math.ceil(words.length/2);
+      g.append('text').attr('class','lane-label').attr('x',M.l+6).attr('y',y0+26).text(words.slice(0,half).join(' '));
+      g.append('text').attr('class','lane-label').attr('x',M.l+6).attr('y',y0+46).text(words.slice(half).join(' '));
+      g.append('text').attr('class','pole').attr('x',M.l+6).attr('y',mid-8).text((l.up || 'alive')+' ↑');
+      g.append('text').attr('class','pole').attr('x',M.l+6).attr('y',mid+16).text((l.down || 'dead')+' ↓');
+      l.y0 = y0; l.mid = mid;
+    });
+    var on = filt();
+    var pts = P.filter(function(d){ return when(d) != null; });
+    var dots = g.append('g').selectAll('circle').data(pts).join('circle')
+      .attr('cx', function(d){ return x(when(d)) + (d.j2-.5)*6; })
+      .attr('cy', function(d){ var l = LC[d.l]; return d.p==='alive' ? l.mid - 6 - d.j1*(laneH*0.6-14) : l.mid + 6 + d.j1*(laneH*0.4-12); })
+      .attr('r', W < 560 ? 2.6 : 3.2)
+      .attr('fill', function(d){ return d.p==='alive' ? LC[d.l].hex : 'none'; })
+      .attr('stroke', function(d){ return LC[d.l].hex; }).attr('stroke-width', function(d){ return d.p==='alive' ? 0 : 1.3; })
+      .attr('opacity', function(d){ return on(d) ? .78 : .06; })
+      .style('pointer-events', function(d){ return on(d) ? 'all' : 'none'; })
+      .on('mouseenter click', function(ev,d){ show(d); d3.select(this).attr('r', 6).raise(); })
+      .on('mouseleave', function(){ d3.select(this).attr('r', W < 560 ? 2.6 : 3.2); });
+    var shown = P.filter(on).length, nd = P.filter(function(d){ return on(d) && when(d)==null; }).length;
+    document.getElementById('count').textContent = fmt(shown)+' passages match'+(nd ? ' ('+nd+' undated, listed in the data file but not plotted)' : '')+'.';
+  }
+  function when(d){ return document.getElementById('f-date').value === 'e' ? d.y : (d.yw != null ? d.yw : d.y); }
+  function filt(){
+    var ls = {}; ctl.querySelectorAll('input[data-l]').forEach(function(c){ ls[c.dataset.l] = c.checked; });
+    var al = document.getElementById('f-alive').checked, de = document.getElementById('f-dead').checked;
+    var tr = document.getElementById('f-trad').value, lg = document.getElementById('f-lang').value, q = document.getElementById('f-q').value.trim().toLowerCase();
+    return function(d){ return ls[d.l] && (d.p==='alive' ? al : de) && (!tr || d.tr===tr) && (!lg || d.lg===lg) && (!q || (d.q+' '+d.t+' '+d.a).toLowerCase().indexOf(q) >= 0); };
+  }
+  function show(d){
+    document.getElementById('detail').innerHTML = '<p class="q">“'+esc(d.q)+'”</p><div class="meta"><b>'+esc(d.t)+'</b>'+(d.a?' · '+esc(d.a):'')+' · '+esc(d.lg)+'<br>Written '+(d.yw!=null ? esc(d.wd || yr(d.yw))+' <span class="cap">('+esc(BASIS[d.wb]||'estimated')+')</span>' : 'date unknown')+' · this edition '+yr(d.y)+
+      '<br>'+(d.l==='inhabited'
+        ? '<span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+(d.p==='alive'?'spirit present':'denied')+'</span><span class="tag">'+esc(trn(d.tr))+'</span><span class="tag">where: '+esc(lbl(d.c))+'</span><span class="tag">who: '+esc(lbl(d.s))+'</span><span class="tag">relation: '+esc(lbl(d.rel))+'</span><span class="tag">voice: '+esc(d.v)+'</span>'
+        : '<span class="tag" style="border-color:'+LC[d.l].hex+'">'+LC[d.l].label+': '+d.p+'</span><span class="tag">'+esc(trn(d.tr))+'</span><span class="tag">what: '+esc(d.c)+'</span><span class="tag">life from: '+esc(d.s)+'</span>'+(d.fp?'<span class="tag">first person</span>':''))+
+      '<br><a href="'+esc(d.u)+'" target="_blank" rel="noopener">'+(d.fm ? 'Open the book on Source Library ↗</a> (this passage is in the front matter, which the reader cannot open by page number)' : 'Read the page on Source Library ↗</a>')+'</div>'+(d.why?'<p class="why">Judge’s reason: '+esc(d.why)+'</p>':'');
+  }
+  ctl.addEventListener('input', draw); window.addEventListener('resize', function(){ clearTimeout(window._rz); window._rz = setTimeout(draw, 120); });
+  draw();
+  var first = P.filter(function(d){ return d.l==='felt' && d.p==='alive' && d.fp; })[0] || P[0]; if (first) show(first);
+
+  // lexical small multiples: phrase occurrences per 10K translated pages by edition century (model-free)
+  if (N.lexical) {
+    var LX = N.lexical, show = ['world_soul','living_minerals','living_heavens','plant_soul','sympathy','dead_matter','vital_breath','acedia','maker_spirit'];
+    var short = ['<1400','1400s','1500s','1600s','1700s','1800s','1900s'];
+    document.getElementById('lex').innerHTML = show.filter(function(d){ return LX.dims[d]; }).map(function(d){
+      var D = LX.dims[d], r = D.rate.map(function(v){ return v || 0; }), mx = Math.max.apply(null, r) || 1, W = 240, H = 110, l = 6, rr = 6, t = 18, b = 22;
+      var hex = LC[D.layer].hex, dead = d === 'dead_matter';
+      var X = function(i){ return l + i*(W-l-rr)/(r.length-1); }, Y = function(v){ return t + (1 - v/mx)*(H-t-b); };
+      var path = r.map(function(v,i){ return (i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1); }).join('');
+      var pk = r.indexOf(mx);
+      return '<div><h3>'+esc(D.label)+'</h3><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(D.label)+' by century">'+
+        '<line x1="'+l+'" x2="'+(W-rr)+'" y1="'+(H-b)+'" y2="'+(H-b)+'" stroke="var(--fig-grid)"/>'+
+        '<path d="'+path+'" fill="none" stroke="'+hex+'" stroke-width="2" '+(dead?'stroke-dasharray="4 3"':'')+'/>'+
+        r.map(function(v,i){ return '<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="2.4" fill="'+hex+'"/>'; }).join('')+
+        '<text x="'+Math.min(X(pk), W-40)+'" y="'+(Y(mx)-6)+'" text-anchor="middle">'+mx+'</text>'+
+        [0,3,6].map(function(i){ return '<text x="'+X(i)+'" y="'+(H-6)+'" text-anchor="'+(i===0?'start':i===6?'end':'middle')+'">'+short[i]+'</text>'; }).join('')+
+        '</svg></div>';
+    }).join('');
+    document.getElementById('cap-lex').textContent = 'Occurrences of each dimension’s phrases per 10,000 translated pages, by the century of the edition the library holds (a 1600s printing of Plato counts in the 1600s). Each panel has its own scale; the number is the peak. Translated pages per bin: '+LX.bins.map(function(b,i){ return b+' '+fmt(LX.denominators[i]); }).join(', ')+'. No model is involved in these counts.';
+  }
+
+  // rates table
+  var rows = [];
+  LAY3.forEach(function(l){ ['alive','dead'].forEach(function(p){ var r = N.baseline[l.id+'_'+p]; rows.push('<tr><td>'+l.label+'</td><td>'+p+'</td><td class="num">'+r.screened+'</td><td class="num">'+r.confirmed+'</td><td class="num">'+r.rate[0]+'%</td><td class="num">'+r.rate[1]+'–'+r.rate[2]+'%</td><td class="num">'+fmt(N.confirmed[l.id+'_'+p])+'</td></tr>'); }); });
+  document.getElementById('tbl-rates').innerHTML = '<thead><tr><th>Sense</th><th>Pole</th><th class="num">Screen flagged (random)</th><th class="num">Confirmed (random)</th><th class="num">Rate</th><th class="num">95% CI</th><th class="num">Confirmed in retrieved sample</th></tr></thead><tbody>'+rows.join('')+'</tbody>';
+  document.getElementById('cap-rates').textContent = 'Random: '+fmt(N.baseline_n)+' corpus pages drawn blind in July 2026 for the experience atlas, re-read here. Wilson 95% intervals. Retrieved: '+fmt(N.hits_n)+' passages, 400 per search dimension.';
+
+  // qualities: alive vs dead per layer
+  var QN = {warmth:'warmth',light:'light',motion:'motion',growth:'growth',breath:'breath',freshness:'freshness',wholeness:'wholeness',proportion:'proportion',intensity:'intensity',joy:'joy',belonging:'belonging',interiority:'interiority',voice:'voice',fertility:'fertility',stillness:'stillness',cold:'cold',heaviness:'heaviness',emptiness:'emptiness',decay:'decay',mechanism:'mechanism'};
+  document.getElementById('qual').innerHTML = LAY3.map(function(l){
+    var A = N.qualities[l.id+'_alive'], D = N.qualities[l.id+'_dead'];
+    var keys = Object.keys(QN).filter(function(k){ return (A.q[k]||0) + (D.q[k]||0) > 0; }).sort(function(a,b){ return ((B(b)) - (B(a))); });
+    function B(k){ return Math.max(A.q[k]||0, D.q[k]||0); }
+    keys = keys.slice(0, 9);
+    return '<div><h3>'+l.label+'</h3><p class="cap">Share of confirmed passages naming each quality: filled = alive (n='+A.n+'), ring colour = dead (n='+D.n+').</p>'+
+      keys.map(function(k){ var a = A.q[k]||0, d = D.q[k]||0;
+        return '<div class="bar"><span>'+k+'</span><span class="track"><span class="fill" style="width:'+Math.min(100,a)+'%;background:'+l.hex+'"></span></span><span class="v">'+a.toFixed(0)+'%</span></div>'+
+               '<div class="bar"><span></span><span class="track"><span class="fill" style="width:'+Math.min(100,d)+'%;background:transparent;border:1.5px solid '+l.hex+'"></span></span><span class="v">'+d.toFixed(0)+'%</span></div>'; }).join('')+'</div>';
+  }).join('');
+
+  // carriers & sources
+  function list(title, arr, hex){ var mx = arr.length ? arr[0][1] : 1; return '<div><h3>'+title+'</h3>'+arr.slice(0,10).map(function(x){ return '<div class="bar"><span>'+esc(lbl(x[0]))+'</span><span class="track"><span class="fill" style="width:'+(100*x[1]/mx)+'%;background:'+hex+'"></span></span><span class="v">'+x[1]+'</span></div>'; }).join('')+'</div>'; }
+  document.getElementById('carriers').innerHTML = list('The world: what lives', N.world_carriers, '#008300') + list('The world: life comes from', N.world_sources, '#008300') +
+    list('Made things: what lives', N.made_carriers, '#c2457a') + list('Made things: life comes from', N.made_sources, '#c2457a');
+
+  // overlap
+  var NM = {felt_alive:'feel alive', felt_dead:'feel dead inside', world_alive:'call the world alive', world_dead:'call matter dead', made_alive:'call a made thing alive', made_dead:'call a made thing lifeless'};
+  document.getElementById('tbl-meet').innerHTML = '<thead><tr><th>Books that…</th><th>…also hold a passage that…</th><th class="num">With</th><th class="num">Without</th></tr></thead><tbody>'+
+    N.book_overlap.map(function(o){ return '<tr><td>'+NM[o.given]+'</td><td>'+NM[o.then]+'</td><td class="num">'+o['with'][0]+'% <span class="cap">(n='+o.n_with+')</span></td><td class="num">'+o.without[0]+'% <span class="cap">(n='+o.n_without+')</span></td></tr>'; }).join('')+'</tbody>';
+
+  // traditions
+  var cols = ['felt_alive','felt_dead','world_alive','world_dead','made_alive','made_dead'];
+  document.getElementById('tbl-trad').innerHTML = '<thead><tr><th>Tradition</th>'+cols.map(function(c){ return '<th class="num">'+c.replace('_',' ')+'</th>'; }).join('')+'<th class="num">total</th></tr></thead><tbody>'+
+    N.traditions.map(function(t){ return '<tr><td>'+esc(trn(t.tradition))+'</td>'+cols.map(function(c){ return '<td class="num">'+(t[c]||0)+'</td>'; }).join('')+'<td class="num">'+t.total+'</td></tr>'; }).join('')+'</tbody>';
+
+
+  // the inhabited world (fourth layer)
+  if (N.animism) {
+    var A = N.animism, hx = LC.inhabited.hex, V = A.voice || {};
+    document.getElementById('anim-stats').innerHTML = [
+      [fmt(A.confirmed.person), 'passages confirmed: a place or thing as a person, or its home'], [fmt(A.confirmed.denied), 'confirmed: the belief denied or explained away'],
+      [fmt(A.books), 'books'], [A.baseline.person.rate[0]+'%', 'of '+fmt(A.baseline_n)+' random pages ('+A.baseline.person.rate[1]+'–'+A.baseline.person.rate[2]+'%)']
+    ].map(function(x){ return '<div><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'; }).join('');
+    var voice = [['insider', V.insider||0], ['outsider', V.outsider||0], ['literary', V.literary||0]];
+    document.getElementById('anim-lists').innerHTML = list('Who speaks', voice, hx) + list('Where it lives', A.dwelling, hx) + list('Who it is', A.being, hx) + list('What people do about it', A.relation, hx);
+    var VC = ['insider','outsider','literary'];
+    document.getElementById('tbl-anim-cent').innerHTML = '<thead><tr><th>Edition century</th>'+VC.map(function(v){ return '<th class="num">'+v+'</th>'; }).join('')+'</tr></thead><tbody>'+
+      A.centuries.filter(function(c){ return VC.some(function(v){ return c[v]; }); }).map(function(c){ return '<tr><td>'+(c.c<0?(-c.c)+' BCE':c.c+'s')+'</td>'+VC.map(function(v){ return '<td class="num">'+(c[v]||0)+'</td>'; }).join('')+'</tr>'; }).join('')+'</tbody>';
+    document.getElementById('tbl-anim-trad').innerHTML = '<thead><tr><th>Tradition</th><th class="num">spirit present</th><th class="num">denied</th><th class="num">insider</th><th class="num">outsider</th><th class="num">literary</th></tr></thead><tbody>'+
+      A.traditions.map(function(t){ return '<tr><td>'+esc(trn(t.tradition))+'</td>'+['person','denied','insider','outsider','literary'].map(function(c){ return '<td class="num">'+(t[c]||0)+'</td>'; }).join('')+'</tr>'; }).join('')+'</tbody>';
+    if (A.phrases) document.getElementById('tbl-anim-ph').innerHTML = '<thead><tr><th>Phrase</th><th>Group</th><th class="num">Pages</th><th class="num">Books</th><th>Mostly in</th></tr></thead><tbody>'+
+      A.phrases.slice(0, 30).map(function(p){ return '<tr><td>'+esc(p.ph)+'</td><td>'+esc(lbl(p.dim))+'</td><td class="num">'+fmt(p.pages)+'</td><td class="num">'+fmt(p.books)+'</td><td>'+p.langs.map(function(x){ return esc(x[0])+' '+fmt(x[1]); }).join(', ')+'</td></tr>'; }).join('')+'</tbody>';
+    document.getElementById('tbl-anim-groups').innerHTML = '<thead><tr><th>Phrase group</th><th class="num">Pages drawn</th><th class="num">Screen flagged</th><th class="num">Confirmed</th><th class="num">95% CI</th></tr></thead><tbody>'+
+      A.per_group.map(function(g){ return '<tr><td>'+esc(lbl(g.id))+'</td><td class="num">'+g.n+'</td><td class="num">'+g.screened+'</td><td class="num">'+g.rate[0]+'%</td><td class="num">'+g.rate[1]+'–'+g.rate[2]+'%</td></tr>'; }).join('')+'</tbody>';
+  }
+  // when: share of each sense's passages by era, by work date and by edition date
+  if (N.work_eras) {
+    var WE = N.work_eras, NMW = {felt_alive:'Feeling alive',felt_dead:'Feeling dead inside',world_alive:'The world as alive',world_dead:'Matter as dead',made_alive:'Made things as alive',made_dead:'Made things as lifeless',inhabited_alive:'The inhabited world',inhabited_dead:'Spirits of place denied'};
+    document.getElementById('tbl-when').innerHTML = '<thead><tr><th>Sense</th><th class="num">n</th><th>Dated by</th>'+WE.eras.map(function(e){ return '<th class="num">'+e+'</th>'; }).join('')+'</tr></thead><tbody>'+
+      Object.keys(WE.rows).map(function(k){ var r = WE.rows[k];
+        return '<tr><td rowspan="2">'+(NMW[k]||k)+'</td><td class="num" rowspan="2">'+r.n+'</td><td>the work</td>'+r.work.map(function(v){ return '<td class="num">'+v+'%</td>'; }).join('')+'</tr>'+
+               '<tr><td class="cap">this edition</td>'+r.edition.map(function(v){ return '<td class="num cap">'+v+'%</td>'; }).join('')+'</tr>'; }).join('')+'</tbody>';
+    var WB = N.work_dates.by_basis || {};
+    document.getElementById('cap-when').textContent = 'Share of each sense’s confirmed passages by era. Work dates: '+fmt(WB.author_lifespan||0)+' passages within the author’s lifetime (Wikidata), '+fmt(WB.wikidata||0)+' from a Wikidata record of the work, '+fmt(WB.title_page||0)+' from a title page, '+fmt(WB.model_knowledge||0)+' estimated by a model and checked against 318 Wikidata-dated works (85% within its range). Rows may not sum to 100 because of rounding and undated editions.';
+  }
+  // dims
+  document.getElementById('tbl-dims').innerHTML = '<thead><tr><th>Search dimension</th><th>Sense</th><th class="num">Passages</th><th class="num">Confirmed for its own sense</th><th class="num">For any sense</th></tr></thead><tbody>'+
+    N.per_dim.map(function(d){ return '<tr><td>'+esc(d.label)+'</td><td>'+d.layer+'</td><td class="num">'+d.n+'</td><td class="num">'+d.own_rate[0]+'%</td><td class="num">'+(d.n?Math.round(100*d.any/d.n):0)+'%</td></tr>'; }).join('')+'</tbody>';
+})();
+</script>

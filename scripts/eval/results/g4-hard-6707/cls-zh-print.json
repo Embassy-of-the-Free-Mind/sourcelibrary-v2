@@ -1,0 +1,206 @@
+[
+ {
+  "uid": "chinese-ext|chinese-ext-490b07-p55",
+  "failure": null,
+  "why": null,
+  "secs": 16.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 185,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:04:39.804776+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-1bcb79-p48",
+  "failure": null,
+  "why": null,
+  "secs": 17.7,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 178,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:04:41.005201+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-db5ac3-p566",
+  "failure": null,
+  "why": null,
+  "secs": 20.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 456,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:00.231392+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-db5e4a-p15",
+  "failure": null,
+  "why": null,
+  "secs": 19.2,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 266,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:00.253401+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-d9f7a0-p109",
+  "failure": null,
+  "why": null,
+  "secs": 38.4,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 254,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:01.783024+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-dbbedb-p66",
+  "failure": null,
+  "why": null,
+  "secs": 20.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 460,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:20.880081+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-e6c5d5-p580",
+  "failure": null,
+  "why": null,
+  "secs": 20.6,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 319,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:22.390246+00:00"
+ },
+ {
+  "uid": "chinese-ext|chinese-ext-db76e7-p11",
+  "failure": null,
+  "why": null,
+  "secs": 30.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 421,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:30.344948+00:00"
+ },
+ {
+  "uid": "chinese|chinese-160972-p14",
+  "failure": null,
+  "why": null,
+  "secs": 19.3,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 314,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:40.162088+00:00"
+ },
+ {
+  "uid": "chinese|chinese-16099d-p117",
+  "failure": null,
+  "why": null,
+  "secs": 18.1,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 256,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:40.553342+00:00"
+ },
+ {
+  "uid": "chinese|chinese-1b5652-p23",
+  "failure": null,
+  "why": null,
+  "secs": 24.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 254,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:05:54.864691+00:00"
+ },
+ {
+  "uid": "chinese|chinese-8f0639-p59",
+  "failure": null,
+  "why": null,
+  "secs": 28.5,
+  "attempts": 1,
+  "nudged": false,
+  "wrapper": null,
+  "gate_denials": 0,
+  "gate_calls": [
+   "view_file"
+  ],
+  "chars": 215,
+  "blocked": false,
+  "error": null,
+  "date": "2026-10-14T02:06:08.660198+00:00"
+ }
+]

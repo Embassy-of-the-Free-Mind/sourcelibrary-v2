@@ -1,0 +1,32 @@
+import fs from 'fs'; import crypto from 'crypto';
+const D = process.env.JOB_SCRATCH + '/calib', OUT = process.env.JOB_SCRATCH + '/blind';
+const metas = fs.readdirSync(D).filter(f => f.endsWith('.meta.json')).map(f => JSON.parse(fs.readFileSync(D + '/' + f, 'utf8')));
+let seed = 6559; const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+const pick = [];
+for (const b of [...new Set(metas.map(m => m.book_id))].sort()) {
+  const c = metas.filter(m => m.book_id === b).filter(m => { const t = fs.readFileSync(`${D}/${m.page_id}.txt`, 'utf8'); return !/<page-type>blank/.test(t) && t.replace(/<[^>]+>[^<]*<\/[^>]+>/g, '').trim().length > 250; });
+  c.sort((x, y) => x.page_number - y.page_number);
+  const s = []; while (s.length < 5 && c.length) s.push(c.splice(Math.floor(rnd() * c.length), 1)[0]);
+  pick.push(...s);
+}
+const uid = () => crypto.randomBytes(4).toString('hex');
+const items = [], key = [];
+for (const m of pick) { const u = uid(); items.push({ uid: u, image_url: m.image_url, text: fs.readFileSync(`${D}/${m.page_id}.txt`, 'utf8') }); key.push({ uid: u, page_id: m.page_id, book_id: m.book_id, page_number: m.page_number, plant: null }); }
+// Plants: one per book, on the first picked page of each book.
+const bodyLines = (t) => t.split('\n').map((l, i) => [l, i]).filter(([l]) => l.trim() && !/^\s*</.test(l) && l.trim().length > 25);
+const books = [...new Set(pick.map(m => m.book_id))].sort();
+const kinds = ['dropped_line', 'invented_line', 'respelled_word'];
+books.forEach((b, bi) => {
+  const k = key.find(x => x.book_id === b); const it = items.find(x => x.uid === k.uid);
+  const lines = it.text.split('\n'); const bl = bodyLines(it.text); const kind = kinds[bi];
+  let detail;
+  if (kind === 'dropped_line') { const [l, i] = bl[Math.floor(bl.length / 2)]; const w = l.split(' '); if (w.length > 16) { const a = Math.floor(w.length / 2) - 4; detail = w.slice(a, a + 8).join(' '); lines[i] = [...w.slice(0, a), ...w.slice(a + 8)].join(' '); } else { lines.splice(i, 1); detail = l; } }
+  if (kind === 'invented_line') { const [, i] = bl[Math.floor(bl.length / 2)]; const inv = b === '6acc3d72230e9a56175ccc93' ? 'xa ꜭa ri qanimaꜭil xbe chi ꜫulaꜭ chuvach ri nimalaj ajau' : b === '6acc39a1c1411f8cc628cfc4' ? 'auh niman ic onmotlalique in tepetitlan in Mexica' : 'ca ye yxquich in quimatizque in ixquichtin christianosme'; lines.splice(i + 1, 0, inv); detail = inv; }
+  if (kind === 'respelled_word') { const [l, i] = bl[Math.floor(bl.length / 2)]; const w = l.match(/\p{L}{6,}/u)[0]; const nw = w.includes('ç') ? w.replace('ç', 'z') : w.includes('qu') ? w.replace('qu', 'cu') : w.includes('z') ? w.replace('z', 's') : w.includes('u') ? w.replace('u', 'o') : w.replace(/a/, 'e'); lines[i] = l.replace(w, nw); detail = `${w} -> ${nw}`; }
+  const u = uid(); items.push({ uid: u, image_url: it.image_url, text: lines.join('\n') }); key.push({ ...k, uid: u, plant: kind, detail, copy_of: k.uid });
+});
+// shuffle items
+for (let i = items.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [items[i], items[j]] = [items[j], items[i]]; }
+fs.writeFileSync(OUT + '/items.json', JSON.stringify(items, null, 1));
+fs.writeFileSync(OUT + '/KEY.json', JSON.stringify(key, null, 1));
+console.log(items.length, key.filter(k => k.plant).map(k => `${k.plant}: ${k.detail}`).join('\n'));

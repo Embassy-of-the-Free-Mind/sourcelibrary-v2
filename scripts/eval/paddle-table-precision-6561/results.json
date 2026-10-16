@@ -1,0 +1,385 @@
+{
+ "issue": 6561,
+ "detector": "scripts/lib/paddle-table-detect.mjs",
+ "T_V1": {
+  "gateRun": 5,
+  "shapeRun": 4,
+  "distinctMax": 0.3,
+  "dittoMinRun": 0
+ },
+ "T": {
+  "gateRun": 5,
+  "shapeRun": 4,
+  "distinctMax": 0.3,
+  "dittoMinRun": 5
+ },
+ "population": {
+  "flagged_pages": 4379,
+  "invented_known": 136,
+  "invented_in_population": 70,
+  "invented_text_mismatch": 0
+ },
+ "classes": {
+  "LO": 0.05,
+  "HI": 0.1,
+  "note": "INV = one of the 136; TAB = Opus layout table/diagram/map/illustration; MIX = mixed; FA = prose with < 5% of Paddle Han removed by Opus; BAD = prose with >= 10% removed; UNC = between"
+ },
+ "parity": {
+  "v1": 0,
+  "v2": 0
+ },
+ "before": {
+  "flagged": 4379,
+  "by_class": {
+   "INV": 70,
+   "TAB": 1107,
+   "MIX": 754,
+   "BAD": 842,
+   "UNC": 188,
+   "FA": 1418
+  },
+  "by_layout": {
+   "diagram": 153,
+   "prose": 2453,
+   "mixed": 769,
+   "table": 986,
+   "map": 2,
+   "illustration": 16
+  },
+  "recall_invented": "136/136",
+  "recall_invented_wilson95": [
+   0.973,
+   1
+  ],
+  "precision_nonprose": 0.44,
+  "precision_table_only": 0.269,
+  "precision_not_fa": 0.676
+ },
+ "after": {
+  "flagged": 4288,
+  "by_class": {
+   "INV": 70,
+   "TAB": 1107,
+   "MIX": 754,
+   "BAD": 842,
+   "UNC": 183,
+   "FA": 1332
+  },
+  "by_layout": {
+   "diagram": 153,
+   "prose": 2362,
+   "mixed": 769,
+   "table": 986,
+   "map": 2,
+   "illustration": 16
+  },
+  "recall_invented": "136/136",
+  "recall_invented_wilson95": [
+   0.973,
+   1
+  ],
+  "precision_nonprose": 0.449,
+  "precision_table_only": 0.274,
+  "precision_not_fa": 0.689
+ },
+ "dropped": {
+  "pages": 91,
+  "by_class": {
+   "INV": 0,
+   "TAB": 0,
+   "MIX": 0,
+   "BAD": 0,
+   "UNC": 5,
+   "FA": 86
+  },
+  "titles": {
+   "御定子史精華": 44,
+   "韻府羣玉": 25,
+   "御定佩文韻府": 16,
+   "御定分類字錦": 4,
+   "御定駢字類編": 1,
+   "御定韻府拾遺": 1
+  }
+ },
+ "ditto_only_tier": {
+  "pages": 1137,
+  "by_class": {
+   "INV": 3,
+   "TAB": 0,
+   "MIX": 0,
+   "BAD": 6,
+   "UNC": 30,
+   "FA": 1098
+  },
+  "invented_known": 3,
+  "titles": {
+   "御定子史精華": 1080,
+   "御定佩文韻府": 25,
+   "韻府羣玉": 14,
+   "御定分類字錦": 10,
+   "御定韻府拾遺": 6,
+   "六帖補": 2
+  }
+ },
+ "grid_full_data": [
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.3,
+   "dittoMinRun": 5,
+   "flagged": 4288,
+   "fa": 1332,
+   "risky_lost": 0,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.3,
+   "dittoMinRun": 4,
+   "flagged": 4347,
+   "fa": 1388,
+   "risky_lost": 0,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.3,
+   "dittoMinRun": 3,
+   "flagged": 4368,
+   "fa": 1408,
+   "risky_lost": 0,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.3,
+   "dittoMinRun": 0,
+   "flagged": 4379,
+   "fa": 1418,
+   "risky_lost": 0,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.25,
+   "dittoMinRun": 5,
+   "flagged": 4257,
+   "fa": 1321,
+   "risky_lost": 19,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.25,
+   "dittoMinRun": 4,
+   "flagged": 4318,
+   "fa": 1379,
+   "risky_lost": 19,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.25,
+   "dittoMinRun": 3,
+   "flagged": 4339,
+   "fa": 1399,
+   "risky_lost": 19,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.25,
+   "dittoMinRun": 0,
+   "flagged": 4350,
+   "fa": 1409,
+   "risky_lost": 19,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 5,
+   "distinctMax": 0.3,
+   "dittoMinRun": 5,
+   "flagged": 4234,
+   "fa": 1314,
+   "risky_lost": 32,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 5,
+   "distinctMax": 0.3,
+   "dittoMinRun": 4,
+   "flagged": 4247,
+   "fa": 1326,
+   "risky_lost": 32,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 5,
+   "distinctMax": 0.3,
+   "dittoMinRun": 3,
+   "flagged": 4268,
+   "fa": 1346,
+   "risky_lost": 32,
+   "invented": 136
+  },
+  {
+   "gateRun": 5,
+   "shapeRun": 5,
+   "distinctMax": 0.3,
+   "dittoMinRun": 0,
+   "flagged": 4279,
+   "fa": 1356,
+   "risky_lost": 32,
+   "invented": 136
+  }
+ ],
+ "holdout": {
+  "seed": 6561,
+  "books_A": 392,
+  "books_B": 396,
+  "tuned_on_A": {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.3,
+   "dittoMinRun": 99
+  },
+  "B_before": {
+   "flagged": 2058,
+   "by_class": {
+    "INV": 29,
+    "TAB": 582,
+    "MIX": 279,
+    "BAD": 343,
+    "UNC": 100,
+    "FA": 725
+   },
+   "by_layout": {
+    "prose": 1173,
+    "mixed": 282,
+    "table": 532,
+    "diagram": 63,
+    "illustration": 8
+   },
+   "recall_invented": "37/37",
+   "recall_invented_wilson95": [
+    0.906,
+    1
+   ],
+   "precision_nonprose": 0.43,
+   "precision_table_only": 0.297,
+   "precision_not_fa": 0.648
+  },
+  "B_after": {
+   "flagged": 1435,
+   "by_class": {
+    "INV": 26,
+    "TAB": 582,
+    "MIX": 279,
+    "BAD": 340,
+    "UNC": 77,
+    "FA": 131
+   },
+   "by_layout": {
+    "prose": 550,
+    "mixed": 282,
+    "table": 532,
+    "diagram": 63,
+    "illustration": 8
+   },
+   "recall_invented": "34/37",
+   "recall_invented_wilson95": [
+    0.787,
+    0.972
+   ],
+   "precision_nonprose": 0.617,
+   "precision_table_only": 0.424,
+   "precision_not_fa": 0.909
+  },
+  "tuned_on_B": {
+   "gateRun": 5,
+   "shapeRun": 4,
+   "distinctMax": 0.3,
+   "dittoMinRun": 5
+  },
+  "A_before": {
+   "flagged": 2321,
+   "by_class": {
+    "INV": 41,
+    "TAB": 525,
+    "MIX": 475,
+    "BAD": 499,
+    "UNC": 88,
+    "FA": 693
+   },
+   "by_layout": {
+    "diagram": 90,
+    "prose": 1280,
+    "mixed": 487,
+    "map": 2,
+    "table": 454,
+    "illustration": 8
+   },
+   "recall_invented": "99/99",
+   "recall_invented_wilson95": [
+    0.963,
+    1
+   ],
+   "precision_nonprose": 0.449,
+   "precision_table_only": 0.244,
+   "precision_not_fa": 0.701
+  },
+  "A_after": {
+   "flagged": 2279,
+   "by_class": {
+    "INV": 41,
+    "TAB": 525,
+    "MIX": 475,
+    "BAD": 499,
+    "UNC": 86,
+    "FA": 653
+   },
+   "by_layout": {
+    "diagram": 90,
+    "prose": 1238,
+    "mixed": 487,
+    "map": 2,
+    "table": 454,
+    "illustration": 8
+   },
+   "recall_invented": "99/99",
+   "recall_invented_wilson95": [
+    0.963,
+    1
+   ],
+   "precision_nonprose": 0.457,
+   "precision_table_only": 0.248,
+   "precision_not_fa": 0.713
+  }
+ },
+ "splits": {
+  "splits": 200,
+  "test_recall_100": 162,
+  "test_invented_missed": {
+   "0": 162,
+   "2": 21,
+   "3": 17
+  },
+  "chosen": {
+   "{\"gateRun\":5,\"shapeRun\":4,\"distinctMax\":0.3,\"dittoMinRun\":5}": 140,
+   "{\"gateRun\":5,\"shapeRun\":4,\"distinctMax\":0.25,\"dittoMinRun\":5}": 22,
+   "{\"gateRun\":5,\"shapeRun\":4,\"distinctMax\":0.3,\"dittoMinRun\":8}": 20,
+   "{\"gateRun\":5,\"shapeRun\":4,\"distinctMax\":0.3,\"dittoMinRun\":99}": 17,
+   "{\"gateRun\":5,\"shapeRun\":4,\"distinctMax\":0.25,\"dittoMinRun\":8}": 1
+  }
+ }
+}

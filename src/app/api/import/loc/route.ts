@@ -9,6 +9,7 @@ import { publishedToYear } from '@/lib/resolve-language';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
+import { initialPageCounters } from '@/lib/page-counts';
 
 export const maxDuration = 300;
 
@@ -248,9 +249,10 @@ export const POST = withCuratorAuth(async (request, session) => {
       ...(work_id ? { work_id } : {}),
       loc_lccn: lccn,
       thumbnail: selectedPages[0]?.thumbnail || '',
-      pages_count: pageCount,
-      pages_ocr: 0,
-      pages_translated: 0,
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(pageCount),
       description: bookDescription,
       dublin_core: {
         dc_identifier: [`LOC:${lccn}`],

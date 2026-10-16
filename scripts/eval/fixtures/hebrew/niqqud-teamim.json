@@ -1,0 +1,10 @@
+{
+ "script": "hebrew",
+ "name": "niqqud-teamim",
+ "reference": "בראשית ברא אלהים את השמים ואת הארץ והארץ היתה תהו ובהו וחשך על פני תהום",
+ "hypothesis": "בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃ וְהָאָ֗רֶץ הָיְתָ֥ה תֹ֙הוּ֙ וָבֹ֔הוּ וְחֹ֖שֶׁךְ עַל־פְּנֵ֣י תְה֑וֹם",
+ "expected_cer": 0,
+ "tolerance": 0,
+ "ref_is_sefaria": false,
+ "why": "niqqud and te'amim are edition-level pointing: stripped; maqaf splits"
+}

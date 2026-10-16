@@ -1,0 +1,17 @@
+{"key": "animal-spirits|translates|pneuma", "verdict": "stated", "idx": 1, "reason": "gives psychikon pneuma with the rendering 'animal spirits'", "judge": "claude-opus-5-5"}
+{"key": "galvanism|descends|animal-spirits", "verdict": "not_stated", "reason": "passages liken electricity to a nerve fluid; none says animal electricity took over from the animal spirits, which are not named", "judge": "claude-opus-5-5"}
+{"key": "weapon-salve|descends|sympathy", "verdict": "stated", "idx": 4, "reason": "says the weapon-salve's defenders ground its working in sympathy and antipathy", "judge": "claude-opus-5-5"}
+{"key": "weapon-salve|descends|mumia", "verdict": "not_stated", "reason": "mumia appears only as an ingredient or in a book list, never as the explanation of the cure", "judge": "claude-opus-5-5"}
+{"key": "seminal-reasons|descends|pneuma", "verdict": "stated", "idx": 2, "reason": "Stoic god as fire containing all seminal reasons and a pneuma passing through the world", "judge": "claude-opus-5-5"}
+{"key": "seminal-reasons|belongs|stoicism", "verdict": "stated", "idx": 0, "reason": "'the notion of seminal reason (logos spermatikos) conceived by the Stoics'", "judge": "claude-opus-5-5"}
+{"key": "weapon-salve|belongs|paracelsianism", "verdict": "stated", "idx": 1, "reason": "Libavius: the cure of wounds by the weapon-salve used by Paracelsians", "judge": "claude-opus-5-5"}
+{"key": "animal-spirits|belongs|galenism", "verdict": "not_stated", "reason": "candidates co-mention animal spirits and Galenists; none attributes the animal spirit to Galenic doctrine", "judge": "claude-opus-5-5"}
+{"key": "gerocomy|belongs|galenism", "verdict": "stated", "idx": 3, "reason": "the gerocomic part of medicine in Galen, which guards the health of the old", "judge": "claude-opus-5-5"}
+{"key": "prana|belongs|ayurveda", "verdict": "not_stated", "reason": "prana appears only as a word in a compound and as a translator's bracket gloss", "judge": "claude-opus-5-5"}
+{"key": "pranayama|belongs|hatha-yoga", "verdict": "stated", "idx": 1, "reason": "defines Hatha Yoga as the practice of postures and breath control", "judge": "claude-opus-5-5"}
+{"key": "pranayama|cultivates|prana", "verdict": "stated", "idx": 2, "reason": "retention regulates and holds the movement of prana; this is the threefold breath control", "judge": "claude-opus-5-5"}
+{"key": "pranayama|cultivates|kundalini", "verdict": "stated", "idx": 5, "reason": "Siva Samhita: pranayama causes the heating of Kundalini", "judge": "claude-opus-5-5"}
+{"key": "bigu|cultivates|immortality", "verdict": "not_stated", "reason": "bigu sits beside immortals or long life in anecdotes; no passage says avoiding grains produces immortality", "judge": "claude-opus-5-5"}
+{"key": "gerocomy|opposes|old-age", "verdict": "stated", "idx": 2, "reason": "old age's consumption can be largely removed; gerocomice resists the heart's withering", "judge": "claude-opus-5-5"}
+{"key": "acedia|opposes|vigour", "verdict": "stated", "idx": 1, "reason": "whoever has obtained vivid vigour has put to flight the vice of acedia", "judge": "claude-opus-5-5"}
+{"key": "daimon|belongs|platonism", "verdict": "not_stated", "reason": "only candidate is a one-line note that a daemon relates to matter", "judge": "claude-opus-5-5"}

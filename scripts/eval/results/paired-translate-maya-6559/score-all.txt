@@ -1,0 +1,250 @@
+
+### maya-lite-gemini — judge gemini-3.8-flash-high: 20 pages in both orders (gemini vs lite)
+position: gemini−lite with gemini as A +2.85 (n=20), as B +3.05 (n=20)
+| book | pages | gemini | lite | gemini − lite | preferred g/l | same pick both orders | omitted g/l | added g/l | mistranslated g/l |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 4.80 | 1.70 | +3.10 | 10/0 | 5/5 | 1/27 | 1/19 | 2/88 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 5.00 | 1.90 | +3.10 | 10/0 | 5/5 | 0/14 | 0/5 | 0/66 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.80 | 2.00 | +2.80 | 10/0 | 5/5 | 0/16 | 0/11 | 3/111 |
+| Yucatec Maya · Platicas de los principales  | 5 | 4.80 | 2.00 | +2.80 | 10/0 | 5/5 | 0/35 | 1/31 | 5/148 |
+| **all** | 20 | 4.85 | 1.90 | +2.95 | 40/0 | 20/20 | 1/92 | 2/66 | 10/413 |
+pages gemini higher / equal / lite higher: 20 / 0 / 0; mean +2.95, bootstrap 95% CI +2.77 to +3.12
+
+### maya-lite-gemini — judge claude opus: 20 pages in both orders (gemini vs lite)
+position: gemini−lite with gemini as A +2.00 (n=20), as B +2.10 (n=20)
+| book | pages | gemini | lite | gemini − lite | preferred g/l | same pick both orders | omitted g/l | added g/l | mistranslated g/l |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 3.90 | 1.90 | +2.00 | 10/0 | 5/5 | 2/21 | 2/28 | 22/77 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 4.20 | 2.20 | +2.00 | 10/0 | 5/5 | 0/9 | 0/13 | 17/71 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.10 | 2.00 | +2.10 | 10/0 | 5/5 | 0/7 | 0/13 | 24/122 |
+| Yucatec Maya · Platicas de los principales  | 5 | 4.30 | 2.20 | +2.10 | 10/0 | 5/5 | 0/34 | 3/34 | 18/127 |
+| **all** | 20 | 4.12 | 2.08 | +2.05 | 40/0 | 20/20 | 2/71 | 5/88 | 81/397 |
+pages gemini higher / equal / lite higher: 20 / 0 / 0; mean +2.05, bootstrap 95% CI +1.90 to +2.17
+
+### maya-lite-opus — judge gemini-3.8-flash-high: 20 pages in both orders (lite vs opus)
+position: lite−opus with lite as A -2.20 (n=20), as B -2.20 (n=20)
+| book | pages | lite | opus | lite − opus | preferred l/o | same pick both orders | omitted l/o | added l/o | mistranslated l/o |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 1.90 | 4.60 | -2.70 | 0/10 | 5/5 | 21/2 | 25/0 | 90/6 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 1.90 | 4.10 | -2.20 | 0/10 | 5/5 | 17/5 | 4/0 | 68/9 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 2.00 | 3.60 | -1.60 | 0/10 | 5/5 | 7/5 | 12/3 | 133/33 |
+| Yucatec Maya · Platicas de los principales  | 5 | 1.90 | 4.20 | -2.30 | 0/10 | 5/5 | 31/5 | 32/2 | 130/24 |
+| **all** | 20 | 1.93 | 4.12 | -2.20 | 0/40 | 20/20 | 76/17 | 73/5 | 421/72 |
+pages lite higher / equal / opus higher: 0 / 0 / 20; mean -2.20, bootstrap 95% CI -2.48 to -1.93
+
+### maya-lite-opus — judge claude opus: 20 pages in both orders (lite vs opus)
+position: lite−opus with lite as A -2.00 (n=20), as B -1.90 (n=20)
+| book | pages | lite | opus | lite − opus | preferred l/o | same pick both orders | omitted l/o | added l/o | mistranslated l/o |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 1.90 | 4.00 | -2.10 | 0/10 | 5/5 | 28/1 | 33/1 | 81/23 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 2.10 | 4.10 | -2.00 | 0/10 | 5/5 | 11/1 | 18/2 | 76/15 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 2.10 | 3.90 | -1.80 | 0/10 | 5/5 | 8/2 | 14/4 | 113/37 |
+| Yucatec Maya · Platicas de los principales  | 5 | 2.20 | 4.10 | -1.90 | 0/10 | 5/5 | 34/0 | 40/4 | 134/21 |
+| **all** | 20 | 2.08 | 4.03 | -1.95 | 0/40 | 20/20 | 81/4 | 105/11 | 404/96 |
+pages lite higher / equal / opus higher: 0 / 0 / 20; mean -1.95, bootstrap 95% CI -2.10 to -1.77
+
+### maya-opus-gemini — judge gemini-3.8-flash-high: 20 pages in both orders (gemini vs opus)
+position: gemini−opus with gemini as A +1.85 (n=20), as B +1.35 (n=20)
+| book | pages | gemini | opus | gemini − opus | preferred g/o | same pick both orders | omitted g/o | added g/o | mistranslated g/o |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 3.70 | 2.40 | +1.30 | 8/2 | 3/5 | 1/15 | 6/14 | 19/45 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 4.10 | 3.10 | +1.00 | 7/2 | 3/5 | 3/5 | 4/3 | 6/23 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.50 | 2.10 | +2.40 | 10/0 | 5/5 | 1/18 | 0/9 | 11/85 |
+| Yucatec Maya · Platicas de los principales  | 5 | 4.20 | 2.50 | +1.70 | 10/0 | 5/5 | 2/21 | 3/8 | 11/60 |
+| **all** | 20 | 4.12 | 2.52 | +1.60 | 35/4 | 16/20 | 7/59 | 13/34 | 47/213 |
+pages gemini higher / equal / opus higher: 16 / 3 / 1; mean +1.60, bootstrap 95% CI +1.15 to +2.02
+
+### maya-opus-gemini — judge claude opus: 20 pages in both orders (gemini vs opus)
+position: gemini−opus with gemini as A +0.45 (n=20), as B +0.30 (n=20)
+| book | pages | gemini | opus | gemini − opus | preferred g/o | same pick both orders | omitted g/o | added g/o | mistranslated g/o |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 2.90 | 3.80 | -0.90 | 2/7 | 4/5 | 8/2 | 11/4 | 39/27 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 3.80 | 3.70 | +0.10 | 6/4 | 3/5 | 2/4 | 5/8 | 18/19 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.00 | 2.40 | +1.60 | 10/0 | 5/5 | 0/12 | 0/11 | 25/66 |
+| Yucatec Maya · Platicas de los principales  | 5 | 3.90 | 3.20 | +0.70 | 9/0 | 4/5 | 4/10 | 8/3 | 25/44 |
+| **all** | 20 | 3.65 | 3.27 | +0.38 | 27/11 | 16/20 | 14/28 | 24/26 | 107/156 |
+pages gemini higher / equal / opus higher: 12 / 2 / 6; mean +0.38, bootstrap 95% CI -0.15 to +0.88
+
+### maya-sonnet-gemini — judge gemini-3.8-flash-high: 20 pages in both orders (gemini vs sonnet)
+position: gemini−sonnet with gemini as A +2.90 (n=20), as B +2.95 (n=20)
+| book | pages | gemini | sonnet | gemini − sonnet | preferred g/s | same pick both orders | omitted g/s | added g/s | mistranslated g/s |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 4.70 | 2.00 | +2.70 | 10/0 | 5/5 | 0/27 | 0/24 | 5/66 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 4.90 | 2.00 | +2.90 | 10/0 | 5/5 | 2/11 | 2/10 | 0/71 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 5.00 | 1.50 | +3.50 | 10/0 | 5/5 | 0/17 | 0/13 | 0/138 |
+| Yucatec Maya · Platicas de los principales  | 5 | 4.60 | 2.00 | +2.60 | 10/0 | 5/5 | 0/29 | 2/20 | 7/106 |
+| **all** | 20 | 4.80 | 1.88 | +2.92 | 40/0 | 20/20 | 2/84 | 4/67 | 12/381 |
+pages gemini higher / equal / sonnet higher: 20 / 0 / 0; mean +2.92, bootstrap 95% CI +2.73 to +3.15
+
+### maya-sonnet-gemini — judge claude opus: 20 pages in both orders (gemini vs sonnet)
+position: gemini−sonnet with gemini as A +2.15 (n=20), as B +2.15 (n=20)
+| book | pages | gemini | sonnet | gemini − sonnet | preferred g/s | same pick both orders | omitted g/s | added g/s | mistranslated g/s |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 3.80 | 2.10 | +1.70 | 10/0 | 5/5 | 2/22 | 4/12 | 27/57 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 4.10 | 2.00 | +2.10 | 10/0 | 5/5 | 0/8 | 5/16 | 14/71 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.10 | 1.70 | +2.40 | 10/0 | 5/5 | 0/20 | 2/33 | 27/130 |
+| Yucatec Maya · Platicas de los principales  | 5 | 4.40 | 2.00 | +2.40 | 10/0 | 5/5 | 0/32 | 2/22 | 15/109 |
+| **all** | 20 | 4.10 | 1.95 | +2.15 | 40/0 | 20/20 | 2/82 | 13/83 | 83/367 |
+pages gemini higher / equal / sonnet higher: 20 / 0 / 0; mean +2.15, bootstrap 95% CI +1.95 to +2.38
+
+### maya-sonnet-opus — judge gemini-3.8-flash-high: 20 pages in both orders (opus vs sonnet)
+position: opus−sonnet with opus as A +2.30 (n=20), as B +2.25 (n=20)
+| book | pages | opus | sonnet | opus − sonnet | preferred o/s | same pick both orders | omitted o/s | added o/s | mistranslated o/s |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 4.30 | 2.00 | +2.30 | 10/0 | 5/5 | 3/34 | 2/21 | 13/76 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 4.20 | 2.00 | +2.20 | 10/0 | 5/5 | 3/13 | 1/11 | 11/62 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.10 | 1.40 | +2.70 | 10/0 | 5/5 | 6/16 | 0/11 | 23/141 |
+| Yucatec Maya · Platicas de los principales  | 5 | 3.90 | 2.00 | +1.90 | 10/0 | 5/5 | 4/34 | 3/13 | 24/102 |
+| **all** | 20 | 4.12 | 1.85 | +2.27 | 40/0 | 20/20 | 16/97 | 6/56 | 71/381 |
+pages opus higher / equal / sonnet higher: 20 / 0 / 0; mean +2.27, bootstrap 95% CI +2.02 to +2.52
+
+### maya-sonnet-opus — judge claude opus: 20 pages in both orders (opus vs sonnet)
+position: opus−sonnet with opus as A +2.05 (n=20), as B +2.05 (n=20)
+| book | pages | opus | sonnet | opus − sonnet | preferred o/s | same pick both orders | omitted o/s | added o/s | mistranslated o/s |
+|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Libro de pláticas | 5 | 4.00 | 2.20 | +1.80 | 10/0 | 5/5 | 3/25 | 1/19 | 20/67 |
+| Yucatec Maya · Catecismo y exposicion breve | 5 | 4.20 | 2.00 | +2.20 | 10/0 | 5/5 | 0/8 | 1/20 | 16/68 |
+| Yucatec Maya · Coleccion de sermones para l | 5 | 4.00 | 1.60 | +2.40 | 10/0 | 5/5 | 2/17 | 0/43 | 29/118 |
+| Yucatec Maya · Platicas de los principales  | 5 | 4.00 | 2.20 | +1.80 | 10/0 | 5/5 | 3/25 | 2/19 | 24/110 |
+| **all** | 20 | 4.05 | 2.00 | +2.05 | 40/0 | 20/20 | 8/75 | 4/101 | 89/363 |
+pages opus higher / equal / sonnet higher: 20 / 0 / 0; mean +2.05, bootstrap 95% CI +1.85 to +2.23
+
+### nah-lite-gemini — judge gemini-3.8-flash-high: 30 pages in both orders (gemini vs lite)
+position: gemini−lite with gemini as A +2.07 (n=30), as B +1.80 (n=30)
+| book | pages | gemini | lite | gemini − lite | preferred g/l | same pick both orders | omitted g/l | added g/l | mistranslated g/l |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.50 | 2.40 | +2.10 | 20/0 | 10/10 | 10/42 | 3/10 | 4/101 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.40 | 2.70 | +1.70 | 18/2 | 10/10 | 29/42 | 5/13 | 11/64 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 4.60 | 2.60 | +2.00 | 20/0 | 10/10 | 9/32 | 5/11 | 5/92 |
+| **all** | 30 | 4.50 | 2.57 | +1.93 | 58/2 | 30/30 | 48/116 | 13/34 | 20/257 |
+pages gemini higher / equal / lite higher: 29 / 0 / 1; mean +1.93, bootstrap 95% CI +1.62 to +2.22
+
+### nah-lite-gemini — judge claude opus: 30 pages in both orders (gemini vs lite)
+position: gemini−lite with gemini as A +0.97 (n=30), as B +1.13 (n=30)
+| book | pages | gemini | lite | gemini − lite | preferred g/l | same pick both orders | omitted g/l | added g/l | mistranslated g/l |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.15 | 3.20 | +0.95 | 20/0 | 10/10 | 7/30 | 7/10 | 40/98 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.10 | 3.15 | +0.95 | 17/2 | 9/10 | 5/31 | 7/13 | 33/49 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 4.30 | 3.05 | +1.25 | 20/0 | 10/10 | 9/26 | 4/18 | 29/78 |
+| **all** | 30 | 4.18 | 3.13 | +1.05 | 57/2 | 29/30 | 21/87 | 18/41 | 102/225 |
+pages gemini higher / equal / lite higher: 27 / 2 / 1; mean +1.05, bootstrap 95% CI +0.83 to +1.27
+
+### nah-lite-opus — judge gemini-3.8-flash-high: 30 pages in both orders (lite vs opus)
+position: lite−opus with lite as A -1.53 (n=30), as B -1.97 (n=30)
+| book | pages | lite | opus | lite − opus | preferred l/o | same pick both orders | omitted l/o | added l/o | mistranslated l/o |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 2.40 | 4.35 | -1.95 | 0/20 | 10/10 | 35/13 | 13/3 | 110/18 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 2.55 | 4.30 | -1.75 | 3/17 | 9/10 | 41/28 | 15/2 | 66/8 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 2.80 | 4.35 | -1.55 | 2/18 | 10/10 | 39/20 | 16/2 | 85/8 |
+| **all** | 30 | 2.58 | 4.33 | -1.75 | 5/55 | 29/30 | 115/61 | 44/7 | 261/34 |
+pages lite higher / equal / opus higher: 2 / 1 / 27; mean -1.75, bootstrap 95% CI -2.10 to -1.35
+
+### nah-lite-opus — judge claude opus: 30 pages in both orders (lite vs opus)
+position: lite−opus with lite as A -1.33 (n=30), as B -1.27 (n=30)
+| book | pages | lite | opus | lite − opus | preferred l/o | same pick both orders | omitted l/o | added l/o | mistranslated l/o |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 3.05 | 4.55 | -1.50 | 0/20 | 10/10 | 27/3 | 8/3 | 105/14 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 2.95 | 4.20 | -1.25 | 1/19 | 9/10 | 35/11 | 15/5 | 52/21 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 3.15 | 4.30 | -1.15 | 2/18 | 10/10 | 32/13 | 19/4 | 85/17 |
+| **all** | 30 | 3.05 | 4.35 | -1.30 | 3/57 | 29/30 | 94/27 | 42/12 | 242/52 |
+pages lite higher / equal / opus higher: 1 / 2 / 27; mean -1.30, bootstrap 95% CI -1.55 to -1.02
+
+### nah-opus-gemini — judge claude opus: 30 pages in both orders (gemini vs opus)
+position: gemini−opus with gemini as A -0.10 (n=30), as B -0.03 (n=30)
+| book | pages | gemini | opus | gemini − opus | preferred g/o | same pick both orders | omitted g/o | added g/o | mistranslated g/o |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.20 | 4.10 | +0.10 | 7/11 | 7/10 | 9/10 | 13/6 | 45/35 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.10 | 4.25 | -0.15 | 5/13 | 7/10 | 11/6 | 5/3 | 30/20 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 3.95 | 4.10 | -0.15 | 7/12 | 7/10 | 10/26 | 12/4 | 44/24 |
+| **all** | 30 | 4.08 | 4.15 | -0.07 | 19/36 | 21/30 | 30/42 | 30/13 | 119/79 |
+pages gemini higher / equal / opus higher: 8 / 9 / 13; mean -0.07, bootstrap 95% CI -0.32 to +0.20
+
+### nah-sonnet-gemini — judge gemini-3.8-flash-high: 30 pages in both orders (gemini vs sonnet)
+position: gemini−sonnet with gemini as A +1.93 (n=30), as B +1.13 (n=30)
+| book | pages | gemini | sonnet | gemini − sonnet | preferred g/s | same pick both orders | omitted g/s | added g/s | mistranslated g/s |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.55 | 2.65 | +1.90 | 19/1 | 9/10 | 12/48 | 8/17 | 15/92 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.10 | 3.00 | +1.10 | 17/3 | 9/10 | 21/26 | 6/11 | 23/60 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 4.55 | 2.95 | +1.60 | 19/1 | 9/10 | 8/25 | 8/13 | 7/82 |
+| **all** | 30 | 4.40 | 2.87 | +1.53 | 55/5 | 27/30 | 41/99 | 22/41 | 45/234 |
+pages gemini higher / equal / sonnet higher: 26 / 2 / 2; mean +1.53, bootstrap 95% CI +1.22 to +1.85
+
+### nah-sonnet-gemini — judge claude opus: 30 pages in both orders (gemini vs sonnet)
+position: gemini−sonnet with gemini as A +0.57 (n=30), as B +0.70 (n=30)
+| book | pages | gemini | sonnet | gemini − sonnet | preferred g/s | same pick both orders | omitted g/s | added g/s | mistranslated g/s |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.15 | 3.35 | +0.80 | 16/4 | 8/10 | 4/21 | 12/11 | 30/83 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.20 | 3.65 | +0.55 | 18/2 | 8/10 | 10/17 | 5/0 | 26/43 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 4.05 | 3.50 | +0.55 | 18/2 | 10/10 | 8/17 | 10/15 | 36/69 |
+| **all** | 30 | 4.13 | 3.50 | +0.63 | 52/8 | 26/30 | 22/55 | 27/26 | 92/195 |
+pages gemini higher / equal / sonnet higher: 20 / 7 / 3; mean +0.63, bootstrap 95% CI +0.37 to +0.90
+
+### nah-sonnet-opus — judge gemini-3.8-flash-high: 30 pages in both orders (opus vs sonnet)
+position: opus−sonnet with opus as A +1.60 (n=30), as B +1.17 (n=30)
+| book | pages | opus | sonnet | opus − sonnet | preferred o/s | same pick both orders | omitted o/s | added o/s | mistranslated o/s |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.25 | 2.65 | +1.60 | 19/1 | 9/10 | 11/47 | 3/24 | 22/82 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.15 | 2.90 | +1.25 | 17/2 | 8/10 | 34/31 | 6/10 | 16/59 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 4.25 | 2.95 | +1.30 | 18/2 | 10/10 | 16/39 | 5/15 | 12/76 |
+| **all** | 30 | 4.22 | 2.83 | +1.38 | 54/5 | 27/30 | 61/117 | 14/49 | 50/217 |
+pages opus higher / equal / sonnet higher: 27 / 2 / 1; mean +1.38, bootstrap 95% CI +1.05 to +1.68
+
+### nah-sonnet-opus — judge claude opus: 30 pages in both orders (opus vs sonnet)
+position: opus−sonnet with opus as A +0.83 (n=30), as B +0.80 (n=30)
+| book | pages | opus | sonnet | opus − sonnet | preferred o/s | same pick both orders | omitted o/s | added o/s | mistranslated o/s |
+|---|---|---|---|---|---|---|---|---|
+| Nahuatl · A Iesu Christo S.N. ofrece e | 10 | 4.35 | 3.35 | +1.00 | 19/1 | 9/10 | 4/22 | 4/9 | 20/73 |
+| Nahuatl · Evangeliarium, epistolarium  | 10 | 4.10 | 3.35 | +0.75 | 16/2 | 6/10 | 23/23 | 3/4 | 25/50 |
+| Nahuatl · Promptuario manual mexicano: | 10 | 4.25 | 3.55 | +0.70 | 18/2 | 10/10 | 17/18 | 3/12 | 18/72 |
+| **all** | 30 | 4.23 | 3.42 | +0.82 | 53/5 | 25/30 | 44/63 | 10/25 | 63/195 |
+pages opus higher / equal / sonnet higher: 25 / 3 / 2; mean +0.82, bootstrap 95% CI +0.55 to +1.07
+
+### ocr-lite-opus — judge gemini-3.8-flash-high: 18 pages in both orders (lite vs opus)
+position: lite−opus with lite as A -1.22 (n=18), as B -1.44 (n=18)
+| book | pages | lite | opus | lite − opus | preferred l/o | same pick both orders | dropped l/o | invented l/o | misread l/o | normalised l/o |
+|---|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Arte pronunciacion y ortogra | 1 | 2.00 | 4.00 | -2.00 | 0/2 | 1/1 | 3/0 | 2/0 | 55/7 | 6/0 |
+| Kaqchikel · Libro de pláticas | 1 | 2.00 | 4.50 | -2.50 | 0/2 | 1/1 | 1/0 | 1/0 | 25/7 | 15/0 |
+| Kaqchikel · Vae ri qutubal qhabal, Ealah | 1 | 2.00 | 3.50 | -1.50 | 0/2 | 1/1 | 0/4 | 0/1 | 22/19 | 16/5 |
+| Nahuatl · Breve practica, y regimen de | 1 | 3.50 | 4.00 | -0.50 | 0/2 | 1/1 | 0/1 | 0/0 | 18/7 | 17/7 |
+| Nahuatl · Codex Osuna | 1 | 1.50 | 4.00 | -2.50 | 0/2 | 1/1 | 9/6 | 18/0 | 31/10 | 1/5 |
+| Nahuatl · Colloquios de la paz, y tran | 1 | 4.00 | 3.00 | +1.00 | 2/0 | 1/1 | 0/0 | 0/0 | 9/2 | 0/12 |
+| Nahuatl · El Evangelio de S. Lucas, de | 1 | 5.00 | 5.00 | +0.00 | 1/0 | 0/1 | 0/0 | 0/0 | 0/0 | 0/0 |
+| Nahuatl · Historia general de las cosa | 1 | 2.00 | 4.00 | -2.00 | 0/2 | 1/1 | 4/0 | 0/0 | 18/4 | 7/10 |
+| Nahuatl · Incipiunt Epistolae et Evang | 1 | 2.00 | 4.00 | -2.00 | 0/2 | 1/1 | 0/0 | 1/1 | 22/1 | 7/16 |
+| Nahuatl · NexcuitilMachiotl quimoteitt | 1 | 2.00 | 4.00 | -2.00 | 0/2 | 1/1 | 6/3 | 0/0 | 57/11 | 5/10 |
+| Nahuatl · Promptuario manual mexicano: | 1 | 2.00 | 4.50 | -2.50 | 0/2 | 1/1 | 3/0 | 12/0 | 27/2 | 14/0 |
+| Nahuatl · Vida y milagros del bien aue | 1 | 3.00 | 4.00 | -1.00 | 0/2 | 1/1 | 0/0 | 0/0 | 12/3 | 13/11 |
+| Nahuatl · [Doctrina cristiana en lengu | 1 | 3.00 | 3.50 | -0.50 | 1/1 | 0/1 | 1/1 | 0/1 | 15/6 | 3/29 |
+| Yucatec Maya · Catecismo y exposicion breve | 1 | 3.50 | 4.50 | -1.00 | 0/2 | 1/1 | 0/0 | 0/0 | 6/2 | 2/0 |
+| Yucatec Maya · Diccionario de Motul, maya e | 2 | 2.50 | 4.00 | -1.50 | 0/4 | 2/2 | 7/2 | 7/0 | 53/12 | 18/8 |
+| Yucatec Maya · Leti u ebanhelio Hezu Crizto | 1 | 3.50 | 4.50 | -1.00 | 0/2 | 1/1 | 0/0 | 0/0 | 3/1 | 20/0 |
+| Yucatec Maya · Oraciones devotas que compre | 1 | 3.00 | 4.00 | -1.00 | 0/2 | 1/1 | 0/0 | 0/0 | 6/2 | 12/0 |
+| **all** | 18 | 2.72 | 4.06 | -1.33 | 4/31 | 16/18 | 34/17 | 41/3 | 379/96 | 156/113 |
+pages lite higher / equal / opus higher: 1 / 1 / 16; mean -1.33, bootstrap 95% CI -1.75 to -0.89
+
+### ocr-lite-opus — judge claude opus: 18 pages in both orders (lite vs opus)
+position: lite−opus with lite as A -1.56 (n=18), as B -1.06 (n=18)
+| book | pages | lite | opus | lite − opus | preferred l/o | same pick both orders | dropped l/o | invented l/o | misread l/o | normalised l/o |
+|---|---|---|---|---|---|---|---|---|---|
+| Kaqchikel · Arte pronunciacion y ortogra | 1 | 2.00 | 3.50 | -1.50 | 0/2 | 1/1 | 1/0 | 0/0 | 52/20 | 5/2 |
+| Kaqchikel · Libro de pláticas | 1 | 2.00 | 4.00 | -2.00 | 0/2 | 1/1 | 0/0 | 0/0 | 40/4 | 9/0 |
+| Kaqchikel · Vae ri qutubal qhabal, Ealah | 1 | 2.00 | 4.00 | -2.00 | 0/2 | 1/1 | 0/3 | 2/0 | 22/3 | 11/5 |
+| Nahuatl · Breve practica, y regimen de | 1 | 2.50 | 4.00 | -1.50 | 0/2 | 1/1 | 0/2 | 0/1 | 16/1 | 9/6 |
+| Nahuatl · Codex Osuna | 1 | 2.00 | 3.50 | -1.50 | 0/2 | 1/1 | 6/3 | 16/4 | 25/11 | 2/5 |
+| Nahuatl · Colloquios de la paz, y tran | 1 | 4.00 | 3.50 | +0.50 | 1/0 | 0/1 | 0/0 | 0/0 | 7/3 | 0/9 |
+| Nahuatl · El Evangelio de S. Lucas, de | 1 | 4.50 | 5.00 | -0.50 | 0/2 | 1/1 | 0/0 | 0/0 | 2/0 | 0/0 |
+| Nahuatl · Historia general de las cosa | 1 | 2.00 | 3.50 | -1.50 | 0/2 | 1/1 | 2/0 | 1/0 | 22/6 | 8/5 |
+| Nahuatl · Incipiunt Epistolae et Evang | 1 | 2.00 | 3.00 | -1.00 | 0/2 | 1/1 | 0/0 | 0/2 | 23/11 | 3/10 |
+| Nahuatl · NexcuitilMachiotl quimoteitt | 1 | 2.00 | 3.50 | -1.50 | 0/2 | 1/1 | 5/2 | 5/2 | 67/27 | 4/3 |
+| Nahuatl · Promptuario manual mexicano: | 1 | 2.50 | 3.50 | -1.00 | 0/2 | 1/1 | 4/0 | 0/8 | 24/4 | 5/2 |
+| Nahuatl · Vida y milagros del bien aue | 1 | 3.00 | 4.00 | -1.00 | 0/2 | 1/1 | 0/0 | 0/0 | 9/1 | 18/10 |
+| Nahuatl · [Doctrina cristiana en lengu | 1 | 3.00 | 3.50 | -0.50 | 0/2 | 1/1 | 0/1 | 0/0 | 24/1 | 1/27 |
+| Yucatec Maya · Catecismo y exposicion breve | 1 | 3.00 | 5.00 | -2.00 | 0/2 | 1/1 | 0/0 | 1/0 | 8/0 | 2/0 |
+| Yucatec Maya · Diccionario de Motul, maya e | 2 | 2.50 | 3.75 | -1.25 | 0/4 | 2/2 | 2/2 | 3/0 | 61/19 | 16/9 |
+| Yucatec Maya · Leti u ebanhelio Hezu Crizto | 1 | 3.00 | 5.00 | -2.00 | 0/2 | 1/1 | 0/0 | 0/0 | 4/0 | 21/0 |
+| Yucatec Maya · Oraciones devotas que compre | 1 | 3.00 | 5.00 | -2.00 | 0/2 | 1/1 | 0/0 | 0/0 | 11/0 | 12/0 |
+| **all** | 18 | 2.64 | 3.94 | -1.31 | 1/34 | 17/18 | 20/13 | 28/17 | 417/111 | 126/93 |
+pages lite higher / equal / opus higher: 1 / 0 / 17; mean -1.31, bootstrap 95% CI -1.58 to -1.00
+
+MAYA VERDICT RULE (Opus only if BOTH judges, order-averaged, put Opus ahead): GEMINI [-1.6, -0.375]

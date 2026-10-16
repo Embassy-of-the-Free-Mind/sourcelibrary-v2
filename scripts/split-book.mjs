@@ -22,6 +22,7 @@ import sharp from 'sharp';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { extractPageType } from './lib/ocr-result-parse.mjs';
 import { NOT_HELD } from './lib/pipeline-hold.mjs';
+import { recountBook } from './lib/page-counts.mjs';
 
 // --- Config ---
 // 3% overlap on each crop (#1491 lesson #6: 1% clipped tight gutters). `--overlap=<fraction>` overrides it for a book
@@ -1033,12 +1034,12 @@ console.log('\n--- Step 7: Update book ---');
 
 const pagesWithOCR = newDocs.filter(d => d.ocr?.data).length;
 
+// All six counters from the pages just written (#5327): the old spreads are hidden
+// (negative page_number), so their translations and archived images leave the counts.
+await recountBook(db, book.id, { reason: 'split-book' });
+
 await db.collection('books').updateOne({ id: book.id }, {
   $set: {
-    pages_count: newDocs.length,
-    pages_ocr: pagesWithOCR,
-    pages_translated: 0,  // Reset — old spread translations are gone
-    pages_blank: 0,        // Reset — will be recomputed by sync-page-counts cron
     needs_splitting: false,
     split_completed: true,
     split_completed_at: new Date(),

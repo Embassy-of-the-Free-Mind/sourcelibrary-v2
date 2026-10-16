@@ -6,7 +6,7 @@
 // #6561 scoring. Usage (cwd = $JOB_SCRATCH/w): node <repo>/scripts/eval/paddle-correct-6561/score.mjs <pilot-w-dir> [uids.json]
 // Reads sets.json, anchors.json, out-*.jsonl (+ the pilot's pil-read-opus.jsonl as set A's redo arm). Writes score.json.
 import fs from 'node:fs';
-import { bodyText, foldHan, bodyCer, fitAlign, median, mean } from '../ground-truth-5935/lib.mjs';
+import { bodyText, foldHan, bodyCer, fitAlign, median, mean, makeRng } from '../ground-truth-5935/lib.mjs';
 // Levenshtein over code points (the census.mjs copy in paddle-stale-english-6388 is not importable: the module runs its census).
 function lev(a, b) {
   const x = [...a], y = [...b];
@@ -35,7 +35,11 @@ const ARMS = {
   'pro-correct': lastBy(readJsonl('out-pro-correct.jsonl')),
   'flashhigh-correct': lastBy(readJsonl('out-flashhigh-correct.jsonl')),
   'opus-redo': new Map([...lastBy(readJsonl('out-opus-redo.jsonl')), ...pilotRedo]),
+  // #6667: the same correct request on Sonnet and Haiku (opus.mjs with a 5th argument)
+  'sonnet-correct': lastBy(readJsonl('out-sonnet-correct.jsonl')),
+  'haiku-correct': lastBy(readJsonl('out-haiku-correct.jsonl')),
 };
+const CORRECT = Object.keys(ARMS).filter((a) => a.endsWith('-correct') && ARMS[a].size);
 const second = lastBy(readJsonl('out-flashlow-second.jsonl'));
 // The transcription between the sentinels; a reply with text but no sentinel pair is used whole and marked.
 export function extract(row) {
@@ -71,7 +75,7 @@ function scoreText(text, leaf) {
 
 // ── per page ──
 const pages = sets.map((s) => {
-  const row = { uid: s.uid, stratum: s.stratum, pid: s.pid, title: s.title, has_leaf: !!s.kanripo, leaf_chars: s.kanripo ? [...s.kanripo].length : null, arms: {} };
+  const row = { uid: s.uid, stratum: s.stratum, pid: s.pid, bid: s.bid, title: s.title, has_leaf: !!s.kanripo, leaf_chars: s.kanripo ? [...s.kanripo].length : null, arms: {} };
   const paddleQ = hanOf(s.paddle);
   row.arms.paddle = { status: 'ok', ...(s.kanripo ? scoreText(s.paddle, s.kanripo) : { han: [...paddleQ].length }) };
   for (const [arm, m] of Object.entries(ARMS)) {
@@ -100,7 +104,7 @@ const pages = sets.map((s) => {
 // ── anchoring ──
 const anch = [];
 for (const a of anchors) {
-  for (const arm of ['opus-correct', 'pro-correct', 'flashhigh-correct']) {
+  for (const arm of CORRECT) {
     const r = ARMS[arm].get(a.uid); const x = extract(r);
     const t = x.text;
     const res = a.plants.map((p) => {
@@ -126,7 +130,7 @@ for (const s of sets) {
   for (const r of runs) {
     const kan = r.before + r.ref + r.after, pad = r.before + r.ours + r.after;
     const by = [];
-    for (const arm of ['opus-correct', 'pro-correct', 'flashhigh-correct', 'opus-redo']) {
+    for (const arm of [...CORRECT, 'opus-redo']) {
       const x = extract(ARMS[arm].get(s.uid)); if (!x.text.trim()) continue;
       const q = hanOf(x.text);
       if (q.includes(kan) && !q.includes(pad)) by.push(arm);
@@ -166,6 +170,17 @@ for (const [sn, f] of Object.entries(STRATA)) {
       o.worse_mean_pts = o.worse ? +(100 * mean(pr.filter((d) => d > 0.005))).toFixed(2) : null;
       o.worse_max_pts = o.worse ? +(100 * Math.max(...pr.filter((d) => d > 0.005))).toFixed(2) : null;
       o.edit_vs_paddle_median = read.length ? median(read.map((x) => x.a.edit_vs_paddle).filter((v) => v != null)) : null;
+    }
+    // #6667: paired with Opus correct on the pages both scored; 95% interval by bootstrap over books (4,000 draws)
+    if (arm !== 'paddle' && arm !== 'opus-correct') {
+      const pr = scored.filter((x) => x.p.arms['opus-correct']?.cer != null).map((x) => ({ b: x.p.bid, d: x.a.cer - x.p.arms['opus-correct'].cer }));
+      if (pr.length) {
+        const byBook = new Map(); for (const x of pr) (byBook.get(x.b) || byBook.set(x.b, []).get(x.b)).push(x.d);
+        const books = [...byBook.values()], r = makeRng(6667), draws = [];
+        for (let k = 0; k < 4000; k++) { let t = 0, n = 0; for (let i = 0; i < books.length; i++) { const g = books[Math.floor(r() * books.length)]; for (const d of g) { t += d; n++; } } draws.push(t / n); }
+        draws.sort((a, b) => a - b);
+        o.vs_opus_correct = { n: pr.length, books: books.length, delta_cer_mean: +mean(pr.map((x) => x.d)).toFixed(4), delta_cer_median: +median(pr.map((x) => x.d)).toFixed(4), ci95: [+draws[100].toFixed(4), +draws[3899].toFixed(4)], worse: pr.filter((x) => x.d > 0.005).length, better: pr.filter((x) => x.d < -0.005).length };
+      }
     }
     summary[sn][arm] = o;
   }

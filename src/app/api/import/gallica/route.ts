@@ -9,6 +9,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint } from '@/lib/dedup';
 import { acquisitionGate, confirmClaims } from '@/lib/acquisition-guard';
 import { resolveLanguage, publishedToYear } from '@/lib/resolve-language';
+import { initialPageCounters } from '@/lib/page-counts';
 
 export const maxDuration = 300;
 
@@ -172,7 +173,10 @@ export const POST = withCuratorAuth(async (request, session) => {
       ...(work_id ? { work_id } : {}),
       gallica_ark: ark,
       thumbnail: getThumbnailUrl(0),
-      pages_count: pageCount,
+      // A book record declares its type at creation rather than landing null (#5292c).
+      content_type: 'book',
+      // All six counters at birth: every page pending, so every page translatable (#5328).
+      ...initialPageCounters(pageCount),
       dublin_core: {
         dc_identifier: [`GALLICA:${ark}`],
         dc_source: `https://gallica.bnf.fr/ark:/12148/${ark}`

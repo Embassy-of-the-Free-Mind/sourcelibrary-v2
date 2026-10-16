@@ -34,6 +34,10 @@ describe('licenseDisplay', () => {
     const noc = licenseDisplay('https://rightsstatements.org/vocab/NoC-NC/1.0/');
     expect(noc?.name).toBe('No Copyright – Non-Commercial Use Only');
     expect(noc?.name).not.toMatch(/^Public Domain/);
+    // NKC is the holder's belief, not a determination: shown as said, never as PD.
+    const nkc = licenseDisplay('http://rightsstatements.org/vocab/NKC/1.0/');
+    expect(nkc?.name).toBe('No Known Copyright');
+    expect(nkc?.url).toBe('http://rightsstatements.org/vocab/NKC/1.0/');
   });
 
   it('carries the URL through so the statement can be linked', () => {

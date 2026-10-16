@@ -1,0 +1,32 @@
+{
+  "_note": "Lexical lane of the aliveness atlas (#6652). English phrases matched as FTS5 phrases over the mirror's English translations (pages_en). Added after the embedding lane measured no enrichment: 3 of 79 judged probe-retrieved passages were confirmed, close to the 1.6% random base rate. Phrases are the vocabulary translators actually use for each idea. Every phrase is positive-controlled by its own hit count; zero-hit phrases are reported, not dropped. A phrase can be ambiguous (\"born again\" is also baptismal doctrine); the screen and the judge, not the phrase, decide.",
+  "dimensions": {
+    "quickening":       ["felt alive", "life returned to me", "new life flowed", "my heart leapt", "fire was kindled in my heart", "felt a new vigour", "life rushed back"],
+    "vividness":        ["all things seemed new", "everything seemed new", "saw all things new", "clothed in a new beauty", "as if for the first time"],
+    "rebirth":          ["born again", "born anew", "second birth", "a new man", "risen from the dead within"],
+    "gladness":         ["leapt for joy", "danced for joy", "danced with joy", "for sheer joy", "overflowing with joy", "intoxicated with joy"],
+    "wakefulness":      ["fully awake", "wide awake", "truly awake", "awoke from a long sleep"],
+    "healing_strength": ["strength returned", "my strength returned", "regained his strength", "recovered his strength", "colour returned to"],
+    "acedia":           ["acedia", "accidie", "spiritual dryness", "dryness of soul", "noonday demon", "weariness of soul"],
+    "numbness":         ["living death", "heart was dead", "dead within me", "felt nothing at all", "as one already dead", "my heart was like stone"],
+    "torpor":           ["torpor", "lethargy", "heaviness of spirit", "sluggishness of the spirits", "spirits were dull"],
+
+    "world_soul":       ["soul of the world", "world soul", "anima mundi", "spirit of the world", "world is an animal", "world is a living", "universe is alive"],
+    "vital_breath":     ["vital spirit", "vital spirits", "breath of life", "spirit of life", "vital breath", "vital force", "life force", "vital heat", "prana", "pneuma"],
+    "living_minerals":  ["metals grow", "seed of metals", "seed of gold", "living stone", "vegetable stone", "metals are alive", "womb of the earth", "stones grow"],
+    "living_heavens":   ["stars are living", "souls of the stars", "soul of the heavens", "heavens are animated", "celestial souls", "intelligences move", "the sun is the heart"],
+    "living_earth":     ["veins of the earth", "the earth breathes", "breathing of the earth", "bones of the earth", "earth is a living", "the earth is our mother"],
+    "plant_soul":       ["vegetative soul", "vegetable soul", "nutritive soul", "soul of plants", "plants have a soul", "plants feel"],
+    "sympathy":         ["sympathy and antipathy", "secret sympathy", "natural sympathy", "loves the iron", "magnet loves"],
+    "dead_matter":      ["dead matter", "brute matter", "inert matter", "matter is inert", "animals are machines", "mere machine", "automata"],
+
+    "living_place":     ["the place seemed alive", "the city was alive", "the place breathed", "a living city", "the house seemed alive"],
+    "genius_loci":      ["genius of the place", "genius loci", "spirit of the place", "guardian spirit of the", "nymph of the spring", "spirit of the grove"],
+    "building_body":    ["proportions of the human body", "proportion of a man", "living stones", "the temple is the body", "house is a little world"],
+    "wholeness":        ["nothing can be added or taken away", "nothing could be added", "all its parts agree", "each part answers"],
+    "garden":           ["the garden flourished", "garden was full of life", "the garden lived"],
+    "maker_spirit":     ["seemed to breathe", "seemed alive", "seemed to live", "as if alive", "so lifelike", "lifelike", "wanted only breath", "lacked only a voice", "seemed about to speak"],
+    "animated_image":   ["animated statues", "statues were animated", "the statue spoke", "the image spoke", "the image wept", "consecration of the image", "ensouled statue", "breathe life into"],
+    "lifeless_made":    ["cold and lifeless", "without life or spirit", "lifeless copy", "dead letter", "lacks life", "without any life"]
+  }
+}

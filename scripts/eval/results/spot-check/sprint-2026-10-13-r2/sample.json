@@ -1,0 +1,817 @@
+[
+ {
+  "slot": 1,
+  "book_id": "6991eaef2f801130a473ec5c",
+  "book_url": "https://sourcelibrary.org/book/6991eaef2f801130a473ec5c",
+  "tradition": null,
+  "book": {
+   "id": "6991eaef2f801130a473ec5c",
+   "title": "Notes et dessins sur la generation et le mecanisme des fonctions intimes",
+   "display_title": "Notes and Drawings on Generation and the Mechanism of Intimate Functions",
+   "author": "Leonardo da Vinci",
+   "language": "Italian",
+   "published": "1901",
+   "ia_identifier": "gri_33125017557675",
+   "pages_count": 108,
+   "pages_ocr": 108,
+   "pages_translated": 46,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "getty",
+     "americana"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 108,
+   "distinct_page_numbers": 108,
+   "duplicate_records": 0,
+   "pages_with_ocr": 108,
+   "pages_translated": 98,
+   "with_printed_number": 8,
+   "printed_backsteps": 3,
+   "printed_repeats": 1,
+   "pages_count_field": 108,
+   "pages_ocr_field": 108,
+   "pages_translated_field": 46
+  },
+  "run": [
+   88,
+   89,
+   90
+  ],
+  "pages": [
+   {
+    "page_number": 88,
+    "page_id": "6991eaef2f801130a473ecb4",
+    "image_url": "https://images.sourcelibrary.org/archived/6991eaef2f801130a473ec5c/88.jpg",
+    "image_status": 200,
+    "ocr": "<lang>None</lang>\n<page-type>blank</page-type>\n<meta>This page is blank. It appears to be an endpaper or a separator within the manuscript facsimile, showing the aged texture of the paper.</meta>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "[Blank page — no translatable content]",
+    "translation_model": null,
+    "translation_source": "system"
+   },
+   {
+    "page_number": 89,
+    "page_id": "6991eaef2f801130a473ecb5",
+    "image_url": "https://images.sourcelibrary.org/archived/6991eaef2f801130a473ec5c/89.jpg",
+    "image_status": 200,
+    "ocr": "<lang>French</lang>\n<page-type>title-page</page-type>\n<page-num>Feuillet n° 13. . . Verso.</page-num>\n\n## FEUILLETS INÉDITS DE LÉONARD DE VINCI\n### (Bibliothèque du Château de Windsor)\n\n## GÉNÉRATION ET MÉCANISME DES FONCTIONS INTIMES\n\n->Édouard Rouveyre, Éditeur, rue de Seine, 76, Paris<-\n\n---\n\n| NUMÉRO D’ORDRE POUR CE VOLUME | CLASSIFICATION DES AUTRES MATIÈRES |\n| :--- | :--- |\n| Feuillet n° 13 . . . Verso. | |\n\n<vocab>Feuillets inédits, Léonard de Vinci, Windsor, Génération, Mécanisme, Fonctions intimes</vocab>\n\n<detected-images>\n[{\"description\": \"Printed identification label for a facsimile edition of Leonardo da Vinci's Windsor manuscripts, featuring a scalloped border and bibliographic details.\", \"type\": \"decorative\", \"bbox\": {\"x\": 0.194, \"y\": 0.387, \"width\": 0.53, \"height\": 0.171}, \"gallery_quality\": 0.3, \"museum_rationale\": \"This is a functional printer's label from a late 19th or early 20th-century scholarly edition, not an original work by Leonardo da Vinci himself.\", \"museum_description\": \"Identifier label for Folio 13 verso from the 'Feuillets inédits de Léonard de Vinci' series published by Édouard Rouveyre. This series was critical in making the anatomical studies held in the Royal Library at Windsor Castle accessible to scholars and the public.\", \"metadata\": {\"subjects\": [\"typography\", \"scholarly edition\", \"Leonardo da Vinci research\"], \"technique\": \"letterpress\", \"style\": \"Belle Époque publishing style\"}}]\n</detected-images>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<meta>This page serves as a formal title or identification leaf for a specific section of the facsimile edition of Leonardo da Vinci's anatomical studies. It follows a blank leaf and introduces a new thematic grouping of drawings.</meta>\n\n## UNPUBLISHED LEAVES OF LEONARDO DA VINCI\n### (Library of Windsor Castle)\n\n## GENERATION AND THE MECHANISM OF INTIMATE FUNCTIONS\n<note>This title refers to Leonardo's anatomical studies of the reproductive system and internal biological processes.</note>\n\n->Édouard Rouveyre, Publisher, 76 Seine Street, Paris<-\n\n---\n\n| SEQUENCE NUMBER FOR THIS VOLUME | CLASSIFICATION OF OTHER SUBJECTS |\n| :--- | :--- |\n| Leaf No. 13 . . . Reverse side. | |\n\n<term>Unpublished Leaves</term><note>original: \"Feuillets inédits\"; refers to manuscript pages that had not been widely printed or circulated prior to this scholarly edition.</note> <term>Leonardo da Vinci</term> <term>Windsor</term> <term>Generation</term> <term>Mechanism</term> <term>Intimate Functions</term>\n\n<summary>This is a title page from a late 19th-century facsimile edition by Édouard Rouveyre, identifying a collection of Leonardo da Vinci's anatomical drawings from Windsor Castle concerning human reproduction and internal mechanics.</summary>\n<keywords>Leonardo da Vinci, Windsor Castle, anatomy, reproduction, Édouard Rouveyre, scientific publishing, 19th century</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 90,
+    "page_id": "6991eaef2f801130a473ecb6",
+    "image_url": "https://images.sourcelibrary.org/archived/6991eaef2f801130a473ec5c/90.jpg",
+    "image_status": 200,
+    "ocr": "<lang>Italian</lang>\n<page-type>blank</page-type>\n<page-num></page-num>\n\n<note>This page is blank.</note>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "[Blank page — no translatable content]",
+    "translation_model": null,
+    "translation_source": "system"
+   }
+  ]
+ },
+ {
+  "slot": 2,
+  "book_id": "69b99ec16ed9e0490990a6f2",
+  "book_url": "https://sourcelibrary.org/book/69b99ec16ed9e0490990a6f2",
+  "tradition": null,
+  "book": {
+   "author": "Eduard Müller (ed.)",
+   "display_title": null,
+   "ia_identifier": "paramatthadpandh00dhamuoft",
+   "id": "69b99ec16ed9e0490990a6f2",
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "language": "Pali",
+   "pages_count": 360,
+   "pages_ocr": 353,
+   "pages_translated": 338,
+   "published": "1893",
+   "title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+   "catalog_metadata": {
+    "collections": [
+     "robarts",
+     "toronto",
+     "university_of_toronto"
+    ]
+   },
+   "visible": true,
+   "original_language": "Pali"
+  },
+  "structure": {
+   "page_records": 360,
+   "distinct_page_numbers": 360,
+   "duplicate_records": 0,
+   "pages_with_ocr": 353,
+   "pages_translated": 338,
+   "with_printed_number": 306,
+   "printed_backsteps": 1,
+   "printed_repeats": 2,
+   "pages_count_field": 360,
+   "pages_ocr_field": 353,
+   "pages_translated_field": 338
+  },
+  "run": [
+   311,
+   312,
+   313
+  ],
+  "pages": [
+   {
+    "page_number": 311,
+    "page_id": "69dfe30e2e48086c70daeb2e",
+    "image_url": "https://images.sourcelibrary.org/archived/69b99ec16ed9e0490990a6f2/311.jpg",
+    "image_status": 200,
+    "ocr": "Anamatagge saṃsarato¹ mahiṃ² Jambudīpaṃ upanītaṃ\nkolaṭṭhimattaguḷikā mātāpitusv³ eva na ppahonti: 498.\nSara⁴ tiṇakaṭṭhaṃ⁵ sākhāpalāsaṃ upanītaṃ anamatag-\ngato\npitusu caturaṅulikā ghaṭikā pitupitusv⁶ eva na ppa-\nhonti. 499.\nSara kāṇakacchapaṃ pubbe samudde aparato ca yugacchid-\ndaṃ\nsiraṃ tassa ca paṭimukkaṃ⁷ manussalābhamhi opam-\namaṃ.⁸ 500.\nSara rūpaṃ phenapiṇḍopamassa⁹ kāyakalino asārassa\nkhandhe¹⁰ passa anicce sarāhi¹¹ niraye bahuvighāte. 501.\nSara kaṭasiṃ vaḍḍhente¹² punappunaṃ tāsu tāsu jātisu\nsara kumbhīlabhayāni ca sarāhi cattāri saccāni. 502.\nAmatamhi vijjamāne kiṃ tava pañcakaṭukena pītena¹³\nsabbā hi kāmaratiyo kaṭukatarā pañcakaṭukena. 503.\nAmatamhi vijjamāne kiṃ tava kāmehi ye pariḷāhā\nsabbā hi kāmaratiyo jalitā kuthitā¹⁴ kupitā¹⁵ santāpitā.¹⁶ 504.\nAsapattamhi¹⁷ samāne kiṃ tava kāmehi ye bahusapattā¹⁸\nrājaggicoraudakappiyehi sādhāraṇā kāmā bahusapattā. 505.\nMokkhamhi vijjamāne kiṃ tava kāmehi yesu hi vadha-\nbandho\nkāmesu hi vadhabandho kāmakāmā¹⁹ dukkhāni anubhon-\nti. 506.\nĀdīpitā tiṇukkā gaṇhantaṃ dahanti n’eva muñcantaṃ²⁰\nukkopamā hi kāmā dahanti ye te na muñcanti. 507.\nMā appakassa hetu kāmasukhassa vipulaṃ jahi²¹ sukhaṃ\n\n---\n\n¹ saṃsārato, cd. ² mahi, cd. ³ mātāmātusv, m.\n⁴ sara om. m. ⁵ tiṇakaṭṭhassa, cd. ⁶ mātāpitusv, cd.\n⁷ paripuṇṇaṃ, cd. ⁸ upamaṃ, cd.\n⁹ ᵒpamāya, cd. m. ¹⁰ nandhe, cd. ¹¹ parāhi, cd.\n¹² vaḍḍhante, cd. ; vaddhente, m. ¹³ mitena, cd.\n¹⁴ kudhitā, m. ¹⁵ kupitā om. m. ¹⁶ santappitā, cd.\n¹⁷ asampatto, cd. ¹⁸ bahusamattā, cd.\n¹⁹ kāmesu hi asākāmā, m. ; vadhabandho om, cd.\n²⁰ muccantaṃ, m. ²¹ jahe, cd.\n\n<scan-quality>good</scan-quality>\n<language>Pali</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>279</page-num>\n<header>THERĪ GĀTHĀ. 73.</header>\n<vocab>Therī Gāthā, Pali, Buddhism, verses, suffering, desire, samsara</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<meta>This page contains verses 498 to 507 of the Therigatha, specifically from the verses attributed to Sumedha. The text uses metaphors to illustrate the vastness of suffering in the cycle of rebirth and the dangers of sensual pleasures.</meta>\n\n# VERSES OF THE ELDER NUNS\n\nRemember that in the beginningless <term>samsara</term> <gloss>cycle of birth and death</gloss>, if the earth of the Rose-apple Island <note>original: \"Jambudipa\", referring to the Indian subcontinent or the known world</note> were rolled into little balls the size of jujube stones, they would not be enough to represent all the mothers and fathers one has had. 498.\n\nRemember that if all the grass, wood, branches, and leaves were gathered from the beginningless cycle and cut into finger-length pieces, they would not be enough to represent all the fathers and grandfathers one has had. 499.\n\nRemember the blind turtle in the eastern ocean and the yoke-hole in the western ocean; the chance of the turtle putting its head through that hole is the comparison used for the rarity of obtaining a human birth. 500.\n\nRemember that the physical form is like a lump of foam, a body of misery and without substance; look at the <term>khandhas</term> <gloss>aggregates of existence</gloss> as impermanent, and remember the many afflictions in the hells. 501.\n\nRemember those who fill up the cemeteries again and again in various births; remember the fears of the crocodiles <note>a metaphor for the dangers of the world</note>, and remember the Four Noble Truths. 502.\n\nWhile the Deathless <note>Nirvana</note> exists, why do you drink the five bitter things? For all sensual delights are more bitter than those five bitter medicines. 503.\n\nWhile the Deathless exists, what use to you are sensual pleasures which are burning fevers? For all sensual delights are blazing, boiling, disturbed, and inflamed. 504.\n\nWhile there is a state of no enmity, what use to you are sensual pleasures which have many enemies? Sensual pleasures are shared with kings, fire, thieves, water, and unloved heirs; they have many enemies. 505.\n\nWhile liberation exists, what use to you are sensual pleasures which involve execution and imprisonment? For in sensual pleasures there is execution and imprisonment; those who crave sensual pleasures experience many sufferings. 506.\n\nA grass torch, when lit, burns the one who holds it if they do not let go; sensual pleasures are like that torch, they burn those who do not let go of them. 507.\n\nDo not, for the sake of a small amount of sensual happiness, abandon a vast happiness.\n\n<margin>\n1. <note>variant: wandering in the cycle of rebirth</note>\n2. <note>variant: the earth</note>\n3. <note>variant: mothers and mothers</note>\n4. <note>variant: \"Remember\" is omitted in some versions</note>\n5. <note>variant: of grass and wood</note>\n6. <note>variant: mothers and fathers</note>\n7. <note>variant: complete</note>\n8. <note>variant: comparison</note>\n9. <note>variant: like a lump</note>\n10. <note>variant: reading unclear</note>\n11. <note>variant: beyond</note>\n12. <note>variant: increasing</note>\n13. <note>variant: measured</note>\n14. <note>variant: hungry</note>\n15. <note>variant: \"disturbed\" is omitted in some versions</note>\n16. <note>variant: tormented</note>\n17. <note>variant: not reached</note>\n18. <note>variant: many completions</note>\n19. <note>variant: in sensual pleasures there is no desire</note>\n20. <note>variant: being released</note>\n21. <note>variant: should abandon</note>\n</margin>\n\n<summary>These verses from the Therigatha emphasize the immense duration of rebirth and the rarity of human life. They contrast the fleeting, painful nature of sensual pleasures with the lasting peace of the Deathless state or Nirvana.</summary>\n<keywords>Samsara, Rebirth, Blind Turtle metaphor, Four Noble Truths, Sensual Pleasures, Nirvana, Sumedha, Therigatha</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 312,
+    "page_id": "69dfe30e2e48086c70daeb2f",
+    "image_url": "https://images.sourcelibrary.org/archived/69b99ec16ed9e0490990a6f2/312.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Pali</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>280</page-num>\n<header>LXXIII. SUMEDHĀ.</header>\n\nmā puthulomo va baḷisaṃ gilitvā pacchā vihaññasi.¹ 508.\nKāmaṃ kāmesu damassu² tāva sunakho va saṅkhalābaddho³\nkāhinti⁴ khu taṃ kāmā⁵ chātā sunakhaṃ va caṇḍālā. 509.\nAparimitaṃ ca dukkhaṃ bahūni ca cittadomanassāni\nanubhohisi kāmesu yutto.⁶ Paṭinissaja addhuve⁷ kāme. 510.\nAjaramhi vijjamāne kiṃ tava kāmehi ye sujarā\nmaraṇavyādhigahitā⁸ sabbā sabbattha jātiyo. 511.\nIdam ajaraṃ idam amaraṃ idam ajarāmarapadaṃ asokaṃ⁹\nasapattaṃ¹⁰ asambādhaṃ akhalitaṃ abhayaṃ nirupatā-\npaṃ. 512.\nAdhigataṃ idaṃ bahūhi amataṃ ajjāpi ca labhanīyaṃ idaṃ\nyo yoniso payuñjati¹¹ na ca sakkā aghaṭamānena.¹² 513.\nEvaṃ bhaṇati Sumedhā saṅkhāragate ratim¹³ alabhamānā\nanunenti¹⁴ Anikarattaṃ kese’va chamam chupi¹⁵ Sume-\ndhā. 514.\nUṭṭhāya Anikaratto pañjaliko yāci¹⁶ tassā pitaraṃ so\nvissajjetha Sumedhaṃ pabbajituṃ vimokkhasaccadas-\nsā.¹⁷ 515.\nVissajjitā mātāpitūhi pabbaji sokabhayabhītā\ncha abhiññā sacchikatā aggaphalaṃ sikkhamānāya. 516.\nAcchariyaṃ abbhutaṃ taṃ nibbānaṃ āsi rājakaññāya\npubbenivāsacaritaṃ yathā vyākari pacchime kāle. 517.\nBhagavati Koṇāgamane saṅghārāmamhi navanivesamhi\nsakhiyo tīṇi janiyo vihāradānaṃ adāsimha. 518.\nDasakkhattuṃ satakkhattuṃ dasasatakkhattuṃ satāni ca\nsatakkhattuṃ\ndevesu upapajjimha. Ko pana vādo manussesu. 519.\nDevesu mahiddhikā ahumha. Manussakamhi ko pana¹⁸ vādo.\n\n---\n\n¹ vihaññati, cd. ² ramassu, cd.\n³ saṅkhānaṃ bandho, cd. ; saṅkhānubandho, m.\n⁴ kāhanti, cd. ; kāhinti, m. ⁵ kāma, cd.\n⁶ kāmayutto, m. cd. ⁷ paṭinissada andhave, cd.\n⁸ ᵒbādhiᵒ, cd. ⁹ idaṃ tamarāmaraṇapaduso, cd.\n¹⁰ athapatthaṃ, cd. ¹¹ payujjati, cd.\n¹² aghaṭamāne, cd. ¹³ rati, cd. ¹⁴ aruṇentī, cd.\n¹⁵ thubhi, cd. ¹⁶ yāva, cd.\n¹⁷ ᵒdassāmi, cd. ¹⁸ pana om. m.\n\n<vocab>Sumedhā, Pali, Buddhism, Therigatha, Nibbana, Koṇāgamana</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "Do not be like a broad-finned fish that swallows the hook and is later destroyed. <note>The broad-finned fish is a traditional metaphor for one who is lured by sensory pleasure only to find it leads to suffering.</note> Restrain yourself from sensual desires, or they will treat you like a dog bound by a chain. Indeed, these desires will devour you just as the <term>Candala</term> <gloss>outcastes</gloss> treat a hungry dog.\n\nYou will experience immeasurable suffering and many mental distresses if you remain attached to sensual pleasures. Renounce these unstable desires. Since the ageless state exists, what use have you for these pleasures that are subject to decay? All births, in all places, are seized by death and disease.\n\nThis <note>the state of Nibbana</note> is ageless; this is undying; this is the ageless and undying state that is free from sorrow. It is without enemies, without confinement, without stumbling, without fear, and without affliction. This deathless state has been attained by many and can still be obtained today by one who applies themselves with thorough attention <note>original: <term>yoniso</term></note>. But it cannot be reached by one who does not strive.\n\nThus spoke Sumedha, finding no delight in conditioned things. While Anikaratta <note>the prince who wished to marry her</note> was pleading with her, Sumedha cut off her hair and threw it on the ground. <note>Cutting the hair is a symbolic act of renouncing worldly life and beauty to become a nun.</note>\n\nAnikaratta stood up and, with hands pressed together in respect, begged her father: \"Let Sumedha go, so that she may go forth into the homeless life to see the truth of liberation.\"\n\nReleased by her mother and father, she went forth into the homeless life, fearing sorrow and danger. While still a student, she realized the six higher powers <note>original: <term>abhiññā</term></note> and reached the highest fruit <note>Arahantship, or full enlightenment</note>.\n\nMarvelous and wonderful was the <term>Nibbana</term> <gloss>extinction of suffering</gloss> of that princess. In her final hour, she explained her conduct in previous lives:\n\n\"In the time of the Blessed One Konagamana <note>a Buddha of a previous age</note>, in a newly built monastery, three of us friends gave the gift of a dwelling place. Ten times, a hundred times, a thousand times, and ten thousand times we were reborn among the gods. What need is there to mention our births among humans? Among the gods, we possessed great psychic power. What need is there to mention our status among humans?\"\n\n<summary>The nun Sumedha rejects a royal marriage, cuts her hair in renunciation, and achieves enlightenment. She recounts her past merit of donating a monastery during the time of a previous Buddha.</summary>\n<keywords>Sumedha, Therigatha, renunciation, Nibbana, Konagamana Buddha, merit, rebirth</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   },
+   {
+    "page_number": 313,
+    "page_id": "69dfe30e2e48086c70daeb30",
+    "image_url": "https://images.sourcelibrary.org/archived/69b99ec16ed9e0490990a6f2/313.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Pali</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>281</page-num>\n<header>THERĪ GĀTHĀ. 73.</header>\n\nSattaratanassa mahesī itthiratanam ahaṃ āsi.¹ 520.\nSo hetu so pabhavotam mūlaṃ satthu sāsane² khanti\ntam pathamaṃ samodhānaṃ tam dhammaratāya nibbā-\nnam. 521.\nEvaṃ kathenti³ ye saddahanti vacanaṃ anomapaññassa\nnibbindanti bhavagate nibbinditvā virajjanti ti. 522.\n\nImā gāthā abhāsi. Tattha Mantāvatiyā nagare\nti Mantāvatī ti evaṃnāmake nagare. Rañño Koñ-\ncassā ti Koñcassa nāma rañño mahesiyā kucchimhi jātā\ndhitā āsi. Sumedhā ti nāmena Sumedhā. Pāsā-\ndikā⁴ sāsanakārehī ti satthu sāsanakārehi ariyehi\ndhammadesanāya sāsane pasādikā sañjātaratanattayappa-\nsādakatā.\n\nSilavatī ācārasīlasampannā. Cittakathā ti\ncittadhammakathā. Bahussutā pariyattidhammassa\nsaṇṭhitā. Buddhasāsane vinītā ti evaṃ pabba-\njanti evaṃ nibbanti iti sīlam iti samādhi iti paññā iti\nsuttānugatena yonisomanasikārena saṅgato⁵ kilesānaṃ\nvinigatattā buddhānaṃ sāsane vinītā saṃyatakāyavācā-\ncittā. Ubhayo nisāmethā ti tumhe dve pi mama\nvacanaṃ nisāmetha. Mātāpitaro upagantvā⁶\nbhaṇatī ti yojanā.\n\nYadi pi dibbaṃ ti⁷ devaloke pariyāpannam pi\nbhavagataṃ nāma sabbaṃ pi asassataṃ⁸ aniccaṃ\ndukkham vipariṇāmadhammaṃ. Kim aṅgaṃ pana\ntucchā kāmā ti kim aṅgaṃ pana manussakāmā ye\nsabbe pi asātā 'va bhāvato tucchā rittā satthadhārāyaṃ\nmadhubindu viya appassādā etarahi āyatiñ ca vipula-\ndukkhatāya bahuvighātā.\n\nKaṭukā ti aniṭṭhā sappaṭibhayatthena āsivisa-\nsadisā. Yesu kāmesu mucchitā ti ajjhositā.\nSamappitā ti sakammunā sabbaso appitā khittā upa-\n\n---\n\n¹ asiṃ, m. ² sāvasāsane, m. cd. ³ karonti, m. cd.\n⁴ pasādhitā, cd. ⁵ taṅgato, cd. ⁶ ugantvā, cd.\n⁷ dibbati, cd. ⁸ apassapataṃ, cd.\n\n<vocab>Therī Gāthā, Pali, Buddhism, Sumedhā, Mantāvatī, commentary, exegesis</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "I was the woman-treasure, the chief queen of the Lord of the Seven Treasures <note>original: \"Sattaratanassa mahesī itthiratanam ahaṃ āsi.\" This refers to the consort of a Universal Monarch or Cakkavatti.</note>. 520.\nThat was the cause, that was the source, that was the root: patience in the teaching of the Teacher. That was the first meeting; that was the Nirvana for one delighted in the Dhamma. 521.\nThus they speak, those who have faith in the word of the One of Supreme Wisdom. They grow weary of existence; having grown weary, they become dispassionate. 522.\n\nShe spoke these verses. There, in the city of Mantāvatī <note>original: \"Mantāvatiyā nagare\"</note> means in the city named Mantāvatī. Of King Koñca <note>original: \"Rañño Koñcassa\"</note> means she was the daughter born from the womb of the chief queen of the king named Koñca. By name, she was Sumedhā. Pleasing through the practitioners of the teaching <note>original: \"Pāsādikā sāsanakārehī\"</note> means she was one who had gained confidence in the Triple Gem through the noble ones who practice the Teacher's instruction and through the preaching of the Dhamma.\n\nVirtuous <note>original: \"Silavatī\"</note> means endowed with conduct and morality. Eloquent <note>original: \"Cittakathā\"</note> means her talk on the Dhamma was variegated and beautiful. Learned <note>original: \"Bahussutā\"</note> means she was well-established in the scriptures. Disciplined in the Buddha's teaching <note>original: \"Buddhasāsane vinītā\"</note> means she was disciplined in the teaching of the Buddhas because her defilements were removed through wise attention following the discourses, understanding how one goes forth, how one attains Nirvana, and what constitutes morality, concentration, and wisdom. Her body, speech, and mind were restrained. Listen, both of you <note>original: \"Ubhayo nisāmethā\"</note> means you two should listen to my words. The construction is: she spoke having approached her mother and father.\n\nEven if it is divine <note>original: \"Yadi pi dibbaṃ\"</note> means even that which belongs to the heavenly worlds, everything included in existence, is impermanent, unstable, suffering, and subject to change. How much more so the empty sensual pleasures? <note>original: \"Kim aṅgaṃ pana tucchā kāmā\"</note> means how much more so are human pleasures? Because they are essentially unpleasant, they are empty and hollow. They are like a drop of honey on the edge of a sword, providing little taste but resulting in great suffering and much distress now and in the future.\n\nBitter <note>original: \"Kaṭukā\"</note> means undesirable; they are like venomous snakes because of their fearful nature. Infatuated with which pleasures <note>original: \"Yesu kāmesu mucchitā\"</note> means those who are stuck in them. Delivered <note>original: \"Samappitā\"</note> means entirely delivered or thrown by their own karma into...\n\n<summary>This page contains verses from the Therigatha and their commentary, focusing on the former life of the nun Sumedhā and her discourse to her parents on the vanity of sensual pleasures.</summary>\n<keywords>Sumedhā, Mantāvatī, King Koñca, sensual pleasures, impermanence, Therigatha commentary, Buddhist ethics</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "batch_api"
+   }
+  ]
+ },
+ {
+  "slot": 3,
+  "book_id": "6a42fb76feb36226e8f0c975",
+  "book_url": "https://sourcelibrary.org/book/6a42fb76feb36226e8f0c975",
+  "tradition": null,
+  "book": {
+   "id": "6a42fb76feb36226e8f0c975",
+   "title": "Positiones Inaugurales De Altero Tanto , Quas Decreto Et Autoritate ... ICtorum Ordinis, Praeside ... Dn. Ortholpho, Ort. p. m. Fil. Fomanno U.I.D. ... Publice ventilandas proponit In Auditorio Iuridico Johannes Christophorus Aveman Isennacensis. Ad diem ",
+   "display_title": null,
+   "author": "Fomann, Ortolph",
+   "language": "Latin",
+   "published": "1635",
+   "ia_identifier": "bub_gb_MK3hLXYyjJ8C",
+   "pages_count": 16,
+   "pages_ocr": 16,
+   "pages_translated": 16,
+   "catalog_metadata": {
+    "collections": [
+     "europeanlibraries"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 16,
+   "distinct_page_numbers": 16,
+   "duplicate_records": 0,
+   "pages_with_ocr": 16,
+   "pages_translated": 16,
+   "with_printed_number": 4,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 16,
+   "pages_ocr_field": 16,
+   "pages_translated_field": 16
+  },
+  "run": [
+   3,
+   4,
+   5
+  ],
+  "pages": [
+   {
+    "page_number": 3,
+    "page_id": "6a42fb76feb36226e8f0c978",
+    "image_url": "https://images.sourcelibrary.org/archived/6a42fb76feb36226e8f0c975/3.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<sig>A 2</sig>\n<meta>Catchword: II.</meta>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">An ornamental horizontal border at the top of the page, featuring a repeating pattern of stylized floral or scrollwork elements.</image-desc>\n\n->In Nomine Domini Nostri Jesu Christi.<-\n->Prooemium.<-\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">An ornamental drop cap letter 'I' decorated with floral patterns.</image-desc>\nINsitum est hominibus naturâ plurimarum rerum desiderium, quod nequit expleri, nisi novarum cognitione & , quod ex hâc consequitur, admiratione atque inquisitione, Hinc vulgata & obvia negligimus, nova verò & semota placent. Huic ut Viri à literis non alieni satisfacerent, nec tamen nova sciendi amorem in curiositatem converterent, quae nonnunquam perscrutatur ea, quorum scientia parum prodest, cautionem hanc adhibuêre, ut miscerent utili dulce & dulci utile, ac seligerent discursuum Academicorum materias , & utilitate & raritate quodammodo singulares ; hâc in parte imitantes Imperatorem in §. 3. Prooemio Institutionum qui ab antiquis fabulis ad rerum pondera ac utilia magis animos studiosorum deducendos putavit: Quos & ego secutus thematis de **ALTERO TANTO**, raritate, utilitateque sese satis commendantis, quandam delibationem hâc vice proponere ac uberiorem ejusdem tractationem in aliud tempus mihi reservare constitui: sit ita cum bono Deo\n\n### Positio I.\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">An ornamental drop cap letter 'J' (printed as an 'I') decorated with floral patterns.</image-desc>\nJUra de Altero tanto esse constituta, constabit ex infra dicendis. Et Juris compilatores hisce verbis usos esse, *ex lege 13. in principio ff. de Liberis & posthumis lege 9. §. 5. ff. de publicanis & vectigalibus lege 18. §. 3. versu Idem quaesit, an alterum et caetera ff. de alimentis vel cibariis legatis lege 9. ff. de usuris lege 46. §. 1. ff. de jure fisci & lege 27. in principio ff. Ad Legem Juliam de Adulteris* nec Philologorum loquendi modos ab hoc nostro abhorrere, liquet ex *Martini Lexico Philologico sub litera A.* Maximè verò in Practicorum ore hunc sermonem esse frequentem, quotidiana satis testatur experientia.\n\n<vocab>Altero Tanto, Prooemium, Institutionum, Pandectae, Martinus Martinius, Lexicon Philologicum, utile dulce</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<note>An ornamental horizontal border at the top of the page, featuring a repeating pattern of stylized floral or scrollwork elements.</note>\n\n->In the Name of our Lord Jesus Christ.<-\n->Preface.<-\n\n<meta>An ornamental drop cap letter 'I' decorated with floral patterns.</meta>\nIt is ingrained in human nature to desire many things, a desire that cannot be satisfied except through the knowledge of new things and, as follows from this, through admiration and inquiry. Thus, we neglect what is common and obvious, while new and distant things please us. In order for men not alien to letters to satisfy this, without turning the love of learning into idle curiosity—which sometimes examines things whose knowledge is of little use—they adopted this caution: to mix the useful with the sweet and the sweet with the useful, and to select the subjects of their Academic discourses, singular in both their utility and their rarity. In this part, they imitate the Emperor in § 3 of the Preface to the Institutes, who thought the minds of students should be led from ancient fables to more weighty and useful matters. Following them, I have decided for this time to offer a certain tasting of the theme of **ALTERO TANTO** <gloss>the other as much/double</gloss>, which commends itself sufficiently by its rarity and utility, and to reserve a fuller treatment of the same for another time. May it be so with the help of God.\n\n### Position I.\n\n<meta>An ornamental drop cap letter 'J' (printed as an 'I') decorated with floral patterns.</meta>\nThat the laws concerning <term>Altero tanto</term> <gloss>the other as much</gloss> are established will be proven by what is said below. And that the compilers of the Law have used these words is clear from *Law 13, in the beginning, ff. de Liberis & posthumis* <gloss>on Children and Posthumous heirs</gloss>, *Law 9, § 5, ff. de publicanis & vectigalibus* <gloss>on Publicans and Taxes</gloss>, *Law 18, § 3, in the verse: The same is asked, whether the other etc., ff. de alimentis vel cibariis legatis* <gloss>on Alimony or Food Legacies</gloss>, *Law 9, ff. de usuris* <gloss>on Usury</gloss>, *Law 46, § 1, ff. de jure fisci* <gloss>on the Right of the Treasury</gloss>, and *Law 27, in the beginning, ff. Ad Legem Juliam de Adulteris* <gloss>on the Julian Law concerning Adultery</gloss>. Nor do the modes of speech of the Philologists differ from our usage here, as is evident from *Martinus’ Lexicon Philologicum under the letter A*. Daily experience sufficiently testifies that this language is particularly frequent in the mouths of practitioners.\n\n<summary>This page introduces the academic discourse on the legal concept of \"Altero tanto\" (a double amount), justifying its study as both useful and rare, and citing primary legal authorities for the term.</summary>\n<keywords>Altero tanto, legal history, academic discourse, Roman law, usury</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 4,
+    "page_id": "6a42fb76feb36226e8f0c979",
+    "image_url": "https://images.sourcelibrary.org/archived/6a42fb76feb36226e8f0c975/4.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>6</page-num>\n<meta>catchword: 6.</meta>\n\n2. Aliter atque aliter indigitatur. In l.7.C. de Jure Fisci dicitur Tantum aliud. l.5.§. fin.ff. de Publican. Duplum. l.un.C. de sententiis, quae pro eo quod interest et cetera. Dupli quantitas. l.5.C. de Sponsal. aliud tantundem. Interdum, Bis tantum, tantundem amplius et cetera. Calvin. in Lex. jurid. sub his vocabulis inter quae usitatiora, Alterum tantum et Duplum.\n\n3. Variae ejusdem in jure nostro inveniuntur acceptiones: 1. enim Late sumitur pro cujusque Rei Altero tanto vel altero totidem. d. l.13.ff. de liber. et posth. ubi in septem partes hereditate divisa secundum voluntatem, ait Julianus, testatoris filius altero tanto amplius habebit, quam uxor: item uxor altero tanto amplius, quam filia. Et sic filius accipiebat partes quatuor, uxor duas, filia unam. Id est, filius ad matrem, et mater ad filiam fuit in proportione dupla, notante Gothofr. ad ipsam l.13. H. quae inibi vocatur alterum tantum et hic agitur de dividenda hereditate. 2. Stricte pro illo duplo, quod poenae, interesse aut accessionis alicujus nomine exigitur. 3. Strictissime respectu ejus tantum accessionis, quae in mutuo ad sortis summam usque processerit, de qua potissimum nobis erit in nostra disquisitione agendum.\n\n4. Hocque significatu: Alterum tantum nihil aliud esse, statuo, quam ad sortem mutuo datam talem, tantamve accessionem, qualis, quantave est sors principalis.\n\n5. Cum in mutuo ita sit comparatum, ut usura quoad materiam conveniat cum forte. Hotoman. de usur. c.2. nec accessio alterius generis, quam cujus est sors, proprie loquendo sit usura, sed aliquid datum vel promissum loco usurae. l. 14. 17. C. de usur. Ideo ratione qualitatis dixi consentire alterum tantum cum forte principali.\n\n<vocab>Alterum tantum, Duplum, hereditate, mutuo, usura, sors principalis, Jure Fisci</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "2. It is designated in various ways. In *Law 7, C. de Jure Fisci*, it is called *Tantum aliud* <gloss>as much again</gloss>. In *Law 5, § fin., ff. de Publican.*, it is *Duplum* <gloss>double</gloss>. In *Law un., C. de sententiis, quae pro eo quod interest etc.*, it is *Dupli quantitas* <gloss>the quantity of the double</gloss>. In *Law 5, C. de Sponsal.*, it is *aliud tantundem* <gloss>as much again</gloss>. Sometimes it is called *Bis tantum* <gloss>twice as much</gloss>, *tantundem amplius* <gloss>as much again more</gloss>, etc. (Calvin, in *Lexicon Juridicum*, under these terms, among which the more customary are *Alterum tantum* and *Duplum*).\n\n3. Various meanings of this are found in our law: 1. It is taken broadly for any thing’s \"other as much\" or \"other as many.\" In the aforementioned *Law 13, ff. de liber. et posth.*, where the inheritance is divided into seven parts according to the will, Julian says the son of the testator will have \"as much again\" more than the wife; likewise, the wife \"as much again\" more than the daughter. And thus the son received four parts, the wife two, the daughter one. That is, the son to the mother, and the mother to the daughter, were in double proportion, as Gothofredus notes on that very *Law 13*, which is called here \"the other as much,\" and here it concerns the division of an inheritance. 2. Strictly for that double amount which is exacted in the name of a penalty, interest, or some accession. 3. Most strictly, with respect to only that accession which, in a loan, has proceeded up to the sum of the principal, which is what we shall mainly address in our inquiry.\n\n4. With this meaning, I define \"the other as much\" as nothing other than such an accession, or as much of an accession, added to the principal given in a loan, as the principal sum itself is.\n\n5. Since it is so arranged in a loan that usury agrees with the principal in regard to its matter (Hotoman, *de usur.* c. 2), and an accession of a different kind than the principal is not, strictly speaking, usury, but something given or promised in place of usury (*Law 14, 17, C. de usur.*), I have therefore said that the \"other as much\" agrees with the principal in quality.\n\n<summary>This page analyzes the terminological variations of \"Altero tanto\" in legal texts and establishes a threefold classification of its meaning, culminating in its specific application to interest on loans.</summary>\n<keywords>legal terminology, inheritance, loans, principal, usury, interest</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 5,
+    "page_id": "6a42fb76feb36226e8f0c97a",
+    "image_url": "https://images.sourcelibrary.org/archived/6a42fb76feb36226e8f0c975/5.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<sig>A 3</sig>\n<meta>catchword: ac</meta>\n\n6. Sic quantitatis ratione illud cum forte reciproca-\nri, vocabula ipsa innuunt. Statim enim dato aliquo ac-\ncessionis causa supra tantundem, non est amplius alte-\nrum, sed incipit tertium tantum, ut ita loquar. Quem-\nadmodum nec infra exaequationem simpli vel fortis\nprincipalis dici potest tantum, cum necdum quantita-\ntem attigerit, nec sit tantum, quanta est fors ipsa.\n\n7. Cujus sit farinae opinio Bartoli, Baldi, Castrensis,\naliorum existimantium, *quando in jure dicitur, usuras*\n*non debere excedere duplum, intelligi de unius anni usuris;*\nin proclivi est conjicere: nimirum ea nihil esse absur-\ndius refert *Fachin. 10. controversia 65.* Non enim tam brevi\ntemporis spatio fieri potest, nisi a crudeli creditore,\nut tantum usurarum nomine (unico puta anno) exiga-\ntur, quantum fors ipsa debita valeat, nec alterum tan-\ntum vel duplum considerari, si minore adhuc summa\nnec pari cum forte quantitate consistat, jam antea di-\nctum.\n\n7. Declaratur hinc controversia in hac materia\nprincipem fere locum tenens: An altero tanto insit\nsimplum? Et quamvis *Budaeus ad legem 10. Codicis de usuris* vo-\nluerit in duplo hoc usurarum non inesse simplum, et\nsic posse usuras currere usque ad duplum fortis, forte\nnon computata. *Molinaeus tractatu de usuris numero 47.*\n\n9. Hoc tamen non esset usuris modum praefigere,\nvel metam dupli, sed tripli; Rectius itaque censebitur\ncum *Molinaeus dicto loco et Borcholt capite finali de usuris numero 19.* altero tan-\nto inesse simplum, adeoque cum duplo usurarum non\nexigi adhuc ipsam fortem. Alterum enim tantum duo\nconstituit simpla, unum fortis, alterum usurarum. *Hot-*\n*tomanus de usuris capite ultimo.* Non sunt tria, unum fortis, duo usu-\nrarum, uti id etiam elucescit ex pronunciandi more\n\n<margin>6.</margin>\n\n<vocab>usuras, duplum, fors, Budaeus, Molinaeus, Bartolus, Baldus, Castrensis, creditore, quantitate</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "6. Thus, the words themselves suggest that it is reciprocal with the principal in regard to quantity. For as soon as something is given for the sake of an accession beyond \"as much again,\" it is no longer the \"other as much,\" but begins to be the \"third as much,\" if I may speak in this way. Just as it cannot be called \"as much\" below the equalization of the simple or principal amount, since it has not yet reached that quantity, nor is it \"as much\" as the principal itself is.\n\n7. As for the opinion of Bartolus, Baldus, Castrensis, and others, who believe that *when it is said in law that usury should not exceed the double, it is understood as usury of one year*, it is easy to conjecture that nothing is more absurd, as *Fachin. 10, controversy 65* relates. For it cannot happen in such a short space of time, unless by a cruel creditor, that as much is exacted in the name of usury (for example, in a single year) as the principal debt is worth. Nor is the \"other as much\" or \"double\" considered if it consists of a smaller or not equal quantity to the principal, as has been said before.\n\n8. Hence the controversy is declared, which holds almost the first place in this matter: Does the \"simple\" exist within the \"other as much\"? And although *Budaeus on Law 10, Code de usuris*, wished that the \"simple\" does not exist in this double of usury, and thus usury could run up to the double of the principal, the principal not being computed—*Molinaeus, treatise on usury, number 47*.\n\n9. However, this would not be to set a limit or a goal of the double for usury, but of the triple. Therefore, it will be more correctly deemed, as *Molinaeus in the aforementioned place and Borcholt, final chapter on usury, number 19*, that the \"simple\" exists within the \"other as much,\" and thus the principal itself is not also exacted with the double of usury. For \"the other as much\" constitutes two \"simples\": one of the principal, and the other of the usury. *Hottomanus on usury, last chapter*. There are not three: one of the principal and two of the usury, as is also evident from the manner of pronouncing...\n\n<margin>6.</margin>\n\n<summary>The author discusses the mathematical nature of \"the other as much\" (double), clarifies that legal limits on interest are not confined to annual sums, and argues that the \"double\" limit includes the principal within its calculation.</summary>\n<keywords>usury limits, principal, mathematical definitions, legal controversy, Bartolus, Molinaeus</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 4,
+  "book_id": "6a4c8dcb8e4c4eb7d2119d1d",
+  "book_url": "https://sourcelibrary.org/book/6a4c8dcb8e4c4eb7d2119d1d",
+  "tradition": null,
+  "book": {
+   "id": "6a4c8dcb8e4c4eb7d2119d1d",
+   "title": "Dissertatio Medica Inauguralis de Fluore Albo, quam Praeside Deo Solenni Eruditorum Examini D. 27. Iunii, A.R.S. M.DC.XC submittet Erdmannus Kupizius, Sora-Lusatus",
+   "display_title": "Kupitz, Erdmann: Dissertatio Medica Inauguralis de Fluore Albo",
+   "author": "Kupitz, Erdmann",
+   "language": "Latin",
+   "published": "Unknown",
+   "pages_count": 20,
+   "pages_ocr": 20,
+   "pages_translated": 20,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "mdz"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 20,
+   "distinct_page_numbers": 20,
+   "duplicate_records": 0,
+   "pages_with_ocr": 20,
+   "pages_translated": 20,
+   "with_printed_number": 18,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 20,
+   "pages_ocr_field": 20,
+   "pages_translated_field": 20
+  },
+  "run": [
+   4,
+   5,
+   6
+  ],
+  "pages": [
+   {
+    "page_number": 4,
+    "page_id": "6a4c8dcb8e4c4eb7d2119d21",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4c8dcb8e4c4eb7d2119d1d/4.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>4</page-num>\n<header>( 4. )</header>\n<meta>catchword: fla-</meta>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Decorative floral printer's ornaments flanking the page number '4'.</image-desc>\n\n*pectabo veniam, si tam arduam materiam ex voto non exhausero. Caterùm liberiores sermones & impudica verba, quantum fieri potuit, quovis modo vitavi; hinc petulanti splene præditis, cùm hac in Dissertatione nihil obscæni, nihil lascivi inventuri sint, hoc dabo consilii, ut intactis his thesibus, jucundiora lectu vel auditu alibi quærant: Tu autem ô **DEUS**, Dux & Autor Studiorum meorum, prosperos suscepto operi largire exitûs, ut omnia quæ nunc aguntur, & imposterum agentur, peragantur **FELICITER**.*\n\n---\n\n### §. I.\n\nImplorato itaque ante omnia hîc in labore divino auxilio Spiritusque Sancti assistentia, *Fluoris Albi* Definitionem nominalem examinaturus, cùm vox *Fluoris* in foro Medico admodum sit *Homonyma*, ab *Homonymia* ejusdem Dissertationem exordiar. Utuntur autem Deorum filii vocabulo *Fluoris* latè pro omni fluxu aut delapsu materiæ peccantis, à quacunque parte, & ad quamcunque partem: *strictè* & *specialiter* verò etiam denotat *Catarrhum*, sive vitiosæ materiæ in capite collectæ præternaturam ex illo in partes subjacentes defluxum. Interdum pro specie sumitur *Diarrhœæ* & *Dysenteriæ*, quando scilicet excrementa aquam, in quâ caro abluta, æmulantur, *Fluxus* tunc dicitur *Hepaticus*; quando verò feces per intestinum rectum solito crebriùs & majori cum humiditate, quàm par est, conjunctæ, eliminantur, *Fluxus* vocatur *ventris*. *Profluvium* sanguinis ex venis, vel ut alii malunt, ex arteriis, quæ sunt in ano, si indigitetur, *Fluxus* audit *Hæmorrhoidalis*: sub vocabulo verò *Fluoris* vel *Fluxûs rubri* aut *cruenti* intelligitur plerumque *muliercularum illud excrementitium Zenith*, ut appellatur à Crollio in *Basil. Chymic.* sive excrementum naturale sanguinis, quô sexus fœmininus à secundo septennio, usque ad septimum singulis mensibus naturaliter affligi solet: haud rarò autem significat quamcunque aliam præternaturalem sanguinis profusionem ab utero provenientem, sive solutionem continui venarum uteri à copiâ vel acrimoniâ sanguinis ortam. Nomine *Fluoris*, sed cum additamento *Albi*, insignitur etiam *Profluvium muliebre* sive *Rheumatismus uteri*, hâc in Dissertatione pertractandus, in quo aliud quid à sanguine per uterum evacuatur, varii aliquando coloris, modò album, modò\n\n<vocab>Fluor Albus, Catarrhus, Diarrhœa, Dysenteria, Fluxus Hepaticus, Fluxus Hæmorrhoidalis, Oswald Croll, Basilica Chymica, Rheumatismus uteri</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "( 4. )\n\n<note>Decorative floral printer's ornaments flank the page number.</note>\n\nforgiveness, if I do not exhaust so arduous a matter according to desire. Furthermore, I have avoided more unrestrained discourses and immodest words in any way possible; hence, for those possessed of a petulant spleen, since they will find nothing obscene or lascivious in this Dissertation, I offer this counsel: let them leave these theses untouched and seek what is more pleasing to read or hear elsewhere. Do Thou, O GOD, Leader and Author of my studies, grant prosperous outcomes to the work undertaken, so that all things which are now being done, and will be done hereafter, may be accomplished HAPPILY.\n\n### §. I.\n\nHaving therefore implored divine aid and the assistance of the Holy Spirit before all else in this labor, I shall begin my dissertation on the nominal definition of the White Fluor, since the term Fluor in the medical forum is quite Homonymous, by starting with its homonymy. The sons of the Gods use the word Fluor broadly for every flux or falling away of peccant matter, from any part and to any part. Strictly and specifically, however, it also denotes Catarrh, or the preternatural flowing down of vicious matter collected in the head into the underlying parts. Sometimes it is taken for a species of Diarrhea and Dysentery, namely when the excrements emulate the water in which meat has been washed, and it is then called a Hepatic Flux. When, however, feces are eliminated through the rectum more frequently than usual and conjoined with greater humidity than is proper, the flux is called a flux of the belly. If a profluvium of blood from the veins—or, as others prefer, from the arteries—which are in the anus is indicated, it is called a Hemorrhoidal Flux. Under the term Fluor or red or bloody flux, one generally understands that excrementitious Zenith of women, as it is called by Crollius in his *Basilica Chymica*, or the natural excretion of blood with which the female sex is accustomed to be naturally afflicted every month from the second septenary of years until the seventh. Not rarely, however, it signifies any other preternatural profusion of blood coming from the uterus, or a solution of the continuity of the uterine veins arising from an abundance or acrimony of blood. By the name Fluor, but with the addition of White, is also signified that female profluvium or Rheumatism of the uterus, to be treated in this dissertation, in which something other than blood is evacuated through the uterus, sometimes of various colors, now white, now",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 5,
+    "page_id": "6a4c8dcb8e4c4eb7d2119d22",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4c8dcb8e4c4eb7d2119d1d/5.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>5</page-num>\n<sig>A 3</sig>\n<meta>catchword: cor-</meta>\n<vocab>Homonymia, Synonymia, Etymologia, Fluor albus, Jacobus Pancratius Bruno, Hippocrates, Galenus, Forestus, Riverius, Gualtherus Charleton, Sylvius, Profluvium Muliebre, Rhevmatismus Uteri</vocab>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Symmetrical printer's ornaments (floral/scrollwork) flanking the page number \"( 5. )\".</image-desc>\n\nflavum, modò aqueum, modò alterius substantiæ, prout ex sequentibus Paragrapho patebit. Verùm ne aliorum scrinia compilare videamur, hæc de Homonymia sufficiant; plures significationes si forsitan quis desideret, evolvat VIRI Nobilissimi, Excellentissimi atque Experientissimi, DOMINI JACOBI PANCRATII BRUNONIS, Philosophiae et Medicinae Doctoris. hîcque in Lycéo Professoris Publici et nunc temporis DECANI Spectatissimi, Patroni et Præceptoris mei quovis honoris cultu devenerandi AMALTHEVM CASTELLO-BRVNONIANVM sub Titulo Fluor, ibidemque citatos Autores.\n\n## II.\n\nQuoad Synonymiam, varias affectus noster præterea sortitur appellationes; HIPPOCRATES et GALENUS, Ille quidem de Natura Muliebri Sectione XV. textu II. et Sectione XLV. textu I. Hic verò III. de Causis Symptomatum Libro item de Differentia Symptomatum et VI. de Locis Affectis eundem vocant ῥόον vel ῥοῦν γυναικεῖον, fluxum, vel fluorem muliebrem, fortassis quia fœminarum est proprius. Foresto Observationum Libro XVIII. Observatione XIX. dicitur Profluvium Muliebre, Superfluitas Alba, Flores Albi, Purgatio Muliebris et cetera. cujus denominationis ratio ex ipsis verbis patet. Riverio Praxi Medica Libro XV. capite IV. placuit nominare Uteri Profluvium: Sagacissimus verò Naturæ Scrutator Gualtherus Charleton maluit eum appellare Rhevmatismus Uteri. Sylvio Praxi Medica Libro III. capite IV. ob convenientiam quam primo intuitu cum pituita habere videtur, Humor audit Pituitosus. Tribuitur et ipsi titulus à quibusdam Menstruorum Alborum: verùm cum fluor hic frequentiùs extra mensium fluxum, ante vel post Naturale Tributum Lunare Solutum peccare soleat, quàm ipso tempore menstruo, cum Accuratissimo Sylvio, cur nomen hoc mereatur, non videmus, nisi maximè impropriè: Germanis dici solet der weisse Fluß et cetera et quis omnia à tot Medicis excogitata et affectui huic imposita nomina enarret?\n\n## III.\n\nEtymologiam hîc quidem traderem, nisi cuilibet jam notum esset, vocem Græcam ῥόος vel ῥοῦς derivari à ῥέω fluo, et Latinam Fluor à fluo: nomina verò λευκὸς et Albus esse primitiva et sic Etymologiâ nullâ opus habere: hinc supervacaneum censeo de eâdem multa facere verba.\n\n## IV.\n\nMissis igitur verbalibus ad magis realia nos accingentes, definimus Fluorem album, quòd fit fluoris nutritii, nunc magis nunc minùs",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "( 5. )\n\n<note>Symmetrical printer's ornaments flank the page number.</note>\n\nyellow, now watery, now of another substance, as will be evident from the following Paragraphs. But lest I seem to be compiling the cabinets of others, let this suffice regarding the Homonymy; if by chance anyone desires more meanings, let him consult the work of that most noble, most excellent, and most experienced man, LORD JACOBUS PANCRATIUS BRUNO, Doctor of Philosophy and Medicine, Public Professor here in the Lyceum, and at this time most respected DEAN, my patron and preceptor to be revered with every mark of honor, the *Amaltheum Castello-Brunonianum* under the title Fluor, and the authors cited therein.\n\n## II.\n\nRegarding synonymy, our condition acquires various other names. Hippocrates and Galen—the former indeed in *On the Nature of Woman*, Section XV, text II, and Section XLV, text I; the latter in Book III of *On the Causes of Symptoms*, and also in *On the Difference of Symptoms* and VI *On Affected Parts*—call it *rhoon* or *rhoun gynaikeion*, a flux or female fluor, perhaps because it is proper to women. In Forestus, *Observations*, Book XVIII, Observation XIX, it is called a Female Profluvium, White Superfluity, White Flowers, Female Purgation, and so forth, the reason for which denomination is clear from the words themselves. Riverius, in *Medical Practice*, Book XV, chapter IV, chose to name it a Profluvium of the Uterus. The most sagacious investigator of Nature, Gualtherus Charleton, preferred to call it Rheumatism of the Uterus. In Sylvius, *Medical Practice*, Book III, chapter IV, because of the similarity it seems to have at first glance with phlegm, it is called Phlegmatic Humor. It is also given the title by some of White Menses; but since this fluor is accustomed to be amiss more frequently outside the flux of the months, before or after the Natural Lunar Tribute has been paid, than during the menstrual time itself, with the most accurate Sylvius, we do not see why it deserves this name, except most improperly. To the Germans, it is usually called *der weisse Fluß*, and so forth; and who could recount all the names devised by so many physicians and imposed upon this condition?\n\n## III.\n\nI would here provide the etymology, were it not already known to everyone that the Greek word *rhoos* or *rhous* is derived from *rheo*, to flow, and the Latin *Fluor* from *fluo*; and that the names *leukos* and *Albus* (white) are primitive and thus have no need of any etymology. Hence, I deem it superfluous to make many words about it.\n\n## IV.\n\nHaving therefore dismissed verbal matters, and preparing ourselves for more real ones, we define the White Fluor as the preternatural excretion of nutritive fluor, now more, now less",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 6,
+    "page_id": "6a4c8dcb8e4c4eb7d2119d23",
+    "image_url": "https://images.sourcelibrary.org/archived/6a4c8dcb8e4c4eb7d2119d1d/6.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>6</page-num>\n<header>( 6. )</header>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Fleuron-like ornaments flanking the page number at the top.</image-desc>\n\ncorrupti, præternaturalis ex utero excretio, ab ejusdem substantiâ, glandulis & vasis præternaturaliter immutatis, originem ducens. Generis in hâc descriptione locum obtinet præternaturalis excretio, sub quâ tamen minimè intelligimus actionem rejiciendi excernenda, quæ solius naturæ munus; sed excretum, Græcis περίττωμα vel διαχώρημα, ipsam actionem excretoriam præsupponens, verbo, excrementum. Differentia verò specifica desumitur ab utero, ut distinguatur à reliquis affectibus Rheumaticis, v. g. Coryza, Brancho, Catarrho, Rheumatismo κατ᾽ ἐξοχήν sic dicto &c. patetque hoc modo affectum hunc referri posse ad Symptomata actionis læsæ, ad symptomata partim excretorum in quantitate & qualitate; ad symptomata partim qualitatis mutatæ, ratione livoris faciei, adspectûs cadaverosi &c.\n\n->V.<-\n\nSubjectum generalius solas constituere fœminas, prout latiori significatu virgines etiam unà includunt, nemo facilè vocabit in dubium, cùm sexus masculus à fœdo hôc morbo soleat esse immunis: quænam verò pars specialiter pro affectâ fit habenda, nunc est animus inquirere. Uterum indigitat descriptio, quia ex solo utero humiditates dictæ nunc parciores, nunc copiosiores, nunc blandæ, nunc acres, nunc albicantes, nunc flavescentes fluunt, nunquam per viam aliam. Quoniam igitur uterus non solùm hujus, sed omnium morborum (puta muliebrium) secundum divinum Coum existit causa, & affecto utero totum corpus in illius κοινωνίαν & contagionem trahitur: non à scopo aberraturum me puto, si, antequam ad reliqua progrediar, tribus verbis solummodo in ejusdem situm, magnitudinem, figuram, substantiam & connexionem; in vasa verò paulò accuratiùs, licèt simul etiam breviùs, pro ingenioli viribus inquisivero, ut eò feliciùs finem propositum assequi possim.\n\n->VI.<-\n\nProdit autem Situs uteri statim singularem Dei providentiam, dum eundem collocatum videmus in hypogastrio sive abdominis parte infimâ, inter vesicam & intestinum rectum, quæ ipsi sunt instar duorum pulvinarium, ne ossium duritie lædatur tenellus embryo. Est præterea locus ille etiam aptissimus non tantum ad concepti fœtûs incrementum; dum enim uterus ultimis mensibus ingentem in molem distenditur, amplius etiam requirebatur spatium; sed ad perfecti etiam exclusionem.\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Repeating decorative symbols in the bottom left margin.</image-desc>\n\n<meta>Catchword: VII. Ma-</meta>\n\n<vocab>excretio, uterus, περίττωμα, διαχώρημα, Rheumaticis, Coryza, Catarrho, κατ᾽ ἐξοχήν, κοινωνίαν, hypogastrio, embryo</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "( 6. )\n\n<note>Fleuron-like ornaments flank the page number.</note>\n\ncorrupted, drawing its origin from the substance of the uterus itself, and from its glands and vessels, which have been preternaturally altered. The term preternatural excretion holds the place of genus in this description, under which, however, we by no means understand the action of rejecting matter to be excreted, which is the function of nature alone; but the excreted matter itself, which the Greeks call *perittoma* or *diachorema*, presupposing the excretory action itself—in a word, excrement. The specific difference, however, is taken from the uterus, so that it may be distinguished from other rheumatic conditions, for example, coryza, broncho, catarrh, rheumatism *kat' exochen* (by eminence) so called, etc. It is evident that in this way this condition can be referred to symptoms of impaired action, to symptoms of excreta part in quantity and quality, and to symptoms of altered quality, by reason of the lividity of the face, the cadaverous appearance, etc.\n\n->V.<-\n\nThat the subject more generally consists only of women, provided that in a broader sense virgins are also included, no one will easily call into doubt, since the male sex is accustomed to be immune from this foul disease. What part specifically is to be considered as affected, it is now my intention to inquire. The description points to the uterus, because from the uterus alone the said humors flow—now more sparse, now more copious, now bland, now acrid, now whitening, now yellowing—never by another way. Since, therefore, the uterus exists as the cause not only of this, but of all diseases (that is to say, female ones) according to the divine Coan <note>referring to Hippocrates</note>, and when the uterus is affected, the whole body is drawn into its *koinonia* (communion) and contagion, I think I shall not stray from the goal if, before I proceed to the rest, I have inquired with the strength of my small talent, briefly and in three words, into its position, magnitude, figure, substance, and connection; and a little more accurately, though still briefly, into the vessels, so that I may more happily attain the proposed end.\n\n->VI.<-\n\nThe Position of the uterus immediately reveals a singular divine providence, while we see it placed in the hypogastrium, or the lowest part of the abdomen, between the bladder and the rectum, which are for it like two cushions, lest the tender embryo be injured by the hardness of the bones. Furthermore, that place is also most suitable not only for the growth of the conceived fetus—since when the uterus is distended into a huge mass in the final months, more space was required—but also for its exclusion once perfected.\n\n<note>Repeating decorative symbols in the bottom left margin.</note>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 5,
+  "book_id": "69af3c65d79faba421042e98",
+  "book_url": "https://sourcelibrary.org/book/69af3c65d79faba421042e98",
+  "tradition": null,
+  "book": {
+   "id": "69af3c65d79faba421042e98",
+   "title": "Подросток, Т. 2",
+   "display_title": "The Adolescent, Vol. 2",
+   "author": "Fyodor Dostoevsky",
+   "language": "Russian",
+   "published": "1911",
+   "ia_identifier": "podrostokt268",
+   "pages_count": 454,
+   "pages_ocr": 446,
+   "pages_translated": 439,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "russian-online-libraries",
+     "booksbylanguage_russian",
+     "booksbylanguage"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 454,
+   "distinct_page_numbers": 454,
+   "duplicate_records": 0,
+   "pages_with_ocr": 446,
+   "pages_translated": 446,
+   "with_printed_number": 412,
+   "printed_backsteps": 2,
+   "printed_repeats": 0,
+   "pages_count_field": 454,
+   "pages_ocr_field": 446,
+   "pages_translated_field": 439
+  },
+  "run": [
+   49,
+   50,
+   51
+  ],
+  "pages": [
+   {
+    "page_number": 49,
+    "page_id": "69af3c65d79faba421042ec9",
+    "image_url": "https://images.sourcelibrary.org/archived/69af3c65d79faba421042e98/49.jpg",
+    "image_status": 200,
+    "ocr": "<language>Russian</language>\n<page-type>text</page-type>\n<page-num>45</page-num>\n<header>ГЛАВА СЕДЬМАЯ.</header>\n\nженіе, и Анна Андреевна отказала вамъ? Такъ ли? Такъ ли? Подробности для меня чрезвычайно важны, князь.\n\n— Нѣтъ, я предложенія не дѣлалъ совсѣмъ, но лишь потому, что не успѣлъ; она сама предупредила меня, — не въ прямыхъ, конечно, словахъ, но, однакоже, въ слишкомъ прозрачныхъ и ясныхъ дала мнѣ «деликатно» понять, что идея эта впредь невозможна.\n\n— Значитъ, все равно что не дѣлали предложенія, и гордость ваша не пострадала!\n\n— Неужели вы можете такъ разсуждать! А судъ собственной совѣсти, а Лиза, которую я обманулъ и... хотѣлъ бросить, стало быть? А обѣтъ, данный себѣ и всему роду моихъ предковъ — возродиться и выкупить всѣ прежнія подлости! Умоляю васъ, не говорите ей про это. Можетъ быть, она этого одного не въ состояніи была бы простить мнѣ! Я со вчерашняго боленъ. А главное, кажется, теперь уже все кончено, и послѣдній изъ князей Сокольскихъ отправится въ каторгу. Бѣдная Лиза! Я очень ждалъ васъ весь день, Аркадій Макаровичъ, чтобъ открыть вамъ, какъ брату Лизы, то, чего она еще не знаетъ. Я — уголовный преступникъ и участвую въ поддѣлкѣ фальшивыхъ акцій —ской желѣзной дороги.\n\n— Это что еще! Какъ въ каторгу? — вскочилъ я, въ ужасѣ смотря на него. Лицо его выражало глубочайшую, мрачную, безысходную горесть.\n\n— Сядьте, — сказалъ онъ, и самъ сѣлъ въ кресла напротивъ. --- Во-первыхъ, узнайте фактъ: годъ слишкомъ назадъ, вотъ въ то самое лѣто Эмса, Лидіи и Катерины Николаевны и потомъ Па-\n\n<vocab>Анна Андреевна, князь Сокольскій, Лиза, Аркадій Макаровичъ, каторга, фальшивыя акціи, желѣзная дорога, Эмсъ, Катерина Николаевна</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<page-num>45</page-num>\n<header>CHAPTER SEVEN.</header>\n\nal, and Anna Andreyevna refused you? Is that so? Is that so? The details are extremely important to me, Prince.\n\n— No, I did not make a proposal at all, but only because I did not have the chance; she anticipated me herself — not in direct words, of course, but, nevertheless, in terms far too transparent and clear she let me \"delicately\" understand that this idea was henceforth impossible.\n\n— Then it is as if you never made the proposal, and your pride was not wounded!\n\n— How can you reason like that! What about the court of one’s own conscience, and Liza, whom I deceived and... meant to abandon, as it turns out? And the vow given to myself and to the whole line of my ancestors to be reborn and redeem all my past baseness! I beg you, do not tell her about this. Perhaps that is the one thing she would be unable to forgive me! I have been ill since yesterday. And above all, it seems everything is over now, and the last of the Princes Sokolsky will go to the <term>katorga</term> <gloss>penal servitude/hard labor</gloss>. Poor Liza! I waited for you all day, Arkady Makarovich, to reveal to you, as Liza’s brother, what she does not yet know. I am a criminal and am involved in the forgery of counterfeit shares of the [---] railway.\n\n— What is this! What do you mean, to the <term>katorga</term>? — I jumped up, looking at him in horror. His face expressed the deepest, gloomiest, most hopeless sorrow.\n\n— Sit down, — he said, and he sat in the armchair opposite. — First, learn the fact: a year and a bit ago, that very summer in Ems, with Lidia and Katerina Nikolaevna, and later in Pa-",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 50,
+    "page_id": "69af3c65d79faba421042eca",
+    "image_url": "https://images.sourcelibrary.org/archived/69af3c65d79faba421042e98/50.jpg",
+    "image_status": 200,
+    "ocr": "<language>Russian</language>\n<page-type>text</page-type>\n<page-num>46</page-num>\n<header>Подростокъ. Часть вторая.</header>\n\nрижа, именно въ то время, когда я отправился на два мѣсяца въ Парижъ, въ Парижѣ мнѣ не достало, разумѣется, денегъ. Тутъ какъ разъ подвернулся Стебельковъ, котораго я, впрочемъ, и прежде зналъ. Онъ далъ мнѣ денегъ и обѣщалъ еще дать, но просилъ и съ своей стороны помочь ему: ему нуженъ былъ артистъ, рисовальщикъ, граверъ, литографъ и прочее, химикъ и техникъ, и — съ извѣстными цѣлями. О цѣляхъ онъ высказался даже съ перваго раза довольно прозрачно. И что жъ? Онъ зналъ мой характеръ, — меня все это только разсмѣшило. Дѣло въ томъ, что мнѣ еще со школьной скамьи былъ знакомъ одинъ, въ настоящее время русскій эмигрантъ, не русскаго, впрочемъ, происхожденія и проживающій гдѣ-то въ Гамбургѣ. Въ Россіи онъ разъ уже былъ замѣшанъ въ одной исторіи по поддѣлкѣ бумагъ. Вотъ на этого-то человѣка и рассчитывалъ Стебельковъ, но потребовалась къ нему рекомендація, и онъ обратился ко мнѣ. Я далъ ему двѣ строки и тотчасъ забылъ о нихъ. Потомъ онъ еще и еще разъ встрѣчался со мной, и я получилъ отъ него тогда всего до трехъ тысячъ. Обо всемъ этомъ дѣлѣ я буквально забылъ. Здѣсь я бралъ все время у него деньги подъ векселя и залоги, и онъ извивался передо мною какъ рабъ, и вдругъ вчера я узнаю отъ него въ первый разъ, что я — уголовный преступникъ.\n\n— Когда, вчера?\n\n— А вотъ вчера, когда мы утромъ кричали съ нимъ въ кабинетѣ передъ пріѣздомъ Нащокина. Онъ въ первый разъ и совершенно уже ясно осмѣлился заговорить со мной объ Аннѣ Андреевнѣ. Я поднялъ руку, чтобъ ударить его, но онъ вдругъ\n\n<vocab>Стебельковъ, Парижъ, Гамбургъ, поддѣлка бумагъ, векселя, Нащокинъ, Анна Андреевна</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<page-num>46</page-num>\n<header>The Adolescent. Part two.</header>\n\nris, at the very time when I went to Paris for two months, I, naturally, lacked money. That was just when Stebelkov turned up, whom I had, in fact, known before. He gave me money and promised to give more, but asked that I, in turn, help him: he needed an artist, a draftsman, an engraver, a lithographer, and so on, a chemist and a technician, and — for certain purposes. He even spoke quite transparently about his goals from the very first. And what of it? He knew my character — all of this only made me laugh. The fact is, ever since my school days I had known someone, currently a Russian émigré, though not of Russian origin, who resides somewhere in Hamburg. Once before in Russia, he had been involved in a case regarding the forgery of documents. It was on this man that Stebelkov was counting, but a recommendation was required for him, and he turned to me. I gave him two lines [of writing] and immediately forgot about them. Then he met with me again and again, and I received in total up to three thousand from him back then. I had literally forgotten about that whole affair. Here, I was taking money from him all the time against promissory notes and collateral, and he was writhing before me like a slave, and suddenly yesterday I learn from him for the first time that I am a criminal.\n\n— When, yesterday?\n\n— Why, yesterday, when we were shouting at each other in the study before Nashchokin’s arrival. He dared, for the first time and quite clearly, to speak to me about Anna Andreyevna. I raised my hand to strike him, but he suddenly",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 51,
+    "page_id": "69af3c65d79faba421042ecb",
+    "image_url": "https://images.sourcelibrary.org/archived/69af3c65d79faba421042e98/51.jpg",
+    "image_status": 200,
+    "ocr": "<language>Russian</language>\n<page-type>text</page-type>\n<page-num>47</page-num>\n<header>ГЛАВА СЕДЬМАЯ.</header>\n\nвсталъ и объявилъ мнѣ, что я съ нимъ солидаренъ, и чтобъ я помнилъ, что я — его участникъ и такой же мошенникъ, какъ онъ, — однимъ словомъ, хоть не эти слова, но эта мысль.\n\n— Вздоръ какой, но вѣдь это мечта?\n\n— Нѣтъ, это — не мечта. Онъ былъ у меня сегодня и объяснилъ подробнѣе. Акціи эти давно въ ходу и еще будутъ пущены въ ходъ, но, кажется, гдѣ-то ужъ начали попадаться. Конечно, я въ сторонѣ, но «вѣдь, однакоже, вы тогда изволили дать это письмецо-съ», — вотъ что мнѣ сказалъ Стебельковъ.\n\n— Такъ вѣдь вы же не знали для чего, или знали?\n\n— Зналъ, — отвѣчалъ тихо князь и потупилъ глаза. — То есть, видите ли, и зналъ, и не зналъ. Я смѣялся, мнѣ было весело. Я ни о чемъ тогда не думалъ, тѣмъ болѣе, что мнѣ было совсѣмъ не надо фальшивыхъ акцій и что я не собирался ихъ дѣлать. Но, однакоже, эти три тысячи, которыя онъ мнѣ тогда далъ, онъ даже ихъ и на счетъ потомъ не поставилъ, а я допустилъ это. А, впрочемъ, почемъ вы знаете, можетъ быть, и я былъ фальшивый монетчикъ? Я не могъ не знать, я — не маленькій; я зналъ, но мнѣ было весело, и я помогъ подлецамъ каторжникамъ... и помогъ за деньги! Стало быть, и я фальшивый монетчикъ!\n\n— О, вы преувеличиваете; вы виноваты, но вы преувеличиваете!\n\n— Тутъ, главное, есть одинъ Жибельскій, еще молодой человѣкъ, по судейской части, нѣчто въ родѣ помощника аблакатишки. Въ этихъ акціяхъ онъ тутъ — тоже какой-то участникъ, ѣздилъ потомъ отъ того господина въ Гамбургѣ ко мнѣ, съ\n\n<vocab>солидаренъ, мошенникъ, акціи, Стебельковъ, князь, фальшивый монетчикъ, каторжники, Жибельскій, аблакатишка, Гамбургъ</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<page-num>47</page-num>\n<header>CHAPTER SEVEN.</header>\n\nstood up and declared to me that I was in solidarity with him, and that I should remember that I was his accomplice and just as much a swindler as he was — in a word, perhaps not those exact words, but that was the thought.\n\n— What nonsense, surely that is a delusion?\n\n— No, it is not a delusion. He was at my place today and explained it in more detail. These shares have been in circulation for a long time and will continue to be circulated, but it seems they have already begun to turn up somewhere. Of course, I am on the sidelines, but \"after all, you were pleased to provide that little note, sir\" — that is what Stebelkov told me.\n\n— But surely you did not know what it was for, or did you know?\n\n— I knew, — the prince replied quietly and cast down his eyes. — That is, you see, I both knew and did not know. I was laughing, I was feeling merry. I was not thinking about anything back then, especially since I had no need for counterfeit shares and was not planning on making them. But, nevertheless, those three thousand he gave me back then, he did not even count them against me later, and I permitted it. And, besides, how do you know, perhaps I was a counterfeiter myself? I could not help but know; I am not a child. I knew, but I was merry, and I helped the scoundrel convicts... and helped for money! It follows that I am a counterfeiter too!\n\n— Oh, you are exaggerating; you are guilty, but you are exaggerating!\n\n— The main thing here is a certain Zhibelsky, still a young man, in the judicial field, something like a shyster’s assistant. In these shares, he is also some kind of participant; he later traveled from that gentleman in Hamburg to me, with",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 6,
+  "book_id": "6a3c6549af3c49b59c5cb37d",
+  "book_url": "https://sourcelibrary.org/book/6a3c6549af3c49b59c5cb37d",
+  "tradition": null,
+  "book": {
+   "id": "6a3c6549af3c49b59c5cb37d",
+   "title": "御定子史精華·卷二十~卷二十三 (vol 7)",
+   "display_title": null,
+   "author": "吳士玉",
+   "language": "Chinese",
+   "published": "Unknown",
+   "ia_identifier": "06055736.cn",
+   "pages_count": 192,
+   "pages_ocr": 162,
+   "pages_translated": 140,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 192,
+   "distinct_page_numbers": 192,
+   "duplicate_records": 0,
+   "pages_with_ocr": 162,
+   "pages_translated": 140,
+   "with_printed_number": 20,
+   "printed_backsteps": 7,
+   "printed_repeats": 11,
+   "pages_count_field": 192,
+   "pages_ocr_field": 162,
+   "pages_translated_field": 140
+  },
+  "run": [
+   137,
+   138,
+   139
+  ],
+  "pages": [
+   {
+    "page_number": 137,
+    "page_id": "6a3c6549af3c49b59c5cb406",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6549af3c49b59c5cb37d/137.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n傳義宗名倍太祖長子忽汗降太祖改其國曰東丹以\n倍為人皇王主之太宗立以東平為南京徙倍居之倍\n歸國命王繼逺撰建南京碑\n作樂田園詩\n閬苑集\n遼史宗室平王隆\n先傳平王為人聰\n明博學能詩有\n行於世\n十鹿射獲其九\n遼史宗室潛傳濬道宗\n長子六歲封梁王明年\n從上獵矢連發三中上顧左右曰朕祖宗以來騎射絕\n人是兒雖幼不墜其風後遇\n帝喜設宴\n剪桐為珪\n劉向說苑成王與唐叔虞燕居丨梧丨葉以\n丨丨而授唐叔虞曰余以此封汝唐叔虞喜\n以告周公周公以請曰天子封虞耶成王曰余一與虞\n戲也周公對曰天子無戲言於是遂封唐叔虞於晉\n鴻寶秘書\n應劭風俗通淮南王安招致賔客方術\n之士數千人作丨丨苑丨枕中之丨\n八公\n詣門\n葛洪神仙傳淮南王劉安者漢髙帝之孫也折節\n下士篤好儒學方術之士不逺千里卑辭重幣請",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "The biography of Yizong <note>original: 義宗</note>, named Bei, states he was the eldest son of Taizu. When the Huhar kingdom surrendered, Taizu renamed the nation East Dan and appointed Bei as the Human Sovereign King to govern it. When Taizhou ascended the throne, he designated Dongping as the Southern Capital and relocated Bei to reside there. Upon Bei's return to his domain, he ordered Wang Jiyuan to compose the Southern Capital Stele.\n\nHe composed the *Garden Poetry on Making Music* and the *Langyuan Collection*.\n\nThe *History of Liao* in the Biographies of the Imperial Clan concerning King Ping, Longxian, records that King Ping was intelligent and possessed vast learning. He was capable in poetry and his writings circulated widely in the world. \n\nHe shot ten deer and captured nine of them.\n\nThe *History of Liao* in the Biographies of the Imperial Clan concerning Qian, named Jun, states he was the eldest son of Daozong. At age six, he was enfeoffed as the King of Liang. The following year, he accompanied the Emperor on a hunt. His arrows hit the target three times in succession. The Emperor looked to his attendants and said, \"Since the time of my ancestors, our riding and archery have surpassed others. Though this child is young, he does not let that tradition fall.\" Later, encountering the Emperor's joy, a banquet was prepared.\n\nCutting a Paulownia leaf to make a jade scepter.\n\nLiu Xiang's *Garden of Stories* <note>original: Shuo Yuan</note> records that King Cheng and Tang Shuyu were living in leisure. The King cut a leaf from a paulownia tree into the shape of a jade scepter and gave it to Tang Shuyu, saying, \"I use this to enfeoff you.\" Tang Shuyu was delighted and informed the Duke of Zhou. The Duke of Zhou requested an audience and asked, \"Did the Son of Heaven enfeoff Shuyu?\" King Cheng replied, \"I was only joking with Shuyu.\" The Duke of Zhou responded, \"The Son of Heaven has no joking words.\" Consequently, Tang Shuyu was enfeoffed at Jin.\n\nThe Great Treasure and the Secret Books.\n\nYing Shao's *Comprehensive Meaning of Customs* <note>original: Fengsu Tong</note> records that An, the King of Huainan, recruited thousands of guests, practitioners of methods, and men of arts. He produced the *Great Treasure* and the *Secret Books* kept in a pillow within the garden.\n\nThe Eight Dukes arrived at the gate.\n\nGe Hong's *Biographies of Divine Immortals* records that Liu An, the King of Huainan, was the grandson of Emperor Gao of the Han. He was humble toward scholars and sincerely loved Confucian learning. Practitioners of methods traveled from a thousand miles away, drawn by his humble words and heavy gifts, to request an audience.\n\n<summary>This page records historical anecdotes from the Liao and Han dynasties, focusing on imperial scholars, the archery skills of young princes, and the literary patronage of Liu An, King of Huainan.</summary>\n<keywords>Liao Dynasty, Yizong, King Ping, Liu An, King of Huainan, Duke of Zhou, archery, poetry, talismans, Jin state</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 138,
+    "page_id": "6a3c6549af3c49b59c5cb407",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6549af3c49b59c5cb37d/138.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n<header>欽定四庫全書</header>\n尚定子史釋華\n<header>卷二十二</header>\n<page-num>十九</page-num>\n致之於是乃有丨丨丨丨皆鬚眉皓白門吏白王王使\n閽人自以意難問之八公皆變為童子角髻青絲色如\n桃花門吏大驚王聞之足不履跣而迎登思仙之臺\n張錦帳象牀燒百和之香進金玉之几執弟子之禮\n登\n思仙臺進金玉\n見\n上\n雞鳴天上犬吠雲中\n葛洪神仙傳\n淮南王安登\n山大祭埋金地中即白日昇天八公與安所踏山上石\n皆陷成跡時人傳八公安臨去時餘藥器置在庭中雞\n犬舐啄之盡得昇天故\n丨丨丨丨丨丨丨也\n魚藻宮\n葛洪西京雜記趙王如\n意年㓜未能親外傅戚\n姬使舊趙王內傅趙媪傅之號\n其室曰養德宮後改為丨丨丨\n落猿巖棲龍岫\n葛洪西\n京雜記\n梁孝王好營宮室苑囿之樂作曜華之宮築兔園園中\n有百靈山山有膚寸石丨丨丨丨丨丨又有雁池池間\n有鶴洲\n鳬渚\n鶴洲鳬渚\n見\n上\n格熊\n葛洪西京雜記廣陵王胥有\n勇力常於別囿學丨丨後遂",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Imperial Collection of the Four Treasuries\nExcerpts from the Masters and Historians\nVolume 22\nPage 19\n\n<note>original: \"致之於是乃有八公皆至\"</note> brought them there; thus there were <term>Eight Elders</term> <gloss>Ba Gong</gloss> who all arrived, their hair and eyebrows completely white. The gate official reported this to the King. The King sent the gatekeeper to intentionally challenge them with difficult questions. The Eight Elders all transformed into young children with hair tied in horn-shaped knots of raven-black silk and complexions like peach blossoms. The gate official was greatly alarmed. When the King heard of this, he did not even put on his shoes but went barefoot to welcome them. They ascended the Terrace for Contemplating Immortals. He spread brocade curtains and ivory beds, burned hundred-blend incense, and presented tables of gold and jade, observing the rituals due from a disciple to a teacher.\n\nAscended the Terrace for Contemplating Immortals; presented gold and jade.\n<note>See above.</note>\n\nChickens crow in the heavens; dogs bark amidst the clouds.\n<term>Ge Hong</term> <gloss>283–343 AD, Taoist scholar and alchemist</gloss>, Traditions of Divine Immortals <note>original: \"Shenxian Zhuan\"</note>: Liu An, the King of Huainan, ascended the mountain to perform a great sacrifice and buried gold in the earth. He then ascended to heaven in broad daylight. The rocks on the mountain where the Eight Elders and Liu An stepped were all indented with their footprints. The people of that time passed down the story that when King Liu An was about to depart, he left the remaining medicinal vessels in the courtyard. The chickens and dogs licked and pecked at them, and all of them were able to ascend to heaven. Thus it is said: <term>chickens crow in the heavens and dogs bark amidst the clouds</term>.\n\nPalace of Fish and Algae.\nGe Hong, Miscellaneous Records of the Western Capital <note>original: \"Xijing Zhaji\"</note>: Liu Ruyi, the Prince of Zhao, was young and could not yet attend lessons with outside tutors. Lady Qi ordered the former tutor of the Prince of Zhao, Mother Zhao, to tutor him. Her chamber was named the Palace of Cultivating Virtue, which was later changed to the <term>Palace of Fish and Algae</term> <gloss>Yu Zao Gong</gloss>.\n\nThe Rock of the Falling Gibbon; The Cave of the Dwelling Dragon.\nGe Hong, Miscellaneous Records of the Western Capital: King Xiao of Liang enjoyed the pleasures of constructing palaces, chambers, gardens, and enclosures. He built the Palace of Shining Splendor and constructed the Rabbit Garden. Within the garden was the Mountain of a Hundred Spirits. On the mountain were stones of diverse textures, the <term>Rock of the Falling Gibbon</term>, and the <term>Cave of the Dwelling Dragon</term>. There was also the Goose Pond, and within the pond were the Isle of Cranes and the Shore of Wild Ducks.\n\nIsle of Cranes and Shore of Wild Ducks.\n<note>See above.</note>\n\nWrestling Bears.\nGe Hong, Miscellaneous Records of the Western Capital: Liu Xu, the Prince of Guangling, possessed great physical strength. He often practiced <term>wrestling bears</term> <gloss>Ge Xiong</gloss> in his private enclosures; later he...\n\n<summary>This page records legends associated with the Prince of Huainan and his ascension to immortality with the Eight Elders, alongside descriptions of Han dynasty palaces and the physical feats of Prince Liu Xu.</summary>\n<keywords>Liu An, Eight Elders, Taoism, immortality, Ge Hong, Rabbit Garden, Han Dynasty palaces, wrestling bears</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 139,
+    "page_id": "6a3c6549af3c49b59c5cb408",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c6549af3c49b59c5cb37d/139.jpg",
+    "image_status": 200,
+    "ocr": "<language>Chinese</language>\n<script>handwritten</script>\n\n能空手搏之\n莫不絕脰\n遊忘憂館\n葛洪西京雜記梁孝王丨於丨\n丨之丨集諸遊士各使為賦枚\n乘為柳賦路喬如為鶴賦公孫詭為文鹿賦鄒陽為酒\n賦公孫乘為月賦羊勝為屏賦韓安國作几賦不成鄒\n陽代\n作\n罇盈縹玉爵獻金漿\n葛洪西京雜記枚乘柳賦曰\n君王淵穆其度御羣英而翫\n之小臣瞽聵與此陳詞於是丨丨丨丨之酒丨丨丨\n丨之醪庶羞千族盈滿六庖雋乂英髦列襟聨袍\n安\n廣坐列雕屏\n葛洪西京雜記鄒陽酒賦曰哲王臨國綽\n矣多暇召皤皤之臣聚肅肅之賓丨丨丨\n丨丨丨綃綺為\n席犀璩為鎮\n藩后\n葛洪西京雜記羊勝屏賦曰飾以\n文錦映以流黃畫以古烈顒顒昂\n昂丨丨宜之\n壽考無疆\n日華客館\n葛洪西京雜記河間王德築丨\n丨宮置丨丨二十餘區以待學\n士自奉養\n不踰賓客\n至閫遺舄\n葛洪西京雜記梁孝王子買從朝\n年幼竇太后欲強冠婚之上謂王\n<header>欽定四庫全書</header>\n<header>御定子史精華</header>\n<page-num>二十</page-num>",
+    "ocr_engine": "paddle",
+    "ocr_model": "PaddleOCR-VL-1.6-0.9B",
+    "translation": "Can wrestle them with bare hands.\nNone escape without a broken neck.\n\nVisiting the Hall of Forgetting Cares\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: King Xiao of Liang <note>Liu Wu, a Han dynasty prince known for his patronage of the arts</note> visited the Hall of Forgetting Cares.</margin>\n<margin>In the Hall of Forgetting Cares, he gathered various wandering scholars and asked each to compose a <term>fu</term> <gloss>rhapsodic poem</gloss>.</margin> Mei Cheng wrote the Poem on the Willow; Lu Qiaoru wrote the Poem on the Crane; Gongsun Gui wrote the Poem on the Patterned Deer; Zou Yang wrote the Poem on Wine; Gongsun Cheng wrote the Poem on the Moon; Yang Sheng wrote the Poem on the Screen. Han Anguo did not finish his Poem on the Table, so Zou Yang composed it on his behalf.\n\nThe flagon is filled with pale jade-colored wine; the goblet is offered with golden syrup.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Mei Cheng’s Poem on the Willow says:</margin>\nThe King’s temperament is deep and serene; he governs the elite and finds pleasure in them. I, your humble servant, though blind and deaf <note>a self-deprecating scholarly trope</note>, join in to offer these words. Thus, we have the wine that fills the pale jade flagon and the mash offered in the golden syrup. A thousand varieties of delicacies fill the six kitchens. The talented and eminent scholars sit in a row, their robes joined together.\n\nTaking a seat in the wide hall, lined with carved screens.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Zou Yang’s Poem on Wine says: A wise king governs the state with generous leisure.</margin> He summons white-haired ministers and gathers solemn guests. He takes a seat in the wide hall, lined with carved screens. Thin silk and patterned fabrics serve as mats; rhinoceros horn and green jade serve as weights to hold them down.\n\nA prince of the frontier.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Yang Sheng’s Poem on the Screen says: It is decorated with</margin> patterned brocade and reflects sulfur-yellow light. It is painted with the virtuous heroes of antiquity, looking solemn and lofty. It is fitting for a prince of the frontier; may his longevity be without limit.\n\nPalace of Solar Splendor and the Guest House.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: King De of Hejian built the Palace of Solar Splendor</margin> and established more than twenty areas for the Guest House to host scholars. His own lifestyle and maintenance did not exceed that of his guests.\n\nShoes left at the threshold.\n<margin>Ge Hong’s Miscellaneous Records of the Western Capital: Liu Mai, the son of King Xiao of Liang, followed him to court.</margin> He was young in years, but Empress Dowager Dou wished to force him to undergo the capping ceremony <note>the rite of passage to adulthood</note> and marry. The Emperor said to the King...\n\n<header>Imperial Edition of the Complete Library of the Four Treasuries</header>\n<header>Imperially Commissioned Essence of Subsidary Books and Histories</header>\n<page-num>20</page-num>\n\n<summary>This page records historical anecdotes from the Western Capital regarding the literary patronage of King Xiao of Liang and King De of Hejian. It focuses on the composition of various poems by famous scholars and the generous treatment of guests in royal courts.</summary>\n<keywords>King Xiao of Liang, Ge Hong, Western Capital, rhapsodic poems, Mei Cheng, Zou Yang, Han dynasty scholars, hospitality</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 7,
+  "book_id": "69c8a2246c6f3cc53c85e367",
+  "book_url": "https://sourcelibrary.org/book/69c8a2246c6f3cc53c85e367",
+  "tradition": null,
+  "book": {
+   "author": "Westcott, William Wynn",
+   "display_title": "Dreams",
+   "id": "69c8a2246c6f3cc53c85e367",
+   "image_source": {
+    "provider": "bph"
+   },
+   "language": "English",
+   "pages_count": 12,
+   "pages_ocr": 12,
+   "pages_translated": 10,
+   "place_published": "[London]",
+   "published": "n.d. [before 1925]",
+   "title": "Dreams",
+   "visible": true,
+   "original_language": "Latin"
+  },
+  "structure": {
+   "page_records": 12,
+   "distinct_page_numbers": 12,
+   "duplicate_records": 0,
+   "pages_with_ocr": 12,
+   "pages_translated": 12,
+   "with_printed_number": 7,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 12,
+   "pages_ocr_field": 12,
+   "pages_translated_field": 10
+  },
+  "run": [
+   1,
+   2,
+   3
+  ],
+  "pages": [
+   {
+    "page_number": 1,
+    "page_id": "69d36c414867d41461b4b3e0",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8a2246c6f3cc53c85e367/sp5jnm-0001.jpg",
+    "image_status": 200,
+    "ocr": "<language>la</language>\n<language>en</language>\n<script>mixed</script>\n<page-type>title-page</page-type>\n<meta>The page is a red paper cover with a decorative border. It contains a library stamp from the Quatuor Coronati Lodge.</meta>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A rectangular decorative border composed of repeating floral and scroll motifs framing the entire text area.</image-desc>\n\n# Societas Rosicruciana.\n\n---\n\n->FRATER DR. W. WYNN WESTCOTT.<-\n->*M.W. Supreme Magus, IX.°*<-\n\n---\n\n<insert>\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Oval library stamp with text and handwritten numbers.</image-desc>\nQUATUOR CORONATI LODGE\nNo. 9586\n001\n</insert>\n\n## DREAMS.\n\n---\n\n->By M.W. FRATER DR. W. WYNN WESTCOTT, IX°.<-\n\n->Supreme Magus, Soc. Ros. in Ang.<-\n\n---\n\n->PRIVATELY PRINTED.<-\n\n[COPYRIGHT.\n\n<vocab>Societas Rosicruciana, Frater, Supreme Magus, Dreams, W. Wynn Westcott, Quatuor Coronati Lodge</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<meta>This is the start of the document titled \"Dreams\" by W. Wynn Westcott.</meta>\n\n<note>A rectangular decorative border composed of repeating floral and scroll motifs frames the entire text area.</note>\n\n# Rosicrucian Society <note>original: \"Societas Rosicruciana\"</note>\n\n---\n\n->BROTHER <note>original: \"FRATER\"</note> DR. W. WYNN WESTCOTT.<-\n->*Highest Magician <note>original: \"Supreme Magus\"</note>, IX.°*<-\n\n---\n\n<insert></insert>\n<note>An oval library stamp identifies this copy as belonging to the Quatuor Coronati Lodge, number 9586, with the handwritten number 001.</note>\nQUATUOR CORONATI LODGE\nNo. 9586\n001\n</insert>\n\n## DREAMS.\n\n---\n\n->By MOST WORTHY BROTHER <note>original: \"M.W. FRATER\"</note> DR. W. WYNN WESTCOTT, IX°.<-\n\n->Highest Magician <note>original: \"Supreme Magus\"</note> of the Rosicrucian Society in England <note>original: \"Soc. Ros. in Ang.\"</note><-\n\n---\n\n->PRIVATELY PRINTED.<-\n\n[COPYRIGHT.",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 2,
+    "page_id": "69d36c414867d41461b4b3e1",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8a2246c6f3cc53c85e367/sp5jnm-0002.jpg",
+    "image_status": 200,
+    "ocr": "<language>en</language>\n<script>mixed</script>\n<page-type>frontispiece</page-type>\n<meta>The left page is a red textured endpaper with a white label pasted in the center.</meta>\n\n<image-desc size=\"medium\" type=\"emblem\" significance=\"high\">A circular blue seal or bookplate. The outer ring contains the text \"PHILOSOPHIA • HERMETICA\". Inside the circle is a symbolic emblem featuring a pelican in her piety (feeding her young from her own breast), a common alchemical and Rosicrucian symbol, set within a shield-like frame with rays emanating from behind.</image-desc>\n\n->Roz M S<-\n<gloss>Handwritten notation in pencil below the seal.</gloss>\n\n<vocab>Philosophia Hermetica, Pelican in her piety</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<note>The left page is a red textured endpaper with a white label pasted in the center.</note>\n\n<note>A circular blue emblem depicts a pelican feeding her young from her own breast. This is a traditional symbol of self-sacrifice and nourishment used in alchemical and Rosicrucian traditions. The border of the seal contains the words Hermetic Philosophy <note>original: \"PHILOSOPHIA HERMETICA\"</note>.</note>\n\n->Roz M S<-\n<gloss>Handwritten notation in pencil below the seal.</gloss>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 3,
+    "page_id": "69d36c414867d41461b4b3e2",
+    "image_url": "https://images.sourcelibrary.org/pages/69c8a2246c6f3cc53c85e367/sp5jnm-0003.jpg",
+    "image_status": 200,
+    "ocr": "<language>en</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n# Dreams.\n\n->By M.W. FRATER DR. W. WYNN WESTCOTT, IX°.<-\n->Supreme Magus, Soc. Ros. in Ang.<-\n\nDREAMS have at all times been a favourite subject for discussion, and the very little that is known about their causation has led to the utmost divergence in the opinions expressed concerning them.\nAll of us dream occasionally, and many persons dream as often as they sleep; probably we all do so, and the difference between persons as to dreaming is due to a variation in the power of Remembrance when awaking.\nThere is considerable evidence to show that animals dream as well as men, women, and children. Many of us must have observed the domestic cat and dog showing signs of dreaming by their movements and the sounds they make. Tennyson wrote—\n> “ Like a dog he hunts in dreams—— ”\nIt has been said that animals in their wild state of nature do not dream, but it is difficult to make observations on wild animals. It is generally agreed that domestication is the cause of increased mind-power in some animals, and with enlarged powers of observation and concerted action, may come the faculty of dreaming. Domesticated animals certainly develop some Reason in addition to their primal Instinct, and this can only be due to the companionship of man and the training they receive; the mere change of food would not alone account for their extended powers.\nTo return to humanity, Byron wrote of dreams—\n> “ Strange state of being . . . .\n> Senseless to feel, and with sealed eyes to see ” ;\nwhile Cato said—\n> “ Regard not dreams, since they are but the images, of our hopes and fears.”\nWordsworth said that we may\n> “ Hunt half a day for a forgotten dream.”\nJoel, the old Hebrew prophet said—\n> “ Your old men shall dream dreams,”\nDryden wrote—\n> “ Dreams are interludes which fancy makes,”\n\n<vocab>Dreams, W. Wynn Westcott, Soc. Ros. in Ang., Supreme Magus, Remembrance, Instinct, Reason</vocab>",
+    "ocr_engine": null,
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "# Dreams.\n\n->By MOST WORTHY BROTHER <note>original: \"M.W. FRATER\"</note> DR. W. WYNN WESTCOTT, IX°.<-\n->Highest Magician <note>original: \"Supreme Magus\"</note> of the Rosicrucian Society in England <note>original: \"Soc. Ros. in Ang.\"</note><-\n\nDREAMS have at all times been a favourite subject for discussion, and the very little that is known about their causation has led to the utmost divergence in the opinions expressed concerning them.\nAll of us dream occasionally, and many persons dream as often as they sleep; probably we all do so, and the difference between persons as to dreaming is due to a variation in the power of Remembrance when awaking.\nThere is considerable evidence to show that animals dream as well as men, women, and children. Many of us must have observed the domestic cat and dog showing signs of dreaming by their movements and the sounds they make. Tennyson wrote:\n> “ Like a dog he hunts in dreams ”\nIt has been said that animals in their wild state of nature do not dream, but it is difficult to make observations on wild animals. It is generally agreed that domestication is the cause of increased mind power in some animals, and with enlarged powers of observation and concerted action, may come the faculty of dreaming. Domesticated animals certainly develop some Reason in addition to their primal Instinct, and this can only be due to the companionship of man and the training they receive; the mere change of food would not alone account for their extended powers.\nTo return to humanity, Byron wrote of dreams:\n> “ Strange state of being . . . .\n> Senseless to feel, and with sealed eyes to see ” ;\nwhile Cato said:\n> “ Regard not dreams, since they are but the images of our hopes and fears.”\nWordsworth said that we may\n> “ Hunt half a day for a forgotten dream.”\nJoel, the old Hebrew prophet said:\n> “ Your old men shall dream dreams,”\nDryden wrote:\n> “ Dreams are interludes which fancy makes,”",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 8,
+  "book_id": "6a26bd05d6b178e5aad87607",
+  "book_url": "https://sourcelibrary.org/book/6a26bd05d6b178e5aad87607",
+  "tradition": null,
+  "book": {
+   "id": "6a26bd05d6b178e5aad87607",
+   "title": "Cosmographey : oder Beschreibung aller Länder Herrschafftenn und fürnembsten Stetten des gantzen Erdbodens sampt ihren Gelegenheiten, Eygenschafften, Religion, Gebreüchen, Geschichten vnnd Handthierungen ect.",
+   "display_title": "Münster, Sebastian: Cosmographey",
+   "author": "Münster, Sebastian",
+   "language": "German",
+   "published": "1578",
+   "pages_count": 1558,
+   "pages_ocr": 25,
+   "pages_translated": 23,
+   "catalog_metadata": {},
+   "image_source": {
+    "provider": "mdz"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 1558,
+   "distinct_page_numbers": 1558,
+   "duplicate_records": 0,
+   "pages_with_ocr": 25,
+   "pages_translated": 23,
+   "with_printed_number": 0,
+   "printed_backsteps": 0,
+   "printed_repeats": 0,
+   "pages_count_field": 1558,
+   "pages_ocr_field": 25,
+   "pages_translated_field": 23
+  },
+  "run": [
+   7,
+   8,
+   9
+  ],
+  "pages": [
+   {
+    "page_number": 7,
+    "page_id": "6a26bd05d6b178e5aad8760e",
+    "image_url": "https://images.sourcelibrary.org/archived/6a26bd05d6b178e5aad87607/7.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>dedication</page-type>\n<columns>1</columns>\n<sig>a ij</sig>\n\n# Dem Durchleuchtigsten vnnd\n## Großmächtigsten Landsfürsten vnd Herren/ Her-\n### ren Gustaff zu Schwedien/ der Gothen vnd Wen-\n### den &c. König/ meinem aller Gnedigsten\n### Herren.\n\n<image-desc size=\"medium\" type=\"decorative\" significance=\"low\">Large woodcut ornamental initial 'V' featuring intricate floral and scrollwork designs, used to open the main body of the dedication text.</image-desc>\n\nVmbeschreiben die gantze Welt\nwie mein fürnemen ist/ in diesem Buch/ Großmäch-\ntigster vnnd Gnedigster Herr/ erfordert ein weitschweif-\nfig vnnd wolbericht gemüt/ das viel gelesen/ vil gescheh/ vil\ngehört vnnd viel erfahren hab/ welches dannocht alles\nnoch nicht genug wil sein/ wo nicht ein recht vrtheil\ndarbey ist/ dadurch man mög vnderscheiden das war\nvon dem falschen/ vnnd das gewiß von dem ungewissen.\nEs were nach den Bücheren Göttlicher geschrifft/\nkein lesen auff Erdtrich lustiger vnnd nützlicher dem\nMenschen/ dann das lesen der Historien/ wo sie (als\nsie solten) ohn angesehen dieser oder jener partheyen/\ngeschrieben weren. Dann was seind alle Historien an-\nders/ weder fürgebilde exempel/ an denen man sicht wie diese oder jene sach außgeschla-\ngen/ wie Menschliche wiß vnd vorsehung zum öfftern mal so ungewiß/ ja blind ist/ vnd\nalle ding so gar an der hand Gottes hangen/ der alle ding würcket in allen dingen? Aller\nvnser Rathschlag gath hindersich/ wo er dem fürsehen Gottes nicht gemäß ist. Sich zu/\nes wolten die Kinder Adams ein Thurn bauwen biß an Himmel/ vnd dem zukünfftigen\nSündtfluß entrinnen? Wie weit sie gefält haben/ ist mengklichem offenbar. Es haben\nvnderstanden Ninus vnd Semiramis zubauwen unüberwindliche Stett/ nemlich Ni-\nniuen vnnd Babylon/ machten Mauren darumb so breit das etlich Wägen neben einan-\nder gehn möchten. Es halff sie aber nichts/ wie es sich mit der zeit erfunden hat. Die\nRömer wolten jhnen zuëignen ein ewigs Regiment vnd höchst Imperium vber die gan-\nze Welt/ vertilckten auch deßhalben die Africanische Statt Carthaginem/ die solichs\nauch vnderstand/ wie lang aber haben sie es behalten? Die Juden vnnd nach jhnen die\nHeyden wolten außtillcken Christum vnnd seine heilsame Lehr wider den Rathschlag Got-\ntes/ aber was haben sie geschaffet? Es seind die Juden darüber zügrund gangen/ vnd die\nHeyden jrem jrthumb vnd falscher Religion genomen/ wie fast sie anfengcklichen dar-\nwider getobet haben. Das Heylig land hat vorzeiten geflossen mit Milch vnd Hönig/\naber jetzt ist es ein rauch/ bitter/ ungeschlacht Erdtrich. Griechenland hat zü den selbigen\nzeiten gehabt die sinnreichsten vnnd spißfindigsten Männer/ so in der Welt haben mö-\ngen erfunden werden/ do auch alle Philosophi vnd Natürliche Meister erstanden seind/\nwas hat es jetzundt dann ellend/ grob/ vngelehrt vnnd vnuerstanden Leüt? Schweden/\nGothen/ Nordwegien vnd andere Mitnächtige Länder/ seind vorzeiten also arm vnnd\ndürfftig gewesen an der Leibs narung/ das sie jhre Indigenas vnnd Landsleüt nicht ha-\nben mögen erziehen/ sonder mit grossen hauffen in fruchtbare Länder geschickt/ dann do\nher seind kommen die Gothen/ Longobarden/ Nortmänner/ Cimbern/ Schwyßer/ Ala-\nmanen vnnd andere vil mehr/ aber zü vnsere zeiten vbertreffen sie in Reichthumen garnahen\nalle Länder Europe/ wirt auch minder darinn gefunden dan in diesen eüsseren Ländern?\nWo findt man mehr Golds/ Sylbers/ Kupffers/ vnd auch andere Metall/ dan in diesen\nLändern? Wo findt man hübscher Viech/ vnnd mehr Fleisch vnd Fisch/ dan in diesen Län-\nderne? Die auch dem gantzen Teütschland/ Franckreich/ Böhem vnnd Poland/ dürr vnnd ge-\nsaltzen Fisch gnüg geben? Was köstlich Fell vnd Belß oder Füter werck auß diesen Län-\ndern komen in all Mittagige Länder/ weißt jederman. Wo kompt aber das her/ das die-\nse Länder die jhre einwohner vorzeiten nicht haben mögen erneheren/ die selbigen speysen\njetzundt vnnd schicken narung in andere Länder? Es kompt von der Hand Gottes/ der gibt\nvnd\n\n<vocab>\nGustaff zu Schwedien, Historien, Vorsehung Gottes, Sündtfluß, Ninus, Semiramis, Carthaginem, Griechenland, Reichthumen, Metall, Viech, Belß\n</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# To the Most Serene and\n## Most Mighty Sovereign and Lord/ Lord\n### Gustav of Sweden/ King of the Goths and\n### Wends &c./ my most Gracious\n### Lord.\n\n<meta>Large woodcut ornamental initial V featuring intricate floral and scrollwork designs, used to open the main body of the dedication text.</meta>\n\nTo describe the entire world as is my intention in this book, Most Mighty and Gracious Lord, requires a far-reaching and well-informed mind that has read much, seen much, heard much, and experienced much. Yet all this would still not be enough if a right judgment were not present, by which one might distinguish the true from the false, and the certain from the uncertain. After the books of Holy Scripture, there would be no reading on earth more pleasant and useful to man than the reading of histories, if they were written (as they should be) without regard for this or that party. For what are all histories other than illustrative examples in which one sees how this or that matter turned out? They show how human wisdom and foresight are so often uncertain, even blind, and how all things depend entirely on the hand of God, who works all things in all things. All our counsel goes backward where it is not in accordance with the providence of God. Look: the children of Adam wanted to build a tower reaching to heaven to escape the future flood. How far they failed is manifest to everyone. Ninus and Semiramis undertook to build invincible cities, namely Nineveh and Babylon. They made walls around them so wide that several wagons might go side by side. But it helped them nothing, as was found with time. The Romans wanted to claim for themselves an eternal reign and highest empire over the whole world. For that reason they also destroyed the African city of Carthage, which also undertook such a thing. But how long did they keep it? The Jews and after them the heathens wanted to root out Christ and his wholesome teaching against the counsel of God, but what did they accomplish? The Jews went to ruin because of it, and the heathens were taken from their error and false religion, however much they initially raged against it. The Holy Land formerly flowed with milk and honey, but now it is a smoky, bitter, and wild soil. Greece in those same times had the most ingenious and subtle men that could be found in the world, where also all philosophers and masters of nature arose. What does it have now but wretched, coarse, unlearned, and simple people? Sweden, Gothland, Norway and other northern lands were formerly so poor and needy in bodily sustenance that they could not raise their <term>indigenas</term> <gloss>natives</gloss> and countrymen. Instead, they sent them in large crowds into fertile lands. From there came the Goths, Lombards, Northmen, Cimbri, Swiss, Alemanni and many others. But in our times they surpass almost all lands of Europe in riches. Is there less found in them than in these outer lands? Where does one find more gold, silver, copper, and also other metals than in these lands? Where does one find handsomer cattle, and more meat and fish than in these lands? They give enough dried and salted fish to all of Germany, France, Bohemia and Poland. Everyone knows what precious skins and furs or lining-work come out of these lands into all southern countries. But where does it come from, that these lands which formerly could not nourish their inhabitants now feed them and send nourishment into other lands? It comes from the hand of God, who gives and\n\n<summary>The dedication to King Gustav of Sweden argues that history and geography reveal God's providence. Münster describes how once-powerful nations have fallen while formerly poor northern lands like Sweden have become wealthy.</summary>\n<keywords>Gustav of Sweden, history, providence, geography, Goths, Nineveh, Carthage, natural resources</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 8,
+    "page_id": "6a26bd05d6b178e5aad8760f",
+    "image_url": "https://images.sourcelibrary.org/archived/6a26bd05d6b178e5aad87607/8.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>dedication</page-type>\n\n# An Kön. Maiestat zu Schweden.\n\nund nimpt nach seinem gefallen/ und erzeigt mit seinen thaten/ das er der Herr ist/ nicht allein im Himmel/ sonder auch auff Erden/ und in dem weiten Möre/ und alle ding durch ihn verhandlet werden/ und nichts *ex fortuna uel casu/* das ist von Glück oder unglück/ wie die Menschen davon reden/ sonder alles auß dem wissen/ ja Ordnung Gottes geschicht. Daher kompt es das ein Königreich abgeth und das ander auffgeth/ ein Landt reich wirt und das ander verdirbt/ ein Statt zu nimpt und die andere abnimpt/ ein Herzschafft außstirbt und die andere auffsteh/ und in summa vnder dem beweglichen Himmel nichts bestendig bleibt/ alles der wunderbarlichkeit vnderworffen ist/ darauß wir lernen sollen/ unser herz nicht auff zergenklich/ sonder auff das ewig zu schlahen. Solches aber schreib ich/ nicht das ich E. Kö. May. damit lernen wöll/ die sollichs wol weißt/ sonder das ich etwas anzeigung geb/ was mich verursacht hat zu beschreiben diß Buch/ das argument streckt sich gar weit. Ich hab hie ein Compendium und kurzen begriff von allen Ländern des Erdtreichs dem gemeinen Mann wöllen zuschreiben/ sich darin mit läsen zu erlustigen/ und den gelehrten ein weg anzeigen/ wie man noch so vil Teutschen Chronographien/ auch gar nuzlich Cosmographien und Topographien schreiben möchte/ wie ich dann solches vor 18. jahren hab vnderstanden unnd angefangen mit diesem Werck/ nach gefolgt dem Hochgelehrten Mann Straboni. Als ich aber vor sechs jahren noch mit dieser arbeit umbgieng/ ist zu mir kommen E. Kö. May. Diener/ der Hochgelehrt Herr/ Herr Georgius Normannus/ dem ich vorhin auß etlichen Bücheren under meinem nammen außgangen/ bekannt was/ und als er besichtiget diese fürgenomen arbeit/ scheinet er sie wol wirdig/ das sie under dem Königlichen schirm E. Kö. May. an tag käme/ sunst were ich nicht so vermessen gewesen/ diesem Buch ein solchen Patron für zu stellen. Hab mich auch dieser anmutung dester lieber vnderzogen/ als ich von jhm vernommen hab das frey und geneigt gemüt/ so E. Kö. May. tregt gegen allen gelehrten und kunstreichen/ welches sie sonderlich bisher bewiesen hat in dem/ das sie sich geflissen/ die junge Landsfürsten und Prinzen E. Kö. May. Sohn zu instituiren in Christlichen Thugenden und Adelichen Künsten/ Gott wöll solich gemüt bestätigen biß zum end. Ich het E. Kö. May. Hauptstatt Stockholm/ sampt andern fürnemmen Stetten des Reichs Schweden gern verfaßt/ gehabt in diese dritt edition wie sunst andere Stett/ damit ich ein danckbar gemüt het erzeigt gegen E. Kö. May. mir bewisen/ aber nach dem E. Kö. May. mir von dem Königlichen Schloß Calmar anno Christi 1546. gantz gnedigklich ein zugeschrieben/ ist mir sither biß auff den heutigen tag nie kein gewisse bottschafft zugestanden in sollichen ferren weg/ dadurch ich mein fürnemmen het mögen entplössen E. Kö. May. Unnd damit wil ich mich entschuldiget haben. Wil auch mich hinfür E. Kö. May. auff das aller vnderthenigst und mit höchstem fleiß befolhen. Datum zu Basel am 17. tag Merzen/ Im jar nach Christi geburt. M. D. L.\n\n->E. Kö. May.<-\n\n->Vnderthänigster<-\n\n->Sebastianus Munsterus.<-\n\n<vocab>Sebastian Münster, Cosmographia, Sweden, Georgius Normannus, Strabo, Stockholm, Calmar, Basel, 1550</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# To His Royal Majesty of Sweden.\n\nand takes away according to his pleasure. He shows with his deeds that he is the Lord, not only in heaven but also on earth and in the wide sea. All things are handled through him, and nothing <term>ex fortuna uel casu</term> <gloss>from fortune or chance</gloss>, as men speak of it, but everything happens out of the knowledge, indeed the order of God. From this it comes that one kingdom ends and another begins; one land becomes rich and another perishes; one city increases and another decreases; one lordship dies out and another rises. In summary, under the moving heavens nothing remains permanent; everything is subject to wonder. From this we should learn to set our hearts not on the perishable, but on the eternal. I write such things, however, not to teach Your Royal Majesty, who knows this well, but to give some indication of what caused me to describe this book. The argument extends very far. I wanted to dedicate here a compendium and short summary of all the lands of the earth to the common man, to delight himself therein with reading. I also wanted to show a way to the learned how one might yet write very useful Cosmographies and Topographies after so many German Chronographies. I undertook and began this work eighteen years ago, following that highly learned man Strabo. But while I was still occupied with this work six years ago, Your Royal Majesty's servant came to me, the highly learned Master Georgius Normannus. He was already familiar with me from several books published under my name. When he inspected this undertaken work, it seemed to him well worthy that it should come to light under the royal protection of Your Royal Majesty. Otherwise, I would not have been so bold as to present such a patron for this book. I also undertook this suggestion all the more gladly as I heard from him of the free and inclined spirit which Your Royal Majesty bears toward all the learned and skillful. This has been especially proven in that Your Majesty has been diligent to instruct the young princes, Your Royal Majesty's sons, in Christian virtues and noble arts. May God confirm such a spirit until the end. I would have gladly included Your Royal Majesty's capital city Stockholm, along with other noble cities of the kingdom of Sweden, in this third edition as I have with other cities. By this I would have shown a thankful spirit for the kindness shown to me by Your Royal Majesty. But after Your Royal Majesty most graciously wrote to me from the Royal Castle of Kalmar in the year of Christ 1546, no certain messenger has reached me from such a distance until this today. Thereby I might have revealed my intention to Your Royal Majesty. And with this I wish to have excused myself. I will also henceforth commend myself to Your Royal Majesty most submissively and with the highest diligence. Dated at Basel on the 17th day of March, in the year after Christ's birth 1550.\n\n->Your Royal Majesty's<-\n\n->Most Submissive<-\n\n->Sebastian Münster.<-\n\n<summary>Münster continues his dedication to the King of Sweden, citing the Greek geographer Strabo as an influence. He apologizes for not including more Swedish cities like Stockholm due to the difficulty of communication.</summary>\n<keywords>Sebastian Münster, Gustav of Sweden, Strabo, Georgius Normannus, Stockholm, Kalmar, Basel, 1550</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 9,
+    "page_id": "6a26bd05d6b178e5aad87610",
+    "image_url": "https://images.sourcelibrary.org/archived/6a26bd05d6b178e5aad87607/9.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>German</language>\n<script>printed</script>\n<page-type>preface</page-type>\n<page-num>a iij</page-num>\n<meta>Catchword: Sie</meta>\n<vocab>Cosmographia, Sebastian Münster, Geography, Erdreich, Weltbeschreibung, Hispania, Orient, Sitten</vocab>\n\n# Vorred Sebastiani Munsteri\n## in das Buch der Cosmography\n### oder Weltbeschreibung.\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Ornamental decorative initial 'D' featuring interlaced foliate and vine patterns.</image-desc>Die kunst / so man mit einem Griechischen wort Cosmographiam nennt / das ist beschreibung der Welt / oder Geographiam / beschreibung des Erdreichs / wie hoch und Edel sie allwegen geachtet sey / bey den erfahrnen Männern / zeigen uns alle Historien an / ja die Historie gründe sich auch auff diese kunst / und ohn sie mag niemand ein Histori ordenlichen beschreiben / oder auch recht verstohn / wie dann ein weyser und gelehrter Mann spricht / <margin>Was Geography ist.</margin> Die Geography ist ein erkantnuß des Erdreichs / das wir tödlichen auß der gaben Gottes einwohnen / welche die Kunst liebhaber richtig unnd fertig macht zu verston die geschehenen ding / so uns von alter zeit her in Geschrifften verlassen seind. Ja diese Kunst eröffnet uns zum dickern mal die verborgne heimlichkeit der Heyligen geschrifft / und entblößt die krafft der klügen natur / so do verborgen ligt in mancherley dingen. Wie hetten die Alten / ja auch die so zu unserer zeit leben / also glückhafftig Krieg mögen füren in frembden und ferren Ländern / do sie etwann über hohe Berg / etwann über tieffe Wasser haben müssen reysen / auch etwann über Möre Schiffen / wann sie nicht hetten gewüst durch die Kunst gelegenheit des Erdreichs / weyte und ende des Möres / unnd eigenschafft der Länder : Was meinst du das die König in Hispania für kosten und schaden haben erlitten / biß sie das undertheil des Erdreichs haben erfaren / und die Schiffung von Hispania in Orient durch den Mittag erkündiget ? Man achtet vor zeiten die Menschen hochverständig unnd klüg / die do weit gewandlet unnd an vil enden gewesen waren / vil Stätt gesehen / der Menschen sitten und eygenschafft / gewonheit und gebreuchen erfaren / darzu mancherley Thier / Bäum <margin>In was achtung bey den alten die Cosmography.</margin> und der Kreüter natur hetten gelehrt und erkennt. Man entboth jnen grosse ehre / unnd braucht sie zu Rhäten gemeines nutzes / unnd zu Richtern des Volcks / als die jhenen so durch eygen erfarung güte unnd sälige Rhät geben köndten. Dann diese Kunst streckt sich nit allein uber die Länder / wohnungen und sitten mancherley Völcker / sonder bekümmert sich auch mit andern dingen des Erdreichs und Möres / als mit seltzamen Thieren / Bäumen / Metallen und andern nützen unnd unnützen dingen / so auff dem Erdreich oder in dem Möre erfunden werden. Zu unsern zeiten ist es gar von nöten / das du weyt hin und her auff der Erden umbschweyfest / zu besichtigen unnd erfaren gelegenheit der Länder / Stätt / Wässer / Bergen unnd Thäler. Item die sitten / gebreüch / gesätz / und Regiment der Menschen / eigenschafft unnd natur der Thier / Bäum unnd Kreüter. Du magst diese ding jetzund in den Büchern finden / und darauß mehr lernen und erkennen von diesem oder jhenem Land / dann ein andrer / der gleich darinn jhar unnd tag ist gewesen. Hie findest du wie man zu unsern zeiten also scheinbarlich und Burgerlich under einandern in den gemeinden lebt / weder zu den alten und ersten zeiten / da die Menschen auff der Erden schlecht / einfeltig / ja frech unnd roh lebten. Sie hetten kein verzeichnete Müntz im brauch / do was kein gewerb noch Kaufft handel / sunder sie gaben waht umb waht / und vergolten ein gutthat mit der andern. Es hett keiner etwas besonders oder eygenthumb / sonder wie der Lufft unnd Himmel gemein ware / also was auch das Erdreich unnd Wasser frey bey jederman.\n\n->Sie<-",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "# Preface of Sebastian Münster\n## to the Book of Cosmography\n### or Description of the World.\n\n<meta>Ornamental decorative initial D featuring interlaced foliate and vine patterns.</meta> All histories show us how highly and nobly the art called by a Greek word <term>Cosmographiam</term> <gloss>Cosmography</gloss>, that is, description of the world, or <term>Geographiam</term> <gloss>Geography</gloss>, description of the earth, has always been regarded by experienced men. Indeed, history is based on this art, and without it no one can describe a history in an orderly way or rightly understand it. As a wise and learned man says, <margin>What Geography is.</margin> Geography is a knowledge of the earth, which we mortals inhabit by the gift of God, which makes the lovers of art ready and prepared to understand the things that have happened, which have been left to us in writings from ancient times. Indeed, this art frequently opens to us the hidden secrets of Holy Scripture and reveals the power of clever nature that lies hidden in various things. How could the ancients, and also those who live in our time, have conducted wars so successfully in foreign and distant lands? They sometimes had to travel over high mountains, sometimes over deep waters, and also sail over seas. This would have been impossible if they had not known through the art the location of the earth, the width and end of the sea, and the properties of the lands. What do you think the kings in Spain suffered in costs and damages until they explored the lower part of the earth and discovered the navigation from Spain to the Orient through the south? In former times, people were considered highly intelligent and wise who had traveled far and been to many places, seen many cities, and experienced the manners and properties, customs and usages of people. They also learned and recognized many animals, trees <margin>In what regard Cosmography was held by the ancients.</margin> and the nature of herbs. Great honor was offered to them, and they were used as counselors for the common good and as judges of the people, as those who could give good and blessed advice through their own experience. For this art extends not only over the lands, dwellings and customs of various peoples, but also concerns itself with other things of the earth and sea, such as strange animals, trees, metals and other useful and useless things that are found on the earth or in the sea. In our times it is quite necessary that you wander far and wide on the earth to inspect and experience the location of lands, cities, waters, mountains and valleys. Likewise the manners, customs, laws, and government of people, and the properties and nature of animals, trees and herbs. You may now find these things in books and learn and recognize more from them about this or that land than another who has been there for a year and a day. Here you find how people in our times live so visibly and civilly among each other in communities, compared to the old and first times when people on earth lived poorly, simply, even boldly and crudely. They had no marked coins in use; there was no trade or merchant business, but they gave item for item and repaid one good deed with another. No one had anything special or private property, but just as the air and heaven were common, so also the earth and water were free to everyone.\n\n->They<-\n\n<summary>Münster defines geography and cosmography as essential tools for understanding history, scripture, and warfare. He contrasts the modern civil world with the simple, communal life of ancient times.</summary>\n<keywords>Cosmography, Geography, history, exploration, nature, ancient vs modern, commerce</keywords>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 9,
+  "book_id": "69dea1ce4d19ec2e9ba75548",
+  "book_url": "https://sourcelibrary.org/book/69dea1ce4d19ec2e9ba75548",
+  "tradition": null,
+  "book": {
+   "id": "69dea1ce4d19ec2e9ba75548",
+   "title": "Le Nuove Musiche",
+   "display_title": null,
+   "author": "Giulio Caccini",
+   "language": "Italian",
+   "published": "1601",
+   "ia_identifier": "iii_20240814",
+   "pages_count": 33,
+   "pages_ocr": 25,
+   "pages_translated": 23,
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true,
+   "catalog_metadata": {
+    "collections": [
+     "BNCF"
+    ]
+   }
+  },
+  "structure": {
+   "page_records": 33,
+   "distinct_page_numbers": 33,
+   "duplicate_records": 0,
+   "pages_with_ocr": 25,
+   "pages_translated": 23,
+   "with_printed_number": 15,
+   "printed_backsteps": 1,
+   "printed_repeats": 1,
+   "pages_count_field": 33,
+   "pages_ocr_field": 25,
+   "pages_translated_field": 23
+  },
+  "run": [
+   21,
+   22,
+   23
+  ],
+  "pages": [
+   {
+    "page_number": 21,
+    "page_id": "69dea1ce4d19ec2e9ba7555d",
+    "image_url": "https://images.sourcelibrary.org/archived/69dea1ce4d19ec2e9ba75548/21.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>18</page-num>\n<vocab>Madrigali, Rapimento di Cefalo, Maria Medici, contrappunto, passaggi, basso continuo</vocab>\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">Three systems of musical notation, each consisting of a vocal staff and a basso continuo staff with figured bass (7 6, b 6, 6, b). The notation utilizes diamond-shaped note heads typical of early 17th-century printing.</image-desc>\n\nahi qual fara'l tormen to? Quãd haurò d'oro il volto, e'l crĩ d'argen\n\nto Quãdo haurò d'oro il volto, e'l crin d'ar gen\n\nto.\n\n->IL FINE DE MADRIGALI.<-\n\n<image-desc size=\"medium\" type=\"decorative\" significance=\"low\">A horizontal rectangular woodcut ornament featuring a symmetrical arrangement of scrolling acanthus leaves and floral motifs.</image-desc>\n\n---\n\n<page-num>19</page-num>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">An ornate woodcut initial 'N' decorated with architectural elements and stylized foliage.</image-desc>\n\nNON hauendo io potuto per molti impedimenti far' istampare com'era il desiderio mio il Rapimento di Cefalo composto in musica da me per comandamento del Se- renissimo Gran Duca mio Signore rappresentato nello Sposalizio della Cristia- nissima Maria Medici Regina di Francia, e di Nauarra, mi è parso ora con l'occasione di quest' altre mie musiche aggiugnere à quelle l'ultimo Coro di esso Rapimento, accioche vedutasi la varietà de i passaggi fatti da me per le parti, che cantano sole, io non sia necessitato farne altra dimostrazione, com' hauea pensato, potendosi nel- la parte del Basso, che tal volta ricerca le corde del Tenore, e ne' due Tenori seguenti osseruare le regole usate da me intorno alle sillabe, e lunghe, e breui. E ben che io non habbia usato la buona, e la cattiva secondo le regole del contrappunto, così in queste parti come nell' altre mie musiche, ove intervengono tali adornamenti, non dimeno perche non ho usato di ripercuotere nel rigiro di essi la corda del Basso nelle dissonanze, ciò giudico, che si debba permettere, e per questo, e per la varietà loro, come anco per lo priuilegio, che deue hauere in questa parte, chi canta solo, non potendo erra- re con le parti di mezzo, come errore grande sarebbe, se nelle altre musiche, che si costumano à più voci qualunque parte facesse passaggi, bastando allora per non corrompere l'artifizio del contrap- punto in esse (oltre à molti errori in che si può incorrere) usare solo la buona maniera, e l'affetto, del quale nel Discorso sopra à bastanza per dichiarazione si è favellato.\n\n### Ultimo Coro del Rapimento di Cefalo concertato tra voci e strumenti da settantacinque persone in mezza Luna tanto quanto tenea la Scena onde poi ne segui altri concerti, & il ballo il quale ad altra occasione manderò fuori.\n\n<image-desc size=\"large\" type=\"diagram\" significance=\"high\">Six staves of musical notation for a multi-part vocal choir. The diamond-shaped notes are underlaid with lyrics. The music represents a choral setting from a theatrical production.</image-desc>\n\nIneffabile ardore ij Ch'agli alberghi del ciel ri chiama il co re.\n\nIneffabile ardore ij Ch'agli alberghi del ciel ri chiama il co re.\n\nIneffabile ardore ij Ch'agli alberghi del ciel richia ma il co re.\n\nIneffabile ardore ij Ch'agli alberghi del ciel ri chiama il co re.\n\nIneffabile ardore ij ch'a gl'al berghi del ciel ri chia ma il co re.\n\nIneffabile ardore ij ch'a gli alberghi del ciel richia ma il co re.",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>18</header>\n\nAh, what will the torment be? When will I have a face of gold and hair of silver? When will I have a face of gold and hair of silver?\n\n->THE END OF THE MADRIGALS.<-\n\n<note>A horizontal rectangular woodcut ornament features a symmetrical arrangement of scrolling acanthus leaves and floral motifs.</note>\n\n---\n\n<page-num>19</page-num>\n\n<meta>An ornate woodcut initial 'N' is decorated with architectural elements and stylized foliage.</meta>\n\nHaving been unable, due to many impediments, to have printed—as was my desire—the <term>Rapimento di Cefalo</term> <gloss>The Abduction of Cephalus</gloss>, composed in music by me by command of the Most Serene Grand Duke my Lord, and performed at the wedding of the Most Christian Maria Medici, Queen of France and Navarre, it has seemed good to me now, on the occasion of these other pieces of music of mine, to add to them the final Chorus of said <term>Rapimento</term> <gloss>Abduction</gloss>. Thus, having seen the variety of the <term>passaggi</term> <gloss>vocal runs/ornaments</gloss> made by me for the parts that sing alone, I will not be necessitated to make other demonstration of it, as I had thought. One may, in the part of the Bass (which at times seeks the strings of the Tenor), and in the two following Tenors, observe the rules used by me regarding the syllables, both long and short. And although I have not used the good and the bad according to the rules of <term>contrappunto</term> <gloss>counterpoint</gloss>, as much in these parts as in my other music where such ornaments intervene, nonetheless, because I have not used the practice of striking again in their rotation the Bass string in dissonances, I judge that this should be permitted. Both for this, and for their variety, as also for the privilege that he who sings alone should have in this part—not being able to err with the middle parts, as it would be a great error if, in other music accustomed to multiple voices, any part were to make <term>passaggi</term> <gloss>vocal runs</gloss>—it is sufficient then, in order not to corrupt the artifice of counterpoint therein (beyond many errors into which one can run), to use only the good manner and the <term>affetto</term> <gloss>musical expression</gloss>, of which I have spoken sufficiently in the Discourse for explanation.\n\n### Final Chorus of the Rapimento di Cefalo, arranged for voices and instruments, [performed] by seventy-five people in a half-moon shape, as much as the Stage held, from which other concerts then followed, and the dance, which I will send out on another occasion.\n\n<note>Six staves of musical notation for a multi-part vocal choir are displayed. The diamond-shaped notes are underlaid with lyrics representing a choral setting from a theatrical production.</note>\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.\n\nIneffable ardor, [repeat], which recalls the heart to the dwellings of heaven.",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 22,
+    "page_id": "69dea1ce4d19ec2e9ba7555e",
+    "image_url": "https://images.sourcelibrary.org/archived/69dea1ce4d19ec2e9ba75548/22.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>mixed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>29, 31</page-num>\n<header>Quest’ Aria cantò solo con i proprij passaggi come sta Melchior Palontrotei 29\nMusico Eccellente della Cappella di N. S.</header>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Large ornamental drop cap letter 'M' featuring intricate vine and floral foliage patterns.</image-desc>\n\nMuoue si dol ce, è si for ue guer ra Lusingando i pensier beltà mor ta le ch'à volo un cor' non spiegheria mai l'à le\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">Musical staves with notes, clefs, and figured bass notations (numbers like 7, 6, 10, 14).</image-desc>\n\n<gloss>Ec trillo</gloss> <gloss>Tri</gloss>\nle Per solle uarsi peregrin da terra Se non scen desse a rifuegliar lo A mo re\n\n<column-break/>\n\n<header>31</header>\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">Continuation of musical staves and notation.</image-desc>\n\nPer solleuarfi peregrin da terra Se nō scendesse a rifuegliar lo A mo re.\n\n> Si replica Ineffabile ardore.\n\n---\n\n->Quest’ aria cantò solo con altri passaggi secondo il suo stile Iacopo Peri,<-\n->Musico Eccellente stipendiato da queste Altezze Sereniss.<-\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Decorative horizontal border made of floral fleurons.</image-desc>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Large ornamental drop cap letter 'C' containing a heraldic shield or coat of arms, surrounded by elaborate baroque foliage.</image-desc>\n\nCaduca fiam ma di leggiadri sguar di ci da per morte dilet tofo af falto Ma verace belta regna nell'al\n\n<sig>F</sig>\n\n<vocab>Melchior Palontrotei, Iacopo Peri, Aria, passaggi, Musico Eccellente, Cappella di N. S., figured bass, trillo</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>Quest’ Aria cantò solo con i proprij passaggi come sta Melchior Palontrotei 29\nMusico Eccellente della Cappella di N. S.</header>\n\n<meta>Large ornamental drop cap letter 'M' features intricate vine and floral foliage patterns.</meta>\n\nIt moves so sweetly, and so fiercely, a war flattering the thoughts, a mortal beauty that at flight a heart would never spread its wings,\n\n<note>Musical staves with notes, clefs, and figured bass notations (numbers like 7, 6, 10, 14).</note>\n\n<term>Et trillo</term> <gloss>And trill</gloss>\n\nto raise itself as a pilgrim from the earth, if it did not descend to reawaken <term>Amore</term> <gloss>Love</gloss>.\n\n<column-break/>\n\n<header>31</header>\n\n<note>Continuation of musical staves and notation.</note>\n\nTo raise itself as a pilgrim from the earth, if it did not descend to reawaken Love.\n\n> Repeat Ineffable Ardor.\n\n---\n\n->This aria was sung solo with other <term>passaggi</term> <gloss>vocal runs</gloss> according to his style by Iacopo Peri,<-\n->Excellent Musician salaried by these Most Serene Highnesses.<-\n\n<note>Decorative horizontal border made of floral fleurons.</note>\n\n<meta>Large ornamental drop cap letter 'C' contains a heraldic shield or coat of arms, surrounded by elaborate baroque foliage.</meta>\n\nFading flame of graceful glances, which gives a delightful assault for death, but true beauty reigns in the high...\n<sig>F</sig>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 23,
+    "page_id": "69dea1ce4d19ec2e9ba7555f",
+    "image_url": "https://images.sourcelibrary.org/archived/69dea1ce4d19ec2e9ba75548/23.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Italian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<page-num>22</page-num>\n\ngo Indi arma l'arco,et indi auuenta i dar\n\ndi Che'l cor pia\n\nga te han di be ar va\n\nlo\n\nre. Ineffa\n\n---\n\n*Quest' aria cantò solo parte con i propri passaggi, e parte à suo gusto il famoso Francesco Rasi Nobile Aretino, molto grato Seruitore all' Alt. Ser. di Mantoua.*\n\n---\n\n<image-desc size=\"medium\" type=\"woodcut\" significance=\"low\">Decorative woodcut initial 'Q' containing a miniature scene with a seated figure in a landscape.</image-desc>\n\nQual trascorren do per gli eterei cam pi Il Sol qua giu l'õbre e not\n\n<column-break/>\n\n<page-num>23</page-num>\n\ntur ne aggior Tale amor su le stelle almo soggior\n\nna E co sparge fra noi fulgidi\n\nlam pi Per in vogliar\n\nal trui del suo\n\nsplẽdo\n\nre.\n\n<meta>catchword: re.</meta>\n\n<vocab>Francesco Rasi, aria, passaggi, Mantoua, Aretino, soggiorno, cosparge, splendore</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>22</header>\n\n...and then arms the bow, and then launches the darts that wound the heart, [for those] who have beautiful value. Ineffable...\n\n---\n\n*This aria was sung solo, partly with its own <term>passaggi</term> <gloss>vocal runs</gloss> and partly to his own taste, by the famous Francesco Rasi, a Nobleman of Arezzo, a very grateful Servant to the Most Serene Highness of Mantua.*\n\n---\n\n<meta>Decorative woodcut initial 'Q' contains a miniature scene with a seated figure in a landscape.</meta>\n\nQual <note>As</note> traversing through the ethereal fields, the Sun down here [scatters] the shadows and...\n\n<column-break/>\n\n<page-num>23</page-num>\n\n...night brings to day. Such love dwells in the soul above the stars, and scatters among us brilliant flashes, to entice others of its splendor.\n\n<meta>catchword: re.</meta>",
+    "translation_model": "gemini-3.1-flash-lite-preview",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "book_id": "69e78f6213e67bd16d4e6bc2",
+  "book_url": "https://sourcelibrary.org/book/69e78f6213e67bd16d4e6bc2",
+  "tradition": null,
+  "book": {
+   "id": "69e78f6213e67bd16d4e6bc2",
+   "title": "Incomplete manuscripts",
+   "display_title": "Incomplete manuscripts",
+   "author": "Ogyen Choling Collection",
+   "language": "Tibetan",
+   "pages_count": 157,
+   "pages_ocr": 59,
+   "pages_translated": 55,
+   "image_source": {
+    "provider": "bl"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 157,
+   "distinct_page_numbers": 157,
+   "duplicate_records": 0,
+   "pages_with_ocr": 135,
+   "pages_translated": 55,
+   "with_printed_number": 10,
+   "printed_backsteps": 2,
+   "printed_repeats": 5,
+   "pages_count_field": 157,
+   "pages_ocr_field": 59,
+   "pages_translated_field": 55
+  },
+  "run": [
+   56,
+   57,
+   58
+  ],
+  "pages": [
+   {
+    "page_number": 56,
+    "page_id": "69e78f6213e67bd16d4e6bfa",
+    "image_url": "https://images.sourcelibrary.org/archived/69e78f6213e67bd16d4e6bc2/56.jpg",
+    "image_status": 200,
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Tibetan</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">A yellow adhesive note containing handwritten Tibetan text placed over a measuring tape grid.</image-desc>\n\nམཛུབ་ཆད།\n\n<vocab>Tibetan, Ogyen Choling Collection, manuscript fragment</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite-preview",
+    "translation": "<meta>translator note: This page consists of a small yellow note placed on a measuring grid.</meta>\n<note>A yellow adhesive note contains handwritten Tibetan text: 'Missing finger/index' <note>original: \"mdzub chad\"</note>. This is likely a library or archival note indicating a missing portion of the manuscript.</note>",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 57,
+    "page_id": "69e78f6213e67bd16d4e6bfb",
+    "image_url": "https://images.sourcelibrary.org/archived/69e78f6213e67bd16d4e6bc2/57.jpg",
+    "image_status": 200,
+    "ocr": "དབུ་ཤོག་ཆད།\n༄༅་། བསྒྲུབ་པ་ ལས་ལ་སྦྱར་བའོ་། དང་པོ་བསྙེན་པ་བྱ་བ་ནི་ དུར་ཁྲོད་ལ་སོགས་པ་དབེན་\nཞིང་ཉམས་དགའ་བའི་གནས་སུ་སོང་ལ་ཕྱག་དར་ལ་སོགས་པ་ཡིད་འཇུག་པར་བྱས་ལ་ གནས་དེར་རང་གི་མདུན་དུ་མཎྜལ་\nམདའ་གང་པ་གཅིག་བྱས་པའི་དབུས་སུ་ ཟླུམ་པོ་ཁྲུ་གང་པ་གཅིག་བྱས་ དེའི་དབུས་སུ་རིན་པོ་ཆེའི་རྟེན་ལྷག་སྤྲོད་\nགཅིག་བྲི་ དེའི་སྟེང་དང་ཕྱི་རུ་ནས་ཀྱི་ཚོམ་བུ་བཀོད་ ཚོམ་བུ་དབུས་མའི་སྟེང་དུ་མཉྫིའཾ་ མཆོག་རྐང་གི་ཁྲིའུ་བྱས་པའི\nསྟེང་དུ་ ཀ་པཱ་ལ་མཚྡན་གཅིག་བཞག་པའི་ནང་དུ་དཔལ་བཤོས་དང་ཁྲག་སྣ་ཚོགས་པས་བཀང་བའི་རྟེན་གཏོར་གཅིག་བཤམས་\n<leaf-break/>\n࿓࿔་། ལ་བྱས་པ་མང་དུ་ཕུལ་ལ་འདོད་པའི་དོན་ལ་གསོལ་བ་གདབ་ དེ་ནས་བསྙེན་པ་བྱས་ལ་ གོང་ལྟར་དུས་བཞིར་བསྐྱེད་སྟིཾ་\nམཆོད་གཏོར་འབུལ་ དེ་ལྟར་ཞག་ཉིུ་རྩ་གཅིག་བསྒྲུབས་ཏེ་གསང་བར་བྱའོ་། དེ་ནས་རྟེན་གཏོར་གཙང་སར་ཕུལ་ ནོར་བུ་དང་སྐུ་ཚགས་བྱ་བ་ནི་\nབསྙེན་པའོ་། ༈ དེ་ནས་དངོས་གྲུབ་བསྒྲུབ་པ་ནི་ ཅེས་པས་འདིའི་སྒྲུབ་པ་བྱ་བ་ལ་ སྔར་གྱི་དཀྱོིར་དེའི་སྟེང་དུ་གྲུ་གསུཾ་རྒྱ་དང་དཔངས་སུ་མཐོ་གང་པ་༡་\nབྱ་ དེའི་ཕྱི་ནང་ཁྲག་ལ་སོཌ་པས་དམར་པོར་བྱུག་ དེའི་ཟུར་གསུམ་དུ་མཆོག་ཕུར་གསུམ་བརྩུགས་ དེའི་ཁར་ཐོད་པ་མཚྡན་གཅིག་ཟས་རྣམ་པ་\nསྣ་ཚོཌ་པས་བཀང་བ་བཞག་ གཞན་ཡང་འབྲུ་སྣ་དང་། རྒུན་འབྲུཾ་དང་ཤིང་ཐོག་ཀྱང་དེའི་ནང་དུ་བླུག་ རིནོེ་སྣ་ཚོཌ་ཀྱང་དེར་བཞག་ དེའི་ནང་དུ་རང་གང་\nདགའ་བའི་ཞལ་ཟས་སྣ་ཚོགས་བཞག་ དེའི་སྟེང་དུ་གོང་གི་ནོར་བུ་དང་སྐུ་བཞག་ དལ་གྱི་ཟུར་གསུཾ་མདུན་དང་བཞིར་གཏོར་མ་ཟན་ཆང་འཐེབ་ཀྱུ་སྤྲད་པ་",
+    "ocr_engine": "bdrc",
+    "ocr_model": "bdrc-yigdzin-v1",
+    "translation": "<meta>Title page is missing.</meta>\nFirst, regarding the practice: apply it to the activity. First, to perform the preliminary retreat <term>nyenpa</term>: go to a secluded and pleasant place such as a charnel ground, and perform sweeping and so on to make the mind engaged. In that place, in front of yourself, make a mandala of one cubit. In its center, make a circle of one span. In its center, draw a single surplus-offering for the precious support. On top and outside of that, arrange heaps of grain. On the central heap, place a small table or a supreme footed-throne. On top of that, place a skull-cup <term>kapala</term> with the required marks, filled with the \"glory-food\" <term>palshö</term> and various kinds of blood, and arrange a single support <term>gtor ma</term>.\n\n<leaf-break/>\n\n...Offer many things that have been made, and make requests for the desired goals. Then, perform the preliminary retreat. As before, perform the generation and visualization at the four times of the day, and offer the <term>gtor ma</term>. Thus, practice for twenty-one days and keep it secret. Then, offer the support <term>gtor ma</term> in a clean place. Making the jewel and the body-form is the preliminary retreat. \nThen, for the accomplishment of the actual siddhi <term>spiritual attainment</term>: for the practice of this, on top of the previous altar, make a triangle one span in width and height. Coat its exterior and interior in red with blood and so on. In its three corners, plant three supreme ritual daggers <term>phur ba</term>. On top of it, place a skull-cup with the required marks, filled with various kinds of food. Also, pour various grains, grapes, and fruits inside it. Place various jewels there too. Inside it, place various kinds of food that you enjoy. On top of that, place the aforementioned jewel and the body-form. In the three corners and the front of the mandala, provide four <term>gtor ma</term> made of dough and beer, with small finger-pressed offerings...",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 58,
+    "page_id": "69e78f6213e67bd16d4e6bfc",
+    "image_url": "https://images.sourcelibrary.org/archived/69e78f6213e67bd16d4e6bc2/58.jpg",
+    "image_status": 200,
+    "ocr": "དབུ་ཤོག་ཆད།\nཆང་ཕུད་ཀྱང་བླུག་ དེའི་ནང་དུ་ནོར་བུ་གཉིས་ཀྱང་བཞག་ལ་ དེའི་སྟེང་དུ་ཡུཾབ་ཀྱི་སྐུ་གཉིས་ཀྱང་བཞུགསོུལ་། རྒྱུན་གཏོར་གཅིག་ཀྱང་མདུན་དུ་བཅའ་\nགཞན་ཡང་དཀོན་མཆོགི་མཆོད་གཏོར་དཀར་གསུམ་མངར་གསུམ་འབྱོར་ཚད་ཀྱང་བཤཾས་ཏེ་ མཚཾས་དཾ་པར་བྱས་ལ་ རང་བསྟན་བདེ་བ་ལ་འདུག་སྟེ་\nསེམས་བསྐྱེད་དང་ལྡན་པས་བདེ་མཆོགི་ཡི་དམ་གང་རུང་བསྐྱེད་ལ་མཚཾས་དྲག་ཏུ་བྱ་ བསྲུང་བའི་གུར་ཁང་ཕུག་སྟེ་མེ་རི་རྡོ་ར་གཞལ་ཡས་ཁང་བསྒོམས་ལ་\nབླ་མ་དང་ཡི་དམ་དཀཽག་རྣཾས་ལ་མཆོད་གཏོར་ཕུལ་ སྒྲུབ་པ་ལ་བར་ཆད་མི་འབྱུང་བ་དང་་ མྱུར་དུ་འགྲུབ་པའི་གསོལ་བ་གདབ་ དེ་ནས་རྟེན་གཏོར་\nདེ་ཤ་ཁྲགི་རི་བོ་བདུད་རྩིའི་རྒྱ་མཚོ་ཆེན་པོ་གཅིག་ཏུ་བསམ་མོ་། དེའི་སྟེང་དུ་ནོར་བུ་གཉིས་དང་རྟེན་གཏོར་རྣཾས་ཆོས་སྐྱོང་ཡབ་ཡུམ་དུ་སྐད་ཅིག་གིས་ཝལ་གྱིས་\nབསྐྱེད་ དེ་ནས་རང་གི་སྙིང་གའི་ས་བོན་ལས་འོད་ཟེར་འཕྲོས་པས་ནུབ་ཕྱོགས་ཨོརྒྱན་གྱི་དྲོུད་ནས་ཡུཾབ་སྤྱན་དྲངས་ལ་སྟིམ་ དེ་ནས་མཆོད་གཏོར་ཤ་ཁྲག་\n<leaf-break/>\nབདུན་གཉིས་གཞན་པའི་ནང་དུ་ཁྲག་རེ་བླུག་པ་བཞི་བཞག། གཞན་ཡང་བླ་མ་དཀཽགི་མཆོད་པ་དང་། ཚོགས་ཀྱི་ཡོ་བྱད་ཅི་འབྱོར་བཤཾས། དེས་ནི་རལ་\nདང་རྫས་ཀྱི་བཀོད་པའི་བཅའ་གཞིའི་རིམ་པ་བསྟན་པའོ་། ༈ དེ་ནས་བསྟན་བདེ་བ་ལ་ཁ་ནུབ་ཏུ་ལྟས་དེ་བསྡད་ལ། བདག་ཉིད་ཡི་དཾ་ལྷའི་ཏིངེ༹ནི་དུ་ཞུཌ་ཏེ་\nམཚཾས་བཅད་བསྲུང་བའི་འཁོར་ལོའི་གུར་ཁང་ཕུག། བླ་མ་ཡི་དཾ་དཀཽག་ལ་སོགས་པ་ལ་མཆོད་གཏོར་གཞུང་བཞིན་ཕུལ་ནས་བར་ཆད་བསྲུང་བའི་གསོལ་བ།\nགདབ། ཚོགས་ཟས་བྱིན་གྱིས་བརླབས་པའི་ཕུད་དང་གཏོར་མ་ལྔ་པོ་ཕུལ། རང་ལོངས་སྤྱད་ལྷག་གཏོར་བཏང་། དེ་ནས་སྐད་ཅིགི་གཏོར་མ་ཨོཾ་ཨཱཿཧཱུཾ་\nགིས་བྱིན་གྱིས་བརླབས་ཏེ། བདིུ༹དའི་རྒྱ་མཚོ་ཆེན་པོ་ཤྲགི་རི་བོ་ཆེན་པོ་གཅིག་ཏུ་དམིགས་ལ། དེའི་ནང་དུ་ཕྱི་ཐོད་པ་ནང་རིན་པོ་ཆེ་ལས་གྲུབ་པའི་དུར་ཁྲོད་\nཀྱི་གཞས་ཁང་ཆེན་པོ་གཅིག་བསཾ། དེའི་ནང་དུ་སྐུ་དུང་དང་འགྲོན་བུ་གཉིས་ལས་ཆོས་སྐྱོང་ཡུཾབ་ཝལ་གྱིས་བསྐྱེད་ལ། རང་གི་ཐུཌའི་སོན་ལས་འོད་ཟེར་",
+    "ocr_engine": "bdrc",
+    "ocr_model": "bdrc-yigdzin-v1",
+    "translation": "The first page is missing.\nPour the first press of beer and place the two jewels inside it. Above that, seat the two figures of the Father and Mother <note>the deity and his consort</note>. Also, arrange a single regular offering <term>gtor ma</term> in front. Furthermore, arrange as many white and sweet offerings to the Triple Gem as you can afford. Establish a strict boundary and remain in a state of self-contained bliss. Possessing the <term>bodhicitta</term> <gloss>mind of enlightenment</gloss>, generate whichever <term>yidam</term> <gloss>meditational deity</gloss> of Chakrasamvara is appropriate and maintain the boundary strictly. Visualize the protective tent, the mountain of fire, the vajra-fence, and the celestial palace. Offer the <term>gtor ma</term> to the gurus, deities, and the Triple Gem. Pray that no obstacles arise to the accomplishment and that it be quickly achieved. Then, visualize that support offering as a mountain of flesh and blood and a great ocean of nectar. Upon it, instantly and vividly generate the two jewels and the support offerings as the Dharma Protector Father and Mother. Then, light rays radiate from the seed syllable in your own heart, inviting the Father and Mother from the charnel ground of Uddiyana in the west, and they dissolve into the visualization. Then, the flesh and blood of the offering <term>gtor ma</term>...\n\n<leaf-break/>\n\n...Place four containers, each filled with a bit of blood, among the other fourteen. Also, arrange whatever offerings for the Guru and Triple Gem and whatever feast substances <term>tsog</term> you have obtained. This explains the sequence of setting up the ritual materials and substances. Then, sitting comfortably and facing the west, enter the meditative absorption of the self-generated deity and establish the boundary by visualizing the protective wheel and tent. Offer the <term>gtor ma</term> to the gurus, deities, and Triple Gem according to the manual, and pray for protection from obstacles. Offer the first portion of the blessed feast food and the five <term>gtor ma</term>. Consume some yourself and send out the remaining offerings. Then, instantly bless the <term>gtor ma</term> with the syllables **OM AH HUM**. Visualize it as a great ocean of nectar and a great mountain of blood. Inside that, imagine a great palace of the charnel ground made of precious gems within a skull-cup. Inside that, from the white shell and the cowrie, the Dharma Protector Father and Mother are vividly generated. From the seed syllable in your own heart, light rays...",
+    "translation_model": "gemini-3-flash-preview",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]

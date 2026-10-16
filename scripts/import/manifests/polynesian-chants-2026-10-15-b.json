@@ -1,0 +1,29 @@
+{
+  "note": "Polynesian chant sources, wave 2, issue #6768. Enumerated on archive.org 2026-10-15; every work holdings-checked with check-holdings.ts --title/--author (all NEW). Institutional scans, pre-1931 (1930 imprints are US public domain since 2026-01-01), not access-restricted. Fornander Account vols 1 and 3 complete our held vol. 2 (69e009b7846d79f28d566e5a, title corrected 2026-10-15). Krämer: vol. 1 (1901, legends/genealogies, Samoan with German) and vol. 2 (1902) — confirm volume on title pages. Left out: Journal of the Polynesian Society (a run of ~40 volumes — its own campaign), Churchill's Rapanui speech (linguistics), retellings for children.",
+  "campaign": "polynesian-chants-6768-b",
+  "collections": ["polynesian", "oceania"],
+  "BOOKS": [
+    { "id": "kongamahingaang00greygoog", "title": "Ko nga Mahinga a nga Tupuna Maori (Maori text of Polynesian Mythology)", "author": "Sir George Grey (collector)", "year": 1854, "lang": "Maori" },
+    { "id": "melehawaii00berg", "title": "Mele Hawaii", "author": "Henry Berger (compiler)", "year": 1884, "lang": "Hawaiian" },
+    { "id": "10035927bsb", "title": "Maori Mementos: A Series of Addresses Presented by the Native People to Sir George Grey", "author": "Charles Oliver Bond Davis", "year": 1855, "lang": "English", "languages": ["English", "Maori"] },
+    { "id": "accountofpolynes01fornuoft", "title": "An Account of the Polynesian Race: Its Origins and Migrations, Vol. 1", "author": "Abraham Fornander", "year": 1878, "lang": "English" },
+    { "id": "accountofpolynes00v3forn", "title": "An Account of the Polynesian Race: Its Origins and Migrations, Vol. 3", "author": "Abraham Fornander", "year": 1885, "lang": "English" },
+    { "id": "b29335784_0001", "title": "An Account of the Natives of the Tonga Islands, Vol. 1", "author": "William Mariner; John Martin", "year": 1817, "lang": "English" },
+    { "id": "b29335784_0002", "title": "An Account of the Natives of the Tonga Islands, Vol. 2", "author": "William Mariner; John Martin", "year": 1817, "lang": "English" },
+    { "id": "bub_gb_AzU8AAAAMAAJ", "title": "Die Samoa-Inseln, Bd. 1: Verfassung, Stammbäume und Überlieferungen", "author": "Augustin Krämer", "year": 1901, "lang": "German", "languages": ["German", "Samoan"] },
+    { "id": "bub_gb_2QRCAAAAYAAJ", "title": "Die Samoa-Inseln, Bd. 2: Ethnographie", "author": "Augustin Krämer", "year": 1902, "lang": "German", "languages": ["German", "Samoan"] },
+    { "id": "marquesanlegends00hand", "title": "Marquesan Legends", "author": "E. S. Craighill Handy", "year": 1930, "lang": "English" },
+    { "id": "oceanicmytholog00dixogoog", "title": "Oceanic Mythology (The Mythology of All Races, Vol. 9)", "author": "Roland B. Dixon", "year": 1916, "lang": "English" },
+    { "id": "teikaamauiornew02taylgoog", "title": "Te Ika a Maui; or, New Zealand and its Inhabitants (2nd ed.)", "author": "Richard Taylor", "year": 1870, "lang": "English" },
+    { "id": "traditionssupers00shoruoft", "title": "Traditions and Superstitions of the New Zealanders", "author": "Edward Shortland", "year": 1856, "lang": "English" },
+    { "id": "cu31924026469753", "title": "The Maori Race", "author": "Edward Tregear", "year": 1904, "lang": "English" },
+    { "id": "maoriloretraditi00izetuoft", "title": "Maori Lore: The Traditions of the Maori People", "author": "James Izett", "year": 1904, "lang": "English" },
+    { "id": "legendsofmauidem00westuoft", "title": "Legends of Maui, a Demi-god of Polynesia, and of his Mother Hina", "author": "W. D. Westervelt", "year": 1910, "lang": "English" },
+    { "id": "hawaiiitspeoplet00naku", "title": "Hawaii, its People, their Legends", "author": "Emma Metcalf Beckley Nakuina", "year": 1904, "lang": "English" },
+    { "id": "cu31924105726222", "title": "Te Pito te Henua; or, Easter Island", "author": "William J. Thomson", "year": 1891, "lang": "English" },
+    { "id": "spiritualmentalc00bestuoft", "title": "Spiritual and Mental Concepts of the Maori", "author": "Elsdon Best", "year": 1922, "lang": "English" },
+    { "id": "mythopoeticmaori00best", "title": "The Mythopoetic Maori", "author": "Elsdon Best", "year": 1922, "lang": "English" },
+    { "id": "waikaremoanaseao00bestuoft", "title": "Waikare-moana, the Sea of the Rippling Waters", "author": "Elsdon Best", "year": 1897, "lang": "English" },
+    { "id": "maorischooloflea0000unse", "title": "The Maori School of Learning", "author": "Elsdon Best", "year": 1923, "lang": "English" }
+  ]
+}

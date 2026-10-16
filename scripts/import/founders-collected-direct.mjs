@@ -13,11 +13,7 @@
  */
 import { MongoClient, ObjectId } from 'mongodb';
 import { makeBookDoc, makePageDoc } from '../lib/book-docs.mjs';
-// normalizeTitle is now the ONE shared dedup-key implementation (#4444). The
-// local normalizeAuthor below has DRIFTED from src/lib/dedup.ts — it is missing
-// the `born|died|fl|circa|ca` date strip — and is left in place deliberately:
-// swapping it would change this script's dedup keys. See #4444 for the plan.
-import { normalizeTitle } from '../lib/dedup-normalize.mjs';
+import { normalizeTitle, normalizeAuthor } from '../lib/dedup-normalize.mjs';
 const COMMIT = process.argv.includes('--commit');
 
 const SETS = [
@@ -43,7 +39,6 @@ const BOOKS = SETS.flatMap(s => s.ids.map((ia, i) => ({
   ia, title: `${s.work}, Vol. ${i + 1}`, author: s.author, language: s.lang, published: s.pub,
 })));
 
-function normalizeAuthor(a){const c=a.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\b(dr|prof|rev|saint|st|sir|fr|bp)\b\.?\s*/g,'').replace(/\s*\([\d\s\-–,?.]+\)\s*/g,'').replace(/,\s*[\d\s\-–?.]+$/,'').replace(/[\[\]]/g,'').replace(/[^\w\s]/g,'').replace(/\s+/g,' ').trim();return c.split(' ').filter(w=>w.length>0).sort().join(' ');}
 function slugify(t,m=70){return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').substring(0,m).replace(/-$/,'');}
 async function uniqueSlug(db,base){let s=base,i=2;while(await db.collection('books').findOne({slug:s},{projection:{_id:1}}))s=`${base}-${i++}`;return s;}
 async function pageCountFor(ia,metadata){

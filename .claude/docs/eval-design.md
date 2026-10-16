@@ -57,6 +57,10 @@ Rules:
   - it is fidelity **to the transcription** unless the judge's source text was corrected against the image, and the write-up says which;
   - a paired difference between arms may decide a change under §10.2. An absolute number ("share ≥ 4", a mean) is read against the 4.3 ceiling and decides nothing until the judge is calibrated against readers (`translation-corpus-audit/HUMAN-CALIBRATION.md`).
 - `judged` may gate a decision where a preregistration fixes the rule in advance and the judge's controls pass (quality round 1, #5438), but the number is still reported as a judge rating, and the decision carries the judge's unmeasured error.
+- **Judge agreement (2026-10-14).** A run with two or more judges on the same items reports Krippendorff's α for each judged measure it quotes (a score, a "serious" flag, a preference), next to the result: `judgeReliability()` / `reliabilityLine()` in `scripts/eval/lib/agreement-stats.mjs`, bootstrap by book. Agreement here checks the **instrument**, never the text: two judges can agree on a shared blind spot or a recited passage, so a high α is not quality, and the planted controls still decide whether a judge is right.
+  - α ≥ 0.80 reliable; 0.667–0.80 tentative; below 0.667 **not settled**. A level or rate from a not-settled measure ("27% of pages have a serious error") is printed with those words beside it and is quoted per judge, never as a fact about the pages.
+  - A paired difference that passes under **each** judge separately still decides (the conjunctive rule, as in #6694); α is reported with it, not required of it.
+  - Why: the first measurement (four readers, 16 pages, #6338/#6420) gave α 0.02 on "serious" and 0.46–0.55 on the 1–5 scores. The families agree roughly on how good a page is and not on where "serious" starts, so a single judge's serious-rate is that judge's threshold, not the page's.
 
 ### 2.1 The reader's chain: which study covers which link
 

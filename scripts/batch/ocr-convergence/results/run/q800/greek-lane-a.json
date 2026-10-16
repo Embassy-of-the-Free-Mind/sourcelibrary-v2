@@ -1,0 +1,123 @@
+{
+ "built_at": "2026-10-14T19:32:42.266Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 701,
+   "book_id": "699389830f04c37dcfa616d6",
+   "slug": "theonis-expositio-magnae-constructionis-ptolemaei-theonos-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 62,
+   "lane_block": null
+  },
+  {
+   "rank": 715,
+   "book_id": "695aa9c7be4023bd34bd6f13",
+   "slug": "heronis-geometricorum-et-stereometricorum-reliquiae-hultsch-ed",
+   "group": "greek",
+   "language": "Greek",
+   "views": 61,
+   "lane_block": null
+  },
+  {
+   "rank": 727,
+   "book_id": "6993895d74305116d72d1644",
+   "slug": "st-gallen-stiftsbibliothek-cod-sang-48-bobbio",
+   "group": "greek",
+   "language": "Greek",
+   "views": 61,
+   "lane_block": null
+  },
+  {
+   "rank": 734,
+   "book_id": "695230c6ab34727b1f044784",
+   "slug": "corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 60,
+   "lane_block": null
+  },
+  {
+   "rank": 737,
+   "book_id": "69938d5f5d28b693146cede1",
+   "slug": "dionysiaca-editio-princeps-panopolis",
+   "group": "greek",
+   "language": "Greek",
+   "views": 60,
+   "lane_block": null
+  },
+  {
+   "rank": 742,
+   "book_id": "69aeb620b6cf480123443359",
+   "slug": "hermetica-volume-ii-notes-on-the-corpus-hermeticum-scott",
+   "group": "greek",
+   "language": "Greek",
+   "views": 60,
+   "lane_block": null
+  },
+  {
+   "rank": 749,
+   "book_id": "69b21d36ddb4fa7c305b4440",
+   "slug": "platonis-opera-quae-extant-vol-1-stephanus-plato",
+   "group": "greek",
+   "language": "Greek",
+   "views": 60,
+   "lane_block": null
+  },
+  {
+   "rank": 750,
+   "book_id": "69b21d42ddb4fa7c305b4693",
+   "slug": "platonis-opera-quae-extant-vol-2-stephanus-plato",
+   "group": "greek",
+   "language": "Greek",
+   "views": 60,
+   "lane_block": null
+  },
+  {
+   "rank": 761,
+   "book_id": "699376e7b0a84a5763961e8f",
+   "slug": "aristotelis-opera-complete-works-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 59,
+   "lane_block": null
+  },
+  {
+   "rank": 762,
+   "book_id": "695311a477f38f6761bcc8b8",
+   "slug": "codex-alexandrinus-greek-museum",
+   "group": "greek",
+   "language": "Greek",
+   "views": 59,
+   "lane_block": null
+  },
+  {
+   "rank": 783,
+   "book_id": "69b2f31321208ea9dc27748b",
+   "slug": "anthologia-diaphoron-epigrammaton-greek-anthology-ed",
+   "group": "greek",
+   "language": "Greek",
+   "views": 58,
+   "lane_block": null
+  },
+  {
+   "rank": 787,
+   "book_id": "69b2ff96a1a4246ddb45b596",
+   "slug": "de-vitis-dogmatibus-et-apophthegmatibus-philosophorum-laertius",
+   "group": "greek",
+   "language": "Greek",
+   "views": 58,
+   "lane_block": null
+  },
+  {
+   "rank": 794,
+   "book_id": "69afe2ebcf56258c93890cac",
+   "slug": "hippocrates-vol-iv-loeb-classical-library-hippocrates",
+   "group": "greek",
+   "language": "Greek",
+   "views": 58,
+   "lane_block": null
+  }
+ ]
+}

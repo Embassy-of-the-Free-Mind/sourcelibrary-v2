@@ -30,6 +30,29 @@ export function checkEmbedAuth({ key, headerValue, path }) {
   return timingSafeEqual(a, b) ? { ok: true, mode: 'authorized' } : { ok: false, mode: 'denied' };
 }
 
+/**
+ * Logger for 401s, so a caller that lost the key shows up in `journalctl -u sl-embedding-server`
+ * instead of only as an empty Images tab. One line per window (default 1 min): the first denial's
+ * path, remote address and user agent, plus how many more were denied in the previous window.
+ * Never logs the header value. A scanner hammering the port costs one line a minute.
+ * @param {{ log?: (line: string) => void, now?: () => number, windowMs?: number }} [o]
+ * @returns {(d: { path?: string, remote?: string, userAgent?: string }) => void}
+ */
+export function createDenialLog({ log = console.warn, now = Date.now, windowMs = 60_000 } = {}) {
+  let windowStart = -Infinity;
+  let suppressed = 0;
+  return ({ path, remote, userAgent } = {}) => {
+    const t = now();
+    if (t - windowStart < windowMs) { suppressed++; return; }
+    const prior = suppressed > 0 ? ` (+${suppressed} more denied in the previous window)` : '';
+    windowStart = t;
+    suppressed = 0;
+    const bare = String(path || '').split('?')[0].slice(0, 80);
+    const ua = String(userAgent || '-').slice(0, 80);
+    log(`embed-auth: 401 ${bare} from ${remote || '-'} ua=${JSON.stringify(ua)}${prior}`);
+  };
+}
+
 /** Headers for a JSON POST to the embedding server; adds x-embed-key when EMBED_SERVER_KEY is set. */
 export function embedAuthHeaders(env = process.env) {
   const headers = { 'Content-Type': 'application/json' };

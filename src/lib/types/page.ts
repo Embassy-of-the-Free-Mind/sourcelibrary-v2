@@ -258,7 +258,13 @@ export interface OcrData extends ProcessingMetadata {
     /** Which run of scripts/import/ia-ocr-ingest.mjs copied it (#4613): `ia-ocr-ingest/<ISO>/<host>@<sha>`. */
     ingest_run?: string;
   };
-  agreement_ref?: { median: number; n: number; min_agreement: number; offset?: number; offset_share?: number };
+  agreement_ref?: {
+    median: number; n: number; min_agreement: number; offset?: number; offset_share?: number;
+    /** Digits gate (#5186): share of the reference pages' numbers the Archive printed identically; `ratio` null = too few to measure. */
+    numeric?: { ratio: number | null; ref: number; matched: number; min: number; unreliable: boolean };
+  };
+  /** The book failed the IA digits gate (#5186) and this page prints numbers: do not quote a number from this text. */
+  digits_unreliable?: true;
   /**
    * Set when a specialist open OCR model read the page, because the general model cannot
    * read its script. Describes the model that produced `data` — nothing else.

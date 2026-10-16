@@ -1,0 +1,3456 @@
+{
+ "diagnostics": {
+  "chains": 3,
+  "draws_per_chain": 500,
+  "divergences": 0,
+  "max_rhat": 1.006,
+  "max_rhat_at": "tau_chart[0]",
+  "min_ess": 348,
+  "min_ess_at": "tau_page[0]"
+ },
+ "rows": 11212,
+ "pages": 1032,
+ "works": 713,
+ "note": "accuracy = 1 - E[CER] for an average page and work of the chart, weighted by the chart's own period mix, no panel effect",
+ "production": {
+  "latin": "gemini-3.1-flash-lite",
+  "english": "gemini-3.1-flash-lite",
+  "latin-script-other": "gemini-3.1-flash-lite",
+  "greek": "gemini-3-flash-preview",
+  "chinese-manuscript": "gemini-3.1-flash-lite",
+  "chinese-print": "gemini-3.1-flash-lite",
+  "armenian": "gemini-3.1-flash-lite",
+  "syriac": "gemini-3.1-flash-lite",
+  "syriac-print": "omnisyr"
+ },
+ "table": [
+  {
+   "chart": "armenian",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.4435,
+    0.6636,
+    0.8359
+   ],
+   "basis": "measured",
+   "pages": 5,
+   "works": 2,
+   "observed_mean_accuracy": 0.955,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "claude-sonnet-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.2526,
+    0.4423,
+    0.65
+   ],
+   "basis": "measured",
+   "pages": 5,
+   "works": 2,
+   "observed_mean_accuracy": 0.748,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0494,
+    0.1253,
+    0.2642
+   ],
+   "basis": "measured",
+   "pages": 5,
+   "works": 2,
+   "observed_mean_accuracy": 0.539,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.6508,
+    0.8053,
+    0.9069
+   ],
+   "basis": "measured",
+   "pages": 9,
+   "works": 3,
+   "observed_mean_accuracy": 0.8712,
+   "p_best": 0.036
+  },
+  {
+   "chart": "armenian",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.7631,
+    0.8811,
+    0.9512
+   ],
+   "basis": "measured",
+   "pages": 9,
+   "works": 3,
+   "observed_mean_accuracy": 0.9612,
+   "p_best": 0.773
+  },
+  {
+   "chart": "armenian",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.4935,
+    0.7126,
+    0.8787
+   ],
+   "basis": "measured",
+   "pages": 5,
+   "works": 2,
+   "observed_mean_accuracy": 0.7792,
+   "p_best": 0.015
+  },
+  {
+   "chart": "armenian",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.6355,
+    0.8169,
+    0.9207
+   ],
+   "basis": "pooled",
+   "pages": 4,
+   "works": 2,
+   "observed_mean_accuracy": 0.9782,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.6311,
+    0.8141,
+    0.9213
+   ],
+   "basis": "pooled",
+   "pages": 4,
+   "works": 2,
+   "observed_mean_accuracy": 0.979,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.1437,
+    0.2777,
+    0.4718
+   ],
+   "basis": "measured",
+   "pages": 5,
+   "works": 2,
+   "observed_mean_accuracy": 0.5804,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0052,
+    0.0173,
+    0.0499
+   ],
+   "basis": "measured",
+   "pages": 5,
+   "works": 2,
+   "observed_mean_accuracy": 0.0,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.201,
+    0.3548,
+    0.5367
+   ],
+   "basis": "measured",
+   "pages": 9,
+   "works": 3,
+   "observed_mean_accuracy": 0.526,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "tesseract-hye",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.0008,
+    0.0054,
+    0.0204
+   ],
+   "basis": "measured",
+   "pages": 9,
+   "works": 3,
+   "observed_mean_accuracy": 0.0,
+   "p_best": 0.0
+  },
+  {
+   "chart": "armenian",
+   "engine": "tesseract-hye_calfa",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.6745,
+    0.8338,
+    0.9246
+   ],
+   "basis": "measured",
+   "pages": 9,
+   "works": 3,
+   "observed_mean_accuracy": 0.8742,
+   "p_best": 0.176
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6561,
+    0.7125,
+    0.7597
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 261,
+   "observed_mean_accuracy": 0.7626,
+   "p_best": 0.001
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "claude-opus-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.631,
+    0.7176,
+    0.7914
+   ],
+   "basis": "measured",
+   "pages": 21,
+   "works": 19,
+   "observed_mean_accuracy": 0.827,
+   "p_best": 0.245
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "claude-sonnet-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.6411,
+    0.6979,
+    0.747
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 261,
+   "observed_mean_accuracy": 0.7414,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.2998,
+    0.3576,
+    0.4168
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 261,
+   "observed_mean_accuracy": 0.449,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "dots-mocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6184,
+    0.7056,
+    0.7802
+   ],
+   "basis": "measured",
+   "pages": 21,
+   "works": 19,
+   "observed_mean_accuracy": 0.8125,
+   "p_best": 0.131
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.6586,
+    0.7124,
+    0.7601
+   ],
+   "basis": "measured",
+   "pages": 499,
+   "works": 262,
+   "observed_mean_accuracy": 0.7634,
+   "p_best": 0.002
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.6053,
+    0.6654,
+    0.7175
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 261,
+   "observed_mean_accuracy": 0.7003,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.5552,
+    0.6191,
+    0.6779
+   ],
+   "basis": "measured",
+   "pages": 148,
+   "works": 101,
+   "observed_mean_accuracy": 0.6541,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.6593,
+    0.7165,
+    0.7674
+   ],
+   "basis": "measured",
+   "pages": 146,
+   "works": 101,
+   "observed_mean_accuracy": 0.7703,
+   "p_best": 0.032
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.6501,
+    0.7041,
+    0.7548
+   ],
+   "basis": "measured",
+   "pages": 460,
+   "works": 250,
+   "observed_mean_accuracy": 0.7599,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "family": "gemini-4",
+   "production": false,
+   "accuracy": [
+    0.6827,
+    0.7387,
+    0.7863
+   ],
+   "basis": "measured",
+   "pages": 148,
+   "works": 101,
+   "observed_mean_accuracy": 0.7973,
+   "p_best": 0.355
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6042,
+    0.6605,
+    0.7126
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 261,
+   "observed_mean_accuracy": 0.7003,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "ndlkotenocr-v3",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.5519,
+    0.6421,
+    0.7252
+   ],
+   "basis": "measured",
+   "pages": 21,
+   "works": 19,
+   "observed_mean_accuracy": 0.7335,
+   "p_best": 0.002
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "paddleocr-vl-1.6",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.683,
+    0.7349,
+    0.7803
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 262,
+   "observed_mean_accuracy": 0.7901,
+   "p_best": 0.205
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6682,
+    0.7223,
+    0.7692
+   ],
+   "basis": "measured",
+   "pages": 498,
+   "works": 261,
+   "observed_mean_accuracy": 0.7797,
+   "p_best": 0.012
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.5759,
+    0.6663,
+    0.7438
+   ],
+   "basis": "measured",
+   "pages": 21,
+   "works": 19,
+   "observed_mean_accuracy": 0.761,
+   "p_best": 0.016
+  },
+  {
+   "chart": "chinese-manuscript",
+   "engine": "tesseract-chi_tra_vert",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.212,
+    0.2857,
+    0.3723
+   ],
+   "basis": "measured",
+   "pages": 21,
+   "works": 19,
+   "observed_mean_accuracy": 0.2666,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6245,
+    0.7351,
+    0.8315
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.8381,
+   "p_best": 0.173
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "claude-opus-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.6193,
+    0.7273,
+    0.8233
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.8347,
+   "p_best": 0.128
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "claude-sonnet-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.5628,
+    0.6811,
+    0.7799
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.7658,
+   "p_best": 0.021
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.2045,
+    0.3104,
+    0.4299
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.4927,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "dots-mocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.553,
+    0.7143,
+    0.8462
+   ],
+   "basis": "pooled",
+   "pages": 4,
+   "works": 3,
+   "observed_mean_accuracy": 0.8273,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.6255,
+    0.7259,
+    0.8083
+   ],
+   "basis": "measured",
+   "pages": 19,
+   "works": 18,
+   "observed_mean_accuracy": 0.7795,
+   "p_best": 0.09
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.5912,
+    0.6985,
+    0.7876
+   ],
+   "basis": "measured",
+   "pages": 19,
+   "works": 18,
+   "observed_mean_accuracy": 0.7488,
+   "p_best": 0.023
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.5405,
+    0.6665,
+    0.7732
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.7541,
+   "p_best": 0.015
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.6133,
+    0.7262,
+    0.8222
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.8324,
+   "p_best": 0.143
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.5977,
+    0.7197,
+    0.8162
+   ],
+   "basis": "measured",
+   "pages": 11,
+   "works": 10,
+   "observed_mean_accuracy": 0.8284,
+   "p_best": 0.131
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "family": "gemini-4",
+   "production": false,
+   "accuracy": [
+    0.6204,
+    0.7323,
+    0.8288
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.838,
+   "p_best": 0.168
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.515,
+    0.6372,
+    0.7487
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.7356,
+   "p_best": 0.003
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "ndlkotenocr-v3",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.3313,
+    0.4927,
+    0.6704
+   ],
+   "basis": "untested",
+   "pages": 4,
+   "works": 3,
+   "observed_mean_accuracy": 0.5757,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "paddleocr-vl-1.6",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6135,
+    0.7144,
+    0.7979
+   ],
+   "basis": "measured",
+   "pages": 19,
+   "works": 18,
+   "observed_mean_accuracy": 0.7814,
+   "p_best": 0.045
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.5989,
+    0.7066,
+    0.807
+   ],
+   "basis": "measured",
+   "pages": 12,
+   "works": 11,
+   "observed_mean_accuracy": 0.8389,
+   "p_best": 0.061
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.5378,
+    0.709,
+    0.8481
+   ],
+   "basis": "untested",
+   "pages": 4,
+   "works": 3,
+   "observed_mean_accuracy": 0.8355,
+   "p_best": 0.0
+  },
+  {
+   "chart": "chinese-print",
+   "engine": "tesseract-chi_tra_vert",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.2135,
+    0.3635,
+    0.5371
+   ],
+   "basis": "untested",
+   "pages": 4,
+   "works": 3,
+   "observed_mean_accuracy": 0.424,
+   "p_best": 0.0
+  },
+  {
+   "chart": "english",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7678,
+    0.8376,
+    0.8851
+   ],
+   "basis": "measured",
+   "pages": 49,
+   "works": 48,
+   "observed_mean_accuracy": 0.9552,
+   "p_best": 0.157
+  },
+  {
+   "chart": "english",
+   "engine": "claude-sonnet-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.7637,
+    0.8371,
+    0.8848
+   ],
+   "basis": "measured",
+   "pages": 49,
+   "works": 48,
+   "observed_mean_accuracy": 0.9557,
+   "p_best": 0.136
+  },
+  {
+   "chart": "english",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7023,
+    0.7888,
+    0.8456
+   ],
+   "basis": "measured",
+   "pages": 49,
+   "works": 48,
+   "observed_mean_accuracy": 0.9049,
+   "p_best": 0.001
+  },
+  {
+   "chart": "english",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.7602,
+    0.8362,
+    0.8814
+   ],
+   "basis": "measured",
+   "pages": 52,
+   "works": 51,
+   "observed_mean_accuracy": 0.9541,
+   "p_best": 0.114
+  },
+  {
+   "chart": "english",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.7411,
+    0.8201,
+    0.8698
+   ],
+   "basis": "measured",
+   "pages": 56,
+   "works": 55,
+   "observed_mean_accuracy": 0.9422,
+   "p_best": 0.023
+  },
+  {
+   "chart": "english",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7436,
+    0.8227,
+    0.8747
+   ],
+   "basis": "measured",
+   "pages": 43,
+   "works": 42,
+   "observed_mean_accuracy": 0.9292,
+   "p_best": 0.045
+  },
+  {
+   "chart": "english",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7616,
+    0.835,
+    0.8859
+   ],
+   "basis": "measured",
+   "pages": 43,
+   "works": 42,
+   "observed_mean_accuracy": 0.9447,
+   "p_best": 0.127
+  },
+  {
+   "chart": "english",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7586,
+    0.833,
+    0.8827
+   ],
+   "basis": "measured",
+   "pages": 43,
+   "works": 42,
+   "observed_mean_accuracy": 0.9479,
+   "p_best": 0.111
+  },
+  {
+   "chart": "english",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7602,
+    0.8363,
+    0.8849
+   ],
+   "basis": "measured",
+   "pages": 43,
+   "works": 42,
+   "observed_mean_accuracy": 0.9471,
+   "p_best": 0.141
+  },
+  {
+   "chart": "english",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7528,
+    0.828,
+    0.8787
+   ],
+   "basis": "measured",
+   "pages": 49,
+   "works": 48,
+   "observed_mean_accuracy": 0.9437,
+   "p_best": 0.057
+  },
+  {
+   "chart": "english",
+   "engine": "olmocr-2-7b-fp8",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7523,
+    0.8283,
+    0.8759
+   ],
+   "basis": "measured",
+   "pages": 58,
+   "works": 57,
+   "observed_mean_accuracy": 0.949,
+   "p_best": 0.043
+  },
+  {
+   "chart": "english",
+   "engine": "paddleocr-vl-1.6",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6879,
+    0.7764,
+    0.8347
+   ],
+   "basis": "measured",
+   "pages": 58,
+   "works": 57,
+   "observed_mean_accuracy": 0.9019,
+   "p_best": 0.0
+  },
+  {
+   "chart": "english",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7459,
+    0.8234,
+    0.8763
+   ],
+   "basis": "measured",
+   "pages": 49,
+   "works": 48,
+   "observed_mean_accuracy": 0.9496,
+   "p_best": 0.045
+  },
+  {
+   "chart": "greek",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6369,
+    0.6909,
+    0.7385
+   ],
+   "basis": "measured",
+   "pages": 136,
+   "works": 122,
+   "observed_mean_accuracy": 0.7611,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "claude-opus-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.7461,
+    0.7994,
+    0.8392
+   ],
+   "basis": "measured",
+   "pages": 54,
+   "works": 50,
+   "observed_mean_accuracy": 0.8957,
+   "p_best": 0.009
+  },
+  {
+   "chart": "greek",
+   "engine": "cllg-qwen3vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.527,
+    0.6056,
+    0.6798
+   ],
+   "basis": "measured",
+   "pages": 25,
+   "works": 19,
+   "observed_mean_accuracy": 0.7327,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.2896,
+    0.3443,
+    0.399
+   ],
+   "basis": "measured",
+   "pages": 89,
+   "works": 82,
+   "observed_mean_accuracy": 0.4945,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "dots-mocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6083,
+    0.7083,
+    0.7972
+   ],
+   "basis": "measured",
+   "pages": 10,
+   "works": 10,
+   "observed_mean_accuracy": 0.7981,
+   "p_best": 0.006
+  },
+  {
+   "chart": "greek",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": true,
+   "accuracy": [
+    0.8094,
+    0.8468,
+    0.8759
+   ],
+   "basis": "measured",
+   "pages": 168,
+   "works": 146,
+   "observed_mean_accuracy": 0.9081,
+   "p_best": 0.936
+  },
+  {
+   "chart": "greek",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": false,
+   "accuracy": [
+    0.7449,
+    0.7911,
+    0.8251
+   ],
+   "basis": "measured",
+   "pages": 169,
+   "works": 146,
+   "observed_mean_accuracy": 0.8596,
+   "p_best": 0.001
+  },
+  {
+   "chart": "greek",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.6513,
+    0.7052,
+    0.7509
+   ],
+   "basis": "measured",
+   "pages": 121,
+   "works": 109,
+   "observed_mean_accuracy": 0.8038,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7702,
+    0.8161,
+    0.8512
+   ],
+   "basis": "measured",
+   "pages": 118,
+   "works": 106,
+   "observed_mean_accuracy": 0.9149,
+   "p_best": 0.026
+  },
+  {
+   "chart": "greek",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7365,
+    0.7842,
+    0.8217
+   ],
+   "basis": "measured",
+   "pages": 114,
+   "works": 102,
+   "observed_mean_accuracy": 0.8808,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "family": "gemini-4",
+   "production": false,
+   "accuracy": [
+    0.7711,
+    0.8168,
+    0.8522
+   ],
+   "basis": "measured",
+   "pages": 108,
+   "works": 96,
+   "observed_mean_accuracy": 0.8768,
+   "p_best": 0.022
+  },
+  {
+   "chart": "greek",
+   "engine": "kraken-greek-cllg",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.7552,
+    0.7988,
+    0.8333
+   ],
+   "basis": "measured",
+   "pages": 150,
+   "works": 130,
+   "observed_mean_accuracy": 0.8868,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6265,
+    0.6831,
+    0.7296
+   ],
+   "basis": "measured",
+   "pages": 136,
+   "works": 122,
+   "observed_mean_accuracy": 0.754,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "olmocr-2-7b-fp8",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.4056,
+    0.4658,
+    0.521
+   ],
+   "basis": "measured",
+   "pages": 141,
+   "works": 127,
+   "observed_mean_accuracy": 0.561,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "paddleocr-vl-1.6",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.403,
+    0.4605,
+    0.5144
+   ],
+   "basis": "measured",
+   "pages": 150,
+   "works": 135,
+   "observed_mean_accuracy": 0.5168,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.533,
+    0.5938,
+    0.6471
+   ],
+   "basis": "measured",
+   "pages": 136,
+   "works": 122,
+   "observed_mean_accuracy": 0.6933,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.6449,
+    0.7089,
+    0.763
+   ],
+   "basis": "measured",
+   "pages": 51,
+   "works": 43,
+   "observed_mean_accuracy": 0.84,
+   "p_best": 0.0
+  },
+  {
+   "chart": "greek",
+   "engine": "tesseract-grc",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.2836,
+    0.3406,
+    0.398
+   ],
+   "basis": "measured",
+   "pages": 50,
+   "works": 42,
+   "observed_mean_accuracy": 0.5882,
+   "p_best": 0.0
+  },
+  {
+   "chart": "hebrew",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.4983,
+    0.6454,
+    0.7709
+   ],
+   "basis": "measured",
+   "pages": 10,
+   "works": 9,
+   "observed_mean_accuracy": 0.7663,
+   "p_best": 0.017
+  },
+  {
+   "chart": "hebrew",
+   "engine": "claude-opus-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.6826,
+    0.8086,
+    0.8979
+   ],
+   "basis": "measured",
+   "pages": 10,
+   "works": 9,
+   "observed_mean_accuracy": 0.8679,
+   "p_best": 0.983
+  },
+  {
+   "chart": "hebrew",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0158,
+    0.0389,
+    0.0865
+   ],
+   "basis": "measured",
+   "pages": 10,
+   "works": 9,
+   "observed_mean_accuracy": 0.1006,
+   "p_best": 0.0
+  },
+  {
+   "chart": "hebrew",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.7441,
+    0.8753,
+    0.9533
+   ],
+   "basis": "untested",
+   "pages": 4,
+   "works": 4,
+   "observed_mean_accuracy": 0.9223,
+   "p_best": 0.0
+  },
+  {
+   "chart": "hebrew",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": false,
+   "accuracy": [
+    0.7247,
+    0.86,
+    0.9416
+   ],
+   "basis": "untested",
+   "pages": 4,
+   "works": 4,
+   "observed_mean_accuracy": 0.9065,
+   "p_best": 0.0
+  },
+  {
+   "chart": "hebrew",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.4316,
+    0.5909,
+    0.726
+   ],
+   "basis": "measured",
+   "pages": 10,
+   "works": 9,
+   "observed_mean_accuracy": 0.6881,
+   "p_best": 0.001
+  },
+  {
+   "chart": "hebrew",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0195,
+    0.0449,
+    0.0961
+   ],
+   "basis": "measured",
+   "pages": 10,
+   "works": 9,
+   "observed_mean_accuracy": 0.064,
+   "p_best": 0.0
+  },
+  {
+   "chart": "hebrew",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.6168,
+    0.7827,
+    0.8922
+   ],
+   "basis": "untested",
+   "pages": 4,
+   "works": 4,
+   "observed_mean_accuracy": 0.8685,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7461,
+    0.7947,
+    0.8294
+   ],
+   "basis": "measured",
+   "pages": 155,
+   "works": 151,
+   "observed_mean_accuracy": 0.91,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "claude-sonnet-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.7821,
+    0.8286,
+    0.8601
+   ],
+   "basis": "measured",
+   "pages": 155,
+   "works": 151,
+   "observed_mean_accuracy": 0.9292,
+   "p_best": 0.169
+  },
+  {
+   "chart": "latin",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6442,
+    0.7021,
+    0.7452
+   ],
+   "basis": "measured",
+   "pages": 155,
+   "works": 151,
+   "observed_mean_accuracy": 0.8353,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.801,
+    0.8421,
+    0.8707
+   ],
+   "basis": "measured",
+   "pages": 166,
+   "works": 161,
+   "observed_mean_accuracy": 0.9071,
+   "p_best": 0.805
+  },
+  {
+   "chart": "latin",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.7173,
+    0.7696,
+    0.8091
+   ],
+   "basis": "measured",
+   "pages": 167,
+   "works": 162,
+   "observed_mean_accuracy": 0.8506,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7328,
+    0.7832,
+    0.8205
+   ],
+   "basis": "measured",
+   "pages": 141,
+   "works": 139,
+   "observed_mean_accuracy": 0.9116,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7616,
+    0.8086,
+    0.8421
+   ],
+   "basis": "measured",
+   "pages": 140,
+   "works": 138,
+   "observed_mean_accuracy": 0.9378,
+   "p_best": 0.007
+  },
+  {
+   "chart": "latin",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7622,
+    0.8091,
+    0.8436
+   ],
+   "basis": "measured",
+   "pages": 139,
+   "works": 137,
+   "observed_mean_accuracy": 0.9378,
+   "p_best": 0.005
+  },
+  {
+   "chart": "latin",
+   "engine": "gemini-3.8-flash-high+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.7635,
+    0.8101,
+    0.8438
+   ],
+   "basis": "measured",
+   "pages": 142,
+   "works": 140,
+   "observed_mean_accuracy": 0.9409,
+   "p_best": 0.011
+  },
+  {
+   "chart": "latin",
+   "engine": "kraken-catmus",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.7251,
+    0.7779,
+    0.8203
+   ],
+   "basis": "measured",
+   "pages": 76,
+   "works": 71,
+   "observed_mean_accuracy": 0.8133,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7492,
+    0.7954,
+    0.8294
+   ],
+   "basis": "measured",
+   "pages": 155,
+   "works": 151,
+   "observed_mean_accuracy": 0.9057,
+   "p_best": 0.001
+  },
+  {
+   "chart": "latin",
+   "engine": "olmocr-2-7b-fp8",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6529,
+    0.711,
+    0.7572
+   ],
+   "basis": "measured",
+   "pages": 79,
+   "works": 79,
+   "observed_mean_accuracy": 0.8087,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "paddleocr-vl-1.6",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.5649,
+    0.6273,
+    0.6828
+   ],
+   "basis": "measured",
+   "pages": 79,
+   "works": 79,
+   "observed_mean_accuracy": 0.7563,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.6994,
+    0.7536,
+    0.7936
+   ],
+   "basis": "measured",
+   "pages": 155,
+   "works": 151,
+   "observed_mean_accuracy": 0.8785,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.734,
+    0.7874,
+    0.8298
+   ],
+   "basis": "measured",
+   "pages": 76,
+   "works": 71,
+   "observed_mean_accuracy": 0.8277,
+   "p_best": 0.002
+  },
+  {
+   "chart": "latin",
+   "engine": "tesseract-lat",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.1284,
+    0.1662,
+    0.2073
+   ],
+   "basis": "measured",
+   "pages": 75,
+   "works": 70,
+   "observed_mean_accuracy": 0.3763,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.8376,
+    0.8894,
+    0.9294
+   ],
+   "basis": "measured",
+   "pages": 23,
+   "works": 23,
+   "observed_mean_accuracy": 0.9808,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "claude-sonnet-5-5",
+   "family": "claude",
+   "production": false,
+   "accuracy": [
+    0.8951,
+    0.9333,
+    0.9583
+   ],
+   "basis": "measured",
+   "pages": 23,
+   "works": 23,
+   "observed_mean_accuracy": 0.9904,
+   "p_best": 0.021
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7702,
+    0.8328,
+    0.8868
+   ],
+   "basis": "measured",
+   "pages": 23,
+   "works": 23,
+   "observed_mean_accuracy": 0.9511,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.9426,
+    0.9627,
+    0.9763
+   ],
+   "basis": "measured",
+   "pages": 35,
+   "works": 35,
+   "observed_mean_accuracy": 0.9667,
+   "p_best": 0.885
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.9157,
+    0.9436,
+    0.9635
+   ],
+   "basis": "measured",
+   "pages": 36,
+   "works": 36,
+   "observed_mean_accuracy": 0.9618,
+   "p_best": 0.054
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.8842,
+    0.9222,
+    0.9509
+   ],
+   "basis": "measured",
+   "pages": 23,
+   "works": 23,
+   "observed_mean_accuracy": 0.9949,
+   "p_best": 0.001
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.8683,
+    0.916,
+    0.9493
+   ],
+   "basis": "measured",
+   "pages": 15,
+   "works": 15,
+   "observed_mean_accuracy": 0.9215,
+   "p_best": 0.005
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.8948,
+    0.9335,
+    0.9626
+   ],
+   "basis": "measured",
+   "pages": 16,
+   "works": 16,
+   "observed_mean_accuracy": 0.9971,
+   "p_best": 0.035
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "kraken-austriannewspapers",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.1725,
+    0.2388,
+    0.3174
+   ],
+   "basis": "measured",
+   "pages": 35,
+   "works": 35,
+   "observed_mean_accuracy": 0.4594,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "kraken-catmus",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.032,
+    0.0544,
+    0.0893
+   ],
+   "basis": "measured",
+   "pages": 35,
+   "works": 35,
+   "observed_mean_accuracy": 0.223,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.8466,
+    0.8944,
+    0.9299
+   ],
+   "basis": "measured",
+   "pages": 23,
+   "works": 23,
+   "observed_mean_accuracy": 0.983,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "olmocr-2-7b-fp8",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.8535,
+    0.8957,
+    0.9297
+   ],
+   "basis": "measured",
+   "pages": 30,
+   "works": 30,
+   "observed_mean_accuracy": 0.9389,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "paddleocr-vl-1.6",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.7711,
+    0.8289,
+    0.8761
+   ],
+   "basis": "measured",
+   "pages": 30,
+   "works": 30,
+   "observed_mean_accuracy": 0.878,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.8223,
+    0.8778,
+    0.9193
+   ],
+   "basis": "measured",
+   "pages": 23,
+   "works": 23,
+   "observed_mean_accuracy": 0.9804,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "surya2",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.8372,
+    0.8842,
+    0.9212
+   ],
+   "basis": "measured",
+   "pages": 37,
+   "works": 37,
+   "observed_mean_accuracy": 0.9112,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "tesseract-deu",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.1181,
+    0.1741,
+    0.2425
+   ],
+   "basis": "measured",
+   "pages": 37,
+   "works": 37,
+   "observed_mean_accuracy": 0.3546,
+   "p_best": 0.0
+  },
+  {
+   "chart": "latin-script-other",
+   "engine": "tesseract-frk",
+   "family": "classic",
+   "production": false,
+   "accuracy": [
+    0.6476,
+    0.7211,
+    0.7873
+   ],
+   "basis": "measured",
+   "pages": 37,
+   "works": 37,
+   "observed_mean_accuracy": 0.7858,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "chandra-ocr-2",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.035,
+    0.1028,
+    0.2528
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.0589,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "deepseek-ocr",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0051,
+    0.019,
+    0.0705
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.0058,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "gemini-3-flash-preview",
+   "family": "gemini-flash",
+   "production": false,
+   "accuracy": [
+    0.1375,
+    0.3068,
+    0.5548
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.2391,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": true,
+   "accuracy": [
+    0.0454,
+    0.1301,
+    0.3014
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.1248,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.0597,
+    0.1615,
+    0.3584
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.1165,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.1844,
+    0.3876,
+    0.6319
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.2574,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.1849,
+    0.3775,
+    0.6268
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.2435,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "family": "gemini-4",
+   "production": false,
+   "accuracy": [
+    0.2661,
+    0.4924,
+    0.7334
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.3418,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "mistral-ocr-4-1",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0451,
+    0.1216,
+    0.2898
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.0439,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "omnisyr",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.2912,
+    0.5361,
+    0.7622
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.3003,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "qoruyo-eastern",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.2672,
+    0.5002,
+    0.7372
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.2612,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "qoruyo-estrangela",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.3102,
+    0.5545,
+    0.7751
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.3242,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "qwen3-vl-8b",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0018,
+    0.0078,
+    0.0328
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.0,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac",
+   "engine": "sophro-defaultseg",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.5007,
+    0.7334,
+    0.8868
+   ],
+   "basis": "measured",
+   "pages": 40,
+   "works": 2,
+   "observed_mean_accuracy": 0.5898,
+   "p_best": 1.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "gemini-3.1-flash-lite",
+   "family": "gemini-lite",
+   "production": false,
+   "accuracy": [
+    0.2321,
+    0.3455,
+    0.4989
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.3179,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "gemini-3.6-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.2097,
+    0.3198,
+    0.4697
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.3957,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "gemini-3.7-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.3168,
+    0.4388,
+    0.5902
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.4883,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "gemini-3.8-flash+antigravity-cli",
+   "family": "gemini-cli",
+   "production": false,
+   "accuracy": [
+    0.2353,
+    0.35,
+    0.5034
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.4509,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "gemini-4-argon-low+antigravity-cli",
+   "family": "gemini-4",
+   "production": false,
+   "accuracy": [
+    0.5409,
+    0.667,
+    0.7958
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.689,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "mineru",
+   "family": "open-vlm",
+   "production": false,
+   "accuracy": [
+    0.0007,
+    0.0042,
+    0.014
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.0,
+   "p_best": 0.0
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "omnisyr",
+   "family": "specialist",
+   "production": true,
+   "accuracy": [
+    0.6973,
+    0.7956,
+    0.8873
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.8725,
+   "p_best": 0.393
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "omnisyr-nosplit",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.6845,
+    0.7937,
+    0.8823
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.867,
+   "p_best": 0.343
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "qoruyo-eastern",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.6585,
+    0.7718,
+    0.8666
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.8377,
+   "p_best": 0.13
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "qoruyo-estrangela",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.6616,
+    0.772,
+    0.8659
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.835,
+   "p_best": 0.135
+  },
+  {
+   "chart": "syriac-print",
+   "engine": "sophro-mhiro",
+   "family": "specialist",
+   "production": false,
+   "accuracy": [
+    0.3999,
+    0.5301,
+    0.6773
+   ],
+   "basis": "measured",
+   "pages": 20,
+   "works": 18,
+   "observed_mean_accuracy": 0.6587,
+   "p_best": 0.0
+  }
+ ],
+ "hyper": {
+  "phi": [
+   4.0416,
+   4.1534,
+   4.2652
+  ],
+  "tau_fam": [
+   0.1367,
+   0.7734,
+   1.6846
+  ],
+  "tau_eng": [
+   0.9443,
+   1.354,
+   1.8778
+  ],
+  "tau_chart": [
+   0.4356,
+   1.0826,
+   1.9042
+  ],
+  "tau_fc": [
+   0.5972,
+   0.828,
+   1.1137
+  ],
+  "tau_ec": [
+   0.6013,
+   0.7326,
+   0.9065
+  ],
+  "tau_period": [
+   0.5974,
+   1.0142,
+   1.6602
+  ],
+  "tau_panel": [
+   0.101,
+   0.2455,
+   0.5122
+  ],
+  "tau_work": [
+   0.8073,
+   0.8628,
+   0.9155
+  ],
+  "tau_page": [
+   0.2994,
+   0.3406,
+   0.382
+  ]
+ },
+ "kind_manuscript_logit": [
+  -0.5217,
+  0.0274,
+  0.6135
+ ],
+ "period_logit": {
+  "1500-1599": [
+   0.0678,
+   0.7122,
+   1.5044
+  ],
+  "1600-1699": [
+   -0.328,
+   0.3322,
+   1.1307
+  ],
+  "1700-1799": [
+   -0.6918,
+   -0.0404,
+   0.7528
+  ],
+  "1800-1899": [
+   -1.3576,
+   -0.651,
+   0.0875
+  ],
+  "1900 on": [
+   -2.6948,
+   -1.4778,
+   -0.461
+  ],
+  "before 1500": [
+   0.6198,
+   1.3926,
+   2.3932
+  ],
+  "unknown": [
+   -0.3567,
+   0.325,
+   1.0932
+  ]
+ },
+ "panel_logit": {
+  "a5-nonlatin-5700": [
+   -0.3713,
+   0.0042,
+   0.4232
+  ],
+  "chinese": [
+   -0.5447,
+   -0.1928,
+   0.0595
+  ],
+  "chinese-cohort-5547": [
+   -0.2243,
+   0.058,
+   0.3259
+  ],
+  "chinese-ext": [
+   -0.1201,
+   0.1395,
+   0.4428
+  ],
+  "eebo-tcp-5488": [
+   -0.5943,
+   -0.1718,
+   0.1241
+  ],
+  "greek": [
+   -0.361,
+   -0.0111,
+   0.3126
+  ],
+  "greek-ext": [
+   -0.3201,
+   -0.0348,
+   0.2072
+  ],
+  "greek-ext2": [
+   -0.3065,
+   0.0267,
+   0.3697
+  ],
+  "latin-period-5126": [
+   -0.5419,
+   -0.1827,
+   0.055
+  ],
+  "ref-pinned": [
+   -0.3461,
+   -0.0126,
+   0.3223
+  ],
+  "ref-ws": [
+   -0.033,
+   0.2424,
+   0.5601
+  ],
+  "syriac-gt": [
+   -0.2608,
+   0.1054,
+   0.8159
+  ],
+  "syriac-print-6295": [
+   -0.3359,
+   0.0583,
+   0.6388
+  ]
+ },
+ "ppc": {
+  "cells": [
+   {
+    "chart": "armenian",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.045,
+    "fitted_cer": 0.1854,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "armenian",
+    "engine": "claude-sonnet-5-5",
+    "observed_cer": 0.252,
+    "fitted_cer": 0.3724,
+    "share_cer_1": 0.2
+   },
+   {
+    "chart": "armenian",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.461,
+    "fitted_cer": 0.7557,
+    "share_cer_1": 0.4
+   },
+   {
+    "chart": "armenian",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.1288,
+    "fitted_cer": 0.2159,
+    "share_cer_1": 0.111
+   },
+   {
+    "chart": "armenian",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.0388,
+    "fitted_cer": 0.1391,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "armenian",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.2208,
+    "fitted_cer": 0.1588,
+    "share_cer_1": 0.2
+   },
+   {
+    "chart": "armenian",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.4196,
+    "fitted_cer": 0.5449,
+    "share_cer_1": 0.4
+   },
+   {
+    "chart": "armenian",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 1.0,
+    "fitted_cer": 0.9611,
+    "share_cer_1": 1.0
+   },
+   {
+    "chart": "armenian",
+    "engine": "surya2",
+    "observed_cer": 0.474,
+    "fitted_cer": 0.6236,
+    "share_cer_1": 0.444
+   },
+   {
+    "chart": "armenian",
+    "engine": "tesseract-hye",
+    "observed_cer": 1.0,
+    "fitted_cer": 0.992,
+    "share_cer_1": 1.0
+   },
+   {
+    "chart": "armenian",
+    "engine": "tesseract-hye_calfa",
+    "observed_cer": 0.1258,
+    "fitted_cer": 0.188,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.2374,
+    "fitted_cer": 0.288,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "claude-opus-5-5",
+    "observed_cer": 0.173,
+    "fitted_cer": 0.2361,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "claude-sonnet-5-5",
+    "observed_cer": 0.2586,
+    "fitted_cer": 0.303,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.551,
+    "fitted_cer": 0.6784,
+    "share_cer_1": 0.267
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "dots-mocr",
+    "observed_cer": 0.1875,
+    "fitted_cer": 0.25,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.2366,
+    "fitted_cer": 0.2878,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.2997,
+    "fitted_cer": 0.3389,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.3459,
+    "fitted_cer": 0.3901,
+    "share_cer_1": 0.041
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.2297,
+    "fitted_cer": 0.2807,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.2401,
+    "fitted_cer": 0.2908,
+    "share_cer_1": 0.007
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "gemini-4-argon-low+antigravity-cli",
+    "observed_cer": 0.2027,
+    "fitted_cer": 0.2571,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.2997,
+    "fitted_cer": 0.3447,
+    "share_cer_1": 0.012
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "ndlkotenocr-v3",
+    "observed_cer": 0.2665,
+    "fitted_cer": 0.3137,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "paddleocr-vl-1.6",
+    "observed_cer": 0.2099,
+    "fitted_cer": 0.2616,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.2203,
+    "fitted_cer": 0.2766,
+    "share_cer_1": 0.008
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "surya2",
+    "observed_cer": 0.239,
+    "fitted_cer": 0.2921,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-manuscript",
+    "engine": "tesseract-chi_tra_vert",
+    "observed_cer": 0.7334,
+    "fitted_cer": 0.71,
+    "share_cer_1": 0.048
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.1619,
+    "fitted_cer": 0.217,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "claude-opus-5-5",
+    "observed_cer": 0.1653,
+    "fitted_cer": 0.2266,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "claude-sonnet-5-5",
+    "observed_cer": 0.2342,
+    "fitted_cer": 0.2792,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.5073,
+    "fitted_cer": 0.6742,
+    "share_cer_1": 0.333
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.2205,
+    "fitted_cer": 0.2661,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.2512,
+    "fitted_cer": 0.2959,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.2459,
+    "fitted_cer": 0.2853,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.1676,
+    "fitted_cer": 0.2273,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.1716,
+    "fitted_cer": 0.2352,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "gemini-4-argon-low+antigravity-cli",
+    "observed_cer": 0.162,
+    "fitted_cer": 0.2191,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.2644,
+    "fitted_cer": 0.3261,
+    "share_cer_1": 0.083
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "paddleocr-vl-1.6",
+    "observed_cer": 0.2186,
+    "fitted_cer": 0.2771,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "chinese-print",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.1611,
+    "fitted_cer": 0.2519,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.0448,
+    "fitted_cer": 0.1183,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "claude-sonnet-5-5",
+    "observed_cer": 0.0443,
+    "fitted_cer": 0.1168,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.0951,
+    "fitted_cer": 0.1614,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.0459,
+    "fitted_cer": 0.1198,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.0578,
+    "fitted_cer": 0.1316,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.0708,
+    "fitted_cer": 0.1297,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.0553,
+    "fitted_cer": 0.1206,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.0521,
+    "fitted_cer": 0.1172,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "gemini-3.8-flash-high+antigravity-cli",
+    "observed_cer": 0.0529,
+    "fitted_cer": 0.118,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.0563,
+    "fitted_cer": 0.1252,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "olmocr-2-7b-fp8",
+    "observed_cer": 0.051,
+    "fitted_cer": 0.1242,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "english",
+    "engine": "paddleocr-vl-1.6",
+    "observed_cer": 0.0981,
+    "fitted_cer": 0.1717,
+    "share_cer_1": 0.017
+   },
+   {
+    "chart": "english",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.0504,
+    "fitted_cer": 0.1283,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "greek",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.2389,
+    "fitted_cer": 0.2883,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "greek",
+    "engine": "claude-opus-5-5",
+    "observed_cer": 0.1043,
+    "fitted_cer": 0.1699,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "greek",
+    "engine": "cllg-qwen3vl-8b",
+    "observed_cer": 0.2673,
+    "fitted_cer": 0.3405,
+    "share_cer_1": 0.16
+   },
+   {
+    "chart": "greek",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.5055,
+    "fitted_cer": 0.6382,
+    "share_cer_1": 0.225
+   },
+   {
+    "chart": "greek",
+    "engine": "dots-mocr",
+    "observed_cer": 0.2019,
+    "fitted_cer": 0.2447,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "greek",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.0919,
+    "fitted_cer": 0.1429,
+    "share_cer_1": 0.012
+   },
+   {
+    "chart": "greek",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.1404,
+    "fitted_cer": 0.196,
+    "share_cer_1": 0.018
+   },
+   {
+    "chart": "greek",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.1962,
+    "fitted_cer": 0.2728,
+    "share_cer_1": 0.083
+   },
+   {
+    "chart": "greek",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.0851,
+    "fitted_cer": 0.1555,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "greek",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.1192,
+    "fitted_cer": 0.1862,
+    "share_cer_1": 0.026
+   },
+   {
+    "chart": "greek",
+    "engine": "gemini-4-argon-low+antigravity-cli",
+    "observed_cer": 0.1232,
+    "fitted_cer": 0.1733,
+    "share_cer_1": 0.028
+   },
+   {
+    "chart": "greek",
+    "engine": "kraken-greek-cllg",
+    "observed_cer": 0.1132,
+    "fitted_cer": 0.1869,
+    "share_cer_1": 0.033
+   },
+   {
+    "chart": "greek",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.246,
+    "fitted_cer": 0.2961,
+    "share_cer_1": 0.007
+   },
+   {
+    "chart": "greek",
+    "engine": "olmocr-2-7b-fp8",
+    "observed_cer": 0.439,
+    "fitted_cer": 0.5255,
+    "share_cer_1": 0.113
+   },
+   {
+    "chart": "greek",
+    "engine": "paddleocr-vl-1.6",
+    "observed_cer": 0.4832,
+    "fitted_cer": 0.5362,
+    "share_cer_1": 0.073
+   },
+   {
+    "chart": "greek",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.3067,
+    "fitted_cer": 0.3928,
+    "share_cer_1": 0.066
+   },
+   {
+    "chart": "greek",
+    "engine": "surya2",
+    "observed_cer": 0.16,
+    "fitted_cer": 0.2278,
+    "share_cer_1": 0.098
+   },
+   {
+    "chart": "greek",
+    "engine": "tesseract-grc",
+    "observed_cer": 0.4118,
+    "fitted_cer": 0.5137,
+    "share_cer_1": 0.3
+   },
+   {
+    "chart": "hebrew",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.2337,
+    "fitted_cer": 0.3558,
+    "share_cer_1": 0.1
+   },
+   {
+    "chart": "hebrew",
+    "engine": "claude-opus-5-5",
+    "observed_cer": 0.1321,
+    "fitted_cer": 0.2077,
+    "share_cer_1": 0.1
+   },
+   {
+    "chart": "hebrew",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.8994,
+    "fitted_cer": 0.9535,
+    "share_cer_1": 0.8
+   },
+   {
+    "chart": "hebrew",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.3119,
+    "fitted_cer": 0.3899,
+    "share_cer_1": 0.1
+   },
+   {
+    "chart": "hebrew",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.936,
+    "fitted_cer": 0.9473,
+    "share_cer_1": 0.7
+   },
+   {
+    "chart": "latin",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.09,
+    "fitted_cer": 0.165,
+    "share_cer_1": 0.019
+   },
+   {
+    "chart": "latin",
+    "engine": "claude-sonnet-5-5",
+    "observed_cer": 0.0708,
+    "fitted_cer": 0.1376,
+    "share_cer_1": 0.006
+   },
+   {
+    "chart": "latin",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.1647,
+    "fitted_cer": 0.2472,
+    "share_cer_1": 0.065
+   },
+   {
+    "chart": "latin",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.0929,
+    "fitted_cer": 0.1667,
+    "share_cer_1": 0.036
+   },
+   {
+    "chart": "latin",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.1494,
+    "fitted_cer": 0.2278,
+    "share_cer_1": 0.072
+   },
+   {
+    "chart": "latin",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.0884,
+    "fitted_cer": 0.1455,
+    "share_cer_1": 0.007
+   },
+   {
+    "chart": "latin",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.0622,
+    "fitted_cer": 0.1276,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.0622,
+    "fitted_cer": 0.1262,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin",
+    "engine": "gemini-3.8-flash-high+antigravity-cli",
+    "observed_cer": 0.0591,
+    "fitted_cer": 0.1227,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin",
+    "engine": "kraken-catmus",
+    "observed_cer": 0.1867,
+    "fitted_cer": 0.2663,
+    "share_cer_1": 0.132
+   },
+   {
+    "chart": "latin",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.0943,
+    "fitted_cer": 0.1649,
+    "share_cer_1": 0.019
+   },
+   {
+    "chart": "latin",
+    "engine": "olmocr-2-7b-fp8",
+    "observed_cer": 0.1913,
+    "fitted_cer": 0.2797,
+    "share_cer_1": 0.152
+   },
+   {
+    "chart": "latin",
+    "engine": "paddleocr-vl-1.6",
+    "observed_cer": 0.2437,
+    "fitted_cer": 0.3376,
+    "share_cer_1": 0.19
+   },
+   {
+    "chart": "latin",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.1215,
+    "fitted_cer": 0.2003,
+    "share_cer_1": 0.045
+   },
+   {
+    "chart": "latin",
+    "engine": "surya2",
+    "observed_cer": 0.1722,
+    "fitted_cer": 0.2596,
+    "share_cer_1": 0.145
+   },
+   {
+    "chart": "latin",
+    "engine": "tesseract-lat",
+    "observed_cer": 0.6237,
+    "fitted_cer": 0.7707,
+    "share_cer_1": 0.6
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.0192,
+    "fitted_cer": 0.0785,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "claude-sonnet-5-5",
+    "observed_cer": 0.0096,
+    "fitted_cer": 0.0459,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.0489,
+    "fitted_cer": 0.1248,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.0333,
+    "fitted_cer": 0.0648,
+    "share_cer_1": 0.029
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.0382,
+    "fitted_cer": 0.0844,
+    "share_cer_1": 0.028
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.0051,
+    "fitted_cer": 0.0533,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.0785,
+    "fitted_cer": 0.0586,
+    "share_cer_1": 0.067
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.0029,
+    "fitted_cer": 0.0387,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "kraken-austriannewspapers",
+    "observed_cer": 0.5406,
+    "fitted_cer": 0.7692,
+    "share_cer_1": 0.514
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "kraken-catmus",
+    "observed_cer": 0.777,
+    "fitted_cer": 0.9329,
+    "share_cer_1": 0.771
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.017,
+    "fitted_cer": 0.0758,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "olmocr-2-7b-fp8",
+    "observed_cer": 0.0611,
+    "fitted_cer": 0.1358,
+    "share_cer_1": 0.033
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "paddleocr-vl-1.6",
+    "observed_cer": 0.122,
+    "fitted_cer": 0.2049,
+    "share_cer_1": 0.067
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 0.0196,
+    "fitted_cer": 0.0881,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "surya2",
+    "observed_cer": 0.0888,
+    "fitted_cer": 0.1433,
+    "share_cer_1": 0.054
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "tesseract-deu",
+    "observed_cer": 0.6454,
+    "fitted_cer": 0.8312,
+    "share_cer_1": 0.622
+   },
+   {
+    "chart": "latin-script-other",
+    "engine": "tesseract-frk",
+    "observed_cer": 0.2142,
+    "fitted_cer": 0.3136,
+    "share_cer_1": 0.162
+   },
+   {
+    "chart": "syriac",
+    "engine": "chandra-ocr-2",
+    "observed_cer": 0.9411,
+    "fitted_cer": 0.9621,
+    "share_cer_1": 0.525
+   },
+   {
+    "chart": "syriac",
+    "engine": "deepseek-ocr",
+    "observed_cer": 0.9942,
+    "fitted_cer": 0.9938,
+    "share_cer_1": 0.875
+   },
+   {
+    "chart": "syriac",
+    "engine": "gemini-3-flash-preview",
+    "observed_cer": 0.7609,
+    "fitted_cer": 0.8519,
+    "share_cer_1": 0.325
+   },
+   {
+    "chart": "syriac",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.8752,
+    "fitted_cer": 0.9498,
+    "share_cer_1": 0.5
+   },
+   {
+    "chart": "syriac",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.8835,
+    "fitted_cer": 0.9359,
+    "share_cer_1": 0.4
+   },
+   {
+    "chart": "syriac",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.7426,
+    "fitted_cer": 0.795,
+    "share_cer_1": 0.15
+   },
+   {
+    "chart": "syriac",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.7565,
+    "fitted_cer": 0.8019,
+    "share_cer_1": 0.125
+   },
+   {
+    "chart": "syriac",
+    "engine": "gemini-4-argon-low+antigravity-cli",
+    "observed_cer": 0.6582,
+    "fitted_cer": 0.6989,
+    "share_cer_1": 0.125
+   },
+   {
+    "chart": "syriac",
+    "engine": "mistral-ocr-4-1",
+    "observed_cer": 0.9561,
+    "fitted_cer": 0.9545,
+    "share_cer_1": 0.4
+   },
+   {
+    "chart": "syriac",
+    "engine": "omnisyr",
+    "observed_cer": 0.6997,
+    "fitted_cer": 0.6636,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac",
+    "engine": "qoruyo-eastern",
+    "observed_cer": 0.7388,
+    "fitted_cer": 0.6957,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac",
+    "engine": "qoruyo-estrangela",
+    "observed_cer": 0.6758,
+    "fitted_cer": 0.6404,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac",
+    "engine": "qwen3-vl-8b",
+    "observed_cer": 1.0,
+    "fitted_cer": 0.9973,
+    "share_cer_1": 1.0
+   },
+   {
+    "chart": "syriac",
+    "engine": "sophro-defaultseg",
+    "observed_cer": 0.4102,
+    "fitted_cer": 0.4228,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "gemini-3.1-flash-lite",
+    "observed_cer": 0.6821,
+    "fitted_cer": 0.6815,
+    "share_cer_1": 0.05
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "gemini-3.6-flash+antigravity-cli",
+    "observed_cer": 0.6043,
+    "fitted_cer": 0.7137,
+    "share_cer_1": 0.2
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "gemini-3.7-flash+antigravity-cli",
+    "observed_cer": 0.5117,
+    "fitted_cer": 0.5882,
+    "share_cer_1": 0.1
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "gemini-3.8-flash+antigravity-cli",
+    "observed_cer": 0.5491,
+    "fitted_cer": 0.6871,
+    "share_cer_1": 0.15
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "gemini-4-argon-low+antigravity-cli",
+    "observed_cer": 0.311,
+    "fitted_cer": 0.3429,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "mineru",
+    "observed_cer": 1.0,
+    "fitted_cer": 0.9966,
+    "share_cer_1": 1.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "omnisyr",
+    "observed_cer": 0.1275,
+    "fitted_cer": 0.2007,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "omnisyr-nosplit",
+    "observed_cer": 0.133,
+    "fitted_cer": 0.2015,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "qoruyo-eastern",
+    "observed_cer": 0.1623,
+    "fitted_cer": 0.2254,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "qoruyo-estrangela",
+    "observed_cer": 0.165,
+    "fitted_cer": 0.2262,
+    "share_cer_1": 0.0
+   },
+   {
+    "chart": "syriac-print",
+    "engine": "sophro-mhiro",
+    "observed_cer": 0.3413,
+    "fitted_cer": 0.4931,
+    "share_cer_1": 0.2
+   }
+  ],
+  "level_bias_cer": {
+   "median": 0.0636,
+   "p10_p90": [
+    0.0118,
+    0.1214
+   ]
+  },
+  "pair_difference_error": {
+   "pairs": 912,
+   "median_abs": 0.0272,
+   "p90_abs": 0.1199,
+   "sign_agrees": "732/768"
+  },
+  "share_rows_cer_1": 0.066
+ }
+}

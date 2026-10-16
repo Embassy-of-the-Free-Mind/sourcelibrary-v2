@@ -30,6 +30,9 @@ const clip = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v
  *  - the page's stored text no longer matches `base_hash` (409, re-load the page)
  *  - a `find` is absent, repeated, or overlaps another (the span-edit contract)
  *  - the book is not visible
+ *
+ * A proposal on a book-run test page (base_hash = a `review_plants` planted hash) is
+ * stored with status `control` and is never applied (#6682).
  */
 export async function POST(request: NextRequest) {
   const limited = await guardPublicSubmission(request, 'page-corrections');
@@ -70,6 +73,39 @@ export async function POST(request: NextRequest) {
   if (book?.visible !== true) return NextResponse.json({ error: 'book not open for corrections' }, { status: 404 });
 
   const currentHash = contentHash(current);
+  // A fix made on a test page (#6682) is scored, never applied: it is stored as a `control`
+  // against the planted text, and the reply reads like any other so the test stays blind.
+  const plant = currentHash !== baseHash && field === 'translation'
+    ? await db.collection('review_plants').findOne(
+        { page_id: pageId, volunteer_id: volunteerId, planted_hash: baseHash },
+        { projection: { id: 1, planted_text: 1 } },
+      )
+    : null;
+  if (plant) {
+    const appliedToPlant = applySpanEdits(String(plant.planted_text), normalized.edits);
+    if ('error' in appliedToPlant) return NextResponse.json({ error: appliedToPlant.error }, { status: 400 });
+    const id = nanoid(12);
+    await db.collection('page_corrections').insertOne({
+      id,
+      status: 'control',
+      control_plant_id: plant.id,
+      page_id: pageId,
+      book_id: bookId,
+      page_number: page.page_number ?? null,
+      field,
+      base_hash: baseHash,
+      proposed_hash: contentHash(appliedToPlant.text),
+      edits: normalized.edits,
+      note: clip(body.note, 2000),
+      volunteer_id: volunteerId,
+      drafted_by: DRAFTED_BY.has(String(body.drafted_by)) ? String(body.drafted_by) : 'volunteer',
+      assistant_model: clip(body.assistant_model, 80) ?? 'unreported',
+      client: clip(body.client, 200),
+      via: 'mcp-shift',
+      created_at: new Date(),
+    });
+    return NextResponse.json({ ok: true, id, status: 'proposed', edits: normalized.edits.length });
+  }
   if (currentHash !== baseHash) {
     return NextResponse.json(
       { error: 'stale: this page changed since it was loaded; start a new shift or reload it', current_hash: currentHash },
@@ -95,7 +131,8 @@ export async function POST(request: NextRequest) {
     volunteer_id: volunteerId,
     volunteer_label: clip(body.volunteer_label, 80),
     drafted_by: draftedBy,
-    assistant_model: clip(body.assistant_model, 80),
+    assistant_model: clip(body.assistant_model, 80) ?? 'unreported',
+    client: clip(body.client, 200),
     shift_id: clip(body.shift_id, 64),
     via: 'mcp-shift',
     created_at: new Date(),

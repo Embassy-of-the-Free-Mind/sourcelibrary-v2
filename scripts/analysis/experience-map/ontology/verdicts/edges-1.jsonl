@@ -1,0 +1,18 @@
+{"key": "rlung|translates|prana", "verdict": "stated", "idx": 1, "reason": "gives rlung as the rendering of prana: 'the winds rlung [prana; vital energies]'", "judge": "claude-opus-5-5"}
+{"key": "kayakalpa|belongs|rasayana", "verdict": "not_stated", "reason": "places kayakalpa in Tantric physical culture; rasayana is never named as its genus", "judge": "claude-opus-5-5"}
+{"key": "bildungstrieb|descends|plastic-nature", "verdict": "not_stated", "reason": "Reichenbach co-mentions plastic nature and formative impulse; no lineage", "judge": "claude-opus-5-5"}
+{"key": "aurum-potabile|descends|elixir", "verdict": "not_stated", "reason": "passages equate aurum potabile with the elixir vitae (another name), they do not say one derives from the other", "judge": "claude-opus-5-5"}
+{"key": "sympathy|belongs|stoicism", "verdict": "stated", "idx": 1, "reason": "glosses sympatheia: 'By such language the Stoics meant to express the organic unity of the world'", "judge": "claude-opus-5-5"}
+{"key": "sympathy|belongs|platonism", "verdict": "not_stated", "reason": "sympathy is attributed to the Greeks generally, not to Plotinus or the Neoplatonists", "judge": "claude-opus-5-5"}
+{"key": "animated-statues|belongs|hermetism", "verdict": "stated", "idx": 0, "reason": "'Statuas animatas, sensu & spiritu plenas ... as Trismegistus calls them' attributes them to Hermes", "judge": "claude-opus-5-5"}
+{"key": "archeus|belongs|paracelsianism", "verdict": "not_stated", "reason": "E0 names Paracelsus for 'middle-life', not the archeus; E1 only uses the term beside a title page", "judge": "claude-opus-5-5"}
+{"key": "archeus|belongs|helmontianism", "verdict": "stated", "idx": 5, "reason": "'addicted to the Helmontian doctrine of the Archaeus'", "judge": "claude-opus-5-5"}
+{"key": "bildungstrieb|belongs|vitalism", "verdict": "not_stated", "reason": "no candidate passages", "judge": "claude-opus-5-5"}
+{"key": "rlung|belongs|sowa-rigpa", "verdict": "not_stated", "reason": "medical texts use rlung among the three humours but never name Tibetan medicine as its doctrine", "judge": "claude-opus-5-5"}
+{"key": "kayakalpa|cultivates|rejuvenation", "verdict": "not_stated", "reason": "no candidate passages", "judge": "claude-opus-5-5"}
+{"key": "aurum-potabile|cultivates|longevity", "verdict": "not_stated", "reason": "long life is credited to 'them', of which aurum potabile is a fruit, not to potable gold itself", "judge": "claude-opus-5-5"}
+{"key": "mechanism|opposes|vitalism", "verdict": "stated", "idx": 0, "reason": "'with explicit opposition to a purely mechanical-chemical theory of life, with the old vitalism'", "judge": "claude-opus-5-5"}
+{"key": "mechanism|opposes|plastic-nature", "verdict": "not_stated", "reason": "E0 lists plastic nature and mechanical laws among four alternative hypotheses; it does not pit them against each other", "judge": "claude-opus-5-5"}
+{"key": "inert-matter|opposes|hylozoism", "verdict": "not_stated", "reason": "no passage names hylozoism; E1/E5 argue living matter against dead matter without naming the doctrine", "judge": "claude-opus-5-5"}
+{"key": "inert-matter|opposes|anima-mundi", "verdict": "not_stated", "reason": "world soul and brute matter appear together in a passage about Pythagoras's theism, not opposed", "judge": "claude-opus-5-5"}
+{"key": "inert-matter|opposes|growth-of-metals", "verdict": "not_stated", "reason": "metals 'sick and dead' are revived; no passage opposes metallic growth to dead matter", "judge": "claude-opus-5-5"}

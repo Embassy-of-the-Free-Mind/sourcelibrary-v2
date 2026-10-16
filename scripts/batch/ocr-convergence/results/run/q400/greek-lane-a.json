@@ -1,0 +1,168 @@
+{
+ "built_at": "2026-10-14T19:32:40.547Z",
+ "note": "Greek books in this range: Derek 2026-10-14 (#6694) keeps Greek on lane A (Gemini 3.8 Flash read + Opus adjudication); not read by arm B. Hold state as of built_at.",
+ "books": [
+  {
+   "rank": 301,
+   "book_id": "6953c68777f38f6761bd9e16",
+   "slug": "aristotelis-opera-omnia-greek-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 86,
+   "lane_block": null
+  },
+  {
+   "rank": 307,
+   "book_id": "69b630611c1c21a37380114a",
+   "slug": "lexicon-graecolatinum-recentissimum-ad-formam-ab-henr-estienne",
+   "group": "greek",
+   "language": "Greek",
+   "views": 86,
+   "lane_block": null
+  },
+  {
+   "rank": 313,
+   "book_id": "69ae633c5d11d232640c382c",
+   "slug": "aristotelis-opera-bekker-edition-vol-2-metaphysica-ethica-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 85,
+   "lane_block": null
+  },
+  {
+   "rank": 328,
+   "book_id": "69942a40045dfc482ad76029",
+   "slug": "opera-quae-exstant-first-greek-edition-sylburg-alexandria",
+   "group": "greek",
+   "language": "Greek",
+   "views": 84,
+   "lane_block": null
+  },
+  {
+   "rank": 331,
+   "book_id": "69afe65fda5fa12b664a75a2",
+   "slug": "aristotelis-opera-vol-i-bekker-1831-bekker",
+   "group": "greek",
+   "language": "Greek",
+   "views": 83,
+   "lane_block": null
+  },
+  {
+   "rank": 333,
+   "book_id": "69a956dc65ddd05bbcd3d160",
+   "slug": "bibliotheca-historica-siculus",
+   "group": "greek",
+   "language": "Ancient Greek",
+   "views": 83,
+   "lane_block": null
+  },
+  {
+   "rank": 335,
+   "book_id": "69b6848470c69d645a737f80",
+   "slug": "diogenous-laertiou-peri-bion-dogmaton-kai-apophthegmaton-laerce-3",
+   "group": "greek",
+   "language": "Greek",
+   "views": 83,
+   "lane_block": null
+  },
+  {
+   "rank": 350,
+   "book_id": "69a97a1bf3f3d2fb7de26ca4",
+   "slug": "hermetica-vol-1-scott",
+   "group": "greek",
+   "language": "Greek",
+   "views": 82,
+   "lane_block": null
+  },
+  {
+   "rank": 351,
+   "book_id": "699382f784cf5845c644c2d3",
+   "slug": "herodotus-cambridge-emmanuel-college-ms-30-herodotus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 82,
+   "lane_block": null
+  },
+  {
+   "rank": 354,
+   "book_id": "69a5e5f385fa13e734e41e1f",
+   "slug": "platonis-dialogi-xxiv-the-clarke-plato-plato",
+   "group": "greek",
+   "language": "Greek",
+   "views": 82,
+   "lane_block": null
+  },
+  {
+   "rank": 357,
+   "book_id": "6952e4cc77f38f6761bc8c0b",
+   "slug": "greek-new-testament-tischendorf-critical-edition-tischendorf",
+   "group": "greek",
+   "language": "Greek",
+   "views": 81,
+   "lane_block": null
+  },
+  {
+   "rank": 360,
+   "book_id": "699389f2ce15387065947f46",
+   "slug": "photius-bibliotheca-myriobiblon-photius",
+   "group": "greek",
+   "language": "Greek",
+   "views": 81,
+   "lane_block": null
+  },
+  {
+   "rank": 366,
+   "book_id": "6955801057e3b773024f5030",
+   "slug": "bibliotheca-myriobiblon-photius-i",
+   "group": "greek",
+   "language": "Greek",
+   "views": 80,
+   "lane_block": null
+  },
+  {
+   "rank": 372,
+   "book_id": "69938dced5a98fd66f42eeb3",
+   "slug": "the-homeric-hymns-allen-sikes-critical-edition-homer",
+   "group": "greek",
+   "language": "Greek",
+   "views": 80,
+   "lane_block": null
+  },
+  {
+   "rank": 382,
+   "book_id": "6993838c50654cbbe29170c5",
+   "slug": "vat-gr-244-aristotle",
+   "group": "greek",
+   "language": "Greek",
+   "views": 79,
+   "lane_block": null
+  },
+  {
+   "rank": 390,
+   "book_id": "69526a50ab34727b1f046dc5",
+   "slug": "plotini-opera-omnia-cum-ficini-commentariis-trans",
+   "group": "greek",
+   "language": "Greek",
+   "views": 78,
+   "lane_block": null
+  },
+  {
+   "rank": 394,
+   "book_id": "69b2f40e0e2f024dfbfba5c2",
+   "slug": "thesaurus-graecae-linguae-vol-2-estienne",
+   "group": "greek",
+   "language": "Greek",
+   "views": 78,
+   "lane_block": null
+  },
+  {
+   "rank": 396,
+   "book_id": "69938963ce15387065946bf9",
+   "slug": "basel-universitatsbibliothek-an-iv-1-erasmus",
+   "group": "greek",
+   "language": "Greek",
+   "views": 77,
+   "lane_block": null
+  }
+ ]
+}

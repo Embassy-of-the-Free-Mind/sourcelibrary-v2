@@ -32,8 +32,8 @@
  * it is that ratios above 1.0 show the PDF carries more resolution than a 200-DPI
  * rasterization extracts, so sampling it harder recovers real detail — and the
  * worst cases (0.28) are exactly where that matters. Per-page IIIF with
- * tile-stitching (fetchPageMaster) would still be the ceiling-free answer and
- * would eliminate the #3186 cover-sheet offset as a side effect, but it costs
+ * tile-stitching (fetchPageMaster) would still be the ceiling-free answer (the
+ * #3186 cover-sheet offset is handled here now: lib/erara-pdf-leaves.mjs), but it costs
  * hundreds of requests per book instead of one — on the order of 267 hours at
  * e-rara's 2/s — from a residential IP, against a partner already sensitive to
  * load. That is a conversation with them, not a switch to flip unilaterally.
@@ -59,6 +59,8 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { uploadPageVariants } from './lib/display-image.mjs';
 import { fetchToFileWithStallTimeout } from '../lib/fetch-stall-timeout.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
+import { eraraPdfLeafOffset, pdfIndexForPage } from './lib/erara-pdf-leaves.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -124,7 +126,7 @@ const s3 = new S3Client({
 });
 
 const stats = {
-  booksProcessed: 0, booksSkipped: 0, booksFailed: 0, countersSynced: 0,
+  booksProcessed: 0, booksSkipped: 0, booksFailed: 0, booksRefused: 0, countersSynced: 0,
   pagesArchived: 0, pagesFailed: 0,
   bytesDownloaded: 0, bytesUploaded: 0,
   startTime: Date.now(),
@@ -152,6 +154,9 @@ async function downloadPdf(url, destPath, timeoutMs = 600000) {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return bytes;
 }
+
+// book_events type written when the PDF does not map onto the book's leaves (#5803).
+const REFUSED_EVENT = 'erara_pdf_refused';
 
 function extractEraraId(book) {
   const manifest = book.image_source?.iiif_manifest || book.image_source?.source_url || '';
@@ -196,20 +201,16 @@ async function processBook(book, db) {
     // runs in the log, none of which moved anything.
     //
     // A skip that does not record WHY is an infinite loop with a progress bar.
-    // Sync the counter from the pages themselves, using the same predicate the
-    // archive route uses, so the book leaves the queue by being correct rather
-    // than by being ignored.
-    const archivedCount = await db.collection(pagesCol).countDocuments(
-      { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
-      { maxTimeMS: 10000 },
-    );
-    if (archivedCount > 0) {
+    // Sync the counter from the pages themselves with recountBook() — the one
+    // writer the archive route and the reconciler share (#5327) — so the book
+    // leaves the queue by being correct rather than by being ignored.
+    const { after } = await recountBook(db, book.id, { reason: 'archive-erara:nothing-to-archive' });
+    if (after.pages_archived > 0) {
       await db.collection(booksCol).updateOne(
         { id: book.id },
         {
           $set: {
-            pages_archived: archivedCount,
-            archive_status: archivedCount >= (book.pages_count || 0) ? 'archive_complete' : 'archive_partial',
+            archive_status: after.pages_archived >= after.pages_count ? 'archive_complete' : 'archive_partial',
             updated_at: new Date(),
           },
         },
@@ -271,17 +272,30 @@ async function processBook(book, db) {
       return;
     }
 
-    // Map pages: page_number 1 → pageFiles[0] (first PDF page)
-    // Build a set of needed page numbers
-    const neededPages = new Map(pages.map(p => [p.page_number, p]));
+    // Map pages: the PDF's first page is e-rara's cover sheet, not leaf 1. Storing PDF
+    // page N as page N put every image one leaf behind its text (#5803, #3186). The
+    // offset is read from the page counts, and a book that does not fit is refused.
+    const leafCount = await db.collection(pagesCol).countDocuments({ book_id: book.id });
+    const archivedOther = await db.collection(pagesCol).countDocuments({
+      book_id: book.id,
+      archived_photo: { $exists: true, $nin: [null, ''], $not: /^failed/ },
+      'archive_metadata.pdf_leaf_offset': { $exists: false },
+    });
+    const mapping = eraraPdfLeafOffset({ pdfPages: pageFiles.length, leafCount, archivedOther });
+    if (mapping.refuse) {
+      console.log(`    [REFUSE] ${mapping.refuse}`);
+      // A row, so the book leaves this queue instead of re-downloading its PDF every run.
+      await db.collection('book_events').insertOne({
+        book_id: book.id, type: REFUSED_EVENT, at: new Date(), source: 'archive-erara',
+        details: { reason: mapping.refuse, pdf_pages: pageFiles.length, leaves: leafCount, archived_other: archivedOther, issue: 5803 },
+      });
+      stats.booksRefused++;
+      return;
+    }
     const workItems = [];
-
-    for (let i = 0; i < pageFiles.length; i++) {
-      const pageNum = i + 1;  // e-rara pages are 1-indexed
-      const page = neededPages.get(pageNum);
-      if (page) {
-        workItems.push({ page, srcFile: pageFiles[i] });
-      }
+    for (const page of pages) {
+      const srcFile = pageFiles[pdfIndexForPage(page.page_number, mapping.offset)];
+      if (srcFile) workItems.push({ page, srcFile });
     }
 
     // Process pages in parallel
@@ -322,6 +336,7 @@ async function processBook(book, db) {
                 'archive_metadata.archived_at': new Date(),
                 'archive_metadata.source': 'erara_pdf',
                 'archive_metadata.source_url': `https://www.e-rara.ch/download/pdf/${eraraId}`,
+                'archive_metadata.pdf_leaf_offset': mapping.offset,
                 'archive_metadata.bytes': jpegBuffer.length,
                 'archive_metadata.full_res': true,
               },
@@ -346,16 +361,13 @@ async function processBook(book, db) {
     const rate = (archived / ((Date.now() - stats.startTime) / 1000)).toFixed(1);
     console.log(`    ${archived}/${workItems.length} archived, ${failed} failed (${rate} pages/sec overall)`);
 
-    // Sync pages_archived counter (#497)
+    // Sync the page counters (#497) through recountBook() (#5327)
     if (archived > 0) {
-      const archivedCount = await db.collection(pagesCol).countDocuments(
-        { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
-        { maxTimeMS: 10000 }
-      );
-      const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
+      const { after } = await recountBook(db, book.id, { reason: 'archive-erara' });
+      const archiveStatus = after.pages_count > 0 && after.pages_archived >= after.pages_count ? 'archive_complete' : 'archive_partial';
       await db.collection(booksCol).updateOne(
         { id: book.id },
-        { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
+        { $set: { archive_status: archiveStatus, updated_at: new Date() } }
       );
     }
 
@@ -411,8 +423,10 @@ async function main() {
   // Find e-rara books that need archiving — any pipeline status, not just 'archiving'.
   // Many e-rara books sailed past the archiving stage before this worker existed.
   // Priority: smaller books first (faster throughput), then first translations
+  const refused = await db.collection('book_events').distinct('book_id', { type: REFUSED_EVENT });
   const eraraFilter = {
     'image_source.provider': 'e-rara',
+    ...(refused.length ? { id: { $nin: refused } } : {}),
     pages_count: { $gt: 0 },
     pages_archived: { $not: { $gte: 1 } },  // No pages archived yet (null, 0, or missing)
   };
@@ -454,7 +468,7 @@ async function main() {
   console.log(`Done in ${Math.round(elapsed)}s — ${stats.pagesArchived} archived, ${stats.pagesFailed} failed`);
   console.log(`Rate: ${pagesPerSec} pages/sec`);
   console.log(`Data: ${(stats.bytesDownloaded / (1024 * 1024)).toFixed(0)}MB downloaded, ${(stats.bytesUploaded / (1024 * 1024)).toFixed(0)}MB uploaded`);
-  console.log(`Books: ${stats.booksProcessed} processed, ${stats.booksFailed} failed, ${stats.booksSkipped} skipped` +
+  console.log(`Books: ${stats.booksProcessed} processed, ${stats.booksFailed} failed, ${stats.booksRefused} refused, ${stats.booksSkipped} skipped` +
     (stats.countersSynced ? `, ${stats.countersSynced} stale counters synced (already archived)` : ''));
 
   // Log to cron_runs

@@ -33,6 +33,11 @@
       "source": ".claude/docs/invariants/measurement-instruments.md"
     },
     {
+      "id": "judge-family",
+      "rule": "We test whether an AI judge favours translations made by its own model family. In October 2026 we found no measurable bias: compared with an Opus judge, a Gemini Pro judge rated Gemini's translations 0.16 points higher (on a 1 to 5 scale) in one round and 0.06 lower in a second, and neither differs from zero beyond chance. We still use a judge from another family where it costs nothing, and keep measuring, but we do not refuse a judge for its family.",
+      "source": "scripts/eval/experiments/2026-10-12-pro-opus-correction-hardest-languages-6545.md"
+    },
+    {
       "id": "typed-first",
       "rule": "Where people have already typed a text and released it openly, we use their text rather than a machine reading, and the page image stays beside it so it can be checked.",
       "source": "scripts/eval/DECISIONS.md"

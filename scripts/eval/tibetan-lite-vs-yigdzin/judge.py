@@ -40,8 +40,11 @@ def _line_doubles_fast(t):
 V.F.line_doubles = _line_doubles_fast
 MAX_PER_PASS = int(os.environ.get("JUDGE_MAX", "40000"))   # keep a tender pass short; the rest waits for the next pass
 
-D = "/root/yig527"
-RUN = "yigdzin-leaf-2026-10-03"
+# A later run (yigdzin-rest-4523) keeps its own state dir, run id and scope label; the defaults are yig527's.
+D = os.environ.get("YIG_DIR", "/root/yig527")
+RUN = os.environ.get("YIG_RUN", "yigdzin-leaf-2026-10-03")
+SCOPE = os.environ.get("YIG_SCOPE", "yigdzin-527")
+BOX_PREFIX = os.environ.get("YIG_NAME", "sl-yig527")
 REV = "50506eb6d8ed8738df86b448f6f6cdc688de29ea"
 
 
@@ -95,13 +98,13 @@ def main():
                 pl = [{"retry_temp0.4_n2": bool(l.get("retry")), "min_tokens300_redecode": bool(l.get("trunc")),
                        "redecode_kept": l.get("trunc_ok") if l.get("trunc") else None} for l in leaves]
                 pf.write(json.dumps({"book": t["book"], "page": t["page"], "read_mode": "leaf", "leaves": len(leaves),
-                                     "scope": "yigdzin-527", "prior_ocr_model": t["prior"], "split_method": r.get("path"), "spans_frac": r.get("spans"),
+                                     "scope": SCOPE, "prior_ocr_model": t["prior"], "split_method": r.get("path"), "spans_frac": r.get("spans"),
                                      "hf_model": "BDRC/tibetan-ocr", "hf_revision": REV, "vllm_version": "0.29.0",
                                      "plugin": "vllm-paddleocr-seqpos 0.1.0 (sequential M-RoPE)", "prompt": "Extract all Tibetan text. Preserve line breaks.",
-                                     "downscale_px": 2400, "run": RUN, "worker": f"sl-yig527-{box}:/root/tib2/yig_leaf_worker.py (2026-09-25 worker, unchanged)",
+                                     "downscale_px": 2400, "run": RUN, "worker": f"{BOX_PREFIX}-{box}:/root/tib2/yig_leaf_worker.py (2026-09-25 worker, unchanged)",
                                      "decode": {"temperature": 0.0, "min_tokens": 0, "max_tokens": 4096,
                                                 "dry": {"dry_multiplier": 0.8, "dry_base": 1.75, "dry_allowed_length": 12}, "per_leaf": pl},
-                                     "reference": "empty (no Yigdzin page read exists; the lite read is not a reference)",
+                                     "reference": "empty (no Yigdzin page read exists; a Gemini read is never the reference)",
                                      "rule_version": j["rule_version"], "accepted": j["accepted"], "reject_reason": None if j["accepted"] else j["reason"],
                                      "new_lines": j["new"], "new_lines_norm": j["new_norm"], "new_syl": j["new_syl"], "stripped_lines": j["stripped_lines"],
                                      "valid_new": j["valid_new"], "class": cls, "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}) + "\n")

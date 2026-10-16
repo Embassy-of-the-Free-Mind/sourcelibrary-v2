@@ -11,12 +11,13 @@
 # todo per GPU, and one worker runs per GPU (CUDA_VISIBLE_DEVICES) in /root/tib2/g<i>/ -- same worker, same flags.
 set -eu
 K=${BOX:?BOX=<shard index>}
-D=/root/yig527; S=$D/boxes/$K; mkdir -p "$S"
+# A later run sets YIG_DIR (state) and YIG_NAME (box name prefix); the defaults are yig527's.
+D=${YIG_DIR:-/root/yig527}; S=$D/boxes/$K; mkdir -p "$S"
 [ -s "$S/zone" ] || echo "${ZONE:?ZONE required at create}" > "$S/zone"
 ZONE=$(cat "$S/zone")
 [ -s "$S/type" ] || echo "${TYPE:-L4-1-24G}" > "$S/type"
 TYPE=$(cat "$S/type"); GPUS=$(echo "$TYPE" | cut -d- -f2)
-NAME=sl-yig527-$K
+NAME=${YIG_NAME:-sl-yig527}-$K
 LEASE_H=${LEASE_H:-4}
 case $ZONE in fr-par-1) IMAGE=d459b881-5396-40ff-9152-afbe50aa53fd ;; pl-waw-2) IMAGE=2b1e002a-f3c1-40e2-8da4-18caf1dd05a9 ;;
   *) echo "no image id for $ZONE"; exit 1 ;; esac   # Ubuntu Noble GPU OS 12 passthrough (the step-2 / #5547 image)
@@ -49,8 +50,9 @@ create)
 push)
   B=root@$(ip)
   $SSH $B 'mkdir -p /root/tib2 /root/yig'
-  rsync -a -e "$SSH" $D/box/yig_leaf_worker.py $D/box/leafsplit.py $REPO/scripts/gpu/idle-poweroff.sh $B:/root/tib2/
-  rsync -a -e "$SSH" $D/box/setup.sh $B:/root/yig/setup.sh
+  BOXD=${YIG_BOX_SRC:-$D/box}   # worker, leafsplit and setup: yig527's /root/yig527/box, unchanged
+  rsync -a -e "$SSH" $BOXD/yig_leaf_worker.py $BOXD/leafsplit.py $REPO/scripts/gpu/idle-poweroff.sh $B:/root/tib2/
+  rsync -a -e "$SSH" $BOXD/setup.sh $B:/root/yig/setup.sh
   printf 'SCW_SECRET_KEY=%s\n' "$SCALEWAY_SECRET_KEY" | $SSH $B 'umask 077; cat > /etc/gpu-idle.env'
   if [ "$GPUS" = 1 ]; then
   rsync -a -e "$SSH" $D/shards/todo-$K.jsonl $B:/root/tib2/todo-main.jsonl

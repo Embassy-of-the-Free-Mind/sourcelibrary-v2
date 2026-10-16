@@ -3,7 +3,7 @@
  "scorer": "syriac-cer/1",
  "generated_by": "scripts/eval/syriac-pareto-6295/score-ocr.mjs",
  "reference": "Digital Syriac Corpus (srophe/syriac-corpus, CC BY 4.0) TEI, window voted across arms (PREREGISTRATION-syriac-pareto-6295.md)",
- "date": "2026-10-08",
+ "date": "2026-10-14",
  "cli_arms": {
   "C36-ocr-b": {
    "rows": 24,
@@ -77,6 +77,16 @@
     "6aaafba3_151",
     "6aaafbb1_300"
    ]
+  },
+  "G4L-syr-print": {
+   "rows": 24,
+   "model": "gemini-4-argon-low",
+   "route": "cli",
+   "run_date": "2026-10-14",
+   "blocked": [
+    "69943c68_564",
+    "69a5e9f0_81"
+   ]
   }
  },
  "pages": [
@@ -94,6 +104,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -224,6 +235,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.0926,
+     "cer_capped": 0.0926,
+     "hyp_chars": 1287,
+     "length_ratio": 1.018,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6717,
      "cer_capped": 0.6717,
@@ -264,6 +283,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -394,6 +414,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.1976,
+     "cer_capped": 0.1976,
+     "hyp_chars": 1136,
+     "length_ratio": 0.959,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.5895,
      "cer_capped": 0.5895,
@@ -434,6 +462,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -564,6 +593,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.3377,
+     "cer_capped": 0.3377,
+     "hyp_chars": 1211,
+     "length_ratio": 1,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 2.4641,
      "cer_capped": 1,
@@ -604,6 +641,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -632,6 +670,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -762,6 +801,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.2376,
+     "cer_capped": 0.2376,
+     "hyp_chars": 654,
+     "length_ratio": 1.016,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6242,
      "cer_capped": 0.6242,
@@ -802,6 +849,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -830,6 +878,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -960,6 +1009,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.314,
+     "cer_capped": 0.314,
+     "hyp_chars": 754,
+     "length_ratio": 0.974,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6382,
      "cer_capped": 0.6382,
@@ -1000,6 +1057,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1130,6 +1188,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.6828,
+     "cer_capped": 0.6828,
+     "hyp_chars": 466,
+     "length_ratio": 0.469,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.7482,
      "cer_capped": 0.7482,
@@ -1170,6 +1236,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1300,6 +1367,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.3428,
+     "cer_capped": 0.3428,
+     "hyp_chars": 885,
+     "length_ratio": 0.963,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6942,
      "cer_capped": 0.6942,
@@ -1340,6 +1415,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1469,6 +1545,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.2703,
+     "cer_capped": 0.2703,
+     "hyp_chars": 876,
+     "length_ratio": 1.112,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.5419,
      "cer_capped": 0.5419,
@@ -1509,6 +1593,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1635,6 +1720,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.1223,
+     "cer_capped": 0.1223,
+     "hyp_chars": 788,
+     "length_ratio": 0.994,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 2.4842,
      "cer_capped": 1,
@@ -1675,6 +1768,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1802,6 +1896,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.1755,
+     "cer_capped": 0.1755,
+     "hyp_chars": 838,
+     "length_ratio": 0.987,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.9658,
      "cer_capped": 0.9658,
@@ -1842,6 +1944,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1870,6 +1973,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -1898,6 +2002,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2026,6 +2131,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.2152,
+     "cer_capped": 0.2152,
+     "hyp_chars": 732,
+     "length_ratio": 0.991,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 1.0677,
      "cer_capped": 1,
@@ -2066,6 +2179,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2187,6 +2301,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.2873,
+     "cer_capped": 0.2873,
+     "hyp_chars": 1061,
+     "length_ratio": 0.958,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6649,
      "cer_capped": 0.6649,
@@ -2227,6 +2349,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2348,6 +2471,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.2976,
+     "cer_capped": 0.2976,
+     "hyp_chars": 987,
+     "length_ratio": 0.97,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6346,
      "cer_capped": 0.6346,
@@ -2388,6 +2519,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2517,6 +2649,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.343,
+     "cer_capped": 0.343,
+     "hyp_chars": 882,
+     "length_ratio": 1.061,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.7172,
      "cer_capped": 0.7172,
@@ -2557,6 +2697,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2686,6 +2827,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.4894,
+     "cer_capped": 0.4894,
+     "hyp_chars": 703,
+     "length_ratio": 0.677,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6329,
      "cer_capped": 0.6329,
@@ -2726,6 +2875,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -2855,6 +3005,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.4856,
+     "cer_capped": 0.4856,
+     "hyp_chars": 845,
+     "length_ratio": 1.06,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.7077,
      "cer_capped": 0.7077,
@@ -2895,6 +3053,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -3025,6 +3184,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.2737,
+     "cer_capped": 0.2737,
+     "hyp_chars": 888,
+     "length_ratio": 0.992,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 2.5553,
      "cer_capped": 1,
@@ -3065,6 +3232,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -3195,6 +3363,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.3677,
+     "cer_capped": 0.3677,
+     "hyp_chars": 875,
+     "length_ratio": 0.969,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6766,
      "cer_capped": 0.6766,
@@ -3235,6 +3411,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -3364,6 +3541,14 @@
      "fit_wer": null,
      "voted": false
     },
+    "G4L-syr-print": {
+     "cer": 0.1411,
+     "cer_capped": 0.1411,
+     "hyp_chars": 525,
+     "length_ratio": 0.926,
+     "fit_wer": null,
+     "voted": false
+    },
     "L-ocr-b": {
      "cer": 0.6296,
      "cer_capped": 0.6296,
@@ -3404,6 +3589,7 @@
     "C37-ocr-b",
     "C38-ocr",
     "C38-ocr-b",
+    "G4L-syr-print",
     "L-ocr",
     "L-ocr-b",
     "mineru",
@@ -3528,6 +3714,14 @@
      "cer_capped": 0.6122,
      "hyp_chars": 1064,
      "length_ratio": 1.1,
+     "fit_wer": null,
+     "voted": false
+    },
+    "G4L-syr-print": {
+     "cer": 0.5471,
+     "cer_capped": 0.5471,
+     "hyp_chars": 1015,
+     "length_ratio": 1.05,
      "fit_wer": null,
      "voted": false
     },

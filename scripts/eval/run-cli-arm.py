@@ -135,6 +135,9 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     waited = (0, 0)
     if add_dir:
         waited = wait_for_gap(os.path.dirname(add_dir), gap_wait)
+    # Gemini only: Claude runs through the Claude subscription (claude -p), never through agy (Derek, 2026-10-14)
+    if not str(model).startswith('gemini-'):
+        raise SystemExit(f'run-cli-arm: refusing --model {model!r}: agy runs Gemini models only; use claude -p for Claude')
     args = ['agy', '-p', prompt, '--model', model] + (['--mode', mode] if mode else []) + ['--print-timeout', f'{timeout - 60}s', '--output-format', 'json']
     if json_schema:
         args += ['--json-schema', json_schema]
@@ -154,7 +157,11 @@ def call(prompt, model, cwd=None, add_dir=None, timeout=180, gap_wait=20, conver
     out = (j.get('response') or '').strip() if j else raw
     meta = {'conversation': j.get('conversation_id'), 'denied': [d.get('action') for d in (j.get('denied_actions') or [])]}
     blob = raw + '\n' + err
-    if any(q in blob for q in QUOTA):
+    # A quota error lives in stderr or agy's JSON envelope, never in a long reply: a review or transcription can quote
+    # "exhausted your" or "quota exceeded" (scripts/lib/agy-cli.mjs isQuotaError, 2026-10-12).
+    envelope = json.dumps({k: v for k, v in j.items() if k != 'response'}) if j else raw
+    quota_blob = err + '\n' + envelope + ('\n' + out if len(out) <= 400 else '')
+    if any(q in quota_blob for q in QUOTA):
         cls = 'quota'
     elif code == -9 or 'print timeout' in blob:
         # #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout after 2m0s with turn in

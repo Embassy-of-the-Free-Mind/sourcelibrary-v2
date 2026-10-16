@@ -19,6 +19,8 @@ import { languageApparatusFields, type LanguageApparatusSource } from '@/lib/edi
 import { resolveTitle, titleProvenanceNote } from '@/lib/title-provenance';
 import { authorSlug } from '@/lib/slugify';
 import { conceptsInQuery } from '@/lib/concept-aliases';
+import { applyAuthorConstraints, hasAuthorConstraints, parseAuthorConstraints } from '@/lib/search/author-constraints';
+import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
@@ -50,7 +52,7 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.9.0';
+const SERVER_VERSION = '4.12.0';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
 
@@ -154,7 +156,10 @@ async function searchPassages(args: Record<string, unknown>) {
   // high. Over-fetch from the same offset to absorb the filter, then slice down
   // to userLimit. The backend clamps limit to 500 (src/app/api/search/route.ts),
   // so 150 is well within range.
-  const fetchLimit = Math.min(userLimit * 3, 150);
+  // Author/work constraints (#3895) drop rows after the fetch, so read deeper.
+  const constraints = parseAuthorConstraints(args);
+  const constrained = hasAuthorConstraints(constraints);
+  const fetchLimit = constrained ? 250 : Math.min(userLimit * 3, 150);
   const params = new URLSearchParams({ q: String(args.query), pages_only: 'true', limit: String(fetchLimit), offset: String(offset) });
   if (args.language) params.set('language', String(args.language));
   if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
@@ -168,7 +173,7 @@ async function searchPassages(args: Record<string, unknown>) {
   if (textLang !== 'en') params.set('lang', textLang);
 
   const result = await apiGet('/search', params) as Record<string, unknown>;
-  const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
+  const allPassages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
     const snippetType = r.snippet_type as string | undefined;
     // The snippet's language: the leaf's own for an OCR hit, otherwise the
     // edition that was searched. Hard-coding "English" here was correct while
@@ -201,14 +206,14 @@ async function searchPassages(args: Record<string, unknown>) {
       url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
       short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
     };
-  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || [])
-    // Slice back to what the user asked for after the empty-snippet filter.
-    .slice(0, userLimit);
+  }).filter(p => !!(p.snippet as string | undefined)?.trim()) || []);
+  const { passages, constraintBlock } = await constrainPassages(allPassages, constraints, constrained, userLimit, fetchLimit);
   return {
     query: result.query,
     total_matches: result.total,
     returned: passages.length,
     offset,
+    ...constraintBlock,
     lang: textLang,
     ...(textLang !== 'en' ? {
       lang_note: `Searched the "${textLang}" edition. Only books that HAVE an edition in that language can appear — this is a narrower corpus than the default English search, not a smaller result set for the same books.`,
@@ -228,7 +233,9 @@ async function searchConcept(args: Record<string, unknown>) {
   // below can empty the page when the backend's first rows carry blank snippets.
   // Over-fetch, filter, then slice to userLimit. Semantic endpoint accepts the
   // same 50 max as the tool, so clamp fetchLimit to 50.
-  const fetchLimit = Math.min(userLimit * 3, 50);
+  const constraints = parseAuthorConstraints(args);
+  const constrained = hasAuthorConstraints(constraints);
+  const fetchLimit = constrained ? 50 : Math.min(userLimit * 3, 50);
   const params = new URLSearchParams({ q: String(args.query), level: 'page', limit: String(fetchLimit) });
   if (args.language) params.set('language', String(args.language));
   if (Array.isArray(args.languages) && args.languages.length > 0) params.set('languages', args.languages.join(','));
@@ -248,7 +255,7 @@ async function searchConcept(args: Record<string, unknown>) {
   if (conceptLane) params.set('lane', 'concept');
 
   const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
-  const passages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
+  const allPassages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
     book_id: r.book_id,
     title: r.book_title,
     author: r.book_author,
@@ -271,10 +278,11 @@ async function searchConcept(args: Record<string, unknown>) {
     similarity: r.score,
     url: `https://sourcelibrary.org/book/${r.slug || r.book_id}?page=${r.page_number || 1}`,
     short_url: r.book_id && r.page_number ? getShortUrl(String(r.book_id), Number(r.page_number)) : undefined,
-  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || [])
-    .slice(0, userLimit);
+  })).filter(p => !!(p.snippet as string | undefined)?.trim()) || []);
+  const { passages, constraintBlock } = await constrainPassages(allPassages, constraints, constrained, userLimit, fetchLimit);
   return {
     query: result.query,
+    ...constraintBlock,
     // total_matches mirrors the post-slice page size here (semantic endpoint does
     // not return a separate corpus count), so keep it equal to returned.
     total_matches: passages.length,
@@ -303,6 +311,43 @@ async function searchConcept(args: Record<string, unknown>) {
  * actually served. `en` and anything malformed collapse to English, the default
  * store, rather than erroring: a bad language code should not fail a search.
  */
+/**
+ * Apply `author` / `exclude_authors` / `max_per_author` / `max_per_work`
+ * (#3895) to a fetched passage list, then slice to the caller's limit. The
+ * response says what was dropped, so a short list reads as "filtered", not as
+ * "the library holds no more".
+ */
+async function constrainPassages<P extends { book_id: unknown; author: unknown }>(
+  all: P[],
+  constraints: ReturnType<typeof parseAuthorConstraints>,
+  constrained: boolean,
+  userLimit: number,
+  fetchLimit: number,
+): Promise<{ passages: P[]; constraintBlock: Record<string, unknown> }> {
+  if (!constrained) return { passages: all.slice(0, userLimit), constraintBlock: {} };
+  // author_id and work_id live on the book, not the search row. A failed lookup
+  // falls back to the author string and the book itself, and says so.
+  const needFacets = !!(constraints.max_per_author || constraints.max_per_work);
+  const lookup = needFacets ? await loadBookFacets(all.map((p) => String(p.book_id ?? ''))) : null;
+  const { rows, report } = applyAuthorConstraints(all, constraints, {
+    bookId: (p) => String(p.book_id ?? ''),
+    author: (p) => (typeof p.author === 'string' ? p.author : null),
+    facets: lookup?.facets,
+  });
+  return {
+    passages: rows.slice(0, userLimit),
+    constraintBlock: {
+      author_constraints: {
+        ...constraints,
+        candidates_read: all.length,
+        ...report,
+        ...(lookup && !lookup.ok ? { facets_unavailable: true } : {}),
+      },
+      author_constraints_note: `Filtered from the ${all.length} best-matching passages (of up to ${fetchLimit} read), not from the whole library: a short list means the constraints dropped the rest of that window. Authors match by name prefix (every word of your term starts a word of the book's author field); max_per_author counts by the library's author record where it has one, else the name; max_per_work counts by work_id, so several printings of one work count once. Rows with no author are never capped by max_per_author.${report.unusable_terms.length ? ' Some author terms had no letters to match on and were ignored.' : ''}`,
+    },
+  };
+}
+
 /** The `diversity` argument: one of the three modes, or undefined to take the endpoint's default. */
 function diversityArg(args: Record<string, unknown>): 'tradition' | 'author' | 'off' | undefined {
   const raw = String(args.diversity || '').trim().toLowerCase();
@@ -1167,6 +1212,12 @@ async function proposeCollection(args: Record<string, unknown>) {
 const SHIFT_VERDICTS = getRatingOptions('translation-check').map((r) => r.rating);
 const clipStr = (v: unknown, max: number) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, max) : null);
 
+/** A shift's evidence is weighed by the model that produced it, and MCP calls carry no model
+ *  name, so the assistant must state its own (#6418). The first real run sent none. */
+const MODEL_FIELD_HELP =
+  'Your own model name and version, copied exactly as your instructions or system prompt give it, and ' +
+  'whether extended thinking is on. Write "unknown" rather than guess; a wrong name is worse than none.';
+
 /** Steps for a model-operated book run, returned with every page so a long chat
  *  never loses them. The volunteer donates their Claude; the person runs it. */
 const BOOK_RUN_STEPS =
@@ -1174,15 +1225,19 @@ const BOOK_RUN_STEPS =
   '(long s vs f, u/v, abbreviation marks, the margins); (2) compare the English with the transcription: ' +
   'omissions ("…" where the original runs on), additions, misreadings, and text carried over from the ' +
   'previous page (use previous_page_tail); judge the texts exactly as returned, never a shortened copy; ' +
-  '(3) tell the user in two or three plain sentences what the page says and what you found, quoting only ' +
-  'the words at issue; do not paste the full transcription or translation unless asked; they do not need ' +
-  'to read the language; (4) call ' +
-  'submit_page_review with mode "book-run" and YOUR verdict and findings; (5) for each error you can see ' +
-  'on the scan or in the original, call propose_correction with drafted_by "assistant" (transcription ' +
-  'before translation); (6) ask whether to continue, and on yes call continue_review_shift with next.book ' +
-  'and next.after. Submit only after the user agreed, once at the start, that findings are submitted as ' +
-  'you go. Never invent a problem to have something to report: "both_sound" with no findings is a ' +
-  'useful result.';
+  '(3) call submit_page_review with mode "book-run" and YOUR verdict and findings; (4) for each error you ' +
+  'can see on the scan or in the original, call propose_correction with drafted_by "assistant" ' +
+  '(transcription before translation); (5) write a short paragraph for the user, so the stretch reads ' +
+  'as a guided reading of the book: the page number, then three or four plain sentences on what happens ' +
+  'or is argued on this page, in your own words, then one sentence on what you found and sent (quote ' +
+  'only the words at issue; never paste the full texts unless asked; they need not read the language); ' +
+  '(6) KEEP GOING: call continue_review_shift with ' +
+  'next.book and next.after straight away, without asking, until you have done the number of pages the ' +
+  'user chose (10 if they did not say), the book ends, or the user interrupts. Then give a short tally ' +
+  '(pages, fixes sent, anything serious such as English that belongs to another page) and ask whether ' +
+  'to do another stretch. Submit only after the user agreed, once at the start, that findings are ' +
+  'submitted as you go. Never invent a problem to have something to report: "both_sound" with no ' +
+  'findings is a useful result.';
 
 async function getBookRunPage(args: Record<string, unknown>, extra: Record<string, string>) {
   const params = new URLSearchParams(extra);
@@ -1211,11 +1266,14 @@ async function startReviewShift(args: Record<string, unknown>) {
   const result = await getBookRunPage(args, extra);
   return {
     ...result,
-    first_time: 'Before the first page, tell the user in a few lines: their Claude will check this book page by page ' +
-      'against the scans and send what it finds to Source Library; they can watch, ask questions, or just say ' +
-      '"continue"; findings and proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s ' +
-      'translations, and nothing changes on a page until a second reader agrees. Ask once whether that is OK. ' +
-      'Give them volunteer_code so a later chat can pick up where this one stops.',
+    first_time: 'Before the first page, tell the user in a few lines: their Claude will work through this book ' +
+      'against the scans, about 10 pages at a stretch (they can choose more or fewer), retelling each page in a short paragraph as it goes, ' +
+      'and send what it finds to Source Library; they can interrupt or ask about any page; findings and ' +
+      'proposed fixes are contributed under CC BY-SA 4.0, the licence of the library\'s translations, and ' +
+      'nothing changes on a page until a second reader agrees. About one page in ten is a test page carrying ' +
+      'one known error, so each setup\'s accuracy can be measured; fixes on test pages are scored, not applied, ' +
+      'and nothing marks which pages they are, so read every page the same way. Ask once whether that is OK and how many pages ' +
+      'to do. Give them volunteer_code so a later chat can pick up where this one stops.',
   };
 }
 
@@ -1281,7 +1339,8 @@ async function submitPageReview(args: Record<string, unknown>) {
       first_verdict: asVerdict(args.first_verdict),
       assistant_verdict: asVerdict(args.assistant_verdict),
       assistant_findings: findings,
-      assistant_model: clipStr(args.assistant_model, 80),
+      assistant_model: clipStr(args.assistant_model, 80) ?? 'unreported',
+      client: clipStr(args._client_user_agent, 200),
       reader_languages: clipStr(args.reader_languages, 200),
       text_version: tv ? { ocr: clipStr(tv.ocr, 64), translation: clipStr(tv.translation, 64) } : null,
     },
@@ -1300,7 +1359,8 @@ async function proposeCorrection(args: Record<string, unknown>) {
     volunteer_id: args.volunteer_code,
     volunteer_label: clipStr(args.name, 80),
     drafted_by: args.drafted_by,
-    assistant_model: clipStr(args.assistant_model, 80),
+    assistant_model: clipStr(args.assistant_model, 80) ?? 'unreported',
+    client: clipStr(args._client_user_agent, 200),
     note: clipStr(args.note, 2000),
     shift_id: clipStr(args.shift_id, 64),
   }) as Record<string, unknown>;
@@ -1370,6 +1430,10 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number' }, year_to: { type: 'number' },
         book_id: { type: 'string', description: 'Search within a specific book' },
+        author: { type: 'array', items: { type: 'string' }, description: 'Keep only passages by these authors, e.g. ["Ficino"] or ["della Porta", "Agrippa"]. Matches by name: every word you give must start a word of the book\'s author field.' },
+        exclude_authors: { type: 'array', items: { type: 'string' }, description: 'Drop passages by these authors, e.g. ["Agrippa"]. Use it to iterate a survey: run, see who dominates, exclude, run again.' },
+        max_per_author: { type: 'number', description: 'Hard cap on passages from one author; the rest are DROPPED (unlike diversity, which only re-orders). Set 1 for "N quotes from N different authors".' },
+        max_per_work: { type: 'number', description: 'Hard cap on passages from one WORK (all printings and editions of it count together, via work_id), so seven printings of De occulta philosophia are one witness, not seven.' },
         diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'Re-order the passages for spread. "author": at most one passage per author and per work in each ten, for a cross-author survey. "tradition": at most 2 per tradition family and per work. Default "off": passages come in relevance order. Nothing is dropped; later pages hold the rest.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max results per page (default 20, max 50)' },
@@ -1392,7 +1456,11 @@ const TOOLS: Tool[] = [
         exclude_languages: { type: 'array', items: { type: 'string' }, description: 'Exclude these languages, e.g. ["Latin", "French", "German", "English"] to surface non-Western sources.' },
         year_from: { type: 'number', description: 'Restrict to books published in or after this year (filters out modern editions and translations).' },
         year_to: { type: 'number', description: 'Restrict to books published in or before this year.' },
-        max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; set to 1–2 for diverse author/work coverage.' },
+        max_per_book: { type: 'number', description: 'Cap on passages from any single book. Useful when one book dominates the conceptual neighborhood; for one passage per author or per work use max_per_author / max_per_work.' },
+        author: { type: 'array', items: { type: 'string' }, description: 'Keep only passages by these authors, e.g. ["Ficino"] or ["della Porta", "Agrippa"]. Matches by name: every word you give must start a word of the book\'s author field.' },
+        exclude_authors: { type: 'array', items: { type: 'string' }, description: 'Drop passages by these authors, e.g. ["Agrippa"]. Use it to iterate a survey: run, see who dominates, exclude, run again.' },
+        max_per_author: { type: 'number', description: 'Hard cap on passages from one author; the rest are DROPPED (unlike diversity, which only re-orders). Set 1 for "N quotes from N different authors".' },
+        max_per_work: { type: 'number', description: 'Hard cap on passages from one WORK (all printings and editions of it count together, via work_id), so seven printings of De occulta philosophia are one witness, not seven.' },
         diversity: { type: 'string', enum: ['tradition', 'author', 'off'], description: 'How the passages are spread. Default "tradition": each ten holds at most 2 passages per tradition family and per work, so a concept query returns several traditions and not one tradition\'s nearest pages (a clearly closer match is never passed over). "author": at most one per author and per work, for a cross-author survey. "off": plain nearest-first; use it when looking for one known passage. A quoted query or one naming a year defaults to "off". Each passage carries its book\'s `tradition` when it has one.' },
         lang: { type: 'string', description: 'ISO code of the EDITION to read, e.g. "es". Default "en". Most books have only English — call get_book and read `editions`, or list_books with has_edition, to find the ones that do not. The response always states which edition it served.' },
         limit: { type: 'number', description: 'Max passages (default 15, max 50)' },
@@ -1637,7 +1705,7 @@ const TOOLS: Tool[] = [
   {
     name: 'start_review_shift',
     title: 'Start a Review Shift',
-    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user runs the shift, watches, asks questions and says "continue". Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Shifts are for a person at the keyboard: one page per message, never run unattended or in a loop.',
+    description: 'Start a volunteer REVIEW SHIFT: the user lends their Claude (you) to Source Library to check one book, page by page, against its scans. Use when the user wants to help Source Library, says "start a shift" or "review pages", or asks how they can contribute. The user does NOT need to read the book\'s language: YOU do the checking (scan against transcription, transcription against English) and the user starts the shift, chooses how many pages, watches and asks questions. Returns ONE page: its scan (inline image), our transcription, our English, the last lines of the previous page, and next (pass to continue_review_shift). Follow first_time once, then how_to_run on every page, working through the stretch of pages without stopping between them. With no book, it resumes the user\'s last run (pass volunteer_code) or picks a book that needs checking; book takes an id, slug or reader URL if the user names one; new_book true skips the resume. Run shifts only while the user is in this conversation; never set one up to run on a schedule or from a script.',
     annotations: { title: 'Start a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -1652,7 +1720,7 @@ const TOOLS: Tool[] = [
   {
     name: 'continue_review_shift',
     title: 'Continue a Review Shift',
-    description: 'Next page of the book being reviewed, after the user says "continue" (or "next"). Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
+    description: 'Next page of the book being reviewed. Call it straight after finishing a page until the stretch the user chose is done, and again when they ask for more. Pass next.book and next.after from the previous page, and volunteer_code. Returns the same shape as start_review_shift; follow how_to_run again. When page is null the book is finished: say so and offer start_review_shift with new_book true.',
     annotations: { title: 'Continue a Review Shift', readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
@@ -1712,12 +1780,12 @@ const TOOLS: Tool[] = [
           },
         },
         reader_languages: { type: 'string', description: 'Languages the user says they read, if they said.' },
-        assistant_model: { type: 'string', description: 'Your model name, if known.' },
+        assistant_model: { type: 'string', description: MODEL_FIELD_HELP },
         text_version: { type: 'object', description: 'page.text_version, passed back unchanged.' },
         shift_id: { type: 'string', description: 'shift_id (blind check only)' },
         name: { type: 'string', description: 'How the user wants to be credited (optional).' },
       },
-      required: ['item_id', 'volunteer_code', 'verdict'],
+      required: ['item_id', 'volunteer_code', 'verdict', 'assistant_model'],
     },
   },
   {
@@ -1747,11 +1815,11 @@ const TOOLS: Tool[] = [
         volunteer_code: { type: 'string' },
         drafted_by: { type: 'string', enum: ['assistant', 'volunteer', 'assistant_accepted', 'mixed'] },
         note: { type: 'string', description: 'Anything the second reader should know (optional)' },
-        assistant_model: { type: 'string', description: 'Your model name, if known' },
+        assistant_model: { type: 'string', description: MODEL_FIELD_HELP },
         shift_id: { type: 'string' },
         name: { type: 'string', description: 'How the user wants to be credited (optional)' },
       },
-      required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by'],
+      required: ['item_id', 'field', 'base_hash', 'edits', 'volunteer_code', 'drafted_by', 'assistant_model'],
     },
   },
   {
@@ -2077,7 +2145,8 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         'VOLUNTEER REVIEW SHIFTS: when the user asks to start a review shift, review or check pages, ' +
         'or help Source Library, call start_review_shift directly, with no questions first: the user ' +
         'lends their Claude, and YOU check the pages, so they need not read the language. Follow its ' +
-        'first_time and how_to_run; on "continue" call continue_review_shift. Use start_blind_check ' +
+        'first_time and how_to_run, working through the stretch of pages with continue_review_shift ' +
+        'without stopping between pages. Use start_blind_check ' +
         'only for a user who reads the language and wants to judge pages themselves.',
     },
   );
@@ -2196,7 +2265,12 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
         }
       }
 
-      const result = await handleToolCall(name, argsObj, toolOpts);
+      // Shift writes record which client sent them (claude.ai, Desktop, Claude Code), next to
+      // the model the assistant reports for itself: MCP calls carry no model name (#6418).
+      const callArgs = name === 'submit_page_review' || name === 'propose_correction'
+        ? { ...argsObj, _client_user_agent: reqContext.userAgent }
+        : argsObj;
+      const result = await handleToolCall(name, callArgs, toolOpts);
       // Record pages served under the REAL caller identity so the budget
       // above has something to sum. Fire-and-forget, like all usage logging.
       if (PAGE_BUDGET_TOOLS.has(name)) {

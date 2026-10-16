@@ -17,6 +17,15 @@ import { unwrapSentinels, TRANSLATION_SENTINEL_INSTRUCTION } from './cli-chatter
 
 export const CLI = 'agy';
 export const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted your|\b429\b/i;
+// Where a quota error can appear: stderr and agy's JSON envelope — never the model's own reply, unless the reply is
+// short enough to BE an error message. A transcription is long and can say "429" (a year, a folio): on 2026-10-12
+// one Latin page matched `\b429\b`, was taken for a quota stop 39 times, and held the whole read run for 6.5 h.
+const QUOTA_REPLY_MAX = 400;
+export function isQuotaError({ out = '', err = '', j = {}, text = '' }) {
+  const envelope = j && Object.keys(j).length ? JSON.stringify({ ...j, response: undefined }) : out;
+  if (QUOTA.test(err) || QUOTA.test(envelope)) return true;
+  return text.length > 0 && text.length <= QUOTA_REPLY_MAX && QUOTA.test(text);
+}
 // #6523: 300 s, not 120: at high thinking 3.8 Flash takes 70–240 s on a dense page, and at the limit agy returns a cut reply.
 export const CLI_SAFE_ARGS = ['--mode', 'plan', '--print-timeout', '300s', '--output-format', 'json'];
 
@@ -46,8 +55,17 @@ export function unwrapRead(raw) {
   return { text: u.inside, problem };
 }
 
+// Gemini only. agy can also reach Claude models; Claude runs only through the Claude subscription (`claude -p`,
+// subagents), never through agy (Derek, 2026-10-14, after #6721 dated 6,452 books with claude-sonnet via agy).
+export function assertGeminiModel(args) {
+  const i = args.indexOf('--model');
+  const model = i >= 0 ? String(args[i + 1] || '') : '';
+  if (!/^gemini-/.test(model)) throw new Error(`agy-cli: refusing --model "${model}": agy runs Gemini models only; use claude -p for Claude`);
+}
+
 /** One `agy -p` call, async so several pages can be in flight. Resolves {text, conversation, denied, code, cls, err, secs}. */
 export function agyCall(args, cwd) {
+  assertGeminiModel(args);
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
@@ -62,8 +80,9 @@ export function agyCall(args, cwd) {
       const text = String((j && j.response) ?? (Object.keys(j).length ? '' : out)).trim();
       const denied = (j.denied_actions || []).map((d) => d.action);
       // #6523: at --print-timeout agy returns the PARTIAL reply with exit 0 ("print timeout … returning partial output").
-      const cls = QUOTA.test(out + err) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
-      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000 });
+      const cls = isQuotaError({ out, err, j, text }) ? 'quota' : code === null || /print timeout/i.test(out + err) ? 'timeout' : code !== 0 ? `exit_${code}` : !text ? (denied.length ? 'denied_tool' : 'empty') : null;
+      // `usage`: agy's own token counts ({input_tokens, output_tokens, thinking_tokens, …}), null on an old CLI (#6728).
+      resolve({ text, conversation: j.conversation_id || null, denied, code, cls, err: err.slice(-300), secs: (Date.now() - t0) / 1000, usage: j.usage || null });
     });
   });
 }

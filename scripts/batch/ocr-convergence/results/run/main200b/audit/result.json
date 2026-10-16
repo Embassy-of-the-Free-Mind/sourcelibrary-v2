@@ -1,0 +1,464 @@
+{
+ "set": "main200b",
+ "audited": 40,
+ "writes": 40,
+ "read": {
+  "opus": 40,
+  "gemini": 40
+ },
+ "writes_worse": {
+  "opus": 0,
+  "gemini": 1
+ },
+ "writes_better": {
+  "opus": 39,
+  "gemini": 39
+ },
+ "writes_same": {
+  "opus": 1,
+  "gemini": 0
+ },
+ "gate": "GO",
+ "rows": [
+  {
+   "page_id": "69c9156dacb41c329360e8c3",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X has 'ex parte filius' for 'ex parte suiipsius', drops 'gratiæ' ('hujusce gratiæ documentum') and 'immensum' after 'ÆTERNUM', and gives the Hebrew as 'לשבת' where the leaf prints 'לדעת'.",
+   "gemini_note": "X misreads 'ex parte suiipsius' as 'ex parte filius', omits 'gratiæ', and corrupts Hebrew 'לָדַעַת' to 'לשבת'."
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1c26",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y collapses the Pareo passage ('hoc eft fublimis in aere pus lucidum uideor...') and drops the lines from 'a quo fibræ & sydera cernunt' through the Appareo/Dispareo quotations, which X keeps.",
+   "gemini_note": "Y omits a substantial passage explaining 'Appareo' and 'Dispareo' ('Hinc Appareo eiusdem significationis...')."
+  },
+  {
+   "page_id": "69f772f46028036f8e239563",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the line 'Herrligkeit die Stifft Basel begabt seind worden / võ dem wir doch bey vnsern zeiten kein', gives 'Cap. ccv' for 'Cap. xciv', and adds margin fragments from the facing page.",
+   "gemini_note": "X omits a passage ('Herrligkeit die Stifft Basel begabt seind worden/ võ dem wir doch bey vnsern zeiten kein') and misreads 'Carlens' as 'Caltens'."
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1aa5",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X leaves out the printed line 'Paulus Iuriscõ. Falsum esse dicit: siqs Chirographũ alteriꝰ imitet: aut libellu: aut rationem itercedat: aut describat', which Y keeps.",
+   "gemini_note": "X omits the passage from Paulus ('Falsum esse dicit: siqs Chirographũ alteriꝰ imitet: aut libellu: aut rationem itercedat: aut describat') and misreads 'ψεῦδος' as 'a 20v'."
+  },
+  {
+   "page_id": "69f712ab1c3f6a72f42ea6db",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y skips several lines (e.g. 'durch zu bemauren' jumps past 'gang / wie dañ zu Meyland...', 'versamlen Krufft' skips a line) and garbles the Plinius passage, while X follows the leaf.",
+   "gemini_note": "Y drops multiple substantial passages, including 'gang/ wie dañ zu Meyland in obgemelter Thumkirchen zusehen / wiewol sie auch solche' and 'derumb ein solcher grausamer last nit vertiefe/von der vnbestendigkeit solchs fundaments/'."
+  },
+  {
+   "page_id": "69f712b21c3f6a72f42ea6f2",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X adds the facing page's column fragments as if they were on this leaf and garbles 'Ist aber die Columnen höher / als von 15 schuch zu 20 schuch' into 'Ist aber die Columnne in 13 teil / deren teil gib ei schuch zu 20 schuch'.",
+   "gemini_note": "X prepends a fictitious column of truncated text from the facing page and corrupts the dimensions, printing '20 zu 35 schuhen' for '20 zů 25'."
+  },
+  {
+   "page_id": "69f69efa732ea17e06b8ee08",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the negation 'οὐκ' in 'πιστεύειν durch οὐκ αἰσθήσει, ἀλλὰ νῷ καταλαμβάνειν', which reverses the sense.",
+   "gemini_note": "X misreads 'οὐκ' as 'εν' in 'οὐκ αἰσθήσει', reversing the meaning of the passage."
+  },
+  {
+   "page_id": "69f7084cbf3ef5b106f5ea81",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X prints a snowman '☃' where the leaf has the mercury sign ('laufender ☿'), and reads 'verlieget' for 'verflieget'; Y keeps '☿' and 'verflieget'.",
+   "gemini_note": "X corrupts key alchemical symbols, transcribing running mercury as 'laufender ☃' instead of 'laufender ☿' and cinnabar as '☄☄'."
+  },
+  {
+   "page_id": "6a06cddfc749b698e5b2cb33",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X numbers the first footnote call '(1)' where the leaf has '(٢)' and adds a '(3)' after 'نكاح الجاهلية' that is not printed; otherwise the two texts match.",
+   "gemini_note": "X misnumbers the footnote callouts by using '(1)' instead of '(٢)' at 'تعني النبي' and inventing an extra callout at 'نكاح الجاهلية'."
+  },
+  {
+   "page_id": "69f71dbcbe92de21c83161ab",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y adds a whole invented second column ('ehe die silberne Schnur entzwey gehe... goldene Schale') that is not on this leaf, with sentences repeated.",
+   "gemini_note": "Y invents an entire second column ('ehe die silberne Schnur entzwey gehe, oder die goldene Schale zerbreche')."
+  },
+  {
+   "page_id": "6a3a3ba8862ce9a5b4d75e5d",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both complete; X matches print in 'Modi vsitatiores', 'quod sit contra illud' and 'astrahens', where Y has 'uisitiores', 'fit' and normalized 'abstrahens'.",
+   "gemini_note": "X is faithful to the page, whereas Y misreads 'vsitatiores' as 'uisitiores' in the title and the catchword 'Coniugatus' as 'Coningatus'."
+  },
+  {
+   "page_id": "69f71d4ebe92de21c8316033",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y invents a page number '3' (head reads ') o (') and misreads 'gout' as 'gour' and 'Sympathisationen' as 'Symphathisationen'; X is faithful.",
+   "gemini_note": "Y hallucinates page number '3' ('-> 3 <-') for the header '···) 0 (···', misspells 'Sympathisationen' as 'Symphathisationen', and incorporates the catchword 'des' into the text."
+  },
+  {
+   "page_id": "69f767ef90139e9166c2238f",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'den Fall im Gespräch' for printed 'den Hall', drops 'ein' and 'abe/', and transcribes fragments of the facing leaf as margin text.",
+   "gemini_note": "X omits 'ein' and 'abe', misreads 'Hall' as 'Fall', and includes garbled fragments in the margin."
+  },
+  {
+   "page_id": "69dbcb181040d1d5e20b207b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X omits line 11 ('cōpotes, sæpeq; ad extremā maciē deueniāt ... nescio qs teneros ocul'') and the clause 'Est āt plaga pprie pcussio, uulnus, uerber. Vir. Plagisq; per-'.",
+   "gemini_note": "X omits 'compotes, sæpeque ad extremam maciem deueniant, a quo Fascino uerbum. Vir. nescio quis teneros oculus' and 'Est autem plaga proprie percussio, uulnus, uerber. Vir. Plagisque'."
+  },
+  {
+   "page_id": "69937973b0a84a5763964f8a",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops line 6 ('καὶ τὰ εὐεργετήματα· οὐ γὰρ εἰς αὑτόν. καὶ τὰ ἐναντία') and misreads 'ἀνάλγητον' as 'ἀνάληπτον'.",
+   "gemini_note": "Y omits 'καὶ τὰ εὐεργετήματα· ὀ γὰρ εἰς αὑτόν. καὶ τὰ ἐναντία'."
+  },
+  {
+   "page_id": "69920c0001d3dcea63458922",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both are essentially complete; Y drops 'τοὺς' in 'ἡ πρὸς τοὺς μαθητὰς ἐπαγγελία'.",
+   "gemini_note": "Y omits 'τοὺς' in 'ἡ πρὸς τοὺς μαθητὰς ἐπαγγελία'."
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1c11",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X garbles and omits passages, e.g. 'A dignus fit Digno uerbu ... Pacu. Quis deos ifernos', 'Vir. Atq; idem fugiete haud est dignatus Herodu', and 'Vir. Cernimus adstatis ... Hic Cernuus dictus'.",
+   "gemini_note": "X omits multiple lines and quotations, including Virgil ('Atque idem fugiete haud est dignatus Herodum Sternere'), and corrupts text into 'Cernis: ficub it cubit cernuus armo'."
+  },
+  {
+   "page_id": "69f772436028036f8e23945b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y omits 'nam zu der Ehe Agrippinam ein Tochter Marci Agrippe/ vnnd gebar mit jhr Drusum' and misreads names ('Veronem', 'Betauiam', 'Eneffschwester').",
+   "gemini_note": "Y omits the passage 'nam zu der Ehe Agrippinam ein Tochter Marci Agrippe/ vnnd gebar mit jhr Drusum/' and introduces severe errors such as 'Veronem' and 'Betauiam'."
+  },
+  {
+   "page_id": "69f774c96028036f8e2398b0",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Neither omits text, but Y has many misreadings ('Lupen', 'auffsehig', 'Daß er' for 'Dañ er', 'also von derden Vöglt'), while X has fewer ('Luchszen').",
+   "gemini_note": "Y introduces sense-changing errors including misreading 'Hirtszen' as 'Hirten' ('fallen an die Hirten') and 'Luchszen' as 'Lupen'."
+  },
+  {
+   "page_id": "69dbcb151040d1d5e20b1a9f",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops lines, e.g. 'frumetor uerbu: quod est frumetu colligo ... frumetator', 'Frusto panis coduci pot', and Varro's 'piu putabat geri oportere ... Idem: Si cuius legati uiolati essent'.",
+   "gemini_note": "X omits several passages, including Cato's quotation ('Frusto panis conduci potest...'), and severely scrambles lines."
+  },
+  {
+   "page_id": "69937973b0a84a5763964ec3",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X has several small misreadings where Y matches the print ('παρέρχεται' for 'παροίχεται', 'τῷ δὲ μέλλοντος' for 'τοῦ δὲ', 'τὰς τοιούτους' for 'τοὺς', apparatus '15. οὖν Lᵇ' missing 'om'), none of which mislead a reader much.",
+   "gemini_note": "X systematically drops 'τ' from 'στ' ligatures (e.g., 'μάλισα', 'ἔσι', 'πισόν') and misreads 'παροίχεται' as 'παρέρχεται'."
+  },
+  {
+   "page_id": "69f729a2d17421b7412a6d55",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops 'nicht' in 'wird dann nicht dannenhero Christus … außgerottet', which changes the rhetorical question, and has 'verkehert' for 'verketzert'; X's slips ('Seelsorger' for 'Seelensorger') are minor.",
+   "gemini_note": "Y misreads 'verketzert' as 'verkehert', omits 'nicht', and introduces the corrupted reading 'Seelenforger'."
+  },
+  {
+   "page_id": "69f7177b2d802dbf65780b0d",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X adds a 'column' of fragments ('G / da / sen / ri …') from the facing leaf's edge and misreads 'Deß' as 'Ders' and 'Alle' as 'All'; Y transcribes only this page.",
+   "gemini_note": "X includes a spurious second column of text from an adjacent leaf ('sen', 'als', 'wa') and misreads the header as 'Ders Heiligen am Tempel'."
+  },
+  {
+   "page_id": "69bd9f0ef6d63c919747e0e8",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops the line 'quærendum nobis inprimis est ejusmodi minerale imma-' (it gives 'Quæturum'), reads 'duorum' as 'propter', scrambles the last sentence ('æquo agens aliud … fit remiffior') and adds margin fragments from the facing page.",
+   "gemini_note": "Y omits a clause in paragraph 2 ('duorum ejusmodi corporum... minerale immaturum') and garbles the final sentence."
+  },
+  {
+   "page_id": "6a435560f920db620cce212f",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X changes the sense with 'in locis reipublicae vel nostris' (print: 'vel nō propriis') and the margin note 'fit in damno' (print: 'sit in facto sine aliorum damno'), drops 'informata est' and 'quis', and leaves 'ficta' out of the heading 'De confessione ficta iteranda'.",
+   "gemini_note": "X omits 'ficta' from the heading 'De confessione ficta iteranda' and misreads 'sine alterius damno' as 'fit in damno'."
+  },
+  {
+   "page_id": "6991c5853074a1745a4119ab",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y garbles key words in the manuscript: 'bouch genant' for 'bin ich genant', 'die fund der phi kunst' for 'die sün', and 'mandchem phi sein'; X is much closer, though it reads 'erczeygen' where the hand looks like 'regiren'.",
+   "gemini_note": "Y misreads 'bin ich genant' as 'bouch genant' and the margin 'die sün' as 'die fund'."
+  },
+  {
+   "page_id": "69bd9cd86120d54bd037163f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both texts are essentially faithful: Y has 'quæ' for 'quare' and X has the catchword 'Mach' for 'Nach', and otherwise they differ only in how abbreviations and margin notes are placed.",
+   "gemini_note": "X is more faithful to the leaf, whereas Y misreads 'quare' as 'quæ' and 'conseruat' as 'conferuat'."
+  },
+  {
+   "page_id": "69f771796028036f8e239309",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Y has more small misreadings ('gans vn gar / oben vn vnd' for 'gantz vñ gar / oben vñ vndē', 'hindaßen', 'zweyfack', 'als weg') than X ('Darauß daß' for 'dañ'), but neither text changes the sense.",
+   "gemini_note": "X is much more faithful to the print, whereas Y introduces OCR errors such as 'hindaßen' for 'hindannen' and 'zweyfack' for 'zweyfach'."
+  },
+  {
+   "page_id": "69f6af3a2c0ba7757cbac0f2",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X reads 'Elyxir autem uinæ' for 'uitæ' (elixir of life), 'rigore' for 'vigorosè', and drops 'tamen' ('oleo tamen solis') and the second 'Phicum' ('Phicum elyxir est'); Y matches the manuscript.",
+   "gemini_note": "X misreads 'vitę' as 'uinæ' ('Elyxir autem uinæ') and garbles 'materiam' as 'mamæ'."
+  },
+  {
+   "page_id": "69f7739f6028036f8e23967f",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y drops several passages ('aber ettlich/ ein gut anzahl von den Herren/ haben sich lassen Adlen/ viel sind Gefreyet', 'Brico oder Pericho', 'Tosso Pfarrherr zu Waldhofen 12. jar lang … durch den Heyligen'), invents 'Gelehrtheit' and wrongly makes Wunefridus the 'Graffe von Bregentz'.",
+   "gemini_note": "Y omits several lines including 'leuten aber ettlich/ ein gut anzahl von den Herren/ haben sich lassen Adlen' and drops Bishop Tosso ('Tosso Pfarrherr zu Waldhofen')."
+  },
+  {
+   "page_id": "69b21cee429e087c6f866003",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Y changes the date 'uigesimotertio' to 'uigisimoseptimo' and drops 'respondit' after 'obiectantibus'; X is otherwise faithful apart from 'visumque' for 'uisurumq;'.",
+   "gemini_note": "X gives the wrong birth year ('vigesimotertio' for 'uigisimoseptimo'), truncates 'uisurumq;' to 'visumque;', and introduces errors like 'derelicturn' and 'venendendum'."
+  },
+  {
+   "page_id": "69f71d6bbe92de21c83160a0",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X omits the sentence 'Er redet von der nöthigen Ehre vor sein Fleisch, damit man auf sich sehe. v. 17.'",
+   "gemini_note": "X omits the sentence regarding verse 17 ('Er redet von der nöthigen Ehre vor sein Fleisch, damit man auf sich sehe. v. 17.')."
+  },
+  {
+   "page_id": "69f713241c3f6a72f42ea7ac",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are complete; X has small misreadings ('Xyltos' for 'Xystos', 'verwenderung' for 'verwendung', 'liget' for 'ligē') and tags the body text as a margin.",
+   "gemini_note": "X misreads 'Xystos' as 'Xyltos' and 'zuuolbringen' as 'zuzuobringen'."
+  },
+  {
+   "page_id": "69f6af32f58c4b99a4bce6e1",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y adds a column of fragments ('steren … der … Pö …') from the edge of the facing leaf as if it were part of this page; X transcribes only this leaf.",
+   "gemini_note": "Y invents a spurious second column ('steren [illegible — 1 word]') and misreads 'Füß' as 'Fuß'."
+  },
+  {
+   "page_id": "6a3a3ba8862ce9a5b4d75e0b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'eiusmodi' as 'eiusdem' twice and 'nunquam ea vsurum' as 'nunquam se vturum', and also has 'fine' and 'deferere'; Y matches the print.",
+   "gemini_note": "X misreads 'deserere militiam' as 'deferere militiam' and 'sine peccato mortali' as 'fine peccato mortali'."
+  },
+  {
+   "page_id": "69f774b26028036f8e239884",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X drops the end of cap. xc ('jnen die Knäblin biß sie erreichen das vierzehende jar …') and splices Cathay text ('Gewehz behalten werden …') into it.",
+   "gemini_note": "X omits the second half of chapter xc after 'Die Weyber aber behalten' and prematurely splices in text from chapter xcj."
+  },
+  {
+   "page_id": "6a3a529eb271827abb182560",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are complete; X omits 'potest ipsum' before 'compellere' and 'de' in 'de peccatis', and misreads 'denunciatiue' as 'denunciatione'; Y has the small slip 'potestatis'.",
+   "gemini_note": "X omits 'potest ipsum' in gloss d and supplies text from the next leaf ('impositionem')."
+  },
+  {
+   "page_id": "69af45f461b03be5fb7af44a",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y transcribes a different page (p. 118, 'CAPUT VI. De ostiorum…') instead of p. 107 ('symmetria sic est facienda…').",
+   "gemini_note": "Y gives text from an entirely different page ('secundum flumina aedes sacrae fient') instead of page 107."
+  },
+  {
+   "page_id": "69f6af532c0ba7757cbac112",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X garbles 'ad leuem reuerberi ignem calcinetur' as 'ad quem reuersum ignem calcineretur' and misreads 'uerò-sicca' as 'uiuo-sicca'.",
+   "gemini_note": "X introduces sense-changing errors, misreading 'leuem reuerberi ignem' as 'quem reuersum ignem' and 'spiritum uini' as 'ipsum uini'."
+  },
+  {
+   "page_id": "69f718319e664dc9a4a60458",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X inserts the stray words 'nis Evans', reads 'Aussicht' for 'Aufsicht', and drops 'den' before 'Trajan'.",
+   "gemini_note": "X inserts the spurious fragment 'nis Evans' into the text and misreads 'Aufsicht' as 'Aussicht'."
+  }
+ ]
+}

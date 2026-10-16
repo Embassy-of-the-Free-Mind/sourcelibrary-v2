@@ -18,7 +18,7 @@
  *              pages per book: the ones readers open most, filled to N with a seeded spread → DIR/NAME/pages.json
  *              (the id list for cli-ocr.mjs read) + manifest.jsonl
  *   read       (cli-ocr.mjs) node … scripts/batch/cli-ocr.mjs read --page-ids-file=DIR/NAME/pages.json
- *              --out=DIR/NAME/reads --model=gemini-3.7-flash-low --concurrency=3 --job=convergent-ocr-6420
+ *              --out=DIR/NAME/reads --model=gemini-3.8-flash-low --concurrency=3 --job=convergent-ocr-6420
  *   compare    --set=NAME   stored text vs CLI read: normalised CER, chatter flags → DIR/NAME/compare.jsonl
  *   packets    --set=NAME [--threshold=T | --all] [--per-chunk=25]   disagreements (or all pages, for calibration)
  *              → DIR/NAME/adj/chunks/*.json + images
@@ -171,7 +171,9 @@ async function compare() {
     const cli = fs.readFileSync(path.join(reads, `${m.page_id}.txt`), 'utf8');
     // The stored text as it was compared, so adjudication and audit see exactly this text even if the page changes.
     fs.writeFileSync(path.join(SETDIR, 'stored', `${m.page_id}.txt`), s?.ocr?.data || '');
-    const chatter = meta.error_class ? `cli ${meta.error_class}` : ocrReadProblem(cli);
+    // A reply with no <<<BEGIN>>> marker or cut before <<<END>>> (#6523) is a partial page; cli-ocr.mjs apply refuses
+    // it, so it is no second read here either, never a disagreement for Opus to settle.
+    const chatter = meta.error_class ? `cli ${meta.error_class}` : meta.wrapper ? `cli wrapper: ${meta.wrapper}` : ocrReadProblem(cli);
     const c = chatter ? { cer: null } : pairCer(s?.ocr?.data, cli);
     rows.push({ ...m, status: chatter ? 'cli-failed' : 'compared', chatter, ...c, cer: c.cer == null ? null : Math.round(c.cer * 10000) / 10000, stored_model: s?.ocr?.model ?? null, stored_updated_at: s?.ocr?.updated_at ?? null, cli_model: meta.model, nudged: !!meta.nudged, rereads: meta.rereads || 0 });
   }
@@ -305,7 +307,7 @@ async function decide() {
   const extra = new Map(fs.existsSync(extraF) ? JSON.parse(fs.readFileSync(extraF, 'utf8')).map((e) => [e.page_id, e.why]) : []);
   const out = [];
   for (const r of rows) {
-    const base = { page_id: r.page_id, book_id: r.book_id, slug: r.slug, page_number: r.page_number, group: r.group, language: r.language, cer: r.cer, chatter: r.chatter, stored_model: r.stored_model };
+    const base = { page_id: r.page_id, book_id: r.book_id, slug: r.slug, page_number: r.page_number, group: r.group, language: r.language, cer: r.cer, chatter: r.chatter, stored_model: r.stored_model, cli_model: r.cli_model ?? null };
     if (r.status !== 'compared') { out.push({ ...base, action: 'no-second-read', why: r.chatter || r.status }); continue; }
     const v = verdicts.get(r.page_id);
     const side = key.get(r.page_id);
@@ -348,7 +350,10 @@ async function apply() {
   const APPLY = flag('apply');
   const dec = readJsonl(path.join(SETDIR, 'decisions.jsonl'));
   const runId = `${LANE}-${SET}-${path.basename(RUN)}`;
-  const reason = `#6420 lane B: second read (gemini-3.7-flash-low, CLI) disagreed with the stored read; Opus picked this read from the image (run ${runId})`;
+  // The second-read model comes from each read's own meta (3.7 was withdrawn from agy on 2026-10-12; sets read
+  // since then are 3.8). Decisions written before cli_model was carried fall back to 3.7, the only model used then.
+  const readModels = [...new Set(dec.map((d) => d.cli_model || 'gemini-3.7-flash-low'))].sort().join(' + ');
+  const reason = `#6420 lane B: second read (${readModels}, CLI) disagreed with the stored read; Opus picked this read from the image (run ${runId})`;
   // 1. Writes, through cli-ocr.mjs apply and its guards. Each written page is stamped translation_stale with this
   //    lane, so lane C finds exactly these pages; no automatic lane re-translates a book outside TRANSLATING (decide).
   // --no-writes: a failed gate (or any stop) applies checks and containments only; `write` pages are reported as
@@ -389,7 +394,7 @@ async function apply() {
     const input = {
       book_id: bookId, checked_at: new Date(), method_id: METHOD.id, method_version: METHOD.version, run_id: runId,
       frame: `#6420 lane B: top books by readers (analytics_pageviews), ${SET}`, pages_read: pagesRead,
-      reader: { kind: 'model', model: 'gemini-3.7-flash-low', role: 'ocr-convergence: CLI second read vs stored; Opus (subscription) reads the image on disagreement', image_opened: true },
+      reader: { kind: 'model', model: [...new Set(ds.map((d) => d.cli_model || 'gemini-3.7-flash-low'))].sort().join(' + '), role: 'ocr-convergence: CLI second read vs stored; Opus (subscription) reads the image on disagreement', image_opened: true },
       verdict, classes: [...new Set(ds.map((d) => d.action))], page_findings: findings,
       note: `${ds.filter((d) => d.action === 'agree').length} agree, ${ds.filter((d) => d.action === 'keep').length} kept, ${ds.filter((d) => d.action === 'write').length} ${NO_WRITES ? 'staged, not written (gate)' : 'written'}, ${ds.filter((d) => d.action === 'defer').length} deferred, ${ds.filter((d) => d.action === 'residual').length} residual, ${ds.filter((d) => d.action === 'contain').length} contained`,
       evidence_path: `scripts/batch/ocr-convergence/results/${path.basename(RUN)}/${SET}/decisions.jsonl.gz`,
@@ -429,7 +434,7 @@ async function auditPackets() {
   writeJsonl(path.join(AUD, 'key.jsonl'), key);
   // The Gemini auditor: one page per call through scripts/eval/run-cli-arm.py (plan mode, the nudge), brief inline.
   const brief = fs.readFileSync(path.join(HERE, 'AUDITOR.md'), 'utf8').replace(/^\s*<!--[\s\S]*?-->\s*/, '');
-  const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. ITEMS_FILE is given inline below and holds ONE item; its image is the file attached at the end of this message. OUTPUT_FILE is your reply: reply with ONLY one JSON object (`item_id`, `better`, `worse_serious`, `confidence`, `note`), with no prose and no markdown fence.';
+  const wrapper = '## How this request is run (not part of the brief)\n\nYou cannot open files, run commands or write files here; do not try. ITEMS_FILE is given inline below and holds ONE item; its image is the file attached at the end of this message: open it with view_file before you judge (#6694: verdicts given without opening it are discarded). OUTPUT_FILE is your reply: reply with ONLY one JSON object (`item_id`, `better`, `worse_serious`, `confidence`, `note`), with no prose and no markdown fence.';
   writeJsonl(path.join(AUD, 'gemini-requests.jsonl'), items.map((it) => ({ uid: it.item_id, image: path.join(AUD, it.image_file), prompt: `${brief}\n\n${wrapper}\n\nITEMS_FILE:\n${JSON.stringify([{ ...it, image_file: `${it.item_id}.jpg` }], null, 1)}` })));
   const tally = {}; for (const k of key) tally[k.action] = (tally[k.action] || 0) + 1;
   console.log(`${SET}: audit of ${items.length} decisions ${JSON.stringify(tally)}\nnext: driver.mjs audit-opus, and python3 scripts/eval/run-cli-arm.py --requests ${path.join(AUD, 'gemini-requests.jsonl')} --out ${path.join(AUD, 'gemini-out.jsonl')} --arm audit6420-g38 --model gemini-3.8-flash-high --job convergent-ocr-6420 --kind audit --parallel 2 --attempts 4`);
@@ -456,7 +461,8 @@ async function auditScore() {
   for (const f of fs.readdirSync(path.join(AUD, 'opus'))) for (const v of JSON.parse(fs.readFileSync(path.join(AUD, 'opus', f), 'utf8'))) opus.set(v.item_id, v);
   const gem = new Map();
   for (const l of fs.existsSync(path.join(AUD, 'gemini-out.jsonl')) ? fs.readFileSync(path.join(AUD, 'gemini-out.jsonl'), 'utf8').split('\n') : []) {
-    try { const o = JSON.parse(l); if (!o.text) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
+    // #6694: a verdict whose call never opened the attached image (no view_file in the tool gate's log) is missing.
+    try { const o = JSON.parse(l); if (!o.text || !(o.gate_calls || []).includes('view_file')) continue; const m = o.text.match(/\{[\s\S]*\}/); if (m) gem.set(o.uid, { ...JSON.parse(m[0]), item_id: o.uid }); } catch { /* unparsable: missing */ }
   }
   const rows = key.map((k) => {
     const verdict = (v) => (!v ? null : v.better === 'same' ? 'same' : v.better === k.stored_is ? 'stored' : 'cli');

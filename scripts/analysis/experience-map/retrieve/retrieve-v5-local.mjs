@@ -16,6 +16,7 @@
  * the mirror go to hits-v5-untranslated.jsonl (a count, not a passage — the classifier reads English).
  *
  *   node scripts/analysis/experience-map/retrieve/retrieve-v5-local.mjs [--probes probes/probes-v2.json]
+ *   RETRIEVE_K / RETRIEVE_THRESHOLD override the per-stratum cap and similarity floor (aliveness, #6652, runs K=12).
  */
 import fs from 'node:fs'; import path from 'node:path'; import os from 'node:os';
 import { Worker, isMainThread, parentPort, workerData } from 'node:worker_threads';
@@ -26,7 +27,7 @@ const ATLAS = path.join(HOME, 'sourcelibrary-atlas', 'scripts', 'local-corpus');
 const CORPUS = process.env.SL_CORPUS || path.join(HOME, 'sl-corpus');
 const SL = path.join(HOME, 'sourcelibrary');
 const OUT = process.env.V5_OUT || path.join(SL, 'scripts', 'output', 'experience-map', 'v5');
-const DIM = 768, THRESHOLD = 0.45, K = 50, MIN_ROWS = 200, ERA_LANGS = 6, TAIL_EXCLUDE = 10;
+const DIM = 768, THRESHOLD = Number(process.env.RETRIEVE_THRESHOLD || 0.45), K = Number(process.env.RETRIEVE_K || 50), MIN_ROWS = 200, ERA_LANGS = 6, TAIL_EXCLUDE = 10;
 
 // ---------------- worker: score [from,to) into the shared score buffer ----------------
 if (!isMainThread) {

@@ -1,0 +1,15 @@
+{
+ "_note": "Pages the aliveness atlas must not show, whatever the screen and judge said: text found by eye not to be on the leaf. build-aliveness.py drops these page_ids from every lane. Each entry names its issue.",
+ "pages": {
+  "699259453d2d40d1b058c03d#49": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#75": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#85": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#89": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#93": "#6783 blank plate-back, OCR invented ('the sky is our father')",
+  "699259453d2d40d1b058c03d#139": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#145": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#167": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#195": "#6783 blank plate-back, OCR invented",
+  "699259453d2d40d1b058c03d#339": "#6783 blank plate-back, OCR invented"
+ }
+}

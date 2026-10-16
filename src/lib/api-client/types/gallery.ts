@@ -42,6 +42,11 @@ export interface GalleryItem {
   rotation?: 0 | 90 | 180 | 270;
   extractedUrl?: string;
   thumbnailUrl?: string;
+  /** The 600px `-card.jpg` variant (#2401) — set only when it was actually
+   *  materialized (`gallery_images.card_url`). Absent ⇒ the grid must not
+   *  derive and request it: ~2/3 of crops have none, and each guess was a
+   *  guaranteed 404 at the image host (#4465). */
+  cardUrl?: string;
   galleryQuality?: number;
   museumDescription?: string;
   metadata?: ImageMetadata;
