@@ -262,7 +262,8 @@ async function fetchBphDigitizedMap(): Promise<Record<string, { id: string; slug
 async function fetchBphCatalogTotal(): Promise<number> {
   const { count } = await supabase
     .from('bph_works')
-    .select('*', { count: 'exact', head: true });
+    .select('*', { count: 'exact', head: true })
+    .is('deleted_at', null);
   return count || 0;
 }
 

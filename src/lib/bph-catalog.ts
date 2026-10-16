@@ -442,6 +442,200 @@ export async function applyWorkRevision(input: ApplyWorkRevisionInput): Promise<
  */
 export const UBN_ALLOCATION_START = 33000;
 
+// ---------------------------------------------------------------------------
+// Catalogue-admin mutations: delete, restore, change UBN (#6799, #6800).
+//
+// These touch columns outside EDITABLE_BPH_FIELDS on purpose — no ordinary
+// editor or contributor form can reach them. Callers must have checked
+// isCatalogAdmin() first. Each follows the same rule as applyWorkRevision:
+// the revision row is written FIRST, and if that fails nothing changes.
+//
+// Delete is SOFT and there is no hard-delete path anywhere in the app:
+// bph_works is the system of record (.claude/docs/bph-catalogue-disaster-
+// recovery.md). Schema: scripts/migration/add-bph-soft-delete-and-ubn-change.sql.
+// ---------------------------------------------------------------------------
+
+interface AdminWorkRow {
+  id: string;
+  ubn: string | null;
+  uuid: string | null;
+  title: string | null;
+  full_title: string | null;
+  deleted_at: string | null;
+  deleted_by: string | null;
+  deleted_reason: string | null;
+  previous_ubns: string[] | null;
+}
+
+async function loadWorkForAdmin(key: string): Promise<AdminWorkRow> {
+  if (!supabaseAdmin) throw new BphCatalogError('supabaseAdmin not configured — SUPABASE_SERVICE_ROLE_KEY missing');
+  const col = catalogKeyColumn(key);
+  const { data, error } = await supabaseAdmin
+    .from('bph_works')
+    .select('id, ubn, uuid, title, full_title, deleted_at, deleted_by, deleted_reason, previous_ubns')
+    .eq(col, key)
+    .maybeSingle();
+  if (error) throw new BphCatalogError('fetch bph_works failed', error);
+  if (!data) throw new BphCatalogError(`bph_works row not found for ${col}=${key}`);
+  return data as unknown as AdminWorkRow;
+}
+
+async function insertAdminRevision(
+  work: AdminWorkRow,
+  changeType: ChangeType,
+  fieldChanges: Record<string, FieldChange>,
+  editorEmail: string,
+  note: string | null,
+): Promise<{ revisionId: string; appliedAt: string }> {
+  const revisionId = crypto.randomUUID();
+  const appliedAt = new Date().toISOString();
+  const { error } = await supabaseAdmin!.from('bph_works_revisions').insert({
+    id: revisionId,
+    ubn: work.ubn,
+    work_uuid: work.uuid,
+    change_type: changeType,
+    field_changes: fieldChanges,
+    editor_email: editorEmail,
+    applied_at: appliedAt,
+    note,
+  });
+  if (error) throw new BphCatalogError('insert bph_works_revisions failed', error);
+  return { revisionId, appliedAt };
+}
+
+/** Hide a record from every catalogue surface. Restorable. */
+export async function softDeleteWork(input: {
+  key: string;
+  editorEmail: string;
+  reason: string;
+}): Promise<ApplyWorkRevisionResult> {
+  const reason = (input.reason || '').trim();
+  if (!reason) throw new BphCatalogError('A reason is required to delete a record');
+  if (reason.length > 2000) throw new BphCatalogError('Reason is too long (2,000 characters at most)');
+  const work = await loadWorkForAdmin(input.key);
+  if (work.deleted_at) throw new BphCatalogError('This record is already deleted');
+
+  const deletedAt = new Date().toISOString();
+  const result = await insertAdminRevision(
+    work,
+    'delete',
+    {
+      deleted_at: { from: null, to: deletedAt },
+      deleted_by: { from: null, to: input.editorEmail },
+      deleted_reason: { from: null, to: reason },
+    },
+    input.editorEmail,
+    reason,
+  );
+  const { error } = await supabaseAdmin!
+    .from('bph_works')
+    .update({ deleted_at: deletedAt, deleted_by: input.editorEmail, deleted_reason: reason })
+    .eq('id', work.id)
+    .is('deleted_at', null);
+  if (error) throw new BphCatalogError('update bph_works failed (revision is orphaned)', error);
+  return result;
+}
+
+/** Undo a soft delete. */
+export async function restoreWork(input: {
+  key: string;
+  editorEmail: string;
+  note?: string | null;
+}): Promise<ApplyWorkRevisionResult> {
+  const work = await loadWorkForAdmin(input.key);
+  if (!work.deleted_at) throw new BphCatalogError('This record is not deleted');
+  const note = (input.note || '').trim();
+
+  const result = await insertAdminRevision(
+    work,
+    'edit',
+    {
+      deleted_at: { from: work.deleted_at, to: null },
+      deleted_by: { from: work.deleted_by, to: null },
+      deleted_reason: { from: work.deleted_reason, to: null },
+    },
+    input.editorEmail,
+    note ? `Restored: ${note}` : 'Restored',
+  );
+  const { error } = await supabaseAdmin!
+    .from('bph_works')
+    .update({ deleted_at: null, deleted_by: null, deleted_reason: null })
+    .eq('id', work.id);
+  if (error) throw new BphCatalogError('update bph_works failed (revision is orphaned)', error);
+  return result;
+}
+
+/**
+ * Correct a record's UBN. The old number is kept in `previous_ubns`, so
+ * /catalog/<old> redirects and Source Library books whose dc_identifier still
+ * carries the old number keep finding the record. The revision and pending
+ * rows follow the record through ON UPDATE CASCADE.
+ */
+export async function changeWorkUbn(input: {
+  key: string;
+  newUbn: string;
+  editorEmail: string;
+  note?: string | null;
+}): Promise<ApplyWorkRevisionResult & { ubn: string }> {
+  const newUbn = (input.newUbn || '').trim();
+  if (!newUbn) throw new BphCatalogError('The new UBN is empty');
+  if (newUbn.length > 64) throw new BphCatalogError('The new UBN is too long');
+  if (/[/?#\s]/.test(newUbn)) throw new BphCatalogError('A UBN cannot contain spaces, "/", "?" or "#"');
+  // A uuid-shaped UBN would be routed to the uuid column and never found.
+  if (catalogKeyColumn(newUbn) === 'uuid') throw new BphCatalogError('That looks like a uuid, not a UBN');
+
+  const work = await loadWorkForAdmin(input.key);
+  if (work.deleted_at) throw new BphCatalogError('This record is deleted. Restore it before changing its UBN');
+  if (work.ubn === newUbn) throw new BphCatalogError(`The record already has UBN ${newUbn}`);
+
+  const { data: taken, error: takenErr } = await supabaseAdmin!
+    .from('bph_works')
+    .select('ubn, title, full_title, deleted_at')
+    .eq('ubn', newUbn)
+    .maybeSingle();
+  if (takenErr) throw new BphCatalogError('UBN lookup failed', takenErr);
+  if (taken) {
+    const t = taken as { title: string | null; full_title: string | null; deleted_at: string | null };
+    const label = t.title || t.full_title || '(untitled)';
+    throw new BphCatalogError(
+      `UBN ${newUbn} already belongs to another record: "${label}"${t.deleted_at ? ' (deleted)' : ''}`,
+    );
+  }
+
+  const note = (input.note || '').trim();
+  const result = await insertAdminRevision(
+    work,
+    'edit',
+    { ubn: { from: work.ubn, to: newUbn } },
+    input.editorEmail,
+    note || `UBN changed from ${work.ubn ?? '(none)'} to ${newUbn}`,
+  );
+  const previous = new Set(work.previous_ubns || []);
+  if (work.ubn) previous.add(work.ubn);
+  previous.delete(newUbn);
+  const { error } = await supabaseAdmin!
+    .from('bph_works')
+    .update({ ubn: newUbn, previous_ubns: [...previous] })
+    .eq('id', work.id);
+  if (error) throw new BphCatalogError('update bph_works failed (revision is orphaned)', error);
+  return { ...result, ubn: newUbn };
+}
+
+/**
+ * The live record that once had this UBN, if any. Used to redirect old links
+ * after a UBN correction. Returns the current address key (ubn, else uuid).
+ */
+export async function findRenamedWorkKey(oldUbn: string): Promise<string | null> {
+  if (!supabaseAdmin || !oldUbn) return null;
+  const { data } = await supabaseAdmin
+    .from('bph_works')
+    .select('ubn, uuid')
+    .contains('previous_ubns', [oldUbn])
+    .limit(1);
+  const row = (data as { ubn: string | null; uuid: string | null }[] | null)?.[0];
+  return row ? row.ubn || row.uuid : null;
+}
+
 /** How many ids to probe per round-trip when hunting for a free number. */
 const UBN_PROBE_WINDOW = 200;
 

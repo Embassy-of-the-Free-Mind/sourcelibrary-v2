@@ -105,6 +105,10 @@ export function applyBphFilters<T extends FilterableQuery<T>>(query: T, f: BphFi
   const { mode } = caps;
   const useNormCols = mode === 'new' && caps.hasNormalizedColumns;
 
+  // Soft-deleted records (#6800) never appear in search or export. Applied
+  // here so the browse route and the CSV export cannot disagree about it.
+  if (mode === 'new') query = query.is('deleted_at', null);
+
   // Simple search across the whole record.
   if (f.q.length >= 2) {
     // A bare 3–4 digit query is almost always a publication year; the text
