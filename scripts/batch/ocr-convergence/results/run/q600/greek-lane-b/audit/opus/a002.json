@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69bfccb18ab50eb88e8c5ed9",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Both are imperfect, but Y follows the leaf (e.g. 'ἁμαρτίαν γὰρ οὐκ', col. 2 opening 'νοις· ἀλλὰ οὐδὲ ταύτῃ φωνῆς ἐκδεχομένης'), while X's text is largely invented ('κανονικοὶ οἶμαι', 'ἐλεύθερος ἦν ἐκ τῆς')."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6d3c",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both are heavily garbled. X gets more key readings right ('ἀμαυροῦται τῆς μεγάλης ταύτης οἰκίας'≈'ταύτης οἰκίας', 'Νῦν γὰρ', 'Ἰουδαῖοι μὲν οἱ ὀφθαλμοὺς ἔχοντες'), whereas Y has 'Ἰδοὺ αἰσχυνόμενοι' and 'Πῶς γὰρ'. X does invent a margin note, though."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5ecb",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y matches readings on the leaf ('τρίχα τῆς γοργάδος', 'θλίβουσί με οἱ λογισμοὶ ἐρχόμενοι', 'μοναστήριον τοῦ ἁγίου Ἀσκληπιοῦ ἐν τῇ Μεσοποταμίᾳ'), where X invents 'τριχῶν τῆς κεφαλῆς' and 'βίου τοῦ κυρίου ἡμῶν Ἀσκληπιοῦ'."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6d4e",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X misreads 'Τὰ παλαιὰ κατῆλθεν' as 'Ταῦτα λαλῶν· κατῆλθε πρὸς ὑμᾶς' and drops the line 'φίλος τοῦ νυμφίου· ὃς ἑαυτῷ … ἐμνηστεύσατο', which Y keeps, along with 'μητρικῆς νηδύος ἐσκίρτησεν'."
+ },
+ {
+  "item_id": "69b2f32121208ea9dc277ad1",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both are complete. X's Greek matches the print more closely ('ἐν τόποις', 'ἀρτίνουν', 'εὗρον', 'προσίεται', 'ἡγεμονευκότα'), where Y has '[gap]', 'ἔκκριτόν τε', 'ἕτερον', 'προστησεται' and 'ἡγεμονεύοντα'."
+ },
+ {
+  "item_id": "6a3f035697e91e1768f6a1c4",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The text and apparatus are essentially identical. The only differences are trivial OCR slips, such as Y's 'νοι τοιούτων' for 'vor' in the apparatus."
+ },
+ {
+  "item_id": "69b2f32121208ea9dc277ad4",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has the printed readings 'τῶν ἱστορουμένων', 'εἴτε αὐτός', 'κατὰ Οὐολογαίσου', 'ὁ γὰρ Ἀντωνῖνος' and Latin 'nec enim', where X has 'ἱστορευθύων', 'κατ' αὐτός', 'πρὸς Οὐολόγαισον' and omits 'enim'."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd759a",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both are complete, with the same numbers. X's 'πολλαπλασιαζόμενα' for the printed 'πολυπλασιαζόμενα' is a negligible variant."
+ },
+ {
+  "item_id": "69937706b0a84a5763962852",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The Greek text, side-notes and apparatus are identical in substance. They differ only in margin layout, and X adds a spurious catchword meta tag."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7449",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the title page in full ('HERON ALEXANDRINVS OPERA IV … J. L. HEIBERG … STVTGARDIAE IN AEDIBVS B. G. TEVBNERI'), differing only in heading markup."
+ }
+]

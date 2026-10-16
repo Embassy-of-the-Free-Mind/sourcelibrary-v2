@@ -1,0 +1,405 @@
+[
+ {
+  "item_id": "6a3f035697e91e1768f6a26e",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "adds an opening guillemet before 'Ἰωάννης' that is not on the leaf"
+  ],
+  "b_errors": [],
+  "note": "The two differ only in line breaks, hyphenation, apostrophe forms and apparatus punctuation; the Greek text and apparatus readings match the image in both."
+ },
+ {
+  "item_id": "69b300275545150b61b4c3bc",
+  "pick": "cannot_tell",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "marginal citations ('Luc. 7. 28.', 'Luc. 16. 16.', 'Mal. 4. 5.' etc.) cannot be seen on the image"
+  ],
+  "note": "The main text is identical and matches the leaf; B's marginal Gospel cross-references would sit in the inner margin, which is lost in the gutter, so I could not confirm or rule them out."
+ },
+ {
+  "item_id": "69b300275545150b61b4c3d9",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "inner-margin citations are mostly hidden in the gutter and could not be verified"
+  ],
+  "b_errors": [
+   "v.23: 'ποτήριόν µε', 'δεξιῶν µε', 'εὐωνύμων µε', 'πατρός µε' — image has the μου ligature (μȣ), i.e. 'μου'"
+  ],
+  "note": "The image shows the ου-ligature, so 'μου' is right and B's repeated 'με' (with a micro sign) changes the word four times; the rest of the text agrees."
+ },
+ {
+  "item_id": "69b300275545150b61b4c3fa",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are punctuation, accents on the capital title, initial description and catchword placement; the text matches the image in both."
+ },
+ {
+  "item_id": "69b300275545150b61b4c42d",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same verses 42–54 in both; A only adds unclear placeholders for gutter-hidden citations and keeps line hyphenation."
+ },
+ {
+  "item_id": "69b300275545150b61b4c468",
+  "pick": "cannot_tell",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "marginal citations ('Matth. 10. 29.', 'Exod. 2. 14.', '1. Tim. 6. 7.' etc.) are not visible on the image"
+  ],
+  "note": "The main text is identical and correct; B's cross-references would fall in the inner margin, which is hidden in the gutter (the visible strip is the facing page), so I cannot verify them."
+ },
+ {
+  "item_id": "69b300275545150b61b4c548",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'νόμον φυλάσσῃ' — image 'νόμου' (νόμȣ)",
+   "v.27: 'τελέσασα' — image 'τελοῦσα'",
+   "catchword 'πα-' — image 'τια-'"
+  ],
+  "b_errors": [
+   "v.1: 'ἰουδαίου' lowercased"
+  ],
+  "note": "The image shows the ου-ligature in 'νόμου' and 'τελοῦσα' and the catchword 'τια-', all as B has them."
+ },
+ {
+  "item_id": "69b300275545150b61b4c5a0",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "adds a margin block '1 Οὐχὶ ὃν ἀπέστειλα πρὸς ὑμᾶς, δι' αὐτοῦ ἐπλεονέκτησα ὑμᾶς;' that is not on this leaf",
+   "adds margin notes 'ἔρις, ζῆλος', 'ταπεινώσει', 'Deut. 19. Matth. 18.', '1. Pet. 3. Rom. 6.' that are not visible on the leaf"
+  ],
+  "b_errors": [],
+  "note": "The page has no visible marginalia (the right strip is the facing page), so A's margin text is invented; the main text is the same in both."
+ },
+ {
+  "item_id": "69b300275545150b61b4c5eb",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "strips most accents and breathings across the page ('Τους νεωτερους ώσαυτως παρακαλει...')"
+  ],
+  "note": "The words are the same, but B drops the accentuation printed on the leaf almost everywhere, while A transcribes it."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5ecb",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "col.1: 'διὰ τοῦτο ἴχνος μὴ καταλείψας' and 'τούτῳ τῷ θαύματι παρία' — not what the manuscript reads ('τούτῳ τῷ ἁγίῳ μακαρίῳ')",
+   "title: 'τοῦ ἐν ἁγίοις πατρὸς... πέρατα τῆς γῆς' — image 'τοῦ ὁσίου πατρὸς... τῆς οἰκουμένης'",
+   "col.2 opening 'Παρακαλῶ ὑμᾶς, ἑρμηνεῦσαί σοι' does not match the leaf"
+  ],
+  "b_errors": [
+   "col.1: 'ποιήσεις; ὅτι ἥλιοι τοιοῦτοί με διαλογισμοὶ ἐτάρασσον' — image 'ποιήσω ὅτι θλίβουσί με οἱ λογισμοί'",
+   "col.2: 'ἐξήλθομεν ἐν τῷ ὀνόματι βίου τοῦ κυρίου ἡμῶν Ἀσκληπιοῦ' and following lines are garbled"
+  ],
+  "note": "Checked line by line against the minuscule: each text gets some stretches right, but both are long runs of invented or garbled Greek in both columns."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5ed9",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "col.1 opening 'κάμνον τοῦ σώματος' — image 'κανόνων/κανονικ... οἶμαι'",
+   "'ἔθετο ἥλιον ἐν ᾧ' (twice) — not on the leaf",
+   "'ἐπιδεικνύς' — image 'ἐδέξατο'"
+  ],
+  "b_errors": [
+   "col.1: 'ψαλλεν' stretches ('ἀπεδέξαμεν ὅτι οὐκ Η ψαλλεν') are garbled",
+   "col.2: 'ἐκλεχομένην τὸ γινόμενον ψαλμοῦ πλείστην...' — not what the leaf reads ('ταύτῃ φωνῆς ἐκδεχομένης')",
+   "'πάντα μὲν οὐ παρὰ ῥητὸν τὸν σημαντικόμενον' — image 'ταῦτα μὲν ὡς πρὸς τὸ ῥητὸν τῶν σημαινομένων'"
+  ],
+  "note": "B follows column 1 more closely and A follows parts of column 2, but both contain long invented or unusable stretches."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5f68",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "opening 'ται δὲ θνητὴ ζωγραφικὴ τοῦτο γὰρ τοῦ ἀσπράζιμ' — garbled",
+   "prayer: 'οὐ γὰρ ἔσωσά μου' and 'λύσας τὸν σάκκον' (image 'Σαούλ') are wrong"
+  ],
+  "b_errors": [
+   "col.1 runs ('ψαλμοὺς μὲν πολλάκις λέγω... κατάστασιν ἔχοντας πράγμασιν') are not on the leaf",
+   "prayer: 'οὐ γὰρ ἐψευσάμην... ἀλλὰ τῇ σῇ πίστει καταφυγὼν ἠλπικα' — invented"
+  ],
+  "note": "Both texts get the psalm verses right, but A's commentary and B's commentary and prayer are largely invented when checked against the hand."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5f80",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἀβροσύνην ἀρὰν δρὸσ κεν καὶ μέγαν πᾶσι δόλοισ' — image 'ἀφροσύνη γὰρ ἀνδρὸς λυμαίνεται πᾶσι δόλοις'",
+   "'μαρτυροῖο τοῖς ἁγίοις· ὥς τε γὰρ λιμὸς' — garbled",
+   "col.2 'ἐν πᾶσι θάλασσα γραφὰς' — garbled"
+  ],
+  "b_errors": [
+   "opening 'τὸ μίασμα' — image 'τὸ κακόν'",
+   "'Ἰωάννην· ὡς τοιαύτης ἁμαρτίας οὔσης' — image 'Ἰωάννην ὁ ποιῶν τὴν ἁμαρτίαν ἐκ τοῦ διαβόλου γεγέννηται'",
+   "'τυφλοῦ· τυφλῷ ἀποδιδόναι' — image 'τυφλὸς τυφλὸν ἐὰν ὁδηγῇ'"
+  ],
+  "note": "A has more of the key phrases right (Matt 15:14, 1 John 3:8), but both texts are interleaved with long garbled or invented passages."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5fe5",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1 'ἐσφαλμένην εἰς φθοράν ὁσίαν' — image 'ἑορακότι διαφθορὰν ὅσιον'",
+   "'Ἐλυτρώθημεν ἁμαρτίας σαρκωθέντος' — image 'Εἰ μὲν εἰς ... σαρκωθεὶς τοῦ θεοῦ λόγος'",
+   "col.1 commentary largely invented"
+  ],
+  "b_errors": [
+   "col.2 opening 'ν ὑπὸ τοῦ σωτῆρος· ὃν γὰρ Ἀδὰμ οὐχ ἑώρα' — image 'ὑπομένουσαι. οὐ γὰρ ἄνευ χάριτος'",
+   "column 2 commentary largely garbled"
+  ],
+  "note": "B is closer in column 1 and A in the first lines of column 2; neither gives a usable text of the commentary."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c6009",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'σὺν τῷ μὲν ὑπερκειμένῳ φθείρεσθαι ἀέρων' — not on the leaf",
+   "'τὸν γὰρ οἶκον τοῦ Ἰακὼβ' — image 'Ἰηλ'",
+   "ends with invented '<unclear>ἀμήν</unclear>' — image 'οὐκ ἐπειδὴ'"
+  ],
+  "b_errors": [
+   "'σὺν τῷ νόμῳ ὕδωρ ἐμμέβληται ἄβροχ' — garbled",
+   "repeated nonce word 'μέβληται' and many unusable lines ('λαμπυαμοισας', 'μανθάμη')"
+  ],
+  "note": "Both texts get a few anchor phrases right (ἀλληγορικῶς φερομένας, the Matt 28:20 quotation), but most of each column is garbled in both."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c604a",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "invents a long marginal block ('αὐτοῦ σώματος ὑπελθεῖν καὶ σωτηρίαν ἅπασι τοῖς πιστεύουσιν...') — there is no such margin",
+   "col.1 body ('καὶ τὰ καθ᾽ ἑρμηνείαν ἀναπεπταμένα... ἐπὶ τοὺς ἱππεῖς') does not match the leaf"
+  ],
+  "b_errors": [
+   "many garbled stretches ('ἀντίμαμα μομεμένην', 'πᾶσα σου ὁ πᾶν πᾶν ἡμᾶσ')"
+  ],
+  "note": "B follows the leaf's lines (δραμίου μαθοῦ, ἐξ ὄρους Φαράν, 'ἀστερ' margin, 'ἄλλως Ἐν ἡμέρᾳ τῆς θυσίας'), though imperfectly; A's margin and much of column 1 are invented."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c6050",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "Eusebius note invents Hezekiah, the Assyrians and Rabshakeh — image 'κατὰ τὸν Σύμμαχον... κατὰ τὸν Ἀκύλαν'",
+   "strips all accents and breathings throughout"
+  ],
+  "b_errors": [
+   "'Δ' paragraph ('Ὁ κατ' ἀγαθὸν καὶ καθ' ὅσιον πρόσωπον...') does not match the leaf ('...ὅρος σωτηρίου καὶ ἀληθείας...')"
+  ],
+  "note": "B matches the Eusebius scholion and the second-column commentary; A rewrote the Eusebius note with content not on the page."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c6117",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "col.1 'προσηγορίαν διὰ τὸ ὄργανον ἔχειν φασὶ μουσικὸν' — image 'πρὸς κιθάραν διαφορὰν ... μουσικοὶ ποιοῦσιν'",
+   "'τὴν οὖν ψυχὴν ἀποδοθήσεσθαι ἔοικε τῇ κιθάρᾳ...' and following lines invented"
+  ],
+  "b_errors": [
+   "col.2 'ὁ ἄλλος ἄνθρωπος καὶ ἀσθενὴς κατὰ τὴν ἑαυτοῦ δύναμιν' — image 'ὁ ἀλαλαγμὸς ὁ ἀθρόος καὶ ἄσημος'",
+   "drops the 'ἐν τῇ καινότητι... λατρεύειν τῷ θεῷ· ὁ μὴ στόματι' passage, replacing it with 'ποιημάτων'"
+  ],
+  "note": "B is right for much of column 1 and A for parts of column 2, but each has long invented stretches."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c6225",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "several garbled lines ('ἀμφισβητῆσαι· ἕτερα πρὸς ὑπόνοιαν εὑρεθέν-μοις')",
+   "adds a margin block ('διὰ τί οὐκ προσῆλθε αὐτοῖς...') — the right edge is the facing page"
+  ],
+  "b_errors": [
+   "col.1 'ἐγὼ γὰρ θεὸς... οὐκ ἔστιν ἔτι σὺν ἐμοὶ ἄλλος θεὸς' — invented",
+   "'ἐλεήμων γέγονεν ἡμῖν... ὁ πατὴρ οὐδὲν ἄνευ ἐμοῦ' — not on the leaf",
+   "col.2 'ὁ ποιοῦντος νόμους' — image 'ὁ τοὺς πολέμους'"
+  ],
+  "note": "A follows the leaf in most lines (μοχθηρὰ τῶν σωμάτων, δυνάμει δὲ καταλήψει, ὑψηλὸς σφόδρα); B invents whole sentences."
+ },
+ {
+  "item_id": "699382d984cf5845c644af34",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "omits the marginal gloss 'ἄγως ἔδωκεν' beside line 4",
+   "margin number '19' — image reads '18'"
+  ],
+  "note": "Same Iliad 1.1–17 text, title, ownership note and medallion in both; the remaining differences are capitalisation, a small gloss and image descriptions."
+ },
+ {
+  "item_id": "699382d984cf5845c644af5f",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "Book Γ line 1: 'Εὖτ' ἄρ' ἕκαστοι ἄγαν ἀμφὶ ἡγεμόνα σφιν ἕκαστοι' — image 'αὐτὰρ ἐπεὶ κόσμηθεν ἅμ' ἡγεμόνεσσιν ἕκαστοι'"
+  ],
+  "b_errors": [
+   "margin note 'ὁ τμῶλος ὄρος ἐστὶν ἐν λυδίη ἔνθεν ὁ πακτωλὸς ῥεῖ' — image 'τμώλῳ ὕπο νιφόεντι ὕδης ἐν πίονι δήμῳ'",
+   "'μέσθλην δὲ μήστλην τε καὶ ἄντιφον' — image 'Μέσθλης αὖτε καὶ Ἄντιφος'",
+   "omits the red argument line 'τόλμα δ' ἄρ' ἀμφ' ἑλένης...'",
+   "'νομόνοος' — image 'νομίονος'"
+  ],
+  "note": "A has the margin note, the argument line and Book 2 right, and B has the first line of Book 3 right."
+ },
+ {
+  "item_id": "699382d984cf5845c644afea",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 3–4: 'δῆσαν ἐϋτμήτωι δόλωνα αἱματόεντ'' — image 'ἔναρα βροτόεντα Δόλωνος θῆκ' Ὀδυσεύς'",
+   "'ἔδουσαι' — image 'ἔδοντες'",
+   "11.5 'στῆ ἐπ' ἐπάνω ὀρθῶς' — image 'στῆ δ' ἐπ' Ὀδυσσῆος'; 'ὦρσεν' — image 'ἔμβαλ''",
+   "the long scholia are fluent but do not match the leaf"
+  ],
+  "b_errors": [
+   "Λ heading: 'Λάμβδα δὲ νῖκε μάχηισι μέγας βασιλεὺς' — image 'Λάμβδα δ' ἐνὶ προμάχοισι μίγη βασιλεὺς Ἀγαμέμνων'",
+   "scholia largely garbled"
+  ],
+  "note": "B's Iliad verses match the hand except the red book heading; A changes several verses, and both scholia are unreliable."
+ },
+ {
+  "item_id": "699382d984cf5845c644b038",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 2: 'βροτολοιγῶι τ' ἀνδραῖ' ἑλεῖν ἦρχ'' — image 'βροτόεντ' ἄνδραγρ' Ἀχαιῶν ἤρατ''",
+   "the marginal scholion is only partly right"
+  ],
+  "b_errors": [
+   "line 1: 'ἕσκεν ἐν ὠμοιμοῦσι Ὀλύμπια δώματ' ἔχουσι' — image 'ἔσπετε νῦν μοι μοῦσαι...'",
+   "'ἴφθιμον Οὖτα' — image 'ὕρτιον οὖτα'",
+   "Book Ο opening: 'οἵπερ δὴ τότε σκοπιάζοντες', 'τεῖρος ὑπεὶρ ὀρέων', 'Τρωσὶν μὲν εὖχος ὀρέξῃ' — image 'αὐτὰρ ἐπεὶ διά τε σκόλοπας', 'χλωροὶ ὑπαὶ δείους', 'ἴδε δὲ Τρῶας καὶ Ἀχαιούς'"
+  ],
+  "note": "A matches the Iliad 14 and 15 verses on the leaf apart from one line; B garbles the opening of both books."
+ },
+ {
+  "item_id": "699382d984cf5845c644b03e",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'ἠδ᾽ ... κατέσχειν' — image 'ἀμφ᾽ ὁμότιμον ... καθέξει'",
+   "'οὔ τι Διὸς βουλαῖσι φέρεσθαι' — image 'οὔτι Διὸς βέομαι φρεσίν'",
+   "'πρὸς Ζῆνα μέγαν καὶ κρατερὸν μῦθον' — image 'μῦθον ἀπηνέα τε κρατερόν τε'",
+   "'Τὴν δὲ μέγ᾽ ὀχθήσας προσέφη κλείων' — image 'Τὴν δ᾽ αὖτε προσέειπε Ποσειδάων'"
+  ],
+  "b_errors": [
+   "page number '207' — image '267'",
+   "'μεγαλερὸς' — image 'κρατερός περ'",
+   "'χειρὸς δὲ μήτι με παισσέσθω κακὸν ὥς τινα ἀτάσθω' — image 'χερσὶ δὲ μή τί με πάγχυ κακὸν ὣς δειδισσέσθω'"
+  ],
+  "note": "Each text has wrong verses that the other gets right, and both scholia are only loosely related to the red notes on the leaf."
+ },
+ {
+  "item_id": "699382d984cf5845c644b104",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1 'θηρίον ἂψ ἐδάμασσεν' and many following lines ('ἀσφιλαγ' ἀλκίω', 'τὰ σῖα δ' ἐπ' αἰένυλος') are garbled",
+   "'ἐπὴν νοήσατο γαῖην' — image 'ἐὴν νοστήσατο πάτρην'"
+  ],
+  "b_errors": [
+   "'μαινόμενος δ' ἐχέεσκε βαθὺ ῥρόον' — image 'Μαιάνδρου τε ῥέεθρα βαθύρροον'",
+   "'καρπὸν ἀμελγομέναν' — image 'Καρῶν ἀμπελόεσσαν'",
+   "many invented verses ('ἀλλ' ὅ γ' ὀπιπτεύων ἅμα λοῖγον ἰὼν κυνέῃσιν')"
+  ],
+  "note": "Both texts are mostly unusable for this epic page, each garbling different lines (B the opening and nostos line, A the Maeander and Carian lines)."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b222ed56715b0e32475ca6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The print reads 'τραγικοῖς ἀχέεσσι', 'τόσον', 'εὐνήσας', 'τὴν περικειρομένην' and 'πολιῇσι κατεύνασε' as Y does, while X has sense-changing misreadings ('βακικοῖς ἀχέειν', 'ῥόον', 'ἐνστήσας', 'πλῶ περικαιρομένην', 'φλογόεσσα κατέσβεσε'); Y's 'ἐμοῖς' for 'ξυνοῖς' is minor."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd75ad",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X gets numbers wrong: '16 1/33 1/1089' where the print has '16/33 1/1089', an added '1/6' in '√720 = 26 1/2 1/3', and '25/36' where the print has '25/6'; Y follows the print."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c6009",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y follows the manuscript ('προμοητὴν θεωρῆσαι· σὺν τῷ νόμῳ ὕδωρ ἐμμέβληται ἄβροχ', ending 'αἰῶνος· οὐκ ἐπειδὴ'), while X is largely invented ('σὺν τῷ μὲν ὑπερκειμένῳ φθείρεσθαι ἀέρων') and ends with an added '<unclear>ἀμήν</unclear>'."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5f80",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both are garbled, but Y keeps the line structure and readings such as 'ἑαυτὸν δοῦλον ποιήσει … ὁ ποιῶν τὴν ἁμαρτίαν ἐκ τοῦ διαβόλου γεγέννηται', while X paraphrases whole stretches ('ὡς τοιαύτης ἁμαρτίας οὔσης οὐδὲ ἀκολουθησάσης'); X does get 'καταδυσώπησον' and the closing 'κατακαινομένων' right."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c6117",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X follows the leaf ('τούτῳ· ψαλτηρίου δὲ πρὸς κιθάραν διαφορὰν', 'ψαλτηρίῳ δεκαχόρδῳ', ending 'ᾆσμα καινότερον ᾄδειν τῷ θεῷ· καινότερον δὲ … ἢ τῆς'), while Y substitutes invented passages ('τὴν δὲ νοῦν τῷ ψαλτηρίῳ …') and adds a page number '109' that is not visible on the leaf."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5f68",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X is closer to the leaf ('σῶσόν με ἐκ πάντων', 'σῶσόν με ὁ Θεός', 'συμβουλίαις', 'παρὰ σοῦ δέομαι', 'μελετωμένους'), while Y rewrites the prayer ('οὐ γὰρ ἐψευσάμην … ἐπερειδόμενος') and the left-column commentary; Y does read 'Σαούλ' correctly where X has 'σάκκον'."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c5fe5",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X matches the leaf ('ἑορακότι διαφθορὰν ὅσιον τοῦ θεοῦ', 'πάσας … ὁδοὺς ἐπὶ τὴν αἰώνιον ζωήν', 'τὸ δὲ κατὰ σάρκα … καὶ ὡς ἄνθρωπος παρ᾽ ἀνθρώπων'), while Y invents much of both columns ('ἐσφαλμένην εἰς φθοράν', 'μετὰ τοῦ ψαλμωδοῦ')."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6cd6",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The red title reads 'εἰς τό, πάτερ εἰ δυνατόν, παρελθέτω … τὸ ποτήριον τοῦτο' as X roughly has, but Y gives the wrong title ('παρέδωκα δὲ ὑμῖν ἐν πρώτοις'), merges the columns and loses the closing 'παρελθέτω ἀπ᾽ ἐμοῦ τὸ ποτήριον … δειλίαν αὐτοῦ καταγγέλλουσι'."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6d31",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y follows the lines ('αὐτοὶ ἐσφράγισαν μετὰ τῆς κουστωδίας', 'Ἔκλεψαν οἱ μαθηταὶ φησὶν αὐτὸν· καὶ πῶς', 'δι᾽ ὧν ἔλεγον περὶ αὐτοῦ· ὅτι εἶπεν'), while X rewrites passages ('καίτοι ἰδιῶται καὶ κηπουροὶ ἄνθρωποι πῶς ἂν ἔκλεψαν')."
+ },
+ {
+  "item_id": "699382d984cf5845c644b104",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf reads 'Μαιάνδρου τε ῥέεθρα βαθύρροον … καρῶν ἀμπελόεσσαν … πολυγνάμπτοισιν', 'Μυκάλην' and 'τριτογένεια' as Y does, while X invents lines ('μαινόμενος δ᾽ ἐχέεσκε βαθὺ ῥρόον', 'καρπὸν ἀμελγομέναν')."
+ }
+]

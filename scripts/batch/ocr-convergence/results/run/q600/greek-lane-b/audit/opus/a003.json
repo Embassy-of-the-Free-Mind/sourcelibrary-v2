@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69937706b0a84a5763962886",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the full Leontius passage, marginalia and apparatus; the only difference is breathing on 'αὐτὸν/αὑτὸν' in the last line."
+ },
+ {
+  "item_id": "69b2f32121208ea9dc277a9e",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches the print with 'ὑπὸ τοὺς πόδας', 'μὲν οὖν καὶ σημεῖα' and margin 'Bl. vigintiquinque drachm.', where X has 'ὑπὸ τοῖς ποσὶν', omits 'καὶ' and reads 'id est'; neither error changes the sense much."
+ },
+ {
+  "item_id": "6a3f035697e91e1768f6a26e",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Same text and apparatus; X adds a stray '»' before 'Ἰωάννης' and Y misreads 'ν ausradiert' as 'υ ausradiert', both trivial."
+ },
+ {
+  "item_id": "699382d984cf5845c644af34",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Both give the standard Iliad 1.1-17 text; X also keeps the interlinear marginal gloss ('ἄγως ἔδωκεν') beside line 4, which Y drops."
+ },
+ {
+  "item_id": "69bfccb18ab50eb88e8c604a",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X roughly follows the hand ('ἐξ ὄρους φαράν', 'ἀστερ … ὄντος· ἄλλως'), but Y invents a long marginal block and different running text ('καὶ τὰ καθ᾽ ἑρμηνείαν', 'ἀστερίσκος ὕμνος') that is not on the leaf."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd74e6",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both texts are the same as the print; the only differences are apparatus trivia ('διτῶν' vs 'δίϊτον' for printed 'διϖον')."
+ },
+ {
+  "item_id": "69937706b0a84a5763962896",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Same Greek text, marginalia and apparatus line '23. καὶ τοῖς Α²ΠΜ : τοῖς Α.'; only the placement of tags differs."
+ },
+ {
+  "item_id": "69b222db56715b0e324759c4",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reads 'οὐκ εἰκότως μυρμιδόνα εἶπε', which reverses the printed 'ὃν εἰκότως'; X also has 'διεσαφήσειεν', 'δεδομένον' and 'θηβαίου' where the print and Y have 'διεσάφησεν', 'δεδεμένον' and 'θυβαίου'."
+ },
+ {
+  "item_id": "69937706b0a84a5763962978",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both reproduce the opening of Republic X, its marginalia and the note '7. παραδεκτέα ΑΠ : παραδεκτέον Α²Μ.' with no substantive differences."
+ },
+ {
+  "item_id": "6a3f035697e91e1768f6a0bd",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Y keeps the printed abbreviation 'GEB.' and correctly describes the owl on an open book; X expands to 'GEBORENE' and says 'two closed books', which is minor either way."
+ }
+]

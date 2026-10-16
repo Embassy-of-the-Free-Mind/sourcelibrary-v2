@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b222db56715b0e3247599e",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'δεηθέντι ἀχιλλεὺς', 'ἐξάγειν' and 'ἐτίτρωσκε'; X has the sense-changing 'θλιβέντι' and also 'ἐξάγει' and 'ἐτίβρωσκε', though Y adds 'καὶ' before 'ἀπόλλωνος'."
+ },
+ {
+  "item_id": "69b2f30ba9a500a45e5e7d0b",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y's Greek column is largely garbled ('μλὼ ξυευρενομένοι τῶ ξυμπεσόντων') and its Latin drops 'præerat Hippocles Menippi filius' and 'legibus'; X follows the page."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7450",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X omits the printed line 'Codicibus igitur usus sum his:' before DEFINITIONES; otherwise the two are identical."
+ },
+ {
+  "item_id": "69b300275545150b61b4c548",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The leaf has 'νόμου φυλάσσῃ', 'τελοῦσα' and the catchword 'τια-'; Y gives 'νόμον', 'τελέσασα' and 'πα-'."
+ },
+ {
+  "item_id": "69b2f30ba9a500a45e5e7c93",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X omits the whole block of Greek scholia (α–λ) at the foot of the page and pads its margin with hundreds of stray '\"' lines; Y transcribes the scholia."
+ },
+ {
+  "item_id": "69b222ed56715b0e32475b1b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'Τροίᾳ … Τροίαν … Πάριν' and 'στυγῇ τις ἄνδρα'; X has 'βοῖα … βοίαν … Γάριν' and 'συζῇ τις ἀνδρὶ', and replaces 'ἐσποδωμένοι' with 'ἐπτοημένοι'."
+ },
+ {
+  "item_id": "69b2f32121208ea9dc2779d8",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y matches the leaf ('ῥῖψαί τε δυνηθεὶς αὖ', 'ἀνῃρτήσατο', 'μάλα γενναίως', 'perhumaniter'); X has 'βίᾳ τε δυνηθεὶς ἂν', 'ᾠκειώσατο', 'μάλιστα γυναίως' and 'humaniter est vso'."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7451",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The date is printed '͵ϛωκγ (1315)'; X gives the numeral as 'ϛωκη'. The two texts otherwise agree."
+ },
+ {
+  "item_id": "699382d984cf5845c644b2ca",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf has Od. 14.360–394 ('ὦ δειλὲ ξείνων … θεοὶ τοὶ ὄλυμπον ἔχουσι'), which Y gives; X transcribes a different passage ('ὦ γέρον οὔτ᾽ ἄρ᾽ ἐγὼ … Κάστωρ Ὑλακίδης')."
+ },
+ {
+  "item_id": "699382d984cf5845c644b279",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X gives Od. 9.230–264 as written ('οὐδ᾽ ἄρ᾽ ἔμελλ᾽ ἑτάροισι φανεὶς ἐρατεινὸς ἔσεσθαι'); Y's main text is nonsense letter strings ('οὐδ᾽ ἄρ᾽ ἔμελλε ταῖροι φανὸς ὥρα τανὸς ἔσσεαι')."
+ }
+]
