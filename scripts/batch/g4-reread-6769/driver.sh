@@ -37,7 +37,7 @@ MIN_DISK_GB=${MIN_DISK_GB:-12}
 PILOT="$REPO/scripts/eval/g4-reread-pilot-6769"
 RELEASE_SENTENCE="every page the g4-reread-6769 lane rewrote carries English written after its new OCR (scripts/batch/g4-reread-6769/book.mjs verify), or the book's gate failed and nothing was written"
 export JOB_SCRATCH=${JOB_SCRATCH:-/mnt/HC_Volume_105839809/jobs/g4-reread-6769}
-mkdir -p "$STATE"
+mkdir -p "$STATE"; rm -f "$STATE/driver.done"
 cd "$REPO" || exit 2
 
 node_() { node --env-file="$ENV_FILE" "$@"; }
@@ -71,6 +71,11 @@ run_book() {
     if [ -n "$hr" ] && [ "$hr" != "$LANE" ]; then
       log "  held for $hr: skipped"; progress "$id" skipped "held for $hr"
       printf '**%s** (`%s`, %s): **skipped** — already held for `%s`, so its pages are not this lane'"'"'s to rewrite. Nothing read or written.\n' "$title" "$id" "$kind" "$hr" > "$D/comment.md"
+      comment "$D/comment.md"; echo skipped > "$D/done"; return 0
+    fi
+    if [ "$(jq .to_read "$D/pages.count.json")" -lt 10 ]; then
+      log "  under 10 readable pages: skipped (a per-book gate needs 10)"; progress "$id" skipped "too few pages"
+      printf '**%s** (`%s`, %s): **skipped** — %s readable pages, under the 10 a per-book gate needs. Nothing read or written.\n' "$title" "$id" "$kind" "$(jq .to_read "$D/pages.count.json")" > "$D/comment.md"
       comment "$D/comment.md"; echo skipped > "$D/done"; return 0
     fi
     echo "$id" > "$D/id.txt"
@@ -134,6 +139,23 @@ run_book() {
     touch "$D/step.translate"; progress "$id" translated "$(tail -1 "$D/translate-apply.log")"
   fi
 
+  # 6b. a page whose English the door refused (stray script, health) or whose call failed is translated ONCE more,
+  # fresh, in its own directory (Grec 1841: 4 of 354 pages carried a stray CJK token, #5734's shape)
+  if [ ! -f "$D/step.retry" ] && [ "$nw" -gt 0 ]; then
+    node_ scripts/batch/g4-reread-6769/book.mjs verify --book="$id" --written="$summary" --out="$D/verify-pre.json" >> "$D/verify.log" 2>&1
+    if [ "$(jq '.stale_ids // [] | length' "$D/verify-pre.json")" -gt 0 ]; then
+      jq -c '.stale_ids' "$D/verify-pre.json" > "$D/retry.json"
+      local t2 rc2
+      for t2 in 1 2 3 4 5 6 7 8 9 10; do
+        CLI_JOB_NAME="$LANE" node_ scripts/batch/cli-translate.mjs read --page-ids-file="$D/retry.json" --out="$D/tr-retry" --model="$MODEL" >> "$D/translate.log" 2>&1; rc2=$?
+        [ $rc2 -eq 3 ] && { log "  agy quota: sleeping 30 min"; sleep 1800; continue; }
+        [ $rc2 -eq 0 ] && break; sleep 300
+      done
+      retry node_ scripts/batch/cli-translate.mjs apply --out="$D/tr-retry" --reason="#6769: English for rewritten pages, second attempt after a refusal, \$0 CLI route" --apply > "$D/translate-retry-apply.log" 2>&1 || log "  retry apply failed"
+    fi
+    touch "$D/step.retry"
+  fi
+
   # 7. verify → release
   node_ scripts/batch/g4-reread-6769/book.mjs verify --book="$id" --written="$summary" --out="$D/verify.json" >> "$D/verify.log" 2>&1
   local released="no — kept held"
@@ -149,6 +171,7 @@ run_book() {
     printf -- '- gate: **PASS**, %s (Opus via `claude -p`, blind, image whole + halves)\n' "$summary_gate"
     printf -- '- OCR **written %s**; skipped %s\n' "$nw" "$(jq -c .skipped "$summary")"
     printf -- '- English (G4L via agy, $0): %s\n' "$(tail -1 "$D/translate-apply.log" 2>/dev/null | sed 's/   / /g')"
+    [ -f "$D/translate-retry-apply.log" ] && printf -- '- English, second attempt on %s refused pages: %s\n' "$(jq length "$D/retry.json")" "$(tail -1 "$D/translate-retry-apply.log" | sed 's/   / /g')"
     printf -- '- verify: %s fresh, %s not translatable, stale %s; counts %s\n' "$(jq .fresh "$D/verify.json")" "$(jq .not_translatable "$D/verify.json")" "$(jq -c .stale "$D/verify.json")" "$(jq -c .counts "$D/verify.json")"
     printf -- '- hold released: %s%s\n' "$released" "$(jq -r 'if .gap_fill_after_release then " (under the 90% gap-fill bar: its never-translated pages are as eligible as before)" else "" end' "$D/verify.json")"
   } > "$D/comment.md"

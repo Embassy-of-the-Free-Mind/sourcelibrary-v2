@@ -58,11 +58,13 @@ if (STAGE === 'pages') {
     const t = isTranslatablePage(p);
     if (!t.ok) {
       r.not_translatable++;
-      if (p.translation?.data && new Date(p.translation.updated_at) < new Date(p.ocr?.updated_at)) r.not_translatable_with_old_english.push(p.page_number);
+      // A bracketed placeholder ("[Blank page — no translatable content]") is not English made from the old text.
+      const placeholder = /^\[[^\]]{0,120}\]$/.test(String(p.translation?.data || '').trim());
+      if (p.translation?.data && !placeholder && new Date(p.translation.updated_at) < new Date(p.ocr?.updated_at)) r.not_translatable_with_old_english.push(p.page_number);
       continue;
     }
     const fresh = p.translation?.data && new Date(p.translation.updated_at) > new Date(p.ocr.updated_at) && !p.translation_stale;
-    fresh ? r.fresh++ : r.stale.push(p.page_number);
+    if (fresh) r.fresh++; else { r.stale.push(p.page_number); (r.stale_ids ??= []).push(p.id); }
   }
   const book = await db.collection('books').findOne({ id: BOOK }, { projection: { pipeline_auto: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_count: 1 } });
   const h = book?.pipeline_auto?.hold;
