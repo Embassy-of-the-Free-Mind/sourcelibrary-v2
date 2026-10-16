@@ -21,6 +21,16 @@ describe('work-board-push: box side', () => {
     });
   });
 
+  it('picks the HOST-block branch whose paths exist on this box', () => {
+    const src = 'if [ -d /data/scratch/sl/sourcelibrary ]; then\n  HOST=cloudlayer; SL=/data/scratch/sl/sourcelibrary; LOGD=/data/scratch/sl/logs/claude-jobs; JD=/data/scratch/sl/claude-jobs\n  WT=$SL/.claude/worktrees\nelse\n  HOST=hetzner; SL=/root/sourcelibrary; LOGD=/var/log/sourcelibrary/claude-jobs; JD=/root/claude-jobs\nfi';
+    const onMain = (p: string) => p.startsWith('/root/') || p.startsWith('/var/');
+    expect(parseJobScriptPaths(src, onMain)).toEqual({
+      SL: '/root/sourcelibrary', LOGD: '/var/log/sourcelibrary/claude-jobs', JD: '/root/claude-jobs', WT: '/root/sourcelibrary/.claude/worktrees',
+    });
+    const onGuest = (p: string) => p.startsWith('/data/');
+    expect(parseJobScriptPaths(src, onGuest).JD).toBe('/data/scratch/sl/claude-jobs');
+  });
+
   it('states: tmux alive is running; done file is done; GAVE UP; marker; else dead', () => {
     const t0 = new Date(h(5)), t1 = new Date(h(1));
     expect(jobState({ tmuxAlive: true, doneAt: null, blockedAt: null, startedAt: t0, gaveUp: false })).toBe('running');
