@@ -31,7 +31,8 @@ for (const language of LANGS) {
   for (let i = 0; i < ids.length; i += CHUNK) {
     const rows = await db.collection('pages').aggregate([
       { $match: { book_id: { $in: ids.slice(i, i + CHUNK) } } },
-      { $project: { model: '$ocr.model', hasText: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] } } },
+      // A non-string ocr.data (null, absent, an object) is "no text"; $strLenCP only ever sees a string.
+      { $project: { model: '$ocr.model', hasText: { $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $gt: [{ $strLenCP: '$ocr.data' }, 0] }, false] } } },
       { $group: { _id: { $cond: ['$hasText', { $ifNull: ['$model', 'unrecorded'] }, 'no_text'] }, pages: { $sum: 1 } } },
     ], { allowDiskUse: true }).toArray();
     for (const r of rows) tally[r._id] = (tally[r._id] || 0) + r.pages;
