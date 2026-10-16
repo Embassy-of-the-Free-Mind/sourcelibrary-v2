@@ -119,7 +119,7 @@ function buildAliasMap(items: WorkGroupable[]): Map<string, string> {
 export interface WorkGroup<T> {
   /** Canonical group key (`work:<id>` / `copy:<keeper id>`). */
   key: string;
-  /** The result that represents the group — the first, i.e. best-ranked. */
+  /** The result that represents the group — the first, i.e. best-ranked, unless `betterRepresentative` chose a sibling. */
   primary: T;
   /** The sibling results this row replaced, in their original order. */
   collapsed: T[];
@@ -142,16 +142,26 @@ export interface CollapseResult<T> {
  * availability, scan quality, pages processed, closeness to source) BEFORE
  * calling. This function never re-ranks — a collapse that quietly reordered
  * results would make every lane's ladder unfalsifiable.
+ *
+ * `betterRepresentative` (#5975) is the one opt-in exception, and it changes
+ * WHICH edition stands for a work, never WHERE the work sits: when it returns
+ * true for a later sibling, that sibling takes the primary's slot and the old
+ * primary joins `collapsed`. A lane's ladder decides between works; inside one
+ * work the caller may say "the edition a reader can read represents it".
  */
 export function collapseByWork<T extends WorkGroupable>(
   items: T[],
-  opts?: { getIdentity?: (item: T) => WorkGroupable },
+  opts?: {
+    getIdentity?: (item: T) => WorkGroupable;
+    betterRepresentative?: (candidate: T, primary: T) => boolean;
+  },
 ): CollapseResult<T> {
   const identityOf = opts?.getIdentity ?? ((item: T) => item as WorkGroupable);
   const identities = items.map(identityOf);
   const survivorOf = buildAliasMap(identities);
 
   const byKey = new Map<string, WorkGroup<T>>();
+  const slotOf = new Map<string, number>();
   const results: T[] = [];
 
   items.forEach((item, i) => {
@@ -166,10 +176,19 @@ export function collapseByWork<T extends WorkGroupable>(
       : raw;
     const existing = byKey.get(key);
     if (existing) {
-      existing.collapsed.push(item);
+      if (opts?.betterRepresentative?.(item, existing.primary)) {
+        // Same slot, different edition. The old primary keeps its place at the
+        // head of `collapsed`, which stays in ranked order.
+        existing.collapsed.unshift(existing.primary);
+        existing.primary = item;
+        results[slotOf.get(key)!] = item;
+      } else {
+        existing.collapsed.push(item);
+      }
       return;
     }
     byKey.set(key, { key, primary: item, collapsed: [] });
+    slotOf.set(key, results.length);
     results.push(item);
   });
 

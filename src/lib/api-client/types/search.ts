@@ -67,6 +67,18 @@ export interface SearchResult {
     editions: number;
     collapsed_in_results: number;
   };
+  /**
+   * Present on a book row a reader cannot yet read in English, when we hold a
+   * TRANSLATED edition of the same work (#5975). The row keeps the edition that
+   * matched the query; this is the way to the one they can read. Absent under
+   * a tenant context and on localized (`lang`) requests.
+   */
+  translated_edition?: {
+    book_id: string;
+    slug?: string;
+    title: string;
+    published?: string;
+  };
 }
 
 export interface SearchFilters {

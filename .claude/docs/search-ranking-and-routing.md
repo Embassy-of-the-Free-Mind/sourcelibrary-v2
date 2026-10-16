@@ -83,6 +83,7 @@ Once #2154 is live, this **automatically A/B-measures `auto-rrf` vs `auto-ladder
 | Lanes + ranking + auto routing + intent | `src/app/api/search/route.ts` |
 | RRF util | `src/lib/search/rrf.ts` |
 | Ladder (legacy) | inline in `route.ts` (`ladderCompare`) + mirrored in `compare-search.ts` |
+| Which edition represents a work (#5975) | `src/lib/search/readable-edition.ts`: the readable edition takes the row (`betterRepresentative` in `collapseByWork`), and an unreadable row links to a translated sibling (`translated_edition`) |
 | LLM intent | `src/app/api/search/ai-expand/route.ts` (`<strategy>`) |
 | Librarian hybrid (live) | `src/lib/search/librarian-search.ts` |
 | Compare tool | `src/lib/search/compare-search.ts`, `src/app/api/search/compare/*`, `src/app/embed/[tenant]/search-compare/*` |
