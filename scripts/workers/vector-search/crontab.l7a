@@ -1,0 +1,9 @@
+# Cron lines for the page-vector service on l7a (#6821). NOT INSTALLED in phase 1: add them to root's
+# crontab on l7a once the recall check has passed (crontab -e; keep the existing lines).
+#
+# Every 30 min: apply page_translations rows updated since the checkpoint (in RAM; no save).
+# 03:40 UTC: the same, then save a new generation (tmp + rename) and compare the row count with Supabase
+# (exit 4 and a COUNT DRIFT line when the drift is above 0.1%, which deleted rows cause over time).
+# Both run inside sourcelibrary.slice and share one lock, so the nightly save never overlaps a delta.
+*/30 * * * * flock -n /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs >> /data/vector-search/logs/delta.log 2>&1
+40 3 * * * flock -w 900 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --save --count-check >> /data/vector-search/logs/delta.log 2>&1
