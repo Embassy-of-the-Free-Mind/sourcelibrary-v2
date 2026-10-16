@@ -1,0 +1,279 @@
+[
+  {
+    "book_id": "6958ea8cd3a892833481693b", "slot": 111, "title": "Kokuyaku Honzo Komoku (Japanese Ben Cao)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "1929 Japanese translation of the Bencao gangmu; the page is from the 主治 (indications) section, as the running head says.",
+    "rights_flag": "A 1929 Japanese typeset translation (Shirai Mitsutaro); possibly still in copyright in Japan depending on the translators' death dates. Nothing on this leaf shows a licence.",
+    "structure_note": "printed_backsteps 262 / repeats 105 on 535 numbered pages is high, but this book carries kanji page numbers that the OCR misreads (this leaf: printed 二一六, stored 三二六), so most backsteps are probably misread numerals, not a disordered scan.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 243, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "<page-num>三二六</page-num>", "image": "二一六", "problem": "printed page number misread; the English shows 326", "severity": "moderate", "class": "O7", "kind": "misread" },
+          { "ocr": "燭雞湯<gloss>しよくけいとう</gloss> … 燭猪湯<gloss>しよくちよとう</gloss>", "image": "燖雞湯 (furigana せんけいたう), 燖猪湯 (せんちよたう)", "problem": "燖 (scalded/boiled) read as 燭, with an invented reading; the English then says 'Castrated Chicken Soup'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "或は猪胆で蒸し", "image": "或は猪肚で蒸し", "problem": "pig stomach read as pig bile; English 'steam with pig bile'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "風邪の入渇", "image": "風邪の久渴", "problem": "久 (prolonged) read as 入; English 'thirst following the entry of wind-evil'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "【燕菴草<gloss>えんあんそう</gloss>】", "image": "【燕蓐草】 (えんじよくさう)", "problem": "drug name misread, reading invented; English 'Eclipta'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "【大豆黄】 … 【麥粉】 … 焼いて研り", "image": "【大豆苗】 … 【麥麨】 … 煆いて研り", "problem": "several drug names / verbs normalised to commoner characters", "severity": "minor", "class": "O8", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "燭雞湯", "english": "Castrated Chicken Soup", "problem": "follows the OCR misread; the source is a scalded-chicken broth", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf, full text present and the English is careful, but a handful of drug names and the printed page number are misread (燖→燭, 肚→胆, 久→入, 二一六→三二六), so a reader checking a remedy against the original will meet wrong ingredients."
+  },
+  {
+    "book_id": "69f32f7f876dd827cbc45808", "slot": 121, "title": "Year book reports, 1332-1337", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "A manuscript of Law French year-book reports (Hilary term heading; Westoft/Elmedon avowry case; Shardelowe, Scrope as speakers).",
+    "rights_flag": null,
+    "structure_note": "275 of 335 pages OCR'd and 260 translated; 105 printed numbers with 28 backsteps is unremarkable for a manuscript with sporadic foliation.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 201, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "fuit par devers cestui que par de la partie par de la seisine duns que la seisine nient / dist en auncien temps que ad de la partie par de la seisine en fait par devers", "image": "line 5–6 read roughly 'Robert ... cestui Wessy p[er] ... ad dist p[ar] altres ... que lautre navoit / dist en avowant le quel ... de la terre par de laquel enfeffa un Will' pere Robert'", "problem": "two lines replaced by a repeating filler of stock law-French phrases ('par de la partie par de la seisine') with no mark of doubt; the feoffment to William, Robert's father, is lost", "severity": "serious", "class": "O1", "kind": "illegible_fill" },
+          { "ocr": "medon est un avant plait et nous dions que tiel plee Johan sur que il avoit", "image": "medon est tut un et la place et nous dioms qun ... John sur qi il avowe", "problem": "misread line changes the argument ('an aforementioned plea')", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "Et aqua de ceo", "image": "Ce. aq[ue] de ceo (abbreviated)", "problem": "abbreviation expanded to 'aqua' (water); the English opens 'And water of this'", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "par de la partie par de la seisine duns que la seisine nient dist …", "english": "by the party by the seisin of which the seisin not said in ancient times …", "problem": "word-for-word rendering of the filler; most of the page reads as unintelligible English with no signal that the source is uncertain", "severity": "moderate", "class": "T7", "kind": "illegible_fill" }
+        ],
+        "other": [],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "Lines 5–6 of the stored text ('par de la partie par de la seisine duns que la seisine nient / dist en auncien temps que ad de la partie par de la seisine') repeat stock phrases; the image there reads 'dist en avowant le quel ... enfeffa un Will' pere Robert' and similar, so this part of the text is fill, not the leaf's words. Hand is hard; confidence medium.",
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Right leaf and the case (Westoft/Elmedon avowry; Shardelowe, Scrope) is recognisable. But a dense legal hand has been read partly as fluent filler, and the English is a literal rendering of that filler, so most of the page cannot be trusted or followed."
+  },
+  {
+    "book_id": "6ac0aa09f427c9bb0692b8a3", "slot": 131, "title": "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ས (Derge Kangyur, vol. 72)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Derge xylograph folio; text is the Kangyur passage comparing human and divine lifespans and their karmic causes.",
+    "rights_flag": null,
+    "structure_note": "619 of 620 folios have text (Esukhia e-text aligned per folio), only 4 translated; that matches a text-first import, not a defect.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 256, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [
+          { "note": "<summary>/<keywords> blocks and Sanskrit glosses appended to the English; the glosses are reasonable (Trayastrimsha, Kalasutra) but are editorial additions.", "severity": "minor", "class": "T10", "kind": "added_gloss" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The line openings and the passages I could read at this resolution (འགྱུར་རོ། །དགེ་སློང་དག་འཛམ་བུའི་གླིང་…; ཚེའི་ཚད་དོ། …; སུ་སྐྱེ་བར་འགྱུར་ཏེ། …) match the folio, and the English is faithful. I could not check every syllable of the small red xylograph."
+  },
+  {
+    "book_id": "69907cda5f855ec553e77c29", "slot": 141, "title": "Janma Kundali Dwadash Bhava Phalam", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Short Devanagari jyotiṣa manuscript on the effects of planets in the twelve houses.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "षष्ट क्रूरानर कुर्य्य संनपत्तेविव जितं", "image": "षष्ट क्रूरा नरं कुर्यु सत्रुपक्षविवर्जितं", "problem": "'free of enemies' (शत्रुपक्षविवर्जितं) misread; the English says malefics in the sixth make a man 'deprived of his wealth and property', the opposite of the source's good effect", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "<margin>राम</margin> सुक्र पुत्र बांधवास्तृते ॥ ५ ॥", "image": "line begins 'सुक्र पुत्र बांधवाहतं ॥५॥'; राम is in the right margin beside it", "problem": "main-text line misread and tagged next to a marginal note it is not part of", "severity": "moderate", "class": "O12", "kind": "layout" },
+          { "ocr": "अतै च सुभदं", "image": "अन्ये च सुभदं", "problem": "minor misread", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "षष्ट क्रूरानर कुर्य्य संनपत्तेविव जितं", "english": "Malefics in the sixth house make a man deprived of his wealth and property.", "problem": "source says malefics in the sixth make a man free of enemies (a standard good placement); English reverses it", "severity": "serious", "class": "T7", "kind": "misread" },
+          { "source": "सुक्र पुत्र बांधवास्तृते ॥ ५ ॥", "english": "<insert>Venus, sons, and relatives in the third...</insert> <note>… This appears to be a later addition or a correction clarifying the influence of Venus on family members.</note>", "problem": "the continuation of verse 5 in the main hand is presented as a later insertion or correction — a manuscript fact not on the leaf", "severity": "serious", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "<meta> paragraph about 'the previous page' at the head of the English", "severity": "minor", "class": "O15", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Right leaf and verses 1–4 are sound, but verse 6 is reversed (malefics 'free of enemies' becomes 'deprived of wealth') and verse 5's continuation is labelled as a later scribal insertion, which is invented apparatus."
+  },
+  {
+    "book_id": "69af0f4eaf16a5a1d22808db", "slot": 151, "title": "Полное собрание сочинений. Т. 9: Подросток", "tradition": null,
+    "shelf_fit": "doubtful", "shelf_note": "The leaf is Poor Folk (running head БѢДНЫЕ ЛЮДИ, p. 105), not The Adolescent; the volume title may be wrong (Poor Folk normally opens vol. 1 of the Marks edition), or this volume holds both. Worth a catalogue check.",
+    "rights_flag": null,
+    "structure_note": "Printed 105 at scan 153 fits a volume with front matter. The catalogue title (Т. 9: Подросток) does not match the work on this page.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 153, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "приняться: требуютъ поскорѣе. Что-то все объ такомъ писано … По 40 коп. съ листа уговорились. … Ну, а теперь прощайте, маточка. Я ужъ прямо и за работу. / Вашъ вѣрный другъ / Макаръ Дѣвушкинъ", "english": "(absent: the English begins with the header and 'September 23.')", "problem": "the end of Makar's letter (five lines and his signature, including the 40 kopecks per sheet agreement) is dropped from the English of this page", "severity": "serious", "class": "T9", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "Catalogue title says vol. 9 'The Adolescent'; the page is Poor Folk.", "severity": "moderate", "class": "I7", "kind": "other" },
+          { "note": "<meta> describing the drop cap shown in the English", "severity": "minor", "class": "O15", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription is near-perfect and the English of Varvara's letter is good, but the English drops the first five lines and signature of Makar's letter, and the volume is catalogued as The Adolescent while the page is Poor Folk."
+  },
+  {
+    "book_id": "69b4c0aa6248be021e01f9f6", "slot": 161, "title": "Manly Palmer Hall Box 04 Ms 019 V 01", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "German alchemical-theosophical manuscript (Kurrent with alchemical symbols), fits the Hall collection.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 95, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "Nun ist das Hebreische <Hebrew letter Zayin> die 6te zahl", "image": "a red ו (vav), the sixth letter", "problem": "letter identified as Zayin (the 7th), which contradicts 'the 6th number' in the same sentence", "severity": "moderate", "class": "O10", "kind": "misread" },
+          { "ocr": "in <Sol/Gold>aria als der reinen <Moon/Silver>mütter", "image": "'in Mariah als der reinen ⊖ mutter' — red 'MarIah', then the salt sign (circle with bar)", "problem": "Mary's name read as a gold symbol + 'aria'; salt read as moon", "severity": "moderate", "class": "O10", "kind": "misread" },
+          { "ocr": "das Göttliche Δ form Menschlichem ∇", "image": "das Göttliche Δ, so im Menschlichem ∇", "problem": "'so im' read as 'form'", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "das Coagulirte, die <Mercury>", "image": "das Coagulirte ♄(?), die ☉(?)", "problem": "symbols after Coagulirte dropped or misidentified", "severity": "minor", "class": "O10", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "deitte Menschheit, am ende des ziehls, sich Christi Gottheit wieder eingegossen", "english": "humanity, at the end of the goal, has poured itself into Christ's Godhead again", "problem": "subject and object swapped: Christ's Godhead poured itself into humanity, not humanity into the Godhead (the sentence starts on the previous page, so some ambiguity)", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "Raw <image-desc …> tags for every alchemical symbol are inlined mid-sentence in both panes ('the <image-desc …Triangle pointing up> ish love'), which makes the reader text very hard to read", "severity": "moderate", "class": "D1", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The right leaf, and the prose is read well, but the symbols are misidentified (Mary's name as gold, ו as Zayin) and are shown as bulky description tags inside the sentences; the opening clause is translated with subject and object reversed."
+  },
+  {
+    "book_id": "69b4c05e86a5921d5bc434b7", "slot": 171, "title": "Theonis Expositio in astronomiam", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Greek astronomical manuscript (epicycles, apogee, precession of the equinoxes); consistent with Theon material.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 101, "right_page": "yes", "form": "manuscript",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "ἀπέχοντα δ’ ἦσαν τὸ μεταξὺ τῆς τε ἰσημερίας καὶ τῆς πρὸς αὐτὸ", "image": "ἀπέχοντα δ’ ἦσαν τὸ μεταξὺ τῶν κέντρων(?) τοῦ ζῳδιακοῦ καὶ τοῦ πρὸς αὐτὸ", "problem": "abbreviations expanded to the wrong words in the first line", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "ἀπὸ τῆς ἀλεξανδρείας", "image": "ἀπὸ τῆς Ἀλεξάνδρου τελευτῆς(?)", "problem": "an era (from the death of Alexander) read as the city Alexandria; the date sense of the passage is lost", "severity": "moderate", "class": "O7", "kind": "misread" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "χ̅ … τὸ κ’ αὐτῆς … τὰ δὲ κ’ τοῦ κέντρου", "english": "'that of the 20' … 'before the 20' … 'And the 20 of the center'", "problem": "κ’ (the scribe's abbreviation for κέντρον, centre) and χ̅ (600) are both rendered as the number 20 throughout, so the figures in a numerical astronomical argument are wrong and the sentences meaningless", "severity": "serious", "class": "T7", "kind": "mistranslation" },
+          { "source": "νοσημάτων", "english": "<term>nosemata</term> <gloss>disturbances/variations</gloss>", "problem": "a gloss invented over a doubtful reading", "severity": "moderate", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "low"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription follows the leaf line by line, but this heavily abbreviated astronomical hand is often expanded wrongly. The English turns abbreviations and numerals into a wrong '20' throughout and reads as nonsense. I read the hand only partly at this resolution."
+  },
+  {
+    "book_id": "69ea5131e0662c881fb5c6a6", "slot": 181, "title": "山海經 (Shānhǎi Jīng), Vol. 2", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Illustrated Shanhai jing (山海經圖) woodcut leaf.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 35, "right_page": "yes", "form": "plate",
+        "ocr_score": 2,
+        "ocr_errors": [
+          { "ocr": "旋水中山 / 白身 / 馬尾 / 牛角 / 出", "image": "䮝馬 牛尾而白身一角 出旋(?)水中山", "problem": "the creature's name 䮝馬 (the bo horse) is dropped, and its features are inverted: the leaf says ox tail, white body, ONE horn; the OCR says horse tail and cow horn", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "山海經圖", "image": "山海經圖 … 亭集卷三 … 十六", "problem": "rest of the side column (section and leaf number) dropped", "severity": "minor", "class": "O11", "kind": "omission" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "白身 馬尾 牛角", "english": "It has a white body, a horse's tail, and a cow's horn.", "problem": "follows the misread; the creature (unnamed in the English) has an ox tail and a single horn, which the English's own image note ('single horn … a cow's tail') contradicts", "severity": "serious", "class": "O6", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "A plate with a seven-character caption, and the caption is wrong: the name 䮝馬 is lost and its ox tail and single horn become a horse tail and cow horn, contradicting the woodcut beside it."
+  },
+  {
+    "book_id": "69f323d44f633eaed8014c9f", "slot": 191, "title": "Pokchae Sŏnsaeng yugo, 2-kwŏn", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Literary collection of Chŏng Ch'ong; a New Year congratulatory memorial (賀正旦表) to the Ming emperor.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 128, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "達用皇極", "image": "建用皇極", "problem": "建 (establish) read as 達 — the Hongfan phrase; the English then says 'achieves the Great Harmony'", "severity": "moderate", "class": "O8", "kind": "misread" },
+          { "ocr": "頌獻於椒觴", "image": "頌願獻於椒觴", "problem": "願 dropped", "severity": "minor", "class": "O5", "kind": "omission" },
+          { "ocr": "肇百工 … 竊當獻歲 … 倍功尋常 … 賀正且表", "image": "釐(?)百工 … 茲當獻歲 … 倍切尋常 … 賀正旦表", "problem": "several single-character misreads that barely change sense", "severity": "minor", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "敢執壤典", "english": "I dare to uphold the regional laws.", "problem": "the memorialist presents local tribute (壤奠/壤典, offerings of the soil), introducing the list of 方物; 'uphold the regional laws' misstates it", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "達用皇極", "english": "He achieves the Great Harmony", "problem": "建用皇極 = 'establishes and uses the Royal Standard'", "severity": "moderate", "class": "O8", "kind": "misread" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf, the text is nearly complete and the English gives the memorial's sense, but some classical allusions are lost (建用皇極, the tribute formula 敢執壤典 rendered as 'uphold the regional laws')."
+  },
+  {
+    "book_id": "69c736b46a0f3d112faf76b0", "slot": 201, "title": "Jesuitici templi stupenda", "tradition": null,
+    "shelf_fit": "wrong", "shelf_note": "Catalogued as Beringer's Latin anti-Jesuit pamphlet (Amberg 1610), but this leaf is the Hebrew title page of ספר עץ חיים (Etz Chaim, Lurianic Kabbalah) with its printing ban (מודעא רבא). The record's language field already says Hebrew. The title, author and date are of another work.",
+    "rights_flag": null,
+    "structure_note": "311 page records against pages_count 208, and this image is a split-crop (sp…) that cuts through the text block: the left ends of the Hebrew lines are cut off at the frame edge. A spread split along the wrong line or a spliced scan; the catalogue identity is wrong.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 4, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "המכנעת וחרמות רבנו גאוני ארץ", "image": "הסכמות וחרמות רבני גאוני ארץ", "problem": "'approbations' (הסכמות) misread; the English says 'the subduing'", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "וזה מוחם אמת וצדק", "image": "וחותמיהם אמת וצדק", "problem": "misread", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "גם משעם רב / … והעובר על זמיר בר", "image": "גם מטעם ה… / והעובר על זה יהי׳ כד… — the line ends are cut off at the image edge", "problem": "truncated line ends completed with guesses and no mark that the text runs off the frame", "severity": "moderate", "class": "I3", "kind": "illegible_fill" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "אך זאת לדעת כי כפיר גורתם בנזירות חומר בקדשים", "english": "But this is to let it be known, that the young lion is in his den, with a vow of strictness in holy matters", "problem": "the decree's force (their decree is mighty, with the severity of decrees on holy things) becomes an image of a lion in its den", "severity": "moderate", "class": "T7", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "The work on the leaf (Etz Chaim title page with its printing ban) is not the catalogued work (Jesuitici templi stupenda, Amberg 1610).", "severity": "serious", "class": "I7", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The page is the notice of approbations and the ten-year printing ban for Etz Chaim, read reasonably except where the crop cuts the line ends. It sits under the title of a 1610 Latin anti-Jesuit pamphlet. The catalogue identity is wrong, and the split cuts through the text."
+  }
+]

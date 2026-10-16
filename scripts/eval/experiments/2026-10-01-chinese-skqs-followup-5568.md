@@ -7,8 +7,8 @@ canons: [chinese-classics]
 n_books: 40
 n_pages: 40
 verdict: "Kanripo aligns 36/40 SKQS pages but 28% have shifted page breaks; Paddle's English beats lite's 20-4 (both orders); Kanripo text does not improve the English over Paddle."
-status: undecided
-decision: "Recommends Paddle for all 7,894 books, Kanripo for 0 as page text (licence is Derek's call); rides on #5547's pending row"
+status: adopted
+decision: "PaddleOCR-VL for the cohort (routing row chinese-siku-manuscript, #5600); Kanripo is a reference, not page text (its licence is still Derek's call, #6688). Closed in #6688"
 superseded_by: null
 issue: [5568, 5547]
 ---

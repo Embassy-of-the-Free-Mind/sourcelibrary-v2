@@ -1,0 +1,252 @@
+[
+ {
+  "book_id": "69f33eee876dd827cbc60b78", "slot": 192, "title": "[Sopʻaerok]", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "Korean court chronicle (Sukjong era, Nam Gu-man, Jo Sa-gi) in Classical Chinese, as catalogued.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 129, "right_page": "yes", "form": "manuscript",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {"ocr": "國家不可一日無領相。後述上意。遣史官溫諭不許。又疏辭。", "image": "國家不可一日無相領相處後述上來意遣史官傳諭上來時給馬事下諭于該道監司九萬上疏辭職上遣史官溫諭不許又疏辭職", "problem": "a run of ~25 characters (the order to send a historian, provide horses via the provincial governor, and Nam Gu-man's first memorial of refusal) is silently dropped", "severity": "serious", "class": "O5", "kind": "omission"},
+     {"ocr": "所料。閏章道及援引李義徵兵始復駐昌明", "image": "所料閔黯閔章道及援引李義徵吳始復駐昌明", "problem": "the name 閔黯 dropped, 閔 read 閏, 吳(始復) read 兵: the persons named are lost", "severity": "moderate", "class": "O6", "kind": "misread"},
+     {"ocr": "攻斥趙彝。靜見塞清。", "image": "攻斥趙樂靜見塞清路", "problem": "趙樂靜 (Jo Rak-jeong? the name 樂靜) misread as 趙彝, and again 事靜之名 for 樂靜之名", "severity": "moderate", "class": "O6", "kind": "misread"},
+     {"ocr": "旁而啟凌吉語。人曰", "image": "旁而故浚吉語人曰", "problem": "garbled, makes the speaker unclear", "severity": "minor", "kind": "misread"},
+     {"ocr": "朴憑", "image": "朴瀗 (or similar)", "problem": "accomplice's name misread", "severity": "minor", "kind": "misread"}
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {"source": "俱備者爭令現以完所供其經營設計不出所料。閏章道及援引李義徵兵始復駐昌明", "english": "The investigation revealed that Ham I-wan’s report ... Yun Jang-do and Yi Ui-jing were implicated, and Mok Chang-myeong was restored to his post.", "problem": "persons 'Ham I-wan', 'Yun Jang-do' and 'Mok Chang-myeong' are invented; nothing in the source or image names them", "severity": "serious", "class": "T7", "kind": "confabulation"},
+     {"source": "人曰。嗣基見我。亦咽為始。諫時枉被攻斥...", "english": "He spoke disparagingly of Song. People said: \"When Jo Sa-gi sees me, he starts to choke.\"", "problem": "it is Song Jun-gil who tells people that Jo Sa-gi, on meeting him, choked in describing how he had been wrongly attacked; the English makes up a disparagement and garbles the speaker", "severity": "moderate", "class": "T8", "kind": "mistranslation"},
+     {"source": "后擬之。文定語", "english": "comparing the late Queen to Empress Wu <note>original: \"the words of Mun-jeong\"</note>", "problem": "'Empress Wu' is an unmarked gloss not in the text", "severity": "moderate", "class": "T10", "kind": "added_gloss"}
+    ],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "Right leaf and largely the right text, but the OCR drops a 25-character run about Nam Gu-man's recall and misreads several names; the English then invents three officials' names. Not fit to show as is."
+ },
+ {
+  "book_id": "69f3278d52a77bb28fdb732f", "slot": 193, "title": "Namgye nanʾgo", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "Manuscript collection of Classical Chinese verse by a Korean author, as catalogued.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 18, "right_page": "yes", "form": "manuscript",
+    "ocr_score": 3,
+    "ocr_errors": [
+     {"ocr": "仍舊身登絕巘飛歸時伐西風\n爐上香煙…", "image": "between these columns a full column 木比地居塵事稀", "problem": "an entire verse line (column 7) is missing from the transcription and the English", "severity": "serious", "class": "O5", "kind": "omission"},
+     {"ocr": "腕晚月來展角影茶差鳴鍾抵信三時舒", "image": "晼晚月來簷角影…三時飯(?)", "problem": "簷 (eaves) read 展; last character misread", "severity": "moderate", "class": "O6", "kind": "misread"},
+     {"ocr": "爐上香煙不掇之微燒客來時花稍", "image": "爐上香煙不掇之微微仍燒客來時花猶", "problem": "iteration mark and 仍 dropped, 猶 read 稍; also 飛飛/伐伐 iteration marks dropped in column 6", "severity": "moderate", "class": "O6", "kind": "misread"},
+     {"ocr": "推問 … 芳昨菲", "image": "推門(?) … 芳草菲", "problem": "草 read 昨", "severity": "minor", "kind": "misread"}
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {"source": "客來時花稍", "english": "When the guest arrives, the flowers tip their heads.", "problem": "built on the misread 稍; image has 花猶 (the flowers still…)", "severity": "minor", "class": "O6", "kind": "misread"},
+     {"source": "腕晚月來展角影", "english": "The clouds and flowers pass the wrist. The evening moon comes to the corner of the tower.", "problem": "fluent English over garbled lines with no mark of doubt", "severity": "moderate", "class": "T7", "kind": "illegible_fill"}
+    ],
+    "other": [
+     {"note": "the OCR's layout <note> ('The text is written in vertical columns…') is repeated inside the English reader text, plus a <summary> describing a monastery day that the page does not state", "severity": "minor", "class": "O15", "kind": "other"}
+    ],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "Right leaf, but one of the eight verse columns (木比地居塵事稀) is missing and several characters are misread; the English renders the gappy poem fluently."
+ },
+ {
+  "book_id": "69e8b2742ff2a8dc09e77bdb", "slot": 194, "title": "韓非子 (Hán Fēizǐ), Vol. 1", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "韓非子新釋 上卷: a Japanese kanbun edition with modern Japanese rendering and glossary, as catalogued.",
+  "rights_flag": "Published 1931 (韓非子新釋, 上卷): a 20th-century typeset Japanese annotated translation; the translator/editor is not named on this page, so its copyright status depends on the editor's death date.",
+  "structure_note": "printed_backsteps 571 of 607 numbered pages is almost certainly the kanji page numerals (二七〇) being parsed badly, not a real disorder; this page's 二七〇 sits correctly at leaf 343.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 343, "right_page": "yes", "form": "print",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "吾恐此將令其宗廟不血食也", "image": "吾恐此將令其宗廟不祓除而社稷不血食也", "problem": "the clause 不祓除而社稷 is dropped", "severity": "moderate", "class": "O5", "kind": "omission"}
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {"source": "獻公不幸離羣臣。出入十年矣。", "english": "Duke Xian unfortunately left his ministers. It has been ten years of people leaving and entering.", "problem": "離羣臣 is the euphemism for dying, and 出入十年 refers to ten years of turmoil/exile; the English is literal and misleading", "severity": "moderate", "class": "T8", "kind": "mistranslation"},
+     {"source": "諸侯莫弗聞", "english": "None of the lords have not heard of it.", "problem": "double negative left ungrammatical", "severity": "minor"}
+    ],
+    "other": [
+     {"note": "the OCR's <vocab> list is rendered as a '<margin> Vocabulary' block in the English, which the page does not have", "severity": "minor", "class": "O15", "kind": "other"}
+    ],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show_with_caveat",
+  "book_verdict": "A clean read of a 1931 Japanese Han Feizi edition; the kanbun loses one clause and the English renders Duke Xian's death literally. Rights should be checked (1931 annotated edition)."
+ },
+ {
+  "book_id": "69e75accb3d509fcb7a48f0e", "slot": 195, "title": "近松浄瑠璃集 (Chikamatsu Jōruri Collection), Vol. 3", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "Chikamatsu's 心中天の網島 in a 1912 typeset edition with headnotes, as catalogued.",
+  "rights_flag": null,
+  "structure_note": "printed_backsteps 556 probably reflects kanji page numerals (四五九) being parsed, not real disorder.",
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 150, "right_page": "yes", "form": "print",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "無心中——源情", "image": "無心中—薄情", "problem": "薄 misread as 源 in the headnote", "severity": "minor", "class": "O6", "kind": "misread"},
+     {"ocr": "(running title absent)", "image": "心中天の網島 in the outer margin", "problem": "running title not transcribed", "severity": "minor", "kind": "omission"}
+    ],
+    "tr_score": 4,
+    "tr_errors": [
+     {"source": "女房限—親しき女房にも見せぬ意か", "english": "Visible only to the wife; perhaps meaning he won't show it to even a close wife", "problem": "first half contradicts the note: it means 'not shown even to a wife'", "severity": "moderate", "class": "T8", "kind": "mistranslation"},
+     {"source": "別れてこそは三重帰りけれ", "english": "they have parted, yet she returns three times over", "problem": "三重 is a jōruri musical cue (sanjū), not 'three times'", "severity": "moderate", "class": "T8", "kind": "mistranslation"},
+     {"source": "夫で私が立ます", "english": "Then I will stand as proof", "problem": "means 'that saves my honour'; loose", "severity": "minor"}
+    ],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show_with_caveat",
+  "book_verdict": "Faithful transcription of the 1912 edition; the English is readable but misreads a headnote and the jōruri cue 三重."
+ },
+ {
+  "book_id": "69f33c33876dd827cbc5a057", "slot": 196, "title": "Yŏji", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "Korean manuscript provincial atlas (this leaf: the Hongju/Deoksan/Taean coast of Chungcheong).",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 4, "right_page": "yes", "form": "plate",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {"ocr": "[red cartouches] 德山 洪州 [And others partially obscured or stylized]", "image": "legible red cartouches incl. 泰安, 瑞山, 海美, 沔川, 結城, 大興 besides 德山 and 洪州", "problem": "most county-seat names, the map's main content, are omitted", "severity": "serious", "class": "O14", "kind": "omission"},
+     {"ocr": "山月 / 山寶 / 山金 / 山馬 / 山城 / 山知 / 靈長", "image": "vertical labels 月山, 寶山, 金馬(?), 城山 etc.; 知靈山 and 冠長", "problem": "labels read in the wrong order or split across neighbours, producing non-existent place names", "severity": "moderate", "class": "O6", "kind": "layout"},
+     {"ocr": "<language>Japanese</language> … hand-colored woodblock map … likely in Japan or Korea", "image": "a hand-drawn Korean manuscript map", "problem": "language and medium tags wrong", "severity": "moderate", "class": "O16", "kind": "other"}
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {"source": "難知島 / 白沙 / 山月 / 加次山 …", "english": "Difficult-to-Know Island, White Sand, Mountain Moon, Successive Mountain …", "problem": "toponyms translated literally into English instead of romanised, so the reader cannot identify the places", "severity": "moderate", "class": "T8", "kind": "mistranslation"}
+    ],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "A Korean manuscript map is tagged as a Japanese woodblock; most of its county cartouches are missing from the reading and the place names that are read come out in the wrong order and as literal English."
+ },
+ {
+  "book_id": "6a1d683bb764c55231287dd8", "slot": 197, "title": "真誥 (卷九~卷十二): Zhen'gao, vol.3", "tradition": null,
+  "shelf_fit": "doubtful", "shelf_note": "display_title is 'Disputations on Nature and Theology', a Latin scholastic title, while title, author and this cover (四庫全書 子部) point to Tao Hongjing's Zhen'gao; either the catalogue or the scan is wrong. Not verified beyond this page.",
+  "rights_flag": null,
+  "structure_note": "Only 1 of 181 pages translated (this cover). The translation's meta claims that the following pages contain Latin scholastic philosophy, which, with the display_title, suggests a catalogue or scan mix-up (I7).",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 1, "right_page": "yes", "form": "plate",
+    "ocr_score": 5,
+    "ocr_errors": [],
+    "tr_score": 4,
+    "tr_errors": [],
+    "other": [
+     {"note": "the reader-facing display_title is 'Disputations on Nature and Theology' on a Siku Quanshu copy of Tao Hongjing's Zhen'gao", "severity": "serious", "class": "I7", "kind": "other"},
+     {"note": "the English carries a <meta>: 'The source title attributes this to Tao Hongjing, but the following pages contain Latin scholastic philosophy. This page serves as a formal Chinese imperial library cover.' (model commentary about other pages, unverified here)", "severity": "moderate", "class": "T17", "kind": "other"}
+    ],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "The cover is read correctly, but the book is displayed as 'Disputations on Nature and Theology' and the stored English says the following pages are Latin scholastic philosophy. The catalogue identity has to be checked before this is shown."
+ },
+ {
+  "book_id": "69f33c78876dd827cbc5a5a9", "slot": 198, "title": "Chʻŏnha yŏjido", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "Korean atlas cover, title slip 天下輿地圖.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 1, "right_page": "yes", "form": "manuscript",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {"ocr": "方輿徐覽下卷", "image": "玄黓執徐臘下澣 (a cyclical date: renchen year, 12th month, last decade — matching the catalogue's 'published: 玄黓執徐')", "problem": "a date inscription read as a work title", "severity": "serious", "class": "O6", "kind": "misread"}
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {"source": "方輿徐覽下卷", "english": "Comprehensive Survey of Geography, Volume Two … the second or \"lower\" volume of a larger geographical work titled \"Fangyu xulan.\"", "problem": "a non-existent work 'Fangyu xulan' is presented to the reader as this book's larger title; the inscription is a date", "severity": "serious", "class": "O6", "kind": "misread"}
+    ],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "The title slip is right, but the cover's date inscription (玄黓執徐臘下澣) is turned into an invented work title, 'Fangyu xulan, lower volume'. The English then builds a false bibliography on it."
+ },
+ {
+  "book_id": "69f326c952a77bb28fdb6a80", "slot": 199, "title": "T'onggam kugyŏl", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "A manuscript Tongjian abridgement with kugyŏl annotations (Warring States, Qin/Zhao/Wei), as catalogued.",
+  "rights_flag": null,
+  "structure_note": "The leaf is an unsplit two-page opening, which is fine for this manuscript.",
+  "on_sight_defect": true,
+  "pages": [
+   {
+    "page_number": 6, "right_page": "yes", "form": "manuscript",
+    "ocr_score": 2,
+    "ocr_errors": [
+     {"ocr": "下書之畢。皆失省。敗劉師。令秦君。", "image": "下書之畢竟發師失道敗劉齊勝師△辛巳年 / 秦邑君△癸未年魏王立…", "problem": "most columns are partially read, with characters dropped, misread or reordered; year headings such as 辛巳年 and 癸未年 are lost, and 乙酉年, 乙丑年 and 丙申年 come out as 酉年, 乙。日。年 and 甲。年", "severity": "serious", "class": "O6", "kind": "misread"},
+     {"ocr": "(no kugyŏl)", "image": "interlinear kugyŏl reading marks throughout", "problem": "the kugyŏl, the point of this book (T'onggam kugyŏl), is dropped entirely", "severity": "moderate", "class": "O10", "kind": "omission"},
+     {"ocr": "full stop after nearly every character", "image": "unpunctuated", "problem": "invented punctuation splitting words", "severity": "moderate", "class": "O8", "kind": "layout"}
+    ],
+    "tr_score": 2,
+    "tr_errors": [
+     {"source": "方里。甲。萬。…乗騎。匹。", "english": "A square mile of Gap. Ten thousand. … Riding the horses.", "problem": "the English is word-by-word glossing of the garbled OCR ('The pestle.', 'The state of Gap'); it reads as fluent noise and conveys none of the passage's sense (territory of so many li, so many armoured soldiers)", "severity": "serious", "class": "T7", "kind": "illegible_fill"}
+    ],
+    "other": [
+     {"note": "<column-break/> tag shows in the English reader text", "severity": "minor", "class": "D1", "kind": "other"}
+    ],
+    "not_this_leaf": false,
+    "confidence": "medium"
+   }
+  ],
+  "page_verdict": "do_not_show",
+  "book_verdict": "The transcription is partial and chopped into single characters, and the kugyŏl and most year headings are lost. The English is fragment-by-fragment nonsense, so nothing a reader could use."
+ },
+ {
+  "book_id": "69f326df52a77bb28fdb6ae6", "slot": 200, "title": "Sinpʻyŏn Kimyo yujŏk, v. 1, 4-kwŏn", "tradition": null,
+  "shelf_fit": "fits", "shelf_note": "Records of the Kimyo (1519) scholars, Classical Chinese, as catalogued.",
+  "rights_flag": null,
+  "structure_note": null,
+  "on_sight_defect": false,
+  "pages": [
+   {
+    "page_number": 89, "right_page": "yes", "form": "manuscript",
+    "ocr_score": 4,
+    "ocr_errors": [
+     {"ocr": "近來不應科者為有獎習", "image": "近来不應科者為有弊習", "problem": "弊 (bad habit) read 獎 (encourage): reverses the sense, which is carried into the English", "severity": "moderate", "class": "O6", "kind": "misread"},
+     {"ocr": "…亦何益於國家哉", "image": "…亦何益於國家哉士", "problem": "the column's last character 士 (running into the next page) is dropped", "severity": "minor", "kind": "omission"}
+    ],
+    "tr_score": 3,
+    "tr_errors": [
+     {"source": "近來不應科者為有獎習朝廷及泮宮皆有此意", "english": "Recently, those who do not respond to the regular examinations do so because they have been encouraged by the court and the National Academy", "problem": "the source (弊習) says shunning the examinations has become a bad habit, and that court and academy share this attitude; the English makes the court encourage it", "severity": "moderate", "class": "O6", "kind": "misread"},
+     {"source": "中朝多不以誠", "english": "many in the central government do not act with sincerity", "problem": "中朝 here is more likely the Ming court (China), not 'central government'", "severity": "minor", "kind": "mistranslation"}
+    ],
+    "other": [],
+    "not_this_leaf": false,
+    "confidence": "high"
+   }
+  ],
+  "page_verdict": "show_with_caveat",
+  "book_verdict": "A clean transcription and fluent English. One misread (獎 for 弊) turns a complaint about bad habits into a claim that the court encourages shunning the exams."
+ }
+]

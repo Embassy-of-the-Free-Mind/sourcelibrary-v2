@@ -7,8 +7,8 @@ canons: []
 n_books: 370
 n_pages: 370
 verdict: "Only NDL v3 on cursive Japanese beats lite; elsewhere flash-preview > lite >= best specialist, and Paddle matches flash-preview on Chinese woodblock only."
-status: undecided
-decision: "NDL lane unjudged in ledger; Paddle adopted as Chinese cost lane (#4925), no other specialist"
+status: adopted
+decision: "NDL reads cursive Japanese (routing row japanese-cursive, PR #5412) and PaddleOCR-VL reads the Siku Quanshu (row chinese-siku-manuscript, #5600); no other specialist adopted. Closed in #6688"
 superseded_by: null
 issue: [4743, 4744, 4745, 4746]
 ---

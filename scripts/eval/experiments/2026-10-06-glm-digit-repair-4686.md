@@ -8,7 +8,7 @@ n_books: 6
 n_pages: 20
 verdict: "GLM-OCR digits lift Kraken's digit strings from 78.5% to 89.2% (body text 95.6%) with no CER loss, one number under the 90% bar, so the gate stopped."
 status: undecided
-decision: "Nothing written and #5969 stays blocked; write with unverified running heads, re-gate on body text, or leave empty is Derek's call on #4686"
+decision: "Nothing written and #5969 stays blocked. For Derek on #6688, default: leave the 715 pages empty until the running heads pass 90%; they are refused pages (routing row refused-pages) and MinerU does not read pre-1820 print"
 superseded_by: null
 issue: [4686, 5969]
 ---

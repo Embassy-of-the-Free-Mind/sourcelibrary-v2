@@ -7,8 +7,8 @@ canons: []
 n_books: 82
 n_pages: 178
 verdict: "Against the page image the Archive gets 5.1% of printed numbers wrong vs lite 1.8% (82 books, 5,212 numbers); lite fewer wrong on 39 books, the Archive on 7."
-status: undecided
-decision: null
+status: rejected
+decision: "The Archive's text does not replace a Flash-Lite read: it fills empty and refused pages only (routing row refused-pages; Derek 2026-09-26, #5186). Closed in #6688"
 superseded_by: null
 issue: [5224, 5124, 5186]
 ---

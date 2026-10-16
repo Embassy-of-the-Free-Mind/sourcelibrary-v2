@@ -103,8 +103,8 @@ const USAGE_LIMIT = /usage limit|limit reached|hit your (?:usage )?limit|out of 
 // `claude -p` prefers an API key over the subscription login, and node --env-file loads one: strip it (#6553).
 function claudeEnv() { const e = { ...process.env }; for (const k of Object.keys(e)) if (/^ANTHROPIC_|^CLAUDE_CODE_USE_|^OPENROUTER/.test(k)) delete e[k]; return e; }
 
-/** One sealed `claude -p` call. Resolves {text, model, usage, code, cls, err, secs}. */
-function claudeCall(prompt, model, cwd) {
+/** One sealed `claude -p` call. Resolves {text, model, usage, code, cls, err, secs}. Shared with claude-ocr-two-read.mjs. */
+export function claudeCall(prompt, model, cwd) {
   return new Promise((resolve) => {
     const t0 = Date.now();
     const child = spawn(CLI, ['-p', prompt, '--model', model, '--restricted', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--no-session-persistence', '--output-format', 'json'], { cwd, stdio: ['ignore', 'pipe', 'pipe'], env: claudeEnv() });

@@ -13,6 +13,11 @@ build-xl-packet.py — $0. Blinded reference-judge packet for #6182, every langu
       engine (L31 or FP) only; same controls and seeds' pattern; every item to both judges. Writes
       /root/cli38-6182/xljudge/ and scripts/eval/results/cli-arm-6182/xljudge/key.json. Stops if any of the 365
       pages has no C38 text unless --allow-holes (a dry build for checking). Runbook: RUNBOOK-cli38-xl.md.
+  python3 scripts/eval/pareto-6182/build-xl-packet.py --g4l [--c4l $JOB_SCRATCH/C4L.jsonl] [--parts 24]
+      #6750: C4L (gemini-4-argon-low via `agy -p`) beside C38 (stored) and the page's production engine; DUP is
+      production, its copy and C38. Pages where C4L failed are judged with C38 and production only (counted, not
+      scored). Writes $JOB_SCRATCH/xljudge/ and scripts/eval/results/g4-xl-6750/xljudge/key.json.
+      Prereg: experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md.
 
 Items: 365 pages × {L31, AA, FP, L35, G35, G36, G37, G38, PRO} (+ O, the track's own Opus arm, where it
 exists), labels shuffled per item. Controls per judge: 8 PLANT (the page's production English beside a
@@ -24,12 +29,15 @@ import json, os, random, subprocess, sys, glob
 
 W = "/root/pareto-6182"
 opt = lambda k, d: sys.argv[sys.argv.index(f"--{k}") + 1] if f"--{k}" in sys.argv else d
-CLI = "--cli" in sys.argv
+G4 = "--g4l" in sys.argv
+CLI = "--cli" in sys.argv or G4
 JW, OUT = ("/root/cli38-6182/xljudge", "scripts/eval/results/cli-arm-6182/xljudge") if CLI else (f"{W}/xljudge", "scripts/eval/results/pareto-6182/xljudge")
+if G4: JW, OUT = os.environ.get("JOB_SCRATCH", "/mnt/HC_Volume_105839809/jobs/g4-xl-6750") + "/xljudge", "scripts/eval/results/g4-xl-6750/xljudge"
 JW, OUT = opt("out", JW), opt("results", OUT)
 PARTS = int(opt("parts", "24" if CLI else "64"))
 os.makedirs(JW, exist_ok=True); os.makedirs(OUT, exist_ok=True)
-rng = random.Random(6182 + 1000 + (38 if CLI else 0))
+SEED = 6750 if G4 else 6182 + 1000 + (38 if CLI else 0)
+rng = random.Random(SEED)
 read = lambda p: [json.loads(l) for l in open(p) if l.strip()]
 GEM = ["L31", "AA", "FP", "L35", "G35", "G36", "G37", "G38", "PRO"]
 recs = {r["id"]: r for r in read(f"{W}/xl/records.jsonl") if r.get("reference_text")}
@@ -41,6 +49,8 @@ if CLI:
     no_c38 = [u for u in units if u not in arm["C38"]]
     if no_c38 and "--allow-holes" not in sys.argv: sys.exit(f"C38 has no text for {len(no_c38)} of {len(units)} xl pages")
     units = {u: x for u, x in units.items() if u in arm["C38"]}
+if G4:  # every C4L row in the file passed screen.mjs; a page missing here is a failed read (failed.jsonl)
+    arm["C4L"] = {r["uid"]: r["text"] for r in read(opt("c4l", os.environ.get("JOB_SCRATCH", "/mnt/HC_Volume_105839809/jobs/g4-xl-6750") + "/C4L.jsonl")) if r["uid"] in units and (r.get("text") or "").strip()}
 # The track's own Opus arm (a context request, run on the subscription): judged beside, never a lane.
 opus = {}
 for uid, r in recs.items():
@@ -67,7 +77,7 @@ def item(uid, cands):
 
 items, refused = [], {}
 for uid in units:
-    mine = ["C38", "G38", PROD[units[uid]["prod_model"]]] if CLI else GEM
+    mine = ["C4L", "C38", PROD[units[uid]["prod_model"]]] if G4 else ["C38", "G38", PROD[units[uid]["prod_model"]]] if CLI else GEM
     have = {a: arm[a][uid] for a in mine if uid in arm[a]}
     for a in mine:
         if a not in have: refused.setdefault(a, []).append(uid)
@@ -76,7 +86,7 @@ for uid in units:
     items.append((it, {"kind": "ARMS", "page_id": uid, "lang": recs[uid]["lang"], "track": recs[uid]["track"], "prod": PROD[units[uid]["prod_model"]], "labels": lab}))
 ids = sorted(units); ctrl = rng.sample(ids, 20)
 prod_text = lambda uid: arm[PROD[units[uid]["prod_model"]]].get(uid)
-plant_js = "import { makePlanters } from './scripts/eval/tengyur-characterize/plants.mjs'; import { rng } from './scripts/eval/tengyur-characterize/common.mjs'; const p = makePlanters(rng(" + str(6182 + 1000 + (38 if CLI else 0)) + ")); const t = JSON.parse(process.argv[1]); console.log(JSON.stringify(t.map((x) => x ? p.plantReversal(x) : null)));"
+plant_js = "import { makePlanters } from './scripts/eval/tengyur-characterize/plants.mjs'; import { rng } from './scripts/eval/tengyur-characterize/common.mjs'; const p = makePlanters(rng(" + str(SEED) + ")); const t = JSON.parse(process.argv[1]); console.log(JSON.stringify(t.map((x) => x ? p.plantReversal(x) : null)));"
 planted = json.loads(subprocess.check_output(["node", "--input-type=module", "-e", plant_js, json.dumps([prod_text(u) for u in ctrl[:16]])]))
 n_plant = 0
 for uid, pl in zip(ctrl[:16], planted):
@@ -86,8 +96,9 @@ for uid, pl in zip(ctrl[:16], planted):
     if new == t: continue
     it, lab = item(uid, {"P": t, "P_PLANT": new})
     items.append((it, {"kind": "PLANT", "page_id": uid, "labels": lab, "plant": pl})); n_plant += 1
-for uid in [u for u in ctrl[16:] if prod_text(u) and u in arm["G38"]][:4]:
-    it, lab = item(uid, {"P": prod_text(uid), "P_DUP": prod_text(uid), "G38": arm["G38"][uid]})
+DA = "C38" if G4 else "G38"
+for uid in [u for u in ctrl[16:] if prod_text(u) and u in arm[DA]][:4]:
+    it, lab = item(uid, {"P": prod_text(uid), "P_DUP": prod_text(uid), DA: arm[DA][uid]})
     items.append((it, {"kind": "DUP", "page_id": uid, "labels": lab}))
 rng.shuffle(items)
 key = {}
@@ -96,7 +107,7 @@ for i, (it, k) in enumerate(items):
 json.dump({"items": key, "refused_after_retry": refused}, open(f"{OUT}/key.json", "w"), indent=1, ensure_ascii=False)
 for f in glob.glob(f"{JW}/in-*.jsonl"): os.remove(f)
 for j in ("J1", "J2"):
-    order = items[:] if j == "J1" else random.Random(6182 + 1001 + (38 if CLI else 0)).sample(items, len(items))
+    order = items[:] if j == "J1" else random.Random(SEED + 1).sample(items, len(items))
     for p in range(PARTS):
         with open(f"{JW}/in-{j}-{p + 1:02d}.jsonl", "w") as f:
             for it, _ in order[p::PARTS]:

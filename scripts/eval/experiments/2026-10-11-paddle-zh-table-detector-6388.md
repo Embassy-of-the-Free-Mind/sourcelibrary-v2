@@ -7,8 +7,8 @@ canons: []
 n_books: 781
 n_pages: 1568108
 verdict: "A text-only rule (strict loop screen or repeated-line run, AND a run/duplicate-line/low-diversity/table-title shape) flags 136 of 136 known invented Paddle table pages and 4,379 of 1,568,108 Paddle-written pages (0.28%). As a backup reader, Opus by image over-writes printed characters 39 times where Paddle does 145 (19 Kanripo-aligned pages) at equal CER; Gemini 3.1 Pro on agy is slower, emptier and worse ordered."
-status: undecided
-decision: null
+status: adopted
+decision: "The table rule is in use: the 4,379 flagged Paddle pages are withheld (ocr.unreadable, paddle_table_6388) pending Opus correction (routing row chinese-tables, #6561). Closed in #6688"
 superseded_by: null
 issue: [6388, 5600, 5660]
 ---

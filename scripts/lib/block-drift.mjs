@@ -56,7 +56,7 @@ export const MIN_FRAGMENT_LETTERS = 20;
 export const FRAGMENT_WINDOW = 400;
 
 const OCR_WRAPPERS = 'meta|vocab|language|lang|page-type|page-num|sig|scan-quality|script|columns|header|image-desc|folio|detected-images|catchword|warning|insert|margin|footnote|note';
-const TR_WRAPPERS = 'meta|summary|keywords|vocab|warning|note|header|page-num|sig|margin|catchword|image-desc|footnote|folio';
+export const TR_WRAPPERS = 'meta|summary|keywords|vocab|warning|note|header|page-num|sig|margin|catchword|image-desc|footnote|folio';
 
 /** Source text with housekeeping removed (ported from continuity-ab ocrProse, notes too). */
 export function sourceProse(ocr) {

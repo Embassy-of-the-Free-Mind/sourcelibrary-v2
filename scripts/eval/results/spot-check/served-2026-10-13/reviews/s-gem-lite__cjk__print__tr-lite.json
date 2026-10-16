@@ -1,0 +1,118 @@
+[
+{"book_id":"69e787db4a6785cfd60cdeb1","slot":182,"title":"農書輯略 (Nōsho Shūryaku / Agricultural Anthology)","tradition":null,"shelf_fit":"fits","shelf_note":"Japanese agricultural/administrative anthology, as catalogued.","rights_flag":null,"structure_note":"Image is a two-page opening of a brush-written (manuscript) copy, NDL shelfmark 特1-2536; OCR tags it 'printed'.","on_sight_defect":true,
+"pages":[{"page_number":51,"right_page":"yes","form":"manuscript","ocr_score":3,
+"ocr_errors":[
+{"ocr":"西國筋ノ靜謐ナラサル時ニハ府中ノ兵ヲ以テ","image":"西國筋ノ靜謐ナラサル / 時ニ賊兵是州ニ侵シ來レルヲ防カシメラルル / ニハ府中ノ兵ヲ以テ","problem":"a whole column dropped: 'when bandit troops invade this province, to make them defend…'; the scenario the defence plan addresses is lost","severity":"serious","class":"O5","kind":"omission"},
+{"ocr":"大界ヲ今茲ニ記スナリ","image":"大略ヲ今茲ニ記スナリ","problem":"大略 'outline' read as 大界; translated 'the grand boundary'","severity":"moderate","class":"O6","kind":"misread"},
+{"ocr":"諸粟ヲ交ユルニテ","image":"藷粟ヲ交ユルニテ","problem":"藷 (yam) read as 諸; translated 'various types of millet'","severity":"moderate","class":"O6","kind":"misread"},
+{"ocr":"藷ナヒヲ / 水ヲ渡ク / 爪蔓レノ処 / 綿村ノ","image":"養ナヒヲ / 水ヲ灑ク / 爪隱レノ処 / 郷村ノ","problem":"several character misreads","severity":"minor","class":"O6","kind":"misread"},
+{"ocr":"<script>printed</script>","image":"brush handwriting","problem":"self-reported script tag wrong","severity":"minor","class":"O16","kind":"other"}],
+"tr_score":3,
+"tr_errors":[
+{"source":"郷村ノ米麥ノ府中ノ末末ノ者マテノ食用ニ足ラストモ藷粟ヲ交ユルニテ足シ得ヘシ","english":"it will suffice for the consumption of the rice and barley in the villages and even for the low-ranking personnel in the capital, provided one mixes in the various types of millet","problem":"concessive dropped: source says even if village rice and barley do not suffice to feed everyone down to the capital's lowest, mixing in yams and millet makes it suffice","severity":"moderate","class":"T8","kind":"mistranslation"},
+{"source":"大界ヲ今茲ニ記スナリ","english":"I shall now record the grand boundary","problem":"nonsense carried from the misread (should be 'I record the outline here')","severity":"moderate","class":"O6","kind":"misread"}],
+"other":[{"note":"<note>original: 鐵炮格式</note> inline in the English","severity":"minor","class":"D1"}],
+"not_this_leaf":false,"confidence":"medium"}],
+"page_verdict":"do_not_show","book_verdict":"Right leaf, mostly read, but the OCR silently drops a full column of the left page (the bandit-invasion clause), and the English inherits that gap plus a few misreads. Do not show without re-OCR."},
+
+{"book_id":"69de98781b234a773e438843","slot":183,"title":"玉茗堂集 (Jade Twig Hall Collection), Vol. 2","tradition":null,"shelf_fit":"fits","shelf_note":"Tang Xianzu's collection, a late-Ming woodblock print, as catalogued.","rights_flag":null,"structure_note":"Many printed backsteps and repeats, expected in a multi-juan collection whose leaf numbers restart in each juan.","on_sight_defect":false,
+"pages":[{"page_number":121,"right_page":"yes","form":"print","ocr_score":4,
+"ocr_errors":[
+{"ocr":"于中父餉煎邊便歸金壇","image":"于中父餉蘄邊便歸金壇 (second character of the compound not certain; it is not 煎)","problem":"one character misread","severity":"minor","class":"O6","kind":"misread"},
+{"ocr":"(nothing)","image":"fold title 詩集 … 目錄","problem":"page furniture not transcribed","severity":"minor","class":"O11","kind":"omission"}],
+"tr_score":3,
+"tr_errors":[
+{"source":"劉君東下第歸西昌 / 答君東天津夜泊","english":"Gentleman Liu returns to Xichang… / A reply to Gentleman Dong","problem":"the personal name Liu Jundong (劉君東) is split into 'Gentleman Liu' and, in the next title, 'Gentleman Dong'","severity":"moderate","class":"T8","kind":"mistranslation"},
+{"source":"蔣蟄父客春以文履繡胸留別却謝","english":"Jiang Zhefu visited in the spring; left a poem on embroidery at his chest as a parting gift, and returned his thanks","problem":"the gift is patterned shoes and an embroidered breast-cloth, not a poem; 却謝 means declining it with thanks; 客春 means last spring","severity":"moderate","class":"T8","kind":"mistranslation"},
+{"source":"司理","english":"Police Prefect","problem":"司理 is a judicial prefect","severity":"minor"}],
+"other":[{"note":"<summary> and <keywords> blocks appended to the translation","severity":"minor","class":"D1"}],
+"not_this_leaf":false,"confidence":"high"}],
+"page_verdict":"show_with_caveat","book_verdict":"The table-of-contents transcription is accurate. The English mangles two titles: it splits the name Liu Jundong, and it misreads Jiang Zhefu's parting gift."},
+
+{"book_id":"69e75e3acc48e59ad74ec35a","slot":184,"title":"笠翁一家言全集 (Lǐwēng Collected Works), Vol. 6","tradition":null,"shelf_fit":"fits","shelf_note":"Li Yu's collected works, Jieziyuan woodblock edition.","rights_flag":null,"structure_note":"Backsteps and repeats fit leaf numbering restarting per juan.","on_sight_defect":false,
+"pages":[{"page_number":91,"right_page":"yes","form":"print","ocr_score":3,
+"ocr_errors":[
+{"ocr":"于此駭人情","image":"于此較人情","problem":"較 'compare' read as 駭 'shock'; the English follows ('Seeing this shocks the human spirit')","severity":"moderate","class":"O6","kind":"misread"},
+{"ocr":"囊不能克","image":"囊橐不能克","problem":"橐 dropped, breaking the five-character line","severity":"minor","class":"O5","kind":"omission"},
+{"ocr":"千錢了劇","image":"千錢了一劇","problem":"一 dropped","severity":"minor","class":"O5","kind":"omission"},
+{"ocr":"幸割戕壽脈 / 螻蚂","image":"宰割戕壽脈 / 螻蟈","problem":"character misreads","severity":"minor","class":"O6","kind":"misread"},
+{"ocr":"(nothing)","image":"其二","problem":"poem number heading not transcribed","severity":"minor","class":"O5","kind":"omission"}],
+"tr_score":3,
+"tr_errors":[
+{"source":"不比窮歲年。造物莫之惜","english":"It is not like the meager years of the poor; the Creator does not cherish them","problem":"sense turned: the poor man's years are ones the Creator does not begrudge, in contrast to the rich man's years, which Heaven cuts short","severity":"moderate","class":"T8","kind":"mistranslation"},
+{"source":"無意合清虛","english":"You have no intention of conforming to the worldly","problem":"means 'without intending it, you accord with pure emptiness'; 'the worldly' reverses the term","severity":"moderate","class":"T8","kind":"mistranslation"},
+{"source":"可補嬾頭陀戒殺頌","english":"Can mend a lazy head / A chant for the precept against killing","problem":"the comment says the poem 'could supplement the Lazy Dhuta's Ode on Abstaining from Killing'; splitting the margin lines produces nonsense","severity":"moderate","class":"O12","kind":"layout"},
+{"source":"往往作逋客","english":"he often becomes a debtor","problem":"逋客 here means one who absconds or hides away","severity":"minor"}],
+"other":[],"not_this_leaf":false,"confidence":"medium"}],
+"page_verdict":"show_with_caveat","book_verdict":"Right leaf, broadly correct. Several small character misreads, one carried into the English. A few lines of the translation are turned, and the commentator's margin note reads as nonsense."},
+
+{"book_id":"69e75e52cc48e59ad74ec55e","slot":185,"title":"笠翁一家言全集 (Lǐwēng Collected Works), Vol. 22","tradition":null,"shelf_fit":"fits","shelf_note":"Li Yu's Xianqing ouji (笠翁偶集) section, as catalogued under his collected works.","rights_flag":null,"structure_note":null,"on_sight_defect":false,
+"pages":[{"page_number":38,"right_page":"yes","form":"print","ocr_score":4,
+"ocr_errors":[
+{"ocr":"<header>金穀傳卷之五</header>","image":"笠翁偶集 卷之五 (fold title)","problem":"running title misread","severity":"moderate","class":"O11","kind":"misread"},
+{"ocr":"善王中饋者 / 譙客者 / 花露一盡","image":"善主中饋者 / 讌客者 / 花露一盞","problem":"character misreads; the English gets the sense anyway","severity":"minor","class":"O6","kind":"misread"}],
+"tr_score":4,
+"tr_errors":[{"source":"小婦","english":"my maid","problem":"小婦 is a concubine","severity":"minor"}],
+"other":[],"not_this_leaf":false,"confidence":"high"}],
+"page_verdict":"show","book_verdict":"A faithful read of Li Yu on cooking rice. Only small character slips and a misread running title."},
+
+{"book_id":"69af118e7feb16bd9d149210","slot":186,"title":"西洋新法曆書 (New Western Calendar Treatise)","tradition":null,"shelf_fit":"fits","shelf_note":"Schall von Bell's astronomical compendium; this leaf is from the 恒星經緯圖說.","rights_flag":null,"structure_note":"Page 4 is served the image file spie46-0003, and its text appears to belong to the preceding leaf: a one-leaf image/text offset. The other pages in the book should be checked for the same offset.","on_sight_defect":true,
+"pages":[{"page_number":4,"right_page":"no","form":"print","ocr_score":1,
+"ocr_errors":[{"ocr":"第一見界總星圖 見界總星圖者以赤道之北極為心以赤道為中圈…","image":"百六十度者赤道緯度也從心至界分二十八直線者係二十八宿各距星分二十八宿各所占度分也…元史載古今前後六測如漢落下閎唐僧一行宋皇祐元豐崇寧元郭守敬…","problem":"the transcription is of another leaf (the 第一見界總星圖 opening, apparently the preceding leaf); none of it is on this image","severity":"serious","class":"I1","kind":"wrong_leaf"}],
+"tr_score":1,
+"tr_errors":[{"source":"(the whole page)","english":"First General Star Map of the Visible Hemisphere …","problem":"translates the other leaf's text, so it is not a translation of the page shown","severity":"serious","class":"I1","kind":"wrong_leaf"}],
+"other":[{"note":"<meta>The text is oriented vertically in traditional Chinese style. It appears to be a section of an astronomical treatise.</meta>: model commentary in the OCR","severity":"minor","class":"O15"}],
+"not_this_leaf":true,"not_this_leaf_evidence":"The stored text opens '第一見界總星圖 見界總星圖者以赤道之北極為心'. The image instead shows a page headed 恒星經緯圖說 that begins '百六十度者赤道緯度也從心至界分二十八直線者' and lists earlier observers (落下閎, 一行, 郭守敬). None of the stored text appears on it.",
+"confidence":"high"}],
+"page_verdict":"do_not_show","book_verdict":"The image and the text are different leaves. The stored OCR and translation are of the 見界總星圖 introduction, apparently one leaf earlier, so a reader sees a page whose English describes other text."},
+
+{"book_id":"69c6613501a26ccff09f4ec6","slot":187,"title":"Yuelü Quanshu (樂律全書): Complete Works on Music and Tuning, Vol. 1","tradition":null,"shelf_fit":"fits","shelf_note":"Zhu Zaiyu's tuning treatise, as catalogued.","rights_flag":null,"structure_note":null,"on_sight_defect":false,
+"pages":[{"page_number":175,"right_page":"yes","form":"print","ocr_score":5,
+"ocr_errors":[
+{"ocr":"<meta>catchword: 樂律全書</meta> / <image-desc>Printer's mark … 樂律全書</image-desc>","image":"樂律全書 in the fold (the book's title), with leaf number 三十六","problem":"fold title mis-tagged as a catchword or printer's mark; leaf number not taken","severity":"minor","class":"O11","kind":"layout"},
+{"ocr":"<columns>4</columns> + three empty <column-break/>","image":"a single block of eight columns","problem":"spurious empty column breaks","severity":"minor","class":"O16","kind":"layout"}],
+"tr_score":4,
+"tr_errors":[],
+"other":[
+{"note":"three empty <column-break/> lines and a <note> calling the fold title 'a printer's mark' in the English","severity":"minor","class":"D1"},
+{"note":"<summary> says 'the established base-nine arithmetic system', a gloss the page does not make","severity":"minor","class":"T10"}],
+"not_this_leaf":false,"confidence":"high"}],
+"page_verdict":"show","book_verdict":"Every number in the calculation is transcribed and translated correctly. Only the tags and furniture are noisy."},
+
+{"book_id":"69e7269ea409200ea79ef976","slot":188,"title":"聊齋志異 (Liaozhai Zhiyi / Strange Tales from a Chinese Studio), Vol. 4","tradition":null,"shelf_fit":"fits","shelf_note":"Annotated Liaozhai edition (this leaf ends the commentary to one tale and begins 白秋練).","rights_flag":null,"structure_note":null,"on_sight_defect":true,
+"pages":[{"page_number":146,"right_page":"yes","form":"print","ocr_score":2,
+"ocr_errors":[
+{"ocr":"其下金屋數鉅 考工記鳧氏為散花舞床詳漢武內傳越雋國貢 鐘鼓上謂之散花舞華絲武帝賜麗娟作舞","image":"其下金屋數百間帝女居之四時有金石絲竹之聲 / [考工記]鳧氏爲鍾…鉦… / 散花舞 [朱詳] [漢武內傳] 越嶲國貢吸華絲武帝賜麗娟作舞衣","problem":"the dense small-type commentary is scrambled across columns: phrases dropped (帝女居之四時有金石絲竹之聲) and others spliced into combinations that are not on the page ('鳧氏為散花舞床')","severity":"serious","class":"O6","kind":"misread"},
+{"ocr":"竹冠簾子止是以失利","image":"賈胡 [後漢馬援傳] 伏波類西域賈胡到一處輒止是以失利 … 毀冠 [莊子] 裂服","problem":"the gloss entries 毀冠/裂服 are garbled into '竹冠簾子'; the English then invents 'The bamboo hat and curtains were the reason for his failure'","severity":"serious","class":"O6","kind":"misread"},
+{"ocr":"小字蠐宮","image":"小字蟾宮","problem":"the hero's childhood name is misread","severity":"moderate","class":"O6","kind":"misread"},
+{"ocr":"<header>耳目言語卷四</header>","image":"fold title of the Liaozhai volume (卷四)","problem":"running title misread","severity":"minor","class":"O11","kind":"misread"}],
+"tr_score":2,
+"tr_errors":[
+{"source":"考工記鳧氏為散花舞床…","english":"Records of the Craftsmen mentions the Fushi casting the Scattering Flower dance stage","problem":"fluent English built on the scrambled OCR, with no mark of doubt","severity":"serious","class":"T7","kind":"misread"},
+{"source":"小字蠐宮","english":"style name Zegong","problem":"wrong name (蟾宮, Chan'gong), and 小字 is a childhood name, not a style name","severity":"moderate","class":"O6","kind":"misread"}],
+"other":[],"not_this_leaf":false,"confidence":"medium"}],
+"page_verdict":"do_not_show","book_verdict":"The opening lines of the tale 白秋練 are nearly right, but the commentary above them is scrambled in the OCR and turned into confident, invented English glosses."},
+
+{"book_id":"69e72885a409200ea79efff6","slot":189,"title":"聊齋志異 Vol. 7","tradition":null,"shelf_fit":"fits","shelf_note":"Liaozhai, the tale 阿英, with red-ink commentary.","rights_flag":null,"structure_note":null,"on_sight_defect":false,
+"pages":[{"page_number":117,"right_page":"yes","form":"print","ocr_score":3,
+"ocr_errors":[
+{"ocr":"此處却說阿英不來有中閒方有次在途問答此文字排展法也","image":"此處却說阿英不來方有中間兩次在途問答言此文字挪展法也","problem":"red margin comment scrambled: order changed, 兩 and 言 dropped, 挪 read as 排","severity":"moderate","class":"O12","kind":"misread"},
+{"ocr":"今夕姊妹權會言之殤人不快","image":"今夕姊妹懽會言之嚇人不快","problem":"懽 read as 權 and 嚇 as 殤; the English then says the opposite ('let us speak of the sorrowful')","severity":"moderate","class":"O6","kind":"misread"},
+{"ocr":"下座者攜手曰","image":"下座者搖手曰","problem":"搖手 (waving the hand) read as 攜手 (taking the hand)","severity":"minor","class":"O6","kind":"misread"},
+{"ocr":"鶻睛鶚座","image":"鶻睛熒…","problem":"last characters misread; the English adds 'an eagle-like stance'","severity":"moderate","class":"O6","kind":"misread"}],
+"tr_score":3,
+"tr_errors":[
+{"source":"婢子膽怯爾爾便有虎狼銜去耶若要勿言須歌一曲為娘行侑酒","english":"You maids are too timid. Even if tigers or wolves were to carry you away, you must not speak of it—you must sing a song to toast the lady.","problem":"misconstrued: 'Little girl, so timid! Will a tiger or wolf carry you off? If you want me not to speak, you must sing a song to toast us'","severity":"moderate","class":"T8","kind":"mistranslation"},
+{"source":"言之殤(嚇)人不快","english":"let us speak of the sorrowful, not the unpleasant","problem":"should be 'talking of it frightens people and spoils the fun'","severity":"moderate","class":"O6","kind":"misread"}],
+"other":[],"not_this_leaf":false,"confidence":"medium"}],
+"page_verdict":"show_with_caveat","book_verdict":"Right leaf and the story is followable, but scattered misreads and one misconstrued speech distort the dialogue, and the red commentary is scrambled."},
+
+{"book_id":"6a3ceb5195fcd455630555fc","slot":190,"title":"周易圖書質疑·卷十五~卷二十 (vol 6)","tradition":null,"shelf_fit":"fits","shelf_note":"Siku quanshu copy of a Yijing diagram study, as catalogued.","rights_flag":null,"structure_note":null,"on_sight_defect":true,
+"pages":[{"page_number":50,"right_page":"yes","form":"plate","ocr_score":2,
+"ocr_errors":[{"ocr":"| ☱☰ | 夬 | ☷☳ | 大有 | ☶☳ | 頤 | … | ☵☰ | 需 | ☳☴ | 大壯 | ☶☴ | 蠱 |","image":"three columns of drawn six-line hexagrams, read right to left, labelled 坤/乾, (inverted label)/夬, 比/大有, (inverted)/大壯, (inverted)/小畜, (inverted)/需, some labels printed upside down to show the 綜 (inverted) pairing","problem":"the diagram is rebuilt as a markdown table of trigram-pair glyphs that do not match the drawn hexagrams; pairs and order are invented, and 頤, 豫 and 蠱 are not legible on the leaf while 坤 and 比 are dropped","severity":"serious","class":"O17","kind":"layout"}],
+"tr_score":3,
+"tr_errors":[{"source":"(the table)","english":"(the table, carried over)","problem":"faithful to the transcription but repeats its invented hexagram pairs","severity":"moderate","class":"O17","kind":"layout"}],
+"other":[{"note":"<summary>, <keywords> and a <note> describing the diagram appended to the English","severity":"minor","class":"D1"}],
+"not_this_leaf":false,"confidence":"low"}],
+"page_verdict":"do_not_show","book_verdict":"The cuo-zong hexagram diagram is flattened into a table whose glyphs and pairings do not match the drawn figures, so a reader is told the wrong hexagram pairs. The small inverted labels are hard to read at this resolution."}
+]

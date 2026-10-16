@@ -48,6 +48,9 @@ import { getEffectiveByline } from '@/lib/byline';
 import CollectionCoverEditor from '@/components/collections/CollectionCoverEditor';
 import { cardFramingStyle, COVER_EVENT, type CardFraming, type CoverEventDetail } from '@/lib/collection-card-image';
 
+/** #5853: run the page-text lane for unquoted multi-word queries too. Off unless NEXT_PUBLIC_SEARCH_PASSAGES_MULTIWORD=on. */
+const SEARCH_PASSAGES_MULTIWORD = process.env.NEXT_PUBLIC_SEARCH_PASSAGES_MULTIWORD === 'on';
+
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
 const PREVIEW_INDEX = 5;
@@ -699,14 +702,19 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         // Use unquoted query for full-text search (finds pages with both words),
         // then try phrase search for exact contiguous matches and promote those.
         const isPhrase = /^".*"$/.test(q.trim());
-        if (isPhrase) {
-          const unquoted = q.trim().slice(1, -1);
+        // Plain multi-word queries get the same page-text lane only behind a build-time flag (#5853): it costs a
+        // request per search and is OFF until measured on scripts/eval/search-recall.
+        const multiWordPassages = !isPhrase && SEARCH_PASSAGES_MULTIWORD && q.trim().split(/\s+/).length >= 2;
+        if (isPhrase || multiWordPassages) {
+          const unquoted = isPhrase ? q.trim().slice(1, -1) : q.trim();
           setPassageLoading(true);
           Promise.all([
             // Full-text search (both words on same page)
             searchApi.search(unquoted, { limit: 15, search_content: 'true' }),
             // Phrase search (exact contiguous match)
-            searchApi.search(q, { limit: 10, search_content: 'true' }).catch(() => ({ results: [] })),
+            isPhrase
+              ? searchApi.search(q, { limit: 10, search_content: 'true' }).catch(() => ({ results: [] }))
+              : Promise.resolve({ results: [] as SearchResult[] }),
           ])
             .then(([fullData, phraseData]) => {
               const fullResults = fullData.results || [];
@@ -2145,6 +2153,30 @@ function WorkEditionsLink({ group }: { group: NonNullable<SearchResult['work_gro
   );
 }
 
+/**
+ * "Translated edition: …" under a book the reader cannot yet read, when another
+ * edition of the same work is translated (#5975). Readers were asking us to
+ * translate pages of works we already held translated in another edition.
+ * Outside the card's <Link> for the reason WorkEditionsLink gives.
+ */
+function TranslatedEditionLink({ edition }: { edition: NonNullable<SearchResult['translated_edition']> }) {
+  const t = SEARCH_STRINGS[useLocale()];
+  const lp = useLocalePath();
+  const title = edition.title.length > 80 ? `${edition.title.slice(0, 79).trimEnd()}…` : edition.title;
+  return (
+    <div className="px-4 pb-3 -mt-1">
+      <Link
+        href={lp(`/book/${edition.slug || edition.book_id}`)}
+        className="inline-flex items-center gap-1 text-xs text-accent-gold-dark hover:text-accent-gold font-medium transition-colors"
+      >
+        <Languages className="w-3.5 h-3.5 shrink-0" aria-hidden />
+        {t.translatedEditionLink(title, edition.published)}
+        <ChevronRight className="w-3 h-3 shrink-0" />
+      </Link>
+    </div>
+  );
+}
+
 function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: { result: SearchResult; query: string; tenant?: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   // Client children take no `lang` prop — the pathname already says which
   // language they are in (i18n.md, "the book page: ONE page, two URLs").
@@ -2290,6 +2322,7 @@ function BookResultCard({ result, query, tenant, autoPassages, mobileCompact }: 
           </div>
         </div>
       </Link>
+      {result.translated_edition && <TranslatedEditionLink edition={result.translated_edition} />}
       {result.work_group && <WorkEditionsLink group={result.work_group} />}
       {passagesOpen && (
         <div className="px-4 pb-4 -mt-1">
@@ -2411,6 +2444,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
           </div>
         </div>
       </Link>
+      {result.translated_edition && <TranslatedEditionLink edition={result.translated_edition} />}
       {result.work_group && <WorkEditionsLink group={result.work_group} />}
     </div>
   );

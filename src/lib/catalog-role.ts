@@ -58,3 +58,38 @@ export async function effectiveCatalogRole(
 
 export const canEditCatalog = (role: Role) => ROLE_LEVEL[role] >= ROLE_LEVEL['contributor'];
 export const canReviewCatalog = (role: Role) => ROLE_LEVEL[role] >= ROLE_LEVEL['editor'];
+
+/**
+ * Catalogue ADMIN: may delete/restore a record and correct its UBN.
+ *
+ * Deliberately not a role level. José Bouman asked (2026-10-07, #6800) that
+ * only he and Paul Dijstelberge can delete records, while every BPH librarian
+ * holds `editor`. Raising the two of them to tenant `admin` would also change
+ * what they can do elsewhere, so this is a separate flag on the membership
+ * row (`catalog_admin: true`), granted per person. Platform admins carry it
+ * everywhere, as with every other catalogue permission.
+ *
+ * Fails closed: any lookup error means "not an admin".
+ */
+export async function isCatalogAdmin(
+  email: string | null | undefined,
+  platformRole: Role,
+  tenantSlug: string,
+): Promise<boolean> {
+  if (ROLE_LEVEL[platformRole] >= ROLE_LEVEL['admin']) return true;
+  if (!email) return false;
+  try {
+    const db = await getDb();
+    const tenant = await db.collection('tenants').findOne({ slug: tenantSlug, status: { $ne: 'deleted' } });
+    if (!tenant) return false;
+    const membership = await db.collection('memberships').findOne({
+      email: email.toLowerCase(),
+      tenantId: tenant.id,
+      status: 'active',
+      catalog_admin: true,
+    });
+    return Boolean(membership);
+  } catch {
+    return false;
+  }
+}

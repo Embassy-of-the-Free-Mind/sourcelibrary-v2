@@ -1,0 +1,246 @@
+[
+  {
+    "book_id": "6992ce133ea667fbac827f95", "slot": 102, "title": "本草綱目拾遺(七)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Zhao Xuemin's supplement to the Bencao gangmu; the page is the 雷公藤 entry, as the fore-edge margin says.",
+    "rights_flag": null, "structure_note": null, "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 18, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "魚目便毒", "image": "魚口便毒", "problem": "魚口 (inguinal bubo) misread as 魚目; the translation silently uses the right reading", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "癰痺跌打", "image": "癧痺跌打", "problem": "癧 misread as 癰", "severity": "minor", "class": "O6", "kind": "misread" },
+          { "ocr": "(not transcribed)", "image": "本草綱目拾遺 卷七 雷公藤 … 十六 in the fore-edge margin", "problem": "running title and folio number dropped", "severity": "minor", "class": "O11", "kind": "omission" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "除壁蝨莖燒牀下一切毒蛇傷", "english": "It eliminates wall lice, and the stems can be burned under the bed to ward off all kinds of poisonous snake bites", "problem": "two separate indications fused: the stems burned under the bed rid it of bedbugs; 'all poisonous snake bites' is a further disease it treats, not something the smoke wards off", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "萬病回", "english": "it is a remedy for ten thousand ailments", "problem": "the sentence runs on to the next leaf (萬病回春 or similar is a cited source/name); the English closes it as a complete claim", "severity": "moderate", "class": "T6", "kind": "mistranslation" },
+          { "source": "犂頭刺藤", "english": "Liutou Citeng", "problem": "pinyin wrong (Litou)", "severity": "minor", "class": "T8", "kind": "misread" },
+          { "source": "癰痺", "english": "(痺 not rendered)", "problem": "numbness/bi-syndrome dropped from the list of indications", "severity": "minor", "class": "T9", "kind": "omission" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Clean transcription of a clear printed page; the translation is faithful in the main but fuses the bedbug-smoke use with the snake-bite indication and closes a sentence that continues overleaf."
+  },
+  {
+    "book_id": "6a3cc1c1ec254ff6cae0edc2", "slot": 103, "title": "五燈會元·卷五 (vol 5)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Siku quanshu manuscript-style facsimile of the Wudeng huiyuan, juan 5, as catalogued.",
+    "rights_flag": null,
+    "structure_note": "One backstep and one repeat among only three printed numbers; with so few readable numerals these are most likely misread folio marks, not a splice.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 78, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "鈞定匹庫全書", "image": "欽定四庫全書", "problem": "running header misread", "severity": "minor", "class": "O11", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "少間與闍黎舉哀", "english": "I will ask you about the matter shortly", "problem": "the master says he will presently hold the mourning rites (wail) for the monk — the point of the exchange about parents' death; the English loses it", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "燒也不燒着", "english": "Burning them does not touch them", "problem": "loose; 'burned, yet it did not burn [anything]'", "severity": "minor", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Transcription is near perfect; translation is serviceable Chan dialogue with one blunted line (舉哀 'hold mourning' rendered as 'ask you about the matter')."
+  },
+  {
+    "book_id": "6a3cc1ccec254ff6cae0f113", "slot": 104, "title": "五燈會元·卷十三 (vol 13)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Wudeng huiyuan juan 13 (header 卷十三 on the leaf), as catalogued.",
+    "rights_flag": null,
+    "structure_note": "A single backstep among two printed numbers is noise from misread folio marks.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 136, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "(not transcribed)", "image": "欽定四庫全書 / 卷十三 running header", "problem": "header dropped", "severity": "minor", "class": "O11", "kind": "omission" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "因郡守受代歸", "english": "Shou, a substitute, returned.", "problem": "'when the prefect, his term ended, was returning home' — 守 is the prefect, not a person named Shou", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "師曰魯祖面壁", "english": "The Master said, \"Why does Luzu face the wall?\"", "problem": "the master's answer is the bare statement 'Luzu faces the wall'; turned into a question", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "猶是堦下漢 … 如何是堦上漢", "english": "the man beneath the pagoda … the man above the pagoda", "problem": "堦 is steps/stairs ('a man still below the steps'), not a pagoda", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "黎手裏也", "english": "(dropped)", "problem": "the opening words carried over from the previous leaf are not translated", "severity": "minor", "class": "T9", "kind": "omission" }
+        ],
+        "other": [
+          { "note": "The English opens with the heading '# Commentary on the Diamond Sutra'. Nothing on the leaf says this; the page is Chan dialogue from the Wudeng huiyuan, and the header reads 欽定四庫全書 卷十三. A reader is told the work is something it is not.", "severity": "serious", "class": "other:invented_heading", "kind": "confabulation" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The translation's heading '# Commentary on the Diamond Sutra' has no basis on the leaf, whose only header is 欽定四庫全書 / 卷十三 over Chan encounter dialogues (魯祖面壁, 郡守受代歸).",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "OCR is excellent, but the English carries an invented title ('Commentary on the Diamond Sutra') that misnames the work, plus several meaning-changing slips (prefect read as a name 'Shou', steps as 'pagoda')."
+  },
+  {
+    "book_id": "6992cdfb81c9d7efb84d129c", "slot": 105, "title": "本草綱目·卷五十二", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Bencao gangmu juan 52 (human substances — urine prescriptions), Siku facsimile, as catalogued.",
+    "rights_flag": null,
+    "structure_note": "Backsteps and repeats among 16 printed numbers in a book whose leaves carry only a juan number and folio; likely misread folio marks.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "中\n惡不醒", "image": "large-character heading 中惡不醒 split across two columns", "problem": "heading broken; small-character notes interleaved out of order with the large-character headings (e.g. 終不除也聖惠 placed after the next heading)", "severity": "minor", "class": "O11", "kind": "layout" }
+        ],
+        "tr_score": 1,
+        "tr_errors": [
+          { "source": "the whole page (中暍昏悶 … 折傷跌撲 童便入少酒飲之)", "english": "a 14-column table of single-word glosses: '| Take | Prevents | Not | Abdomen | Clots | Malignant | Navel | …'", "problem": "no translation at all: the characters are glossed one by one in a grid read across the vertical columns, producing word salad; none of the prescriptions (heatstroke treated by urinating on hot earth piled on the navel, urine for gold-sore bleeding, etc.) can be recovered", "severity": "serious", "class": "T16", "kind": "layout" },
+          { "source": "citations on the leaf: 聖惠, 肘后方, 千金方, 蘇恭本草, 林億 citing 張仲景", "english": "<note>… as cited in the \"Jin Kui Yaolue\" <gloss>Essential Prescriptions from the Golden Cabinet</gloss> and other texts.</note>", "problem": "the Jin kui yaolüe is named nowhere on the leaf; the note invents the source", "severity": "serious", "class": "T10", "kind": "confabulation" }
+        ],
+        "other": [
+          { "note": "The reader sees a markdown table of disconnected English words with a <note> beneath — a page of nonsense presented as a translation.", "severity": "serious", "class": "T16", "kind": "layout" }
+        ],
+        "not_this_leaf": true,
+        "not_this_leaf_evidence": "The note says the methods are 'cited in the \"Jin Kui Yaolue\"'; the leaf's citations are 聖惠, 肘后方, 千金方 and 蘇恭本草 (Lin Yi attributes one method to Zhang Zhongjing, but no Jin kui yaolüe is named).",
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription is usable, but the served English is a character-by-character grid of single words, not a translation, topped by a note that invents its source text; the page should be retranslated."
+  },
+  {
+    "book_id": "69dea7aa914eeed04ca4b3d5", "slot": 106, "title": "李卓吾先生批評西遊記 (Journey to the West), Vol. 8", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Li Zhuowu commentary edition of Xiyou ji; the leaf is the Wuchao chanshi episode (chapter 19), as catalogued.",
+    "rights_flag": null, "structure_note": null, "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 27, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "署眼", "image": "署眼 (head-margin comment) above the frame", "problem": "commentary note kept but placed inline after the verse with no marking as a marginal comment", "severity": "minor", "class": "O12", "kind": "layout" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "多年老石猴那里懷嗔怒", "english": "After encountering a many-year-old stone, it harbors anger there.", "problem": "'old stone monkey' — the verse's jibe at Wukong, which is why he flies into a rage and says the master 'scolded' him and his brother (the wild boar = Bajie) — is rendered as 'a many-year-old stone'; the reader cannot follow the quarrel that follows", "severity": "serious", "class": "T8", "kind": "mistranslation" },
+          { "source": "琴堂蒼狼為主簿獅象盡稱王", "english": "The lyre-hall's fragrant wolves act as clerks. Lions, elephants, <term>naoseng</term> <gloss>macaque-like</gloss> kings", "problem": "蒼狼 is 'grey wolves', not fragrant; 'naoseng macaque-like' is not in the text at all", "severity": "moderate", "class": "T10", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "An untranslated Chinese character left in the English: 'raised his iron staff,搗 <note>pounding or smashing</note> upwards wildly'", "severity": "minor", "class": "T2" },
+          { "note": "<summary> and <keywords> blocks appended to the reader text", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Transcription is clean; the prose half of the translation is good, but the verse loses 'old stone monkey', so Wukong's anger in the rest of the page makes no sense, and an invented 'naoseng' gloss is inserted."
+  },
+  {
+    "book_id": "6a3c675daf3c49b59c5d2a0d", "slot": 107, "title": "呻吟語摘·卷下 (vol 2)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Lü Kun's Shenyin yu zhai, lower juan (header 卷下), Siku facsimile.",
+    "rights_flag": null, "structure_note": null, "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 42, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "世治則禮法易行國衰則姦盜不起", "english": "when the country is in decline, treachery and theft cannot be prevented", "problem": "sense reversed: the parallel says that even when the state declines, villainy and theft do not arise (because the people are disciplined)", "severity": "serious", "class": "T8", "kind": "mistranslation" },
+          { "source": "正微從甚", "english": "correcting the subtle and following the obvious", "problem": "the sense is treating small faults as if grave (punishing the slight severely); 'following the obvious' is wrong", "severity": "moderate", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "The running header 欽定四庫全書 is rendered as a top-level title '# Imperial Collection of Four Treasuries', as if it were the work's title", "severity": "minor", "class": "O11", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Exact transcription; the translation reads well but reverses the key parallel (國衰則姦盜不起 'even in decline, theft does not arise' becomes 'theft cannot be prevented')."
+  },
+  {
+    "book_id": "6a3c68c5af3c49b59c5dc4db", "slot": 108, "title": "巢氏諸病源候總論·卷二十九~卷三十四 (vol 6)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Chao Yuanfang's Zhubing yuanhou lun, tooth disorders (juan 29), as catalogued.",
+    "rights_flag": null,
+    "structure_note": "Backsteps and repeats among 8 printed numbers are expected: the volume binds juan 29–34, each restarting its folio count.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 27, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "齒蜚候 / 齒蜚者", "image": "齒𧏾-type insect character (䘌/𧓍?) under 齒", "problem": "the disease character is rendered as 蜚; I cannot read the variant confidently at this resolution", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "至斷 / 令齒斷間", "image": "likely 齗 (gums)", "problem": "齗 'gum' read as 斷 'break'; carried into the English as 'eat the teeth until they break' and 'causes the teeth to break'", "severity": "moderate", "class": "O6", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "令齒斷間津液化為膿汁", "english": "it causes the teeth to break, and the interstitial fluids transform into pus", "problem": "should be 'the fluids between teeth and gums turn to pus'; the teeth do not break", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "source": "汁臭如屯之收", "english": "fluids that smell like the decay of a gathered pile", "problem": "fluent guess over a garbled phrase with no mark of doubt", "severity": "minor", "class": "T7" }
+        ],
+        "other": [
+          { "note": "Section titles wrapped in arrows: '->Tooth Decay Condition<-' shows in the reader text", "severity": "moderate", "class": "D1", "kind": "layout" },
+          { "note": "<summary> and <keywords> blocks appended to the reader text", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "Right leaf, mostly accurate; 齗 (gums) read as 斷 (break) makes the English say the teeth break, and arrow markup leaks into the headings."
+  },
+  {
+    "book_id": "6992ce1a3ea667fbac828217", "slot": 109, "title": "本草綱目拾遺(九)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Bencao gangmu shiyi juan 9 (花簪, 小兒破鞋 entries), as catalogued.",
+    "rights_flag": null, "structure_note": null, "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 62, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "夏布舊絞張", "image": "夏布舊蚊帳", "problem": "margin title 'old mosquito net' misread; English follows it as 'Old Purple Hemp Bag'", "severity": "minor", "class": "O11", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "用市鎭上乞小兒破鞋一隻", "english": "a single worn-out shoe from a child, bought in the marketplace", "problem": "乞 is 'beg for', not buy", "severity": "moderate", "class": "T8", "kind": "mistranslation" },
+          { "source": "稀痘出外帶之辟蛇蠱", "english": "If carried, it prevents the appearance of pox", "problem": "稀痘 'makes smallpox sparse' and 出外帶之 'carry it when going out' are run together", "severity": "minor", "class": "T8", "kind": "mistranslation" }
+        ],
+        "other": [
+          { "note": "<summary> and <keywords> blocks appended; the summary mentions 'a rare cup', which this leaf does not name", "severity": "minor", "class": "D1" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "Accurate transcription and a faithful translation of the hairpin charm; small slips (乞 'beg' as 'bought', margin title misread)."
+  },
+  {
+    "book_id": "6992cfb1f5b4f75c1a4c968d", "slot": 110, "title": "海國圖志(29)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Wei Yuan's Haiguo tuzhi, the Russia section (Poltava governorate), as catalogued.",
+    "rights_flag": null, "structure_note": null, "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 77, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "幅員萬六千八百零十方里", "english": "The area is 6,810 square *li*", "problem": "萬 dropped: the area is 16,810 square li", "severity": "serious", "class": "O7", "kind": "mistranslation" },
+          { "source": "戸百九十三萬三千口", "english": "1,933,000 households", "problem": "the figure is a count of persons (口), not households", "severity": "moderate", "class": "O7", "kind": "mistranslation" },
+          { "source": "東界阿羅匿斯西界幾付南界斯底里加那甫北界查尼俄付", "english": "<gloss>Eastern boundary, Voronezh; …</gloss>", "problem": "the boundaries are in the source but are wrapped in a <gloss> tag as if editorial", "severity": "minor", "class": "D1", "kind": "layout" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The transcription is exact, but the English drops 萬 and gives Poltava's area as 6,810 instead of 16,810 square li, and calls the population figure households."
+  }
+]

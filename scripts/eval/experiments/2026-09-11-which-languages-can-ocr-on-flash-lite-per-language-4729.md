@@ -7,8 +7,8 @@ canons: []
 n_books: null
 n_pages: null
 verdict: "Of 14 languages with a verdict, German, French and Dutch (routed lite) did not pass and Russian and Armenian (routed flash) did; Latin and Italian were never sampled."
-status: undecided
-decision: "Routing unchanged (ledger: UNJUDGED); editing the allowlist awaits Derek (#5090)"
+status: rejected
+decision: "Allowlist unchanged: an agreement score cannot settle routing. German, French and Dutch stay on Flash-Lite (routing row latin-script-print); Arabic, Sanskrit and Ge'ez moved to Flash on judged evidence instead (row persian-sanskrit-pali-arabic-print, #5700). Closed in #6688"
 superseded_by: null
 issue: [4729, 4735]
 ---

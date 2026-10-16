@@ -443,6 +443,43 @@ const CLI_XL = { writeup: 'scripts/eval/experiments/2026-10-08-cli-arm-xl-365-63
   TRACKS.push({ id: 'cli-arm-6331', writeup: CLI_XL.writeup, judges: 2 });
 }
 
+// #6750: Gemini 4 Argon low through the CLI (C4L, no API list price) beside C38 (stored, judged again in this round) and
+// the page's stored production English, one blinded item per page, both Opus judges on every item. Its own panel: the
+// #6331 panel's numbers come from another judging round. C38 is placed at G38's billed dollars, as in #6331.
+const G4L = 'gemini-4-argon-low+antigravity-cli';
+LABEL[G4L] = 'Gemini 4 Argon low (CLI)';
+const G4_XL = { writeup: 'scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md', file: 'g4-xl-6750/xljudge/scores.json' };
+{
+  const sc = JSON.parse(fs.readFileSync(path.join(RES, G4_XL.file), 'utf8'));
+  if (!sc.judge_gate_pass) throw new Error(`${G4_XL.file}: the judge gate did not pass, so no C4L number may be plotted`);
+  const PRODE = { L31: LITE, FP: FLASH }, A = ['C4L', 'C38', 'PROD'];
+  const fid = (r, a) => avg(Object.values(r.J).map(j => j[a].fid).filter(x => x != null));
+  const rev = (r, a) => Object.values(r.J).some(j => j[a].rev > 0);
+  for (const chart of charts) {
+    const all = sc.rows.filter(r => r.lang === chart.title && r.arms.length === 3);
+    const own = sc.primary.languages_ge_20[chart.title];
+    for (const a of A) {
+      if (own && (own.pages_shared !== all.length || Math.abs(avg(all.map(r => fid(r, a))) - own.arms[a].fidelity) > 0.0005)) throw new Error(`${G4_XL.file}: parse does not reproduce ${chart.title} ${a}`);
+    }
+    const lr = all.filter(r => keep(r.page_id));
+    if (lr.length < MIN_PAGES) continue;
+    if (lr.some(r => r.usd.G38 == null || r.usd.PROD == null)) throw new Error(`${G4_XL.file}: ${chart.title} has a page with no billed cost`);
+    const prods = [...new Set(lr.map(r => PRODE[r.prod]))];
+    const items = lr.map(r => ({ page: r.page_id, book: r.book, cluster: workOf(r.book),
+      fid: Object.fromEntries(A.map(a => [a, fid(r, a)])), rev: Object.fromEntries(A.map(a => [a, rev(r, a)])) }));
+    const arms = [
+      { arm: 'PROD', engine: prods.length > 1 ? 'production-per-book' : prods[0], label: prods.length > 1 ? 'Production (each book’s engine)' : LABEL[prods[0]], production: true, cost: billed(avg(lr.map(r => r.usd.PROD)), "billed tokens of #6182's run of the production engine at the Batch rate", X6182_WRITEUP) },
+      { arm: 'C38', engine: C38, label: LABEL[C38], cost: quota(avg(lr.map(r => r.usd.G38)), 'run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages', CLI_XL.writeup) },
+      { arm: 'C4L', engine: G4L, label: LABEL[G4L], cost: null, no_price: 'no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)' },
+    ];
+    chart.panels.push(buildPanel(chart, 'gemini-4-cli-6750', items, arms, {
+      heading: 'Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)', references: [{ reference: REF_DEFAULT, pages: items.length }],
+      date: dateOf(G4_XL.writeup), files: [G4_XL.writeup], famous: FAMOUS[chart.title] || 0,
+    }));
+  }
+  TRACKS.push({ id: 'g4-xl-6750', writeup: G4_XL.writeup, judges: 2 });
+}
+
 // #6182, Claude on the subscription: Sonnet 5.5 (CS) and Haiku 4.5 (CH) as Claude Code subagents, $0 billed, beside the
 // API's Gemini 3.8 Flash and the page's production engine, one blinded item per page, two blind Opus judges.
 const CL = { writeup: 'scripts/eval/experiments/2026-10-08-claude-subscription-arms-6182.md', xl: 'pareto-6182/claude/xljudge/scores.json', tib: 'pareto-6182/claude/tibjudge/scores.json' };

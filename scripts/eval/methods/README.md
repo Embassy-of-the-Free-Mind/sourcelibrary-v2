@@ -50,6 +50,7 @@ which. Rates are never pooled across methods: they sample different frames with 
 |---|---|---|---|
 | [shelf-overview](shelf-overview.md) | Opus reviewer | yes | stratified random, 4 books × 4 spread pages |
 | [curation-check](curation-check.md) | Opus reviewer or session | yes | hand-picked, 2 consecutive mid-book pages |
+| [served-audit](served-audit.md) | Opus reviewer | yes | random per book, stratified by lane, 1 page |
 | [fortnightly-spot-check](fortnightly-spot-check.md) | Opus reviewer | yes | random per book, 3 consecutive pages |
 | [monthly-corpus-audit](monthly-corpus-audit.md) | Opus judge | no | random, 1 interior page |
 | [refusal-empty](refusal-empty.md) | detector | no | every page of a sampled book |

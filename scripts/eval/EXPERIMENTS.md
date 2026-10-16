@@ -158,6 +158,268 @@ window was not narrower than the stored one: a second guess is not better for be
 one who died 1253) — now refused (`unrecognised_name`, 235 books). The model's own cycle numbers. 153 named authors have
 no BDRC match by exact name; 1,529 books name no author at all (mostly EAP ritual manuscripts from Bhutan).
 
+## 2026-10-16 · Seam repair, lean: rule fixes, Gemini via agy, and a runner that spends Claude only on a sample (#6742)
+
+PRIOR ART: `2026-10-15-seam-repair-pilot-6742.md` (the $0 Opus pilot; 227 joins written). Its prompt, placement check,
+blind judge, write path, manifest and undo (`seam-repair.mjs`) are reused unchanged. `2026-10-15-seams-scale-opus-flashlite-6742.md`
+holds the 300-junction set with Opus labels. The pilot cost ≈ 0.6 weekly Opus points per 100 joins (24 calls),
+about 20 account-weeks for the ~330K tranche. This entry tests two cheaper repairers, then builds and dry-runs a runner.
+
+**Test A: deterministic rules, no model.** Sample: the pilot's 500 tranche joins. Their excerpts were rebuilt from
+Mongo: the current text where the hash matched, else the `seam-repair-6742` revision pre-image. All 500 were
+recovered; Opus's `repairCheck` agrees on 386/386.
+- Catchword echo rule: the same 1–6 words end N and open N+1. The source decides which side keeps them:
+  - a hyphen split or split remnant stays on N, so N+1 loses it;
+  - a printed catchword belongs to N+1, so N loses it;
+  - with no source cause, the rule declines.
+- dup8 rule: an 8+-word run that ends N and opens N+1 is removed on the side whose English/source ratio it inflates.
+- Agreement measure: "equivalent" means the same join text after whitespace and punctuation are normalised.
+
+| signal | joins | rule edits | equivalent to Opus's repair | edits on Opus-ok joins | declined |
+|---|---:|---:|---:|---:|---:|
+| catchwordEcho | 185 | 122 | 84/108 = **78%** (69–85) | 10/122 = **8.2%** | 62 |
+| dup8 | 117 | 15 | 9/15 = **60%** (36–80) | 0 | 101 |
+
+- The bar was ≥ 95% equivalent and ≤ 2% edits on Opus-ok joins. **Neither signal is trusted.**
+- On 13 of the 24 echo misses, Opus also rewords or reorders the words.
+- The 10 edits on Opus-ok joins are real false positives: liturgical repeats, speaker turns, and a split noun next to a different verb.
+- Most dup8 joins are not facing-edge duplicates (75 of 117). Opus's repairs there move or retranslate text, which a deletion cannot reproduce.
+- These rules were designed and scored on the same 500 joins, so the rates are optimistic.
+
+**Test B: Gemini 3.8 Flash (low) via agy as the repairer.** Gemini used the pilot's single-join prompt over the
+#6742 300-junction set, one join per call. Its repairs went through the pilot's placement check and the pilot's blind
+Opus judge (both orders, 10 pairs per call, 10 A/A pairs per arm). The Opus reference repairs were re-judged in the
+same session.
+
+| | Gemini (agy) | Opus |
+|---|---:|---:|
+| labelled defective | 136 | 131 |
+| placed | 118 | 114 |
+| judge prefers the repair in both orders | **110** | **109** |
+| verified yield (/300) | **36.7%** | **36.3%** |
+| judged worse in both orders | 1 (0.8% of placed) | 0 |
+| plants caught and verified | 28/30 | 28/30 |
+| A/A pairs called tie | 20/20 | 20/20 |
+
+- Both arms verified the same 93 joins; 17 were Gemini-only and 16 Opus-only.
+- The one worse repair: Gemini closed a Greek sentence at a chapter break with an invented `[life]`.
+- Gate: yield within 10 points of Opus and ≤ 2% worse. **Passed (gap +0.4 points).**
+- Gemini cost: ~10K input and ~2.8K output tokens per join, 27 s per call. agy is a subscription, so this is $0.
+
+**The lean runner** (`scripts/maintenance/seam-repair-6742/lean.mjs`).
+- Candidates: every tranche join in the most-read books first. Readership is distinct (ip, day) per book in
+  `analytics_pageviews` over 60 days, the instrument of `ocr-convergence/driver.mjs frame`.
+- Tier 1: rules, for the signals Test A trusts. That set is empty.
+- Tier 2: Gemini with tight windows: ~2 English sentences either side and the matching share of the source,
+  ~700 characters against the pilot's ~3,000. Opus at 30 joins per call is the fallback.
+- Placement: the pilot's checks, plus a new content-conservation guard. A repair is refused if more than 3 content
+  words vanish from the join.
+- Verification: a 7% blind Opus sample, minimum 20, both orders, with an A/A pair. Below 90% preferred, nothing is
+  written and a DECISION line goes to the digest.
+- Writes: `writePageTranslation`, labelled `seam-repair-6742`, with the pilot's manifest and undo.
+- Guard: stops when the box's account is ≥ 60% weekly (read the way `spare-lane.py` does).
+
+**Dry run: 2,000 candidates, 43 books (views 567 → 170), no writes.**
+- Tier split: tier 1 = 0, tier 2 = 2,000 (Gemini). 7 of 2,000 agy calls failed.
+- Placed: 1,267 (63%). Refusals:
+  - 278 labelled ok, 175 with no repair;
+  - 158 that drop content words, 75 touching more than 3 sentences, 30 edits too large;
+  - 17 other.
+- 7% sample: preferred in both orders **85/89 = 95.5%**, judged worse 0, A/A a tie. That clears the 90% floor.
+- Would write **967 joins (1,477 pages)**. 300 placed repairs were refused against the stored text. 239 joins mapped
+  only through the new tag-aware path (`mapProjected`), counted before the structure guard below; before it, the pilot lost 61/304 joins this way.
+- Calls per 100 joins: 100 agy and 0.9 Opus (judge only). The pilot used 24 Opus calls per 100 joins.
+- **Claude per 100 joins: $0.12 list-equivalent. At the pilot's ratio (0.6 points ≈ $7.6 list), that is ≈ 0.01
+  weekly points, against the pilot's 0.6.**
+  - The account meter read weekly 28% → 35% over the 4.4 h run. That account was shared with other jobs, so 0.35
+    points per 100 joins is only an upper bound.
+- Opus fallback, measured on 60 of the same candidates: 2 repair calls, $1.43 list per 100 joins for repair. With the
+  sample, that is ≈ 0.12 points per 100 joins, 35 placed, sample 20/20.
+- Throughput at 4 agy calls in flight, box load 25–35: 460 joins/h, ≈ 220 written joins/h.
+
+**Guards added because the dry run needed them.**
+- `lostWords`: Gemini proposed deleting a title-page head, and replacing a dedication with "[This page is blank.]".
+  Both passed the pilot's placement checks.
+- `mapProjected`: maps edits that cross `<term>`, `<gloss>`, `->…<-` or headings. Only the changed words are
+  rewritten, and an edit inside or against markup is refused.
+- `structureRefusal` (both mapping paths): refuses an insertion that would land inside a `**bold**` heading, and edits
+  on `| table |` rows. The dry run produced both.
+- Gemini also labelled 59 joins in 18 books with "not a translation of its source".
+  - The leads concentrate in *Utriusque Cosmi Historia*, the Chun Ts'ew, and the Summae de casibus.
+  - They are listed in `dry-run/not-a-translation-flags.json`. They are model claims from text windows, not
+    image-checked, so they are leads for a containment check, not findings.
+  - The content guard keeps the runner from "fixing" them by deletion.
+
+**Scale.** The ~330K-join tranche costs ≈ 30 weekly Opus points in total on the sample, against ≈ 2,000 for the
+pilot. Writes would cover ~48% of joins. The binding constraints are now agy calls (one per join; the account makes
+~10K per day) and wall time: ~2,700 joins per 6 h night at 4 calls in flight, ≈ 120 nights.
+
+Proposed cron entry, not installed:
+`30 1 * * * cd /root/sourcelibrary && flock -n /tmp/sl-seam-lean.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/maintenance/seam-repair-6742/lean.mjs night --out=/mnt/HC_Volume_105839809/seam-lean-6742 --max-joins=2500 --apply' >> /var/log/sourcelibrary/seam-lean.log 2>&1`
+
+Data: `scripts/eval/results/seam-lean-6742/` (README there). Scripts: `rules.mjs`, `score-rules.mjs`,
+`gemini-repair.mjs`, `lean.mjs`, with the pilot's `seam-repair.mjs` extended (`writeRepairs`, `mapProjected`,
+`structureRefusal`). Tests: `tests/unit/seam-repair-lean.test.ts`.
+
+## 2026-10-16 · Does Gemini 4 Argon, or Opus at one page per call, beat Gemini 3.8 Flash Low on Maya?
+
+**Why.** The 2026-10-14 test gave Maya to Gemini 3.8 Flash Low over Opus at 5 pages per call. Two questions were left: does a newer Gemini (`gemini-4-argon-low`, available on agy) do better, and was Opus's loss caused by the multi-page block rather than by the model? A dictionary check of *Coleccion de sermones* p. 247 (#6559, 2026-10-16 00:41 UTC) had Flash right on 4 of 5 disputed words and Opus on 1.
+
+**Design.** Same pages as 2026-10-14 (`selection-maya.json`): Domínguez *Platicas* 1758 pp. 25–29, *Coleccion de sermones* 1846 pp. 245–249, Ripalda *Catecismo* 1847 pp. 49–53 (Yucatec), Saz *Libro de pláticas* pp. 163–167 (Kaqchikel MS). Nothing was written to any page. Run by job `maya-g4-6559`; scored by `maya-route-6559`.
+- **Arms.**
+  - **Argon:** `cli-translate.mjs read --model=gemini-4-argon-low`, agy, one page per call, seeded with its previous page (the 3.8 arm's path and prompt, `Standard Translation` v13, `sentinels-6523`).
+  - **Opus 1pp:** `claude-translate.mjs read --model=opus --per-call=1`, subscription. 3 calls on *Platicas* were refused by the tag check and re-read (p. 29 needed a third run).
+  - **Comparator:** the stored 2026-10-14 Gemini 3.8 Flash Low reads.
+- **Judges.** Each arm was paired with 3.8 Flash and judged in both A/B orders by `agy gemini-3.8-flash-high` and by a sealed `claude -p --model opus` with the page image (`claude-judge.py`), with the 2026-10-14 prompt. One Gemini-judge reply (Kaqchikel, Argon pair) came back empty and was not re-run, so that cell has 19 pages.
+
+**Result.** Fidelity 1–5, each page order-averaged. Positive = the new arm ahead of 3.8 Flash.
+
+| pair | judge | new arm | 3.8 Flash | new − 3.8 (95% CI) | pages new > / = / < | Yucatec only (15 pp) | Kaqchikel (5 pp) |
+|---|---|---|---|---|---|---|---|
+| Argon vs 3.8 | Gemini 3.8 Flash High | 3.63 | 3.00 | **+0.63** (+0.13, +1.11) | 13 / 1 / 5 | +0.63 | +0.62 (4 pp) |
+| Argon vs 3.8 | Opus | 3.98 | 3.25 | **+0.72** (+0.42, +1.02) | 14 / 5 / 1 | +0.57 | +1.20 |
+| Opus 1pp vs 3.8 | Gemini 3.8 Flash High | 2.23 | 4.35 | −2.12 (−2.50, −1.68) | 1 / 0 / 19 | −2.33 | −1.50 |
+| Opus 1pp vs 3.8 | Opus | 2.95 | 3.55 | −0.60 (−1.15, 0.00) | 5 / 1 / 14 | −0.93 | **+0.40** |
+
+By book (new − 3.8):
+
+| book | Argon, Gemini judge | Argon, Opus judge | Opus 1pp, Gemini judge | Opus 1pp, Opus judge |
+|---|---|---|---|---|
+| *Platicas* 1758 | +0.20 | +0.60 | −2.00 | −0.40 |
+| *Coleccion de sermones* 1846 | +1.10 | +0.70 | −2.80 | −1.60 |
+| Ripalda 1847 | +0.60 | +0.40 | −2.20 | −0.80 |
+| Kaqchikel *Libro de pláticas* | +0.62 | +1.20 | −1.50 | +0.40 |
+
+Listed errors, summed over both orders (new / 3.8): Argon under the Opus judge has 4/27 omitted, 29/30 added, 80/153 mistranslated; under the Gemini judge 15/46, 31/52, 76/123. Opus 1pp has more of every kind than 3.8 under both judges.
+
+Speed (wall clock per call, from the logs): Argon 38 s a page on agy under that night's load; Opus 1pp 23 s a page.
+
+**Checked by eye (on the text).** *Coleccion* p. 247, the 2026-10-16 dictionary arbiter page: Argon has *Ahzáat-zah c zipiléex* "the Forgiver of our sins" ✓, *ti iké* "spoken to the wind" ✓, *zinil kab* "stretch out your hand" ✓, *káaxóob* "forests", with a note that the Maya departs from the Latin *montes* ✓, and *zebchilah* "speaks to us in prophecy" ✗ (Pío Pérez: "presto, á priesa"). 4 of 5, against 3.8 Flash's 4 of 5 (it missed *káax*) and Opus 10pp's 1 of 5.
+
+**Limits.**
+- Same 20 pages and 4 books as 2026-10-14, so the two tests are not independent.
+- The Gemini judge shows a large position bias in the Argon pair: Argon − 3.8 is +1.10 with Argon shown first and +0.16 shown second. Under the Opus judge the two orders agree (+0.65, +0.80). The verdict rests on the Opus judge, the family of neither arm.
+- Argon was not judged against Opus, so the Kaqchikel question (Opus ahead of 3.8 there in both 2026-10-14 and this run, under the Opus judge) stays open.
+- Judges score side by side; read the differences, not the absolute scores.
+
+**Decision.** Yucatec lane: **Gemini 4 Argon Low**. Applied by job `maya-route-6559` to the Yucatec prints of #6559 (the 11 books now on 3.8 Flash, and the 4 maya-modern imports on Opus). Kaqchikel stays on Opus. The Motul dictionary (Spanish glosses) is out of scope.
+
+**Artifacts.** `scripts/eval/results/paired-translate-maya-6559/`: `maya-argon-gemini/` and `maya-opus1-gemini/` (keys, judge outputs, `requests.jsonl.gz`), `reads/maya-argon.tar.gz`, `reads/maya-opus1.tar.gz`, and `score-all.txt` / `summary.json` regenerated by `score.py` over every packet.
+
+*Replicated?* No.
+
+## 2026-10-16 · Gemini 4 Argon low re-read pilots: Grec 1841 and Zohar Chadash (#6769)
+PRIOR ART: `2026-10-15-gemini-4-argon-hard-hands-greek-ms-rashi-6731.md` (the panel result this pilots: G4L 0.78 vs served 0.58 on Greek manuscripts, 0.83 vs 0.48 on Rashi; Amendment 2's spread-vs-page image fix), `2026-10-06-greek-manuscripts-full-kraken-fit-5619.md` (the 385-book Greek manuscript census used for the plan).
+
+**Question (Derek, 2026-10-15).** #6731 found that G4L reads Greek manuscripts and Rashi script far better than the served text. Before re-reading these whole shelves, run one book of each through the real writer: does the apply write what it should, is the new text better against the image, and what would a write set off downstream?
+
+**Design.** $0. No page was written; `apply` ran without `--apply`.
+- **Books.**
+  - Greek: Grec 1841 (Proclus, *In Timaeum*, 355 spreads). This page was named in the brief.
+  - Rashi: the rule was "the lowest served accuracy in #6731 among the 12 books, ≥ 100 pages, visible". It picks Zohar Chadash (1702, 188 pages): served 0.22 on its 3 OCR-scored pages; G4L scored 0.77. Pardes Rimmonim was next (0.22, 348 pp).
+- **Read.** `cli-ocr.mjs read --model=gemini-4-argon-low --concurrency=2`. This is the live OCR prompt, agy 1.3.6, on the page's own image (`getPageSource`). Grec 1841's page records are whole spreads, so they were read whole: #6731 cut them at the gutter. Pages that failed for transient reasons (503 "service unavailable", or a 300 s timeout) were re-run until they read: 3 passes.
+- **Blind A/B (step 2).** `draw.mjs`: 30 pages per book, seeded random, from the pages with both a G4L read and served text. There were 5 more pages per book as **controls**: the G4L text against a copy of itself with planted errors (8% of words swapped for other words of the page, one middle line dropped).
+  - Both texts were stripped of markup, so the judge cannot recognise a prompt generation by its format.
+  - A/B order was randomised; ids were opaque.
+  - The judge got the image whole plus two enlarged halves, long side ≤ 2,000 px.
+  - The judge was Opus 5.5 through the Claude CLI (`judge.py`; never agy, no API key). It had to check ≥ 3 differing places against the image, then answer A / B / same. It also reported the column count and each text's reading order.
+- **Column order (step 3).** On every page the judge saw as ≥ 2 columns, it reported order for each text. I (Opus, this job) read 5 of those images myself.
+
+**Result: reads.**
+
+| book | pages | final reads | transient failures retried | median s/page | wall s/page (2 at a time) |
+|---|---|---|---|---|---|
+| Grec 1841 | 355 | 355 ok | 13 (11 × 503, 2 timeouts) | 81 | 46 |
+| Zohar Chadash | 188 | 187 ok, 1 timeout with partial text | 29 (26 × 503, 2 timeouts, 1 "model not recognised") | 82 | 49 |
+
+- In all, the job made 586 G4L calls: 544 ok, 38 exit 1, 4 timeouts.
+- There was no quota error. About 1,090 G4L calls ran account-wide in those 4.5 h.
+- No read needed a nudge. Two Rashi reads were re-read by the chatter guard.
+
+**Result: dry apply (step 1).**
+
+| book | would write | refused | reasons |
+|---|---|---|---|
+| Grec 1841 | **5** (microfilm target, covers) | **350** | all "only N% of its words are in the stored read" (median 15%) |
+| Zohar Chadash | **121**: 48 over flash-lite OCR, **30 over Sefaria-fitted text**, 43 onto empty pages | 67 | 66 shared-words guard (median 7%), 1 CLI timeout |
+
+- No page was refused as human-edited, a loop, a refusal, chatter or over-long.
+- No page was held. Neither book carries a pipeline hold, and the ya-btags hold is Tibetan-only.
+- Folding accents and final sigma does not change the guard result (Greek median shared 0.15 → 0.16; 5 pass either way). So the guard is not tripping on orthography: the stored reads are simply that far from the page.
+
+**Result: blind A/B against the image (step 2).** G4L vs served, 30 pages per book:
+
+| book | G4L better | same | G4L worse | controls (clean copy chosen) |
+|---|---|---|---|---|
+| Grec 1841 | **29/30 = 97%** [83, 99] | 1 (a French microfilm notice) | **0/30** [0, 11] | 5/5 |
+| Zohar Chadash, all | 25/30 = 83% [66, 93] | 0 | 5/30 = 17% [7, 34] | 5/5 |
+| · served from flash-lite OCR | **25/25** [87, 100]: 13 the apply would write, **12 the guard refuses** | 0 | 0 | |
+| · served from Sefaria (`sefaria-fit-5560`) | 0/5 | 0 | **5/5** | |
+
+- 59 of 60 verdicts were "high" confidence. Every judge call opened all three images (4 turns).
+- A slip let 8 requests run twice, and all 8 repeats gave the same verdict.
+- On the Sefaria pages, the judge's notes match the image to the Sefaria text word for word: שבע אלפי עלמין, ולא קשיר קשרא. G4L misreads these, giving צבע and פקיד.
+
+**Result: column order, Rashi (step 3).** The judge saw 23 of the 30 drawn Zohar Chadash pages as two columns.
+- G4L gave the right column first on 17 of them and **the left column first on 6 (26%, [13, 46])**. That is the same left-before-right fault #6731 saw on spreads.
+- The served text was in order on 12, interleaved line by line on 4, and not columnar on 7.
+- I read 5 images myself, and all 5 agree with the judge:
+  - p47: the right column's last line "…ללכת" runs on into the left column's "בהבלי העולם". G4L starts at בהבלי, so it is reversed.
+  - p116: G4L starts with the ליקוטים column, not זהר כי תבוא. Reversed.
+  - p154: G4L starts with "ומתמן שמעון · ריחא", not "עלייהו איתמר". Reversed.
+  - p84: correct.
+  - p135: correct. G4L places the bracketed side-gloss (אמ"ו בככ"י מצאתי כתוב…) after its anchor line.
+- Two of the five images are mis-split. p84 carries a strip of the neighbouring page. p135's crop cuts off its own right column, and G4L leaves the cut column out.
+
+**Downstream (step 4): what an apply would set off.**
+- **The marker.** `mark-stale-translations.mjs --apply --since-hours=26` runs daily at 07:30 on Hetzner. It stamps `translation_stale` on every rewritten page that carries English.
+  - The reader shows nothing for that marker (`git grep translation_stale -- src`). Readers would see the new transcription beside English made from the old one.
+  - The marker is not a withhold: `WITHHOLD_LANES` is BDRC and Syriac only.
+- **Who retranslates.**
+  - Orchestrator gap-fill picks a book at `translate_partial` / `translate_complete` / `chapters_complete` / `complete` whose `pages_translated < 0.9 × (pages_ocr − pages_blank)`. It then dispatches **every page whose English is older than its OCR**, i.e. the whole re-read book.
+  - translate-worker self-dispatch does the same for books at `ocr_complete` / `translate_partial`.
+  - Both refuse held books and books the #5700 trust gate refuses.
+  - The model is `getTranslateModelForBook`: Greek and Hebrew → `gemini-3-flash-preview`.
+  - Both lanes ask the daily dial, which is currently **$5/day**.
+- **Price.** 4,435 in / 1,581 out tokens a page: the Greek/Hebrew mean of `realtime-translate.mjs` flash rows over the last 45 days. At $0.50 / $3.00 per M that is **$0.0069/page** realtime, $0.0035 on Batch.
+  - This is a floor: thinking tokens are not in the meter.
+  - `gemini_usage` logs those 13,692 flash rows at `cost_usd: 0`, so they are priced here from tokens.
+- **Grec 1841:**
+  - 354 pages carry English. Status `complete`, 100% translated, not held, and the trust gate passes: its pages carry no handwriting tag, so it is not counted as a manuscript.
+  - The apply as built writes 5 pages (4 with English): 4 stale marks and no dispatch.
+  - A full write would stale 354 pages and still dispatch nothing: the share stays at 1.0. The English would stay stale until someone retranslates (≈ $2.44 realtime).
+- **Zohar Chadash:**
+  - 95 pages carry English. Status `failed`, not held, trust passes.
+  - The would-write set holds 38 pages with English, 28 of them over Sefaria text. Status `failed` is selected by neither lane, so nothing dispatches now.
+  - If the book reaches a translate status, it is under the 90% bar (95/188 after an apply). Gap-fill would then retranslate all ~188 pages (≈ $1.30).
+- **The $0 route.** `scripts/batch/cli-translate.mjs` (agy, one call at a time, ~30 s a page), or `claude-translate.mjs` (Opus through the Claude CLI, #6559), both through its `apply`. Neither asks the trust gate. `writePageTranslation` clears the stale marker.
+
+**Full-run frame** (`plan.mjs` → `results/g4-reread-pilot-6769/plan.json`, `plan-books.csv`). "CLI days" means one concurrency-2 stream at the pilot's wall rate: 46 s/page Greek, 49 s/page Hebrew.
+
+| shelf | visible books | pages | pages with English | trust-refused | held | CLI days | paid retranslation (realtime / Batch) |
+|---|---|---|---|---|---|---|---|
+| Greek manuscripts (#5619 census) | 355 | 137,189 | 117,557 | 207 | 11 | 73 | $818 / $409 |
+| · Greek share ≥ 0.5 | 296 | 125,892 | 115,280 | 191 | 11 | 67 | |
+| · located in an open edition (#5619) | 87 | 37,138 | 32,540 | 66 | 1 | 20 | |
+| · trust row `greek-manuscript` | 126 | 68,987 | 59,352 | 126 | 3 | 37 | |
+| Rashi (#6731 classification) | 28 | 8,363 | 6,846 | 0 | 7 | 4.5 | |
+| Mixed square + Rashi | 10 | 7,360 | 5,085 | 0 | 1 | 3.9 | |
+| Rashi + mixed | 38 | 15,723 | 11,931 | 0 | 8 | 8.9 | $83 / $42 |
+
+- Across the 38 Hebrew books, 43 pages in 2 books are Sefaria-fitted.
+- Two of them, Ein Yaakov (270 pp) and Talmud Yerushalmi (736 pp), are already under the gap-fill bar. A write there turns a gap-fill of the untranslated pages into a retranslation of the whole book (1,006 pages, ≈ $7 realtime).
+
+**Caveats.**
+- **One book per script.** Grec 1841 is the book #6731 found worst served (0.36), so its 29/30 is the easy end of the shelf.
+- **Judge.** The judge is one model family's preference. The controls show it catches planted errors at this length; they do not show it can rank two real reads of a hard hand. The Sefaria result (5/5 for an edition text) is consistent with it reading the image, not the fluency.
+- **Frame.** The A/B frame excludes pages with no served text: the 43 empty Zohar Chadash pages, which G4L fills.
+
+**Grade:** directional (2 books, 30 + 30 pages, 10 controls). Nothing here changes routing. *Cost:* $0; 586 G4L calls, 80 Opus judge calls (2 of them a smoke test). *Artifacts:* `scripts/eval/g4-reread-pilot-6769/` (draw, judge, score, timing, plan), `scripts/eval/results/g4-reread-pilot-6769/` (keys, verdicts, scores, dry-apply logs, timing, plan, and the G4L reads as `reads-g4l.tar.gz`, which `cli-ocr.mjs apply --out=` can consume once unpacked).
+
+**Verdicts (2026-10-16, these two books):**
+- **Greek manuscripts:** the G4L re-read is better than the served text against the image (29/30, 0 worse). As built, `cli-ocr.mjs apply` cannot write it: the 40% shared-words guard refuses 350 of 355 pages.
+- **Rashi:** the G4L re-read is better than flash-lite OCR (25/25, including 12 pages the guard refuses). It is worse than Sefaria-fitted text (0/5). It reads the left column first on 26% of two-column pages.
+
 ## 2026-10-15 · Does Gemini 4 Argon low correct the Yigdzin Tibetan better than 3.8 Flash low? (#6560)
 
 PRIOR ART: `2026-10-13-tibetan-flash38-correct-6560.md` (3.8 Flash low and high, the arm the running pass uses),
@@ -242,6 +504,103 @@ away-from-Derge spot check on the first volume, because that is the one place wh
 *Replicated?* No. Artifacts: `scripts/eval/results/tibetan-correct-6560/out/g4l-*`, `out/readoff-opus-settles-g4l.jsonl.gz`,
 `readoff-key-opus-settles-g4l.json.gz`, `scores-g4l.json.gz`. Re-scoring from the committed files reproduces every
 number above.
+
+## 2026-10-15 · Gemini 4 Argon low correction pass, the same gate volume (#6560)
+
+PRIOR ART: `2026-10-15-tibetan-flash-pass-gate-6560.md` is the gate this repeats: 3.8 Flash low on the same volume,
+NO-GO (judge B: 10 of 40 pages worse, the leaf shows the correction at 74% [69, 80] of decided spans).
+`2026-10-15-tibetan-gemini4-argon-correct-6560.md` is the 30-folio arm where G4L topped identity against Derge
+(0.972), with one plausible-word substitution seen by eye. Identity against Derge rewards normalising toward the
+print; only the leaf audit decides. Derek, 2026-10-15: run G4L through the gate.
+
+### Preregistration (committed before any G4L call)
+
+- **Volume:** `69e7aaba80b52390feb199b8` (Thadrak Kanjur rGyud 'bum Kha, 435 pages), the same page list
+  (`pass/volume-ids.mjs`).
+- **Read:** `pass/run-volume.sh 69e7aaba80b52390feb199b8 --no-apply` with `MODEL=gemini-4-argon-low`
+  `JOB=tib-g4-gate-6560`. The only change to the script is that the model and job name are parameters; the CORR
+  request (`corr-prompt.txt`), lane, guard and dry apply are the Flash gate's. At most 2 agy calls in flight. A
+  quota stop (exit 3) is resumed after the reset, at most 3 times. Transient agy errors are re-read, as Flash's 13
+  were. **Nothing is written to `pages`.** $0 (agy and `claude -p` only).
+- **Guard:** the ya-btags leaf check as in the pass (Opus via `claude -p`, sealed, Read only).
+- **Audit:** `leafcheck.mjs audit-req --n=40 --seed=6560`: 40 pages drawn from the changed pages the dry apply
+  would write (guard reverts applied, over-25% pages excluded), every changed span, 2 known-answer controls per
+  page. Same READOFF request, A/B blind, context from the draft. The 40 pages are drawn from G4L's changed set, so
+  they are not the same 40 pages as Flash's.
+  - **Judge B (primary):** `tiles-req`, full frame + 4 full-resolution tiles, fresh `claude -p` Opus.
+  - **Judge A (secondary):** the full frame only.
+  - `audit-score` per judge, and `judges` for the pooled verdict and α.
+- **Decision rule, fixed now, against Flash's judge-B numbers.** GO only if all three hold on judge B:
+  1. the leaf shows the correction at **≥ 90%** of decided spans, **and** the Wilson 95% lower bound is **above
+     80%** (Flash's upper bound, [69, 80]);
+  2. pages worse **≤ 2 of 40** (Flash: 10);
+  3. controls right **≥ Flash's rate**, 67 of 80 (84%), as a rate over the controls asked.
+  
+  Otherwise NO-GO. Judge A and the pooled verdict are reported beside it and do not decide.
+- **Also reported:** seconds per page (median of the read's started→finished, beside Flash's on the same volume),
+  the guard's hit rate, the kinds of change the leaf contradicts, and 3 pages read by eye where judge B says the
+  leaf shows the draft (labelled read-from-image).
+
+### Result (2026-10-16)
+
+**Run.** 435 pages read with `gemini-4-argon-low` through `run-volume.sh --no-apply` (`MODEL`, `JOB` env). 35 calls
+failed on agy 503/500 "eligibility check" errors and 1 timed out; all were re-read on a second run of the script. No
+quota stop. $0. Nothing written to Mongo.
+- **Dry apply:** 426 pages would be written. 3 were refused for changing 29%, 40% and 44% of the draft's syllables;
+  5 were refused because the reply was cut before `<<<END>>>` (after the one re-read cli-ocr gives); 1 was held by the
+  guard. Flash: 432 / 2 / 0 / 1. The median change is 1.36% of the draft's syllables (Flash 0.97%); 10 pages are
+  unchanged (Flash 40).
+- **ya-btags guard:** the same single hit as Flash, མོས→མྱོས on p. 415. Opus answered "unclear" again, so it would be put
+  back.
+- **Seconds per page** (median of the successful call, started→finished): **40 s** against Flash's 28 s on the same
+  volume (quartiles 34–58 against 21–56). Wall time was longer: the 503s cost about a third of the first pass.
+
+**Audit.** 417 changed pages apply would write; 40 drawn by seed 6560; 309 changed spans and 80 controls.
+
+| arm (same volume, same rule) | judge | worse / same / better (of 40) | leaf shows the correction (decided spans) | spans unclear or other | controls right / wrong / unclear |
+|---|---|---|---|---|---|
+| Flash 3.8 low | B: frame + 4 tiles | **10** / 6 / 24 | 178 of 239, 74% [69, 80] | 41 of 280 | 67 / 3 / 10 |
+| **G4 Argon low** | **B: frame + 4 tiles** | **5** / 6 / 29 | **233 of 297, 78% [73, 83]** | 12 of 309 | **72 / 1 / 7** |
+| Flash 3.8 low | A: frame only | 2 / 16 / 22 | 133 of 149 (89%) | 131 of 280 | 43 / 0 / 37 |
+| G4 Argon low | A: frame only | 0 / 15 / 25 | 168 of 185, 91% [86, 94] | 124 of 309 | 52 / 1 / 27 |
+| G4 Argon low | pooled (A and B) | 3 / 7 / 30 | 230 of 282, 82% [77, 86] | 10 both unclear, 17 cancel | — |
+
+- **Rule (judge B):** (1) 78% < 90%, and the lower bound 73% is not above 80%: **fails**. (2) 5 > 2 pages worse:
+  **fails**. (3) controls 72 of 80 (90%) ≥ 84%: passes. **NO-GO.**
+- **Judge agreement** (eval-design.md §2): span answer α 0.15, 309 spans; leaf side where both decided α 0.53, 183
+  spans. Both **not settled**. Judge A abstained on 40% of spans and 27 of 80 controls, as it did for Flash; its
+  0 worse is not a finding.
+- The two arms' audits draw different 40 pages (each from its own changed set), so the side-by-side is not paired.
+
+**What the leaf contradicts** (judge B's 64 draft-side spans, classified by hand):
+- **Substituted words, 28.** Examples: བརྒྱད→བདུན (eight → seven, p. 331), མཐོ→མཆོག (p. 47), བསྐྱོད→བསྡུད,
+  ཚེགས་ཆེན→ཚེ་ཟད, ཆོས→ཚེམས, སྨྱོན→སྐྱོན, གཞན→གཞག.
+- **Syllables split or merged, 11.** G4L expands contractions the leaf writes as one syllable: ཆོག→ཆོ་ག twice,
+  གེར→གེ་ར, པུར→པུ་ར, ལན→ལ་ན, མཎྜལ→མཎྜ་ལ, ཀཽར→ཀཽ་ར, པོའམ→པོ་འམ. Three go the other way (ན་ར→ནར).
+- **Particles, 10:** པོ→པོའི, ཡ→ཡི, མོའི→མོའོ, ∅→ལ twice, ∅→དང, པ→∅.
+- **Mantra and Sanskrit, 8:** ཨ→ཨཱ, ཀཱ→ཀ, ཀྵེ→ཀེ, དྲུ→དྷཱུ, ཧཱུྃ་ས་ཧཱུྃ→ཧྲཱིཿཧཱུྃ.
+- **Spelling normalisation, 6:** འཀྱིལ→དཀྱིལ, ཅུ་ཀྲུང→ཆུ་ཀླུང, འཐོན→ཐོན, དགང→དགངས.
+- **A non-Tibetan character, 1:** p. 47, སྐྱེད་སྡོམ→ས್ದོམ, with U+0CCD KANNADA SIGN VIRAMA inside a Tibetan stack. It is
+  the only such character in the 435 reads. No guard catches it today.
+
+**Checked by eye (read-from-image, full resolution crops):**
+- **p. 331, line 4:** the leaf has །བརྒྱད་ན་འཆི་བར་ཤེས་པར་བྱ། (a tall r-g-y stack, then ད), as the draft does. G4L
+  wrote བདུན, "seven" for "eight". Judge B was right.
+- **p. 47, lower leaf line 6:** the leaf has རྡོ་རྗེ་རིགས་མཐོ་ཆེན་པོ་ལ, as the draft does. G4L wrote མཆོག, the stock
+  phrase. Judge B was right.
+- **p. 292, lower leaf line 6:** the leaf has །མཎྜལ་ནི with no tsheg inside མཎྜལ, as the draft does. G4L wrote
+  མཎྜ་ལ. Judge B was right; this kind changes no word.
+
+**Decision.** NO-GO: nothing applied, no G4L pass. G4L halves Flash's worse pages on this volume (5 against 10) and
+its correction rate is 4 points higher with overlapping intervals; neither is enough for the bar. Both models make
+the same kind of error: they move the leaf's reading toward a standard or canonical one (stock phrases, contraction
+expansion, particle and mantra normalisation). That is what identity against Derge rewards and what the leaf
+contradicts. What would change this is unchanged from the Flash entry: a corrector the leaf agrees with at ≥ 90–95%
+of decided spans, e.g. a prompt that forbids normalisation, or correction limited to syllables the Yigdzin read marks
+as low-confidence.
+
+Artifacts: `scripts/eval/results/tibetan-correct-6560/pass-gate-g4l-69e7aaba80b52390feb199b8/` (the reads, guard and
+audit requests and replies, both judges' scores, `audit-judges.json.gz`).
 
 ## 2026-10-15 · Flash low correction pass, gate volume (#6560)
 
@@ -1245,6 +1604,217 @@ both neighbours in hand. A false alarm costs eight pages a single-page translati
 **Limits.** One draw. The false-alarm frame assumes `prompt_version` v1-v6 means single-page; a few of the 7
 rejections may be real OCR-side leaf errors rather than false alarms, and none were opened. A shift with no printed
 numbers in the body is invisible to this gate, as it is to the audit.
+
+## 2026-10-15 · Does Gemini 4 Argon (low, through the CLI) translate the 365 xl reference pages better than 3.8 Flash and than production? (#6750)
+
+PRIOR ART: `2026-10-08-cli-arm-xl-365-6331.md` (C38 on the same 365 pages, the same judges, prompt, plants and
+duplicates; this run is that one with a new arm), `pareto-6182/RUNBOOK-cli38-xl.md` (its recipe),
+`pareto-6182/build-xl-packet.py` (packet; gains `--g4l`), `pareto-6182/score-xl.py` (judge schema, strata, judge gate,
+by-book bootstrap; `run_cli` gains arm and pair arguments), `tengyur-levers/score-ref.py` (gains `--round g4xl6750`),
+`2026-10-14-gemini-4-argon-low-hard-panels-6707.md` (Gemini 4 Argon's CLI behaviour on OCR),
+`g4-translate-6729/DESIGN.md` on `job-g4-translate-6729` (the same model on #6545's five hard-language panels: same
+runner, `--kind translate`, plan mode). Nothing redrawn.
+
+### Preregistration (committed and pushed before any C4L page was read)
+
+**Question.** Arm **C4L** = `gemini-4-argon-low` through `agy -p` (Google subscription sign-in, no API key, $0), run
+by `scripts/eval/run-cli-arm.py --kind translate --print-timeout 300` (plan mode: no tools; text-only requests, so no
+workspace and no tool gate, as C38 ran). The prompt is each page's `prompt` from `/root/pareto-6182/units.jsonl`
+**byte for byte**, the string C38 was sent; no markers are added (C38 had none). One page per call, at most 2 calls in
+flight, at most 2 attempts per page. On the 365 `xl` pages of #6182 (Latin 71, Greek 69, Sanskrit 30, Pali 30,
+Hebrew 29, Chinese 25, Arabic 24, Persian 23, German 22, French 14, Italian 10, Dutch 7, Spanish 6, Aramaic 5; one
+page per book), each against its published English: is C4L better, the same, or worse than **C38**
+(`gemini-3.8-flash-low` via `agy -p`, stored, `/root/cli38-6182/C38-full.jsonl`) and than **PROD** (the page's
+stored production English: L31 `gemini-3.1-flash-lite` on 112 pages, FP `gemini-3-flash-preview` on 253)?
+
+**Failed reads.** A C4L reply that is empty, timed out, filter-blocked, or that `cliChatterReason`
+(`scripts/lib/cli-chatter.mjs`, the #6412 guard) flags (plan note, opener, tool output, refusal, code fence) is
+re-read once from scratch; if the second read also fails, the page is a **failed read: counted and reported, not
+scored**. A quota stop is not a failure: the run waits for the quoted reset and resumes (at most 3 times). C38 has
+text on all 365 pages and none is flagged by the guard.
+
+**Strata** (`score-xl.py`'s `STRATA`): Latin (71), Greek (69), T3 pool (German, French, Italian, Dutch, Spanish: 59),
+T4 pool (Hebrew, Aramaic, Arabic, Persian: 81), T5 pool (Sanskrit, Pali, Chinese: 85), and all pages pooled.
+
+**Design.** Each item: C4L, C38 and PROD in random order (seed 6750), labels T1–T3 only. Controls: 8 PLANT
+(production English beside a copy with one reversal from #5829's planter) and 4 DUP (production, an identical copy and
+C38): 377 items if C4L reads every page, 24 parts per judge; J2 reads every item in another order. Prompt:
+`/root/pareto-6182/xljudge/PROMPT.md` (#5695's judge prompt, the one C38's round used; sha256 b0b98c17…). Two blind
+Opus judges, `claude -p --model opus` on the Claude subscription (never through agy), one process per part, 3 at a
+time; the driver is `/root/cli38-6182/judge-driver-xl.sh` with paths changed. Judge packets quote the published
+references and stay on the box.
+
+**Measures** (`score-xl.run_cli`'s, unchanged). Fidelity 1–5 per page per arm = mean of the scoring judges' non-null
+scores; a reversal page = either judge lists a reversal (both judges reported beside it). Arms are compared on pages
+where all three have a fidelity. By-book bootstrap 95% CI (books, then pages within; one page per book here), 2,000
+draws, seed 6182. Per stratum and pooled: each arm's mean fidelity with CI; reversal pages and reversal pages per 100;
+**C4L − C38**, **C4L − PROD** and C38 − PROD with CI, pages higher / lower.
+
+**Verdict rule, per stratum and pooled, for X = C38 and X = PROD:**
+- **better:** the CI of C4L − X lies wholly above 0 **and** C4L reversal pages ≤ X's + 2;
+- **worse:** the CI lies wholly below 0, **or** C4L reversal pages > X's + 2 (the runbook's reversal rule; the
+  verdict then says "more reversals");
+- **same:** otherwise.
+- Beside it, the runbook's non-inferiority gate (lower bound > −0.15 and reversals ≤ X's + 2), pass / fail.
+
+**Per language** ("Gemini 4 Argon translates <language> better / same / worse than 3.8 Flash and than production"):
+the same rule on each language with ≥ 20 pages (Latin, Greek, Sanskrit, Pali, Hebrew, Chinese, Arabic, Persian,
+German). Languages with fewer pages (French, Italian, Dutch, Spanish, Aramaic) take their pool's verdict, and the
+report says so.
+
+**Judge gate** (`score-xl.judge_gate`): a plant is caught when the judge lists a reversal on the planted copy (and not
+its twin) or gives it a lower fidelity, ≥ 6 of 8; duplicates tie (same fidelity, same rank tier) ≥ 3 of 4. Scored only
+with the judge(s) that pass; if neither passes, the result is an instrument failure and no verdict is given.
+
+**#6304 sensitivity.** `results/pareto-sample-audit-6304/drops.json`'s 20 translation pages in this set (Latin 1,
+Greek 7, T4 4, T5 8). Primary on all pages; again without them, same rule.
+
+**Reported beside the rule, not part of it:** omission, invention and span-off pages; length ratio C4L / C38; C4L
+seconds per call, attempts, guard re-reads; the 3 pages where C4L and C38 differ most in fidelity, read against the
+reference.
+
+**Comparability note.** C38 was judged before (#6331) beside G38; here it is judged again, beside C4L. Levels are
+compared only inside this round; the #6331 numbers are not mixed in.
+
+Budget: $0. ≤ 500 agy calls per UTC day for this job; Gemini only through agy, Claude only through `claude -p`. No
+database write.
+
+### Amendment 1 (2026-10-15 22:45Z, after judging, before any result was read except the screen)
+
+Two C4L replies passed `screen.mjs` though the prereg calls them failed reads ("filter-blocked"): Gemini's own block
+messages, which `cliChatterReason` does not know. Found while reading the largest C4L − C38 pages, after both judges
+had scored them:
+- **L321 (Arabic, a *Kalīla wa-Dimna* page):** the whole reply was "The prompt could not be submitted.
+  The prompt contains sensitive words that violate Google's Generative AI Prohibited Use policy …". It was never
+  re-read (the screen did not flag it).
+- **L345 (Latin, Swedenborg, *Vera Christiana Religio* §§828–833):** the first read was flagged (recitation filter) and
+  re-read; the re-read was cut again mid-§832, with a `<warning>` that the translation "cannot be provided because …
+  recitation filters".
+
+**Change:** both pages are failed reads, counted and not scored. The pattern is now in `screen.mjs` (`FILTER`), and
+`score-ref.py --round g4xl6750` drops C4L on every page in `failed.jsonl`. The run as judged (both stubs scored as
+C4L's English) is reported too, as `--as-judged` (`scores-as-judged.json`). No other C4L, C38 or production text on
+the 365 pages matches the pattern.
+
+### Result (scored 2026-10-15, `score-ref.py --round g4xl6750`)
+
+**Verdict: Gemini 4 Argon low through the CLI translates these pages better than 3.8 Flash through the CLI, and better
+than production.** Pooled over 361 pages: fidelity 4.57 against 4.34 (C38) and 4.05 (production), C4L − C38 = +0.23
+[+0.16, +0.29], C4L − production = +0.51 [+0.44, +0.58]. It reversed the sense of a statement on 11 pages, against 32
+for C38 and 46 for production (2 / 23 / 32 where both judges agreed). By the preregistered rule it is **better than
+C38** in Latin, Greek, T4, T5 and pooled, **the same** in T3 (German, French, Italian, Dutch, Spanish: 4.84 and 4.84,
+where both are near the ceiling), and **better than production** in every stratum. Among single languages with ≥ 20
+pages, better than C38 in Greek, Latin, Persian and Sanskrit (Sanskrit +0.68 [+0.38, +0.98]: C38 reversed 6 of 30
+Sanskrit pages, C4L 1). The same as C38 in Arabic, Chinese, German, Hebrew and Pali. It is never worse than either.
+The #6304 cut changes no verdict.
+
+**Judge gate: PASS.** J1 and J2 each caught 7 of 8 planted reversals and tied 4 of 4 duplicates. Their fidelity scores
+agree within 1 point on 99.6% of page × arm pairs. Judging 21:39–22:39Z, 48 parts, no failures or limit waits, $0.
+
+**n = 361 pages, 361 books** (one page per book). Off the 365: C4L failed 3 reads (Italian: timed out twice at 300 s;
+Arabic and Latin: the filter stubs above), and production has no English on one Pali page. Fidelity 1–5 is the mean
+of both judges. Intervals are by-book bootstrap 95%. "Reversal pages" means either judge listed a reversal; the
+both-judge count is in brackets.
+
+
+**All pages (primary).**
+
+| stratum | n | C4L | C38 | prod | C4L − C38 | C4L − prod | C38 − prod | reversal pages C4L / C38 / prod (both judges) | per 100 | vs C38 | vs prod |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Latin | 70 | 4.71 | 4.55 | 4.16 | +0.16 [+0.01, +0.32] | +0.55 [+0.37, +0.73] | +0.39 [+0.22, +0.55] | 1 / 6 / 12 (0 / 4 / 9) | 1.4 / 8.6 / 17.1 | better | better |
+| Greek | 69 | 4.40 | 4.02 | 3.77 | +0.38 [+0.23, +0.53] | +0.63 [+0.46, +0.80] | +0.25 [+0.11, +0.40] | 4 / 9 / 9 (1 / 7 / 7) | 5.8 / 13.0 / 13.0 | better | better |
+| T3 pool | 58 | 4.84 | 4.84 | 4.53 | +0.01 [-0.09, +0.10] | +0.31 [+0.15, +0.48] | +0.30 [+0.16, +0.46] | 0 / 0 / 5 (0 / 0 / 3) | 0.0 / 0.0 / 8.6 | same | better |
+| T4 pool | 80 | 4.40 | 4.17 | 3.95 | +0.23 [+0.07, +0.38] | +0.45 [+0.29, +0.60] | +0.23 [+0.11, +0.34] | 3 / 7 / 11 (1 / 4 / 8) | 3.8 / 8.8 / 13.8 | better | better |
+| T5 pool | 84 | 4.55 | 4.23 | 3.96 | +0.32 [+0.15, +0.49] | +0.59 [+0.43, +0.73] | +0.27 [+0.12, +0.40] | 3 / 10 / 9 (0 / 8 / 5) | 3.6 / 11.9 / 10.7 | better | better |
+| **Pooled** | 361 | 4.57 | 4.34 | 4.05 | +0.23 [+0.16, +0.29] | +0.51 [+0.44, +0.58] | +0.28 [+0.22, +0.35] | 11 / 32 / 46 (2 / 23 / 32) | 3.0 / 8.9 / 12.7 | better | better |
+
+**Languages with ≥ 20 pages, all pages.**
+
+| language | n | C4L | C38 | prod | C4L − C38 | C4L − prod | C38 − prod | reversal pages C4L / C38 / prod (both judges) | per 100 | vs C38 | vs prod |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Arabic | 23 | 4.48 | 4.24 | 3.94 | +0.24 [-0.11, +0.56] | +0.54 [+0.22, +0.89] | +0.30 [+0.13, +0.48] | 1 / 1 / 2 (1 / 0 / 0) | 4.3 / 4.3 / 8.7 | same | better |
+| Chinese | 25 | 4.36 | 4.16 | 4.02 | +0.20 [-0.02, +0.44] | +0.34 [+0.04, +0.66] | +0.14 [-0.08, +0.36] | 2 / 3 / 4 (0 / 2 / 1) | 8.0 / 12.0 / 16.0 | same | better |
+| German | 22 | 4.86 | 4.93 | 4.64 | -0.07 [-0.20, +0.09] | +0.23 [+0.00, +0.46] | +0.29 [+0.09, +0.55] | 0 / 0 / 1 (0 / 0 / 0) | 0.0 / 0.0 / 4.5 | same | same |
+| Greek | 69 | 4.40 | 4.02 | 3.77 | +0.38 [+0.23, +0.53] | +0.63 [+0.46, +0.80] | +0.25 [+0.11, +0.40] | 4 / 9 / 9 (1 / 7 / 7) | 5.8 / 13.0 / 13.0 | better | better |
+| Hebrew | 29 | 4.47 | 4.47 | 4.24 | +0.00 [-0.19, +0.21] | +0.22 [-0.02, +0.48] | +0.22 [+0.09, +0.40] | 1 / 2 / 3 (0 / 2 / 2) | 3.4 / 6.9 / 10.3 | same | same |
+| Latin | 70 | 4.71 | 4.55 | 4.16 | +0.16 [+0.01, +0.32] | +0.55 [+0.37, +0.73] | +0.39 [+0.22, +0.55] | 1 / 6 / 12 (0 / 4 / 9) | 1.4 / 8.6 / 17.1 | better | better |
+| Pali | 29 | 4.66 | 4.60 | 4.12 | +0.05 [-0.19, +0.28] | +0.53 [+0.34, +0.72] | +0.48 [+0.28, +0.69] | 0 / 1 / 1 (0 / 1 / 1) | 0.0 / 3.4 / 3.4 | same | better |
+| Persian | 23 | 4.33 | 3.96 | 3.76 | +0.37 [+0.15, +0.59] | +0.56 [+0.37, +0.78] | +0.20 [-0.07, +0.48] | 1 / 4 / 4 (0 / 2 / 4) | 4.3 / 17.4 / 17.4 | better | better |
+| Sanskrit | 30 | 4.62 | 3.93 | 3.77 | +0.68 [+0.38, +0.98] | +0.85 [+0.60, +1.08] | +0.17 [-0.10, +0.42] | 1 / 6 / 4 (0 / 5 / 3) | 3.3 / 20.0 / 13.3 | better | better |
+
+**Without #6304's 20 drops.**
+
+| stratum | n | C4L | C38 | prod | C4L − C38 | C4L − prod | C38 − prod | reversal pages C4L / C38 / prod (both judges) | per 100 | vs C38 | vs prod |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Latin | 69 | 4.72 | 4.56 | 4.16 | +0.17 [+0.01, +0.32] | +0.56 [+0.38, +0.75] | +0.40 [+0.23, +0.56] | 1 / 6 / 12 (0 / 4 / 9) | 1.4 / 8.7 / 17.4 | better | better |
+| Greek | 62 | 4.43 | 4.10 | 3.80 | +0.33 [+0.16, +0.50] | +0.63 [+0.44, +0.81] | +0.30 [+0.14, +0.46] | 4 / 9 / 9 (1 / 7 / 7) | 6.5 / 14.5 / 14.5 | better | better |
+| T3 pool | 58 | 4.84 | 4.84 | 4.53 | +0.01 [-0.09, +0.10] | +0.31 [+0.15, +0.48] | +0.30 [+0.16, +0.46] | 0 / 0 / 5 (0 / 0 / 3) | 0.0 / 0.0 / 8.6 | same | better |
+| T4 pool | 76 | 4.39 | 4.16 | 3.95 | +0.23 [+0.08, +0.38] | +0.44 [+0.28, +0.61] | +0.21 [+0.10, +0.32] | 3 / 7 / 11 (1 / 4 / 8) | 3.9 / 9.2 / 14.5 | better | better |
+| T5 pool | 76 | 4.56 | 4.21 | 3.95 | +0.35 [+0.17, +0.53] | +0.60 [+0.45, +0.75] | +0.26 [+0.10, +0.42] | 3 / 10 / 9 (0 / 8 / 5) | 3.9 / 13.2 / 11.8 | better | better |
+| **Pooled** | 341 | 4.58 | 4.36 | 4.07 | +0.22 [+0.16, +0.29] | +0.52 [+0.44, +0.59] | +0.29 [+0.22, +0.36] | 11 / 32 / 46 (2 / 23 / 32) | 3.2 / 9.4 / 13.5 | better | better |
+
+
+**As judged (the two filter stubs scored as C4L's English), all pages:** the pooled verdicts are unchanged (+0.21
+[+0.14, +0.28] against C38). Latin moves from better to the same (+0.12 [−0.05, +0.28]), T4 from better to the same
+(lower bound +0.00), and Arabic against production from better to the same.
+| stratum | n | C4L | C38 | prod | C4L − C38 | C4L − prod | C38 − prod | reversal pages C4L / C38 / prod (both judges) | per 100 | vs C38 | vs prod |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Latin | 71 | 4.68 | 4.56 | 4.18 | +0.12 [-0.05, +0.28] | +0.50 [+0.28, +0.70] | +0.38 [+0.20, +0.54] | 1 / 6 / 12 (0 / 4 / 9) | 1.4 / 8.5 / 16.9 | same | better |
+| Greek | 69 | 4.40 | 4.02 | 3.77 | +0.38 [+0.23, +0.53] | +0.63 [+0.46, +0.80] | +0.25 [+0.11, +0.40] | 4 / 9 / 9 (1 / 7 / 7) | 5.8 / 13.0 / 13.0 | better | better |
+| T3 pool | 58 | 4.84 | 4.84 | 4.53 | +0.01 [-0.09, +0.10] | +0.31 [+0.15, +0.48] | +0.30 [+0.16, +0.46] | 0 / 0 / 5 (0 / 0 / 3) | 0.0 / 0.0 / 8.6 | same | better |
+| T4 pool | 81 | 4.36 | 4.18 | 3.95 | +0.18 [+0.00, +0.33] | +0.41 [+0.23, +0.57] | +0.23 [+0.11, +0.33] | 3 / 7 / 11 (1 / 4 / 8) | 3.7 / 8.6 / 13.6 | same | better |
+| T5 pool | 84 | 4.55 | 4.23 | 3.96 | +0.32 [+0.15, +0.49] | +0.59 [+0.43, +0.73] | +0.27 [+0.12, +0.40] | 3 / 10 / 9 (0 / 8 / 5) | 3.6 / 11.9 / 10.7 | better | better |
+| **Pooled** | 363 | 4.55 | 4.34 | 4.06 | +0.21 [+0.14, +0.28] | +0.49 [+0.42, +0.57] | +0.28 [+0.22, +0.35] | 11 / 32 / 46 (2 / 23 / 32) | 3.0 / 8.8 / 12.7 | better | better |
+
+**Beside the rule** (pooled, all pages):
+- **Omission pages:** C4L 4, C38 49, production 98.
+- **Span off:** C4L 11, C38 8, production 31.
+- **Invention** (gloss, unreadable fill or boundary, `score-xl.norm`'s measure): C4L 164, C38 128, production 145.
+- **Added facts.** The judges list added facts separately, and `norm` does not count them as invention: editorial
+  context the source does not state, such as dates, identifications, "This page from a 1495 Hebrew manuscript". C4L
+  drew them on 323 page × judge readings, C38 on 92 and production on 107. The prompt asks for notes and a summary, so
+  this is partly asked for. No judge checked whether these facts are TRUE. This is the main open risk, given #6420's
+  failure mode (fluent, wrong).
+- **Length:** C4L's English is 1.43× as long as C38's on the same pages.
+- **Page by page,** C4L − C38: 135 higher, 54 lower, 172 tied.
+
+**The three pages where C4L and C38 differ most** (failed reads aside), read against the source and the reference:
+- **Sanskrit, the 1492 palm-leaf Bhagavad Gītā, f. 45 (L067): C4L 4.5, C38 2.0, production 3.5.** The verso OCR is
+  mostly loops (a repeated nonsense string). C38 turned the loops into a devotee "Sudhama, devoted servant" who is not
+  in the text. C4L said in a `<meta>` that the verso OCR is corrupt and supplied Gītā 11.25–28 from the known text; the
+  judges found it consistent with Telang's English. That is reconstruction, not reading: it is labelled as such, but a reader still gets
+  verses the scan's OCR does not carry.
+- **Sanskrit, Kumārasambhava VII.28–30 with Mallinātha (L064): C4L 5.0, C38 3.0, production 3.0.** All three
+  translate the verses correctly (Griffith covers only the verses). C38 and production cut the commentary's grammar
+  (the Pāṇini rules, the variant footnotes). C4L translates all of it.
+- **Arabic, al-Bīrūnī's *India* (L007): C4L 3.0, C38 5.0, production 4.0.** C4L reverses who honours whom. The Arabic
+  (and Sachau) says the people favour their astronomers and the astronomers repay them with assent. C4L has the
+  astronomers courting the masses. Both judges listed it. One of C4L's 11 reversal pages; C38 is right here.
+
+**Calls.** 385 agy calls in all (1 probe, 384 translation calls) on 2026-10-15, 20:00–21:40Z, 2 in flight. No quota
+event. Median 26 s per call, 90th percentile 42 s, maximum 88 s. The screen re-read 6 replies: 3 conversational
+openers, 2 plan notes, 1 filter cut. 3 turns ended on a denied tool and were nudged. 1 call hit a 503 service error and
+was read again. 1 page timed out twice.
+
+**Limits.**
+- AI judges (Opus), not a scholar. The three pages above were checked by this job against the source and the reference.
+  Nothing else was checked by eye.
+- Levels are this round's own. C38 scores 4.34 here and 4.47 in #6331's round on the same pages, because the scale
+  shifts with the other candidates. Compare arms only inside one round.
+- One read per page; there is no C4L A-vs-A repeat. C38's A-vs-A floor (±0.25 per language, #6545) has not been
+  measured for C4L.
+- C4L runs on the Google subscription and has no API list price. Whether it could carry production volume (the
+  account is shared, and there are daily caps) is not measured here.
+- Added facts were not checked for truth (see above).
+
+**Chart.** In `build-translation-pareto.mjs`, every language chart with ≥ 10 pages left after #6304's drops gets a
+panel "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)": C4L (no price), C38 (at G38's billed dollars, as in
+#6331) and production. That is Latin, Greek, German, French, Hebrew, Arabic, Persian, Sanskrit, Pali and Chinese.
+Italian has 9 scored pages and gets none. `--check` passes. No existing panel changed.
+
+Files: `scripts/eval/results/g4-xl-6750/xljudge/{key.json,scores.json,scores-as-judged.json}` (numbers only),
+`scripts/eval/g4-xl-6750/` (runner, screen, judge driver). The judge packets, the outputs and the C4L English quote
+published translations and the sources, so they stay on the box (`/mnt/HC_Volume_105839809/jobs/g4-xl-6750`).
 
 ## 2026-10-15 · Gemini 4 Argon low vs Opus vs 3.8 Flash, translation, the #6545 panels (#6729)
 
@@ -2375,6 +2945,82 @@ pages, one run, Kanripo CER as the only measure, no by-image review).
   and repeated; no page has two rows).
   $0 cash. Nothing was written to Mongo.
 - Haiku ran as two lanes of one call each once Sonnet had finished; never more than 2 of this job's calls in flight.
+
+## 2026-10-13 · What share of the pages readers are served carries a serious error, by lane? (#6691)
+<!-- PRIOR ART: 2026-10-13-quality-sprint-round-2-public-frame-6056.md (10 random public books, 3 pages each: 4/30 pages serious) and the fortnightly spot check (_series-fortnightly-spot-check.md). Both draw uniform over books and cannot say which LANE the errors come from; this run stratifies by lane with one page per book. -->
+
+**Question.** Every engine test so far scored engines on test sets. What do readers actually get today, and in which OCR × script × form × translation lane are the errors?
+
+**Design.**
+- **Frame.** 23,256 live books (`visible`, `pages_count > 0`) with a translated page.
+- **Screen.** `served-draw.mjs`, seed 6691. The first 3,000 books in seeded order, uniform per book. For each, ONE translated page with `page_number > 0`, uniform over the book's translated pages, and its lane:
+  - OCR engine family;
+  - script family, from `books.language`;
+  - form, from a catalogue heuristic (print, manuscript or e-text);
+  - translation model family.
+- **Strata.** The 20 lane cells with ≥ 10 screened books are strata; the rest is one stratum, `rest`. 10 books per stratum, 210 in all. A stratum's weight is its share of the screen.
+- **Not reviewed.** 10 ETCSL Sumerian books: typed corpus text with a published translation and no image. No page in the screen was made by Claude, so no page needed a Gemini reviewer.
+- **Review.** `run-reviewers.sh`: Opus via `claude -p`, 3 calls in flight, 22 packets of 9–10 books. The brief is the frozen `REVIEWER.md` plus the new `SERVED-ADDENDUM.md`, which asks for a review-vocabulary `kind` on each serious error, the form seen, a `not_this_leaf` call and a page verdict. 200 pages; $34.46 API-eq on the subscription, $0 billed.
+- **Pilot.** The first book of each stratum (20 books) ran first; the full run used the same brief unchanged.
+- **Scoring.** `served-score.mjs`: k of n books with Wilson 95% intervals (`kOfNBooks`). The headline is served pages only; exposure was taken at the draw.
+- **By-eye checks.** Every `not_this_leaf` call that claimed a passage or more was re-read by the session with the image open.
+
+**Result.** Measured 2026-10-13. 184 served books, 16 withheld. All 10 BDRC Tibetan pages in the sample were already withheld, so that stratum has no served book.
+
+| | served books |
+|---|---|
+| serious error, unweighted | **62 of 184 (34%, 95% CI 27–41%)** |
+| serious error, frame-weighted | 22% (19 strata, 93% of the frame) |
+| a passage or the whole text not of this leaf, confirmed by eye | **10 of 184 (5%, 3–10%)**, all contained |
+| image and text of different leaves (image fault, text right) | 3 of 184 (2%, 1–5%) |
+| reviewer `not_this_leaf` calls, any size | 27 of 184 (15%, 10–21%) |
+| page verdict, all 200 | show 74 · caveat 59 · do not show 67 |
+
+- **Kinds** among served books with a serious error (a book can carry more than one): misread 21, confabulation 13, omission 11, mistranslation 10, illegible fill 9, added gloss 7, other 4, wrong leaf 3, carry-over 3, layout 3, show-through 1. Classes: O6 20, T7 19, O1 11, T10 8, T8 6, O5 5.
+- **The 27 `not_this_leaf` calls**, sorted:
+  - 10 contained (below).
+  - 3 are image faults: the text is of the right IA leaf and the served image is not.
+  - 1 page was already withheld.
+  - 13 are a clause or line, kept as findings. Of these, 4 are seam completions, where the English finishes a sentence the leaf breaks off; 4 are a line or phrase of fill on a hard leaf; 3 are notes or image descriptions (a library stamp named wrongly, a heading, a citation); 1 is an edition-text recitation; 1 is the next page's sentence.
+  - So "text not on the leaf" in the vocabulary's sense is 15%, but whole-passage invention is about a third of that.
+- **By the form the reviewer saw (served):** manuscript 28 of 44 (64%, 49–76%); print 25 of 116 (22%, 15–30%); plate 6 of 13; blank 3 of 11.
+- **Per stratum** (each n ≈ 10; intervals about ± 25–30 points): `report.md`. Highest rates: Latin manuscript / 3 Flash / lite translation 8 of 10; Greek manuscript 6 of 10; Paddle CJK with lite translation 6 of 10; lite CJK 6 of 10 and 4 of 5. Lowest: Latin print, 1–2 of 10 in each of the four big Latin-print strata; Tibetan Esukhia e-text 0 of 10.
+- **Where repair pays most** (share × frame × rate, so volume counts): the two big Latin-print strata, Gemini lite or 3 Flash OCR with lite translation (≈ 940 and ≈ 670 books with a serious page; 1–2 of 10 each), then Latin print with 3 Flash both ways (≈ 580). The high-rate strata are each under 1% of the frame. With n = 10 these ranks are not stable: a stratum's 1/10 and 2/10 overlap almost entirely.
+
+**Contained** (`containment-on-finding.md`: books held for `served-audit-6691`, the named page withheld with a `page_revisions` snapshot; undo `restore-withheld-translation.mjs`):
+
+| book | page | what the leaf shows vs the stored text |
+|---|---:|---|
+| Year book reports 1332–1337 `69f32f7f876dd827cbc45808` | 201 | about 50 lines of law hand; 16 stored lines that loop stock phrases from line 5 |
+| Thucydides, Vat. gr. 126 `6993837f50654cbbe2916cba` | 250 | Thuc. 5.45.4 legible; the top half of the stored text is invented ("περὶ τὴν Κύπρον") |
+| Tangut Avatamsaka `69f1341dc8d07a681065333c` | 4 | ~30 varied columns; the transcription loops 4 glyphs; the English calls it a glossary |
+| Zohar MS `69b3e677304c1c6b3950b41f` | 547 | Aramaic Zohar (Terumah, fol. 271); the stored text is a Hebrew essay that is not on the leaf |
+| Disputatio de aetatibus `6a4f1ddbdd60b16646ccecf3` | 2 | Bregelana / Reusner / Meiovio; the stored text gives Königsberg / Kanter / 1717 |
+| 臺灣番社風俗 `6992f412c8c6ac61574e753f` | 10 | plate 収貯; the English adds a 刈禾 reaping scene that is not on the leaf |
+| Graha Kaumudi `69906d5364d44bd0a0ef5344` | 3 | 13 lines of verse; the English invents a planet table |
+| Fragmenta Herculanensia `6953cc3677f38f6761be156e` | 172 | a drawing only; the English appends another page's apparatus |
+| Khunrath, Urim & Thurim `6a267d456c1f37c9c4f391d6` | 21 | the leaf ends "Parentis mul-ti-"; the English goes on for four paragraphs |
+| Genji Monogatari Ekotoba `69dfede38d34461cbe7f4db6` | 17 | the English is not a translation of the stored (correct) Japanese |
+
+**Image faults, not contained** (the text is right, so withholding it fixes nothing):
+- Galen vol. 8 (`69b0081de8cbd2498149b813`) and Sorel, *Réflexions sur la violence* (`69aeaaf167e6731bc136594f`). Both are `bulk_jp2` archives one leaf behind (#3368). In the Galen volume the shift starts between images 21 and 25: at image 20 image and text agree, from image 26 on the image is one leaf behind.
+- 西洋新法曆書 (`69af118e7feb16bd9d149210`). The display images are swapped in pairs (page 3 ↔ 0004, page 4 ↔ 0003, 5 ↔ 6).
+
+**What this teaches about sample size (for the weekly audit, #6688).**
+- At 10 books a stratum, a Wilson interval spans about 50 points: 1/10 is 2–40% and 6/10 is 31–83%. Ten books separate only the extremes (Latin print vs manuscripts). To tell a 10% lane from a 25% lane (power 0.8) needs about 100 books per lane; ± 10 points at 30% needs about 80.
+- The pooled served rate is already usable at n = 184 (± 7 points). A weekly audit should report the pooled rate and a handful of grouped lanes (print vs manuscript, Latin vs other scripts, lite vs Flash translation), each with ≥ 40 books. Cell-level rates should accumulate across weeks.
+- One reviewer's `not_this_leaf` overcounts whole-page invention by about 3× (27 calls, 10 passages confirmed). The audit needs the by-eye step, or a second reader on those calls, before it quotes "invented".
+- The lane frame is dominated by Latin print (≈ 70%). Proportional allocation would spend the audit where the rate is lowest, and ten books per cell spends it where the volume is smallest. A Neyman-style allocation (∝ share × √(p(1−p))) puts about 60% of the books in the big Latin-print strata and the rest in manuscripts and non-Latin print.
+- Three image faults in 184 books (2%) are invisible to any text-only detector. The weekly audit must keep opening the image.
+
+**Limits.**
+- One AI reviewer (Opus) per page. Class and kind labels were unstable across reads in #6174 (Jaccard 0.55–0.67).
+- 6 pages were marked low confidence and 68 medium.
+- The strata's form is a catalogue heuristic; the reviewer's by-eye form is reported separately.
+- The 13 fragment-level `not_this_leaf` calls were not each re-checked by eye.
+- One page per book says nothing about a book's other pages.
+
+*Replicated?* No. Data: `scripts/eval/results/spot-check/served-2026-10-13/`: `sample.json` (draw, lanes, exposure), `draw-log.json`, `screen.json.gz`, `reviews/`, `report.md`, `report.json`. The packets are the reviewer view of `sample.json` and are not committed.
 
 ## 2026-10-13 · Does "short source, long English" find title leaves that were given a chapter? (#6297)
 

@@ -66,6 +66,11 @@ A page (or book) needs text
 │     │                      default); Kraken passes on Greek 1450–1699 but no lane      │
 │     │                      exists; NDL for Japanese unjudged (0 references).           │
 │     ├─ BPH manuscripts ─── flash by policy.                                            │
+│     ├─ German Kurrent MS ─ two-read Opus lane (`claude-ocr-two-read.mjs`, #6780) ✓:    │
+│     │                      two independent Opus reads from native-res strips, a diff,   │
+│     │                      a zoomed adjudication of the disputed spans only. lite reads │
+│     │                      fluent nonsense on these hands (Zucker → "Zuber") and        │
+│     │                      truncates whole recipes. Subscription, $0; run on Hetzner.   │
 │     ├─ Latin-script print (en/fr/de/nl/la/it/es …) ── lite, batch. de/fr/nl stay on   │
 │     │                      lite UNJUDGED (agreement only, #5090); English 1800–1930    │
 │     │                      DECIDED lite (flash fixes nothing, #5182).                  │
@@ -123,6 +128,8 @@ and `node scripts/audit/provenance-coverage.mjs`; do not trust this table over t
 | Syriac Kraken | `scripts/lib/syriac-kraken-lane.mjs` | `kraken` | ✓ the reference shape |
 | Tibetan Yigdzin / BDRC | `scripts/maintenance/apply-reocr-verdicts.mjs` | per verdict | ✓ `engine` + `verdict` + revisions + sweep_log + book_events |
 | MinerU (ladder tier 3) | `scripts/workers/mineru-ocr-worker.mjs` | `mineru` | ✓ since PR #5280 — `specialist-engine/1` block (version, licence, run, image, `ladder` = the refusal stamps it follows), revisions, human-edit guard, sweep_log + book_events; `missingProvenance` checks it with the kraken/bdrc rule. Rows before 2026-09-30 (2,586) carry only a bare string. |
+| Opus two-read (German Kurrent MS, #6780) | `scripts/batch/claude-ocr-two-read.mjs apply` (`ocr.pipeline: claude-two-read-6780`) | `ai` | ✓ `anthropic` engine block (api `cli`); `input.two_read` = both reads' hashes, folded agreement, every dispute with its ruling; revisions, human-edit guard, sweep_log + book_events. The 40% overlap guard is lifted only for a stored flash-lite read on a book in `--replace-lite-books`. |
+| Opus one-read (Nahuatl / Maya, #6559) | `scripts/batch/claude-ocr.mjs` reads, `scripts/batch/cli-ocr.mjs apply` writes | `ai` | ✓ `anthropic` engine block (api `cli`) |
 | Chinese Paddle cost lane | no production writer yet (#4743) | — | — |
 | Greek Kraken, Japanese NDL | eval only | — | — |
 | Manual edit (reader UI) | `/api/pages/[id]` | `manual` | `edited_by` only; not in `audit_log` |

@@ -40,6 +40,10 @@
    "writeup": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
   },
   {
+   "track": "g4-xl-6750",
+   "writeup": "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+  },
+  {
    "track": "g4-argon-6729",
    "writeup": "scripts/eval/experiments/2026-10-15-gemini-4-argon-low-translation-hardest-6729.md"
   }
@@ -540,6 +544,135 @@
       }
      ],
      "verdict": "Gemini 3.8 Flash scores better than Gemini 3.1 Flash-Lite, the engine we use, by +0.39 a page on the 1 to 5 scale (95% interval +0.21 to +0.60). Also better: Claude Sonnet 5.5.",
+     "role": "secondary"
+    },
+    {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 69,
+     "n_works": 56,
+     "n_books": 69,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 69
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.558,
+       "fidelity_ci95": [
+        4.403,
+        4.701
+       ],
+       "share_ge4": 0.913,
+       "reversals": {
+        "pages": 6,
+        "n": 69,
+        "per_100": 8.7,
+        "ci95": [
+         4,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.188,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.399,
+        "ci95": [
+         0.231,
+         0.576
+        ],
+        "n_pages": 69,
+        "n_works": 56
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "production-per-book",
+       "label": "Production (each book’s engine)",
+       "production": true,
+       "fidelity": 4.159,
+       "fidelity_ci95": [
+        3.961,
+        4.346
+       ],
+       "share_ge4": 0.797,
+       "reversals": {
+        "pages": 12,
+        "n": 69,
+        "per_100": 17.4,
+        "ci95": [
+         10.2,
+         28
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.885,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.725,
+       "fidelity_ci95": [
+        4.629,
+        4.816
+       ],
+       "share_ge4": 0.971,
+       "reversals": {
+        "pages": 1,
+        "n": 69,
+        "per_100": 1.4,
+        "ci95": [
+         0.3,
+         7.8
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.565,
+        "ci95": [
+         0.379,
+         0.766
+        ],
+        "n_pages": 69,
+        "n_works": 56
+       },
+       "verdict": "better"
+      }
+     ],
+     "verdict": "Gemini 4 Argon low (CLI) scores better than Production (each book’s engine), the engine we use, by +0.56 a page on the 1 to 5 scale (95% interval +0.38 to +0.77). Also better: Gemini 3.8 Flash (CLI).",
      "role": "secondary"
     },
     {
@@ -1274,6 +1407,135 @@
      "role": "secondary"
     },
     {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 62,
+     "n_works": 61,
+     "n_books": 62,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 62
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.097,
+       "fidelity_ci95": [
+        3.881,
+        4.303
+       ],
+       "share_ge4": 0.79,
+       "reversals": {
+        "pages": 9,
+        "n": 62,
+        "per_100": 14.5,
+        "ci95": [
+         7.8,
+         25.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.596,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.298,
+        "ci95": [
+         0.143,
+         0.467
+        ],
+        "n_pages": 62,
+        "n_works": 61
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.798,
+       "fidelity_ci95": [
+        3.587,
+        4.008
+       ],
+       "share_ge4": 0.677,
+       "reversals": {
+        "pages": 9,
+        "n": 62,
+        "per_100": 14.5,
+        "ci95": [
+         7.8,
+         25.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.908,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.427,
+       "fidelity_ci95": [
+        4.246,
+        4.607
+       ],
+       "share_ge4": 0.855,
+       "reversals": {
+        "pages": 4,
+        "n": 62,
+        "per_100": 6.5,
+        "ci95": [
+         2.5,
+         15.4
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.629,
+        "ci95": [
+         0.435,
+         0.828
+        ],
+        "n_pages": 62,
+        "n_works": 61
+       },
+       "verdict": "better"
+      }
+     ],
+     "verdict": "Gemini 4 Argon low (CLI) scores better than Gemini 3 Flash, the engine we use, by +0.63 a page on the 1 to 5 scale (95% interval +0.43 to +0.83). Also better: Gemini 3.8 Flash (CLI).",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-cli-6331",
      "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
      "n_pages": 62,
@@ -1938,6 +2200,135 @@
      "role": "primary"
     },
     {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 22,
+     "n_works": 22,
+     "n_books": 22,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 22
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.932,
+       "fidelity_ci95": [
+        4.818,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.637,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.295,
+        "ci95": [
+         0.091,
+         0.545
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "production-per-book",
+       "label": "Production (each book’s engine)",
+       "production": true,
+       "fidelity": 4.636,
+       "fidelity_ci95": [
+        4.409,
+        4.841
+       ],
+       "share_ge4": 0.909,
+       "reversals": {
+        "pages": 1,
+        "n": 22,
+        "per_100": 4.5,
+        "ci95": [
+         0.8,
+         21.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.698,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.864,
+       "fidelity_ci95": [
+        4.727,
+        4.977
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.227,
+        "ci95": [
+         0,
+         0.455
+        ],
+        "n_pages": 22,
+        "n_works": 22
+       },
+       "verdict": "same"
+      }
+     ],
+     "verdict": "Gemini 3.8 Flash (CLI) scores better than Production (each book’s engine), the engine we use, by +0.29 a page on the 1 to 5 scale (95% interval +0.09 to +0.55).",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-cli-6331",
      "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
      "n_pages": 22,
@@ -2538,6 +2929,137 @@
      "no_cost": [],
      "verdict": "Verdicts withheld: the engine we use did not reproduce itself (−0.21 a page on the 1 to 5 scale between two runs of Gemini 3.1 Flash-Lite on these pages).",
      "role": "primary"
+    },
+    {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 14,
+     "n_works": 14,
+     "n_books": 14,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 14
+      }
+     ],
+     "grade": {
+      "level": "directional",
+      "why": "14 works; a decision needs 20"
+     },
+     "to_decide": [
+      "6 more works (20 needed)"
+     ],
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.929,
+       "fidelity_ci95": [
+        4.786,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.653,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0,
+        "ci95": [
+         0,
+         0
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "production-per-book",
+       "label": "Production (each book’s engine)",
+       "production": true,
+       "fidelity": 4.929,
+       "fidelity_ci95": [
+        4.786,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.819,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.893,
+       "fidelity_ci95": [
+        4.75,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": -0.036,
+        "ci95": [
+         -0.25,
+         0.179
+        ],
+        "n_pages": 14,
+        "n_works": 14
+       },
+       "verdict": "same"
+      }
+     ],
+     "verdict": "No engine stands out from Production (each book’s engine), the engine we use.",
+     "role": "secondary"
     },
     {
      "kind": "gemini-cli-6331",
@@ -4010,6 +4532,137 @@
      "role": "secondary"
     },
     {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 28,
+     "n_works": 27,
+     "n_books": 28,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 28
+      }
+     ],
+     "grade": {
+      "level": "directional",
+      "why": "mostly famous texts, which a model may know by heart"
+     },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.446,
+       "fidelity_ci95": [
+        4.183,
+        4.704
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 2,
+        "n": 28,
+        "per_100": 7.1,
+        "ci95": [
+         2,
+         22.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.925,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.196,
+        "ci95": [
+         0.052,
+         0.357
+        ],
+        "n_pages": 28,
+        "n_works": 27
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.25,
+       "fidelity_ci95": [
+        3.931,
+        4.554
+       ],
+       "share_ge4": 0.821,
+       "reversals": {
+        "pages": 3,
+        "n": 28,
+        "per_100": 10.7,
+        "ci95": [
+         3.7,
+         27.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.2,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.464,
+       "fidelity_ci95": [
+        4.259,
+        4.667
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.214,
+        "ci95": [
+         -0.037,
+         0.455
+        ],
+        "n_pages": 28,
+        "n_works": 27
+       },
+       "verdict": "same"
+      }
+     ],
+     "verdict": "The evidence points toward Gemini 3.8 Flash (CLI) over Gemini 3 Flash, the engine we use (+0.20 a page on the 1 to 5 scale, 95% interval +0.05 to +0.36); directional only.",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-cli-6331",
      "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
      "n_pages": 28,
@@ -4916,6 +5569,135 @@
      "role": "secondary"
     },
     {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 21,
+     "n_works": 20,
+     "n_books": 21,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 21
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.262,
+       "fidelity_ci95": [
+        3.857,
+        4.6
+       ],
+       "share_ge4": 0.714,
+       "reversals": {
+        "pages": 1,
+        "n": 21,
+        "per_100": 4.8,
+        "ci95": [
+         0.8,
+         22.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.322,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.333,
+        "ci95": [
+         0.15,
+         0.5
+        ],
+        "n_pages": 21,
+        "n_works": 20
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.929,
+       "fidelity_ci95": [
+        3.5,
+        4.31
+       ],
+       "share_ge4": 0.714,
+       "reversals": {
+        "pages": 2,
+        "n": 21,
+        "per_100": 9.5,
+        "ci95": [
+         2.7,
+         28.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.749,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.476,
+       "fidelity_ci95": [
+        4.225,
+        4.725
+       ],
+       "share_ge4": 0.905,
+       "reversals": {
+        "pages": 1,
+        "n": 21,
+        "per_100": 4.8,
+        "ci95": [
+         0.8,
+         22.7
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.548,
+        "ci95": [
+         0.238,
+         0.905
+        ],
+        "n_pages": 21,
+        "n_works": 20
+       },
+       "verdict": "better"
+      }
+     ],
+     "verdict": "Gemini 4 Argon low (CLI) scores better than Gemini 3 Flash, the engine we use, by +0.55 a page on the 1 to 5 scale (95% interval +0.24 to +0.91). Also better: Gemini 3.8 Flash (CLI).",
+     "role": "secondary"
+    },
+    {
      "kind": "track-T4",
      "heading": "The #5695 reference round, 3 Oct 2026",
      "n_pages": 17,
@@ -5642,6 +6424,135 @@
       }
      ],
      "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 22,
+     "n_works": 21,
+     "n_books": 22,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 22
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 3.909,
+       "fidelity_ci95": [
+        3.591,
+        4.214
+       ],
+       "share_ge4": 0.636,
+       "reversals": {
+        "pages": 4,
+        "n": 22,
+        "per_100": 18.2,
+        "ci95": [
+         7.3,
+         38.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.52,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.159,
+        "ci95": [
+         -0.13,
+         0.435
+        ],
+        "n_pages": 22,
+        "n_works": 21
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.75,
+       "fidelity_ci95": [
+        3.452,
+        4.068
+       ],
+       "share_ge4": 0.591,
+       "reversals": {
+        "pages": 4,
+        "n": 22,
+        "per_100": 18.2,
+        "ci95": [
+         7.3,
+         38.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.882,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.295,
+       "fidelity_ci95": [
+        4.045,
+        4.524
+       ],
+       "share_ge4": 0.955,
+       "reversals": {
+        "pages": 1,
+        "n": 22,
+        "per_100": 4.5,
+        "ci95": [
+         0.8,
+         21.8
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.545,
+        "ci95": [
+         0.333,
+         0.786
+        ],
+        "n_pages": 22,
+        "n_works": 21
+       },
+       "verdict": "better"
+      }
+     ],
+     "verdict": "Gemini 4 Argon low (CLI) scores better than Gemini 3 Flash, the engine we use, by +0.55 a page on the 1 to 5 scale (95% interval +0.33 to +0.79).",
      "role": "secondary"
     },
     {
@@ -6507,6 +7418,135 @@
      "role": "secondary"
     },
     {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 27,
+     "n_works": 25,
+     "n_books": 27,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 27
+      }
+     ],
+     "grade": {
+      "level": "decide",
+      "why": "20 or more works, independent reference, one measure"
+     },
+     "to_decide": null,
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 3.87,
+       "fidelity_ci95": [
+        3.607,
+        4.148
+       ],
+       "share_ge4": 0.667,
+       "reversals": {
+        "pages": 6,
+        "n": 27,
+        "per_100": 22.2,
+        "ci95": [
+         10.6,
+         40.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.84,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.13,
+        "ci95": [
+         -0.113,
+         0.385
+        ],
+        "n_pages": 27,
+        "n_works": 25
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.741,
+       "fidelity_ci95": [
+        3.538,
+        3.944
+       ],
+       "share_ge4": 0.556,
+       "reversals": {
+        "pages": 4,
+        "n": 27,
+        "per_100": 14.8,
+        "ci95": [
+         5.9,
+         32.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.106,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.611,
+       "fidelity_ci95": [
+        4.37,
+        4.796
+       ],
+       "share_ge4": 0.926,
+       "reversals": {
+        "pages": 1,
+        "n": 27,
+        "per_100": 3.7,
+        "ci95": [
+         0.7,
+         18.3
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.87,
+        "ci95": [
+         0.615,
+         1.135
+        ],
+        "n_pages": 27,
+        "n_works": 25
+       },
+       "verdict": "better"
+      }
+     ],
+     "verdict": "Gemini 4 Argon low (CLI) scores better than Gemini 3 Flash, the engine we use, by +0.87 a page on the 1 to 5 scale (95% interval +0.61 to +1.14).",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-cli-6331",
      "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
      "n_pages": 27,
@@ -7242,6 +8282,137 @@
      "role": "secondary"
     },
     {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 28,
+     "n_works": 26,
+     "n_books": 28,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 28
+      }
+     ],
+     "grade": {
+      "level": "directional",
+      "why": "mostly famous texts, which a model may know by heart"
+     },
+     "to_decide": [
+      "mostly texts a model cannot know by heart"
+     ],
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.589,
+       "fidelity_ci95": [
+        4.375,
+        4.778
+       ],
+       "share_ge4": 0.964,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.395,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.464,
+        "ci95": [
+         0.231,
+         0.696
+        ],
+        "n_pages": 28,
+        "n_works": 26
+       },
+       "verdict": "better",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.125,
+       "fidelity_ci95": [
+        3.907,
+        4.315
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 1,
+        "n": 28,
+        "per_100": 3.6,
+        "ci95": [
+         0.6,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.813,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.679,
+       "fidelity_ci95": [
+        4.519,
+        4.823
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 28,
+        "per_100": 0,
+        "ci95": [
+         0,
+         12.1
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.554,
+        "ci95": [
+         0.352,
+         0.734
+        ],
+        "n_pages": 28,
+        "n_works": 26
+       },
+       "verdict": "better"
+      }
+     ],
+     "verdict": "The evidence points toward Gemini 4 Argon low (CLI) over Gemini 3 Flash, the engine we use (+0.55 a page on the 1 to 5 scale, 95% interval +0.35 to +0.73); directional only.",
+     "role": "secondary"
+    },
+    {
      "kind": "gemini-cli-6331",
      "heading": "Gemini 3.8 Flash through the CLI, 8 Oct 2026 (#6331)",
      "n_pages": 28,
@@ -7742,6 +8913,138 @@
       }
      ],
      "verdict": "No verdict: the engine we use was not run on these pages.",
+     "role": "secondary"
+    },
+    {
+     "kind": "gemini-4-cli-6750",
+     "heading": "Gemini 4 Argon through the CLI, 15 Oct 2026 (#6750)",
+     "n_pages": 21,
+     "n_works": 18,
+     "n_books": 21,
+     "judges": 2,
+     "reference": "a published English translation of the same passage",
+     "references": [
+      {
+       "reference": "a published English translation of the same passage",
+       "pages": 21
+      }
+     ],
+     "grade": {
+      "level": "directional",
+      "why": "18 works; a decision needs 20"
+     },
+     "to_decide": [
+      "2 more works (20 needed)",
+      "mostly texts a model cannot know by heart"
+     ],
+     "frontier": false,
+     "noise": null,
+     "date": "2026-10-15",
+     "files": [
+      "scripts/eval/experiments/2026-10-15-gemini-4-argon-xl-365-translation-6750.md"
+     ],
+     "notes": [],
+     "placed": [
+      {
+       "engine": "gemini-3.8-flash+antigravity-cli",
+       "label": "Gemini 3.8 Flash (CLI)",
+       "production": false,
+       "fidelity": 4.143,
+       "fidelity_ci95": [
+        3.806,
+        4.458
+       ],
+       "share_ge4": 0.762,
+       "reversals": {
+        "pages": 3,
+        "n": 21,
+        "per_100": 14.3,
+        "ci95": [
+         5,
+         34.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.884,
+        "basis": "quota",
+        "detail": "run through the Antigravity CLI on the subscription, $0 billed; placed at what the same model and prompt billed on the API for these pages",
+        "source": "scripts/eval/experiments/2026-10-08-cli-arm-xl-365-6331.md"
+       },
+       "vs_in_use": {
+        "diff": 0.143,
+        "ci95": [
+         -0.13,
+         0.45
+        ],
+        "n_pages": 21,
+        "n_works": 18
+       },
+       "verdict": "same",
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4,
+       "fidelity_ci95": [
+        3.625,
+        4.364
+       ],
+       "share_ge4": 0.619,
+       "reversals": {
+        "pages": 4,
+        "n": 21,
+        "per_100": 19,
+        "ci95": [
+         7.7,
+         40
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.448,
+        "basis": "billed",
+        "detail": "billed tokens of #6182's run of the production engine at the Batch rate",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "gemini-4-argon-low+antigravity-cli",
+       "label": "Gemini 4 Argon low (CLI)",
+       "production": false,
+       "fidelity": 4.333,
+       "fidelity_ci95": [
+        4.091,
+        4.575
+       ],
+       "share_ge4": 0.857,
+       "reversals": {
+        "pages": 2,
+        "n": 21,
+        "per_100": 9.5,
+        "ci95": [
+         2.7,
+         28.9
+        ]
+       },
+       "cost": null,
+       "no_price": "no API list price; $0 billed on the Google subscription (Antigravity CLI, #6750)",
+       "vs_in_use": {
+        "diff": 0.333,
+        "ci95": [
+         0,
+         0.737
+        ],
+        "n_pages": 21,
+        "n_works": 18
+       },
+       "verdict": "same"
+      }
+     ],
+     "verdict": "No engine stands out from Gemini 3 Flash, the engine we use.",
      "role": "secondary"
     },
     {

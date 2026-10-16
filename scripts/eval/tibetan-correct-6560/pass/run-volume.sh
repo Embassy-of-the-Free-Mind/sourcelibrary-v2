@@ -1,21 +1,23 @@
 #!/bin/bash
 # #6560 Flash low correction pass, one Kangyur volume: read -> ya-btags leaf check (Opus) -> apply.
 #   run-volume.sh <book_id> [--no-apply]      resumable: every stage skips what it has already done
+#   env MODEL (agy model, default gemini-3.8-flash-low), JOB (agy job name, default tib-flash-pass-6560)
 # Exit 0 = applied (or read + checked with --no-apply); 3 = a quota stop (state is on disk, re-run to resume).
 # Needs: agy and claude signed in on this box; $JOB_SCRATCH; the env file below. $0 calls only (subscription CLIs).
 set -uo pipefail
 B=$1; NOAPPLY=${2:-}
+MODEL=${MODEL:-gemini-3.8-flash-low}; JOB=${JOB:-tib-flash-pass-6560}
 REPO=$(cd "$(dirname "$0")/../../../.." && pwd)
 ENV=${ENV_FILE:-/root/sourcelibrary/.env.production.local}
 D=$JOB_SCRATCH/vol/$B; mkdir -p "$D"
 P=$REPO/scripts/eval/tibetan-correct-6560
 LANE=tib-correct-6560
-REASON="#6560 Gemini 3.8 Flash low correction of the Yigdzin read (image + draft), ya-btags changes kept only where Opus saw them on the leaf"
+REASON="#6560 ${MODEL/gemini-3.8-flash-low/Gemini 3.8 Flash low} correction of the Yigdzin read (image + draft), ya-btags changes kept only where Opus saw them on the leaf"
 cd "$REPO"
 [ -s "$D.ids.json" ] || node --env-file="$ENV" $P/pass/volume-ids.mjs book --book="$B" --out="$D.ids.json" || exit 1
-# 1. read: Flash low, the #6560 CORR prompt, 2 in flight (cli-ocr sleeps through a quota window and goes on)
-node --env-file="$ENV" scripts/batch/cli-ocr.mjs read --page-ids-file="$D.ids.json" --out="$D" --model=gemini-3.8-flash-low \
-  --correct-prompt=$P/corr-prompt.txt --lane=$LANE --concurrency=2 --job=tib-flash-pass-6560 >> "$D.read.log" 2>&1 || exit 1
+# 1. read: $MODEL (Flash low by default), the #6560 CORR prompt, 2 in flight (cli-ocr sleeps through a quota window and goes on)
+node --env-file="$ENV" scripts/batch/cli-ocr.mjs read --page-ids-file="$D.ids.json" --out="$D" --model="$MODEL" \
+  --correct-prompt=$P/corr-prompt.txt --lane=$LANE --concurrency=2 --job="$JOB" >> "$D.read.log" 2>&1 || exit 1
 # 2. which pages hold a ya-btags change (dry run, no verdicts: every such page is emitted)
 rm -f "$D/yat-emit.jsonl"
 node --env-file="$ENV" scripts/batch/cli-ocr.mjs apply --out="$D" --reason="$REASON" --emit-yatags="$D/yat-emit.jsonl" > "$D.dry.log" 2>&1 || exit 1

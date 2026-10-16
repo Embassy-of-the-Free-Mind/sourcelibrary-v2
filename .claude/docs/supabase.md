@@ -269,6 +269,13 @@ a migration was blocked for a week. Verified working from both the laptop and He
 2026-08-21 (created `page_texts`, three RPCs, a trigger and four indexes). **Check AAAA
 before concluding a Supabase host is gone.**
 
+**The laptop's reach depends on the network it is on.** On a network with no IPv6 route
+(2026-10-16), `getaddrinfo ENOTFOUND db.ykhxaecbbxaaqlujuzde.supabase.co` came back from
+both `pg` and `psql`, the guessed IPv4 pooler hosts refused the password, and the
+Management API token was rejected (401). Hetzner reached it at once: `scp` the script
+and run it there with `node --env-file=.env.production.local` (that file carries
+`SUPABASE_DB_URL`). Use Hetzner for DDL by default; the laptop only when it is on IPv6.
+
 Two things that genuinely do not work, so you don't retry them: the service-role key
 cannot run DDL (it only reaches PostgREST), and the `exec_sql` RPC some older scripts
 reference does not exist (`PGRST202`).

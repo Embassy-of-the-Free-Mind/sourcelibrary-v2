@@ -7,8 +7,8 @@ canons: []
 n_books: 82
 n_pages: 82
 verdict: "1600s Latin print: rule says keep lite (flash 0.3 pp better, under the 1 pp margin, 50 books); 1500s, 1700s and incunabula lack references; lite misreads long s."
-status: undecided
-decision: "UNJUDGED, for Derek (DECISIONS.md); routing unchanged on lite"
+status: rejected
+decision: "Latin print stays on Flash-Lite (routing row latin-script-print): the 1600s rule says keep it, and the other centuries lack references. The gothic and long-s question is one decision for Derek on #6688"
 superseded_by: null
 issue: [5126, 4925]
 ---

@@ -36,6 +36,7 @@ function Plate({
   width,
   height,
   wide = false,
+  small = false,
   children,
 }: {
   src: string;
@@ -45,10 +46,12 @@ function Plate({
   height: number;
   // Tall plates are capped so one picture does not fill several screens.
   wide?: boolean;
+  // Low-resolution sources stay near their natural size instead of being blown up.
+  small?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <figure className={wide ? 'mb-10' : 'mb-10 max-w-md mx-auto w-full'}>
+    <figure className={wide ? 'mb-10' : small ? 'mb-10 max-w-xs mx-auto w-full' : 'mb-10 max-w-md mx-auto w-full'}>
       <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
         <Link href={href}>
           <Image src={src} alt={alt} width={width} height={height} className="w-full h-auto" unoptimized />
@@ -82,7 +85,7 @@ export default function TreesOfLifePage() {
           image={LEAD_IMAGE}
           imageAlt="Robert Fludd’s inverted sefirotic tree, 1621: roots in a crowned light above, branches spreading below"
         >
-          <p className="text-stone-400 text-sm mt-4">15 October 2026 &middot; 14 min read</p>
+          <p className="text-stone-400 text-sm mt-4">15 October 2026 &middot; 17 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -236,6 +239,15 @@ export default function TreesOfLifePage() {
           The oak of Romowe with its three idols. Christoph Hartknoch, <em>Alt und Neues Preussen</em> (1684).
         </Plate>
 
+        <p className="text-secondary leading-relaxed mb-8">
+          The picture travelled. A German translation of the Edda printed in 1777, now in the Bibliotheca
+          Philosophica Hermetica in Amsterdam, reprints the oak of Romowe among its plates of northern religion:{' '}
+          <Link href="/book/69c820ca6c6f3cc53c84a904" className={linkClass}>
+            <em>Die isländische Edda</em>
+          </Link>
+          .
+        </p>
+
         <Section>Assyria: the sacred tree</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -269,6 +281,26 @@ export default function TreesOfLifePage() {
             (1883).
           </Plate>
         </Pair>
+
+        <Section>Egypt: the goddess in the sycamore</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          In the Egyptian Book of the Dead a goddess, Nut or Hathor, stands in a sycamore fig and gives the dead
+          water and bread, so that they need not go thirsty in the next world. The Papyrus of Ani, written around
+          1250 BCE, paints her among the fruit, pouring water for Ani as he kneels below.
+        </p>
+
+        <Plate
+          src={`${IMG}/ani-sycamore.jpg`}
+          alt="Egyptian painting: a goddess standing in a sycamore heavy with red fruit pours water for a kneeling man"
+          href="/book/699209afbed8f4b5ff5b23f8?page=386"
+          width={250}
+          height={310}
+          small
+        >
+          The goddess in the sycamore, Papyrus of Ani. From E. A. Wallis Budge’s facsimile,{' '}
+          <em>The Book of the Dead</em> (1895).
+        </Plate>
 
         <Section>Mesoamerica: trees in the Codex Laud</Section>
 
@@ -387,19 +419,41 @@ export default function TreesOfLifePage() {
           Arabic and Persian geographers placed the island of Waqwaq at the eastern edge of the world. On it grew a
           tree whose fruit were human figures, said to call out “waq waq” before they fell. The <em>Kitāb al-Bulhān</em>,
           a book of divination and wonders compiled in Baghdad around 1400, paints the tree hung with its human
-          fruit. The Qur’an’s own trees, the lote tree of the boundary in the seventh heaven and Ṭūbā in
-          paradise, are not yet among the library’s pictures.
+          fruit, and a copy of Zakariyā al-Qazwīnī’s cosmography, <em>The Wonders of Creation</em>, paints it twice.
+          The Qur’an’s own trees, the lote tree of the boundary in the seventh heaven and Ṭūbā in paradise, are not
+          yet among the library’s pictures.
         </p>
 
         <Plate
           src={`${IMG}/kitab-al-bulhan-waqwaq.jpg`}
-          alt="Manuscript painting of a tree whose fruit are small human figures hanging by their hair"
+          alt="Manuscript painting of a tree whose fruit are small human figures"
           href="/book/6953b56577f38f6761bd979d?page=88"
           width={1012}
           height={1400}
         >
           The Waqwaq tree. <em>Kitāb al-Bulhān</em>, Bodleian Library MS. Bodl. Or. 133 (c. 1400).
         </Plate>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/qazwini-waqwaq-1.jpg`}
+            alt="Persian painting: a red-trunked tree on a rocky island, small human figures in its branches, animals below"
+            href="/book/69907bdc5f855ec553e7177b?page=111"
+            width={570}
+            height={716}
+          >
+            The Waqwaq tree in al-Qazwīnī, <em>ʿAjāʾib al-makhlūqāt</em>, Cambridge University Library MS Nn.3.74.
+          </Plate>
+          <Plate
+            src={`${IMG}/qazwini-waqwaq-2.jpg`}
+            alt="Persian painting: a tree whose branches bear human figures, rocks around its foot"
+            href="/book/69907bdc5f855ec553e7177b?page=114"
+            width={522}
+            height={948}
+          >
+            A second Waqwaq tree from the same manuscript.
+          </Plate>
+        </Pair>
 
         <Section>Java: the kayon</Section>
 
@@ -518,6 +572,77 @@ export default function TreesOfLifePage() {
           </Plate>
         </Pair>
 
+        <Section>Böhme’s trees, in the Embassy of the Free Mind</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Jacob Böhme (1575–1624), a shoemaker of Görlitz, opened his first book, <em>Aurora</em> (1612), by
+          likening the whole of philosophy and theology to a great tree. His followers drew the soul as a tree
+          growing out of the dark world, through fire, into light. The pictures in this section all belong to the
+          Bibliotheca Philosophica Hermetica, the library of the Embassy of the Free Mind in Amsterdam.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/law-tree-of-the-soul.jpg`}
+            alt="Hand-coloured engraving: a palm tree rising from a dark globe through the fire world and paradise to a triangle of light"
+            href="/book/69c6f72ada9771c71631512e?page=655"
+            width={622}
+            height={1400}
+          >
+            “The Tree of the Soul,” rooted in the dark world and reaching the Light of Majesty.{' '}
+            <em>The Works of Jacob Behmen</em> (London, 1764–81).
+          </Plate>
+          <Plate
+            src={`${IMG}/bohme-russian-ms-paradise.jpg`}
+            alt="Drawing: Adam and Eve on either side of a tree in a circle marked Paradise, the abyss below, an eye in a triangle above"
+            href="/book/69b418ca2b0edf3eaa2dde61?page=4"
+            width={1152}
+            height={1400}
+          >
+            Adam and Eve at the tree, between Paradise (Рай) and the abyss, in an eighteenth-century Russian
+            manuscript of Böhme’s figures.
+          </Plate>
+        </Pair>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          One Böhmist figure of the tree of the knowledge of good and evil had a long life. A hand from a cloud holds
+          a tree whose branches end in hands, with the sun among its leaves and its roots in three globes. It appears
+          as the frontispiece of a pietist devotional book of 1700 and again, hand-coloured, in the{' '}
+          <em>Geheime Figuren der Rosenkreuzer</em> printed at Altona in 1785–88.
+        </p>
+
+        <Pair>
+          <Plate
+            src={`${IMG}/arnold-1700-tree.jpg`}
+            alt="Engraving: a tree held by a hand from a cloud, its branches ending in hands, the sun among its leaves, roots in three globes"
+            href="/book/69c833fa6c6f3cc53c84e3bf"
+            width={876}
+            height={1400}
+          >
+            Frontispiece of <em>Der richtigste Weg durch Christum zu Gott</em> (1700).
+          </Plate>
+          <Plate
+            src={`${IMG}/geheime-figuren-baum.jpg`}
+            alt="Hand-coloured engraving of the same tree: fruiting branches, a radiant sun, roots in three coloured globes"
+            href="/book/697c8e0fbaa544415f85b6c6?page=132"
+            width={946}
+            height={1400}
+          >
+            The tree of the knowledge of good and evil, <em>Geheime Figuren der Rosenkreuzer</em> (1785–88).
+          </Plate>
+        </Pair>
+
+        <Plate
+          src={`${IMG}/freher-una-vitis.jpg`}
+          alt="Pen drawing in a circle: a vine heavy with grapes climbing a cross, with a Latin motto around the rim"
+          href="/book/69b4194bddff1f043992a157?page=49"
+          width={732}
+          height={726}
+        >
+          “From this stock rises one vine: many branches, but the many are nothing without the one.” Dionysius
+          Andreas Freher, emblem manuscript (c. 1720).
+        </Plate>
+
         <Section>Trees of knowledge, logic and kinship</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -603,9 +728,27 @@ export default function TreesOfLifePage() {
         <Section>Living sacred trees</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Some sacred trees are living trees. The Buddha reached enlightenment under a fig tree at Bodh Gaya, and the
-          earliest Buddhist sculpture shows the tree, an empty seat or a pair of footprints in his place. In West
-          Africa, R. E. Dennett photographed a tree planted over a grave, which then became sacred.
+          Some sacred trees are living trees. In India shrines are built under the banyan and the pipal, the
+          aśvattha of the Gita. Bernard Picart’s plate of 1723 sets temples, offerings and ascetics beneath “le grand
+          Arbre des Banians,” the first item in its key.
+        </p>
+
+        <Plate
+          src={`${IMG}/picart-banyan.jpg`}
+          alt="Engraving: a great banyan spreading over domed shrines, worshippers and ascetics in a forest clearing"
+          href="/book/6a100a94f71729295097066f?page=18"
+          width={1400}
+          height={1013}
+          wide
+        >
+          “Diverses pagodes et pénitences des faquirs,” under the great banyan. Bernard Picart,{' '}
+          <em>Cérémonies et coutumes religieuses des peuples idolâtres</em> (1723).
+        </Plate>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The Buddha reached enlightenment under a pipal at Bodh Gaya, and the earliest Buddhist sculpture shows the
+          tree, an empty seat or a pair of footprints in his place. In West Africa, R. E. Dennett photographed a tree
+          planted over a grave, which then became sacred.
         </p>
 
         <Pair>
@@ -633,17 +776,15 @@ export default function TreesOfLifePage() {
         <Section>Trees the library does not yet show</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
-          A search of the library’s images on 15 October 2026 found no usable picture of these:
+          A search of the library’s images on 16 October 2026 found no usable picture of these:
         </p>
 
         <ul className="list-disc pl-6 text-secondary leading-relaxed mb-8 space-y-2">
           <li>
-            <strong>India:</strong> the aśvattha of the Upanishads and the Gita, and the wish-granting{' '}
-            <em>kalpavṛkṣa</em>.
+            <strong>India:</strong> the wish-granting <em>kalpavṛkṣa</em> of the gods’ paradise.
           </li>
           <li>
-            <strong>Egypt:</strong> the sycamore from which the sky goddess Nut or Hathor pours water for the dead, and
-            the <em>ished</em> tree on whose leaves Thoth writes the years of the king’s reign.
+            <strong>Egypt:</strong> the <em>ished</em> tree on whose leaves Thoth writes the years of the king’s reign.
           </li>
           <li>
             <strong>China:</strong> Fusang, the mulberry in the east where the ten suns rest, and Jianmu, the tree by

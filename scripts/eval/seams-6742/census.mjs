@@ -37,7 +37,7 @@ const EN_ELLIPSIS_TAIL = /(?:…|\.\s*\.\s*\.)\s*[»”"'’)\]]*$|[-–—]$/u;
 const EN_CONT_HEAD = /^\s*[«“"'‘(\[]*\s*(?:…|\.\s*\.\s*\.|[-–—])/u;
 // Furniture: no 3-letter word; or a short line (≤ 60 chars, ≤ 7 words) that is mostly capitals or carries a numeral —
 // a running head ("524 C. PLINII SECVNDI", "No. 6366.] CHAPTER XLIX.", "Page 63").
-const isFurniture = (l) => {
+export const isFurniture = (l) => {
   const t = l.trim();
   if (!t || !/\p{L}{3,}/u.test(t)) return true;
   if (t.length > 60 || t.split(/\s+/).length > 7) return false;
@@ -46,7 +46,7 @@ const isFurniture = (l) => {
 };
 /** English with the renderer's centring marks (->, <-, a leading "- ") and heading marks removed. */
 const cleanEn = (t) => String(t).replace(/->|<-/g, ' ').replace(/^[ \t]*[-#]+[ \t]+/gm, '').replace(/[ \t]+/g, ' ');
-function bodyLines(text) {
+export function bodyLines(text) {
   const ls = String(text).split('\n');
   let a = 0, b = ls.length;
   while (a < b && a < 6 && isFurniture(ls[a])) a++;
@@ -54,7 +54,7 @@ function bodyLines(text) {
   return ls.slice(a, b);
 }
 /** Source prose with the catchword line removed (a lone last-line word that the next page opens with). */
-function sourceTail(ocrA, ocrB) {
+export function sourceTail(ocrA, ocrB) {
   const ls = bodyLines(sourceProse(ocrA));
   const last = (ls[ls.length - 1] || '').trim();
   const headB = words(sourceProse(ocrB)).slice(0, 3);
@@ -64,7 +64,7 @@ function sourceTail(ocrA, ocrB) {
 }
 const lastWordsEn = (t, n) => words(t).slice(-n);
 const firstWordsEn = (t, n) => words(t).slice(0, n);
-const STOP = new Set(['the', 'and', 'of', 'to', 'a', 'in', 'that', 'is', 'it', 'for', 'as', 'with', 'he', 'his', 'this', 'be', 'by', 'on', 'which', 'or', 'not', 'are', 'was', 'i']);
+export const STOP = new Set(['the', 'and', 'of', 'to', 'a', 'in', 'that', 'is', 'it', 'for', 'as', 'with', 'he', 'his', 'this', 'be', 'by', 'on', 'which', 'or', 'not', 'are', 'was', 'i']);
 
 /** Paragraphs of a raw OCR / translation (blank-line separated) after housekeeping is stripped. */
 function paragraphs(raw, prose) {

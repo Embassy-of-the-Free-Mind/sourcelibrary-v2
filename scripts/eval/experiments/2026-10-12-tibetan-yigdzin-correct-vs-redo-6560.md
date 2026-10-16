@@ -8,7 +8,7 @@ n_books: 30
 n_pages: 30
 verdict: "Correcting the Yigdzin read helps (Opus +0.015 [0.008, 0.022] syllable identity vs Derge, 0 of 30 folios worse; Pro +0.020 [0.011, 0.029], 5 worse); re-reading from the image is far worse (Opus 0.70, Pro 0.50 vs 0.945): both invent fluent text that is not on the leaf. Opus under-corrects (47% of planted errors survive); Pro writes the reference edition's spelling over the leaf (mi→myi on 2 folios)."
 status: undecided
-decision: null
+decision: "Re-reading Tibetan from the image is ruled out (routing rows tibetan, correct-not-redo). For Derek on #6688, default: no Opus correction pass yet (+1.5 points, 47% of planted errors left); spend the Opus quota on the Chinese table pages first"
 superseded_by: null
 issue: [6560, 6553]
 ---

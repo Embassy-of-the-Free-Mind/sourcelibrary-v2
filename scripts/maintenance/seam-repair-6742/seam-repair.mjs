@@ -33,7 +33,7 @@ import { PROMPT, LABELS, validRepair } from '../../eval/seams-6742/opus-referenc
 import { JUDGE, applyRepair } from '../../eval/seams-6742/judge-repairs.mjs';
 import { claudeCall, extractJson, pool, shuffle, sentences } from '../../eval/seams-6742/lib.mjs';
 import { PLACEHOLDER, HUMAN, SAME_LANGUAGE } from '../../eval/seams-6742/break-frame.mjs';
-import { sourceProse, translationProse } from '../../lib/block-drift.mjs';
+import { sourceProse, translationProse, TR_WRAPPERS } from '../../lib/block-drift.mjs';
 import { makeRng } from '../../eval/lib/paired-stats.mjs';
 import { spawn } from 'node:child_process';
 import os from 'os';
@@ -120,14 +120,14 @@ async function candidates(framePath, out, n, seed) {
 }
 
 // ── repair (packed) ──────────────────────────────────────────────────────────
-const PACK_HEAD = `Below are several page turns, each headed "##### JOIN <id>". Apply the instructions below to EACH join
+export const PACK_HEAD = `Below are several page turns, each headed "##### JOIN <id>". Apply the instructions below to EACH join
 independently (the joins come from different books). Instead of one JSON object, reply with ONE JSON array holding one
 object per join, in order, each with an added "id" field equal to the join id, and nothing else.
 
 `;
-const joinText = (it) => `##### JOIN ${it.id}\n=== SOURCE N (end) ===\n${it.srcTailA}\n\n=== SOURCE N+1 (start) ===\n${it.srcHeadB}\n\n=== ENGLISH N (end) ===\n${it.enTailA}\n\n=== ENGLISH N+1 (start) ===\n${it.enHeadB}\n`;
-const packs = (xs, k) => { const o = []; for (let i = 0; i < xs.length; i += k) o.push(xs.slice(i, i + k)); return o; };
-const usageOf = (r) => r.usage ? { in: r.usage.input, out: r.usage.output, cache: r.usage.cache_read, list_usd: r.usage.list_cost_usd } : null;
+export const joinText = (it) => `##### JOIN ${it.id}\n=== SOURCE N (end) ===\n${it.srcTailA}\n\n=== SOURCE N+1 (start) ===\n${it.srcHeadB}\n\n=== ENGLISH N (end) ===\n${it.enTailA}\n\n=== ENGLISH N+1 (start) ===\n${it.enHeadB}\n`;
+export const packs = (xs, k) => { const o = []; for (let i = 0; i < xs.length; i += k) o.push(xs.slice(i, i + k)); return o; };
+export const usageOf = (r) => r.usage ? { in: r.usage.input, out: r.usage.output, cache: r.usage.cache_read, list_usd: r.usage.list_cost_usd } : null;
 
 async function repair(out, model, limit, pack, conc) {
   const items = readJsonl(path.join(out, 'candidates.jsonl')).filter(r => r.join).slice(0, limit);
@@ -171,8 +171,28 @@ export function edgeRefusal(it, rep) {
   return applyRepair(it, rep) ? null : 'repair-changes-nothing';
 }
 
-/** Map an excerpt-side replacement onto the stored raw translation. Returns the new raw text, or {refuse}. */
+/** Map an excerpt-side replacement onto the stored raw translation. Returns the new raw text, or {refuse}. A span that
+ *  is not verbatim in the stored text (it crosses a <term>, a heading mark, a centring arrow, a <meta> block) falls back
+ *  to mapProjected. */
 export function mapOntoRaw(raw, side, oldSpan, newSpan) {
+  const exact = mapExact(raw, side, oldSpan, newSpan);
+  const res = !exact.refuse || !/not-in-stored-text/.test(exact.refuse) ? exact : (() => { const p = mapProjected(raw, side, oldSpan, newSpan); return p.refuse ? { refuse: `${exact.refuse}+${p.refuse}` } : p; })();
+  return res.refuse ? res : structureRefusal(raw, res.text, side) || res;
+}
+
+/** A seam repair never edits a table row — the lines the change touches must not be `| … |` rows (lean dry run 2026-10-16
+ *  removed "[price missing]" and "Special" from Korean ledger tables) — and the changed stretch never starts or ends
+ *  against an emphasis / heading mark (an insertion after "- **" landed inside the bold: "- **1 seok 5 du\n- Fourth…"). */
+export function structureRefusal(raw, text, side) {
+  let p = 0; while (p < raw.length && raw[p] === text[p]) p++;
+  let s = 0; while (s < raw.length - p && s < text.length - p && raw[raw.length - 1 - s] === text[text.length - 1 - s]) s++;
+  const a = raw.lastIndexOf('\n', p - 1) + 1, e = raw.indexOf('\n', raw.length - s); const lines = raw.slice(a, e < 0 ? raw.length : e);
+  if (/^\s*\|.*\|\s*$/m.test(lines)) return { refuse: `${side}-edit-in-table-row` };
+  if (/[*_`#]/.test(raw[p - 1] || '') || /[*_`]/.test(raw[raw.length - s] || '')) return { refuse: `${side}-edit-against-markup` };
+  return null;
+}
+
+function mapExact(raw, side, oldSpan, newSpan) {
   let o = oldSpan.trim(), n = String(newSpan ?? ''), kept = [];
   if (!o) return { text: raw };
   // The excerpt is prose with the tags stripped but their contents kept ("Latin", a running head), and the model copies
@@ -197,11 +217,61 @@ export function mapOntoRaw(raw, side, oldSpan, newSpan) {
   return { text };
 }
 
+// The excerpt is translationProse(raw): editorial blocks gone, tags gone, markdown marks gone, whitespace collapsed.
+// project() applies the same removals to any string and keeps, for every surviving character, its index in that string;
+// the marks are dropped outright (not turned into spaces) on BOTH sides, so "->allow.<-" and "- allow." both read "allow.".
+const WRAPPER_BLOCK = new RegExp(`<(${TR_WRAPPERS})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi');
+const MARKS = /[-*_#>`~|<]/;
+export function project(str) {
+  const s = String(str), skip = new Uint8Array(s.length);
+  for (const m of s.matchAll(WRAPPER_BLOCK)) skip.fill(1, m.index, m.index + m[0].length);
+  for (const m of s.matchAll(/<\/?[a-zA-Z][^>]*>/g)) skip.fill(1, m.index, m.index + m[0].length);
+  let text = '', idx = [], ws = false;
+  for (let i = 0; i < s.length; i++) {
+    if (skip[i] || MARKS.test(s[i])) { if (skip[i]) ws = true; continue; }
+    if (/\s/.test(s[i])) { ws = true; continue; }
+    if (ws && text) { text += ' '; idx.push(i - 1); }
+    ws = false; text += s[i]; idx.push(i);
+  }
+  return { text, idx };
+}
+/**
+ * Replace oldSpan by newSpan in the stored text through the projection: find the projected old span (exactly once,
+ * at the projected edge), then rewrite only the stretch where old and new differ. That stretch must hold no tag and
+ * no markdown mark, so a <term>, a <gloss> or an emphasis around words the edit does not touch is kept as stored.
+ */
+export function mapProjected(raw, side, oldSpan, newSpan) {
+  const R = project(raw), O = project(String(oldSpan).trim()), N = project(String(newSpan ?? '').trim());
+  if (!O.text) return { refuse: `${side}-projected-span-empty` };
+  const at = R.text.indexOf(O.text);
+  if (at < 0) return { refuse: `${side}-projected-span-not-found` };
+  if (R.text.indexOf(O.text, at + 1) >= 0) return { refuse: `${side}-projected-span-not-unique` };
+  if (side === 'tail' ? R.text.slice(at + O.text.length).trim() : R.text.slice(0, at).trim()) return { refuse: `${side}-projected-span-not-at-edge` };
+  let cp = 0; while (cp < O.text.length && cp < N.text.length && O.text[cp] === N.text[cp]) cp++;
+  let cs = 0; while (cs < O.text.length - cp && cs < N.text.length - cp && O.text[O.text.length - 1 - cs] === N.text[N.text.length - 1 - cs]) cs++;
+  // the differing stretch, in the stored text and in the new span's own characters
+  const oA = at + cp, oB = at + O.text.length - cs;                 // [oA, oB) in R.text
+  const rawA = oA < at + O.text.length ? R.idx[oA] : R.idx[oB - 1] + 1;
+  const rawB = oB > oA ? R.idx[oB - 1] + 1 : rawA;
+  const nA = cp, nB = N.text.length - cs;
+  const ins = nB > nA ? String(newSpan).trim().slice(N.idx[nA], N.idx[nB - 1] + 1) : '';
+  let a = rawA, b = rawB;
+  if (oB === oA) { a = b = oA > at ? R.idx[oA - 1] + 1 : R.idx[oA]; }  // a pure insertion goes after the last kept character
+  const cut = raw.slice(a, b);
+  // nor may it sit against one: an insertion right after "- **" lands inside the bold (dry run, "Fourth Category")
+  if (/[<>*_#`~|]/.test(cut) || /<\/?[a-zA-Z]|[*_#`]/.test(ins) || /[*_#`~|>]/.test(raw[a - 1] || '') || /[*_`~|<]/.test(raw[b] || '')) return { refuse: `${side}-projected-edit-touches-markup` };
+  const text = raw.slice(0, a) + ins + raw.slice(b);
+  // the projected result must equal the projected excerpt edit
+  const want = R.text.slice(0, at) + N.text + R.text.slice(at + O.text.length);
+  if (project(text).text.replace(/\s+/g, ' ').trim() !== want.replace(/\s+/g, ' ').trim()) return { refuse: `${side}-projected-result-mismatch` };
+  return { text, projected: true };
+}
+
 // ── verify (blind Opus, both orders, packed) ─────────────────────────────────
 const vblock = (label, v) => `--- VERSION ${label}: English, end of page N ---\n${v.enTailA}\n--- VERSION ${label}: English, start of page N+1 ---\n${v.enHeadB}`;
-const pairText = (p) => `##### PAIR ${p.pair}\n--- SOURCE, end of page N ---\n${p.srcTailA}\n--- SOURCE, start of page N+1 ---\n${p.srcHeadB}\n${vblock('P', p.P)}\n${vblock('Q', p.Q)}`;
+export const pairText = (p) => `##### PAIR ${p.pair}\n--- SOURCE, end of page N ---\n${p.srcTailA}\n--- SOURCE, start of page N+1 ---\n${p.srcHeadB}\n${vblock('P', p.P)}\n${vblock('Q', p.Q)}`;
 /** Joins of one arm that pass every placement check on the excerpt, with their repaired excerpts. */
-function placed(out, arm) {
+export function placed(out, arm) {
   const cands = new Map(readJsonl(path.join(out, 'candidates.jsonl')).filter(r => r.join).map(r => [r.id, r]));
   return readJsonl(path.join(out, `repair-${arm}.jsonl`)).map(x => {
     const it = cands.get(x.id);
@@ -211,7 +281,7 @@ function placed(out, arm) {
     return { id: x.id, it, x, refuse: why, fixed: why ? null : applyRepair(it, x.repair) };
   });
 }
-async function verify(out, arm, pack, conc) {
+export async function verify(out, arm, pack, conc) {
   const file = path.join(out, `verify-${arm}.jsonl`), calls = path.join(out, 'calls.jsonl');
   const done = new Set(readJsonl(file).map(v => v.pair));
   const ok = placed(out, arm).filter(r => !r.refuse);
@@ -303,20 +373,32 @@ async function imagecheck(out, arm, n) {
 
 // ── apply: through writePageTranslation, one write per changed page ──────────
 async function applyStage(out, arms, doApply) {
-  const manifest = path.join(out, 'manifest.jsonl'), refusals = path.join(out, 'apply-refusals.jsonl');
-  const written = new Set(readJsonl(manifest).filter(m => m.written).map(m => m.join));
+  const written = new Set(readJsonl(path.join(out, 'manifest.jsonl')).filter(m => m.written).map(m => m.join));
   const accepted = [];
   for (const arm of arms) { const v = verdicts(out, arm); for (const r of placed(out, arm)) if (!r.refuse && v[r.id]?.prefers && !accepted.some(a => a.id === r.id)) accepted.push({ ...r, arm, verdict: v[r.id] }); }
   console.log(`${accepted.length} accepted repairs (${arms.join('+')}), ${written.size} already written`);
   const { client, db } = await mongo();
+  const tally = await writeRepairs(db, accepted.filter(r => !written.has(r.id)), { out, doApply });
+  await client.close();
+  console.log(JSON.stringify(tally));
+}
+
+/**
+ * Write accepted repairs ({ id, it, x, arm, verdict }) through writePageTranslation, one write per changed page, with
+ * the manifest / refusal / sweep-log rows `undo` reads. `cli`/`model` name the repairer in the engine block; `reason`
+ * says how the repair was accepted. Exits the process on a door refusal or a failed read-back (as the pilot did).
+ */
+export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude', model = 'claude-opus-5-5', promptName = 'seam-repair-6742 label+minimal edge repair (opus-reference PROMPT, packed)',
+  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders' } = {}) {
+  const manifest = path.join(out, 'manifest.jsonl'), refusals = path.join(out, 'apply-refusals.jsonl');
   const runId = `${TAG}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
-  const cliVersion = String(fs.existsSync(CLI) ? (await new Promise(res => { const c = spawn(CLI, ['--version']); let o = ''; c.stdout.on('data', d => { o += d; }); c.on('close', () => res(o.trim().split(' ')[0])); })) : 'unknown');
+  const bin = cli === 'claude' ? CLI : cli;
+  const cliVersion = String(cli !== 'claude' || fs.existsSync(CLI) ? (await new Promise(res => { const c = spawn(bin, ['--version']); let o = ''; c.stdout.on('data', d => { o += d; }); c.on('error', () => res('unknown')); c.on('close', () => res(o.trim().split(' ')[0] || 'unknown')); })) : 'unknown');
   const cv = await codeVersion();
-  const tally = { written: 0, pagesWritten: 0, refused: {} };
-  const refuse = (r, why, extra = {}) => { tally.refused[why] = (tally.refused[why] || 0) + 1; append(refusals, { join: r.id, book: r.it.book, why, ...extra, at: new Date().toISOString() }); };
+  const tally = { run: runId, apply: doApply, written: 0, pagesWritten: 0, refused: {} };
+  const refuse = (r, why, extra = {}) => { tally.refused[why] = (tally.refused[why] || 0) + 1; append(refusals, { join: r.id, book: r.it.book, why, run: runId, apply: doApply, ...extra, at: new Date().toISOString() }); };
   const books = {};
   for (const r of accepted) {
-    if (written.has(r.id)) continue;
     const { it, x } = r;
     const book = await db.collection('books').findOne({ id: it.book }, { projection: { _id: 0, id: 1, visible: 1, pages_count: 1, pipeline_auto: 1, language: 1 } });
     if (!bookLive(book)) { refuse(r, 'book-not-live-or-held-now'); continue; }
@@ -332,26 +414,26 @@ async function applyStage(out, arms, doApply) {
     const pre = plan.map(([pg, t]) => { const h = assessTranslationHealth(pg.ocr?.data, t, { lang: book.language });
       return !h.healthy ? `health:${h.reason}` : hidesPageInMeta(t) ? 'hidden-meta' : refusableReasoningLeak(t) ? 'reasoning-leak' : null; }).find(Boolean);
     if (pre) { refuse(r, `door-precheck-${pre}`); continue; }
-    if (!doApply) { tally.written++; console.log(`would write ${it.book} p.${it.p}/${it.pB} (${plan.length} page(s))`); continue; }
+    if (!doApply) { tally.written++; tally.pagesWritten += plan.length; continue; }
     for (const [pg, text, side, oldSpan, newSpan] of plan) {
       const t = pg.translation;
       const engine = geminiEngine({
-        name: engineNameForCli('claude'), call_site: TAG, api: 'cli', cli: { name: 'claude', version: cliVersion }, model: x.model || 'claude-opus-5-5',
-        prompt: { id: TAG, name: 'seam-repair-6742 label+minimal edge repair (opus-reference PROMPT, packed)', version: '1', hash: sha(PROMPT), sent_hash: sha(PACK_HEAD + PROMPT) },
-        generationConfig: notRecorded('claude -p exposes no temperature, output cap or thinking setting; the model id names the tier'),
-        run: { job_id: runId, code_version: cv, host: host(), at: new Date(), reason: `${TAG}: minimal ${side}-edge seam repair of the ${t.model} translation, verified by a blind Opus pairwise judge in both orders`, edited_from: { model: t.model, content_hash: t.content_hash ?? null, prompt_version: t.prompt_version ?? null } },
+        name: engineNameForCli(cli), call_site: TAG, api: 'cli', cli: { name: cli, version: cliVersion }, model: x.model || model,
+        prompt: { id: TAG, name: promptName, version: '1', hash: sha(PROMPT), sent_hash: sentHash },
+        generationConfig: notRecorded(`${cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
+        run: { job_id: runId, code_version: cv, host: host(), at: new Date(), reason: `${TAG}: minimal ${side}-edge seam repair of the ${t.model} translation, ${how}`, edited_from: { model: t.model, content_hash: t.content_hash ?? null, prompt_version: t.prompt_version ?? null } },
         input: translationInput({ ocrText: pg.ocr?.data ?? '', ocrUpdatedAt: pg.ocr?.updated_at }),
       });
       // The page keeps its translation's prompt identity and model: the body is that model's text, edited at one edge.
       const promptRef = { id: t.prompt_id, name: t.prompt_name, version: t.prompt_version, content_hash: t.prompt_hash };
       const res = await writePageTranslation(db, { page: pg, book, text, promptRef, model: t.model, jobId: runId, note: TAG, refuseUnhealthy: true, engine });
-      if (!res.written) { refuse(r, res.protected ? 'door-human-edited' : `door-refused-${res.reason}`, { page: pg.id }); append(manifest, { join: r.id, page: pg.id, written: false, why: res.reason || 'protected' }); console.error(`STOP: the door refused ${pg.id}: ${res.reason || 'protected'}`); await client.close(); process.exit(3); }
+      if (!res.written) { refuse(r, res.protected ? 'door-human-edited' : `door-refused-${res.reason}`, { page: pg.id }); append(manifest, { join: r.id, page: pg.id, written: false, why: res.reason || 'protected' }); console.error(`STOP: the door refused ${pg.id}: ${res.reason || 'protected'}`); process.exit(3); }
       const after = await db.collection('pages').findOne({ id: pg.id }, { projection: { 'translation.content_hash': 1, 'translation.data': 1 } });
       const rev = await db.collection('page_revisions').findOne({ page_id: pg.id, field: 'translation', reason: TAG, data: t.data }, { projection: { id: 1, created_at: 1 } });
       const hashChanged = after?.translation?.content_hash && after.translation.content_hash !== t.content_hash && after.translation.data !== t.data;
       append(manifest, { join: r.id, arm: r.arm, book: it.book, page: pg.id, page_number: pg.page_number, side, written: true, revision_id: rev?.id ?? null, old_hash: t.content_hash ?? null, new_hash: after?.translation?.content_hash,
         old_span: oldSpan, new_span: newSpan, label: x.label, severity: x.severity, verdict: r.verdict, url: `https://sourcelibrary.org/book/${it.book}/page/${pg.id}`, run: runId, at: new Date().toISOString() });
-      if (!rev || !hashChanged) { console.error(`STOP: after writing ${pg.id}: revision ${rev ? 'ok' : 'MISSING'}, hash ${hashChanged ? 'changed' : 'NOT changed'}`); await client.close(); process.exit(4); }
+      if (!rev || !hashChanged) { console.error(`STOP: after writing ${pg.id}: revision ${rev ? 'ok' : 'MISSING'}, hash ${hashChanged ? 'changed' : 'NOT changed'}`); process.exit(4); }
       await recordSweepAction(db, { sweep: TAG, book_id: it.book, action: 'seam-edge-repaired', detail: { page_id: pg.id, page_number: pg.page_number, side, join: r.id, revision_id: rev.id, run: runId } });
       (books[it.book] ||= []).push(pg.page_number);
       tally.pagesWritten++;
@@ -362,8 +444,7 @@ async function applyStage(out, arms, doApply) {
     await syncBookTranslationCounters(db, bookId);
     await db.collection('book_events').insertOne({ book_id: bookId, type: 'translation_seam_repaired', at: new Date(), source: TAG, details: { run: runId, api: 'cli', pages: nums.length, page_numbers: nums.sort((a, b) => a - b), reason: TAG } });
   }
-  await client.close();
-  console.log(JSON.stringify({ run: runId, apply: doApply, ...tally }));
+  return tally;
 }
 
 // ── report: every number in the #6742 comment, from the files ───────────────

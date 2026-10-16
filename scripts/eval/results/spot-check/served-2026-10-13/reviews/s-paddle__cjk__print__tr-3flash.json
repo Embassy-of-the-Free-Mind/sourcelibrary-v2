@@ -1,0 +1,260 @@
+[
+  {
+    "book_id": "6a3c614440c88a541d8ef620", "slot": 32, "title": "御定駢字類編·卷一百七十四: Imperial Parallel Characters (vol 349)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Siku quanshu copy of the Pianzi leibian, entries under 羅; matches the catalogue.",
+    "rights_flag": null,
+    "structure_note": "Backsteps/repeats are expected from misread folio numerals on a 161-page Siku volume; nothing on this page suggests a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 32, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "羅\n武\n一明\n一統\n十里\n志\n半\n一山\n有泉\n入在\n勝永\n備平\n江縣\n發東\n源北\n源一\n此百\n羅岷", "image": "羅武 明一統志丨丨山在永平縣東北一百十里山半有泉入勝備江發源于此", "problem": "The whole 羅武 entry is read across two columns at once, character by character, so the two columns are interleaved into pairs. The entry cannot be recovered from the transcription.", "severity": "serious", "class": "other:column-interleave", "kind": "layout" },
+          { "ocr": "<script>handwritten</script>", "image": "woodblock-style Siku print", "problem": "script tag wrong", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "羅 武 一明 一統 十里 志 半 一山 有泉 入在 …", "english": "Luo / Wu / One Ming / Unified / Ten Miles / Gazetteer / Half / One Mountain / There is a spring / Entering at …", "problem": "The interleaved OCR is translated pair by pair as a list of nonsense, and the 羅武 entry (a mountain 110 li NE of Yongping, with a spring halfway up that is the source of the Shengbei river) is lost from the English.", "severity": "serious", "class": "T7", "kind": "omission" },
+          { "source": "羅岷 明一統志丨丨山在永昌軍民府城東北八十里", "english": "Luo Wood Mountain is located eighty miles northeast of the seat of Yongchang Military and Civilian Prefecture", "problem": "This is the 羅岷 entry, but the ditto mark is resolved as 'Luo Wood', so the Lancang river mountain is attributed to 羅木", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "八里 / 八十里", "english": "eight miles / eighty miles", "problem": "li rendered as miles", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Most of the page is read and translated well, but one of its five entries (羅武) has its two columns interleaved in the OCR and comes out as a word-salad list in the English. The next entry's mountain is also given the wrong name."
+  },
+  {
+    "book_id": "6a3cc1ccf9474f825c1728bb", "slot": 33, "title": "五燈會元·卷十四 (vol 14)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Siku copy of the Wudeng huiyuan; Chan dialogues as expected.",
+    "rights_flag": null,
+    "structure_note": "Only 17 of 176 pages are translated, so most of the volume is still untranslated. The page counts are otherwise consistent.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 20, "right_page": "yes", "form": "print",
+        "ocr_score": 5,
+        "ocr_errors": [
+          { "ocr": "<script>handwritten</script>", "image": "print", "problem": "script tag wrong", "severity": "minor", "class": "O16" }
+        ],
+        "tr_score": 5,
+        "tr_errors": [
+          { "source": "臏", "english": "(omitted)", "problem": "a lone character carried over from the previous leaf is silently dropped; harmless", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The transcription matches the leaf character for character. The translation of the host/guest dialogues is faithful and readable."
+  },
+  {
+    "book_id": "6a3c641839b4508b04e24421", "slot": 34, "title": "御定佩文韻府·卷三十六之一 (vol 457)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Peiwen yunfu, entries in -語; matches.",
+    "rights_flag": null,
+    "structure_note": "Backsteps/repeats are consistent with misread folio numerals; nothing on the page suggests a structural fault.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 26, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "寓言有季紆", "image": "寓言有李紓", "problem": "name misread (Li Shu → Ji Yu), carried into the English", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "小兒能\n令\n白語", "image": "小兒能令丨丨 白語", "problem": "ditto marks for the headword dropped here and in several other entries (能立意者未必能丨丨, 日暮丨丨乃寄止 …), so the headword cannot be seen in the quotation", "severity": "moderate", "class": "O5", "kind": "omission" },
+          { "ocr": "言其丈無一", "image": "言其文無一", "problem": "文 read as 丈", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "近代詠字有蕭昕", "english": "Zu Yong’s zi (courtesy name) was Xiao Xin", "problem": "The source means 'in recent times, for poems on single characters there was Xiao Xin'. The English invents a false biographical fact: that Zu Yong's courtesy name was Xiao Xin.", "severity": "serious", "class": "T8", "kind": "mistranslation" },
+          { "source": "白語 楊文公談苑聞教坊宴會曰丨丨 / 臏語 聞見後錄韓忠獻公曽祖… / 謾語 聞見後錄予見司馬公…", "english": "# Patched Words (臏語) Yang Wengong … / # Vacuous Words (謾語) Han Qi's great-grandfather … / # Deceptive Words (謾語) Sima Guang …", "problem": "The headword 白語 is dropped, and every entry after it moves up one heading. Yang Yi's quotation is filed under 臏語, and the Han Qi stele story under a duplicated 謾語. A reader of this dictionary is misled about which phrase each quotation illustrates.", "severity": "serious", "class": "T9", "kind": "omission" },
+          { "source": "誰可與兮寤語", "english": "with whom can I walk?", "problem": "寤語 'talk while awake' (the headword) rendered as 'walk'", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "輕薄", "english": "# Frivolous Words", "problem": "heading invented for the tail of an entry begun on the previous page", "severity": "minor", "kind": "layout" },
+          { "source": "太祖", "english": "Emperor Taizhu", "problem": "typo for Taizu", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "The anecdotes are mostly translated well, but the English misfiles headwords: one is dropped, so the quotations below it sit under the wrong phrase. It also invents a courtesy name for Zu Yong."
+  },
+  {
+    "book_id": "6992ce2e3ea667fbac8286b2", "slot": 35, "title": "三才圖會(八十)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Sancai tuhui ritual diagram (親迎圖), matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 51, "right_page": "yes", "form": "plate",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "莫雁干地", "image": "奠雁于地", "problem": "奠→莫 and 于→干 (the translator silently corrected both)", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "主\n人\n主\n向西", "image": "主人位向西 … 主人", "problem": "位 dropped and the two 主人 labels merged; 西 and 南 compass labels missing", "severity": "moderate", "class": "O5", "kind": "omission" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "東 (placed at upper right of the diagram)", "english": "<note>In traditional Chinese ritual diagrams, the East is often positioned on the left …</note>", "problem": "an added gloss that contradicts the diagram, where 東 is on the right", "severity": "moderate", "kind": "added_gloss" },
+          { "source": "壻 … 南 … 主人", "english": "Groom South Host … The groom stands to the South of the host", "problem": "The positions are inferred, and the explanation is not on the leaf.", "severity": "moderate", "kind": "added_gloss" },
+          { "source": "(nothing on the leaf)", "english": "<meta>This page follows the \"Libation Ceremony for a Daughter\" (Jiao Nü) …</meta>; Technical Vocabulary note block", "problem": "A long apparatus is added, and it is about three times the length of the diagram's ten labels.", "severity": "minor", "class": "T15", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "Reader text carries ->…<- centring arrows, <insert>, <column-break/> and a duplicated diagram title", "severity": "moderate", "class": "D1", "kind": "layout" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The diagram labels come through correctly in the English despite two OCR misreads. But the page is buried under invented explanatory notes, one of which contradicts the diagram's orientation, and layout markup shows in the text."
+  },
+  {
+    "book_id": "6a3c641b39b4508b04e245dd", "slot": 36, "title": "御定佩文韻府·卷三十六之四 (vol 460)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Peiwen yunfu entries in -舉; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 47, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<page-num>二十</page-num>", "image": "二十二 (folio in margin)", "problem": "folio number truncated", "severity": "minor", "class": "O11" },
+          { "ocr": "傳丁不宜稱尊號 … 益董賢封邑", "image": "same, in reading order", "problem": "The first lines are slightly out of order, but every word is present.", "severity": "minor", "kind": "layout" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "乃解韋帶", "english": "untied his leather belt <note>a sign of retiring from private life</note>", "problem": "The note is loose: casting off the commoner's leather belt means taking office.", "severity": "minor", "kind": "added_gloss" },
+          { "source": "永平初", "english": "Yong平 <term>Yongping</term>", "problem": "a Chinese character leaks into the English", "severity": "minor" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show",
+    "book_verdict": "The transcription is accurate, and the translation of the eight 舉 entries is faithful and readable. Only small slips."
+  },
+  {
+    "book_id": "6a3c64b839b4508b04e29792", "slot": 37, "title": "御定佩文韻府·卷八十五之六 (vol 618)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Peiwen yunfu, -驟 entries; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 61, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "太驟\n宋史吳曦傳\n淳熙五年換\n車馬于焉往來風舉雲搖帝王由兹行幸", "image": "呂令則賦川流丨丨車馬于焉往來風舉雲搖帝王由兹行幸 | 太驟 宋史吳曦傳淳熙五年換…", "problem": "The rest of Lü Lingze's quotation is moved into the 太驟/決驟 entries.", "severity": "moderate", "class": "O17", "kind": "layout" },
+          { "ocr": "而氣盛\n驟既力盡盛", "image": "而氣盛丨丨驟既力盡盛", "problem": "Ditto marks for the headword are dropped here and in several other places.", "severity": "moderate", "class": "O5", "kind": "omission" },
+          { "ocr": "雪驟\n說\n…\n雪驟\n說", "image": "雪驟 說 (once)", "problem": "the last block is repeated", "severity": "minor", "class": "O4" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "車馬于焉往來風舉雲搖帝王由兹行幸", "english": "(under **Galloping away**) Carriages and horses come and go here …", "problem": "Following the OCR shift, Lü Lingze's line is printed under the 決驟 heading with no source attribution.", "severity": "moderate", "kind": "layout" },
+          { "source": "後省言其丨丨改武冀郎", "english": "remarked that his promotion was too sudden <note>改武冀郎太驟</note>", "problem": "The order is inverted. The Secretariat objected that the appointment was too abrupt, and so he was changed to 武冀郎; the English makes the 武冀郎 post the too-sudden promotion.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "賊來尚遠而氣盛丨丨(矢驟)既力盡", "english": "once they have raced until their strength is spent", "problem": "The headword 矢驟 ('arrows come thick') is lost, and a note gives an invented original, '力驟'.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "(running title)", "english": "# Imperial Peiwen Yunfu / ## Volume 85, Part 6 / ### Page 29", "problem": "The headings are built from metadata, and 'Volume 85, Part 6' is not printed on the leaf.", "severity": "minor", "kind": "layout" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The entries are recognisably this page's. But the OCR column order moves a quotation into the wrong entry, and dropped ditto marks blur several headwords. The Wu Xi entry is subtly mistranslated."
+  },
+  {
+    "book_id": "6a3c6302879008ba7e164f85", "slot": 38, "title": "御定佩文韻府·卷四十七之四~卷四十八 (vol 184)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Peiwen yunfu, -巧 entries; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 128, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "<header>金父匹座全書</header>", "image": "欽定四庫全書", "problem": "running title garbled", "severity": "minor", "class": "O11" },
+          { "ocr": "論簡加丨", "image": "論衡加丨", "problem": "衡 read as 簡", "severity": "minor", "kind": "misread" }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          { "source": "通利末之道", "english": "opened up the trade of salt and silk", "problem": "'salt and silk' is added; the source says only 'opened the way of trade'", "severity": "moderate", "kind": "added_gloss" }
+        ],
+        "other": [
+          { "note": "Broken markup in reader text: '<note>a legendary music master</消失>' and a stray '</note>' before the Ou Ye note", "severity": "moderate", "class": "D1", "kind": "other" }
+        ],
+        "not_this_leaf": false,
+        "confidence": "medium"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The transcription and translation of the 巧 entries are sound, as far as the low-resolution scan can be read. But the English contains a broken closing tag (</消失>) and a stray </note>, which a reader will see."
+  },
+  {
+    "book_id": "6a3c617a879008ba7e15e723", "slot": 39, "title": "御定駢字類編·卷二百二十八: Imperial Parallel Characters (vol 401)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Pianzi leibian, 崇- compounds; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 107, "right_page": "yes", "form": "print",
+        "ocr_score": 3,
+        "ocr_errors": [
+          { "ocr": "崇\n則 / 崇之周禮 / 崇佳 / 崇平", "image": "崇劇 / 崇尺 / 崇雉 / 崇年", "problem": "Four of the page's eight headwords are misread, and the English then defines compounds that are not in the book: 'Exalted Principle', 'Exalted One', 'Exalted Excellence', 'Exalted Peace'.", "severity": "serious", "class": "O6", "kind": "misread" },
+          { "ocr": "豫產諸侯謀之", "image": "丨祿產諸侯謀之", "problem": "The ditto mark is dropped and 祿 is read as 豫; the reference to the Lü clan (Lü Lu and Lü Chan) is lost.", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "崇\n則\n唐\n書\n趙 …", "image": "one column", "problem": "one character per line", "severity": "minor", "kind": "layout" }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          { "source": "崇彊祿產，諸侯謀之", "english": "one produced provincial lords to plot for it", "problem": "Meaningless. The source says the Lü exalted and strengthened Lü Lu and Lü Chan, and the lords plotted against them.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "簋實一觳，崇尺，厚半寸，脣寸", "english": "the capacity is one exalted foot, the volume is one Hu", "problem": "崇尺 means 'one chi high'; the English gives a capacity of 'one exalted foot'.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "高墉積崇雉", "english": "the high walls are of accumulated exalted excellence", "problem": "The source says lofty battlements are piled on the high walls; the English is nonsense built on the misread 佳.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "明順養更老以崇年", "english": "following the aged to seek exalted peace", "problem": "The source means 'to honour age'; built on the misread 平.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "神州治本宰輔崇要", "english": "Spiritually exalted and essential. The provincial seat …", "problem": "神州 is split apart, and the sentence loses its sense.", "severity": "moderate", "kind": "mistranslation" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "do_not_show",
+    "book_verdict": "Half the headwords on this dictionary page are misread, so the English defines four compounds that are not in the book. Most of the glosses are garbled as a result."
+  },
+  {
+    "book_id": "6a3c60d140c88a541d8eae89", "slot": 40, "title": "御定駢字類編·卷五十: Imperial Parallel Characters (vol 233)", "tradition": null,
+    "shelf_fit": "fits", "shelf_note": "Pianzi leibian, 漳- compounds; matches.",
+    "rights_flag": null,
+    "structure_note": null,
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 86, "right_page": "yes", "form": "print",
+        "ocr_score": 4,
+        "ocr_errors": [
+          { "ocr": "史傳伯成傳", "image": "史傅伯成傳", "problem": "傅 read as 傳; the English calls him 'Chuan Bocheng' instead of Fu Bocheng", "severity": "moderate", "class": "O6", "kind": "misread" },
+          { "ocr": "明一統志一一在", "image": "明一統志丨丨在", "problem": "ditto marks read as 一一", "severity": "minor" }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          { "source": "徙治李澳川縣三龍溪龍巖丨丨(漳浦)", "english": "moved to Li'aochuan. The county had the Sanlong Stream and the Longyan Zhangpu", "problem": "The source names three counties (Longxi, Longyan and Zhangpu); the English misparses this as 'Sanlong Stream'.", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "濟丨丨而橫陣 / 初發清丨丨 / 日斜丨丨 / 丨丨卧劉楨", "english": "Crossing the Zhangshui … clear Zhangshui … Zhang River saw Liu Zhen lying ill", "problem": "The headword is 漳浦 throughout, but the English switches it to 'Zhangshui'. The Bai Juyi couplet is garbled ('Changsha was empty for Jia Yi's Zhang River').", "severity": "moderate", "kind": "mistranslation" },
+          { "source": "漳淇 / 漳汝", "english": "# Zhang / # Qi ; # Zhang / # Ru", "problem": "each two-character headword split into two headings", "severity": "minor", "kind": "layout" }
+        ],
+        "other": [],
+        "not_this_leaf": false,
+        "confidence": "high"
+      }
+    ],
+    "page_verdict": "show_with_caveat",
+    "book_verdict": "The transcription is close to the leaf. But the English misparses the three-county list, renders the 漳浦 headword inconsistently, and garbles the Bai Juyi couplet; the 漳淇/漳淮/漳汝 entries are sound."
+  }
+]

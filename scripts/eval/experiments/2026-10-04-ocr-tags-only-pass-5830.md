@@ -7,8 +7,8 @@ canons: []
 n_books: 150
 n_pages: 150
 verdict: "A tags-only Gemini pass over GLM-OCR text recovers every tag but marginalia (margin F1 0.64) at $0.43 per 1,000 pages, 47% of a full lite OCR ($0.91); $0 rules give only language and script."
-status: undecided
-decision: null
+status: rejected
+decision: "No tags-only pass: it was a recipe for an open-engine print lane, and no such lane was adopted (routing row latin-script-print, not-adopted list). Closed in #6688"
 superseded_by: null
 issue: 5830
 ---

@@ -584,3 +584,41 @@ export function parseRoleReply(answer, n) {
   }
   return out;
 }
+
+// ── One-line reasons for model-estimated work dates (#6721, Derek 2026-10-15) ────────────────────────────────────────
+// A reader judging an estimate needs to know what it rests on. The model is given the catalogue record AND the date
+// already stored (it never re-dates): it names the anchor a reader can check, or says plainly that there is none. Where
+// it would itself put the work more than 50 years away, it adds its own year, and the writer flags `why_disagrees`
+// (the stored date is never changed by this pass).
+export const WHY_PROMPT_VERSION = 'date-why-1';
+export const WHY_MAX_WORDS = 20;
+export const buildWhyPrompt = (works) => `Each catalogue record below already carries an estimated date for the WORK (when the text was first composed or compiled, not this copy). For each, write ONE short reason (at most ${WHY_MAX_WORDS} words) saying why that date: name the anchor a reader can check, e.g. the author's lifetime or floruit, the reign or event the text belongs to, the standard scholarly dating, or the first printing. Examples of the register:
+Galen, fl. 2nd c. CE; standard dating of the Ars medica
+Tibetan canonical text; translated 11th c.; Sanskrit original undated
+no internal or catalogue evidence; estimated from author name only
+Rules: name only people, works, editions and events you are certain exist; never invent a manuscript, edition, scholar or catalogue. If all you have is the title, the language or the catalogue date, say exactly that. Plain words, no hedging adverbs, no full sentence needed. Do not restate the date itself unless the anchor is a year.
+If you would yourself date the work more than 50 years away from the stored date, add "y": your year (negative for BCE); otherwise omit "y".
+
+${works.map((b, i) => `${i + 1}. ${[b.original_title || b.title, b.title && b.original_title && b.title !== b.original_title ? `[${b.title}]` : null,
+  b.author ? `by ${b.author}${b.author_window ? ` (author's recorded dates: ${fmtSpan(b.author_window.from, b.author_window.to)})` : ''}` : null,
+  b.published != null && String(b.published).trim() !== '' ? `cat. ${b.published}` : null, b.language || null]
+  .filter(Boolean).join(' | ').replace(/\s+/g, ' ').slice(0, 400)} || STORED DATE: ${b.work.display || fmtSpan(b.work.from, b.work.to)}`).join('\n')}
+
+Reply with exactly ${works.length} lines, one per record, in order, and nothing else. Each line is one JSON object:
+{"i":<record number>,"why":"<reason>"} or {"i":<record number>,"why":"<reason>","y":<year>}
+No prose, no code fences, no tools.`;
+
+/** Parse a reasons reply: Map(index → { why, year|null }). A reason far over the word limit is cut (limit + 4 words). */
+export function parseWhyReply(answer, n) {
+  const out = new Map();
+  for (const m of String(answer || '').matchAll(/\{[^\n]*\}/g)) {
+    let o; try { o = JSON.parse(m[0]); } catch { continue; }
+    const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
+    if (i < 0 || i >= n || out.has(i) || typeof o.why !== 'string') continue;
+    const words = o.why.replace(/\s+/g, ' ').trim().split(' ').filter(Boolean);
+    if (!words.length) continue;
+    const why = words.slice(0, WHY_MAX_WORDS + 4).join(' ').slice(0, 220);
+    out.set(i, { why, year: Number.isInteger(o.y) ? o.y : null });
+  }
+  return out;
+}

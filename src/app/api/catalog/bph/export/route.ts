@@ -195,7 +195,8 @@ export async function POST(req: NextRequest) {
     const { data, error } = await supabase
       .from('bph_works')
       .select(columns)
-      .in(chunk.column, chunk.values);
+      .in(chunk.column, chunk.values)
+      .is('deleted_at', null);
     if (error) {
       console.error('[catalog/bph/export] selection query failed:', error);
       return NextResponse.json({ error: 'Export failed. Please try again' }, { status: 500 });

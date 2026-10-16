@@ -45,6 +45,13 @@ export default function BookBiblioPanel({
   // (every schema-1 layer, written by enrichment, is one) says so.
   const estimated = (l: SourceWorkDateLayer) =>
     l.basis ? l.basis === 'model_knowledge' : book.source_work_dates_meta?.source === 'ai_enrichment';
+  // the reason for an estimated WORK date goes under the work's layer (the first composition/compilation one)
+  const work = book.source_work_dates_meta?.work;
+  // not where the reason itself argues for another date (why_disagrees, ~2,300 books): a reader would see a reason that
+  // contradicts the date beside it; those wait until the conflict is resolved
+  const whyLayer = work?.basis === 'model_knowledge' && work.why
+    && !book.source_work_dates_meta?.checks?.includes('why_disagrees')
+    ? layers.find((l) => l.type === 'composition' || l.type === 'compilation') : undefined;
   const layerLine = (l: SourceWorkDateLayer) => (
     <>
       {l.author && <span>{l.author}</span>}
@@ -69,6 +76,9 @@ export default function BookBiblioPanel({
       )}
       {l.basis === 'wikidata' && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>From Wikidata</span>
+      )}
+      {l === whyLayer && l.basis === 'model_knowledge' && (
+        <span className="block text-[13px]" style={{ color: '#948d80' }}>Why this date: {work?.why}</span>
       )}
       {l.basis === 'author_lifespan' && (
         <span className="block text-[13px]" style={{ color: '#948d80' }}>From the author’s recorded dates</span>

@@ -7,8 +7,8 @@ canons: []
 n_books: 3
 n_pages: 15
 verdict: "Opus reads through claude-ocr.mjs scored 3.80 / 5 mean fidelity from a blind Gemini 3.8 Flash High judge (15 pages, 3 books), just under the 4.0 gate; the judge caught 3 of 3 planted errors, and its one 'invented line' on a real page was a judge misreading, checked by eye."
-status: undecided
-decision: null
+status: adopted
+decision: "Applied on Derek's call 2026-10-13: 11,843 Opus-read pages written to pages that were empty, books held (routing row nahuatl-mayan, #6559; gate rule for empty pages changed in PR #6670). Closed in #6688"
 superseded_by: null
 issue: [6559]
 ---

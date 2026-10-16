@@ -7,8 +7,8 @@ canons: []
 n_books: 385
 n_pages: 385
 verdict: "No untried engine beats Gemini 3 Flash outside the margin on any script; Qwen3-VL-8B (Chinese MS), Opus 5.5 (Greek), Sonnet 5.5 (early English) beat lite; none near Yigdzin on Tibetan."
-status: undecided
-decision: "No routing change; wave-2 arms (Qwen3-VL-32B, GPT) pending Derek (#6011)"
+status: rejected
+decision: "No untried engine adopted: Gemini stays the reader for Latin-script and Greek print (routing rows latin-script-print, greek-print); wave 2 replicated it on the full panels (2026-10-07). Closed in #6688"
 superseded_by: null
 issue: 6011
 ---
