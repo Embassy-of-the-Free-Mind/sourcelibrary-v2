@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'harmonic-justice',
+    title: 'Harmonic Justice',
+    subtitle:
+      'Before economics was a science, money and fair exchange were problems of proportion. Aristotle, Oresme, Kepler correcting Bodin, the alchemists and Adam Smith on what makes an exchange fair and an order hold.',
+    date: '16 October 2026',
+    readTime: '12 min read',
+    kind: 'stories',
+    // English satirical print signed "Cross sculpsit": Money as a winged coin, Justice's scales on the ground.
+    image: 'https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg',
+    imageAlt:
+      'Engraving: Money, a coin on bird legs, runs off while Prodigality scatters coins and the scales of Justice lie on the ground; hounds named Diligence, Industry and Labour on leashes.',
+  },
+  {
     slug: 'maya-ritual-in-the-colonial-dictionaries',
     title: 'Maya Ritual in the Colonial Dictionaries',
     subtitle:
