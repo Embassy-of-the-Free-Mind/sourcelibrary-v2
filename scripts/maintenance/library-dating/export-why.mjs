@@ -13,15 +13,13 @@
  * not carry) and one row per WORK, so this reads Mongo directly and groups.
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/library-dating/export-why.mjs <out.jsonl>
- *     [--sample N]   (N random works, seeded, for the check before the bulk)
+ * (The check sample before the bulk was drawn from the output with `shuf -n 300 --random-source`.)
  */
 import fs from 'node:fs';
 import { MongoClient } from 'mongodb';
 
 const OUT = process.argv[2];
-const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
-if (!OUT) { console.error('usage: export-why.mjs <out.jsonl> [--sample N]'); process.exit(2); }
-const SAMPLE = +arg('--sample', 0);
+if (!OUT) { console.error('usage: export-why.mjs <out.jsonl>'); process.exit(2); }
 
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const books = c.db(process.env.MONGODB_DB || 'bookstore').collection('books');
@@ -49,11 +47,7 @@ for (const d of docs) {
   }
   works.set(k, row);
 }
-let rows = [...works.entries()].filter(([k]) => !k.endsWith('#')).map(([, r]) => r);
+const rows = [...works.entries()].filter(([k]) => !k.endsWith('#')).map(([, r]) => r);
 console.log(`${docs.length} books with a model-estimated work date → ${rows.length} works`);
-if (SAMPLE) {
-  let s = 6721; const rnd = () => { s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; };
-  rows = rows.map((r) => [rnd(), r]).sort((a, b) => a[0] - b[0]).slice(0, SAMPLE).map(([, r]) => r);
-}
 fs.writeFileSync(OUT, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
 console.log(`${rows.length} rows → ${OUT}`);
