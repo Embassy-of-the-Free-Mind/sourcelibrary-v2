@@ -85,10 +85,10 @@ export const posts: BlogPost[] = [
     date: '16 October 2026',
     readTime: '12 min read',
     kind: 'stories',
-    // A printed page because the page is the evidence: the "a b c" Landa kept after burning the books.
-    image: '/blog/preserved-by-enemies/landa-abc-1864-hero.jpg',
+    // The omen painting from the Florentine Codex leaf the essay quotes (Book 5, ch. 1), cut from our scan.
+    image: '/blog/preserved-by-enemies/florentine-omen-jaguar.jpg',
     imageAlt:
-      'Diego de Landa’s “a b c” of Maya signs, as printed by Brasseur de Bourbourg in 1864: numbered glyphs, each with the Spanish letter Landa’s informant was asked to write.',
+      'Florentine Codex, Book 5, chapter 1: a spotted jaguar with a speech scroll at its mouth, and a man with a carrying bag who raises his hands to his head.',
   },
   {
     slug: 'hyperborea',

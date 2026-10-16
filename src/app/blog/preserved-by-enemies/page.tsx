@@ -8,9 +8,9 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 // from the prints were read off the scans. The images in public/blog/preserved-by-enemies are cut from those scans.
 
 const DIR = '/blog/preserved-by-enemies';
-const HERO = `${DIR}/landa-abc-1864-hero.jpg`;
+const HERO = `${DIR}/florentine-omen-jaguar.jpg`;
 const HERO_ALT =
-  'Diego de Landa’s “a b c” of Maya signs, as printed by Brasseur de Bourbourg in 1864: numbered glyphs, each with the Spanish letter Landa’s informant was asked to write.';
+  'Florentine Codex, Book 5, chapter 1: a spotted jaguar with a speech scroll at its mouth, and a man with a carrying bag who raises his hands to his head. The omen of the beast heard crying in the hills.';
 
 const TITLE = 'Preserved by Their Enemies';
 const DESCRIPTION =
@@ -306,7 +306,8 @@ export default function PreservedByEnemiesPage() {
           The fifth book, on omens, carries the metaphor through. The omens are there &ldquo;so that when they are wounded by
           this sore, they may go to seek medicine, and the physician may easily understand them&rdquo; (
           <Link href={PAGE.sahagun675} className={linkClass}>prologue to Book 5</Link>). Then the book lets the diviner speak.
-          A man has heard a wild beast howling at night and goes to the <em>tonalpouhqui</em>, the reader of the day-count,
+          A man has heard a wild beast howling at night (the painting at the head of this essay opens the chapter) and goes
+          to the <em>tonalpouhqui</em>, the reader of the day-count,
           who tells him what it means and on what authority: &ldquo;And this is not because I say it: but because my elders
           and ancestors left it said and written.&rdquo; In the Nahuatl column the diviner points to his source: &ldquo;Listen
           to the word, for it is marked in the tonalamatl&rdquo;, the book of days (
