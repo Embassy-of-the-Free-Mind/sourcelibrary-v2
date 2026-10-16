@@ -87,6 +87,23 @@ export default function MayaRitualDictionariesPage() {
           Every Maya and Spanish quotation below is copied from the page image it links to. The English glosses of the Spanish are ours.
         </p>
 
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">What we did this month</h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          In October 2026 Source Library read nearly 5,000 pages of Maya-language sources and colonial works about Maya language and religion, almost all of it new to Source Library as searchable text.
+        </p>
+
+        <ul className="space-y-2 mb-6 list-disc pl-6 font-body text-secondary">
+          <li><strong>Transcribed from the page images</strong> by Claude Opus, with an instruction to keep the colonial letters as written (ɔ, the barred <em>cħ</em>, doubled consonants such as <em>pp</em>), and to mark what it cannot read as unclear rather than guess.</li>
+          <li><strong>Translated into English</strong> by the model that won a blind comparison for each language: Gemini 4 for Yucatec, Claude Opus for Kaqchikel and for the Motul dictionary. Each comparison was judged by two models from different companies, in both orders.</li>
+          <li><strong>Checked</strong> against the page images, page by page on samples, and against the dictionaries themselves: Maya numerals in the translations were tested against Beltrán&rsquo;s tables, and the mistranslated ones fixed.</li>
+          <li><strong>Imported</strong> manuscripts from Princeton&rsquo;s Garrett-Gates Mesoamerican Manuscripts and the University of Pennsylvania&rsquo;s Berendt-Brinton Collection, both in the public domain, including the <em>Ritual of the Bacabs</em> and the letters of the Caste War leaders.</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          Every book opens beside its page images, so any transcription or translation can be checked against the original. The full list of what is readable is <a href="#available" className="text-accent-rust hover:underline">at the end of this note</a>.
+        </p>
+
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">A confiscated book</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -182,28 +199,41 @@ export default function MayaRitualDictionariesPage() {
           &ldquo;Baño caliente de parida: pib&rdquo; (the hot bath of a woman who has given birth) (<Leaf book={MOTUL_2} page={90}>Motul, Spanish–Maya volume</Leaf>). The Maya–Spanish volume gives the other sense, &ldquo;pib: assar debaxo de tierra&rdquo; (to roast under the earth) (<Leaf book={MOTUL_1} page={758}>Motul, Maya–Spanish volume</Leaf>). The inner sanctuaries of the Cross Group at Palenque are named in their inscriptions as <em>pib naah</em>, &ldquo;sweatbath houses&rdquo;, and have been read as symbolic places of divine birth (Houston 1996).
         </p>
 
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Being read now</h2>
+        <h2 id="available" className="text-2xl md:text-3xl text-primary mt-16 mb-6">What you can read now</h2>
 
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          These books were imported this week from Princeton&rsquo;s Garrett-Gates Mesoamerican Manuscripts and the University of Pennsylvania&rsquo;s Berendt-Brinton Collection, and are being read now. They will appear in the library as they are finished:
-        </p>
-
-        <ul className="space-y-2 mb-8 list-disc pl-6 font-body text-secondary">
-          <li>the <em>Ritual of the Bacabs</em>, the Yucatec healing incantations (Princeton, Garrett-Gates no. 1);</li>
-          <li>twenty-six letters of the Caste War leaders, 1848&ndash;50, among them Jacinto Pat and Bonifacio Novelo (Princeton);</li>
-          <li>nineteenth-century copies of the books of Chilam Balam of Chumayel, Tizimín, Ixil, Kaua and Calkiní, and the <em>Libro de los Médicos</em>;</li>
-          <li>Maya wills and land titles from Ebtún and Chicxulub, 1561&ndash;1869;</li>
-          <li>the <em>Títulos</em> of the K&rsquo;iche&rsquo; lords, the manuscript of the Kaqchikel annals, and a Q&rsquo;eqchi&rsquo; divinatory calendar of 1867.</li>
+        <p className="text-secondary leading-relaxed mb-4 font-body"><strong>Written by Maya authors</strong></p>
+        <ul className="space-y-2 mb-6 list-disc pl-6 font-body text-secondary">
+          <li><Leaf book="6ad191a242debc96269252b6" page={1}><em>Ritual of the Bacabs</em></Leaf>, Yucatec healing incantations, late eighteenth century (Princeton, Garrett-Gates no. 1)</li>
+          <li>The books of Chilam Balam: <Leaf book={KAUA} page={1}>Kaua</Leaf> (Maler&rsquo;s 1887 photographs) and <Leaf book="6a87102131598d129803de7b" page={1}>Kaua, 1824 copy</Leaf>, <Leaf book="699259a03d2d40d1b0592ce8" page={1}>Chumayel</Leaf> (Gordon&rsquo;s 1913 facsimile), <Leaf book="6a8ee3de880abaf2b45934c3" page={1}>Calkiní</Leaf>, <Leaf book="6a8d9b7c4cc19d0e10153aa9" page={1}>Teabo</Leaf>, <Leaf book="6a8da255aa8f57838adf7fe4" page={1}>Nah</Leaf> and the <Leaf book="6a8da256aa8f57838adf8025" page={1}>Ixil lunario</Leaf></li>
+          <li><Leaf book="6ad191b742debc9626925415" page={1}>Letters of the Caste War leaders, 1848&ndash;1850</Leaf>, among them Jacinto Pat and Bonifacio Novelo</li>
+          <li><Leaf book="6ad191c442debc962692562c" page={1}>Maya legal documents, 1686&ndash;1849</Leaf> (wills and deeds) and the <Leaf book="6ad191c342debc962692561e" page={1}>Ebtún land papers, 1561&ndash;1869</Leaf></li>
+          <li>The <Leaf book="6a87106327fd08cecf145caa" page={1}><em>Popol Vuh</em> manuscript (Newberry Library, Ayer MS 1515)</Leaf> and <Leaf book="69e729dca409200ea79f16d5" page={1}>Brasseur de Bourbourg&rsquo;s 1861 edition</Leaf></li>
         </ul>
 
-        <p className="text-secondary leading-relaxed mb-6 font-body">
-          One Maya-written counterpart to the friars&rsquo; record is already readable: the <em>Book of Chilam Balam of Kaua</em>, where the twenty day names are set, one by one, against the names of saints (<Leaf book={KAUA} page={11}>p. 11</Leaf>).
+        <p className="text-secondary leading-relaxed mb-4 font-body"><strong>Dictionaries and grammars</strong></p>
+        <ul className="space-y-2 mb-6 list-disc pl-6 font-body text-secondary">
+          <li><Leaf book={MOTUL_1} page={1}><em>Diccionario de Motul</em>, Maya–Spanish</Leaf> and <Leaf book={MOTUL_2} page={1}>Spanish–Maya</Leaf></li>
+          <li><Leaf book={PIO_PEREZ} page={1}>Pío Pérez, <em>Diccionario de la lengua maya</em></Leaf> (1866) and his <Leaf book="6a9f3fa783c3b522416e4a0d" page={1}><em>Coordinación alfabética</em></Leaf> of Beltrán&rsquo;s vocabulary (1898)</li>
+          <li><Leaf book="6a9f3fa483c3b522416e48fa" page={1}>Beltrán, <em>Arte del idioma maya</em></Leaf> (1859 edition) and, for Kaqchikel, <Leaf book="6acc3da4230e9a56175cd383" page={1}>Maldonado&rsquo;s <em>Arte</em></Leaf> (1748)</li>
+          <li><Leaf book="69f8c12d0c0c281d4bd32a5c" page={1}>Brasseur de Bourbourg, <em>Grammaire de la langue quichée</em></Leaf> (1862)</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-4 font-body"><strong>Written to convert, or to suppress</strong></p>
+        <ul className="space-y-2 mb-6 list-disc pl-6 font-body text-secondary">
+          <li><Leaf book={SANCHEZ} page={1}>Sánchez de Aguilar, <em>Informe contra idolorum cultores</em></Leaf> (1639)</li>
+          <li>Sermons and catechisms in Yucatec: <Leaf book="6acc3dbd230e9a56175cd616" page={1}>Domínguez, <em>Pláticas</em></Leaf> (1758), the <Leaf book="6acc3dd5230e9a56175cd709" page={1}><em>Colección de sermones</em></Leaf> (1846), <Leaf book="6acc3ddc230e9a56175cd8f4" page={1}>Ruz, <em>Explicación</em></Leaf> (1847), <Leaf book="6acc3ddf230e9a56175cda8b" page={1}>Ripalda&rsquo;s catechism</Leaf> (1847) and the <Leaf book="6acc3e19230e9a56175cdf20" page={1}>Gospel of John</Leaf> (1869)</li>
+          <li>In Kaqchikel: <Leaf book="6acc3d72230e9a56175ccc93" page={1}>Antonio del Saz, <em>Libro de pláticas</em></Leaf> (1662)</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-4 font-body"><strong>Still being read</strong></p>
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          Nineteenth-century copies of the books of Chilam Balam of Chumayel, Calkiní, Tizimín, Ixil and Kaua and of the <em>Libro de los Médicos</em>; a manuscript of the Chumayel; the <em>Títulos</em> of the K&rsquo;iche&rsquo; lords; a Q&rsquo;eqchi&rsquo; divinatory calendar of 1867; and, from Penn, Berendt&rsquo;s copies of Maya texts, the manuscript of the Kaqchikel annals and an 1864 broadside to the people of Chan Santa Cruz.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">How these pages were read</h2>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The transcriptions were made by Claude Opus from the page images, with an instruction to keep the colonial letters (ɔ, the barred <em>cħ</em>, doubled consonants) as written. The English translations are machine drafts. On the nineteenth-century Yucatec sermons we found a numeral error of the kind to expect: <em>lahu oxkal catac oxpel</em>, which Beltrán&rsquo;s <em>Arte</em> gives as fifty-three, was translated as the thirty-three the context suggested. Quote the Maya and the Spanish from the page images; treat the English as a guide to them. Corrections are welcome.
+          The English is a machine draft. Its typical error is fluent English that quietly corrects the source toward what the model expects. On the 1846 Yucatec sermons, <em>lahu oxkal catac oxpel</em>, which Beltrán&rsquo;s <em>Arte</em> gives as fifty-three, had been translated as the thirty-three the context suggested; a scan of every Maya numeral against Beltrán&rsquo;s tables found and fixed that and four more. The manuscripts are harder than the printed books, and their transcriptions mark doubtful readings. Quote the Maya and the Spanish from the page images and treat the English as a guide to them. Corrections are welcome.
         </p>
 
         <hr className="my-12 border-stone-200" />
