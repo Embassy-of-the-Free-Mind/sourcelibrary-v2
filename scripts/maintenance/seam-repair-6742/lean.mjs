@@ -13,9 +13,12 @@
  *   N="node --env-file=/root/sourcelibrary/.env.production.local"; S=scripts/maintenance/seam-repair-6742/lean.mjs
  *   $N $S candidates --out=DIR [--max-joins=2000] [--days=60]   most-read books first; every tranche join, until N are
  *                    pending (drawn, not yet repaired); Mongo reads
+ *                    [--all-joins --top-books=N] every prose join of the N most-read books, not only the rule tranche
+ *                    [--per-book=K] a seeded sample of K joins per book; [--skip-manifest=F,...] other runs' writes
  *   $N $S run        --out=DIR [--max-joins=N] [--repairer=gemini|opus] [--pack=1|30] [--conc=4] [--verify-rate=0.07]
  *                    [--max-weekly=60] [--apply]                 dry run (no writes) unless --apply
- *   $N $S night      --out=DIR --max-joins=N [--apply]          candidates (topped up to N pending) + run: the cron entry
+ *   $N $S night      --out=DIR --max-joins=N [--all-joins --top-books=N] [--apply]   candidates (topped up to N pending)
+ *                    + run: the cron entry
  *   $N $S write      --out=DIR --run=ID [--apply]                re-plan / write a finished run's placed repairs, no model call
  *   $N $S report     --out=DIR
  *   $N seam-repair.mjs undo --out=DIR [--apply]                 the pilot's undo reads this DIR's manifest.jsonl
@@ -149,19 +152,29 @@ const PROJ = { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, 'ocr.dat
   'translation.edited_by': 1, 'translation.edited_at': 1, translation_withheld: 1 };
 const asPage = (r) => ({ id: r.id, p: r.page_number, type: r.page_type, ocr: r.ocr?.data || '', tr: r.translation.data });
 
-async function candidates(out, maxJoins, days) {
+/**
+ * "Every join" mode (#6742 job seam-prevent): the rule tranche finds 16 of 35 Opus-defective joins on the uniform random
+ * stratum, so for the most-read books every eligible prose join goes to the repairer, which labels "ok" itself (an ok
+ * label is never placed). `allJoins` takes every join, `topBooks` stops after the N most-read books, `perBook` keeps a
+ * seeded sample of K joins per book (a dry run's estimate), and `skipManifests` adds other runs' manifests to the joins
+ * never re-proposed. Joins that fire a tranche signal keep their `fired` list; the others carry `fired: []`.
+ */
+export const ALL_JOINS_SEED = 6742;
+/** The seeded per-book sample of join page numbers (N of each join N, N+1); the same book rank gives the same sample. */
+export const perBookSample = (pageNumbers, perBook, rank) => new Set(shuffle(pageNumbers, makeRng(ALL_JOINS_SEED + rank)).slice(0, perBook));
+async function candidates(out, maxJoins, days, { allJoins = false, topBooks = Infinity, perBook = Infinity, skipManifests = [] } = {}) {
   fs.mkdirSync(out, { recursive: true });
   const file = path.join(out, 'candidates.jsonl'), booksFile = path.join(out, 'books-done.jsonl');
   // Top up to maxJoins PENDING joins (drawn, not yet sent to a repairer). A book cut off at the cap is resumed.
   const doneBooks = new Set(readJsonl(booksFile).filter(b => b.complete).map(b => b.book));
   const have = new Set(readJsonl(file).map(c => c.id)), processed = new Set(readJsonl(path.join(out, 'repairs.jsonl')).map(r => r.id));
   let got = [...have].filter(id => !processed.has(id)).length;
-  // never re-propose a join the pilot (or an earlier night) already wrote
+  // never re-propose a join the pilot (or an earlier night, or a run named in skipManifests) already wrote
   const pilotManifest = path.join(REPO, 'scripts/eval/results/seam-repair-6742/manifest.jsonl.gz');
-  const writtenJoins = new Set([...readJsonl(path.join(out, 'manifest.jsonl')).filter(m => m.written).map(m => m.join),
+  const writtenJoins = new Set([...[path.join(out, 'manifest.jsonl'), ...skipManifests].flatMap(f => readJsonl(f)).filter(m => m.written).map(m => m.join),
     ...(fs.existsSync(pilotManifest) ? (await import('zlib')).gunzipSync(fs.readFileSync(pilotManifest)).toString().trim().split('\n').map(l => JSON.parse(l)).filter(m => m.written).map(m => m.join) : [])]);
   const { client, db } = await mongo();
-  const books = await readership(db, days);
+  const books = (await readership(db, days)).slice(0, topBooks);
   fs.writeFileSync(path.join(out, 'readership.json'), JSON.stringify({ built_at: new Date().toISOString(), window_days: days, instrument: 'analytics_pageviews, distinct (ip, day) per book, human-filtered at write (ocr-convergence/driver.mjs frame)', books: books.length, top: books.slice(0, 20).map(b => ({ id: b.id, title: (b.title || '').slice(0, 80), views: b.views })) }, null, 1));
   console.log(`${books.length} live translated books with readers in ${days} days; top ${books[0]?.views} views`);
   let rank = 0;
@@ -171,22 +184,26 @@ async function candidates(out, maxJoins, days) {
     if (doneBooks.has(b.id)) continue;
     const rows = await db.collection('pages').find({ book_id: b.id }, { projection: PROJ }).sort({ page_number: 1 }).toArray();
     const by = new Map(rows.map(r => [r.page_number, r]));
-    let joins = 0, tranche = 0, cut = false;
+    // perBook: a seeded sample of the book's eligible joins, kept in page order
+    const keep = Number.isFinite(perBook) ? perBookSample(rows.filter(r => eligible(r) && eligible(by.get(r.page_number + 1))).map(r => r.page_number), perBook, rank) : null;
+    let joins = 0, tranche = 0, prose = 0, cut = false;
     for (const ra of rows) {
       if (got >= maxJoins) { cut = true; break; }
       const p = ra.page_number, rb = by.get(p + 1);
       if (!eligible(ra) || !eligible(rb)) continue;
       joins++;
+      if (keep && !keep.has(p)) continue;
       const id = sha(`${b.id}:${p}`).slice(0, 12);
       if (writtenJoins.has(id) || have.has(id)) continue;
       const A = asPage(ra), B = asPage(rb), r0 = by.get(p - 1), r1 = by.get(p + 2);
       const sig = joinSignals({ A0: eligible(r0) ? asPage(r0) : null, A, B, B1: eligible(r1) ? asPage(r1) : null });
       if (sig.skipped || sig.nonProse) continue;
+      prose++;
       const fired = TRANCHE.filter(k => sig[k]);
-      if (!fired.length) continue;
-      tranche++;
+      if (!fired.length && !allJoins) continue;
+      if (fired.length) tranche++;
       const enA = translationProse(A.tr), enB = translationProse(B.tr), srcA = sourceProse(A.ocr), srcB = sourceProse(B.ocr);
-      const it = { id, book: b.id, title: (b.title || '').slice(0, 120), views: b.views, rank, p, idA: A.id, idB: B.id, pB: p + 1, fired, script: sig.script, lang: b.language,
+      const it = { id, book: b.id, title: (b.title || '').slice(0, 120), views: b.views, rank, p, idA: A.id, idB: B.id, pB: p + 1, fired, ...(allJoins ? { mode: 'all-joins' } : {}), script: sig.script, lang: b.language,
         modelA: ra.translation.model, modelB: rb.translation.model, hashA: sha(A.tr), hashB: sha(B.tr) };
       it.enTailA = enWindow(enA, 'tail'); it.enHeadB = enWindow(enB, 'head');
       it.srcTailA = srcWindow(srcA, enA, it.enTailA, 'tail'); it.srcHeadB = srcWindow(srcB, enB, it.enHeadB, 'head');
@@ -196,7 +213,7 @@ async function candidates(out, maxJoins, days) {
       for (const s of fired) if (RULES[s]) { const r = RULES[s]({ ...it, rawA: A.tr, rawB: B.tr, ocrA: A.ocr, ocrB: B.ocr }); it.rules[s] = r.repair ? { repair: r.repair } : { decline: r.decline }; }
       append(file, it); got++;
     }
-    append(booksFile, { book: b.id, rank, views: b.views, pages: rows.length, joins, tranche, complete: !cut });
+    append(booksFile, { book: b.id, rank, views: b.views, pages: rows.length, joins, prose, tranche, ...(keep ? { sampled: keep.size } : {}), complete: !cut });
     if (rank % 25 === 0) process.stderr.write(`${rank} books, ${got} joins\n`);
   }
   await client.close();
@@ -351,9 +368,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const repairer = arg('repairer', 'gemini');
   const o = { maxJoins: Number(arg('max-joins', 2000)), repairer, pack: Number(arg('pack', repairer === 'opus' ? OPUS_PACK : 1)), conc: Number(arg('conc', 4)),
     verifyRate: Number(arg('verify-rate', VERIFY_RATE)), maxWeekly: Number(arg('max-weekly', MAX_WEEKLY)), apply: process.argv.includes('--apply') };
-  const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60))), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), o),
+  const allJoins = process.argv.includes('--all-joins');
+  if (allJoins && !arg('top-books')) { console.error('--all-joins needs --top-books=N: every join goes to the repairer, so it is for the most-read books only'); process.exit(2); }
+  const co = { allJoins, topBooks: Number(arg('top-books', Infinity)), perBook: Number(arg('per-book', Infinity)), skipManifests: (arg('skip-manifest', '') || '').split(',').filter(Boolean) };
+  const go = { candidates: () => candidates(out, o.maxJoins, Number(arg('days', 60)), co), run: () => run(out, o), report: async () => report(out), write: () => writeOnly(out, arg('run'), o),
     // the cron entry: top the candidates up to --max-joins pending, then run them (the guard is checked first)
-    night: async () => { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60))); return run(out, o); } }[cmd];
+    night: async () => { const u = claudeUsage(); if (!u || u.weekly >= o.maxWeekly) return run(out, o); await candidates(out, o.maxJoins, Number(arg('days', 60)), co); return run(out, o); } }[cmd];
   if (!go || !out) { console.error('usage: see the header'); process.exit(2); }
   go().catch(e => { console.error(e); process.exit(1); });
 }
