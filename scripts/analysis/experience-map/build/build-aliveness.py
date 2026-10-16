@@ -21,8 +21,13 @@ import json, sys, math, collections as C, os
 D = sys.argv[1] if len(sys.argv) > 1 else os.path.expanduser('~/sourcelibrary/scripts/output/experience-map/aliveness')
 LAYERS = ['felt', 'world', 'made']
 
+# pages whose text was found by eye not to be on the leaf (probes/excluded-pages.json, each with its issue): never shown
+# phrases whose every hit is on excluded pages: "the sky is our father" occurs only in the invented plate-backs of #6783
+EXCLUDED_PHRASES = {'the sky is our father'}
+EXCLUDED = set(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'probes', 'excluded-pages.json')))['pages'])
+
 def load(p):
-    return [json.loads(l) for l in open(os.path.join(D, p)) if l.strip()]
+    return [r for r in (json.loads(l) for l in open(os.path.join(D, p)) if l.strip()) if r.get('page_id') not in EXCLUDED]
 
 def confirmed(screen, judged):
     J = {j['page_id']: j for j in judged}
@@ -250,7 +255,7 @@ if os.path.exists(os.path.join(D, 'classified-animism.jsonl')):
         fold = lambda t: ''.join(c for c in unicodedata.normalize('NFKD', t) if not unicodedata.combining(c))
         seen_ph = set(); A['phrases'] = []
         for ph, v in sorted(LCA['phrases'].items(), key=lambda kv: -kv[1]['pages']):
-            if fold(ph) in seen_ph: continue
+            if fold(ph) in seen_ph or ph in EXCLUDED_PHRASES: continue
             seen_ph.add(fold(ph)); A['phrases'].append({'ph': ph, 'dim': v['dim'], 'pages': v['pages'], 'books': v['books'], 'langs': list(v['byLanguage'].items())[:3]})
     # Jev (classify/jev-animism.py), a non-Gemini rater: does its score separate what the judge confirmed from what it rejected?
     jf = os.path.join(D, 'jev-animism.jsonl')
