@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a26c265aad44c98627c3b12",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Identical wording; X only normalizes 'vnd' to 'und' where the print has 'vnd Stunde/vnd auff'."
+ },
+ {
+  "item_id": "69b00ec3312120db3b489ac0",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Text and apparatus match the page in both; Y adds the section numbers 16-19 and X tags '[327]' as gloss, which are markup differences only."
+ },
+ {
+  "item_id": "6952b0fb77f38f6761bc2a8c",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y has several sense-changing misreadings, e.g. 'nisi his calamitossimis' for 'nostris', 'Nam quod ea etiam' for 'Nam quis eam quaeso', 'pretium' for 'perpetuum', 'quartum auguror' for 'quantum', and it drops 'cum' before 'crebrioribus'."
+ },
+ {
+  "item_id": "69dbc8e41040d1d5e209d442",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y misreads 'pcitatē' ('parcitatem') as 'pecuniam serves', 'impitorum' ('imperitorum') as 'impiorum' and 'rides' as 'rites', and it drops 'de' in 'de tusculanis'."
+ },
+ {
+  "item_id": "69f6ebeda26f03d5b09f730a",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is blank and shows only mirrored show-through; Y transcribes that as a title page ('BASILICA CHYMICA ... M. DC. XLVI.'), which invents the date."
+ },
+ {
+  "item_id": "69b51cea261c58d6366480ff",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has 'integra' for the printed 'integræ' and leaves 'idē' out of the margin note 'Phædone idē: ne putet'; Y has both, and the other differences are spelling conventions."
+ },
+ {
+  "item_id": "69af0d05be5fc7f3635458b3",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X gives wrong citations and words: 'Ezech. 29. 7.' for 'Es. 23. v. 7', 'De gloria data' for 'Deo gloria dāda', 'partes confluentes corpus eius Ecclesiam cum Spiritu' for 'constituentes corpus eius Ecclesiasticum & spirituale', and 'Matth. 23. 8. 9.' without the '10'."
+ },
+ {
+  "item_id": "6a26c265aad44c98627c3b20",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Only small spelling differences ('Vrsache'/'Vrsachē', 'liegen'/'ligē', 'ganze'/'gantze'), and Y is slightly closer to the print in each."
+ },
+ {
+  "item_id": "69ade7aa6a6b945bbdfa2e83",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has 'Skiße' in the header (the print reads 'Skizze') and 'Verhältnis' for 'Verhältniß'; neither changes the sense."
+ },
+ {
+  "item_id": "69b00ec3312120db3b489a5a",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X gives the month lengths as 'undetvicenum' and 'undetvicenis' (19 days) where the print has 'undetricenum' and 'undetricenis' (29 days), and it drops 'Zeunius' from the note."
+ }
+]
