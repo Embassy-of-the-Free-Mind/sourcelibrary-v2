@@ -8,8 +8,9 @@
 #
 #   tmux new -d -s g4-reread 'scripts/batch/g4-reread-6769/driver.sh QUEUE.tsv'
 #
-# QUEUE.tsv: one book per line, `kind<TAB>book_id<TAB>title`; kind rashi|mixed sends the Hebrew right-column-first
-# instruction with every read. Per book, each step leaves a marker in $STATE/<book_id>/ so a restart resumes:
+# QUEUE.tsv: one book per line, `kind<TAB>book_id<TAB>title`. kind rashi|mixed is REFUSED: G4L reads the left column
+# of a two-column Hebrew page first on 6/23 pilot pages, and 15/23 with a right-column-first instruction (#6769,
+# results/g4-reread-pilot-6769/score-rashi-colfix.json); the Rashi lane waits for an order check. Per book, each step leaves a marker in $STATE/<book_id>/ so a restart resumes:
 #   1. skip a book held for ANY other reason (its pages may be about to move: ia-wrong-leaf, containment …)
 #   2. hold it (hold-pipeline-books.mjs, reason g4-reread-6769): the 07:30 stale sweep + gap-fill cannot then dispatch
 #      paid retranslation of what this writes
@@ -33,7 +34,6 @@ LANE=g4-reread-6769; MODEL=gemini-4-argon-low; ISSUE=6769
 NTFY=${NTFY:-https://ntfy.sh/sourcelibrary-uptime}
 POST=${POST_COMMENTS:-1}
 MIN_DISK_GB=${MIN_DISK_GB:-12}
-INSTR="$REPO/scripts/batch/g4-reread-6769/hebrew-right-column-first.txt"
 PILOT="$REPO/scripts/eval/g4-reread-pilot-6769"
 RELEASE_SENTENCE="every page the g4-reread-6769 lane rewrote carries English written after its new OCR (scripts/batch/g4-reread-6769/book.mjs verify), or the book's gate failed and nothing was written"
 export JOB_SCRATCH=${JOB_SCRATCH:-/mnt/HC_Volume_105839809/jobs/g4-reread-6769}
@@ -62,6 +62,7 @@ run_book() {
   local avail; avail=$(df --output=avail -BG / | tail -1 | tr -dc 0-9)
   if [ "${avail:-0}" -lt "$MIN_DISK_GB" ]; then log "root disk ${avail}G < ${MIN_DISK_GB}G: stopping"; ntfy "g4-reread-6769 driver paused: root disk ${avail}G free"; exit 4; fi
   log "== $kind $id $title"; progress "$id" start "$kind"
+  case "$kind" in rashi|mixed) log "  Hebrew column order unsolved (#6769): refused"; progress "$id" refused "column order"; return 0;; esac
 
   # 1–2. page list, hold
   if [ ! -f "$D/step.hold" ]; then
@@ -79,9 +80,8 @@ run_book() {
 
   # 3. read (twice: the second pass re-reads only what failed)
   if [ ! -f "$D/step.read" ]; then
-    local extra=(); [ "$kind" = rashi ] || [ "$kind" = mixed ] && extra=(--instruction-file="$INSTR")
     for pass in 1 2; do
-      retry node_ scripts/batch/cli-ocr.mjs read --page-ids-file="$D/pages.json" --out="$D/read" --model="$MODEL" --concurrency=2 --quota-sleep=1800 --job="$LANE" "${extra[@]}" >> "$D/read.log" 2>&1 || { log "  read failed"; return 1; }
+      retry node_ scripts/batch/cli-ocr.mjs read --page-ids-file="$D/pages.json" --out="$D/read" --model="$MODEL" --concurrency=2 --quota-sleep=1800 --job="$LANE" >> "$D/read.log" 2>&1 || { log "  read failed"; return 1; }
     done
     touch "$D/step.read"; progress "$id" read "$(grep -c ' ok ' "$D/read.log") ok lines"
   fi

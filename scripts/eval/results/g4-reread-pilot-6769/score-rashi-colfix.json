@@ -1,0 +1,671 @@
+{
+ "colfix": {
+  "tag": "colfix",
+  "reads": 23,
+  "frame": 23,
+  "sample": {
+   "better": 18,
+   "same": 0,
+   "worse": 5,
+   "unjudged": 0,
+   "n": 23
+  },
+  "controls": {
+   "pass": 5,
+   "same": 0,
+   "fail": 0,
+   "unjudged": 0,
+   "n": 5
+  },
+  "columns": [
+   {
+    "page": 182,
+    "page_id": "69f66e0880c7a291ec4c22bf",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "n/a"
+   },
+   {
+    "page": 177,
+    "page_id": "69f66e0480c7a291ec4c22b6",
+    "columns": 3,
+    "g4l": "reversed",
+    "served": "interleaved"
+   },
+   {
+    "page": 96,
+    "page_id": "69f66dda80c7a291ec4c2261",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "correct"
+   },
+   {
+    "page": 115,
+    "page_id": "69f66de580c7a291ec4c2278",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "correct"
+   },
+   {
+    "page": 171,
+    "page_id": "69f66e0380c7a291ec4c22b0",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   },
+   {
+    "page": 84,
+    "page_id": "69f66dd280c7a291ec4c2257",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "reversed"
+   },
+   {
+    "page": 157,
+    "page_id": "69f66dfb80c7a291ec4c22a0",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "n/a"
+   },
+   {
+    "page": 73,
+    "page_id": "69f66dce80c7a291ec4c224e",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "interleaved"
+   },
+   {
+    "page": 36,
+    "page_id": "69f66db880c7a291ec4c2227",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "correct"
+   },
+   {
+    "page": 33,
+    "page_id": "69f66db880c7a291ec4c2224",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   },
+   {
+    "page": 25,
+    "page_id": "69f66db280c7a291ec4c221c",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "reversed"
+   },
+   {
+    "page": 34,
+    "page_id": "69f66db880c7a291ec4c222b",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "correct"
+   },
+   {
+    "page": 147,
+    "page_id": "69f66df580c7a291ec4c2294",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "n/a"
+   },
+   {
+    "page": 155,
+    "page_id": "69f66dfa80c7a291ec4c229c",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "interleaved"
+   },
+   {
+    "page": 86,
+    "page_id": "69f66dd380c7a291ec4c225b",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "interleaved"
+   },
+   {
+    "page": 154,
+    "page_id": "69f66dfa80c7a291ec4c229d",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   },
+   {
+    "page": 134,
+    "page_id": "69f66df080c7a291ec4c228d",
+    "columns": 2,
+    "g4l": "correct",
+    "served": "interleaved"
+   },
+   {
+    "page": 135,
+    "page_id": "69f66df080c7a291ec4c228c",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   },
+   {
+    "page": 12,
+    "page_id": "69f66dae80c7a291ec4c2213",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   },
+   {
+    "page": 93,
+    "page_id": "69f66dda80c7a291ec4c2266",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "n/a"
+   },
+   {
+    "page": 47,
+    "page_id": "69f66dbc80c7a291ec4c222c",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "n/a"
+   },
+   {
+    "page": 116,
+    "page_id": "69f66de580c7a291ec4c2275",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   },
+   {
+    "page": 113,
+    "page_id": "69f66de480c7a291ec4c2272",
+    "columns": 2,
+    "g4l": "reversed",
+    "served": "correct"
+   }
+  ],
+  "pages": [
+   {
+    "uid": "a9ace35571b8",
+    "kind": "sample",
+    "page": 182,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "n/a",
+    "checked": [
+     "Right column, line 1 reads 'פרנסיו דור דור ומנהיגיו... אז ראה'. B has this line; A has no matching text and gives only the header and 'עיון'.",
+     "After the header, A repeats 'עיון / למטרה' hundreds of times. These words are not on the page, so A is a degenerate loop that drops the whole main text.",
+     "The left column opens 'ואת הטוב ואת המות ואת הרע'. In B this comes after the end of the right column ('...את החיי׳'), which is the correct right-to-left reading order.",
+     "The left column has the headings 'תא חזי' and 'מתניתין' and ends '...תלתין ותרין עיינין'. B has all three; A has none.",
+     "The page has two columns. A's line order can't be judged because it contains no real text; B reads the right column first and then the left."
+    ]
+   },
+   {
+    "uid": "9b667745723d",
+    "kind": "sample",
+    "page": 177,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 3,
+    "order_g4l": "reversed",
+    "order_served": "interleaved",
+    "checked": [
+     "Image, wide left-page column: 'פתחין בתיובתא שוכנה ... לגבי בעלה דאיהו ריח דיליה'. B has nearly this text. A has an invented line, 'פתחי תיקונים טובה לתפלת ליל שבועות', that is not on the page.",
+     "Image, narrow column: 'והמשכילים יזהירו כזוהר הרקיע איהו זוהר טמיר וגניז ודא כתר'. B reads this closely. A has garbled pseudo-words ('יכירו כוונת הרקיע לילה ודאי עמיר ורבין').",
+     "Image, editor's note: '(אמ\"ו בכאן מתחלת תוספת זה הזוהר הנדפס בשאלוניקי...)'. B renders it, with small slips. A has '(למ\"ו) כסלן כסלן תוספת זו' and then repeats 'כסלן כסלן ולק' hundreds of times.",
+     "Image has the 'ויבן נח מזבח' section, the 'אי ברכה' column and the 'עד כאן מצאתי... לך לך' note. B includes all of them. A has none of them.",
+     "Order: the 'ויבן' column ends 'כד ישראל' and runs on to 'פתחין בתיובתא', so the near-gutter columns come before the wide column. B starts with the wide column and puts 'והמשכילים' before 'אי ברכה', so its order is reversed."
+    ]
+   },
+   {
+    "uid": "508af80dc704",
+    "kind": "sample",
+    "page": 96,
+    "served_model": "sefaria/Zohar Chadash",
+    "result": "worse",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "right col line 3: image reads 'וע\"ד אחסין משה ירותא'; A has 'ועל דא אחסין משה ירותא'; B has 'עד ג׳ אלפין מאה ירותא'",
+     "right col line 6: image reads 'ותמן אשתכחו משחתין'; A has 'אשתכחו'; B has 'אסתפקו'",
+     "right col line 7: image reads 'ברזא דמהימנותא'; A has 'דמהימנותא'; B has 'דמחיצוותא'",
+     "left col, first line after the parasha heading: image reads 'זנח ישראל טוב אויב ירדפו'; A has the same; B has 'וכה ישראל טוב לויה יראיו'",
+     "left col: image reads 'ווי על דא... ונבל כי ישבע לחם'; A has 'ונבל'; B has 'ובכל'; B also contains stray Arabic characters ('על', 'تلاتא')"
+    ]
+   },
+   {
+    "uid": "495294325eb1",
+    "kind": "sample",
+    "page": 115,
+    "served_model": "sefaria/Zohar Chadash",
+    "result": "worse",
+    "confidence": "medium",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Right column, 'כתיב' paragraph: the image reads 'ויברא אלהים את שני המאורות הגדולים'; A has 'ויעש אלהים'; B has 'ויברא אלהים' (correct)",
+     "Next line: the image reads 'שקולין דא לקביל דא כמא דאוקמוה חברין'; A has 'סלקין דא לקבל דא כחדא לאוקומא'; B has 'שקולין ... כמא דאוקמוה' (correct)",
+     "The image reads 'זנב׳ דאריה אריה איהו ואריה אתקרי'; A has 'זכא׳ דאקרי ... אריה איהו נהיר׳ אתק׳'; B matches the image",
+     "Left column: the image reads 'כתיב אלהים בארמנותיה נודע למשגב'; A has 'שערה כארגמן נודע דמחשב׳' (garbled); B matches the image",
+     "B weaknesses: it opens with 'עילאה' where the image has 'עלמא'; it leaves out the marginal notes (א״ג ...) that A keeps; it adds verse citations that are not on the page. A has stray Arabic letters and many misread words."
+    ]
+   },
+   {
+    "uid": "261aa0b223d2",
+    "kind": "sample",
+    "page": 171,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "Left column, which is long (begins 'למיין ול\"ב אלהים דעובדא דבראשי׳'): B transcribes it in full; A leaves it out entirely",
+     "List of the 32 Elohim in the right column: the image reads 'א׳ בראשית ברא אלהים את · ב׳ ורוח אלהים מרחפת על'; B matches; A garbles it badly ('ללה\"ס לתי' כ' ורוח טהיס...', 'שהיס')",
+     "Right column top: the image reads 'הפקין לפתחא ואינון מארי דחושבן...'; B has this paragraph (as 'ואפין לפתחא'); A leaves it out",
+     "Lower right column: the image has 'אבג יתץ · קרע שטן · נגד יכש...' and 'עלייהו איתמר שבע ביום'; B includes these; A has neither and instead repeats a 'ויכל ללהיס...' line three times, which is not on the page",
+     "Reading order: Hebrew reads right column first, but B puts the left column before the right column, so B's order is reversed"
+    ]
+   },
+   {
+    "uid": "e91ef6f14027",
+    "kind": "sample",
+    "page": 84,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "reversed",
+    "checked": [
+     "Left column opens 'שבע דרגין כד נטלי ממשכן בירא דמיין'; A has 'טבע לדינו כל כנויי מלכי דלעילא'; B matches the image",
+     "Nasso section reads 'וידבר ה' כה תברכו ת\"ח כיון דס\"כ עביד צלותיה ובעא לברכא ברכתא דכהני'; B matches; A garbles it and then adds the repeated filler verse 'ולקחתם לכם ביום הראשון', which is not on the page",
+     "Chukat section reads 'ויסעו מהר ההר דרך ים סוף מאי איתערו חברייא'; B close; A has 'כל דיתערו קב\"ה' followed by filler, and the whole block is duplicated",
+     "Right column top reads 'אלא בזמנא זעירא דחילא...'; B has it; A leaves it out",
+     "The page's main text has 2 columns; the catchword 'בלא' at the foot of the left column shows the right column comes first; both A and B put the left column first"
+    ]
+   },
+   {
+    "uid": "2a32f7bd1af1",
+    "kind": "sample",
+    "page": 157,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "n/a",
+    "checked": [
+     "Right column line 1: image reads 'יהבין ליה שאלתוי בתלת כתרין דתמן...'; A has 'יכין ליה צלותהי בתיקון לתקון'; B has 'יהבין ליה שאלתוי בתלת כתרלין לתמן', which is close",
+     "Right column line 2: image reads 'שכינתא איהי קבלה מסטרא דצדיקייא'; A has 'לתיקון ליהי קבלס מסטרא דדין'; B matches the image",
+     "Left column (begins 'שכינתא מסטרא דניקודי איהי ברתא דקב\"ה'): A leaves out the whole column; B gives it in full, after the right column",
+     "Line beginning 'כורסייה עם מרכבתא': A has 'כולמיה'; B has 'כורסייה', matching the image",
+     "Right column, lower section starting with 'אג': image reads 'אשכחן בין שפתים'; A has 'אז מתכנן כון ספתס'; B has 'אשכחן בין שפתים', matching the image"
+    ]
+   },
+   {
+    "uid": "29cc4ad0ca58",
+    "kind": "sample",
+    "page": 73,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "interleaved",
+    "checked": [
+     "Left column opening: image reads 'עוד לתרומה הוצרך משה ארבעים יום לתורה שבעל פה'; A has 'בהתחלתן ויתקנו בהן קול' then endless 'דקול' repetition; B has 'עוד לתרומה הוצרך משה לארבעים יום לתורה שבעל פה'",
+     "Right column opening: image reads 'קדישא הכו יקרא לבריה דמלכא'; A has nothing; B has 'קדיש' דבו יקרא דבריה דמלכא' (close)",
+     "Right column end: image reads 'ואיהי מקטורת מור ולבונה מכל אבקת רוכל'; A has nothing; B has this text",
+     "Reading order: the right column continues from the previous page's catchword, so it comes first; B gives the left column first (reversed)",
+     "Header: image reads 'לה זהר תרומה זהר', foliation 'יז א'; B matches; A has 'לה תרומה לה', '17'"
+    ]
+   },
+   {
+    "uid": "2d9e69b25f4d",
+    "kind": "sample",
+    "page": 36,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Right col line 1: image reads 'אליעזר ורבי עקיבא הוו אזלי באורחא אמר ליה רבי עקיבא רבי'; A matches; B has 'לאורחא לחד ליה לרבי עקיבא'",
+     "Right col line 3: image reads 'כן מיד כשאר כל הימים כשהיה אומר הקדוש ברוך הוא דבר מיד נאמר ויהי כן'; A close; B has 'מן הדין כל הני כתיבי ולימדו ליה לקב\"ה' (made-up text)",
+     "Section 'אלה תולדות השמים וגו׳ רבה בשם ר׳ ברכיה אמר בא הכתוב להורות כי'; A close; B has 'כתיב ליה ללס לומ׳ ליה לכתוב ליתורות'",
+     "Left col line 1: image reads 'בעולם וגזר לכל אחד ואחד אלא שנה הכנתו מאותו העניין'; A close; B has 'וזה לכל לכל לחד ולחל לית לית...'",
+     "Most of B's left column is filler, with 'לית' repeated over and over; A follows the page text all the way to 'האור של מעלה נבראו'"
+    ]
+   },
+   {
+    "uid": "1e0c53acf858",
+    "kind": "sample",
+    "page": 33,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "Right column, line 1: the image reads 'אדם מאי משמע כתיב הכא עליו וכתיב התם ויעל מעליו אלהים'. A has 'לדס מלי מטעמ כתיב הכל עלי'', which is badly misread. B has this line almost exactly right.",
+     "Right column, lines 2-3: the image reads 'בר יעקב אין לך בכל לילה ולילה שאין הכרוז יוצא'. A has 'חייא כל הלילה ולילה שאין הקב\"ה יושב ודן', which is not on the page. A then repeats 'ויתרך' hundreds of times and drops the rest of the page.",
+     "Left column, line 1: the image reads 'רעייה דמסר נפשיה על עניניה כמשה דאמר עתה אם תשא חטאתם'. A leaves this out entirely. B has it.",
+     "Reading order: the right column ends 'דאמר רבי חייא סבא לא אשכחנא' and the sentence carries on at the top of the left column with 'רעייה דמסר נפשיה'. So the right column comes first. B puts the left column first, which is reversed.",
+     "Section opening words: the image has 'תאני רבי שמעון', 'בכה רבי יוסי' and 'פתח ההוא ינוקא'. B has all three. A has none of them."
+    ]
+   },
+   {
+    "uid": "8100e04c8461",
+    "kind": "sample",
+    "page": 25,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "reversed",
+    "checked": [
+     "left column line 1 reads 'ליה וסליק לזמנין'; A has 'ליה ואזלין וזמנין'; B has 'לפי וסליק לזמנין' then repeats 'לזמנין' thousands of times",
+     "right column opens 'ביום היה ראוי להיות שני'; A has it; B omits all main text",
+     "running head reads 'סתרי אותיות'; A has 'סתרי אותיות'; B has 'סדרי אותיות'",
+     "left column ends 'עד כאן סתרי אותיות'; A has it; B lacks it",
+     "full-width lower block (רבי אלעזר שאל לרבן יוחנן בן זכאי...) present in A, absent in B"
+    ]
+   },
+   {
+    "uid": "a7652a663e88",
+    "kind": "sample",
+    "page": 34,
+    "served_model": "sefaria/Zohar Chadash",
+    "result": "worse",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "correct",
+    "checked": [
+     "Right column, line 3: image reads 'ודאי דאמריתו דשמשא אתאצל נהירותיה מזיוא'; A matches; B has 'זכאי לאימיהון דמשה אתכא נהירותיה מיומא'",
+     "Right column, near 'פתח': image reads 'כך הוא שמשא ... אתמשך חד חוטא דזיוא'; A matches; B has 'משה ... דכתי׳ ומשה עלה אל האלהי׳', which is not on the page",
+     "Left column, R. Pinchas passage: image reads 'צאינה וראינה בנות ציון במלך שלמה'; A matches; B has 'אהבה ואהיבה כבות כיון דמלך שלמה אתייהב חכמתא'",
+     "First line: image starts 'זקינים אתאצלו מיהוש׳'; A leaves out 'זקינים'; B has the garbled 'זקיפיס לתכלו מילוס׳'",
+     "Left column: image reads 'בכל ציונא וציונא דבתי קברי'; A matches; B has 'בכל כוכב וכוכב דכתי׳ קברי'"
+    ]
+   },
+   {
+    "uid": "61626840ca22",
+    "kind": "sample",
+    "page": 147,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "n/a",
+    "checked": [
+     "Left column line 1: image reads 'חובוי דהא מיתה מכפרא על חובין ואהדר לקבלא עונשא'; A has this nearly verbatim; B has garbled 'קובי דכל מיתא מכפרה על עובדין וזוכסא לוקרל'",
+     "Left column 'מאן חמא גו גנתא דעדן... עשר מרגלאן שפיראן'; A matches; B has 'מן קחול גו גנתא דעדן דאתתא לחתמ' ליכא לעילא עטר מרגלתא טפילסו', which is mostly nonsense",
+     "Right column, which starts 'קול הטתנה קלא דשכינתא צווחא בכל יומא' and ends 'ווי מאן דקטיל עונשא על': A transcribes it (placed after the left column); B leaves out the whole column",
+     "Reading order: the right column ends '...עונשא על' and runs straight into the left column's 'חובוי', so the right column comes first; A puts the left column first, so its order is reversed",
+     "Colophon: image reads 'אברהם בן לאדוני אבי יעקב חיים די קורדווא'; A has it; B drops 'אברהם'"
+    ]
+   },
+   {
+    "uid": "a60656042909",
+    "kind": "sample",
+    "page": 155,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "interleaved",
+    "checked": [
+     "image reads 'איתמ' משה רוע' אבן ישראל על אבן אחת שבעה עינים' at the top of the left column; B has this; A has nothing like it (the vowel-point formula 'חירק דאיהו...' repeated, which is not on the page)",
+     "image reads 'והמשכילים אינון דלית בהון שכל לאשתמודעא בצלותא' in the right column; B has this, with small misreadings; A is missing it",
+     "image reads 'קם רבי שמעון בוצינא קדישא על רגלוי' in the right column; B has 'קם רבי שמעון בוכיכא קדישא'; A has a made-up 'קם. דאיהו קמץ' instead",
+     "right column ends 'ובגינה' and the left column continues 'איתמ' משה', so the right column is read first; B gives the left column first (reversed)",
+     "A's text doesn't follow either column (no real column order); 'interleaved' is a nominal label"
+    ]
+   },
+   {
+    "uid": "f95546063fcd",
+    "kind": "sample",
+    "page": 86,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "interleaved",
+    "checked": [
+     "Right column opens with 'עילאה דאתחבר עם יוסף תמן בגין דנטר ברית קדש'. A has 'עילאה להתחבר עם יוסף תמן בגין דכנור ברית קדש' and then falls into an endless repeat of 'מילתא דכתיב'. B reads it nearly correctly.",
+     "The left column of the main page begins 'ומסטרא דאברהם ובגין שמך טובים'. A does not have this text and only offers garbled scraps like 'ומסטרא דלסתרכס'. B has it in full.",
+     "The right column ends '...מסטרא דאימא', and the text carries straight on into 'ומסטרא דאברהם' at the top of the left column. So right then left is the correct order, but B gives the left column first (reversed).",
+     "A begins with the cut-off margin of the facing page ('משבחי', 'קרנית לנגד', 'כאהלי'), which is not this page's main text. Its few words are badly misread.",
+     "Text near the 'רחש לבי דבר טוב' section heading and the 'יפיפית' and 'הוצק חן' headings appears in B and matches the image. A has none of it."
+    ]
+   },
+   {
+    "uid": "9f719110f631",
+    "kind": "sample",
+    "page": 154,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "right col line 1: image reads 'עלייהו איתמר ערכי נחל דומיא דתרין שפוון ותלת ספירן'; A has 'ויתמר ערכי כה' ... טורין טפח ונתן ספרין'; B matches",
+     "image 'יגל פזק דא איהו צדיק אלף שתיתאה דביה'; A 'יגל פוק דל ליהו פריק ליה'; B matches closely",
+     "left col: image 'ברייתא איהי שכינתא משמאלא הה\"ד כי בשדה מצאה'; A 'בריתא ליהי שכינתא תתחליל הס''; B matches",
+     "left col opening 'ומתמן שמעון ריחא דפני נשר': A omits these lines; B has them but places the left column before the right one (reversed)",
+     "A ends with a long run of repeated 'לליתי'' that is not on the page; B gives the real פתח/קמץ lines"
+    ]
+   },
+   {
+    "uid": "1eb47100191f",
+    "kind": "sample",
+    "page": 134,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "correct",
+    "order_served": "interleaved",
+    "checked": [
+     "Right column, line 1: the image reads 'הנפש והכי ליני ידעת לילך והם השנים דוגמת העור'. B has this. A has 'הכאב ולבי לוי ידעת ליתן לכל חכמה ופעם', which is not on the page.",
+     "Right column, lines 3-5: the image reads 'מפיו ומידיו ומרגליו... הלכתי לאותו העולם וריקם השיבני'. B matches. A repeats four invented lines twice.",
+     "Most of A is the phrase 'לכל חכמה לית' repeated over dozens of lines. This is degenerate output; none of it is on the page.",
+     "Left column of the right-hand page, line 1: the image reads 'שמות כדוגמת דא יו\"ד יו\"ד... (ס\"א יסודות)'. B matches and puts it after the right column, which is the correct order. A has only scraps of it.",
+     "Left column, the 'רבי רחומאי פתח גבור בארץ' section and the bottom catchword 'קריאת': B has both. A gives 'רבי חזקיה פתח נבור' and then more filler. B leaves out the partly visible left-hand page of the spread."
+    ]
+   },
+   {
+    "uid": "c20cc06defb7",
+    "kind": "sample",
+    "page": 135,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "Opening line: image reads 'לדרתם מלי שנא דהא כתיב לדורותם מלא'; A has 'מלי זבח ... מלי וזבחת'; B matches the image",
+     "Top of the right edge: image is a cut-off column fragment starting 'כיון דקרי ביה רב'; A invents more than 20 identical repeated 'רבי יצחק קרי ליה...' lines; B gives a partial but plausible fragment",
+     "Line 2: image reads 'פרשת ציצית בק\"ש וברייתו של אדם'; A has 'פרשת כתיב כתיב בקי\"ב'; B matches",
+     "Lower section: image has 'פתח ואמר ולנעמי מודע לאיש איש גבור חיל'; A garbles it as 'ולבעמי מודע לחיים ליט נכור מיל'; B is correct",
+     "Lower right subcolumn 'והוא כמו רוח היוצא מאור גדול ... תלתיהון בדיוקנא': B includes it but puts it after the left-hand note; A leaves it out almost entirely"
+    ]
+   },
+   {
+    "uid": "2f19f7eb4302",
+    "kind": "sample",
+    "page": 12,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "Right column line 1: image reads 'הכותב ובלותו שעה אפשר שיוכל ללמוד : גלא הכותב ע\"ה בודאי הרבה טעות'. A has this nearly exactly. B has 'הכותב וחותם פה קק\"ק זיטומיר...', which is not on the page.",
+     "Header: image reads 'הקדמה דבעל המגיהה'. A matches. B has 'המגיה'.",
+     "Left column: image reads 'פתח ר' שמעון ואמר ווי לבני עלמא דאינון אטימא לבא'. A matches. B has 'פתק' ל' טעון וסמר ויי ללבי עלמס' and then turns into nonsense.",
+     "Left column bottom: image has the signature 'הצעיר יצחק בן החבר אברהם זצ\"ל דיי\"דק אמשטרדם'. A has it. B never reaches it and instead repeats 'ללס' thousands of times, which is not on the page.",
+     "Order: Hebrew reads right to left, so the right column ('הכותב...') comes first. A puts the left column first, which reverses the order. B's order is correct, but almost all of B's text is misread or made up."
+    ]
+   },
+   {
+    "uid": "d43c3ff2df14",
+    "kind": "sample",
+    "page": 93,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "n/a",
+    "checked": [
+     "Left-page header reads 'מה זהר ואתחנן'. A has only the header words and then repeats 'זהר' over and over, with no body text. B has the header correctly.",
+     "Left page, left column, first line reads 'ליה ביממא ועל ההוא זמנא כתיב יענך ה׳ ביום צרה'. A does not have it. B has it, with small misreadings such as 'היאך'.",
+     "Section heading in the left column reads 'זוהר מפרשת מטות'. A does not have it. B has it.",
+     "Heading lower in the left column reads 'פרשת ואתחנן קו המדה'. A does not have it. B has it.",
+     "In Hebrew the right column ('בההוא יומא ... תלת קלין') is read before the left column ('ליה ביממא'). B gives the left column first, so its order is reversed. A has no column text at all, so its order is marked n/a."
+    ]
+   },
+   {
+    "uid": "a57a1eaae7c7",
+    "kind": "sample",
+    "page": 47,
+    "served_model": "gemini-3.1-flash-lite-preview",
+    "result": "better",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "n/a",
+    "checked": [
+     "Opening of left column: image reads 'בהבלי העולם הולכים אחר דעתם והרהורם'; A has this exactly; B has 'העביר העולם מלפנים לחדר נכנס והראהו'",
+     "Same line: image reads 'ויעבר אברם בארץ עד מקום'; A matches; B has 'ויעבר חרבו נחתו על מקום'",
+     "Line 3: image reads 'כיון שפוקד הקב\"ה מעשיהם ומוציא הנשמה מן'; A matches; B has 'כיון דפוקד הקב\"ה העתיק ויומין הכחמה מן'",
+     "Mid-column: image reads 'וישמע אברם כי נשבה אחיו רבי תנחום פתח קמתי אני לפתוח לדודי'; A matches; B has 'לכרס כי נססב לחין ... קויתי לכי לפתות ללוזי'. B misreads alef as lamed throughout and garbles most of the text",
+     "Layout: the right column ('כמה יש לו לאדם להכשיר...', with the Zohar inset) comes first and runs into the left column ('ללכת / בהבלי העולם'). A gives the left column first, then the right. B leaves out the right column entirely"
+    ]
+   },
+   {
+    "uid": "a854c5450c52",
+    "kind": "sample",
+    "page": 116,
+    "served_model": "sefaria/Zohar Chadash",
+    "result": "worse",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "Left column, line 3: the image reads 'שבחו ישראל בארעא תושבחתא'. A has שבחו; B has שבקו.",
+     "Left column, line 2: the image reads 'כיון דטבעי כל אינון סוסוון ... בימא'. A has דטבעי ... בימא; B has דשמעי ... ביומא.",
+     "Right column, lower part: the image reads 'וברזא דרחימו וחדו דתשבחתא'. A has דרחימו; B has דרקיעו, and B uses that misreading many times.",
+     "Reading order: the right column, starting 'מההו׳ עילאה', is read first. A starts there; B starts with the left column, so its order is reversed.",
+     "The side note 'ה\"ג וכן מוכח בפרשה בשלח' is on the page. B includes it; A leaves it out (a minor loss for A)."
+    ]
+   },
+   {
+    "uid": "4be7033868a0",
+    "kind": "sample",
+    "page": 113,
+    "served_model": "sefaria/Zohar Chadash",
+    "result": "worse",
+    "confidence": "high",
+    "columns": 2,
+    "order_g4l": "reversed",
+    "order_served": "correct",
+    "checked": [
+     "Right column opening: image reads 'יומא דגרעונ׳ דבתולת ישר׳ לא אתחזי למהוי בתולה אחרא בשלימו'; A has 'עאל לגרעוב׳... בגולה אחרא באלין'; B matches",
+     "Left column first line: image reads 'נוטרה את הכ׳ מים דהואיל והערלה לגבי: הוא ינקא מני למיהב'; A has 'את ה׳ יהיב להו חילא ובעלה אבנוי'; B matches",
+     "Reading order: the right column (יומא דגרעונא...) comes first and the left column (שמוני...) second; B follows this order, while A starts with the left column",
+     "Image reads 'אבל ביום שני דאתברי ביה גיהנם'; A has 'לגבי נוא הכי דאתברי ביה גהינם'; B matches",
+     "Left column marginal note '(ק״ג זכור זה הענין החשוב)' is on the page; A includes it, B leaves it out. B also adds Bible citations that are not printed, both minor"
+    ]
+   },
+   {
+    "uid": "eae80cf8324b",
+    "kind": "control",
+    "page": 154,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "79455baf3866",
+    "kind": "control",
+    "page": 155,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "41d904ee4323",
+    "kind": "control",
+    "page": 113,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "5eb6346d7c57",
+    "kind": "control",
+    "page": 33,
+    "result": "clean",
+    "confidence": "high"
+   },
+   {
+    "uid": "15cc3425a0c7",
+    "kind": "control",
+    "page": 73,
+    "result": "clean",
+    "confidence": "high"
+   }
+  ],
+  "summary": {
+   "better": "18/23 = 78% [58, 90]",
+   "same": "0/23 = 0% [0, 14]",
+   "worse": "5/23 = 22% [10, 42]",
+   "unjudged": 0,
+   "controls": "5/5 clean copy chosen (0 same, 0 planted chosen, 0 unjudged)",
+   "multi_column_pages": 23,
+   "g4l_order": [
+    [
+     "correct",
+     8
+    ],
+    [
+     "reversed",
+     15
+    ]
+   ],
+   "served_order": [
+    [
+     "n/a",
+     5
+    ],
+    [
+     "interleaved",
+     5
+    ],
+    [
+     "correct",
+     11
+    ],
+    [
+     "reversed",
+     2
+    ]
+   ]
+  }
+ }
+}

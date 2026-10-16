@@ -46,8 +46,9 @@
  * per-BOOK verdict (scripts/batch/reread-gate.mjs: 30 random pages judged blind against the image by Opus through
  * `claude -p`, 0 worse, 5/5 planted controls caught). A failed or mismatched gate writes nothing; every other guard
  * stays. The write stamps `ocr.pipeline` with the lane and the gate (verdict, sample, judge run, file hashes) in
- * `engine.input.lane_gate`. `read --instruction-file=F` appends F's text to the prompt (the Hebrew right-column-first
- * instruction); it is kept as prompt-extra.txt and is part of the prompt hashed.
+ * `engine.input.lane_gate`. `read --instruction-file=F` appends F's text to the prompt; it is kept as
+ * prompt-extra.txt and is part of the prompt hashed. (Tried on #6769 with a Hebrew right-column-first rule: G4L then
+ * read the left column first on 15/23 two-column pages, against 6/23 without it. Measure an instruction before using it.)
  *
  * ALWAYS, in every mode (scripts/lib/reread-lane-gate.mjs): a page whose text is an open edition fitted to the scan
  * (Sefaria, Esukhia Derge, CBETA) is never overwritten, and a read with 3+ letters of a script that is not the book's
