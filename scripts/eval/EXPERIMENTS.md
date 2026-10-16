@@ -135,6 +135,29 @@ compare with its arm-corrected column: ≥ 4 87.2%, major 14.4%). measure = judg
 |---|---:|---|---:|---|---:|---:|---:|---|---|
 | 2026-09 | 103 | 85.6 (77.4–92.8) | 2.9 | 14.3 (7.4–22.3) | 12.7 | 15.7 | 9.3 | 93.8 / 63.2 | 15/15 · 15/15 · 15/15 within 1 · CI recomputed 2026-09-30, #5373 (was 76.9–93, 7.1–22.5) |
 
+## 2026-10-16 · Can Tibetan work dates come from the colophon and BDRC rather than a model?
+
+**Why.** After the lean run (#6721, 2026-10-15) 2,331 of 2,341 Tibetan books carried a bare catalogue-only model
+estimate of the WORK, typically "c. 1600–1900" (1,030 windows wider than 300 years). Derek: "we are looking for dates
+of the works, not the editions … the tibetan are all at 1700."
+
+**Design.** Sonnet (`claude -p`, subscription) read each book's catalogue record, opening leaves and last three
+pages (`date-books.mjs --lean tibetan`, 10 a call, 241 calls) and returned only readings: the author named (Tibetan,
+Wylie, English), the exact words naming them, their dates as it knows them, Kangyur/Tengyur status with Indian and
+translation windows, the exact words stating a year, cycle/element/animal/age, and its own window. The code then:
+BDRC work record (scan W… → instance MW… → work WA…: AuthoredEvent, main author/tertön/commentator → person dates);
+a named author matched through Wikidata's 19,419 BDRC-linked people (labels in Tibetan script and English) to a BDRC
+person whose dates meet the model's; the colophon year converted by `rabjungYears()`; a person window wider than a
+century refused.
+
+**Result.** Work basis before → after: model_knowledge 2,331 → 1,894; author_lifespan 10 → 393; colophon 0 → 53;
+catalogue 0 → 1. Window width >300 years: 1,030 → 428; exact: 13 → 71. Unchanged: 887 (no source, and the new model
+window was not narrower than the stored one: a second guess is not better for being second).
+
+**What did not work.** Taking a single name-index hit when the model did not recognise the person ("Sonam Senge" → the
+one who died 1253) — now refused (`unrecognised_name`, 235 books). The model's own cycle numbers. 153 named authors have
+no BDRC match by exact name; 1,529 books name no author at all (mostly EAP ritual manuscripts from Bhutan).
+
 ## 2026-10-15 · Does Gemini 4 Argon low correct the Yigdzin Tibetan better than 3.8 Flash low? (#6560)
 
 PRIOR ART: `2026-10-13-tibetan-flash38-correct-6560.md` (3.8 Flash low and high, the arm the running pass uses),
