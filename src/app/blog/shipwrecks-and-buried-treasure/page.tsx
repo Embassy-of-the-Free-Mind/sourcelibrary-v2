@@ -323,6 +323,140 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           crown, which also describes a treasure “that surpasses all the others” in “a rejected place”.
         </Find>
 
+        <Section>Never recovered</Section>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          A second pass asked of every wreck and hoard page whether it says the valuables were never recovered. These
+          four came out on top, and none of them has a wreck site that we could find in published sources.
+        </p>
+
+        <Find
+          title="The 1502 gold fleet, and a nugget like a loaf of bread"
+          href="/book/69ea06f14c15c76fe934a77a?page=41"
+          source={
+            <>
+              Bartolomé de las Casas, <em>Brevísima relación de la destrucción de las Indias</em> (Seville, 1552), p. 13
+            </>
+          }
+          quote="The ship was lost at sea, and along with him, many Christians and a large quantity of gold drowned; among the items lost was a large nugget that was like a loaf of bread and weighed three thousand six hundred castellanos."
+        >
+          The &ldquo;him&rdquo; is Guarionex, a Taíno king captured on Hispaniola and shipped to Castile in chains. He
+          sailed with the fleet that left Santo Domingo in 1502 carrying the outgoing governor, Francisco de
+          Bobadilla, against Columbus’s warning that a storm was coming. Oviedo gives the same story from the island
+          (
+          <Link href="/book/695910f5ecb01322b306854d?page=194" className={linkClass}>
+            Historia general, vol. 1, ch. VII
+          </Link>
+          ). Most of the fleet sank in the hurricane, and later accounts disagree on the number of ships.
+        </Find>
+
+        <Find
+          title="Prince Rupert’s prize money"
+          href="/book/6a4a3ea3f0f4a3b75e90cdbc?page=78"
+          source={
+            <>
+              Edward Hyde, Earl of Clarendon, <em>The History of the Rebellion and Civil Wars in England</em>, book XIV
+            </>
+          }
+          quote="What treasure had been gathered, which, he confessed, had amounted to great value, had been all lost in the ship in which he himself was."
+        >
+          Rupert’s Royalist squadron spent 1650 to 1653 taking prizes at sea. Clarendon reports the prince’s account to
+          Charles II: the treasure went down with his own ship, and more with the ship in which his brother Maurice was
+          lost. Clarendon names the sunken ship as the <em>Antelope</em> and puts the loss &ldquo;in the Indies&rdquo;;
+          other sources name the <em>Constant Reformation</em>, wrecked off Terceira in the Azores on 30 September
+          1651. We found no published wreck site.
+        </Find>
+
+        <Find
+          title="The loot of Kaffa, 1475"
+          href="/book/6991e7ecc91ce7d733e50311?page=283"
+          source={
+            <>
+              An Italian chronicle printed in Giovanni Francesco Pagnini, <em>Della decima</em> (Florence, 1765), p. 270
+            </>
+          }
+          quote="He carried away many souls, and many treasures, and many goods, and loaded everything onto a Genoese ship, and coming in the direction of Constantinople the said ship broke and perished, and went to the bottom of the Sea, and everything was lost."
+        >
+          After the Ottoman capture of the Genoese colony of Kaffa in the Crimea, the spoils and captives were sent to
+          Constantinople in a Genoese ship. When it sank, the chronicle says, the Sultan seized the Genoese merchants of
+          Pera and made them pay for the loss. The text does not say where in the Black Sea it went down.
+        </Find>
+
+        <Find
+          title="Moctezuma’s gold in the lagoon"
+          href="/book/695910f9ecb01322b3068858?page=533"
+          source={
+            <>
+              Gonzalo Fernández de Oviedo, <em>Historia general y natural de las Indias</em>, vol. 2, p. 517
+            </>
+          }
+          quote="They told where they had thrown the gold into the lagoon, and part of it was found; but not a third part of what had been lost."
+        >
+          After the fall of Tenochtitlan in 1521, Cuauhtémoc and the stewards of his household told the Spaniards where
+          the gold had been thrown into the lake. The lake has since been drained and Mexico City built over it.
+        </Find>
+
+        <Section>Where are they now?</Section>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          What we could find about the stories above, in published sources, as of October 2026.
+        </p>
+        <ul className="list-disc pl-6 text-secondary leading-relaxed mb-8 space-y-3">
+          <li>
+            <strong>The São Tiago</strong> was found on the Bassas da India and salvaged: guns identified by the Natal
+            Museum, coins and jewellery, an astrolabe, and a bronze falconet raised in 1985 that is now in Lisbon’s
+            Museu de Marinha (
+            <a href="https://shiplib.org/?p=4602" className={linkClass}>
+              ShipLib
+            </a>
+            ). The atoll is a French nature reserve and visits need a permit.
+          </li>
+          <li>
+            <strong>The Tobermory ship</strong> has been searched with diving bells in 1666, by Sacheverell in 1688,
+            by the Pieces of Eight Company in 1906 to 1908 and by the Duke of Argyll between 2008 and 2014. No
+            significant treasure has come up, the hull lies deep in mud, and the records suggest it carried soldiers,
+            not money (
+            <a href="https://canmore.org.uk/site/22320" className={linkClass}>
+              Canmore
+            </a>
+            ).
+          </li>
+          <li>
+            <strong>The Hundon pot</strong> was the find itself, in 1687.
+          </li>
+          <li>
+            <strong>Hawkesdown Hill</strong> is an Iron Age hillfort and has been a scheduled monument since 1924, so
+            digging for Courd’s treasure would now be a criminal offence.
+          </li>
+          <li>
+            <strong>The Cadiz wreck</strong> has no identified site that we could find. Schmidt’s own pages date it:
+            he reached Lisbon on 30 September 1553 (
+            <Link href="/book/69b525c46be6046083031e1b?page=88" className={linkClass}>
+              p. 71
+            </Link>
+            ), and Schetz is the family he names as owners of sugar estates at São Vicente in Brazil (
+            <Link href="/book/69b525c46be6046083031e1b?page=85" className={linkClass}>
+              p. 68
+            </Link>
+            ).
+          </li>
+          <li>
+            <strong>The Maldonado silver ship</strong> has no identified site either. Pernety’s visit was in 1763, so
+            the loss was around 1733, close enough to the island for a dragnet to bring up coins.
+          </li>
+          <li>
+            <strong>King Christopher’s ship</strong> appears in Münster; we found no other record of it.
+          </li>
+          <li>
+            <strong>The Caspian chest</strong> is recorded only in Hakluyt. The voyage itself, Christopher Burrough’s
+            of 1580, is well documented (
+            <a href="https://www.iranicaonline.org/articles/borough-christopher-merchant/" className={linkClass}>
+              Encyclopaedia Iranica
+            </a>
+            ).
+          </li>
+        </ul>
+
         <Section>How these pages were found</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -331,7 +465,8 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           TypeSafe’s Jev, then answered four questions about each page: does it report a particular wreck; does it
           report particular valuables that were buried, hidden or sunk (not treasure in heaven, and not the
           philosophers’ stone); does it name a place someone could go and look; and is it a record, a legend, a method
-          for finding treasure, law, allegory or fiction. The whole pass cost 64 cents. We then read the top-scoring
+          for finding treasure, law, allegory or fiction. The whole pass cost 64 cents. A second pass over the 1,356
+          pages that named a place asked whether the valuables were never recovered, for another 6 cents. We then read the top-scoring
           pages and chose the ones above.
         </p>
         <p className="text-secondary leading-relaxed mb-6">
