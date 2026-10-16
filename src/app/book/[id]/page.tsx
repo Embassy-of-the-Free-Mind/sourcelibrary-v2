@@ -76,7 +76,8 @@ import AboutVariants from '@/components/book/AboutVariants';
 import BookBiblioPanel from '@/components/book/BookBiblioPanel';
 import PlusToggle from '@/components/book/PlusToggle';
 import BookLibrarySection, { type LibrarySectionData } from '@/components/book/BookLibrarySection';
-import { getPartnerByProvider } from '@/lib/library-partners';
+import { getPartnerByProvider, getProviderKeys } from '@/lib/library-partners';
+import { resolveBookProvenance, provenanceSentence, type ProvenanceSource } from '@/lib/book-provenance';
 import { getRelatedBooks } from '@/lib/related-books';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import { formatAuthor, getBookThumbnailUrl } from '@/lib/utils';
@@ -1182,45 +1183,68 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       : [] as CatalogBook[];
     const hasRelated = tagRelated.length > 0;
 
-    // "Part of the collection" section — the contributing digital library/source
-    // this book came from (Biblioteca Philosophica Hermetica, Internet Archive,
-    // …), with its own stats. Resolved from image_source.provider via the static
-    // LIBRARY_PARTNERS registry; skipped in embed/tenant views.
+    // Provenance section: who holds the original, who digitised it, what Source
+    // Library did, and where the scans came from (src/lib/book-provenance.ts).
+    // Keyed on the HOLDER, never the platform: "From the collection of
+    // Internet Archive" credited the wrong party (#6503). With no holder on
+    // record it says where the scans are from instead. Skipped in embed/tenant views.
     const librarySection: LibrarySectionData | null = await (async () => {
-      const provider = (book as unknown as { image_source?: { provider?: string } }).image_source?.provider;
-      const partner = provider ? getPartnerByProvider(provider) : undefined;
-      if (!partner || !embedPolicy.showBookRelatedBooks) return null;
-      // Only a HOLDING institution gets this callout. A platform (Internet
-      // Archive, Google Books…) does not hold the book, and "From the
-      // collection of Internet Archive" would credit the wrong party; the
-      // provenance panel names both the holder and the scan source.
-      if (partner.kind === 'platform') return null;
-      // Each query is timeout-guarded and independently caught so a slow/failing
-      // one (e.g. an exact count over a huge provider like Internet Archive)
-      // never nulls the whole section — we degrade a stat, not the feature.
+      if (!embedPolicy.showBookRelatedBooks) return null;
+      const src = (book as unknown as { image_source?: ProvenanceSource }).image_source;
+      const prov = resolveBookProvenance(src);
+      if (!prov.holder && !prov.host) return null;
+      const stamped = translationState as (typeof translationState & { translated?: number; translatable?: number }) | null | undefined;
+      const sentence = provenanceSentence(prov, {
+        kind: src?.provider === 'museumsofindia' ? 'object' : src?.provider === 'wikimedia_commons' ? 'item' : 'book',
+        hasScans,
+        provider: src?.provider,
+        work: {
+          rung: translationRung,
+          englishOriginal: !!translationState?.english_original,
+          translated: stamped?.translated ?? translatedCount,
+          translatable: stamped?.translatable ?? totalPages,
+          transcribed: ocrCount,
+        },
+      });
+      // The shelf: books that share this holder (or, with no holder, this
+      // platform). The Explore button only appears where a page lists exactly
+      // those books, i.e. a partner library page keyed on the same provider.
+      const shelfPartner = prov.holdingPartner || (!prov.holder ? prov.hostPartner : undefined);
+      const shelfQuery = shelfPartner
+        ? { provider: getProviderKeys(shelfPartner) }
+        : prov.holderKey ? { holder: prov.holderKey } : null;
+      // Timeout-guarded: a slow catalogue query degrades the shelf, never the section.
       const guard = <T,>(p: Promise<T>, fallback: T): Promise<T> =>
         Promise.race([p, new Promise<T>((res) => setTimeout(() => res(fallback), 3500))]).catch(() => fallback);
-      // Sample (fast, estimated) gates the section and gives cover art. Exact
-      // counts are fetched separately and fall back to the estimate if slow — so
-      // the numbers are real (not the planner's round "1,001" estimate) without
-      // ever hiding the section on a big provider.
-      const all = await guard(browseBooks({ provider: partner.providerKey, sort: 'popular', limit: 24 }), { books: [] as CatalogBook[], total: 0 });
-      if (all.total < 2) return null; // not worth a "collection" callout for a lone book
-      const covers = all.books
-        .filter(bk => bk.id !== book.id && renderableCover(bk.thumbnail))
+      const shelf = shelfQuery && hasScans
+        ? await guard(browseBooks({ ...shelfQuery, sort: 'popular', limit: 24, exactCount: true }), { books: [] as CatalogBook[], total: 0 })
+        : { books: [] as CatalogBook[], total: 0 };
+      // First cover we host ourselves: the card variant, archived blob or thumbnail
+      // (e-rara books keep an e-rara thumbnail but have an archived card).
+      const hostedCover = (bk: CatalogBook) => [bk.image_card, bk.thumbnail_blob, bk.thumbnail].find(u => renderableCover(u)) || undefined;
+      const covers = shelf.books
+        .filter(bk => bk.id !== book.id && hostedCover(bk))
         .slice(0, 14)
-        .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: bk.thumbnail || bk.thumbnail_blob || undefined }));
-      const image = partner.heroImageOverride || covers.find(c => c.thumbnail)?.thumbnail;
+        .map(bk => ({ slug: (bk.slug || bk.id) as string, title: bk.display_title || bk.title, thumbnail: hostedCover(bk) }));
+      const label = prov.holder || prov.host || '';
+      const explore = shelfPartner && shelf.total > 1 && covers.length >= 4
+        ? { href: `/libraries/${shelfPartner.slug}`, label: `Explore ${shelf.total.toLocaleString('en')} items from ${prov.holder ? label : `${label} scans`}` }
+        : undefined;
+      // One link to the original record. Left out when the heading already
+      // names the platform ("From the scans on Internet Archive" + button).
+      const via = !prov.sourceUrl ? undefined
+        : !hasScans ? { label: 'Text from', host: prov.host || prov.holder || '', href: prov.sourceUrl }
+        : prov.host && prov.holder ? { label: 'Scans from', host: prov.host, href: prov.sourceUrl }
+        : undefined;
+      const ownCover = (book as unknown as { thumbnail?: string }).thumbnail;
       return {
-        slug: partner.slug,
-        name: partner.name,
-        shortName: partner.shortName,
-        url: partner.url,
-        description: partner.description,
-        color: partner.color,
-        image,
-        logo: partner.logo,
+        heading: prov.holder || (hasScans ? `From the scans on ${prov.host}` : prov.host || ''),
+        description: prov.description,
+        sentence,
         covers,
+        explore,
+        via,
+        ownImage: hasScans && renderableCover(ownCover) ? ownCover : undefined,
       };
     })();
 
