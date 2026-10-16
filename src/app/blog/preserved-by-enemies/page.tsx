@@ -70,6 +70,7 @@ const PAGE = {
   motul1_48: `${BOOK.motul1}/page/6acc3d60230e9a56175cc761`,
   motul1_56: `${BOOK.motul1}/page/6acc3d60230e9a56175cc769`,
   motul2_236: `${BOOK.motul2}/page/6acc3d6d230e9a56175ccbce`,
+  motul2_237: `${BOOK.motul2}/page/6acc3d6d230e9a56175ccbcf`,
   kaua13: `${BOOK.kaua}/page/6a87102131598d129803de88`,
   kaua20: `${BOOK.kaua}/page/6a87102131598d129803de8f`,
   kaua42: `${BOOK.kaua}/page/6a87102131598d129803dea5`,
@@ -418,7 +419,11 @@ export default function PreservedByEnemiesPage() {
           in order to rob them&rdquo; (
           <Link href={PAGE.motul1_48} className={linkClass}>vol. 1</Link>). A man in a jaguar skin may have been a robber, or a
           dancer, or a priest in regalia whose purpose the lexicographer did not know or did not record. The word is
-          recorded exactly; the explanation attached to it is the friar&rsquo;s.
+          recorded exactly; the explanation attached to it is the friar&rsquo;s. The Spanish&ndash;Maya volume shows the
+          filing from the other side: the one Spanish word <em>hechicero</em> is answered with three Maya ones,
+          &ldquo;Sorcerer: tutuz nac: ahcunyah: ahpulyaah&rdquo; (
+          <Link href={PAGE.motul2_237} className={linkClass}>vol. 2, f. 127</Link>). Three Maya words, one
+          Spanish category.
         </p>
 
         <p className={p}>
