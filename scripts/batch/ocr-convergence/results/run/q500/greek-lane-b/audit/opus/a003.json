@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "699247034c402ed78ad696b0",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give the Cornell bookplate text and URL 'cu31924014590529' correctly; the differences are only in tags and image description."
+ },
+ {
+  "item_id": "69938de2d5a98fd66f42f888",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both have wrong readings, but X invents 'πόλεως τύχαι' where the print has 'πολυχρονίαν' and 'ἐν λοιδορήματι' for 'εὐλοιδόρητον'; Y garbles only the heading ('Ἐν τῷ σβίνε') and reads 'γὰρ αἰσχρὸν'."
+ },
+ {
+  "item_id": "695696f91479a63c1108d551",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Same text in both, but X misreads 'perpessæ' as 'perpetæ' and has the typo 'graviffimíſque'; Y matches the print."
+ },
+ {
+  "item_id": "69b3006c5545150b61b4c6ba",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X replaces printed phrases with invented ones ('ὅτου ἂν ἐπαγγελίῃσιν εἴδηται' for 'δεδειγμένων ἤδη τῶν τεχνέων'; 'οὐκ ἔστιν. εἴπερ ἰδέτω' for 'οὐκ εἴη … τοῦτο'; 'δὲ οὐχ ὃ' for 'οὐ τοῦτο'), though Y has its own slips ('ἀπορέω' for 'ἀποστερέω')."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b202f",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X leaves out the first Latin line, 'duobus electos audito modo; ut'; Y keeps it (Y's catchword 'τιο-' should be 'τεσ-')."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2017",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reads 'ἡ τετρὰς' where the print has 'τριάς', and 'ἑκάστῳ εἴδει τῶν πολυγώνων' for 'ἑκάστου εἴδους τοῦ πολυγώνου'; it also attaches stray Greek ('καὶ ἐπιπέδῳ') to the end of the Latin column."
+ },
+ {
+  "item_id": "6953e60e1479a63c11084b57",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The wording is identical in both and matches the page ('Let us once more, then, recall…'); they differ only in markup and line breaks."
+ },
+ {
+  "item_id": "69b300125545150b61b4bb3c",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X has 'πληρωμένοι' for 'πεπληρωμένοι' and the garbage token 'προσgrowthλώσας' for 'προσηλώσας'; Y is correct."
+ },
+ {
+  "item_id": "69b300125545150b61b4bbba",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The text is the same in both, but X puts verse 13 at 'ζεταί' when the print places it at 'ἵνα ἡ χαρὰ', and reads the signature 'N ii' as 'N n'."
+ },
+ {
+  "item_id": "69b300125545150b61b4b8a2",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The text of Matt. 4:3–12 is the same in both; X moves some verse numbers (9 at 'Ταῦτα'), and the two read the first fragment differently ('γνάσε' / 'νωσε')."
+ }
+]

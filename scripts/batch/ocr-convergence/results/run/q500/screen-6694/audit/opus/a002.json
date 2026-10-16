@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a100a22f71729295096e12a",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches the print's spellings 'Ebendeßelben', 'Bedürfnißen', 'zugeschikt' where X normalizes ('Ebendesselben', 'Bedürfnissen', 'zugeschickt'); the wording is otherwise identical."
+ },
+ {
+  "item_id": "6959afa11dfc1806c080bd96",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X misreads 'disserendi' as 'differendi' and 'necessaria' as 'necesfaria', and drops the guide-letter initial ('Voniam' for 'Quoniam'); Y reads all three correctly."
+ },
+ {
+  "item_id": "69f7347933881e31c2c0eea4",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y follows the print: 'Waldensern', 'grösserem', 'Ketzer-Register', 'muthmassen', 'trifftigere'; X has 'Waldenfern', 'Keßer-Register', 'triffigere'."
+ },
+ {
+  "item_id": "699066482ec9f7db57179f4c",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y misreads several key words: 'ad duritiem solis' becomes 'ad dignitatem solis', 'minerali puro' becomes 'naturali prīo', and the rubric becomes 'de nra sola lune'; X's expanded text matches the manuscript."
+ },
+ {
+  "item_id": "69c83bdb6c6f3cc53c84f7cc",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X's table reverses the sense of two lines: it gives 'Ick doe het goede, dat ick niet wil' where the leaf has 'Ick en doe het goede niet, dat ick wil', and 'Ick doe het quade, en wil het niet doen' where the leaf has 'Ick en doe het quade niet, en wil het niet doen'. X also prints f for long s throughout."
+ },
+ {
+  "item_id": "69bd9f13f6d63c919747f186",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y adds marginal notes from the facing page ('Viridis color', 'Prasina factio') and has sense-changing misreadings ('Hunc tumorem' for 'Hunc tu morem', 'veste hiuea'); X is accurate."
+ },
+ {
+  "item_id": "6aa94d3a98dd95a320802eff",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X garbles much of the text, e.g. 'Ostensis et super de qualitate consuetudinis', 'consilium ecclesiasticum' and 'Item Innocentius'; Y gives the coherent readings 'Ostensum est supra', 'concilium Toletanum' and 'Dicit Innocentius', though Y wrongly reads 'Odoardus' as 'Gofredus'."
+ },
+ {
+  "item_id": "6991e1b0339ebc850994ae1f",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops 'non' in 'Ad quintum dicendum quod non omnes delectationes tactus pertinent', which reverses the meaning, and drops 'magis' in objection 1; X matches the print."
+ },
+ {
+  "item_id": "69c1ba978522835be8459aa0",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y correctly starts the right column with 2 Chr 16:2 ('ויצא אסא כסף וזהב'). X drops those verses and invents text that is not on this leaf ('וישב המלך יורם להתרפא ביזרעאל')."
+ },
+ {
+  "item_id": "69aec5d23b6ebce5e0ee9aea",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two are essentially identical; Y only merges the catchword into 'negligentia' and writes 'etiam si' for 'etiamsi'."
+ }
+]

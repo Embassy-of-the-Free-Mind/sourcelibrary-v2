@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6953eab81479a63c1108782f",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Image reads 'cujus eæ sunt partes'; X has 'cujus ex sunt partes', otherwise the texts match."
+ },
+ {
+  "item_id": "69b3009ee28f56bd749425a0",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y duplicates the whole LXXXV summary as an invented <margin> block and drops 'ant' in 'consul ant[e] annos viginti'."
+ },
+ {
+  "item_id": "69b00a63c42435fcd0cfa250",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Image prints 'vapor sit' and the 'Ed. Chart. III. [65.] Ed. Bas. I. (75.)' line; X reads 'vapor fit' and omits the edition line."
+ },
+ {
+  "item_id": "69d5adbcd0bd3547a5656418",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Image reads '劉摠管共新羅兩河道摠管金庾信', '所將兵糧', '賊徒瓦解' and '雖復無涯'; X invents the name '劉仁軌' and has '兩將', '賊徒死，解', '辭解救' and '離復'."
+ },
+ {
+  "item_id": "69af0be1bc67baee10860feb",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "The right edge is cropped; Y supplies 'qui cum vellet... inuenit' and 'Resupinata', while X has 'qua cum vellet' and 'Refupinata'. Otherwise they match."
+ },
+ {
+  "item_id": "69f6c221adf50ba54304672c",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Image reads 'mit unterlauffen', 'weis', 'dießelbige', 'Erkäntniß'; X has 'mit uns terlauffen', 'weiß' and 'Erkänntniß'."
+ },
+ {
+  "item_id": "69b3009ee28f56bd749425b0",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X invents four or five marginal notes that are not on the leaf (e.g. 'M. Marcellus occisus ab P. Magio Chilone'), drops the 'C.' in 'C. Cæsar' and the 'à' in 'à senatu', and reads 'caussu'."
+ },
+ {
+  "item_id": "69b6c95731b7f0d07f505cca",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Image reads 'servent', 'æquilibrio quodam' and 'coagmentantur'; X has 'fervent', 'æquilibrium quodam' and 'coagmenantur', and adds 'immutatur' from the catchword."
+ },
+ {
+  "item_id": "69b21dac94025df5d290952a",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Image reads '29. Septemb.' and 'eruditione innotescūt'; Y gives the wrong date '20. Septemb.' and 'innotescit'."
+ },
+ {
+  "item_id": "6a26c209aad44c98627c1678",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y misreads long s as 'fit' (three times, for 'sit') and has 'determiner' for 'determinet'; X reads these correctly."
+ }
+]

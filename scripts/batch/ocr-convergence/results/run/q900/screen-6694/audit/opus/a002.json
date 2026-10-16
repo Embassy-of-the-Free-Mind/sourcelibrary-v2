@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69906ecf7d027b8182c0ab70",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X is badly garbled and misreads the leaf (e.g. 'rex signa orit[ur]' for 'sex signa oriuntur', '20000' for '252000', 'Duo aute[m] circuli' for 'Horum autem circulorum'), whereas Y follows the hand closely."
+ },
+ {
+  "item_id": "69af4749d6be7ec9cc323d65",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y matches the print with 'quorunque' and 'quoniam et in ea legitur'; X has 'quorumque' and drops the 'et'."
+ },
+ {
+  "item_id": "69906328ef12272ffdc8f9de",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X misreads 'inania utilibus' as 'immania', a change of sense, and also has 'aspernerentur' and 'nobiliaribus' where the print reads 'aspernarentur' and 'nobilioribus'."
+ },
+ {
+  "item_id": "69b1867ac4be2cdd0edc6c6e",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The body text is identical apart from long-s use; the only other difference is the header ('Oraculis.' vs the printed 'Oraculu.')."
+ },
+ {
+  "item_id": "69f6e1a699642793973d1d5b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops the line 'So war ein Christ gebilt nach CHRISTI Wort und Leben/' and garbles the next one as 'So saher Christlich aus'."
+ },
+ {
+  "item_id": "69b2ffdfe5d6d64d8e197719",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X correctly reads 'relicturo' and the Greek 'ἄρθρα σὺν ἄρθροις', where Y has 'relicto' and 'ἄνδρα σὺν ἀνδρείοις'; X's only slip is 'εὐνούχισαν' for the printed 'εὐνουχίσθησαν'."
+ },
+ {
+  "item_id": "697b0c8572c802490c1a19ca",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X keeps the printed 'angenohmen' and 'Dispositon' and gets the dashes right ('— —, —, und —'); Y normalises the spelling and adds an extra dash plus a superscript 'a'."
+ },
+ {
+  "item_id": "69dbcb901040d1d5e20b7d85",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X garbles many entries (e.g. 'Balatus.us.ui.o damo ꝓui' for 'dicitur clamor ouium') and leaves out the printed 'a balea baleos vel balerica vel balearis'; Y expands the abbreviations faithfully."
+ },
+ {
+  "item_id": "699f079db1d3d9b95300b7f4",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The texts are nearly identical, but X misreads 'weitläuftiger' as 'weitläufriger'; the other differences are only in how the brace layout is rendered."
+ },
+ {
+  "item_id": "69f6d34c9490c1e39e843c76",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops words from the Latin ('verba o-' becomes 'verationemque', 'qui solem ipsum' becomes 'quibus ipsum'), misreads 'eum concentum' as 'cum concentu', and garbles more of the Greek (e.g. 'δὲ' for 'γὰρ')."
+ }
+]

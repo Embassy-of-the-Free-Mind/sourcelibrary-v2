@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69a956dc65ddd05bbcd3d170",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y renders the printed Greek 'οὐρανομήκη' as 'σύγχυσιν' and inserts a word not on the leaf ('tradiderint, quid posteris intelligere'); X follows the print."
+ },
+ {
+  "item_id": "6953c68877f38f6761bd9e5b",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Texts are nearly identical; Y correctly reads 'Ὥρισται' where X has 'Ἥρισται', otherwise only accent/apostrophe differences."
+ },
+ {
+  "item_id": "69938963ce15387065946cc7",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The red marginal section numbers read 'ρδ', 'ρε', 'ρϛ', 'ρζ' as in Y; X gives wrong numbers 'ρα', 'ρβ', 'ργ', 'ρδ' (main text agrees in both)."
+ },
+ {
+  "item_id": "6955801057e3b773024f503d",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops printed line 15 ('ἔργον ἐστὶ τῷ βουλομένῳ· ὁμοῦ δὲ πλειόνων, καὶ τότε χρόνου μεταξὺ διαῤῥυέντος, εἰς ἀνάμνησιν μετὰ') and misreads many ligatures (e.g. 'τῷ σῷ διαπύρῳ πόθῳ', 'Hoeschel. 392')."
+ },
+ {
+  "item_id": "699389f2ce15387065948186",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reads the opening as written ('ἐπιγράψας οὕτω· Σκιπίων στρατηγὸς ἀνθύπατος Ῥωμαίων') while Y garbles it into 'ἐπίπραξαν οὕτω. σκυπίων στρατηγὸς ὢν τῆς πατρὸς', with similar distortions throughout; both have errors in the harder passages."
+ },
+ {
+  "item_id": "69938963ce15387065946d9c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X omits the negation in line 1 ('δόξαν παρὰ ἀνθρώπου λαμβάνω' vs the manuscript's 'παρὰ ἀνθρώπων οὐ λαμβάνω'), reversing the sense, and misreads the red margin numbers 'λε'/'λϛ'."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d169",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y reads the Greek 'οἰκουμενικὴν' as 'οἰκουμένην' and 'posse' as 'posset'; otherwise both match the page."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a75c2",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y omits the entire critical apparatus at the foot of the page (replacing it with a meta note) and drops 'τὸ ὂν' in 'ἐὰν τὸ ὂν εἴπῃς'; X transcribes both."
+ },
+ {
+  "item_id": "69938963ce15387065946c7e",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The first line reads 'εἰς μνημόσυνον αὐτῆς· τότε πορευθεὶς' as in Y; X substitutes the invented 'ἀμὴν λέγω ὑμῖν αὐτοῖς'."
+ },
+ {
+  "item_id": "69b630611c1c21a3738011a7",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is pp. 134–135 (ἌΛΦΟΣ, ἈΛΩΠΗΞ … ἈΜΑΜΥΞ) as in X; Y transcribes a different spread ('132-133', ἌΛΣΟΣ, ἌΛΦΙΤΟΝ)."
+ }
+]

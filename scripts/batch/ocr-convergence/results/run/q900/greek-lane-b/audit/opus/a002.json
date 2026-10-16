@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b2fee065b9d6bf89925310",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y swaps printed wording for invented phrases, e.g. 'ἀπαντῶντες ... περὶ τοῦ ἐγκλήματος' for 'ἀγῶνες ... ἐπὶ τοῦ βήματος', 'ἠρώτα δὲ πρῶτον αὐτὸς' for 'καὶ περὶ αὐτοῦ γε πρότερον', and ends with 'ἐννέα γὰρ' where the leaf has 'ἀνάλωμα'; X is closer throughout, despite its own errors."
+ },
+ {
+  "item_id": "69a5e5e385fa13e734e4190d",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Both are heavily garbled: X has the wrong page number '85' (leaf reads 58) and invents 'Καὶ τοὶ δὲ αἱ γῆς καὶ λίμνας'; Y invents 'ὕδωρ ὄν τε' and 'σὺν γὰρ ἀφανισμῷ ...', but gets 'καίτοι φαίη ἄν τις καὶ ἄλλως' and the closing lines right."
+ },
+ {
+  "item_id": "6993830384cf5845c644c666",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf opens 'ἔφη ἴσμεν μή σε τὸ ἄλγος' and closes 'βεβηκυῖα· ὡς ἂν μὴ ἀνεγερθείη', as Y gives; X starts with an invented 'ἐμὲ ἰσχυρῶς ἐκίνησε' and largely fabricates the text, though Y also wrongly treats the facing page's text as this leaf's margin."
+ },
+ {
+  "item_id": "69de0cc580210ba13d79f5f4",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts are essentially identical; X keeps the printed misprint 'nnreasonable' and Y silently corrects it to 'unreasonable'."
+ },
+ {
+  "item_id": "6993830384cf5845c644c748",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf begins 'ἐπειδὴ δὲ μετέωρον τὸ λυπηρὸν ἦν, ἀπεκρίνατο' and later has 'κομήτας', matching Y; X's 'Ἐπειδὴ ὑστέρησε τὸ πλῆθος' and its Achilles/Hector/Odysseus narrative are invented."
+ },
+ {
+  "item_id": "69af453b004a024aaf216419",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts include all of the leaf's text, but Y transcribes every left half-column before every right one, which breaks sentences across sections (e.g. 'Attamen omnes homines qui,' is separated from 'viderunt majestatem meam'); X keeps the reading order, though it has 'quoddam' for 'quodam'."
+ },
+ {
+  "item_id": "6993897cce1538706594712d",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y fabricates most of the first dozen lines, including the invented number 'ὑπὸ Ἀθηναίων ἐφάνησαν πεντακόσιαι' where the leaf has 'ὑπὲρ ἥμισυ Κᾶρες ἐφάνησαν', and garbles the Agamemnon sentence; X follows the Thucydides text apart from its first line."
+ },
+ {
+  "item_id": "69937a5eb0a84a576396824d",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both texts reproduce all 16 lines of Peace and the footnote correctly; the only differences are formatting and the placement of line numbers."
+ },
+ {
+  "item_id": "69af453b004a024aaf216273",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has 'sacerdotes' (print: 'sacerdos'), 'temeridordiam' (print: 'te misericordiam') and 'mutant' (print: 'mutarunt'); Y has fewer slips, though it drops 'te'."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa60020",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf has 'οὐ γάρ ἐστιν, οὐκ ἔστιν' and the passage 'πρὸς δὲ Θετταλοὺς πρεσβείαν πέμπειν ... Παγασὰς ἀπαιτεῖν', as Y gives; X replaces the Thessalian embassy passage with other text ('ἥτις ταῦτ᾽ ἐρεῖ ... μὴ πανοῦργος ὢν')."
+ }
+]

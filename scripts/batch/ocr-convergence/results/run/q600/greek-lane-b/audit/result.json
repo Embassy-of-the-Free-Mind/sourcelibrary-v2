@@ -1,0 +1,464 @@
+{
+ "set": "q600g",
+ "audited": 40,
+ "writes": 12,
+ "read": {
+  "opus": 40,
+  "gemini": 40
+ },
+ "writes_worse": {
+  "opus": 0,
+  "gemini": 2
+ },
+ "writes_better": {
+  "opus": 12,
+  "gemini": 10
+ },
+ "writes_same": {
+  "opus": 0,
+  "gemini": 0
+ },
+ "gate": "GO",
+ "rows": [
+  {
+   "page_id": "69b222db56715b0e3247599e",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'δεηθέντι ἀχιλλεὺς', 'ἐξάγειν' and 'ἐτίτρωσκε'; X has the sense-changing 'θλιβέντι' and also 'ἐξάγει' and 'ἐτίβρωσκε', though Y adds 'καὶ' before 'ἀπόλλωνος'.",
+   "gemini_note": "Y substitutes the wrong word 'δεηθέντι' for 'θλιβέντι' and invents 'καὶ' before 'ἀπόλλωνος'."
+  },
+  {
+   "page_id": "69b2f30ba9a500a45e5e7d0b",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y's Greek column is largely garbled ('μλὼ ξυευρενομένοι τῶ ξυμπεσόντων') and its Latin drops 'præerat Hippocles Menippi filius' and 'legibus'; X follows the page.",
+   "gemini_note": "Y omits Latin text such as 'præerat Hippocles Menippi filius' and 'legibus', and severely corrupts the Greek column with garbled ligature transcriptions."
+  },
+  {
+   "page_id": "695aa9ddbe4023bd34bd7450",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X omits the printed line 'Codicibus igitur usus sum his:' before DEFINITIONES; otherwise the two are identical.",
+   "gemini_note": "X omits 'Codicibus igitur usus sum his:' before DEFINITIONES."
+  },
+  {
+   "page_id": "69b300275545150b61b4c548",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf has 'νόμου φυλάσσῃ', 'τελοῦσα' and the catchword 'τια-'; Y gives 'νόμον', 'τελέσασα' and 'πα-'.",
+   "gemini_note": "Y misreads 'τελοῦσα' as 'τελέσασα' in verse 27 and gives the incorrect catchword 'πα-' instead of 'τια-'."
+  },
+  {
+   "page_id": "69b2f30ba9a500a45e5e7c93",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X omits the whole block of Greek scholia (α–λ) at the foot of the page and pads its margin with hundreds of stray '\"' lines; Y transcribes the scholia.",
+   "gemini_note": "X omits the entire Greek scholia section at the bottom of the leaf ('α Ἰσομοιρεῖν...') and replaces the printed Greek text with a different recension ('ἀκούσαντας ἄριστα κρῖναι')."
+  },
+  {
+   "page_id": "69b222ed56715b0e32475b1b",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'Τροίᾳ … Τροίαν … Πάριν' and 'στυγῇ τις ἄνδρα'; X has 'βοῖα … βοίαν … Γάριν' and 'συζῇ τις ἀνδρὶ', and replaces 'ἐσποδωμένοι' with 'ἐπτοημένοι'.",
+   "gemini_note": "Y misreads 'ἄνδρες ἐπτοημένοι' as 'ἄνδρεσσι ἀποδωμένοι' and replaces the leaf's printed readings ('βοῖα', 'Γάριν') with editorial emendations."
+  },
+  {
+   "page_id": "69b2f32121208ea9dc2779d8",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y matches the leaf ('ῥῖψαί τε δυνηθεὶς αὖ', 'ἀνῃρτήσατο', 'μάλα γενναίως', 'perhumaniter'); X has 'βίᾳ τε δυνηθεὶς ἂν', 'ᾠκειώσατο', 'μάλιστα γυναίως' and 'humaniter est vso'.",
+   "gemini_note": "X substitutes several readings not found on the leaf, such as 'μάλιστα γυναίως' for 'μάλα γενναίως' and 'βίᾳ' for 'ῥῖψαί'."
+  },
+  {
+   "page_id": "695aa9ddbe4023bd34bd7451",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The date is printed '͵ϛωκγ (1315)'; X gives the numeral as 'ϛωκη'. The two texts otherwise agree.",
+   "gemini_note": "X misreads the date numeral '͵ϛωκγ' as 'ϛωκη' and prints 'ὀκτοβρίου' for 'ὀκτωβρίου'."
+  },
+  {
+   "page_id": "699382d984cf5845c644b2ca",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf has Od. 14.360–394 ('ὦ δειλὲ ξείνων … θεοὶ τοὶ ὄλυμπον ἔχουσι'), which Y gives; X transcribes a different passage ('ὦ γέρον οὔτ᾽ ἄρ᾽ ἐγὼ … Κάστωρ Ὑλακίδης').",
+   "gemini_note": "X transcribes text from a different leaf beginning with 'ὦ γέρον οὔτ' ἄρ' ἐγὼ' instead of the leaf's text beginning with 'ὦ δειλὲ ξείνων'."
+  },
+  {
+   "page_id": "699382d984cf5845c644b279",
+   "action": "write",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X gives Od. 9.230–264 as written ('οὐδ᾽ ἄρ᾽ ἔμελλ᾽ ἑτάροισι φανεὶς ἐρατεινὸς ἔσεσθαι'); Y's main text is nonsense letter strings ('οὐδ᾽ ἄρ᾽ ἔμελλε ταῖροι φανὸς ὥρα τανὸς ἔσσεαι').",
+   "gemini_note": "Y severely corrupts the Greek text throughout into garbled readings, such as 'φατο μεν μέν μεν πέμπεν ἔνδον' for 'φάγομεν, μένομέν τέ μιν ἔνδον'."
+  },
+  {
+   "page_id": "69b222ed56715b0e32475ca6",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The print reads 'τραγικοῖς ἀχέεσσι', 'τόσον', 'εὐνήσας', 'τὴν περικειρομένην' and 'πολιῇσι κατεύνασε' as Y does, while X has sense-changing misreadings ('βακικοῖς ἀχέειν', 'ῥόον', 'ἐνστήσας', 'πλῶ περικαιρομένην', 'φλογόεσσα κατέσβεσε'); Y's 'ἐμοῖς' for 'ξυνοῖς' is minor.",
+   "gemini_note": "X misreads multiple passages, including 'φλογόεσσα κατέσβεσε' for 'πολίοισι κατεύνασε' and 'βακικοῖς ἀχέειν' for 'τραγικοῖς ἀχέεσσι'."
+  },
+  {
+   "page_id": "695aa9ddbe4023bd34bd75ad",
+   "action": "write",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X gets numbers wrong: '16 1/33 1/1089' where the print has '16/33 1/1089', an added '1/6' in '√720 = 26 1/2 1/3', and '25/36' where the print has '25/6'; Y follows the print.",
+   "gemini_note": "X invents an extra '\\frac{1}{6}' in '$26 \\frac{1}{2} \\frac{1}{3} \\frac{1}{6}$' and misreads '$\\frac{16}{33}$' as '$16 \\frac{1}{33}$'."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c6009",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Y follows the manuscript ('προμοητὴν θεωρῆσαι· σὺν τῷ νόμῳ ὕδωρ ἐμμέβληται ἄβροχ', ending 'αἰῶνος· οὐκ ἐπειδὴ'), while X is largely invented ('σὺν τῷ μὲν ὑπερκειμένῳ φθείρεσθαι ἀέρων') and ends with an added '<unclear>ἀμήν</unclear>'.",
+   "gemini_note": "X repeatedly hallucinates and substitutes text throughout the page, such as replacing 'παρελάβομεν τὸ πάσχα τοῦτο' with 'νώσει λέγοις τὸ πάθος λέγεται'."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c5f80",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are garbled, but Y keeps the line structure and readings such as 'ἑαυτὸν δοῦλον ποιήσει … ὁ ποιῶν τὴν ἁμαρτίαν ἐκ τοῦ διαβόλου γεγέννηται', while X paraphrases whole stretches ('ὡς τοιαύτης ἁμαρτίας οὔσης οὐδὲ ἀκολουθησάσης'); X does get 'καταδυσώπησον' and the closing 'κατακαινομένων' right.",
+   "gemini_note": "Y extensively hallucinates and misreads the text throughout, inventing passages such as 'ἐκ τοῦ διαβόλου γεγέννηται' not present on the leaf."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c6117",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X follows the leaf ('τούτῳ· ψαλτηρίου δὲ πρὸς κιθάραν διαφορὰν', 'ψαλτηρίῳ δεκαχόρδῳ', ending 'ᾆσμα καινότερον ᾄδειν τῷ θεῷ· καινότερον δὲ … ἢ τῆς'), while Y substitutes invented passages ('τὴν δὲ νοῦν τῷ ψαλτηρίῳ …') and adds a page number '109' that is not visible on the leaf.",
+   "gemini_note": "X severely misreads the manuscript throughout, fabricating passages such as 'σθαι καὶ διδαχῇ ἐπαινούμενος' where the leaf reads 'νοῦς γὰρ διὰ τῆς φωνῆς'."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c5f68",
+   "action": "contain",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X is closer to the leaf ('σῶσόν με ἐκ πάντων', 'σῶσόν με ὁ Θεός', 'συμβουλίαις', 'παρὰ σοῦ δέομαι', 'μελετωμένους'), while Y rewrites the prayer ('οὐ γὰρ ἐψευσάμην … ἐπερειδόμενος') and the left-column commentary; Y does read 'Σαούλ' correctly where X has 'σάκκον'.",
+   "gemini_note": "X heavily garbles the Greek text throughout, hallucinating non-words such as 'ἀσπράζιμ' in column 1 and misreading 'Σαούλ' as 'σάκκον' in column 2."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c5fe5",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X matches the leaf ('ἑορακότι διαφθορὰν ὅσιον τοῦ θεοῦ', 'πάσας … ὁδοὺς ἐπὶ τὴν αἰώνιον ζωήν', 'τὸ δὲ κατὰ σάρκα … καὶ ὡς ἄνθρωπος παρ᾽ ἀνθρώπων'), while Y invents much of both columns ('ἐσφαλμένην εἰς φθοράν', 'μετὰ τοῦ ψαλμωδοῦ').",
+   "gemini_note": "Y invents the majority of the text across both columns, fabricating passages such as 'Ἐλυτρώθημεν ἁμαρτίας σαρκωθέντος τοῦ θῦ λόγου'."
+  },
+  {
+   "page_id": "69bfccdf8ab50eb88e8c6cd6",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The red title reads 'εἰς τό, πάτερ εἰ δυνατόν, παρελθέτω … τὸ ποτήριον τοῦτο' as X roughly has, but Y gives the wrong title ('παρέδωκα δὲ ὑμῖν ἐν πρώτοις'), merges the columns and loses the closing 'παρελθέτω ἀπ᾽ ἐμοῦ τὸ ποτήριον … δειλίαν αὐτοῦ καταγγέλλουσι'.",
+   "gemini_note": "Y invents an incorrect title ('παρέδωκα δὲ ὑμῖν ἐν πρώτοις ὃ καὶ παρέλαβον') and omits the leaf's central text 'παρελθέτω ἀπ᾿ ἐμοῦ τὸ ποτήριον τοῦτο'."
+  },
+  {
+   "page_id": "69bfccdf8ab50eb88e8c6d31",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y follows the lines ('αὐτοὶ ἐσφράγισαν μετὰ τῆς κουστωδίας', 'Ἔκλεψαν οἱ μαθηταὶ φησὶν αὐτὸν· καὶ πῶς', 'δι᾽ ὧν ἔλεγον περὶ αὐτοῦ· ὅτι εἶπεν'), while X rewrites passages ('καίτοι ἰδιῶται καὶ κηπουροὶ ἄνθρωποι πῶς ἂν ἔκλεψαν').",
+   "gemini_note": "Y severely misreads and garbles the Greek text throughout, producing nonsensical readings such as 'ὥσπερ αἰώνια γράμμα ποιεῖται χωρον' where the leaf reads 'ἰδιῶται καὶ ἄγραμματοι οἵ τε τυγχάνοντες'."
+  },
+  {
+   "page_id": "699382d984cf5845c644b104",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The leaf reads 'Μαιάνδρου τε ῥέεθρα βαθύρροον … καρῶν ἀμπελόεσσαν … πολυγνάμπτοισιν', 'Μυκάλην' and 'τριτογένεια' as Y does, while X invents lines ('μαινόμενος δ᾽ ἐχέεσκε βαθὺ ῥρόον', 'καρπὸν ἀμελγομέναν').",
+   "gemini_note": "Y severely corrupts lines 1–21 with garbled and fabricated text, such as line 15 ('οὔτα σὺν ἔγχεϊ μάρνατο γάρ') instead of 'οὔτε συνεσσυμένους ὄφελον χραισμεῖν γὰρ ὀϊστοῖς'."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c5ed9",
+   "action": "contain",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are imperfect, but Y follows the leaf (e.g. 'ἁμαρτίαν γὰρ οὐκ', col. 2 opening 'νοις· ἀλλὰ οὐδὲ ταύτῃ φωνῆς ἐκδεχομένης'), while X's text is largely invented ('κανονικοὶ οἶμαι', 'ἐλεύθερος ἦν ἐκ τῆς').",
+   "gemini_note": "X hallucinates extensively, transcribing 'κατηγορείτω· ἁμαρτίαν γὰρ οὐκ ἐπιστάμεθα' as 'τέχνης· διὸ καὶ μαρτυρίας οὐκ ἐδέοντο' (col. 1, lines 5–6)."
+  },
+  {
+   "page_id": "69bfccdf8ab50eb88e8c6d3c",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are heavily garbled. X gets more key readings right ('ἀμαυροῦται τῆς μεγάλης ταύτης οἰκίας'≈'ταύτης οἰκίας', 'Νῦν γὰρ', 'Ἰουδαῖοι μὲν οἱ ὀφθαλμοὺς ἔχοντες'), whereas Y has 'Ἰδοὺ αἰσχυνόμενοι' and 'Πῶς γὰρ'. X does invent a margin note, though.",
+   "gemini_note": "Y is severely corrupted with garbled OCR errors and invented pseudo-words such as 'κάτοπταρχομφα' and 'δριμυμυρίαν', whereas X accurately transcribes the Greek text and marginal notes."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c5ecb",
+   "action": "contain",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y matches readings on the leaf ('τρίχα τῆς γοργάδος', 'θλίβουσί με οἱ λογισμοὶ ἐρχόμενοι', 'μοναστήριον τοῦ ἁγίου Ἀσκληπιοῦ ἐν τῇ Μεσοποταμίᾳ'), where X invents 'τριχῶν τῆς κεφαλῆς' and 'βίου τοῦ κυρίου ἡμῶν Ἀσκληπιοῦ'.",
+   "gemini_note": "X heavily hallucinates throughout, fabricating phrases such as 'τοῦ κυρίου ἡμῶν Ἀσκληπιοῦ' and 'ποιήσαντες τὸν λιμένα ὕμνον ἐβαπτίσθημεν' where Y accurately transcribes the leaf."
+  },
+  {
+   "page_id": "69bfccdf8ab50eb88e8c6d4e",
+   "action": "contain",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X misreads 'Τὰ παλαιὰ κατῆλθεν' as 'Ταῦτα λαλῶν· κατῆλθε πρὸς ὑμᾶς' and drops the line 'φίλος τοῦ νυμφίου· ὃς ἑαυτῷ … ἐμνηστεύσατο', which Y keeps, along with 'μητρικῆς νηδύος ἐσκίρτησεν'.",
+   "gemini_note": "X omits the line 'φίλος τοῦ νυμφίου· ὃς ἑαυτῷ' in the second column and heavily fabricates text across the page."
+  },
+  {
+   "page_id": "69b2f32121208ea9dc277ad1",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both are complete. X's Greek matches the print more closely ('ἐν τόποις', 'ἀρτίνουν', 'εὗρον', 'προσίεται', 'ἡγεμονευκότα'), where Y has '[gap]', 'ἔκκριτόν τε', 'ἕτερον', 'προστησεται' and 'ἡγεμονεύοντα'.",
+   "gemini_note": "X replaces the leaf's printed text with variants from another edition, reading 'εὗρον' for 'ἕτερον' and substituting 'καὶ ἀρτίνουν' for 'ἔκκριτόν τε'."
+  },
+  {
+   "page_id": "6a3f035697e91e1768f6a1c4",
+   "action": "keep",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "The text and apparatus are essentially identical. The only differences are trivial OCR slips, such as Y's 'νοι τοιούτων' for 'vor' in the apparatus.",
+   "gemini_note": "Y misreads the German preposition 'vor' in the apparatus as Greek 'νοι' and 'νορ'."
+  },
+  {
+   "page_id": "69b2f32121208ea9dc277ad4",
+   "action": "keep",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Y has the printed readings 'τῶν ἱστορουμένων', 'εἴτε αὐτός', 'κατὰ Οὐολογαίσου', 'ὁ γὰρ Ἀντωνῖνος' and Latin 'nec enim', where X has 'ἱστορευθύων', 'κατ' αὐτός', 'πρὸς Οὐολόγαισον' and omits 'enim'.",
+   "gemini_note": "X garbles Greek ligatures into corrupt readings, printing 'τῆς ἱστορευθύων' instead of 'τῶν ἱστορουμένων' and substituting 'πρὸς Οὐολόγαισον' for 'κατὰ Οὐολογαίσου'."
+  },
+  {
+   "page_id": "695aa9ddbe4023bd34bd759a",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both are complete, with the same numbers. X's 'πολλαπλασιαζόμενα' for the printed 'πολυπλασιαζόμενα' is a negligible variant.",
+   "gemini_note": "Y correctly records the printed form 'πολυπλασιαζόμενα' (lines 4 and 9) where X normalizes to 'πολλαπλασιαζόμενα'."
+  },
+  {
+   "page_id": "69937706b0a84a5763962852",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "The Greek text, side-notes and apparatus are identical in substance. They differ only in margin layout, and X adds a spurious catchword meta tag.",
+   "gemini_note": "Y correctly places the marginal Stephanus section letters 'B' and 'C' next to the text, whereas X omits them from the margins and mislabels them as '<meta>catchword: p. 407. B C</meta>'."
+  },
+  {
+   "page_id": "695aa9ddbe4023bd34bd7449",
+   "action": "keep",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Both give the title page in full ('HERON ALEXANDRINVS OPERA IV … J. L. HEIBERG … STVTGARDIAE IN AEDIBVS B. G. TEVBNERI'), differing only in heading markup.",
+   "gemini_note": "Both transcriptions faithfully record all text from 'BIBLIOTHECA' through 'STVTGARDIAE IN AEDIBVS B. G. TEVBNERI' with differences limited to markup conventions."
+  },
+  {
+   "page_id": "69937706b0a84a5763962886",
+   "action": "keep",
+   "stored_is": "Y",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Both give the full Leontius passage, marginalia and apparatus; the only difference is breathing on 'αὐτὸν/αὑτὸν' in the last line.",
+   "gemini_note": "X is more faithful, correctly using initial vowels with breathing marks ('Ἀλλ’', 'Ἰδοὺ') where Y uses apostrophes ('’Αλλ’', '’Ιδοὺ') and inserts a marginal note mid-sentence."
+  },
+  {
+   "page_id": "69b2f32121208ea9dc277a9e",
+   "action": "keep",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Y matches the print with 'ὑπὸ τοὺς πόδας', 'μὲν οὖν καὶ σημεῖα' and margin 'Bl. vigintiquinque drachm.', where X has 'ὑπὸ τοῖς ποσὶν', omits 'καὶ' and reads 'id est'; neither error changes the sense much.",
+   "gemini_note": "Y departs from the leaf by reading 'ὑπὸ τοὺς πόδας' for 'ὑπὸ τοῖς ποσὶν' and misreading 'id est' as 'Bl.'."
+  },
+  {
+   "page_id": "6a3f035697e91e1768f6a26e",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Same text and apparatus; X adds a stray '»' before 'Ἰωάννης' and Y misreads 'ν ausradiert' as 'υ ausradiert', both trivial.",
+   "gemini_note": "X adds an unprinted quotation mark before 'Ἰωάννης' and alters manuscript M's reading 'ἐν τῶ' to 'ἐν τῷ' in the apparatus."
+  },
+  {
+   "page_id": "699382d984cf5845c644af34",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "Both give the standard Iliad 1.1-17 text; X also keeps the interlinear marginal gloss ('ἄγως ἔδωκεν') beside line 4, which Y drops.",
+   "gemini_note": "X omits the marginal number ('19') and the emblem inscription ('ΘΕΟΔΩΡΟΣ')."
+  },
+  {
+   "page_id": "69bfccb18ab50eb88e8c604a",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "cli",
+   "gemini_serious": true,
+   "opus_note": "X roughly follows the hand ('ἐξ ὄρους φαράν', 'ἀστερ … ὄντος· ἄλλως'), but Y invents a long marginal block and different running text ('καὶ τὰ καθ᾽ ἑρμηνείαν', 'ἀστερίσκος ὕμνος') that is not on the leaf.",
+   "gemini_note": "X severely misreads nearly the entire page, hallucinating phrases such as 'θηρίων παῖδεσ' in column 1 where the manuscript actually reads 'καὶ τὰ καθ᾽ ἑρμηνείαν ἀναπεπταμένα τε ποιήσῃ'."
+  },
+  {
+   "page_id": "695aa9ddbe4023bd34bd74e6",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "Both texts are the same as the print; the only differences are apparatus trivia ('διτῶν' vs 'δίϊτον' for printed 'διϖον').",
+   "gemini_note": "Y misreads 'διτῶν' as 'δίϊτον' in the critical apparatus."
+  },
+  {
+   "page_id": "69937706b0a84a5763962896",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "cli",
+   "gemini_serious": false,
+   "opus_note": "Same Greek text, marginalia and apparatus line '23. καὶ τοῖς Α²ΠΜ : τοῖς Α.'; only the placement of tags differs.",
+   "gemini_note": "Y correctly places the apparatus note ('23. καὶ τοῖς Α²ΠΜ : τοῖς Α.') at the bottom of the page, whereas X misplaces it at the top as a catchword."
+  },
+  {
+   "page_id": "69b222db56715b0e324759c4",
+   "action": "keep",
+   "stored_is": "Y",
+   "opus": "stored",
+   "opus_serious": true,
+   "gemini": "stored",
+   "gemini_serious": true,
+   "opus_note": "X reads 'οὐκ εἰκότως μυρμιδόνα εἶπε', which reverses the printed 'ὃν εἰκότως'; X also has 'διεσαφήσειεν', 'δεδομένον' and 'θηβαίου' where the print and Y have 'διεσάφησεν', 'δεδεμένον' and 'θυβαίου'.",
+   "gemini_note": "X misreads 'ὃν εἰκότως' as 'οὐκ εἰκότως', reversing the meaning, and misreads the opening lemma as 'ΣΟΙ' rather than 'ΩΣ ΟΙ'."
+  },
+  {
+   "page_id": "69937706b0a84a5763962978",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "same",
+   "opus_serious": false,
+   "gemini": "stored",
+   "gemini_serious": false,
+   "opus_note": "Both reproduce the opening of Republic X, its marginalia and the note '7. παραδεκτέα ΑΠ : παραδεκτέον Α²Μ.' with no substantive differences.",
+   "gemini_note": "Y transcribes rough breathings on capital letters using quotation marks ('‘Ως', '‘Ρητέον', '‘Ομήρου') instead of proper polytonic Greek characters."
+  },
+  {
+   "page_id": "6a3f035697e91e1768f6a0bd",
+   "action": "keep",
+   "stored_is": "X",
+   "opus": "cli",
+   "opus_serious": false,
+   "gemini": "same",
+   "gemini_serious": false,
+   "opus_note": "Y keeps the printed abbreviation 'GEB.' and correctly describes the owl on an open book; X expands to 'GEBORENE' and says 'two closed books', which is minor either way.",
+   "gemini_note": "Both transcriptions are equally faithful; X expands 'GEB.' to 'GEBORENE', which is an abbreviation convention that does not alter meaning."
+  }
+ ]
+}

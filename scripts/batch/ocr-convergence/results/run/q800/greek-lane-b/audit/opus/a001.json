@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b21d42ddb4fa7c305b47c5",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 287 'POLITICVS' beginning 'κεχρῆσθαι· πρὸς δὲ ταῦτα' / 'culpet nostram orationem', which Y follows; X gives another leaf (p. 294 'PLATONIS', 'rogatione. eram enim percontaturus')."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4469",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is blank with only mirror-image show-through (e.g. 'TERTIO TOMO … SEXTA SYZYGIA'), as X says; Y invents a printed page ('PRIMVS TOMVS', 'EVTHYPHRO … PHAEDO')."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b475f",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 185 'LACHES' beginning 'βουλευόμεθα, ἢ οὔ' / 'arte valeat', which X follows; Y gives another leaf (p. 192, 'quemadmodum si quærerem quidnam sit celeritas')."
+ },
+ {
+  "item_id": "699750805583d749eb732ef6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y matches the print in 'οἰνομάοιο πανείκελος', 'θαλπομένῳ', 'ἥμιον ἵππων', 'ἐκούφισε', 'πέλε'; X has wrong words such as 'ὀνομαίοιο ποδύσκελος', 'ἥμισυ', 'ἐπέφισε' (though X gets 'βελαρῇ' where Y has 'βαρείῃ')."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e8",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Both texts begin roughly as the hand does ('ὡς ἔφαμεν τῶν ἀρχῶν ποιουμένους…', 'ὅτι … σφαῖρα … οὐρανός'), but both soon turn into loose reconstructions that do not follow the faded minuscule line by line, and neither is clearly more faithful."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e5",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The hand begins 'ὅτι ἡ ἐπιφάνεια … τοῦ ὕδατος ἠρεμοῦντος' and has the folio number '3', which is close to X; Y supplies a different text altogether (Gregory of Nyssa, 'ὅτι τῶν ἐμφανῶν τὸ θαυμάζεσθαι…')."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890d8d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is the Greek p. 156 'ΑΦΟΡΙΣΜΟΙ' ('πιτυρώδεα συνεξουρεῖται … LXXXIII'), which Y follows; X gives the English facing page (p. 159, 'FIFTH SECTION … Convulsion after hellebore')."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4945",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 667 'DE LEGIBVS LIB. II.' beginning 'διοικεῖν, ὃν δὴ κατ' ἀρχὰς' / 'publ. aptus euadat', which Y follows; X gives another leaf (p. 678, 'priscorum illorum temporum homines')."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b4579",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 160 'PLATONIS' (Theaetetus, 'imò planè alterũ' / 'καὶ ἄλλο ποιῇ τὸν αἰσθανόμενον'), which Y follows; X gives the opening of the Euthydemus (p. 271)."
+ },
+ {
+  "item_id": "699750805583d749eb732e0a",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y matches the print in 'πρηνὴς', 'μεμυκότι', 'ἀπόσυτον', 'εὐθώρηκες', 'πίσυνος', 'Ζηνὸς', 'ἔνθεος'; X has wrong words such as 'πλευρῆς', 'πίτυος', 'ζωὸς' (though X gets 'ἀντὶ σιδήρου' and the signature 'α 2' right)."
+ }
+]

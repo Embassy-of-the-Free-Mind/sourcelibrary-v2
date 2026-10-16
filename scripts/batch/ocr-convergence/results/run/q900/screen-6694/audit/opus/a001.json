@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a085a5a49638a50931c9319",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'Expauit famam' (as X has it); Y's 'Expuit famam' changes 'took fright at' to 'spat out'. Otherwise the texts are identical, and both record the catchword 'Felices tenebrae'."
+ },
+ {
+  "item_id": "6950051bf426a210d109dfd1",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The texts match apart from long-s conventions. Y misreads 'sed altero' as 'sed aftero' and invents a 'classical scene' for the woodcut initial, which actually shows two small figures, as X says."
+ },
+ {
+  "item_id": "69f6d3f29490c1e39e843dd7",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops 'ἔρον' ('ἀναπαύσιος ἔρον ἔχει'), garbles many Greek words ('ζέπηται', 'ῥέοις', 'λουζὰ', 'σεμνὰ ... ῥαχεία' for 'τρέπηται', 'νέοις', 'λουτρὰ', 'στρωμνὰ ... τραχεῖα') and has 'fit' for 'sit' in the Latin."
+ },
+ {
+  "item_id": "69af4749d6be7ec9cc323d18",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf has page number '3292' and 'Pag. 554'; X gives '1202' and '854'. X also turns the Florentine reading 'extraneasse' and the phrase 'extraneus heres' into 'externasse' and 'externare heras'."
+ },
+ {
+  "item_id": "69bd9fddf6d63c9197482893",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf has the καί ligature in 'λιμέσιν καὶ' and 'Δὴ τότε καὶ', which X renders as 'ἢ'. X also drops 'καὶ' in note 123, gives 'infano' for 'insano', puts Arabic letters into the Hebrew, and adds a spurious sig '126'."
+ },
+ {
+  "item_id": "69906ffa245959b9547d5dbf",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y omits 'l' in 'semiperipheria l f d' and writes 'anguli a d deinceps ... angulis a d deinceps' where the leaf has 'ad u' and 'ad o'. It also has 'ex hypothesi' for 'ex thesi' and 'per 12 p 1' for 'per 13 p 1'."
+ },
+ {
+  "item_id": "69af0fb5024c2bf295285ab1",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The main text is the same, apart from X's systematic 'f' for long s ('ficco', 'effentia'). The right-hand marginal notes are cut off and survive only as fragments ('A ta re ri', 'So Ge tu cu mi'); Y marks them unclear, while X invents full notes such as 'Acre', 'Solutio.' and 'Generatio & interitus.'"
+ },
+ {
+  "item_id": "697ae775b8ab3a14486fb189",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The right edge of the text is cut off. Y marks the lost endings with '[...]'; X silently fills them in ('Er-/fahrung', 'Na-/hrung' where the leaf shows 'Erf...' / 'rung'). X also normalises 'niemahls' and 'Schwantz'."
+ },
+ {
+  "item_id": "69aebb3439a4307877773046",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf's gloss reads '妻去聲下同縲力追反絏息列反', as Y has it. X replaces the fanqie readings with an invented '縲音雷絏音屑'."
+ },
+ {
+  "item_id": "6a08529815c643eb1af4d587",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y turns 'Clā uiro' (Clam uiro) into a new speaker line 'Cl. a uiro'. It also misreads 'Neq; salsum' as 'falsum', 'inijcio' as 'inuicio' and 'sanun es' as 'sanus es'."
+ }
+]

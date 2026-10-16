@@ -1,0 +1,407 @@
+[
+ {
+  "item_id": "69b2f4280e2f024dfbfbb7c9",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 4: 'ἁνίκα πρὸς τε' — image 'πέρ' abbreviation",
+   "line 10: 'σεφάνοισι' — image has στ-ligature, 'στεφάνοισι'",
+   "line 21: 'κίσᾳ' — image 'κίστᾳ' (στ-ligature)"
+  ],
+  "b_errors": [
+   "breathings rendered oddly as 'Α’ὼ', 'Α’κράτω', 'Α’σσυρίω'",
+   "last line: 'ἑυκήλοιο' — image 'εὐκήλοιο'"
+  ],
+  "note": "Checked the differing spans on the image: B reads the πέρ abbreviation and the στ ligatures correctly where A turns them into wrong words; what B gets wrong is only breathing marks."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb7e6",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'siquam ineas' — image prints 'incas'"
+  ],
+  "b_errors": [],
+  "note": "Apart from expanded tildes and the long s, the only real difference is ineas/incas: the image shows 'incas', but A's reading is the obvious intended word, so the difference is trivial."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb830",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'Agamẽnoni' — image prints 'Agamēnon;' (A expands the final mark as -i)"
+  ],
+  "b_errors": [
+   "'Deucalionibus.' — image ends with ':'"
+  ],
+  "note": "The texts differ only in how they render the tilde and other abbreviations; Agamēnon; versus Agamẽnoni is a reading of the final abbreviation mark, and the dative is grammatical."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb85e",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "'vmbrofas' — image 'vmbrosas' (long s misread as f)"
+  ],
+  "note": "A normalises u/v, ae and the abbreviations while B keeps them; the only misreading is B's one-letter 'vmbrofas'."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb85f",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 2: 'ἰδρείῃ' — image 'ἰδρίῃ'",
+   "line 4: 'πρόσω' — image 'πρόσσω'",
+   "line 5: 'τοῦ δ'' — image 'τῶ δ''",
+   "line 25: 'Ἀλλήλους' — image 'Ἀλλάλους'"
+  ],
+  "b_errors": [
+   "line 13: 'Ἀμφοτέρῃσιν' — image 'Ἀμφοτέραισιν'",
+   "line 13: 'ἀμοιβადი́ς' has Georgian characters — image 'ἀμοιβαδίς'",
+   "line 15: 'πληγῇς' — image 'πληγαῖς'"
+  ],
+  "note": "Each text has several one-word misreadings the other gets right, and neither drops or adds a line."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb89b",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "last line: ends 'εὐναῖς.' — image 'εὐνᾶς Ἤϊε.' (drops Ἤϊε)",
+   "line 3: 'εἰμὶ δ᾽ γυμνά' — image has δὲ abbreviation",
+   "line 4: 'Ἄλλαν ἀμπεχόναν' — image has ην ligatures, 'Ἄλλην ἀμπεχόνην'"
+  ],
+  "b_errors": [
+   "speaker labels 'κο.' — image 'κ.'",
+   "line 9: 'ἀφερπῶ' — image 'ἀφερψῶ'",
+   "line 13: 'δίεσχε' — image 'διέστιχε'",
+   "line 4: 'Ἄλλω' — image 'Ἄλλην'"
+  ],
+  "note": "A drops the closing word Ἤϊε and misreads the ligatures; B mislabels the speaker and garbles two verbs, so each has errors the other avoids."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb8bf",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 4: 'Πρηΰς ἰδεῖν εἰσίδεσιν' — image 'Πρηΰς ὅδ᾽ εἰσιδέειν'",
+   "line 1: 'ἑτάρᾳ' — image 'ἑτάραι'"
+  ],
+  "b_errors": [
+   "line 18: 'βαρυῤῥόου ἄναες ἧρες' — image 'βαθυρρόου ἐνναετῆρες'",
+   "line 19: 'Κόγχλοισιν' — image 'Κόχλοισιν'",
+   "line 22: 'ὠμὺν' — image 'ὦμον'",
+   "line 8: 'ἀνεπήλνατο' — not a word; image 'ἀνεπήλατο'"
+  ],
+  "note": "A garbles line 4, which B reads correctly; B garbles the Triton line and several other words, which A reads nearly correctly."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb959",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are only long s, tilde expansion and heading markup; the wording is the same and matches the image."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbb96b",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 3: quoted word 'γεγώς' — image 'γεγαώς'"
+  ],
+  "b_errors": [],
+  "note": "The image shows γεγαώς, the word under discussion; otherwise the texts differ only in u/v and line breaks."
+ },
+ {
+  "item_id": "69b2f4280e2f024dfbfbba1f",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Greek line 4: 'θέρεις μέσωι' — image 'θέρεος μέσῳ'"
+  ],
+  "b_errors": [],
+  "note": "A misreads one word in the Theocritus quotation; otherwise the texts differ only in u/v and æ normalisation and blockquote markup."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee56d",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'so folgt daraus, dass das Fieber' — image 'dass sich auch das Fieber' (drops 'sich auch')"
+  ],
+  "note": "The image has 'sich auch', which B drops; otherwise the texts differ only in footnote markup and heading levels."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee580",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "main text: 'ἁρμόζει μόνον' — image 'μόνων'"
+  ],
+  "b_errors": [
+   "footnote 1: 'μόνων 2204' — image 'μόνον 2204'",
+   "main text: 'τὰ ἔντυβα' — image 'ἴντυβα'",
+   "commentary: 'ἔντυβον' — image 'ἴντυβον'"
+  ],
+  "note": "A swaps μόνων/μόνον in the main text and B swaps them in the apparatus, and B also misreads ἴντυβα/ἴντυβον twice."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee60f",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are only the table versus dot-leader layout, the footnote marker style and accent placement on στυπτηρία."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee6b3",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The texts are identical; they differ only in how the small end-ornament is marked."
+ },
+ {
+  "item_id": "69b220b356715b0e3247330c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'μὴ εἰδὼς' — image 'μὴ ᾔδει'",
+   "line 20: drops 'ἢ ὄντα' after 'υἱὸν'",
+   "line 21: 'ἐσφαιρωμένον τὸ λελογχισμένον' — image 'ἐσφαιρῶσθαι τὸ λελογχωμένον'"
+  ],
+  "b_errors": [
+   "line 1: 'μὴ ἡδύς' — image 'μὴ ᾔδει'",
+   "line 4: 'ἕτερον γὰρ ἔοικε. Καὶ' — image 'ἕτερον δ' ἔοικε καὶ'",
+   "line 13: 'διορίσαι καὶ τὰ' — image 'αὐτὰ'",
+   "line 28: 'ἴσως δὲ' — image 'ἴσως γὰρ'"
+  ],
+  "note": "In this ligature-heavy print each text misreads words the other gets right: A in the Merope line, B in lines 4, 13 and 28."
+ },
+ {
+  "item_id": "69b220b356715b0e3247338d",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 2: 'συνηκειῶσθαι' — image 'συνῳκειῶσθαι'",
+   "last line: drops 'γὰρ' in 'ὁ γὰρ ψέγων'"
+  ],
+  "b_errors": [
+   "last line: 'προσαναPlatform/προσαναιροῦσιν' — junk inserted",
+   "sig 'μέγ(ος) / ligatures' is invented",
+   "line 11: 'ὡδοξον' in place of λόγων — not a word"
+  ],
+  "note": "B has the correct συνῳκειῶσθαι and the γὰρ that A drops, but it inserts junk tokens and a nonsense word where A reads cleanly."
+ },
+ {
+  "item_id": "69b220b356715b0e324733ba",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 28: 'ἐκ συμβαίνοντος δὴ' — image '⁊ συμβαίνει δὴ'"
+  ],
+  "b_errors": [
+   "line 4: 'γραμμένον' — image 'γεγραμμένον'",
+   "line 6: 'κοινάς. δι' ἣν δ' αἰτίαν' — image 'κοινάς· καὶ δι' ἣν αἰτίαν'",
+   "line 10: 'διώρισαι' — image 'διώρισται'",
+   "line 24: drops 'δὲ' in 'ἐξ ὧν δὲ δεῖ'",
+   "last line: adds 'ἐστιν' after 'βέλτιον'"
+  ],
+  "note": "On the image A has one misreading near the end, while B misreads or drops words in several lines."
+ },
+ {
+  "item_id": "69b220b356715b0e32473468",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'πόλις συνίσταται' — image 'πόλις οὐ συνίσταται· καὶ' (drops the negation and inverts the sense)",
+   "line 24: 'ἀπουλίαν' — image 'Ἰαπυγίαν'",
+   "line 25: drops 'καὶ' before 'οἱ χάονες'"
+  ],
+  "b_errors": [
+   "line 1: both texts omit 'ἄνευ' after 'γίνωνται'",
+   "line 15: drops 'αὐτοὺς'",
+   "line 24: 'Ἰόνιον κόλπον' — image shows no κόλπον here"
+  ],
+  "note": "A drops the οὐ in line 1, which reverses the sentence; B keeps it and reads Ἰαπυγίαν correctly, and its own slips are smaller."
+ },
+ {
+  "item_id": "69b220b356715b0e3247346e",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "line 1: adds 'ᾧ' in 'ἐν δὲ τῷ πράττειν'",
+   "line 3: 'ὑπέθεντο' — image 'ἔθεντο'"
+  ],
+  "note": "B adds one word and misreads a verb; otherwise the texts differ only in apostrophe and punctuation conventions."
+ },
+ {
+  "item_id": "69b220b356715b0e32473488",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'διὸ παραδοτέον' — image 'διόπερ ἀποδοτέον'",
+   "last word 'Φρύγιος' — image 'φρύγι-' (i.e. φρύγιον)"
+  ],
+  "b_errors": [
+   "'ὀργαστικὰ' — image 'ὀργιαστικὰ'"
+  ],
+  "note": "Each text has a different wrong word; the rest is line breaks and capitalisation."
+ },
+ {
+  "item_id": "69b220b356715b0e324734dc",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'εἶνε ταῖ· ἐπειδὴ' — image '-νεται· εἰ δ' οὕτως'",
+   "line 1: 'καὶ διακρίνοντ'' — image 'καὶ διακείμενον'",
+   "'εἰ ἁπλῶς εὐτυχής τίς ἐστι, καὶ τίς ἐστι' — image 'ἁπλῶς ὁ εὐτυχής ... καὶ ἐν τίσι'"
+  ],
+  "b_errors": [
+   "'τις γοῦν' — image 'τοῦτ''",
+   "'ὅτι τις ἂν εἴποι, τίς τύχη' — image 'ὅτι οὐκ ἂν εἴποι τις τὴν τύχην'",
+   "'ἀτάκτως πῶς ἔτυχε' — image 'ἀτάκτως καὶ ὡς ἔτυχε'"
+  ],
+  "note": "A garbles the opening and the εὐτυχής clause, which B reads correctly; B garbles the clauses on fortune and nature, which A reads correctly."
+ },
+ {
+  "item_id": "69b220b356715b0e32473522",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "header says 'νικομαχείων ... εʹ' — image 'Ἠθικῶν εὐδημίων τὸ δ'' (B has the same error)"
+  ],
+  "b_errors": [
+   "line 3: 'τελεία, ἀλλ' οὐ πρὸς ἕτερον' — image 'ἀλλὰ πρὸς ἕτερον' (adds a negation that reverses the sense)",
+   "line 4: 'διὰ δὲ τοῦτο' — image 'καὶ διὰ τοῦτο'",
+   "line 11: 'ἀδυνατοῦσι. διὰ δὲ' — image 'ἀδυνατοῦσι· καὶ διὰ'"
+  ],
+  "note": "B inserts an οὐ that reverses the definition of justice and changes two connectives; A follows the image apart from the header it shares with B."
+ },
+ {
+  "item_id": "69b220b356715b0e32473524",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'περὶ τῆς πολιτικῆς ἐστι μετέπειτα' — image 'πότερον τῆς πολιτικῆς ἐστιν ἢ ἑτέρας'",
+   "line 17: drops 'καὶ τὸ ἄνισον'",
+   "line 3: 'ἓν ᾗ' — image 'τῆς δὲ'",
+   "'κατ' αὐτὸν' — image 'κατ' αὐτὴν'"
+  ],
+  "b_errors": [
+   "line 1: 'περὶ οὗ ἐν τοῖς πολιτικοῖς ἔστιν εἰπεῖν' — not on the leaf",
+   "line 2: 'εἰ γὰρ ἴσως' — image 'οὐ γὰρ'",
+   "line 3: 'Φανερὸν δὲ καὶ' — image 'τῆς δὲ'",
+   "'ὅταν ἢ μὴ ἴσοι ἴσα, ἢ μὴ ἴσοι ἴσα' — image 'μὴ ἴσα ἴσοι' first"
+  ],
+  "note": "Both garble the opening lines in different ways, and each gets right some spans the other misreads; both headers wrongly say Nicomachean."
+ },
+ {
+  "item_id": "69b220b356715b0e32473576",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'τοῦτ' ἐστίν·' — image 'τοῦτ' ἐστι τίς'",
+   "line 12: 'φυ-το καὶ δι' ὁρᾶται' — image unclear but not this"
+  ],
+  "b_errors": [
+   "line 5: 'οἳ τυχεῖς' — image 'εὐτυχεῖς'",
+   "line 6: 'βούλεσθαι' and 'βουλήσεως' — image 'βουλεύεσθαι'/'βουλεύσεως'",
+   "line 8: 'γοῦν οὐ' — image 'τοῦτο δ' οὐ'",
+   "line 10: 'μόνον τὴν τὴν' — image 'μόνον οὐ τὴν'",
+   "line 16: 'ἀπολυθέντες γὰρ' — image 'τοῦ'"
+  ],
+  "note": "A follows the image more closely; B misreads several words, including εὐτυχεῖς and the βουλεύ- forms, and duplicates τὴν."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd788",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 5: 'θείων λογίων' — image 'θείων λογικῶν'"
+  ],
+  "b_errors": [
+   "line 2: drops 'καὶ' before 'μόλις' (image 'ϗ μόλις')"
+  ],
+  "note": "The image reads λογικῶν, so A has a wrong word; B only drops one καὶ, and the rest is line breaks and the marginal note's placement."
+ }
+]

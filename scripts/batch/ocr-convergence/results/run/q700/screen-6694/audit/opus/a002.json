@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b4c08d86a5921d5bc445de",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X matches the hand in 'abstractam', 'eius', 'perspectiva', 'ab aliqua', 'artis' and page '1', where Y has 'abstractionem', 'cuius', 'perspectica', 'alia' and page '20'; Y is better only at 'bene namque ... tam sapiens quamque', where X guesses '<unclear>Utitur</unclear>' and 'quicumque'."
+ },
+ {
+  "item_id": "69af21b0f98f6eff774cb5f2",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The first line reads 'vincere persta', and Y changes it to 'vincere persas', which brings in Persians that are not on the page; otherwise the two are identical."
+ },
+ {
+  "item_id": "6951549fab34727b1f041099",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y follows the print in 'conditio', 'deseri potuisset', 'prope' and 'pagin. 192', where X has 'condicio', 'deferri', 'propè' and '191'; X also normalises v to u ('DUABUS', 'ut')."
+ },
+ {
+  "item_id": "69593413b282844d7b277b0a",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y keeps the engraved labels as printed, 'Mediæ Hyerarchiæ attributa' and 'Infimæ hierarchiæ propria'; X reduces them to 'Media Hierarchia attributa' and 'Infima hierarchia propria' and gives the header as 'VIII' elsewhere, but the content is the same."
+ },
+ {
+  "item_id": "69942e9ed607f8e57e4b9a41",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both have the same text, but Y drops the woodcut D ('E primo ita q; ētel' for 'DE primo itaq; ēte'), misreads it as an 'E', makes up a catchword 'de quid/aut' and has the typo 'potential'."
+ },
+ {
+  "item_id": "69f679e3c9d0b9e0080de0cf",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y keeps the printed 'einigermassen', which X normalises to 'einigermaßen', and Y correctly treats 'Inhalt' as a catchword rather than a heading; the wording is otherwise identical."
+ },
+ {
+  "item_id": "6951549fab34727b1f04109f",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X misreads 'sperans diuinam opem' as 'qui erant diuinam operam' and 'vtilia dulcibus' as 'vitia dulcibus'; it also has 'Ipe' for 'spe', 'ecudiendæ', 'sensum' and 'nutriant', all of which Y gets right."
+ },
+ {
+  "item_id": "69f679efc9d0b9e0080de0fd",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has the Greek 'ανομοια' as printed and the catchword 'wer-', where Y has 'ανομια' and 'wers'; the German text is identical."
+ },
+ {
+  "item_id": "69b21cda429e087c6f865df1",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y puts most of the body text inside a <margin> tag, writes 'scribit μῆλον potius, quàm μῆλον' where the print has 'βῆλον', garbles the Dutch words ('Fpg', 'Gpf' for 'Vyg', 'Gyf') and leaves out 'luxuriaret'."
+ },
+ {
+  "item_id": "69590717736e8b2e7a262b0a",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads the definition 'Finis: est id in q̄ principiū q̄escit' as '... desinit', and also has 'bonificādo' for 'bonificās', 'hō'/'rō' for 'vō' and the garbled 'ꝓyelemētatiua'; Y reads all of these correctly."
+ }
+]

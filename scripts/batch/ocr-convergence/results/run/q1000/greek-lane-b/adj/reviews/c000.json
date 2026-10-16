@@ -1,0 +1,433 @@
+[
+ {
+  "item_id": "6a0853c415c643eb1af50ced",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "first paradigm line: 'ποιοίην, οίην. ποιοίης, οίης. ποιοίη …' — image 'ποιέοιμι, οῖμι· ποιέοις, οῖς· ποιέοι, οῖ· ποιέοιτον …'",
+   "adds a model <warning> comment about expanded ligatures"
+  ],
+  "note": "The image's first optative line clearly prints ποιέοιμι/ποιέοις forms, which A has; B replaces the whole line with different forms that are not on the page. The rest differs only in punctuation and capitalisation."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50d00",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "participia: 'Qui statuit · qui statuit' — image 'q̄ statuit' (quae)",
+   "infinitive: 'statuturire' — image 'statutúire'",
+   "'praefens' — image 'præsens'"
+  ],
+  "b_errors": [
+   "imperfect: 'bat, … bat' — image 'bāt' (bant) twice",
+   "optative/subjunctive: 'sies', 'statuissies' — image 'sses', 'statuisses' (repeated)"
+  ],
+  "note": "B repeatedly garbles the verb endings (bant→bat, sses→sies). A's slips are fewer and smaller."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50d52",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1 'πυθώ' — image 'πτύσω'",
+   "'Πράττω, δ' πωλῶ … πέπραχα' — image 'ὃ πωλῶ … πέπρακα'",
+   "'πείεμαι. προκειμένων' — image 'πρίεμαι. προηκάμην'",
+   "'Προσδέχω' — image 'Προστρέχω'",
+   "'Πράθω' — image 'Πέρθω'"
+  ],
+  "b_errors": [
+   "'ἐσευάμην' — image 'ἐσύθην'",
+   "'σχάτω' — image 'σχέτω'",
+   "'συνκέκρακα' — image 'συγκέκρακα'"
+  ],
+  "note": "I checked the head-words against the image: A misreads several of them in the top third of the page. B gets those right but has three later errors that A avoids."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50dd0",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'λυσίσερως, λυσισέρωτος. χρυσέρωτος, χρυσέρωτος' — image 'λυσίδρως, λυσίδρωτος· χρυσέρως, χρυσέρωτος'",
+   "'εἰρηθέντι' — image 'ῥηθέντι'",
+   "'ὀφείλων εἶναι ἁλός, ἁλὸς ἐκλίθη' — image 'ἅλτος, ἁλὸς ἐγένετο'",
+   "'εἰ γ' οὖν ἦν ἁλός' — image 'ἅλτος'"
+  ],
+  "b_errors": [
+   "'λυσίβρως, λυσίβρωτος' — image 'λυσίδρως'",
+   "adds 'καὶ' before 'τοῦ φιλογέλω' and before 'τοῦ μάκαρος', not on the leaf"
+  ],
+  "note": "A's 'ἁλός' for the image's 'ἅλτος' breaks the passage's argument about the rough breathing. B's errors are minor."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50dd6",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'panis uilis. per panis uilis' — image 'pān⁹' (pannus) and 'ꝓ' (pro)",
+   "'per' for the pro-abbreviation four times (per democoontem, per saluator, per rupes)",
+   "'sed quia ante consonantiam' — drops the 'r' printed in the image",
+   "merges the section heading 'De in on grauisonis …' into the running text"
+  ],
+  "b_errors": [
+   "'oppositum' — image 'appositum'",
+   "'grauifonis/grauifona' — image long-s 'grauisonis'",
+   "'rumpes pro rupes' — image has the same word twice"
+  ],
+  "note": "A expands the pro-sign wrongly, reads pannus as panis and drops the 'r'. B has one wrong word (oppositum) and long-s misreads."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50dec",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'fulcus fulci' — image 'sulcus' (long s)",
+   "'turma. mæ' kept as printed but 'scuticá' rendered with accent for the macron"
+  ],
+  "b_errors": [
+   "'folisyllaba' — image 'soli syllaba'",
+   "'turmam' — image 'turma'",
+   "'perpenacutisone' — image 'ꝓpenacutisone'"
+  ],
+  "note": "Nearly all spans are æ/ae, &/et and u/v conventions. Each text has one or two long-s or abbreviation slips that a reader can easily work around."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50e10",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "heading 'Περὶ τῆς πέμπτης κλίσεως' — image 'τρίτης'",
+   "'καὶ πὺ μέλαιναν' — image 'καὶ τὴν μέλαιναν'",
+   "'ἀχίλλης προπαροξυτόνως' — image 'ἀχίλληος'",
+   "'σπετειούς … σπετειᾶ' — image 'ἐρετριεύς … ἐρετριᾶ'",
+   "'ἀχίλλυς δὲ βαρυτόνως' — image 'ἀχίλλευς'"
+  ],
+  "b_errors": [
+   "'ὀμματογράφου' — image 'ὀμματογράφον'",
+   "'ἐν τῷ ϑ τῆς ἰλιάδος' and drops the catchword 'ἐνθ''"
+  ],
+  "note": "A gets the declension number in the heading wrong and garbles several forms; B matches the image except for two small slips."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50e23",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1 'nu in converso' — image 'n in g uerso'",
+   "'praeteritum per se' — image 'pfe.' (perfectum)",
+   "'feminabo' — image 'seminabo'",
+   "'praeter fortiti' — image 'sortiti'",
+   "'panam timemus' — image 'pana'"
+  ],
+  "b_errors": [
+   "'secunda prima mutatione' — drops 'a' (image 'secunda a prima')"
+  ],
+  "note": "A misreads several long-s words and the 'pfe.' abbreviation; B's long-s typography is a convention, and it drops only one 'a'."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50ea1",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'curant' — fine; 'ᾱος, per εως' — image 'ᾶος, per εῶς' (accent only)"
+  ],
+  "b_errors": [
+   "'uertit autem o in epsilon' — image 'σ in ξ' (also 'in epsilon' twice more)",
+   "'per os, per eos' — image Greek 'ᾶος … εῶς'",
+   "drops 'σ' before 'huius meneleo'",
+   "drops Greek 'και' before 'coniunctionem'",
+   "'mea sententiam' — image 'meā sñiam' (meam)"
+  ],
+  "note": "The page's Greek letters are the subject of its rules. B misidentifies or drops them, while A transcribes them as printed."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50ee2",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'visque gemina perditur' — image 'ui'q; gemina pditæ' (perditæ)",
+   "'At si ai et oi et ti. oi u legas' — image 'αι ε. οι & ει ι. ου u' (garbled)",
+   "'Atque si ate sonat' — image 'αι e sonat'",
+   "'magia' — image 'māgia' (mangia)",
+   "'fonos' — image 'sonos'"
+  ],
+  "b_errors": [
+   "'καὶ φοβεῖται παρ' αἰλίῳ' — image 'φέρεται'",
+   "'At si αι et οι et ει per u legas' — drops the 'ε' and 'ι' readings printed after αι and ει",
+   "'Atque si αι sonat' — drops 'e'"
+  ],
+  "note": "Both garble the key line on diphthong pronunciation. B is right in most other spans, but A has the Greek 'φέρεται' correct."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66d96",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'transilientem' — image 'trans-silientem'",
+   "symbols given as verbal descriptions rather than characters"
+  ],
+  "b_errors": [
+   "symbol glyphs only approximate the printed signs (e.g. '⚲' for the hooked sign)"
+  ],
+  "note": "The text is identical. The only differences are how the special symbols are rendered and a line-break hyphen, so neither misleads."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66e10",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "inserts a descriptive <note> 'Critical apparatus and commentary…' that is not on the page"
+  ],
+  "note": "Same words in both; A keeps the line-end hyphens and B joins them."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66e48",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are apostrophe and numeral-sign forms, hyphenation, and the wording of the diagram description. The text agrees with the image."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66ecf",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Only italics markup and where the 'Mus. script. ed. Jan.' signature line is tagged differ. The words match the image."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66f25",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "notation signs only approximated (e.g. '⨀' for the half-delta sign, 'Ⅎ' for the line-10 sign)"
+  ],
+  "b_errors": [
+   "notation signs only approximated (e.g. '∢', '𝈏')"
+  ],
+  "note": "The Greek text of the table is the same in both. Neither can render the special Alypian signs exactly, and the differences are table versus line layout."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66f27",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'παράμεσος ⊔ τετράγωνον' — image 'ω τετράγωνον'"
+  ],
+  "b_errors": [
+   "notation signs approximated differently ('ϡ', '𝄩')"
+  ],
+  "note": "The wording agrees. The differences are approximate glyphs for musical signs, inserted line numbers and where the diagram description sits."
+ },
+ {
+  "item_id": "6a3f024e97e91e1768f66f34",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "apparatus '19 ἡμίδελτα M' — image 'ἡμιδέλτα M' (the note is about this accent)",
+   "'παράμεσος … Ι ⋌' — image 'Ι <'",
+   "header 'VIII. Alypius' — image 'Alypi'"
+  ],
+  "b_errors": [
+   "notation signs approximated ('𝈱', '⊿', 'ᚩ')"
+  ],
+  "note": "The text otherwise agrees. A loses the accent that the apparatus note exists to record, while B prints it as the image does."
+ },
+ {
+  "item_id": "69557475f63a757109173555",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "apparatus '10) … ἐκφανῖσα A' — image 'ἐκφανεῖσα A'"
+  ],
+  "b_errors": [
+   "brackets '[οἱ δὲ καὶ]' not on the page",
+   "apparatus 'πρισῳκείονται A' — image 'προσῳκείονται'"
+  ],
+  "note": "The main text is the same apart from superscript style and hyphenation. Each has one small slip in the apparatus."
+ },
+ {
+  "item_id": "69557475f63a75710917356a",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ὑρμώμενον' — image 'ὁρμώμενον'",
+   "'(Pag. 21 E.)' — image 'Pag. 24 E.'",
+   "apparatus 'συνεχῆ B' — image 'συνεχεῖ B'",
+   "apparatus 'ἐγκωμιά-ζεται A' — image 'ἐγκομιά-'"
+  ],
+  "b_errors": [
+   "'Ἀθηναίαις αὐτὸ' — image 'Ἀθηναί-ας'",
+   "apparatus 6 'ἐν αὐτοῖς ἐναντιότης' — image '…τὸς ἐναντιότης' (A's 'παντὸς' fits)",
+   "apparatus 2 'τέλειον' guessed under the ink blot"
+  ],
+  "note": "Each text has small errors in different places, mostly in the apparatus; neither is clearly better overall."
+ },
+ {
+  "item_id": "69557475f63a7571091735bf",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ὁ τρόπος ἐκείνων ἄλλως' — image 'ἐπ' ἄλ-λον ἄλλως'",
+   "drops footnote marker 10 after 'εἶναι καλόν'",
+   "'πρὸς ἄϊδιον παράδειγμα' — B's 'αἰώνιον' fits the cut-off image"
+  ],
+  "b_errors": [
+   "'νοῦ καὶ ψυχή' — image 'νοῦς'",
+   "'ταύτῃ … πῶτον, γενητικῶς' — image 'ταύτης … πρῶτον, γεννητικῶς'",
+   "'μετὰ τούτων' — image 'τούτους'; 'ὑπαδούς' — image 'ὀπαδοὺς'",
+   "'εἰδοποιεῖται' — image 'εἰδοπεποίη-ται'",
+   "apparatus '3) καλοποιὸς B' — image 'καλλοποιὸς B'; '9) … Μ' — image 'B'"
+  ],
+  "note": "B has many letter-level corruptions through the page. A has one wrong phrase (ἐκείνων) and a dropped footnote marker."
+ },
+ {
+  "item_id": "69557475f63a757109173638",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'τριάδα τῶν Ὡρῶν, Ἧις' — image 'Ταῖς'",
+   "apparatus numbers the ἠδ' note '²)' — image '³)'"
+  ],
+  "b_errors": [
+   "''Ρείη', ''Ωρῶν' — breathing rendered as a quote mark (cosmetic)"
+  ],
+  "note": "Image reads 'Ταῖς' at the start of the Orphic quotation, as in B; other spans are accent or cropped-letter conventions."
+ },
+ {
+  "item_id": "69557475f63a757109173688",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'οὔκουν καθ' ὕλην αὐτὴν' — image 'καθ' ὅλην'",
+   "apparatus 8 'addit. ad 126, 10' — image 'V. not. ad'",
+   "apparatus 1 'στερεώτης)' — image 'στερεότης)'"
+  ],
+  "b_errors": [
+   "opening 'ὶ δὲ ὄγκων' — image '[ἶ]δε ὄγκων' (cropped)"
+  ],
+  "note": "A reads 'ὕλην' (matter) where the image has 'ὅλην' (whole), which changes the sense; B matches the image."
+ },
+ {
+  "item_id": "69557475f63a7571091736ae",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'καὶ γὰρ βαδίσει πάντα' — image '[πρό]εισι πάντα'",
+   "'παραδέδωκαμεν' — image 'παραδεδώκαμεν' (accent)"
+  ],
+  "b_errors": [
+   "'πᾶν | ὕλην αὐτήν' — image '[τὴ]ν | ὕλην'",
+   "'τάξεως δὲ ὅμως ἐν αὐτοῖς τῆς τάξεως' — image '[οὔ]σης δὲ ὅμως'",
+   "'περικάλυψεν' — image 'περιεκάλυψεν'",
+   "apparatus 8 '*delendum.*' invented where the image is blotted (A marks it [...])"
+  ],
+  "note": "B makes several substitutions that change the sense and invents a blotted apparatus note. A has one wrong verb."
+ },
+ {
+  "item_id": "69557475f63a757109173753",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "apparatus 11 'addendum essebat' — image '…sebat' (censebat)",
+   "apparatus 13 'πάντ' B' — image 'πάν τ' B'"
+  ],
+  "b_errors": [
+   "text 'τῷ δὲ ἐμψυχωμένῳ' — image 'ἐψυχωμένῳ'",
+   "apparatus 18 lemma and reading 'ἐμψυχωμένῳ) ἐμψυχουμένῳ B' — image 'ἐψυχωμένῳ) ἐμψυχωμένῳ B'",
+   "'ἑξάς¹⁶) ἢ ὡς' — image has a comma, not 'ἢ'"
+  ],
+  "note": "B changes the main-text reading ἐψυχωμένῳ and therefore misreports apparatus note 18. A's errors are two small slips in the apparatus."
+ },
+ {
+  "item_id": "69557475f63a7571091737b1",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'αἰῶνος ἐπέταδε' — image 'ἐπίταδε'",
+   "'οὐδ' ἂν αἰὼν εἴη' — drops 'ὁ' (image 'οὐδ' ἂν ὁ αἰὼν')",
+   "apparatus 11 'ὑπεραυτὸ B' — image 'ὑπεραυτοῦ B'"
+  ],
+  "b_errors": [
+   "'ὅτι, φαῖεν ἄν' — image 'φαίην ἄν'"
+  ],
+  "note": "Small differences on both sides, but B matches the image in three places where A slips, against one slip of its own."
+ }
+]

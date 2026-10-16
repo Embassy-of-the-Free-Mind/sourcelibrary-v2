@@ -1,0 +1,25 @@
+{
+ "set": "q700g",
+ "threshold": 0.01,
+ "pages": 140,
+ "books": 14,
+ "actions": {
+  "residual": 55,
+  "keep": 32,
+  "agree": 32,
+  "write": 16,
+  "contain": 4,
+  "no-second-read": 1
+ },
+ "by_group": {
+  "greek": {
+   "residual": 55,
+   "keep": 32,
+   "agree": 32,
+   "write": 16,
+   "contain": 4,
+   "no-second-read": 1
+  }
+ },
+ "decided_at": "2026-10-16T06:30:03.481Z"
+}

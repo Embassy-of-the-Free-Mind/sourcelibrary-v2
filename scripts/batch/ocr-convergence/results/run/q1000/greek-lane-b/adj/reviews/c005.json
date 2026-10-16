@@ -1,0 +1,270 @@
+[
+ {
+  "item_id": "69938dd7d5a98fd66f42f476",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "line 49: 'ἔλευθον' — image 'ἔκευθον'"
+  ],
+  "note": "The only substantive difference is line 49, where the image clearly reads ἔκευθον as A has it; the rest is apostrophe style and B's margin line numbers."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f4af",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "apparatus: '15 σβεννύμενος codd.' — image 'σβεννύμενε codd.'",
+   "margin line numbers 5/10/15 placed one to three lines off the image's numbering"
+  ],
+  "b_errors": [
+   "line 5 of hymn: 'καθηγητὲ' — image 'καθοδηγὲ'"
+  ],
+  "note": "Checked against the image: A is right on καθοδηγὲ in the text, B is right on σβεννύμενε in the apparatus, and the other spans are iota-subscript/adscript conventions."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f4b2",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are apostrophe/breathing glyphs, diaeresis, margin numbers and where the signature mark sits; the words agree with the image."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f4b4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are blockquote/heading markup, italics, θ/ϑ glyphs and margin numbers; the text matches the image in both."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f4c7",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "apparatus: 'εὐιέροις codd.' — image 'εὐιεροῖς'"
+  ],
+  "b_errors": [
+   "LIV.11: 'γαληνιώων' — image 'γαληνιόων'"
+  ],
+  "note": "The only differences are accent or vowel-length slips on single words and margin numbers; no word or line is lost."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f51b",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are italics markup, breathing/apostrophe glyphs and one accent (προσεῖρηται/προσείρηται); the content is identical and matches the image."
+ },
+ {
+  "item_id": "699438416879ff0184cb830e",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "drops 'Quamobrem Caveus (e) scribit de Philone: Ad Cyprum' and runs the Epiphanius quotation into Cave's text",
+   "footnote calls shifted: 'Fabricius (e), Lequien (f)' — image '(f)', '(g)'",
+   "'distanti' — image 'distantis'",
+   "'Xenagora' — image 'Xenagoræ'",
+   "'gentililium' — image 'gentilitium'"
+  ],
+  "b_errors": [
+   "'Theoprepuin' — image 'Theoprepum'"
+  ],
+  "note": "Left column on the image has 'Quamobrem Caveus (e) scribit de Philone : Ad Cyprum delatus…', which A omits, so A misattributes the passage and misnumbers the notes."
+ },
+ {
+  "item_id": "699438416879ff0184cb8329",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "note 82: 'semiapertis' — image 'semiadapertis'"
+  ],
+  "b_errors": [
+   "LII lemma: 'patruelis' — image 'fratruelis'",
+   "Greek: 'ἐπιδείκνυσι' — image 'ἐπιδίδωσι'",
+   "Greek: 'ἀπήλασαν' — image 'ἀπήλασεν'"
+  ],
+  "note": "Checked the spans on the image: fratruelis, ἐπιδίδωσι and ἀπήλασεν are as A has them; B's word substitutions are its only real errors."
+ },
+ {
+  "item_id": "699438416879ff0184cb83a2",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ὑπὲρ Αἰγαῖον' — image 'Αἰγαίου'",
+   "'fœlicitari' — image 'factitari'",
+   "'procella inturgente' — image 'inturgescente'",
+   "'Catalaniæ' / 'Catalonia' — image 'Catalauniæ' / 'Catalaunia'"
+  ],
+  "b_errors": [
+   "'οὐχὶ τὸν Εὔξεινον … καὶ τὸν Ἀδρίαν' — image 'οὐχ οἱ τὸν … καὶ οἱ τὸν' (two words of οἱ lost)",
+   "'primorum devotioni' — image 'piorum'",
+   "'regiaque magnificentia' — image 'regiæque magnificentiæ'",
+   "'consertiores' — image 'confertiores'",
+   "'d'Harcourt' — image 'd'Harcour'; note '28' — image '35'"
+  ],
+  "note": "Each text has several single-word misreadings the other gets right (A: Αἰγαίου, factitari, Catalaunia; B: οὐχ οἱ, piorum, confertiores), so neither is clearly better as a whole."
+ },
+ {
+  "item_id": "699438416879ff0184cb83b1",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Latin col.: 'Commendata namque gloriam cedit' — drops 'athletarum probitas, in celebrem palæstritarum' and inserts a garbled stray fragment of it in the Greek column",
+   "'præclareque' — image 'præclarique'",
+   "'strenui' — image 'etrenui' (misprint on the leaf)"
+  ],
+  "b_errors": [
+   "'exstimulat' — image 'exstimulet'",
+   "'voluptati sit' — image 'volupe sit'",
+   "Greek: 'καὶ ἥδεσθε' — image 'καὶ ἡδέως'"
+  ],
+  "note": "A mangles the full-width closing lines of the Latin (phrase dropped and misplaced); B renders them correctly, though B has three single-word errors where A is right."
+ },
+ {
+  "item_id": "699438416879ff0184cb8449",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "Greek line 1: 'κατὰ τὸν μὲν λόγον' — image 'κατὰ πρῶτον μὲν'",
+   "'εἴτε ὑδατώδης, εἴτε γεώδης ἐστὶν' — image 'ὑδατῶδες … γεῶδές ἐστιν'",
+   "note 74: 'Mox ἰδίῳ αὐτῆς' — image 'Mox idem αὐτῆς'",
+   "note 88: 'Sic mox ἐστὶ ὅλον' — image 'est ὅλον'"
+  ],
+  "b_errors": [
+   "Latin: 'ita censu percipit' — image 'percipitur'"
+  ],
+  "note": "Checked against the image: B is right in the main Greek text (πρῶτον, ὑδατῶδες/γεῶδες) and in the notes, while A has several word errors and B only one."
+ },
+ {
+  "item_id": "699438416879ff0184cb8458",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "note 58: 'Gap interponit' — image 'Γάρ interponit'"
+  ],
+  "b_errors": [
+   "note 45: 'συστῆναι, loco συστῆναι' — image 'συστάναι, loco συστῆναι'"
+  ],
+  "note": "The texts are otherwise the same, apart from encoding and italics; each has one apparatus misreading that the other gets right."
+ },
+ {
+  "item_id": "699438416879ff0184cb84b8",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'Τὰ μὲν Εὐαγγέλια' — image 'Τὰ γὰρ Εὐαγγέλια'",
+   "note 14: 'συννεχώρησεν' — image 'συνεχώρησεν'"
+  ],
+  "note": "The image reads 'Τὰ γὰρ Εὐαγγέλια' as A has it; the remaining differences are ligature, diphthong and footnote-marker conventions."
+ },
+ {
+  "item_id": "699438416879ff0184cb8500",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'erigere volumus intellectus' — image 'nolumus' (reverses the sense)",
+   "'hæreditauda' — image 'hæreditanda'"
+  ],
+  "b_errors": [
+   "'iuteam' — image 'luteam'",
+   "'ad eorum hæreditatem opera' — image 'hæreditanda'"
+  ],
+  "note": "The image has 'erigere nolumus'; A's 'volumus' reverses the meaning, whereas B's errors are a letter typo and one wrong word ending."
+ },
+ {
+  "item_id": "699438416879ff0184cb8557",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'infectus fuerit' — image 'infectum'",
+   "'acertius' — image 'acerbius'",
+   "'Ligno … afflixit' — image 'affixit'",
+   "'percutit, et aquam effundit' — image 'percutito … effundet'",
+   "drops all scripture note calls (93–7) from the text"
+  ],
+  "b_errors": [
+   "note 96: 'Matth. Ⅷ' — image 'xviii'",
+   "note 3: 'Exod. Ⅳ, 2-4' — image 'iii, 2-4'"
+  ],
+  "note": "Checked the spans on the image: infectum, acerbius, affixit and percutito/effundet are as B has them; B's only slips are two Roman numerals in the notes."
+ },
+ {
+  "item_id": "695906ee95a91542b28c0208",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "v. 13: 'ἰκτῖνα' — image 'ἴκτινον'",
+   "v. 15: 'λάρον' — image 'λᾶρον'"
+  ],
+  "note": "The image reads 'καὶ τὸν ἴκτινον' as A has it; the other differences are apostrophe glyphs, accents and where the footnote line sits."
+ },
+ {
+  "item_id": "695906ee95a91542b28c0259",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "inserts a model note 'The Latin text repeats the verse number 30 for the final verse.' that is not on the leaf"
+  ],
+  "b_errors": [
+   "Latin v. 25: 'obtulit butyrum' — image 'attulit'",
+   "v. 21: first 'Κισὼν' — image 'Κισῶν'"
+  ],
+  "note": "A's text matches the image (attulit, Κισῶν) but adds an editorial comment; B has no added text but misreads attulit. B's hyphenated line breaks are layout only."
+ }
+]

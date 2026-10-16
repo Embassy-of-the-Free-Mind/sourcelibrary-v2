@@ -1,0 +1,376 @@
+[
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6d4e",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "col 1 line 1: 'ἡμᾶς αἰρούμενος' — image 'ἀπονεμόμενος'",
+   "'τὸ σρίον τοῦ Θεοῦ ᾅδου' — image 'τὸ σριον τοῦ θῦ· εἶδον'",
+   "'τὸ γῆρας κατέσθιε, οὐδ’ ἔστω σθῆναι' — image 'ἠδέσθη, οὐδ’ ἐδυσωπήθη'",
+   "'ἀλλ’ εἷς θρόνος αὐτῶν … μαρτυσάντος' — image 'ἀλλ’ εἰς θρόνον αὐτὸν … βαστάσαντος'",
+   "much of col 2 lines 12-30 garbled ('προελάθει', 'οἰχάρτυμαι', 'μηκτύσατο')"
+  ],
+  "b_errors": [
+   "col 1 lines 3-5: invented 'Ταῦτα λαλῶν· κατῆλθε πρὸς ὑμᾶς· ἅμα σκιρτῶν χορεύων' — image 'Τὰ παλαιὰ κατῆλθ… ἀφ’ ὅσου κληροῦχος…'",
+   "'κριτὴς ἀξιόπιστος εἶναι' not on leaf",
+   "drops col 2 line 'φίλος τοῦ νυμφίου· ὃς ἑαυτῷ'",
+   "'τῶν τοῦ μεγάλου βασιλέως' — image 'τῶν ὑπὲρ τοῦ βασιλέως'",
+   "col 2 lines 15-30 largely invented ('Εἴρηται τῇ φύσει, ἵνα θεὸς ἐμηκύνατο …')"
+  ],
+  "note": "Checked against the minuscule: B gets several middle-column-1 readings right (σωτήριον, εἶδον, ἠδέσθη, βαστάσαντος), but it invents whole lines and drops one; A garbles many spans. Neither text is reliable."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6d6f",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "lines 3-6: 'ἀλλ’ ἐκ μιᾶς πασῶν … ἀναρμοσόμεθα … κρησάμενος τρὶς' — image '…σὺν σοὶ ἀποθανεῖν, οὐ μή σε ἀπαρνησόμεθα … ἠρνήσατό με τρίς'",
+   "'μάλιστα ἐλθεῖν' — image 'μάλα δηχθείς'",
+   "'σὺ δὲ ὁ δέκας τὰς κλεῖς' — image 'σοὶ δέδωκα τὰς κλεῖς'",
+   "col 2: 'μετανοήσαντα τὸν κόσμον … τὸ ἁμάρτημα καὶ παρρησία' — image 'μετάνοιαν τῷ κόσμῳ χαρίσωμαι· τελώναις καὶ πόρναις'",
+   "col 2 lower half garbled ('φοβερὸν συνάρχεσθαι', 'εἴπωμεν χαίρειν')"
+  ],
+  "b_errors": [
+   "line 1: 'ὀνομάζεται ἐκεῖνος μοιχός' — image 'ὀνομαστὶ ἐκεῖνον μόνον'",
+   "'ἀνεμποδίστως ἅμα τοῖς λοιποῖς ἔλθῃ πρὸς τὸ μνῆμά μου' — image 'ἀμεριμνήσας μετὰ τῶν λοιπῶν μαθητῶν μου ἔλθῃ'",
+   "'καὶ τοῖς ἀποστόλοις' — image 'μηδὲν φοβηθῆναι'",
+   "col 2 line 1 'ὑπερμνήσομε' garbled",
+   "col 2 lines 14-20 partly invented ('ἐδάκρυσας, ὦ Ἰούδα', 'ἀρχιερέα ἐλήλυθεν')"
+  ],
+  "note": "Both texts have wrong stretches. B matches the image over more of the page (ἠρνήσατό με τρίς, λελύσθαι, σοὶ δέδωκα, προκαθεδρίας, τελώναις καὶ πόρναις, the closing lines), while A is closer only in a few lines."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6d8d",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "col 1 lines 1-3: 'τῶ φῶτι τῶ πνευματικῶ ἀναστῶμεν …' — image 'τῶν αὐτῶν τῶν ὠδίνων …'",
+   "col 2 line 4: 'μάρτυρος θυμησοι' — garbled",
+   "several garbled spans in col 2 ('σελεκλέτελείωσε', 'ἔρεμνον')"
+  ],
+  "b_errors": [
+   "adds a 40-line <margin> block of text from the facing page, which is not on this leaf",
+   "'ὅτι οὐχ ἡμᾶς τιμήσας, σωτῆρι καὶ συνεκάλυψεν … ὀψωνίοις' — image 'ὅτι ὁ θς̅ … συνήγειρε καὶ συνεκάθισεν … ἐπουρανίοις'",
+   "col 2: 'ἐκδύσεων, ἄρτι καθαιρομένην' — image 'ἐκκλησίας· ἄρτι καθισαμένας'",
+   "'ἐγκαινίζεται ὁ τῆς κρηπῖδος ὑπὲρ τυρίου' — image 'ἡ σκηνὴ τοῦ μαρτυρίου'",
+   "'καὶ ἄλλο τι τῶν δαιμόνων' — image 'ὥσπερ ἄλλος προφήτης'"
+  ],
+  "note": "B transcribes the neighbouring page's column as a margin and garbles several key phrases that A gets right (ὁ θς̅, ἐπουρανίοις, ἐκκλησίας, σκηνὴ τοῦ μαρτυρίου). A's first lines are wrong."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6df7",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "rubric 'τις ἐστιν ἡ ἀνάληψις' — image 'Τῇ ε̅ τῆς ἀναλήψεως'",
+   "'τοῦτο γὰρ ἦν ἀπολειφθὲν τῇ δευτέρᾳ οἰκονομίᾳ' — image 'τὸν χθὲς ἀπολειφθέντα διὰ ἱερὰν οἰκονομίαν'",
+   "'πρόσοψιν ἀνάγει τὸ μάγον' — image 'πρὸς οὐρανὸν ἀνάγει τὸν νοῦν'",
+   "'τὸ μόνωμα τοῖς ἀγροῖς' — image 'τὸν οὐρανὸν τοῖς ἀνθρώποις'"
+  ],
+  "b_errors": [
+   "omits first line 'ρασκευάζων πρὸς τὴν μάχην'",
+   "col 1 lines 2-12 garbled ('φυτομεροῦσα ζωομείαν. ψυχὴν μερκεδοξίαν …') — image 'φύγωμεν οὖν ἀλαζονείαν· φύγωμεν κενοδοξίαν· ἀγαπήσωμεν χν̅'",
+   "'ὁ ᾱδης ἡτοιμάσθη' — image 'ὁ δαδ· ἡτοιμάσθην'",
+   "'χρεητὸν θαῦμα τὸ κεκρατηκότα τοσαύτην μερίδα' — image 'ἐχρῆν τὸν θάνατον κεκρατηκότα …γένος'"
+  ],
+  "note": "B gets the rubric and a few col 2 phrases right, but it drops the first line and turns most of the first column into nonsense; A reads the hortatory passage correctly."
+ },
+ {
+  "item_id": "69bfccdf8ab50eb88e8c6e46",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'πᾶσι μὲν οὐ τοῖς πιστεύουσιν' and 'ὅτι τὸ χάρισμα οὐ πρὸς ἡμᾶς … τοὺς ἀγνοοῦντας τὸν τοῦ κῦ λόγον' — not on leaf",
+   "col 2 line 1 'ἀναπαύσω' — image 'καταπαύσω'",
+   "'περὶ τοῦ πυρός· καθὼς … κατῆλθεν, ἀλλ’ ὡσεὶ περιστερά' — image 'περὶ τοῦ πνς̅· καθάπερ … κατέπτη, ἀλλ’ ἐν εἴδει περιστερᾶς'",
+   "'μάταια· πρὸς ἐμὲ γὰρ ὁ κς μου φησίν' — image 'περὶ μὲν γὰρ ἐκείνου φησίν'"
+  ],
+  "b_errors": [
+   "'ἀλλὰ ποῖς ἀποστόλοις' — image 'ἀλλὰ τοῖς ἀπίστοις'",
+   "'πῶς κηρύξουσιν ἐὰν μὴ ἀποσταλῶσιν' — not on leaf",
+   "'ὁρᾷς τὸ τῆς χάριτος μέγεθος' — image differs",
+   "drops 'μετὰ δέκα ἡμέρας' (image 'καὶ διὰ τί μετὰ δέκα ἡμέρας')"
+  ],
+  "note": "In column 1 each text is right in places the other is wrong. Column 2 of B matches the image much better than A's."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7449",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Title page; the two texts differ only in heading markup and in how they describe the device."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7450",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "drops the line 'Codicibus igitur usus sum his:' printed above DEFINITIONES"
+  ],
+  "note": "The image shows the line 'Codicibus igitur usus sum his:', which B leaves out; otherwise the texts agree."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7451",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "f. 12v: 'ἔτους ϛωκη (1315)' — image '͵ϛωκγ' (6823 = 1315)"
+  ],
+  "b_errors": [],
+  "note": "The year numeral on the image is ͵ϛωκγ, as B has; A's ϛωκη is a different year. Other differences are only superscript conventions."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7452",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The only differences are superscript notation, italic markup and ϛ vs ς; the words are identical."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7458",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 14: 'γίνονται ιςʹ' — image 'ιζ′' (4¼×4 = 17)",
+   "line 15: 'δεκάκις τὰ ιςʹ ροʹ' — image 'ιζ′'"
+  ],
+  "b_errors": [
+   "line 3: 'δ λόγος' — image 'ὁ λόγος'",
+   "apparatus: 'corr. ex ,γνκ'' — image ',γυκ''",
+   "apparatus: 'ρξ'' C' — image 'ρξ′ C'"
+  ],
+  "note": "The image reads ιζ′ twice in the worked calculation, where A has ιςʹ, a wrong number. B's slips are minor ones, in the apparatus and an article."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd74c8",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἡμῖν αὑτοῖς' — image 'αὐτοῖς' (breathing only)"
+  ],
+  "b_errors": [],
+  "note": "The texts differ only in line-number markup, apostrophe form and one breathing mark."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd74e6",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "apparatus 'δίϊτον' — image 'διῶον'"
+  ],
+  "b_errors": [
+   "apparatus 'διτῶν' — image 'διῶον'"
+  ],
+  "note": "The main text is identical. The texts differ only in line numbers, hyphenation, and a slightly misread apparatus word in each."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd7526",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 19: 'πήχεις α̅L′' (1½) — image 'αβ′' (1⅔; 40 δάκτυλοι = 1⅔ of 24)"
+  ],
+  "b_errors": [
+   "line 19: 'πήχεις α̅ ϛ̅′' (1⅙) — image 'αβ′' (1⅔)"
+  ],
+  "note": "Apart from markup the texts are faithful, but both get the same measurement wrong (the βῆμα in cubits), in different ways, so neither gives the right value."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd759a",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'πολλαπλασιαζόμενα' — image 'πολυπλασιαζόμενα' (spelling)"
+  ],
+  "b_errors": [],
+  "note": "The numerals agree; the texts differ only in overline vs keraia notation, line numbers and a spelling variant."
+ },
+ {
+  "item_id": "695aa9ddbe4023bd34bd75ad",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'529/33 : 33 = 16 1/33 1/1089' — image '16/33 1/1089'",
+   "'√720 = 26 ½ ⅓ ⅙' — image '26 ½ ⅓'",
+   "'5/6 × 5/6 = 25/36 : 6' — image '25/6 : 6'"
+  ],
+  "note": "The image confirms A's fractions in all three places where B changes the numbers. The other differences are just × vs X and ÷ vs −."
+ },
+ {
+  "item_id": "69937706b0a84a57639627d4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The Greek text and apparatus match. The differences are in where the margin notes and line numbers sit."
+ },
+ {
+  "item_id": "69937706b0a84a5763962852",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The texts differ only in apostrophe forms, margin-letter placement and spacing in the apparatus."
+ },
+ {
+  "item_id": "69937706b0a84a5763962886",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "line 28: 'αὑτὸν' — image 'αὐτὸν' (breathing only)"
+  ],
+  "note": "The texts differ only in margin placement, line numbers, punctuation spacing and one breathing mark."
+ },
+ {
+  "item_id": "69937706b0a84a5763962896",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The text is identical. B keeps the apparatus note in its metadata instead of the body, and the margin placement differs."
+ },
+ {
+  "item_id": "69937706b0a84a5763962897",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The texts differ only in where the margin letters sit and in punctuation spacing."
+ },
+ {
+  "item_id": "69937706b0a84a576396289c",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "line 15: 'ἐναντίοτο' — image 'ἐναντιοῖτο' (misspelling)"
+  ],
+  "note": "Apart from one misspelled verb in B, the differences are line numbers, hyphenation and apostrophes."
+ },
+ {
+  "item_id": "69937706b0a84a57639628fc",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "''κείνά' — image ''κεῖνά' (accent)"
+  ],
+  "b_errors": [
+   "'τοιούτος' — image 'τοιοῦτος' (accent)"
+  ],
+  "note": "Each text has one accent slip; the rest of the differences are margin placement and punctuation."
+ },
+ {
+  "item_id": "69937706b0a84a5763962978",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The texts differ only in apostrophe and breathing glyph forms and in punctuation spacing."
+ },
+ {
+  "item_id": "69937706b0a84a5763962984",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The texts differ only in where the margin letters and page numbers sit and in apostrophe glyphs."
+ },
+ {
+  "item_id": "69b222db56715b0e324757b0",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 3: 'ἐπισκιάει νεφέλη ἥλιον' — image 'νεφέλιον'",
+   "line 5: 'Τἔμπαλι δ’ … νεφέληλασεν, ἱρά μ’' — image 'Τὔμπαλι δ’ … νεφέληλασε, γράμμ’'",
+   "line 4: 'ὑμνογράφου' — image 'ὑμναγόρου'",
+   "line 19: 'ἐμβόλεαι' — image 'μερόπεσσι'",
+   "line 18: 'οὐ ῥανὸς' — image 'οὐρανὸς'"
+  ],
+  "b_errors": [
+   "line 7: 'οὐδ’ τύμβος' — image 'οὓς ἵμερος'",
+   "line 2: 'Αὐτὸν δ’' — image 'Αὐτὸν ὁ'",
+   "line 20: 'ὢν δ’ ἔμολεν' — image 'ὧδ’ ἔμολεν'"
+  ],
+  "note": "B gets more of the epigram right (νεφέλιον, γράμμ’, μερόπεσσι, οὐρανὸς), but A alone has the correct 'οὓς ἵμερος', 'ὁ' and 'ὧδ’', so each fixes errors in the other."
+ }
+]

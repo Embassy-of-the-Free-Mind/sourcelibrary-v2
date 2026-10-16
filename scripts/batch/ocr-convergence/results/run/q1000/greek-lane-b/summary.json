@@ -1,0 +1,27 @@
+{
+ "set": "q1000g",
+ "threshold": 0.01,
+ "pages": 180,
+ "books": 18,
+ "actions": {
+  "write": 28,
+  "residual": 49,
+  "keep": 57,
+  "agree": 36,
+  "pending-adjudication": 3,
+  "contain": 5,
+  "no-second-read": 2
+ },
+ "by_group": {
+  "greek": {
+   "write": 28,
+   "residual": 49,
+   "keep": 57,
+   "agree": 36,
+   "pending-adjudication": 3,
+   "contain": 5,
+   "no-second-read": 2
+  }
+ },
+ "decided_at": "2026-10-16T15:06:31.342Z"
+}

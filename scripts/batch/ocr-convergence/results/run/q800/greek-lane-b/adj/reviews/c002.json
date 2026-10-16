@@ -1,0 +1,403 @@
+[
+ {
+  "item_id": "69b21d36ddb4fa7c305b4579",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 271, Euthydemus dialogue opening) — image is p. 160 PLATONIS, Theaetetus"
+  ],
+  "b_errors": [
+   "right-margin Latin notes partly garbled (cropped in image), e.g. 'nitictem', 'fieriientem'",
+   "Greek col.: 'ἐν περιφορᾷ'-type minor slips not checked in full"
+  ],
+  "note": "Image is p. 160 (Theaetetus, Latin + Greek with A–E markers); B transcribes it, A transcribes a different page."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b45fa",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 400, Cratylus on ψυχή/σῶμα) — image is p. 233 SOPHISTA"
+  ],
+  "b_errors": [],
+  "note": "Header, page number 233 and the Sophist dialogue in both columns match B; A is a different page."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b468e",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'ἐσκεύαζε' — image 'ἔσωζε(ν)'",
+   "'καὐτεῦθεν' — image 'τοὐντεῦθεν'",
+   "left margin note garbled: 'elegantur hac in uer. ταρσοῖς' — image 'edit. est ἀνέμοις) leguntur hæc in uet.'",
+   "right margin 'fabulosa' — image 'fabulosi'"
+  ],
+  "b_errors": [
+   "'ἔρχετ’' — image 'ἔρχεται' (abbreviated)"
+  ],
+  "note": "Checked the differing Greek words and margin notes on the image; B matches, A has several wrong words and a garbled margin note."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4724",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "entire text is another page (p. 133, Alcibiades I) — image is p. 128 PLATONIS"
+  ],
+  "note": "Image is p. 128 (Alcibiades on care of self, pes/calceus); A matches, B is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4727",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 136, Argumentum to Alcibiades II) — image is p. 131 ALCIBIADES I"
+  ],
+  "b_errors": [],
+  "note": "Header ALCIBIADES I, page 131 and the dialogue in both columns match B; A is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b475f",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "last Greek line truncated after 'τῆς αὐτῶν' — image continues 'τέχνης ἔργον ἔχοιεν ἐπιδεῖξαι εὖ εἰργασμένον'",
+   "left margin note partly garbled"
+  ],
+  "b_errors": [
+   "entire text is another page (p. 192, Laches on fortitude) — image is p. 185 LACHES"
+  ],
+  "note": "Image is p. 185 LACHES with sig. QQ.iii; A matches apart from a truncated last line, B is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b47c5",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 294, Politicus on law) — image is p. 287 POLITICVS"
+  ],
+  "b_errors": [
+   "left-margin variant notes garbled ('legitur ita vt qui hic loqui possit...')"
+  ],
+  "note": "Image is p. 287 (Politicus, concausae/instrumenta); B matches, A is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b47db",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'δι' σπουδῆς' — image 'δὴ σπουδῆς'"
+  ],
+  "b_errors": [
+   "entire text is another page (p. 316, Minos) — image is p. 309 POLITICVS"
+  ],
+  "note": "Image is p. 309 POLITICVS; A matches, B is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b47eb",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "axiom 13: 'ἀδικίαν' — image 'ἀβουλίαν'",
+   "axiom 13: 'δυνατὸν ἀληθὲς' — image 'γενναίαν εὐήθειαν'",
+   "axiom 9: 'ἀνυπεύθυνον' — image 'ἀναμάρτητον'",
+   "axiom 14: 'δικαιοσύνης' — image 'εὐβουλίας'"
+  ],
+  "b_errors": [
+   "entire text is another page (p. 332, Republic I, Simonides) — image is p. 325 Argumentum/Axiomata"
+  ],
+  "note": "Image is p. 325 (Argumentum and Axiomata, sig. EEe.i); A is that page but misreads several Greek terms, B is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b48b8",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 537, Republic VII) — image is p. 528 PLATONIS"
+  ],
+  "b_errors": [
+   "Greek: 'ἐν περιφορᾷ ὂν ἤδη φέρον' — image 'ἤδη στερεὸν'",
+   "sig 'Yyy iij' not visible on the leaf"
+  ],
+  "note": "Image is p. 528 (Republic, cube-increment/astronomy); B matches, A is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4918",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 633, Laws I dialogue on courage) — image is p. 624 (end of axiomata, headpiece, start of Laws)"
+  ],
+  "b_errors": [],
+  "note": "Image is p. 624 with axioms 17–34, headpiece and 'DEVSNE' opening; B matches, A is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4945",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "entire text is another page (p. 678, Laws III) — image is p. 667 DE LEGIBVS LIB. II"
+  ],
+  "note": "Image is p. 667 (Laws II, Tyrtaeus/χάρις); A matches, B is a different page."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b49d2",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 819, Laws VII on mathematics) — image is p. 808 PLATONIS"
+  ],
+  "b_errors": [],
+  "note": "Image is p. 808 (Laws, sleep and paedagogues); B matches, A is a different page."
+ },
+ {
+  "item_id": "699376e7b0a84a5763961ef2",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'οὐ συλλελόγισται' — image 'οὐ συλλελόγισαι'",
+   "'τῶνδ᾽ ὄντων' — image 'τωνδὶ ὄντων'"
+  ],
+  "b_errors": [
+   "'οὔτε ὧν ἀπόδειξις' — image 'οὔτε οὗ ἀπόδειξις'",
+   "'τῷ αὐτῷ οὐδενὸς' — image 'τοῦ αὐτοῦ'",
+   "'τὸ Α τῷ Γ ἴδιον' etc. — image 'τοῦ Γ' (several τοῦ→τῷ)",
+   "'εἶτ’ ἔλαβε ζῷον, καὶ συλλελόγισαι' — image 'οὐ συλλελόγισαι' (negation lost)"
+  ],
+  "note": "Most diffs are apostrophe conventions; on the substantive spans the image supports A, and B drops a negation."
+ },
+ {
+  "item_id": "699376e7b0a84a5763961f60",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "renders ου-ligatures and στ as 'ὔτε', 'τ῏', 'ἕκασον', 'ἔσαι' — nonstandard, hard to read",
+   "'ὅταν ἐντελεχείᾳ ὂν ἐνεργῇ ᾗ αὐτὸ' — image 'ἢ αὐτὸ'"
+  ],
+  "b_errors": [
+   "'ὅπως ἔχει' given as 'πῶς ἔχει'",
+   "'ὂν ἐνεργῇ' given as 'ὢν ἐνεργῇ'",
+   "col. 2: 'οὔτ’ ἂν ἕτερα... οὔτ’ ἂν ἄνισα... οὔτ’ ἂν οὐκ ὄντα' given as 'ἔτ’ ἂν'",
+   "'οὔτ’ εἰς ταῦτα' given as 'ἔστ’ εἰς ταῦτα'"
+  ],
+  "note": "A keeps the printed ligatures in a nonstandard form but reads the words better; B normalises the spelling but misreads several words (οὔτ'→ἔτ', ὅπως→πῶς)."
+ },
+ {
+  "item_id": "699376e7b0a84a5763961fa1",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'πεπερασμένην μὲν ἄπειρον δ’ ἔχοντος' — image 'πεπερασμένου'",
+   "'τῷ Ε τὸ Β' — image 'τῇ Ε'"
+  ],
+  "b_errors": [
+   "drops 'τὰ δύο ἢ' in 'οἷον τὰ δύο ἢ τὸ ἕν'",
+   "'κινεῖσθαί τι ἄπειρον' — image 'κινεῖσθαι οὐδὲν ἄπειρον'",
+   "'αὐτὸ διορίσαντες' — image 'αὐτοῦ'",
+   "'κινύμενον' (line 2) — image 'κινούμενον' ligature"
+  ],
+  "note": "Checked the substantive spans on the image; B drops a phrase and turns οὐδὲν into τι, while A has two minor slips."
+ },
+ {
+  "item_id": "699376e7b0a84a5763961fd1",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'τἄλλα συγκflagsεῖσθαί' — corrupted token; image 'τἆλλα συγκεῖσθαι'",
+   "'κινούντων' — image 'κινόντων'"
+  ],
+  "b_errors": [
+   "apparatus: 'ἠέρα EL' — image 'ὅρα EL'"
+  ],
+  "note": "Most diffs are hyphenation/apostrophes; A has a corrupted word ('συγκflagsεῖσθαί'), otherwise the two agree with the image."
+ },
+ {
+  "item_id": "699376e7b0a84a5763962040",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'τῶ αὐτῶ' — image 'τοῦ αὐτοῦ' (ligature)"
+  ],
+  "b_errors": [
+   "'πλείους ἔχομεν αἰσθήσεις, ἀλλ’ ἢ μίαν μόνην' — image 'ἀλλ' οὐ μίαν μόνην'",
+   "drops στ throughout ('ἐσίν', 'ἕκασον', 'ἔσαι', 'σάσεως')"
+  ],
+  "note": "The image reads 'ἀλλ' οὐ μίαν', which B gets wrong; B also writes στ-ligature words without the τ, while A normalises them correctly."
+ },
+ {
+  "item_id": "699376e7b0a84a576396204c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'τὸ δ’ αἴτιον τούτου' — image 'τὰ δ’ αἴτια τούτου'",
+   "'ἐκεῖνος δ’ αὐτὸς' — image 'ἐκείνως δ’ αὐτὸς'",
+   "header adds '·' after ΑΙΣΘΗΤΩΝ"
+  ],
+  "b_errors": [
+   "'Τῶν δὲ σώματος' — image 'Τοῦ δὲ σώματος'",
+   "'διὰ τὸ πάθος τινὸς' — image 'πάθους'",
+   "drops 'καὶ' in 'καὶ τῆς ἀπορίας καὶ τοῦ δοκεῖν'",
+   "'τῷ δ’ ὀφθαλμῷ' — image 'τοῦ δ’ ὀφθαλμοῦ'"
+  ],
+  "note": "Each text has word-level misreadings the other gets right (A: αἴτια, ἐκείνως; B: Τοῦ, πάθους, καὶ, ὀφθαλμοῦ)."
+ },
+ {
+  "item_id": "699376e7b0a84a5763962155",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἐκ πηγνυόντων ὑγρὰ' — image 'ἐκ πεπηγότων'",
+   "'τῷ παθητικῷ καὶ ποιητικῷ' — image 'τοῦ παθητικοῦ καὶ ποιητικοῦ'",
+   "'ὥσ’' / 'τύτων' keeps ligature forms inconsistently"
+  ],
+  "b_errors": [
+   "'ἀπολείπῃ' — image 'ἀπολίπῃ'"
+  ],
+  "note": "On the image the substantive spans (πεπηγότων, τοῦ παθητικοῦ) agree with B; most of the remaining diffs are invisible encoding differences."
+ },
+ {
+  "item_id": "695311a477f38f6761bcc8bd",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "puts the handwritten '23360' and stray tags 'autotype facsimile Codex Alexandrinus' at the top; the number is at the foot of the leaf"
+  ],
+  "b_errors": [],
+  "note": "The body text of both matches the printed preface word for word; the differences are quotes, blockquote layout and tags."
+ },
+ {
+  "item_id": "695311a477f38f6761bcc8cd",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "omits the faint '+' before 'AD 284'"
+  ],
+  "note": "Both give the two handwritten lines correctly; the only difference is a faint '+' visible at the left edge."
+ },
+ {
+  "item_id": "695311a477f38f6761bcca57",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "lines 1–2: 'ΚΑΙ ΗΜΕΡΑΙ ΘΕΡΙΣΜΟΥ ΠΥΡΩΝ· ΦΑΙΝΗ' — image 'ΔΥΝΑΜΕΩΣ ΣΠΩΜΕΝΩΝ ΡΟΜΦΑΙΑΝ'",
+   "'ΕΠΙΦΕΡΩΝ ΣΟΙ· ΕΚΛΕΞΑΙ' — image 'ΕΓΩ ΕΠΙ ΣΕ ΚΑΙ ΕΚΛΕΞΕ'",
+   "col. 2 'ΤΑ ΑΡΕΣΚΟΝΤΑ' — image 'ΤΟ ΑΓΑΘΟΝ ΕΝ'"
+  ],
+  "b_errors": [
+   "lines 1–3: 'ΙΣΧΥΡΑΙ ΕΩΣ ΟΓΔΟΗΚΟΝΤΑΚΟΣΙΑΙ... ΙΣΧΥΡΩΝ' — image 'ΠΕΝΤΑΚΟΣΙΑΙ ΧΙΛΙΑΔΕΣ ΑΝΔΡΩΝ ΜΑΧΗΤΩΝ'",
+   "'ΚΑΡΑΙΑ ΑΛΛΑ ΑΥΤΩΝ' — image 'ΚΑΡΔΙΑ ΔΑΔ ΑΥΤΟΝ'",
+   "'ΙΣΛ' — image 'ΙΗΛ'",
+   "'ΤΡΙΣ ΗΜΕΡΑΣ ΘΑΝΑ' drops -ΤΟΝ"
+  ],
+  "note": "The uncial is small and faint; both texts misread the opening lines in different ways and each partly normalises toward a printed LXX, so neither is clearly better."
+ },
+ {
+  "item_id": "695311a477f38f6761bccb9e",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ΑΥΤΩΙ Ο ΓΟΔΟΛΙΑC' — image 'ΑΥΤΟΙC ΓΟΔΟΛΙΑC'",
+   "'ΜΑCΕΦΗΘ' — image 'ΜΑCCΗΦΑ'",
+   "'ΟΙ ΟΝΤΕC ΜΕΤ ΑΥΤΟΥ' — image 'ΟΙ ΗCΑΝ'"
+  ],
+  "b_errors": [
+   "drops ~12 lines of col. 1 (from 'ΚΑΙ ΙΩΑΝΑΝ ΕΙΠΕΝ... ΚΡΥΦΗ ΕΝ ΜΑCCΗΦΑ' through 'ΨΕΥΔΗ CΥ ΛΕΓΕΙC ΚΑΤΑ ΤΟΥ ΙCΜΑΗΛ')",
+   "omits the '48' chapter mark at the margin"
+  ],
+  "note": "The image shows the Johanan–Gedaliah exchange in col. 1 lines 3–14, which B leaves out; A has it but misreads some names."
+ },
+ {
+  "item_id": "695311a477f38f6761bccbb5",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "col. 1: 'ΠΤΕΡΥΓΕΣ ΑΥΤΩΝ ΣΥΝΑΠΤΟΜΕΝΑΙ' — image 'ΕΠΙ ΤΑ ΤΕΣΣΑΡΑ ΜΕΡΗ ΑΥΤΩΝ ΚΑΙ ΤΑ ΠΡΟΣΩΠΑ... ΤΩΝ ΤΕΣΣΑΡΩΝ ΕΧΟΜΕΝΑΙ' (passage dropped/replaced)",
+   "'ΠΡΟΣΩΠΟΝ ΑΝΘΡΩΠΟΥ ΑΥΤΟΙΣ' — image 'ΑΝΘΡΩΠΟΥ ΚΑΙ ΠΡΟΣΩΠΟΝ'",
+   "expands nomina sacra (ΘΕΟΥ, ΚΥΡΙΟΥ) and adds marginal Greek notes not legible on the leaf",
+   "last line 'ΕΚΑΤΕΡΩΙ ΔΥΟ' — image 'ΕΚΑΣΤΗ ΔΥΟ'"
+  ],
+  "b_errors": [
+   "no word division (follows the scriptio continua)",
+   "marginal notes rendered as unclear fragments"
+  ],
+  "note": "B follows the leaf line by line, including the passage at the column-1 break; A normalises toward a printed text and loses that passage."
+ }
+]

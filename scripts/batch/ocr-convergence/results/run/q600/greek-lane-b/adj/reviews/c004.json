@@ -1,0 +1,80 @@
+[
+ {
+  "item_id": "699382d984cf5845c644b1f4",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'δὴ τότε κυανόεντα χέοντ’ ἐπ’ ἀπείρονα' — image 'ἀλλ' αἰνὸν ὄλεθρον ἐπευξάμενον'",
+   "line 3: 'ἀστακὴ … ἐσάδως' — image 'αἶσα κακή … εὖ εἰδώς'",
+   "line 5: 'μέμνων … κάλχαντε παρίφερον' — image 'μίμνεν … Κάλχαντι περίφρονι'",
+   "line 10: 'ἀνὰς κἀν μέσως ἀνέβαν' — garbled, not what the leaf says",
+   "line 18: 'νόον δ’ ἀνόσον δ’ ὀπάσαι' — image 'ἀκηδέα νόστον ὀπάσσαι'"
+  ],
+  "b_errors": [
+   "line 7: 'ποθέειν δ' ἄρ' ἔτ' οὐκέτι νόστον' — not on the leaf",
+   "line 15: 'κοῦραι φαλαὶς' — image 'καὶ κεφαλὰς'",
+   "line 19: 'ἐν ἅμασι' — image 'ἀνέμοισι'",
+   "line 18: 'νοῆσαι δ' αἶψ' ὄσον ὄπποτ' ἄνακτες' — invented",
+   "last line: 'ἐπέστενε λευγαλέῃσιν' — image 'ἐπεγέλασκε γοώσαις'"
+  ],
+  "note": "B gets the opening lines right where A invents them, but B garbles or invents several later lines (e.g. 'κοῦραι φαλαὶς', the last line) that A reads closer to the image, so each has serious errors the other lacks."
+ },
+ {
+  "item_id": "699382d984cf5845c644b1fe",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "top note line 2: 'Μέντορι' — image 'Μέντῃ'",
+   "top note line 5: 'κατανωτισθῆναι οὖν ἵν’ εὐεργεσία' — image 'καὶ τῶν μνηστήρων ἡ εὐωχία'",
+   "lower margin scholia largely garbled/invented relative to the faint red notes"
+  ],
+  "b_errors": [
+   "top note line 4: 'περὶ τῆς τῶν μνηστήρων ἀταξίας … ὑπομονῇ' — image 'εἰς Πύλον μὲν πρὸς Νέστορα, εἰς Σπάρτην δὲ πρὸς Μενέλαον'",
+   "interlinear glosses replaced by copies of the verse lines ('πολύτροπον ὅς μάλα πολλὰ')",
+   "drops the right-margin note beside 'ἄλγεα' ('… ἵνα σώσῃ τοὺς ἑταίρους'), substitutes an invented Achilles note",
+   "puts main-text verses (e.g. 'τῶν ἁμόθεν …', 'τὸν δ’ οἶον …') inside <margin>"
+  ],
+  "note": "The Homer verses agree; in the prose argument at the top and the scholia each text has passages matching the image that the other gets wrong or invents, and the small red marginalia are too faint for me to fully confirm either."
+ },
+ {
+  "item_id": "699382d984cf5845c644b279",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "main text largely garbled syllable strings, e.g. 'ἔμελλε ταῖροι φανὸς ὥρα τανὸς ἔσσεαι' — image 'ἔμελλ' ἑταίροισι φανεὶς ἐρατεινὸς ἔσεσθαι'",
+   "line 6: 'ἐκ τοθεν οἴαν τυσο σα λεινὸ ὀρυκασὸν' — image 'ἔκτοθεν δ' ἄντροιο βαλὼν ὀρυμαγδὸν'",
+   "'ἠλθομεν οὖν που 3ας' — image 'ἤλθομεν· οὕτω που Ζεὺς'",
+   "drops 'πίνειν αἰνυμένῳ, καί οἱ ποτιδόρπιον εἴη' as a usable line",
+   "marginal scholia mostly unusable <unclear> fragments"
+  ],
+  "b_errors": [
+   "marginal scholia partly garbled (e.g. 'ἐστικυθίρα ἄης')"
+  ],
+  "note": "The image shows Odyssey 9.230–264 in a readable hand that B transcribes correctly line by line, while A's main text is an unusable garble."
+ },
+ {
+  "item_id": "699382d984cf5845c644b2ca",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "line 2 onward: 'ὦ γέρον οὔτ' ἄρ' ἐγὼ …' — image 'ὦ δειλὲ ξείνων ἦ μοι μάλα θυμὸν ὄρινας'",
+   "whole body is Od. 14.166–215, not the text on this leaf (14.360–394)",
+   "omits the leaf's lines about the Aetolian, Idomeneus and the 'ῥήτρη' oath",
+   "ends at 'δύη ἔχει ἄσπετος ἤδη' — leaf ends 'θεοὶ τοὶ Ὄλυμπον ἔχουσι' (line 394)"
+  ],
+  "note": "The image's lines ('ὦ δειλὲ ξείνων…' through 'μάρτυροι ἀμφοτέροισι θεοὶ', marked 394) match A, while B gives a different passage of Odyssey 14."
+ }
+]

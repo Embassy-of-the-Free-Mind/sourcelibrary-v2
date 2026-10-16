@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a0853c415c643eb1af50e10",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf heads the section 'Περὶ τῆς τρίτης κλίσεως' ('Ἡ τρίτη κλίσις'), but Y reads 'πέμπτης' twice and also gives 'σπετειούς' for 'ἐρετριεύς'."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8666f0",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 517 'IOANNIS PRIMA' ('ut gaudium uestrum sit plenum'); X transcribes a different leaf (Apocalypse, p. 542)."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8664b7",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 90 'LOCA MANIFESTE DEPRAVATA'; Y gives another leaf (p. 91 'AD PLACANDOS ...')."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866510",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 55 Matthew 24 ('dicabitur hoc euangelium regni'); Y gives Gethsemane text from p. 362, which is another leaf."
+ },
+ {
+  "item_id": "6a0853c415c643eb1af50ea1",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The image prints 'uertit aũt σ in ξ', 'per ᾱος, per εως', 'abiectionẽ σ' and 'και coniunctionẽ'; X turns these into 'o in epsilon' and 'per os, per eos', and drops σ and και."
+ },
+ {
+  "item_id": "699438416879ff0184cb8557",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The errors are small and split between the two: X has the leaf's 'infectum', 'acerbius' and 'percutito... effundet' but miscites note 96 as 'Matth. Ⅷ' (leaf: xviii) and note 3 as 'Exod. Ⅳ' (leaf: iii); Y has the right citations but 'acertius' and 'percutit... effundit'."
+ },
+ {
+  "item_id": "69b2ff82e5d6d64d8e19702a",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'treis hypostaseis confitentes', which Y gives as 'consistentes'; otherwise both are close, with X expanding the abbreviations."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd3bb",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'ἐκ τοῦ καλοῦ' and 'ἀρχὴ παντὸς'; X has 'ἐκ τῶν καλοῦ' and 'ἀρχὴ πάντων', which are minor slips."
+ },
+ {
+  "item_id": "699388e61075be7d32055077",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y's first lines are garbled ('τα βροτων ἧμαρ ἔλοι αὐτοὺς τὸ ἴσον μοιρᾷ σᾶς'), where the leaf reads 'ἐρωτῶν εἰ ἀφέλοι αὐτῆς τοὺς κυνοραιστάς', though Y has the later 'πόσα μὲν οὖν εἴδη παραδειγμάτων' right."
+ },
+ {
+  "item_id": "6959067f95a91542b28bd3b5",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'κατὰ τὸ δοκοῦν εὐφημότερον' and 'ἐπὶ τοῖς ὀρθῶς'; X gives 'δύσφημον' (the opposite sense) and 'ἀλλὰ τοῖς ὀρθῶς', and adds an invented '2 Sam. 1:26' margin note."
+ }
+]

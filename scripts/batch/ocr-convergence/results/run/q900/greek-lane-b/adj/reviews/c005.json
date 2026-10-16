@@ -1,0 +1,373 @@
+[
+ {
+  "item_id": "6993897cce15387065947127",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "language tagged Latin; script of the faded hand not determinable from the image"
+  ],
+  "b_errors": [
+   "supplies legible-looking petition words ('Sheweth', 'Your ... shall ever pray', 'which was ... and hath for ... past been') that cannot be read anywhere on the almost entirely faded leaf",
+   "language asserted as English secretary hand without visible support"
+  ],
+  "note": "The leaf is almost entirely faded, so A's 'illegible' is faithful; B's petition fragments are not visible and look invented."
+ },
+ {
+  "item_id": "6993897cce15387065947128",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 3-4: 'καθιστα<gloss>ας</gloss>- / - μένου' garbles 'καθι-σταμένου'",
+   "bottom: stamp given as text 'BIBLIOTECA MED. LAUR.' rather than described"
+  ],
+  "b_errors": [
+   "line 8: adds 'πρὸς ἑκατέρους' which is not on the leaf (image: 'συνιστάμενον τὸ μὲν εὐθύς')",
+   "initial described as a small cross/fleur-de-lis; image shows a gold ornamental initial Θ",
+   "line 1: gloss 'ων' for the superscript ending, minor"
+  ],
+  "note": "Checked line 8 and the initial on the image: B adds a phrase from the vulgate text that the manuscript omits; the other differences are mostly punctuation and ξυν/συν spelling."
+ },
+ {
+  "item_id": "6993897cce15387065947129",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "lines 1-2: 'Καὶ ἀταξίᾳ ὤν οὐκ εὐ- ἀποσαφήσεται' — image 'καὶ ἀτειχίστων ἅμα ὄντων ἄλλος ἀφαιρήσεται'",
+   "line 3: drops 'οὐ' before 'χαλεπῶς' (reverses the sense)",
+   "line 7: 'ἔσχεν' — image 'εἶχεν'",
+   "line 17-18: 'πρὸς ἀθηναίους' — image 'πλεῖστοι ... οἱ δυνατώτατοι'"
+  ],
+  "b_errors": [
+   "last two lines: 'τὰ πράγματα ἀσθενῆ ὄντα' — image 'τὴν ἀσθένειαν οὐχ ἥκιστα'"
+  ],
+  "note": "B matches the image in the opening lines, the negation and the δυνατώτατοι line; it goes wrong only in the penultimate line, where A is closer."
+ },
+ {
+  "item_id": "6993897cce1538706594712a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "page number '8' — image '3'",
+   "line 1: 'ἡ Ἑλλὰς δοκεῖ κοινῇ ἐργάσασθαι' — image has 'ἐργασαμένη ἡ ἑλλάς· δοκεῖ'",
+   "line 4: 'κατὰ δὲ ἔθνη' — image 'κατὰ ἔθνη δὲ'",
+   "line breaks re-flowed and do not follow the leaf"
+  ],
+  "note": "Checked the folio number and the first line on the image; A follows the leaf, and the rest of B's differences are capitalisation and punctuation."
+ },
+ {
+  "item_id": "6993897cce1538706594712b",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 22-23: 'ξυνήθη ἔμεινε' — image 'ἐμμεμένηκε'"
+  ],
+  "b_errors": [
+   "line 4: adds 'αὐταῖς' not on the leaf",
+   "lines 6-8: drops 'παρα-' and 'ναυσὶν, ἐπ' ἀλλήλους', invents 'ἐκ τῶν' and 'πλοίοις'",
+   "line 19: 'τόδε' — image 'τοῦδε'",
+   "line 22: 'ἐπιμεμηκε' garbled for 'ἐμμεμένηκε'"
+  ],
+  "note": "The image's lines 6-8 read 'παραθαλάσσιοι ... περαιοῦσθαι ναυσὶν ἐπ' ἀλλήλους', as A has them; B drops and invents words there, and both misread one verb near the end."
+ },
+ {
+  "item_id": "6993897cce1538706594712c",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "line 5-6: drops the whole line 'καὶ οἱ πρεσβύτεροι αὐτοῖς τῶν εὐδαιμόνων διὰ τὸ ἁβροδίαιτον'",
+   "line 15: 'σταδιεῖς' — image 'ἀθληταὶ'",
+   "line 17: 'νῦν, οἷς ἆθλα κεῖται' — image 'ἔστιν οἷς, νῦν'",
+   "last lines: drops 'τείχεσιν' and 'τοὺς ἰσθμοὺς ἀπελάμβανον ἐμπορίας τε', invents 'τείχεσιν ἀπελαμβάνοντο'"
+  ],
+  "note": "The image has the πρεσβύτεροι line and ends with 'τοὺς ἰσθμοὺς ἀπελάμβανον ἐμπορίας τε', both as in A; B drops a line and rewrites the end."
+ },
+ {
+  "item_id": "6993897cce1538706594712d",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "lines 1-9 largely invented: 'οὐ μόνον λῃστεῖαι', 'ἐφθόγγοντο', 'πλευστέον δὲ ἦν ἤδη κατασκευαῖς τε ὑποζυγίων' are not on the leaf",
+   "line 11: 'ὑπὸ Ἀθηναίων ἐφάνησαν πεντακόσιαι' — image 'ὑπὲρ ἥμισυ Κᾶρες ἐφάνησαν'",
+   "last lines: 'ὧν ἀναμνησθῆναι πάνυ' — image 'Ἀγαμέμνων τέ μοι δοκεῖ'"
+  ],
+  "b_errors": [
+   "line 1: 'ἐνῴκιζον ... περὶ τοὺς νησιώτας' — image 'ἕνεκα ... πρὸς τοὺς περιοίκους'",
+   "line 4-5: 'δι-απλῶν' — image 'ἄλλων'",
+   "last lines: 'ἡγεῖσθαι κατεχόμενος πρὸς ... ἀγόμενος, ὅσον ἰσχύϊ' do not match the leaf's wording"
+  ],
+  "note": "B follows the leaf for most lines (Δήλου καθαιρομένης, Κᾶρες, Ἀγαμέμνων); A replaces large parts with text that is not there."
+ },
+ {
+  "item_id": "69938a88c564adf9fabebfa5",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "after 'ὅταν μὴ προστιθῆταί τι' adds 'οὔτε γὰρ ψεῦδος οὔτε ἀληθές πω ἐστίν', which is not on the leaf (image goes straight on to 'σημεῖον δ' ἐστὶ τοῦδε')",
+   "omits nearly all the interlinear and marginal glosses visible on the page"
+  ],
+  "b_errors": [
+   "individual small glosses unverifiable at this resolution"
+  ],
+  "note": "The main text agrees except where A adds a vulgate clause the scribe omits; B also transcribes the many glosses on the leaf."
+ },
+ {
+  "item_id": "69938a88c564adf9fabebfcc",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "omits the numerous interlinear glosses",
+   "'θατέρου μέρους' — image 'θατέρου μορίου'",
+   "marginal scholia wording doubtful"
+  ],
+  "b_errors": [
+   "main text given without accents or breathings",
+   "heading 'περι των σχηματων' drops 'τριῶν'",
+   "third heading 'Τμημα α̅ το θεωρητικον' — image 'Τμῆμα αον τοῦ πρώτου τῶν προτέρων'",
+   "'και τι ορος. και συλλογισμος' drops 'τί'"
+  ],
+  "note": "The main text matches in both; A has the headings right but drops the glosses, while B has the glosses but garbles the headings and strips the accents; the marginal scholia cannot be verified at this resolution."
+ },
+ {
+  "item_id": "69938a88c564adf9fabebfde",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'τὸ δὲ ξ̅ τὸ μὲν τινὶ' — image 'τῷ δὲ ξ̅ τὸ μ̅ τινὶ'",
+   "line 7: 'Εἰ δὲ τὸ μὲν ξ̅' — image 'ἐὰν δὲ τῷ μὲν ξ̅'",
+   "margin 'σχῆμα βον' — image 'τοῦ πρ(ώτου) / 2 σχ.'"
+  ],
+  "b_errors": [
+   "line 6: 'ὅτι γὰρ παντὶ' — image 'ὅτι οὐ παντὶ' (drops the negation)",
+   "line 7: 'ἀποδείξεις' — image 'ἀπόδειξις'",
+   "last word 'ὁ ταυς' garbled"
+  ],
+  "note": "Each text has a reading the image contradicts: A garbles the first line, and B drops the 'οὐ' that the conclusion depends on."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec007",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "letter labels sometimes wrong (e.g. 'οὐ παντὶ τῷ α τὸ β' — image 'τῷ Γ τὸ β')",
+   "line 1: 'τῷ ὑποκειτο' misses the letter Γ"
+  ],
+  "b_errors": [
+   "line 1: 'εἰ τοίνυν τῷ Δ ἐξ ὑποθέσεως' — image 'ἢ τινί· εἰ δὲ τῷ Γ ὑπόκειται'",
+   "line 10: 'ἐξ ἡλικίας' — image 'ἐξ ἀρχῆς'",
+   "line 17-18: 'πρὸς τὸ Β ἢ Α πονῆ ἄμφω τεθῇ τὸ Α τῷ Δ' — image 'πρὸς τῷ ἐλάττονι ἄκρῳ τεθῇ στερητική'",
+   "terms: 'ἵππος' — image 'ζῷον'; letter Δ invented throughout"
+  ],
+  "note": "A follows the leaf's wording closely apart from some letter labels; B invents a letter Δ and several phrases."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec052",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 5: 'τὸ συμπέρασμα ψευδές' — image 'ἀληθές'",
+   "line 12: 'σωτῶς' garbled — image 'ὅλῳ τῷ γ'",
+   "lines 1-2 'δορίκυνκον', 'ω ὑπάρχει' garbled"
+  ],
+  "b_errors": [
+   "line 3: 'τὸ ᾱ καὶ τὸ γ̄ παντὶ τῷ β̄' — image 'τὸ α καὶ τὸ β παντὶ τῷ γ'",
+   "line 7: 'τῆς μὲν οὔσης ἀληθοῦς οὔσης' — image 'τῆς μὲν ὅλης ἀληθοῦς οὔσης'",
+   "line 2: 'ἀνθρώπῳ' not on the leaf",
+   "line 12: 'συνάμφω τῷ γ̄' — image 'ὅλῳ τῷ γ'"
+  ],
+  "note": "Each text gets right some letters and truth values that the other gets wrong, and both garble several lines of this crabbed hand."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec069",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "page number '106' — image '156'",
+   "line 1: 'ὥστ' ἔσται δι' ἐκείνου τινὸς δεδειγμένος' not on the leaf",
+   "lines 5-9: 'ὥσπερ ἂν μηδενὶ τῷ Β' — image 'τῷ μὲν Α μηδενί, τῷ δὲ Β'",
+   "line 10: 'διὰ τῶν ἀντικειμένων' — image 'διὰ τῶν αὐτῶν ὅρων'",
+   "last line: invents 'κατὰ δὲ τὴν ἀλήθειαν, τρεῖς' and drops 'καὶ τὸ παντὶ τῷ οὐδενί'"
+  ],
+  "b_errors": [
+   "line 12-13: 'ἀναλύειν εἰς τοὺς ἐξ ὑποθέσεως εἰλημμένους ὅρους' — image 'τὸ ἀδύνατον ἐπάγειν ἐν τοῖς εἰλημμένοις ὅροις'",
+   "lines 16-19: drops 'τὰ σχήματα ... δῆλον οὖν ὅτι πᾶν πρόβλημα δείκνυται κατ' ἀμφοτέρους τοὺς τρόπους' and invents 'ἐλλειμματικῶς ...'",
+   "'οὐδὲν δεῖται' — image 'οὐκ ἐνδέχεται'"
+  ],
+  "note": "B is right in the first half and the last line, and A is right in the middle passage (ἀδύνατον ... πᾶν πρόβλημα); each has rewritten text where the other is faithful."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec0f5",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'τῶν καθόλου' — image 'τῶν καθ' ἕκαστον'",
+   "lines 3-6: 'ὃ μὲν καθόλου, τὸ δὲ ἀπολογούμενον, παρέθετο πρὸ ἡμῶν' not on the leaf",
+   "'δημαίνει' twice — image 'σημαίνει'",
+   "no page number given (image has a folio number top right)"
+  ],
+  "b_errors": [
+   "line 1: 'μηδὲν ἧττον ὁ ταὐτὸ χρῆσθαι ζητῶν' does not match the leaf",
+   "line 7-8: 'αἱ ἐπιβολὰι, μεθ' ὧν αἱ αἰτίαι ἴδιαι περὶ τὰ πτώματα' garbled",
+   "margin '+ περὶ τῶν τεσσάρων' not legible as such",
+   "'ὃ λέγεται' — image 'λέγω'"
+  ],
+  "note": "The lower two-thirds agree and match the leaf, but both garble the opening eight lines in different ways, so neither is clearly better there."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec0fe",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 6-7: 'πᾶν γὰρ τὸ ἀνὰ πᾶν, γίνεται ἐξ ἐναντίων' — image 'οὔτ' ἐπ' αὐτῶν, οὔτ' ἐπὶ τῶν ἐναντίων'",
+   "line 10-11: 'ἀπὸ δὲ τῆς ψυχῆς λύπη' — image 'ἀπὸ τοῦ διψῆν λυπηρόν'",
+   "lines 13-15: 'ὧν οἱ πόνοι φίλοι ... ταῖς γὰρ κατὰ τὰ σώματα ἡδοναῖς' — image 'κατὰ τὴν διάνοιαν φιλεῖν τὸ μισεῖν ἐναντίον ... σωματικὴν'",
+   "margin section letters misplaced (ζ η θ ι vs image ϛ ζ η θ)"
+  ],
+  "b_errors": [
+   "line 1: 'αὐτῆς αἰσθήσεως' / 'αὐτῶν εἰσιν' doubtful against the image"
+  ],
+  "note": "The image's middle lines (διψῆν, διάνοιαν φιλεῖν, σωματικήν) and red margin letters match B; A substitutes several invented clauses."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec136",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'μέγεθος ... μονάδας' — image '... μοναχῶς'"
+  ],
+  "b_errors": [
+   "mostly garbled throughout ('ἡ τυφλότης ἀναιρεθείσης, ὄψις ἀναιρεῖται', 'ἐπεὶ οἱ πλεῖον. ἱκανὸν πρὸς τῷ πρὸς τί')",
+   "invents a second column and repeats one marginal line six times",
+   "drops 'ἡ μὲν γὰρ ἐπιστήμη τῶν πρός τι, ἡ δὲ γραμματικὴ οὔ'"
+  ],
+  "note": "A reads the leaf line by line (τυφλότης ἀναισθησία, ἐπιστήμη/γραμματική, διπλάσιον/πολλαπλάσιον); B is largely unusable and fabricates the layout."
+ },
+ {
+  "item_id": "69938a88c564adf9fabec1c9",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "lines 2-6 partly invented ('μὲν τὸν γεωμέτρην ὁ ἐριστικός', 'ὅτι ποιητικὸς τῶν ὑπὸ τὴν τέχνην') — image 'ἐξ ὡρισμένου τινὸς γένους ἀρχῶν· ἀλλὰ περὶ πᾶν γένος ἐστὶν ὁ ἐριστικός'",
+   "line 6-7: 'δεινὰ ἅπαντα ποιῶν' — image 'δύνασθαι ταῦτα ποιεῖν'"
+  ],
+  "b_errors": [
+   "most of the text is garbled ('βασιν ἐλέγχου. τοῦτο μὲν θὲν ὁρισθὲν', 'τομὴ δι' ἀπάθεια ζητῶν θεοσίν')",
+   "long list of marginal words that does not correspond to the page margin",
+   "invented 'πράγματος εἶναι οἷον οὐκ ἀληθινά'"
+  ],
+  "note": "From line 9 down, A matches the leaf (ψευδόμενόν τι δεῖξαι ... χώραν γὰρ ἐπιχειρήματος); B is largely nonsense throughout."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1baf",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same text; the differences are only italics markup and footnote-marker formatting."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1c28",
+  "pick": "cannot_tell",
+  "confidence": "low",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "adds signature 'I' not visible on the page"
+  ],
+  "note": "The only substantive difference is the Porphyrius section number ('sect. 13.' vs '15.'); at this resolution the digit could be either, and everything else is convention (vt/ut, superscripts, accent)."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1c43",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "note: 'περὶ ἄλλοι;' — image 'περι ἄλλῳ.'"
+  ],
+  "b_errors": [
+   "modernises 'vnoquoque', 'vti', 'vt' to u-spellings (convention)"
+  ],
+  "note": "The image shows the quoted Cizensis reading as 'ἄλλῳ', as in B; the other differences are u/v and markup conventions."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1c76",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same text; the differences are only marker formatting, italics, the iota subscript in πρᾳότητι, and where the margin numbers (81) and 96 are placed."
+ },
+ {
+  "item_id": "69d143ea1c2a66dc094b1d68",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same text; the differences are only apostrophe forms, blockquote markup and B's u for the page's v (convention)."
+ }
+]

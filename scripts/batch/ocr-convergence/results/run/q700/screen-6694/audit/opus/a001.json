@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "695906974953388fe7ac6cd8",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both are close; Y misreads 'ſcilentio' as 'ſcientio', 'ſpiritali' as 'ſpirituali', 'ꝑtinus' as 'pōtinus', and drops the 'q' in 'rūq; q epiſcopatus', none of which changes the sense much."
+ },
+ {
+  "item_id": "698452da57def41af9aee941",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Same body text; X records the woodcut's numbers correctly ('24 · 113 · 8 · 312 · 132 …'), while Y's description adds a circle (show-through) and 'astrological or alchemical symbols' that are not printed."
+ },
+ {
+  "item_id": "699062ebef12272ffdc8ddc6",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Verse text identical; X reads the stamp correctly as 'ESCUELA SUPERIOR DE DIPLOMATICA BIBLIOTECA' where Y has 'Escola … Diplomática'."
+ },
+ {
+  "item_id": "6a3f035f97e91e1768f6a343",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Greek text, apparatus and commentary agree word for word; they differ only in layout (Y keeps the 'ap-/poni' column split)."
+ },
+ {
+  "item_id": "6992caced4d545ae73feeb26",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X keeps the boxed labels ('第二南門金剛…并青色', '第一東門淨地并黄色') separate from '寶生佛身青色' and '阿閦佛身白色'; Y merges them into '第二南門寶生佛身青色', drops the boxed text and invents a margin note, '四門論 向後'."
+ },
+ {
+  "item_id": "69dbcb011040d1d5e20b073d",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X gives a sound expanded reading, while Y garbles many words ('te uil?' for 'se uilius', 'sheret ho' for 'deberet homo', 'meulet' for 'incubet', 'cũ he auricalcū' for 'cum sit')."
+ },
+ {
+  "item_id": "69afd0a8775a23a98ee93660",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y gives the page number as '380' (the leaf prints 580) and reads 'ſumantur'/'ſumitur' as 'fumantur'/'fumitur', which changes the sense; X matches the page."
+ },
+ {
+  "item_id": "6981938e1c3027d6de3747f2",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Title text agrees (X has the typo 'Oxonienfi'), but X's image description invents 'a harbor with a distant city', while Y describes the engraving more faithfully."
+ },
+ {
+  "item_id": "69dbc8d51040d1d5e209cb49",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X reads the signature 'CC' as 'LL' throughout, repeats 'De saturno in domo martis' in place of 'iouis', and drops 'De Ioue in domo saturni' and the 'CC 5' entry, all of which Y gets right."
+ },
+ {
+  "item_id": "69aea8741cbf28a363a4fc80",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Nearly identical; X misreads 'cūcta ſcilicet' as 'cūncta ſilicet' and adds italics that are not on the leaf."
+ }
+]

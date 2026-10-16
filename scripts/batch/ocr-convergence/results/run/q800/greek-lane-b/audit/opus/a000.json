@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "695311a477f38f6761bccd09",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf's psalm titles read 'ΕΙC ΤΟ ΤΕΛΟC ΨΑΛΜΟC ΤΩ ΔΑΔ' (and 'ΨΑΛΜΟC ΤΩ ΔΑΔ' in col. 2), which Y gives, while X substitutes 'ΤΟΙC ΥΙΟΙC ΚΟΡΕ' three times; X also has 'ΑΝΘC' where the leaf has 'ΑΝΟC'."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890dda",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is English p. 233 'REGIMEN, I. III.–IV.' ('each of them possesses is this...'), which X matches; Y is the Greek text of another page (p. 236, 'ΠΕΡΙ ΔΙΑΙΤΗΣ')."
+ },
+ {
+  "item_id": "699389830f04c37dcfa616e4",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf opens 'ἐγγυτέρω γὰρ τὰ...' and has the heading 'περὶ τῆς τάσεως τῶν θεωρημάτων', which X follows (with doubtful readings); Y is an unrelated text on divine names ('Συγγνώμην γὰρ ἔχειν δεῖ...')."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890e76",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is English p. 389 'REGIMEN, III. LXXI.–LXXII.' ('have fall upon them long and pleasant sleeps'), which Y matches; X is the Greek of p. 392."
+ },
+ {
+  "item_id": "69b21d36ddb4fa7c305b44a8",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is 'APOLOGIA SOCR.' p. 37 ('τιμῶμαι, τῆς ἐν Πρυτανείῳ σιτήσεως'), which Y matches; X gives a Phaedo page (p. 62, 'PLATONIS')."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890d75",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is Greek p. 132 'ΑΦΟΡΙΣΜΟΙ' ('καρίδες, ἀκροχορδόνες...' through XXXI), which X matches; Y is the English translation on p. 135."
+ },
+ {
+  "item_id": "69afe2eccf56258c93890d91",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is Greek p. 160 'ΑΦΟΡΙΣΜΟΙ' (XI–XVII, 'πλεύμονα αὐτοῖσι τρέπεται'), which X matches; Y is the English of p. 163."
+ },
+ {
+  "item_id": "695311a477f38f6761bccb9e",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops the whole Ioanan–Godolias exchange at the top of col. 1 ('ΚΑΙ ΙΩΑΝΑΝ ΕΙΠΕΝ ΤΩ ΓΟΔΟΛΙΑ ΚΡΥΦΗ ΕΝ ΜΑCCΗΦΑ...' through 'ΨΕΥΔΗ CΥ ΛΕΓΕΙC ΚΑΤΑ ΙCΜΑΗΛ'), which X keeps, although X misreads 'ΕCΩΘΗ ΕΝ ΟΚΤΩ ΑΝΔΡΑCΙΝ' later on."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b47db",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is 'POLITICVS.' p. 309 ('ὕβριν καὶ ἀδικίαν ὑπὸ κακῆς βίᾳ φύσεως'), which Y matches; X gives a Minos page (p. 316)."
+ },
+ {
+  "item_id": "69b21d42ddb4fa7c305b4918",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 624, with numbered summaries 17–34 and the opening of the Laws ('DEVSNE an hominum aliquis' / 'ΘΕΟΣ ἤ τις ἀνθρώπων'), which X matches; Y is another page (p. 633, 'DE LEGIBVS LIB. I.')."
+ }
+]

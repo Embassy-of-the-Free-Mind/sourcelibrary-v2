@@ -1,0 +1,376 @@
+[
+ {
+  "item_id": "69b2ffb05545150b61b491e2",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "line 8: 'historiá' — image 'historia' (stray accent)"
+  ],
+  "note": "Same text throughout; A expands the abbreviations (neq;, tildes) and B keeps them, which is a convention difference."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e3",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 7: 'φοβερὸς' — image 'φοξὸς'",
+   "line 15-16: 'οἰκίας οὕτως εὐκαίρως ἔχοντα' — image 'οἰκίας ἔργων εἰκότως ἔχοντα'",
+   "line 9: 'αἰσωπῷ τῷ αἰθίοπι' — image 'αἴσωπος τῷ αἰθίοπι'",
+   "line 11: 'τὸ δὲ διὰ πάντων' — image 'τὸ δὲ δὴ πάντων'",
+   "line 27: 'παραθέσαι … κατά τινα' — image 'παραθεῖναι … κατὰ δή τινα'"
+  ],
+  "b_errors": [
+   "line 4: 'ἐκείνην' — image 'ἐκείνῳ'",
+   "line 6: 'δυσειδέστατος' — image 'δυσειδέστατα'",
+   "line 27: 'ὥστε τὸν αἴσωπον κατὰ' — image 'καὶ τοῦ αἰσώπου κατὰ'",
+   "adds gloss 'quasi' not visible in the text line"
+  ],
+  "note": "In the main text B matches the image at most of the spans checked (φοξός, ἔργων εἰκότως, δὴ πάντων, ἔχοντι, παραθεῖναι, τῶν συνδού-), and A has several wrong words."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "margin: 'ὀξὺν νοῦν ἔχων omnium pastorum' is a guess at faint handwriting"
+  ],
+  "b_errors": [],
+  "note": "The printed text is identical apart from expanded or kept abbreviations and long s; only the handwritten margin readings differ, and both are uncertain."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e5",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "catchword 'γνάθων' only in meta, not as text"
+  ],
+  "b_errors": [
+   "line 1-2: 'ὧ-στῶν' — image 'ὦ οὗτος'",
+   "line 12: 'σι δίστυχε' — image 'σοι δύστηνε'",
+   "line 26: 'οὕτω γὰρ τροφῆς' — image 'οὔπω γὰρ' (reverses the sense)",
+   "line 27: 'αὐτὸν ἔτι' — image 'αὐτὸ τοῦτο'",
+   "last line: 'καὶ τοῦ λαιμοῦ … ἀλλ’ ὠθὶ' — image 'κατὰ τοῦ λαιμοῦ … ἀλλ’ ἐπὶ'"
+  ],
+  "note": "At the disputed spans the image supports A (οὗτος, τούτου, δύστηνε, οὔπω, αὐτὸ τοῦτο, κατά, ἐπί); B has several wrong words, and one of them changes the meaning."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e8",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "inserts margin notes mid-word ('ministro / [margin] / rum', 'Aeso/ [margin] pum')",
+   "line 15: 'frugalen:' — image 'frugalem'"
+  ],
+  "b_errors": [],
+  "note": "The printed text matches the image in both; they differ only in where the hard-to-read handwritten notes are placed and how they are read."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491e9",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "overseer's name 'Ζωᾶς' throughout — image 'ζηνᾶς'",
+   "line 1: 'ἀγαθόν ἐστι' — image 'ἀγαθῶν ἐστι'",
+   "line 7: 'τίνος χάριν' — image 'τοῦ χάριν'",
+   "'εἰ μὲν γὰρ εἰς ἐμὲ πολυ-' — image 'ἃ μὲν … περιύ-'",
+   "'θεὸς' — image 'θεοὺς'"
+  ],
+  "b_errors": [
+   "line 9: 'οἷα ἡμιόνοις' — image 'δι᾽ ἡμέρας' (invented phrase)",
+   "line 3: 'τοῖς πράγμασι' — image 'τῷ πράγματι'",
+   "line 4: 'τοῖς ἀγροῖς' — image 'τῷ ἀγρῷ'",
+   "'παραδίδοται' — image 'παραδέδοται'",
+   "'τεδιύ-βρισεν' — image 'περιύ-βρισεν'"
+  ],
+  "note": "A gets the name wrong on every occurrence; B has the name right but invents 'οἷα ἡμιόνοις' and changes several case endings, so each needs the other."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491eb",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 3: 'κατὰ δὲ δή τινα τύχην' — image 'ἐπὶ δὲ δή'",
+   "line 3: 'κτῆνος' — image 'κτήνη'",
+   "margin glosses interleaved into the text lines break the reading order"
+  ],
+  "b_errors": [
+   "line 5: 'τος ἐκείνου' — image 'ἐκεῖνον'",
+   "line 8: 'ἐπιδειχθῆναι' — image 'ὑποδειχθῆναι'",
+   "line 14: 'τοτουῒ' — image 'τουτουῒ'",
+   "line 7: 'σθαι εἰ θέλεις' garbled"
+  ],
+  "note": "Each text has a few small word errors the other doesn't; neither is clearly better."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491ec",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 12: 'sermè' — image 'fermè'"
+  ],
+  "b_errors": [],
+  "note": "The printed text is identical except A's 'sermè' for 'fermè'; the rest is spacing and margin placement."
+ },
+ {
+  "item_id": "69b2ffb05545150b61b491ed",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἀπαχθισθείς' — image 'ἀπηχθισμένος'",
+   "'πρὸ τῆς οἰκίας' — image unclear ligature before 'τῆς'"
+  ],
+  "b_errors": [
+   "'ἐδέετο τὸν κουφότατον' — image 'ἐδεῖτο τοῦ κουφοτάτου'",
+   "'οὐκ ἔαν ἔλεγε' — image 'οὐ δεῖν ἔλεγε'",
+   "'ἀσωτελῆ' — image 'ἀσυντελῆ'",
+   "'διελονεῖτο' — image 'διεκλονεῖτο'"
+  ],
+  "note": "At most of the disputed spans the image supports A (τοῦ κουφοτάτου, οὐ δεῖν, ἀσυντελῆ, διεκλονεῖτο); B has several wrong word forms."
+ },
+ {
+  "item_id": "69937716b0a84a5763962d9e",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Identical text; only line breaks and the placement of the margin line numbers differ."
+ },
+ {
+  "item_id": "69937716b0a84a5763962dc6",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Identical text; only italic markup and the placement of the margin numbers differ."
+ },
+ {
+  "item_id": "69937716b0a84a5763962e84",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Identical text; only the positions of the line numbers 639/640 differ."
+ },
+ {
+  "item_id": "69937716b0a84a5763962ef6",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Identical text; only hyphenation, line breaks and the apostrophe character differ."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866462",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'transfusas' — image 'transfusa'",
+   "'fatius' — image 'satius'",
+   "speculative readings of faint red marginalia ('Christi philosophia', 'Nihil magis sed…')"
+  ],
+  "b_errors": [
+   "'uulgilinguam' — missing space",
+   "speculative or invented margin readings ('Non solum ab idiotis sed etia mulieribus…', 'Ipsum mysterium celare')"
+  ],
+  "note": "The printed text and printed side-notes match the image in both apart from minor letter slips; both guess at faint handwriting inside unclear tags."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866463",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "margin: 'Patrioticam' — image 'idioticam'"
+  ],
+  "b_errors": [
+   "line 4: 'inquitet' — image 'inuitet'",
+   "drops 'uere' in 'si uere exspectamus'",
+   "long s rendered as f throughout ('fit', 'fi', 'fua' for 'sit', 'si', 'sua')",
+   "'paffira' — image 'passim'"
+  ],
+  "note": "A matches the image; B writes f for long s (turning 'sit/si' into 'fit/fi'), misreads 'inuitet' and drops 'uere'."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866466",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'decretis autem mortem usque' — image 'decretis ad mortē usq;'",
+   "adds margin '= cretis autem mortem usque' not on leaf",
+   "'sumus' — image 'simus'",
+   "'ulla imaguncula' — image 'ullæ imagunculæ'"
+  ],
+  "note": "A matches the image; B misreads 'ad' as 'autem', copies that error into an invented margin note, and changes a few word endings."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8664b7",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "entire text is another page (p. 91, 'AD PLACANDOS EOS…'); this leaf is p. 90 'LOCA MANIFESTE DEPRAVATA'"
+  ],
+  "note": "The image is p. 90, 'Loca manifeste depravata', which A transcribes; B gives the next page's errata list."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8664ca",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "entire text is another page (p. 112, chapter list and Vita S. Marci); this leaf is p. 109 'ORDO SEV NVMERVS LIBRORVM NOVI TESTAMENTI'"
+  ],
+  "note": "The image is the p. 109 New Testament book list, which A transcribes; B is a different page."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8664cc",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 114, chapters λγ–μη and Vita S. Lucae); this leaf is p. 111 chapters κα–νϛ"
+  ],
+  "b_errors": [],
+  "note": "The image is p. 111 with Greek chapters κα–νϛ and Latin 21–55, which B transcribes; A is a different page."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866510",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "margin section numbers read as ρμ… where image shows σμ…"
+  ],
+  "b_errors": [
+   "entire text is another page (p. 362, Gethsemane); this leaf is p. 55, Matthew 24"
+  ],
+  "note": "The image is p. 55, Matthew 24 in Greek and Latin, which A transcribes; B gives a different passage from another page."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f86657d",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "entire text is another page (p. 171, Luke 19); this leaf is p. 154, Luke 12"
+  ],
+  "note": "The image is p. 154, Luke 12 ('uos præstatis uolucribus…'), which A transcribes; B is p. 171."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f866647",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 373, 1 Corinthians 12–13); this leaf is p. 348, Romans 15–16"
+  ],
+  "b_errors": [],
+  "note": "The image is p. 348, the end of Romans 15 and start of 16, which B transcribes; A is a 1 Corinthians page."
+ },
+ {
+  "item_id": "69b21cf8429e087c6f8666f0",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "entire text is another page (p. 542, Apocalypse 8); this leaf is p. 517, 1 John 1–2"
+  ],
+  "b_errors": [],
+  "note": "The image is p. 517, 1 John 1–2, which B transcribes; A is an Apocalypse page."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f46e",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "restores 'secul|i' where 'saec|uli' is more likely"
+  ],
+  "b_errors": [
+   "restores 'qu-a-d' — should be 'quod'",
+   "'in qua omnes codices … consentiunt' — required 'in quam'",
+   "'Lectiones quavis' — should be 'quasvis'",
+   "'duo Matritenses' — the remaining '-ienses' and the later 'Mutinensis' support 'Mutinenses'"
+  ],
+  "note": "Both fill in letters lost at the torn left edge; A's fills are more consistent with the surviving letters and the grammar, while B produces 'quad', 'qua' and the wrong manuscript name 'Matritenses'."
+ },
+ {
+  "item_id": "69938dd7d5a98fd66f42f472",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Same title and footnote; only the footnote-marker markup differs."
+ }
+]

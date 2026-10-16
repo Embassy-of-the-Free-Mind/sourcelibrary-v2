@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b220b356715b0e32473522",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf reads 'τελεία· ἀλλὰ πρὸς ἕτερον', but Y inserts 'ἀλλ' οὐ πρὸς ἕτερον', which reverses the sense; Y also writes '(ψέγομεν γάρ) καὶ κατ' ἀδικίαν' and 'ἔστι γάρ τις' where the leaf has 'ψέγομεν γὰρ κατ' ἀδικίαν' and 'ἔστι δέ τις'."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aaa",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The image is p. 19 'TIMAEVS.' (Greek 'μὲν τῶν ἀγαθῶν θρεπτέον…' / Latin 'bonorũ & malorũ liberos…'); Y transcribes another leaf (p. 20 'PLATONIS', 'tionis genus, vtraq; re…')."
+ },
+ {
+  "item_id": "69938d705d28b693146cfc03",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Where the leaf quotes Homer 'οὐδέ κ' ὀχῆας ῥεῖα μετοχλίσσειε θυράων ἡμετεράων', Y substitutes an invented line 'μή νύ τοι οὐ χραίσμῃσιν ὅσοι θεοί…'; Y also has 'μυχὰ θυρίστου' and 'ἐκ τῶν μνημείων' (X's only notable slip is 'καὶ νύκτα' for 'κατὰ νύκτα')."
+ },
+ {
+  "item_id": "69938d895d28b693146d035a",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The two texts are nearly identical, but the leaf reads 'διὰ τῶν ἀποστολέων' as Y has it, where X gives 'ἀποστόλων'; X's header 'ΑΝΝΗΣ ΚΟΜΝΗΝΗΣ' is only show-through from the verso."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4ab2",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The image is p. 27 'TIMAEVS.' ('λόγων, καὶ ἡσυχίαν ἄγοντα ἀκούειν'; Latin 'norum à me habitorum sermonum'); Y transcribes p. 28 'PLATONIS', which is a different leaf."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aac",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The image is p. 21 'TIMAEVS.' ('πρέπον ἂν ἡμῖν εἴη…' / 'memorare, tu ut in beneficio…'); Y transcribes p. 22 'PLATONIS' ('incolas & sacerdotes illos rogaret…'), which is a different leaf."
+ },
+ {
+  "item_id": "6993882874305116d72cfa08",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y follows the hand ('βίαντι πεμφθῆναι', 'ἐν Δελφοῖς γαμοῦντι', the oracle verse 'καὶ ἐς δόμον ἀνδρὸς ἵκηται'); X invents wording such as 'εἶαν ἤδη συμφωνῆσαι' and 'Ἐν ὅσῳ μὲν γὰρ ἐξέπεμψε', and drops the oracle."
+ },
+ {
+  "item_id": "69938f995d28b693146d1439",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "X gives no text and only marks the three columns '<unclear>'; Y's continuous text runs into degenerate repetition ('ὦ πᾶσι φῶς καὶ σωτηρία…'), so it is largely invented and not a reading of the columns."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a4",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X presents Romans 12 ('παρακαλῶ οὖν ὑμᾶς ἀδελφοὶ…') as the page text, but the dense faded hand does not match it; Y honestly reports the page as undecipherable."
+ },
+ {
+  "item_id": "69938f995d28b693146d10a7",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Both are unreliable: Y is a degenerate loop ('καὶ τῶν ἐν αὐταῖς ἀναφανέντων' repeated) and wrongly describes a 2-column page with a headpiece, which actually belongs to the facing leaf; X is mostly guesswork, but at least marks it '<unclear>'."
+ }
+]

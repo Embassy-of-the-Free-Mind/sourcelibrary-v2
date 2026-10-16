@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69aeab3c67e6731bc1366376",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both texts of the preface ('Cum mihi in mentem uenit … Ego id existi-') and the 'Geometria. Arithmetica.' margin agree with the leaf; the two differ only in how they describe the library stamp."
+ },
+ {
+  "item_id": "69f5347004dcb6fec257a34a",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both have the same body text, but Y gives the signature as 'B' (the leaf shows 'H'), swaps the printed virgules for commas, and joins the catchword into 'Gutdünken'."
+ },
+ {
+  "item_id": "695201aaab34727b1f041831",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X makes up stamp texts ('EX BIBLIOTHECA REGIA BEROLINENSI', 'BIBLIOTHEQUE NATIONALE') where the leaf reads 'BIBLIOTH. IMPERIALE IMPR.' and 'BIBLIOTHEQUE DU TRIBUNAT', misreads 'Oxonienfi', and leaves out the manuscript corrections 'principatus'/'virtutes' that Y records."
+ },
+ {
+  "item_id": "69906ed78a353648e1ed0894",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X describes the diagrams accurately and places 'Figura musice' below the frame; Y guesses '<unclear>Lira</unclear>' and describes 'four semicircular diagrams' at the bottom, where the leaf has two circles."
+ },
+ {
+  "item_id": "69c1bad18522835be845ab1e",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y numbers the new psalm 'קב' where the leaf has 'קג' (Ps. 103), misreads the foot note as 'בכל גגג ומימ … ערוכה', and runs the marginal Masorah together into a jumbled list."
+ },
+ {
+  "item_id": "69dbcb7d1040d1d5e20b6efd",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y puts the Sagittarius-row '4' under ☊ (the leaf has it under ☋), silently changes the misprinted second ♍ row to ♏, and has misreadings such as 'Loniunctio', 'Laput', 'Lauda' and 'The dignitates'."
+ },
+ {
+  "item_id": "69f5346904dcb6fec257a343",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y follows the print with 'gradirt', 'RIPLÆI' and 'Aquæ'; X has 'gradiert' and 'RIPLEI'. Otherwise the texts are the same."
+ },
+ {
+  "item_id": "69b4cc3fbb3208142d7bc87e",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The body texts are identical, but Y adds a page number '93' and a signature 'J.' that do not appear on this leaf."
+ },
+ {
+  "item_id": "69af462d61b03be5fb7af6de",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X runs the foot-line 'Tom. III.' into the note ('dixi ad *Tom. III.*'), but the note actually continues 'ad Iuuencum lib. 4'. Otherwise the texts match."
+ },
+ {
+  "item_id": "69f72f346415e6e30f89786c",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y reads 'Idem Temen.' as printed, where X has 'Timen'. Y also records the catchword 'tes'. The wording is otherwise the same."
+ }
+]

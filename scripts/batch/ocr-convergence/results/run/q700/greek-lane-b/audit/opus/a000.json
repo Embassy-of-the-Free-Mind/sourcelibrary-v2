@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69b21d4addb4fa7c305b4aad",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 22 'PLATONIS' beginning 'incolas & sacerdotes illos rogaret'; Y transcribes p. 23 'TIMAEVS.' ('minú tamé genusquoddá...'), which is another leaf's text."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4a99",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'νόθῳ etiam λογισμῷ ἀπεικασθείσας. i. adulterina quadam ratiocinatione', which X matches; Y invents 'νόθῳ τινι λογισμῷ ἅπτικα οἴσεσθαι', drops 'quadam' and has 'germanæ ueritatis' for 'veritati'."
+ },
+ {
+  "item_id": "69b1deccca46fa60ea1ee56d",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X omits 'sich auch' in 'so folgt daraus, dass sich auch das Fieber in diesen drei Arten'; otherwise the two are identical."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1ef1",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The apparatus reads 'v. 13. C. γαβαθα', and X misnumbers it 'v. 15', which attaches the variant to the wrong verse; the main texts are otherwise the same."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4ab0",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 25 'TIMAEVS.' starting 'ἤπειρον, τὴν περὶ τὸν ἀληθινὸν ἐκεῖνον πόντον'; Y transcribes p. 26 'PLATONIS' ('διὰ χρόνου γὰρ οὐχ ἱκανῶς ἐμεμνήμην'), which is another leaf."
+ },
+ {
+  "item_id": "6a3f027f97e91e1768f67638",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Against the image, Y has several small misreadings: 'παρεξήμεθα' for 'παρεξόμεθα', 'οὐχὶ ὅπλοις' for 'οὐχ ὅπλοις', 'θάλασσαν' for 'θάλατταν', and the footnote's 'Colb. 3035' for '3055'."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aae",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 23 'TIMAEVS.' beginning 'πων, ὅσα ἢ παρ᾽ ἡμῖν'; X transcribes p. 24 'PLATONIS' ('περὶ πάντων ἐφεξῆς εἰσαῦθις'), which is another leaf."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7bb",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'τοῦ δὲ ἀνθρώπου ἰδίαι', which Y matches; X has 'τὰ δὲ ἀνθρώπῳ' and splits 'τῶν τῇ δὲ' for 'τῶν τῇδε'."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7ab",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'πρὸς γὰρ ψόφοις καὶ ἤχοις', which Y matches; X normalizes this to 'ψόφους καὶ ἤχους', and the texts are otherwise the same."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4add",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is p. 70 'PLATONIS' beginning 'que virorum seorsim sedem'; X transcribes p. 71 'TIMAEVS.' ('χίαν καὶ τὸ πᾶσι κοινῇ'), which is another leaf."
+ }
+]

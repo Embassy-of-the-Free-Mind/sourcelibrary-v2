@@ -1,0 +1,10 @@
+  skip p.2: only 39% of its words are in the stored read: check by eye
+  skip p.5: only 29% of its words are in the stored read: check by eye
+  skip p.5: only 32% of its words are in the stored read: check by eye
+  skip p.15: only 39% of its words are in the stored read: check by eye
+  skip p.22: only 26% of its words are in the stored read: check by eye
+  skip p.106: only 36% of its words are in the stored read: check by eye
+  skip p.146: only 33% of its words are in the stored read: check by eye
+  skip p.270: only 40% of its words are in the stored read: check by eye
+  skip p.455: only 22% of its words are in the stored read: check by eye
+written: 507   skipped: {"only 39% of its words are in the stored read: check by eye":2,"only 29% of its words are in the stored read: check by eye":1,"only 32% of its words are in the stored read: check by eye":1,"only 26% of its words are in the stored read: check by eye":1,"only 36% of its words are in the stored read: check by eye":1,"only 33% of its words are in the stored read: check by eye":1,"only 40% of its words are in the stored read: check by eye":1,"only 22% of its words are in the stored read: check by eye":1}   run cli-ocr-20261015215332

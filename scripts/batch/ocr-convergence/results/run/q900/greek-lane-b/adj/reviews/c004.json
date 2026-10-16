@@ -1,0 +1,470 @@
+[
+ {
+  "item_id": "69b62f671c1c21a3737f540c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "Latin: 'deuoratio illa feminis genitalis' — image 'seminis'",
+   "Latin: 'humoris fluo genitali' — image 'suo'",
+   "Latin: 'mas eandem rursus trahit' — image 'mutuò trahit'",
+   "Greek: 'ὀχεύεται δὲ ... ἔπειτα ὕπτιος' — image 'ἐκ τῶν ὄπισθεν'",
+   "Greek: 'ἐνίοτε δὲ, καὶ ὅταν τὰ σῦκα' — image 'ἐνιαχοῦ δὲ'"
+  ],
+  "b_errors": [
+   "Greek col. starts 'ἄῤῥην ποιοῦνται' — image 'θήραν ποιοῦνται'",
+   "Greek: 'κερκέας' — image 'κεστρέας'",
+   "Greek: 'αὐτὴ πυγί' — image 'ἀντίπυγα'; 'στρογγύλαι' — image 'σφονδύλαι'",
+   "Latin: 'versúsque vice' — image 'versáque'; 'cùm fœtus maturescunt' — image 'cùm ficus'",
+   "Latin: 'Narem ... inferunt' — image 'inserunt'"
+  ],
+  "note": "Image checked span by span: B's Latin column is much closer, but its Greek column has many invented readings, while A's Greek is better and its Latin has several wrong words."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f549b",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "Latin heading: 'quæ semen in fæmina non mittunt' — image 'Vtrum ... quæ semen in fœminam mittunt, insit aliqua'",
+   "Greek: 'μέζι θερμὸς ἀήρ' — image 'ἐστι θερμὸς ἀήρ'",
+   "duplicates the bottom Greek line as a <margin> block"
+  ],
+  "b_errors": [
+   "Greek column largely garbled: 'διὸ καὶ ἐπὶ ὕδατι διπλοῦται, οἷον δ᾽ ἂν εἴη' — image 'ἐπιπολάζει. ἐν αὐτῷ ὢν ἀήρ'",
+   "'Κτησίας δὲ ... τοῦ σώματος τῇ ἐλέφαντι ἐν εἴρηκε, φησὶν ὅτι ἐξελυσόμενος' — image 'τοῦ σπέρματος τῶν ἐλεφάντων εἴρηκε, φανερός ἐστιν ἐψευσμένος'",
+   "whole Greek chapter γ' text is unusable nonsense ('Τοῦτον δὲ ἐκείνων ἐπὶ ... θεοὶ ἐξελθόντων')"
+  ],
+  "note": "A's Greek follows the leaf closely; B's Greek column is largely garbled, and the two Latin columns are similar."
+ },
+ {
+  "item_id": "6993830384cf5845c644c646",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "header 'Excerpta tragoediae' — image 'Eschili tragoediae'",
+   "invents a speaker list (Διὸς, Ἑρμῆς, Προμηθεὺς, Ἥφαιστος, Κράτος, Βία) and opening 'Ὦ Ἑρμῆ καὶ Ἥφαιστε' — image 'Λῦσόν με ὦ Ζεῦ'",
+   "'αἳ μὲν γὰρ ἐμέμψαντο πᾶσι τοῖς ἐν τῷ οὐρανῷ θεοῖς' — not on the leaf",
+   "puts the whole page text inside a <margin> tag"
+  ],
+  "b_errors": [
+   "'ἐπικεῖσθαι δὲ ἑκκαίδεκα γυπῶν' — image 'ὑπὸ ἑκκαίδεκα γυπῶν'",
+   "'καὶ τοὺς ὀφθαλμοὺς' — image 'ἐς τοὺς ὀφθαλμοὺς'",
+   "'λούμενον αὐτῷ' — image 'αἰετόν'"
+  ],
+  "note": "B follows the lines of the Lucian Prometheus dialogue on the leaf, with some normalizations; A invents passages and a speaker list."
+ },
+ {
+  "item_id": "6993830384cf5845c644c666",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "transcribes the gutter text of the facing leaf as a long <margin> block",
+   "many uncertain readings in the main text (e.g. 'τὸ ἄλγος ἀφορᾶσθαι')"
+  ],
+  "b_errors": [
+   "line 1 'ἐμὲ ἰσχυρῶς ἐκίνησε τὸ εἰς τέλος ἀφορῶσα' — image 'ἔφη ἴσ... μή σε τὸ ... ἀφορῶσα'",
+   "line 2 'ἰδόντες ὑπαίθριόν τε κἀμὲ κἀκεῖσε ἐλθόντα' — image 'καθεύδοντα ὑπαίθριον ... φιλοτεκνοῦντα'",
+   "line 5 'οὐδὲν μέγα οὐδὲ βρῖθος ἔχων' — image 'βρίθει ἐστίν'",
+   "much of the text is invented ('διὰ τὸ πείθεσθαι μετὰ ἀμφοτέρων', 'τὸ πρᾶγμα, ἵνα δὲ νοικυρᾷ')"
+  ],
+  "note": "Checked line openings on the image: A's main text matches the leaf (καθεύδοντα ὑπαίθριον, βρίθει, ἀκροδάκτυλος close), while B rewrites most lines."
+ },
+ {
+  "item_id": "6993830384cf5845c644c66f",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "drops the first three lines of the leaf ('ἔξωσι φάν· ἀμφοτέρων ἀποπεμψόμεθ’ ὑμᾶς … Ἀσκληπιάδαις')",
+   "main dialogue is the standard printed Lucian text rather than the manuscript: 'πενθῶ' — image 'ποθῶ'",
+   "'ἐγὼ μὲν ἀνέρριψα ὡς οἷόν τε ψηλὰ τὸν δίσκον' — image 'ἀνέρριπτον ... τὸν δίσκον ἐς τὸ ἄνω'",
+   "inserts speaker names (Ἑρμῆς/Ἀπόλλων) that are not written out on the leaf"
+  ],
+  "b_errors": [
+   "'ἄτοπον εἶναί μοι δοκεῖς, ὦ Λυκόφρον' — not on leaf",
+   "'κατά τινα συμφορὰν' — image 'κατὰ τὴν Δάφνην'",
+   "'Δίσκον διακύψας κατεκρύβης ... μειζεφύρῳ' — garbled",
+   "'ἀχάριστος' — image 'ἀνέραστος'"
+  ],
+  "note": "B keeps the top three lines and several manuscript readings that A drops or normalizes, but B also garbles the middle of the dialogue."
+ },
+ {
+  "item_id": "6993830384cf5845c644c6a8",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "invents a long passage on ἀγάπη and Paul ('ὅθεν καὶ ὁ Παῦλος ξυνάπτει τὸν γάμον ...') before 'Διὰ τί', which is not on the leaf",
+   "'ὁ δῆμος τοῦ δήμου τὸν δῆμον ἐρωτᾶτο' — image 'ἐξηπάτησε'",
+   "adds a final paragraph on φιλανθρωπία that is not on the leaf"
+  ],
+  "b_errors": [
+   "'ἐφθέγξατο· λαμπρυνεῖ· διαδικασίαν' — image 'ἔνδειξις, ἀπαγωγή, διαδικασία'",
+   "'ἡλίκων' — image 'χαλκεῖον'",
+   "marginal notes largely conjectural"
+  ],
+  "note": "The leaf's main text begins 'Διὰ τί πολλὰ ταῦτα τῶν δικῶν ὀνομάτων'; B follows it line by line, while A invents preceding and following passages."
+ },
+ {
+  "item_id": "6993830384cf5845c644c6b4",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἐδίδασκεν' — image 'ἐδίδασκον'",
+   "'κοινὸν ἂν καὶ ἐμοῦ καὶ δίκης' — image 'ἦν ἐμοῦ κἀκείνης'",
+   "'ἐπὶ τηλικοῦτον διαβεβλημένος' — image 'ἐκ τηλικούτου ... κακοῦ ... βεβουλημένος'",
+   "'οἱ θεοὶ πυρὶ κομήτῃ' — not on leaf"
+  ],
+  "b_errors": [
+   "top margin 'τῶν μὲν πρὸς γῆν ὥσπερ τὴν βλαβὴν' — image 'μῶν μὲν ... γνώμην τῆς βουλῆς'",
+   "'εἰ μέν’ ἐφ’ ἑτέρων' — image 'εἰ μὲν ἐπὶ γέλωτι'",
+   "'τὸν Δηΐφοβον ἔργον' — not on leaf",
+   "'ἐπήγγειλα' — image 'ἀτύχημα'"
+  ],
+  "note": "Each text matches the leaf in different stretches (A at the top and in 'ἀτύχημα', B in the middle lines), and both invent phrases elsewhere."
+ },
+ {
+  "item_id": "6993830384cf5845c644c6ed",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἢ τῶν ἱερέων' — image 'ἱππέων'",
+   "'ἐν κινδύνοις ταῦτα νομίσας' — image 'κοσμήσας'",
+   "omits 'ἢ γραικιδίων φροντὶς' line opening",
+   "last lines largely conjectural"
+  ],
+  "b_errors": [
+   "line 1 'ὥστε καὶ Λουκιανῷ Κόιντε πηλὸς ἔπεσεν' — not on leaf",
+   "'οὐδὲ γὰρ Κύπρος αὐτὸν' — invented",
+   "'ἡ ψυχὴ αὐτοῦ ἐκείνη ... τὸν μῦθον' — image 'προσθήκῃ αὐτὸν ἐκείνῃ ... μισθὸν'",
+   "'ἢ τῶν παίδων' — image 'νέων'"
+  ],
+  "note": "In this hard cursive hand, A matches the first half (ὑβρίζουσι, ἐκτησάμενον, προσθήκῃ, ἀπαλλαγὴν) and B several later readings (γραικιδίων, ἱππέων, κοσμήσας); both conjecture heavily."
+ },
+ {
+  "item_id": "6993830384cf5845c644c721",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "presents a continuous homily on ἀνάπαυσις ending with a doxology 'αὐτῷ ἡ δόξα ... ἀμήν' — the leaf has no doxology; its last line ends mid-word",
+   "structure does not match the leaf's short sections marked with '+'"
+  ],
+  "b_errors": [
+   "presents generic philosophical filler ('πολλαπλάσιον ... ποιητικὸν ... οὐσίας') that cannot be matched to the leaf's lines",
+   "wraps the whole text in <unclear>"
+  ],
+  "note": "The heavily abbreviated hand shows short '+'-separated sections, and neither text's wording could be matched to the visible line shapes, so both appear to be largely invented."
+ },
+ {
+  "item_id": "6993830384cf5845c644c72e",
+  "pick": "neither",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "after a plausible first line ('Εἰ δὲ καὶ κανών ἐστι ... πλεονάσουσι'), the rest is a theological text (βασιλεία τῶν οὐρανῶν, μετανοήσητε) that cannot be matched to the leaf",
+   "repetitive filler at the end ('τὸ εἶναι, διὰ τὸ εἶναι')"
+  ],
+  "b_errors": [
+   "first line 'Εἰ δὲ μὴ παντάπασιν ἐς ἀγαθὸν χρεὼν' — image begins 'Εἰ δὲ καὶ κανὼν'",
+   "the rest is generic philosophical filler about ἰδιώτης and λῃσταί that cannot be matched to the leaf"
+  ],
+  "note": "Only A's opening matches the dense cursive; beyond that, neither text can be verified against the leaf, and both read as invented."
+ },
+ {
+  "item_id": "6993830384cf5845c644c748",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'θυγαλλικὸν οὐκ ἦν μὴ κατὰ τὴν ἑωραν' — not legible as such on the leaf",
+   "many later lines conjectural (e.g. 'ἐκ τούτων χεῖμα χρὴ δυσμάς')"
+  ],
+  "b_errors": [
+   "line 1 'Ἐπειδὴ ὑστέρησε τὸ πλῆθος ἡμῶν, ἀπορήσειν' — image 'Ἐπειδὴ δὲ μετέωρον τὸ λυπηρὸν ἦν'",
+   "invents a narrative about Hector, Odysseus and Helen ('πρεσβευτὴς', 'Ἑλένην ὡς ἀποδοθῆναι') that is not on the leaf",
+   "'κομπάζοντες ταῦτα εἰς Ἀχιλλέα' — image 'κομήτας ... ταύταις αἰτίαις'"
+  ],
+  "note": "Opening lines on the image (μετέωρον, φάσμα, ἄτοπον, ὁμοφύλοις τὸν πόλεμον, κομήτας) match A; B replaces the page with an unrelated Homeric narrative."
+ },
+ {
+  "item_id": "6993830384cf5845c644c74e",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'sanctis Theodosio' — image 'Theodoris' (two saints Theodore)",
+   "omits the superscript 'γ' over Χαβρίου"
+  ],
+  "b_errors": [
+   "'τετράστιχα τῆς ἰδιότητος' — image 'συν…' word (A's 'συνηθροισμένα' is closer)"
+  ],
+  "note": "Short index page checked line by line: each text has one meaningful wrong word, and the rest agrees."
+ },
+ {
+  "item_id": "69b2235a56715b0e324772d9",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἐκ δὲ τῶν εἰρημένων' — image 'διηρημένων'"
+  ],
+  "b_errors": [
+   "vowel list reordered 'ο̄. ῡ. ω̄' — image 'ο. ω. υ'",
+   "adds 'ὑποδιαστολή ,.' at the foot — the leaf ends with the hyphenated 'ὑπο-'"
+  ],
+  "note": "Both are close to the printed Gaza page; A has one wrong word, and B reorders the vowel list and completes a word from the next page."
+ },
+ {
+  "item_id": "69b2235a56715b0e324772da",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'κλητικῶν δὲ οὐδὲν' — image 'κλητικὴν'"
+  ],
+  "b_errors": [
+   "'ἀριθμοὶ μὲν ἑνικὸν' — image 'ἀριθμὸν μὲν'",
+   "'καὶ αἰτιατικὴ τά' — image 'ἡ αἰτιατικὴ'",
+   "'διαστολή · , =' adds a symbol not on the leaf"
+  ],
+  "note": "Article paradigm page: both agree on the paradigms, and each has one or two small wrong words."
+ },
+ {
+  "item_id": "69b2235a56715b0e324772f8",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἑκάστη τριχῶς λέγεται' — image 'τριγενῶς'",
+   "'ἡ δὲ κλίσις τούτων, δῆλον' — image 'ἡ δὲ κλιθήσεται, δῆλον'"
+  ],
+  "b_errors": [
+   "'πρωτότυποι μὲν οὖν εἰσὶν' — image 'τρεῖς'",
+   "'ὅς· ἕ· οἷ· ἕ' — image 'ὅς· οὗ· οἷ· ἕ'",
+   "omits 'δὴ' in 'ὧν δὴ ἑκάστη'"
+  ],
+  "note": "Pronoun page checked on the image: A misses 'τριγενῶς'/'κλιθήσεται', and B drops 'τρεῖς' and garbles the genitive 'οὗ'."
+ },
+ {
+  "item_id": "69b2235a56715b0e32477382",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "renders δ-words with λ throughout: 'λαίειν', 'λαίμαργον', 'λαίδαλος', 'λαὶς', 'λαιβὸς' — image 'δαίειν ... δαίδαλος, δαῖς, δαιβὸς'",
+   "'καὶ λύω τῷ υ' — image 'δύο'; 'λίκω ... λίγμα ... λικνύω' — image 'δίκω ... δῖγμα ... δεικνύω'",
+   "'χρίσιος' — image 'γρῖφος'",
+   "'ἐπιρρητικῶς δὲ τῇ ει, λεί' — image '... δεῖ'"
+  ],
+  "b_errors": [
+   "opening 'τῷ η̄ · γρηγόρος' — image 'ῑ · γρηγόριος'",
+   "adds page number 38, which is not visible on the leaf"
+  ],
+  "note": "This orthography page lists δ-words. B reads them correctly, while A misreads δ as λ throughout, which corrupts most of the entries."
+ },
+ {
+  "item_id": "69b2235a56715b0e3247739f",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'Λέξις δὲ μόριον ἐλάχιστον' — image 'μέρος'",
+   "'μελίας δ’ αἴθωνι σιδήρῳ' — image 'μένος'",
+   "'παρ’ Ὁμήρου ... παρὰ Θεοκρίτου' — image 'τὸ Ὁμήρου ... τὸ Θεοκρίτου'"
+  ],
+  "b_errors": [
+   "'τὸ δι’ ὠτὸς ἄγχω πρῶτος' — image 'τὺ δ’ ὠδὰς ἄρχεο πρᾶτος' (Theocritus quotation garbled)",
+   "'ἐπὶ τῶν λίτων' — image 'λόγων'",
+   "'ἐστί τε τῶν στοιχείων' — image 'ἐπί τε'",
+   "'ἐναρμόστως' — image 'εὐαρμόστως'"
+  ],
+  "note": "Checked the quotations on the image: A gets the Theocritus line and 'λόγων', and B gets 'μέρος', 'μένος' and 'τὸ Ὁμήρου'; each corrupts something the other has right."
+ },
+ {
+  "item_id": "69b2235a56715b0e324773e6",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ἄνευ τῆς ἐπ᾿ ἐκφορᾶς πτωτικῆς' — image 'ἄνευ τινὸς ἐπιφορᾶς'",
+   "tags the final line 'συναμφοτέρως' as a catchword; it is the last text line"
+  ],
+  "b_errors": [
+   "'ἐπιῤῥήματα εἷς τῷ ῥήματι' — image 'ἑνὶ'",
+   "'καὶ οὐδὲν τὸ τοιοῦτο' — image 'κοινὸν δὲ τὸ τοιοῦτο'",
+   "drops 'ἰδού· ὦ' at the end of the genitive examples",
+   "drops 'οἷον' after 'θετικῶν'"
+  ],
+  "note": "A matches the printed page more closely: B changes 'κοινὸν δὲ' to 'καὶ οὐδὲν' and drops 'ἰδού· ὦ', while A's one error is minor."
+ },
+ {
+  "item_id": "69b2235a56715b0e32477429",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'πολυχρήμονα' — image 'πολυσχήμονα'",
+   "'δέον εἰδέναι πρῶτον' — image 'πρότερον'",
+   "'τὴν ὑγιῆ' — image 'ὑγιᾶ'; 'τῆς πρὸς ἡμᾶς' — image 'περὶ ἡμᾶς'",
+   "'λόγος, ὅ τε ἐνδιάθετος' — image 'ὁ ἐνδιάθετος'"
+  ],
+  "b_errors": [
+   "'οὐ μικρά τε καὶ ἐχέγγυα' — image 'ὅμηρά τε καὶ ἐχέγγυα'",
+   "'εἴπερ ἐντυχικὼς' — image '… τετυχηκὼς'"
+  ],
+  "note": "B is closer on most small spans but turns 'ὅμηρα' into 'οὐ μικρά', while A gets 'ὅμηρα' right but misreads several other words."
+ },
+ {
+  "item_id": "69b2235a56715b0e32477471",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'καλὰ ὄμματα' — image 'καλὰ ἔργα'",
+   "'καὶ τὰ ἑξῆς' — image 'καὶ πρᾶττε'",
+   "omits 'τὰ' before 'σοφὰ ῥήματα' and 'ἐν' before 'ταῖς συντάξεσι'"
+  ],
+  "b_errors": [
+   "'καλὰ ὄργανα' — image 'ἔργα'",
+   "'καὶ ἐπιῤῥηματικῶς' — image 'ἢ ἐπιρρηματικὴν'",
+   "'ὧν μὴ πόθεν' — image 'τὸ μὴ πόθεν'",
+   "'κινίκα' — image 'ἡνίκα'; 'ὥσπω' and 'ὄρχῃ' garbled"
+  ],
+  "note": "Each misreads different words on this syntax page (A 'τὰ ἑξῆς', B 'ἐπιῤῥηματικῶς'/'κινίκα'), and neither is clearly better."
+ },
+ {
+  "item_id": "69b2235a56715b0e32477497",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'εἰ μὴ ὀξὺς διέστησεν αὐτοὺς' — image 'εἰ μὴ ὁ Ζεὺς διέστησεν αὐτάς'",
+   "'ἀπεκλύθεισαν' — image 'ἀπεληλύθεισαν'",
+   "'ἐκπλήττομαι' — image 'ἐκπλήττει με'",
+   "'Εντείνω εὐεργητικόν' — image 'ἐνεργητικόν'"
+  ],
+  "b_errors": [
+   "opening 'Σ σέ. νότι' — image 'Ἰστέον ὅτι'",
+   "'πήχεις γυιάρμοσας' — image 'πήχεις γὰρ ἐναρμόσας'",
+   "'ὕφαινε' — image 'ὦ Ἥφαιστε'",
+   "'**γλυκύ** αἰτιατικῇ' and 'οὐκ ἐᾶς' — image 'πλωΐω'/'οὐ πλωΐειν ἐᾷς'",
+   "'ἐνέτει ἀμήν δὲ' garbled"
+  ],
+  "note": "A matches the printed page more often (Ἰστέον ὅτι, γὰρ ἐναρμόσας, πλωΐειν ἐᾷς), but B correctly has 'ὁ Ζεὺς' and 'ἀπεληλύθεισαν'."
+ },
+ {
+  "item_id": "69b2235a56715b0e32477499",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'οὐ δὲ τολᾶτον οἶμαι' — image 'ὁ δὲ Πλάτων' (name lost)",
+   "'ἐνίοτε δὲ μετὰ δοτικῆς' — image 'ἐνίοτε δὲ μεταπίπτει'",
+   "'ἐπιστήμην' — image 'ἐπιτηδεύειν'",
+   "'οὐ γὰρ ποιεῖν' — image 'εὖ γὰρ ποιεῖν'"
+  ],
+  "b_errors": [
+   "'Ἀναισχυντοῦμαι ... ἀναισχύνεται ... ὑπεραναισχυνθήσομαι' — image 'Ἀναιδεύομαι ... ἀναιδεύεται ... ὑπεραναιδευθήσομαι' (wrong headword)",
+   "'ἔχει τὸ σεμνόν. οἷον, ὅτε δὲ' — image '… τὸ σεμνόν. ἐνίοτε δὲ'",
+   "'ταῖς ἐμαυτοῦ συμφοραῖς' — image 'τὰς … συμφοράς'",
+   "'γονέας ὑπὲρ κέρδει' — image 'ἐπὶ κέρδει'"
+  ],
+  "note": "A keeps the ἀναιδεύομαι lemma that B replaces, while B has Πλάτων, εὖ ποιεῖν and ἐπιτηδεύειν, which A garbles."
+ },
+ {
+  "item_id": "6993897cce15387065947120",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ἐπὶ πλεῖστον στον' — duplicated syllables, image 'ἐπὶ πλεῖστον'",
+   "drops 'ὂν' at the end — image 'ἄδηλον ὂν'",
+   "initial described as orange-red — image shows a yellow/brown Θ"
+  ],
+  "b_errors": [
+   "page number 'No. 2' fine; minor punctuation additions only"
+  ],
+  "note": "The Thucydides opening is identical in both; B reproduces the last word 'ὂν' and the 'ξυν-' spelling, while A garbles 'πλεῖστον' and drops 'ὂν'."
+ },
+ {
+  "item_id": "6993897cce15387065947122",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "shelfmark 'P. 62.' — image 'P. 69.'"
+  ],
+  "note": "The binding clearly reads '2.' and 'P. 69.'; B gets the shelfmark number wrong."
+ },
+ {
+  "item_id": "6993897cce15387065947126",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "invents Latin phrases ('autem fuit die una quod quandam multitudinem …', 'in civitate quodam homo valde') that are not legible on this washed-out leaf"
+  ],
+  "b_errors": [
+   "folio number '169' — image 'n. 69'",
+   "claims the stamp reads 'BIBLIOTECA NAZIONALE FIRENZE' and is oval; it is a small round stamp whose text is not legible at this size"
+  ],
+  "note": "The leaf is almost blank (faint show-through, a small round stamp, 'n. 69' at the foot); A invents text, and B misreads the folio number and invents the stamp legend."
+ }
+]

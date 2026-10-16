@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69af21b0f98f6eff774cb728",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The texts are identical except the last line, where the first letter is damaged; X marks it '<unclear>F</unclear>uerit' while Y invents 'Struerit'."
+ },
+ {
+  "item_id": "69f707bc22e5f088fbf167f1",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops 'Diis ipsis loqui solent. Ut apud Livium lib. XXVII, de capta Tarento agens', reads 'lib. xxviii.' for the printed 'XXXVIII.', and appends fragments from the facing page."
+ },
+ {
+  "item_id": "6992caced4d545ae73feeb1d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y matches the labels ('大喜金剛', '北門水藏并身録色', '大捨金剛身録色'), while X gives '大毒金剛', '第三西北毒芥' and '第三北門火前芥身録色'."
+ },
+ {
+  "item_id": "695906974953388fe7ac6cd0",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y correctly keeps '(Ita. n. arbitrati sunt plurimi)' inline as printed and reads 'deq;', 'præsidi', 'sit', 'asseruerat'; X moves the parenthesis to a margin and has 'dec'', 'prælídí', 'fit', 'assuerat'."
+ },
+ {
+  "item_id": "69f692f03c03d88b6ddfa8c4",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X omits whole passages, e.g. 'in vno loco solum. sed maius esset si...' and 'quod deus plura potest facere: quam nullus homo potest intelligere...', and garbles much of the rest."
+ },
+ {
+  "item_id": "6952723fab34727b1f0483fd",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The texts match, but Y gets the dot patterns for Albus, Puer and Puella wrong (e.g. Albus 'one dot, one dot, two dots, one dot' against the printed oo/oo/o/oo), and it reads 'inuenta' where the page has 'inuentæ'."
+ },
+ {
+  "item_id": "6992f401c8c6ac61574e7396",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give '康熙三十五年春二月御書' and '一犁杏雨' correctly; they differ only in descriptive notes."
+ },
+ {
+  "item_id": "6992f401c8c6ac61574e73bc",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y reads '八蠶獨蛹' and the painting inscription '大繭至八蠶小繭止 獨蛹繭衣繞指柔' correctly; X has '入筐獨蛹', drops a character before '嫗理', and invents the inscription ('大繭糸多小繭糸...')."
+ },
+ {
+  "item_id": "69b67cff24677234712504d1",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y garbles the Greek (e.g. 'ἀνὰ πλέκον' for 'κεφαλὴν μικρὰν'), repeats the line '& fæmine maribus...', and scrambles the margins into the text ('Meleagris ... cur gibbera ... dicta')."
+ },
+ {
+  "item_id": "69b00c3d74f90a85f3ecedbb",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The texts are nearly identical; Y has '& in centennarys', '& ipz' and 'accidat' (printed 'acci dat') where X has 'zin', 't īpiz' and 'accidens', and Y puts the column break in the right place."
+ }
+]

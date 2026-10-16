@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6992f401c8c6ac61574e73ad",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X reads the painting's inscription as printed ('茅簷閒杵臼竹屋細 簸颺照人珠琲光奮…'); Y invents a different poem ('嘉穀既升盤 功需在簸揚…')."
+ },
+ {
+  "item_id": "698fb9446b95eeda7d2d38c6",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X's Greek has sense-changing misreadings that Y gets right as printed ('ἄγγελα δῆριν' for 'ἄγρια', 'ἐθιμόντε' for 'ἰθύνοντα', 'πυθέωσιν' for 'πτολίεσσιν'), and X's Latin has 'Belgicatum' for 'Belgica tum'."
+ },
+ {
+  "item_id": "69b21cda429e087c6f865c8d",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The body texts agree in substance; Y has small slips ('eratérem', 'cam trado') and cuts the side note down to 'Agenoris filius.', where the print has 'Cadmus Agenoris filius'."
+ },
+ {
+  "item_id": "6952723fab34727b1f04814c",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X reads 'magnus ille & spuriæ philosophiæ…spuriæ Deus', repeating 'spuriæ'; the print has 'totius philosophiæ', as Y gives it."
+ },
+ {
+  "item_id": "69b6424e1c1c21a37388bfe9",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops the title 'M. VITRVVII POLLIONIS DE ARCHITECTVRA LIBER SEXTVS. PRAEFATIO.' and puts 'f' where the print has long s ('fperemus'); X records the leaf faithfully."
+ },
+ {
+  "item_id": "69dbc8d51040d1d5e209cb3d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads every C as L, so the gathering references come out as 'L 3' instead of 'C 3' and the chapters as 'La./Lap.'; Y reads them correctly."
+ },
+ {
+  "item_id": "6a9b59f7ff40c2791f174d1d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y follows the printed apparatus (e.g. note a: 'Infra in itin. A. et B. خان روان ut Edrisi… D. خان زوان… E. خاوران ut Djih.-Numa'); X scrambles which manuscripts give which readings in notes a, b and d."
+ },
+ {
+  "item_id": "69af53c86011c40e7176a74c",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two are nearly identical; Y has 'navigio pertransit' where the print has 'pertransitur'."
+ },
+ {
+  "item_id": "6951549fab34727b1f041098",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give only the ink shelfmark '12. 32. H. 5' and treat the mirrored title page as show-through."
+ },
+ {
+  "item_id": "69b67cff24677234712506cd",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y leaves out passages ('sesquilatera longitudine ad Ciconiæ rostrum, colore'; 'iis, quas Gallinulas aquaticas … Germanis'), reads 'hominem' for 'nomen', and mixes line numbers into the text."
+ }
+]

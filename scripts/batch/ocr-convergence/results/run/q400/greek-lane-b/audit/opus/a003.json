@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6955801057e3b773024f5049",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads the ου-ligature as ε throughout, which yields wrong forms such as 'τὰς Μεσαλιανὺς', 'τὰς τὰς ὥρας' (for τοὺς), 'ἐδὲν' and 'ἐξὶ', and it drops 'ἢ' before 'εἰπόντος'; Y has a few slips of its own ('συνᾶσα', 'φέροντος', 'Πτολεμαΐδι') but is far more faithful."
+ },
+ {
+  "item_id": "69526a50ab34727b1f046dcd",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The texts are nearly identical; X normalizes the printed 'Erlang.' to 'Erlangen' and 'Vitebergæ' to 'Vitembergæ', while Y keeps both as printed."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16f",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both have the full text; X has OCR slips such as 'unusquisque', 'quibusdem', 'fedulò' and 'etiamfi', and drops the period after 'accusatio', while Y reads cleanly."
+ },
+ {
+  "item_id": "6952e4cc77f38f6761bc8ec1",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "In the apparatus X miscopies sigla, e.g. '(r al -νομεν)' for 'Γ al', 'BKΠ' for 'BKMQΠ' and 'ℵCDLΧΓΔΛ' for 'ℵCDLRΓΔΛ'; Y matches the print, apart from 'Lη' where the print has 'Ln'."
+ },
+ {
+  "item_id": "699389f2ce15387065948051",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X garbles whole lines: it gives 'ἐν οἷς οὗτοι· καὶ ὅσε κἀκείνου' for 'ἐνάτου τε καὶ δεκάτου', and 'Ὅτι εὔδημος ... προσθήκη ἱστορίας' for 'ὁ δὲ ἕβδομος αὐτῷ λόγος διήνθισται ἐκ τῆς Ἡροδότου ἱστορίας'; Y follows the hand."
+ },
+ {
+  "item_id": "69b2f40e0e2f024dfbfba647",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "low",
+  "note": "Y invents headwords such as 'Αἴθειλος' and 'Αἰθειλοκοιτέω' where the print has Αἴθριος and Αἰθριοκοιτέω, invents the Gregory phrase 'τοῦ μέδοντος αἰθριάζοντος καὶ πεπαυσμένου' and gives 'Αἱμαποπότης'; X has its own Greek errors (e.g. 'αἵματι ἀναχεῖσθαι', 'Pol. 1') but keeps the entry structure more faithfully."
+ },
+ {
+  "item_id": "69a5e5f385fa13e734e42085",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X invents text that is not on the leaf, e.g. 'τίνος ἀμμείνονος τέχνης' and 'ἡμῖν τε καὶ ὑμῖν τοῖς ἀμφιλέγουσι'; Y reads what the hand shows: 'τίνες ἄλλοι ὁμότεχνοι', 'ἢ δώροις ἢ χάρισιν', 'οὐκ ἐν τῷ Καρὶ ὑμῖν ὁ κίνδυνος'."
+ },
+ {
+  "item_id": "69a97a1bf3f3d2fb7de26cae",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both give 'HERMETICA', 'Plan of the Work' and the same four volume lines; they differ only in layout (centred lines vs. a table)."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a77ec",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "Y follows the print in 'ἐγχέλυς', 'ἐστὶν οὐκ ἀληθές' and 'τοῦ τίκτειν', where X normalizes or reorders ('οὐκ ἔστιν', 'τὸ τίκτειν'); Y has slips of its own ('ἔγχυσιν', 'σελαχιῶν'), and none of these changes the sense much."
+ },
+ {
+  "item_id": "69938963ce15387065946cad",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both give the same Mark 5:41–6:4 text and the same marginalia; they differ only in small spellings ('γνοῖ'/'γνῷ', 'ἔλεγεν'/'ἔλεγε')."
+ }
+]

@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69aebb806e076d07213e88e0",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "X drops 'die' in 'durch die wir die durch reine Logik gebundenen Gegenstände', which the image prints; otherwise both texts match."
+ },
+ {
+  "item_id": "6991d8ce8c1030b12444cad6",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The image reads 'Est magis ætheream sustinuisse domum' and Y has 'æthereum'; apart from that, the differences are only spelling normalization (Ut/utrumque/cælo)."
+ },
+ {
+  "item_id": "69f69c75523c3a10c14badd5",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y adds word fragments from the facing page ('ubique', 'uitate', 'Legum', 'rebus' …) and also misreads 'Lulius' and 'ut probo' where the leaf has 'L. Iulius' and 'uir probo'."
+ },
+ {
+  "item_id": "695592c17bd6d2cd1d61aff8",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X matches the leaf's 'constitutuʒ', 'predictaʒ', 'p quaʒ' and the column break after 'tres po-'; Y has 'constitutus', 'predictas', 'ꝑ quas' and puts the column break in the wrong place."
+ },
+ {
+  "item_id": "69c1bb538522835be845ee9d",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y follows the manuscript ('ב' גדלות ושום בצורת תיכון ... ואצ\"ל בעולמות אלו שהם בחי' בריאה ואצי'' … final 'סילוק'), while X is largely invented ('ב' דלתות ... במעלות אלו יפה פסק', ending 'לפש'')."
+ },
+ {
+  "item_id": "695435671479a63c1108ca06",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y moves the side-note words 'und über' into the main text ('so er von und über sich') and leaves the note as 'Haupt zu …'; it also has 'lasset', 'Erkantniß' and 'Miinen' where the leaf has 'läſſet', 'Erkäntniß' and 'Minen'."
+ },
+ {
+  "item_id": "69938e0fd5a98fd66f43019f",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The leaf reads 'in lucem asseri' and Y has this; X has 'afferi' and also 'arbitōr' and 'mult.' where the print is damaged."
+ },
+ {
+  "item_id": "695d0e044afae5c3b3aeadac",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The wording is the same in both; Y keeps the printed 'vt' and 'reuera', while X normalizes them and adds a catchword 'admi-' that is really the last word of the text."
+ },
+ {
+  "item_id": "69af0fc46f6d83348c7fa724",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The leaf prints 'calidior fit', 'magnus fit calor', 'minor fit calor' and so on; Y repeatedly has 'ſit' and also 'obtruſos'. Both texts drop 'etiam' in 'ſolis etiam rectà proiectos'."
+ },
+ {
+  "item_id": "695924fe1cac2ce31a4a8be0",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The leaf prints '久坐久立久勞役' and X drops '役'; Y also has the correct '一曰…二曰' where X has '一日'."
+ }
+]

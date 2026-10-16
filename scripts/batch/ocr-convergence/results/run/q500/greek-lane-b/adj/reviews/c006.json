@@ -1,0 +1,309 @@
+[
+ {
+  "item_id": "69d146051c2a66dc094b202f",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ὑποφισταμένη' — image 'προϋφισταμένη'",
+   "'ἐξ αὐτῆς πλὴν' — image 'καὶ αὐτῆς πλὴν'",
+   "'ἢ παλινδρομίαν' — image 'τῆς παλινδρομίας'",
+   "'διαφοίτησιν' — image 'διαφόρησιν'",
+   "catchword 'τιο-' — image 'τέσ-'"
+  ],
+  "b_errors": [
+   "Latin column drops opening 'duobus electos audito modo; ut'",
+   "'συναφαίρεσιν' — image 'διαφόρησιν'",
+   "'ὡς ἐπί τινος νύσσης' — image 'τινα νύσσαν'",
+   "'τετραγῶνας' — image 'τετραγώνους'",
+   "'ἐπιθέσει' — image 'περιθέσει' (Latin 'circumpositione')"
+  ],
+  "note": "B drops the first phrase of the Latin column and has several wrong Greek words; A's errors are fewer and smaller."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2061",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "Latin ends with invented 'chordarum magades, si moveatur magis ad graviores vel acutiores sonos, ita & hic.' — image ends 'in quo sunt'",
+   "'τῶν ἐν μονάσιν' — image 'τῆς ἐν μονάσιν'",
+   "'δυάσι καὶ τριπλάσιαι' — image 'δυάσιν αἱ τριπλάσιαι'",
+   "'ἐπὶ τῶν κανόνων τῶν ἐξάψεων εἱρμοσῶν' — image 'ἐπὶ τοῦ κανόνος τῶν ἑξάψεων ἐμμεσῶν'"
+  ],
+  "b_errors": [
+   "drops Greek sentence 'Ἀπὸ πασῶν δὲ τῶν γινομένων πλάσεων τὰ ἰδιώματα τῆς ἁρμονικῆς παρακολουθήσει'",
+   "Latin drops '& secundo, secundum ex primo'",
+   "'προστάγμασι τοῖς αὐτοῖς' — 'αὐτοῖς' not on leaf",
+   "'τονες' — image 'τονας'",
+   "'ἑξάφωνων' — image 'ἑξάψεων'"
+  ],
+  "note": "A invents a Latin clause not on the leaf; B drops a Greek sentence and a Latin phrase; otherwise each is right where the other errs."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b206b",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'ἐκ ἐν πολλαπλασίῳ' — image 'οὐκ ἐν' (negation lost)",
+   "'προμήκες' — image 'ἑτερόμηκες'",
+   "'διαφανεισῶν' — image 'ἀναφανεισῶν'",
+   "'τῇ δεκάδος' / 'αὐτῶν' / 'ἔσαν' — image 'τῆς δεκάδος' / 'αὐτήν' / 'οὖσαν'",
+   "Latin adds 'quatuor-' not on leaf (catchword is Greek 'τέσσαρ-')"
+  ],
+  "b_errors": [
+   "'ἐν τοῖς ἄκροις' — image 'τοὺς ἄκρους'",
+   "'ἑκάστῳ ἐπιστήματα' — image 'ἑκάστου ... παθήματα'",
+   "'Τὰ μὲν δὴ' — image 'Τὰ νῦν δὲ'",
+   "last word 'ἑσ-' — image 'ἐν'"
+  ],
+  "note": "Checked the Greek spans: B is right on most, including 'οὐκ' where A's 'ἐκ' reverses the sense; Latin columns are essentially equal."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2070",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "drops final Greek line 'ἔχων, ὑπεπίτριτον λόγον πρὸς ἄλλον' (printed under Latin column)",
+   "Latin ends with invented 'habens sesquitertiam habeat rationem'",
+   "'ἑώλως ἐμπνευσῶν' — image 'ἢ ὅλως ἐμπνευστῶν'",
+   "'ἔν τε τοῖς ζῶ τε μήκη' — image 'τοῖς ἐντατοῖς τά τε μήκη'",
+   "'σαφηνιῶμεν' / 'ἀριθμῷ' — image 'σαφηνιοῦμεν' / 'ἀριθμοῦ'"
+  ],
+  "b_errors": [
+   "'τρεῖς τὰς διαφορὰς ἰδὼν ἐξέτασιν' — image 'τρεῖς διαφορὰς τὴν ἐξέτασιν'",
+   "'ἐν ταῖς χορδαῖς' — image 'ἐντατοῖς' (χορδαῖς not on leaf)",
+   "'τῷ μὲν εὐρύτητι καὶ μακρότητι' — image 'τοῦ μὲν εὐρύτητος καὶ μακρότητος'",
+   "'Ἡ δὴ καὶ ἐπὶ' — image 'Ἤδη κἀπὶ τῶν'",
+   "'τοῦ ἐπιτρίτου' / 'τότε' — image 'τούτου ἐπίτριτος' / 'τούτου'"
+  ],
+  "note": "A drops the last Greek line and invents Latin; B keeps the line but has several invented or wrong Greek words that A gets right."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b2099",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'Numerus Προμήκης' — image 'Ἐπιμήκης' (B repeats προμήκης, losing the first term)"
+  ],
+  "note": "The only substantive difference is the Greek term; the image reads Ἐπιμήκης as in A; table and other text agree."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b20af",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'hoc numero, & tribuitur lunae. rationem' — image '& mundi constitutionem' (wrong phrase pasted in)",
+   "'appellant' — image 'appellarunt'",
+   "'ἐπιμοιρος' — image 'ἐπιμόριος'"
+  ],
+  "note": "B substitutes a phrase from later in the page for 'mundi constitutionem'; A matches the image."
+ },
+ {
+  "item_id": "69d146051c2a66dc094b20d3",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "drops '(quæ definitio & hic habetur)' in the Theo quotation",
+   "'παιδείας' — image 'πεττείας'",
+   "'Thaletem' — image 'Thalete'",
+   "'faltem' — image 'saltem'"
+  ],
+  "note": "Image shows the parenthesis B omits and reads πεττείας; A follows the print, including its misprints."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7730e",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'δ’ μετ’' — image 'ὁ δὲ μετ''"
+  ],
+  "b_errors": [
+   "'προσπίπτειν' — image 'προσαπαντᾷν'",
+   "'ἀμφιβάλων' — image 'ἀμφιβάλλων'",
+   "long s rendered as 'f' throughout Latin ('fufpicari poffent', 'effe', 'fermones')"
+  ],
+  "note": "Image reads προσαπαντᾷν as in A, and B misreads every long s as f in the Latin."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad773b4",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'τηδέ τινας ποτὲ σοφούς' — image 'τούσδε τινας τοὺς σοφούς'",
+   "'ὄνομα δὲ ὁ θεός' — image 'ὄνομα τὸ ὁ θεός'"
+  ],
+  "b_errors": [],
+  "note": "Image shows 'τούσδε τινας τοὺς' and 'τὸ ὁ θεός' as in B; A garbles the phrase."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7740a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ipforum' — image 'ipsorum'",
+   "'illudq́ue;' — image 'illudq́;'"
+  ],
+  "b_errors": [
+   "'ὑπάρχουσι' — image 'ὑπάρχουσαν'",
+   "'ἐνδοξαμένου' — image 'ἐνδεξαμένου'",
+   "'instituimus' — image 'institimus'"
+  ],
+  "note": "The Greek spans in the image match A; B has two wrong Greek word forms, while A's slips are small Latin ones."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad77414",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'καὶ γαλᾶς ὑποτύπων' — image 'καὶ γαλᾶς ὑπό τινων'",
+   "'ἀνθρώπους' — image 'ἀνθρώποις'",
+   "'παρ' Ὁμήρῳ' — image 'παρὰ τῷ Ὁμήρῳ'"
+  ],
+  "b_errors": [
+   "'ἐν γαλαῖς' — image 'καὶ γαλᾶς'",
+   "'τοιάδε' — image 'τοιασδὶ'"
+  ],
+  "note": "B is closer on ὑπό τινων, ἀνθρώποις and παρὰ τῷ; both have a small slip in the γαλᾶς phrase."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7747e",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'καθ' ὃ δή, τί' — image 'καθ' ὃ δὴ ὅ, τι'",
+   "'ὃ περὶ' — image 'τὸ περὶ'",
+   "'προσίεσθαι αὐτοῖς' — image 'αὐτοὺς'"
+  ],
+  "b_errors": [
+   "'παυσώμεθα' — image 'πυθώμεθα' (reverses sense: 'let us stop' for 'let us ask')",
+   "'αὖθις' — image 'καὶ αὐτοὶ'",
+   "'ἀληθεύειν αὐτοῖς' — image 'αὐτοὺς'",
+   "'σαφὲς ὅτι μὴ' — image 'σαφὲς τὸ μὴ'"
+  ],
+  "note": "B's 'παυσώμεθα' changes the argument; A's slips are smaller particle and article errors."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad774f5",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἀπαίρει μὲν εἰς τὴν Βηρυτὸν' — image 'παραγέ- ... κατὰ τὴν Βηρυτὸν'",
+   "'ᾔτησαν γραφῇ ταύτας ἀνατρέψαι' — image 'παραδοῦναι'",
+   "Latin 'colloquiuntur' — image 'colloquuntur'"
+  ],
+  "b_errors": [
+   "'προσεδρεύειν τὸν Ζαχαρίαν' — not on leaf (image 'περι-... τῷ Ζαχαρίᾳ')",
+   "'τὸ Ἀμμώνιος, εἶτα τὸ Γέσιος τὸ' — image 'τὸ Ἀμμωνίου, εἶτα τὸ Γεσίου τοῦ'",
+   "'πρὸς αὐτὸν' / 'διαλέγονται' — image 'αὐτοὺς' / 'διαλέγεται'"
+  ],
+  "note": "The small, dense Greek is only partly legible; each text gets different clauses right and both carry invented wording."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad774f8",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'φθαρεῖσαν' — image 'φθαρῆναι'",
+   "'ἄν σου ἐροίμην' — image 'σε'",
+   "'Βούλῃ ... ἐμαυτοῦ τε' — image 'Βούλει ... ἐμήν τε'",
+   "'μή τις ἡμῶν ἐκκόπτῃ' — image 'μή τις ἐλθὼν ἐκκόψῃ'"
+  ],
+  "b_errors": [
+   "'συνναΐδιον' — image 'συναΐδιον'",
+   "'περίσι' — image 'πέρυσι'"
+  ],
+  "note": "Image matches B on φθαρῆναι, σε, ἔχει, Βούλει, ἐμήν and ἐλθὼν ἐκκόψῃ; Latin columns are equivalent."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7753e",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'τῇ μὲν ὑποστάσει' — image 'ταῖς μὲν ὑποστάσεσι'",
+   "'ὅπερ γὰρ ὁ' — image 'τοῦτο γὰρ ὃ'",
+   "'σαρδάνιον' — image 'σαρδώνιον'",
+   "'ἤτοι τρισηλίου' — image 'ἤγουν τρισσῆς'"
+  ],
+  "b_errors": [
+   "'τριαστικῆς' — image 'τρισσῆς'"
+  ],
+  "note": "Image agrees with B on ὑποστάσεσι, τοῦτο γὰρ ὃ, σαρδώνιον and ἤγουν; A has several wrong forms."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad7755b",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "transcribes mirrored show-through of the facing title page as if it were this page's text"
+  ],
+  "b_errors": [],
+  "note": "The leaf is blank except for mirrored bleed-through, which B reports correctly."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad77606",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'formica' — image 'formicæ'",
+   "margin '12' — image '26'"
+  ],
+  "b_errors": [
+   "'preparant' / 'terre' — image 'præparant' / 'terræ'",
+   "margin '12' — image '26'"
+  ],
+  "note": "Remaining differences are italics markup, u/v and diphthong spellings, and punctuation spacing."
+ }
+]

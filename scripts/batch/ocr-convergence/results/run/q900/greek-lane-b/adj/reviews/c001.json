@@ -1,0 +1,438 @@
+[
+ {
+  "item_id": "6993896474305116d72d190c",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "header 'παραινεσις εἰ δεῖ' — image 'παραίνεσις αἳ/δὲ δεῖ' (abbreviation, not εἰ)",
+   "'περὶ πάντα σεαυτὸν' — image 'περὶ πάντας ἑαυτὸν'",
+   "red marginal 'ἀρ(χὴ)' rendered as 'λ̄ ·:·'",
+   "last line completed as 'ἀκατάγνωστον' — leaf ends 'ἀκατα-'"
+  ],
+  "b_errors": [
+   "footer note transcribed as 'τῆς πρὸς Τίτον ἐπιστολῆς κεφάλαιον β̅' — red footer is a lection note, not this",
+   "header 'καθολικῶς' — image 'καθ' ἡλικίαν' (both texts miss this)"
+  ],
+  "note": "Both carry the full Titus 1:9–2:8 text. B matches the leaf on 'πάντας ἑαυτὸν', the ἀρχή rubric and the truncated last word, but A's differences are small and would not mislead a reader."
+ },
+ {
+  "item_id": "6993896474305116d72d1924",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "lines 1–3 garbled: 'κομιδῆ χοι νόμασι πεντάς· ἆρα μόθοι ἄγε καὶ ἐχλοί' — image 'ἧς μέτοχοι γεγόνασι πάντες· ἄρα νόθοι ἐστὲ καὶ οὐχ υἱοί'",
+   "line 1 'λ' η μ' ... —πρ'· ἡ δὲ' — image 'πατήρ· εἰ δὲ'",
+   "line 3 'ποιοῦμεν' — image 'τοὺς μὲν'",
+   "'ἔχομεν' — image 'εἴχομεν'",
+   "omits the running head 'ΕΒ'"
+  ],
+  "b_errors": [
+   "red marginal lection notes partly guessed ('κυριακῇ η μετὰ πεντηκοστῆς πρὸς Ἑβραίους')"
+  ],
+  "note": "The image's first lines read 'πατήρ· εἰ δὲ χωρίς ἐστε παιδείας ἧς μέτοχοι γεγόνασι πάντες· ἄρα νόθοι ἐστὲ' as in B. A's opening is gibberish; the rest of the two texts agree."
+ },
+ {
+  "item_id": "6993896474305116d72d1949",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "adds 'τοῦ κόσμου' after 'καταβολῆς' — not on the leaf",
+   "adds 'καὶ' before 'προσῆλθον αὐτῷ' — not on the leaf",
+   "'αἰγιαλὸν καὶ καθίσαντες' — image 'αἰγιαλὸν καθίσαντες'",
+   "red header rendered as unreadable letter strings ('β̅ ω̅ κ̅ α̅ι̅ ελθων...')"
+  ],
+  "b_errors": [
+   "page number 'λ̅ε̅' — the red mark at top left is unclear",
+   "red marginalia paraphrased and expanded"
+  ],
+  "note": "The main text of Matt 13 agrees in both. A adds 'τοῦ κόσμου' and 'καί' that are not on the leaf, and its rubric is garbled; B's header reads as a sensible lection rubric."
+ },
+ {
+  "item_id": "6993896474305116d72d19ba",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'τίς ἂν εἴη ἡ παραβολή' — image 'τίς εἴη αὕτη ἡ παραβολή'",
+   "'συνῶσιν' — image looks like 'συνιῶσιν'"
+  ],
+  "b_errors": [
+   "line 1 'ᾧ δὲ ἀφίενται αἱ πολλαὶ ἁμαρτίαι' — image 'εἶπεν δὲ αὐτῇ· ἀφέωνταί σου αἱ ἁμαρτίαι'",
+   "red rubric 'τῆ δ' τῆς β' ἑβδ. τῆς εὐαγγελίου τοῦ λουκᾶ' — image 'τῇ ϛ' τῆς ιβ' ἑβδ. τῷ καιρῷ ἐκείνῳ ἐπορεύετο ὁ ἰς κατὰ πόλιν καὶ κώμην'",
+   "'μὴ βλέπωσι' — image 'μὴ ἴδωσι'"
+  ],
+  "note": "The image's opening lines match A ('εἶπεν δὲ αὐτῇ· ἀφέωνταί σου αἱ ἁμαρτίαι'), as does the red rubric. B has a different, wrong first sentence and an invented rubric."
+ },
+ {
+  "item_id": "6993896474305116d72d1a1a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ἐντολὴν ἔδωκεν' — image 'δέδωκεν'",
+   "omits 'καὶ' (compendium at line end) in 'ὅμως μέντοι καὶ ἐκ τῶν ἀρχόντων'"
+  ],
+  "b_errors": [
+   "page number '284' — image '287'",
+   "'ἐπώρωσεν' — image 'πεπώρωκεν'",
+   "'ἐλήλυθεν αὐτοῦ ἡ ὥρα' — image 'ἦλθεν'",
+   "drops the last line 'εἰδὼς ὁ Ἰησοῦς ὅτι πάντα δέδω-'",
+   "red marginalia and footer replaced by model notes ('likely liturgical markers')"
+  ],
+  "note": "Checked the differing words and the folio number on the leaf: A is right on 287, πεπώρωκεν and ἦλθεν, and keeps the final line, which B drops; B is right only on δέδωκεν and καί."
+ },
+ {
+  "item_id": "69ad716ac5001c07fa84807e",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'βαστάζητε' — image 'βαστάσητε'",
+   "marginal line numbers placed inline and some misplaced (e.g. '25' before line 11, '30' after line 20)"
+  ],
+  "b_errors": [
+   "omits the marginal line numbers"
+  ],
+  "note": "The small-caps quotation on the leaf reads ΒΑΣΤΑΣΗΤΕ, as in B. Otherwise the two texts are identical apart from A's inline line numbers."
+ },
+ {
+  "item_id": "69ad716ac5001c07fa848132",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "header 'P. 382' — image 'P. 882'",
+   "'Str. iv. P. 578' — image '579'",
+   "line-end words clipped by the gutter are filled in by guesswork (marked unclear), e.g. 'Harnack, Chronol.'"
+  ],
+  "b_errors": [
+   "'are also mentioned by Matthias ἐν ταῖς παραδόσεσι' — runs two lines together and invents a link; drops 'τοῦτο πρῶτον … ὥσπερ' line structure",
+   "'ἡ γραφὴ τοὺς παραπίπτοντας … συνέπρασκεν' — image 'παραπεσόντας … πιπράσκει'",
+   "invents references not visible on the cropped leaf: 'from Hippolytus', 'Zahn Gesch. d. Kan.', 'Lucian Alex. 11', 'Lightfoot's note'",
+   "'the tradition of Matthias' / 'the gnostic' — image 'of Matthias' / clipped 'the g…'",
+   "'He contrasts the Stoic expressions of the Stoics' — doubled phrase not on the leaf"
+  ],
+  "note": "The right edge of the page is cropped. A marks the clipped endings as unclear; B fills them silently with invented citations and rewrites lemma 28. A's only real misreadings are the numbers 382 and 578."
+ },
+ {
+  "item_id": "69ad716ac5001c07fa8481a5",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "παιδαγωγός '898' — image '893'",
+   "πάλιν αὖ '884' — image '834'; παλινδρομέω '28' — image '23'",
+   "πάμπολυς '898' — image '893'; πανεπίσκοπος '887' — image '837'; '811' — image '311'",
+   "Pr. Ev. I. 1. '8' — image '3'"
+  ],
+  "b_errors": [
+   "παγκρατιάζω '843' — image '848'; παίγνιον '848' — image '865'",
+   "swaps the headwords παιδαγωγέω / παιδαγωγία",
+   "'πανηγυμών … θεὸν' — image 'πανηγεμών … θεὸς'",
+   "'συγκεντροῦσι' — image 'συγκαττύουσι'",
+   "'παραβῆναι' — image 'παραβέβηκα'"
+  ],
+  "note": "A matches the leaf on 848, 865, the headword order and πανηγεμών; B matches on 893, 834, 23, 3, 837 and 311. Each text has several wrong page references the other gets right."
+ },
+ {
+  "item_id": "69938e685d28b693146d073e",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The title-page text is identical in both and matches the leaf; the only differences are heading levels and how the Teubner device is described."
+ },
+ {
+  "item_id": "69938e685d28b693146d07b3",
+  "pick": "B",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'per-pessi essent' — image '…petiuntur'",
+   "'deum auxilium' — image 'deorum'",
+   "'codicavit: 183—191' — image 'collocavit: 153—191'",
+   "'179 σὺ — δάμασσον ἄτροπον ἠματίῃσι καὶ ἀφραδέεσσιν ἐδίταις' — image has a new lemma '181 …' on that line",
+   "'In nota elegans veritas est' — image 'In nota di… res notata est'"
+  ],
+  "b_errors": [
+   "'perpeliuntur' — image 'perpetiuntur'",
+   "'praescivit' — image 'praeivit'",
+   "'epan orthosi plora' — image 'epana-phora'",
+   "many Greek lemmas guessed ('αἰχὴ', 'λυσίσου', 'κότρον')"
+  ],
+  "note": "The page is heavily over-inked and the right edge is cut. Where I could read it, B tracks the line numbers and Latin better (collocavit, 153, deorum, res notata), but both texts garble most of the Greek lemmas."
+ },
+ {
+  "item_id": "69938e685d28b693146d08c6",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "verse numbers given as 177, 164, 165, 178, 180 … 200 — image 277, 264, 265, 278, 280 … 300"
+  ],
+  "b_errors": [
+   "'νέφῳ ψευδήμονι' — image 'νέῳ'",
+   "verse numbers '284', '285' for lines 2–3 — image '264', '265'"
+  ],
+  "note": "The Greek verse is otherwise identical. A has the right word (νέῳ) but every line number is off by 100; B has the right hundreds but one wrong word and two wrong numbers."
+ },
+ {
+  "item_id": "69938e685d28b693146d0b61",
+  "pick": "merge",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "line 415 'φαμένη' — image 'φθαμένη'"
+  ],
+  "b_errors": [
+   "line 426 'θεομάχος' — image 'θεημάχος'"
+  ],
+  "note": "Checked both spans on the print: φθαμένη (B is right) and θεημάχος (A is right). Everything else is diacritic convention."
+ },
+ {
+  "item_id": "69938e685d28b693146d0ba2",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "restores letters cut off at the left gutter ('ἶσαν', 'παιδὸς', 'eniensium') that are not visible"
+  ],
+  "b_errors": [
+   "'Ἐριννύος ἀντία κόρης' — image 'κόρσης'"
+  ],
+  "note": "The clipped left column is ambiguous either way. In the fully visible right column, B misreads 'κόρσης' as 'κόρης'."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f6c",
+  "pick": "neither",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1 'πρὸς τὰς ἀπατούσας πιθανότητας τῶν ἀρχῶν' — image 'πρὸς τὰς ἁπασῶν τῶν μεθόδων ἀρχὰς'",
+   "lines 2–8 largely invented ('διάφορος ἐστὶ τῆς διαλεκτικῆς ἡ διαιρετική', 'οἱ σταλαγμίαι', 'στάλαντα')",
+   "rubric 'τοῦ ἰατροῦ τοῦ Ἰωάννου' — image '… πατρὸς τοῦ Ἰωάννου'",
+   "omits λάρυγξ/adds 'κίων' in the list of organs"
+  ],
+  "b_errors": [
+   "second half garbled: 'Πᾶσα δὲ φωνὴ αἰσθητή, καὶ σημαντική' — image 'Τῶν δὲ φωνῶν αἱ μὲν εἰσὶ σημαντικαί αἱ δ' οὔ'",
+   "'κρούσεις τῶν χορδῶν' — image 'κροῦσις τῶν ξύλων'",
+   "'ὅτι ἡ ἀκοὴ ἀκοὰς ἡ τῶν ὀπτικῶν ἀνακόπτονται' — unusable",
+   "definitions of φύσει/θέσει and ὄνομα paraphrased beyond recognition"
+  ],
+  "note": "Same leaf as 696925044fa3b04c6de86f7a (read at higher resolution there). A invents most of the first paragraph; B gets the opening right but turns the second half into unusable text."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f6e",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "gives the metal label as 'Ex Bibliotheca Philippi Eduardi et Octaviani Sec: Fuggerorum' — the label is illegible at this resolution and its last line looks like '…Hispani', not Fuggerorum"
+  ],
+  "b_errors": [
+   "calls the bosses 'corner bosses' (three are visible, two at the bottom corners, one upper left)"
+  ],
+  "note": "Both give the painted '33.' and 'P. 71.' correctly. A puts a specific provenance reading in for a label that cannot be read, while B marks it illegible."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f72",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "Both read 'Pl 71 cod 33', page I and the Laurenziana stamp; they differ only in how they describe the stamp."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f78",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The list of contents is identical; the only differences are the æ/ae ligature, final punctuation and expanding 'Aphrodisiens.'."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f7a",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'πρὸς τὰς ἁπάσας' — image 'ἁπασῶν'",
+   "'εὐπρεπῶς τῶν ἐπιστημῶν πρῶτον ἐντυγχάνει τῷ διαλεκτικῶ' — garbled",
+   "'ὡς ἐπὶ θραύσεως τῶν ξύλων' — image 'ὡς ἡ κροῦσις τῶν ξύλων'",
+   "'Πασῶν δὲ φωνῶν' — image 'Τῶν δὲ φωνῶν'",
+   "'ὑπερῶος' — image 'ὑπερῴα'"
+  ],
+  "b_errors": [
+   "'Εἴληπται δὲ ἡ διαλεκτικὴ' — image 'λέγεται δὲ ἡ διαλεκτικὴ'",
+   "invented sentence 'Τὸ γὰρ τῆς διαλεκτικῆς σημαινόμενον ἴσον ἐστὶ τῇ ψηλαφήσει'",
+   "'κροῦσις τῶν πλίνθων, ἢ τῶν πετρῶν πτῶσις' — image 'τῶν ξύλων … κτύπος'",
+   "organ list drops λάρυγξ and adds 'ἐπιγλωττίς'",
+   "'πᾶσα δὲ φωνὴ ψόφος ἐστὶν οὐ κυρίως· ἡ γὰρ κυρίως' — garbled"
+  ],
+  "note": "Both have garbled stretches. A follows the leaf more closely through the ψόφος/φωνή passage (λέγεται, ξύλων, λάρυγξ); B adds sentences that are not on the page."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f7b",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "some readings normalised (e.g. 'ὁμοίως δὲ καὶ' for 'ὁμοίως καὶ')"
+  ],
+  "b_errors": [
+   "'Το δὲ ἐκ χρόνου αδιαφορᾶν ἄνευ ῥήματὸς' — image 'Τὸ δὲ ἄνευ χρόνου εἰς διαφορὰν τοῦ ῥήματος'",
+   "'ὅπερ οἰκεία ὄνομα καλείσθαι τοῖς παλαιοτέροις' — image 'ὃ οὐκ ἔστιν ὄνομα κατὰ τοὺς διαλεκτικούς' (repeated invention 'τοῖς παλαιοτέροις')",
+   "drops the example 'τοῦ Φίλωνος, τῷ Φίλωνι'",
+   "'οἷον τὸ ἄνθρωπος' — image 'οἷον τὸ οὐκ ἄνθρωπος'",
+   "the λόγος section rewritten (προθετικοί, εὐχτικοί, 'εἰ ἄνθρωπός ἐστι, ζῶον ἔστι')"
+  ],
+  "note": "Line by line the leaf reads as A does (εἰς διαφορὰν, κατὰ τοὺς διαλεκτικούς, Φίλωνος/Φίλωνι). B misreads the abbreviations and adds phrases that are not there."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f7c",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "opening 'ἤτοι οὐ μόνον δὲ ἀλλ' ἡ ἀντιθετικὴ ταὐτοδόξημα' — garbled",
+   "'Πρότασις δὲ εἴρηται οἷον εἰπεῖν, κατηγορικὴ ἤτοι ὑποθετική' — image 'Τῶν δὲ προτάσεων αἱ μὲν κατηγορικαὶ αἱ δὲ ὑποθετικαί'",
+   "'ἡ ἄγουσα' — image 'ἡ ἔχουσα'"
+  ],
+  "b_errors": [
+   "'ἡ καὶ μετὰ μορίου ἀφαιρετικοῦ' — image 'ἡ τὸ κατηγορούμενον ἀφαιροῦσα'",
+   "'ζήτει ἐν πᾶσι τοῖς πράγμασι τὰ ἑξῆς τρία' — invented",
+   "'ἄνθρωπος ἔμαθον … ἵππος ἔμαχε' — image examples are ἄνθρωπος ζῶον / τρέχει",
+   "'ἔντισται' — garbled"
+  ],
+  "note": "B has the structure of the opening lines right (κατηγορικαί/ὑποθετικαί, ἔχουσα); A is better on the definition of the negative proposition and on ποία καὶ πόση. Both garble the middle of the page."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f7d",
+  "pick": "A",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "list of matters omits 'ἀδύνατος' and invents 'εἰς δύο διῃρημένη'",
+   "'ἐπὶ παντὸς τοῦ ὑποκειμένου' — image 'ἀεὶ ὑπάρχει τῷ ὑποκειμένῳ'",
+   "'ὁ ἄνθρωπος ἵππος ἐστίν' as an example of necessary matter — not on the leaf",
+   "'ἀναπιπτούσης τῆς ὑποφορᾶς' — image 'ἄνευ τῆς τοῦ ὑποκειμένου φθορᾶς'"
+  ],
+  "b_errors": [
+   "'γινώσκειν δὲ χρὴ ὡς ἐν μὲν τῇ ἀναγκαία ὕλη αἱ καταφάσεις ἀληθεῖς' — image 'νόμος τῶν ἐναντίων ἐστὶν…'",
+   "'οὐκ ἀνάκειται μέντοι ἄμφω' — image 'συνίστανται μέντοι ἄμφω'",
+   "replaces the law of subcontraries ('νόμος τῶν ὑπεναντίων … ἡ μία ψευδής') with an invented sentence on impossible matter",
+   "examples changed to 'ὑγιαίνει' — image 'λευκός … ζῶον … ὄνος'"
+  ],
+  "note": "B reads the first lines on the three matters better, but from 'νόμος τῶν ἐναντίων' on it replaces the leaf's laws of opposition with invented text. A keeps those laws and their examples."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f7e",
+  "pick": "merge",
+  "confidence": "low",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "'ἐν τοῖς προτατικοῖς ὑποκειμένης … αὐτὴ γραφῆναι … τὸ χρῶμα δὲ συμβαίνει' — image 'τῆς μελλούσης ἀντιστραφῆναι, ὁποῖον ἄρα ἐστί, χρὴ …'",
+   "hypothetical-proposition section garbled ('ὑπὸ τῆς φωνῆς τοῦ κλήματος', 'οἱ σοφοί')"
+  ],
+  "b_errors": [
+   "line 1 'οὐ μόνον ἀποφατικὴ ἐπὶ τῆς ἐπικαταφατικῆς' — image 'ἡ καθόλου ἀποφατικὴ εἰς τὴν καθόλου ἀποφατικήν'",
+   "'ἀνάγκη ἐστὶ ζῷον· εἰ δὲ ζῷον οὐκ ἔστιν ἄνθρωπος' — image 'τὶς ἄνθρωπος ζῶον καὶ τὶ ζῶον ἄνθρωπος'",
+   "'τι ζῷον οὐκ ἔστιν ἄνθρωπος' — image 'τὶ ζῶον ἐστὶν ἄνθρωπος'",
+   "'καὶ τὰ ἀντικείμενα' — image 'κατὰ ἀντίθεσιν'"
+  ],
+  "note": "A follows the leaf through the conversion rules in the first half, which B inverts. B is better in the second half (ἀντιστραφῆναι, the three kinds of hypothetical). Both have unusable stretches."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f7f",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ὡς γιγνώσκειν. προσέτι' — image 'ἐστὶν ἀδύνατος. πρὸς δὲ'",
+   "'ὁ θεὸς κράτιστος ὡς γλυκύτατος' — invented example",
+   "renders 'ἐστὶ' as 'ὡς' throughout ('ὁ ἄνθρωπος ὡς ζῶον')",
+   "'ὡς χρωματιστικόν' — image 'ἐστὶ χρεμετιστικόν'",
+   "margin 'Ἄλλος κανών' — image 'δεύτερος κανὼν ἐστὶν οὗτος' in the text line"
+  ],
+  "b_errors": [
+   "'ὁ ἄνθρωπος ἐστὶ λευκότης' — example uncertain",
+   "'ἐὰν μὲν ὁ συμπεπλεγμένος καθόλου ᾖ στερητικὸς προστάττηται' — garbled",
+   "later paragraph on adverbs paraphrased ('εἴδη ῥηματικῆς συντάξεως')"
+  ],
+  "note": "The leaf has 'πρὸς δὲ … ἐστὶ ζῷον … ἐστὶ χρεμετιστικόν … δεύτερος κανών', as in B. A misreads ἐστί throughout and adds examples that are not there; B still has garbled patches."
+ },
+ {
+  "item_id": "69de0cc580210ba13d79f5c5",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The Lucian text and apparatus are identical; the only differences are apostrophe forms, superscript notes and line breaks."
+ },
+ {
+  "item_id": "69de0cc580210ba13d79f5f4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The text is identical. The print really has the typo 'nnreasonable', which B keeps and A silently corrects; the rest is spacing and apostrophes."
+ }
+]

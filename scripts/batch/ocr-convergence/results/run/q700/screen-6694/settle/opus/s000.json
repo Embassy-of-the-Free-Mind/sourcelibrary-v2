@@ -1,0 +1,27 @@
+[
+ {
+  "item_id": "69590717736e8b2e7a262b09",
+  "verdict": "not-confirmed",
+  "confidence": "medium",
+  "note": "The only transcribed text, 'Secunda pars.' and 'QVARTA FIGVRA', is printed on the leaf above the volvelle; the <note>, <vocab> and <detected-images> blocks are labelled descriptive annotations of the figure (like an <image> description), not passages presented as leaf text."
+ },
+ {
+  "item_id": "69b2f3cca9a500a45e5e88e5",
+  "verdict": "not-confirmed",
+  "confidence": "medium",
+  "note": "Page 280 'COMMENT.' prints verses 30 ('Et surgent septem anni famis') through 54 ('erat panis.') exactly as transcribed; the trailing <vocab> tag is a labelled keyword list, a markup convention rather than a passage claimed for the leaf."
+ },
+ {
+  "item_id": "69afd0a8775a23a98ee93439",
+  "verdict": "not-confirmed",
+  "confidence": "medium",
+  "note": "The leaf runs from '& proficiunt. Lingua quoque' to 'Nam putredo multum in eo præualet.' with margins 'Dentiū series.', 'Radices molariū plures.', 'Intestinorum anfractus.' and catchword 'Et quia', all in the text; the closing <vocab> tag is a labelled keyword list, not a passage claimed for the leaf."
+ },
+ {
+  "item_id": "6a05f06e6a888f57ebd77143",
+  "verdict": "confirmed",
+  "kind": "invented",
+  "confidence": "high",
+  "note": "The leaf is the printed preface '序例' beginning '中国医药学作为中华民族古代灿烂文化的一个重要组成部分', but the text holds only a model <warning> ('This page is not a 16th–18th-century manuscript… the full text is not reproduced here') plus correction notes, so none of the leaf's paragraphs are transcribed and the prose given is not on the leaf."
+ }
+]

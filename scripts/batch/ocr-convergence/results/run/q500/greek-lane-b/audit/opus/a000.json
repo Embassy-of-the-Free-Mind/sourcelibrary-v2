@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69d146051c2a66dc094b20d3",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X omits the printed parenthesis '(quæ definitio & hic habetur)' and misreads 'πεττείας' as 'παιδείας' and 'Thalete' as 'Thaletem'."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad773b4",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X misreads 'τούσδε τινας τοὺς σοφούς' as 'τηδέ τινας ποτὲ σοφούς' and 'ὄνομα τὸ ὁ θεός' as 'ὄνομα δὲ ὁ θεός'; Y matches the leaf."
+ },
+ {
+  "item_id": "6a357eaac6e2d5bb56a640e8",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has 'δεσπότην' where the leaf prints 'δεσπότιν', and garbles 'III 1³ S. 314⁶' as 'III 13 S. 3146'; otherwise the two are equivalent."
+ },
+ {
+  "item_id": "6a3f02bb97e91e1768f68273",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X misreads 'οἷόν τε' as 'αἰόν τε', codd. 'οὐδὲν' as 'οὐθὲν', and 'τᾶ τοιαύτα ἁρμονίᾳ' as 'τὰ τοιαῦτα' (which makes the reading identical to the libri); both keep all the text."
+ },
+ {
+  "item_id": "69b6684db3f4fc0441568e06",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf has 'Ἂν μὲν καλὴν ἕξεις' and 'πυνθανόμενον', as Y gives them; X has 'λάβῃς' and 'πυνθάμενον', and 'retaliant' for 'retalient'."
+ },
+ {
+  "item_id": "69942a7f045dfc482ad774f8",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y misreads 'φθαρῆναι' as 'φθαρεῖσαν', 'σε ἐροίμην' as 'σου', and 'μή τις ἐλθὼν ἐκκόψῃ' as 'μή τις ἡμῶν ἐκκόπτῃ'; X's main slip is 'ἐμήν' for 'ἐμαυτοῦ'."
+ },
+ {
+  "item_id": "6a357eaac6e2d5bb56a640c2",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X gives the lemma name as 'Ξέστρου' where the leaf prints 'Σέκστρου' (Sextus), and has 'Ἀτοπόν' for 'Ἄτοπόν'."
+ },
+ {
+  "item_id": "69944b932aa4c20217a343c4",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops the negation in both columns ('Porro domus quæ in his sunt non eodem pacto' and 'οὐ τὸν αὐτὸν τρόπον'), which reverses the sense, and reads 'μετὰ δὲ τὸν ἐνιαυτὸν' as 'μὴ δὲ'."
+ },
+ {
+  "item_id": "6a3f02bb97e91e1768f683b0",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y has 'ἑτέρου μὲν παρόντος' where the leaf prints 'πταρόντος' (sneezing), plus 'τρόμειν' for 'τρέμειν' and 'quod aes faciendam' without 'ad'; X's slip is 'Olympicenicen' for 'Olympionicen'."
+ },
+ {
+  "item_id": "69aea3b5912e8f072fbef567",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y gets the folio numerals wrong: κ becomes χ ('ρχγ'' for 'ρκγ''), and ξ and ϟ become ζ or η ('ζη'', 'ηγ'' for 'ξη'', 'ϟγ''); X reproduces the numerals correctly."
+ }
+]

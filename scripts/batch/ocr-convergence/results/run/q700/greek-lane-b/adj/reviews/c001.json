@@ -1,0 +1,382 @@
+[
+ {
+  "item_id": "69942c54b2f6748db4abd79f",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'ὑποτεινομένας' — image 'ἀποτεινομένας'",
+   "'βουλήσει' — image 'βουλήσῃ'"
+  ],
+  "b_errors": [
+   "'κινείμεθα' — image 'κινούμεθα'",
+   "'καθαπτομέναις' — image 'καθαπτούσαις'",
+   "'ψυχ-/ικῶν' — image 'ψυχι-/κῶν'",
+   "'ἐστὶ τοῦ διανοητικοῦ' — image 'ἐστὶν'"
+  ],
+  "note": "Checked the differing spans on the leaf: A is right on κινούμεθα, καθαπτούσαις and ἐστὶν, and B only on ἀποτεινομένας and βουλήσῃ."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7ab",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "'πρὸς γὰρ ψόφους καὶ ἤχους' — image 'ψόφοις καὶ ἤχοις'"
+  ],
+  "b_errors": [],
+  "note": "The image clearly reads ψόφοις καὶ ἤχοις. All other differences are accents, punctuation or heading level."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7bb",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "'τὰ δὲ ἀνθρώπῳ' — image 'τοῦ δὲ ἀνθρώπου'",
+   "'φαινομέναι' — image 'φαινόμεναι'",
+   "'ἐμποιούσα' — image 'ἐμποιοῦσα'"
+  ],
+  "note": "The image shows τοῦ δὲ ἀνθρώπου, which B garbles. The other spans are apostrophe or punctuation conventions."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7bc",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'ὑπερβαλλόσῃ' — image 'ὑπερβαλλούσῃ'"
+  ],
+  "b_errors": [
+   "'οὐδ' ἐπεί' — image 'οὐδ' ἐπὶ'",
+   "'αἰδὼς δὲ φόβος ἐστὶ προσδοκία' — image 'ἐπὶ προσδοκίᾳ'",
+   "'εἰ δὲ τοῦτο' — image 'οὐ δὲ τοῦτο'",
+   "'εἰς ἀγωνίαν' — A's 'σωτηρίαν' fits the leaf better (word is small)",
+   "'ὑπερβαλούσῃ' drops a λ"
+  ],
+  "note": "In the definitions of αἰδώς and αἰσχύνη, B has several wrong words where the image supports A."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7c4",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "catchword 'τα κὴ' — image 'τα καὶ'",
+   "'περιττωμάτων' — leaf prints 'περιττωμένων'"
+  ],
+  "b_errors": [
+   "'χεδὸν' reproduces the leaf's misprint literally"
+  ],
+  "note": "The differences are literal-versus-normalised readings of misprints, plus accent and breathing conventions. Neither text misleads."
+ },
+ {
+  "item_id": "69942c54b2f6748db4abd7cb",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἐπῇσαν' — image 'ἐπῄεσαν'"
+  ],
+  "b_errors": [
+   "'οὕτως·' — image 'οὕτω πως'"
+  ],
+  "note": "Each text has one small slip. Both give 'sixth book' (ἕκτῳ / ϛ΄) for a word the image seems to print as τρίτῳ, so that difference does not separate them."
+ },
+ {
+  "item_id": "69b21f344522d8c1db3be19f",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "marginal '283' placed at paragraph start rather than at line 11; line numbers omitted"
+  ],
+  "b_errors": [
+   "'διασκευασμένους' — image 'διεσκευασμένους'",
+   "'Ἦκε' — image 'Ἧκε'"
+  ],
+  "note": "The text agrees throughout; the remaining differences are line numbers, hyphenation and two one-letter slips in B."
+ },
+ {
+  "item_id": "69b21f344522d8c1db3be1f4",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are only hyphenation, letter-spaced heading, bold initial and punctuation; both match the leaf."
+ },
+ {
+  "item_id": "69b21f344522d8c1db3be246",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "marginal line numbers run inline into the prose"
+  ],
+  "note": "The wording is identical apart from an accent (χερσῖν/χερσὶν). The only other difference is where the line numbers are placed."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1dd1",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The differences are hyphenation, footnote-marker style and breathings; both match the page."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1e03",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "apparatus v. 14 'Ed. omitt. Er. omitt. ὁ' — image 'Ed. omn. Er. omitt. ὁ'",
+   "drops the † before 'τοῦ ὕδατος' in v. 10 that the leaf prints",
+   "adds accents to the unaccented apparatus readings (ἐν τῷ ἰορδάνῃ etc.)"
+  ],
+  "b_errors": [],
+  "note": "The image has † before τοῦ ὕδατος and reads 'Ed. omn.' in the apparatus, as B does."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1e15",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'ἐσὶν' — image 'ἐστὶν' (ligature)",
+   "apparatus 'ἡ ὡς' — image 'ἢ ὡς'"
+  ],
+  "b_errors": [
+   "'χῦν' — image 'χοῦν' (ȣ ligature)",
+   "'ungebant' — image 'unguebant'"
+  ],
+  "note": "Each text has small misreadings the other avoids; none of them changes the passage much."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1e4d",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'τὸν ζαχαρία υἱὸν' — image 'ζαχαρίου'"
+  ],
+  "b_errors": [
+   "'Caiapha' — image 'Caïpha'",
+   "'Jes. 40, 3.' — image 'Jes. 40, 5.'",
+   "restores the cropped beginnings of the Greek lines without marking them"
+  ],
+  "note": "A wrongly reads ζαχαρία. B misreads Caïpha and a reference number, and silently restores the cropped line starts that A marks as unclear."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1ebe",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "v. 12 'quae superfuerunt fragmenta' — image 'superaverunt'",
+   "apparatus 'ἐγεμισαν' — image 'ἐγεμησαν'"
+  ],
+  "b_errors": [
+   "footnote '1530.' — image '1590.'"
+  ],
+  "note": "The image reads 'superaverunt' and 'ἐγεμησαν' (as in B) but '1590' (as in A). B has fewer errors."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1ec3",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "v. 66 'ἐκέτι' — image 'οὐκέτι'",
+   "apparatus 'v. 68. ἐν omitt.' — image 'οὖν omitt.'",
+   "note 'cf. v. 57. 44.' — image 'cf. v. 37. 44.'"
+  ],
+  "b_errors": [
+   "'ἔμελλεν' — image 'ἤμελλεν'"
+  ],
+  "note": "B matches the image on οὐκέτι, the apparatus οὖν and the reference v. 37; A gets all three wrong."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1ef1",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "apparatus 'v. 15. C. γαβαθα' — image 'v. 13.'",
+   "completes 'αὐτοῦ,' where the leaf breaks off at 'αὐ-'"
+  ],
+  "note": "The apparatus on the leaf reads 'v. 13'. The other differences are bold markup and a breathing."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc1f5e",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "renders the ȣ ligature as ε/υ throughout: 'τὲς ὀφθαλμὺς', 'ἤκεσαν', 'ἰεδαῖοι', 'τῶ λαῶ τούτω'",
+   "'ῥήσεως' — image '(αἱ)ρέσεως'"
+  ],
+  "b_errors": [
+   "'γνωσόν' — image 'γνωστόν' (στ ligature)"
+  ],
+  "note": "A's mishandling of the ȣ ligature produces many non-words across the Greek column. B reads the column correctly apart from γνωσόν."
+ },
+ {
+  "item_id": "69aea5c81c89af5ce4bc2040",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "v. 4 'φανερωθέντες' — image 'φανερωθέντος'",
+   "v. 12 'σιλυανοῦ' — image 'σιλβανοῦ'",
+   "omits the † critical marks printed before several words"
+  ],
+  "b_errors": [
+   "v. 7 Latin 'quoniam ipsi est de vobis' — drops 'cura' (right edge cropped)"
+  ],
+  "note": "The image confirms φανερωθέντος, σιλβανοῦ and the daggers that B keeps."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4a97",
+  "pick": "both",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [],
+  "note": "The title page agrees word for word; the differences are letter spacing, the μετ'/μετὰ abbreviation and the woodcut description."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4a99",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'μυστηριῶδες' — image appears to read 'μυσταγωγὸν'"
+  ],
+  "b_errors": [
+   "'νόθῳ τινι λογισμῷ ἅπτικα οἴσεσθαι' — image 'νόθῳ etiam λογισμῷ ἀπεικασθείσας'",
+   "drops 'quadam' in 'adulterina quadam ratiocinatione'",
+   "'germanæ ueritatis uim' — image 'veritati vim'",
+   "'falebris' — image 'salebris' (long s), also changes printed 'vt/vel' to 'ut/uel'",
+   "woodcut described as having a bearded profile medallion, not visible"
+  ],
+  "note": "B garbles a Greek phrase, drops a word and misreads long s. A follows the leaf closely."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4a9a",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'animun' — image 'animum'",
+   "'acceditè' — image 'accedēte'",
+   "Greek 'ἐν δρασνεῖοις' and 'αἷς ζῶσι πρεπούσαις' — image 'δραστικοῖς', 'ὑπηρετούσαις'",
+   "'de prisca illius' — image 'priscæ'",
+   "omits 'τῶν' before 'μετὰ τὰ φυσικὰ'"
+  ],
+  "b_errors": [
+   "'demonstratione' — image 'commonstratione'",
+   "'Vniuersum igitur' — image 'Vniuersim'",
+   "'vites' — image 'vires'"
+  ],
+  "note": "A is right on commonstratione, Vniuersim and vires; B is better on several Latin and Greek words. Neither is clearly better overall."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aaa",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "transcribes page 20 (PLATONIS) instead of this leaf, page 19 TIMAEVS ('bonorū & malorū liberos…')"
+  ],
+  "note": "The leaf is p. 19 with signature BBBB.iiii; A matches it and B is the text of the following page."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aac",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "transcribes page 22 (PLATONIS) instead of this leaf, page 21 TIMAEVS ('πρέπον ἂν ἡμῖν εἴη…' / 'memorare, tu ut in beneficio…')"
+  ],
+  "b_errors": [],
+  "note": "The leaf is p. 21 and begins πρέπον ἂν ἡμῖν; B matches it and A is the next page."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aad",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "transcribes another page (the Nile/Egyptian-records passage of p. 23) instead of this leaf, page 22"
+  ],
+  "note": "The leaf is p. 22 ('incolas & sacerdotes illos rogaret…', Greek beginning ρωτῶν…); A matches it."
+ },
+ {
+  "item_id": "69b21d4addb4fa7c305b4aae",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "transcribes page 24 (PLATONIS) instead of this leaf, page 23 TIMAEVS"
+  ],
+  "note": "The leaf is p. 23 ('πων, ὅσα ἢ παρ' ἡμῖν…' / 'minū tamē genusquoddā…'); A matches it and B is the next page."
+ }
+]

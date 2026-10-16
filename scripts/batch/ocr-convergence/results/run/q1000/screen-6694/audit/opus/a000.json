@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "6a26c407aad44c98627ccc63",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'Minerӕ' and 'ernehrende'; Y misreads 'Minoræ' and modernizes the spelling ('ihr', 'Ursach', 'ernährende'), but the sense is intact."
+ },
+ {
+  "item_id": "69b2ff225545150b61b46f82",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y drops 'creaturis' from 'nihil creaturis uisibile, ut Fortunatus', which changes the sense, and alters the printed 'Marcellius' to 'Marcellus'."
+ },
+ {
+  "item_id": "69f729b77c3b54c5bde3c2db",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X keeps the Hebrew as printed ('קירון עור פנים') and reads 'sit'; Y normalizes the Hebrew to 'קֶרֶן עוֹר פָּנִים' and twice gives 'fit' for 'sit', though Y correctly has the Greek 'ὃς τις'."
+ },
+ {
+  "item_id": "69aeac1911981ede8212cba9",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf prints 'otio is ali solet' and 'quibusdam'; X omits 'is' and gives 'quibusdā'. Otherwise the two are near-identical."
+ },
+ {
+  "item_id": "695435461479a63c1108bbd1",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The body texts are identical; Y only adds a spurious '<sig>s</sig>' taken from show-through and bolds 'Deum'."
+ },
+ {
+  "item_id": "69f750d0651c793f6f2520c0",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y matches 'quartæ quintæue partis', 'Conseruæ', 'Enulæ' and 'I. Q.'; X drops the '-ue' ('quartæ quintæ') and gives 'Conferuæ', 'Enula' and 'pleurifibus'."
+ },
+ {
+  "item_id": "69f729ecc6111a27ed8a14a5",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y collapses the subscript leaf numbers into wrong figures ('24V, 50V' for 'X4v, X5v'; '288 V' for '21₈v'; 'IV 11, 12 & 13'), which misstates the collation."
+ },
+ {
+  "item_id": "69ade7aa6a6b945bbdfa3090",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'kulminirt', 'frugi', 'Aukto=rität' and 'funfzigsten'; Y's 'fulminirt' and 'fruggi' are wrong words, and its header reads 'Bom' for 'Vom'."
+ },
+ {
+  "item_id": "69b21d9e94025df5d2908e08",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'ductore Bor-bonio'; X garbles the name as 'Bo-bonio' and leaves HTML '&amp;' entities. Y is otherwise faithful."
+ },
+ {
+  "item_id": "69bcebfdae27b5d80618b7da",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads '曰干扞也…青裘豹褎麛裘青豻褎豹取制服豻取守也'; X has '干豻也', '豹豻裘青豻裘' and '豹取守也', which change the gloss. X's page number '百十一' is also wrong."
+ }
+]

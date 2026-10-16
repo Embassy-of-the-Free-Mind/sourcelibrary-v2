@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69938a88c564adf9fabec136",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is a single column of Aristotle's Topics that Y follows closely ('ἀναιροῦντι μὲν οὖν, καθάπερ εἴρηται'). X garbles the wording, invents a second column and repeats a fake margin note ('τὸ δὲ πρὸς τί, ὡς τὸ διπλάσιον') six times."
+ },
+ {
+  "item_id": "69b62f671c1c21a3737f522f",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X matches the Greek, the Latin and the 'γρ. εἰ γὰρ μηδενὶ…' margin note. Y drops that note, corrupts terms ('ζῶον ὅτι σήπει' for 'ζῶον, ἐπιστήμη, ἄγριον') and leaves out the Latin clause 'At pro certo ac concesso habebatur nullum consequi: verum'."
+ },
+ {
+  "item_id": "69b2235a56715b0e32477382",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "X reads the printed words better ('γρῖφος', 'γαλιψὸς καβεῖα', 'δύο'). Y misreads many of them, often putting λ for δ ('χρίσιος', 'λύω', 'λίδυμος', 'λείπνον'), which changes the dictionary entries."
+ },
+ {
+  "item_id": "699388e60f04c37dcfa6001c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y follows the Demosthenes text on the leaf ('οὔτε γὰρ ὡς δοκεῖ καὶ φήσειέ τις ἂν μὴ σκοπῶν ἀκριβῶς'; column 2 starts 'ἀπὸ τούτων δέοι διοικεῖν'). X garbles it ('ὡς δόξει καὶ φοβερός ἐστι'), starts column 2 with the wrong lines and invents scholia passages."
+ },
+ {
+  "item_id": "6993897cce15387065947126",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf is illegible and X says so honestly. Y invents readable Latin sentences ('et erat in illo tempore in civitate quodam homo'), though Y reads the foliation 'n. 69' correctly where X has '169'."
+ },
+ {
+  "item_id": "696925044fa3b04c6de86f6c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y matches the rubric ('τοῦ ἰατροῦ τοῦ Ἰωάννου') and the opening ('πρὸς τὰς ἀπατούσας'), and keeps the run of red rubric headings on sounds and signs. X's wording is largely invented ('πρὸς ἁπάσας τῶν μεθόδων') and it repeats a garbled rubric."
+ },
+ {
+  "item_id": "69a5e5e385fa13e734e418eb",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y gets key lines right ('πόλεμον ἔχωμεν ὦ μειρακίσκοι', 'ὑπὸ τῶν ὀλυμπιονικῶν', 'ἀνδρός· λογγῖνος'). X misreads them into different sense ('πόλιν οὐκ ἔχομεν ᾧ μικροὶ', 'πήχη τὰς μήκωνας') and adds a page number '21'. Both are rough in the middle."
+ },
+ {
+  "item_id": "69937a5eb0a84a57639682a0",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Both texts give the verse, speaker labels and notes c–e exactly; they differ only in indentation markup."
+ },
+ {
+  "item_id": "69924f3f09c5da0cf50d7cff",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts are word-for-word identical ('become guardian of that ruler's son', '481 (Gaspar), 477 (L. Schmidt),'); only the tags differ."
+ },
+ {
+  "item_id": "69937a5eb0a84a576396824b",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The two texts are identical, including all three footnotes ('See Rogers, Introduction, p. ix.'); only the formatting differs."
+ }
+]

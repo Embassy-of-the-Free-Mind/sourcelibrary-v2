@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69ef2f5d72c1376fdf2af1f1",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Leaf reads 'cum sief viridi, & sief de chalcātho' and 'sebel, & scabiei', 'in oculū'; X has 'cum fiet viridi, & fiet de chalcatho', 'sebeli, & scabei', 'in oculo', which garbles the remedy's name."
+ },
+ {
+  "item_id": "69f6fec106cac8cfcfca317c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X's Greek column is garbled, drops the line 'διηγεῖτο δὲ ὅμως, ὡς ὑπὸ τοῦ θεοῦ πρὸς αὐτὸν' and inserts line numbers; its Latin also omits 'uiam' in 'in hora uiam quinque milium annorum'."
+ },
+ {
+  "item_id": "69b51e50cf111105c429a8b8",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The leaf has only mirror-reversed show-through of the title page; Y transcribes that other side's title ('BREVIARIUM ROMANUM … M. DC. XCVI.') as if it were this page's text."
+ },
+ {
+  "item_id": "69a9768ee12635ded71c4ed4",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Footnote 10 prints 'Id. οὔπω' (a variant); Y gives 'οὕτω', the same as the main text, which voids the variant note. Y also has 'Infinitiois'."
+ },
+ {
+  "item_id": "69f72f2f6415e6e30f897859",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The texts differ only in how abbreviations are handled ('theatrum'/'theatrū', 'idque'/'idq;'); the wording is identical."
+ },
+ {
+  "item_id": "69b52beb3dd6d9423027cbc1",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Leaf reads 'eum seruemus uictum'; X has 'eum qui huic uictum'. X's margins misread 'discrimen' as 'differre' and 'hec ex controuersia mirabilis' as 'haec est conseruatiua mirabilis'."
+ },
+ {
+  "item_id": "69dbc9211040d1d5e20a06e3",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops 'uir' in 'quod uir matris opianicus ei parauisset', gives 'libras ccliii' for the printed 'cccliii', and 'quod gallicum' for 'per quendam gallicum'."
+ },
+ {
+  "item_id": "69593455b282844d7b277f6c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The page number is printed '3785' (continuous pagination, with a fraktur 5); X gives '378'. Otherwise X only normalises spellings ('Erzhirt' for 'Ertzhirt')."
+ },
+ {
+  "item_id": "69906ed78a353648e1ed0878",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X is largely garbled and invents headings ('Incipit de arte nova', 'Exordium de arte nova'); Y follows the leaf, e.g. 'hel, y, gamaze, azatan, hemel, samuetheon' and 'Restant nota que non possunt aliquo modo exponi'."
+ },
+ {
+  "item_id": "6957ef6bcbe1dcad7b76bf0c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops 'Tussiētes medicat̃ bibita vsqz ad .ʒ.i.' and puts an invented 'Auicē.' in its place; X also misdescribes the iris-like woodcut."
+ }
+]

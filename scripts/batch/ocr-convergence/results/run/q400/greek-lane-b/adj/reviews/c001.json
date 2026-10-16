@@ -1,0 +1,484 @@
+[
+ {
+  "item_id": "69942a40045dfc482ad760aa",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 2: 'ἰοὶ ἐπεσκέψατ' — image 'ἐπεσκέψατο'",
+   "line 11: 'κατ’ ἄλλας μὲν τὰς τόπους' — image 'κατ’ ἄλλους μέν τοι γε τόπους'",
+   "line 14: 'τὴν τι αὐτῷ ... τῷ ἐν Χριστῷ ἀναπαύσας' — image 'τήν τε αὖ προπαιδείαν τῆς ἐν Χριστῷ ἀναπαύσεως'",
+   "line 17: 'εἴη σ’ αὖ γυμνασία τῶν νοητῶν' — image 'ἔτι δ’ αὖ γυμνασία τῷ νῷ, τὰ νοητά'",
+   "line 47: drops 'καὶ χρὴ μετιέναι τὸ' before 'ἐλεγκτικὸν εἶδος'"
+  ],
+  "b_errors": [
+   "line 1: '(ὡς Φίλων ὁ Ἑβραῖος' — image 'ἰὼ ὁ Φιλομαθὴς Ἰούδας'",
+   "line 3: 'τῇ Σάρρᾳ τῆς Ἅγαρ παραδοκιμασάσης' — image 'τῆς Σάρρας τὴν Ἄγαρ παραδοκιμάσων'",
+   "line 15: 'μᾶλλον δὲ ἀληθεῖς' — image 'μᾶλλον δὲ εἰληφότες'",
+   "line 19: 'τῶν προστρεχουσῶν ἡμῖν, ὥσπερ ὕλης τῶν ἐκτὸς' — image 'ὑποτρέχουσιν ἡμῖν, ὑποπίπτειν οὐκ ἐᾷ'",
+   "line 45: 'μισῶν' — image 'μῖσος'"
+  ],
+  "note": "Checked the differing spans line by line; each text has sense-changing misreadings the other gets right, so neither is clearly better."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76111",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 18: 'ἡ μεταπειστικὴ αὕτη αἱρετή' — image 'ἡ ματαιοπονία αὕτη αἱρετή'",
+   "line 6: 'ἀπευθύνοντες. εἰ δὲ μέγιστον τὸ ἀγαθωσύνης' — image 'σπεύδοντες. οἱ δὲ μέγιστοι τῆς ἀγαθωσύνης'",
+   "line 24: 'κατὰ τὴν μακαρίαν ἕξιν' — image 'καὶ τῷ μακαρίῳ εἶναι'",
+   "line 28: 'ὁ σωτήριος, ἡ διὰ φόβου' — image 'τοῦ σώματος, ἡ μετὰ φόβου'",
+   "line 18: 'κατὰ συμφορὰν' — image 'κατησχυμμένον'"
+  ],
+  "b_errors": [
+   "line 6: 'ἐκ γὰρ τῆς ἐλπίδος' — image 'εἰ δ’ ὁ θεὸς τῆς ἐλπίδος'",
+   "line 7: 'ἐν ἐπί' — image 'οὖν ἐστι'",
+   "line 10: 'τότε ἡμεῖς' — image 'τούτου ἡμεῖς'",
+   "line 18: 'τὸ κατόρθωμον' — image 'κατησχυμμένον'",
+   "Euripides: 'Ἄγ’ οὖν ... διέξαγε' / 'χαῖτ’ ἕτερα' / 'ἅπερ ἐπιφέρει' — image 'Ἅ γ’ οὖν ... δέξαι γύναι' / 'καὶ ἕτερα' / 'εἶτ’ ἐπιφέρει'"
+  ],
+  "note": "Both texts have several sense-changing misreadings in different places, so neither can replace the other."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76125",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'ἐπαναλήψεται' — image 'ὑποπιπτόντων'",
+   "line 8: 'ὅνπερ οὐρανόθεν καταπέμπει· δεῦρο ἐπὶ τὰ ἡμέρω' — image 'ἔνθεν οὐρανόθεν καταπέμπεται δεῦρο ἐπὶ τὰ ἥττω'",
+   "line 14: 'καὶ βλαστὸς ἐκλεκτός' — image 'καὶ διὰ τοῦτο ἐκλεκτός'",
+   "line 33: 'μὴ φωνῆς εὔχεσθαι' — image 'μετὰ φωνῆς'"
+  ],
+  "b_errors": [
+   "line 12-13: 'ὀψὲ γὰρ αἰγνοίαν ὧν ... γῆ ἔφοδος' — image 'ὁ γὰρ ἐν ἀγνοίᾳ ὢν ... γῆ καὶ σποδός'",
+   "line 13: 'εἰς γνῶσιν' — image 'ἐν γνώσει'",
+   "line 4: 'τοῦ Ἐπιχάρμου' — image 'τὸν Ἐπίχαρμον'",
+   "line 10: 'ἑκόντως' — image 'εἰκότως'",
+   "line 36: 'προσᾴδοντα τῷ λόγῳ ἀφομοιώσομεθα' — image 'λόγῳ διαληψόμεθα'"
+  ],
+  "note": "Each text gets right several readings the other garbles, so a merge is needed."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76136",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 5: 'Δαβὶδ δὲ λέγει' — image 'Διὰ τοῦτο λέγει'",
+   "line 8: 'τῆς γὰρ ζωῆς' — image 'τοῦτο γὰρ ἡ ζωὴ'",
+   "line 18: 'καὶ τῷ Διὰ λόγου τοῦτο' — image 'κἀν τῷ διαλέγεσθαι τὸ'",
+   "line 24: 'καὶ ὁ περιλαμβάνειν πρὸ τῶν ἀπειληφότων ὀπτικῶς' — image 'καὶ ὅτι οὐ περιλαμβάνεται τόπῳ τὸ ἀπερίληπτον ὁ γνωστικὸς'"
+  ],
+  "b_errors": [
+   "line 5: 'Ἀλατᾶτ’ λέγει' — image 'Διὰ τοῦτο λέγει' (garbled)",
+   "line 16: 'κἂν δι’ ἀγγέλων πιτεύσῃ ὡς μυσταγωγεῖται' — image 'καὶ δι’ ἀγγέλων προσεχῶς μυσταγωγεῖται'",
+   "line 17: 'κἂν μόνας' — image 'κατὰ μόνας'",
+   "line 15: 'περιέχοντα περιεκτικόν' — image 'καὶ τῶν ὅλων περιεκτικόν'"
+  ],
+  "note": "Spans checked on the image; each text has distinct sense-changing errors."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76140",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 1: 'ἀπρεπῶς' — image 'ἀπηρεῖς'",
+   "line 9: 'ἔστιν οἷον' set as margin — image 'εἶτα οἷον' in text",
+   "line 29: 'Ἐγὼ ἔστησεν βροντὴν' — image 'Ἐγὼ στερεῶν βροντὴν'",
+   "line 30: 'τὸν στρατὸν τοῦ οὐρανοῦ' — image 'τὴν στρατιὰν τοῦ οὐρανοῦ'"
+  ],
+  "b_errors": [
+   "accents/breathings dropped and abbreviation glyphs (ꝸ, ꝫ) left throughout",
+   "line 28: 'πιχα και οἱ ζυγον νοητον ꝸ θεοῦ' — image 'πῆχα καὶ σύζυγον νοητὸν τοῦ θεοῦ'",
+   "line 30: 'τῆυ σρανιαν τε κρανιοῦ' — image 'τὴν στρατιὰν τοῦ οὐρανοῦ'",
+   "line 41: 'ὕποξε τας ἶνας' — image 'ἀποτάκτας τινὰς'"
+  ],
+  "note": "A has a few word slips, but B is garbled throughout: diacritics are stripped, glyphs are left in, and several phrases are unreadable."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76157",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 1: 'συνεπιπνεῖν' — image 'συνεμπίπτειν'",
+   "line 18: 'χρησὶν παιδὸς' — image 'φησὶν παιδὸς'",
+   "line 36: 'Ἀγαθοποιητέον μετὰ προσευχῆς' — image 'Ἀγαθὸν νηστεία μετὰ προσευχῆς'",
+   "line 21: 'κἀπὶ τοῦ Ἀβραὰμ ... αὐτῷ τὴν ἀδελφὴν' — image 'ἔκτοτε ὁ Ἀβραάμ ... αὐτὴν ἀδελφὴν'"
+  ],
+  "b_errors": [
+   "line 10: 'ἐπίσημον 10 συναύξησιν' — image 'ἐπιστήμης συναύξησιν'",
+   "line 10: 'ἐκ ὑπερβαίνων' — image 'οὐχ ὑπερβαίνων'",
+   "line 12: 'αὐγάμον' — image 'αὖ γάμον'",
+   "line 22: 'ἐμνησικακεί' — not on the leaf",
+   "line 19: 'εὐαγγελισθεὶς ... ἀπιστήσας' — image 'εὐαγγελισθείσης ... ἀπιστησάσης'"
+  ],
+  "note": "Both texts have meaning-changing misreadings at different spots."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76172",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 7: 'ἐκ πολλοῦ χρόνου ἐν τοῖς πάλοις' — image 'ἐκ ἀγωνίης(?) ἐν τοῖς πάλαι'",
+   "line 24: 'τῇ μὲν ἀῤῥήτῳ εὐχῇ' — image 'τῇ διὰ στόματος εὐχῇ'",
+   "line 25: 'ὅθεν παντὶ τοίνυν τόπῳ' — image 'ἐν παντὶ τοίνυν τόπῳ'",
+   "line 29-30: drops 'τὸ δ’ ἀποτελεῖν' clause",
+   "line 3: 'παρέσεσθαι καὶ πείσεσθαι' — image 'πράσσειν'"
+  ],
+  "b_errors": [
+   "line 12: 'ταῦτ’ ἂν ἀπαγγέλ’' — image 'ταῦτ’ οὖν ἀπαιτεῖται'",
+   "line 2: 'ἐπιζητητικὸν' — image 'ἐπιγυμναστικὸν'",
+   "line 3: 'πᾶσαι καὶ πᾶσαν' — image differs",
+   "throughout: abbreviations rendered as truncated forms ('τ’', 'κτ’', 'δ’') making many words unreadable"
+  ],
+  "note": "A invents or drops some phrases, and B mangles abbreviations and misreads verbs; each is right where the other is wrong."
+ },
+ {
+  "item_id": "69942a40045dfc482ad7618c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 11: 'Οὐχὶ δὲ, ἀλλὰ πολλῷ ταπεινοπροσώπῳ' — image 'ὁ κύριος δὲ διὰ πολλὴν ταπεινοφροσύνην'",
+   "line 19: 'τῶν μὲν οὔπω τὴν τοῦ φωτὸς οἷόν τε ἦν ἰδεῖν ἰδέαν' — image 'τὴν μὲν ὄψιν τὴν φωτεινὴν ἰδόντες'",
+   "line 5: 'ὑπὸ Θεοῦ δὲ δι’ Ἀδὰμ' — image 'ὕπνος δὲ ἦν Ἀδάμ'"
+  ],
+  "b_errors": [
+   "line 1: 'καταδικηθῆναι ζωὴν ἐναποτιθεῖσα' — image 'καταδιῃρῆσθαι ἤδη ἑνοποιοῦσαι'",
+   "line 6: drops 'ὁ σωτήρ' before 'τὸ σπέρμα'",
+   "line 16: 'τοπικὴν τὴν μεταβολὴν ἀμείβον, ὡς τὰ μεταβαλλόμενα' — image 'τόπον ἐκ τόπου ἀμεῖβον, ὡς τὸ μὲν ἐπιλαβεῖν, τὸ δὲ ἀπολιπεῖν'",
+   "line 38: 'ἀγαπήσας οὖν ὁ πατὴρ τὸν' — image 'ἄγνωστος οὖν ὁ πατὴρ ὤν'"
+  ],
+  "note": "The errors are spread across both texts, so a merge is needed."
+ },
+ {
+  "item_id": "69942a40045dfc482ad7618f",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 13: 'διττὸν καὶ παθητόν, διὰ τὰς ὁράσεις' — image 'γενητὸν καὶ παθητόν, διὰ τοὺς ἀριστερούς'",
+   "line 14: 'καὶ τὰ λοιπὰ τὸν διδάξειν' — image 'κατὰ τοῦτον δεδίασιν'",
+   "line 19: 'ὁ κύριος εἰς τὸν ἀπὸ φυτῶν' — image 'ὃ κατὰ εἷς τῶν προφητῶν'"
+  ],
+  "b_errors": [
+   "line 31: 'τὸ διάπυρον' — image 'τοῦ δευτέρου'",
+   "line 32: drops 'ἐν σιγῇ'; adds 'αἰσθητὸν'",
+   "line 14: 'καθ’ ἕτερον πνευματικὸν' — image 'κατὰ τὸ πνευματικὸν'",
+   "line 27: 'ἀπερριμμάτων ... ἐστολίσατο' — image 'σπερμάτων ... ἐνεδύσατο(?)'"
+  ],
+  "note": "Both have sense-changing errors in different passages; neither dominates."
+ },
+ {
+  "item_id": "69942a40045dfc482ad76190",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 6: 'δι’ αὐτὸν ὅλον, καὶ τὸ πανεύρεσκον πάσχον' — image 'δι’ ὧν τὸ ὅλον καὶ τὸ πᾶν εὑρίσκεται πάσχον'",
+   "line 8: 'ὄνομα αἰώνων' — image 'ὄνομα ἀνωνόμαστον'",
+   "line 3: 'ἡ δὲ συμπάθεια' / 'ὁ δὲ συνεπάθησεν' — image 'γὰρ'",
+   "line 17: 'παραπλήσιος τῷ ἡμετέρῳ, τὸ ὑπὸ τοῦ λιμένος' — image 'παράκουσμα τῆς μητρὸς ἐκ τοῦ ὑπὸ σημείου'"
+  ],
+  "b_errors": [
+   "line 21-22: 'ὑπεπόθησιν ... ὑπάρχουλος ... ἠτίεν γίνετυ' — garbled",
+   "line 7: 'πείσεως ... παραδοθέντα' — image 'πταίσεως ... παιδευθέντα'",
+   "line 17: 'παρακούσματά ἡμέτερα ἐκ τοῦ λυπουμένη' — garbled",
+   "line 15: 'ἔδοξε' — not on the leaf"
+  ],
+  "note": "Each text has garbled or wrong stretches that the other reads correctly."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a75c2",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "omits the critical apparatus at the foot of the page (replaced by a meta note)",
+   "col. 2 line 24: drops 'τὸ ὂν' ('οὐδ’ ἐὰν τὸ ὂν εἴπῃς')",
+   "col. 2 line 2: 'αὐτῷ' — image 'αὐτοῦ'",
+   "col. 2 line 14: 'προσσημαῖνον μὲν γὰρ' — image 'προσσημαίνει μὲν γὰρ'"
+  ],
+  "note": "A matches the image; B drops the apparatus and a phrase and misreads two words."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a7626",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 9: 'τῷ ἑτέρῳ' — image 'τοῦ ἑτέρου'",
+   "line 31: 'τὸ καθ’ αὑτὸ τῷ κατὰ συμβεβηκός' — image 'τοῦ κατὰ'",
+   "col. 2 line 27: 'ποιητικὰ δὲ καὶ τέλος' — image 'ποιητικοῦ δὲ καὶ τέλους'"
+  ],
+  "b_errors": [
+   "col. 2 line 9: 'τῷ τινὶ ... τῷ τέμνεσθαι' — image 'τοῦ τινὶ ... τοῦ τέμνεσθαι'",
+   "col. 2 line 4: 'ἐπὶ τῶν ἐναντίων' — image 'ἐπὶ τοῦ ἐναντίου'",
+   "col. 2 line 23: 'τῷ τέλει' — image 'τοῦ τέλους'",
+   "col. 2 lines 34-37: 'τῷ ὑγιεινῷ' (x2), 'τῷ γὰρ αὐτοῦ' — image 'τοῦ'"
+  ],
+  "note": "The page prints the τοῦ ligature throughout; B misreads it as τῷ more often than A does."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a76bd",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "line 5: 'κινεῖν καὶ κινεῖσθαι' — image 'κινοῦν καὶ κινούμενον'",
+   "line 6: 'κινεῖν δὲ ἔτι' — image 'κινοῦν δὲ ἔτι'",
+   "line 7: 'ἄλλο ἑχόμενον' — image 'ἄλλου ἐχόμενον'",
+   "apparatus: 'τε κινοῦν K' — image 'τε κινεῖ K'"
+  ],
+  "b_errors": [
+   "throughout: 'κινήμενον', 'κινῆν' — nonwords for 'κινούμενον', 'κινοῦν' (ου ligature misread)",
+   "line 20: 'ἢ γὰρ ὑπὸ τοῦ αὐτοῦ' — image 'οὐ γὰρ ὑπὸ τοῦ αὐτοῦ' (reverses sense)",
+   "col. 2 line 14: 'κινύμενος' — image 'κινούμενος'"
+  ],
+  "note": "A has a few wrong verb forms; B turns the ου ligature into nonwords all through the page and reverses a negation."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a76dc",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "signature 'q 7' — not visible on the leaf",
+   "line 11: 'θάλασσαν' — image 'θάλατταν'",
+   "apparatus line 30: 'ἴσα FM' — image 'ὅσα FM'"
+  ],
+  "b_errors": [
+   "col. 2 line 31: 'γίγνεσθαί' — image 'γίνεσθαί'"
+  ],
+  "note": "The text is the same apart from spelling variants and one apparatus slip."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a777b",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "col. 2 line 20: 'τῷ σωματώδους' — image 'τοῦ σωματώδους'",
+   "'ὥσε', 'ἔσιν', 'ἐσιν' — image 'ὥστε', 'ἔστιν' (st ligature dropped)",
+   "apparatus line 10: 'τῷ πάθους τούτου' — image 'τοῦ πάθους'"
+  ],
+  "note": "A matches the image; B has a few ligature misreadings that produce wrong or non-words."
+ },
+ {
+  "item_id": "69afe660da5fa12b664a77ec",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 3: 'θορικὸς πόρος ὔθ’ ὑστερικὸς ἔγχυσιν' — image 'θορικοὺς πόρους οὔθ’ ὑστερικοὺς ἔχουσιν'",
+   "throughout: 'ὔτ’', 'ὐδ’', 'ὐχ', 'ὓς' — nonwords for 'οὔτ’', 'οὐδ’', 'οὐχ', 'οὓς'",
+   "col. 2 line 31: 'σελαχιῶν' — image 'σελαχῶν'"
+  ],
+  "b_errors": [
+   "line 14: 'ἐγχέλων' — image 'ἐγχελύων'",
+   "line 15: 'οὐκ ἔστιν ἀληθές' — image 'ἐστὶν οὐκ ἀληθές' (order)",
+   "col. 2 line 9: 'τὸ τίκτειν' — image 'τοῦ τίκτειν'",
+   "apparatus: 'ἔτ’ AaCa' — image 'οὔτ’ AaCa'"
+  ],
+  "note": "A drops the ο of the ου ligature throughout and garbles one clause; B has only scattered small slips."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d169",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [],
+  "b_errors": [
+   "line 25: 'οἰκουμένην' — image 'οἰκουμενικὴν'",
+   "line 41: 'poſſet' — image 'poſſe'"
+  ],
+  "note": "Abbreviation expansion differs only by convention; B misreads one Greek word and one Latin verb."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16a",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 12-13: drops 'πάθειαν' (second half of 'συμπάθειαν') and invents a margin note 'ad has'",
+   "line 2: '<unclear>conarentur</unclear>. Sed' — passage is smudged on the leaf; reading is guessed"
+  ],
+  "b_errors": [
+   "line 10: 'Vl tar' — image 'Vtar'",
+   "line 34: 'Huld rice' — image 'Huldrice'",
+   "line 35: 'Baysio' — image 'Bayſio' (long s)"
+  ],
+  "note": "The image shows 'συμ-/πάθειαν' across the line break; A drops the second half and invents a margin, while B's slips are only spacing and letter errors."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16b",
+  "pick": "B",
+  "confidence": "high",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "drops about seven lines after 'ſed eius ſe ætate vixiſſe non addens. ſcribit enim,' ('In ſequentibus autem vigintitribus libris ... Eadem autem Olympiade ſe in Ægyptum veniſſe ſcribit,')"
+  ],
+  "b_errors": [
+   "'ſcribit interim' — image 'ſcribit enim'",
+   "'Dei ornare nomine cognoſco' — image 'Dei ornare cognomento'",
+   "'ἡμεῖς δὲ Ἀγυριναῖοι' — image 'ἡμεῖς δὲ ἐξ Ἀγυρίου'",
+   "'Britania' — image 'Britānia'"
+  ],
+  "note": "A omits a whole passage visible on the page; B keeps it, though B has some word errors of its own."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16c",
+  "pick": "merge",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": true,
+  "replace": false,
+  "a_errors": [
+   "line 8: 'κηρίον' — image 'λειμών'",
+   "line 1: 'ἱστορικῆς βιβλιοθήκην' — image 'ἱστορικὴν βιβλιοθήκην'",
+   "margin '110' — not on the leaf",
+   "line 3: 'ὀψὲ τῶν τῇδε συναγαγών' — image differs"
+  ],
+  "b_errors": [
+   "line 16: 'τῆς ξ̄ τῶν ἱστορικῶν βιβλιοθήκης' — image 'τῆς τῶν ἱστοριῶν βιβλιοθήκης'",
+   "line 20: 'ἐκ τῆς περὶ' — image 'ἐν τοῖς περὶ'",
+   "line 19: 'τῆς περὶ βιβλιοθήκης' — image 'τὰ περὶ'",
+   "line 40: drops 'his' ('quali opus eſt his in rebus')",
+   "'quuum', 'deferi', 'deſit' — image 'quum', 'deſeri', 'deſiit'"
+  ],
+  "note": "The Greek titles are misread differently in each text; A is better in the Latin, but both have errors that matter."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16d",
+  "pick": "A",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'Volaterranus' — image 'Volaterranū'",
+   "'credidit' — image 'credit'",
+   "'verſauerunt' / 'Latina' — image 'verſauerant' / 'Latinā'",
+   "'νησιωτικην' duplicated and placed as margin notes not on the leaf"
+  ],
+  "b_errors": [
+   "'τέρμα Διοδώρου' — image 'τμῆμα δεύτερον'",
+   "'τέρμα τοῦ πρώτου' — image 'τμῆμα πρῶτον'",
+   "'Περὶ τῶν' — image 'Περὶ ὧν'",
+   "'νήσων βίβλον' (x2) — image 'νησιωτικὴν βίβλον'"
+  ],
+  "note": "The passage is about the book titles; A reads the Greek titles correctly, while B replaces them with wrong words."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16e",
+  "pick": "B",
+  "confidence": "medium",
+  "a_serious": true,
+  "b_serious": false,
+  "replace": true,
+  "a_errors": [
+   "line 20: 'σε και αυτου ώς εαυτου' — image 'ſe κατὰ γένος'",
+   "line 28-29: 'τὸ πρᾶγμα' (x2) — image 'τὸ ἔργον' / 'ἔργον'"
+  ],
+  "b_errors": [
+   "line 29: 'ἐν παρέργῳ' — image 'τὸ πάρεργον'",
+   "line 32: 'diſtinxit' — image 'diſtinguit'"
+  ],
+  "note": "A invents the Greek phrase and substitutes τὸ πρᾶγμα for ἔργον; B's Greek mostly matches, with two small slips."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d16f",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [],
+  "b_errors": [
+   "long s read as 'f' in places ('fedulò', 'fe', 'etiamfi', 'exercitatiffimus fit')",
+   "'quibuſdem' — image 'quibuſdam'"
+  ],
+  "note": "Same text; the differences are expansion conventions plus B's long-s/f confusion."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d170",
+  "pick": "A",
+  "confidence": "high",
+  "a_serious": false,
+  "b_serious": true,
+  "replace": true,
+  "a_errors": [
+   "'Bœotiæ' — fine; 'Quotufquiſque' — image 'Quotuſquiſque'"
+  ],
+  "b_errors": [
+   "line 48: 'turrim σύγχυσιν' — image 'turrim οὐρανομήκη'",
+   "line 9: 'παλαιὰς μυθολογίας' — image 'παλαιὰν μυθολογίαν'",
+   "'Polyhiſtor' — image 'Polyiſtor'",
+   "'tradiderint, quid poſteris' — image 'tradiderint poſteris' (adds 'quid')"
+  ],
+  "note": "A matches the image; B replaces a Greek word with one not on the page and adds a word."
+ },
+ {
+  "item_id": "69a956dc65ddd05bbcd3d171",
+  "pick": "both",
+  "confidence": "medium",
+  "a_serious": false,
+  "b_serious": false,
+  "replace": false,
+  "a_errors": [
+   "'euaferant' — image 'euaſerant'",
+   "'ſuperfſtructa' — image 'ſuperſtructā'"
+  ],
+  "b_errors": [
+   "'notis []' — image 'notis *]'",
+   "'ἔνεστι' — image 'ἔνεστιν'"
+  ],
+  "note": "The text is the same apart from minor letter and sign slips on both sides."
+ }
+]

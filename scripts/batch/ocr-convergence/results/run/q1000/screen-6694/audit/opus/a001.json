@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f7290a7c3b54c5bde3c0ae",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X drops abbreviation marks, giving 'Christianus' for 'Christianū', 'scatet'/'resonat' for 'scatēt'/'resonāt', 'minitate' for 'minitāte' and 'fannis' for 'sannis', where Y reads correctly; the words change but the sense still comes through."
+ },
+ {
+  "item_id": "69af0da19f13b61d0a6c5d79",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both carry the full text of both columns, the Hebrew and Greek verse and the marginal numbers; Y has small slips ('creada', 'mudi') and X has 'Qvid', and none of them change the meaning."
+ },
+ {
+  "item_id": "6a9f34409a132af38544619e",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y misreads several words in ways that change the meaning: 'ملكية' for 'صلحيّة', 'وجد' for 'وجّه', 'الخزاعي' for 'اليها', 'فاذاروان' for 'همذان فاثروا', 'فنفذه' for 'فخنقه' and 'وبنى بها دارا' for 'وحبس بها'; X matches the print."
+ },
+ {
+  "item_id": "69809a84fa39eabacd81c046",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X misreads 'praxim ītroductorijs' as 'parim īproductorijs', writes 'eorum:dem' for 'eorun-dem', and adds a title heading ('Domini Simphoriani / champerii lugdunensi') that is not printed twice on the page; Y matches the line breaks and readings."
+ },
+ {
+  "item_id": "69b00ec3312120db3b489a79",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y leaves out 'rem' in 'Non recte rem intellexisse', has 'plebe' for 'plebs' and 'predicta' for 'prodicta', and changes the apparatus variant 'Retulius' to 'Rutilius'; X reads all of these correctly."
+ },
+ {
+  "item_id": "69aea8291cbf28a363a4e7f0",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has 'constit.' for 'consistit', 'Extistit' for 'Existit', margin note '§ διαλυσις' for 'ἢ διαλύονται', and section number '82' where the page prints '62'; X follows the page."
+ },
+ {
+  "item_id": "69dbca511040d1d5e20aaeef",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops 'Lactuca siue endiuia que maioris est amaritudinis' (garbled as 'Ubi gal. Lacus dinis'), has 'spoliata' for 'composita' and 'orizuccaro' for 'oxizuccaro', and gives the signature as 'd ij' where the page has 'M ij'; Y is accurate."
+ },
+ {
+  "item_id": "6a08574049638a50931c3f16",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The printed title is the same in both, but X calls the medallion portrait Virgil when its legend names Aldus Pius Manutius, and X leaves out the handwritten '3' and the 'R' mark that Y records."
+ },
+ {
+  "item_id": "69dbca511040d1d5e20ab086",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y is badly garbled: chapters 'Ca. c.' and 'cij' twice where the page has 'cx', 'cxj', 'cxij', 'bonum magnitudine' for 'boum', and the invented 'In africa et ethiopia'; X gives a faithful expanded reading."
+ },
+ {
+  "item_id": "69b1d9bdbd74411f89f7244b",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "Y has 'in stannum verretur' where the page prints 'con-vertetur' and 'excaldescat' where it prints 'excādescat'; otherwise the two are the same."
+ }
+]

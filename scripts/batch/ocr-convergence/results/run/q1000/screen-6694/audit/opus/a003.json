@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69f7055828877807ac5218ea",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X reads 'Christophorus parisiensis', 'Einem' and 'sogenanten' as printed; Y has 'parifienfis' and normalizes to 'sogennanten'."
+ },
+ {
+  "item_id": "69afe234cf56258c9389055e",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X keeps the printed 'hervorbläckende' and lowercase 'den'; Y normalizes to 'hervorbleckende' and has 'Den'."
+ },
+ {
+  "item_id": "695906c795a91542b28bf603",
+  "better": "X",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "X has the printed 'næ vitæ', 'Physicæ' and 'præhenfionem'; Y has 'ne', 'Physica' and 'prahenfionem'."
+ },
+ {
+  "item_id": "6a0852d949638a50931bb9f7",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The only difference is that Y keeps the printed misspelling 'incoporata' and X normalizes it to 'incorporata'."
+ },
+ {
+  "item_id": "69bcebfbae27b5d80618b7d6",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X matches '以足至者也' and '故牝曰麐也'; Y invents '以足以至', garbles the end as '故從君麇也' and uses the wrong character 麇 throughout."
+ },
+ {
+  "item_id": "69dbc8e41040d1d5e209d410",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y misreads 'asianus' as 'alianus', 'antequam' as 'antea' and 'tibique pro pena' as 'tibi quod per pena'; X is accurate apart from normalizing 'vitens' to 'videns'."
+ },
+ {
+  "item_id": "69aebe65a103e42dc94140b1",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y has the printed 'promovit' and 'eâdem'; X has 'promovet'."
+ },
+ {
+  "item_id": "6a097091bf2196cdca904096",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "The texts are identical except for 'CAP.' vs the printed 'CAPVT' and 'vitae' vs 'uitae'."
+ },
+ {
+  "item_id": "69b51cea261c58d6366481ef",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Y reads the printed 'iudicamus' correctly; X has 'indicamus'."
+ },
+ {
+  "item_id": "6959068395a91542b28bd622",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "low",
+  "note": "The wording is identical; they differ only in how they render the apothecary sign (X '$\\mathfrak{z}$', Y a mix of '℥' and 'ʒ')."
+ }
+]

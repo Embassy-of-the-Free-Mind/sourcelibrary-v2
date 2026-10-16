@@ -1,0 +1,13 @@
+{
+ "set": "q400",
+ "prepared_at": "2026-10-15T15:34:38.005Z",
+ "decisions": 710,
+ "held_books_skipped": [
+  "69b52c43a2d71b015aa97877"
+ ],
+ "pages_held_skipped": 5,
+ "to_screen": 700,
+ "write": 563,
+ "keep": 137,
+ "image_failed": []
+}

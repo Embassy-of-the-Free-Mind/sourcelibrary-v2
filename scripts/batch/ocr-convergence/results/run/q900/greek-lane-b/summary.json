@@ -1,0 +1,25 @@
+{
+ "set": "q900g",
+ "threshold": 0.01,
+ "pages": 180,
+ "books": 18,
+ "actions": {
+  "contain": 3,
+  "keep": 41,
+  "residual": 89,
+  "write": 14,
+  "agree": 25,
+  "no-second-read": 8
+ },
+ "by_group": {
+  "greek": {
+   "contain": 3,
+   "keep": 41,
+   "residual": 89,
+   "write": 14,
+   "agree": 25,
+   "no-second-read": 8
+  }
+ },
+ "decided_at": "2026-10-16T14:48:27.510Z"
+}
