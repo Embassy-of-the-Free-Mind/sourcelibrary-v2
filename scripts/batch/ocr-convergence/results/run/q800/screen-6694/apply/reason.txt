@@ -1,0 +1,1 @@
+#6694 step 3 (q800): Opus (claude -p, subscription) corrected the stored transcription against the page image in place (job opus-route-6694); a gemini-3.8-flash-low leaf screen found it this leaf's text (or a flag Opus did not confirm), and the batch's 40-write audit passed (Opus 0, Gemini 3 worse of 40; job opus-screen-6694)

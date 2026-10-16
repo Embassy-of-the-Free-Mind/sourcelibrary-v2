@@ -1,0 +1,72 @@
+[
+ {
+  "item_id": "69792e5364029c055cb7ffc5",
+  "better": "same",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Both texts are faithful; the differences are minor (X 'utiliſsimus' where the leaf prints 'vtiliſsimus'; Y puts the catchword 'terminum' in meta instead of the text)."
+ },
+ {
+  "item_id": "69d5adbcd0bd3547a565641b",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "X drops 殺 in '摠殺漢官' (losing 'killed the Han officials'), drops 主 in '主簿' and drops 平 in '向府平論', all of which the leaf prints."
+ },
+ {
+  "item_id": "695207e5ab34727b1f043d08",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The leaf reads 'disputatione abijciatur' and 'quenquam', which Y has; X gives 'disputione abjiciatur' and 'quemquam'."
+ },
+ {
+  "item_id": "69f72f2f6415e6e30f897860",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "The title word is 'SENTENTIAE', but X reads it as 'TENTIAB'; Y also records the struck-through inscription and the motto 'VIRTVTE DVCE, COMITE FORTVNA'."
+ },
+ {
+  "item_id": "69ae6818b3b0e7bf712d6d7a",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "high",
+  "note": "In letter XLII X leaves out 'ob' in 'si ob intermissionem obsequia', which the leaf prints; otherwise the two are identical."
+ },
+ {
+  "item_id": "6950050ef426a210d109cd18",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "The leaf reads 'statutis sublatis sua substituerunt'; X has 'oblatis' and drops 'sua', and also gives 'quod diceros' where Y has 'quasi diceres'."
+ },
+ {
+  "item_id": "69f72f2f6415e6e30f89785c",
+  "better": "Y",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "The entry for page 429 is 'De iureiurando', but X gives a wrong heading, 'De inveniendo'."
+ },
+ {
+  "item_id": "6950050ef426a210d109cd12",
+  "better": "Y",
+  "worse_serious": false,
+  "confidence": "medium",
+  "note": "Where the passage is obscured by show-through, X misreads it as 'veterum gentium ritibus & caeremoniis, ad philosophandi rationem' and 'probatur', while Y matches the leaf: 'cæterarum gentium ritibus, cæremonijs, ac philosophandi ratione' and 'probaturi'."
+ },
+ {
+  "item_id": "6957ef6bcbe1dcad7b76bf0e",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "medium",
+  "note": "Y has many wrong words that change the sense ('pulsa' for 'pusca', 'puniceū' for 'feniceū', 'agris' for 'areis', 'De ōes' for '⁊ oēs'), and its side-letters A/B/D/F do not match the printed G–N."
+ },
+ {
+  "item_id": "69ad6a975e7e0803b48e704a",
+  "better": "X",
+  "worse_serious": true,
+  "confidence": "high",
+  "note": "Y misreads long s as 'f' throughout and drops whole phrases ('Magis exigas. Magis uitae longitudinem' and 'deus uoluntatem pro effectu coronabit ... quid utili-')."
+ }
+]

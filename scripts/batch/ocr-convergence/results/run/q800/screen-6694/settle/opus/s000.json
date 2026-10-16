@@ -1,0 +1,20 @@
+[
+ {
+  "item_id": "69b51e50cf111105c429a8b8",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "The leaf shows only mirror-reversed show-through of the title page ('BREVIARIUM ROMANUM … ANTVERPIAE … PLANTINIANA'), a blank reinforcing strip and a stamp; the text marks it <page-type>blank</page-type> and only describes this in <meta>, so it reads no passage that isn't there."
+ },
+ {
+  "item_id": "69f6fe1a6c77d4c5b4858df4",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "The endleaf has no print, only a faint pale-blue oval stamp and a few faint pencil lines running off the right edge; the text describes exactly this in <warning>/<image-desc> and marks the lines <unclear>, without making up any reading."
+ },
+ {
+  "item_id": "695435201479a63c1108aecb",
+  "verdict": "not-confirmed",
+  "confidence": "high",
+  "note": "The text follows p. 245 from 'Enthymema affirmativum hoc est' through §§ 480–483 and its margins to 'Ergo mundum optimum produxit:', and the closing <vocab> line is a metadata tag, not a passage."
+ }
+]
