@@ -376,7 +376,7 @@ export default function PreservedByEnemiesPage() {
           The Franciscans in Yucatán made the same kind of record without the sermon. The great Maya&ndash;Spanish
           dictionary compiled at Motul, probably by Antonio de Ciudad Real in the late sixteenth century, defines the vocabulary of
           Maya religion the way it defines the vocabulary of farming, flatly. Under <em>ah kin</em>: &ldquo;a priest&rdquo;.
-          Two entries down, <em>ah kinyah</em>: &ldquo;a sorcerer who casts lots with superstition&rdquo; (
+          A few entries later, <em>ah kinyah</em>: &ldquo;a sorcerer who casts lots with superstition&rdquo; (
           <Link href={PAGE.motul1_47} className={linkClass}>vol. 1, f. 20</Link>). <em>Ah cunal can, ceh, balam</em>:
           &ldquo;a charmer or sorcerer who charms snakes, deer, jaguars, and so on&rdquo; (
           <Link href={PAGE.motul1_31} className={linkClass}>vol. 1</Link>). <em>Ah ohel tukinam xiuob</em>, &ldquo;an
