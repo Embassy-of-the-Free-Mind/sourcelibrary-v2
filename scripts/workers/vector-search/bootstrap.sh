@@ -23,7 +23,9 @@ DONE=$ROOT/bootstrap.done
 PHASE2=1
 for a in "$@"; do case "$a" in --no-phase2) PHASE2=0 ;; --rebuild) REBUILD=1 ;; esac; done
 step() { echo "$(date -u +%FT%TZ) == $*"; }
-die() { step "FAILED: $*"; echo "{\"failed\":\"$*\",\"at\":\"$(date -u +%FT%TZ)\"}" > "$ROOT/bootstrap.failed"; exit 1; }
+phase2() { [ "$PHASE2" = 1 ] && { step "starting phase 2"; HOME=/root /root/bin/claude-job.sh start vector-search-2 /root/claude-jobs/vector-search-2.txt; }; }
+# A failure still starts phase 2: its brief diagnoses bootstrap.failed, so a dead bootstrap is reported, not silent.
+die() { step "FAILED: $*"; echo "{\"failed\":\"$*\",\"at\":\"$(date -u +%FT%TZ)\"}" > "$ROOT/bootstrap.failed"; phase2; exit 1; }
 slice_mem() { systemctl show sourcelibrary.slice -p MemoryCurrent --value | awk '{printf "%.1f GB", $1/1e9}'; }
 T0=$(date +%s)
 rm -f "$DONE" "$ROOT/bootstrap.failed"
@@ -69,7 +71,4 @@ ROWS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$ROOT/index/s
 echo "{\"rows\":$ROWS,\"minutes\":$(( ($(date +%s) - T0) / 60 )),\"recall\":\"$RECALL\",\"at\":\"$(date -u +%FT%TZ)\"}" > "$DONE"
 step "done: $(cat "$DONE")"
 
-if [ "$PHASE2" = 1 ]; then
-  step "starting phase 2"
-  HOME=/root /root/bin/claude-job.sh start vector-search-2 /root/claude-jobs/vector-search-2.txt
-fi
+phase2
