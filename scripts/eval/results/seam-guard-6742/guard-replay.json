@@ -1,0 +1,22 @@
+{
+ "book": {
+  "id": "6acc3dbd230e9a56175cd616",
+  "title": "Platicas de los principales mysterios de nuestra Sta. Fee, con una breve exortacion al fin del modo con que deben excitarse al dolor de las culpas.: Hechas en el idioma yucateco, por orden del Illmo. ",
+  "language": "Yucatec Maya"
+ },
+ "since": "2026-10-15T00:00:00.000Z",
+ "at": "2026-10-16T07:55:21.490Z",
+ "pages": 39,
+ "joins": 34,
+ "calls": 35,
+ "labelledOk": 30,
+ "accepted": 4,
+ "wouldWrite": 3,
+ "wouldWritePages": 3,
+ "refused": {
+  "store:tail-span-not-in-stored-text+tail-projected-edit-touches-markup": 1
+ },
+ "skipped": {},
+ "errors": 0,
+ "secs": 1615
+}

@@ -386,10 +386,14 @@ async function applyStage(out, arms, doApply) {
 /**
  * Write accepted repairs ({ id, it, x, arm, verdict }) through writePageTranslation, one write per changed page, with
  * the manifest / refusal / sweep-log rows `undo` reads. `cli`/`model` name the repairer in the engine block; `reason`
- * says how the repair was accepted. Exits the process on a door refusal or a failed read-back (as the pilot did).
+ * says how the repair was accepted. Exits the process on a door refusal or a failed read-back (as the pilot did) — or,
+ * with `throwOnStop` (the write-time guard, which runs inside another job's process), throws instead. `allowHidden`
+ * accepts a book that is not yet visible (a new translation of a book still being processed); a held book is refused
+ * either way. `callSite` names the writer in the engine block; the revision reason stays TAG so `undo` finds it.
  */
 export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude', model = 'claude-opus-5-5', promptName = 'seam-repair-6742 label+minimal edge repair (opus-reference PROMPT, packed)',
-  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders' } = {}) {
+  sentHash = sha(PACK_HEAD + PROMPT), accepted: how = 'verified by a blind Opus pairwise judge in both orders', allowHidden = false, throwOnStop = false, callSite = TAG } = {}) {
+  const stop = (code, msg) => { if (throwOnStop) throw new Error(msg); console.error(msg); process.exit(code); };
   const manifest = path.join(out, 'manifest.jsonl'), refusals = path.join(out, 'apply-refusals.jsonl');
   const runId = `${TAG}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
   const bin = cli === 'claude' ? CLI : cli;
@@ -401,7 +405,7 @@ export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude',
   for (const r of accepted) {
     const { it, x } = r;
     const book = await db.collection('books').findOne({ id: it.book }, { projection: { _id: 0, id: 1, visible: 1, pages_count: 1, pipeline_auto: 1, language: 1 } });
-    if (!bookLive(book)) { refuse(r, 'book-not-live-or-held-now'); continue; }
+    if (allowHidden ? !book || book.pipeline_auto?.hold : !bookLive(book)) { refuse(r, 'book-not-live-or-held-now'); continue; }
     const pages = await db.collection('pages').find({ id: { $in: [it.idA, it.idB] } }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, translation_withheld: 1 } }).toArray();
     const A = pages.find(p => p.id === it.idA), B = pages.find(p => p.id === it.idB);
     if (!eligible(A) || !eligible(B)) { refuse(r, 'page-no-longer-eligible'); continue; }
@@ -418,7 +422,7 @@ export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude',
     for (const [pg, text, side, oldSpan, newSpan] of plan) {
       const t = pg.translation;
       const engine = geminiEngine({
-        name: engineNameForCli(cli), call_site: TAG, api: 'cli', cli: { name: cli, version: cliVersion }, model: x.model || model,
+        name: engineNameForCli(cli), call_site: callSite, api: 'cli', cli: { name: cli, version: cliVersion }, model: x.model || model,
         prompt: { id: TAG, name: promptName, version: '1', hash: sha(PROMPT), sent_hash: sentHash },
         generationConfig: notRecorded(`${cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
         run: { job_id: runId, code_version: cv, host: host(), at: new Date(), reason: `${TAG}: minimal ${side}-edge seam repair of the ${t.model} translation, ${how}`, edited_from: { model: t.model, content_hash: t.content_hash ?? null, prompt_version: t.prompt_version ?? null } },
@@ -427,13 +431,13 @@ export async function writeRepairs(db, accepted, { out, doApply, cli = 'claude',
       // The page keeps its translation's prompt identity and model: the body is that model's text, edited at one edge.
       const promptRef = { id: t.prompt_id, name: t.prompt_name, version: t.prompt_version, content_hash: t.prompt_hash };
       const res = await writePageTranslation(db, { page: pg, book, text, promptRef, model: t.model, jobId: runId, note: TAG, refuseUnhealthy: true, engine });
-      if (!res.written) { refuse(r, res.protected ? 'door-human-edited' : `door-refused-${res.reason}`, { page: pg.id }); append(manifest, { join: r.id, page: pg.id, written: false, why: res.reason || 'protected' }); console.error(`STOP: the door refused ${pg.id}: ${res.reason || 'protected'}`); process.exit(3); }
+      if (!res.written) { refuse(r, res.protected ? 'door-human-edited' : `door-refused-${res.reason}`, { page: pg.id }); append(manifest, { join: r.id, page: pg.id, written: false, why: res.reason || 'protected' }); stop(3, `STOP: the door refused ${pg.id}: ${res.reason || 'protected'}`); }
       const after = await db.collection('pages').findOne({ id: pg.id }, { projection: { 'translation.content_hash': 1, 'translation.data': 1 } });
       const rev = await db.collection('page_revisions').findOne({ page_id: pg.id, field: 'translation', reason: TAG, data: t.data }, { projection: { id: 1, created_at: 1 } });
       const hashChanged = after?.translation?.content_hash && after.translation.content_hash !== t.content_hash && after.translation.data !== t.data;
       append(manifest, { join: r.id, arm: r.arm, book: it.book, page: pg.id, page_number: pg.page_number, side, written: true, revision_id: rev?.id ?? null, old_hash: t.content_hash ?? null, new_hash: after?.translation?.content_hash,
         old_span: oldSpan, new_span: newSpan, label: x.label, severity: x.severity, verdict: r.verdict, url: `https://sourcelibrary.org/book/${it.book}/page/${pg.id}`, run: runId, at: new Date().toISOString() });
-      if (!rev || !hashChanged) { console.error(`STOP: after writing ${pg.id}: revision ${rev ? 'ok' : 'MISSING'}, hash ${hashChanged ? 'changed' : 'NOT changed'}`); process.exit(4); }
+      if (!rev || !hashChanged) stop(4, `STOP: after writing ${pg.id}: revision ${rev ? 'ok' : 'MISSING'}, hash ${hashChanged ? 'changed' : 'NOT changed'}`);
       await recordSweepAction(db, { sweep: TAG, book_id: it.book, action: 'seam-edge-repaired', detail: { page_id: pg.id, page_number: pg.page_number, side, join: r.id, revision_id: rev.id, run: runId } });
       (books[it.book] ||= []).push(pg.page_number);
       tally.pagesWritten++;

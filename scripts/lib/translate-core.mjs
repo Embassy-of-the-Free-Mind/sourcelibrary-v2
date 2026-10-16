@@ -1283,6 +1283,14 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
       $unset: CLEAR_STALE_UNSET,
     }
   );
+  // The write-time seam guard (#6742): OFF unless SEAM_GUARD=dry|apply. It runs after the commit, is bounded and
+  // fail-open, and skips its own writes; loaded only when on, so this door does not depend on it otherwise.
+  if (process.env.SEAM_GUARD) {
+    try {
+      const { runSeamGuard } = await import('../maintenance/seam-repair-6742/guard.mjs');
+      await runSeamGuard(db, { page, book, note, jobId });
+    } catch { /* never the translation write's failure */ }
+  }
   return { written: true, protected: false, text: clean };
 }
 
