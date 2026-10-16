@@ -215,8 +215,8 @@ function decide() {
   });
   writeJsonl(path.join(W, 'decisions.jsonl'), out);
   const t = {}; for (const o of out) t[o.action] = (t[o.action] || 0) + 1;
-  // Two judges on the same flagged pages: Gemini's flag vs Opus's settlement. Nominal "not this leaf's text" (yes/no)
-  // — every unit is a Gemini yes, so α measures how often Opus agrees on a selected set, not a general reliability.
+  // Gemini's flag vs Opus's settlement on the flagged pages. Every unit is a Gemini "yes", so this is a confirmation
+  // rate on a selected set; no α is reported for it (no variation on one side).
   const pairs = out.filter((o) => o.settle).map((o) => ({ cluster: o.book_id, values: [1, o.settle.verdict === 'confirmed' ? 1 : 0] }));
   const conf = pairs.filter((p) => p.values[1] === 1).length;
   console.log(JSON.stringify({ actions: t, flagged_settled: pairs.length, opus_confirmed: conf }));
