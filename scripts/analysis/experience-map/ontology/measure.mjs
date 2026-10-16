@@ -11,12 +11,16 @@
  *   node measure.mjs edges     → OUT/cand-edges.jsonl    per edge: up to 6 pages that name both ends, with the window
  *   node measure.mjs verify    → OUT/verify.json         re-reads every quoted page; exit 1 if any quote is no longer verbatim on it
  *   node measure.mjs baseline  → OUT/baseline.json       pages of live books by century of the work (the denominator)
+ *   node measure.mjs redate    → rewrites the year/basis of every book in OUT/counts.json, cand-passages.jsonl and
+ *                                cand-edges.jsonl with the current dating rule, in place, order kept (the verdicts
+ *                                index candidates by position). No Atlas query: the page counts per book do not change.
  *
  * Phrases are matched as Atlas `phrase` queries (lucene.standard: case-folded, NOT accent-folded) on translation.data
  * and ocr.data for counts, and on translation.data only for quotes (the reader quotes the English).
- * Work date per book, first that exists: /root/aliveness/dated-works.jsonl (work.year; basis title_page |
- * model_knowledge) → books.source_work_dates composition → books.original_work_year → edition year. Each count
- * carries its basis.
+ * Work date per book, first that exists: books.source_work_dates_meta.work (schema 2, #6721; basis wikidata |
+ * author_lifespan | title_page | colophon | model_knowledge, recorded as `work:<basis>`) →
+ * /root/aliveness/dated-works.jsonl → books.source_work_dates composition → books.original_work_year → edition
+ * year. Each count carries its basis.
  *   OUT defaults to $JOB_SCRATCH/ontology. Run with node --env-file=<.env.production.local>.
  */
 import fs from 'node:fs';
@@ -62,6 +66,10 @@ if (fs.existsSync(DATED)) for (const l of fs.readFileSync(DATED, 'utf8').split('
 }
 const yearOf = (s) => { const m = String(s ?? '').match(/-?\d{3,4}/); return m ? +m[0] : null; };
 function workDate(b) {
+  const w2 = b.source_work_dates_meta;
+  if (w2?.schema === 2 && Number.isFinite(w2.work?.year)) {
+    return { year: w2.work.year, basis: `work:${w2.work.basis || 'unknown'}`, display: w2.work.display, confidence: w2.confidence ?? null };
+  }
   const d = dated.get(b.id) || dated.get(String(b._id));
   if (d) return { year: d.year, basis: `dated-works:${d.basis}`, display: d.display };
   // One composition entry only: an anthology's first treatise is not the date of the page a passage sits on.
@@ -80,7 +88,7 @@ async function loadBooks(ids) {
     const chunk = need.slice(i, i + 800);
     const rows = await retry(() => db.collection('books').find({ $or: [{ id: { $in: chunk } }, { _id: { $in: chunk } }] }, {
       projection: { id: 1, title: 1, display_title: 1, english_title: 1, author: 1, language: 1, year: 1, published: 1, tradition: 1,
-        source_work_dates: 1, original_work_year: 1, visible: 1, hidden: 1, pages_count: 1 } }).toArray());
+        source_work_dates: 1, source_work_dates_meta: 1, original_work_year: 1, visible: 1, hidden: 1, pages_count: 1 } }).toArray());
     for (const b of rows) {
       const m = { id: b.id || String(b._id), title: b.english_title || b.display_title || b.title || '', author: b.author || '', language: b.language || '',
         tradition: Array.isArray(b.tradition) ? b.tradition[0] : b.tradition || null, live: b.visible === true && b.hidden !== true && (b.pages_count || 0) > 0,
@@ -247,13 +255,37 @@ if (mode === 'verify') {
 if (mode === 'baseline') {
   // The corpus's own shape: pages of live books by century of the work, same dating rule. Every strip leans where
   // the library leans; this is the denominator a reader compares against.
-  const byC = {}; const basis = {}; let n = 0;
-  const cur = db.collection('books').find({ visible: true, hidden: { $ne: true }, pages_count: { $gt: 0 } }, { projection: { id: 1, year: 1, published: 1, source_work_dates: 1, original_work_year: 1, pages_count: 1 } });
+  const byC = {}; const byCEd = {}; const basis = {}; let n = 0;
+  const cur = db.collection('books').find({ visible: true, hidden: { $ne: true }, pages_count: { $gt: 0 } }, { projection: { id: 1, year: 1, published: 1, source_work_dates: 1, source_work_dates_meta: 1, original_work_year: 1, pages_count: 1 } });
   for await (const b of cur) {
     const w = workDate(b); n++; if (w.year == null || w.year < -1500 || w.year > 2030) continue;
     const c = Math.floor(w.year / 100) * 100; byC[c] = (byC[c] || 0) + b.pages_count; basis[w.basis] = (basis[w.basis] || 0) + b.pages_count;
+    const ey = Number.isFinite(b.year) ? b.year : yearOf(b.published);
+    if (ey != null && ey >= -1500 && ey <= 2030) { const ce = Math.floor(ey / 100) * 100; byCEd[ce] = (byCEd[ce] || 0) + b.pages_count; }
   }
-  fs.writeFileSync(path.join(OUT, 'baseline.json'), JSON.stringify({ books: n, by_century: byC, basis }));
+  fs.writeFileSync(path.join(OUT, 'baseline.json'), JSON.stringify({ books: n, by_century: byC, by_century_edition: byCEd, basis }));
   console.log('baseline', n, 'books');
+}
+if (mode === 'redate') {
+  const cf = path.join(OUT, 'counts.json');
+  const counts = JSON.parse(fs.readFileSync(cf, 'utf8'));
+  const jl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []);
+  const pf = path.join(OUT, 'cand-passages.jsonl'), ef = path.join(OUT, 'cand-edges.jsonl');
+  const P = jl(pf), E = jl(ef);
+  await loadBooks([...Object.values(counts).flatMap((c) => c.books.map((b) => b.id)),
+    ...P.flatMap((r) => r.candidates.map((q) => q.book_id)), ...E.flatMap((r) => r.candidates.map((q) => q.book_id))]);
+  const moved = {};
+  const set = (x, id) => {
+    const m = META.get(id); if (!m) return;
+    if (x.basis !== m.work.basis || x.year !== m.work.year) moved.n = (moved.n || 0) + 1;
+    x.year = m.work.year; x.basis = m.work.basis; x.edition_year = m.edition_year; x.work_confidence = m.work.confidence ?? null;
+  };
+  for (const c of Object.values(counts)) for (const b of c.books) set(b, b.id);
+  for (const r of [...P, ...E]) for (const q of r.candidates) set(q, q.book_id);
+  fs.writeFileSync(cf, JSON.stringify(counts));
+  fs.writeFileSync(pf, P.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  fs.writeFileSync(ef, E.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const basis = {}; for (const c of Object.values(counts)) for (const b of c.books) basis[b.basis] = (basis[b.basis] || 0) + b.pages;
+  console.log('redated', moved.n || 0, 'rows; pages by basis', basis);
 }
 await client.close();
