@@ -1,158 +1,168 @@
 # Needs map: Trustworthy
 
-**Purpose:** the text we serve says what the page says, and we tell readers how good it is.
-**Built:** 2026-10-11 by job `needs-trustworthy-6359`, part of #6359 step 2. Read-only, $0.
-Mongo figures are from `bookstore`, queried 2026-10-11; "live" means `visible: true && pages_count > 0`.
-Every issue number below was checked open on 2026-10-11 unless it is marked as a merged PR.
+**Purpose:** every page a reader opens reads right, hardest books first, paid for with subscription capacity that
+would otherwise go unused (Derek, 2026-10-16). Claude is the final arbiter; a Gemini review is a second opinion.
+**Measure:** verified pages per week, weighted by difficulty and readership, not jobs finished.
+**Built:** 2026-10-11 by job `needs-trustworthy-6359`. **Refreshed:** 2026-10-16 by job
+`needs-refresh-trustworthy-6359`, part of #6359 step 2. Read-only, $0.
+Mongo figures are from `bookstore`, queried 2026-10-16; "live" means `visible: true && pages_count > 0` (42,357 books).
+Every issue and PR number below was checked on 2026-10-16 and has the state given.
 Ranked queue: `trustworthy.json` next to this file.
 
 ## 1. The number
 
-**Share of served pages with a serious error, read against the page image, by shelf.**
-A serious error is one that misleads a reader about what the page says (`scripts/eval/spot-check/REVIEWER.md`).
+**Serious-error rate of what readers are served, read against the page image: one random served page per book,
+across every OCR and translation lane.** A serious error misleads a reader about what the page says
+(`scripts/eval/spot-check/REVIEWER.md`).
 
-**Now: 23% (21 of 91 pages, 30 books; 95% CI 12–35 by book), canon shelves, drawn 2026-10-06.**
-Source: `scripts/eval/experiments/_series-fortnightly-spot-check.md` (#5914). Next draw is due 2026-10-19.
+**Now: 22% frame-weighted (34% of 184 served books unweighted, 95% CI 27–41), all lanes, measured 2026-10-13.**
+Source: served-text audit, first run (#6691, PR #6698,
+`scripts/eval/experiments/2026-10-13-served-text-audit-by-lane-6691.md`). By form: manuscript 28 of 44 (64%),
+print 25 of 116 (22%). Text not on the leaf, confirmed by eye: 10 of 184 (5%, 3–10), all contained.
 
-By shelf (shelf overviews, 2026-10-07, 4 random books × 4 pages per shelf, Opus reviewers with the image open;
-`scripts/eval/results/spot-check/overview-2026-10-07*/report.md`). Each row is 16 pages, so the intervals are wide:
+**Then (2026-10-11 map): 23% of 91 pages, canon shelves, drawn 2026-10-06** (fortnightly spot check, #5914). That is a
+different frame, so the two are not a trend. The fortnightly draw runs next on 2026-10-19 with the page-frame fix
+(PR #6637, merged).
 
-| shelf | books in frame | serious pages (95% CI by book) | show / caveat / don't |
-|---|---:|---|---|
-| Japanese | 136 | 88% (63–100) | 0 / 0 / 4 |
-| Korean | 246 | 75% (50–100) | 0 / 3 / 1 |
-| Chinese | 153 | 50% (13–88) | 0 / 2 / 2 |
-| Arabic and Persian | 28 | 47% (25–77), 15 pages | 0 / 3 / 1 |
-| Hebrew | 15 | 45% (13–100), 11 pages | 0 / 1 / 3 |
-| Latin Kabbalah | 114 | 44% (0–88); 25% of pages a wrong leaf | 1 / 1 / 2 |
-| Hindu Sanskrit | 65 | 44% (13–81) | 0 / 3 / 1 |
-| Greek and Latin classics | 1,078 | 38% (13–63) | 1 / 1 / 2 |
-| Javanese, Old Javanese | 149 | 25% each | 1 / 6 / 1 |
-| Chan and Zen, Nalanda Sanskrit, Indian Buddhist | 62 | 19% each | 0 / 11 / 1 |
-| Pali, Vajrayana, Tengyur (Nalanda draw), Bhutan Tibetan | 744 | 13% each | 4 / 12 / 0 |
-| Tengyur by section (6 sections) | 184 | 0–13% | 6 / 18 / 0 |
-| Derge Kangyur | 13 | 0% (0–0) | 0 / 4 / 0 |
+Two more image-grounded readings this week. They point the same way and are not summed with the number:
+- **Random visible non-English books, one Opus reader (#6420, job `opus-audit-6420`, 2026-10-16):** 171 of 551 books
+  serve a serious error, **31.0% (27.3–35.0)**; text not on the leaf 70 of 551, 12.7% (10.2–15.7). No Gemini reader
+  ran, so nothing in it is convergent.
+- **Quality sprint round 2 (#6056, PR #6655, public frame, 2026-10-13):** 4 of 30 pages serious, nothing invented,
+  0 of 30 wrong leaf. Round 1 on the canon frame was 15 of 30.
 
-Three other instruments exist. They agree in direction and measure different things, so they are not summed:
-- **Translation corpus audit** (Opus judge, one page per book, no image): 14.3% of pages carry a major defect
-  (CI 7.4–22.3, n = 103, drawn 2026-09-30); baseline 11.4% (7.6–15.6, n = 311, 2026-09-29).
-  Invention 15.7%, omission 12.7%, garbled source rendered as prose 9.3%, sense inverted 4.6%.
-  The October draw is waiting unjudged on branch `eval/tca-2026-10`. Source: https://sourcelibrary.org/admin/quality
-- **Served-text panel** (#6388, mean capped CER of the stored OCR, 30 pages per stratum, 2026-10-10):
-  Latin print 3.9%, Chinese manuscript 9.3%, English print 13.4%. The key is an AI consensus, not a human one.
-- **Translate quality gate** (#5826, 10 books × 3 pages by eye): first run 2026-10-10 was NO-GO,
-  4 of 30 pages carried text not on the leaf.
+**This week's verified pages (the purpose's measure, first count).** Pages rewritten after a Claude decision with the
+image open, 2026-10-11 to 10-16:
+- #6694 (opus-screen): 3,624 Opus-corrected pages written in q400–q1000, each batch screened by Gemini and audited
+  by fresh Opus (0 worse); 92 Greek pages written, 31 contained.
+- #6420 lane B main200b: 1,131 pages in 114 books checked, 188 written, 31 contained.
+- #6561 (PR #6744): 4,379 Paddle table pages served on Opus corrections, Claude arbiter on all 23 Gemini flags.
+- #6769: Grec 1841, 354 pages, G4L under a per-book blind gate (29 better, 1 same, 0 worse of 30).
+- #6559: 570 Maya manuscript pages OCR'd by Opus; 1,341 Yucatec pages re-translated by Argon with a style gate.
+- #4523 (2026-10-14): 5,145 empty Tibetan pages written by the Yigdzin rule in 15 hidden books. The rule is a
+  model-free guard, not a Claude read.
 
-**Why this one:** it is the only measure that opens the image, so it sees invented and wrong-leaf text.
-The corpus audit judges English against our own OCR and scores an invented page as faithful.
+About 10,000 pages in all, before weighting. **Readership weighting can start now:** `books.human_read_count`
+(PR #6809, merged 2026-10-16) replaces `pages.read_count`, which counts 1.19M pages as read 3+ times (#5048).
+Difficulty weights can come from the pareto accuracy of the page's lane (below).
+
+**Where the reads are worst** (`src/data/ocr-pareto.json`, regenerated 2026-10-16 by PR #6789; accuracy is
+1 − capped CER against a typed reference; production engine, then the best one we can run):
+
+| page kind | production | best measured | grade |
+|---|---|---|---|
+| Syriac manuscript | flash-lite 12.5% | Kraken (Sophro) 59% | not fit, 2 works |
+| Hebrew in Rashi type | stored 48% | G4L (CLI, $0) 83% | not fit, 12 works |
+| Greek manuscript | stored 57% | G4L (CLI, $0) 78% | not fit, 4 works |
+| Chinese manuscript | Paddle 79% | Paddle 79% | directional, 261 works |
+| Chinese print | flash-lite 82% | Qwen3-VL 84% | not fit, 11 works |
+| Greek print | 3 Flash 91% | Surya 2 93% | decide, 24 works |
+| Latin print | flash-lite 96.2% | 3.8 Flash (CLI, high) 98.9% | decide, 44 works |
+
+No reference yet for Japanese, Hebrew (4 pages), Tibetan, Sanskrit or Persian on that scale. **No reader at all:**
+Mongolian (0 of 10 pages on any arm, #5664), Samaritan (#5645).
 
 **How it could be gamed, and the outside check for each:**
-1. *Withholding or hiding lowers the rate without repairing anything.* Report the rate next to the containment
-   debt: **about 1,740 live books sit under a text-trust hold today** (1,441 Tibetan under #4523, 150 wrong-leaf
-   Internet Archive books under #4790, 81 Syriac under #4883, 37 poisoned reads under #3391, about 30 single-book
-   by-eye holds). The number is better only if the rate falls and the debt does not rise.
-2. *The same model family draws, reads and judges.* Outside check: Cloudflare Clef's "does this text transcribe
-   this image" screen on a fresh random draw (#5803: 36 of 1,497 books flagged, filed 2026-10-04, $0.59). It is a
-   different vendor, it is not a judge of English, and it can be re-run for under a dollar.
-   Second check: the Gemini second reader on the same pages (#6338).
-3. *The draw avoids hard pages.* The fortnightly draw can pick pages no reader sees (`page_number <= 0`,
-   5.3% of public books, #5914) and the shelf overviews leave out held books. Fix the frame before 10-19.
-4. *Readers disagree with us.* Reader page reports are the last check: 3 in 30 days (all `missing_text` or
-   unclassified, since the button shipped 2026-09-30). That is too few to be a rate; count them, do not trend them.
+1. *Withholding lowers the rate without repairing anything.* Report it next to the containment debt: **3,004 live
+   books are under a text-trust hold today, up from about 1,740 on 10-11.** Biggest: Tibetan 1,432
+   (`tibetan-retranslation-awaits-derek`, #4523); Paddle Chinese held while stale English is rewritten 866 (#6388,
+   #6561); title-leaf recitation 306 (#6297, new); IA wrong leaf 150 (#4790); Syriac 81 (#4883); poison cohort 37
+   (#3391); `ocr-unsettled-6420` 35; about 100 single-cause by-eye holds. (Pipeline-lane holds such as
+   `paddle-zh-5600-ocr-only` 7,006 and `gpu-backlog-5660` 3,477 are excluded; they hold work, not bad text.)
+   The rise is containment catching up (#6297, #6388), not new damage. The number is better only if the rate falls
+   and this debt does not rise.
+2. *One model family draws, reads and judges.* The 10-16 audit was Opus only. Outside checks: the Gemini second
+   reader (#6338, Phase 2 not run) and the Clef image-text screen (#5803).
+3. *The sample avoids hard pages.* The served-text audit stratifies by lane and found every BDRC Tibetan page already
+   withheld, so that stratum has no served book; n = 10 per stratum, so its ranks are not stable (#6688).
+4. *Readers disagree with us.* 2 text-quality reports since 10-11 (a `missing_text` page report and a seam complaint), both unread; too few to trend.
 
 ## 2. Asked
 
-- **Derek, 2026-10-10 (#6420):** no human review of non-English text for about a month; make it as good as
-  possible with two model families and the image. Added 2026-10-11: every review should also turn error
-  clusters into fixes (a cluster at 3× the lane's rate, n ≥ 20 pages from ≥ 5 books, becomes one issue).
-- **Derek, 2026-10-08 (PR #6301, `.claude/docs/invariants/containment-on-finding.md`):** invented or wrong-leaf
-  text found by eye comes off the page in the same run, with no ask. Why: five invented pages on a funder-facing
-  shelf stayed public for two days (#6048).
-- **Derek, 2026-10-07 (#6199, #6120, `.claude/docs/quality-statements.md`):** warn with a link to the evidence,
-  do not hide; say the measured value and the measured errors, with n and date. 25 books were republished with
-  warnings on 2026-10-08; 10 with no recorded check are still hidden.
-- **Derek, 2026-10-10 (#5826):** a standing by-eye gate every 300 books or 7 days; NO-GO pauses enrolment.
-- **Readers and research agents (feedback, last 90 days: 258 rows, 61 mention text quality by regex):**
-  - Wrong English on one page of Llull's *Ars brevis* (1578) and two gaps in Capellanus *De amore*
-    (MCP, 2026-10-09, unread, no issue).
-  - Plato 1550 p.527, the wax-tablet passage of the *Theaetetus* (MCP, 2026-09-30, unread, no issue).
-  - Translation errors in Augustine *Confessiones* VI.3 (MCP, 2026-09-28, #5221).
-  - Three `missing_text` page reports in 14 days on three books: Weishaupt p.3, *Histoire de la magie* p.86,
-    Plotinus *Enneaden* p.5 (#6490, #6402). None is resolved.
-  - "IA put Russian characters, it should be Latin": Gesner III, 341 of 825 pages (2026-09-27, #5215).
-  - Untranslated words on a Paracelsus page (2026-09-18); a Tibetan sādhana whose English reads as nonsense (#5004);
-    a Balinese lontar whose OCR loops in Thai script on 73 of 423 pages (#4850).
-- **Partners:** Eternity (Francis) is the reader for the canon shelves; the spot check before his look found
-  5 invented pages in 84 (#6048). The Tengyur draft is published with per-section measured shortcomings (#6120);
-  a scholar review has not happened.
+- **Derek, 2026-10-16 (this refresh):** rank by the quality pages (`/platform/admin/ocr-evidence`, the pareto pages
+  of PR #6789), worst and most read first. Claude is the final arbiter, Gemini review a second opinion (applied in
+  PR #6744). Named areas: quality control (#6694, #6420, #6553, #6561) and difficult transcription (Maya #6559,
+  Mongolian #5664, Tibetan #6560 and #4523, Kurrent #6780, Greek and Rashi #6769).
+- **Derek, 2026-10-16 (#6769):** GO to write G4L re-reads for Rashi and mixed books (38), then Greek MS row 2
+  (87), each behind a per-book blind gate, retranslated on the $0 CLI route before release.
+- **Derek, 2026-10-16 (#6780):** run Kurrent manuscripts cpg 555, 293 and 594 (~1,210 pages) with the two-read Opus
+  writer; keep 627 held.
+- **Derek, 2026-10-16 (#6742):** yes to measuring page seams; prompt candidate A had no effect (PR #6814).
+- **Derek, 2026-10-10 (#6420):** no human review of non-English text for a month; two model families and the image.
+  Error clusters at 3× a lane's rate (n ≥ 20 pages, ≥ 5 books) become one issue each.
+- **Derek, 2026-10-10 (#5826):** a by-eye gate every 300 books or 7 days; NO-GO pauses enrolment.
+- **Derek, 2026-10-08 (`containment-on-finding.md`):** invented or wrong-leaf text found by eye comes off the page in
+  the same run.
+- **Readers and agents (feedback, unread, no issue):** Llull *Ars brevis* (1578) wrong English on one page
+  (2026-10-09); Plato 1550 p.527, the *Theaetetus* wax-tablet passage (2026-09-30); "no smooth transition between
+  pages" (2026-10-13, the seam class of #6742); a `missing_text` page report on book `6988a59e…` p.3 (2026-10-11).
 
 ## 3. In motion
 
 Finishing these ranks above starting anything new.
 
-- **#6420 convergent AI review** (updated 2026-10-11). Lane A (Tengyur, #6361): 6,492 pages re-read and applied,
-  2 of 40 checked pages restored. Lane B (top-read books): 50 books checked 2026-10-10, 8 `fix`, 37 `caveat`,
-  5 `show`; 8 live books held `ocr-unsettled-6420`.
-- **#6388 OCR routing prereg** (updated 2026-10-11). Job `english-eval-6388` is judging whether the stale English
-  on 751 Paddle-read Siku books (75,701 pages) should be retranslated. Job `table-detect-6388` follows the finding
-  (noted on #6420, 2026-10-11) that invented text sits on 37% of table and diagram pages against 3.6% of prose. PR #6440 (model-adjudicated
-  key) is open, `tier:hold`, and needs a rebase.
-- **#5826 quality gate.** PR #6422 is open, `tier:hold`. Until it merges, the NO-GO of 2026-10-10 sets a flag
-  nothing reads, and translation keeps enrolling.
-- **#5803 page shift.** 151 clean shifts repaired (PR #6369, merged); 13 held books released 2026-10-10.
-  Four e-rara books (*Troumbüchlin*, *Pymander*, *De re metallica*, Agrippa) still serve shifted text: the
-  override Derek approved is not built into `repair-bulk-jp2-offset.mjs`, and it must run on the main box.
-- **#5782 Schutzschrift:** text and image differ on 366 of 367 leaves. The move was decided 2026-10-09; no
-  comment says it ran.
-- **#4523 Tibetan:** decided 2026-10-10 to translate the 26,440 readable held pages ($40–55) and apply 738
-  Yigdzin reads after a by-eye check of 3. Neither ran; both need a main-box job. 1,433 live books are held.
-- **#6305 Siku black pages:** 1,657 images repaired 2026-10-10. The check after found most of the stored text
-  was read from the black copy; 563 pages of English are withheld and need a re-read.
-- **#6048 Eternity spot check:** six pages stay withheld, waiting on #5056 (duplicate leaf) and #6297.
-- **#6117 reasoning stored as translation:** write guard merged 2026-10-08 (PR #6158); 550 pages are withheld
-  with no English, and re-translating them is unapproved paid work.
-- **#6338 second reader:** preregistered, amended 2026-10-09, not yet drawn.
-- **#5700 text quality redesign (tracking):** read-time markup repair written to 72,880 stored pages on 2026-10-10.
-- **#6367 Aldine Iamblichus:** 313 re-read pages still show English made from the old transcription.
-- **#5699 reversed page order:** decided 2026-10-10 (renumber 32 books, then 17, then re-translate 12,218 pages);
-  not started, and it is a migration across eight stores.
-- **Translation corpus audit, October draw:** branch `eval/tca-2026-10` is drawn and not judged.
+- **#6694 Opus correct-in-place vs lane B** (updated 2026-10-16): step 3 done, q400–q1000 screened, audited and
+  applied; 3,624 pages written, 31 Greek pages contained. Gemini called 3–4 of 40 audited writes worse in each batch
+  where Opus called none worse; those pages were not written. Open: Theon *Expositio* p.15, where the judges disagree
+  about which text is on the leaf, needs a look by eye.
+- **#6420 convergent review** (updated 2026-10-16): main200 has no books left. **Systemic finding:** 299 of the 310
+  pages lane B rewrote still serve English made before the new OCR (61 of them more than 1.5× the OCR's length), and
+  `withhold-stale-translations.mjs` does not catch them. Whether to withhold or retranslate went to the digest.
+- **#6561 / #6567 Paddle Chinese:** 4,379 table pages served on Opus corrections, Claude arbiter (PR #6744 merged
+  10-16; 781 books stay held). The stale-Siku correction run is at 28,306 of 50,387 pages (12:00 UTC); the review at
+  30,000 found new better 14, same 4, worse 2.
+- **#6769 Greek MS and Rashi (G4L):** Grec 1841 OCR written (354 pages), English being rewritten. **Rashi row 1 is
+  blocked:** a right-column-first instruction made column order worse (left first on 15 of 23, was 6 of 23). Greek
+  row 2 (87 books) is next.
+- **#6559 Maya:** 15 Yucatec books re-translated with Argon plus a style line (1,341 pages, PRs #6795, #6801); 4
+  Princeton manuscripts live with Opus OCR (Bacabs 235 of 239). The judges scored word-by-word glossing as faithful;
+  a gloss gate caught it after 223 pages. finish-6559 checks the rebuilt summaries after 00:00 UTC.
+- **#4523 / #6560 Tibetan:** Yigdzin wrote 5,145 empty pages in 15 hidden books (10-14, PR #6734); 5,132 guttered
+  bound-book pages stay empty and need a page-format reader. The G4L correction gate is NO-GO (5 of 40 worse;
+  PR #6790), as was Flash (10 of 40, PR #6758). 1,432 live books remain held for the translation decision.
+- **#5664 Mongolian:** no reader. G4L and Opus 0 of 10 pages (PR #6813); 83K pages, no $0 route.
+- **#6780 Kurrent:** the two-read Opus lane is merged (PR #6804) and piloted on 10 cpg555 pages; the ~1,210-page run
+  is approved and not dispatched.
+- **#5826 quality gate:** the brake is live. PR #6422 merged 2026-10-12, and the 10-10 NO-GO still pauses translate
+  enrolment (`system_config.processing_control.lane_budgets.translate.enrol_paused`). `quality_gates` has 1 row; no
+  gate since; the 7-day rule calls for one by 2026-10-17.
+- **#6691 served-text audit:** baseline run done (above); 10 pages contained in 9 books (`served-audit-6691`).
+- **#6297 title leaves:** 20 of 20 sampled were real, so all 532 pages are withheld; 306 live books held. The
+  re-translation needs an output-length cap that is not built; #6048's four title leaves wait on the same cap.
+- **#5803 page shift:** PR #6658 (e-rara cover-sheet fix) merged; 45 of 353 re-archived books are one leaf off again.
+- **#5782 Schutzschrift:** text re-seated on prod; the run record PR #6659 is open, `tier:hold`.
+- **#6326 dropped lines:** detector built, PR #6636 open (`tier:auto`): 12,431 pages flagged in 990 books, 12 of 20
+  real by eye.
+- **#6338 second reader:** Phase 2 not run (`src/data/second-reader-6338.json` still says not run).
 
 ## 4. Found, not fixed
 
-No issue below has an assignee; "no owner" here means no job or session has claimed it this week.
-
-- **34 live books whose latest recorded check is `fix` are neither held nor repaired.** `book_checks` holds 385
-  rows on 298 books (2026-10-06 to 10-10): latest verdict `fix` 76, `caveat` 161, `show` 61. Of the 76, 73 are
-  live, 39 held, 34 not. Nothing checks that each of the 34 carries the reader warning of #6199. No issue.
-- **Japanese and Korean shelves:** 88% and 75% of sampled pages serious (16 pages each, 2026-10-07), 382 books in
-  the two frames. #6115 names the Japanese lane (English is not a translation of the page on Noh utaibon and
-  the Genji Ekotoba); it has no comment since it was filed. Korean has no issue.
-- **Wrong-leaf Internet Archive text:** 8,599 stranded pages in 283 books after the 2026-10-02 repair (#5309);
-  197 books held `ia-wrong-leaf-4790`, 150 of them live (#4790).
-- **Script-recitation candidates:** the #5650 audit ran over 69,882 books; 225 have exotic-script pages and 455 a
-  recitation hit. They are ranked on the issue and have not been read by eye.
-- **Detectors with no repair:** truncated translations, 66,525 pages in 6,994 live books, 10 of 20 real (#5055);
-  echoed source, 4,598 pages, 12 of 20 real (#5058); one page repeated through 198 books, 121 live (#5057);
-  duplicate captures, 30,186 pages in 4,249 books (#5056); wrong years in 2–7% of accepted IA English books (#5186).
-- **Error classes with no working detector:** dropped lines, class O5, seen in 15 of 78 books by eye (#6326, #5136);
-  a dropped negation that reverses the English, 6 books in 3 scripts (#6184); a recited chapter on a title leaf,
-  14 Tengyur pages to open (#6297); confabulation on a damaged leaf (#3591).
-- **Contained, awaiting a re-read:** Samaritan Pentateuch, 457 pages withheld, no engine reads the script (#5645);
-  Ludus Scacchiae, 23 pages (#4808); 81 live Syriac books (#4883); 37 live poisoned-read books including Gesner III
-  (#3391, #5215); the derived lane over the 196 withheld Tibetan books (#4757).
-- **Single books reported and still wrong:** Idrisi 1619, text one page after its image near pp.268–282 (#5095);
-  Bodhicaryāvatāra p.4 is a Latin page from another book (#5848); three Avesta editions serve Buddhist text (#4775).
-- **Fabricated text on pages queued for permanent DOIs** (#4960): `quality_score` does not see it.
-- **Unread wrong-text feedback:** the Llull and Plato reports above have no issue and are marked unread.
+- **79 live books whose latest `book_checks` verdict is `fix` are not held** (was 34). `book_checks` now holds 957
+  rows on 854 books: latest `fix` 177, `caveat` 488, `show` 189. Of 174 live `fix` books, 95 are held. Nothing checks
+  that each of the 79 carries its #6199 reader warning. No issue.
+- **Lane B and #6694 leave stale English under new OCR** (#6420): the review measures the OCR it wrote, and readers
+  read the English.
+- **Manuscripts are three times worse than print** (64% against 22% serious, #6691), and the worst rows on the pareto
+  page are manuscript or specialist type: Syriac 12.5%, Rashi 48%, Greek MS 57%.
+- **Japanese and Korean:** 88% and 75% serious (16 pages each, 2026-10-07); #6115 is `spare-skip` (its A/B is paid
+  API work) and there is no Japanese typed reference. Korean has no issue.
+- **Judges miss form errors:** side-by-side judges scored word-by-word glossing and recited Spanish as faithful on
+  Yucatec (#6559); single-reviewer `not_this_leaf` calls overcount whole-page invention about 3× (#6691).
+- **Detectors with no repair:** truncated translations 66,525 pages (#5055, `spare-skip`: paid repair, notes policy);
+  echoed source 4,598 pages (#5058); page repeated through 198 books (#5057); duplicate captures 30,186 pages (#5056);
+  page seams (#6742, #5021, #5103).
+- **Contained, waiting on a reader:** Syriac 81 (#4883), Samaritan (#5645), poison cohort 37 incl. Gesner III
+  (#3391, #5215), IA wrong leaf 150 (#4790, #5309), reasoning-leak 550 pages (#6117, `spare-skip`).
+- **Unread wrong-text feedback:** Llull and Plato reports, still unread with no issue on 2026-10-16.
 
 ## Surprises
 
-- The number most people quote (the corpus audit's 85.6% of pages rated 4 or 5) cannot see an invented page.
-  The image-grounded rate on canon shelves is 23% serious.
-- Containment is working and repair is not keeping up: about 1,740 live books are held for text trust, and the
-  two largest decided repairs (#4523, #5803) did not run because the deciding job was on a box that cannot reach
-  the main box's files.
-- A NO-GO quality gate exists that pauses nothing until PR #6422 merges.
-- The reader "report a problem" button has produced 3 reports in 30 days. Reader reports cannot be this area's
-  number.
+- Containment debt rose from about 1,740 to 3,004 live books in five days. Most of the rise is new holds on known
+  damage (#6297 title leaves 306, Paddle 866), so the served rate improves while the debt grows.
+- The verified-page count is dominated by Latin and German print (#6694 audit gates were 33/40 and 27/40 Latin), the
+  easiest rows on the pareto page. The hardest rows (Syriac, Rashi, Greek MS, Tibetan, Mongolian) moved one book.
+- The translate brake has been on since 2026-10-12 and nobody has recorded a gate since. Only the orchestrator and
+  the two translate workers read it; `scripts/batch/cli-translate.mjs`, which wrote most of this week's English, does
+  not, so the gate samples a lane that is mostly idle.
+- The best $0 reader for Rashi (G4L, 83% against 48% served) is blocked only by column order, a crop problem, not a
+  model problem.
