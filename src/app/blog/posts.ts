@@ -78,6 +78,18 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'maya-ritual-in-the-colonial-dictionaries',
+    title: 'Maya Ritual in the Colonial Dictionaries',
+    subtitle:
+      'Uay, tzac, kinyah, pib: what the Motul dictionary, Pío Pérez and a 1639 report against idolaters record about Maya dreaming, transformation, conjuring and the count of days.',
+    date: '16 October 2026',
+    readTime: '10 min read',
+    kind: 'tours',
+    image: 'https://images.sourcelibrary.org/archived/6acc3d6c230e9a56175ccae2/423.jpg',
+    imageAlt: 'A leaf of the Spanish–Maya Diccionario de Motul with the entry Visiones ver como entre sueños: uay',
+    imagePosition: 'center 30%',
+  },
+  {
     slug: 'preserved-by-enemies',
     title: 'Preserved by Their Enemies',
     subtitle:
