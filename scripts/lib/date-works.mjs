@@ -478,3 +478,109 @@ export function parseLeanEditionReply(answer, books, opts = {}) {
   }
   return out;
 }
+
+// ── Tibetan WORK dates (#6721, Derek 2026-10-15: "we are looking for dates of the works, not the editions") ─────────
+// A Tibetan book's work date, in order: a colophon that states when the text was COMPOSED (a rab byung year, converted
+// here, not by the model) > BDRC's AuthoredEvent for the work > the author's dated window (BDRC person; the author named
+// by BDRC's work record, or by the colophon/title and matched to a BDRC person) > for a Kangyur/Tengyur text, the
+// Indian composition window (the Tibetan translation window as its own layer) > the model's range. The model only
+// READS: who the colophon names, the words that state a year, the cycle/element/animal it gives; the code verifies the
+// words against the OCR and does the arithmetic.
+
+export const TIBETAN_PROMPT_VERSION = 'tibetan-work-2';
+const ELEMENTS = ['fire', 'earth', 'iron', 'water', 'wood'];
+const ANIMALS = ['rabbit', 'dragon', 'snake', 'horse', 'sheep', 'monkey', 'bird', 'dog', 'pig', 'mouse', 'ox', 'tiger'];
+const ELEMENT_ALIAS = { metal: 'iron', fire: 'fire', earth: 'earth', iron: 'iron', water: 'water', wood: 'wood' };
+const ANIMAL_ALIAS = { hare: 'rabbit', rat: 'mouse', goat: 'sheep', ram: 'sheep', sheep: 'sheep', rooster: 'bird', hen: 'bird', chicken: 'bird', bird: 'bird', boar: 'pig', hog: 'pig', cow: 'ox', bull: 'ox' };
+/**
+ * The CE year(s) of a Tibetan sexagenary (rab byung) year. The first rab byung began in 1027, a fire-female-rabbit
+ * year; elements change every two years (fire, earth, iron, water, wood), animals every year. With `cycle` (1-based)
+ * one year; without it, every matching year in [lo, hi]. (Tibetan new year falls in Feb/Mar: ±1 at the edges.)
+ */
+export function rabjungYears({ cycle = null, element, animal }, lo = 1027, hi = 2030) {
+  const el = ELEMENT_ALIAS[String(element || '').toLowerCase()]; const an = ANIMAL_ALIAS[String(animal || '').toLowerCase()] || String(animal || '').toLowerCase();
+  const ei = ELEMENTS.indexOf(el); const ai = ANIMALS.indexOf(an);
+  if (ei < 0 || ai < 0) return [];
+  const offs = []; for (let o = 0; o < 60; o++) if (o % 12 === ai && Math.floor((o + 1) / 2) % 5 === ei) offs.push(o);
+  if (offs.length !== 1) return [];
+  const off = offs[0];
+  if (Number.isInteger(cycle) && cycle >= 1 && cycle <= 17) return [1027 + 60 * (cycle - 1) + off];
+  const out = []; for (let y = 1027 + off; y <= hi; y += 60) if (y >= lo) out.push(y);
+  return out;
+}
+export const rabjungLabel = (y) => { const o = (((y - 1027) % 60) + 60) % 60; return `${ELEMENTS[Math.floor((o + 1) / 2) % 5]}-${o % 2 ? 'male' : 'female'}-${ANIMALS[o % 12]}`; };
+
+const SYL = { wood: ['ཤིང'], fire: ['མེ'], earth: ['ས'], iron: ['ལྕགས'], water: ['ཆུ'],
+  mouse: ['བྱི'], ox: ['གླང'], tiger: ['སྟག'], rabbit: ['ཡོས'], dragon: ['འབྲུག'], snake: ['སྦྲུལ', 'སྤྲུལ'], horse: ['རྟ'], sheep: ['ལུག'],
+  monkey: ['སྤྲེ', 'སྤྲེའུ', 'སྤྲེལ'], bird: ['བྱ'], dog: ['ཁྱི'], pig: ['ཕག'] };
+const SYL_ALIAS = { metal: 'iron', hare: 'rabbit', rat: 'mouse', goat: 'sheep', rooster: 'bird', hen: 'bird', boar: 'pig', cow: 'ox' };
+/** The element's and the animal's syllables are both in the words (a syllable, or one with a case ending). */
+export function elementAnimalIn(words, el, an) {
+  const syl = String(words).split(/[་།༔\s]+/).filter(Boolean);
+  const has = (k) => (SYL[SYL_ALIAS[k] || k] || []).some((w) => syl.some((x) => new RegExp(`^${w}(འི|ར|ས|འོ|ོ|འུ|འི་)?$`).test(x)));
+  return has(String(el).toLowerCase()) && has(String(an).toLowerCase());
+}
+/** A CE year the words state (after phyi lo / spyi lo, Tibetan or Arabic digits), else null. */
+export function statedCE(words) {
+  const t = String(words).replace(/[༠-༩]/g, (d) => String(d.charCodeAt(0) - 0x0F20));
+  const m = t.match(/(?:ཕྱི་?\s*[ལའ]ོ|སྤྱི་?\s*ལོ)[་\s]*(\d{4})/) || t.match(/(\d{4})\s*(?:CE|AD)\b/);
+  const y = m ? +m[1] : null; return y && y >= 600 && y <= 2030 ? y : null;
+}
+
+/** What the Tibetan work prompt shows of one book: its record, then opening and closing leaves. */
+export const tibetanText = (b, { leadChars = 500, tailChars = 1500 } = {}) =>
+  `${b.description ? `CATALOGUE: ${String(b.description).slice(0, 500).replace(/\s+/g, ' ')}\n` : ''}${b.bdrc ? `BDRC: ${b.bdrc}\n` : ''}OPENING: ${(b.lead || '[none]').slice(0, leadChars).replace(/\s+/g, ' ')}\nCLOSING: ${b.tail ? String(b.tail).slice(-tailChars).replace(/\s+/g, ' ') : '[none]'}`;
+export const buildTibetanWorkPrompt = (books, opts = {}) => `Below are ${books.length} Tibetan books: catalogue record, and the OCR (may be noisy) of the opening leaves and of the CLOSING leaves, where a Tibetan text's colophon names its author and often the year it was composed. We want the date of the WORK (when the text was composed, revealed or translated), not of this copy.
+
+${books.map((b, i) => `=== ${i + 1}. ${[b.original_title || b.title, b.title && b.original_title && b.title !== b.original_title ? `[${b.title}]` : null, b.author ? `cat. author: ${b.author}` : null].filter(Boolean).join(' | ').replace(/\s+/g, ' ').slice(0, 300)}
+${tibetanText(b, opts)}`).join('\n')}
+
+Reply with exactly ${books.length} lines, one per book, in order, and nothing else. Each line is one JSON object:
+{"i":<number>,"a_bo":"<the work's author in Tibetan script>","a_wy":"<the same in Wylie>","a_en":"<common English name>","role":"author|terton|compiler|translator|unknown","a_x":"<the exact words of the OCR, title or catalogue that name the author, copied character for character, else empty>","a_d":[<birth>,<death>],"bdrc":"<the author's BDRC person id P… only if you are sure, else empty>","canon":"kangyur|tengyur|none","ind":[<from>,<to>],"tib":[<from>,<to>],"y_x":"<the exact words of the CLOSING leaves that state a year or the author's age, else empty>","y_what":"composition|translation|copy|print|none","cyc":<rab byung cycle number, or 0 if the words give none>,"el":"<element of that year, or empty>","an":"<animal of that year, or empty>","age":<the AUTHOR's age when composing, if the words state it, else 0>,"w":[<from>,<to>],"c":"h|m|l"}
+- Author: the person who composed the work. A treasure text (gter ma) attributed to Padmasambhava, Yeshe Tsogyal or Vimalamitra: the author is the tertön who revealed it (role terton), never the attributed figure; if no tertön is named, leave the author empty. Never the scribe, sponsor, carver, or someone whose short note or prayer is appended at the end. Leave every author field empty if the record and leaves do not name one. a_d: their birth and death years as you know them, or [] if unknown.
+- canon: a Kangyur or Tengyur text or volume (sutra, tantra, Indian sastra; a title with Kanjur/bKa' 'gyur or Tanjur/bsTan 'gyur). ind = the Indian composition window (for a whole volume of many texts, the window that covers them), tib = the Tibetan translation window; [] when not canonical.
+- y_x: only words that state a year (an element-animal year, a rab byung, a CE year) or the author's age. y_what: does that year date the COMPOSITION of the text, its TRANSLATION into Tibetan, or the copy/print? Do not convert the year yourself.
+- w: the narrowest composition window you can defend from all of the above (a range is fine). c: your confidence in w.
+Years are integers. No prose, no code fences, no tools.`;
+
+const yrPair = (v) => (Array.isArray(v) && v.length === 2 && v.every((x) => Number.isFinite(+x) && +x !== 0) ? [Math.min(+v[0], +v[1]), Math.max(+v[0], +v[1])] : null);
+/** Parse a Tibetan work reply: Map(index → reading). Quotes are verified later, against what the book showed. */
+export function parseTibetanWorkReply(answer, books) {
+  const out = new Map();
+  for (const m of String(answer || '').matchAll(/\{[^\n]*\}/g)) {
+    let o; try { o = JSON.parse(m[0]); } catch { continue; }
+    const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
+    const w = yrPair(o.w);
+    if (i < 0 || i >= books.length || out.has(i) || !w) continue;
+    const s = (v, n = 200) => String(v ?? '').slice(0, n).trim();
+    const work = { year: Math.round((w[0] + w[1]) / 2), from: w[0], to: w[1], display: w[0] === w[1] ? fmtYear(w[0]) : `c. ${fmtSpan(w[0], w[1])}`,
+      precision: w[0] === w[1] ? 'exact' : 'range', basis: 'model_knowledge', evidence: '' };
+    out.set(i, { work, confidence: { h: 'high', m: 'medium', l: 'low' }[o.c] || 'low',
+      reading: { a_bo: s(o.a_bo, 120), a_wy: s(o.a_wy, 120), a_en: s(o.a_en, 120), role: s(o.role, 20), a_x: s(o.a_x), a_d: yrPair(o.a_d), bdrc: /^P\w+$/.test(s(o.bdrc)) ? s(o.bdrc) : '',
+        canon: ['kangyur', 'tengyur'].includes(o.canon) ? o.canon : 'none', ind: yrPair(o.ind), tib: yrPair(o.tib),
+        y_x: s(o.y_x), y_what: s(o.y_what, 20), cyc: Number.isInteger(+o.cyc) ? +o.cyc : 0, el: s(o.el, 20), an: s(o.an, 20), age: Number.isInteger(+o.age) && +o.age > 5 && +o.age < 110 ? +o.age : 0 } });
+  }
+  return out;
+}
+
+// ── Author role check (#6721 work dates, 2026-10-16): before an author's dated window replaces a model estimate that
+// lies OUTSIDE it, ask whether `author_id` names the work's author at all, or a translator/editor/commentator (R. H.
+// Charles for 1 Enoch, James Legge for the Li Ki: 641 of 3,791 on the first run). Catalogue fields only.
+export const ROLE_PROMPT_VERSION = 'author-role-1';
+export const buildRolePrompt = (books) => `Each record below names a book and a person the catalogue credits as its author, with that person's dates. Say what the person is to the TEXT (not to this volume): its original author (composed or compiled it), or a translator, editor, commentator, or other (a collector, a later printer, a namesake).
+
+${books.map((b, i) => `${i + 1}. ${[b.original_title || b.title, b.title && b.original_title && b.title !== b.original_title ? `[${b.title}]` : null, `person: ${b.person}`, b.language || null].filter(Boolean).join(' | ').replace(/\s+/g, ' ').slice(0, 400)}`).join('\n')}
+
+Reply with exactly ${books.length} lines, one per record, in order, and nothing else. Each line is one JSON object:
+{"i":<record number>,"r":"author|translator|editor|commentator|other","c":"h|m|l"}
+No prose, no code fences, no tools.`;
+export function parseRoleReply(answer, n) {
+  const out = new Map();
+  for (const m of String(answer || '').matchAll(/\{[^{}\n]*\}/g)) {
+    let o; try { o = JSON.parse(m[0]); } catch { continue; }
+    const i = Number.isInteger(o?.i) ? o.i - 1 : -1;
+    if (i < 0 || i >= n || out.has(i) || !['author', 'translator', 'editor', 'commentator', 'other'].includes(o.r)) continue;
+    out.set(i, { role: o.r, confidence: { h: 'high', m: 'medium', l: 'low' }[o.c] || 'low' });
+  }
+  return out;
+}
