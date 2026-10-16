@@ -310,6 +310,7 @@ if os.path.exists(wd_path):
         w = WD.get(bid)
         if w:
             p['yw'] = w['y']; p['wd'] = w.get('display') or ''; p['wb'] = w.get('basis'); p['wc'] = w.get('confidence')
+            p['wf'] = w.get('from'); p['wt'] = w.get('to')  # the work date's range, so the map can spread a mark within it
     have = [p for p in pts if p.get('yw') is not None]
     N['work_dates'] = {'points_with_work_date': len(have), 'points': len(pts),
                        'by_basis': dict(C.Counter(p['wb'] for p in have)),
