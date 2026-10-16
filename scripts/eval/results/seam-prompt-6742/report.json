@@ -1,0 +1,179 @@
+{
+ "build": {
+  "at": "2026-10-16T07:10:45.200Z",
+  "junctions": 300,
+  "kept": 254,
+  "dropped": {
+   "english-book": 40,
+   "N-soft-hidden": 1,
+   "english-page": 5
+  }
+ },
+ "model": "gemini-3.8-flash-low",
+ "reads": {
+  "P": {
+   "calls": 511,
+   "okPages": 507,
+   "failedJunctions": 1,
+   "failures": {
+    "reply cut before <<<END>>>": 1,
+    "conversational opener": 2
+   },
+   "medianSecs": 26
+  },
+  "P2": {
+   "calls": 512,
+   "okPages": 507,
+   "failedJunctions": 1,
+   "failures": {
+    "conversational opener": 2
+   },
+   "medianSecs": 26
+  },
+  "C": {
+   "calls": 514,
+   "okPages": 507,
+   "failedJunctions": 1,
+   "failures": {
+    "reply cut before <<<END>>>": 3,
+    "conversational opener": 2
+   },
+   "medianSecs": 27
+  }
+ },
+ "judgeFloor": {
+  "join": {
+   "n": 128,
+   "tie": 128
+  },
+  "page": {
+   "n": 20,
+   "tie": 20
+  }
+ },
+ "join": {
+  "n": 253,
+  "CvsP": {
+   "defP": 16.2,
+   "defC": 15.4,
+   "anydefP": 27.3,
+   "anydefC": 24.1,
+   "delta100": 0.8,
+   "ci100": [
+    -4.7,
+    6.3
+   ],
+   "discordant": {
+    "Cbetter": 28,
+    "Pbetter": 26
+   },
+   "preferredBothOrders": {
+    "tie": 158,
+    "split": 40,
+    "P": 26,
+    "C": 29
+   }
+  },
+  "P2vsP": {
+   "defP": 12.6,
+   "defP2": 19.4,
+   "delta100": -6.7,
+   "ci100": [
+    -12.3,
+    -1.2
+   ],
+   "discordant": {
+    "P2better": 19,
+    "Pbetter": 36
+   },
+   "preferredBothOrders": {
+    "tie": 161,
+    "split": 26,
+    "P": 44,
+    "P2": 22
+   }
+  },
+  "byScript": {
+   "latin": {
+    "n": 211,
+    "defP": 14.2,
+    "defC": 15.2,
+    "delta100": -0.9
+   },
+   "other": {
+    "n": 42,
+    "defP": 26.2,
+    "defC": 16.7,
+    "delta100": 9.5
+   }
+  },
+  "byStratum": {
+   "random": {
+    "n": 101,
+    "defP": 23.8,
+    "defC": 17.8,
+    "delta100": 5.9
+   },
+   "flagged": {
+    "n": 102,
+    "defP": 14.7,
+    "defC": 16.7,
+    "delta100": -2
+   },
+   "good": {
+    "n": 24,
+    "defP": 4.2,
+    "defC": 8.3,
+    "delta100": -4.2
+   },
+   "plant": {
+    "n": 26,
+    "defP": 3.8,
+    "defC": 7.7,
+    "delta100": -3.8
+   }
+  }
+ },
+ "page": {
+  "n": 127,
+  "CvsP": {
+   "tie": 41,
+   "split": 36,
+   "C": 23,
+   "P": 27,
+   "LminusW": 3.1,
+   "ci100": [
+    -7.9,
+    14.2
+   ]
+  },
+  "P2vsP": {
+   "tie": 38,
+   "P2": 21,
+   "split": 44,
+   "P": 24,
+   "LminusW": 2.4,
+   "ci100": [
+    -7.9,
+    12.6
+   ]
+  },
+  "medianLenRatioCoverP": 0.991
+ },
+ "rule": {
+  "effect_ci_excludes_0": false,
+  "effect_outside_floor": true,
+  "effect_min_8": false,
+  "script_groups_same_sign": false,
+  "page_noninferior": false,
+  "failed_reads": true,
+  "length_ratio": true,
+  "judge_floor": true,
+  "verdict": "NO MEASURABLE EFFECT: not shipped"
+ },
+ "claudeCalls": {
+  "joinjudge": 120,
+  "pagejudge": 106
+ },
+ "claudeListUsd": 53.69
+}
