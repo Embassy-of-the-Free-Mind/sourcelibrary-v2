@@ -458,6 +458,11 @@ async function listBooks(args: Record<string, unknown>) {
   }));
   return {
     total: result.total, showing: books?.length || 0,
+    // The route's count timed out (#6854): `total` is only what was seen so far.
+    ...(result.total_is_lower_bound ? {
+      total_is_lower_bound: true,
+      total_note: 'The match count timed out, so `total` is a lower bound, not the number of matching books. Page with skip to see more, or narrow the search.',
+    } : {}),
     ...(params.get('has_edition') ? { has_edition: params.get('has_edition') } : {}),
     // Canonicalized author echo when filtering by author_id (null-safe: the
     // route omits it unless the filter was applied).

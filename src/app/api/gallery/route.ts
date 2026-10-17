@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { BOOK_SEARCH_INDEX } from '@/lib/atlas-search';
 import { galleryFilter, type GalleryScope } from '@/lib/gallery-scope';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { resolveSearchScope, closedScopeResponse, matchClip, matchGalleryText, scopeAdmits, type SearchScope } from '@/lib/tenant-search-scope';
@@ -132,6 +133,13 @@ let cachedFilters: { data: { types: string[]; subjects: string[]; yearRange: { m
  *   - semantic: use embedding search
  */
 export async function GET(request: NextRequest) {
+  // Per-stage wall time, returned as Server-Timing (#4692, #6854).
+  const startedAt = Date.now();
+  const timings: Record<string, number> = {};
+  const timed = async <T,>(name: string, f: () => Promise<T>): Promise<T> => {
+    const t = Date.now();
+    try { return await f(); } finally { timings[name] = Date.now() - t; }
+  };
   try {
     const { searchParams } = new URL(request.url);
     const tenantCtx = getTenantContextFromRequest(request);
@@ -319,12 +327,38 @@ export async function GET(request: NextRequest) {
     // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
     // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
 
+    // Independent of every lane below, so it runs beside them (#6854): its two
+    // page counts read every page of the book.
+    const bookInfoPromise = bookId ? getBookInfo(db, bookId, tenantId || undefined) : null;
+    bookInfoPromise?.catch(() => {});
+
     // Fire CLIP visual search in parallel with text search
     const clipPromise = searchQuery
-      ? clipTextSearch(searchQuery, Math.max(limit * 2, 60), searchScope)
+      ? timed('clip', () => clipTextSearch(searchQuery, Math.max(limit * 2, 60), searchScope))
       : Promise.resolve(new Map<string, number>());
 
+    // The search lead lanes (title artworks, title-book plates, semantic
+    // artworks) only depend on the query, so they start now and run beside the
+    // Atlas and CLIP lanes. They used to run one after another AFTER those,
+    // which made a query search_images' slowest path: 4.9 s median over MCP
+    // (#6854). Only unfiltered first pages use them (see below, #3936).
+    const structurallyFiltered = Boolean(bookId || imageType || subjectFilter || figureFilter || symbolFilter || collectionSlug || libraryFilter)
+      || yearStart !== null || yearEnd !== null;
+    const leadDocsPromise = searchQuery && offset === 0 && !structurallyFiltered
+      ? timed('lead', () => fetchSearchLeadDocs(db, searchQuery, tenantId ? { tenantId } : {}, searchScope)).catch(() => null)
+      : null;
+
     let textItems: any[] = [];
+    // The book-context lane's semantic book lookup (see "Book-context fallback").
+    let contextBooksPromise: Promise<Awaited<ReturnType<typeof import('@/lib/semantic-search')['semanticBookSearch']>>> | null = null;
+    const startContextBooks = () => {
+      const p = timed('context', () => import('@/lib/semantic-search')
+        .then(({ semanticBookSearch }) => semanticBookSearch(searchQuery!, 8, { scope: searchScope, threshold: 0.5 })));
+      // Handled where it is awaited; this only keeps an unused or early-return
+      // lookup from surfacing as an unhandled rejection.
+      p.catch(() => {});
+      return p;
+    };
     // Accurate total for the Atlas Search path. The old estimate
     // (offset + items.length + 1) grew with every page — "ship" reported
     // "Found 41", then "Found 61", and "Page X of X+1" forever, so a reader
@@ -422,14 +456,14 @@ export async function GET(request: NextRequest) {
       };
       try {
         // Relevance unless the reader picked an explicit order.
-        textItems = await db.collection('gallery_images').aggregate([
+        textItems = await timed('atlas', () => db.collection('gallery_images').aggregate([
           searchStage,
           matchStage,
           ...searchSortStages(sort, seed),
           { $project: { _id: 0 } },
           { $skip: offset },
           { $limit: limit + 1 },
-        ], { maxTimeMS: 8000, allowDiskUse: true }).toArray();
+        ], { maxTimeMS: 8000, allowDiskUse: true }).toArray());
         // Kick off the count in parallel (only meaningful when Atlas Search ran,
         // not the $text fallback). Guarded so a slow/failed count degrades to the
         // old estimate rather than breaking the request.
@@ -444,6 +478,13 @@ export async function GET(request: NextRequest) {
         // Atlas Search index not ready — fall back to $text
       }
 
+      // The book-context lane (below) runs when the text lanes find fewer than
+      // 3 plates. The $text fallback can only add rows when Atlas found none, so
+      // the lane's semantic book lookup starts now, beside that fallback and the
+      // CLIP wait, instead of after both (#6854). If the fallback then finds 3
+      // or more, the lookup is dropped unused.
+      if (!bookId && textItems.length < 3 && offset === 0) contextBooksPromise = startContextBooks();
+
       // Fallback: $text index (covers description, book_title, book_author)
       if (textItems.length === 0) {
         // Multi-word queries: quote the phrase so $text requires the words
@@ -457,17 +498,28 @@ export async function GET(request: NextRequest) {
         filter.$text = { $search: phraseQuery };
         const sortOrder: Record<string, any> = searchSortStage(sort) ?? { score: { $meta: 'textScore' }, gallery_quality: -1 };
         const projection = { _id: 0, score: { $meta: 'textScore' as const } };
-        textItems = await db.collection('gallery_images')
-          .find(filter, { projection })
-          .sort(sortOrder)
-          .skip(offset)
-          .limit(limit + 1)
-          .toArray();
+        // Capped at 600 ms (#6854). A phrase $text query fetches every document
+        // holding ANY of its words before it can check the phrase or the book:
+        // "proposition 47 squares triangle" inside one book examined 20,283
+        // documents in 2.4 s. And it rarely adds anything here, because the
+        // response keeps only grounded items: over 120 real MCP queries, Atlas
+        // found nothing for 59, and this lane added a grounded plate for 1.
+        try {
+          textItems = await timed('text_fallback', () => db.collection('gallery_images')
+            .find(filter, { projection, maxTimeMS: 600 })
+            .sort(sortOrder)
+            .skip(offset)
+            .limit(limit + 1)
+            .toArray());
+        } catch {
+          textItems = [];
+          delete filter.$text;
+        }
       }
     } else {
       // Order from gallery-sort.ts (default: round-robin through books within each
       // quality score). Segmented sorts page across undated / unhashed rows last.
-      textItems = await findSorted(db.collection('gallery_images'), filter, sort, seed, offset, limit + 1);
+      textItems = await timed('browse', () => findSorted(db.collection('gallery_images'), filter, sort, seed, offset, limit + 1));
     }
 
     // Decide "is there another page?" from the RAW row count, before any
@@ -479,6 +531,14 @@ export async function GET(request: NextRequest) {
     const rawHasMore = textItems.length > limit;
     if (rawHasMore) textItems = textItems.slice(0, limit);
 
+    // Same gate as before the lookup moved up: fewer than 3 plates on page 1.
+    // A query with no checkable words never reached the Atlas lane, so it
+    // starts here.
+    if (searchQuery && !bookId && textItems.length < 3 && offset === 0) {
+      contextBooksPromise ??= startContextBooks();
+    } else {
+      contextBooksPromise = null;
+    }
     const clipScores = await clipPromise;
     let items = textItems;
 
@@ -490,17 +550,16 @@ export async function GET(request: NextRequest) {
     // construction, so under a book filter it silently un-scopes the response —
     // a caller asking "images in this book" got corpus-wide results with no
     // signal the filter was dropped (#3936).
-    if (searchQuery && !bookId && items.length < 3 && offset === 0) {
+    if (contextBooksPromise) {
       try {
-        const { semanticBookSearch } = await import('@/lib/semantic-search');
-        const contextBooks = await semanticBookSearch(searchQuery, 8, { scope: searchScope, threshold: 0.5 });
+        const contextBooks = await contextBooksPromise;
         if (contextBooks.length > 0) {
           const existingBookIds = new Set(items.map(doc => doc.book_id));
           const newBookIds = contextBooks
             .map(b => b.book_id)
             .filter(id => !existingBookIds.has(id));
           if (newBookIds.length > 0) {
-            const bookImages = await db.collection('gallery_images')
+            const bookImages = await timed('context_images', () => db.collection('gallery_images')
               .find({
                 book_id: { $in: newBookIds },
                 gallery_quality: { $gte: Math.max(minQuality, 0.7) },
@@ -511,7 +570,7 @@ export async function GET(request: NextRequest) {
               }, { projection: { _id: 0 } })
               .sort({ gallery_quality: -1 })
               .limit(limit)
-              .toArray();
+              .toArray());
             if (bookImages.length > 0) {
               const existingIds = new Set(items.map(doc => `${doc.page_id}-${doc.detection_index}`));
               const newImages = bookImages.filter(doc =>
@@ -538,7 +597,7 @@ export async function GET(request: NextRequest) {
         // corpus-wide, so the caller's filters MUST be re-applied here — before
         // #3936 this fetch dropped bookId/type/year and visually-similar images
         // from unrelated books leaked past an explicit book filter.
-        const clipDocs = await db.collection('gallery_images')
+        const clipDocs = await timed('clip_docs', () => db.collection('gallery_images')
           .find({
             id: { $in: clipOnlyIds },
             ...(tenantBooks ? { $and: tenantBooks } : {}),
@@ -557,7 +616,7 @@ export async function GET(request: NextRequest) {
               },
             } : {}),
           }, { projection: { _id: 0 } })
-          .toArray();
+          .toArray());
 
         // Append CLIP-only results after text results
         items = [...items, ...clipDocs];
@@ -592,7 +651,7 @@ export async function GET(request: NextRequest) {
       if (searchQuery && !filter.$text) {
         // Atlas Search was used — prefer the accurate parallel $count; fall back
         // to the (page-growing) estimate only if it failed/timed out.
-        const counted = atlasSearchCount ? await atlasSearchCount : null;
+        const counted = atlasSearchCount ? await timed('count', () => atlasSearchCount!) : null;
         total = (counted != null && counted >= offset + items.length)
           ? counted
           : offset + items.length + (hasMore ? 1 : 0);
@@ -613,10 +672,10 @@ export async function GET(request: NextRequest) {
     let likesMap: Record<string, { count: number; liked: boolean }> = {};
     if (imageIds.length > 0) {
       try {
-        const likeDocs = await db.collection('likes').aggregate([
+        const likeDocs = await timed('likes', () => db.collection('likes').aggregate([
           { $match: { target_type: 'image', target_id: { $in: imageIds } } },
           { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
-        ]).toArray();
+        ]).toArray());
         for (const ld of likeDocs) {
           likesMap[ld._id as string] = {
             count: ld.count as number,
@@ -674,20 +733,10 @@ export async function GET(request: NextRequest) {
     let outItems: any[] = mappedItems; // eslint-disable-line @typescript-eslint/no-explicit-any
     let searchHasMore = hasMore;
     let displayTotal = total;
-    const structurallyFiltered = Boolean(bookId || imageType || subjectFilter || figureFilter || symbolFilter || collectionSlug || libraryFilter)
-      || yearStart !== null || yearEnd !== null;
-    if (searchQuery && offset === 0 && !structurallyFiltered) {
+    const leadDocs = leadDocsPromise ? await leadDocsPromise : null;
+    if (leadDocs) {
       try {
-        const tenantF = tenantId ? { tenantId } : {};
-        const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const rx = { $regex: esc, $options: 'i' }; // case-insensitive phrase match on titles
-        const imgPresent = { $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] };
-        // description + enrichment.description must survive this projection, or
-        // artworkToGalleryItem has nothing to fall back to and every search-lane
-        // artwork tile reads as its own title (the #4798 fix covered the browse
-        // lane's projection in gallery-merge.ts only — same bug, second call site).
-        // ...and the enrichment fields grounding scores (tags, inscriptions, prose).
-        const artProj = { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, 'enrichment.subject': 1, 'enrichment.figures_depicted': 1, 'enrichment.symbols': 1, 'enrichment.inscriptions': 1, 'enrichment.inscriptions_translation': 1, 'enrichment.museum_description': 1, 'enrichment.significance': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 } };
+        const { titleArtDocs, titlePlateDocs, artHits, semArtDocs } = leadDocs;
         const bboxAspect = (b: any) => b && b.width > 0 && b.height > 0 ? Math.min(3, Math.max(0.33, (b.width / b.height) * 0.72)) : 0.72; // eslint-disable-line @typescript-eslint/no-explicit-any
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mapPlate = (d: any) => ({
@@ -698,41 +747,6 @@ export async function GET(request: NextRequest) {
           source: 'illustration', likeCount: 0, likedByVisitor: false,
         });
 
-        // (1) Title-matching artworks — strongest signal (e.g. "John the Apostle" in the name)
-        const titleArtDocs = await db.collection('books').find(
-          // Inscriptions are the words written ON the artwork (enrichment.inscriptions,
-          // transcribed by scripts/artwork-enrichment.mjs). Until now they were rendered on
-          // the artwork page but matched by nothing, so "hypotyposin" — a word that appears
-          // only in Sadeler's engraved caption — returned an anatomy plate. Measured against
-          // production 2026-09-14: adding the two fields to this $or examines the same 57,614
-          // docs as the title-only version (869ms) because the lane already collection-scans.
-          // A dedicated artwork search index is the real fix — see the follow-up issue.
-          { content_type: 'artwork', visible: true, ...tenantF, $and: [{ $or: [{ title: rx }, { display_title: rx }, { 'enrichment.inscriptions': rx }, { 'enrichment.inscriptions_translation': rx }] }, imgPresent] },
-          artProj,
-        ).limit(10).toArray().catch(() => []);
-        // (2) Books whose title matches → their top plates
-        const titleBookIds = await db.collection('books').distinct('id',
-          { visible: true, ...tenantF, content_type: { $ne: 'artwork' }, $or: [{ title: rx }, { display_title: rx }] },
-          { maxTimeMS: 5000 },
-        ).catch(() => []);
-        const titlePlateDocs = titleBookIds.length > 0
-          ? await db.collection('gallery_images').find(
-              { book_id: { $in: titleBookIds.slice(0, 200) }, gallery_quality: { $gte: 0.6 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null }, book_rank: { $lte: 4 } },
-              { projection: { _id: 0 } },
-            ).sort({ gallery_quality: -1 }).limit(12).toArray().catch(() => [])
-          : [];
-        // (3) Semantically relevant artworks (related, not necessarily titled)
-        const { semanticArtworkSearch } = await import('@/lib/semantic-search');
-        // Candidates only: grounding below decides. 0.60 (was 0.25) just trims
-        // obvious noise before the DB fetch — at 0.25 the lane always returned
-        // its 12 (calibrated: real hits 0.62-0.68, unrelated 0.54-0.59), and no
-        // threshold separates "smartphone" from armillary clocks, which is why
-        // grounding, not the score, is the gate.
-        const artHits = await semanticArtworkSearch(searchQuery, 12, { scope: searchScope, threshold: 0.60 }).catch(() => []);
-        const semIds = artHits.map(a => a.book_id);
-        const semArtDocs = semIds.length > 0
-          ? await db.collection('books').find({ id: { $in: semIds }, content_type: 'artwork', visible: true, ...tenantF, ...imgPresent }, artProj).toArray().catch(() => [])
-          : [];
         const semById = new Map(groundArtworks(semArtDocs).map(d => [d.id, d]));
 
         // Assemble: title artworks + title plates lead, then semantic artworks, then the illustration search.
@@ -773,16 +787,13 @@ export async function GET(request: NextRequest) {
     // Get filters (cached for 30 min, only compute on first page)
     let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };
     if (offset === 0) {
-      filters = await getGalleryFilters(db);
+      filters = await timed('filters', () => getGalleryFilters(db));
     } else if (cachedFilters && (Date.now() - cachedFilters.timestamp) < FILTER_CACHE_TTL_MS) {
       filters = cachedFilters.data;
     }
 
     // Get book info if filtered by bookId
-    let bookInfo = null;
-    if (bookId) {
-      bookInfo = await getBookInfo(db, bookId, tenantId || undefined);
-    }
+    const bookInfo = bookInfoPromise ? await timed('book_info', () => bookInfoPromise) : null;
 
     return NextResponse.json(withIiifRefs({
       items: outItems,
@@ -793,7 +804,10 @@ export async function GET(request: NextRequest) {
       bookInfo,
       filters,
     }, iiifRefs), {
-      headers: { 'Cache-Control': galleryCacheControl({ tenantScoped, personal: Boolean(visitorId), degraded }) },
+      headers: {
+        'Cache-Control': galleryCacheControl({ tenantScoped, personal: Boolean(visitorId), degraded }),
+        'Server-Timing': serverTiming(timings, Date.now() - startedAt),
+      },
     });
   } catch (error) {
     console.error('Gallery error:', error);
@@ -839,6 +853,123 @@ async function getGalleryFilters(db: Awaited<ReturnType<typeof getReadDb>>) {
 
   cachedFilters = { data, timestamp: Date.now() };
   return data;
+}
+
+function serverTiming(timings: Record<string, number>, totalMs: number): string {
+  return [...Object.entries(timings).map(([k, v]) => `${k};dur=${v}`), `total;dur=${totalMs}`].join(', ');
+}
+
+// description + enrichment.description must survive this projection, or
+// artworkToGalleryItem has nothing to fall back to and every search-lane
+// artwork tile reads as its own title (the #4798 fix covered the browse
+// lane's projection in gallery-merge.ts only — same bug, second call site).
+// ...and the enrichment fields grounding scores (tags, inscriptions, prose).
+const ARTWORK_LEAD_PROJECTION = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, summary: 1, description: 1, 'enrichment.description': 1, 'enrichment.subject': 1, 'enrichment.figures_depicted': 1, 'enrichment.symbols': 1, 'enrichment.inscriptions': 1, 'enrichment.inscriptions_translation': 1, 'enrichment.museum_description': 1, 'enrichment.significance': 1, resource_type: 1, image_display: 1, image_full: 1, image_thumb: 1, thumbnail: 1, thumbnail_blob: 1, full_width: 1, full_height: 1, commons_width: 1, commons_height: 1 };
+
+/**
+ * The three lead lanes of a search's first page, fetched in parallel. Raw
+ * documents only: grounding and assembly stay in the route.
+ *
+ * Titles go through the `books_search` Atlas index (a phrase on title /
+ * display_title). They used to be an unanchored case-insensitive $regex, which
+ * no index can serve: each of the two lanes fetched all 58,130 visible books,
+ * 0.5–3 s apiece on 2026-10-17 (#6854). The phrase is word-level and folds
+ * diacritics, where the regex matched substrings ("tree" in "treatise"); the
+ * grounding check downstream is word-level too, so substring-only hits were
+ * dropped there anyway.
+ *
+ * Inscriptions (the words written ON an artwork, scripts/artwork-enrichment.mjs)
+ * are not in that index, so they keep the substring regex, run against the
+ * partial indexes `artwork_inscriptions_partial` and
+ * `artwork_inscriptions_translation_partial` (books, content_type: 'artwork').
+ * The regex is checked against index keys only: ~13K keys, 20–60 ms, against
+ * 0.3–1.6 s fetching every artwork. The planner prefers content_type_1_visible_1
+ * by itself, hence the hint; if the index is missing, the hinted query errors
+ * and the lane falls back to the unhinted one rather than going silent.
+ */
+async function fetchSearchLeadDocs(
+  db: Awaited<ReturnType<typeof getReadDb>>,
+  searchQuery: string,
+  tenantF: Record<string, string>,
+  searchScope: SearchScope,
+) {
+  const books = db.collection('books');
+  const esc = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const rx = { $regex: esc, $options: 'i' };
+  const imgPresent = { $or: [{ image_display: { $nin: [null, ''] } }, { image_full: { $nin: [null, ''] } }, { image_thumb: { $nin: [null, ''] } }] };
+  const titleSearch = {
+    $search: {
+      index: BOOK_SEARCH_INDEX,
+      compound: {
+        should: [{ phrase: { query: searchQuery, path: 'title' } }, { phrase: { query: searchQuery, path: 'display_title' } }],
+        minimumShouldMatch: 1,
+      },
+    },
+  };
+  const inscriptionLane = (field: 'inscriptions' | 'inscriptions_translation') => {
+    const filter = { content_type: 'artwork', visible: true, ...tenantF, [`enrichment.${field}`]: rx, ...imgPresent };
+    return books.find(filter, { projection: ARTWORK_LEAD_PROJECTION, hint: `artwork_${field}_partial`, maxTimeMS: 5000 }).limit(10).toArray()
+      .catch(() => books.find(filter, { projection: ARTWORK_LEAD_PROJECTION, maxTimeMS: 5000 }).limit(10).toArray())
+      .catch(() => []);
+  };
+
+  const titleArtworks = async () => {
+    // (1) Title-matching artworks — strongest signal (e.g. "John the Apostle" in the name).
+    // Inscriptions: until 2026-09 they were rendered on the artwork page but matched by
+    // nothing, so "hypotyposin" — a word only in Sadeler's engraved caption — returned an
+    // anatomy plate.
+    const [byTitle, byInscription, byTranslation] = await Promise.all([
+      books.aggregate([
+        titleSearch,
+        { $match: { content_type: 'artwork', visible: true, ...tenantF, ...imgPresent } },
+        { $limit: 10 },
+        { $project: ARTWORK_LEAD_PROJECTION },
+      ], { maxTimeMS: 5000 }).toArray().catch(() => []),
+      inscriptionLane('inscriptions'),
+      inscriptionLane('inscriptions_translation'),
+    ]);
+    const seen = new Set<string>();
+    return [...byTitle, ...byInscription, ...byTranslation]
+      .filter(d => !seen.has(d.id) && Boolean(seen.add(d.id)))
+      .slice(0, 10);
+  };
+
+  const titleBookPlates = async () => {
+    // (2) Books whose title matches → their top plates
+    const titleBookIds = (await books.aggregate([
+      titleSearch,
+      { $match: { visible: true, ...tenantF, content_type: { $ne: 'artwork' } } },
+      { $limit: 200 },
+      { $project: { _id: 0, id: 1 } },
+    ], { maxTimeMS: 5000 }).toArray().catch(() => [])).map(d => d.id as string);
+    if (titleBookIds.length === 0) return [];
+    return db.collection('gallery_images').find(
+      { book_id: { $in: titleBookIds }, gallery_quality: { $gte: 0.6 }, book_visible: true, extracted_url: { $ne: null }, image_url: { $ne: null }, book_rank: { $lte: 4 } },
+      { projection: { _id: 0 } },
+    ).sort({ gallery_quality: -1 }).limit(12).toArray().catch(() => []);
+  };
+
+  const semanticArtworks = async () => {
+    // (3) Semantically relevant artworks (related, not necessarily titled)
+    const { semanticArtworkSearch } = await import('@/lib/semantic-search');
+    // Candidates only: grounding decides. 0.60 (was 0.25) just trims
+    // obvious noise before the DB fetch — at 0.25 the lane always returned
+    // its 12 (calibrated: real hits 0.62-0.68, unrelated 0.54-0.59), and no
+    // threshold separates "smartphone" from armillary clocks, which is why
+    // grounding, not the score, is the gate.
+    const artHits = await semanticArtworkSearch(searchQuery, 12, { scope: searchScope, threshold: 0.60 }).catch(() => []);
+    const semIds = artHits.map(a => a.book_id);
+    const semArtDocs = semIds.length > 0
+      ? await books.find({ id: { $in: semIds }, content_type: 'artwork', visible: true, ...tenantF, ...imgPresent }, { projection: ARTWORK_LEAD_PROJECTION }).toArray().catch(() => [])
+      : [];
+    return { artHits, semArtDocs };
+  };
+
+  const [titleArtDocs, titlePlateDocs, { artHits, semArtDocs }] = await Promise.all([
+    // A failed import() must cost only the semantic lane, not all three.
+    titleArtworks(), titleBookPlates(), semanticArtworks().catch(() => ({ artHits: [], semArtDocs: [] })),
+  ]);
+  return { titleArtDocs, titlePlateDocs, artHits, semArtDocs };
 }
 
 /**

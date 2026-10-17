@@ -37,6 +37,13 @@ const VISUAL_RESOURCE_TYPES = ['painting', 'drawing', 'print', 'fresco', 'engrav
  *   offset     — pagination offset (default 0)
  */
 export async function GET(request: NextRequest) {
+  // Per-stage wall time, returned as Server-Timing on the q lane (#6854).
+  const startedAt = Date.now();
+  const timings: Record<string, number> = {};
+  const timed = async <T,>(name: string, f: () => Promise<T>): Promise<T> => {
+    const t = Date.now();
+    try { return await f(); } finally { timings[name] = Date.now() - t; }
+  };
   try {
     const { searchParams } = new URL(request.url);
     const tenantCtx = getTenantContextFromRequest(request);
@@ -97,24 +104,24 @@ export async function GET(request: NextRequest) {
       const semanticLimit = Math.min(limit + offset + 30, 120);
       // Rank inside the tenant's book set (#4330); the Mongo `tenantScope`
       // below stays as the second check.
-      const semanticResults = await semanticArtworkSearch(q, semanticLimit, {
+      const semanticResults = await timed('semantic', () => semanticArtworkSearch(q, semanticLimit, {
         scope,
         period: period ?? undefined,
         culture: culture ?? undefined,
         genre: genre ?? undefined,
         threshold: 0.25,
-      });
+      }));
 
       // Resolve full Mongo docs for slug, image URLs, year, tenant scope
       let docs: Array<Record<string, unknown>> = [];
       if (semanticResults.length > 0) {
         const ids = semanticResults.map(r => r.book_id);
-        docs = await db.collection('books').find({
+        docs = await timed('docs', () => db.collection('books').find({
           id: { $in: ids },
           ...tenantScope,
           visible: true,
           resource_type: { $in: VISUAL_RESOURCE_TYPES },
-        }).toArray();
+        }).toArray());
       }
       const docMap = new Map(docs.map(d => [d.id as string, d]));
 
@@ -152,10 +159,12 @@ export async function GET(request: NextRequest) {
             { medium: { $regex: pattern, $options: 'i' } },
           ],
         };
-        const regexDocs = await db.collection('books')
+        // Served by resource_type_1_visible_1 (5.8K docs, not all 58K visible
+        // books: 1.2 s → 36–130 ms, #6854).
+        const regexDocs = await timed('regex_fallback', () => db.collection('books')
           .find(regexFilter)
           .limit(limit + offset + 1)
-          .toArray();
+          .toArray());
         merged = regexDocs.map(d => shapeArtworkRow(d));
       }
 
@@ -164,6 +173,10 @@ export async function GET(request: NextRequest) {
         total: merged.length,
         showing: page.length,
         items: page,
+      }, {
+        headers: {
+          'Server-Timing': [...Object.entries(timings).map(([k, v]) => `${k};dur=${v}`), `total;dur=${Date.now() - startedAt}`].join(', '),
+        },
       });
     }
 
