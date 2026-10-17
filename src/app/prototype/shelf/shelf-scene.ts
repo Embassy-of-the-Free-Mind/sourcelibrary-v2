@@ -254,11 +254,21 @@ function woodTexture(): THREE.CanvasTexture {
   return tex;
 }
 
+/**
+ * 'stacked' lays books flat in piles, spine out, as libraries kept them before
+ * upright shelving became usual (roughly the 16th century); the spine titles
+ * then read horizontally. 'upright' is the modern shelf.
+ */
+export type ShelfLayout = 'stacked' | 'upright';
+
 type Slot =
-  | { kind: 'book'; book: ShelfBook; w: number }
+  | { kind: 'pile'; books: ShelfBook[]; w: number }
   | { kind: 'plaque'; label: string; w: number };
 
-export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene {
+const PILE_MAX = 7;
+const PILE_GAP = 0.07;
+
+export function createShelfScene(books: ShelfBook[], cb: Callbacks, layout: ShelfLayout = 'stacked'): ShelfScene {
   const disposables: { dispose(): void }[] = [];
   const keep = <T extends { dispose(): void }>(x: T) => { disposables.push(x); return x; };
 
@@ -287,11 +297,27 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
 
   // ── Layout ────────────────────────────────────────────────────────────
   const slots: Slot[] = [];
+  const clearance = SHELF_H - BOARD - 0.12;
   let lastCentury: number | null = null;
+  let pile: Extract<Slot, { kind: 'pile' }> | null = null;
+  let pileH = 0;
   for (const b of books) {
     const c = centuryOf(b.year);
-    if (c !== null && c !== lastCentury) { slots.push({ kind: 'plaque', label: centuryLabel(c), w: PLAQUE_W }); lastCentury = c; }
-    slots.push({ kind: 'book', book: b, w: sizeOf(b).t + GAP });
+    if (c !== null && c !== lastCentury) {
+      slots.push({ kind: 'plaque', label: centuryLabel(c), w: PLAQUE_W });
+      lastCentury = c;
+      pile = null; // a pile never straddles a century
+    }
+    const size = sizeOf(b);
+    if (layout === 'upright') { slots.push({ kind: 'pile', books: [b], w: size.t + GAP }); continue; }
+    if (!pile || pile.books.length >= PILE_MAX || pileH + size.t > clearance) {
+      pile = { kind: 'pile', books: [], w: 0 };
+      pileH = 0;
+      slots.push(pile);
+    }
+    pile.books.push(b);
+    pileH += size.t;
+    pile.w = Math.max(pile.w, size.h + PILE_GAP);
   }
   const total = slots.reduce((s, x) => s + x.w, 0);
   // Wide rather than tall: the reader pans sideways, the way you walk a shelf.
@@ -324,7 +350,11 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
   const pageMat = keep(new THREE.MeshStandardMaterial({ color: '#e9dcc0', roughness: 0.9 }));
   const plaqueGeo = keep(new THREE.BoxGeometry(PLAQUE_W - 0.04, 0.13, 0.02));
 
-  interface BookObj { book: ShelfBook; mesh: THREE.Mesh; home: THREE.Vector3; size: { h: number; t: number; d: number }; coverMat: THREE.MeshStandardMaterial; coverLoaded: boolean }
+  interface BookObj {
+    book: ShelfBook; mesh: THREE.Mesh; size: { h: number; t: number; d: number };
+    home: THREE.Vector3; homeQuat: THREE.Quaternion; floorY: number;
+    coverMat: THREE.MeshStandardMaterial; coverLoaded: boolean;
+  }
   const bookObjs: BookObj[] = [];
   const byId = new Map<string, BookObj>();
 
@@ -342,23 +372,39 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
       // A bookend so the plaque reads as a divider, not a gap.
       addBox(0.03, 0.5, 0.45, x + s.w / 2, baseY + 0.25, -0.35, woodMat);
     } else {
-      const size = sizeOf(s.book);
-      const leather = leatherFor(s.book);
-      const leatherMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
-      const spine = keep(spineTexture(s.book, leather, size.h, size.t));
-      const spineMat = keep(new THREE.MeshStandardMaterial({ map: spine, roughness: 0.6, metalness: 0.05 }));
-      const coverMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
-      // Faces: +x front cover, -x back cover, +y/-y page block, +z spine, -z fore-edge.
-      const mesh = new THREE.Mesh(keep(new THREE.BoxGeometry(size.t, size.h, size.d)), [coverMat, leatherMat, pageMat, pageMat, spineMat, pageMat]);
-      // Spines sit flush-ish with the shelf front, with a little jitter so the row looks handled.
-      const jitter = (hash(s.book.id + 'z') - 0.5) * 0.05;
-      const home = new THREE.Vector3(x + size.t / 2, baseY + size.h / 2, -size.d / 2 + jitter);
-      mesh.position.copy(home);
-      mesh.userData.id = s.book.id;
-      scene.add(mesh);
-      const obj = { book: s.book, mesh, home, size, coverMat, coverLoaded: false };
-      bookObjs.push(obj);
-      byId.set(s.book.id, obj);
+      // Heaviest at the bottom of a pile, as anyone stacking books would.
+      const ordered = layout === 'stacked' ? [...s.books].sort((a, b) => sizeOf(b).h - sizeOf(a).h) : s.books;
+      let y = baseY;
+      for (const book of ordered) {
+        const size = sizeOf(book);
+        const leather = leatherFor(book);
+        const leatherMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
+        const spine = keep(spineTexture(book, leather, size.h, size.t));
+        const spineMat = keep(new THREE.MeshStandardMaterial({ map: spine, roughness: 0.6, metalness: 0.05 }));
+        const coverMat = keep(new THREE.MeshStandardMaterial({ color: leather, roughness: 0.7 }));
+        // Faces: +x front cover, -x back cover, +y/-y page block, +z spine, -z fore-edge.
+        const mesh = new THREE.Mesh(keep(new THREE.BoxGeometry(size.t, size.h, size.d)), [coverMat, leatherMat, pageMat, pageMat, spineMat, pageMat]);
+        // Spines sit flush-ish with the shelf front, with a little jitter so the shelf looks handled.
+        const jz = (hash(book.id + 'z') - 0.5) * 0.05;
+        let home: THREE.Vector3;
+        const rot = new THREE.Euler();
+        if (layout === 'stacked') {
+          // Lying on its back cover, head to the left, so the spine title reads left to right.
+          const jx = (hash(book.id + 'x') - 0.5) * 0.06;
+          home = new THREE.Vector3(x + s.w / 2 + jx, y + size.t / 2, -size.d / 2 + jz);
+          rot.set(0, (hash(book.id + 'r') - 0.5) * 0.08, Math.PI / 2);
+          y += size.t + 0.002;
+        } else {
+          home = new THREE.Vector3(x + size.t / 2, baseY + size.h / 2, -size.d / 2 + jz);
+        }
+        mesh.position.copy(home);
+        mesh.rotation.copy(rot);
+        mesh.userData.id = book.id;
+        scene.add(mesh);
+        const obj: BookObj = { book, mesh, size, home, homeQuat: mesh.quaternion.clone(), floorY: baseY, coverMat, coverLoaded: false };
+        bookObjs.push(obj);
+        byId.set(book.id, obj);
+      }
     }
     x += s.w;
   }
@@ -380,7 +426,8 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
   // ── Selection ─────────────────────────────────────────────────────────
   let selected: BookObj | null = null;
   let hovered: BookObj | null = null;
-  const anim = new Map<BookObj, { pos: THREE.Vector3; rotY: number }>();
+  const anim = new Map<BookObj, { pos: THREE.Vector3; quat: THREE.Quaternion }>();
+  const shownQuat = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -Math.PI / 2 + 0.25, 0));
   let savedView: { target: THREE.Vector3; dist: number } | null = null;
   // Covers are drawn on first pull rather than up front: most books are never taken off the shelf.
   // (The title page itself is shown in the HTML card; the image host's CORS would block it as a texture off sourcelibrary.org.)
@@ -395,16 +442,16 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
   function select(id: string | null) {
     const next = id ? byId.get(id) ?? null : null;
     if (next === selected) return;
-    if (selected) anim.set(selected, { pos: selected.home.clone(), rotY: 0 });
+    if (selected) anim.set(selected, { pos: selected.home.clone(), quat: selected.homeQuat });
     selected = next;
     if (next) {
       if (!savedView) savedView = { target: goal.target.clone(), dist: goal.dist };
       loadCover(next);
-      // Pull it clear of the shelf, lift it a little, and turn the front cover to the reader.
+      // Pull it clear of the shelf, stand it up, and turn the front cover to the reader.
       const out = next.home.clone();
       out.z = next.size.d * 0.5 + 0.35;
-      out.y = next.home.y + 0.05;
-      anim.set(next, { pos: out, rotY: -Math.PI / 2 + 0.25 });
+      out.y = next.floorY + next.size.h / 2 + 0.05;
+      anim.set(next, { pos: out, quat: shownQuat });
       // Portrait screens need more distance for the book to fit above the bottom card.
       goal.dist = Math.max(minDist + 0.6, next.size.h * (aspect < 1 ? 4.2 : 2.4));
       // On a wide screen the card sits on the right, so frame the book left of centre.
@@ -520,8 +567,8 @@ export function createShelfScene(books: ShelfBook[], cb: Callbacks): ShelfScene 
 
     for (const [o, a] of anim) {
       o.mesh.position.lerp(a.pos, 1 - Math.exp(-dt * 9));
-      o.mesh.rotation.y += (a.rotY - o.mesh.rotation.y) * (1 - Math.exp(-dt * 8));
-      if (o.mesh.position.distanceTo(a.pos) < 0.001 && Math.abs(a.rotY - o.mesh.rotation.y) < 0.001) anim.delete(o);
+      o.mesh.quaternion.slerp(a.quat, 1 - Math.exp(-dt * 8));
+      if (o.mesh.position.distanceTo(a.pos) < 0.001 && o.mesh.quaternion.angleTo(a.quat) < 0.001) anim.delete(o);
     }
     // Hovered spine tips out slightly, like a finger hooked over the headcap.
     for (const o of bookObjs) {
