@@ -14,7 +14,7 @@ How an article under `/articles` looks and what goes into it. Read this before w
 
 Articles need a lot of pictures. Text-only articles are boring, and the library is full of pages and plates.
 
-- **Aim for a picture in every section**, and never more than three or four paragraphs of text without one. A picture means something the reader can look at that carries information: a page, a plate, a detail of a plate, a diagram, a map, a screenshot of a tool or a result, a chart.
+- **A picture in most sections, ideally every one.** It isn't a hard rule: a good, relevant page or plate is worth adding, a weak or loosely related one isn't. Long runs of text with nothing to look at are what to avoid. A picture means something the reader can look at that carries information: a page, a plate, a detail of a plate, a diagram, a map, a screenshot of a tool or a result, a chart.
 - **From the library first.** Pages and plates from the books the article quotes, at their true proportions, never cropped to a uniform box. Use `PageFigure` (`src/components/articles/PageFigure.tsx`) with `href` set to the reader page (`/book/<slug>?page=N`) and `source` set to the book.
 - **Outside material only when the licence is clear.** Public domain, CC0, CC BY or CC BY-SA, or written permission. Say who holds it, the licence, and link to it, in the `credit` line of `PageFigure`. Museum open-access images already mirrored under `images.sourcelibrary.org/artwork/` are fine (their credit is in the gallery record). If the licence is unclear, leave the image out. Never hotlink: bring the file in with `scripts/import-*-artworks.mjs` or into `public/articles/<slug>/`.
 - **Screenshots** of Source Library itself (the reader, a search, a chart) are welcome where they show what the article describes.
@@ -56,7 +56,7 @@ Articles need a lot of pictures. Text-only articles are boring, and the library 
 ## Checklist before opening a PR
 
 1. Hero set, `feature` and `headerVariant="dark"` on `ContentHeader`; generators re-run.
-2. A picture in every section; every outside image has a clear licence and a credit line.
+2. Pictures in most sections; every outside image has a clear licence and a credit line.
 3. Quotes from library books use `SourceQuote` with the page.
 4. No `text-accent-rust` or other red text in the article.
 5. Every book drawn on is linked (or in `books.ts`); no hand-written book list.
