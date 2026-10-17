@@ -3,9 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Download, LayoutGrid, List, Search, X } from 'lucide-react';
-import type { CollectionBook } from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
-import JustifiedBooks from './JustifiedBooks';
+import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import StatsBand, { type BandStats } from './StatsBand';
 import AdvancedSearch, { type Draft } from './AdvancedSearch';
 import AskWorkList from './AskWorkList';
@@ -547,18 +546,18 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
         {showEarly && (
           <>
             <p className="text-[13px] text-muted mb-3">{earlyLabel}</p>
-            <JustifiedBooks books={earlyCards} />
+            <BookGrid books={earlyCards} />
           </>
         )}
         {topicMode && shownWorks && (
           shownWorks.length === 0 ? <Empty /> :
-            s.view === 'list' ? <AskWorkList works={shownWorks} topic={s.topic ?? ''} /> : <JustifiedBooks books={workCards} />
+            s.view === 'list' ? <AskWorkList works={shownWorks} topic={s.topic ?? ''} /> : <BookGrid books={workCards} />
         )}
         {!topicMode && (
           bookCards.length === 0 && !loading ? <Empty /> :
             s.view === 'list'
               ? <CollectionListView books={bookCards as never} sort={s.sort === 'relevance' ? 'popular' : s.sort} onSort={(v: string) => run({ ...s, sort: v as CatalogSort })} loading={loading} />
-              : <JustifiedBooks books={bookCards} />
+              : <BookGrid books={bookCards} />
         )}
       </div>
       {moreLeft && (
@@ -575,15 +574,27 @@ function Empty() {
   return <div className="py-16 text-center text-muted text-base">Nothing matches all of that. Remove one of the filters above.</div>;
 }
 
-function Skeleton() {
-  const widths = [150, 172, 140, 190, 160, 146, 182, 155, 168, 150, 176, 142];
+/** The site's standard book grid and card, as on every other surface. */
+function BookGrid({ books }: { books: CollectionBook[] }) {
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-6" aria-hidden>
-      {widths.map((w, i) => (
-        <div key={i} style={{ width: w }}>
-          <div className="h-[220px] bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
-          <div className="h-[11px] mt-2.5 bg-warm" />
-          <div className="h-[11px] mt-1.5 w-3/5 bg-warm" />
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+      {books.map((book, i) => (
+        <CollectionBookCard key={`${book.bookId || book.id || book.slug}:${i}`} book={book} priority={i < 6} />
+      ))}
+    </div>
+  );
+}
+
+function Skeleton() {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5" aria-hidden>
+      {Array.from({ length: 12 }, (_, i) => (
+        <div key={i} className="border border-border-light bg-white">
+          <div className="aspect-[3/4] bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
+          <div className="p-3">
+            <div className="h-[11px] bg-warm" />
+            <div className="h-[11px] mt-1.5 w-3/5 bg-warm" />
+          </div>
         </div>
       ))}
     </div>
