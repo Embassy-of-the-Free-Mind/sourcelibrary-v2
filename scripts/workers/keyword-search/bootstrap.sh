@@ -57,7 +57,7 @@ if [ ! -f /etc/keyword-search.env ]; then
   ( umask 077; printf 'KEYWORD_SEARCH_TOKEN=%s\nKEYWORD_SEARCH_HOST=127.0.0.1\nKEYWORD_SEARCH_PORT=3460\nKEYWORD_SEARCH_LOCAL_PORT=%s\n' "$(openssl rand -hex 32)" "$LOCAL_PORT" > /etc/keyword-search.env )
   step "wrote /etc/keyword-search.env (public listener on 127.0.0.1 until the TLS proxy, #6843)"
 fi
-cp "$CHECKOUT/infrastructure/systemd/keyword-search.service" /etc/systemd/system/ && systemctl daemon-reload || die "unit install failed"
+cp "$CHECKOUT/infrastructure/systemd/search-services.slice" "$CHECKOUT/infrastructure/systemd/keyword-search.service" /etc/systemd/system/ && systemctl daemon-reload || die "unit install failed"
 
 if [ "$REBUILD" = 1 ] || [ ! -f "$ROOT/index/meta.json" ]; then
   FREE=$(df --output=avail -BG "$ROOT" | tail -1 | tr -dc 0-9)

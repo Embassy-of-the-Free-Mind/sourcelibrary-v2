@@ -4,7 +4,7 @@
 #
 #   apt-get install -y caddy
 #   cp infrastructure/caddy/Caddyfile.cloudlayer /etc/caddy/Caddyfile && systemctl reload caddy
-#   cp infrastructure/caddy/caddy-slice.conf /etc/systemd/system/caddy.service.d/slice.conf && systemctl daemon-reload && systemctl restart caddy
+#   cp infrastructure/caddy/caddy-search-slice.conf /etc/systemd/system/caddy.service.d/slice.conf && systemctl daemon-reload && systemctl restart caddy
 #   ufw allow 80/tcp; ufw allow 443/tcp        # 80 for the ACME HTTP-01 challenge and the https redirect
 #
 # Before installing: the live Cloud Layer globe runs on this box. Check `ss -ltnp` for 80/443 first; if

@@ -1,0 +1,21 @@
+# /etc/systemd/system/search-services.slice on cloudlayer (#6852): the reader-facing search services, kept OUT of
+# sourcelibrary.slice, where the Claude jobs run. On 2026-10-17 l7a's vector service hung for ~15 min because it
+# shared that slice with the jobs: an sl-tsc pushed the slice over MemoryHigh and the kernel throttled every
+# process in it, the service included. A request path must not depend on what a job is type-checking.
+#
+# Members: keyword-search.service (Slice= in its unit) and caddy.service (caddy-search-slice.conf drop-in).
+# MemoryMin reserves the hot index set from reclaim. Phase 2 measured ~2 GB of the memory-mapped index charged to
+# the unit after a parity run, plus ~80 MB of process; 4G leaves room for it to grow under shadow, then serve,
+# traffic. cgroup v2 protection is hierarchical: a unit's MemoryMin counts only up to its parent's, so it is set
+# here AND on the unit. MemoryMax 10G matches the unit's own cap, so the box's worst case for Source Library is
+# 14G (jobs) + 10G (search) of 31 GB, and the Cloud Layer globe (system.slice) keeps the rest.
+[Unit]
+Description=Source Library search services (keyword page service + its TLS front), outside the jobs slice
+
+[Slice]
+MemoryMin=4G
+MemoryHigh=9G
+MemoryMax=10G
+CPUWeight=50
+IOWeight=50
+TasksMax=2000

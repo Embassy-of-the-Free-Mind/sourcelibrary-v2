@@ -1,7 +1,7 @@
 # Keyword page service for the /api/search page lane (#6852). Installed at
 # /etc/systemd/system/keyword-search.service on the serving box (README in scripts/workers/keyword-search/):
 #
-#   cp infrastructure/systemd/keyword-search.service /etc/systemd/system/
+#   cp infrastructure/systemd/search-services.slice infrastructure/systemd/keyword-search.service /etc/systemd/system/
 #   systemctl daemon-reload && systemctl enable --now keyword-search
 #
 # Code: /data/keyword-search/app (a copy of scripts/workers/keyword-search). Python half (the service):
@@ -25,9 +25,11 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-# On the guest boxes every Source Library process runs in this slice (MemoryMax 14G, CPUWeight 30), so the
-# host's own service is never starved (JOB-HOSTS.md). The memory-mapped index's page cache is charged here too.
-Slice=sourcelibrary.slice
+# Not sourcelibrary.slice, where the Claude jobs run: a job pushing that slice over MemoryHigh throttles every
+# process in it (l7a's vector service hung ~15 min that way, 2026-10-17). search-services.slice is capped on its
+# own, and MemoryMin here (inside the slice's 4G) keeps the hot index set from being reclaimed for a job.
+Slice=search-services.slice
+MemoryMin=3G
 WorkingDirectory=/data/keyword-search/app
 EnvironmentFile=/etc/keyword-search.env
 Environment=KEYWORD_SEARCH_ROOT=/data/keyword-search
