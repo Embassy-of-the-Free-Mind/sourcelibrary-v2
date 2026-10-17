@@ -20,6 +20,8 @@
 
 The boxes reach each other through the **box mesh** (below), and the laptop reaches all three as root. The ARM boxes have no Python ML tools (kraken, CLIP, onnx): a brief that needs them goes to main.
 
+**GPU box, not a job host: GEX45-1** (`root@65.108.136.89`, Hetzner Robot HEL1, RTX PRO 4000 Blackwell 24 GB, 20 cores, 62 GB; $249/mo flat, #5660). No Claude login and no secrets on it; a job on main drives it over ssh. Stack in `/root/pz` (`paddle-zh-box.sh setup` with `PADDLE_CU=cu129`; vLLM needs `VLLM_USE_FLASHINFER_SAMPLER=0`). **Every job writes under `/root/jobs/<name>/` or `/root/pz/out/`**, because that is what `scripts/maintenance/gex45-idle-alert.sh` watches: 6 h with no new file there pages ntfy and comments on #5660. Never power it off to save money: a dedicated box bills the same.
+
 Each box's Claude login is a different account; check with `python3 -c "import json;print(json.load(open('/root/.claude.json'))['oauthAccount']['emailAddress'])"` on the box, since logins change (main: team@sourcelibrary.org since 2026-10-15, cloudlayer: derek@playpowerlabs.com, l7a: derek@sourcelibrary.org), so spreading jobs across the boxes also spreads them across three weekly limits.
 
 ## The spare lane on every box (#6395)

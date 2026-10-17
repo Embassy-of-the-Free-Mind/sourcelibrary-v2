@@ -1,0 +1,693 @@
+{
+ "at": "2026-10-17T05:17:46.561Z",
+ "by_language": {
+  "Tibetan": {
+   "books": 1823,
+   "owed": 50828,
+   "rows": [
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "specialist-ocr-lane-4523",
+     "books": 317,
+     "owed": 33219
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "tibetan-retranslation-awaits-derek",
+     "books": 989,
+     "owed": 7235
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "specialist-ocr-lane-4523",
+     "books": 79,
+     "owed": 2031
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "kangyur-import",
+     "books": 19,
+     "owed": 1518
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": null,
+     "books": 3,
+     "owed": 1443
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "kangyur-import",
+     "books": 59,
+     "owed": 1396
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": "warehouse-promotion-5470",
+     "books": 2,
+     "owed": 1082
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": null,
+     "books": 10,
+     "owed": 769
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 2,
+     "owed": 514
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 186,
+     "owed": 493
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "tibetan-retranslation-awaits-derek",
+     "books": 77,
+     "owed": 447
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": null,
+     "books": 6,
+     "owed": 203
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "gpu-backlog-5660",
+     "books": 1,
+     "owed": 170
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "specialist-ocr-lane-4523",
+     "books": 2,
+     "owed": 76
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "tengyur-import-5497",
+     "books": 37,
+     "owed": 49
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "qa-enrich-1007",
+     "books": 2,
+     "owed": 48
+    },
+    {
+     "visible": true,
+     "class": "mixed",
+     "hold": "tibetan-retranslation-awaits-derek",
+     "books": 14,
+     "owed": 41
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "tibetan-unverified-gemini-ocr-4523",
+     "books": 1,
+     "owed": 35
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "gpu-backlog-5660",
+     "books": 1,
+     "owed": 20
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "title-leaf-recitation-6297",
+     "books": 3,
+     "owed": 12
+    },
+    {
+     "visible": true,
+     "class": "mixed",
+     "hold": null,
+     "books": 1,
+     "owed": 9
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "kangyur-import",
+     "books": 6,
+     "owed": 7
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "specialist-ocr-lane-4523",
+     "books": 2,
+     "owed": 4
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "kangyur-import",
+     "books": 1,
+     "owed": 3
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "tibetan-unverified-gemini-ocr-4523",
+     "books": 1,
+     "owed": 2
+    },
+    {
+     "visible": false,
+     "class": "mixed",
+     "hold": "specialist-ocr-lane-4523",
+     "books": 2,
+     "owed": 2
+    }
+   ]
+  },
+  "Japanese": {
+   "books": 283,
+   "owed": 26750,
+   "rows": [
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 199,
+     "owed": 20456
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 20,
+     "owed": 4101
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": null,
+     "books": 5,
+     "owed": 1694
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "ndl-koten-lane-4925",
+     "books": 34,
+     "owed": 214
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "cbeta-chan-translate-5566",
+     "books": 2,
+     "owed": 156
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": null,
+     "books": 2,
+     "owed": 55
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "ndl-koten-lane-4925",
+     "books": 4,
+     "owed": 25
+    },
+    {
+     "visible": false,
+     "class": "mixed",
+     "hold": null,
+     "books": 3,
+     "owed": 19
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "ndl-koten-lane-4925",
+     "books": 12,
+     "owed": 18
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "ndl-koten-lane-4925",
+     "books": 2,
+     "owed": 12
+    }
+   ]
+  },
+  "Mongolian": {
+   "books": 108,
+   "owed": 83090,
+   "rows": [
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "mongol-kanjur-import-5664",
+     "books": 100,
+     "owed": 76967
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "mongol-kanjur-import-5664",
+     "books": 8,
+     "owed": 6123
+    }
+   ]
+  },
+  "Manchu": {
+   "books": 0,
+   "owed": 0,
+   "rows": []
+  },
+  "Chinese": {
+   "books": 7682,
+   "owed": 330802,
+   "rows": [
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": null,
+     "books": 1241,
+     "owed": 162222
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 253,
+     "owed": 89550
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "gpu-backlog-5660",
+     "books": 2676,
+     "owed": 46680
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "paddle-zh-5600-ocr-only",
+     "books": 3327,
+     "owed": 13265
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": null,
+     "books": 12,
+     "owed": 6800
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 18,
+     "owed": 5603
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "paddle-zh-6388-excluded",
+     "books": 35,
+     "owed": 2639
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 34,
+     "owed": 1466
+    },
+    {
+     "visible": false,
+     "class": "mixed",
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 3,
+     "owed": 785
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "paddle-zh-6388-ocr-only",
+     "books": 43,
+     "owed": 720
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 2,
+     "owed": 396
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "warehouse-promotion-5470",
+     "books": 4,
+     "owed": 275
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "gpu-backlog-5660",
+     "books": 3,
+     "owed": 180
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "paddle-zh-6388-ocr-only",
+     "books": 21,
+     "owed": 109
+    },
+    {
+     "visible": false,
+     "class": "mixed",
+     "hold": null,
+     "books": 1,
+     "owed": 76
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "ocr-scrambled-lexicon-6056",
+     "books": 2,
+     "owed": 22
+    },
+    {
+     "visible": true,
+     "class": "mixed",
+     "hold": "paddle-zh-5600-ocr-only",
+     "books": 6,
+     "owed": 13
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": null,
+     "books": 1,
+     "owed": 1
+    }
+   ]
+  },
+  "Classical Chinese": {
+   "books": 75,
+   "owed": 2867,
+   "rows": [
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 67,
+     "owed": 2348
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": "gpu-backlog-5660",
+     "books": 4,
+     "owed": 390
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "cbeta-chan-5566",
+     "books": 1,
+     "owed": 94
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 3,
+     "owed": 35
+    }
+   ]
+  },
+  "Syriac": {
+   "books": 418,
+   "owed": 97902,
+   "rows": [
+    {
+     "visible": false,
+     "class": null,
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 356,
+     "owed": 90183
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 14,
+     "owed": 4235
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 17,
+     "owed": 2192
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "specialist-ocr-lane-4523",
+     "books": 2,
+     "owed": 803
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "syriac-retranslation-awaits-derek",
+     "books": 2,
+     "owed": 416
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "syriac-retranslation-awaits-derek",
+     "books": 26,
+     "owed": 69
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 1,
+     "owed": 4
+    }
+   ]
+  },
+  "Persian": {
+   "books": 4490,
+   "owed": 83980,
+   "rows": [
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": null,
+     "books": 115,
+     "owed": 46519
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": null,
+     "books": 4263,
+     "owed": 15252
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 49,
+     "owed": 11274
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 35,
+     "owed": 7916
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": "acquisition-wave-2026-10-images-only",
+     "books": 5,
+     "owed": 1637
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 17,
+     "owed": 1300
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": null,
+     "books": 5,
+     "owed": 81
+    },
+    {
+     "visible": true,
+     "class": "mixed",
+     "hold": null,
+     "books": 1,
+     "owed": 1
+    }
+   ]
+  },
+  "Sanskrit": {
+   "books": 8137,
+   "owed": 219004,
+   "rows": [
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 352,
+     "owed": 97723
+    },
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": null,
+     "books": 938,
+     "owed": 83510
+    },
+    {
+     "visible": false,
+     "class": null,
+     "hold": null,
+     "books": 6761,
+     "owed": 31964
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": null,
+     "books": 61,
+     "owed": 4645
+    },
+    {
+     "visible": false,
+     "class": "mixed",
+     "hold": null,
+     "books": 15,
+     "owed": 915
+    },
+    {
+     "visible": true,
+     "class": "printed",
+     "hold": "tibetan-unverified-gemini-ocr-4523",
+     "books": 1,
+     "owed": 217
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": null,
+     "books": 7,
+     "owed": 19
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "tattva-flash-reread-6142",
+     "books": 1,
+     "owed": 7
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": "nalanda-sanskrit-ocr-only",
+     "books": 1,
+     "owed": 4
+    }
+   ]
+  },
+  "Javanese": {
+   "books": 292,
+   "owed": 52486,
+   "rows": [
+    {
+     "visible": false,
+     "class": "handwritten",
+     "hold": null,
+     "books": 247,
+     "owed": 50177
+    },
+    {
+     "visible": false,
+     "class": "printed",
+     "hold": null,
+     "books": 17,
+     "owed": 1667
+    },
+    {
+     "visible": true,
+     "class": "handwritten",
+     "hold": null,
+     "books": 26,
+     "owed": 530
+    },
+    {
+     "visible": false,
+     "class": "mixed",
+     "hold": null,
+     "books": 2,
+     "owed": 112
+    }
+   ]
+  }
+ },
+ "held": {
+  "gpu-backlog-5660": {
+   "books": 3481,
+   "pages_without_ocr": 47420
+  }
+ },
+ "checks": {
+  "reverted_paddle_5660": {
+   "revisions": 372,
+   "pages": 372,
+   "still_without_ocr": 372
+  }
+ }
+}
