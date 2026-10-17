@@ -1,0 +1,17 @@
+# Install on GEX45-1 ONLY, as /etc/systemd/system/sourcelibrary.slice, then `systemctl daemon-reload` (#5660).
+# Every Source Library job on the box runs inside it: claude-job.sh's gex45 HOST block starts each job with
+# `systemd-run --scope --slice=sourcelibrary.slice`, so the job's model processes (vLLM, Paddle, torch) are in it too.
+# Why a slice on a dedicated box: Derek may share GEX45 with Earthlove (Landshapes StyleGAN) and MakeMode (2026-10-17),
+# so Source Library leaves room for them in RAM, and yields CPU when contended. With no other tenant it can use all CPU.
+# VRAM cannot be capped by systemd: the HOST rules ask jobs to stop any model they start, and to keep vLLM to
+# --gpu-memory-utilization 0.6 (about 14 GB of the 24 GB card) unless the brief says the card is free.
+[Unit]
+Description=Source Library jobs on GEX45 (shared with other tenants)
+Before=slices.target
+
+[Slice]
+MemoryAccounting=yes
+MemoryHigh=40G
+MemoryMax=44G
+CPUAccounting=yes
+CPUWeight=50

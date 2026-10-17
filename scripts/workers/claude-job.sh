@@ -53,9 +53,12 @@ elif [ "$(hostname)" = gex45-1 ]; then
   node_modules is shared with the checkout: NEVER run npm ci / npm install. Type-check with \`sl-tsc\`.
 - It is the only x86 box, so Python ML tools belong here. GPU stack: /root/pz (PaddleOCR-VL, vLLM 0.10.2,
   torch 2.8 cu129; vLLM needs VLLM_USE_FLASHINFER_SAMPLER=0). Run \`nvidia-smi\` before loading a model:
-  the GPU is one 24 GB card shared by every job, and a model you start you must stop before the done file."
+  the 24 GB card is shared by every job AND by other tenants of this box. Keep vLLM to
+  --gpu-memory-utilization 0.6 unless the brief says the card is free, never hold VRAM idle, and stop any
+  model you start before the done file. Jobs run in sourcelibrary.slice (44 GB RAM cap, CPU weight 50)."
   CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
-  claude_capped() { "$CLAUDE_BIN" "$@"; }
+  # The slice (infrastructure/systemd/gex45-sourcelibrary.slice) leaves room for the box's other tenants.
+  claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- "$CLAUDE_BIN" "$@"; }
   WT=/root/worktrees; DATA=/root/jobs
 else
   HOST=hetzner; SL=/root/sourcelibrary; LOGD=/var/log/sourcelibrary/claude-jobs; JD=/root/claude-jobs
@@ -610,7 +613,7 @@ case "${1:-status}" in
   where)  # one line a dispatcher can compare across boxes (scripts/workers/job-where.sh asks each box)
     cores=$(nproc); load=$(cut -d' ' -f1 /proc/loadavg); load5=$(cut -d' ' -f2 /proc/loadavg)
     mem=$(awk '/MemAvailable/{printf "%d", $2/1024}' /proc/meminfo)
-    if [ "$HOST" = cloudlayer ] || [ "$HOST" = l7a ]; then  # guest hosts: what the slice still allows, if that is less
+    if [ "$HOST" != hetzner ]; then  # guest hosts and gex45: what the slice still allows, if that is less
       cap=$(systemctl show sourcelibrary.slice -p MemoryMax --value 2>/dev/null); cur=$(systemctl show sourcelibrary.slice -p MemoryCurrent --value 2>/dev/null)
       case "$cap$cur" in *[!0-9]*|"") ;; *) room=$(( (cap - cur) / 1048576 )); [ "$room" -lt "$mem" ] && mem=$room ;; esac
     fi
