@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'ledgers-and-heavens',
+    title: 'Ledgers and Heavens',
+    subtitle:
+      'What the money-men paid for and read: Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus on coinage, a Rosicrucian debate on abolishing gold, and a financier’s chair of music.',
+    date: '17 October 2026',
+    readTime: '11 min read',
+    kind: 'stories',
+    // Hollow dodecahedron woodcut from our 1509 De divina proportione (scan p. 248), checked by eye.
+    image: 'https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/248.jpg',
+    imageAlt:
+      'Woodcut of a hollow dodecahedron labelled "Dodecaedron Planum Vacuum", from Pacioli’s De divina proportione, 1509.',
+  },
+  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
