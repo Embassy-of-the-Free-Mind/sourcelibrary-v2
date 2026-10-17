@@ -61,7 +61,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <SiteHeader variant="light" />
+      <SiteHeader variant="dark" />
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 md:px-12 pt-10 md:pt-11 pb-12">
         {state.collection && (
           <Link href={`/collections/${state.collection}`} className="inline-flex items-center gap-1 text-sm text-accent-rust hover:opacity-70 transition-opacity mb-4">
