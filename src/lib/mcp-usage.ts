@@ -45,7 +45,7 @@ const COLLECTION = 'mcp_tool_calls';
  */
 const DB_TIMEOUT_MS = 3000;
 
-function deferDbWrite(work: () => Promise<void>): void {
+export function deferDbWrite(work: () => Promise<void>): void {
   const bounded = async () => {
     try {
       await Promise.race([

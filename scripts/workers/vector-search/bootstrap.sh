@@ -50,6 +50,8 @@ if [ ! -f "$ROOT/index/state.json" ]; then
 else
   step "2/5 build: index/state.json exists, skipping"
 fi
+# The exact-scan file for selective filters; skips itself when it already matches this index.
+node "$APP/build-exact.mjs" || step "build-exact failed: the filtered path runs HNSW-only until it is rebuilt"
 
 step "3/5 start the service"
 systemctl restart vector-search || die "systemctl restart vector-search failed"

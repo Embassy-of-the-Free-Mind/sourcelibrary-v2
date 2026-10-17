@@ -10,7 +10,9 @@
  *   - { route: 1, ts: -1 }
  *   - { ip_hash: 1, ts: -1 }
  *
- * Fire-and-forget — logging failures never affect the response.
+ * Fire-and-forget — logging failures never affect the response. Written through
+ * `after()` (deferDbWrite, src/lib/mcp-usage.ts says why a bare floating promise
+ * loses rows on serverless), which also lets a row wait for `vector_shadow`.
  * IPs are hashed (SHA-256, 16 hex chars) to keep the collection PII-light.
  */
 import { createHash } from 'crypto';
@@ -20,6 +22,8 @@ import { getClientIp } from '@/lib/rate-limit';
 import type { ApiIdentity } from '@/lib/api-auth';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { resolveHostFromHeaders } from '@/lib/analytics-ingest';
+import { deferDbWrite } from '@/lib/mcp-usage';
+import type { VectorShadow } from '@/lib/vector-search';
 
 const COLLECTION = 'search_queries';
 const MAX_QUERY_LEN = 500;
@@ -78,10 +82,14 @@ export interface LogSearchQueryInput {
    *  response already says so (`partial`, `degraded_lanes`); without it here
    *  there is no way to count how often a lane drops out (#5905). */
   degraded_lanes?: string[];
+  /** VECTOR_SEARCH_MODE=shadow (#6821): the page-vector service beside match_semantic for
+   *  this request's semantic page lane — ms on each side and overlap@k. One sub-document,
+   *  absent when the shadow is off or the lane did not run. Awaited after the response. */
+  vector_shadow?: Promise<VectorShadow | null>;
 }
 
 export function logSearchQuery(input: LogSearchQueryInput): void {
-  void writeEntry(input).catch(() => {});
+  deferDbWrite(() => writeEntry(input));
 }
 
 async function writeEntry(input: LogSearchQueryInput) {
@@ -107,6 +115,8 @@ async function writeEntry(input: LogSearchQueryInput) {
   // only", which it never was. Deriving inside the writer means a new caller
   // cannot forget it (see src/lib/search-event-log.ts for the sibling rule).
   const tenant = getTenantContextFromRequest(input.request.headers);
+  // Settled by now in practice (the service call is bounded at 400 ms and runs beside a ~1 s RPC).
+  const vectorShadow = input.vector_shadow ? await input.vector_shadow.catch(() => null) : null;
 
   await db.collection(COLLECTION).insertOne({
     ts: new Date(),
@@ -127,5 +137,6 @@ async function writeEntry(input: LogSearchQueryInput) {
     ...(input.stage_ms ? { stage_ms: input.stage_ms } : {}),
     ...(input.page_search_timed_out ? { page_search_timed_out: true } : {}),
     ...(input.degraded_lanes && input.degraded_lanes.length > 0 ? { degraded_lanes: input.degraded_lanes.slice(0, 10) } : {}),
+    ...(vectorShadow ? { vector_shadow: vectorShadow } : {}),
   });
 }

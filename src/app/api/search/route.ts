@@ -10,6 +10,7 @@ import { searchBookIds } from '@/lib/books-catalog';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { semanticBookSearch, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { conceptPageSearch } from '@/lib/search/concept-search';
+import type { VectorShadowSink } from '@/lib/vector-search';
 import { defaultDiversity, diversify, parseDiversityParam } from '@/lib/search/diversity';
 import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { rrfScores } from '@/lib/search/rrf';
@@ -406,6 +407,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       })
       : Promise.resolve([]);
 
+    // VECTOR_SEARCH_MODE=shadow (#6821): the semantic page lane fills this with the
+    // page-vector service's comparison against match_semantic; logged below.
+    const vectorShadow: VectorShadowSink = {};
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       timed(async () => {
@@ -707,6 +711,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             scope,
             textLang,
             diversity: semanticDiversity,
+            vectorShadow,
           });
           untranslatedLane = concept.lanes.untranslated;
           const pages = concept.rows;
@@ -1363,6 +1368,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       request, identity, route: 'search', query,
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
+      vector_shadow: vectorShadow.result,
       page_search_timed_out: pageSearchHitTimeout || degradedLanes.includes('page'),
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,

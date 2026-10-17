@@ -6,8 +6,9 @@ service on l7a with filters, a delta sync and a unit; each file names what it to
 
 Every semantic page lookup (`semanticPageSearchGlobal` → `match_semantic`) costs ~1.1 s for a new query
 vector, because Supabase reads its HNSW index for `page_translations` from disk (#2049). This service holds
-the same vectors in an 8-bit HNSW in RAM on l7a and answers in milliseconds. **It is not wired into the
-app yet**: that, and a shadow week comparing both paths, is a separate PR after the recall number exists.
+the same vectors in an 8-bit HNSW in RAM on l7a and answers in milliseconds. **The app calls it only when `VECTOR_SEARCH_MODE` is set** (`src/lib/vector-search.ts`): `shadow`
+runs it beside the RPC and logs `search_queries.vector_shadow`; `serve` uses its rows, falling back to
+the RPC on any error or `complete: false`. Default off.
 
 ## Contract
 
@@ -17,7 +18,8 @@ app yet**: that, and a shadow week comparing both paths, is a separate PR after 
 {"vector": [768 floats], "k": 15, "threshold": 0.3,
  "filter_language": "Latin", "filter_languages": ["German"], "filter_exclude_languages": ["English"],
  "year_min": 1500, "year_max": 1700}
-→ {"rows": [{"page_id": "…", "book_id": "…", "page_number": 12, "similarity": 0.71}], "ms": 2.4, "candidates": 15, "rounds": 1}
+→ {"rows": [{"page_id": "…", "book_id": "…", "page_number": 12, "similarity": 0.71}], "ms": 2.4,
+   "path": "exact", "complete": true, "filtered_rows": 154299, "candidates": 154299, "rounds": 1}
 ```
 
 - **Rows served**: every `page_translations` row with a non-null `embedding` — translated or not, exactly
@@ -28,8 +30,19 @@ app yet**: that, and a shadow week comparing both paths, is a separate PR after 
   before the call, as it does for the RPC. An empty array means no filter. A NULL language passes only the
   exclude list; a NULL year fails any year bound.
 - **Threshold**: similarity = 1 − cosine distance, kept when `> threshold` — the RPC's operator.
-- **Filtered queries** over-fetch k×4 and widen to k×16 when the filter leaves fewer than k rows. That is
-  a post-filter: a very selective filter can return fewer rows than the RPC's iterative scan.
+- **Filtered queries** (phase 3) go through a planner; `path` says which branch ran:
+  - The filtered row count comes exactly from per-(language, year) class counts.
+  - **≤ 300K rows → `exact`.** An int8 scan of exactly those rows, read as one contiguous range from
+    `index/exact.i8` (built by `build-exact.mjs`, ordered by language then year). The top 2k are
+    re-scored in float32 from the shards.
+  - **Otherwise → `hnsw`.** Over-fetch sized by the filter's share of the corpus, then widened by
+    the pass rate actually seen near the query, up to 16,384 candidates or 250 ms.
+  - **Still short and ≤ 600K rows → `hnsw+exact`.**
+  - **Otherwise `complete: false`.** Fewer than k rows came back, and rows above the threshold may
+    exist that were not seen. Typical case: a broad Latin filter on a query whose neighbourhood is
+    all Chinese. The app treats it as a miss and asks the RPC.
+  - Recall against an exact filtered scan: `scripts/eval/experiments/2026-10-17-vector-service-filtered-recall-6821.md`.
+    Knobs (env): `VECTOR_SEARCH_MAX_ASK`, `_BUDGET_MS`, `_EXACT_MAX`, `_EXACT_FALLBACK_MAX`, `_EXACT_THREADS`.
 - `GET /health` → `{size, live_rows, book_map_size, built_at, last_delta_at, checkpoint, generation, …}`.
 - `k` ≤ 1000. Bodies over 256 KB are refused.
 
@@ -45,7 +58,9 @@ Listeners: `0.0.0.0:3458` needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on 
 | `build-hnsw.mjs` | shards → `index/index-1.usearch` + `rows-1.jsonl` + `state.json`, streamed |
 | `server.mjs` | the service |
 | `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service; `--save`, `--count-check` |
+| `build-exact.mjs` | shards → `index/exact.{i8,keys,json}`: int8 vectors in (language, year) order for the exact filtered scan (~5.9 GB, ~4 min) |
 | `recall-eval.mjs` | overlap@45 vs exact float32 cosine, latency; no Gemini |
+| `filtered-recall-eval.mjs` | recall@45 of filtered queries vs an exact float32 filtered scan, per filter shape |
 | `bootstrap.sh` | pull → build → start → recall → first delta → phase-2 job |
 | `crontab.l7a` | the delta lines, **not installed** until the recall check has been read |
 | `../../../infrastructure/systemd/vector-search.service` | the unit |
@@ -64,6 +79,14 @@ Listeners: `0.0.0.0:3458` needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on 
   point, so a crash mid-save leaves the previous generation intact.
 - **Deleted rows** are invisible to a delta keyed on `updated_at`. `--count-check` reports the drift; above
   0.1% it exits 4 and says to rebuild (`bootstrap.sh --rebuild --no-phase2`).
+- **The exact file is a second copy, on disk, not in RAM.** The shards are ordered by page_id, so a
+  filtered set is scattered across 23 GB (5.5K random reads/s on l7a). In (language, year) order,
+  one language is one sequential read. Rows a delta adds or re-embeds are not in the file: the server
+  keeps their int8 vectors in RAM and saves them with each generation (`overrides-<g>.bin`). A
+  rebuilt index renumbers keys, so the server ignores an `exact.json` whose `index_built_at` differs
+  from `state.json`, and `bootstrap.sh` rebuilds the file after every index build. The scan reads
+  into ONE buffer allocated at startup: a fresh 96 MB buffer per query cost 390 ms of reclaim in a
+  slice at its `memory.high`.
 - **Postgres, not PostgREST**, for the pull: 5,000 rows with vectors in 1.9 s per stream from l7a against
   ~11 s per 1,000 over REST. The `translation` column is not pulled.
 
@@ -80,4 +103,5 @@ setsid nohup systemd-run --scope --quiet --unit=vector-search-bootstrap --slice=
   bash /data/vector-search/app/bootstrap.sh >> /data/vector-search/logs/bootstrap.log 2>&1 < /dev/null &
 ```
 
-Disk: ~23 GB of float32 shards (kept: the recall eval and a rebuild read them) + ~7 GB per index generation.
+Disk: ~23 GB of float32 shards (kept: the recall evals, the exact path's float32 re-score and a rebuild
+read them) + ~7 GB per index generation + ~5.9 GB for `exact.i8`.
