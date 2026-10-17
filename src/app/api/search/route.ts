@@ -24,7 +24,8 @@ import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchTranslatedEditions, namesOneVolume, readabilityTier, TIER_READABLE, type ReadabilitySource } from '@/lib/search/readable-edition';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
-import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence } from '@/lib/search/page-rollup';
+import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence, ROLLUP_BUCKETS, type BookPageCount } from '@/lib/search/page-rollup';
+import { keywordSearchMode, callKeywordLane, hydrateKeywordRows, buildKeywordShadow, liveBookSet, type KeywordLaneParams, type KeywordLaneResult, type KeywordShadow } from '@/lib/keyword-search';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
 import { phraseMatch } from '@/lib/passage-score';
 
@@ -410,6 +411,52 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // VECTOR_SEARCH_MODE=shadow (#6821): the semantic page lane fills this with the
     // page-vector service's comparison against match_semantic; logged below.
     const vectorShadow: VectorShadowSink = {};
+
+    // KEYWORD_SEARCH_MODE (#6852): the keyword page service on Hetzner beside
+    // (shadow) or in front of (serve) the Atlas page lane. Global English
+    // searches only: a `book_id` search admits a book that is not visible, a
+    // tenant's lane is confined at its join, and `?lang=` is the Postgres lane.
+    const keywordMode = (!bookId && !tenantId && !isLocalizedSearch) ? keywordSearchMode() : 'off';
+    const keyword: {
+      shadowCall?: Promise<{ ok: true; r: KeywordLaneResult; ms: number } | { ok: false; error: string; ms: number }>;
+      k: number; filtered: boolean; variants: boolean;
+      atlasMain: Array<{ book_id?: unknown; page_number?: unknown }>;
+      atlasCounts: BookPageCount[] | null;
+      lane?: 'served' | 'fallback';
+    } = { k: 0, filtered: false, variants: false, atlasMain: [], atlasCounts: null };
+    /** The page lane's question in the service's terms. */
+    const keywordParams = (terms: string[] | null, pageLimit: number, bookIds: string | string[] | undefined, variants: string[], topicWords: string[]): KeywordLaneParams => ({
+      query,
+      k: pageLimit,
+      bookIds: Array.isArray(bookIds) ? bookIds : undefined,
+      variants,
+      topicWords,
+      variantK: pagesOnly ? pageLimit : NAME_VARIANT_PAGE_RESULTS,
+      rollup: terms ? { terms, buckets: ROLLUP_BUCKETS, maxBooks: MAX_ROLLUP_BOOKS } : null,
+    });
+    /**
+     * `serve`: the lane's pages from the service, in the order the Atlas path
+     * returns them (main, variant pages, roll-up pages), text hydrated from
+     * Mongo by page id. The service's roll-up counts cover live books inside
+     * the allow-list, which is the set the Atlas path's liveness check keeps.
+     * Null on any failure, and the Atlas path runs as before.
+     */
+    const serveKeywordLane = async (params: KeywordLaneParams): Promise<any[] | null> => {
+      try {
+        const r = await callKeywordLane(params);
+        const rows = [...r.main, ...r.variants, ...r.extra];
+        const srcOf = new Map(rows.map(x => [x.page_id, x.src]));
+        const docs = await hydrateKeywordRows(db as any, rows, { query: matchQuery, variants: params.variants });
+        const of = (src: string) => docs.filter(d => srcOf.get(d.id as string) === src);
+        const main = of('main');
+        for (const c of r.counts || []) matchPagesByBook.set(c.book_id, c.pages);
+        return [...(pagesOnly ? rankPassages(matchQuery, main) : main), ...of('variant'), ...of('rollup')];
+      } catch (err) {
+        console.warn('[search] keyword service failed, using Atlas:', err instanceof Error ? err.message : String(err));
+        return null;
+      }
+    };
+
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       timed(async () => {
@@ -593,6 +640,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // contract: best passages, in score order). It counts the spelling
           // typed; name variants (#5888) arrive through the second query.
           const terms = (bookId || pagesOnly) ? null : rollupTerms(query);
+          if (keywordMode === 'serve') {
+            const { variants, topicWords } = await expandNameQuery(query);
+            const served = await serveKeywordLane(keywordParams(terms, pageLimit, filteredBookIds, variants, topicWords));
+            keyword.lane = served ? 'served' : 'fallback';
+            if (served) return served;
+          }
           const rollupDeadline = Date.now() + ROLLUP_BUDGET_MS;
           /** Resolves `null` if `work` is not done by the roll-up's deadline. */
           const withinBudget = <T,>(work: Promise<T>): Promise<T | null> => Promise.race([
@@ -617,6 +670,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           livePromise.catch(() => {}); // handled below; never an unhandled rejection
 
           const { variants, topicWords } = await expandNameQuery(query);
+          if (keywordMode === 'shadow') {
+            // Beside Atlas, never awaited by the response; compared after it (below).
+            const started = performance.now();
+            Object.assign(keyword, { k: pageLimit, filtered: Array.isArray(filteredBookIds), variants: variants.length > 0 });
+            keyword.shadowCall = callKeywordLane(keywordParams(terms, pageLimit, filteredBookIds, variants, topicWords)).then(
+              (r) => ({ ok: true as const, r, ms: performance.now() - started }),
+              (e: Error) => ({ ok: false as const, error: e.message, ms: performance.now() - started }),
+            );
+          }
           const [mainPages, variantPages, counts] = await Promise.all([
             db.collection('pages')
               .aggregate(pagePipeline(buildPageSearchStage(query, filteredBookIds), pageLimit), { maxTimeMS: 8000 })
@@ -635,6 +697,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               : Promise.resolve([]),
             countsPromise,
           ]);
+          keyword.atlasMain = mainPages;
+          keyword.atlasCounts = counts;
           const seenPages = new Set(mainPages.map(p => `${p.book_id}:${p.page_number}`));
           const rankedMain = pagesOnly ? rankPassages(matchQuery, mainPages) : mainPages;
           const pages = [...rankedMain, ...variantPages.filter(p => !seenPages.has(`${p.book_id}:${p.page_number}`))];
@@ -751,6 +815,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     };
     // Surface if the page lane hit its 8s ceiling — likely degraded results.
     const pageSearchHitTimeout = pageResult.ms >= 8000 && pageDocs.length === 0;
+
+    // KEYWORD_SEARCH_MODE=shadow (#6852): compare the service with what Atlas
+    // returned, after the response (logged as `search_queries.keyword_shadow`).
+    let keywordShadow: Promise<KeywordShadow | null> | undefined;
+    if (keyword.shadowCall) {
+      const atlas = { main: keyword.atlasMain, lane: pageDocs, counts: keyword.atlasCounts, ms: pageResult.ms, failed: degradedLanes.includes('page') };
+      keywordShadow = keyword.shadowCall.then(async (s) => {
+        const ids = new Set<string>([...atlas.main, ...atlas.lane].map(p => String(p.book_id)));
+        for (const c of atlas.counts || []) ids.add(c.book_id);
+        return buildKeywordShadow(s, atlas, await liveBookSet(db as any, [...ids]), keyword.k, { filtered: keyword.filtered, variants: keyword.variants });
+      }).catch(() => null);
+    }
 
     // Reciprocal Rank Fusion scores, keyed by the same result.id scheme used
     // when results are built below (books → book.id, pages → `${book_id}-p${n}`).
@@ -1369,6 +1445,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       total: dedupedResults.length, ms: Date.now() - _searchStart, ok: true,
       stage_ms: stageMs,
       vector_shadow: vectorShadow.result,
+      keyword_shadow: keywordShadow,
       page_search_timed_out: pageSearchHitTimeout || degradedLanes.includes('page'),
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,
@@ -1376,6 +1453,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         has_doi: hasDoi, has_translation: hasTranslation, first_translation: firstTranslation, library, book_id: bookId,
         pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
         diversity: semanticDiversity, untranslated_lane: untranslatedLane,
+        keyword_lane: keyword.lane,
       },
       degraded_lanes: degradedLanes,
     });

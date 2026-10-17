@@ -24,6 +24,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { resolveHostFromHeaders } from '@/lib/analytics-ingest';
 import { deferDbWrite } from '@/lib/mcp-usage';
 import type { VectorShadow } from '@/lib/vector-search';
+import type { KeywordShadow } from '@/lib/keyword-search';
 
 const COLLECTION = 'search_queries';
 const MAX_QUERY_LEN = 500;
@@ -86,6 +87,10 @@ export interface LogSearchQueryInput {
    *  this request's semantic page lane — ms on each side and overlap@k. One sub-document,
    *  absent when the shadow is off or the lane did not run. Awaited after the response. */
   vector_shadow?: Promise<VectorShadow | null>;
+  /** KEYWORD_SEARCH_MODE=shadow (#6852): the keyword page service beside the Atlas page lane —
+   *  ms on each side and recall of Atlas's pages and roll-up books. Absent when the shadow is off
+   *  or the lane did not ask Atlas. Awaited after the response. */
+  keyword_shadow?: Promise<KeywordShadow | null>;
 }
 
 export function logSearchQuery(input: LogSearchQueryInput): void {
@@ -117,6 +122,8 @@ async function writeEntry(input: LogSearchQueryInput) {
   const tenant = getTenantContextFromRequest(input.request.headers);
   // Settled by now in practice (the service call is bounded at 400 ms and runs beside a ~1 s RPC).
   const vectorShadow = input.vector_shadow ? await input.vector_shadow.catch(() => null) : null;
+  // Bounded too: the service call at 1.5 s, then one indexed books find for the live set.
+  const keywordShadow = input.keyword_shadow ? await input.keyword_shadow.catch(() => null) : null;
 
   await db.collection(COLLECTION).insertOne({
     ts: new Date(),
@@ -138,5 +145,6 @@ async function writeEntry(input: LogSearchQueryInput) {
     ...(input.page_search_timed_out ? { page_search_timed_out: true } : {}),
     ...(input.degraded_lanes && input.degraded_lanes.length > 0 ? { degraded_lanes: input.degraded_lanes.slice(0, 10) } : {}),
     ...(vectorShadow ? { vector_shadow: vectorShadow } : {}),
+    ...(keywordShadow ? { keyword_shadow: keywordShadow } : {}),
   });
 }

@@ -1,0 +1,6 @@
+# Cron line for the keyword page service (#6852), on the box that serves it. Install by APPENDING to
+# root's crontab after backing it up (crontab -l > /root/crontab.bak-$(date +%Y%m%d%H%M); keep every
+# existing line). flock -n: a run still going when the next is due is skipped, never doubled.
+#
+# Every 10 min: pages whose translation/OCR changed since the checkpoint, and the live-book set.
+*/10 * * * * flock -n /tmp/keyword-search-delta.lock /usr/bin/node --disable-warning=ExperimentalWarning --env-file=/root/sourcelibrary/.env.production.local /data/keyword-search/app/sync-delta.mjs >> /data/keyword-search/logs/delta.log 2>&1

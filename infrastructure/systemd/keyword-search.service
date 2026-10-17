@@ -1,0 +1,42 @@
+# Keyword page service for the /api/search page lane (#6852). Installed at
+# /etc/systemd/system/keyword-search.service on the serving box (README in scripts/workers/keyword-search/):
+#
+#   cp infrastructure/systemd/keyword-search.service /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now keyword-search
+#
+# Code: /data/keyword-search/app (a copy of scripts/workers/keyword-search). Python half (the service):
+# /data/keyword-search/venv with requirements.txt (tantivy). Node half (pull, delta): the mongodb driver
+# from /root/sourcelibrary/node_modules. bootstrap.sh does all of it. Index: /data/keyword-search/index.
+# Secrets: /etc/keyword-search.env, mode 600:
+#   KEYWORD_SEARCH_TOKEN=<openssl rand -hex 32>
+#   KEYWORD_SEARCH_HOST=127.0.0.1    stays on localhost until the TLS proxy (#6843) fronts it
+#   KEYWORD_SEARCH_PORT=3460         Bearer token on every route
+#   KEYWORD_SEARCH_LOCAL_PORT=3461   127.0.0.1 only, no auth, /admin for sync-delta.mjs
+#
+# Memory: the process holds the live-book set and tantivy's per-segment structures (a few hundred MB) plus a
+# 200 MB writer heap for the delta. The index (~16 GB) is memory-mapped, so the box's free RAM is what keeps
+# hot posting lists off the disk; MemoryHigh bounds the process, not the page cache.
+[Unit]
+Description=Source Library keyword page service (tantivy BM25 over page text, #6852)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# On the guest boxes every Source Library process runs in this slice (MemoryMax 14G, CPUWeight 30), so the
+# host's own service is never starved (JOB-HOSTS.md). The memory-mapped index's page cache is charged here too.
+Slice=sourcelibrary.slice
+WorkingDirectory=/data/keyword-search/app
+EnvironmentFile=/etc/keyword-search.env
+Environment=KEYWORD_SEARCH_ROOT=/data/keyword-search
+ExecStart=/data/keyword-search/venv/bin/python /data/keyword-search/app/server.py
+Restart=always
+RestartSec=15
+MemoryHigh=3G
+MemoryMax=4G
+Nice=-2
+StandardOutput=append:/data/keyword-search/logs/server.log
+StandardError=append:/data/keyword-search/logs/server.log
+
+[Install]
+WantedBy=multi-user.target
