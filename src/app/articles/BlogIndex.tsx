@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLOG_KINDS, KIND_INFO, postHref, type BlogKind, type BlogPost } from './posts';
 
 type Filter = BlogKind | 'all';
 type Sort = 'newest' | 'oldest' | 'title';
+
+const PAGE_SIZE = 30;
 
 const SORTS: { value: Sort; label: string }[] = [
   { value: 'newest', label: 'Newest first' },
@@ -122,6 +124,16 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
   const [kind, setKind] = useState<Filter>(active);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<Sort>('newest');
+  const [page, setPage] = useState(1);
+  const listTop = useRef<HTMLDivElement>(null);
+
+  // A new search, category or sort starts again at page 1.
+  useEffect(() => setPage(1), [kind, query, sort]);
+
+  const goTo = (next: number) => {
+    setPage(next);
+    listTop.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   // Categories used to be a hash on one page (/blog#tours, which the redirect
   // carries over as /articles#tours). Open that category instead.
@@ -149,6 +161,10 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
       })
       .sort(SORTERS[sort]);
   }, [posts, kind, query, sort]);
+
+  const pages = Math.max(1, Math.ceil(shown.length / PAGE_SIZE));
+  const current = Math.min(page, pages);
+  const pageItems = shown.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
   const filtered = kind !== 'all' || query !== '' || sort !== 'newest';
   const kindOptions: { value: Filter; label: string }[] = [
@@ -200,14 +216,49 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
 
       {kind !== 'all' && <p className="mt-8 max-w-3xl text-secondary font-body text-lg">{KIND_INFO[kind].definition}</p>}
 
+      <div ref={listTop} className="scroll-mt-6" />
       {shown.length > 0 ? (
         <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {shown.map((post, i) => (
-            <ArticleCard key={post.slug} post={post} priority={i < 3} />
+          {pageItems.map((post, i) => (
+            <ArticleCard key={post.slug} post={post} priority={current === 1 && i < 3} />
           ))}
         </div>
       ) : (
         <p className="mt-12 text-secondary">No articles match that search.</p>
+      )}
+
+      {pages > 1 && (
+        <nav aria-label="Pages" className="mt-16 flex items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => goTo(current - 1)}
+            disabled={current === 1}
+            className="h-10 px-4 text-sm text-primary disabled:text-muted disabled:cursor-default hover:underline underline-offset-4"
+          >
+            &larr; Previous
+          </button>
+          {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => goTo(n)}
+              aria-current={n === current ? 'page' : undefined}
+              className={`h-10 w-10 border text-sm transition-colors ${
+                n === current ? 'bg-primary text-white border-primary' : 'border-border-light text-primary hover:border-primary'
+              }`}
+            >
+              {n}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => goTo(current + 1)}
+            disabled={current === pages}
+            className="h-10 px-4 text-sm text-primary disabled:text-muted disabled:cursor-default hover:underline underline-offset-4"
+          >
+            Next &rarr;
+          </button>
+        </nav>
       )}
     </div>
   );

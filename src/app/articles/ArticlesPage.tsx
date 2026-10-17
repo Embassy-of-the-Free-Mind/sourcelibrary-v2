@@ -12,7 +12,7 @@ export default function ArticlesPage({ active = 'all' }: { active?: BlogKind | '
     <div className="min-h-screen bg-cream">
       <SiteHeader variant="dark" />
       <div className="relative">
-        <HeroBackdrop posts={all} />
+        <HeroBackdrop />
         <main className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-14 md:pt-20 pb-24">
           <h1 className="font-serif text-5xl md:text-7xl text-primary tracking-tight">Articles</h1>
           <p className="mt-6 mb-10 max-w-3xl text-lg md:text-xl text-secondary font-body leading-relaxed">
