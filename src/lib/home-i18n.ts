@@ -223,9 +223,9 @@ const en: HomeStrings = {
   discoverSubtitle: 'Translated primary sources from the collection.',
   discoverEmpty: 'Browse the collection to discover translated primary sources.',
 
-  blogHeading: 'Research Notes',
-  blogSubtitle: 'AI-assisted research on the collection and its history',
-  blogAllPosts: 'All posts',
+  blogHeading: 'Articles',
+  blogSubtitle: 'Stories, reading tours, research notes and things to try, all from the books in the library',
+  blogAllPosts: 'All articles',
   tagDeepDive: 'Deep dive',
   tagCollection: 'Collection',
 

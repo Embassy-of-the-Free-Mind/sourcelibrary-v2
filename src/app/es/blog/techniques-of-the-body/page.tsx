@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import doc from '@/app/blog/techniques-of-the-body/document.es.json';
-import TechniquesDocument, { COPY, HERO_PATH } from '@/app/blog/techniques-of-the-body/TechniquesDocument';
+import doc from '@/app/articles/techniques-of-the-body/document.es.json';
+import TechniquesDocument, { COPY, HERO_PATH } from '@/app/articles/techniques-of-the-body/TechniquesDocument';
 
 // Spanish twin of /blog/techniques-of-the-body. The body is document.es.json, built from
 // the English document by scripts/maintenance/translate-html-document.mjs (originals kept
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: heroAlt }] },
   alternates: {
     canonical: '/es/blog/techniques-of-the-body',
-    languages: { en: '/blog/techniques-of-the-body', es: '/es/blog/techniques-of-the-body' },
+    languages: { en: '/articles/techniques-of-the-body', es: '/es/blog/techniques-of-the-body' },
   },
 };
 

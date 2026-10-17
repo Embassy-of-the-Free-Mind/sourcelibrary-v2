@@ -338,7 +338,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     progress: 'Progress',
     models: 'AI models',
     research: 'Research',
-    researchNotes: 'Research Notes',
+    researchNotes: 'Articles',
     privacy: 'Privacy',
     cookieSettings: 'Cookie Settings',
     terms: 'Terms',

@@ -508,7 +508,7 @@ export default function ConnectPage() {
           <Link href="/developers" className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors text-sm">
             Developer docs &amp; API
           </Link>
-          <Link href="/blog/mcp-server" className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors text-sm">
+          <Link href="/articles/mcp-server" className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors text-sm">
             Why we built it
           </Link>
           <Link href="/" className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors text-sm">

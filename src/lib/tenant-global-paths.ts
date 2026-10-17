@@ -56,7 +56,7 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Ideas across traditions (#6173): every page is a list of books from the
   // whole library, chosen for spanning traditions. Same reasoning as /works.
   '/ideas',
-  '/blog',
+  '/articles',
   '/contribute',
   '/support',
   // `/give` is /support's one-screen twin and the header's Support button. Both

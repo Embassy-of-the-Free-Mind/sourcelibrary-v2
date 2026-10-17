@@ -57,7 +57,7 @@ const POLICY_PREAMBLE = `# As a condition of accessing this website, you agree t
 // Endpoints a reserved AI crawler MAY still reach: the structured API, the
 // partnership/licensing docs, and the blog. Everything else (full text) is reserved.
 const AI_ALLOW_LIST = [
-  '/blog/',
+  '/articles/',
   '/api/search',
   '/api/books/',
   '/api/verify',
@@ -68,7 +68,7 @@ const AI_ALLOW_LIST = [
   '/developers',
 ];
 // Reserved crawlers that aren't given API access still get the public docs + blog.
-const DOCS_ONLY = ['/blog/', '/llms.txt', '/terms', '/licensing', '/developers'];
+const DOCS_ONLY = ['/articles/', '/llms.txt', '/terms', '/licensing', '/developers'];
 
 const DEFAULT_DISALLOW = [
   '/talks/', // password-gated internal decks; the route also sends X-Robots-Tag: noindex

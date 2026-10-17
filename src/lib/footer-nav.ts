@@ -42,7 +42,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'progress', href: '/about/progress' },
       { key: 'models', href: '/about/models' },
       { key: 'research', href: '/research' },
-      { key: 'researchNotes', href: '/blog' },
+      { key: 'researchNotes', href: '/articles' },
       { key: 'privacy', href: '/privacy' },
       { key: 'cookieSettings', href: '#cookie-settings' },
       { key: 'terms', href: '/terms' },

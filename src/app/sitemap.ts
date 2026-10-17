@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
-import { posts as blogPostList } from '@/app/blog/posts';
+import { posts as blogPostList } from '@/app/articles/posts';
 import { canonWorkForWorkId } from '@/lib/canon-works';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
@@ -224,7 +224,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/explore/map`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/gallery/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/articles`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${BASE_URL}/support`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE_URL}/support/business`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
@@ -237,7 +237,7 @@ function staticPages(): MetadataRoute.Sitemap {
 // was missing ~half of them, including every recent post).
 function blogPosts(): MetadataRoute.Sitemap {
   return blogPostList.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
+    url: `${BASE_URL}/articles/${post.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,

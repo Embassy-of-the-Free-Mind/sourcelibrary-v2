@@ -1,6 +1,6 @@
 /**
  * Shared Pythagorean interval arithmetic for the playable-facsimile demos
- * (/blog/playable-page, issue #3224). Everything is computed from exact
+ * (/articles/playable-page, issue #3224). Everything is computed from exact
  * ratios (9:8 tone, 256:243 limma, 2187:2048 apotome), never from rounded
  * cents — that is what lets the Boethius ladder reproduce the manuscript's
  * canonical monochord integers (9216, 8192 … 2304) on the nose.

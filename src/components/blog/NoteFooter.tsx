@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { BLOG_KINDS } from '@/app/articles/posts';
 import revisions from '@/generated/blog-revisions.json';
 
 const REPO = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2';
@@ -24,14 +25,14 @@ interface RevisionEntry {
  * from git history by scripts/maintenance/generate-blog-revisions.mjs (run
  * automatically by scripts/deploy-prod.sh).
  *
- * Skipped on the /blog index and on the colophon page itself.
+ * Skipped on the /articles index, the category pages and on the colophon page itself.
  */
 export default function NoteFooter() {
   const pathname = usePathname();
-  if (!pathname || !pathname.startsWith('/blog/')) return null;
+  if (!pathname || !pathname.startsWith('/articles/')) return null;
 
-  const slug = pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
-  if (!slug || slug === 'how-these-are-made') return null;
+  const slug = pathname.replace(/^\/articles\//, '').replace(/\/$/, '');
+  if (!slug || slug === 'how-these-are-made' || (BLOG_KINDS as readonly string[]).includes(slug)) return null;
 
   const rev = (revisions as Record<string, RevisionEntry>)[slug];
   const revisedDate = rev
@@ -45,7 +46,7 @@ export default function NoteFooter() {
         <div className="border-t border-border-light pt-6 text-sm text-muted space-y-1.5">
           <p>
             An AI-assisted research note from Source Library.{' '}
-            <Link href="/blog/how-these-are-made" className="text-accent-rust hover:underline">
+            <Link href="/articles/how-these-are-made" className="text-accent-rust hover:underline">
               How these notes are made
             </Link>
           </p>

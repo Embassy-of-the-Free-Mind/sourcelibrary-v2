@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { posts, KIND_INFO } from '@/app/blog/posts';
+import { posts, KIND_INFO } from '@/app/articles/posts';
 
 // Atom feed for the Research Notes blog. Reads the same `posts` array the index
 // renders, so the feed never drifts from the site.
@@ -43,12 +43,14 @@ export async function GET() {
   const updated = dated[0]?.iso || new Date().toISOString();
 
   const entries = dated.map((post) => {
-    const url = `${BASE_URL}/blog/${post.slug}`;
+    // Entry ids keep the old /blog address so feed readers don't re-show every post.
+    const id = `${BASE_URL}/blog/${post.slug}`;
+    const url = `${BASE_URL}/articles/${post.slug}`;
     const image = post.image
       ? `<img src="${escapeXml(post.image.startsWith('/') ? BASE_URL + post.image : post.image)}" alt="${escapeXml(post.imageAlt || post.title)}" /><br/>`
       : '';
     return `  <entry>
-    <id>${escapeXml(url)}</id>
+    <id>${escapeXml(id)}</id>
     <title>${escapeXml(post.title)}</title>
     <link href="${escapeXml(url)}" rel="alternate" type="text/html"/>
     <updated>${post.iso}</updated>
@@ -63,9 +65,9 @@ export async function GET() {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>${BASE_URL}/blog</id>
-  <title>Source Library | Research Notes</title>
+  <title>Source Library | Articles</title>
   <subtitle>AI-assisted research on the collection: OCR, translation, the history of science, and the texts behind it.</subtitle>
-  <link href="${BASE_URL}/blog" rel="alternate" type="text/html"/>
+  <link href="${BASE_URL}/articles" rel="alternate" type="text/html"/>
   <link href="${BASE_URL}/api/feed/blog" rel="self" type="application/atom+xml"/>
   <updated>${updated}</updated>
   <icon>${BASE_URL}/favicon.ico</icon>

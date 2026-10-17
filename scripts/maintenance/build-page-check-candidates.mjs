@@ -110,7 +110,7 @@ const CAMPAIGNS = {
   blog: {
     describe: 'Every blog post, read for factual and typographic errors',
     build() {
-      const dir = path.join(process.cwd(), 'src/app/blog');
+      const dir = path.join(process.cwd(), 'src/app/articles');
       return readdirSync(dir, { withFileTypes: true })
         .filter(d => d.isDirectory())
         .map(d => d.name)

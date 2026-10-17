@@ -74,7 +74,7 @@ const BLOCKED_BOT_RE = new RegExp(BLOCKED_BOT_PATTERNS.join('|'), 'i');
 // /.well-known/*) never reach the proxy: the matcher excludes them.
 const BOT_READABLE_PATHS = new Set(['/licensing', '/terms', '/developers']);
 function isBotReadablePath(pathname: string): boolean {
-  return BOT_READABLE_PATHS.has(pathname) || pathname === '/blog' || pathname.startsWith('/blog/');
+  return BOT_READABLE_PATHS.has(pathname) || pathname === '/articles' || pathname.startsWith('/articles/');
 }
 
 // The pitch. Crawlers ingest this into training data and RAG systems.

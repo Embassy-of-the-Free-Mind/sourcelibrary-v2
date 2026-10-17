@@ -14,7 +14,7 @@
  * and the book must be `visible: true`.
  *
  * Sources scanned:
- *   - files: every text file under src/app/blog/ (posts keep their prose in
+ *   - files: every text file under src/app/articles/ (posts keep their prose in
  *     page.tsx AND in document.json), src/data/, src/components/, and every
  *     page.tsx under src/app/ outside admin/ and api/
  *   - Mongo `collections` (visible ones): `description`, `expanded_description`
@@ -60,7 +60,7 @@ function walk(dir, keep, out = []) {
 }
 const notTest = (p) => !/\.test\.|__tests__/.test(p);
 const files = [...new Set([
-  ...walk('src/app/blog', (p, e) => TEXT_FILE.test(e) && notTest(p)),
+  ...walk('src/app/articles', (p, e) => TEXT_FILE.test(e) && notTest(p)),
   ...walk('src/data', (p, e) => TEXT_FILE.test(e) && notTest(p)),
   ...walk('src/components', (p, e) => TEXT_FILE.test(e) && notTest(p)),
   ...walk('src/app', (p, e) => e === 'page.tsx' && !/src\/app\/(admin|api)\//.test(p.replace(/\\/g, '/'))),

@@ -277,7 +277,7 @@ export default function RithmomachiaGame() {
                   >
                     Interactive tutorial &rarr;
                   </button>
-                  <Link href="/blog/rithmomachia" className="text-accent-rust hover:underline">
+                  <Link href="/articles/rithmomachia" className="text-accent-rust hover:underline">
                     Full rules with primary sources &rarr;
                   </Link>
                 </div>

@@ -396,6 +396,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Research Notes became Articles: /blog and every post under it moved
+      // to /articles with the same slugs.
+      { source: '/blog', destination: '/articles', permanent: true },
+      { source: '/blog/:path*', destination: '/articles/:path*', permanent: true },
       // Merged/retired collection slugs → successors (issue #3002). True HTTP
       // 308s at the routing layer — the page-level permanentRedirect in
       // /collections/[id] only yields a streamed meta-refresh because the

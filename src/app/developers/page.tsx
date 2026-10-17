@@ -774,7 +774,7 @@ source-library search "alchemy" --json | jq .results`}
             Browse the Library
           </Link>
           <Link
-            href="/blog/mcp-server"
+            href="/articles/mcp-server"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
             Read the announcement

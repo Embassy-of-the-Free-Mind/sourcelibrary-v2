@@ -33,7 +33,7 @@ export default function RithmomachiaPage() {
         <div className="mt-12 pt-8 border-t border-border-light text-center text-sm text-muted space-y-2">
           <p>
             Rules grounded in five Renaissance primary sources (1496&ndash;1616).{' '}
-            <Link href="/blog/rithmomachia" className="text-accent-rust hover:underline">
+            <Link href="/articles/rithmomachia" className="text-accent-rust hover:underline">
               Read the blog post
             </Link>{' '}
             or{' '}

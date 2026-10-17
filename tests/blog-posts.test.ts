@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { readdirSync, existsSync, readFileSync } from 'fs';
 import path from 'path';
-import { posts, BLOG_KINDS, KIND_INFO, UNLISTED_PAGES } from '@/app/blog/posts';
+import { posts, LINKED_PAGES, BLOG_KINDS, KIND_INFO, UNLISTED_PAGES } from '@/app/articles/posts';
 
 // #6049: every Research Note has one of a closed set of kinds, and every page
 // under src/app/blog is either in the list or deliberately left out with a reason.
-const BLOG_DIR = path.join(__dirname, '..', 'src', 'app', 'blog');
+const BLOG_DIR = path.join(__dirname, '..', 'src', 'app', 'articles');
 
 describe('blog post list', () => {
   it('gives every post a kind from the closed set', () => {
@@ -65,6 +65,19 @@ describe('blog post list', () => {
 
   it('parses every date, so the index and the feed can sort', () => {
     const bad = posts.filter((p) => Number.isNaN(Date.parse(p.date)));
+    expect(bad.map((p) => p.slug)).toEqual([]);
+  });
+
+  // An article folder named like a category would shadow /articles/<category>.
+  it('never names an article like a category', () => {
+    const clash = posts.filter((p) => (BLOG_KINDS as readonly string[]).includes(p.slug));
+    expect(clash.map((p) => p.slug)).toEqual([]);
+  });
+
+  it('gives every linked page a kind, an address outside /articles and an image', () => {
+    const bad = LINKED_PAGES.filter(
+      (p) => !(BLOG_KINDS as readonly string[]).includes(p.kind) || !p.href?.startsWith('/') || p.href.startsWith('/articles') || !p.image,
+    );
     expect(bad.map((p) => p.slug)).toEqual([]);
   });
 });

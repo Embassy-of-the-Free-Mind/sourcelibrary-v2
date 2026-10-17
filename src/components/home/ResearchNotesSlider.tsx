@@ -29,7 +29,7 @@ export default function ResearchNotesSlider({
           className="snap-start shrink-0 basis-[80%] sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-3rem)/4)]"
         >
           <Link
-            href={`/blog/${post.slug}`}
+            href={`/articles/${post.slug}`}
             className="group flex flex-col h-full bg-white rounded-xl border border-border-light overflow-hidden hover:shadow-lg hover:border-accent-rust/20 transition-[box-shadow,border-color]"
           >
             {post.image && (

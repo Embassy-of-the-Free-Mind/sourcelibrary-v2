@@ -367,7 +367,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </p>
             </div>
             <Link
-              href="/blog"
+              href="/articles"
               className="text-sm text-accent-rust hover:underline"
             >
               {t.blogAllPosts}

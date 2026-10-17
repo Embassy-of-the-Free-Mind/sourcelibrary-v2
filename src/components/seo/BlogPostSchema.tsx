@@ -29,7 +29,7 @@ export default function BlogPostSchema({
   image,
   authorName = 'Derek Lomas',
 }: BlogPostSchemaProps) {
-  const pageUrl = `${BASE_URL}/blog/${slug}`;
+  const pageUrl = `${BASE_URL}/articles/${slug}`;
 
   const article: Record<string, unknown> = {
     '@type': 'Article',
@@ -62,7 +62,7 @@ export default function BlogPostSchema({
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Research Notes', item: `${BASE_URL}/blog` },
+      { '@type': 'ListItem', position: 2, name: 'Articles', item: `${BASE_URL}/articles` },
       { '@type': 'ListItem', position: 3, name: title, item: pageUrl },
     ],
   };
