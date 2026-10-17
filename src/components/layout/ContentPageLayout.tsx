@@ -23,12 +23,12 @@ interface ContentHeaderProps {
   maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
   /** The site header above the hero: 'light' (default) or the solid 'dark' bar the book pages use. */
   headerVariant?: 'light' | 'dark';
-  /** Article hero: 80vh tall from `md` up, picture drifting with a slight parallax. */
+  /** Article hero: 65vh tall from `md` up, picture drifting with a slight parallax. */
   feature?: boolean;
 }
 
 export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false }: ContentHeaderProps) {
-  if (feature) heightClass = 'min-h-[420px] md:min-h-[80vh]';
+  if (feature) heightClass = 'min-h-[400px] md:min-h-[65vh]';
   const headerWidthClass =
     maxWidth === 'full'
       ? ''

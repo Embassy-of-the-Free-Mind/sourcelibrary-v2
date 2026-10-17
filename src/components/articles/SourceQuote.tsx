@@ -38,7 +38,7 @@ export default function SourceQuote({
 }) {
   const href = `/book/${book}?page=${page}`;
   return (
-    <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-start">
+    <figure className="not-prose my-10 grid gap-6 md:grid-cols-[1fr_minmax(0,16rem)] items-center">
       <blockquote className="border-l-2 border-accent-gold/60 pl-5 font-body text-lg leading-relaxed text-primary">
         {original && <p className="mb-3 text-secondary italic">{original}</p>}
         <div>{children}</div>
