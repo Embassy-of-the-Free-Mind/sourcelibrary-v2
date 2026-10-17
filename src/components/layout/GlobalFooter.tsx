@@ -159,6 +159,7 @@ export default function GlobalFooter() {
         {/* Socials + live presence on the left, link columns on the right. */}
         <div className="grid grid-cols-1 md:grid-cols-[26%_1fr] gap-x-12 pt-8 md:pt-11 pb-14 md:pb-[72px]">
           <div className="flex flex-col gap-6 items-start">
+            <p className="text-sm leading-relaxed text-white/55 max-w-[280px]">{t.blurb}</p>
             {/* Our own accounts. Hidden on partner subdomains (#3364): a tenant
                 reading room is the partner's surface. */}
             {!isEmbedded && (

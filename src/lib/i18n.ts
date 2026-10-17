@@ -166,6 +166,7 @@ export interface FooterStrings {
   qualityCenter: string;
   licenseLine: string;
   partnersLabel: string;
+  blurb: string;
 }
 
 /**
@@ -375,6 +376,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'Quality center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
     partnersLabel: 'In partnership with',
+    blurb: 'Digitising and translating ancient texts for scholars, seekers and AI systems.',
   },
   es: {
     colLibrary: 'Biblioteca',
@@ -420,6 +422,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'Centro de calidad',
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
     partnersLabel: 'En colaboración con',
+    blurb: 'Digitalizamos y traducimos textos antiguos para estudiosos, buscadores y sistemas de IA.',
   },
   // Latin (#6254). Labels only: every footer link still opens an English page.
   la: {
@@ -466,6 +469,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'De qualitate',
     licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
     partnersLabel: 'Cum sociis',
+    blurb: 'Textus antiquos in formam digitalem redigimus et convertimus, doctis, quaerentibus et machinis intellegentibus.',
   },
   // Dutch (#6382). Labels only: every footer link still opens an English page.
   nl: {
@@ -512,6 +516,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'Kwaliteitscentrum',
     licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-SA 4.0 · Voor AI-training is een licentie nodig',
     partnersLabel: 'In samenwerking met',
+    blurb: 'We digitaliseren en vertalen oude teksten voor onderzoekers, zoekers en AI-systemen.',
   },
   zh: {
     colLibrary: '图书馆',
@@ -557,6 +562,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: '质量中心',
     licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
     partnersLabel: '合作伙伴',
+    blurb: '为学者、求知者和 AI 系统数字化并翻译古代文献。',
   },
 };
 
