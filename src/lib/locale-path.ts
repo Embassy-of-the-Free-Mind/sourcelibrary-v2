@@ -85,7 +85,7 @@ export type PrefixedLocale = Exclude<Locale, 'en'>;
 // prefixed locale; a shared set would have sent a Latin reader to
 // `/la/support`, which no route serves.
 export const LOCALIZED_PATHS: Record<PrefixedLocale, Set<string>> = {
-  es: new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search']),
+  es: new Set<string>(['/', '/support', '/auth/signin', '/librarian', '/search', '/blog/techniques-of-the-body']),
   la: new Set<string>(['/']),
   nl: new Set<string>(['/']),
   zh: new Set<string>(['/']),
