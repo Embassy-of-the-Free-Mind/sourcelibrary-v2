@@ -48,7 +48,7 @@ export default function InvisibleHandPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Adam Smith&apos;s &ldquo;invisible hand&rdquo; is one of the most famous metaphors in intellectual history. But the idea that markets self-organize into beneficial order (that individual actions, guided by no central plan, can produce collective harmony) did not spring fully formed from the <em>Wealth of Nations</em> in 1776. It has a lineage stretching back through Reformation theologians, Renaissance merchants, Scholastic monks, and ancient philosophers. Source Library has assembled the primary sources that make this lineage readable for the first time in a single collection.
+          Adam Smith&apos;s &ldquo;invisible hand&rdquo; is one of the most famous metaphors in intellectual history. But the idea that markets self-organize into beneficial order (that individual actions, guided by no central plan, can produce collective harmony) did not spring fully formed from the <em>Wealth of Nations</em> in 1776. It has a lineage stretching back through Reformation theologians, Renaissance merchants, Scholastic monks, and ancient philosophers.
         </p>
 
         <figure className="my-12">
@@ -96,21 +96,22 @@ export default function InvisibleHandPage() {
         <p className="text-secondary leading-relaxed mb-6">
           For centuries, Aristotle&apos;s authority on economic questions was mediated through one text above all: the{' '}
           <Link href="/book/6991e1b0339ebc850994ab9e" className="text-accent-rust hover:text-accent-rust underline"><em>Summa Theologica</em></Link>
-          {' '}of Thomas Aquinas. Questions 57&ndash;79 of the Secunda Secundae treat justice; Question 77 addresses the just price in buying and selling; Question 78 covers usury. Aquinas&apos;s crucial insight, underappreciated for centuries, was that the just price is simply the <em>common market price</em>. Not a price calculated by philosophers or decreed by kings, but the price that emerges from the ordinary transactions of buyers and sellers. Already, buried in 13th-century Latin, is a form of market theory.
+          {' '}of Thomas Aquinas. Questions 57&ndash;79 of the Secunda Secundae treat justice; Question 77 addresses the just price in buying and selling; Question 78 covers usury. Aquinas allowed that the just price is not fixed to a point but depends on common estimation, and many later readers, the Spanish scholastics among them, took this to mean the price current in the market rather than one calculated by philosophers or decreed by kings. How far Aquinas himself meant that is still argued over.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Nicole Oresme pushed further. His{' '}
           <Link href="/book/6991e16bb53cae6bb6024014" className="text-accent-rust hover:text-accent-rust underline"><em>Traictie de la Premiere Invention des Monnoies</em></Link>
-          {' '}(c. 1355) is the earliest systematic monetary treatise in Western thought. Writing during the chaos of medieval currency debasement, Oresme argued that money belongs to the community, not the prince, and that manipulating the currency is a form of theft. His analysis of how debased coinage drives good money out of circulation anticipated Gresham&apos;s Law by two hundred years.
+          {' '}(c. 1355) is among the earliest treatises in Europe devoted entirely to money. Writing during the chaos of medieval currency debasement, Oresme argued that money belongs to the community, not the prince, and that manipulating the currency is a form of theft. His analysis of how debased coinage drives good money out of circulation anticipated Gresham&apos;s Law by two hundred years.
         </p>
 
         <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-2">
-            &ldquo;The community, who use the coin, are the true owners thereof; and the prince has no right to alter money to the detriment of his subjects.&rdquo;
+            &ldquo;Since the money belongs to the community, as was stated and demonstrated in the 6th Chapter, it seems that this community may ordain concerning it at its will&hellip;&rdquo;
           </p>
           <p className="text-muted text-sm">
-            Nicole Oresme, <em>De Moneta</em>, c. 1355
+            Nicole Oresme, <em>Traictie de la première invention des monnoies</em>, ch. 22 (ed. Wolowski, 1864), p. lxv.{' '}
+            <Link href="/book/traictie-de-la-premiere-invention-des-monnoies-oresme/page/6991e16bb53cae6bb60240a3" className="text-accent-rust hover:text-accent-rust underline">Read the page &rarr;</Link>
           </p>
         </div>
 
@@ -157,20 +158,20 @@ export default function InvisibleHandPage() {
           <Link href="/book/6991e7d1c91ce7d733e4ffb5" className="text-accent-rust hover:text-accent-rust underline">Calimala guild statutes</Link>
           {' '}(1301) show the institutional infrastructure: the rules governing the cloth importers&apos; guild that was Florence&apos;s economic engine. And{' '}
           <Link href="/book/6991e7ecc91ce7d733e50311" className="text-accent-rust hover:text-accent-rust underline"><strong>Pagnini</strong></Link>
-          {' '}(<em>Della Decima</em>, 1765) compiled the fiscal records: taxation, currency, and the trade agreements by which Florence projected its commercial power. This is where Pegolotti&apos;s <em>Pratica</em> was first published, three and a half centuries after it was written.
+          {' '}(<em>Della Decima</em>, 1765) compiled the fiscal records: taxation, currency, and the trade agreements by which Florence projected its commercial power. This is where Pegolotti&apos;s <em>Pratica</em> was first published, more than four centuries after it was written.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The School of Salamanca: The Actual Inventors of Economics
+          The Spanish Scholastics
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The most important chapter of this story is the least known. In the 16th century, a group of Dominican and Jesuit theologians at the University of Salamanca, grappling with the flood of New World silver and the explosion of Atlantic commerce, effectively invented modern economic analysis. They did so two centuries before Adam Smith, and they did it in Latin treatises on justice and natural law that have never been widely read outside specialist circles.
+          The most important chapter of this story is the least known. In the 16th century, a group of Dominican and Jesuit theologians, several of them trained at or shaped by the University of Salamanca, grappled with the flood of New World silver and the growth of Atlantic commerce, and worked out much of the price and monetary analysis that later economics would rediscover. They did so two centuries before Adam Smith, in Latin treatises on justice and natural law that have never been widely read outside specialist circles.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/6991e182339ebc8509949055" className="text-accent-rust hover:text-accent-rust underline"><strong>Francisco de Vitoria</strong></Link>
-          {' '}(1557 edition of the <em>Relectiones Theologicae</em>) founded the school. His lectures on justice, international trade, and the rights of indigenous peoples established the framework that his students built upon. Vitoria argued that trade is a natural right (not merely a privilege granted by sovereigns) and that just war cannot be waged to create trade monopolies.
+          {' '}(1557 edition of the <em>Relectiones Theologicae</em>) founded the school. His lectures on justice, international trade, and the rights of indigenous peoples established the framework that his students built upon. Vitoria argued that trade is a natural right, not merely a privilege granted by sovereigns.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -190,12 +191,12 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/6991e189339ebc85099497d9" className="text-accent-rust hover:text-accent-rust underline"><strong>Luis de Molina</strong></Link>
-          {' '}(<em>De Iustitia et Iure</em>, 1614 edition) produced the most comprehensive Salamanca treatment of economic questions. Disputations 347&ndash;406 cover price formation, money, credit, exchange, and banking with an analytical sophistication that would not be matched for generations. Molina argued explicitly that the just price is determined by supply and demand (by the &ldquo;common estimation&rdquo; of the market), not by the cost of production.
+          {' '}(<em>De Iustitia et Iure</em>, 1614 edition) produced the most comprehensive scholastic treatment of economic questions. Disputations 347&ndash;406 cover price formation, money, credit, exchange, and banking with an analytical sophistication that would not be matched for generations. Molina held that the just price is set by the common estimation of the market, moving with abundance and scarcity, buyers and sellers, rather than fixed by any one party&apos;s costs.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
           <Link href="/book/6991e16eb53cae6bb602414e" className="text-accent-rust hover:text-accent-rust underline"><strong>Leonardus Lessius</strong></Link>
-          {' '}(<em>De Iustitia et Iure</em>, 1608), a Jesuit at Louvain, wrote what the economic historian Raymond de Roover called &ldquo;the most exhaustive treatment of business ethics written during the period.&rdquo; Book II covers property, contracts, money, exchange, banking, insurance, and interest. Lessius synthesised the entire Salamanca tradition into its most refined form.
+          {' '}(<em>De Iustitia et Iure</em>, 1608), a Jesuit at Louvain, wrote what the economic historian Raymond de Roover counted among the fullest treatments of business ethics of its period. Book II covers property, contracts, money, exchange, banking, insurance, and interest. Lessius synthesised the whole scholastic tradition into its most refined form.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -212,7 +213,7 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           <Link href="/book/6991e1b4339ebc850994af2e" className="text-accent-rust hover:text-accent-rust underline"><strong>Sigismondo Scaccia</strong></Link>
-          {' '}(<em>Tractatus de Commerciis et Cambio</em>, 1650) bridged the theological and commercial traditions, producing a major treatise on commercial law covering exchange, usury, deposits, and bills of exchange.
+          {' '}(<em>Tractatus de Commerciis et Cambio</em>, first printed 1619; our copy 1650) bridged the theological and commercial traditions, producing a major treatise on commercial law covering exchange, usury, deposits, and bills of exchange.
         </p>
 
         <figure className="my-12">
@@ -245,7 +246,7 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           <Link href="/book/6991e1a2339ebc850994a53c" className="text-accent-rust hover:text-accent-rust underline"><strong>Juan de Mariana</strong></Link>
-          {' '}(<em>De Rege et Regis Institutione</em>, 1605) pushed the political implications further than anyone before. A Jesuit who had already argued that tyrannicide could be justified, Mariana insisted that the king has no right to debase the currency, tax without consent, or create monopolies. Philip III of Spain ordered the book burned.
+          {' '}(<em>De Rege et Regis Institutione</em>, 1605) pushed the political implications further than anyone before. A Jesuit who had already argued that tyrannicide could be justified, Mariana insisted that the king has no right to debase the currency, tax without consent, or create monopolies. In 1610, after the assassination of Henri IV, the Parlement of Paris had it publicly burned.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -253,12 +254,12 @@ export default function InvisibleHandPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          In the 1690s, within a few years of each other, four English writers produced pamphlets that anticipated nearly everything Smith would say a century later:
+          In the early 1690s, within a few years of each other, four English pamphlets appeared (Petty&apos;s after its author&apos;s death) that anticipated nearly everything Smith would say a century later:
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/6991e175b53cae6bb602470e" className="text-accent-rust hover:text-accent-rust underline"><strong>Nicholas Barbon</strong></Link>
-          {' '}(<em>A Discourse of Trade</em>, 1690) stated the subjective theory of value with startling clarity: &ldquo;the Value of all Wares arises from their Use.&rdquo; Things have no intrinsic value; all value comes from the wants and needs of the user. This directly contradicts the labour theory of value that would mislead economists from Smith through Marx.
+          {' '}(<em>A Discourse of Trade</em>, 1690) stated the subjective theory of value with startling clarity: &ldquo;the Value of all Wares arise from their Use.&rdquo; Things have no intrinsic value; all value comes from the wants and needs of the user. This directly contradicts the labour theory of value that would mislead economists from Smith through Marx.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -286,7 +287,7 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/69525874ab34727b1f045110" className="text-accent-rust hover:text-accent-rust underline"><strong>Ralph Cudworth</strong></Link>
-          {' '}(<em>The True Intellectual System of the Universe</em>, 1678) argued that the cosmos is governed by rational, intelligible principles: a &ldquo;plastic nature&rdquo; that produces order without external micromanagement. Cudworth was the step-grandfather of the Third Earl of Shaftesbury, and his cosmic rationalism flowed directly into the next generation.
+          {' '}(<em>The True Intellectual System of the Universe</em>, 1678) argued that the cosmos is governed by rational, intelligible principles: a &ldquo;plastic nature&rdquo; that produces order without external micromanagement. The Cambridge Platonists&apos; picture of an ordered, intelligible cosmos passed to the next generation through readers like the Third Earl of Shaftesbury, who edited the sermons of Cudworth&apos;s colleague Benjamin Whichcote.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -296,20 +297,20 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The{' '}
-          <Link href="/book/6991dc7c569478bd6c9d5078" className="text-accent-rust hover:text-accent-rust underline"><strong>Third Earl of Shaftesbury</strong></Link>
-          {' '}translated Cudworth&apos;s metaphysics into a moral aesthetics. His <em>Characteristicks</em> (1714, already in our collection) argued for an innate moral sense, a natural capacity to perceive right and wrong as directly as we perceive beauty. Francis Hutcheson systematised this into a full{' '}
+          <Link href="/book/6953efe21479a63c110885e1" className="text-accent-rust hover:text-accent-rust underline"><strong>Third Earl of Shaftesbury</strong></Link>
+          {' '}translated Cudworth&apos;s metaphysics into a moral aesthetics. His <em>Characteristicks</em> (1711; our copy is the 1714 edition) argued for an innate moral sense, a natural capacity to perceive right and wrong as directly as we perceive beauty. Francis Hutcheson systematised this into a full{' '}
           <Link href="/book/6991dc73569478bd6c9d4af4" className="text-accent-rust hover:text-accent-rust underline"><em>System of Moral Philosophy</em></Link>
           {' '}(1755), which he taught at Glasgow to a young student named Adam Smith.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/6991dc7c569478bd6c9d5078" className="text-accent-rust hover:text-accent-rust underline"><strong>Lord Kames</strong></Link>
-          {' '}(<em>Essays on the Principles of Morality and Natural Religion</em>, 1751), Hume&apos;s patron and Smith&apos;s mentor, argued for a moral sense implanted by divine providence. This is the direct intellectual context for Smith&apos;s &ldquo;impartial spectator.&rdquo;
+          {' '}(<em>Essays on the Principles of Morality and Natural Religion</em>, 1751), Hume&apos;s patron and Smith&apos;s mentor, argued for a moral sense implanted by divine providence. His work is part of the setting in which Smith developed the &ldquo;impartial spectator.&rdquo;
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
           <Link href="/book/6991dc76569478bd6c9d4ca5" className="text-accent-rust hover:text-accent-rust underline"><strong>Adam Ferguson</strong></Link>
-          {' '}(<em>An Essay on the History of Civil Society</em>, 1767) articulated what would become the concept of spontaneous order: &ldquo;Nations stumble upon establishments, which are indeed the result of human action, but not the execution of any human design.&rdquo; This single sentence is the intellectual ancestor of Hayek&apos;s entire programme.
+          {' '}(<em>An Essay on the History of Civil Society</em>, 1767) articulated what would become the concept of spontaneous order: &ldquo;Nations stumble upon establishments, which are indeed the result of human action, but not the execution of any human design.&rdquo; Two centuries later Hayek took this sentence as a founding statement of spontaneous order.
         </p>
 
         <figure className="my-12">
@@ -357,7 +358,7 @@ export default function InvisibleHandPage() {
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The French Tradition: Harmonies All the Way Down
+          The French Tradition: Economic Harmonies
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -370,7 +371,7 @@ export default function InvisibleHandPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           <Link href="/book/6991dc5a79a19ded6bdb452b" className="text-accent-rust hover:text-accent-rust underline"><strong>Richard Cantillon</strong></Link>
-          {' '}(<em>Essai sur la Nature du Commerce en G&eacute;n&eacute;ral</em>, 1755), written in French but by an Irish-born Paris banker, is the most important economic text between the Salamanca School and Smith. Cantillon analysed how money enters the economy through specific channels, how prices adjust to new supplies of precious metal, and how entrepreneurial decision-making coordinates production. Schumpeter called it &ldquo;the first systematic penetration of the field of economics.&rdquo;
+          {' '}(<em>Essai sur la Nature du Commerce en G&eacute;n&eacute;ral</em>, 1755), written in French but by an Irish-born Paris banker, is the most important economic text between the Salamanca School and Smith. Cantillon analysed how money enters the economy through specific channels, how prices adjust to new supplies of precious metal, and how entrepreneurial decision-making coordinates production.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -379,7 +380,7 @@ export default function InvisibleHandPage() {
           <Link href="/book/6991dc6b569478bd6c9d488e" className="text-accent-rust hover:text-accent-rust underline"><strong>Condillac</strong></Link>
           {' '}(<em>Le Commerce et le Gouvernement</em>, published the same year as the <em>Wealth of Nations</em>, 1776) produced a subjective value theory arguably more sophisticated than Smith&apos;s labour theory: the proto-Austrian text.{' '}
           <Link href="/book/6991dc66569478bd6c9d456d" className="text-accent-rust hover:text-accent-rust underline"><strong>Jean-Baptiste Say</strong></Link>
-          {' '}(<em>Treatise on Political Economy</em>, 1821 English edition) reformulated Smith for a Continental audience and contributed Say&apos;s Law (&ldquo;supply creates its own demand&rdquo;), the most contested proposition in the history of economics.
+          {' '}(<em>Treatise on Political Economy</em>, 1821 English edition) reformulated Smith for a Continental audience and contributed what came to be called Say&apos;s Law, later compressed (by others, not by Say) into the slogan &ldquo;supply creates its own demand.&rdquo;
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -387,27 +388,28 @@ export default function InvisibleHandPage() {
           <Link href="/book/6991dc4879a19ded6bdb3ef9" className="text-accent-rust hover:text-accent-rust underline"><strong>Fr&eacute;d&eacute;ric Bastiat</strong></Link>
           {' '}made the metaphor explicit. His{' '}
           <Link href="/book/6991dc4879a19ded6bdb3ef9" className="text-accent-rust hover:text-accent-rust underline"><em>Harmonies &eacute;conomiques</em></Link>
-          {' '}(1850) argued that the apparent conflicts between classes, between producers and consumers, between nations, are illusory, and that underneath them lies a harmony of interests as real and as lawful as the harmonies of the physical world. The title is not accidental. Bastiat was consciously connecting economic theory to the tradition of cosmic harmony that runs from Pythagoras through Kepler.
+          {' '}(1850) argued that the apparent conflicts between classes, between producers and consumers, between nations, are illusory, and that underneath them lies a harmony of interests as real and as lawful as the harmonies of the physical world. The title borrows the old vocabulary of cosmic harmony. For where that vocabulary came from, and the older, critical use of it by Aristotle, Oresme and Kepler, see{' '}
+          <Link href="/blog/harmonic-justice" className="text-accent-rust hover:text-accent-rust underline">Harmonic Justice</Link>.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          What This Collection Makes Possible
+          Why Start Before Smith
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The standard history of economics begins with Smith and proceeds to Ricardo, Mill, Marx, and the marginalists. This is like beginning the history of physics with Newton. The earlier tradition is not merely a prelude; in many ways it is more sophisticated. Molina&apos;s subjective price theory, Cantillon&apos;s monetary analysis, Barbon&apos;s theory of value, Oresme&apos;s monetary constitutionalism: these anticipate ideas that would be &ldquo;discovered&rdquo; centuries later.
+          The standard history of economics begins with Smith and proceeds to Ricardo, Mill, Marx, and the marginalists. The earlier tradition is more than a prelude. Molina&apos;s subjective price theory, Cantillon&apos;s monetary analysis, Barbon&apos;s theory of value, Oresme&apos;s monetary constitutionalism: these anticipate ideas that would be &ldquo;discovered&rdquo; centuries later.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library now holds original editions of the complete chain, from Aristotle&apos;s <em>Ethics</em> through Florentine merchant manuals, Aquinas, and the Salamanca School to Smith and Bastiat. As these texts are processed through our OCR and translation pipeline, they become searchable and cross-referenceable for the first time. A researcher studying Molina&apos;s price theory can trace its debts to Aquinas, compare it with the commercial practice recorded in Pegolotti and Cotrugli, follow its parallels with Davanzati, and track its echoes in Cantillon, all within a single reading environment.
+          Every book named here is in the library, from Aristotle&apos;s <em>Ethics</em> through the Florentine merchant manuals, Aquinas and the Spanish scholastics to Smith and Bastiat, and most are translated and searchable. A researcher studying Molina&apos;s price theory can trace its debts to Aquinas, compare it with the commercial practice recorded in Pegolotti and Cotrugli, follow its parallels with Davanzati, and track its echoes in Cantillon, all within a single reading environment.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The English-language texts from the 18th century (Hutcheson, Shaftesbury, Ferguson, Kames, Butler, Mandeville, Smith&apos;s Lectures) will also pass through our modernisation pipeline, which rewrites early modern English into clear, accessible modern prose while preserving the author&apos;s arguments. These are important texts that remain difficult to read in their original form. Making them accessible does not diminish them; it lets them speak again.
+          The English-language texts from the 18th century (Hutcheson, Shaftesbury, Ferguson, Kames, Butler, Mandeville, Smith&apos;s Lectures) will also pass through our modernisation pipeline, which rewrites early modern English into clear, accessible modern prose while preserving the author&apos;s arguments. These are important texts that remain difficult to read in their original form.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The invisible hand, it turns out, has a very long history. And that history looks less like a single insight and more like a conversation, carried on across languages, centuries, and continents, about whether the order we observe in human exchange is a sign of something deeper in the structure of things.
+          Read in order, these books are less a single discovery than a long argument, in many languages, over whether the order we see in exchange is a sign of something deeper in the structure of things.
         </p>
 
         <div className="border-t border-border-light pt-8 mt-12">
