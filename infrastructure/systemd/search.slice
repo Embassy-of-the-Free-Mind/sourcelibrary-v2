@@ -1,0 +1,9 @@
+# /etc/systemd/system/search.slice on cloudlayer (#6852): the parent systemd creates implicitly for
+# search-services.slice, because a dash in a slice name means nesting. cgroup v2 caps a child's effective
+# memory.min at its ancestors', so without this file the parent sits at memory.min=0 and the 4G reservation in
+# search-services.slice (and the unit's 3G) is silently zero. Found on install (job keyword-slice-cl, 2026-10-17).
+[Unit]
+Description=Parent of search-services.slice (carries its MemoryMin)
+
+[Slice]
+MemoryMin=4G

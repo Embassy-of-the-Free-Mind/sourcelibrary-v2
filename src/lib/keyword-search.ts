@@ -27,6 +27,7 @@
  */
 import type { Db, Document } from 'mongodb';
 import { NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { STOPWORDS } from '@/lib/search/page-rollup';
 
 export type KeywordSearchMode = 'off' | 'shadow' | 'serve';
 
@@ -37,6 +38,19 @@ export type KeywordSearchMode = 'off' | 'shadow' | 'serve';
  * an 8 s ceiling.
  */
 export const KEYWORD_SEARCH_TIMEOUT_MS = 1500;
+
+/**
+ * Serve mode's whole budget: the service call AND the Mongo hydration of its
+ * pages, together. The page lane races everything against one 8 s ceiling
+ * (route.ts), and the Atlas fallback only starts once this is spent, so it
+ * keeps 8 − 2.5 = 5.5 s: more than the Atlas lane's p99 (4.6 s). Before this,
+ * the service had 1.5 s and hydration its own 5 s, and a fallback after both
+ * ran out of lane (#6863 review).
+ */
+export const KEYWORD_SERVE_BUDGET_MS = 2500;
+
+/** Below this, hydration is not attempted: one indexed `$in` find needs tens of ms, not single digits. */
+const MIN_HYDRATE_MS = 50;
 
 export function keywordSearchMode(): KeywordSearchMode {
   if (!process.env.KEYWORD_SEARCH_URL || !process.env.KEYWORD_SEARCH_TOKEN) return 'off';
@@ -233,24 +247,47 @@ function hitWords(words: string[]): string[] {
   return [...new Set(words.flatMap((w) => w.toLowerCase().split(/[^\p{L}\p{M}\p{N}'’]+/u)).filter((w) => w.length >= 2))];
 }
 
+/** Scripts written without spaces between words: there a word boundary is not a letter boundary. */
+const UNSPACED_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}]/u;
+
+/**
+ * Where `word` first occurs in `text` as a whole word, case-insensitively, or
+ * -1. "art" is not found in "part", nor "sol" in "solve". In a script written
+ * without spaces (Han, kana, Thai…) any occurrence counts, since there is no
+ * boundary to require. The index is into `text` itself, not a lowercased copy
+ * (which can change length).
+ */
+export function indexOfWord(text: string, word: string): number {
+  if (!word) return -1;
+  const esc = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const rx = UNSPACED_SCRIPT.test(word)
+    ? new RegExp(esc, 'iu')
+    : new RegExp(`(?<![\\p{L}\\p{M}\\p{N}])${esc}(?![\\p{L}\\p{M}\\p{N}])`, 'iu');
+  const m = rx.exec(text);
+  return m ? m.index : -1;
+}
+
 /**
  * Atlas returns `searchHighlights`, which the route uses to choose the
  * translation or the OCR for the snippet and to centre it on the hit. The
  * service stores no text, so the same choice is made here from the hydrated
- * text: the first word found in the translation, else in the OCR. No word
- * found → no highlight, and the route's own fallback (translation, else OCR)
- * applies, as it does for an Atlas page without highlights.
+ * text: the first query word found, as a whole word, in the translation, else
+ * in the OCR. Stopwords are skipped while the query has any other word, so
+ * "the philosopher's stone" centres on "philosopher's", not on the first
+ * "the" (#6863 review). No word found → no highlight, and the route's own
+ * fallback (translation, else OCR) applies, as it does for an Atlas page
+ * without highlights.
  */
 export function synthesizeHighlights(page: { translation?: { data?: string }; ocr?: { data?: string } }, words: string[]):
   Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined {
-  const ws = hitWords(words);
+  const all = hitWords(words);
+  const content = all.filter((w) => !STOPWORDS.has(w));
+  const ws = content.length > 0 ? content : all;
   for (const [path, text] of [['translation.data', page.translation?.data], ['ocr.data', page.ocr?.data]] as const) {
     if (!text) continue;
-    const low = text.toLowerCase();
-    const w = ws.find((x) => low.includes(x));
-    if (w) {
-      const i = low.indexOf(w);
-      return [{ path, texts: [{ value: text.slice(i, i + w.length), type: 'hit' }] }];
+    for (const w of ws) {
+      const i = indexOfWord(text, w);
+      if (i >= 0) return [{ path, texts: [{ value: text.slice(i, i + w.length), type: 'hit' }] }];
     }
   }
   return undefined;
@@ -263,11 +300,11 @@ export function synthesizeHighlights(page: { translation?: { data?: string }; oc
  * or moved to another book is dropped — the read-side check the delta relies
  * on (sync-delta.mjs). Throws on a Mongo error, so the caller falls back.
  */
-export async function hydrateKeywordRows(db: Db, rows: KeywordServiceRow[], words: { query: string; variants?: string[] }): Promise<Document[]> {
+export async function hydrateKeywordRows(db: Db, rows: KeywordServiceRow[], words: { query: string; variants?: string[] }, maxTimeMS = 5000): Promise<Document[]> {
   if (rows.length === 0) return [];
   const docs = await db.collection('pages')
     .find({ id: { $in: rows.map((r) => r.page_id) } }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, page_type: 1, 'translation.data': 1, 'ocr.data': 1 } })
-    .maxTimeMS(5000)
+    .maxTimeMS(Math.max(1, Math.round(maxTimeMS)))
     .toArray();
   const byId = new Map(docs.map((d) => [d.id as string, d]));
   const nonContent = new Set<string>(NON_CONTENT_PAGE_TYPES);
@@ -280,4 +317,41 @@ export async function hydrateKeywordRows(db: Db, rows: KeywordServiceRow[], word
     out.push({ id: d.id, book_id: d.book_id, page_number: d.page_number, translation: d.translation, ocr: d.ocr, searchScore: r.score ?? 0, ...(hl ? { highlights: hl } : {}) });
   }
   return out;
+}
+
+/**
+ * Serve mode's one call: the service, then hydration, both inside
+ * `budgetMs` (KEYWORD_SERVE_BUDGET_MS), so the Atlas fallback still fits the
+ * page lane's 8 s. Hydration gets what the service left, as `maxTimeMS` and
+ * as a timer (`maxTimeMS` bounds the server's work, not a wait for a pooled
+ * connection). Throws KeywordServiceError when the budget runs out; the
+ * caller then runs Atlas.
+ *
+ * `rollupDegraded`: a roll-up was asked and no `counts` came back. The Atlas
+ * path marks the lane `page_rollup`-degraded when its counts are missing, so
+ * a reader is told the total is incomplete; the served path must say the same
+ * (#6863 review).
+ */
+export async function serveKeywordPages(
+  db: Db,
+  params: KeywordLaneParams,
+  words: { query: string; variants?: string[] },
+  budgetMs = KEYWORD_SERVE_BUDGET_MS,
+): Promise<{ r: KeywordLaneResult; docs: Document[]; rollupDegraded: boolean }> {
+  const deadline = performance.now() + budgetMs;
+  const r = await callKeywordLane(params, Math.min(KEYWORD_SEARCH_TIMEOUT_MS, budgetMs));
+  const left = deadline - performance.now();
+  if (left < MIN_HYDRATE_MS) throw new KeywordServiceError(`no budget left to hydrate (${Math.round(left)} ms of ${budgetMs})`);
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const docs = await Promise.race([
+      hydrateKeywordRows(db, [...r.main, ...r.variants, ...r.extra], words, left),
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new KeywordServiceError(`hydration over budget (${budgetMs} ms with the service)`)), left);
+      }),
+    ]);
+    return { r, docs, rollupDegraded: !!params.rollup && !Array.isArray(r.counts) };
+  } finally {
+    clearTimeout(timer);
+  }
 }

@@ -27,8 +27,9 @@
 import type { Db, Document } from 'mongodb';
 import { PAGE_SEARCH_INDEX, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 
-/** Function words the book lane already ignores (src/lib/books-catalog.ts). */
-const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+/** Function words the book lane already ignores (src/lib/books-catalog.ts). Also the words a served
+ *  keyword snippet is never centred on (keyword-search.ts `synthesizeHighlights`). */
+export const STOPWORDS: ReadonlySet<string> = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
 
 /** More words than this is a sentence, and no page prints all of a sentence's words. */
 const MAX_TERMS = 8;
