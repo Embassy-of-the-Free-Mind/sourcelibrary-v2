@@ -18,6 +18,7 @@ import type { Db } from 'mongodb';
 import { getTestDb, cleanDb } from '../setup';
 import * as mjs from '../../scripts/lib/page-counts.mjs';
 import * as ts from '@/lib/page-counts';
+import { syncBookTranslationCounters } from '../../scripts/lib/translate-core.mjs';
 
 const BOOK = 'parity-book';
 const OTHER = 'parity-other';
@@ -220,6 +221,92 @@ describe('recountBook(): the one writer (#5325)', () => {
       await expect(twin.recountBook(db, '', { reason: 'x' })).rejects.toThrow(/bookId/);
     });
   }
+
+  // #6824: CLI translate recounted Taillevent past 90% and the stamped rung stayed
+  // `transcribed`, so every collection grid (which filters on the rung) hid it.
+  const TAILLEVENT = 'taillevent-6824';
+  async function seedTranscribed(db: Db) {
+    await db.collection('pages').insertMany(
+      Array.from({ length: 10 }, (_, i) => ({ book_id: TAILLEVENT, page_number: i + 1, ocr: { data: `p${i + 1}` } })),
+    );
+    const counts = { pages_count: 10, pages_ocr: 10, pages_translated: 0, pages_translatable: 10, pages_blank: 0, pages_archived: 0 };
+    const stampedAt = new Date('2026-10-01T00:00:00Z');
+    await db.collection('books').insertOne({
+      id: TAILLEVENT, language: 'French', ...counts, updated_at: stampedAt,
+      translation_state: { ...mjs.computeTranslationState(counts, { language: 'French' }), computed_at: stampedAt },
+    });
+    expect((await db.collection('books').findOne({ id: TAILLEVENT }))?.translation_state?.rung).toBe('transcribed');
+  }
+  async function translatePages(db: Db, n: number) {
+    await db.collection('pages').updateMany(
+      { book_id: TAILLEVENT, page_number: { $lte: n } },
+      { $set: { translation: { data: 'English.' } } },
+    );
+  }
+
+  for (const [name, twin] of [['mjs', mjs], ['ts', ts]] as const) {
+    it(`${name}: a recount that carries pages_translated past 90% restamps the rung to readable (#6824)`, async () => {
+      const db = getTestDb();
+      await seedTranscribed(db);
+      await translatePages(db, 9);
+      const now = new Date('2026-10-16T12:00:00Z');
+      const res = await twin.recountBook(db, TAILLEVENT, { reason: 'test', now });
+      expect(res).toMatchObject({ rung: 'readable', rung_before: 'transcribed' });
+
+      const book = await db.collection('books').findOne({ id: TAILLEVENT });
+      expect(book?.translation_state).toMatchObject({ rung: 'readable', translated: 9, translatable: 10, computed_at: now });
+      expect(mjs.isReadableInEnglish(book?.translation_state)).toBe(true);
+      expect(mjs.catalogTranslationColumns(book)).toEqual({ translation_rung: 'readable', english_original: false });
+      expect(book?.updated_at).toEqual(now); // the catalog sync keys on it
+    });
+
+    it(`${name}: a stamp that is already right is left alone (computed_at does not move)`, async () => {
+      const db = getTestDb();
+      await seedTranscribed(db);
+      const before = (await db.collection('books').findOne({ id: TAILLEVENT }))?.translation_state;
+      await twin.recountBook(db, TAILLEVENT, { reason: 'test', now: new Date('2026-10-16T12:00:00Z') });
+      const book = await db.collection('books').findOne({ id: TAILLEVENT });
+      expect(book?.translation_state).toEqual(before);
+      expect(book?.updated_at).toEqual(new Date('2026-10-01T00:00:00Z'));
+    });
+
+    it(`${name}: a rung left stale by an older subset writer is restamped and re-synced even with no counter change`, async () => {
+      const db = getTestDb();
+      await seedTranscribed(db);
+      await translatePages(db, 10);
+      // A writer that bypassed recountBook(): counters right, rung still `transcribed`.
+      await db.collection('books').updateOne({ id: TAILLEVENT }, { $set: { pages_translated: 10 } });
+      const now = new Date('2026-10-16T12:00:00Z');
+      const res = await twin.recountBook(db, TAILLEVENT, { reason: 'test', now });
+      expect(res.changed).toEqual([]);
+      const book = await db.collection('books').findOne({ id: TAILLEVENT });
+      expect(book?.translation_state?.rung).toBe('complete');
+      expect(book?.updated_at).toEqual(now);
+    });
+  }
+
+  it('syncBookTranslationCounters (cli-translate, batch collectors) goes through recountBook and restamps the rung (#6824)', async () => {
+    const db = getTestDb();
+    await seedTranscribed(db);
+    await translatePages(db, 9);
+    const res = await syncBookTranslationCounters(db, TAILLEVENT);
+    expect(res).toMatchObject({ matched: true, rung: 'readable' });
+    const book = await db.collection('books').findOne({ id: TAILLEVENT });
+    expect(book?.translation_state?.rung).toBe('readable');
+    expect(book?.pages_translatable).toBe(10); // all six counters, not the old subset
+    expect(book?.page_counts_at).toBeInstanceOf(Date);
+  });
+
+  it('the staleness test is the same in both twins, and ignores computed_at', () => {
+    const counts = { pages_count: 10, pages_ocr: 10, pages_translated: 9, pages_translatable: 10, pages_blank: 0 };
+    const state = mjs.computeTranslationState(counts, { language: 'Latin' });
+    for (const twin of [mjs, ts]) {
+      expect(twin.translationStateChanged(undefined, state)).toBe(true);
+      expect(twin.translationStateChanged({ ...state, computed_at: new Date() }, state)).toBe(false);
+      expect(twin.translationStateChanged({ ...state, rung: 'translating' }, state)).toBe(true);
+      expect(twin.translationStateChanged({ ...state, translatable: 11 }, state)).toBe(true);
+    }
+  });
 
   it('initialPageCounters: every page pending, so every page translatable', () => {
     expect(mjs.initialPageCounters(12)).toEqual({

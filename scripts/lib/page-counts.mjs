@@ -400,29 +400,41 @@ export function recountSet(after, now) {
  * make the catalog sync re-read the book; `page_counts_at` is stamped every time,
  * because it records when the count was last verified, not when it last changed.
  *
+ * Restamps `translation_state` from the recount whenever it moved (#6824): a
+ * collection grid filters on the stamped rung, so a book a job just translated
+ * must not wait up to 2 h for sync-worker to look translated. A moved rung bumps
+ * `updated_at` too, so the catalog sync carries it to `books_catalog`. Same rule
+ * and same staleness test as sync-worker (computeTranslationState,
+ * translationStateChanged), so the two writers cannot disagree.
+ *
  * Does not stamp `ocr.text_free` (recount-page-stats.mjs does, before calling this)
- * and does not write translation flags (the reconciler derives those).
+ * and does not write the legacy translation flags or `pipeline_next` (the
+ * reconciler derives those).
  *
  * @param {import('mongodb').Db} db
  * @param {string} bookId
  * @param {{ reason: string, now?: Date }} opts  `reason` names the caller, for logs.
- * @returns {Promise<{ matched: boolean, reason: string, before: object|null, after: object, changed: string[] }>}
+ * @returns {Promise<{ matched: boolean, reason: string, before: object|null, after: object, changed: string[], rung?: string, rung_before?: string|null }>}
  */
 export async function recountBook(db, bookId, { reason, now = new Date() } = {}) {
   if (typeof bookId !== 'string' || bookId === '') throw new Error('recountBook: bookId must be a non-empty string');
   if (typeof reason !== 'string' || reason === '') throw new Error('recountBook: pass { reason } naming the caller');
 
   const books = db.collection('books');
-  const projection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
+  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1 };
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
   const { before, after, changed } = diffPageCounters(book, row);
   if (!book) return { matched: false, reason, before: null, after, changed: [] };
 
   const $set = recountSet(after, now);
-  if (changed.length) $set.updated_at = now;
+  const state = computeTranslationState(after, { language: book.language, content_type: book.content_type });
+  const stored = book.translation_state;
+  if (translationStateChanged(stored, state)) $set.translation_state = { ...state, computed_at: now };
+  const mirrored = !stored || stored.rung !== state.rung || (stored.english_original === true) !== state.english_original;
+  if (changed.length || mirrored) $set.updated_at = now;
   await books.updateOne({ id: bookId }, { $set });
-  return { matched: true, reason, before, after, changed };
+  return { matched: true, reason, before, after, changed, rung: state.rung, rung_before: stored?.rung ?? null };
 }
 
 /**
@@ -522,7 +534,7 @@ export function computeTranslationMetrics(counts) {
 /**
  * Rule version for `books.translation_state`. Bump it whenever the rule below
  * changes: sync-worker compares the stored version and re-stamps every book on
- * its next pass, so no backfill script is ever needed (single writer).
+ * its next pass, so no backfill script is ever needed (one rule, applied by both writers).
  */
 export const TRANSLATION_STATE_VERSION = 1;
 
@@ -551,9 +563,19 @@ export function isEnglishOriginal(language) {
 }
 
 /**
+ * True iff a stored `translation_state` differs from a fresh computeTranslationState()
+ * in the rung, the version, or any input it was computed from (a stale input would
+ * make a right rung untraceable). `computed_at` is deliberately not compared. The one
+ * staleness test for both writers: sync-worker and recountBook() (#6824).
+ */
+export function translationStateChanged(stored, computed) {
+  return !stored || Object.keys(computed).some((k) => stored[k] !== computed[k]);
+}
+
+/**
  * The translation-state ladder for one book (#5284, design:
  * .claude/docs/translation-state.md). ONE rung per book, stored as
- * `books.translation_state` by sync-worker and read by every surface, so "how
+ * `books.translation_state` by sync-worker and recountBook() and read by every surface, so "how
  * many books are translated" has one answer instead of seven.
  *
  *   no_pages     pages_count 0, or content_type 'artwork' — out of every denominator

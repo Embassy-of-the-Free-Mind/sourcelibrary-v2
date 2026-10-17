@@ -23,7 +23,7 @@
  */
 
 import { createHash, randomBytes } from 'crypto';
-import { buildVisiblePageCountPipeline } from './page-counts.mjs';
+import { recountBook } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
@@ -1319,20 +1319,18 @@ export async function findHumanEditedPageIds(db, pageIds, field = 'translation')
 }
 
 /**
- * Recompute the book's cached page counters with the canonical visible-pages
- * convention (#3293) and bump updated_at (which the Supabase catalog sync
- * keys on — a counter write without updated_at is invisible downstream).
- * Extra fields (e.g. a status transition) ride along in the same update.
+ * Recount the book after a translation write. Delegates to recountBook(), the one
+ * writer of the six counters, which also restamps `translation_state` — so a book
+ * this job carried past 90% is `readable` on every collection grid at the next
+ * catalog sync, not after sync-worker's next pass (#6824; Taillevent, #6780). It
+ * bumps updated_at (which the catalog sync keys on) when a counter or rung moved.
+ * Extra fields (e.g. a status transition) are written after, with updated_at.
+ * Returns recountBook()'s result.
  */
 export async function syncBookTranslationCounters(db, bookId, extraSet = {}) {
-  const [counts] = await db.collection('pages')
-    .aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
-  const $set = { updated_at: new Date(), ...extraSet };
-  if (counts) {
-    $set.pages_count = counts.total;
-    $set.pages_ocr = counts.with_ocr;
-    $set.pages_translated = counts.with_translation;
+  const result = await recountBook(db, bookId, { reason: 'translate-core:syncBookTranslationCounters' });
+  if (Object.keys(extraSet).length) {
+    await db.collection('books').updateOne({ id: bookId }, { $set: { ...extraSet, updated_at: new Date() } });
   }
-  await db.collection('books').updateOne({ id: bookId }, { $set });
-  return counts || null;
+  return result;
 }
