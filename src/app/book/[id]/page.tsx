@@ -1204,6 +1204,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           translated: stamped?.translated ?? translatedCount,
           translatable: stamped?.translatable ?? totalPages,
           transcribed: ocrCount,
+          pages: totalPages,
         },
       });
       // The shelf: books that share this holder (or, with no holder, this
@@ -1832,7 +1833,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <span title={t.ocrTooltip(ocrCount, totalPages)} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} {t.ocr}
                   </span>
-                  {translatedPct > 0 && (
+                  {/* English originals carry their OCR as the "translation", so a
+                      Translated chip would count copies, not translations. */}
+                  {translatedPct > 0 && !translationState?.english_original && (
                     <span title={t.translatedTooltip(translatedCount)} style={{ color: '#86c98f' }}>
                       {verdict === 'complete'
                         ? `✓ ${t.translationComplete}`
