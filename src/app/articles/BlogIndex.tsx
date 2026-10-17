@@ -76,7 +76,7 @@ function ArticleCard({ post, priority }: { post: BlogPost; priority: boolean }) 
 }
 
 const PILL =
-  'h-11 rounded-full border border-stone-400 bg-transparent text-base text-primary hover:border-primary focus:outline-none focus-visible:border-primary transition-colors';
+  'h-11 rounded-full border border-stone-400 bg-white text-base text-primary hover:border-primary focus:outline-none focus-visible:border-primary transition-colors';
 
 function PillSelect<T extends string>({
   label,
