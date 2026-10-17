@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 
 const require = createRequire(import.meta.url);
 
@@ -79,24 +80,75 @@ export const TEXT_DIR = path.join(ROOT, 'text');
 export const TEXT_DB_PATH = path.join(TEXT_DIR, 'pages.sqlite');
 export const TEXT_SELECT = 'page_id, translation, book_title, book_author, extract(epoch from updated_at)::float8 AS u';
 
-/** Open the text store for writing (pull-text.mjs, sync-delta.mjs). Returns {db, upsert(r), remove(pid), tx(fn)}. */
+/**
+ * A text-store row's fingerprint, so the reconcile can tell a stale copy from a current one without
+ * reading either text (#6821, the #6859 review). In-place edits of page_translations.translation do
+ * NOT move updated_at — resyncMirrors (translation-text-repair.mjs), backfill-clean-snippets.mjs,
+ * translation-cleanup-a2-5700.mjs, repair-text-shift-run.mjs — and updated_at is the Mongo source
+ * time by design (.claude/docs/embeddings.md), so the delta cannot see them. Two strengths:
+ *   tl, ml  byte lengths of translation and of title + author. Postgres reads octet_length from the
+ *           TOAST header without detoasting, so the 2-hourly scan costs what the id-only scan cost
+ *           (measured 2026-10-17: same 33 ms on a 6.8K-row range). Misses a same-length edit.
+ *   h       md5 of the three columns, the nightly pass: it detoasts every translation on Supabase
+ *           (~4× the id scan on a 1% block sample, 22 s vs 5.7 s), so it is not run every 2 h.
+ * FP_LEN_SQL / FP_HASH_SQL are the same functions in SQL; they must agree byte for byte with
+ * textFingerprint() (UTF-8 lengths; NULL → -1 for translation, '' for title and author).
+ */
+export const FP_LEN_SQL = 'coalesce(octet_length(translation), -1) AS tl, coalesce(octet_length(book_title), 0) + coalesce(octet_length(book_author), 0) AS ml';
+export const FP_HASH_SQL = "decode(md5(coalesce(translation, '') || chr(31) || coalesce(book_title, '') || chr(31) || coalesce(book_author, '')), 'hex') AS h";
+export function textFingerprint(r) {
+  const t = r.translation ?? null, title = r.book_title ?? '', author = r.book_author ?? '';
+  return {
+    tl: t === null ? -1 : Buffer.byteLength(t, 'utf8'),
+    ml: Buffer.byteLength(title, 'utf8') + Buffer.byteLength(author, 'utf8'),
+    h: createHash('md5').update(`${t ?? ''}\x1f${title}\x1f${author}`, 'utf8').digest(),
+  };
+}
+
+/**
+ * Open the text store for writing (pull-text.mjs, sync-delta.mjs, text-fingerprints.mjs).
+ * Returns {db, upsert(r), replace(r), remove(pid), fp(pid), fpComplete(), tx(fn)}.
+ * `fp` (page_id → tl, ml, h) is written beside every row write, in the same transaction; a store made
+ * before it existed is filled once by text-fingerprints.mjs, which sets meta.fp_complete. Until then
+ * the reconcile skips its text comparison (an empty fp table would read as 7.6M stale rows).
+ */
 export function openTextStore(file = TEXT_DB_PATH) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const { DatabaseSync } = require('node:sqlite');
   const db = new DatabaseSync(file);
   db.exec(`PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL; PRAGMA busy_timeout = 60000;
     CREATE TABLE IF NOT EXISTS pages (page_id TEXT PRIMARY KEY, u REAL NOT NULL, translation TEXT, book_title TEXT, book_author TEXT);
-    CREATE TABLE IF NOT EXISTS pull_ck (shard INTEGER PRIMARY KEY, last TEXT NOT NULL, rows INTEGER NOT NULL, done INTEGER NOT NULL);`);
+    CREATE TABLE IF NOT EXISTS pull_ck (shard INTEGER PRIMARY KEY, last TEXT NOT NULL, rows INTEGER NOT NULL, done INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS fp (page_id TEXT PRIMARY KEY, tl INTEGER NOT NULL, ml INTEGER NOT NULL, h BLOB NOT NULL) WITHOUT ROWID;
+    CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);`);
   const up = db.prepare(`INSERT INTO pages (page_id, u, translation, book_title, book_author) VALUES (?, ?, ?, ?, ?)
     ON CONFLICT (page_id) DO UPDATE SET u = excluded.u, translation = excluded.translation,
       book_title = excluded.book_title, book_author = excluded.book_author WHERE excluded.u >= pages.u`);
-  const rm = db.prepare('DELETE FROM pages WHERE page_id = ?');
+  // The reconcile's repair: the row it just read from Supabase is current whatever its updated_at says
+  // (an in-place edit leaves it alone, and a re-embed can move it backwards), and the delta lock keeps
+  // every other writer out while it runs.
+  const rep = db.prepare('INSERT OR REPLACE INTO pages (page_id, u, translation, book_title, book_author) VALUES (?, ?, ?, ?, ?)');
+  const putFp = db.prepare('INSERT OR REPLACE INTO fp (page_id, tl, ml, h) VALUES (?, ?, ?, ?)');
+  const getFp = db.prepare('SELECT tl, ml, h FROM fp WHERE page_id = ?');
+  const rm = db.prepare('DELETE FROM pages WHERE page_id = ?'), rmFp = db.prepare('DELETE FROM fp WHERE page_id = ?');
+  const args = (r) => [r.page_id, Number(r.u), r.translation ?? null, r.book_title ?? null, r.book_author ?? null];
+  const writeFp = (r) => { const f = textFingerprint(r); putFp.run(r.page_id, f.tl, f.ml, f.h); };
   return {
     db,
-    upsert: (r) => up.run(r.page_id, Number(r.u), r.translation ?? null, r.book_title ?? null, r.book_author ?? null),
-    remove: (pid) => rm.run(pid),
+    upsert: (r) => { const res = up.run(...args(r)); if (res.changes) writeFp(r); return res; },
+    replace: (r) => { const res = rep.run(...args(r)); writeFp(r); return res; },
+    remove: (pid) => { rmFp.run(pid); return rm.run(pid); },
+    fp: (pid) => getFp.get(pid),
+    fpComplete: () => db.prepare("SELECT v FROM meta WHERE k = 'fp_complete'").get()?.v ?? null,
     tx: (fn) => { db.exec('BEGIN'); try { const v = fn(); db.exec('COMMIT'); return v; } catch (e) { db.exec('ROLLBACK'); throw e; } },
   };
+}
+
+/** True when a Supabase scan row ({tl, ml[, h]}) matches the stored fingerprint. A missing fingerprint never matches. */
+export function fpMatches(row, stored) {
+  if (!stored) return false;
+  if (Number(row.tl) !== stored.tl || Number(row.ml) !== stored.ml) return false;
+  return row.h == null || Buffer.compare(Buffer.from(row.h), Buffer.from(stored.h)) === 0;
 }
 
 /**
@@ -173,6 +225,19 @@ export function parseVector(text, out = new Float32Array(DIM)) {
   const parts = s.split(',');
   if (parts.length !== DIM) return null;
   for (let i = 0; i < DIM; i++) out[i] = +parts[i];
+  return out;
+}
+
+/**
+ * A vector on the /admin/apply wire: base64 of its float32 bytes. A JSON array of 768 numbers is ~15 KB
+ * a row, and the server parses the body on the thread that answers /match (500 rows: ~7.5 MB of JSON);
+ * base64 is 4 KB a row and decodes without a parse. The server still takes `embedding` arrays.
+ */
+export const encodeVec = (v) => Buffer.from(Float32Array.from(v).buffer).toString('base64');
+export function decodeVec(b64, out) {
+  const b = Buffer.from(b64, 'base64');
+  if (b.length !== DIM * 4) return null;
+  out.set(new Float32Array(new Uint8Array(b).buffer)); // the copy starts at offset 0: Buffer's pool may not be 4-aligned
   return out;
 }
 

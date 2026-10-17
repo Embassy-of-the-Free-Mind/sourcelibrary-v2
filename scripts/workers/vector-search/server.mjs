@@ -42,7 +42,7 @@ import { timingSafeEqual } from 'node:crypto';
 import {
   DIM, SHARD_DIR, indexConfigFor, readState, writeJsonAtomic, STATE_PATH, indexPath, rowsPath, loadUsearch, RowStore, log,
   EXACT_VEC_PATH, EXACT_KEYS_PATH, EXACT_META_PATH, overridesPath, quantizeI8, classLang, classYear,
-  TEXT_DB_PATH, openTextReader, rangeOfPageId,
+  TEXT_DB_PATH, openTextReader, rangeOfPageId, decodeVec,
 } from './lib.mjs';
 
 const HOST = process.env.VECTOR_SEARCH_HOST || '127.0.0.1';
@@ -348,25 +348,44 @@ function addText(out) {
 let adminBusy = Promise.resolve();
 const serial = (fn) => { const p = adminBusy.then(fn, fn); adminBusy = p.catch(() => {}); return p; };
 
-/** Upsert / remove rows. Body: {upserts: [{page_id, book_id, page_number, book_language, book_year, embedding: [768]}], removes: [page_id], checkpoint?} */
-function applyDelta(b) {
+// The admin calls run on the thread that answers /match, so each one gives the loop back every
+// YIELD_MS: measured 2026-10-17 during a reconcile, before this, /match p99 was 1,869 ms and the worst
+// stall 2.4 s (648 index.add calls in one synchronous loop, ~3.7 ms each; then the diff's 7.6M-row scan).
+// A row's index + row-store + override update never straddles a yield, so a query between two slices
+// sees each row either before or after its change, never half-way.
+const YIELD_MS = +(process.env.VECTOR_SEARCH_ADMIN_YIELD_MS || 5);
+const yieldLoop = () => new Promise((r) => setImmediate(r));
+async function eachSliced(items, fn) {
+  let t = performance.now();
+  for (const x of items) {
+    fn(x);
+    if (performance.now() - t >= YIELD_MS) { await yieldLoop(); t = performance.now(); }
+  }
+}
+
+/**
+ * Upsert / remove rows. Body: {upserts: [{page_id, book_id, page_number, book_language, book_year,
+ * embedding_b64 | embedding: [768]}], removes: [page_id], checkpoint?}. embedding_b64 is lib.mjs encodeVec.
+ */
+async function applyDelta(b) {
   let added = 0, replaced = 0, removed = 0, skipped = 0;
   const vec = new Float32Array(DIM);
-  for (const r of b.upserts || []) {
-    if (!r.page_id || !r.book_id || !Array.isArray(r.embedding) || r.embedding.length !== DIM) { skipped++; continue; }
-    vec.set(r.embedding);
+  await eachSliced(b.upserts || [], (r) => {
+    const ok = r.page_id && r.book_id && (typeof r.embedding_b64 === 'string' ? decodeVec(r.embedding_b64, vec)
+      : Array.isArray(r.embedding) && r.embedding.length === DIM && (vec.set(r.embedding), true));
+    if (!ok) { skipped++; return; }
     let key = rows.pageKey.get(r.page_id);
     if (key === undefined) { key = nextKey++; added++; } else { replaced++; if (index.contains(BigInt(key))) index.remove(BigInt(key)); }
     index.add(BigInt(key), vec);
     rows.set(key, r);
     if (exact) overrides.set(key, quantizeI8(vec));
-  }
-  for (const pid of b.removes || []) {
+  });
+  await eachSliced(b.removes || [], (pid) => {
     const key = rows.pageKey.get(pid);
-    if (key === undefined || !rows.alive[key]) continue;
+    if (key === undefined || !rows.alive[key]) return;
     if (index.contains(BigInt(key))) index.remove(BigInt(key));
     rows.kill(key); removed++;
-  }
+  });
   if (b.checkpoint) state.checkpoint = b.checkpoint;
   state.last_delta_at = new Date().toISOString();
   pending += added + replaced + removed;
@@ -374,33 +393,39 @@ function applyDelta(b) {
 }
 
 /**
- * Reconcile (sync-delta.mjs --reconcile): the caller sends every page_id Supabase serves in one pull
- * range (PULL_EDGES[range] < id < PULL_EDGES[range + 1]); this returns the ids the service lacks
- * (`missing`) and the live ids it holds in that range that Supabase no longer serves (`extra`).
+ * Reconcile (sync-delta.mjs --reconcile): the live page_ids the service holds in one pull range
+ * (PULL_EDGES[range] < id < PULL_EDGES[range + 1]), a page at a time. The caller diffs them against
+ * what Supabase serves, both ways: ids the service lacks, and ids it holds that Supabase no longer
+ * serves (deleted rows too). Body: {session, range, offset, limit} → {ids, total, next}.
  * Why it exists: page_translations.updated_at is the Mongo SOURCE time (page-embedding-text.mjs), not
  * the write time, so a page embedded after the checkpoint with an older source time is invisible to
- * the updated_at delta — 4,055 such rows in the first 26 h (2026-10-17). The live ids are bucketed by
- * range once per session (one scan of the row store), not once per range.
+ * the updated_at delta — 4,055 such rows in the first 26 h (2026-10-17).
+ * The caller does the set work (it was /admin/diff until 2026-10-17: a 7.6M-row bucket scan, a Set of
+ * up to 1.5M ids and a ~40 MB JSON parse, all on this thread). Here: the bucket scan once per session,
+ * sliced, and then pages of ≤ 50K ids (~1.3 MB of JSON each).
  */
-let diffCache = null;
-function diffRange(b) {
-  if (typeof b.session !== 'string' || !Number.isInteger(b.range) || !Array.isArray(b.ids)) throw new BadRequest('need session, range, ids');
-  if (diffCache?.session !== b.session) {
+let idsCache = null;
+async function listIds(b) {
+  if (typeof b.session !== 'string' || !Number.isInteger(b.range)) throw new BadRequest('need session, range');
+  if (idsCache?.session !== b.session) {
+    idsCache = null; // the previous session's buckets go before this one's are built
     const buckets = new Map();
+    let t = performance.now();
     for (let k = 0; k < rows.n; k++) {
-      if (!rows.alive[k]) continue;
-      const r = rangeOfPageId(rows.pageIds[k]);
-      if (r < 0) continue;
-      let a = buckets.get(r); if (!a) buckets.set(r, (a = []));
-      a.push(rows.pageIds[k]);
+      if (rows.alive[k]) {
+        const r = rangeOfPageId(rows.pageIds[k]);
+        if (r >= 0) { let a = buckets.get(r); if (!a) buckets.set(r, (a = [])); a.push(rows.pageIds[k]); }
+      }
+      if ((k & 4095) === 0 && performance.now() - t >= YIELD_MS) { await yieldLoop(); t = performance.now(); }
     }
-    diffCache = { session: b.session, buckets };
+    idsCache = { session: b.session, buckets };
   }
-  const have = new Set(b.ids);
-  const live = (pid) => { const k = rows.pageKey.get(pid); return k !== undefined && rows.alive[k] === 1; };
-  const missing = b.ids.filter((pid) => !live(pid));
-  const extra = (diffCache.buckets.get(b.range) || []).filter((pid) => !have.has(pid) && live(pid));
-  return { missing, extra };
+  if (b.done === true) { idsCache = null; return { ok: true }; }
+  const all = idsCache.buckets.get(b.range) || [];
+  const offset = Number.isInteger(b.offset) && b.offset > 0 ? b.offset : 0;
+  const limit = Math.min(50000, Number.isInteger(b.limit) && b.limit > 0 ? b.limit : 50000);
+  const ids = all.slice(offset, offset + limit);
+  return { ids, total: all.length, next: offset + ids.length < all.length ? offset + ids.length : null };
 }
 
 /** Write generation g+1 (index, rows), then state.json (the commit point), then drop generation g. */
@@ -478,13 +503,13 @@ function handler(local) {
         return send(res, 200, { ...r, ...tx, ms: Number(process.hrtime.bigint() - t) / 1e6 });
       }
       if (local && req.method === 'POST' && url === '/admin/apply') {
-        const b = await readBody(req, 256 * 1024 * 1024);
+        const b = await readBody(req, 64 * 1024 * 1024);
         return send(res, 200, await serial(() => applyDelta(b)));
       }
       if (local && req.method === 'POST' && url === '/admin/save') return send(res, 200, await serial(save));
-      if (local && req.method === 'POST' && url === '/admin/diff') {
-        const b = await readBody(req, 256 * 1024 * 1024);
-        return send(res, 200, await serial(() => diffRange(b)));
+      if (local && req.method === 'POST' && url === '/admin/ids') {
+        const b = await readBody(req, 64 * 1024);
+        return send(res, 200, await serial(() => listIds(b)));
       }
       return send(res, 404, { error: 'not found' });
     } catch (e) {
