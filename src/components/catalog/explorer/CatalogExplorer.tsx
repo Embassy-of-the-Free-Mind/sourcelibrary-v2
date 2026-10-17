@@ -418,24 +418,28 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     run({ ...s, ...CLEAR, sort: 'popular', view: 'grid' });
   };
 
-  const fieldClass = 'flex items-stretch h-[52px] border border-border-medium bg-white focus-within:border-primary';
-  const exampleClass = 'px-1 py-0.5 text-[12.5px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary';
+  // The black button sits over the bar's border (-my-px -mr-px) so it reads as
+  // the bar's full height. Phones get a 40px bar (16px text stays, so iOS does not zoom); desktop 52px.
+  const fieldClass = 'flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary';
+  const exampleClass = 'shrink-0 px-1 py-0.5 text-[11.5px] sm:text-[12.5px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary';
+  // One line of examples on a phone, scrolled sideways; wrapped on wider screens.
+  const examplesRow = 'flex flex-nowrap sm:flex-wrap items-center gap-x-1 gap-y-0.5 mt-1.5 sm:mt-2 text-[11.5px] sm:text-[12.5px] overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] whitespace-nowrap sm:whitespace-normal';
 
   return (
     <div>
       {/* The two ways in */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[22px] md:gap-7">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-7">
         <form onSubmit={(e) => { e.preventDefault(); search(searchText); }} role="search" aria-label="Search the catalogue">
-          <label htmlFor="catalog-search" className="block text-[13.5px] font-semibold text-primary mb-2">Search the catalogue</label>
+          <label htmlFor="catalog-search" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Search the catalogue</label>
           <div className={fieldClass}>
-            <Search className="w-[17px] h-[17px] self-center ml-4 text-muted shrink-0" aria-hidden />
+            <Search className="w-4 h-4 sm:w-[17px] sm:h-[17px] self-center ml-3 sm:ml-4 text-muted shrink-0" aria-hidden />
             <input id="catalog-search" type="search" value={searchText} onChange={(e) => setSearchText(e.target.value)}
               placeholder="Title, author, subject or date"
-              className="flex-1 min-w-0 px-3 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
-            <button type="submit" className="px-5 bg-primary text-cream text-sm shrink-0">Search</button>
+              className="flex-1 min-w-0 px-2.5 sm:px-3 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
+            <button type="submit" className="-my-px -mr-px px-3.5 sm:px-5 bg-primary text-cream text-[13px] sm:text-sm shrink-0">Search</button>
           </div>
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 mt-2 text-[12.5px]">
-            <span className="text-muted mr-0.5">Try</span>
+          <div className={examplesRow}>
+            <span className="shrink-0 text-muted mr-0.5">Try</span>
             {SEARCH_EXAMPLES.map((e) => (
               <button key={e} type="button" className={exampleClass} onClick={() => { setSearchText(e); search(e); }}>{e}</button>
             ))}
@@ -443,27 +447,27 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
         </form>
 
         <form onSubmit={(e) => { e.preventDefault(); ask(askText); }} aria-label="Ask the librarian">
-          <label htmlFor="catalog-ask" className="block text-[13.5px] font-semibold text-primary mb-2">Ask the librarian</label>
+          <label htmlFor="catalog-ask" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Ask the librarian</label>
           <div className={fieldClass}>
             <input id="catalog-ask" type="text" value={askText} onChange={(e) => setAskText(e.target.value)}
               placeholder="Describe what you are looking for"
-              className="flex-1 min-w-0 px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
-            <button type="submit" aria-busy={!!busy} className="relative px-5 bg-primary text-cream text-sm shrink-0">
+              className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
+            <button type="submit" aria-busy={!!busy} className="relative -my-px -mr-px px-3.5 sm:px-5 bg-primary text-cream text-[13px] sm:text-sm shrink-0">
               <span className={busy ? 'invisible' : ''}>Ask</span>
               {busy && <span aria-hidden className="absolute left-1/2 top-1/2 -ml-2 -mt-2 w-4 h-4 rounded-full border-2 border-cream/30 border-t-cream animate-spin" />}
             </button>
           </div>
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 mt-2 text-[12.5px]">
+          <div className={examplesRow}>
             {suggestionList.length > 0 ? (
               <>
-                <span className="text-muted mr-0.5">{s.topic ? 'Add to search' : 'Also try'}</span>
+                <span className="shrink-0 text-muted mr-0.5">{s.topic ? 'Add to search' : 'Also try'}</span>
                 {suggestionList.map((t) => (
                   <button key={t} type="button" className={exampleClass} onClick={() => addSuggestion(t)}>{s.topic ? `+ ${t}` : t}</button>
                 ))}
               </>
             ) : (
               <>
-                <span className="text-muted mr-0.5">Try</span>
+                <span className="shrink-0 text-muted mr-0.5">Try</span>
                 {ASK_EXAMPLES.map((e) => (
                   <button key={e} type="button" className={exampleClass} onPointerEnter={() => warmExample(e)} onFocus={() => warmExample(e)} onClick={() => { setAskText(e); ask(e); }}>{e}</button>
                 ))}
@@ -498,15 +502,18 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
       )}
 
       {/* Advanced search, what is applied, and how it is shown */}
-      <div className="flex flex-wrap items-center gap-2.5 mt-[22px] pb-3.5 border-b border-border-light">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-4 sm:mt-[22px] pb-3 sm:pb-3.5 border-b border-border-light">
         <button type="button" onClick={() => setAdvOpen((o) => !o)} aria-expanded={advOpen}
-          className={`inline-flex items-center gap-2 h-[38px] px-3.5 border text-sm ${advOpen ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium'}`}>
-          Advanced search
+          className={`order-1 sm:order-none inline-flex items-center gap-2 h-9 sm:h-[38px] px-3 sm:px-3.5 border text-[13px] sm:text-sm ${advOpen ? 'bg-primary text-cream border-primary' : 'bg-white text-primary border-border-medium'}`}>
+          <span className="sm:hidden">Advanced</span><span className="hidden sm:inline">Advanced search</span>
           {chipCount > 0 && <span className="min-w-5 h-5 px-1.5 rounded-full bg-accent-rust text-white text-xs grid place-items-center">{chipCount}</span>}
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${advOpen ? 'rotate-180' : ''}`} aria-hidden />
         </button>
+        {/* Chips: their own row on a phone, under Advanced search and the sort. */}
+        {chipCount > 0 && (
+        <div className="order-3 basis-full sm:order-none sm:basis-auto flex flex-wrap items-center gap-2 sm:gap-2.5">
         {chips.map((c) => (
-          <span key={c.key} className={`inline-flex items-center gap-1.5 h-[30px] pl-3 pr-1.5 border text-[13.5px] whitespace-nowrap ${c.other ? 'bg-warm border-dashed border-border-medium' : 'bg-white border-border-medium'}`}>
+          <span key={c.key} className={`inline-flex items-center gap-1.5 h-7 sm:h-[30px] pl-2.5 sm:pl-3 pr-1 sm:pr-1.5 border text-[12.5px] sm:text-[13.5px] whitespace-nowrap ${c.other ? 'bg-warm border-dashed border-border-medium' : 'bg-white border-border-medium'}`}>
             {c.other && <span className="text-muted">also</span>}
             {c.label}
             <button type="button" onClick={() => run(c.remove())} aria-label={`Remove ${c.label}`} className="w-5 h-5 rounded-full grid place-items-center text-muted hover:bg-warm hover:text-primary">
@@ -514,21 +521,23 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
             </button>
           </span>
         ))}
-        {chipCount > 1 && <button type="button" onClick={clearAll} className="text-[13.5px] text-muted underline underline-offset-[3px]">Clear all</button>}
-        <div className="flex items-center gap-2.5 w-full sm:w-auto sm:ml-auto">
+        {chipCount > 1 && <button type="button" onClick={clearAll} className="text-[12.5px] sm:text-[13.5px] text-muted underline underline-offset-[3px]">Clear all</button>}
+        </div>
+        )}
+        <div className="order-2 sm:order-none ml-auto flex items-center gap-2 sm:gap-2.5">
           <a href={csvHref} className="hidden md:inline-flex items-center gap-1 text-xs text-muted hover:text-primary" title="Download the catalogue as CSV">
             <Download className="w-3.5 h-3.5" aria-hidden /> CSV
           </a>
           <Link href="/catalog/scholar" className="hidden md:inline text-xs text-muted hover:text-primary mr-1" title="Minimal bibliographic view for researchers">Scholar view</Link>
           <select value={s.sort} onChange={(e) => run({ ...s, sort: e.target.value as CatalogSort })} aria-label="Sort"
-            className="h-[38px] flex-1 sm:flex-none border border-border-medium bg-white px-3 text-base sm:text-sm text-primary">
+            className="h-9 sm:h-[38px] w-[132px] sm:w-auto border border-border-medium bg-white px-2.5 sm:px-3 text-base sm:text-sm text-primary">
             {sortOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
           <div className="flex border border-border-medium" role="group" aria-label="View">
             <button type="button" aria-pressed={s.view === 'grid'} aria-label="Grid" onClick={() => run({ ...s, view: 'grid' }, { keepPage: true })}
-              className={`w-[38px] h-9 grid place-items-center ${s.view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
+              className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${s.view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
             <button type="button" aria-pressed={s.view === 'list'} aria-label="List" onClick={() => run({ ...s, view: 'list' }, { keepPage: true })}
-              className={`w-[38px] h-9 grid place-items-center ${s.view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
+              className={`w-8 h-[34px] sm:w-[38px] sm:h-9 grid place-items-center ${s.view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
           </div>
         </div>
       </div>
