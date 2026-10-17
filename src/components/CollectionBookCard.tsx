@@ -20,6 +20,7 @@ import { localizedTitle, originalTitleIfDifferent, type LocalizedBookMap, hasLoc
 import { languageToBcp47, titleLang } from '@/lib/language-code';
 import { translationPercent, translationVerdict, type StoredTranslationState } from '@/lib/translation-completeness';
 import PreviewBadge from '@/components/book/PreviewBadge';
+import { isEnglishOriginal } from '@/lib/page-counts';
 
 export interface CollectionBook {
   bookId?: string;
@@ -239,6 +240,10 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
     pages_blank: book.pages_blank,
   });
   const verdict = translationVerdict(book);
+  // English originals store their OCR as the "translation", so their translated
+  // count is copies. Many surfaces don't project translation_state, hence the
+  // language fallback.
+  const englishOriginal = !!book.translation_state?.english_original || isEnglishOriginal(book.language);
   const byline = getEffectiveByline({ ...book, author: book.author || '' });
 
   return (
@@ -358,12 +363,14 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
                 `readable`, "Complete" only at `complete`, "In English" for a
                 transcribed English original; below that, the percentage.
                 Unstamped (verdict null) falls back to tick-at-100%. */}
-            <Status
-              label={verdict === 'complete' ? labels.complete : verdict === 'english_original' ? labels.inEnglish : labels.translated}
-              pctValue={translatedPct}
-              doneClass="text-status-success"
-              done={verdict === null ? undefined : verdict !== 'none'}
-            />
+            {englishOriginal
+              ? <span className="text-muted">{labels.inEnglish}</span>
+              : <Status
+                  label={verdict === 'complete' ? labels.complete : verdict === 'english_original' ? labels.inEnglish : labels.translated}
+                  pctValue={translatedPct}
+                  doneClass="text-status-success"
+                  done={verdict === null ? undefined : verdict !== 'none'}
+                />}
           </div>
         )}
       </div>

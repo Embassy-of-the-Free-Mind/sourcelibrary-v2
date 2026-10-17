@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { isEnglishOriginal } from '@/lib/page-counts';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -114,7 +115,7 @@ export default async function CollectionCatalogPage({
                 {meta && (
                   <span className="block text-sm" style={{ color: 'var(--text-muted)' }}>
                     {meta}
-                    {b.pages_translated > 0 ? ' · English translation' : ''}
+                    {b.pages_translated > 0 && !isEnglishOriginal(b.language) ? ' · English translation' : ''}
                   </span>
                 )}
               </li>
