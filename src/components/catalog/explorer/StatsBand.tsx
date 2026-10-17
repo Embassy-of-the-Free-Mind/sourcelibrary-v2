@@ -1,6 +1,32 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import type { CatalogStats } from '@/lib/catalog/query';
+
+/**
+ * A number that runs from its last value to the new one (~0.6s, easing out).
+ * Reduced motion: it simply changes.
+ */
+function useCountUp(target: number): number {
+  const [shown, setShown] = useState(target);
+  const from = useRef(target);
+  useEffect(() => {
+    const start = from.current;
+    if (start === target) return;
+    const still = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const t0 = performance.now();
+    const dur = still ? 0 : 600;
+    let raf = requestAnimationFrame(function step(now) {
+      const k = dur ? Math.min(1, (now - t0) / dur) : 1;
+      const v = Math.round(start + (target - start) * (1 - Math.pow(1 - k, 3)));
+      setShown(v);
+      from.current = v;
+      if (k < 1) raf = requestAnimationFrame(step);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [target]);
+  return shown;
+}
 
 /** The band's numbers: the server's exact stats, or counts over an asked result list. */
 export interface BandStats extends Omit<CatalogStats, 'languages'> {
@@ -44,8 +70,10 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
   // No numbers (the count failed): dashes, never a previous search's figures.
   const total = stats?.total ?? 0;
   const translated = stats?.translated ?? 0;
-  const totalText = stats ? fmt(total) : '—';
-  const translatedText = stats ? `${stats.sample ? '~' : ''}${fmt(translated)}` : '—';
+  const totalShown = useCountUp(total);
+  const translatedShown = useCountUp(translated);
+  const totalText = stats ? fmt(totalShown) : '—';
+  const translatedText = stats ? `${stats.sample ? '~' : ''}${fmt(translatedShown)}` : '—';
   const printed = stats?.printed ?? [];
   const maxBucket = Math.max(1, ...printed.map((p) => p.count));
   const bars = printed.map((p, i) => ({
@@ -107,7 +135,7 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
               aria-label={b.label}
               aria-pressed={b.on}
               onClick={() => onYears(b.from, b.to)}
-              className={`flex-1 min-w-0 p-0 border-0 ${b.on ? 'bg-primary' : 'bg-border-medium'} hover:bg-accent-rust`}
+              className={`flex-1 min-w-0 p-0 border-0 transition-[height,background-color] duration-500 ease-out motion-reduce:transition-none ${b.on ? 'bg-primary' : 'bg-border-medium'} hover:bg-accent-rust`}
               style={{ height: `${(100 * b.height) / 40}%` }}
             />
           ))}
@@ -121,8 +149,8 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
       <div className={`${box} flex-[0_0_62%] sm:flex-auto`}>
         <div className="text-[11.5px] sm:text-[13px] text-muted mb-1 sm:mb-2">{languageTitle}</div>
         <div className="flex h-1.5 sm:h-2.5 gap-0.5" aria-hidden>
-          {topLangs.map((l) => <i key={l.value} className="block h-full" style={{ flex: l.flex, background: l.color }} />)}
-          {rest > 0 && <i className="block h-full" style={{ flex: rest, background: OTHERS }} />}
+          {topLangs.map((l) => <i key={l.value} className="block h-full transition-[flex-grow] duration-500 ease-out motion-reduce:transition-none" style={{ flex: l.flex, background: l.color }} />)}
+          {rest > 0 && <i className="block h-full transition-[flex-grow] duration-500 ease-out motion-reduce:transition-none" style={{ flex: rest, background: OTHERS }} />}
         </div>
         <div className="flex flex-wrap gap-x-2.5 sm:gap-x-3 gap-y-0.5 mt-1.5 sm:mt-2.5 text-[11px] sm:text-[12px] text-secondary">
           {topLangs.map((l) => (

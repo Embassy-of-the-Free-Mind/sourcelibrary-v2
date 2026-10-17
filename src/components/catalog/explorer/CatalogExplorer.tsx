@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Download, LayoutGrid, List, Search, X } from 'lucide-react';
+import { ChevronDown, Download, LayoutGrid, List, X } from 'lucide-react';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
@@ -128,6 +128,7 @@ function sortWorks<W extends AskWork>(works: W[], sort: CatalogSort): W[] {
   return w;
 }
 
+const ASKED = '#asked';
 const idOf = (w: AskWork) => w.hit.book_id || w.hit.id;
 /** An asked work with the catalogue's own record for it. */
 type ListedWork = AskWork & { row: CatalogRow };
@@ -145,6 +146,8 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   const [books, setBooks] = useState<CatalogRow[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
+  // Bumped whenever a new set of results lands, to replay the rise-in.
+  const [version, setVersion] = useState(0);
   const [works, setWorks] = useState<ListedWork[] | null>(null);
   const [early, setEarly] = useState<CatalogRow[] | null>(null);
   const [busy, setBusy] = useState('');
@@ -161,7 +164,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   // The catalogue's record for each asked work, by id; filled as works arrive.
   const rowsRef = useRef<Map<string, CatalogRow>>(new Map());
   const statsCtl = useRef<AbortController | null>(null);
-  const statsKey = useRef(filtersKey(initialState));
+  // Which filter set the band's numbers belong to. ASKED marks numbers counted
+  // from an asked result list, so any catalogue view after it reloads them.
+  const statsKey = useRef(initialState.topic ? ASKED : filtersKey(initialState));
 
   const searched = activeFilterCount(s) > 0 || hasTextQuery(s);
 
@@ -208,6 +213,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
       if (listCtl.current !== ctl) return;
       setBooks(j.books || []);
       setTotal(j.total || 0);
+      setVersion((v) => v + 1);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
     }
@@ -248,14 +254,18 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
       return;
     }
     if (asking.current !== token) return;
+    setVersion((v) => v + 1);
     setWorks(found);
+    statsKey.current = ASKED;
     setStats(statsOfRows(rowsOf(found)));
     const names = next.also ?? [];
     if (!names.length) { setBusy(''); return; }
     setBusy(`Adding books under ${names.length > 3 ? `“${names[0]}”, “${names[1]}” and ${names.length - 2} other names` : names.map((n) => `“${n}”`).join(', ')}…`);
     const merged = await listed(await askOtherNames(f, topic, names, found));
     if (asking.current !== token) return;
+    setVersion((v) => v + 1);
     setWorks(merged);
+    statsKey.current = ASKED;
     setStats(statsOfRows(rowsOf(merged)));
     setBusy('');
   }, [libraryTotal]);
@@ -432,10 +442,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
         <form onSubmit={(e) => { e.preventDefault(); search(searchText); }} role="search" aria-label="Search the catalogue">
           <label htmlFor="catalog-search" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Search the catalogue</label>
           <div className={fieldClass}>
-            <Search className="w-4 h-4 sm:w-[17px] sm:h-[17px] self-center ml-3 sm:ml-4 text-muted shrink-0" aria-hidden />
             <input id="catalog-search" type="search" value={searchText} onChange={(e) => setSearchText(e.target.value)}
               placeholder="Title, author, subject or date"
-              className="flex-1 min-w-0 px-2.5 sm:px-3 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
+              className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none placeholder:text-muted/70" />
             <button type="submit" className="-my-px -mr-px px-3.5 sm:px-5 bg-primary text-cream text-[13px] sm:text-sm shrink-0">Search</button>
           </div>
           <div className={examplesRow}>
@@ -561,18 +570,18 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
         {showEarly && (
           <>
             <p className="text-[13px] text-muted mb-3">{earlyLabel}</p>
-            <BookGrid books={earlyCards} />
+            <BookGrid books={earlyCards} version={-1} />
           </>
         )}
         {topicMode && pagedWorks && (
           pagedWorks.length === 0 ? <Empty /> :
-            s.view === 'list' ? <AskWorkList works={pagedWorks} topic={s.topic ?? ''} /> : <BookGrid books={pagedWorkCards} />
+            s.view === 'list' ? <AskWorkList works={pagedWorks} topic={s.topic ?? ''} /> : <BookGrid books={pagedWorkCards} version={version} />
         )}
         {!topicMode && (
           bookCards.length === 0 && !loading ? <Empty /> :
             s.view === 'list'
               ? <CollectionListView books={bookCards as never} sort={s.sort === 'relevance' ? 'popular' : s.sort} onSort={(v: string) => run({ ...s, sort: v as CatalogSort })} loading={loading} />
-              : <BookGrid books={bookCards} />
+              : <BookGrid books={bookCards} version={version} />
         )}
       </div>
       <div className="mb-16">
@@ -586,12 +595,20 @@ function Empty() {
   return <div className="py-16 text-center text-muted text-base">Nothing matches all of that. Remove one of the filters above.</div>;
 }
 
-/** The site's standard book grid and card, as on every other surface. */
-function BookGrid({ books }: { books: CollectionBook[] }) {
+/**
+ * The site's standard book grid and card, as on every other surface. Each set
+ * of results rises in card by card (the first twenty staggered, the rest
+ * together); `version` changes with every load so a book that stays between
+ * two searches animates in again with its new neighbours.
+ */
+function BookGrid({ books, version }: { books: CollectionBook[]; version: number }) {
+  const items = books.map((book, i) => ({ book, key: `${version}:${book.bookId || book.id || book.slug}:${i}`, delay: `${Math.min(i, 20) * 28}ms`, priority: i < 6 }));
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-      {books.map((book, i) => (
-        <CollectionBookCard key={`${book.bookId || book.id || book.slug}:${i}`} book={book} priority={i < 6} />
+      {items.map((it) => (
+        <div key={it.key} className="catalog-rise" style={{ animationDelay: it.delay }}>
+          <CollectionBookCard book={it.book} priority={it.priority} />
+        </div>
       ))}
     </div>
   );

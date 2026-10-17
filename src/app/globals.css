@@ -1305,3 +1305,10 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
   from { left: -40%; }
   to { left: 100%; }
 }
+/* Library results: each card rises in shortly after the one before it. */
+.catalog-rise {
+  animation: fade-in-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .catalog-rise { animation: none; }
+}
