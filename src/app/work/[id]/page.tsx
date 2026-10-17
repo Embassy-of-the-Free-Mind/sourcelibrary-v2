@@ -331,7 +331,7 @@ export default async function WorkPage({ params }: PageProps) {
   const earliest = dateRange.length ? Math.min(...dateRange) : null;
   const latest = dateRange.length ? Math.max(...dateRange) : null;
   const totalPages = editions.reduce((s, e) => s + (e.pages_count || 0), 0);
-  const canonAuthorUrl = canon ? authorUrl(canon.author) : null;
+  const canonAuthorUrl = canon ? authorUrl(canon.author, canon.authorId) : null;
   const readNow = canon ? pickReadNow(canon, editions) : null;
   const sameBook = !!(readNow?.original && readNow.original === readNow.english);
 
