@@ -327,6 +327,11 @@ export async function GET(request: NextRequest) {
     // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
     // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
 
+    // Independent of every lane below, so it runs beside them (#6854): its two
+    // page counts read every page of the book.
+    const bookInfoPromise = bookId ? getBookInfo(db, bookId, tenantId || undefined) : null;
+    bookInfoPromise?.catch(() => {});
+
     // Fire CLIP visual search in parallel with text search
     const clipPromise = searchQuery
       ? timed('clip', () => clipTextSearch(searchQuery, Math.max(limit * 2, 60), searchScope))
@@ -476,12 +481,23 @@ export async function GET(request: NextRequest) {
         filter.$text = { $search: phraseQuery };
         const sortOrder: Record<string, any> = searchSortStage(sort) ?? { score: { $meta: 'textScore' }, gallery_quality: -1 };
         const projection = { _id: 0, score: { $meta: 'textScore' as const } };
-        textItems = await db.collection('gallery_images')
-          .find(filter, { projection })
-          .sort(sortOrder)
-          .skip(offset)
-          .limit(limit + 1)
-          .toArray();
+        // Capped at 1 s (#6854). A phrase $text query fetches every document
+        // holding ANY of its words before it can check the phrase or the book:
+        // "proposition 47 squares triangle" inside one book examined 20,283
+        // documents in 2.4 s. And it rarely adds anything here, because the
+        // response keeps only grounded items: over 120 real MCP queries, Atlas
+        // found nothing for 59, and this lane added a grounded plate for 1.
+        try {
+          textItems = await timed('text_fallback', () => db.collection('gallery_images')
+            .find(filter, { projection, maxTimeMS: 1000 })
+            .sort(sortOrder)
+            .skip(offset)
+            .limit(limit + 1)
+            .toArray());
+        } catch {
+          textItems = [];
+          delete filter.$text;
+        }
       }
     } else {
       // Order from gallery-sort.ts (default: round-robin through books within each
@@ -527,7 +543,7 @@ export async function GET(request: NextRequest) {
             .map(b => b.book_id)
             .filter(id => !existingBookIds.has(id));
           if (newBookIds.length > 0) {
-            const bookImages = await db.collection('gallery_images')
+            const bookImages = await timed('context_images', () => db.collection('gallery_images')
               .find({
                 book_id: { $in: newBookIds },
                 gallery_quality: { $gte: Math.max(minQuality, 0.7) },
@@ -538,7 +554,7 @@ export async function GET(request: NextRequest) {
               }, { projection: { _id: 0 } })
               .sort({ gallery_quality: -1 })
               .limit(limit)
-              .toArray();
+              .toArray());
             if (bookImages.length > 0) {
               const existingIds = new Set(items.map(doc => `${doc.page_id}-${doc.detection_index}`));
               const newImages = bookImages.filter(doc =>
@@ -565,7 +581,7 @@ export async function GET(request: NextRequest) {
         // corpus-wide, so the caller's filters MUST be re-applied here — before
         // #3936 this fetch dropped bookId/type/year and visually-similar images
         // from unrelated books leaked past an explicit book filter.
-        const clipDocs = await db.collection('gallery_images')
+        const clipDocs = await timed('clip_docs', () => db.collection('gallery_images')
           .find({
             id: { $in: clipOnlyIds },
             ...(tenantBooks ? { $and: tenantBooks } : {}),
@@ -584,7 +600,7 @@ export async function GET(request: NextRequest) {
               },
             } : {}),
           }, { projection: { _id: 0 } })
-          .toArray();
+          .toArray());
 
         // Append CLIP-only results after text results
         items = [...items, ...clipDocs];
@@ -619,7 +635,7 @@ export async function GET(request: NextRequest) {
       if (searchQuery && !filter.$text) {
         // Atlas Search was used — prefer the accurate parallel $count; fall back
         // to the (page-growing) estimate only if it failed/timed out.
-        const counted = atlasSearchCount ? await atlasSearchCount : null;
+        const counted = atlasSearchCount ? await timed('count', () => atlasSearchCount!) : null;
         total = (counted != null && counted >= offset + items.length)
           ? counted
           : offset + items.length + (hasMore ? 1 : 0);
@@ -640,10 +656,10 @@ export async function GET(request: NextRequest) {
     let likesMap: Record<string, { count: number; liked: boolean }> = {};
     if (imageIds.length > 0) {
       try {
-        const likeDocs = await db.collection('likes').aggregate([
+        const likeDocs = await timed('likes', () => db.collection('likes').aggregate([
           { $match: { target_type: 'image', target_id: { $in: imageIds } } },
           { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
-        ]).toArray();
+        ]).toArray());
         for (const ld of likeDocs) {
           likesMap[ld._id as string] = {
             count: ld.count as number,
@@ -755,16 +771,13 @@ export async function GET(request: NextRequest) {
     // Get filters (cached for 30 min, only compute on first page)
     let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };
     if (offset === 0) {
-      filters = await getGalleryFilters(db);
+      filters = await timed('filters', () => getGalleryFilters(db));
     } else if (cachedFilters && (Date.now() - cachedFilters.timestamp) < FILTER_CACHE_TTL_MS) {
       filters = cachedFilters.data;
     }
 
     // Get book info if filtered by bookId
-    let bookInfo = null;
-    if (bookId) {
-      bookInfo = await getBookInfo(db, bookId, tenantId || undefined);
-    }
+    const bookInfo = bookInfoPromise ? await timed('book_info', () => bookInfoPromise) : null;
 
     return NextResponse.json(withIiifRefs({
       items: outItems,
