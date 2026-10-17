@@ -14,7 +14,7 @@ import { centuryLabel, centuryRange, centurySlug, parseCenturySlug } from '@/lib
 export const revalidate = 21600;
 export const maxDuration = 60;
 
-/** Per section. The 16th century alone holds ~4,000 works; the rest are one click away in /search. */
+/** Per section. The 16th century alone holds 5,586 works (2026-10-17); the rest are one click away in /search. */
 const SHOWN = 300;
 /**
  * A work dated only to a window wider than this sits in the century of the
