@@ -61,8 +61,8 @@ interface Props {
 /**
  * The library in numbers under the search bars: the whole library before a
  * search, then whatever the search found. Every mark narrows the search.
- * Four boxes on desktop, two by two on a tablet, one swipeable row on a phone
- * so the results stay near the top.
+ * Four boxes on desktop, two by two on a tablet; on a phone, one line of
+ * numbers and a slim printed chart, so the books start near the top.
  */
 export default function StatsBand({ stats, libraryTotal, searched, loading, stale, selectedLanguages, yearMin, yearMax, hasTranslation, onYears, onLanguage, onTranslated }: Props) {
   // Everything the JSX shows is worked out here, as plain values: the React
@@ -100,61 +100,92 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
   const showTranslatedLink = searched || hasTranslation;
   const translatedLink = hasTranslation ? 'Show all' : 'Only translated';
 
-  const box = 'bg-warm border border-border-light px-3 pt-2.5 pb-2 sm:px-[18px] sm:pt-4 sm:pb-3.5 min-w-0 snap-start';
+  const box = 'bg-warm border border-border-light px-[18px] pt-4 pb-3.5 min-w-0';
   const muted = stale || loading ? 'opacity-40 transition-opacity' : 'transition-opacity';
+  const languageCount = fmt(searched ? langs.length : (stats?.languageCount ?? langs.length));
+  const worksWord = searched ? (total === 1 ? 'work found' : 'works found') : 'works';
+  const printedBars = (cls: string) => (
+    <div className={`flex items-end gap-0.5 ${cls}`} role="group" aria-label="Works by half-century printed">
+      {bars.map((b) => (
+        <button
+          key={b.key}
+          type="button"
+          title={b.label}
+          aria-label={b.label}
+          aria-pressed={b.on}
+          onClick={() => onYears(b.from, b.to)}
+          className={`flex-1 min-w-0 p-0 border-0 transition-[height,background-color] duration-500 ease-out motion-reduce:transition-none ${b.on ? 'bg-primary' : 'bg-border-medium'} hover:bg-accent-rust`}
+          style={{ height: `${(100 * b.height) / 40}%` }}
+        />
+      ))}
+    </div>
+  );
 
   return (
+    <>
+    {/* Phones: one line of numbers and a slim printed chart, so the books start high. */}
+    <section aria-label="What is in view" data-band="line" className={`sm:hidden mt-4 pt-2.5 border-t border-border-light ${muted}`}>
+      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-[13px] text-secondary">
+        <span><b className="font-semibold text-primary tabular-nums">{totalText}</b> {worksWord}</span>
+        <span aria-hidden className="text-border-medium">·</span>
+        {showTranslatedLink ? (
+          <button type="button" onClick={onTranslated} aria-pressed={hasTranslation} className="p-0 border-0 bg-transparent text-[13px] text-secondary underline decoration-border-medium underline-offset-[3px]">
+            <b className="font-semibold text-primary tabular-nums">{translatedText}</b> translated
+          </button>
+        ) : (
+          <span><b className="font-semibold text-primary tabular-nums">{translatedText}</b> translated</span>
+        )}
+        <span aria-hidden className="text-border-medium">·</span>
+        <span><b className="font-semibold text-primary tabular-nums">{languageCount}</b> {langs.length === 1 && searched ? 'language' : 'languages'}</span>
+      </div>
+      {sampleNote && <div className="text-[11px] text-muted mt-0.5">{sampleNote}</div>}
+      <div className="mt-2">{printedBars('h-[18px]')}</div>
+      <div className="flex justify-between text-[10.5px] text-muted mt-0.5 tabular-nums">
+        <span>{firstYear}</span>
+        <span>{lastYear}</span>
+      </div>
+    </section>
+
+    {/* Tablet and desktop: four boxes. */}
     <section
       aria-label="What is in view"
-      className={`mt-4 sm:mt-7 flex gap-1.5 sm:gap-2 overflow-x-auto -mx-4 px-4 pb-1 snap-x snap-mandatory [scrollbar-width:none] sm:mx-0 sm:px-0 sm:grid sm:gap-3 sm:overflow-visible sm:grid-cols-2 lg:[grid-template-columns:1fr_1fr_1.6fr_1.6fr] ${muted}`}
+      data-band="boxes"
+      className={`hidden sm:grid mt-7 gap-3 grid-cols-2 lg:[grid-template-columns:1fr_1fr_1.6fr_1.6fr] ${muted}`}
     >
-      <div className={`${box} flex-[0_0_34%] sm:flex-auto`}>
-        <div className="text-[17px] sm:text-[28px] font-medium leading-tight tabular-nums text-primary">{totalText}</div>
-        <div className="text-[11.5px] sm:text-[13px] text-muted sm:mt-0.5 leading-snug">{worksLabel}</div>
+      <div className={box}>
+        <div className="text-[28px] font-medium leading-tight tabular-nums text-primary">{totalText}</div>
+        <div className="text-[13px] text-muted mt-0.5 leading-snug">{worksLabel}</div>
         {sampleNote && <div className="text-[11.5px] text-muted mt-1">{sampleNote}</div>}
       </div>
 
-      <div className={`${box} flex-[0_0_34%] sm:flex-auto`}>
-        <div className="text-[17px] sm:text-[28px] font-medium leading-tight tabular-nums text-primary">{translatedText}</div>
-        <div className="text-[11.5px] sm:text-[13px] text-muted sm:mt-0.5 leading-snug">translated into English</div>
+      <div className={box}>
+        <div className="text-[28px] font-medium leading-tight tabular-nums text-primary">{translatedText}</div>
+        <div className="text-[13px] text-muted mt-0.5 leading-snug">translated into English</div>
         {showTranslatedLink && (
-          <button type="button" onClick={onTranslated} className="mt-1 sm:mt-2 text-[11.5px] sm:text-[12.5px] text-secondary underline underline-offset-[3px] hover:text-primary">
+          <button type="button" onClick={onTranslated} className="mt-2 text-[12.5px] text-secondary underline underline-offset-[3px] hover:text-primary">
             {translatedLink}
           </button>
         )}
       </div>
 
-      <div className={`${box} flex-[0_0_62%] sm:flex-auto`}>
-        <div className="text-[11.5px] sm:text-[13px] text-muted mb-1 sm:mb-2">Printed</div>
-        <div className="flex items-end gap-0.5 h-6 sm:h-10" role="group" aria-label="Works by half-century printed">
-          {bars.map((b) => (
-            <button
-              key={b.key}
-              type="button"
-              title={b.label}
-              aria-label={b.label}
-              aria-pressed={b.on}
-              onClick={() => onYears(b.from, b.to)}
-              className={`flex-1 min-w-0 p-0 border-0 transition-[height,background-color] duration-500 ease-out motion-reduce:transition-none ${b.on ? 'bg-primary' : 'bg-border-medium'} hover:bg-accent-rust`}
-              style={{ height: `${(100 * b.height) / 40}%` }}
-            />
-          ))}
-        </div>
-        <div className="flex justify-between text-[10.5px] sm:text-[11px] text-muted mt-0.5 sm:mt-1 tabular-nums">
+      <div className={box}>
+        <div className="text-[13px] text-muted mb-2">Printed</div>
+        {printedBars('h-10')}
+        <div className="flex justify-between text-[11px] text-muted mt-1 tabular-nums">
           <span>{firstYear}</span>
           <span>{lastYear}</span>
         </div>
       </div>
 
-      <div className={`${box} flex-[0_0_62%] sm:flex-auto`}>
-        <div className="text-[11.5px] sm:text-[13px] text-muted mb-1 sm:mb-2">{languageTitle}</div>
-        <div className="flex h-1.5 sm:h-2.5 gap-0.5" aria-hidden>
+      <div className={box}>
+        <div className="text-[13px] text-muted mb-2">{languageTitle}</div>
+        <div className="flex h-2.5 gap-0.5" aria-hidden>
           {topLangs.map((l) => <i key={l.value} className="block h-full transition-[flex-grow] duration-500 ease-out motion-reduce:transition-none" style={{ flex: l.flex, background: l.color }} />)}
           {rest > 0 && <i className="block h-full transition-[flex-grow] duration-500 ease-out motion-reduce:transition-none" style={{ flex: rest, background: OTHERS }} />}
         </div>
-        <div className="flex flex-wrap gap-x-2.5 sm:gap-x-3 gap-y-0.5 mt-1.5 sm:mt-2.5 text-[11px] sm:text-[12px] text-secondary">
+        <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-2.5 text-[12px] text-secondary">
           {topLangs.map((l) => (
-            <button key={l.value} type="button" onClick={() => onLanguage(l.value)} aria-pressed={l.on} className="inline-flex items-center gap-1 sm:gap-1.5 p-0 border-0 bg-transparent text-[11px] sm:text-[12px] text-inherit group">
+            <button key={l.value} type="button" onClick={() => onLanguage(l.value)} aria-pressed={l.on} className="inline-flex items-center gap-1.5 p-0 border-0 bg-transparent text-[12px] text-inherit group">
               <span className="w-2 h-2" style={{ background: l.color }} aria-hidden />
               <span className={`group-hover:underline underline-offset-2 ${l.on ? 'font-semibold' : ''}`}>{l.value}</span>
               <span className="text-muted tabular-nums">{l.pct}%</span>
@@ -168,5 +199,6 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
         </div>
       </div>
     </section>
+    </>
   );
 }
