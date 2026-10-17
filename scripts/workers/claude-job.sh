@@ -44,6 +44,19 @@ if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/
   CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
   claude_capped() { systemd-run --quiet --scope --slice=sourcelibrary.slice -- "$CLAUDE_BIN" "$@"; }
   WT=$SL/.claude/worktrees; DATA=/data/scratch/sl/jobs
+elif [ "$(hostname)" = gex45-1 ]; then
+  # GEX45-1 (#5660): dedicated x86_64 i5-13500 (20 threads), 62 GB, RTX PRO 4000 Blackwell 24 GB, one 436 GB
+  # RAID1 root and no separate volume, so everything stays under /root like main. Job output goes to
+  # /root/jobs/<name>: that is the directory gex45-idle-alert.sh watches, so a running job counts as use.
+  HOST=gex45; SL=/root/sourcelibrary; LOGD=/var/log/sourcelibrary/claude-jobs; JD=/root/claude-jobs
+  HOST_RULES="- This box (gex45) is DEDICATED x86_64: 20 threads, 62 GB, one NVIDIA RTX PRO 4000 Blackwell (24 GB).
+  node_modules is shared with the checkout: NEVER run npm ci / npm install. Type-check with \`sl-tsc\`.
+- It is the only x86 box, so Python ML tools belong here. GPU stack: /root/pz (PaddleOCR-VL, vLLM 0.10.2,
+  torch 2.8 cu129; vLLM needs VLLM_USE_FLASHINFER_SAMPLER=0). Run \`nvidia-smi\` before loading a model:
+  the GPU is one 24 GB card shared by every job, and a model you start you must stop before the done file."
+  CLAUDE_BIN=${CLAUDE_BIN:-/root/.local/bin/claude}
+  claude_capped() { "$CLAUDE_BIN" "$@"; }
+  WT=/root/worktrees; DATA=/root/jobs
 else
   HOST=hetzner; SL=/root/sourcelibrary; LOGD=/var/log/sourcelibrary/claude-jobs; JD=/root/claude-jobs
   HOST_RULES="- This box has 16 GB shared by every worker. node_modules is shared with the main checkout: NEVER run
@@ -597,7 +610,7 @@ case "${1:-status}" in
   where)  # one line a dispatcher can compare across boxes (scripts/workers/job-where.sh asks each box)
     cores=$(nproc); load=$(cut -d' ' -f1 /proc/loadavg); load5=$(cut -d' ' -f2 /proc/loadavg)
     mem=$(awk '/MemAvailable/{printf "%d", $2/1024}' /proc/meminfo)
-    if [ "$HOST" != hetzner ]; then  # guest hosts: what the slice still allows, if that is less
+    if [ "$HOST" = cloudlayer ] || [ "$HOST" = l7a ]; then  # guest hosts: what the slice still allows, if that is less
       cap=$(systemctl show sourcelibrary.slice -p MemoryMax --value 2>/dev/null); cur=$(systemctl show sourcelibrary.slice -p MemoryCurrent --value 2>/dev/null)
       case "$cap$cur" in *[!0-9]*|"") ;; *) room=$(( (cap - cur) / 1048576 )); [ "$room" -lt "$mem" ] && mem=$room ;; esac
     fi

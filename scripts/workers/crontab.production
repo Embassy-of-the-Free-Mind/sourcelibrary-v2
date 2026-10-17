@@ -149,7 +149,8 @@
 */20 * * * * /root/sourcelibrary/scripts/catalog-coverage/acquire-catchup.sh >> /var/log/sourcelibrary/acquire.log 2>&1
 0 6 * * 0 /root/sourcelibrary/scripts/workers/backup-corpus-text.sh
 */30 * * * * bash /root/tibetan-reocr/relaunch.sh >> /root/tibetan-reocr/relaunch.log 2>&1 # tibetan-reocr-4523 (remove when re-OCR done)
-*/30 * * * * bash /root/tibetan-eval/launch_repair.sh >> /root/tibetan-eval/repair-relaunch.log 2>&1 # gutter-repair-4534 (remove when repair done)
+# RETIRED 2026-10-17 (#5660/#4534): every run since 2026-09-10 measured guttered=0 repaired=0; it re-scanned ~117K pages on 3 cores, around the clock. Re-enable only for a new damage cohort.
+# */30 * * * * bash /root/tibetan-eval/launch_repair.sh >> /root/tibetan-eval/repair-relaunch.log 2>&1 # gutter-repair-4534 (remove when repair done)
 */30 * * * * bash /root/tibetan-eval/relaunch_reacquire.sh # reacquire-bl-4646 (remove when reacquire-done.txt complete)
 # Withhold stale translations (#4523). Every apply pass of the re-OCR lane puts
 # more pages into the state where the English on the page was made from a
@@ -159,7 +160,8 @@
 # cleanup do not race; the sweep is idempotent and resumable, so a missed run
 # costs nothing but latency. The `[ -f ]` guard makes it a no-op until the
 # auto-pull brings the scripts.
-20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
+# MOVED to gex45 2026-10-17 (#5660, infrastructure/gex45-crontab). Never run on both boxes.
+# 20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
 # …and the reconciliation the sweep cannot do for itself: LEAKED / ORPHANED /
 # UNBACKED, plus the Supabase side. Exit 2 means UNKNOWN, which is not PASS.
 50 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/withheld-translation-drift.mjs ] && flock -n /tmp/sl-withhold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/withheld-translation-drift.mjs" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1

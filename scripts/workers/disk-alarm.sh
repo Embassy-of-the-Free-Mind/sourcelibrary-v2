@@ -43,12 +43,13 @@ page=""
 [ "$level" = critical ] && [ "$prev" = critical ] && [ $((epoch - last_paged)) -ge "$REPEAT_SEC" ] && page=repeat
 [ -z "$page" ] && exit 0
 
+BOX=${DISK_ALARM_BOX:-$([ "$(hostname)" = clawdbot ] && echo Hetzner || hostname)}  # gex45-1 runs this too (#5660)
 runbook="Runbook #6223: scripts/workers/disk-steward.sh --apply moves idle /root folders to the volume /mnt/HC_Volume_105839809 and reaps merged worktrees."
 case "$level" in
-  critical) title="Hetzner disk ${used}% full — jobs about to die"; prio=urgent; msg="Root disk at ${used}% (${free} free). Jobs die silently when it fills. ${runbook}" ;;
-  high)     title="Hetzner disk ${used}% full"; prio=high; msg="Root disk at ${used}% (${free} free, alarm at ${PCT_LIMIT}%). ${runbook}" ;;
-  unknown)  title="Hetzner disk check UNKNOWN"; prio=high; msg="df could not read ${MOUNT}. Treat as not-clear until checked (#5534)." ;;
-  ok)       title="Hetzner disk recovered: ${used}%"; prio=low; msg="Root disk back under ${PCT_LIMIT}% (${free} free)." ;;
+  critical) title="$BOX disk ${used}% full — jobs about to die"; prio=urgent; msg="Root disk at ${used}% (${free} free). Jobs die silently when it fills. ${runbook}" ;;
+  high)     title="$BOX disk ${used}% full"; prio=high; msg="Root disk at ${used}% (${free} free, alarm at ${PCT_LIMIT}%). ${runbook}" ;;
+  unknown)  title="$BOX disk check UNKNOWN"; prio=high; msg="df could not read ${MOUNT}. Treat as not-clear until checked (#5534)." ;;
+  ok)       title="$BOX disk recovered: ${used}%"; prio=low; msg="Root disk back under ${PCT_LIMIT}% (${free} free)." ;;
 esac
 [ "$page" = repeat ] && title="STILL: $title"
 if curl -fsS -m 15 -H "Title: $title" -H "Priority: $prio" -H "Tags: floppy_disk" -d "$msg" "$TOPIC" >/dev/null; then

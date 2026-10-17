@@ -19,7 +19,8 @@ rounds are finished, the lane posts them as ONE pooled comment on #6420
 (scripts/audit/convergent-audit-pool.mjs), not one per round.
 
 Runs on every job box, each spending the account that box is logged in as
-(main: team@sourcelibrary; cloudlayer: derek@playpowerlabs; l7a: derek@sourcelibrary).
+(main: team@sourcelibrary; cloudlayer: derek@playpowerlabs; l7a: derek@sourcelibrary;
+gex45: dereklomas@gmail.com once Derek logs it in). A box with no Claude login stays idle.
 Only main polls usage (climits, every 5 min). Main can't reach the guest boxes and they
 can't reach it, so each run on main publishes its poll to Mongo (ops_reports
 `claude-limits:latest`, scripts/workers/claude-limits-share.mjs) and the guests read it.
@@ -27,6 +28,7 @@ can't reach it, so each run on main publishes its poll to Mongo (ops_reports
 Cron, every 30 min (guests offset by 15 min so they read a poll main just published):
   main        */30 * * * *      ... spare-lane.py >> /var/log/sourcelibrary/spare-lane.log 2>&1
   guests      cloudlayer 5,35 and l7a 25,55 ... spare-lane.py >> /data/scratch/sl/logs/spare-lane.log 2>&1
+  gex45       10,40 ... spare-lane.py >> /var/log/sourcelibrary/spare-lane.log 2>&1 (infrastructure/gex45-crontab)
               (staggered 2026-10-11: on the same minute two boxes took the same issue before either claimed it)
 
   spare-lane.py            decide, and start or stop jobs
@@ -46,6 +48,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import os
+import socket
 import random
 import subprocess
 import sys
@@ -58,7 +61,8 @@ GUEST = os.path.isdir("/data/scratch/sl/sourcelibrary")
 STATE = "/root/claude-jobs/spare-lane-state.json"  # issues already tried: never retried
 JOB = "/root/bin/claude-job.sh"
 REPO = "Embassy-of-the-Free-Mind/sourcelibrary-v2"
-AUDIT_BASE = ("/data/scratch/sl/jobs" if GUEST else "/mnt/HC_Volume_105839809/jobs") + "/spare-audit"
+GEX45 = socket.gethostname() == "gex45-1"  # dedicated x86 GPU box (#5660): no volume, job output under /root/jobs
+AUDIT_BASE = ("/data/scratch/sl/jobs" if GUEST else "/root/jobs" if GEX45 else "/mnt/HC_Volume_105839809/jobs") + "/spare-audit"
 
 MAX_JOBS = 1 if GUEST else 2  # guests share the box with a live public service
 LABEL_ORDER = ("bug", "user-feedback", "data-quality")
@@ -333,6 +337,11 @@ def post_pooled_audits(state: dict, running: list[str]):
 def main():
     if os.path.exists(STATE):
         post_pooled_audits(load_state(), lane_jobs())
+    if not AS and not this_box_account():
+        # Without this, the fallback below would take main's account from the shared poll, start a job,
+        # and the wrapper's login preflight would refuse it and page high every 30 min (gex45, #5660).
+        log("idle: Claude is not logged in on this box")
+        return
     got = account_limits()
     if not got:
         log(f"idle: no fresh limits for this box's account ({this_box_account()})")

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Ask another job box to do one of the things its box-rpc.sh allows (#6360). Installed at /root/bin/box.sh.
-#   box.sh <main|cloudlayer|l7a|all|others> <verb> [arg] [< stdin]   verbs: see box-rpc.sh
+#   box.sh <main|cloudlayer|l7a|gex45|all|others> <verb> [arg] [< stdin]   verbs: see box-rpc.sh
 #   box.sh pick [--exclude <box>]   the emptiest ready box (what job-where.sh decides on the laptop)
 #   box.sh push-limits              copy this box's climits meter to the other boxes (main, cron */5)
 #   box.sh self                     this box's name in the table below
@@ -12,13 +12,13 @@
 # on a connection failure (ssh exit 255) and none on a refusal, so a dead box costs seconds, never a hang.
 # Setup and key rotation: scripts/workers/mesh-setup.sh, run from the laptop. Doc: scripts/workers/JOB-HOSTS.md.
 set -u
-BOXES="main=46.224.122.120 cloudlayer=46.224.208.175 l7a=167.233.32.250"
+BOXES="main=46.224.122.120 cloudlayer=46.224.208.175 l7a=167.233.32.250 gex45=65.108.136.89"
 KEY=/root/.ssh/id_mesh; KH=/root/.ssh/known_hosts_mesh
 ip_of() { local b; for b in $BOXES; do [ "${b%%=*}" = "$1" ] && { echo "${b#*=}"; return 0; }; done; return 1; }
 self() {
   local mine b; mine=$(hostname -I 2>/dev/null)
   for b in $BOXES; do case " $mine " in *" ${b#*=} "*) echo "${b%%=*}"; return 0 ;; esac; done
-  case "$(hostname)" in clawdbot) echo main ;; earthai-live) echo cloudlayer ;; earthai-l7a) echo l7a ;; *) return 1 ;; esac
+  case "$(hostname)" in clawdbot) echo main ;; earthai-live) echo cloudlayer ;; earthai-l7a) echo l7a ;; gex45-1) echo gex45 ;; *) return 1 ;; esac
 }
 call() {  # $1 box, rest = verb [arg]; stdin passes through
   local ip try rc=255 in=""; ip=$(ip_of "$1") || { echo "box.sh: no box named $1" >&2; return 2; }; shift
