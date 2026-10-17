@@ -56,7 +56,7 @@ the RPC on any error or `complete: false`. Default off. The app reaches it at
 Listeners: `127.0.0.1:3458` (`VECTOR_SEARCH_HOST`) needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on
 every route, `/health` included; Caddy terminates TLS for `vectors.sourcelibrary.org` and proxies to it
 (`infrastructure/caddy/Caddyfile.l7a`), and ufw allows 80/443, not 3458. `127.0.0.1:3459` needs no token
-and also serves `/admin/apply` and `/admin/save` (used by `sync-delta.mjs`); Caddy never proxies it.
+and also serves `/admin/apply`, `/admin/diff` and `/admin/save` (used by `sync-delta.mjs`); Caddy never proxies it.
 
 ## Files
 
@@ -67,8 +67,8 @@ and also serves `/admin/apply` and `/admin/save` (used by `sync-delta.mjs`); Cad
 | `build-hnsw.mjs` | shards → `index/index-1.usearch` + `rows-1.jsonl` + `state.json`, streamed |
 | `server.mjs` | the service |
 | `pull-text.mjs` | Supabase → `text/pages.sqlite`: translation, book_title, book_author per served page (~26 GB, ~20 min), resumable |
-| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--save`, `--count-check` |
-| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, last delta > 2 h, or row drift > 0.5% (counted every 6 h) |
+| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--reconcile` (page-id diff against Supabase), `--save`, `--count-check` |
+| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, last delta > 2 h, last reconcile > 6 h, or row drift > 0.5% (from the reconcile's count; no database read) |
 | `latency-eval.mjs` | end to end over HTTPS: service + text vs service + Supabase hydration vs the RPC, and a column-by-column check against the RPC |
 | `build-exact.mjs` | shards → `index/exact.{i8,keys,json}`: int8 vectors in (language, year) order for the exact filtered scan (~5.9 GB, ~4 min) |
 | `recall-eval.mjs` | overlap@45 vs exact float32 cosine, latency; no Gemini |
@@ -90,8 +90,14 @@ and also serves `/admin/apply` and `/admin/save` (used by `sync-delta.mjs`); Cad
   a restart reloads the last generation and the next delta re-applies everything after its checkpoint.
   A generation is `index-<g>.usearch` + `rows-<g>.jsonl`, and `state.json` (tmp + rename) is the commit
   point, so a crash mid-save leaves the previous generation intact.
-- **Deleted rows** are invisible to a delta keyed on `updated_at`. `--count-check` reports the drift; above
-  0.1% it exits 4 and says to rebuild (`bootstrap.sh --rebuild --no-phase2`).
+- **The `updated_at` delta is not enough: `--reconcile` is load-bearing.** The writer stamps `updated_at`
+  with the page's Mongo source time, not the write time (`scripts/lib/page-embedding-text.mjs`), so a page
+  embedded after the checkpoint with an older source time is invisible to the delta. In the first 26 h
+  that was 4,055 rows against the delta's 681 (2026-10-17). Deleted rows are invisible to it too.
+  `--reconcile` (cron, every 2 h) reads every served page_id in one unordered cursor scan (~55 s; ordered
+  by page_id it was ~10K ids/s, 12 min), the service diffs it range by range (`/admin/diff`), and the
+  missing rows are fetched and applied, the extras removed. It writes `logs/reconcile.json`, where
+  `freshness-check.mjs` reads the drift. `--count-check` (nightly) still exits 4 above 0.1%.
 - **The exact file is a second copy, on disk, not in RAM.** The shards are ordered by page_id, so a
   filtered set is scattered across 23 GB (5.5K random reads/s on l7a). In (language, year) order,
   one language is one sequential read. Rows a delta adds or re-embeds are not in the file: the server

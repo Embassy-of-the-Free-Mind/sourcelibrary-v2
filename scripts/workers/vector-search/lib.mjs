@@ -112,6 +112,19 @@ export const PULL_EDGES = (() => {
   return e;
 })();
 
+/** The pull range k with PULL_EDGES[k] < pid < PULL_EDGES[k + 1], or -1 for an id equal to an edge (no range holds it). */
+export function rangeOfPageId(pid) {
+  let lo = 0, hi = PULL_EDGES.length - 2;
+  while (lo <= hi) {
+    const m = (lo + hi) >> 1, a = PULL_EDGES[m], b = PULL_EDGES[m + 1];
+    if (pid <= a) hi = m - 1; else if (b !== null && pid >= b) lo = m + 1; else return m;
+  }
+  return -1;
+}
+
+/** The last reconcile's result (sync-delta.mjs --reconcile), read by freshness-check.mjs. */
+export const RECONCILE_PATH = path.join(LOG_DIR, 'reconcile.json');
+
 /**
  * Open the text store for the server's reads, or null when it does not exist. A read/write handle with
  * query_only on, not SQLITE_OPEN_READONLY: a read-only handle cannot always attach a WAL that another

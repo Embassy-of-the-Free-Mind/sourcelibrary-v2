@@ -42,7 +42,7 @@ import { timingSafeEqual } from 'node:crypto';
 import {
   DIM, SHARD_DIR, indexConfigFor, readState, writeJsonAtomic, STATE_PATH, indexPath, rowsPath, loadUsearch, RowStore, log,
   EXACT_VEC_PATH, EXACT_KEYS_PATH, EXACT_META_PATH, overridesPath, quantizeI8, classLang, classYear,
-  TEXT_DB_PATH, openTextReader,
+  TEXT_DB_PATH, openTextReader, rangeOfPageId,
 } from './lib.mjs';
 
 const HOST = process.env.VECTOR_SEARCH_HOST || '127.0.0.1';
@@ -373,6 +373,36 @@ function applyDelta(b) {
   return { added, replaced, removed, skipped, size: index.size(), live: rows.live };
 }
 
+/**
+ * Reconcile (sync-delta.mjs --reconcile): the caller sends every page_id Supabase serves in one pull
+ * range (PULL_EDGES[range] < id < PULL_EDGES[range + 1]); this returns the ids the service lacks
+ * (`missing`) and the live ids it holds in that range that Supabase no longer serves (`extra`).
+ * Why it exists: page_translations.updated_at is the Mongo SOURCE time (page-embedding-text.mjs), not
+ * the write time, so a page embedded after the checkpoint with an older source time is invisible to
+ * the updated_at delta — 4,055 such rows in the first 26 h (2026-10-17). The live ids are bucketed by
+ * range once per session (one scan of the row store), not once per range.
+ */
+let diffCache = null;
+function diffRange(b) {
+  if (typeof b.session !== 'string' || !Number.isInteger(b.range) || !Array.isArray(b.ids)) throw new BadRequest('need session, range, ids');
+  if (diffCache?.session !== b.session) {
+    const buckets = new Map();
+    for (let k = 0; k < rows.n; k++) {
+      if (!rows.alive[k]) continue;
+      const r = rangeOfPageId(rows.pageIds[k]);
+      if (r < 0) continue;
+      let a = buckets.get(r); if (!a) buckets.set(r, (a = []));
+      a.push(rows.pageIds[k]);
+    }
+    diffCache = { session: b.session, buckets };
+  }
+  const have = new Set(b.ids);
+  const live = (pid) => { const k = rows.pageKey.get(pid); return k !== undefined && rows.alive[k] === 1; };
+  const missing = b.ids.filter((pid) => !live(pid));
+  const extra = (diffCache.buckets.get(b.range) || []).filter((pid) => !have.has(pid) && live(pid));
+  return { missing, extra };
+}
+
 /** Write generation g+1 (index, rows), then state.json (the commit point), then drop generation g. */
 async function save() {
   if (pending === 0) return { skipped: 'no changes since the last save', generation: state.generation };
@@ -452,6 +482,10 @@ function handler(local) {
         return send(res, 200, await serial(() => applyDelta(b)));
       }
       if (local && req.method === 'POST' && url === '/admin/save') return send(res, 200, await serial(save));
+      if (local && req.method === 'POST' && url === '/admin/diff') {
+        const b = await readBody(req, 256 * 1024 * 1024);
+        return send(res, 200, await serial(() => diffRange(b)));
+      }
       return send(res, 404, { error: 'not found' });
     } catch (e) {
       if (e instanceof BadRequest) return send(res, 400, { error: e.message });
