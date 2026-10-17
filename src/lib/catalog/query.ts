@@ -122,7 +122,9 @@ export function relevanceScore(b: Pick<CatalogBook, 'title' | 'display_title' | 
 }
 
 export async function browseCatalog(f: CatalogFilters, sort: CatalogSort, page = 1, limit = 48): Promise<{ books: CatalogBook[]; total: number }> {
-  const ranked = sort === 'relevance' && !!(f.q || f.title || f.author);
+  // "Most relevant" ranks the first RANK_POOL matches in memory; pages past
+  // the pool continue in most-read order rather than ending early.
+  const ranked = sort === 'relevance' && !!(f.q || f.title || f.author) && page * limit <= RANK_POOL;
   const select = ranked ? `${await bookSelect()}, human_read_count` : await bookSelect();
   let query = applyCatalogFilters(supabase.from('books_catalog').select(select, { count: 'exact' }), f);
   query = applySort(query, ranked || sort === 'relevance' ? 'popular' : sort);
