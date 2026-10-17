@@ -47,3 +47,4 @@ describe('claude-translate splitBlockReply', () => {
     expect(CALL_SUFFIX).toMatch(/nothing before, between or after/);
   });
 });
+
