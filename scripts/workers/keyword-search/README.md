@@ -58,7 +58,8 @@ timeout. Default off.
 | top-1 | 1.00 |
 
 **Time:**
-- Service, warm: p50 20 ms, p90 147 ms, p99 362 ms.
+- On **cloudlayer**, the serving box, 189 queries warm: p50 14 ms, p90 48 ms, p99 202 ms. Index 14.9 GB there; the bootstrap took 40 min. Phase 2 comment on #6852.
+- Service, warm, on main: p50 20 ms, p90 147 ms, p99 362 ms.
 - Service, cold, read from a network volume: p50 195 ms, p90 491 ms.
 - Atlas lane, same queries: p50 787 ms, p90 2,200 ms.
 
