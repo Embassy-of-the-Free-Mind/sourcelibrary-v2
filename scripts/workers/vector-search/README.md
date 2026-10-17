@@ -69,7 +69,7 @@ and also serves `/admin/apply`, `/admin/ids` and `/admin/save` (used by `sync-de
 | `pull-text.mjs` | Supabase → `text/pages.sqlite`: translation, book_title, book_author per served page (19.3 GB at 7.64M rows, ~30 min), resumable |
 | `text-fingerprints.mjs` | once, for a store made before the `fp` table: fills each row's fingerprint from the store itself and sets `meta.fp_complete` |
 | `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--reconcile` (page-id diff against Supabase, plus the text fingerprints; `--hash` adds the md5), `--save`, `--count-check` |
-| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, last delta > 2 h, last reconcile > 6 h, or row drift > 0.5% (from the reconcile's count; no database read) |
+| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, `/health` slower than 1 s, last delta > 2 h, last reconcile > 6 h, or row drift > 0.5% (from the reconcile's count; no database read) |
 | `match-latency-probe.mjs` | steady `/match` load at a fixed rate, p50/p90/p99 per window: what a reconcile or a save does to query latency |
 | `latency-eval.mjs` | end to end over HTTPS: service + text vs service + Supabase hydration vs the RPC, and a column-by-column check against the RPC |
 | `build-exact.mjs` | shards → `index/exact.{i8,keys,json}`: int8 vectors in (language, year) order for the exact filtered scan (~5.9 GB, ~4 min) |
@@ -79,6 +79,7 @@ and also serves `/admin/apply`, `/admin/ids` and `/admin/save` (used by `sync-de
 | `../../../infrastructure/l7a-crontab` | the delta, nightly save and freshness lines (installed 2026-10-17) |
 | `../../../infrastructure/caddy/` | the Caddyfile and Caddy's slice drop-in |
 | `../../../infrastructure/systemd/vector-search.service` | the unit |
+| `../../../infrastructure/systemd/l7a-search.slice` | its slice (installed as `search.slice` on l7a; cloudlayer's `search.slice` is a different file), shared with Caddy and apart from the jobs' `sourcelibrary.slice` |
 
 ## Choices that are not obvious
 
@@ -86,6 +87,12 @@ and also serves `/admin/apply`, `/admin/ids` and `/admin/save` (used by `sync-de
   ~±0.04, so i8 keeps about five levels of each. On 2,000 real rows against exact float32 cosine: similarity
   error mean 0.0129 (i8) vs 0.0015 (e4m3) at the same 917 B/row; overlap 0.951 vs 0.975. f16 would be
   near-exact but 1.7 KB/row, which at 7.6M rows does not fit the slice beside anything else.
+- **Its own slice, not the jobs'.** The service and Caddy run in `search.slice` (MemoryMin 9G, MemoryLow
+  11G, MemoryMax 13G, no MemoryHigh). They started in `sourcelibrary.slice`, and on 2026-10-17 two `sl-tsc`
+  runs took that slice past its MemoryHigh=12G: the kernel throttled every process in it, the service
+  included (state D in `mem_cgroup_handle_over_high`), and every shadow call timed out from ~21:04 UTC.
+  The delta, reconcile and freshness jobs stay in `sourcelibrary.slice`: a throttled job is late, a
+  throttled service fails a reader. `freshness-check.mjs` pages when `/health` takes over 1 s.
 - **Delta in the server's process.** `sync-delta.mjs` reads Supabase and posts the rows to `/admin/apply`;
   it does not load its own copy of the index, because two 7 GB copies do not fit the 14 GB slice.
 - **Saves are nightly.** `index.save` blocks queries for seconds. Between saves the changes live in RAM;
@@ -141,7 +148,7 @@ mkdir -p /data/vector-search/{app,logs}
 cp scripts/workers/vector-search/{*.mjs,bootstrap.sh,package*.json} /data/vector-search/app/
 (cd /data/vector-search/app && npm ci)        # its own node_modules: usearch (prebuilt linux-arm64) + pg
 umask 077; printf 'VECTOR_SEARCH_TOKEN=%s\nVECTOR_SEARCH_PORT=3458\nVECTOR_SEARCH_LOCAL_PORT=3459\n' "$(openssl rand -hex 32)" > /etc/vector-search.env
-cp infrastructure/systemd/vector-search.service /etc/systemd/system/ && systemctl daemon-reload && systemctl enable vector-search
+cp infrastructure/systemd/l7a-search.slice /etc/systemd/system/search.slice && cp infrastructure/systemd/vector-search.service /etc/systemd/system/ && systemctl daemon-reload && systemctl enable vector-search
 # TLS (phase 4, #6843): Caddy in front, the service on loopback. See infrastructure/caddy/Caddyfile.l7a.
 apt-get install -y caddy && cp infrastructure/caddy/Caddyfile.l7a /etc/caddy/Caddyfile
 mkdir -p /etc/systemd/system/caddy.service.d && cp infrastructure/caddy/caddy-slice.conf /etc/systemd/system/caddy.service.d/slice.conf
