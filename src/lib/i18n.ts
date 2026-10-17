@@ -120,17 +120,26 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
 export interface FooterStrings {
   // column titles
   colLibrary: string;
+  colDiscover: string;
+  colGetInvolved: string;
   colAbout: string;
-  colParticipate: string;
-  // Library column
-  browseBooks: string;
+  colLegal: string;
+  // Find books
+  texts: string;
+  askLibrarian: string;
   browseAZ: string;
+  catalogue: string;
+  works: string;
   gallery: string;
   identify: string;
   collections: string;
   search: string;
   favorites: string;
-  // About column
+  // Look and listen
+  explore: string;
+  librarian: string;
+  podcast: string;
+  // How it works
   about: string;
   howItWorks: string;
   vision: string;
@@ -143,7 +152,8 @@ export interface FooterStrings {
   cookieSettings: string;
   terms: string;
   copyright: string;
-  // Participate column
+  licensing: string;
+  // Take part, and the top bar's two actions
   libraries: string;
   contribute: string;
   support: string;
@@ -155,6 +165,16 @@ export interface FooterStrings {
   checkPages: string;
   qualityCenter: string;
   licenseLine: string;
+  partnersLabel: string;
+  blurb: string;
+  signUp: string;
+  faq: string;
+  press: string;
+  languages: string;
+  dataset: string;
+  forResearchers: string;
+  forLibraries: string;
+  account: string;
 }
 
 /**
@@ -322,51 +342,78 @@ export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
 export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
   en: {
     colLibrary: 'Library',
+    colDiscover: 'Discover',
+    colGetInvolved: 'Get involved',
     colAbout: 'About',
-    colParticipate: 'Participate',
-    browseBooks: 'Browse Books',
+    colLegal: 'Legal',
+    texts: 'Texts',
+    askLibrarian: 'Ask the librarian',
     browseAZ: 'Browse A–Z',
+    catalogue: 'Catalogue',
+    works: 'Works',
     gallery: 'Gallery',
-    identify: 'Identify an Artwork',
+    identify: 'Identify an artwork',
     collections: 'Collections',
     search: 'Search',
     favorites: 'Favorites',
-    about: 'About',
+    explore: 'Explore',
+    librarian: 'Librarian',
+    podcast: 'Podcast',
+    about: 'Our story',
     howItWorks: 'How it works',
-    vision: 'Our Vision',
-    census: 'Translation Census',
+    vision: 'Our vision',
+    census: 'Translation census',
     progress: 'Progress',
     models: 'AI models',
     research: 'Research',
-    researchNotes: 'Research Notes',
+    researchNotes: 'Research notes',
     privacy: 'Privacy',
-    cookieSettings: 'Cookie Settings',
+    cookieSettings: 'Cookie settings',
     terms: 'Terms',
     copyright: 'Copyright & DMCA',
+    licensing: 'Licensing',
     libraries: 'Libraries',
     contribute: 'Contribute',
     support: 'Support',
     donate: 'Donate',
-    sponsorship: 'Corporate Sponsorship',
+    sponsorship: 'Corporate sponsorship',
     connect: 'Connect to Claude & ChatGPT',
     developers: 'Developers',
-    giveFeedback: 'Give Feedback',
+    giveFeedback: 'Give feedback',
     checkPages: 'Check a few pages',
-    qualityCenter: 'Quality Center',
+    qualityCenter: 'Quality center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
+    partnersLabel: 'In partnership with',
+    blurb: "Rare texts from the world's libraries, transcribed and translated for a new renaissance.",
+    signUp: 'Sign up',
+    faq: 'FAQ',
+    press: 'Press',
+    languages: 'Languages',
+    dataset: 'Dataset',
+    forResearchers: 'For researchers',
+    forLibraries: 'For libraries',
+    account: 'Account',
   },
   es: {
     colLibrary: 'Biblioteca',
+    colDiscover: 'Descubrir',
+    colGetInvolved: 'Participar',
     colAbout: 'Acerca de',
-    colParticipate: 'Participar',
-    browseBooks: 'Explorar libros',
+    colLegal: 'Legal',
+    texts: 'Textos',
+    askLibrarian: 'Pregunta al bibliotecario',
     browseAZ: 'Índice A–Z',
+    catalogue: 'Catálogo',
+    works: 'Obras',
     gallery: 'Galería',
     identify: 'Identificar una obra',
     collections: 'Colecciones',
     search: 'Buscar',
     favorites: 'Favoritos',
-    about: 'Acerca de',
+    explore: 'Explorar',
+    librarian: 'Bibliotecario',
+    podcast: 'Pódcast',
+    about: 'Nuestra historia',
     howItWorks: 'Cómo funciona',
     vision: 'Nuestra visión',
     census: 'Censo de traducciones',
@@ -378,6 +425,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Preferencias de cookies',
     terms: 'Términos',
     copyright: 'Derechos de autor y DMCA',
+    licensing: 'Licencias',
     libraries: 'Bibliotecas',
     contribute: 'Contribuir',
     support: 'Apoyar',
@@ -389,20 +437,38 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Revisar algunas páginas',
     qualityCenter: 'Centro de calidad',
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
+    partnersLabel: 'En colaboración con',
+    blurb: 'Textos raros de las bibliotecas del mundo, transcritos y traducidos para un nuevo renacimiento.',
+    signUp: 'Regístrate',
+    faq: 'Preguntas frecuentes',
+    press: 'Prensa',
+    languages: 'Idiomas',
+    dataset: 'Conjunto de datos',
+    forResearchers: 'Para investigadores',
+    forLibraries: 'Para bibliotecas',
+    account: 'Cuenta',
   },
   // Latin (#6254). Labels only: every footer link still opens an English page.
   la: {
     colLibrary: 'Bibliotheca',
+    colDiscover: 'Inveni',
+    colGetInvolved: 'Particeps esto',
     colAbout: 'De nobis',
-    colParticipate: 'Particeps esto',
-    browseBooks: 'Libros perlustra',
+    colLegal: 'De iure',
+    texts: 'Textus',
+    askLibrarian: 'Bibliothecarium interroga',
     browseAZ: 'Index A–Z',
+    catalogue: 'Catalogus',
+    works: 'Opera',
     gallery: 'Pinacotheca',
     identify: 'Opus artis agnosce',
     collections: 'Collectiones',
     search: 'Quaere',
     favorites: 'Dilecta',
-    about: 'De nobis',
+    explore: 'Explora',
+    librarian: 'Bibliothecarius',
+    podcast: 'Podcast',
+    about: 'Historia nostra',
     howItWorks: 'Quomodo fiat',
     vision: 'Propositum nostrum',
     census: 'Census conversionum',
@@ -414,6 +480,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Optiones crustulorum',
     terms: 'Condiciones',
     copyright: 'Ius auctoris et DMCA',
+    licensing: 'Licentiae',
     libraries: 'Bibliothecae',
     contribute: 'Operam confer',
     support: 'Sustenta',
@@ -425,20 +492,38 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Paucas paginas recense',
     qualityCenter: 'De qualitate',
     licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
+    partnersLabel: 'Cum sociis',
+    blurb: 'Textus rari ex bibliothecis orbis terrarum, descripti et conversi ad novam renascentiam.',
+    signUp: 'Nomen da',
+    faq: 'Quaestiones frequentes',
+    press: 'Nuntii publici',
+    languages: 'Linguae',
+    dataset: 'Data',
+    forResearchers: 'Investigatoribus',
+    forLibraries: 'Bibliothecis',
+    account: 'Ratio tua',
   },
   // Dutch (#6382). Labels only: every footer link still opens an English page.
   nl: {
     colLibrary: 'Bibliotheek',
+    colDiscover: 'Ontdekken',
+    colGetInvolved: 'Meedoen',
     colAbout: 'Over ons',
-    colParticipate: 'Meedoen',
-    browseBooks: 'Boeken bekijken',
+    colLegal: 'Juridisch',
+    texts: 'Teksten',
+    askLibrarian: 'Vraag de bibliothecaris',
     browseAZ: 'Index A–Z',
+    catalogue: 'Catalogus',
+    works: 'Werken',
     gallery: 'Galerij',
     identify: 'Een kunstwerk herkennen',
     collections: 'Collecties',
     search: 'Zoeken',
     favorites: 'Favorieten',
-    about: 'Over ons',
+    explore: 'Verkennen',
+    librarian: 'Bibliothecaris',
+    podcast: 'Podcast',
+    about: 'Ons verhaal',
     howItWorks: 'Hoe het werkt',
     vision: 'Onze visie',
     census: 'Vertaalcensus',
@@ -450,6 +535,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Cookie-instellingen',
     terms: 'Voorwaarden',
     copyright: 'Auteursrecht en DMCA',
+    licensing: 'Licenties',
     libraries: 'Bibliotheken',
     contribute: 'Bijdragen',
     support: 'Steunen',
@@ -461,19 +547,37 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Een paar pagina’s controleren',
     qualityCenter: 'Kwaliteitscentrum',
     licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-SA 4.0 · Voor AI-training is een licentie nodig',
+    partnersLabel: 'In samenwerking met',
+    blurb: 'Zeldzame teksten uit de bibliotheken van de wereld, getranscribeerd en vertaald voor een nieuwe renaissance.',
+    signUp: 'Aanmelden',
+    faq: 'Veelgestelde vragen',
+    press: 'Pers',
+    languages: 'Talen',
+    dataset: 'Dataset',
+    forResearchers: 'Voor onderzoekers',
+    forLibraries: 'Voor bibliotheken',
+    account: 'Account',
   },
   zh: {
     colLibrary: '图书馆',
+    colDiscover: '发现',
+    colGetInvolved: '参与',
     colAbout: '关于',
-    colParticipate: '参与',
-    browseBooks: '浏览书籍',
+    colLegal: '法律信息',
+    texts: '文献',
+    askLibrarian: '咨询图书馆员',
     browseAZ: '按字母浏览',
+    catalogue: '目录',
+    works: '作品',
     gallery: '图库',
     identify: '识别艺术作品',
     collections: '专题',
     search: '搜索',
     favorites: '收藏',
-    about: '关于我们',
+    explore: '探索',
+    librarian: '图书馆员',
+    podcast: '播客',
+    about: '我们的故事',
     howItWorks: '工作原理',
     vision: '我们的愿景',
     census: '翻译普查',
@@ -485,6 +589,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Cookie 设置',
     terms: '条款',
     copyright: '版权与 DMCA',
+    licensing: '许可',
     libraries: '合作图书馆',
     contribute: '贡献',
     support: '支持',
@@ -496,6 +601,16 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: '校对几页',
     qualityCenter: '质量中心',
     licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
+    partnersLabel: '合作伙伴',
+    blurb: '来自世界各地图书馆的珍稀文献，经转录与翻译，迎接新的文艺复兴。',
+    signUp: '注册',
+    faq: '常见问题',
+    press: '媒体',
+    languages: '语言',
+    dataset: '数据集',
+    forResearchers: '面向研究者',
+    forLibraries: '面向图书馆',
+    account: '账户',
   },
 };
 

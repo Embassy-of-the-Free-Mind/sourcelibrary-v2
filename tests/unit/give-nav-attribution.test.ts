@@ -60,13 +60,14 @@ describe('both giving controls are instrumented', () => {
   });
 
   it('each control records its DESTINATION, because the two differ', () => {
-    // header pill → /give, footer link → /support. Merging them would average two
-    // pages with different conversion odds into one meaningless rate.
+    // Both controls now land on /give (the footer's Donate button replaced its
+    // /support link), so `source` is what tells them apart. Each still records
+    // its real destination, so a later href change shows up in the data.
     expect(code('components/layout/SiteHeader.tsx')).toMatch(
-      /trackEvent\(\s*['"]give_nav_click['"][^)]*url:\s*['"]\/give['"]/,
+      /trackEvent\(\s*['"]give_nav_click['"][^)]*source:\s*['"]header['"][^)]*url:\s*['"]\/give['"]/,
     );
     expect(code('components/layout/GlobalFooter.tsx')).toMatch(
-      /trackEvent\(\s*['"]give_nav_click['"][^)]*url:\s*link\.href/,
+      /trackEvent\(\s*['"]give_nav_click['"][^)]*source:\s*['"]footer['"][^)]*url:\s*['"]\/give['"]/,
     );
   });
 

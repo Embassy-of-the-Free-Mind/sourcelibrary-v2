@@ -10,8 +10,10 @@ import ReaderPresence from '@/components/presence/ReaderPresence';
 import { clearConsent } from '@/lib/consent';
 import { trackEvent } from '@/lib/track-event';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
-import { visibleFooterNavColumns } from '@/lib/footer-nav';
+import { visibleFooterNavColumns, type FooterLinkKey } from '@/lib/footer-nav';
+import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useLocale, useLocalePath, FOOTER_STRINGS } from '@/lib/i18n';
+import { useStableSession } from '@/hooks/useStableSession';
 
 type Partner = {
   name: string;
@@ -45,14 +47,14 @@ const GLOBAL_PARTNERS: Partner[] = [
 // both, or search engines and readers see different sets.
 const SOCIALS: { name: string; href: string; path: string }[] = [
   {
-    name: 'X',
-    href: 'https://x.com/SourceLibrary_',
-    path: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z',
-  },
-  {
     name: 'Instagram',
     href: 'https://www.instagram.com/source.library',
     path: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z',
+  },
+  {
+    name: 'X',
+    href: 'https://x.com/SourceLibrary_',
+    path: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z',
   },
   {
     name: 'GitHub',
@@ -69,6 +71,8 @@ export default function GlobalFooter() {
   // is registry-guarded, so everything else still points at its English page.
   const localePath = useLocalePath();
   const [hasFavorites, setHasFavorites] = useState(false);
+  // Signed-in readers see Account where everyone else sees Sign up.
+  const { status: sessionStatus } = useStableSession();
   // Global-only surfaces 404 on partner subdomains (the list and its rationale
   // live in src/lib/tenant-global-paths.ts — #3364, #3370). SiteHeader has
   // filtered on that list since #3364; the footer never did, so on
@@ -82,7 +86,11 @@ export default function GlobalFooter() {
   // hostname check (#3367). Resolved after mount, so the static HTML the
   // global site serves is unchanged and only a tenant visitor sees links drop.
   const isEmbedded = useIsEmbedded();
-  const navColumns = visibleFooterNavColumns(isEmbedded);
+  const allColumns = visibleFooterNavColumns(isEmbedded);
+  const navColumns = allColumns.filter(col => col.titleKey !== 'colLegal');
+  const legalLinks = allColumns.find(col => col.titleKey === 'colLegal')?.links ?? [];
+  // Same rule the header's Support pill follows: /give is global-only.
+  const showDonate = !(isEmbedded && isGlobalOnlyNavHref('/give'));
 
   useEffect(() => {
     try {
@@ -96,163 +104,153 @@ export default function GlobalFooter() {
   // Ficino Society pages have their own footer
   if (pathname?.startsWith('/ficino-society')) return null;
 
+  const linkClass = 'text-sm text-white/60 hover:text-white transition-colors';
+  const renderLink = ({ key, href }: { key: FooterLinkKey; href: string }, className = linkClass) =>
+    key === 'cookieSettings' ? (
+      <button onClick={() => clearConsent()} className={className}>{t[key]}</button>
+    ) : key === 'signUp' && sessionStatus === 'authenticated' ? (
+      <Link href="/account" className={className}>{t.account}</Link>
+    ) : (
+      <Link href={localePath(href)} className={className}>{t[key]}</Link>
+    );
+  const partners = isEmbedded ? PARTNERS : [...PARTNERS, ...GLOBAL_PARTNERS].sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <>
     <FeedbackCallout />
     <footer className="bg-dark text-white/60 mt-auto">
-      <div className="max-w-[1500px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-12">
 
-        {/* Zone 1: Brand + Mission */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-b border-white/[0.08]">
-          <Link href={localePath('/')} className="group">
-            <Image
-              src="/brand/png/logo-compact--white-on-transparent--96h.png"
-              alt="Source Library"
-              width={300}
-              height={96}
-              sizes="auto"
-              className="h-16 sm:h-20 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
-              unoptimized
-            />
-          </Link>
-          <Link href="/in-memoriam" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
-            ad fontes
-          </Link>
-        </div>
-
-        {/* Zone 2: Navigation Columns. Mobile: 2 columns — Library + Participate
-            stacked on the left, About on the right. Desktop: the usual 3-up. */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-8 sm:gap-12 py-10 border-b border-white/[0.08]">
-          {navColumns.map((col) => (
-            <div
-              key={col.titleKey}
-              className={
-                col.titleKey === 'colLibrary' ? 'col-start-1 row-start-1 sm:col-auto sm:row-auto'
-                : col.titleKey === 'colAbout' ? 'col-start-2 row-start-1 row-span-2 sm:col-auto sm:row-auto'
-                : 'col-start-1 row-start-2 sm:col-auto sm:row-auto'
-              }
-            >
-              <h3 className="text-accent-gold text-xs font-semibold uppercase tracking-[0.15em] mb-4">
-                {t[col.titleKey]}
-              </h3>
-              <ul className="space-y-2.5">
-                {col.links.map((link) => (
-                  <li key={link.href}>
-                    {link.key === 'support' ? (
-                      <Link
-                        href={localePath(link.href)}
-                        // Instrumented alongside the header pill so the two paths
-                        // are comparable. Before the pill existed this footer link
-                        // was the ONLY route to giving, and it drew 60 of 330,698
-                        // pageviews in 30 days — the baseline the pill is meant to
-                        // beat. Attributing the split needs an event at each
-                        // control; the referrer cannot tell them apart.
-                        onClick={() => trackEvent('give_nav_click', { source: 'footer', url: link.href })}
-                        className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
-                      >
-                        {t[link.key]}
-                        <span className="text-[11px] bg-accent-rust/20 text-accent-rust px-2 py-0.5 rounded-full font-bold">
-                          {t.donate}
-                        </span>
-                      </Link>
-                    ) : link.key === 'cookieSettings' ? (
-                      <button
-                        onClick={() => clearConsent()}
-                        className="text-sm text-white/50 hover:text-white transition-colors"
-                      >
-                        {t[link.key]}
-                      </button>
-                    ) : (
-                      <Link
-                        href={localePath(link.href)}
-                        className="text-sm text-white/50 hover:text-white transition-colors"
-                      >
-                        {t[link.key]}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-                {/* Conditional personal links under Library */}
-                {col.titleKey === 'colLibrary' && hasFavorites && (
-                  <li>
-                    <Link href="/favorites" className="text-sm text-white/50 hover:text-white transition-colors">
-                      {t.favorites}
-                    </Link>
-                  </li>
-                )}
-                {/* Feedback widget under Participate */}
-                {col.titleKey === 'colParticipate' && (
-                  <li>
-                    <FeedbackWidget label={t.giveFeedback} className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
-                  </li>
-                )}
-              </ul>
+        {/* Top bar: brand on the left; the two actions start on the last link
+            column's line, so they sit on the same grid as the columns below. */}
+        <div className="grid grid-cols-1 md:grid-cols-[26%_1fr] gap-6 md:gap-12 items-center pt-8 md:pt-14">
+          <div className="flex items-center gap-4 md:gap-5 whitespace-nowrap">
+            <Link href={localePath('/')} className="shrink-0 opacity-90 hover:opacity-100 transition-opacity">
+              <Image
+                src="/brand/svg/logo-compact--white-on-dark.svg"
+                alt="Source Library"
+                width={205}
+                height={32}
+                className="h-7 md:h-8 w-auto"
+                unoptimized
+              />
+            </Link>
+            <span className="w-px h-[18px] md:h-5 bg-white/20" aria-hidden="true" />
+            <Link href="/in-memoriam" className="font-serif italic text-white/45 text-lg md:text-xl hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
+              ad fontes
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div className="col-start-1 md:col-start-2 lg:col-start-4 flex gap-1.5">
+              <FeedbackWidget
+                label={t.giveFeedback}
+                className="inline-flex items-center h-[34px] px-[13px] border border-white/20 text-sm font-medium text-white/70 hover:text-white hover:border-white/40 whitespace-nowrap transition-colors"
+              />
+              {showDonate && (
+                <Link
+                  href={localePath('/give')}
+                  // The header's Support pill reports the same event, so the
+                  // two entry points stay comparable (#3364 era instrumentation).
+                  onClick={() => trackEvent('give_nav_click', { source: 'footer', url: '/give' })}
+                    className="inline-flex items-center h-[34px] px-[13px] bg-accent-rust hover:bg-[#ad5442] text-sm font-medium text-[#f6ece8] hover:text-white whitespace-nowrap no-underline transition-colors"
+                >
+                  {t.donate}
+                </Link>
+              )}
             </div>
-          ))}
-        </div>
-
-        {/* Zone 3: Partners */}
-        <div className="py-8">
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-            {(isEmbedded ? PARTNERS : [...PARTNERS, ...GLOBAL_PARTNERS].sort((a, b) => a.name.localeCompare(b.name))).map((partner) => (
-              <a
-                key={partner.name}
-                href={partner.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center h-[2.4rem] md:h-[3.2rem] opacity-50 hover:opacity-80 transition-opacity"
-                title={partner.name}
-              >
-                <Image
-                  src={partner.src!}
-                  alt={partner.name}
-                  width={partner.width}
-                  height={partner.height}
-                  sizes="auto"
-                  className={`h-[2.4rem] md:h-[3.2rem] w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
-                  unoptimized
-                />
-              </a>
-            ))}
           </div>
         </div>
 
-        {/* Zone 3b: Our own accounts. Hidden on partner subdomains for the same
-            reason the global-only nav links are (#3364): a tenant reading room
-            is the partner's surface, and Source Library's social accounts are
-            not theirs to carry. */}
-        {!isEmbedded && (
-          <div className="flex justify-center gap-6 pb-6">
-            {SOCIALS.map((s) => (
-              <a
-                key={s.name}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer me"
-                aria-label={s.name}
-                title={s.name}
-                className="text-white/35 hover:text-white/70 transition-colors"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5">
-                  <path d={s.path} />
-                </svg>
-              </a>
+        {/* Socials + live presence on the left, link columns on the right. */}
+        <div className="grid grid-cols-1 md:grid-cols-[26%_1fr] gap-x-12 pt-8 md:pt-11 pb-14 md:pb-[72px]">
+          <div className="flex flex-col gap-6 items-start">
+            <p className="text-sm leading-relaxed text-white/55 max-w-[280px]">{t.blurb}</p>
+            {/* Our own accounts. Hidden on partner subdomains (#3364): a tenant
+                reading room is the partner's surface. */}
+            {!isEmbedded && (
+              <div className="flex gap-[18px]">
+                {SOCIALS.map((s) => (
+                  <a
+                    key={s.name}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer me"
+                    aria-label={s.name}
+                    title={s.name}
+                    className="text-white/45 hover:text-white/80 transition-colors"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-[18px] w-[18px]">
+                      <path d={s.path} />
+                    </svg>
+                  </a>
+                ))}
+              </div>
+            )}
+            {/* Live reader presence (#3059); collapses when the chip renders nothing. */}
+            <div className="empty:hidden">
+              <ReaderPresence variant="chip" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 lg:gap-x-8 gap-y-10 pt-10 md:pt-0">
+            {navColumns.map((col) => (
+              <div key={col.titleKey}>
+                <h3 className="font-sans text-sm tracking-normal leading-snug text-white mb-3.5" style={{ fontWeight: 600 }}>{t[col.titleKey]}</h3>
+                <ul className="space-y-2.5">
+                  {col.links.map((link) => (
+                    <li key={link.href}>{renderLink(link)}</li>
+                  ))}
+                  {col.titleKey === 'colLibrary' && hasFavorites && (
+                    <li>
+                      <Link href="/favorites" className={linkClass}>{t.favorites}</Link>
+                    </li>
+                  )}
+                </ul>
+              </div>
             ))}
           </div>
-        )}
-
-        {/* Zone 4: License line */}
-        <div className="pb-4 -mt-2 text-center">
-          <Link href="/licensing" className="text-xs text-white/35 hover:text-white/60 transition-colors">
-            {t.licenseLine}
-          </Link>
         </div>
+      </div>
 
-        {/* Zone 5: Live reader presence — the very bottom line, on every page
-            (#3059). The wrapper collapses (empty:hidden) when the chip renders
-            nothing (below the display floor, or on tenant subdomains). */}
-        <div className="flex justify-center pb-6 empty:hidden">
-          <ReaderPresence variant="chip" />
+      {/* Small print: a darker band instead of hairlines. Partner subdomains
+          keep exactly the partner row they have today (order included). */}
+      <div className="bg-[#13100d]">
+        <div className="max-w-[1500px] mx-auto px-4 md:px-12 pt-8 pb-9 flex flex-col gap-[22px]">
+          <div className="flex flex-col md:flex-row md:items-center gap-[18px] md:gap-9">
+            <span className="text-[13px] text-white/45 whitespace-nowrap">{t.partnersLabel}</span>
+            <div className="grid grid-cols-2 md:flex md:flex-wrap items-center gap-x-4 md:gap-x-10 gap-y-6">
+              {partners.map((partner) => (
+                <a
+                  key={partner.name}
+                  href={partner.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center opacity-60 hover:opacity-100 transition-opacity"
+                  title={partner.name}
+                >
+                  <Image
+                    src={partner.src!}
+                    alt={partner.name}
+                    width={partner.width}
+                    height={partner.height}
+                    sizes="auto"
+                    className={`w-auto ${partner.name === 'Folium' ? 'h-[26px] md:h-7' : partner.name === 'TU Delft' ? 'h-5 md:h-[21px]' : 'h-6'} ${partner.invert ? 'brightness-0 invert' : ''}`}
+                    unoptimized
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row md:flex-wrap md:items-baseline gap-3.5 md:gap-x-10 md:gap-y-2">
+            <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+              {legalLinks.map((link) => (
+                <span key={link.href}>{renderLink(link, 'text-[13px] text-white/45 hover:text-white/80 transition-colors')}</span>
+              ))}
+            </div>
+            <Link href="/licensing" className="text-[13px] text-white/45 hover:text-white/80 transition-colors">
+              {t.licenseLine}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

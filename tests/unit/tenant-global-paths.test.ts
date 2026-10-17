@@ -330,6 +330,8 @@ describe('wiring', () => {
     // Rendered on partner hosts: the gate each one must carry.
     const GATED: Record<string, RegExp> = {
       'src/components/layout/SiteHeader.tsx': /isGlobalOnlyNavHref/,
+      // The footer's nav table; visibleFooterNavColumns drops /librarian on tenants.
+      'src/lib/footer-nav.ts': /isGlobalOnlyNavHref/,
       'src/app/search/page.tsx': /!isTenantSurface && \(/,
       'src/components/search/UnifiedSearch.tsx': /!isTenantSurface && \(/,
       'src/components/reader-v2/Reader2C.tsx': /siteMenuOpen && !isEmbedded/,
