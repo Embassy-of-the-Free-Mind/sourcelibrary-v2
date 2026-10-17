@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# Bootstrap the page-vector service on l7a (#6821): pull → build → start → recall check → phase 2.
+# Bootstrap the page-vector service on l7a (#6821): pull → text pull → build → start → recall check → phase 2.
 # Every step is resumable: re-running skips what is done (pull checkpoints, index/state.json).
 #
 #   setsid nohup systemd-run --scope --quiet --unit=vector-search-bootstrap --slice=sourcelibrary.slice \
 #     bash /data/vector-search/app/bootstrap.sh >> /data/vector-search/logs/bootstrap.log 2>&1 < /dev/null &
 #
-#   --rebuild   move the old shards and index aside first (a full re-pull; ~23 GB + ~7 GB of disk while both exist)
+#   --rebuild   move the old shards, index and text store aside first (a full re-pull; ~23 + ~7 + ~26 GB of
+#               disk while both exist). The text store goes too: its pull is resumable and marks itself done,
+#               so a kept store would skip the re-pull and miss text changed before the new checkpoint.
 #   --no-phase2 do not start the phase-2 Claude job at the end
 #
 # Done marker: /data/vector-search/bootstrap.done (one line of JSON: rows, minutes, recall file).
@@ -33,7 +35,7 @@ mkdir -p "$ROOT/logs"
 
 if [ "${REBUILD:-0}" = 1 ]; then
   old="$ROOT/old-$(date -u +%Y%m%dT%H%M)"; step "rebuild: moving shards/ and index/ to $old"
-  mkdir -p "$old"; mv "$ROOT/shards" "$ROOT/index" "$old/" 2>/dev/null || true
+  mkdir -p "$old"; mv "$ROOT/shards" "$ROOT/index" "$ROOT/text" "$old/" 2>/dev/null || true
 fi
 
 step "1/5 pull (slice memory $(slice_mem), disk free $(df -h --output=avail "$ROOT" | tail -1))"
@@ -41,6 +43,15 @@ for attempt in $(seq 1 10); do
   node --env-file="$ENVF" "$APP/pull-embeddings.mjs" --workers 4 --batch 5000 && break
   [ "$attempt" = 10 ] && die "pull failed 10 times"
   step "pull attempt $attempt failed; retry in 60 s"; sleep 60
+done
+
+# The text store (phase 4, #6843): with_text serves translation/title/author from it instead of the app
+# hydrating from Supabase. Resumable; a failure only means serve mode hydrates, so it does not stop the bootstrap.
+step "1b text pull (disk free $(df -h --output=avail "$ROOT" | tail -1))"
+for attempt in $(seq 1 5); do
+  node --no-warnings --env-file="$ENVF" "$APP/pull-text.mjs" --workers 4 --batch 2000 && break
+  [ "$attempt" = 5 ] && { step "text pull failed 5 times: with_text rows will lack text until it is re-run"; break; }
+  step "text pull attempt $attempt failed; retry in 60 s"; sleep 60
 done
 
 if [ ! -f "$ROOT/index/state.json" ]; then
@@ -67,7 +78,7 @@ step "4/5 recall check (before any delta: a delta re-embeds rows the shards stil
 node "$APP/recall-eval.mjs" --n 50 --k 45 --out "$RECALL" || step "recall check failed (phase 2 re-runs it)"
 
 step "5/5 first delta (catches up from the pull's start; not saved — the nightly --save does that)"
-node --env-file="$ENVF" "$APP/sync-delta.mjs" --count-check || step "delta/count check exited $? (see above)"
+node --no-warnings --env-file="$ENVF" "$APP/sync-delta.mjs" --count-check || step "delta/count check exited $? (see above)"
 
 ROWS=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$ROOT/index/state.json','utf8')).rows)")
 echo "{\"rows\":$ROWS,\"minutes\":$(( ($(date +%s) - T0) / 60 )),\"recall\":\"$RECALL\",\"at\":\"$(date -u +%FT%TZ)\"}" > "$DONE"

@@ -10,7 +10,7 @@
 // carries book_language/book_year, the two columns match_semantic filters on.
 import fs from 'node:fs';
 import path from 'node:path';
-import { DIM, SHARD_DIR, ROW_SELECT, pgClient, parseVector, rowLine, writeJsonAtomic, log } from './lib.mjs';
+import { DIM, SHARD_DIR, PULL_EDGES, ROW_SELECT, pgClient, parseVector, rowLine, writeJsonAtomic, log } from './lib.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const WORKERS = +arg('--workers', 4);
@@ -18,12 +18,7 @@ const BATCH = +arg('--batch', 5000);
 const LIMIT = +arg('--limit', 0); // per shard, for tests
 fs.mkdirSync(SHARD_DIR, { recursive: true });
 
-// page_ids are 24-hex ObjectIds; measured 2026-09-09 almost all lie in 69…6a, so that band is cut
-// into 0x10-wide ranges and the ranges feed a pool of workers (the atlas edges, unchanged).
-const pad = (h) => h.padEnd(24, '0');
-const edges = ['', pad('68'), pad('69')];
-for (let x = 0x6910; x < 0x6b00; x += 0x10) edges.push(pad(x.toString(16)));
-edges.push(pad('6b'), null); // null = unbounded
+const edges = PULL_EDGES;
 
 const pullPath = path.join(SHARD_DIR, 'pull.json');
 let pull = fs.existsSync(pullPath) ? JSON.parse(fs.readFileSync(pullPath, 'utf8')) : null;
