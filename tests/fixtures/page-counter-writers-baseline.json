@@ -23,10 +23,13 @@
     "",
     "2026-10-13 (#5327, archive group): the seven archive workers, archive-acquired.ts,",
     "claremont-nag-hammadi.mjs, books/[id]/archive-images/route.ts and split-book.mjs left \u2014",
-    "each calls recountBook() once per book after its page writes. 68 \u2192 57."
+    "each calls recountBook() once per book after its page writes. 68 \u2192 57.",
+    "",
+    "2026-10-17 (#6824): scripts/lib/translate-core.mjs left \u2014 syncBookTranslationCounters()",
+    "delegates to recountBook(), which also restamps translation_state. 57 \u2192 56."
   ],
   "generated_at": "2026-09-30",
-  "count": 57,
+  "count": 56,
   "files": [
     "scripts/batch/collect-batch-results.mjs",
     "scripts/batch/collect-multipage-ocr.mjs",
@@ -38,7 +41,6 @@
     "scripts/import-naj-sancai.mjs",
     "scripts/import/cdli-atf-source.mjs",
     "scripts/import/oraec-paginate-translate.mjs",
-    "scripts/lib/translate-core.mjs",
     "scripts/maintenance/apply-reocr-verdicts.mjs",
     "scripts/maintenance/bph-nas-ingest.mjs",
     "scripts/maintenance/cleanup-dead-pages.mjs",

@@ -174,13 +174,17 @@ export interface RecountResult {
   before: Record<PageCounter, number | null> | null;
   after: PageCounters;
   changed: PageCounter[];
+  /** The rung the recount stamps (#6824); absent when the book was not found. */
+  rung?: TranslationRung;
+  rung_before?: string | null;
 }
 
 /**
  * THE writer of a book's page counters. Mirror of the .mjs recountBook(): recounts
  * the book's visible pages and `$set`s all six counters plus `page_counts_at`;
  * never a subset, never `$inc`. `bookId` is the book's string `id` (what
- * `pages.book_id` carries), never `_id`. `updated_at` moves only when a counter did.
+ * `pages.book_id` carries), never `_id`. Restamps `translation_state` when it moved
+ * (#6824); `updated_at` moves only when a counter or a mirrored rung did.
  */
 export async function recountBook(
   db: Db,
@@ -191,7 +195,7 @@ export async function recountBook(
   if (typeof reason !== 'string' || reason === '') throw new Error('recountBook: pass { reason } naming the caller');
 
   const books = db.collection('books');
-  const projection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
+  const projection = { ...Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1])), language: 1, content_type: 1, translation_state: 1 };
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate<PageCountStats>(buildVisiblePageCountPipeline(bookId)).toArray();
   const after = pageCountersFromStats(row);
@@ -200,9 +204,13 @@ export async function recountBook(
   const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book[c] ?? null])) as Record<PageCounter, number | null>;
   const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
   const $set: Document = { ...after, page_counts_at: now };
-  if (changed.length) $set.updated_at = now;
+  const state = computeTranslationState(after, { language: book.language, content_type: book.content_type });
+  const stored = book.translation_state as Partial<TranslationState> | undefined;
+  if (translationStateChanged(stored, state)) $set.translation_state = { ...state, computed_at: now };
+  const mirrored = !stored || stored.rung !== state.rung || (stored.english_original === true) !== state.english_original;
+  if (changed.length || mirrored) $set.updated_at = now;
   await books.updateOne({ id: bookId }, { $set });
-  return { matched: true, reason, before, after, changed };
+  return { matched: true, reason, before, after, changed, rung: state.rung, rung_before: stored?.rung ?? null };
 }
 
 // ── Translation state (#5284) ──────────────────────────────────────────────
@@ -222,7 +230,7 @@ export const FULL_TRANSLATION_MIN_OCR_COVERAGE = 0.9;
 /** Share of translatable pages that makes a book `readable`. */
 export const READABLE_MIN_TRANSLATED = 0.9;
 
-/** Stored shape of `books.translation_state` (written only by sync-worker). */
+/** Stored shape of `books.translation_state` (written by sync-worker and recountBook()). */
 export interface TranslationState {
   rung: TranslationRung;
   english_original: boolean;
@@ -253,6 +261,14 @@ export function isEnglishOriginal(language: unknown): boolean {
     .trim()
     .replace(/\s*\(.*\)$/, '');
   return ENGLISH_LANGUAGE_TOKENS.has(first);
+}
+
+/** Mirror of the .mjs translationStateChanged(): stale iff any computed key differs (`computed_at` excluded). */
+export function translationStateChanged(
+  stored: Partial<TranslationState> | null | undefined,
+  computed: Omit<TranslationState, 'computed_at'>,
+): boolean {
+  return !stored || (Object.keys(computed) as (keyof typeof computed)[]).some((k) => stored[k] !== computed[k]);
 }
 
 export function computeTranslationState(

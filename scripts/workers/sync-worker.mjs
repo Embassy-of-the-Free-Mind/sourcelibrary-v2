@@ -24,7 +24,7 @@ import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import {
   buildCorpusPageCountPipeline, diffPageCounters, recountSet, PAGE_COUNTERS,
-  computeTranslationMetrics, computeTranslationState,
+  computeTranslationMetrics, computeTranslationState, translationStateChanged,
   READABLE_IN_ENGLISH_FILTER, translationStateStampCoverage,
 } from '../lib/page-counts.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
@@ -117,8 +117,9 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
     const { translation_pct, is_fully_translated, over_90_translated } = computeTranslationMetrics(actual);
 
     // The translation-state ladder (#5284, .claude/docs/translation-state.md).
-    // This worker is its ONLY writer — job-time writers update counters and
-    // never this field — so a rung lags a counter by at most one cycle. The
+    // Written here and by recountBook() (#6824), the job-time recount, with the
+    // same rule and staleness test; a job-time writer that does not go through
+    // recountBook() leaves the rung at most one cycle behind its counters. The
     // three legacy flags above keep being written until step 7 of #3402.
     const translation_state = computeTranslationState(
       actual,
@@ -136,8 +137,7 @@ export async function syncPageCounts(db, { dryRun = DRY_RUN } = {}) {
     // (e.g. pages_translatable moved by a recount) would make a right rung
     // untraceable. `computed_at` is deliberately not compared.
     const stored = book.translation_state;
-    const stateStale = !stored ||
-      Object.keys(translation_state).some((k) => stored[k] !== translation_state[k]);
+    const stateStale = translationStateChanged(stored, translation_state);
 
     // The next step (#5477), computed from the counters and rung just derived, so it is never a cycle
     // behind them. OBSERVE ONLY: no phase or lane selects on it until that lane's cutover (#5469 step 5).
