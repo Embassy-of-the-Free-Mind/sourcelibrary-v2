@@ -17,8 +17,9 @@
  *     `hnsw.ef_search` rows whatever is asked: 100 in both branches since
  *     #5853 (2026-10-16; the no-filter branch was the session default 40).
  *     The pool stays 40 rows; the higher ef buys recall inside it.
- *  2. Original-text lane when it is switched on and deployed; otherwise
- *     nothing, and `lanes.untranslated` says which.
+ *  2. Original-text lane when it is switched on and deployed, started beside
+ *     the English lane and given UNTRANSLATED_GRACE_MS past it; otherwise
+ *     nothing, and `lanes.untranslated` says which (`late` = not back in time).
  *  3. Reciprocal-rank fusion. The lanes share no row (a page has a
  *     translation or it does not), so this interleaves them by rank.
  *  4. Books the reader does not serve are dropped BEFORE the caps are
@@ -41,6 +42,7 @@ import {
   semanticPageSearchUntranslated,
   type SemanticPageResult,
   type SemanticPageSearchOptions,
+  type UntranslatedLaneResult,
   type UntranslatedLaneState,
 } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
@@ -52,6 +54,15 @@ import { stripMarkupTags } from '@/lib/strip-markup-tags';
 /** Rows asked of `match_semantic` (its ef_search is 100, #5853; 40 is the pool, not the ceiling). */
 const CANDIDATES = 40;
 const UNTRANSLATED_CANDIDATES = 20;
+/**
+ * How long the original-text lane may run past the English lane before the
+ * answer goes out without it (state `late`). Its 7.5 GB index does not fit in
+ * shared_buffers: warm it answers in ~0.1 s, cold in 1.3 s or more, and 21–28%
+ * of /api/search calls waited out its 4 s abort and answered at a p50 of 4.4 s
+ * (search_queries, 2026-10-13..16). A late lane's query still runs to its own
+ * abort, so it keeps warming the index for the next one.
+ */
+export const UNTRANSLATED_GRACE_MS = 500;
 /** Untranslated rows per screen of ten: found, but not most of what a reader of English sees. */
 export const ORIGINAL_PER_SCREEN = 3;
 /**
@@ -92,6 +103,14 @@ export interface ConceptSearchResult {
   traditions: Record<string, number>;
 }
 
+function withinGrace(pending: Promise<UntranslatedLaneResult>, ms: number): Promise<UntranslatedLaneResult> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const late = new Promise<UntranslatedLaneResult>((resolve) => {
+    timer = setTimeout(() => resolve({ rows: [], state: 'late' }), ms);
+  });
+  return Promise.race([pending, late]).finally(() => clearTimeout(timer));
+}
+
 const key = (r: { book_id: string; page_number: number }) => `${r.book_id}-p${r.page_number}`;
 
 /** The page's own text as a snippet: wrappers out content-and-all, then tags, then whitespace. */
@@ -128,12 +147,18 @@ export async function conceptPageSearch(
     return { rows: [], diversity: requested, lanes: { untranslated: 'closed' }, traditions: {} };
   }
   const want = Math.max(limit, CANDIDATES);
-  const [english, original] = abstractLane
-    ? [await semanticConceptSearch(query, want, { scope: opts.scope }), { rows: [], state: 'off' as const }]
-    : await Promise.all([
-      semanticPageSearchGlobal(query, want, laneOpts),
-      semanticPageSearchUntranslated(query, UNTRANSLATED_CANDIDATES, laneOpts),
-    ]);
+  let english: SemanticPageResult[];
+  let original: UntranslatedLaneResult;
+  if (abstractLane) {
+    english = await semanticConceptSearch(query, want, { scope: opts.scope });
+    original = { rows: [], state: 'off' };
+  } else {
+    // Both lanes start together; the English answer does not wait out the
+    // original-text lane's 4 s abort (#5729). The lane never throws.
+    const pending = semanticPageSearchUntranslated(query, UNTRANSLATED_CANDIDATES, laneOpts);
+    english = await semanticPageSearchGlobal(query, want, laneOpts);
+    original = await withinGrace(pending, UNTRANSLATED_GRACE_MS);
+  }
 
   // An English-lane row with no stored translation is a page embedded from
   // its own text: same handling as the original-text lane's rows.
