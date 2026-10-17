@@ -966,7 +966,8 @@ async function fetchSearchLeadDocs(
   };
 
   const [titleArtDocs, titlePlateDocs, { artHits, semArtDocs }] = await Promise.all([
-    titleArtworks(), titleBookPlates(), semanticArtworks(),
+    // A failed import() must cost only the semantic lane, not all three.
+    titleArtworks(), titleBookPlates(), semanticArtworks().catch(() => ({ artHits: [], semArtDocs: [] })),
   ]);
   return { titleArtDocs, titlePlateDocs, artHits, semArtDocs };
 }
