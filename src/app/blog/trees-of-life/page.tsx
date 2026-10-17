@@ -393,6 +393,40 @@ export default function TreesOfLifePage() {
           </Plate>
         </Pair>
 
+        <p className="text-secondary leading-relaxed mb-6">
+          Han dynasty painters drew Fusang itself. On the silk banner laid over the coffin of the Lady of Dai at
+          Mawangdui (before 168 BCE), the sun with its crow sits at the top right, and smaller red suns hang among
+          the twisting branches below it. On the Wu Liang shrines in Shandong (mid-second century CE) the archer Yi
+          aims at the sun-crows perched in the tree; in the myth he shot down nine of the ten suns when they all rose
+          at once.
+        </p>
+
+        <Plate
+          src={`${IMG}/mawangdui-fusang.jpg`}
+          alt="Painted silk: a crescent moon at left, a red sun with a black crow at right, red suns among dark branches below"
+          href="https://commons.wikimedia.org/wiki/File:T-shaped_Painting_on_Silk_-_Google_Art_Project.jpg"
+          width={1400}
+          height={1052}
+          wide
+          source="Wikimedia Commons"
+        >
+          The heavens of the Mawangdui banner, with the sun-crow and the suns of Fusang at right. Tomb 1, Mawangdui,
+          Western Han. Hunan Museum (detail).
+        </Plate>
+
+        <Plate
+          src={`${IMG}/wuliang-fusang.jpg`}
+          alt="Stone rubbing: a tree with interlaced branches full of birds, an archer and a chariot below"
+          href="https://commons.wikimedia.org/wiki/File:Wu_liang_shrine_relief_depicting_xihe,_yi,_and_fusang_tree.jpg"
+          width={498}
+          height={406}
+          small
+          source="Wikimedia Commons"
+        >
+          The Fusang tree with Yi the archer and Xihe readying the sun chariot. Rubbing from the Wu Liang shrines (mid-2nd
+          century CE).
+        </Plate>
+
         <Section>Mesoamerica: trees in the Codex Laud</Section>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -562,6 +596,25 @@ export default function TreesOfLifePage() {
         >
           Bilal before the lote tree, <em>Miʿrājnāma</em>, c. 1317–35. Topkapı Palace Library, H. 2154, fol. 61r
           (detail).
+        </Plate>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Paradise has its own tree in the hadith, Ṭūbā, so large that a rider could travel in its shade for a hundred
+          years. The Timurid <em>Miʿrājnāma</em> made at Herat in 1436 paints the Prophet’s visit to the gardens of
+          paradise, where houris on camels greet each other among flowering trees. The painting does not label any of
+          them as Ṭūbā.
+        </p>
+
+        <Plate
+          src={`${IMG}/miraj-paradise.jpg`}
+          alt="Persian painting: Gabriel and the Prophet above a turquoise garden of flowering trees, women on camels below"
+          href="https://commons.wikimedia.org/wiki/File:Mohammed_visiting_Paradise.jpg"
+          width={648}
+          height={622}
+          source="Wikimedia Commons"
+        >
+          The Prophet visits paradise. <em>Miʿrājnāma</em>, Herat, 1436. Bibliothèque nationale de France, Suppl.
+          turc 190.
         </Plate>
 
         <Section>Java: the kayon</Section>
@@ -908,13 +961,17 @@ export default function TreesOfLifePage() {
 
         <ul className="list-disc pl-6 text-secondary leading-relaxed mb-8 space-y-2">
           <li>
-            <strong>China:</strong> Jianmu, the tree by which the gods climb between heaven and earth.
+            <strong>China:</strong> Jianmu, the tree by which the gods climb between heaven and earth. The illustrated{' '}
+            <Link href="/book/69ea51b2e0662c881fb5c71d?page=129" className={linkClass}>
+              <em>Shanhai jing</em>
+            </Link>{' '}
+            in the library draws the fish-bodied people who live west of it, but not the tree.
           </li>
           <li>
             <strong>Iran:</strong> Gaokerena, the white haoma tree of immortality growing in the cosmic sea.
           </li>
           <li>
-            <strong>Islam:</strong> Ṭūbā, the tree of paradise.
+            <strong>Islam:</strong> Ṭūbā named as such.
           </li>
           <li>
             <strong>The Baltic:</strong> the Latvian sun tree (<em>Austras koks</em>) of the folk songs.
