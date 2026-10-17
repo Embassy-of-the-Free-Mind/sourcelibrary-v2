@@ -4,12 +4,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Download, LayoutGrid, List, Search, X } from 'lucide-react';
 import CollectionListView from '@/components/collections/CollectionListView';
+import CatalogPagination from '@/components/collections/CatalogPagination';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import StatsBand, { type BandStats } from './StatsBand';
 import AdvancedSearch, { type Draft } from './AdvancedSearch';
 import AskWorkList from './AskWorkList';
 import {
-  PRINTED_BUCKETS, activeFilterCount, catalogFiltersOf, hasTextQuery, writeCatalogFilters, writeCatalogState,
+  CATALOG_PAGE_SIZE, PRINTED_BUCKETS, activeFilterCount, catalogFiltersOf, hasTextQuery, writeCatalogFilters, writeCatalogState,
   type CatalogSort, type CatalogState,
 } from '@/lib/catalog/filters';
 import { readRequest, type RequestVocabulary } from '@/lib/catalog/read-request';
@@ -64,7 +65,6 @@ interface Props {
   vocab: ExplorerVocabulary;
 }
 
-const PER_PAGE = 48;
 const SORT_LABELS: [CatalogSort, string][] = [
   ['relevance', 'Most relevant'], ['popular', 'Most read'], ['year_asc', 'Oldest first'],
   ['year_desc', 'Newest first'], ['title', 'Title A–Z'], ['author', 'Author A–Z'],
@@ -144,7 +144,6 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   const [s, setS] = useState<CatalogState>(initialState);
   const [books, setBooks] = useState<CatalogRow[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [works, setWorks] = useState<ListedWork[] | null>(null);
   const [early, setEarly] = useState<CatalogRow[] | null>(null);
@@ -202,14 +201,13 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     const sp = writeCatalogFilters(catalogFiltersOf(next));
     sp.set('sort', next.sort);
     sp.set('page', String(pageNo));
-    sp.set('limit', String(PER_PAGE));
+    sp.set('limit', String(CATALOG_PAGE_SIZE));
     try {
       const r = await fetch(`/api/catalog/results?${sp}`, { signal: ctl.signal });
       const j = await r.json();
       if (listCtl.current !== ctl) return;
-      setBooks((prev) => (pageNo > 1 ? [...prev, ...(j.books || [])] : j.books || []));
+      setBooks(j.books || []);
       setTotal(j.total || 0);
-      setPage(pageNo);
     } catch (err) {
       if ((err as Error).name === 'AbortError') return;
     }
@@ -262,8 +260,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     setBusy('');
   }, [libraryTotal]);
 
-  /** Apply a new state: address bar, list, numbers. */
-  const run = useCallback((next: CatalogState) => {
+  /** Apply a new state: address bar, list, numbers. Any change but a page turn goes back to page 1. */
+  const run = useCallback((change: CatalogState, opts: { keepPage?: boolean } = {}) => {
+    const next = opts.keepPage ? change : { ...change, page: 1 };
     setS(next);
     window.history.replaceState(null, '', `${window.location.pathname}${writeCatalogState(next).toString() ? `?${writeCatalogState(next)}` : ''}`);
     if (next.topic) {
@@ -274,7 +273,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
       setBusy('');
       setWorks(null);
       setEarly(null);
-      loadList(next, 1);
+      loadList(next, next.page);
       loadStats(next);
     }
   }, [loadList, loadStats, loadTopic]);
@@ -380,7 +379,14 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   const showSkeleton = topicMode && !shownWorks && !earlyCards.length;
   const showEarly = topicMode && !shownWorks && earlyCards.length > 0;
   const earlyLabel = `${earlyCards.length === 1 ? 'One title matches' : `${earlyCards.length} titles match`} so far`;
-  const moreLeft = !topicMode && books.length < total;
+  const pageCount = Math.ceil((topicMode ? shownWorks?.length ?? 0 : total) / CATALOG_PAGE_SIZE);
+  const pageStart = (s.page - 1) * CATALOG_PAGE_SIZE;
+  const pagedWorks = shownWorks ? shownWorks.slice(pageStart, pageStart + CATALOG_PAGE_SIZE) : null;
+  const pagedWorkCards = workCards.slice(pageStart, pageStart + CATALOG_PAGE_SIZE);
+  const goToPage = (n: number) => {
+    run({ ...s, page: n }, { keepPage: true });
+    document.getElementById('catalog-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const printed = stats?.printed ?? [];
   const advKey = filtersKey(s) + (s.topic ?? '');
   const applied: Draft = { ...catalogFiltersOf(s), topic: s.topic };
@@ -519,9 +525,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
             {sortOptions.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
           </select>
           <div className="flex border border-border-medium" role="group" aria-label="View">
-            <button type="button" aria-pressed={s.view === 'grid'} aria-label="Grid" onClick={() => run({ ...s, view: 'grid' })}
+            <button type="button" aria-pressed={s.view === 'grid'} aria-label="Grid" onClick={() => run({ ...s, view: 'grid' }, { keepPage: true })}
               className={`w-[38px] h-9 grid place-items-center ${s.view === 'grid' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><LayoutGrid className="w-4 h-4" /></button>
-            <button type="button" aria-pressed={s.view === 'list'} aria-label="List" onClick={() => run({ ...s, view: 'list' })}
+            <button type="button" aria-pressed={s.view === 'list'} aria-label="List" onClick={() => run({ ...s, view: 'list' }, { keepPage: true })}
               className={`w-[38px] h-9 grid place-items-center ${s.view === 'list' ? 'bg-warm text-primary' : 'bg-white text-muted'}`}><List className="w-4 h-4" /></button>
           </div>
         </div>
@@ -541,7 +547,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
       )}
 
       {/* Results */}
-      <div className={`mt-6 transition-opacity ${advDirty || (loading && !topicMode) ? 'opacity-35' : ''}`}>
+      <div id="catalog-results" className={`mt-6 scroll-mt-4 transition-opacity ${advDirty || (loading && !topicMode) ? 'opacity-35' : ''}`}>
         {showSkeleton && <Skeleton />}
         {showEarly && (
           <>
@@ -549,9 +555,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
             <BookGrid books={earlyCards} />
           </>
         )}
-        {topicMode && shownWorks && (
-          shownWorks.length === 0 ? <Empty /> :
-            s.view === 'list' ? <AskWorkList works={shownWorks} topic={s.topic ?? ''} /> : <BookGrid books={workCards} />
+        {topicMode && pagedWorks && (
+          pagedWorks.length === 0 ? <Empty /> :
+            s.view === 'list' ? <AskWorkList works={pagedWorks} topic={s.topic ?? ''} /> : <BookGrid books={pagedWorkCards} />
         )}
         {!topicMode && (
           bookCards.length === 0 && !loading ? <Empty /> :
@@ -560,12 +566,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
               : <BookGrid books={bookCards} />
         )}
       </div>
-      {moreLeft && (
-        <button type="button" onClick={() => loadList(s, page + 1)} disabled={loading}
-          className="block mx-auto mt-9 mb-20 h-10 px-4 border border-border-medium bg-white text-sm text-primary hover:border-primary">
-          Show more
-        </button>
-      )}
+      <div className="mb-16">
+        <CatalogPagination currentPage={s.page} totalPages={pageCount} onPageChange={goToPage} />
+      </div>
     </div>
   );
 }

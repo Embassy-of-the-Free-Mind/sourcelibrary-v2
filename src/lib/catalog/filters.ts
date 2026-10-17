@@ -11,6 +11,9 @@
  * that really contains punctuation ("Hebrew and Aramaic in Hebrew script").
  */
 
+/** Results per page on the catalogue. */
+export const CATALOG_PAGE_SIZE = 100;
+
 export type CatalogSort = 'relevance' | 'popular' | 'year_asc' | 'year_desc' | 'title' | 'author';
 
 export const CATALOG_SORTS: readonly CatalogSort[] = ['relevance', 'popular', 'year_asc', 'year_desc', 'title', 'author'];
@@ -39,6 +42,8 @@ export interface CatalogFilters {
 export interface CatalogState extends CatalogFilters {
   sort: CatalogSort;
   view: 'grid' | 'list';
+  /** 1-based page of CATALOG_PAGE_SIZE results. */
+  page: number;
   /** A request typed to the librarian, as typed. */
   ask?: string;
   /** What the request is about; searched inside the books, not in the catalogue. */
@@ -83,6 +88,7 @@ export function parseCatalogState(sp: URLSearchParams): CatalogState {
     ...parseCatalogFilters(sp),
     sort: sort && CATALOG_SORTS.includes(sort) ? sort : 'popular',
     view: sp.get('view') === 'list' ? 'list' : 'grid',
+    page: Math.min(10_000, Math.max(1, parseInt(sp.get('page') || '1', 10) || 1)),
     ask: text(sp.get('ask')),
     topic: text(sp.get('topic')),
   };
@@ -112,6 +118,7 @@ export function writeCatalogState(s: CatalogState): URLSearchParams {
   writeCatalogFilters(s, sp);
   if (s.sort !== 'popular') sp.set('sort', s.sort);
   if (s.view === 'list') sp.set('view', 'list');
+  if (s.page > 1) sp.set('page', String(s.page));
   return sp;
 }
 

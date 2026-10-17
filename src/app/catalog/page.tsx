@@ -5,7 +5,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import CatalogExplorer, { type CatalogRow } from '@/components/catalog/explorer/CatalogExplorer';
 import type { BandStats } from '@/components/catalog/explorer/StatsBand';
 import { browseCatalog, catalogStats } from '@/lib/catalog/query';
-import { catalogFiltersOf, parseCatalogState } from '@/lib/catalog/filters';
+import { CATALOG_PAGE_SIZE, catalogFiltersOf, parseCatalogState } from '@/lib/catalog/filters';
 import { isSingleRealLanguage } from '@/lib/language-canonical';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { getReadDb } from '@/lib/mongodb';
@@ -43,7 +43,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
 
   const [list, stats, library, collections] = await Promise.all([
     listed
-      ? browseCatalog(filters, state.sort, 1, 48).catch((err) => {
+      ? browseCatalog(filters, state.sort, state.page, CATALOG_PAGE_SIZE).catch((err) => {
         console.error('[catalog] list failed:', err?.message || err);
         return { books: [], total: 0 };
       })

@@ -132,9 +132,9 @@ describe('catalogue wire format', () => {
 
   it('round-trips the page state and drops defaults', () => {
     const { ids: _ids, ...rest } = full;
-    const s: CatalogState = { ...rest, sort: 'relevance', view: 'list', ask: 'plague in Latin', topic: 'plague' };
+    const s: CatalogState = { ...rest, sort: 'relevance', view: 'list', page: 3, ask: 'plague in Latin', topic: 'plague' };
     expect(parseCatalogState(writeCatalogState(s))).toEqual(s);
-    expect(writeCatalogState({ sort: 'popular', view: 'grid' }).toString()).toBe('');
+    expect(writeCatalogState({ sort: 'popular', view: 'grid', page: 1 }).toString()).toBe('');
   });
 
   it('ignores an unknown sort and a nonsense year', () => {
