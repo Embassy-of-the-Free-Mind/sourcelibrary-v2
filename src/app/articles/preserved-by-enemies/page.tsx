@@ -2,6 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import SourceQuote from '@/components/articles/SourceQuote';
+import RecordTimeline from './RecordTimeline';
 
 // Every quotation below is copied from the stored text of the page it links to (#6559): the served English
 // translation, or, for Legge's Hippolytus and Harvey's notes, the printed English itself. Each passage the
@@ -78,6 +81,30 @@ const PAGE = {
   maler241: `${BOOK.kauaMaler}/page/6a879ba86f4a03d5d89ad5a9`,
 };
 
+// Book slugs for SourceQuote, and page images by reader page number.
+const SLUG = {
+  hippolytus1: 'refutation-of-all-heresies-vol-1-rome',
+  hippolytus2: 'refutation-of-all-heresies-vol-2-rome',
+  irenaeus: 'sancti-irenaei-adversus-haereses-ed',
+  epiphanius: 'epiphanius-epiphanius',
+  landa: 'relation-des-choses-de-yucatan-de-diego-de-landa-bilingual-bourbourg',
+  florentine: 'florentine-codex-vol-1-books-1-5',
+};
+const BOOK_ID = {
+  hippolytus1: '69ac9bb999d9a0170d090d1e',
+  hippolytus2: '69ac9bbf99d9a0170d090df4',
+  irenaeus: '69920bf777b798aa12121afc',
+  epiphanius: '6a3f035697e91e1768f6a0b5',
+  landa: '69f8c0f74c6a515115aedadd',
+  florentine: '69dfeba8090ad7d5c33b0f36',
+  paredes: '6acc3ae4c1411f8cc628f4e5',
+  motul1: '6acc3d5f230e9a56175cc731',
+  motul2: '6acc3d6c230e9a56175ccae2',
+  kaua: '6a87102131598d129803de7b',
+};
+const img = (bookId: string, n: number) =>
+  `https://images.sourcelibrary.org/pages/${bookId}/${String(n).padStart(4, '0')}.jpg`;
+
 const EXT = {
   landaBritannica: 'https://www.britannica.com/biography/Diego-de-Landa',
   knorozov: 'https://exhibits.lib.unc.edu/exhibits/show/maya/decipherment/sistema-pisma-drevnikh-maiia',
@@ -90,37 +117,14 @@ const EXT = {
     'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/experiments/2026-10-13-opus-vs-flash-translation-nahuatl-6559.md',
 };
 
-const linkClass = 'text-accent-rust hover:underline';
 const p = 'text-secondary leading-relaxed mb-6 font-body';
 const h2 = 'text-2xl md:text-3xl text-primary mt-16 mb-6';
 
 function Ext({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <a href={href} className={linkClass} target="_blank" rel="noopener noreferrer">
+    <a href={href} target="_blank" rel="noopener noreferrer">
       {children}
     </a>
-  );
-}
-
-function Quote({ href, cite, children }: { href: string; cite: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
-      <div className="text-secondary leading-relaxed italic font-body">{children}</div>
-      <p className="text-xs text-muted mt-2 not-italic">
-        <Link href={href} className={linkClass}>
-          {cite} &rarr;
-        </Link>
-      </p>
-    </blockquote>
-  );
-}
-
-function Figure({ src, alt, children }: { src: string; alt: string; children: React.ReactNode }) {
-  return (
-    <figure className="my-10">
-      <img src={src} alt={alt} className="w-full rounded-lg border border-stone-200" />
-      <figcaption className="text-sm text-muted mt-3 leading-relaxed">{children}</figcaption>
-    </figure>
   );
 }
 
@@ -148,10 +152,17 @@ export default function PreservedByEnemiesPage() {
           described it in one sentence:
         </p>
 
-        <Quote href={PAGE.landa439} cite={<>Diego de Landa, <em>Relación de las cosas de Yucatán</em>, ed. Brasseur de Bourbourg (1864), p. 316</>}>
+        <SourceQuote
+          book={SLUG.landa}
+          page={439}
+          src={img(BOOK_ID.landa, 439)}
+          pageAlt="Printed page 316 of Landa's Relación, Spanish text, with the paragraph on the burning of the books in the lower half."
+          source={<>Diego de Landa, <em>Relación de las cosas de Yucatán</em>, ed. Brasseur de Bourbourg (1864)</>}
+          printedPage="316"
+        >
           &ldquo;We found a great number of books of these letters of theirs, and because they contained nothing that did not
           have superstition and falsehoods of the devil, we burned them all&rdquo;
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The Spanish goes on: <em>lo qual a maravilla sentian, y les dava pena</em>, which they felt to an extraordinary
@@ -160,19 +171,23 @@ export default function PreservedByEnemiesPage() {
           twenty-seven Maya signs, each beside the Spanish letter it was supposed to stand for.
         </p>
 
-        <Figure src={`${DIR}/landa-abc-1864.jpg`} alt="Landa’s a b c: twenty-seven Maya signs in three columns, each with a Spanish letter or syllable beside it.">
-          &ldquo;Siguese su a b c&rdquo;: Landa&rsquo;s signs as Brasseur printed them in 1864 (
-          <Link href={PAGE.landa443} className={linkClass}>read the page</Link>). Brasseur copied them from a manuscript in
-          Madrid that he describes as a later copy, not Landa&rsquo;s original (
-          <Link href={PAGE.landa14} className={linkClass}>his note</Link>).
-        </Figure>
+        <PageFigure
+          src={`${DIR}/landa-abc-1864.jpg`}
+          alt="Landa’s a b c: twenty-seven Maya signs in three columns, each with a Spanish letter or syllable beside it."
+          href={`${BOOK.landa}?page=443`}
+          source={<>Landa, <em>Relation des choses de Yucatan</em>, ed. Brasseur (Paris, 1864)</>}
+        >
+          &ldquo;Siguese su a b c&rdquo;: Landa&rsquo;s signs as Brasseur printed them in 1864. Brasseur copied them from a
+          manuscript in Madrid that he describes as a later copy, not Landa&rsquo;s original (
+          <Link href={PAGE.landa14}>his note</Link>).
+        </PageFigure>
 
         <p className={p}>
           The man who burned the books also kept the only key to them that survived the century. Brasseur, the French
           priest who found and published the manuscript, saw that at once. Landa, he wrote, &ldquo;rendered an immense service
           to historical sciences by compiling the precious information that follows, and by preserving for us the characters
           of the Maya alphabet&rdquo;; the book &ldquo;is the key to American inscriptions&rdquo; (
-          <Link href={PAGE.landa19} className={linkClass}>Brasseur&rsquo;s introduction</Link>). It was not an alphabet. The
+          <Link href={PAGE.landa19}>Brasseur&rsquo;s introduction</Link>). It was not an alphabet. The
           key turned only in 1952, when the Soviet linguist Yuri Knorozov argued that Landa&rsquo;s informant had written
           syllables: asked for the letter <em>b</em>, pronounced <em>be</em>, he wrote the sign for the syllable <em>be</em>{' '}
           (<Ext href={EXT.knorozov}>University of North Carolina Libraries</Ext>). That reading opened the Maya script.
@@ -191,19 +206,26 @@ export default function PreservedByEnemiesPage() {
           Around 225, Hippolytus of Rome wrote a <em>Refutation of All Heresies</em>. Most of it was itself lost until the
           1840s, when a Greek scholar sent by the French government to the monasteries of Mount Athos came back with a
           manuscript of seven of its ten books (
-          <Link href={PAGE.legge11} className={linkClass}>Legge&rsquo;s introduction</Link>). Its value, wrote its English
+          <Link href={PAGE.legge11}>Legge&rsquo;s introduction</Link>). Its value, wrote its English
           translator F. Legge in 1921, is the Gnostic writing it quotes, &ldquo;of which well-nigh the whole has been lost to
-          us&rdquo; (<Link href={PAGE.legge13} className={linkClass}>p. 3</Link>).
+          us&rdquo; (<Link href={PAGE.legge13}>p. 3</Link>).
         </p>
 
         <p className={p}>
           One of those quotations is a hymn of the sect Hippolytus calls the Naassenes. He introduces it with contempt:
           &ldquo;This psalm has been concocted by them, whereby they seem to hymn all the mysteries of their error&rdquo; (
-          <Link href={PAGE.naassene154} className={linkClass}>p. 144</Link>). Then he copies it out. It ends with Jesus asking
+          <Link href={PAGE.naassene154}>p. 144</Link>). Then he copies it out. It ends with Jesus asking
           the Father to send him down to the soul lost in chaos:
         </p>
 
-        <Quote href={PAGE.naassene155} cite={<>Hippolytus, <em>Refutation</em> V, trans. F. Legge (1921), vol. 1, p. 145</>}>
+        <SourceQuote
+          book={SLUG.hippolytus1}
+          page={155}
+          src={img(BOOK_ID.hippolytus1, 155)}
+          pageAlt="Page 145 of Legge's Philosophumena, headed The Ophite Heresies: the Naassene hymn set as verse, with footnotes below."
+          source={<>Hippolytus, <em>Refutation</em> V, trans. F. Legge (1921), vol. 1</>}
+          printedPage="145"
+        >
           &ldquo;Holding seals I will go down,
           <br />
           Through entire æons I will pass,
@@ -215,18 +237,25 @@ export default function PreservedByEnemiesPage() {
           The secrets of the holy way
           <br />
           Called Gnosis, I will hand down.&rdquo;
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           In the next book Hippolytus turns to Simon Magus, accuses him of &ldquo;stupidly and clumsily garbling the Law of
           Moses&rdquo;, and quotes the opening of a book attributed to him, the <em>Great Announcement</em>:
         </p>
 
-        <Quote href={PAGE.simon14} cite={<>Hippolytus, <em>Refutation</em> VI, trans. F. Legge (1921), vol. 2, p. 4</>}>
+        <SourceQuote
+          book={SLUG.hippolytus2}
+          page={14}
+          src={img(BOOK_ID.hippolytus2, 14)}
+          pageAlt="Page 4 of Legge's Philosophumena, vol. 2: the passage on Simon Magus, with a long run of footnotes below."
+          source={<>Hippolytus, <em>Refutation</em> VI, trans. F. Legge (1921), vol. 2</>}
+          printedPage="4"
+        >
           &ldquo;This is the writing of the Announcement of Voice and Name from the Thought of the great power of the
           Boundless One. Wherefore it will be sealed up, hidden, concealed and will be in the dwelling-place where the root
           of the universals is founded.&rdquo;
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           A book that announces its own concealment survives in the pages of the man who wrote to expose it. (The English
@@ -238,14 +267,21 @@ export default function PreservedByEnemiesPage() {
           book on doctrines he despises: &ldquo;I have deemed it necessary, after reading the commentaries of the disciples
           of Valentinus, as they themselves call them, and having even met with some of them and grasped their way of
           thinking, to reveal to you, most beloved, the monstrous and profound mysteries&rdquo; (
-          <Link href={PAGE.irenaeus205} className={linkClass}>Harvey&rsquo;s edition, 1857</Link>). His first chapter then
+          <Link href={PAGE.irenaeus205}>Harvey&rsquo;s edition, 1857</Link>). His first chapter then
           sets out the Valentinian system from its first principle:
         </p>
 
-        <Quote href={PAGE.irenaeus209} cite={<>Irenaeus, <em>Against Heresies</em> I.1.1, ed. W. W. Harvey (1857), p. 8</>}>
+        <SourceQuote
+          book={SLUG.irenaeus}
+          page={209}
+          src={img(BOOK_ID.irenaeus, 209)}
+          pageAlt="Page 8 of Harvey's Irenaeus: the Greek of book I chapter 1 above the Latin, with Harvey's notes in two columns below."
+          source={<>Irenaeus, <em>Against Heresies</em> I.1.1, ed. W. W. Harvey (1857)</>}
+          printedPage="8"
+        >
           &ldquo;They say that there is a certain perfect Æon, who existed before, in invisible and ineffable heights. Him they
           call Proarche, and Propator, and Bythos&rdquo;
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The chain goes one link further. Irenaeus&rsquo;s own Greek is lost; his work survives whole only in an old Latin
@@ -260,11 +296,18 @@ export default function PreservedByEnemiesPage() {
           said why:
         </p>
 
-        <Quote href={PAGE.flora465} cite={<>Epiphanius, <em>Panarion</em> 33.3, ed. K. Holl (1915), p. 450</>}>
+        <SourceQuote
+          book={SLUG.epiphanius}
+          page={465}
+          src={img(BOOK_ID.epiphanius, 465)}
+          pageAlt="Page 450 of Holl's Epiphanius: Greek text with the heading of Ptolemy's letter to Flora in the middle, and the apparatus below."
+          source={<>Epiphanius, <em>Panarion</em> 33.3, ed. K. Holl (1915)</>}
+          printedPage="450"
+        >
           &ldquo;For a more abundant refutation of the deceiver, I will set down in order and present the persuasive and
           poisonous words written by Ptolemy himself to a certain woman named Flora. This is so no one thinks we refute the
           deceiver based only on hearsay, without having first encountered his distorted teaching.&rdquo;
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The letter follows, beginning &ldquo;My good sister Flora, since not many have understood the law established
@@ -279,11 +322,17 @@ export default function PreservedByEnemiesPage() {
           called the Florentine Codex with it:
         </p>
 
-        <Quote href={PAGE.sahagun14} cite={<>Bernardino de Sahagún, Prologue to Book 1, Florentine Codex (1577)</>}>
+        <SourceQuote
+          book={SLUG.florentine}
+          page={14}
+          src={img(BOOK_ID.florentine, 14)}
+          pageAlt="The first page of the Prologue to Book 1 of the Florentine Codex, in a Spanish hand, with the library stamp at top right."
+          source={<>Bernardino de Sahagún, Prologue to Book 1, Florentine Codex (1577)</>}
+        >
           &ldquo;A physician cannot properly apply medicines to a patient without first knowing from what humor or cause the
           illness proceeds. &hellip; Preachers and confessors are physicians of the souls, tasked with curing spiritual
           diseases.&rdquo;
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The disease is idolatry, and Sahagún says it is not over: &ldquo;The sins of idolatry, rites, superstitious
@@ -295,15 +344,26 @@ export default function PreservedByEnemiesPage() {
         <p className={p}>
           The fifth book, on omens, carries the metaphor through. The omens are there &ldquo;so that when they are wounded by
           this sore, they may go to seek medicine, and the physician may easily understand them&rdquo; (
-          <Link href={PAGE.sahagun675} className={linkClass}>prologue to Book 5</Link>). Then the book lets the diviner speak.
+          <Link href={PAGE.sahagun675}>prologue to Book 5</Link>). Then the book lets the diviner speak.
           A man has heard a wild beast howling at night (the painting at the head of this essay opens the chapter) and goes
           to the <em>tonalpouhqui</em>, the reader of the day-count,
           who tells him what it means and on what authority: &ldquo;And this is not because I say it: but because my elders
           and ancestors left it said and written.&rdquo; In the Nahuatl column the diviner points to his source: &ldquo;Listen
           to the word, for it is marked in the tonalamatl&rdquo;, the book of days (
-          <Link href={PAGE.sahagun677} className={linkClass}>Book 5, ch. 1</Link>). The books of the kind Landa burned are
+          <Link href={PAGE.sahagun677}>Book 5, ch. 1</Link>). The books of the kind Landa burned are
           cited by name, inside the book written to root them out.
         </p>
+
+        <div className="mx-auto max-w-md">
+          <PageFigure
+            src={img(BOOK_ID.florentine, 677)}
+            alt="A manuscript page in two columns: Spanish on the left, Nahuatl on the right, with Libro quinto at the head."
+            href={`${BOOK.florentine}?page=677`}
+            source={<>Florentine Codex, vol. 1</>}
+          >
+            Book 5, chapter 1: the diviner&rsquo;s answer, Spanish in the left column, Nahuatl in the right.
+          </PageFigure>
+        </div>
 
         <p className={p}>
           That book nearly went the same way. A royal decree of Philip II, dated 22 April 1577, ordered Sahagún&rsquo;s work
@@ -320,22 +380,23 @@ export default function PreservedByEnemiesPage() {
           He imagines his listeners objecting that &ldquo;idolatry has already left, has already perished, and demon-worship
           scarcely shows its footprints anymore&rdquo;, and answers: &ldquo;Behold, listen, my children: there are still some
           who lead people astray, who still live in doubt&rdquo; (
-          <Link href={PAGE.sermonario77} className={linkClass}>p. 17</Link>). A list follows, and the printer set a Spanish
+          <Link href={PAGE.sermonario77}>p. 17</Link>). A list follows, and the printer set a Spanish
           gloss after each Nahuatl word, so that the preacher reading it would know exactly whom he was naming:
         </p>
 
-        <Figure
+        <PageFigure
           src={`${DIR}/sermonario-1606-p78.jpg`}
           alt="A page of Nahuatl sermon text with italic Spanish glosses in parentheses after the names of different kinds of sorcerer."
+          href={`${BOOK.sermonario}?page=78`}
+          source={<>Juan Bautista, <em>Sermonario en lengua mexicana</em> (Mexico, 1606), p. 18</>}
         >
-          Juan Bautista, <em>Sermonario en lengua mexicana</em> (Mexico, 1606), p. 18 (
-          <Link href={PAGE.sermonario78} className={linkClass}>read the page</Link>). The italic Spanish glosses the Nahuatl:{' '}
+          The italic Spanish glosses the Nahuatl:{' '}
           <em>tlaciuhque</em>, &ldquo;hechizeros astrologos&rdquo;; <em>atlan teitta</em>, &ldquo;hechizeros que adiuinan por
           el agua&rdquo;, sorcerers who divine by water; <em>tequaquamana</em>, who call themselves{' '}
           <em>moyohualihtohua</em>, &ldquo;Hechizeros, o encantadores que de noche se mostrauan en diuersas formas. s. Tigre,
           Gato, Raposo, Comadreja&rdquo;, sorcerers or enchanters who showed themselves at night in various forms: jaguar,
           cat, fox, weasel.
-        </Figure>
+        </PageFigure>
 
         <p className={p}>
           The list runs to seven kinds of specialist across the two pages: day-count diviners, those who claim to draw stones
@@ -350,11 +411,23 @@ export default function PreservedByEnemiesPage() {
           &ldquo;whoever goes about consulting, goes about seeking out, goes about testing&rdquo; the sorcerers and &ldquo;the
           shapeshifters Nanahualtin&rdquo;; the Spanish in the margin of the print says it plainly, <em>Hechizeros,
           Nahuales</em> (
-          <Link href={PAGE.paredes181} className={linkClass}>read the page</Link>). And it tells its hearers what to do if someone
+          <Link href={PAGE.paredes181}>read the page</Link>). And it tells its hearers what to do if someone
           shows them a god: &ldquo;And do not be afraid of it in any way, do not fear it&rdquo; (
-          <Link href={PAGE.paredes84} className={linkClass}>read the page</Link>). More than two centuries after the conquest, a preacher
+          <Link href={PAGE.paredes84}>read the page</Link>). More than two centuries after the conquest, a preacher
           still had to tell people not to be afraid of the old gods.
         </p>
+
+        <div className="mx-auto max-w-md">
+          <PageFigure
+            src={img(BOOK_ID.paredes, 181)}
+            alt="A printed page of Nahuatl sermon text headed Platica decimaseptima mexicana, with Spanish glosses in italic parentheses, among them Hechizeros, Nahuales."
+            href={`${BOOK.paredes}?page=181`}
+            source={<>Ignacio de Paredes, <em>Promptuario manual mexicano</em> (Mexico, 1759)</>}
+          >
+            The seventeenth sermon, printed p. 128. Near the foot of the page the Spanish gloss reads <em>que invoca, consulta,
+            &amp;c. Hechizeros, Nahuales</em>, beside the Nahuatl <em>Nânahualtin</em>.
+          </PageFigure>
+        </div>
 
         <p className={p}>
           Some of these records are less a sermon than a census. Hernando Ruiz de Alarcón&rsquo;s <em>Treatise on the
@@ -368,15 +441,26 @@ export default function PreservedByEnemiesPage() {
           dictionary compiled at Motul, probably by Antonio de Ciudad Real in the late sixteenth century, defines the vocabulary of
           Maya religion the way it defines the vocabulary of farming, flatly. Under <em>ah kin</em>: &ldquo;a priest&rdquo;.
           A few entries later, <em>ah kinyah</em>: &ldquo;a sorcerer who casts lots with superstition&rdquo; (
-          <Link href={PAGE.motul1_47} className={linkClass}>vol. 1, f. 20</Link>). <em>Ah cunal can, ceh, balam</em>:
+          <Link href={PAGE.motul1_47}>vol. 1, f. 20</Link>). <em>Ah cunal can, ceh, balam</em>:
           &ldquo;a charmer or sorcerer who charms snakes, deer, jaguars, and so on&rdquo; (
-          <Link href={PAGE.motul1_31} className={linkClass}>vol. 1</Link>). <em>Ah ohel tukinam xiuob</em>, &ldquo;an
+          <Link href={PAGE.motul1_31}>vol. 1</Link>). <em>Ah ohel tukinam xiuob</em>, &ldquo;an
           herbalist&rdquo;, one who knows the power of plants (
-          <Link href={PAGE.motul1_56} className={linkClass}>vol. 1</Link>). In the Spanish&ndash;Maya volume, under{' '}
+          <Link href={PAGE.motul1_56}>vol. 1</Link>). In the Spanish&ndash;Maya volume, under{' '}
           <em>hechizar</em> and <em>hechizero</em>, to bewitch and sorcerer, the Maya is <em>pulyah</em>, and
           &ldquo;Bewitched: pulaan yaah yokol&rdquo; (
-          <Link href={PAGE.motul2_236} className={linkClass}>vol. 2</Link>). Those words will come back.
+          <Link href={PAGE.motul2_236}>vol. 2</Link>). Those words will come back.
         </p>
+
+        <div className="mx-auto max-w-md">
+          <PageFigure
+            src={img(BOOK_ID.motul1, 47)}
+            alt="A manuscript dictionary page, folio 20, with Maya headwords beginning ah k and Spanish definitions, each entry ticked in the margin."
+            href={`${BOOK.motul1}?page=47`}
+            source={<><em>Diccionario de Motul</em>, Maya&ndash;Spanish, vol. 1</>}
+          >
+            Folio 20: <em>ah kin: sacerdote</em>, and a few lines below it <em>ah kinyah</em>, the sorcerer who casts lots.
+          </PageFigure>
+        </div>
 
         <h2 className={h2}>Where the parallel breaks</h2>
 
@@ -387,13 +471,25 @@ export default function PreservedByEnemiesPage() {
 
         <p className={p}>
           <strong>It was not written by the enemy alone.</strong> Hippolytus worked from books and, Legge suspected, from
-          what a convert told him (<Link href={PAGE.naassene155} className={linkClass}>Legge&rsquo;s note</Link>). Sahagún worked with a team, and named it. In the prologue to Book 2 he lists the elders chosen
+          what a convert told him (<Link href={PAGE.naassene155}>Legge&rsquo;s note</Link>). Sahagún worked with a team, and named it. In the prologue to Book 2 he lists the elders chosen
           by the town governments and the college students who checked and rewrote everything with him; among them &ldquo;the
           principal and most wise was Antonio Valeriano, a resident of Azcapotzalco&rdquo;, with Alonso Vegerano, Martín
           Jacobita and Pedro de San Buenaventura, &ldquo;all experts in three languages&rdquo;, Latin, Spanish and Nahuatl (
-          <Link href={PAGE.sahagun124} className={linkClass}>Book 2, prologue</Link>). The Nahuatl column of the Florentine
+          <Link href={PAGE.sahagun124}>Book 2, prologue</Link>). The Nahuatl column of the Florentine
           Codex is, in large part, Nahua writing.
         </p>
+
+        <div className="mx-auto max-w-md">
+          <PageFigure
+            src={img(BOOK_ID.florentine, 124)}
+            alt="A manuscript page in a Spanish hand ending Fin del prologo, naming Antonio Valeriano, Alonso Vegerano, Martín Jacobita and Pedro de San Buenaventura near the top."
+            href={`${BOOK.florentine}?page=124`}
+            source={<>Florentine Codex, vol. 1</>}
+          >
+            The end of the prologue to Book 2. Sahagún names Valeriano, Vegerano, Jacobita and San Buenaventura in the first
+            lines.
+          </PageFigure>
+        </div>
 
         <p className={p}>
           <strong>It keeps the original language.</strong> Irenaeus summarised the Valentinians in his own Greek; Epiphanius
@@ -408,20 +504,39 @@ export default function PreservedByEnemiesPage() {
           <em> hechizero</em>, sorcerer, the category of a Spanish confessor. Sometimes the sorting shows. The Motul dictionary
           defines <em>ah koh keuel</em> as &ldquo;a sorcerer or wizard who dressed in the skins of jaguars and frightened people
           in order to rob them&rdquo; (
-          <Link href={PAGE.motul1_48} className={linkClass}>vol. 1</Link>). A man in a jaguar skin may have been a robber, or a
+          <Link href={PAGE.motul1_48}>vol. 1</Link>). A man in a jaguar skin may have been a robber, or a
           dancer, or a priest in regalia whose purpose the lexicographer did not know or did not record. The word is
           recorded exactly; the explanation attached to it is the friar&rsquo;s. The Spanish&ndash;Maya volume shows the
           filing from the other side: the one Spanish word <em>hechicero</em> is answered with three Maya ones,
           &ldquo;Sorcerer: tutuz nac: ahcunyah: ahpulyaah&rdquo; (
-          <Link href={PAGE.motul2_237} className={linkClass}>vol. 2, f. 127</Link>). Three Maya words, one
+          <Link href={PAGE.motul2_237}>vol. 2, f. 127</Link>). Three Maya words, one
           Spanish category.
         </p>
+
+        <div className="not-prose grid gap-x-6 sm:grid-cols-2">
+          <PageFigure
+            src={img(BOOK_ID.motul1, 48)}
+            alt="A manuscript dictionary page whose first entry is ah koh keuel, defined in Spanish as a sorcerer dressed in jaguar skins."
+            href={`${BOOK.motul1}?page=48`}
+            source={<>Motul, vol. 1</>}
+          >
+            <em>Ah koh keuel</em>, the first entry on the page.
+          </PageFigure>
+          <PageFigure
+            src={img(BOOK_ID.motul2, 237)}
+            alt="A manuscript dictionary page, folio 127, whose first entry is hechicero followed by three Maya words."
+            href={`${BOOK.motul2}?page=237`}
+            source={<>Motul, vol. 2, f. 127</>}
+          >
+            <em>Hechicero</em>, answered with three Maya words.
+          </PageFigure>
+        </div>
 
         <p className={p}>
           <strong>There is a check.</strong> For the Gnostics, the check arrived late. Legge, in 1921, could write that apart
           from patristic quotations &ldquo;the only extant Gnostic works are the Coptic collection in the British Museum and
           the Bodleian at Oxford, known as the Pistis Sophia and the Bruce Papyrus respectively&rdquo; (
-          <Link href={PAGE.legge13} className={linkClass}>p. 3, note 1</Link>). Twenty-four years later, in 1945, farmers near
+          <Link href={PAGE.legge13}>p. 3, note 1</Link>). Twenty-four years later, in 1945, farmers near
           Nag Hammadi in Upper Egypt dug up a jar of papyrus codices holding more than fifty treatises, most of them Gnostic,
           and the heretics could at last be read in their own words (
           <Ext href={EXT.nagHammadi}>Biblical Archaeology Society</Ext>).
@@ -434,29 +549,43 @@ export default function PreservedByEnemiesPage() {
           keep what the dictionaries filed under sorcery.
         </p>
 
-        <Figure
+        <PageFigure
           src={`${DIR}/kaua-wheel.jpg`}
           alt="A hand-drawn wheel: the twenty Maya day names around the rim, faces between them, a cross at the top marked lakin (east), and numbered kings in the centre around the Spanish word mundo."
+          href={`${BOOK.kaua}?page=42`}
+          source={<>Book of Chilam Balam of Kaua</>}
         >
-          A day-wheel in the Book of Chilam Balam of Kaua (
-          <Link href={PAGE.kaua42} className={linkClass}>read the page</Link>). The twenty Maya day names run round the rim,
+          A day-wheel in the Kaua book. The twenty Maya day names run round the rim,
           with <em>lakin</em>, east, under a cross at the top; in the middle, Spanish words, <em>Rey</em> (king) and{' '}
           <em>Mũdo</em> (world).
-        </Figure>
+        </PageFigure>
 
         <p className={p}>
           The Kaua book carries a year-count that runs Christian years beside Maya ones. The line for 1810, read off the page,
           gives 7 Ahau, the day 9 Ik, the 2nd of the month Kankin (
-          <Link href={PAGE.kaua13} className={linkClass}>read the page</Link>). It prescribes remedies by plant, and gives
+          <Link href={PAGE.kaua13}>read the page</Link>). It prescribes remedies by plant, and gives
           them a lineage the friars never would: a bath of gumbo-limbo (<em>chacah</em>), the scribe writes, &ldquo;has been
           used since ancient times to stop the pain and the aching of the body&rdquo; (
-          <Link href={PAGE.kaua20} className={linkClass}>p. 5</Link>). In the copy Teobert Maler photographed, one remedy is headed &ldquo;For the cure of the lower-body sickness sent by sorcery&rdquo;: in the Maya,{' '}
-          <em>pulbil yah</em> (<Link href={PAGE.maler241} className={linkClass}>read the page</Link>). It is built on the word
+          <Link href={PAGE.kaua20}>p. 5</Link>). In the copy Teobert Maler photographed, one remedy is headed &ldquo;For the cure of the lower-body sickness sent by sorcery&rdquo;: in the Maya,{' '}
+          <em>pulbil yah</em> (<Link href={PAGE.maler241}>read the page</Link>). It is built on the word
           the Motul dictionary gave for bewitching. In the dictionary it names a sin to be confessed. In the Kaua book it names a
           sickness that has a cure.
         </p>
 
+        <div className="mx-auto max-w-md">
+          <PageFigure
+            src={img(BOOK_ID.kaua, 13)}
+            alt="A manuscript page headed CXXV with the years 1810 to 1826 down the left margin and the Maya day and month for each year beside them."
+            href={`${BOOK.kaua}?page=13`}
+            source={<>Book of Chilam Balam of Kaua</>}
+          >
+            The year-count: Christian years 1810 to 1826 down the margin, the Maya reckoning beside each.
+          </PageFigure>
+        </div>
+
         <h2 className={h2}>Reading the enemy&rsquo;s archive</h2>
+
+        <RecordTimeline />
 
         <p className={p}>
           None of this redeems the burning. Landa&rsquo;s a b c is one page against an unknown number of books, and the
@@ -485,66 +614,12 @@ export default function PreservedByEnemiesPage() {
           reaches us.
         </p>
 
-        <p className="text-sm text-muted uppercase tracking-wider mb-4">Primary sources in the library</p>
-        <ul className="space-y-2 mb-8">
-          <li className="text-secondary font-body">
-            Hippolytus, <em>Philosophumena, or the Refutation of All Heresies</em>, trans. F. Legge (1921):{' '}
-            <Link href={BOOK.hippolytus1} className={linkClass}>vol. 1</Link>,{' '}
-            <Link href={BOOK.hippolytus2} className={linkClass}>vol. 2</Link>.
-          </li>
-          <li className="text-secondary font-body">
-            <Link href={BOOK.irenaeus} className={linkClass}>
-              Irenaeus, <em>Adversus haereses</em>, ed. W. Wigan Harvey (Cambridge, 1857)
-            </Link>
-            , Latin with the surviving Greek.
-          </li>
-          <li className="text-secondary font-body">
-            <Link href={BOOK.epiphanius} className={linkClass}>
-              Epiphanius, <em>Ancoratus</em> and <em>Panarion</em> 1&ndash;33, ed. Karl Holl (Leipzig, 1915)
-            </Link>
-            , with Ptolemy&rsquo;s <em>Letter to Flora</em>.
-          </li>
-          <li className="text-secondary font-body">
-            <Link href={BOOK.landa} className={linkClass}>
-              Diego de Landa, <em>Relation des choses de Yucatan</em>, Spanish and French, ed. Brasseur de Bourbourg (Paris,
-              1864)
-            </Link>
-            .
-          </li>
-          <li className="text-secondary font-body">
-            <Link href={BOOK.florentine} className={linkClass}>
-              Bernardino de Sahagún, Florentine Codex, vol. 1 (Books 1&ndash;5)
-            </Link>
-            .
-          </li>
-          <li className="text-secondary font-body">
-            <Link href={BOOK.sermonario} className={linkClass}>
-              Juan Bautista, <em>Sermonario en lengua mexicana</em> (Mexico, 1606)
-            </Link>
-            ;{' '}
-            <Link href={BOOK.paredes} className={linkClass}>
-              Ignacio de Paredes, <em>Promptuario manual mexicano</em> (Mexico, 1759)
-            </Link>
-            .
-          </li>
-          <li className="text-secondary font-body">
-            <em>Diccionario de Motul</em>, Maya&ndash;Spanish:{' '}
-            <Link href={BOOK.motul1} className={linkClass}>vol. 1</Link>,{' '}
-            <Link href={BOOK.motul2} className={linkClass}>vol. 2</Link>.
-          </li>
-          <li className="text-secondary font-body">
-            Book of Chilam Balam of Kaua:{' '}
-            <Link href={BOOK.kaua} className={linkClass}>manuscript copy</Link>,{' '}
-            <Link href={BOOK.kauaMaler} className={linkClass}>Teobert Maler&rsquo;s photographs</Link>.
-          </li>
-        </ul>
-
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Related:{' '}
-          <Link href="/articles/indigenous-traditions" className={linkClass}>Indigenous traditions</Link>,{' '}
-          <Link href="/collections/maya" className={linkClass}>Maya</Link>,{' '}
-          <Link href="/collections/aztec-nahua" className={linkClass}>Aztec and Nahua</Link>,{' '}
-          <Link href="/collections/mesoamerican" className={linkClass}>Mesoamerican</Link>
+          <Link href="/articles/indigenous-traditions">Indigenous traditions</Link>,{' '}
+          <Link href="/collections/maya">Maya</Link>,{' '}
+          <Link href="/collections/aztec-nahua">Aztec and Nahua</Link>,{' '}
+          <Link href="/collections/mesoamerican">Mesoamerican</Link>
         </p>
       </article>
     </ContentPageLayout>

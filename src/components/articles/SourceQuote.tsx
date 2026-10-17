@@ -22,6 +22,7 @@ import Link from 'next/link';
 export default function SourceQuote({
   book,
   page,
+  printedPage,
   src,
   source,
   original,
@@ -30,6 +31,8 @@ export default function SourceQuote({
 }: {
   book: string;
   page: number;
+  /** The page number printed on the leaf, when it differs from the reader (scan) page. Shown in the source line. */
+  printedPage?: number | string;
   src: string;
   source: ReactNode;
   original?: ReactNode;
@@ -43,7 +46,7 @@ export default function SourceQuote({
         {original && <p className="mb-3 text-secondary italic">{original}</p>}
         <div>{children}</div>
         <figcaption className="mt-3 text-sm text-muted not-italic">
-          {source}, <Link href={href}>p. {page}</Link>
+          {source}, <Link href={href}>p. {printedPage ?? page}</Link>
         </figcaption>
       </blockquote>
       <Link href={href} className="block border border-border-light bg-white p-2" aria-label={`Open p. ${page} in the reader`}>

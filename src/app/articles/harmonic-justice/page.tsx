@@ -2,6 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import SourceQuote from '@/components/articles/SourceQuote';
+import PageFigure from '@/components/articles/PageFigure';
+import MeansDiagram from './MeansDiagram';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
 // fetched through the get_quote tool on 2026-10-16. Claims from outside the library link to their source.
@@ -39,15 +42,29 @@ const BOOK = {
   giorgi: '/book/de-harmonia-mundi-totius-zorzi',
 };
 
-// The reader route takes a page id, not a page number (quote-and-snippet-integrity.md).
-const PAGE = {
-  aristotle584: `${BOOK.aristotle}/page/69b220b356715b0e32473529`,
-  oresme143: `${BOOK.oresme}/page/6991e16bb53cae6bb60240a3`,
-  kepler203: `${BOOK.kepler}/page/697dd31799fd5fbfe8f83432`,
-  kepler204: `${BOOK.kepler}/page/697dd31799fd5fbfe8f83433`,
-  splendor129: `${BOOK.splendor}/page/695906d94953388fe7ac7595`,
-  becher7: `${BOOK.becher}/page/6a42727728e9db2e39c14057`,
-  smith344: `${BOOK.smithTms}/page/69569c011479a63c11090b3f`,
+// Book slugs for SourceQuote, and the page images (reader page numbers, checked by eye on 2026-10-18).
+const SLUG = {
+  aristotle: 'aristotle-opera-vol-6-metaphysica-aldine-editio-princeps-aristotle',
+  oresme: 'traictie-de-la-premiere-invention-des-monnoies-oresme',
+  kepler: 'the-harmony-of-the-world-kepler',
+  splendor: 'splendor-solis-the-splendour-of-the-sun-trismosin',
+  becher: 'narrische-weiszheit-und-weise-narrheit-oder-ein-hundert-so-becher',
+  smithTms: 'the-theory-of-moral-sentiments-smith',
+};
+
+const IMG = 'https://images.sourcelibrary.org/pages';
+const PAGE_IMG = {
+  aristotle7: `${IMG}/69b220b356715b0e324732e1/0007.jpg`,
+  aristotle584: `${IMG}/69b220b356715b0e324732e1/0584.jpg`,
+  oresme9: `${IMG}/6991e16bb53cae6bb6024014/0009.jpg`,
+  oresme143: `${IMG}/6991e16bb53cae6bb6024014/0143.jpg`,
+  kepler133: `${IMG}/697d9ca2e930671f09614566/0133.jpg`,
+  kepler203: `${IMG}/697d9ca2e930671f09614566/0203.jpg`,
+  kepler204: `${IMG}/697d9ca2e930671f09614566/0204.jpg`,
+  splendor43: `${IMG}/6952dbf977f38f6761bc7720/0043.jpg`,
+  splendor129: `${IMG}/6952dbf977f38f6761bc7720/0129.jpg`,
+  becher6: `${IMG}/6a42727728e9db2e39c14050/0006.jpg`,
+  smith344: `${IMG}/69568c79be7c607c5f03d7bb/0344.jpg`,
 };
 
 const EXT = {
@@ -57,28 +74,14 @@ const EXT = {
   keynesNewton: 'https://mathshistory.st-andrews.ac.uk/Extras/Keynes_Newton/',
 };
 
-const linkClass = 'text-accent-rust hover:underline';
 const p = 'text-secondary leading-relaxed mb-6 font-body';
 const h2 = 'text-2xl md:text-3xl text-primary mt-16 mb-6';
 
 function Ext({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <a href={href} className={linkClass} target="_blank" rel="noopener noreferrer">
+    <a href={href} target="_blank" rel="noopener noreferrer">
       {children}
     </a>
-  );
-}
-
-function Quote({ href, cite, children }: { href: string; cite: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
-      <div className="text-secondary leading-relaxed italic font-body">{children}</div>
-      <p className="text-xs text-muted mt-2 not-italic">
-        <Link href={href} className={linkClass}>
-          {cite} &rarr;
-        </Link>
-      </p>
-    </blockquote>
   );
 }
 
@@ -109,11 +112,11 @@ export default function HarmonicJusticePage() {
 
         <p className={p}>
           Two earlier notes cover neighbouring ground.{' '}
-          <Link href="/articles/invisible-hand" className={linkClass}>
+          <Link href="/articles/invisible-hand">
             The Invisible Hand Has a History
           </Link>{' '}
           traces market theory from Aristotle to Bastiat, and{' '}
-          <Link href="/articles/nature-of-harmony" className={linkClass}>
+          <Link href="/articles/nature-of-harmony">
             The Nature of Harmony
           </Link>{' '}
           follows the measurers of musical ratio from Pythagoras to Kepler. This one is about the place where the
@@ -139,15 +142,22 @@ export default function HarmonicJusticePage() {
         <p className={p}>
           In Book V of the <em>Nicomachean Ethics</em> Aristotle treats exchange as a problem in proportion. A
           shoemaker and a farmer make things that cannot be compared directly, so something has to make them
-          comparable. He sets out the chain of conditions in our copy of the Aldine Greek edition of 1495:
+          comparable. He sets out the chain of conditions in our copy of the{' '}
+          <Link href={BOOK.aristotle}>Aldine Greek edition of 1495</Link>:
         </p>
 
-        <Quote href={PAGE.aristotle584} cite="Aristotle, Nicomachean Ethics V, in the Aldine Opera vol. 6 (Venice, 1495), p. 584">
+        <SourceQuote
+          book={SLUG.aristotle}
+          page={584}
+          src={PAGE_IMG.aristotle584}
+          pageAlt="A page of Greek text from the Nicomachean Ethics, Book V, in the Aldine edition"
+          source={<>Aristotle, <em>Nicomachean Ethics</em> V, in the Aldine <em>Opera</em> vol. 6 (Venice, 1495)</>}
+        >
           Currency, like a mean, makes things commensurable and equalizes them. For there would be no community
           without exchange, no exchange without equality, and no equality without commensurability. In truth, it is
           impossible that things so different can become commensurable. But with respect to need, it is sufficiently
           possible.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           Two things in this passage matter for everything after it. Money is a <em>mean</em> in the mathematical
@@ -157,6 +167,17 @@ export default function HarmonicJusticePage() {
           with respect to need.
         </p>
 
+        <PageFigure
+          src={PAGE_IMG.aristotle7}
+          alt="Contents leaf of the Aldine volume, in Greek and Latin, listing the Ethics to Nicomachus, the Politics, the Economics, the Magna Moralia and the Eudemian Ethics with their numbers of books"
+          href={`${BOOK.aristotle}?page=7`}
+          source={<>Aristotle, <em>Opera</em> vol. 6 (Venice: Aldus, 1495)</>}
+        >
+          The contents leaf of the volume, in Greek and then in Latin: the <em>Ethics</em> to Nicomachus in ten books,
+          the <em>Politics</em> in eight, the <em>Economics</em> in two, the <em>Magna Moralia</em> in two and the
+          ethics to Eudemus in eight.
+        </PageFigure>
+
         <h2 className={h2}>Oresme: the measure belongs to the community</h2>
 
         <p className={p}>
@@ -165,15 +186,32 @@ export default function HarmonicJusticePage() {
           <em>incommensurable</em>, and that exact astrological prediction is therefore impossible (
           <Ext href={EXT.oresmeGrant}>edited by Edward Grant in 1971</Ext>). In his treatise on money, written in the
           1350s while the French crown was repeatedly altering the coinage, he argued that the coinage is not the
-          prince&apos;s to alter. The library holds the 1864 edition that prints the medieval French version beside
-          the Latin:
+          prince&apos;s to alter. The library holds the{' '}
+          <Link href={BOOK.oresme}>1864 edition</Link> that prints the medieval French version beside the Latin:
         </p>
 
-        <Quote href={PAGE.oresme143} cite="Nicole Oresme, Traictie de la première invention des monnoies, ch. 22 (ed. Wolowski, Paris, 1864), p. lxv">
+        <PageFigure
+          src={PAGE_IMG.oresme9}
+          alt="Title page: Traictie de la première invention des monnoies de Nicole Oresme, with Copernicus's treatise on money, edited by L. Wolowski, Paris, Guillaumin"
+          href={`${BOOK.oresme}?page=9`}
+          source={<>Oresme, <em>Traictie de la première invention des monnoies</em> (Paris, 1864)</>}
+        >
+          Wolowski&apos;s title page: Oresme&apos;s French and Latin texts from the manuscripts of the Bibliothèque
+          impériale, bound with Copernicus&apos;s treatise on money in Latin and French.
+        </PageFigure>
+
+        <SourceQuote
+          book={SLUG.oresme}
+          page={143}
+          src={PAGE_IMG.oresme143}
+          pageAlt="Printed page lxv, the opening of chapter 22 in medieval French"
+          source={<>Nicole Oresme, <em>Traictie de la première invention des monnoies</em>, ch. 22 (ed. Wolowski, Paris, 1864)</>}
+          printedPage="lxv"
+        >
           Since the money belongs to the community, as was stated and demonstrated in the 6th Chapter, it seems that
           this community may ordain concerning it at its will, and thus change it and take profit from it at its
           pleasure, and treat it as its own property.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           Oresme states this as the strongest case for altering the coin, and then argues that even the community
@@ -197,18 +235,24 @@ export default function HarmonicJusticePage() {
           geometric one.
         </p>
 
+        <MeansDiagram />
+
         <p className={p}>
           Forty years later Kepler read this and stopped the third book of his{' '}
-          <Link href={BOOK.kepler} className={linkClass}>
+          <Link href={BOOK.kepler}>
             <em>Harmony of the World</em>
           </Link>{' '}
           (1619) to deal with it. The section is headed &ldquo;A Political Digression,&rdquo; and he says plainly why
           it is there:
         </p>
 
-        <Quote
-          href={PAGE.kepler203}
-          cite="Kepler, Harmonices mundi III (Linz, 1619), p. 86. Copy: Bibliotheca Philosophica Hermetica, Amsterdam"
+        <SourceQuote
+          book={SLUG.kepler}
+          page={203}
+          src={PAGE_IMG.kepler203}
+          pageAlt="Printed page 86 of Harmonices mundi, headed De tribus medietatibus, Digressio politica, with small tables of numbers"
+          source={<>Kepler, <em>Harmonices mundi</em> III (Linz, 1619; the Bibliotheca Philosophica Hermetica copy, Amsterdam)</>}
+          printedPage="86"
         >
           I decided to transcribe the principal points of this political discussion from Bodin himself, with the
           words and order mostly shaped by my own understanding of that passage. I do this both to bring some light to
@@ -216,7 +260,7 @@ export default function HarmonicJusticePage() {
           this speculation) and to soothe the boredom of those peevish mathematical demonstrations (of which this whole
           work is composed) by interspersing pleasant, popular material, and to show a taste of its usefulness in
           understanding the Commonwealth.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           Kepler does not reject the idea that a state can be harmonic. He rejects Bodin&apos;s arithmetic. On the
@@ -224,10 +268,17 @@ export default function HarmonicJusticePage() {
           excludes ratios that plainly are, and contradicts itself. Then he names the real fault:
         </p>
 
-        <Quote href={PAGE.kepler204} cite="Kepler, Harmonices mundi III (Linz, 1619), p. 87">
+        <SourceQuote
+          book={SLUG.kepler}
+          page={204}
+          src={PAGE_IMG.kepler204}
+          pageAlt="Printed page 87 of Harmonices mundi, Book III, with tables of arithmetic and geometric progressions above Kepler's objections to Bodin"
+          source={<>Kepler, <em>Harmonices mundi</em> III (Linz, 1619)</>}
+          printedPage="87"
+        >
           Bodin wrongly denies that these latter sets produce harmonic concords, rising up on the authority of the
           ancients against the very evidence of the sense of hearing.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           This is the useful part of the episode. A model of social order borrowed from music was held to the
@@ -235,18 +286,40 @@ export default function HarmonicJusticePage() {
           is the ear, not the authority.
         </p>
 
+        <PageFigure
+          src={PAGE_IMG.kepler133}
+          alt="Printed page 27 of Harmonices mundi, Book III, with a diagram of a string divided into sections, numbered fractions beside each division"
+          href={`${BOOK.kepler}?page=133`}
+          source={<>Kepler, <em>Harmonices mundi</em> III (Linz, 1619), printed p. 27</>}
+        >
+          Earlier in the same book Kepler sets out the seven divisions of a string that give the consonances, drawn as
+          brackets with their fractions. The paragraph beside the diagram opens &ldquo;Has sectiones chordae septem
+          primum auditu indice inveni&rdquo;: he found them first with the ear as judge.
+        </PageFigure>
+
         <h2 className={h2}>The alchemists: wealth that multiplies without being spent</h2>
 
         <p className={p}>
           Alchemy is remembered as an attempt to make gold. The texts often set the Art above gold and above trade.
-          The English translation of <em>Splendor Solis</em> ends:
+          The{' '}
+          <Link href={BOOK.splendor}>
+            English translation of <em>Splendor Solis</em>
+          </Link>{' '}
+          ends:
         </p>
 
-        <Quote href={PAGE.splendor129} cite="Splendor Solis, English translation (London, 1920), p. 81">
+        <SourceQuote
+          book={SLUG.splendor}
+          page={129}
+          src={PAGE_IMG.splendor129}
+          pageAlt="Printed page 81, the Conclusion of Splendor Solis, ending 'End of Splendor Solis'"
+          source={<><em>Splendor Solis</em>, English translation (London, 1920)</>}
+          printedPage="81"
+        >
           He is like one who had a flint from which he strikes fire and gives to whosoever he likes, without the stone
           getting any smaller through it. It is as good as giving superfluous fine Gold. This Art is also better than
           all commerce, Gold and Silver, and her fruits are better than the wealth of all the world.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The flint that gives fire without wearing down is the alchemists&apos; &ldquo;multiplication&rdquo; of the
@@ -254,11 +327,21 @@ export default function HarmonicJusticePage() {
           gives without being used up.
         </p>
 
+        <PageFigure
+          src={PAGE_IMG.splendor43}
+          alt="Plate VI of Splendor Solis, The Other Parable: inside an ornate architectural frame a man on a ladder picks fruit from a tree into a bag while two robed men talk below; bathers sit in the foreground"
+          href={`${BOOK.splendor}?page=43`}
+          source={<><em>Splendor Solis</em> (London, 1920), plate VI</>}
+        >
+          &ldquo;The Other Parable&rdquo;: a man on a ladder gathers the fruit of a tree into a bag while two men talk
+          beneath it.
+        </PageFigure>
+
         <p className={p}>
           The people who held this hope were not all recluses. Johann Joachim Becher (1635&ndash;1682) was an
           alchemist, a physician, an economic adviser to the emperor in Vienna, and a promoter of manufactories and
           trading companies. One of his books in the library is a ledger of his own projects. Its title promises{' '}
-          <Link href={PAGE.becher7} className={linkClass}>
+          <Link href={`${BOOK.becher}?page=6`}>
             &ldquo;one hundred political, physical, mechanical and mercantile concepts and propositions, some of which
             went well and some came to nothing&rdquo;
           </Link>{' '}
@@ -266,19 +349,40 @@ export default function HarmonicJusticePage() {
           edition). A generation later Isaac Newton, who spent decades on alchemy, was running the Royal Mint.
         </p>
 
+        <PageFigure
+          src={PAGE_IMG.becher6}
+          alt="Title page in black and red Fraktur: D. Joh. Joachim Bechers Närrische Weißheit und Weise Narrheit, oder ein hundert so politische als physicalische, mechanische und mercantilische Concepten und Propositionen, Anno MDCCVII"
+          href={`${BOOK.becher}?page=6`}
+          source={<>Becher, <em>Närrische Weißheit und weise Narrheit</em> (1707)</>}
+        >
+          The title page, printed in black and red, with the promise of a hundred concepts &ldquo;deren etliche gut
+          gethan, etliche zu nichts worden&rdquo;, and a preface on Becher&apos;s virtues, vices and fortunes.
+        </PageFigure>
+
         <h2 className={h2}>Adam Smith: the invisible hand is a providence</h2>
 
         <p className={p}>
-          The phrase everyone knows first appears in Smith&apos;s <em>Theory of Moral Sentiments</em> (1759), in a
+          The phrase everyone knows first appears in Smith&apos;s{' '}
+          <Link href={BOOK.smithTms}>
+            <em>Theory of Moral Sentiments</em>
+          </Link>{' '}
+          (1759), in a
           passage about the land and how its produce is shared:
         </p>
 
-        <Quote href={PAGE.smith344} cite="Adam Smith, The Theory of Moral Sentiments (1759), p. 350">
-          They are led by an invisible hand to make nearly the same distribution of the necessities of life which
-          would have been made had the earth been divided into equal portions among all its inhabitants. Thus, without
-          intending it and without knowing it, they advance the interest of society and provide the means for the
+        <SourceQuote
+          book={SLUG.smithTms}
+          page={344}
+          src={PAGE_IMG.smith344}
+          pageAlt="Printed page 350 of The Theory of Moral Sentiments, the passage on the invisible hand"
+          source={<>Adam Smith, <em>The Theory of Moral Sentiments</em> (London, 1759)</>}
+          printedPage="350"
+        >
+          They are led by an invisible hand to make nearly the same distribution of the necessaries of life, which
+          would have been made, had the earth been divided into equal portions among all its inhabitants, and thus
+          without intending it, without knowing it, advance the interest of the society, and afford means to the
           multiplication of the species.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The next sentence begins &ldquo;When providence divided the earth among a few lordly masters.&rdquo; The
@@ -338,7 +442,7 @@ export default function HarmonicJusticePage() {
 
         <p className={p}>
           A sequel,{' '}
-          <Link href="/articles/ledgers-and-heavens" className={linkClass}>
+          <Link href="/articles/ledgers-and-heavens">
             Ledgers and Heavens
           </Link>
           , follows the people who handled money for a living (the Medici, Pacioli, Copernicus at the mint, a London

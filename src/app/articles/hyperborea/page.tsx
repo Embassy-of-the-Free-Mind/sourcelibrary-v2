@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import SourceQuote from '@/components/articles/SourceQuote';
+import HyperboreaTimeline from './HyperboreaTimeline';
 
 const LEAD_IMAGE = 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg';
 const LEAD_ALT =
@@ -27,59 +29,8 @@ export const metadata: Metadata = withArticleMeta('hyperborea', {
   },
 });
 
-const linkClass = 'text-accent-rust hover:text-accent-rust underline';
-const captionLinkClass = 'text-accent-rust hover:text-accent-rust';
-
-function Plate({
-  src,
-  alt,
-  href,
-  width,
-  height,
-  wide = false,
-  children,
-}: {
-  src: string;
-  alt: string;
-  href: string;
-  width: number;
-  height: number;
-  wide?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <figure className={wide ? 'my-10' : 'my-10 max-w-md mx-auto w-full'}>
-      <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
-        <Link href={href}>
-          <Image src={src} alt={alt} width={width} height={height} className="w-full h-auto" unoptimized />
-        </Link>
-      </div>
-      <figcaption className="text-xs text-muted mt-2 text-center">
-        {children}{' '}
-        <Link href={href} className={captionLinkClass}>
-          View in collection →
-        </Link>
-      </figcaption>
-    </figure>
-  );
-}
-
 function Section({ children }: { children: React.ReactNode }) {
   return <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">{children}</h2>;
-}
-
-function Quote({ children, cite, href }: { children: React.ReactNode; cite: React.ReactNode; href: string }) {
-  return (
-    <blockquote className="border-l-2 border-accent-gold/40 pl-5 my-8 text-secondary">
-      <p className="leading-relaxed italic">{children}</p>
-      <footer className="text-sm text-muted mt-2 not-italic">
-        {cite}{' '}
-        <Link href={href} className={captionLinkClass}>
-          Read the page →
-        </Link>
-      </footer>
-    </blockquote>
-  );
 }
 
 function P({ children }: { children: React.ReactNode }) {
@@ -108,7 +59,7 @@ export default function HyperboreaPage() {
           from the far north, wrapped in wheat straw. It had passed from people to people across the whole of Europe.
           Nobody on Delos had met the senders. The Greeks called them the <em>Hyperboreans</em>, the people beyond
           the north wind. In another book Herodotus admits he cannot say where the north ends, only that{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=163" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=163">
             amber reaches Greece from there
           </Link>
           . Two thousand years later, historians on the Baltic coast put those two passages together and concluded
@@ -120,7 +71,7 @@ export default function HyperboreaPage() {
           described it, the scholars of the sixteenth to eighteenth centuries who each found it in their own country,
           and the historians of Prussia, Latvia and Lithuania who joined it to the one northern thing a Greek could
           hold in his hand. Many of these books are in the library&apos;s{' '}
-          <Link href="/collections/baltic-paganism" className={linkClass}>
+          <Link href="/collections/baltic-paganism">
             Baltic Paganism
           </Link>{' '}
           collection, translated into English for the first time.
@@ -133,14 +84,17 @@ export default function HyperboreaPage() {
           Pythian games in 498 BCE, puts it at the limit of human striving:
         </P>
 
-        <Quote
-          cite={<>Pindar, <em>Pythian</em> 10, tr. J. E. Sandys (1915).</>}
-          href="/book/the-odes-of-pindar-sandys?page=346"
+        <SourceQuote
+          book="the-odes-of-pindar-sandys"
+          page={347}
+          src="https://images.sourcelibrary.org/pages/69924f3f09c5da0cf50d7b8d/0347.jpg"
+          source={<>Pindar, <em>Pythian</em> 10, tr. J. E. Sandys (1915)</>}
+          pageAlt="Page of Sandys's English translation of Pythian 10, with the passage on the road to the Hyperboreans"
         >
           Neither by ships nor by land canst thou find the wondrous road to the trysting-place of the Hyperboreans.
           Yet among them, in olden days, Perseus, the leader of the people, shared the banquet on entering their homes
           and finding them sacrificing famous hecatombs of asses in honour of the god.
-        </Quote>
+        </SourceQuote>
 
         <P>
           The god is Apollo. The Hyperboreans are his people: he spends the winter with them, and they live long and
@@ -150,15 +104,18 @@ export default function HyperboreaPage() {
           story is the strangest thing in his account:
         </P>
 
-        <Quote
-          cite={<>Herodotus, <em>Histories</em> 4.33, Loeb edition (1921), English translation by Source Library.</>}
-          href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=254"
+        <SourceQuote
+          book="the-persian-wars-ii-books-3-4-loeb-l118-herodotus"
+          page={254}
+          src="https://images.sourcelibrary.org/pages/69937cdac970b9f8351dd273/0254.jpg"
+          source={<>Herodotus, <em>Histories</em> 4.33, Loeb edition (1921), English translation by Source Library</>}
+          pageAlt="Page of the Loeb Herodotus, Book IV chapters 31 to 33, on the Hyperboreans and the offerings wrapped in wheat-straw"
         >
           They claim that sacred offerings wrapped in wheat-straw are brought from the Hyperboreans into Scythia.
           When they have passed through Scythia, each neighboring nation receives them in turn until they are carried
           as far west as the Adriatic Sea. From there, they are brought southward, and the people of Dodona are the
           first of the Greeks to receive them.
-        </Quote>
+        </SourceQuote>
 
         <P>
           At first, the Delians said, the Hyperboreans sent two girls, Hyperoche and Laodice, with an escort of five
@@ -166,7 +123,7 @@ export default function HyperboreaPage() {
           asked their neighbours to pass it on. The girls&apos; tomb was still shown on Delos, under an olive tree to
           the left of the temple of Artemis, and Delian boys and girls cut a lock of their hair before marriage and
           laid it there. Herodotus{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=255" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=255">
             adds a detail he had seen himself
           </Link>
           : Thracian and Paeonian women never sacrificed to Artemis without wheat straw.
@@ -174,7 +131,7 @@ export default function HyperboreaPage() {
 
         <P>
           Then he steps back. He will not tell the story of the Hyperborean Abaris, who{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=257" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=257">
             carried an arrow all around the world without eating
           </Link>
           , and he points out the symmetry the idea depends on: if there are people beyond the north wind, there must
@@ -186,13 +143,13 @@ export default function HyperboreaPage() {
           Hyperboreans behind the Rhipaean mountains, the range the Greeks imagined along the top of the world, where
           the sun rises once a year and sets once a year and the old, tired of living, feast and then leap into the
           sea. Solinus, copying Pliny two centuries later, decided that so many authors could not be wrong:{' '}
-          <Link href="/book/c-iulii-solini-polyhistor-1543-solinus?page=79" className={linkClass}>
+          <Link href="/book/c-iulii-solini-polyhistor-1543-solinus?page=79">
             &ldquo;let no one fear the false. We shall, therefore, speak of the Hyperboreans.&rdquo;
           </Link>{' '}
           Diodorus of Sicily, drawing on the lost Hecataeus of Abdera, made Hyperborea an island &ldquo;no smaller
           than Sicily&rdquo; opposite the land of the Celts, with a round temple where Apollo came every nineteen
           years. The German antiquary Johann Georg Keyssler{' '}
-          <Link href="/book/dissertatio-de-cultu-solis-keyssler?page=26" className={linkClass}>
+          <Link href="/book/dissertatio-de-cultu-solis-keyssler?page=26">
             was still quoting the passage in 1728
           </Link>{' '}
           in a dissertation on sun worship.
@@ -204,13 +161,13 @@ export default function HyperboreaPage() {
           The one Hyperborean with a name is Abaris, priest of Apollo. Herodotus gives him a single sentence and
           refuses to repeat the story. The later lives of Pythagoras, written in the third and fourth centuries CE
           by Porphyry and Iamblichus, give him a career. In Iamblichus he comes south{' '}
-          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=189" className={linkClass}>
+          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=189">
             &ldquo;gathering gold for the temple and predicting a plague. He stayed in the temples, and he was never
             seen drinking or eating anything.&rdquo;
           </Link>{' '}
           He performs purifications at Sparta, after which, the story goes, Sparta never had the plague again;
           Pausanias, as an Italian literary historian{' '}
-          <Link href="/book/istoria-de-poeti-greci-et-di-que-che-n-greca-lingua-han-crasso?page=17" className={linkClass}>
+          <Link href="/book/istoria-de-poeti-greci-et-di-que-che-n-greca-lingua-han-crasso?page=17">
             noted in 1678
           </Link>
           , credits him with founding the Spartan temple of Kore the Saviour.
@@ -218,29 +175,32 @@ export default function HyperboreaPage() {
 
         <P>
           Then he meets Pythagoras. Iamblichus describes him as an old man from the north,{' '}
-          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=153" className={linkClass}>
+          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=153">
             &ldquo;inexperienced in Greek education and uninitiated&rdquo;
           </Link>
           , and says Pythagoras waived the five years of silence his other pupils served and taught him the doctrine
           of nature and of the gods in brief. Abaris takes Pythagoras for the god he serves, and is shown the proof:
         </P>
 
-        <Quote
-          cite={<>Iamblichus, <em>On the Pythagorean Life</em> 28, ed. A. Nauck (1884), English translation by Source Library.</>}
-          href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=185"
+        <SourceQuote
+          book="de-vita-pythagorica-liber-codex-florentinus-nauck"
+          page={185}
+          src="https://images.sourcelibrary.org/pages/69d144c11c2a66dc094b1de5/0185.jpg"
+          source={<>Iamblichus, <em>On the Pythagorean Life</em> 28, ed. A. Nauck (1884), English translation by Source Library</>}
+          pageAlt="Page of Nauck's Greek text of Iamblichus, chapter 28, with the golden thigh shown to Abaris"
         >
           For the fact that he displayed his golden thigh to Abaris the Hyperborean, who had surmised that he was the
           Apollo who is among the Hyperboreans, of whom Abaris was a priest, confirming that his assumption was true and
           not a deception, is very famous.
-        </Quote>
+        </SourceQuote>
 
         <P>
           Pythagoras also takes away Abaris&apos;s golden arrow,{' '}
-          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=189" className={linkClass}>
+          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=189">
             &ldquo;without which he was unable to find his way.&rdquo;
           </Link>{' '}
           Near the end of the book the two men stand together before Phalaris, the tyrant of Acragas, and Abaris{' '}
-          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=238" className={linkClass}>
+          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=238">
             asks &ldquo;concerning statues, the most holy forms of worship, the providence of the gods&rdquo;
           </Link>{' '}
           while Phalaris rages and blasphemes. The Hyperborean in these stories is a pious foreigner who confirms
@@ -250,13 +210,13 @@ export default function HyperboreaPage() {
         <P>
           The arrow is what people remembered. In Porphyry and Iamblichus it is Apollo&apos;s gift, and Abaris
           rides it: as the German collector of magic lore Eberhard David Hauber quoted the Greek in 1739,{' '}
-          <Link href="/book/bibliotheca-acta-et-scripta-magica-vol-ii-hauber?page=111" className={linkClass}>
+          <Link href="/book/bibliotheca-acta-et-scripta-magica-vol-ii-hauber?page=111">
             &ldquo;he crossed rivers and seas and impassable places, walking through the air, as it were.&rdquo;
           </Link>{' '}
           Hyginus made it the arrow Apollo shot the Cyclopes with and then hid under a mountain in the north. The
           pagan critic Celsus held Abaris up against Jesus as a man nobody called a god although he flew on an
           arrow, and Origen answered with a question:{' '}
-          <Link href="/book/opera-omnia-xviii-contra-celsum-i-iv-lommatzsch-origen?page=302" className={linkClass}>
+          <Link href="/book/opera-omnia-xviii-contra-celsum-i-iv-lommatzsch-origen?page=302">
             &ldquo;what did he himself gain by being carried on an arrow?&rdquo;
           </Link>
         </P>
@@ -265,65 +225,70 @@ export default function HyperboreaPage() {
           Christian writers kept the arrow as a figure. Gregory of Nazianzus, in his funeral oration for Basil, set
           the arrow of Abaris beside Pegasus as things whose flight mattered less than lifting the mind to God, and
           Erasmus entered it in his <em>Adages</em>:{' '}
-          <Link href="/book/adagiorum-opus-erasmus-desiderius?page=1096" className={linkClass}>
+          <Link href="/book/adagiorum-opus-erasmus-desiderius?page=1096">
             <em>Abaridos oistos</em>, &ldquo;the arrow of Abaris, is said of those who are swift&rdquo;
           </Link>
           . Nicolas Caussin&apos;s emblem book of 1623 glosses it as{' '}
-          <Link
-            href="/book/polyhistor-symbolicus-electorum-symbolorum-amp-parabolarum-caussin-2?page=587"
-            className={linkClass}
-          >
+          <Link href="/book/polyhistor-symbolicus-electorum-symbolorum-amp-parabolarum-caussin-2?page=587">
             &ldquo;a mind contemplating God, or fame.&rdquo;
           </Link>{' '}
           Later readers tried to explain it. Pierre Bayle, in a note Hauber summarised in 1738, compared it to the
           dowsers&apos; divining rod and judged that the rod, which found{' '}
-          <Link
-            href="/book/bibliotheca-acta-et-scripta-magica-grundliche-nachrichten-hauber?page=856"
-            className={linkClass}
-          >
+          <Link href="/book/bibliotheca-acta-et-scripta-magica-grundliche-nachrichten-hauber?page=856">
             &ldquo;treasures, metals, the boundaries of fields, thieves, and murderers,&rdquo;
           </Link>{' '}
           was &ldquo;no less wonderful than the arrow of Abaris.&rdquo; Godfrey Higgins guessed in 1827 that{' '}
-          <Link href="/book/the-celtic-druids-or-an-attempt-to-show-that-the-druids-higgins?page=341" className={linkClass}>
+          <Link href="/book/the-celtic-druids-or-an-attempt-to-show-that-the-druids-higgins?page=340">
             &ldquo;perhaps this arrow was the magnetic needle,&rdquo;
           </Link>{' '}
           and the Welsh antiquary Edward Davies suggested it had been{' '}
-          <Link
-            href="/book/6977ace4235fbd25a5194779?page=293"
-            className={linkClass}
-          >
+          <Link href="/book/6977ace4235fbd25a5194779?page=293">
             an arrow of straw
           </Link>
           , like the straw the Hyperborean offerings came wrapped in.
         </P>
 
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/6a09ece3b4da373307f15cf4/1096.jpg"
+            alt="Two-column page of Latin and Greek from Erasmus's Adages, with the entry Abaridis sagitta in the left column"
+            href="/book/adagiorum-opus-erasmus-desiderius?page=1096"
+            source={<>Erasmus, <em>Adagiorum opus</em> (1578)</>}
+          >
+            <em>Abaridis sagitta</em>, the arrow of Abaris, in the left column of Erasmus&apos;s <em>Adages</em>.
+          </PageFigure>
+        </div>
+
         <P>
           Where he came from was argued as hard as where Hyperborea was. Higgins summed up the British debate:
         </P>
 
-        <Quote
-          cite={<>Godfrey Higgins, <em>The Celtic Druids</em> (1827), p. 124.</>}
-          href="/book/the-celtic-druids-or-an-attempt-to-show-that-the-druids-higgins?page=341"
+        <SourceQuote
+          book="the-celtic-druids-or-an-attempt-to-show-that-the-druids-higgins"
+          page={340}
+          src="https://images.sourcelibrary.org/pages/69ee4f106dd925d126f42acd/0340.jpg"
+          source={<>Godfrey Higgins, <em>The Celtic Druids</em> (1827)</>}
+          pageAlt="Page 124 of Higgins's Celtic Druids, headed Abaris probably a native of Ireland"
         >
           Every true and loyal Scot is certain that he came from the Hebrides: Mr. Vallencey proves, as clear as the
           sun at noon, that he was an Irishman. This seems odd to the Welshmen, who are quite certain that he came
           from Wales; and Mr. Borlase does not fail to secure him for Cornwall.
-        </Quote>
+        </SourceQuote>
 
         <P>
           In 1706 Carl Gottfried Zapf devoted a whole academic disputation to Abaris. He collected every ancient
           witness and then declined to locate the man&apos;s homeland, because{' '}
-          <Link href="/book/disp-hist-de-abaride-zapf?page=20" className={linkClass}>
+          <Link href="/book/disp-hist-de-abaride-zapf?page=20">
             &ldquo;to designate in what region that people held a fixed seat is dangerous&rdquo;
           </Link>
           : what the authors wrote about the northern ocean was &ldquo;very unknown and uncertain.&rdquo; The
           historian of philosophy Jacob Brucker put the problem more sharply in 1742: the Pythagoreans&apos;{' '}
-          <Link href="/book/historia-critica-philosophiae-brucker?page=374" className={linkClass}>
+          <Link href="/book/historia-critica-philosophiae-brucker?page=374">
             enthusiasm for Abaris &ldquo;strangely obscured his history.&rdquo;
           </Link>{' '}
           The alchemist Johann Ludwig Hannemann went the other way. He read the Hyperborean birth of Apollo and Diana
           as a code for the red and white stones of the Great Work, and concluded that{' '}
-          <Link href="/book/ovum-hermetico-paracelsico-trismegistum-hannemann?page=208" className={linkClass}>
+          <Link href="/book/ovum-hermetico-paracelsico-trismegistum-hannemann?page=208">
             the art had first flourished among that people
           </Link>{' '}
           and spread from them to the rest of the world (1694).
@@ -331,7 +296,7 @@ export default function HyperboreaPage() {
 
         <P>
           Modern scholars read Abaris with a second figure from Herodotus, Aristeas of Proconnesus, who{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=235" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=235">
             said in his epic verses that, while possessed by Apollo, he reached the Issedones
           </Link>
           , and that beyond them lived the one-eyed Arimaspians, the gold-guarding griffins and, last, the
@@ -354,13 +319,13 @@ export default function HyperboreaPage() {
             <strong>The Delian maidens.</strong> Herodotus names two pairs: Hyperoche and Laodice with their five
             escorts, and before them Arge and Opis, who came &ldquo;at the same time as the gods themselves.&rdquo;
             Later poets added Opis and Hecaerge, and Olen&apos;s hymn brought a third, Achaeia,{' '}
-            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=346" className={linkClass}>
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=346">
               &ldquo;to Delos from these Hyperboreans.&rdquo;
             </Link>
           </li>
           <li>
             <strong>Eileithyia,</strong> goddess of childbirth, who in the Athenian story{' '}
-            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=125" className={linkClass}>
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=125">
               &ldquo;is said to have come from the Hyperboreans to Delos to help Latona in her pangs.&rdquo;
             </Link>{' '}
             Diodorus said Leto herself was born among the Hyperboreans, which is why Apollo was honoured there above
@@ -369,25 +334,25 @@ export default function HyperboreaPage() {
           <li>
             <strong>The founders of Delphi.</strong> The Delphian poetess Boeo wrote that the oracle was set up by
             Hyperboreans, Pagasus and Agyieus, and that{' '}
-            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=605" className={linkClass}>
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=605">
               Olen, who came with them, &ldquo;was the first to give oracles and sing in hexameters.&rdquo;
             </Link>{' '}
             Herodotus calls Olen a Lycian; Boeo made him a northerner. The Delphians also said their second temple,
             made by bees{' '}
-            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=606" className={linkClass}>
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=606">
               &ldquo;out of wax and feathers,&rdquo; was &ldquo;sent to the Hyperboreans by Apollo.&rdquo;
             </Link>
           </li>
           <li>
             <strong>Two ghost warriors.</strong> When the Gauls attacked Delphi in 279 BCE, thunderbolts and
             falling rocks drove them off, and{' '}
-            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=106" className={linkClass}>
+            <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=106">
               &ldquo;two of these phantom warriors, Hyperochus and Amadocus, came from the Hyperboreans.&rdquo;
             </Link>
           </li>
           <li>
             <strong>The olive of Olympia.</strong> Pindar tells how Heracles persuaded{' '}
-            <Link href="/book/the-odes-of-pindar-sandys?page=91" className={linkClass}>
+            <Link href="/book/the-odes-of-pindar-sandys?page=91">
               &ldquo;the servants of Apollo, the people of the Hyperboreans&rdquo;
             </Link>{' '}
             to give him the wild olive from the springs of the Danube, and planted it at Olympia, where it crowned
@@ -396,7 +361,7 @@ export default function HyperboreaPage() {
           <li>
             <strong>Aristeas of Proconnesus,</strong> the poet who said he had travelled north possessed by Apollo,
             reappeared at Metapontum in Italy long after his supposed death. The Metapontines set up a{' '}
-            <Link href="/book/historiae-commentitiae-dyscolus?page=116" className={linkClass}>
+            <Link href="/book/historiae-commentitiae-dyscolus?page=116">
               bronze laurel &ldquo;when he said he had arrived from the Hyperboreans.&rdquo;
             </Link>
           </li>
@@ -417,44 +382,40 @@ export default function HyperboreaPage() {
           century BCE), sails his heroes up the Eridanus past the smoking wreck and records a second version:
         </P>
 
-        <Quote
-          cite={<>Apollonius of Rhodes, <em>Argonautica</em> 4.611–617, ed. Henri Estienne (1574), English translation by Source Library.</>}
-          href="/book/apollonii-rhodii-argonautica-estienne?page=210"
+        <SourceQuote
+          book="apollonii-rhodii-argonautica-estienne"
+          page={210}
+          src="https://images.sourcelibrary.org/pages/69b2f33221208ea9dc277d1f/0210.jpg"
+          source={<>Apollonius of Rhodes, <em>Argonautica</em> 4.611–617, ed. Henri Estienne (1574), English translation by Source Library</>}
+          pageAlt="Page of Estienne's Greek Argonautica, Book 4 lines 597 to 626, with marginal scholia"
         >
           The Celts have made it a tradition that these are the tears of Apollo, son of Leto, which are borne in the
           eddies, which he shed in countless numbers before, when he reached the holy race of the Hyperboreans,
           leaving the gleaming heaven because of his father&apos;s rebuke.
-        </Quote>
+        </SourceQuote>
 
-        <Plate
-          src={LEAD_IMAGE}
-          alt={LEAD_ALT}
-          href="/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan"
-          width={2000}
-          height={1403}
-          wide
-        >
+        <PageFigure src={LEAD_IMAGE} alt={LEAD_ALT} href="/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan" wide>
           The Heliades become poplars by the Eridanus. Engraving after Hendrick Goltzius, from his series on
           Ovid&apos;s <em>Metamorphoses</em> (c. 1590).
-        </Plate>
+        </PageFigure>
 
         <P>
           Amber was real, and so was the trade that brought it south. Infrared analyses of Bronze Age finds, made by
           Curt Beck and his colleagues at Vassar from the 1960s onward, identified Baltic amber (succinite) in
           Mycenaean Greece. Herodotus knew that amber came from the far north and did not believe the river story
           that explained it. He{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=164" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=164">
             did not believe there was a river called Eridanus
           </Link>{' '}
           flowing into a northern sea; the name was Greek, he said, and some poet had made it up
           ; yet{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=165" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=165">
             &ldquo;it is from these furthest reaches that both tin and amber come to us.&rdquo;
           </Link>{' '}
           Five centuries later Tacitus
           named the people who gathered it. On the right-hand shore of the Baltic, he writes in the{' '}
           <em>Germania</em>, live the Aestii, who{' '}
-          <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=196" className={linkClass}>
+          <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=196">
             &ldquo;worship the Mother of the Gods&rdquo; and wear the figures of wild boars
           </Link>{' '}
           as its emblem, and who alone collect amber, which they call <em>glesum</em>, on the beach and in the shallows.
@@ -464,7 +425,7 @@ export default function HyperboreaPage() {
           Nothing in Herodotus says what was inside the Hyperborean bundles. A commentator on Callimachus&apos;s{' '}
           <em>Hymn to Delos</em>, printed in a 1761 edition of the poet, notes that Pausanias described the
           first-fruits as{' '}
-          <Link href="/book/hymni-epigrammata-et-fragmenta-callimachus?page=567" className={linkClass}>
+          <Link href="/book/hymni-epigrammata-et-fragmenta-callimachus?page=567">
             &ldquo;hidden in wheaten straw, and recognized by no one.&rdquo;
           </Link>{' '}
           What the Greek sources do record is a chain of hands running out of the north toward Delos, and amber
@@ -478,40 +439,52 @@ export default function HyperboreaPage() {
           that Hyperborea came from poets and cult, while Thule came from a traveller. Around 325 BCE Pytheas of
           Massalia (Marseille) sailed north past Britain and reported an island where at midsummer the sun did not
           set. Pliny preserves the distance: Thule is{' '}
-          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=138" className={linkClass}>
+          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=138">
             &ldquo;six days&apos; sail from the north of Britain.&rdquo;
           </Link>{' '}
           Beyond it, Pytheas said, there was no longer land or sea or air but{' '}
-          <Link href="/book/the-geography-of-strabo-vol-1-strabo?page=451" className={linkClass}>
+          <Link href="/book/the-geography-of-strabo-vol-1-strabo?page=451">
             &ldquo;a kind of substance concreted from all these elements, resembling a sea-lung.&rdquo;
           </Link>{' '}
           Pliny adds that{' '}
-          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=374" className={linkClass}>
+          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=374">
             &ldquo;at one day&apos;s sail from Thule is the frozen ocean, which by some is called the Cronian
             Sea.&rdquo;
           </Link>
         </P>
 
+        <PageFigure
+          src="/articles/hyperborea/cluver-northern-lands-map.jpg"
+          alt="Engraved map of Europe and western Asia: Thule north of Britain under the Mare Cronium, and the word Hyperborei above the Ryphaei montes north of Sarmatia"
+          href="/book/germaniae-antiquae-libri-tres-cluver?page=65"
+          source={<>Philipp Clüver, <em>Germania antiqua</em> (1616)</>}
+          credit="Scan: Early European Books, © 2012 ProQuest LLC, reproduced by courtesy of the Wellcome Trust, London."
+          wide
+        >
+          Clüver&apos;s map of the northern lands of Europe and Asia, drawn, as its cartouche says, &ldquo;to the
+          false notion of the ancient writers&rdquo; (<em>ad falsam veterum scriptorum mentem accommodata</em>).
+          Thule lies north of Britain beside the Mare Cronium; the <em>Hyperborei</em> live along the Rhipaean
+          mountains (<em>Ryphaei montes</em>) at the top of the map. The two halves of the folding plate are joined
+          here.
+        </PageFigure>
+
         <P>
           Strabo did not believe a word of it. Gerardus Vossius, listing the charges in 1624, noted that Strabo
           had called Pytheas{' '}
-          <Link href="/book/de-historicis-graecis-vossius?page=563" className={linkClass}>
+          <Link href="/book/de-historicis-graecis-vossius?page=563">
             <em>andra pseudestaton</em>, &ldquo;a most lying man.&rdquo;
           </Link>{' '}
           The same page shows why Pytheas matters for the amber story. Pliny cites him for an estuary of the
           Guttones, a Germanic people, and an island called Abalus a day&apos;s sail off, where amber washes up in
           spring as &ldquo;a refuse of the congealed sea,&rdquo; which the islanders burn as fuel and sell to the
           Teutons. Pliny also reports that Pytheas called a huge northern island{' '}
-          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=363" className={linkClass}>
+          <Link href="/book/the-natural-history-of-pliny-vol-1-elder?page=363">
             Basilia
           </Link>
           , the name Diodorus used for the amber island that Hartknoch would claim as Samland. Pytheas is the
           first Greek who seems to have reached the amber coast, or met people who had. In 1641 Pierre Gassendi, at
           the urging of his friend Peiresc, set out to defend his fellow Provençal:{' '}
-          <Link
-            href="/book/viri-illustris-nicolai-claudii-fabricii-de-peiresc-vita-gassendi?page=322"
-            className={linkClass}
-          >
+          <Link href="/book/viri-illustris-nicolai-claudii-fabricii-de-peiresc-vita-gassendi?page=322">
             &ldquo;Pytheas is the oldest scholar the entire West possesses.&rdquo;
           </Link>
         </P>
@@ -519,32 +492,44 @@ export default function HyperboreaPage() {
         <P>
           Rome kept Thule as the end of the world. Virgil called it <em>ultima Thule</em>, &ldquo;farthest
           Thule,&rdquo; and Tacitus says Agricola&apos;s fleet, rounding Scotland in 83 CE, saw it:{' '}
-          <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=121" className={linkClass}>
+          <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=121">
             &ldquo;The shores of Thule were even descried.&rdquo;
           </Link>{' '}
           Later writers moved it to wherever the edge of knowledge then lay. Procopius, in the sixth century, made
           Thule Scandinavia, where the Heruli sent{' '}
-          <Link href="/book/procopii-caesariensis-opera-omnia-caesarea?page=488" className={linkClass}>
+          <Link href="/book/procopii-caesariensis-opera-omnia-caesarea?page=488">
             to fetch a king of royal blood
           </Link>{' '}
           and where the people, after a{' '}
-          <Link href="/book/procopii-caesariensis-opera-omnia-caesarea?page=489" className={linkClass}>
+          <Link href="/book/procopii-caesariensis-opera-omnia-caesarea?page=489">
             &ldquo;great and perpetual night of thirty-five days,&rdquo;
           </Link>{' '}
           sent watchers up the mountains to look for the sun. Adam of Bremen, around 1075, settled it on Iceland:{' '}
-          <Link href="/book/gesta-hammaburgensis-ecclesiae-pontificum-bremen?page=212" className={linkClass}>
+          <Link href="/book/gesta-hammaburgensis-ecclesiae-pontificum-bremen?page=212">
             &ldquo;This Thyle is now called Island, from the ice which binds the ocean.&rdquo;
           </Link>{' '}
           Olaus Magnus, the exiled Swedish archbishop, agreed in 1555, calling Iceland{' '}
-          <Link href="/book/historia-de-gentibus-septentrionalibus-magnus?page=152" className={linkClass}>
+          <Link href="/book/historia-de-gentibus-septentrionalibus-magnus?page=152">
             &ldquo;the glacial land, or the ultimate Thule.&rdquo;
           </Link>{' '}
           A Greek-Latin edition of Cleomedes printed in 1605{' '}
-          <Link href="/book/cleomedis-meteora-graece-et-latine-balfour-1605-cleomedes?page=244" className={linkClass}>
+          <Link href="/book/cleomedis-meteora-graece-et-latine-balfour-1605-cleomedes?page=244">
             lists the rival answers
           </Link>
           : Mercator&apos;s Iceland, Ortelius&apos;s Telemark in Norway, Camden&apos;s Shetland.
         </P>
+
+        <div className="max-w-lg mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/699065763dc2ed39a49f155d/0098.jpg"
+            alt="Woodcut map of Scandinavia, Finland and the northern seas, with Iceland labelled Islandia at top left"
+            href="/book/historia-de-gentibus-septentrionalibus-magnus?page=98"
+            source={<>Olaus Magnus, <em>Historia de gentibus septentrionalibus</em> (1555)</>}
+          >
+            Olaus Magnus&apos;s woodcut map of the northern kingdoms, printed near the start of his history. Iceland,
+            his &ldquo;ultimate Thule,&rdquo; is at top left as <em>Islandia</em>.
+          </PageFigure>
+        </div>
 
         <P>
           The other names belong to the same map. The Rhipaean mountains were the imagined range along the top of
@@ -552,7 +537,7 @@ export default function HyperboreaPage() {
           falling snow that Herodotus explained as a figure of speech. The one-eyed Arimaspians and the griffins
           guarded northern gold. For the Goths the north was a beginning, not an edge: Jordanes, in the sixth
           century, called the island of Scandza{' '}
-          <Link href="/book/iordanis-romana-et-getica-jordanes?page=141" className={linkClass}>
+          <Link href="/book/iordanis-romana-et-getica-jordanes?page=141">
             &ldquo;a workshop of nations or indeed a womb of peoples,&rdquo;
           </Link>{' '}
           and placed it opposite the mouth of the Vistula, close to the amber coast.
@@ -561,7 +546,7 @@ export default function HyperboreaPage() {
         <P>
           Learned writers kept Thule and Hyperborea apart for a long time. Toland in 1740 was careful to say that
           by Thule he meant{' '}
-          <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland?page=198" className={linkClass}>
+          <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland?page=198">
             &ldquo;only that of Pytheas, or Iceland,&rdquo;
           </Link>{' '}
           and by the island of the Hyperboreans the one Diodorus described. The modern occult and racial writers
@@ -578,24 +563,34 @@ export default function HyperboreaPage() {
           fertile, with a sacred precinct and a famous round temple, where the god comes
           every nineteen years and the moon looks very close to the earth. Readers in Britain drew the obvious
           conclusion. William Stukeley, in his <em>Stonehenge</em> of 1740, wrote that Diodorus{' '}
-          <Link href="/book/stonehenge-stukeley?page=161" className={linkClass}>
+          <Link href="/book/stonehenge-stukeley?page=161">
             &ldquo;gives an odd account from thence mix&apos;d with fable, and seemingly some reports of Stonehenge
             itself.&rdquo;
           </Link>{' '}
           William Borlase quoted the moon passage in 1769 as if the islanders{' '}
-          <Link href="/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=114" className={linkClass}>
+          <Link href="/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=114">
             &ldquo;had the use of telescopes&rdquo;
           </Link>
           . John Smith, whose <em>Choir Gaur</em> (1771) called Stonehenge &ldquo;the Grand Orrery of the Ancient
           Druids,&rdquo; counted{' '}
-          <Link href="/book/choir-gaur-the-grand-orrery-of-the-ancient-druids-commonly-smith?page=42" className={linkClass}>
+          <Link href="/book/choir-gaur-the-grand-orrery-of-the-ancient-druids-commonly-smith?page=42">
             nineteen stones in the inner oval
           </Link>
           . Richard Payne Knight concluded in 1786 that{' '}
-          <Link href="/book/an-account-of-the-remains-of-the-worship-of-priapus?page=140" className={linkClass}>
+          <Link href="/book/an-account-of-the-remains-of-the-worship-of-priapus?page=140">
             &ldquo;the Island I think can be no other than Britain.&rdquo;
           </Link>
         </P>
+
+        <PageFigure
+          src="/articles/hyperborea/stukeley-prospect-southwest.jpg"
+          alt="Engraving of the standing and fallen stones of Stonehenge, with a shepherd and dog, a couple walking and a man resting on the grass"
+          href="/book/stonehenge-stukeley?page=102"
+          source={<>William Stukeley, <em>Stonehenge</em> (1740)</>}
+          wide
+        >
+          &ldquo;Prospect of Stonehenge from the Southwest.&rdquo;
+        </PageFigure>
 
         <P>
           Several details fit. Britain lies opposite Gaul and is far larger than Sicily. The moon&apos;s rising
@@ -604,6 +599,18 @@ export default function HyperboreaPage() {
           on the midsummer sunrise. Hecataeus wrote a generation after Pytheas had sailed round Britain, so news of
           its stone circles could have reached him.
         </P>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/cropped/699ef9f4b0a976d32fd37467/699f2dc1ff964210e766d487.jpg"
+            alt="Engraved plan of Stonehenge: the stones in rings at the centre of a round banked enclosure, with the Avenue running out of it and scales in cubits and feet"
+            href="/book/stonehenge-stukeley?page=176"
+            source={<>William Stukeley, <em>Stonehenge</em> (1740)</>}
+          >
+            &ldquo;The Area of Stonehenge&rdquo;: Stukeley&apos;s plan of the round enclosure with the stones at its
+            centre and the Avenue leading away, measured in cubits and feet.
+          </PageFigure>
+        </div>
 
         <P>
           Other details do not fit. Stonehenge was built between about 3000 and 1500 BCE and was an old monument by
@@ -623,49 +630,60 @@ export default function HyperboreaPage() {
           There is a bolder version of the British case: that the Hyperborean offerings reaching Delos in
           Herodotus&apos;s lifetime were sent by Pythagorean druids. Roman and Greek writers did describe the druids
           in Pythagorean terms. Caesar, in the 50s BCE, says that the druids&apos; discipline{' '}
-          <Link href="/book/6a085cfb49638a50931ce60a?page=189" className={linkClass}>
+          <Link href="/book/6a085cfb49638a50931ce60a?page=189">
             &ldquo;is thought to have been invented in Britain and transferred from there into Gaul,&rdquo;
           </Link>{' '}
           that they keep their teaching out of writing although they use Greek letters for accounts, and that they
           teach above all{' '}
-          <Link href="/book/6a085cfb49638a50931ce60a?page=190" className={linkClass}>
+          <Link href="/book/6a085cfb49638a50931ce60a?page=190">
             &ldquo;that souls do not perish, but after death pass to others.&rdquo;
           </Link>{' '}
           Their Apollo, he adds,{' '}
-          <Link href="/book/6a085cfb49638a50931ce60a?page=191" className={linkClass}>
+          <Link href="/book/6a085cfb49638a50931ce60a?page=191">
             &ldquo;drives away diseases&rdquo;
           </Link>
           , which is what Abaris did at Sparta. Diodorus says outright that among the Gauls{' '}
-          <Link href="/book/studies-on-celtic-law-jubainville?page=30" className={linkClass}>
+          <Link href="/book/studies-on-celtic-law-jubainville?page=30">
             &ldquo;the word of Pythagoras prevails&rdquo;
           </Link>
           : souls are immortal and live again in another body after a fixed number of years. Ammianus Marcellinus,
           in the fourth century CE, describes the druids as bound in fellowships{' '}
-          <Link
-            href="/book/ammiani-marcellini-rerum-gestarum-libri-xviii-valesius-1693-marcellinus?page=197"
-            className={linkClass}
-          >
+          <Link href="/book/ammiani-marcellini-rerum-gestarum-libri-xviii-valesius-1693-marcellinus?page=197">
             &ldquo;as the authority of Pythagoras decreed.&rdquo;
           </Link>{' '}
           Alexander Polyhistor claimed that Pythagoras himself had studied with the Galatians and the Brahmans.
         </P>
+
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="/articles/hyperborea/caesar-1561-druids.jpg"
+            alt="Page of Latin italic type from a 1561 edition of Caesar's Commentaries, on the druids"
+            href="/book/6a085cfb49638a50931ce60a?page=189"
+            source={<>Caesar, <em>Commentarii</em>, with corrections by Paolo Manuzio (1561)</>}
+            credit="Scan: Early European Books, © 2010 ProQuest LLC, reproduced by courtesy of the Biblioteca Nazionale Centrale di Firenze."
+          >
+            Caesar on the druids: <em>Disciplina in Britannia reperta, atque inde in Galliam translata esse
+            existimatur</em>, the discipline &ldquo;is thought to have been invented in Britain and transferred from
+            there into Gaul.&rdquo;
+          </PageFigure>
+        </div>
 
         <P>
           The dates allow the hypothesis. Pythagoras died around 495 BCE. His communities in southern Italy were
           still active when Herodotus settled at Thurii, a few days from Croton, in the 440s. Herodotus speaks of the
           Hyperborean offerings as arriving in his own time, and Greeks and Celts were already in contact through
           the Greek colony at Massalia, founded around 600 BCE. Herodotus knew that the Danube rose{' '}
-          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=276" className={linkClass}>
+          <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=276">
             &ldquo;among the Celts&rdquo;
           </Link>
           , and the Hyperborean bundles came down to the head of the Adriatic, which can be reached from the upper
           Danube and the Alps. Two old witnesses point the same way. Hellanicus, a contemporary of Herodotus, put
           the Hyperboreans{' '}
-          <Link href="/book/argonautica-editio-princeps-lascaris-rhodius?page=159" className={linkClass}>
+          <Link href="/book/argonautica-editio-princeps-lascaris-rhodius?page=159">
             &ldquo;beyond the Alps of Italy,&rdquo;
           </Link>{' '}
           and in the next century Heraclides of Pontus called the Gauls who sacked Rome in 390 BCE{' '}
-          <Link href="/book/histoire-des-celtes-pelloutier?page=68" className={linkClass}>
+          <Link href="/book/histoire-des-celtes-pelloutier?page=68">
             &ldquo;an Army, coming from the country of the Hyperboreans&rdquo;
           </Link>
           ; Plutarch adds that Aristotle called the same people Celts. Apollonius, finally, attributes the story of
@@ -677,21 +695,18 @@ export default function HyperboreaPage() {
           offerings; Herodotus names Scythians as the first carriers, and Pausanias&apos;s later route runs through
           the Black Sea. Second, the druids are first named in Greek around 200 BCE, by Sotion and a work on magic
           attributed to Aristotle, which Diogenes Laertius cites at the start of his{' '}
-          <Link
-            href="/book/diogenes-laertius-lives-and-opinions-of-eminent-philosophers-yonge?page=25"
-            className={linkClass}
-          >
+          <Link href="/book/diogenes-laertius-lives-and-opinions-of-eminent-philosophers-yonge?page=25">
             <em>Lives of the Philosophers</em>
           </Link>
           , two and a half centuries after Herodotus. Third, the Pythagorean description of the druids goes back to
           one Greek ethnographer, Posidonius, around 100 BCE, whom Caesar, Diodorus and Alexander all seem to follow.
           The French Celticist Henri d&apos;Arbois de Jubainville called it, in 1895, a hypothesis{' '}
-          <Link href="/book/studies-on-celtic-law-jubainville?page=30" className={linkClass}>
+          <Link href="/book/studies-on-celtic-law-jubainville?page=30">
             &ldquo;flattering to the self-esteem of the Greeks&rdquo;
           </Link>
           : a Greek explaining a foreign belief in the terms of his own philosophy. Jacob Brucker had made the same
           objection in 1742, that{' '}
-          <Link href="/book/historia-critica-philosophiae-brucker?page=338" className={linkClass}>
+          <Link href="/book/historia-critica-philosophiae-brucker?page=338">
             &ldquo;some slight harmony and similarity of this or that doctrine&rdquo;
           </Link>{' '}
           does not prove descent. On the present evidence, Celtic participation in the chain is possible and the
@@ -715,23 +730,45 @@ export default function HyperboreaPage() {
           on each face.
         </P>
 
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="/articles/hyperborea/tongeren-dodecahedron.jpg"
+            alt="A hollow bronze dodecahedron with a round hole in each pentagonal face and a knob at each corner"
+            credit={
+              <>
+                Gallo-Romeins Museum Tongeren, inv. 4002. Photo: Gallo-Romeins Museum Tongeren, CC0, via{' '}
+                <a
+                  href="https://commons.wikimedia.org/wiki/File:Pentagon-dodeca%C3%ABder_in_brons,_150_tot_400_NC,_vindplaats-_Tongeren,_Leopoldwal,_1939,_collectie_Gallo-Romeins_Museum_Tongeren,_4002.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Wikimedia Commons
+                </a>
+                .
+              </>
+            }
+          >
+            The bronze dodecahedron found at Tongeren in 1939, dated 150 to 400 CE.
+          </PageFigure>
+        </div>
+
         <P>
           The Pythagorean connection is real on the Greek side. The dodecahedron was the figure the Pythagoreans
           kept secret. Iamblichus says that Hippasus, one of the school,{' '}
-          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=152" className={linkClass}>
+          <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=152">
             &ldquo;was the first to divulge and write down the sphere made of the twelve pentagons&rdquo;
           </Link>{' '}
           and drowned at sea for the impiety. Plato gave it to the cosmos. In the <em>Timaeus</em>, after assigning
           four regular solids to the four elements,{' '}
-          <Link href="/book/69942e25d607f8e57e4b7950?page=550" className={linkClass}>
+          <Link href="/book/69942e25d607f8e57e4b7950?page=550">
             &ldquo;God used this one for the whole&rdquo;
           </Link>
           ; in the <em>Phaedo</em> the true earth seen from above looks{' '}
-          <Link href="/book/69937767b0a84a57639639fe?page=287" className={linkClass}>
+          <Link href="/book/69937767b0a84a57639639fe?page=287">
             &ldquo;like balls made of twelve pieces of leather.&rdquo;
           </Link>{' '}
           Plutarch, in his <em>Platonic Questions</em>, read the twelve faces as the zodiac: the figure, he wrote,{' '}
-          <Link href="/book/69905f1140bc3a0478efa1d3?page=209" className={linkClass}>
+          <Link href="/book/69905f1140bc3a0478efa1d3?page=209">
             seems to imitate the zodiac and the year
           </Link>
           . The Geneva object spells out the same idea.
@@ -775,7 +812,6 @@ export default function HyperboreaPage() {
           samples there, made at the Vassar laboratory Curt Beck founded, showed that{' '}
           <a
             href="https://austriaca.at/0xc1aa5572%200x003f6cca.pdf"
-            className={linkClass}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -795,7 +831,6 @@ export default function HyperboreaPage() {
           Birmingham thesis on the dedications at Dodona goes as far as to propose{' '}
           <a
             href="https://etheses.bham.ac.uk/8375/1/Fotiadi18MARes.pdf"
-            className={linkClass}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -823,38 +858,51 @@ export default function HyperboreaPage() {
           usually arrived at home.
         </P>
 
+        <HyperboreaTimeline />
+
         <P>
           In Sweden, Olof Rudbeck&apos;s <em>Atlantica</em> (1679–1702) made Sweden both Plato&apos;s Atlantis and
           Hyperborea. The 1761 Callimachus commentary summarises his etymology:{' '}
-          <Link href="/book/hymni-epigrammata-et-fragmenta-callimachus?page=563" className={linkClass}>
+          <Link href="/book/hymni-epigrammata-et-fragmenta-callimachus?page=563">
             the name came not from the Greek <em>boreas</em> but from the Swedes
           </Link>
           , whose most ancient king was called Boreus, so that <em>Oferborne</em>, &ldquo;Hyperboreans,&rdquo; meant
           the nobly born. In Britain, John Toland placed them in the Hebrides and made Abaris a Druid:{' '}
-          <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland?page=203" className={linkClass}>
+          <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland?page=203">
             &ldquo;if the Hebrides were the Hyperboreans of Diodorus, as I fancy it can scarce hereafter be
             doubted&rdquo;
           </Link>{' '}
           (1740). John Wood{' '}
-          <Link href="/book/69ee471d6dd925d126f416a9?page=9" className={linkClass}>
+          <Link href="/book/69ee471d6dd925d126f416a9?page=9">
             made Abaris and Bladud, the legendary founder of Bath, &ldquo;one and the same man&rdquo;
           </Link>{' '}
           (1747), William Borlase{' '}
-          <Link href="/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=114" className={linkClass}>
+          <Link href="/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=114">
             read Diodorus&apos;s round temple
           </Link>{' '}
           into Cornwall, and Godfrey Higgins wrote in 1827 that{' '}
-          <Link href="/book/the-celtic-druids-higgins?page=346" className={linkClass}>
+          <Link href="/book/the-celtic-druids-higgins?page=346">
             by the Hyperboreans the Greeks &ldquo;generally meant the British isles.&rdquo;
           </Link>
         </P>
+
+        <div className="max-w-sm mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/69ee47436dd925d126f41aba/0235.jpg"
+            alt="Engraved plate of four Cornish stone circles drawn one above the other, with a scale of yards and a dedication with a coat of arms"
+            href="/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=235"
+            source={<>William Borlase, <em>Antiquities of the County of Cornwall</em> (1769)</>}
+          >
+            Borlase&apos;s Cornish circles: Tredinek, Boskednan in Gulval, Boscawen-un in Beryan, and Senor.
+          </PageFigure>
+        </div>
 
         <P>
           The German geographer Philipp Clüver, in his <em>Germania antiqua</em> (1616), took the amber route instead
           and followed it to the Vistula. The amber river, he argued, was the Radaune, which reaches the sea at
           Danzig. The Greeks had heard its name as Eridanus, and the name later slid onto the Po and the Rhône
           because amber was shipped through them:{' '}
-          <Link href="/book/germaniae-antiquae-libri-tres-cluver?page=886" className={linkClass}>
+          <Link href="/book/germaniae-antiquae-libri-tres-cluver?page=886">
             &ldquo;This confusion of the three rivers, Rhone, Po, and Vistula, is truly strange.&rdquo;
           </Link>
         </P>
@@ -869,18 +917,21 @@ export default function HyperboreaPage() {
           his own country:
         </P>
 
-        <Quote
-          cite={<>Christoph Hartknoch, <em>Alt- und Neues Preussen</em> (1684), English translation by Source Library.</>}
-          href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=35"
+        <SourceQuote
+          book="old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch"
+          page={35}
+          src="https://images.sourcelibrary.org/pages/6a209d5c89e8715c5947a6ac/0035.jpg"
+          source={<>Christoph Hartknoch, <em>Alt- und Neues Preussen</em> (1684), English translation by Source Library</>}
+          pageAlt="Opening of Hartknoch's Alt- und Neues Preussen, pages 82 and 83, in German blackletter with Latin notes"
         >
           Nevertheless, not all writers have gone so far astray; rather, there have also been people who believed they
           could find the Eridanus in the North, and perhaps they also found the amber-bearing river Eridanus, like the
           Electrides, in our Prussia.
-        </Quote>
+        </SourceQuote>
 
         <P>
           He goes on to read Diodorus&apos;s island of Basilia, where amber washes ashore, as{' '}
-          <Link href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=36" className={linkClass}>
+          <Link href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=36">
             Samland, the amber peninsula north of Königsberg
           </Link>
           . Diodorus had called Basilia an island. Hartknoch answers that Diodorus could not have known whether it
@@ -893,6 +944,19 @@ export default function HyperboreaPage() {
           oldest histories there are.
         </P>
 
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="/articles/hyperborea/hartknoch-samland-amber.jpg"
+            alt="Engraved bird's-eye view of the Samland coast with ships on the sea and people in the shallows, and below it a large lump of amber on a draped table"
+            href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=134"
+            source={<>Christoph Hartknoch, <em>Alt- und Neues Preussen</em> (1684)</>}
+          >
+            Hartknoch&apos;s view of Samland (<em>Samlandt</em>), between the Baltic (<em>Oost See</em>) and the
+            Frisches Haff, with people working in the shallows; below it, a lump of amber, from the chapter on the
+            nature of amber.
+          </PageFigure>
+        </div>
+
         <P>
           The same wish shaped the Prussian origin legend, and it too ran through Hyperborean geography. The
           Dominican chronicler Simon Grunau, writing in the 1520s, gave the Prussians a migration from Scandinavia, a
@@ -900,10 +964,7 @@ export default function HyperboreaPage() {
           folklorist Wilhelm Mannhardt (1831–1880), whose collected study of Baltic religion was published in 1936,
           took the story apart source by source. Grunau had found in Erasmus Stella
           that{' '}
-          <Link
-            href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt?page=220"
-            className={linkClass}
-          >
+          <Link href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt?page=220">
             &ldquo;the Borussian peoples, who according to Ptolemy had their seats at the Rhipaean mountains,&rdquo;
           </Link>{' '}
           had entered Prussia, and he placed the Rhipaean mountains in Norway. These were the mountains beyond which
@@ -911,26 +972,21 @@ export default function HyperboreaPage() {
           misread geography, on the threshold of Hyperborea.
         </P>
 
-        <Plate
+        <PageFigure
           src="/articles/trees-of-life/hartknoch-romowe.jpg"
           alt="Engraving of a great oak behind a wooden screen with three idols in niches, a fire burning before it, a village around"
           href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=87"
-          width={1400}
-          height={1198}
+          source={<>Christoph Hartknoch, <em>Alt- und Neues Preussen</em> (1684)</>}
           wide
         >
-          The oak of Romove with its three idols, as Grunau described it. Christoph Hartknoch,{' '}
-          <em>Alt- und Neues Preussen</em> (1684).
-        </Plate>
+          The oak of Romove with its three idols, as Grunau described it.
+        </PageFigure>
 
         <P>
           Hartknoch engraved Grunau&apos;s scenes, including the war banner of Widewuto with the three gods: Patollo,
           old and grey-bearded, god of the dead; Perkuno, the thunder god, with a face like fire; and young Potrimpo,
           crowned with ears of grain. Mannhardt&apos;s verdict was that{' '}
-          <Link
-            href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt?page=235"
-            className={linkClass}
-          >
+          <Link href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt?page=235">
             &ldquo;like the entire triad, the image of the gods on the war flag of Widewut with the enigmatic
             inscription and the coat of arms of the first king are inventions.&rdquo;
           </Link>{' '}
@@ -939,16 +995,14 @@ export default function HyperboreaPage() {
           Prussian sources and in Lithuanian and Latvian folk song.
         </P>
 
-        <Plate
+        <PageFigure
           src="/articles/hyperborea/hartknoch-widewuto-banner.jpg"
           alt="Engraving of a banner showing three male busts, one bearded in a cap, one with a crown of flames, one crowned with ears of grain, above a shield held by two rearing horses"
           href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=143"
-          width={1400}
-          height={1315}
+          source={<>Christoph Hartknoch, <em>Alt- und Neues Preussen</em> (1684), after Simon Grunau</>}
         >
-          The banner of Widewuto with Patollo, Perkuno and Potrimpo. Christoph Hartknoch,{' '}
-          <em>Alt- und Neues Preussen</em> (1684), after Simon Grunau.
-        </Plate>
+          The banner of Widewuto with Patollo, Perkuno and Potrimpo.
+        </PageFigure>
 
         <Section>Lithuania and the sun</Section>
 
@@ -958,23 +1012,23 @@ export default function HyperboreaPage() {
           Samogitian prayer to the fire god Gabie that peasants still recited in their drying barns, he writes:
         </P>
 
-        <Quote
-          cite={<>Teodor Narbutt, <em>Dzieje starożytne narodu litewskiego</em>, vol. 1 (1835), English translation by Source Library.</>}
-          href="/book/ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt?page=37"
+        <SourceQuote
+          book="ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt"
+          page={37}
+          src="https://images.sourcelibrary.org/pages/6a209d3389e8715c5947a32b/0037.jpg"
+          source={<>Teodor Narbutt, <em>Dzieje starożytne narodu litewskiego</em>, vol. 1 (1835), English translation by Source Library</>}
+          pageAlt="Page 18 of Narbutt's Polish text, on the Samogitian prayer to Gabie and the Hyperborean Apollo"
         >
           The worship of fire and the sun, or Apollo, merged into one among all nations. Fire and the sun everywhere
           received worship where the pagan religion had external pomp and priests. The Greeks used to say that the
           worship of Apollo among the northern peoples was very famous, for which reason they called him
           Hyperboreans.
-        </Quote>
+        </SourceQuote>
 
         <P>
           Narbutt connected the Hyperborean Apollo to a sun cult &ldquo;observed by the Baltic Sea&rdquo; in Pliny,
           and later in the volume to Sanskrit. Lithuanian, he argued, came{' '}
-          <Link
-            href="/book/ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt?page=480"
-            className={linkClass}
-          >
+          <Link href="/book/ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt?page=480">
             &ldquo;directly and immediately&rdquo; from Sanskrit
           </Link>
           , as Sanskrit <em>devas</em>, god, survives in Lithuanian <em>Dievas</em>, Latvian <em>Dievs</em> and
@@ -989,11 +1043,21 @@ export default function HyperboreaPage() {
         <P>
           The oldest Greek route to Hyperborea runs north-east. Aristeas, in Herodotus, travels past the Scythians of
           the Ukrainian steppe to the Issedones, and beyond them come the one-eyed Arimaspians, the gold-guarding
-          griffins and finally the Hyperboreans. Pausanias&apos;s route for the offerings comes the same way:{' '}
-          <Link href="/book/pausanias-description-of-greece-vol-1-frazer?page=148" className={linkClass}>
-            &ldquo;the Hyperboreans, they say, hand them over to the Arimaspians, the Arimaspians to the
-            Issedonians, and from the Issedonians the Scythians convey them to Sinope.&rdquo;
-          </Link>{' '}
+          griffins and finally the Hyperboreans. Pausanias&apos;s route for the offerings comes the same way:
+        </P>
+
+        <SourceQuote
+          book="pausanias-description-of-greece-vol-1-frazer"
+          page={148}
+          src="https://images.sourcelibrary.org/pages/69924f3a5976b55115ffd500/0148.jpg"
+          source={<>Pausanias, <em>Description of Greece</em>, Book 1, tr. J. G. Frazer (1898)</>}
+          pageAlt="Page of Frazer's Pausanias, Book 1 chapter 31, on the first-fruits of the Hyperboreans"
+        >
+          the Hyperboreans, they say, hand them over to the Arimaspians, the Arimaspians to the Issedonians, and from
+          the Issedonians the Scythians convey them to Sinope.
+        </SourceQuote>
+
+        <P>
           That points up the steppe toward the Urals and the Altai, whose gold the Scythians traded. In that sense the
           earliest Hyperborea lay in what is now Russia and Kazakhstan.
         </P>
@@ -1001,7 +1065,7 @@ export default function HyperboreaPage() {
         <P>
           Western Europeans later used the word for Russians. In a dialogue Alexander Herzen wrote at Nice in 1869,
           a French doctor greets the Russian narrator as &ldquo;my dear Hyperborean,&rdquo; and he answers:{' '}
-          <Link href="/book/2-herzen?page=239" className={linkClass}>
+          <Link href="/book/2-herzen?page=239">
             &ldquo;do not call me a Hyperborean. Firstly, the word makes me cold every time,&rdquo;
           </Link>{' '}
           and it recalls the age of Montesquieu, when Paris called Peter the Great{' '}
@@ -1028,10 +1092,7 @@ export default function HyperboreaPage() {
           <em>The Arctic Home in the Vedas</em> (1903) put the Aryans there. Helena Blavatsky made the Hyperborean the
           second of her root races in <em>The Secret Doctrine</em> (1888), and she used the amber to prove it. The
           Eridanus could not be the Po, she wrote, because{' '}
-          <Link
-            href="/book/the-secret-doctrine-synthesis-of-science-religion-and-blavatsky?page=838"
-            className={linkClass}
-          >
+          <Link href="/book/the-secret-doctrine-synthesis-of-science-religion-and-blavatsky?page=838">
             &ldquo;amber is found only in the northern seas, in the Baltic&rdquo;
           </Link>
           ; Phaethon&apos;s fall was an allegory of the poles changing climate.
@@ -1060,7 +1121,7 @@ export default function HyperboreaPage() {
             and Paeonian women who never sacrificed to Artemis without wheat straw. Thrace also had Zalmoxis, the
             Getic teacher of immortality whom Herodotus makes a former slave of Pythagoras. In Plato&apos;s{' '}
             <em>Charmides</em>, Socrates names the two northern kinds of healing together:{' '}
-            <Link href="/book/cologny-fondation-martin-bodmer-cod-bodmer-136-plato?page=304" className={linkClass}>
+            <Link href="/book/cologny-fondation-martin-bodmer-cod-bodmer-136-plato?page=304">
               &ldquo;the charms of Zalmoxis&rdquo; and &ldquo;those of Abaris the Hyperborean.&rdquo;
             </Link>
           </li>
@@ -1088,6 +1149,18 @@ export default function HyperboreaPage() {
           </li>
         </ul>
 
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/699389510f04c37dcfa609ca/0304.jpg"
+            alt="Manuscript page of Greek text in a single column, with the name Abaris written in the left margin"
+            href="/book/cologny-fondation-martin-bodmer-cod-bodmer-136-plato?page=304"
+            source={<>Plato, <em>Dialogues</em>, Greek manuscript, Cologny, Fondation Martin Bodmer, Cod. Bodmer 136</>}
+          >
+            Socrates names the charms of Zalmoxis and of Abaris the Hyperborean in the <em>Charmides</em>; a reader
+            has written Abaris&apos;s name in the margin.
+          </PageFigure>
+        </div>
+
         <Section>What the sources support</Section>
 
         <P>
@@ -1104,22 +1177,19 @@ export default function HyperboreaPage() {
           beaches. Their mistake was to ask the classical sources for a national past that the sources could not
           give. The older religion of the Baltic peoples survives in thinner but more reliable records: the treaty of
           1249 between the Teutonic Order and the Prussians, the{' '}
-          <Link href="/book/on-the-gods-of-the-samogitians-mannhardt" className={linkClass}>
+          <Link href="/book/on-the-gods-of-the-samogitians-mannhardt">
             list of Samogitian gods
           </Link>{' '}
           that Jan Łasicki compiled in the 1580s, Matthäus Praetorius&apos;s{' '}
-          <Link
-            href="/book/prussian-delights-prussian-lithuanian-religion-and-customs-pierson"
-            className={linkClass}
-          >
+          <Link href="/book/prussian-delights-prussian-lithuanian-religion-and-customs-pierson">
             <em>Deliciae Prussicae</em>
           </Link>{' '}
           from the Lithuanian villages of East Prussia, the{' '}
-          <Link href="/book/6a209d3889e8715c5947a52c" className={linkClass}>
+          <Link href="/book/6a209d3889e8715c5947a52c">
             <em>dainos</em>
           </Link>{' '}
           or folk songs, and Mannhardt&apos;s compendium of every source he could find. They are in the{' '}
-          <Link href="/collections/baltic-paganism" className={linkClass}>
+          <Link href="/collections/baltic-paganism">
             Baltic Paganism collection
           </Link>
           , with English translations, next to the Greek authors they were measured against.
@@ -1134,101 +1204,95 @@ export default function HyperboreaPage() {
           <ul className="list-disc list-inside space-y-2 text-secondary text-sm">
             <li>
               Herodotus,{' '}
-              <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=253" className={linkClass}>
+              <Link href="/book/the-persian-wars-ii-books-3-4-loeb-l118-herodotus?page=253">
                 <em>Histories</em>, Books 3–4
               </Link>{' '}
               (Loeb, 1921): 3.115 on amber and the Eridanus; 4.32–36 on the Hyperboreans.
             </li>
             <li>
               Pindar,{' '}
-              <Link href="/book/the-odes-of-pindar-sandys?page=346" className={linkClass}>
+              <Link href="/book/the-odes-of-pindar-sandys?page=346">
                 <em>Odes</em>
               </Link>
               , tr. Sandys (1915): <em>Pythian</em> 10.
             </li>
             <li>
               Apollonius of Rhodes,{' '}
-              <Link href="/book/apollonii-rhodii-argonautica-estienne?page=210" className={linkClass}>
+              <Link href="/book/apollonii-rhodii-argonautica-estienne?page=210">
                 <em>Argonautica</em>
               </Link>
               , ed. Estienne (1574): Book 4, the Eridanus and Apollo&apos;s tears.
             </li>
             <li>
               Iamblichus,{' '}
-              <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=185" className={linkClass}>
+              <Link href="/book/de-vita-pythagorica-liber-codex-florentinus-nauck?page=185">
                 <em>On the Pythagorean Life</em>
               </Link>
               , ed. Nauck (1884); Solinus,{' '}
-              <Link href="/book/c-iulii-solini-polyhistor-1543-solinus?page=79" className={linkClass}>
+              <Link href="/book/c-iulii-solini-polyhistor-1543-solinus?page=79">
                 <em>Polyhistor</em>
               </Link>{' '}
               (1543), ch. 26; Tacitus,{' '}
-              <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=196" className={linkClass}>
+              <Link href="/book/tacitus-dialogus-de-oratoribus-agricola-germania-hutton?page=196">
                 <em>Germania</em>
               </Link>{' '}
               45 (Loeb, 1914).
             </li>
             <li>
               Carl Gottfried Zapf,{' '}
-              <Link href="/book/disp-hist-de-abaride-zapf" className={linkClass}>
+              <Link href="/book/disp-hist-de-abaride-zapf">
                 <em>Disputatio historica de Abaride</em>
               </Link>{' '}
               (1706); Johann Ludwig Hannemann,{' '}
-              <Link href="/book/ovum-hermetico-paracelsico-trismegistum-hannemann" className={linkClass}>
+              <Link href="/book/ovum-hermetico-paracelsico-trismegistum-hannemann">
                 <em>Ovum Hermetico-Paracelsico-Trismegistum</em>
               </Link>{' '}
               (1694).
             </li>
             <li>
               Callimachus,{' '}
-              <Link href="/book/hymni-epigrammata-et-fragmenta-callimachus" className={linkClass}>
+              <Link href="/book/hymni-epigrammata-et-fragmenta-callimachus">
                 <em>Hymni, Epigrammata et Fragmenta</em>
               </Link>{' '}
               (1761), commentary on the <em>Hymn to Delos</em>.
             </li>
             <li>
               Philipp Clüver,{' '}
-              <Link href="/book/germaniae-antiquae-libri-tres-cluver" className={linkClass}>
+              <Link href="/book/germaniae-antiquae-libri-tres-cluver">
                 <em>Germania antiqua</em>
               </Link>{' '}
               (1616); John Toland,{' '}
-              <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland" className={linkClass}>
+              <Link href="/book/a-critical-history-of-the-celtic-religion-and-learning-toland">
                 <em>A Critical History of the Celtic Religion and Learning</em>
               </Link>{' '}
               (1740); Godfrey Higgins,{' '}
-              <Link href="/book/the-celtic-druids-higgins" className={linkClass}>
+              <Link href="/book/the-celtic-druids-higgins">
                 <em>The Celtic Druids</em>
               </Link>{' '}
               (1827).
             </li>
             <li>
               Christoph Hartknoch,{' '}
-              <Link href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch" className={linkClass}>
+              <Link href="/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch">
                 <em>Alt- und Neues Preussen</em>
               </Link>{' '}
               (1684); Simon Grunau,{' '}
-              <Link href="/book/simon-grunau-prussian-chronicle-old-prussian-pagan-religion-perlbach" className={linkClass}>
+              <Link href="/book/simon-grunau-prussian-chronicle-old-prussian-pagan-religion-perlbach">
                 <em>Preussische Chronik</em>
               </Link>
               , ed. Perlbach; Wilhelm Mannhardt,{' '}
-              <Link
-                href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt"
-                className={linkClass}
-              >
+              <Link href="/book/latvian-prussian-mythology-the-master-source-compendium-of-mannhardt">
                 <em>Letto-preussische Götterlehre</em>
               </Link>{' '}
               (1936).
             </li>
             <li>
               Teodor Narbutt,{' '}
-              <Link href="/book/ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt" className={linkClass}>
+              <Link href="/book/ancient-history-of-the-lithuanian-nation-vol-1-lithuanian-narbutt">
                 <em>Dzieje starożytne narodu litewskiego</em>, vol. 1
               </Link>{' '}
               (1835); Helena Blavatsky,{' '}
-              <Link
-                href="/book/the-secret-doctrine-synthesis-of-science-religion-and-blavatsky"
-                className={linkClass}
-              >
+              <Link href="/book/the-secret-doctrine-synthesis-of-science-religion-and-blavatsky">
                 <em>The Secret Doctrine</em>, vol. 2
               </Link>{' '}
               (1888).
