@@ -581,7 +581,7 @@ const isFilteredMatch = (f: VectorMatchFilters) => !!(f.language || f.languages?
  */
 async function serveFromVectorService(embedding: number[], k: number, f: VectorMatchFilters): Promise<any[] | null> {
   try {
-    const r = await matchVectorService(embedding, k, f);
+    const r = await matchVectorService(embedding, k, f, undefined, true);
     if (r.complete === false) return null;
     return await hydrateServiceRows(r.rows);
   } catch (e) {

@@ -343,6 +343,15 @@ export default function HarmonicJusticePage() {
           ask which ratios are fair in the same breath as which ones are stable.
         </p>
 
+        <p className={p}>
+          A sequel,{' '}
+          <Link href="/blog/ledgers-and-heavens" className={linkClass}>
+            Ledgers and Heavens
+          </Link>
+          , follows the people who handled money for a living (the Medici, Pacioli, Copernicus at the mint, a London
+          exchange dealer) and what they read.
+        </p>
+
         <h2 className={h2}>The books</h2>
 
         <ul className="list-disc pl-6 space-y-2 text-secondary font-body mb-8">

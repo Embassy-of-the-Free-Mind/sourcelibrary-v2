@@ -1,0 +1,41 @@
+# TLS in front of the page-vector service on l7a (earthai-l7a, 167.233.32.250), #6843 / #6821.
+# Installed at /etc/caddy/Caddyfile (Ubuntu's caddy 2.6 package; its unit runs `caddy run --config` on it):
+#
+#   apt-get install -y caddy
+#   cp infrastructure/caddy/Caddyfile.l7a /etc/caddy/Caddyfile && systemctl reload caddy
+#   cp infrastructure/caddy/caddy-slice.conf /etc/systemd/system/caddy.service.d/slice.conf && systemctl daemon-reload && systemctl restart caddy
+#   ufw allow 80/tcp; ufw allow 443/tcp        # 80 for the ACME HTTP-01 challenge and the https redirect
+#
+# DNS: vectors.sourcelibrary.org A 167.233.32.250, Cloudflare DNS-only (grey cloud). A proxied record
+# would put the edge hop and its cache in front of a ~10 ms service, and Let's Encrypt would then see
+# Cloudflare, not this box.
+#
+# The service listens on 127.0.0.1:3458 (VECTOR_SEARCH_HOST, server.mjs) and checks the Bearer token
+# itself on every route, /health included, so Caddy only terminates TLS: no auth, no caching here.
+# The admin listener (127.0.0.1:3459) is never proxied.
+{
+	# No ACME account email: the certificate needs none, and expiry mail would go to nobody who reads it;
+	# Caddy renews on its own ~30 days before expiry.
+	admin localhost:2019
+}
+
+vectors.sourcelibrary.org {
+	# The largest legitimate body is one /match request: a 768-float vector plus filters (~16 KB).
+	request_body {
+		max_size 256KB
+	}
+	# with_text responses carry ~45 translations (~70 KB); gzip roughly thirds that on the wire.
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:3458 {
+		transport http {
+			keepalive 120s
+		}
+	}
+	log {
+		output file /var/log/caddy/vectors.log {
+			roll_size 20MiB
+			roll_keep 5
+		}
+		format json
+	}
+}

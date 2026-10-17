@@ -105,6 +105,16 @@ describe('semanticPageSearchGlobal, VECTOR_SEARCH_MODE=shadow', () => {
     expect((svcCalls[0].init.headers as Record<string, string>).authorization).toBe('Bearer tok');
   });
 
+  it('does not ask the service for text (the comparison reads page ids only)', async () => {
+    const { semanticPageSearchGlobal } = await import('@/lib/semantic-search');
+    rpc.mockResolvedValue({ data: [rpcRow('p1')], error: null });
+    const sink: { result?: Promise<unknown> } = {};
+    await semanticPageSearchGlobal('q', 5, { ...global_, vectorShadow: sink } as any);
+    await sink.result;
+    expect(svcCalls).toHaveLength(1);
+    expect(svcCalls[0].body.with_text).toBeUndefined();
+  });
+
   it('does not wait for a service that never answers', async () => {
     const { semanticPageSearchGlobal } = await import('@/lib/semantic-search');
     rpc.mockResolvedValue({ data: [rpcRow('p1')], error: null });
@@ -156,6 +166,34 @@ describe('semanticPageSearchGlobal, VECTOR_SEARCH_MODE=serve', () => {
     // Order and scores are the service's; a row missing from page_translations is dropped.
     expect(rows.map((r) => [r.page_id, r.score])).toEqual([['p2', 0.9], ['p1', 0.7]]);
     expect(rows[0].snippet).toBe('text p2');
+  });
+
+  const svcRow = (id: string, sim: number) => ({
+    page_id: id, book_id: 'b1', page_number: 3, similarity: sim, translation: `svc text ${id}`,
+    book_title: 'T', book_author: null, book_language: 'Latin', book_year: 1600,
+  });
+
+  it('asks for with_text and skips Supabase when the service sent every column (#6843)', async () => {
+    const { semanticPageSearchGlobal } = await import('@/lib/semantic-search');
+    svcHandler = async () => jsonResponse({ rows: [svcRow('p2', 0.9), svcRow('p1', 0.7)], ms: 3, complete: true });
+    const rows = await semanticPageSearchGlobal('q', 5, global_);
+    expect(svcCalls[0].body.with_text).toBe(true);
+    expect(rpc).not.toHaveBeenCalled();
+    expect(from).not.toHaveBeenCalled();
+    expect(rows.map((r) => [r.page_id, r.score])).toEqual([['p2', 0.9], ['p1', 0.7]]);
+    expect(rows[0].snippet).toBe('svc text p2');
+  });
+
+  it('hydrates only the rows the service sent without text, keeping service order', async () => {
+    const { semanticPageSearchGlobal } = await import('@/lib/semantic-search');
+    svcHandler = async () => jsonResponse({
+      rows: [svcRow('p2', 0.9), { page_id: 'p1', book_id: 'b1', page_number: 1, similarity: 0.8, book_language: 'Latin', book_year: 1600 }, svcRow('p3', 0.7)],
+      ms: 3, complete: true,
+    });
+    inFn.mockResolvedValue({ data: [rpcRow('p1', 0.1)], error: null });
+    const rows = await semanticPageSearchGlobal('q', 5, global_);
+    expect(inFn).toHaveBeenCalledWith('page_id', ['p1']);
+    expect(rows.map((r) => [r.page_id, r.score, r.snippet])).toEqual([['p2', 0.9, 'svc text p2'], ['p1', 0.8, 'text p1'], ['p3', 0.7, 'svc text p3']]);
   });
 
   for (const [name, setup] of [

@@ -52,3 +52,15 @@
 .bodymap .sub > h3 [lang]{ font-size: .72em; color: var(--dust); margin-left: .35em; font-weight: 400; }
 .bodymap .sub-src{ font-family: var(--f-mono); font-size: 12px; color: var(--dust); margin: 6px 0 0; }
 .bodymap .sec-head h2 [lang="bo"], .bodymap .sec-head h2 [lang="he"], .bodymap .sec-head h2 [lang="ar"]{ font-size: .72em; color: var(--dust); margin-left: .3em; font-weight: 400; }
+
+/* index at the top: regions, each with its practices (TechniquesDocument.tsx) */
+.bodymap .toc{ margin: 0 0 40px; padding: 20px 0 24px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--hair); }
+.bodymap .toc h2{ font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--dust); margin: 0 0 14px; }
+.bodymap .toc ol{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px 28px; }
+.bodymap .toc-region{ font-family: var(--f-display); font-size: 1.2rem; line-height: 1.2; text-decoration: none; }
+.bodymap .toc-region [lang]{ font-size: .8em; color: var(--dust); margin-left: .3em; }
+.bodymap .toc ul{ list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 3px; }
+.bodymap .toc ul a{ font-size: .92rem; line-height: 1.35; color: var(--dust); text-decoration: none; }
+.bodymap .toc ul a [lang]{ display: none; }
+.bodymap .toc a:hover{ color: var(--cinnabar); }
+.bodymap .sec, .bodymap .sub{ scroll-margin-top: 96px; }

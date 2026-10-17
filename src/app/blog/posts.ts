@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'ledgers-and-heavens',
+    title: 'Ledgers and Heavens',
+    subtitle:
+      'What the money-men paid for and read: Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus on coinage, a Rosicrucian debate on abolishing gold, and a financier’s chair of music.',
+    date: '17 October 2026',
+    readTime: '11 min read',
+    kind: 'stories',
+    // Hollow dodecahedron woodcut from our 1509 De divina proportione (scan p. 248), checked by eye.
+    image: 'https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/248.jpg',
+    imageAlt:
+      'Woodcut of a hollow dodecahedron labelled "Dodecaedron Planum Vacuum", from Pacioli’s De divina proportione, 1509.',
+  },
+  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
@@ -92,11 +105,11 @@ export const posts: BlogPost[] = [
   },
   {
     slug: 'maya-ritual-in-the-colonial-dictionaries',
-    title: 'Maya Ritual in the Colonial Dictionaries',
+    title: 'Maya Religion in the Colonial Sources',
     subtitle:
-      'Uay, tzac, kinyah, pib: what the Motul dictionary, Pío Pérez and a 1639 report against idolaters record about Maya dreaming, transformation, conjuring and the count of days.',
+      'The Bacabs holding up the sky, katuns of carved stone, a diviner counting maize, the sun and the Pleiades as a disease’s parents: Maya religion from the friars who burned its books and the Maya who kept it.',
     date: '16 October 2026',
-    readTime: '10 min read',
+    readTime: '15 min read',
     kind: 'tours',
     image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg',
     imageAlt: 'A page of the Dresden Codex with columns of glyphs and two descending serpents',

@@ -17,9 +17,14 @@
  * stay on Supabase: the service holds neither a tenant's book set nor those
  * vectors. Only `semanticPageSearchGlobal` calls this, after its scope branch.
  *
- * Transport: plain HTTP to the box's IP with a Bearer token, as CLIP does
- * (src/lib/clip.ts). The token crosses the network unencrypted; TLS is a
- * follow-up (Caddy + a DNS name), see the PR.
+ * Transport: HTTPS to https://vectors.sourcelibrary.org (Caddy on l7a in front
+ * of the service's loopback listener, #6843) with a Bearer token.
+ *
+ * Text: serve mode asks for `with_text`, and the service returns
+ * match_semantic's text and book columns from its own store, so a served
+ * search costs no Supabase round trip (#6843: hydrating 45 rows was ~100 ms
+ * warm, ~350 ms cold, against ~10 ms of search). A row the service sends
+ * without them is hydrated by primary key, as before.
  *
  * PRIOR ART: src/lib/clip.ts — the self-hosted-service shape (env URL, auth
  * header, no fallback secret). Its callers have no RPC to fall back to and no
@@ -53,6 +58,12 @@ export interface VectorServiceRow {
   book_id: string;
   page_number: number;
   similarity: number;
+  /** With `with_text`: match_semantic's other columns (null where the row's column is null). */
+  translation?: string | null;
+  book_title?: string | null;
+  book_author?: string | null;
+  book_language?: string | null;
+  book_year?: number | null;
 }
 
 export interface VectorServiceResult {
@@ -78,6 +89,7 @@ export async function matchVectorService(
   k: number,
   f: VectorMatchFilters,
   timeoutMs = VECTOR_SEARCH_TIMEOUT_MS,
+  withText = false,
 ): Promise<VectorServiceResult> {
   const url = process.env.VECTOR_SEARCH_URL;
   const token = process.env.VECTOR_SEARCH_TOKEN;
@@ -96,6 +108,7 @@ export async function matchVectorService(
         filter_exclude_languages: f.excludeLanguages,
         year_min: f.yearMin,
         year_max: f.yearMax,
+        ...(withText ? { with_text: true } : {}),
       }),
       signal: AbortSignal.timeout(timeoutMs),
       cache: 'no-store',
@@ -153,23 +166,42 @@ export interface VectorShadowSink {
 /** The columns `match_semantic` returns. */
 const HYDRATE_COLUMNS = 'page_id, book_id, page_number, translation, book_title, book_author, book_language, book_year';
 
+/** The service sent every column match_semantic returns (`with_text`), so the row needs no hydration. */
+export function hasServiceColumns(r: VectorServiceRow): boolean {
+  return r.translation !== undefined && r.book_title !== undefined && r.book_author !== undefined
+    && r.book_language !== undefined && r.book_year !== undefined;
+}
+
 /**
- * The service's rows in `match_semantic`'s shape: one primary-key `in()` on
- * page_translations for the text and book columns, service order and scores
- * kept. A row gone since the service last synced is dropped. Throws on a
- * hydration error, so the caller falls back to the RPC. k ≤ 50, far under
- * supabase-js's 1,000-row cap.
+ * The service's rows in `match_semantic`'s shape, service order and scores
+ * kept. A row that carries the columns itself (`with_text`) is used as is; the
+ * rest are hydrated with one primary-key `in()` on page_translations, and a row
+ * gone from there since the service last synced is dropped. With every row
+ * complete, Supabase is not called at all. Throws on a hydration error, so the
+ * caller falls back to the RPC. k ≤ 50, far under supabase-js's 1,000-row cap.
  */
 export async function hydrateServiceRows(rows: VectorServiceRow[]): Promise<Record<string, unknown>[]> {
   if (rows.length === 0) return [];
-  const { data, error } = await supabase
-    .from('page_translations')
-    .select(HYDRATE_COLUMNS)
-    .in('page_id', rows.map((r) => r.page_id));
-  if (error) throw new VectorServiceError(`hydration failed: ${error.message}`);
-  const byId = new Map(((data || []) as unknown as Record<string, unknown>[]).map((r) => [r.page_id as string, r]));
+  const missing = rows.filter((r) => !hasServiceColumns(r)).map((r) => r.page_id);
+  let byId = new Map<string, Record<string, unknown>>();
+  if (missing.length) {
+    const { data, error } = await supabase
+      .from('page_translations')
+      .select(HYDRATE_COLUMNS)
+      .in('page_id', missing);
+    if (error) throw new VectorServiceError(`hydration failed: ${error.message}`);
+    byId = new Map(((data || []) as unknown as Record<string, unknown>[]).map((r) => [r.page_id as string, r]));
+  }
   const out: Record<string, unknown>[] = [];
   for (const r of rows) {
+    if (hasServiceColumns(r)) {
+      out.push({
+        page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, translation: r.translation,
+        book_title: r.book_title, book_author: r.book_author, book_language: r.book_language, book_year: r.book_year,
+        similarity: r.similarity,
+      });
+      continue;
+    }
     const t = byId.get(r.page_id);
     if (t) out.push({ ...t, similarity: r.similarity });
   }
