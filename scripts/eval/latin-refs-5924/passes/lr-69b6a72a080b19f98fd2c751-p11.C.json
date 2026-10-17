@@ -1,0 +1,40 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "dici poſſe, Cingalo furacior, propterea,",
+  "A": "quod",
+  "B": "quòd",
+  "ctx_after": "hoc hominum genus furandi artem",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "quod",
+   "note": "no accent visible"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "circum-Danubianas regiones incredibili mul- titudine",
+  "A": "inundarunt, Itali",
+  "B": "inundarunt;Itali",
+  "ctx_after": "Cingaros vocant, Galli Bohe- mos,",
+  "resolution": {
+   "k": 10,
+   "choice": "B",
+   "text": "inundarunt;Itali",
+   "note": "no space after mark"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "mul- titudine inundarunt, Itali Cingaros",
+  "A": "vocant, Galli",
+  "B": "vocant;Galli",
+  "ctx_after": "Bohe- mos, quod inclidem ex",
+  "resolution": {
+   "k": 11,
+   "choice": "B",
+   "text": "vocant;Galli"
+  }
+ }
+]

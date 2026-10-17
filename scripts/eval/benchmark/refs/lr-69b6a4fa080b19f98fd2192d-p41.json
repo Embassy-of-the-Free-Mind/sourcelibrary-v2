@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Moguntini labores electorales, praevii &amp; electorii ... (1657), the leaf itself: https://www.e-rara.ch/i3f/v21/11030722/full/1000,/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69b6a4fa080b19f98fd2192d",
+  "page_number": 41,
+  "page_id": "69b6a4fa080b19f98fd21956",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1600s",
+  "year": 1657,
+  "visible": false,
+  "hidden_reason": "launch_curation",
+  "image": {
+    "url": "https://www.e-rara.ch/i3f/v21/11030722/full/1000,/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "138b0d51009d6c7bde82816f9bf9309b48b3843db3c4bfe52299fe32a138de42",
+    "width": 1000,
+    "height": 1257,
+    "fetched_at": "2026-10-17T22:31:03.836Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "verse",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9704,
+    "hunks": 5,
+    "space_only_hunks": 0,
+    "c_chose": {
+      "A": 1,
+      "B": 4,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1282,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.607Z",
+  "text_location": "repo",
+  "text_sha256": "d2eba311288112358f59454d9076a23ea8cfa8108cc48b4ad17ff839e14bf12d"
+}

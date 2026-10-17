@@ -1,0 +1,15 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "26",
+  "A": "ex",
+  "B": "",
+  "ctx_after": "orichalco dominus, propè quam crucem",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ex",
+   "note": "faded but traces of ex present"
+  }
+ }
+]

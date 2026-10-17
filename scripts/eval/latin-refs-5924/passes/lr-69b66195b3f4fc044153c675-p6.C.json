@@ -1,0 +1,41 @@
+[
+ {
+  "k": 4,
+  "ctx_before": "ait,cum Ignaria pugnat.Locus enim paſcendi",
+  "A": "uictusq;",
+  "B": "uictuſq;",
+  "ctx_after": "idem eſt. Turtur & Luteus",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "uictusq;",
+   "note": "round s"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "Quis mihi dabit alas ſicut",
+  "A": "columbæ:",
+  "B": "columbæ?",
+  "ctx_after": "auolarem & quie tem caperem.",
+  "resolution": {
+   "k": 9,
+   "choice": "B",
+   "text": "columbæ?",
+   "note": "interrogation mark"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "Petit autem orbatus compare turtur",
+  "A": "ſolitudinem,",
+  "B": "ſolitudinem.",
+  "ctx_after": "& in editiſsimorum montium iugis",
+  "resolution": {
+   "k": 11,
+   "choice": "A",
+   "text": "ſolitudinem,",
+   "note": "comma; next line continues & in"
+  }
+ }
+]

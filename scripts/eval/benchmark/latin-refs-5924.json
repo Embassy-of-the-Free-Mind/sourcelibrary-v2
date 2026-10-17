@@ -1,0 +1,942 @@
+{
+ "stratum": "latin-refs-5924",
+ "issue": 5924,
+ "parent": 5660,
+ "built_by": "scripts/eval/latin-refs-5924.mjs finalize",
+ "unit": "book (one leaf)",
+ "draw": {
+  "seed": 5924,
+  "rule": "per century: frame sorted by book_id, shuffled by Mulberry32(5924 + centuryStart); taken in that order until the target of books with a usable body leaf is met. Per book: leaves sorted by page_number, body = index [0.15·n, 0.9·n), body shuffled by Mulberry32(5924 ^ fnv1a(book_id)); the first 4 usable leaves (provider leaf URL, no split crop) are the candidates in order; the reader rejects non-text leaves and the next candidate is read.",
+  "frame_sizes": {
+   "1600s": 16427,
+   "1500s": 11954
+  },
+  "excluded": {
+   "no_year_or_other_century": 22887,
+   "duplicate_of": 1186,
+   "under_min_pages": 1800
+  }
+ },
+ "pages": [
+  {
+   "slug": "lr-69b62fe81c1c21a3737fc0b3-p132",
+   "book_id": "69b62fe81c1c21a3737fc0b3",
+   "page_number": 132,
+   "substratum": "1500s",
+   "title": "Commentarii in secundam Epistolam D. Pauli ad Corinthios, facili et perspicua methodo conscripti a D. Benedicto Aretio bernensi theologo. Cu",
+   "year": 1579,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-69b63c691c1c21a373852e60-p67",
+   "book_id": "69b63c691c1c21a373852e60",
+   "page_number": 67,
+   "substratum": "1500s",
+   "title": "Paradoxorum medicinae libri tres : in quibus sane multa a nemine hactenus prodita, Arabum aetatisque nostrae medicorum errata non tantum ind",
+   "year": 1535,
+   "typeface": {
+    "A": "roman",
+    "B": "mixed-roman-italic"
+   }
+  },
+  {
+   "slug": "lr-69b63d7e1c1c21a37385c5aa-p6",
+   "book_id": "69b63d7e1c1c21a37385c5aa",
+   "page_number": 6,
+   "substratum": "1500s",
+   "title": "Threni magistri nostri Ioannis Eccii in obitu Margarethae concubinae suae, omnium quae fuerunt quaeque post futurae sunt fidelissimae : Quae",
+   "year": 1538,
+   "typeface": "italic"
+  },
+  {
+   "slug": "lr-69b641d01c1c21a37388850b-p29",
+   "book_id": "69b641d01c1c21a37388850b",
+   "page_number": 29,
+   "substratum": "1500s",
+   "title": "Regule grammaticales Guarini Veronensis",
+   "year": 1549,
+   "typeface": "gothic"
+  },
+  {
+   "slug": "lr-69b650ca18b87551bfca20ca-p20",
+   "book_id": "69b650ca18b87551bfca20ca",
+   "page_number": 20,
+   "substratum": "1500s",
+   "title": "Tractatio Verborvm Domini, In Domo Patris Mei Mansiones multae sunt, &amp;c. ex XIIII. cap. Euang. secundum Ioan : qua demonstratur spem sal",
+   "year": 1561,
+   "typeface": {
+    "A": "italic",
+    "B": "roman"
+   }
+  },
+  {
+   "slug": "lr-69b6535318b87551bfcbc552-p46",
+   "book_id": "69b6535318b87551bfcbc552",
+   "page_number": 46,
+   "substratum": "1500s",
+   "title": "Aristotelis Stagiritae, Pepli fragmentum, sive heroum Homericorum epitaphia",
+   "year": 1566,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b654f218b87551bfccf7b1-p206",
+   "book_id": "69b654f218b87551bfccf7b1",
+   "page_number": 206,
+   "substratum": "1500s",
+   "title": "Historia Frvmentorvm, Legvminvm, Palvstrivm Et Aqvatilivm Herbarvm, Ac Eorvm, Qvae Eo Pertinent",
+   "year": 1569,
+   "typeface": {
+    "A": "mixed-roman-italic",
+    "B": "italic"
+   }
+  },
+  {
+   "slug": "lr-69b6590718b87551bfcf91e6-p288",
+   "book_id": "69b6590718b87551bfcf91e6",
+   "page_number": 288,
+   "substratum": "1500s",
+   "title": "Commentariorum de statu religionis et reipublicae in regno Galliae, I. partis libri tres",
+   "year": 1577,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b65d3fb3f4fc0441517802-p178",
+   "book_id": "69b65d3fb3f4fc0441517802",
+   "page_number": 178,
+   "substratum": "1500s",
+   "title": "Theodori Bezae Vezelii Volumen alterum Tractationum theologicarum, in quibus pleraque christianae religionis dogmata adversus haereses nostr",
+   "year": 1582,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b65f40b3f4fc04415277f3-p57",
+   "book_id": "69b65f40b3f4fc04415277f3",
+   "page_number": 57,
+   "substratum": "1500s",
+   "title": "M. Varronis Genevensis I.C. et Cos. Ord. De motu tractatus",
+   "year": 1584,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-69b66125b3f4fc0441538679-p774",
+   "book_id": "69b66125b3f4fc0441538679",
+   "page_number": 774,
+   "substratum": "1500s",
+   "title": "Sacri sermones R.P.F. Clementis Aranei Ragusei, ordinis praedictorum, pro diebus festis a prima dominica adventus usque ad cineres &amp; sub",
+   "year": 1586,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-69b66156b3f4fc044153aef9-p162",
+   "book_id": "69b66156b3f4fc044153aef9",
+   "page_number": 162,
+   "substratum": "1500s",
+   "title": "Institutionum iuris Civilis libri IV",
+   "year": 1587,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b66195b3f4fc044153c675-p6",
+   "book_id": "69b66195b3f4fc044153c675",
+   "page_number": 6,
+   "substratum": "1500s",
+   "title": "De generis humani censu, capita doctrinae Theologicae",
+   "year": 1587,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b66318b3f4fc044154804f-p294",
+   "book_id": "69b66318b3f4fc044154804f",
+   "page_number": 294,
+   "substratum": "1500s",
+   "title": "Flores R.P.F. Lodoici Granatensis, ex omnibus eius opusculis spiritualibus iam recens summa fide excerpti, &amp; in octo partes distributi",
+   "year": 1588,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b66582b3f4fc0441555ece-p3",
+   "book_id": "69b66582b3f4fc0441555ece",
+   "page_number": 3,
+   "substratum": "1500s",
+   "title": "Decreto ac voluntate amplissimi Iurisconsultorum Ordinis celeberrimae Academiae Basiliensis, subsequentes Positiones De Iureiurando, sive Vo",
+   "year": 1591,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b666edb3f4fc0441560ba8-p8",
+   "book_id": "69b666edb3f4fc0441560ba8",
+   "page_number": 8,
+   "substratum": "1500s",
+   "title": "Theses theologicae De authentica Biblicorum librorum interpretatione",
+   "year": 1592,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69bd9cf76120d54bd037254f-p140",
+   "book_id": "69bd9cf76120d54bd037254f",
+   "page_number": 140,
+   "substratum": "1500s",
+   "title": "Compendium alchimiae Ioannis Garlandii Angli philosophi doctissimi ... : adiecimus eiusdem compendii per Arnoldum de Villanova explicationem",
+   "year": 1560,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69bd9d836120d54bd03774f6-p553",
+   "book_id": "69bd9d836120d54bd03774f6",
+   "page_number": 553,
+   "substratum": "1500s",
+   "title": "Variorum in Europa itinerum deliciae : seu, ex variis manu-scriptis selectiora tantum inscriptionum maxime recentium monumenta : quibus pass",
+   "year": 1599,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a08557415c643eb1af55fa5-p192",
+   "book_id": "6a08557415c643eb1af55fa5",
+   "page_number": 192,
+   "substratum": "1500s",
+   "title": "Rhetoricorum ad C. Herennium libri 4. incerto auctore. Ciceronis De inuentione libri 2. De oratore, ad Q. fratrem libri 3. Brutus, siue, De ",
+   "year": 1550,
+   "typeface": "italic"
+  },
+  {
+   "slug": "lr-6a08567915c643eb1af59235-p42",
+   "book_id": "6a08567915c643eb1af59235",
+   "page_number": 42,
+   "substratum": "1500s",
+   "title": "Rhetoricorum ad C. Herennium libri 4. incerto auctore. Ciceronis De inuentione libri 2. De oratore, ad Q. fratrem libri 3. Brutus, siue, De ",
+   "year": 1550,
+   "typeface": "italic"
+  },
+  {
+   "slug": "lr-6a41aec44f7292ab3ec107f2-p28",
+   "book_id": "6a41aec44f7292ab3ec107f2",
+   "page_number": 28,
+   "substratum": "1500s",
+   "title": "Nova fabricandi horaria mobilia, & permanentia, tam acu magnetico, quam sine acu ad omnem latitudinem, ratio nuper excogitata, et nunc primu",
+   "year": 1596,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a424dd8c1f44d759e6cf921-p368",
+   "book_id": "6a424dd8c1f44d759e6cf921",
+   "page_number": 368,
+   "substratum": "1500s",
+   "title": "Therapeutices universalis, seu medendi rationis, libri septem.",
+   "year": 1581,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a4260f7744db9e3105a80d6-p110",
+   "book_id": "6a4260f7744db9e3105a80d6",
+   "page_number": 110,
+   "substratum": "1500s",
+   "title": "Opuscula quorum numerum, atque ordinem versa pagina indicabit. Accedit Gulielmi Rondeletii tractatus De fucis. Item Arcanorum liber primus. ",
+   "year": 1566,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a4268b7aedf4c943f91f35b-p106",
+   "book_id": "6a4268b7aedf4c943f91f35b",
+   "page_number": 106,
+   "substratum": "1500s",
+   "title": "Moralia, cum additionibus",
+   "year": 1525,
+   "typeface": "gothic"
+  },
+  {
+   "slug": "lr-6a426d18175f31ca3ec5391c-p58",
+   "book_id": "6a426d18175f31ca3ec5391c",
+   "page_number": 58,
+   "substratum": "1500s",
+   "title": "De methodis libri duo, quorum prior quidem omnium methodorum universalium et particularium, quarum usus est in philosophia brevem ac dilucid",
+   "year": 1562,
+   "typeface": "italic"
+  },
+  {
+   "slug": "lr-6a42b98a5207af7c42f683b0-p207",
+   "book_id": "6a42b98a5207af7c42f683b0",
+   "page_number": 207,
+   "substratum": "1500s",
+   "title": "In quatuor libros institutionum iuris civilis eruditissima commentaria",
+   "year": 1569,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a42bdb497284560a2b078dc-p26",
+   "book_id": "6a42bdb497284560a2b078dc",
+   "page_number": 26,
+   "substratum": "1500s",
+   "title": "Explicationes suarum in Caronem, Varronem, Columellam castigationem",
+   "year": 1542,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a4306ba22c0c8edb0f88ee5-p163",
+   "book_id": "6a4306ba22c0c8edb0f88ee5",
+   "page_number": 163,
+   "substratum": "1500s",
+   "title": "Paraphrasis. In isaiam: libri V.",
+   "year": 1577,
+   "typeface": "italic"
+  },
+  {
+   "slug": "lr-6a4a5cb69050f0b43431f544-p217",
+   "book_id": "6a4a5cb69050f0b43431f544",
+   "page_number": 217,
+   "substratum": "1500s",
+   "title": "De astrologia divinatrice epistolae Thomae Erasti : iam olim ab eodem ad diversos scriptae & in duos libros digestae",
+   "year": 1580,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a4ad22c33aff31aa5243306-p33",
+   "book_id": "6a4ad22c33aff31aa5243306",
+   "page_number": 33,
+   "substratum": "1500s",
+   "title": "Epitaphia et inscriptiones lugubres. A Gulielmo Berchero, cum in Italia, animi causa, peregrinaretur, collecta",
+   "year": 1566,
+   "typeface": {
+    "A": "roman",
+    "B": "mixed-roman-italic"
+   }
+  },
+  {
+   "slug": "lr-6a506a2678825bd7fddf0013-p19",
+   "book_id": "6a506a2678825bd7fddf0013",
+   "page_number": 19,
+   "substratum": "1500s",
+   "title": "De animo libri III",
+   "year": 1564,
+   "typeface": "italic"
+  },
+  {
+   "slug": "lr-6a905f881da1ecc792bd26b6-p613",
+   "book_id": "6a905f881da1ecc792bd26b6",
+   "page_number": 613,
+   "substratum": "1500s",
+   "title": "Institutionem dialecticarum libri octo",
+   "year": 1595,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a90955bac1fcc717ba305fe-p43",
+   "book_id": "6a90955bac1fcc717ba305fe",
+   "page_number": 43,
+   "substratum": "1500s",
+   "title": "Chartiludium institute sumarie doctore thoma murner memorante et ludente.",
+   "year": 1518,
+   "typeface": "gothic"
+  },
+  {
+   "slug": "lr-6a9097f05fecff234ca5eb2b-p600",
+   "book_id": "6a9097f05fecff234ca5eb2b",
+   "page_number": 600,
+   "substratum": "1500s",
+   "title": "Lexicon, nunc demum à mendis exactissime repurgatum accessere ad postremam hanc editionem Jacobi montani viri literatissimi castigationes",
+   "year": 1534,
+   "typeface": "mixed-gothic-roman"
+  },
+  {
+   "slug": "lr-6a90bcd6a02f8189feb97ac6-p94",
+   "book_id": "6a90bcd6a02f8189feb97ac6",
+   "page_number": 94,
+   "substratum": "1500s",
+   "title": "Enchiridion de milite Christiano in quo taxatis vulgi substitionibus, ad priscae religionis puritat: veteris aeloquenetiae lituo nos prouoca",
+   "year": 1515,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a90d5430cdb00394ba531cd-p362",
+   "book_id": "6a90d5430cdb00394ba531cd",
+   "page_number": 362,
+   "substratum": "1500s",
+   "title": "De antiquitatibus ac De bello Iudaico / Iosephus. ",
+   "year": 1502,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a941c8158e968ecd979f393-p98",
+   "book_id": "6a941c8158e968ecd979f393",
+   "page_number": 98,
+   "substratum": "1500s",
+   "title": "[De ratione ordinis a jurisconsultis in Pandectis, Codice et Institutionibus servati]",
+   "year": 1580,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a943b2545a4780cb83dd409-p108",
+   "book_id": "6a943b2545a4780cb83dd409",
+   "page_number": 108,
+   "substratum": "1500s",
+   "title": "Heroides sive epistolae",
+   "year": 1558,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6ac514204ba7223afe068770-p705",
+   "book_id": "6ac514204ba7223afe068770",
+   "page_number": 705,
+   "substratum": "1500s",
+   "title": "Mar. Marvli Spalatensis de institutione bene beateq. uiuendi libri sex ad normam uitae sanctorum utriusque testamenti feliciter digesti",
+   "year": 1530,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6ac52d70ed10b8de509f0a53-p155",
+   "book_id": "6ac52d70ed10b8de509f0a53",
+   "page_number": 155,
+   "substratum": "1500s",
+   "title": "Vir Pius Et Sapiens. Hoc Est, In Solomonis Regis Paroimiōn Librum: Post Aliorvm Messes Spicilegium Primum",
+   "year": 1596,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b51ea6cf111105c42a2b3f-p204",
+   "book_id": "69b51ea6cf111105c42a2b3f",
+   "page_number": 204,
+   "substratum": "1600s",
+   "title": "Georgii Paschii Schediasma de curiosis huius seculi inventis, quorum accuratiori cultui facem praetulit antiquitas",
+   "year": 1695,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6797a70c69d645a6f59e2-p57",
+   "book_id": "69b6797a70c69d645a6f59e2",
+   "page_number": 57,
+   "substratum": "1600s",
+   "title": "Encomia gloriosissimae Deiparae semperque virginis Mariae, et nomina sacra quibus beata virgo condecorata est",
+   "year": 1607,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b67a8070c69d645a6fb80e-p11",
+   "book_id": "69b67a8070c69d645a6fb80e",
+   "page_number": 11,
+   "substratum": "1600s",
+   "title": "Positiones medicae inaugurales de convulsione",
+   "year": 1608,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-69b67e5270c69d645a70cbfc-p7",
+   "book_id": "69b67e5270c69d645a70cbfc",
+   "page_number": 7,
+   "substratum": "1600s",
+   "title": "Positionum Medicarum septenae septem de iliaco affectu cognoscendo &amp; curando",
+   "year": 1611,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b686ce70c69d645a74659d-p158",
+   "book_id": "69b686ce70c69d645a74659d",
+   "page_number": 158,
+   "substratum": "1600s",
+   "title": "Prosodia Henrici Smetii, Medicinae D. Promtissima : Qvæ Syllabarvm Positione &amp; Diphthongis carentium Qvantitates, Sola veterum Poëtarum ",
+   "year": 1617,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6887d2368e1fad320d102-p39",
+   "book_id": "69b6887d2368e1fad320d102",
+   "page_number": 39,
+   "substratum": "1600s",
+   "title": "Disquisitio methodica de iure fideicommissorum",
+   "year": 1619,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b689dc2368e1fad3217c45-p7",
+   "book_id": "69b689dc2368e1fad3217c45",
+   "page_number": 7,
+   "substratum": "1600s",
+   "title": "Disputatio de arrestis, e iure communi, Saxonico &amp; constitutionibus Imperii deprompta",
+   "year": 1620,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b68a232368e1fad3218e75-p104",
+   "book_id": "69b68a232368e1fad3218e75",
+   "page_number": 104,
+   "substratum": "1600s",
+   "title": "Domni Constantini Caietani sanctiss. D.N. a sacris litterarum monumentis abbatis S. Baronti congregat. Casinensis ord. S. Benedicti pro Ioan",
+   "year": 1620,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b690c7080b19f98fce0926-p15",
+   "book_id": "69b690c7080b19f98fce0926",
+   "page_number": 15,
+   "substratum": "1600s",
+   "title": "Theses politicae de foederibus",
+   "year": 1627,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-69b69808080b19f98fcf59a7-p12",
+   "book_id": "69b69808080b19f98fcf59a7",
+   "page_number": 12,
+   "substratum": "1600s",
+   "title": "Disputatio inauguralis de praescriptionibus",
+   "year": 1639,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b699da080b19f98fcfbbc0-p417",
+   "book_id": "69b699da080b19f98fcfbbc0",
+   "page_number": 417,
+   "substratum": "1600s",
+   "title": "Hieronymi Cardani Mediolanensis, De propria vita liber : ex bibliotheca Gab. Naudaei",
+   "year": 1643,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6a48a080b19f98fd202ca-p3",
+   "book_id": "69b6a48a080b19f98fd202ca",
+   "page_number": 3,
+   "substratum": "1600s",
+   "title": "Disputatio theologica ad Matthaei cap. XVI, vers. XVIII, XIX",
+   "year": 1656,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6a4fa080b19f98fd2192d-p41",
+   "book_id": "69b6a4fa080b19f98fd2192d",
+   "page_number": 41,
+   "substratum": "1600s",
+   "title": "Moguntini labores electorales, praevii &amp; electorii ...",
+   "year": 1657,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6a692080b19f98fd2b55b-p23",
+   "book_id": "69b6a692080b19f98fd2b55b",
+   "page_number": 23,
+   "substratum": "1600s",
+   "title": "Conscientiae humanae anatomia, per theses succinte digesta",
+   "year": 1659,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6a72a080b19f98fd2c751-p11",
+   "book_id": "69b6a72a080b19f98fd2c751",
+   "page_number": 11,
+   "substratum": "1600s",
+   "title": "Diatribe historico-politica de Zygenorum origine, vita ac moribus",
+   "year": 1660,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6aaec080b19f98fd40db6-p328",
+   "book_id": "69b6aaec080b19f98fd40db6",
+   "page_number": 328,
+   "substratum": "1600s",
+   "title": "Historia Animalium : In quâ plerorumque Animalium praecipuae proprietates in gratiam Studiosorum Theologiae, &amp; Ministrorum Verbi ad usum",
+   "year": 1665,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6ac22080b19f98fd47814-p15",
+   "book_id": "69b6ac22080b19f98fd47814",
+   "page_number": 15,
+   "substratum": "1600s",
+   "title": "Positiones iuridicae de transactionibus",
+   "year": 1667,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6ac4f080b19f98fd47f41-p8",
+   "book_id": "69b6ac4f080b19f98fd47f41",
+   "page_number": 8,
+   "substratum": "1600s",
+   "title": "Quaestiones hasce philosophicas",
+   "year": 1667,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6ae3edc00a90e322afdc9-p18",
+   "book_id": "69b6ae3edc00a90e322afdc9",
+   "page_number": 18,
+   "substratum": "1600s",
+   "title": "Disputatio iuridica inauguralis de moratoria",
+   "year": 1670,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6afd296dc15d4a16c8270-p70",
+   "book_id": "69b6afd296dc15d4a16c8270",
+   "page_number": 70,
+   "substratum": "1600s",
+   "title": "Disputatio philosophica De conceptibus metaphysicis",
+   "year": 1672,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6b04496dc15d4a16cb96d-p9",
+   "book_id": "69b6b04496dc15d4a16cb96d",
+   "page_number": 9,
+   "substratum": "1600s",
+   "title": "Disputatio textualis de beatitudinibus evangelicis ad Matthaei cap. V. v. 3---12. prima",
+   "year": 1673,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6b60296dc15d4a16ea626-p87",
+   "book_id": "69b6b60296dc15d4a16ea626",
+   "page_number": 87,
+   "substratum": "1600s",
+   "title": "Vindiciae oppositae vindici veritatis reverendi atque illustrissimi domini, dn. Augustini Reding, abbatis Einsidlensis ... : ; una cum succi",
+   "year": 1681,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6b8058566c83814624dc2-p289",
+   "book_id": "69b6b8058566c83814624dc2",
+   "page_number": 289,
+   "substratum": "1600s",
+   "title": "Johannis Oweni Celeberrimi Theologi Theologoumena Pantodapa Sive de Natura, Ortu, Progressu, Et Studio Veræ Theologiæ Libri Sex : Quibus eti",
+   "year": 1684,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6b8588566c838146263bc-p223",
+   "book_id": "69b6b8588566c838146263bc",
+   "page_number": 223,
+   "substratum": "1600s",
+   "title": "Sectiones conicae : in novem libros distributae : in quibus quidquid hactenus observatione dignum cum a veteribus, tum a recentioribus Geome",
+   "year": 1685,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6b9158566c83814628f76-p19",
+   "book_id": "69b6b9158566c83814628f76",
+   "page_number": 19,
+   "substratum": "1600s",
+   "title": "Urim et Thumim : dissertatio theologica ex I. Cor I. v. 30. tertia : de sapientia et iustitia ad salutem",
+   "year": 1686,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-69b6b9378566c8381462a96b-p15",
+   "book_id": "69b6b9378566c8381462a96b",
+   "page_number": 15,
+   "substratum": "1600s",
+   "title": "Dissertationis theologicae de iudicio incipiente a domo Dei, pars tertia",
+   "year": 1686,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6bdb18566c83814641d0c-p9",
+   "book_id": "69b6bdb18566c83814641d0c",
+   "page_number": 9,
+   "substratum": "1600s",
+   "title": "Dissertatio theologica textualis de electionis immutabilitate et certitudine : declarata ex II. Timoth. II, vers 19",
+   "year": 1694,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69b6bedd8566c83814646f26-p128",
+   "book_id": "69b6bedd8566c83814646f26",
+   "page_number": 128,
+   "substratum": "1600s",
+   "title": "Emanuelis König, phil. &amp; med. doct. Basil. ... cognom. Avicennae, Regni vegetabilis pars altera : plantarum descriptionem, classes et di",
+   "year": 1696,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-69ee643b7b983848aff567f7-p149",
+   "book_id": "69ee643b7b983848aff567f7",
+   "page_number": 149,
+   "substratum": "1600s",
+   "title": "Runir seu Danica Literatura Antiquissima (Runic Characters)",
+   "year": 1651,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a1009fbf71729295096d465-p715",
+   "book_id": "6a1009fbf71729295096d465",
+   "page_number": 715,
+   "substratum": "1600s",
+   "title": "Theatrum chemicum, praecipuos selectorum auctorum tractatus de chemiae et lapidis philosophici antiquitate, veritate, iure, praestantia, & o",
+   "year": 1659,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a26c3e3aad44c98627cbf3a-p15",
+   "book_id": "6a26c3e3aad44c98627cbf3a",
+   "page_number": 15,
+   "substratum": "1600s",
+   "title": "Centuria chymica : Hoc est tractatus aureus de lapide philosophorum",
+   "year": 1652,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a26c68faad44c98627dfd7e-p945",
+   "book_id": "6a26c68faad44c98627dfd7e",
+   "page_number": 945,
+   "substratum": "1600s",
+   "title": "Johannis Dolaei Med. Doctoris ... Encyclopaedia, Medica Dogmatica : In Qua Omnes Affecus Interni, a Quibus Machina illa divina, sive Corpus ",
+   "year": 1691,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a4255b0dfbbb4d07aa51571-p303",
+   "book_id": "6a4255b0dfbbb4d07aa51571",
+   "page_number": 303,
+   "substratum": "1600s",
+   "title": "Observationum medicarum centuria",
+   "year": 1677,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a4259b5dfbbb4d07aa5afd4-p84",
+   "book_id": "6a4259b5dfbbb4d07aa5afd4",
+   "page_number": 84,
+   "substratum": "1600s",
+   "title": "Opuscula medica de arthritide, de calculo et de urinarum hypostasi, in quibus omnibus Galeni et veterum authoritas contra Joannem Fernelium ",
+   "year": 1643,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a425e51dfbbb4d07aa63e8c-p237",
+   "book_id": "6a425e51dfbbb4d07aa63e8c",
+   "page_number": 237,
+   "substratum": "1600s",
+   "title": "Modus & Ratio Visendi aegros",
+   "year": 1670,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a42626f744db9e3105adafe-p286",
+   "book_id": "6a42626f744db9e3105adafe",
+   "page_number": 286,
+   "substratum": "1600s",
+   "title": "Nymphaeum Beatissimae Virg: Mariae Fabariensis. Sive Tractatus De Celeberrimis Fabarianis Thermis, Vulgo Pfefers Bad, In Superiore Helvetiae",
+   "year": 1631,
+   "typeface": {
+    "A": "mixed-roman-italic",
+    "B": "roman"
+   }
+  },
+  {
+   "slug": "lr-6a42725728e9db2e39c135a7-p49",
+   "book_id": "6a42725728e9db2e39c135a7",
+   "page_number": 49,
+   "substratum": "1600s",
+   "title": "Epistola ad Virum Nobilissimum atque Amplissimum D. Joelem Langelottum, Serenissimi Ducis Holsatiae Archiatrum, De Alcali Et Acidi Insuffici",
+   "year": 1675,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a42af56466deeb51e55d1f6-p27",
+   "book_id": "6a42af56466deeb51e55d1f6",
+   "page_number": 27,
+   "substratum": "1600s",
+   "title": "Relegatio Lutheranorum Et Calvinianorum Praedicantium Ex Sacro Romano Imperio : Ex Relegatione Jesuitica Andreae Lonneri Lutherano Calvinist",
+   "year": 1613,
+   "typeface": {
+    "A": "roman",
+    "B": "mixed-roman-italic"
+   }
+  },
+  {
+   "slug": "lr-6a42bbcf5207af7c42f6f1a7-p40",
+   "book_id": "6a42bbcf5207af7c42f6f1a7",
+   "page_number": 40,
+   "substratum": "1600s",
+   "title": "Luculenta Descriptio, Summa arte extructi Sacelli, in quo illustrissimorum trium Electorum, [et] reliquorum Principum, ac Ducum Saxoniae [et",
+   "year": 1604,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a42f6193ad4d80da123710b-p263",
+   "book_id": "6a42f6193ad4d80da123710b",
+   "page_number": 263,
+   "substratum": "1600s",
+   "title": "In Universam Aristotelis Logicam. Commentarii Cum Annexis Disputationibus Romae ab eodem olim praelecti",
+   "year": 1620,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a42fbf7b519e35bbf24011b-p13",
+   "book_id": "6a42fbf7b519e35bbf24011b",
+   "page_number": 13,
+   "substratum": "1600s",
+   "title": "Dissertatio De Officiis Transeuntium Cum Exercitu Per Aliorum Territoria, Quam Praeside Academiae Ienensis Rectore Magnifico Dn. Petro Mülle",
+   "year": 1682,
+   "typeface": "mixed-gothic-roman"
+  },
+  {
+   "slug": "lr-6a4303a34e06bc233ecfcc50-p267",
+   "book_id": "6a4303a34e06bc233ecfcc50",
+   "page_number": 267,
+   "substratum": "1600s",
+   "title": "De Poenitentia dissertationes theologicae",
+   "year": 1646,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a437bd657a09c2c0fcb4d33-p262",
+   "book_id": "6a437bd657a09c2c0fcb4d33",
+   "page_number": 262,
+   "substratum": "1600s",
+   "title": "Numismata imperatorum Romanorum præstantiora a Julio Cæsare ad postumum et tyrannos",
+   "year": 1694,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a447bcdd4792484c6c18068-p382",
+   "book_id": "6a447bcdd4792484c6c18068",
+   "page_number": 382,
+   "substratum": "1600s",
+   "title": "Theatrum Virtutis Et Gloriae Boicae Serenissimi Et Potentissimi Principis Maximiliani Emmanuelis Utr. Bav. & Super. Palatin. Ducis Honori Er",
+   "year": 1680,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a4a584b9050f0b4342e8c64-p80",
+   "book_id": "6a4a584b9050f0b4342e8c64",
+   "page_number": 80,
+   "substratum": "1600s",
+   "title": "Medicina Hippocratis chymica",
+   "year": 1671,
+   "typeface": {
+    "A": "mixed-roman-italic",
+    "B": "roman"
+   }
+  },
+  {
+   "slug": "lr-6a4a585e9050f0b4342e9a1a-p164",
+   "book_id": "6a4a585e9050f0b4342e9a1a",
+   "page_number": 164,
+   "substratum": "1600s",
+   "title": "Zachariae Brendelii Med. Doct. & Prof. Publici Chimia In Artis Formam Redacta : Ubi praeter Methodum addiscendi ... Chimicas facilimam, disq",
+   "year": 1641,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a4ac35333aff31aa523ee90-p89",
+   "book_id": "6a4ac35333aff31aa523ee90",
+   "page_number": 89,
+   "substratum": "1600s",
+   "title": "Opuscula Sacra",
+   "year": 1614,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a9055cdce61c4a7de146884-p322",
+   "book_id": "6a9055cdce61c4a7de146884",
+   "page_number": 322,
+   "substratum": "1600s",
+   "title": "Historia Philosophica : continens veterum phil., qui quidem praecipui fuerunt, studia ac dogmata, modernorum quaestionibus in primis exagita",
+   "year": 1674,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a9058d67f6818cc17cd7565-p164",
+   "book_id": "6a9058d67f6818cc17cd7565",
+   "page_number": 164,
+   "substratum": "1600s",
+   "title": "Joh. Henrici Ursini De Zoroastre Bactriano, Hermete Trismegisto, Sanchoniathone Phoenicio, Eorumque scriptis, & aliis, contra Mosaicae Scrip",
+   "year": 1661,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a90620ec21b989bffd7625f-p30",
+   "book_id": "6a90620ec21b989bffd7625f",
+   "page_number": 30,
+   "substratum": "1600s",
+   "title": "Brevis disquisitio, an & quomodo vulgo dicti evangelici pontificios, ac nominatim Val. Magni de acatholicorum credendi regula judicium refut",
+   "year": 1633,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a907c707f9d520dd42e84a4-p20",
+   "book_id": "6a907c707f9d520dd42e84a4",
+   "page_number": 20,
+   "substratum": "1600s",
+   "title": "De Emphasibus Scripturae Dissertatio Philologica, Quam Pro gradu Magisterii ab amplissima Facultate Philosophica rite consequendo, Praeside ",
+   "year": 1698,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a907e604e70467f352333ac-p13",
+   "book_id": "6a907e604e70467f352333ac",
+   "page_number": 13,
+   "substratum": "1600s",
+   "title": "Theses Theologicas, Quae velut in Summario Labadismum sive Errores & Haeretica Dogmata Johannis de Labadie Eiusque Asseclarum continent, & c",
+   "year": 1681,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a90877cc223d60c78ed0ef4-p94",
+   "book_id": "6a90877cc223d60c78ed0ef4",
+   "page_number": 94,
+   "substratum": "1600s",
+   "title": "Prudentiae Civilis Rabbinicae Specimen sive R. Isaaci Abarbanelis Dissertatio De Principatu Abimelechi Observationibus Illustrata, Auctore J",
+   "year": 1694,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a90adb22764d973ba12dc61-p64",
+   "book_id": "6a90adb22764d973ba12dc61",
+   "page_number": 64,
+   "substratum": "1600s",
+   "title": "Irminsula Saxonica, Hoc Est Eius nominis Idoli, sive Numinis Tutelaris, apud antiquissimos Saxones paganos culti, Et a Karolo M. Augusto per",
+   "year": 1659,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a90c07c3822dc24e54022d9-p478",
+   "book_id": "6a90c07c3822dc24e54022d9",
+   "page_number": 478,
+   "substratum": "1600s",
+   "title": "Historiarum decas tertia",
+   "year": 1679,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6a90c3bca02f8189feb9f357-p406",
+   "book_id": "6a90c3bca02f8189feb9f357",
+   "page_number": 406,
+   "substratum": "1600s",
+   "title": "Operum omnium",
+   "year": 1601,
+   "typeface": "roman"
+  },
+  {
+   "slug": "lr-6a90e847544007b776b38e58-p785",
+   "book_id": "6a90e847544007b776b38e58",
+   "page_number": 785,
+   "substratum": "1600s",
+   "title": "Aristarchus, sive De arte grammatica libri septem. Editio secunda",
+   "year": 1635,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6ac5035ceefc6804b9d7cca7-p126",
+   "book_id": "6ac5035ceefc6804b9d7cca7",
+   "page_number": 126,
+   "substratum": "1600s",
+   "title": "Ioannis Macarii Canonici Ariensis Abraxas, Sev Apistopistvs: Qvæ Est Antiqvaria De Gemmis Basilidianis Disqvisitio",
+   "year": 1657,
+   "typeface": "mixed-roman-italic"
+  },
+  {
+   "slug": "lr-6ac5152a0749a01cb81cd1b4-p353",
+   "book_id": "6ac5152a0749a01cb81cd1b4",
+   "page_number": 353,
+   "substratum": "1600s",
+   "title": "Andreae Lavrentii, Ferrerii Domini, Gall. Regis Christian. Consiliarij ac Medici primarij, & Academiae Monspeliensis Cancellarij Opera Omnia",
+   "year": 1627,
+   "typeface": "mixed-roman-italic"
+  }
+ ],
+ "excluded_after_adjudication": [
+  {
+   "slug": "lr-6a906d7132545072610bb8e6-p227",
+   "book_id": "6a906d7132545072610bb8e6",
+   "century": "1600s",
+   "reason": "final text has 17 [?] (leaf obscured at an edge)"
+  }
+ ]
+}

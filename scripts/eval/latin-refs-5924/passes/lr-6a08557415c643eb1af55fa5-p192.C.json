@@ -1,0 +1,64 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "ex laude naſci defendet ,",
+  "A": "ſemperq́;",
+  "B": "ſemperq;",
+  "ctx_after": "eam cum dignitate eſſe coniunctam",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ſemperq́;",
+   "note": "acute over q visible"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "orationis admouenda eſt ad animorum",
+  "A": "motus,nonnū-",
+  "B": "motus,nonnũ-",
+  "ctx_after": "quam aut cohortatione,aut commemoratione aliqua,",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "motus,nonnũ-",
+   "note": "curved tilde-shaped mark"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "eloquens eſſe nō poſſit. Et",
+  "A": "cū",
+  "B": "cũ",
+  "ctx_after": "ſint populares multi uarijq́; lapſus",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "cũ"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "matio aduerſa populi, quæ aut",
+  "A": "oratiōis",
+  "B": "oratiõis",
+  "ctx_after": "peccato aliquo excitatur , ſi",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "oratiõis"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "ſordi- de,ſi quoquo animi uitio",
+  "A": "dictū",
+  "B": "dictũ",
+  "ctx_after": "eſſe aliquid uideatur , aut",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "dictũ"
+  }
+ }
+]

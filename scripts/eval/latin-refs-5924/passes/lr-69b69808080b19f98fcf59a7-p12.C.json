@@ -1,0 +1,28 @@
+[
+ {
+  "k": 5,
+  "ctx_before": "quàm actiones ſtricti juris: ſed",
+  "A": "hîc",
+  "B": "hìc",
+  "ctx_after": "Bona fides nihil aliud eſt,",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "hìc",
+   "note": "grave accent"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "evict. niſi ei ante contractum",
+  "A": "denunciatũ",
+  "B": "denunciatū",
+  "ctx_after": "ſit à domino ne emeret.",
+  "resolution": {
+   "k": 6,
+   "choice": "B",
+   "text": "denunciatū",
+   "note": "straight stroke, macron"
+  }
+ }
+]

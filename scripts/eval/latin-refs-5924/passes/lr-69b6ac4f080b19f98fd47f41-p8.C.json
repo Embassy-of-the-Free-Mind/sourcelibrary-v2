@@ -1,0 +1,39 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "obſervato moderamine inculpatæ tutelæ? A.",
+  "A": "Καταφατικῶς.",
+  "B": "Καταφατική.",
+  "ctx_after": "Ratio 1. Quia à natura",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "Καταφατική."
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "tributum eſt, ut ſe, vitam,",
+  "A": "corpusq;",
+  "B": "corpuſq;",
+  "ctx_after": "tueatur, declinetq; ea quæ nocitura",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "corpusq;",
+   "note": "round s"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "An ludi ſcenici, & theatrici,",
+  "A": "utì",
+  "B": "uti",
+  "ctx_after": "hoc no- ſtro tem-",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "utì"
+  }
+ }
+]

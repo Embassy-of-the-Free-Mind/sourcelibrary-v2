@@ -1,0 +1,28 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "pius,caſtus,ſanctus,puruſq́; Sacerdos Eccius in luctu",
+  "A": "triſtitiaq;",
+  "B": "triſtitiaq́;",
+  "ctx_after": "iacet. Strennuus Hæretici domitor tuus",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "triſtitiaq́;",
+   "note": "acute over q visible"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "(prò cœlum) funera deflet, Crudeles",
+  "A": "diuos,diraq́;",
+  "B": "diuos,diráq́;",
+  "ctx_after": "fata uocans. Vſq; adeò quod",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "diuos,diraq́;",
+   "note": "accent sits over q, not a"
+  }
+ }
+]

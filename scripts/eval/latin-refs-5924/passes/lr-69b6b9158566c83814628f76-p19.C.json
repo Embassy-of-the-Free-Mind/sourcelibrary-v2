@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "& omnia",
+  "A": "pòſuit",
+  "B": "poſuit",
+  "ctx_after": "ſub pedes ejus,ut ingens eſſet",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "poſuit",
+   "note": "marks over o look like added hand stress marks, not type"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "ſub pedes ejus,ut ingens eſſet",
+  "A": "nòmen Dòmini",
+  "B": "nomen Domini",
+  "ctx_after": "in ter- ra,Pſal.VIII.5. &c. ſupra",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "nomen Domini",
+   "note": "hand marks, not printed accents"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "mo voluntario lapſu ἄδικος,juris divini",
+  "A": "violatòr,&",
+  "B": "violator,&",
+  "ctx_after": "rebellis contra ipſiusLegem eſt factus,Deum",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "violator,&",
+   "note": "hand mark"
+  }
+ }
+]

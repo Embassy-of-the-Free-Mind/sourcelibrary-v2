@@ -1,0 +1,15 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "rectè reſpon- deri: poſſe quenquam",
+  "A": "mediatorẽ",
+  "B": "mediatorē",
+  "ctx_after": "eſſe, etiamſi non ſuſtineat pœnas",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "mediatorẽ",
+   "note": "wavy tilde"
+  }
+ }
+]

@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "ἐν τῇ γῇ, μὴ ἀποκρύψῃς",
+  "A": "ἀπ᾽",
+  "B": "ἀπ'",
+  "ctx_after": "ἐμοῦ τὰς ἐν- τολάς σου,",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ἀπ᾽",
+   "note": "elision mark printed above-right of π; Greek apostrophe form, not ASCII"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "THESES THEOLOGICÆ, exhibentes SUMMARIUM LABADISMI,",
+  "A": "Ejusq;",
+  "B": "Ejusq́;",
+  "ctx_after": "CONFUTATIONEM Ex Scriptura Sacra, Libris",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "Ejusq́;",
+   "note": "acute stands over the q"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "di- gnum Scripturæ Sacræ Elogium,",
+  "A": "qvâ",
+  "B": "qvà",
+  "ctx_after": "autorem, formam ac auctoritatem tribuere",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "qvà",
+   "note": "grave accent"
+  }
+ }
+]

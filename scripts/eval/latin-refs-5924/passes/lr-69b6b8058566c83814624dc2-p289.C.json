@@ -1,0 +1,15 @@
+[
+ {
+  "k": 17,
+  "ctx_before": "citra murum eſſet, Romani occuparent,",
+  "A": "alteram, verò Lib. III. cap. II.",
+  "B": "alteram,verò Lib.III.cap.11.",
+  "ctx_after": "Ii 2 trans-",
+  "resolution": {
+   "k": 17,
+   "choice": "B",
+   "text": "alteram,verò Lib.III.cap.11.",
+   "note": "no spaces printed; cap.11 in roman figures"
+  }
+ }
+]

@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "In quatuor libros institutionum iuris civilis eruditissima commentaria (1569), the leaf itself: https://archive.org/download/bub_gb_lE37MfhaRw4C/page/n206/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a42b98a5207af7c42f683b0",
+  "page_number": 207,
+  "page_id": "6a42b98a5207af7c42f6847f",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1569,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://archive.org/download/bub_gb_lE37MfhaRw4C/page/n206/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "1513d3c96415e61c81d402799a059de50da47c038dbcca42a14923cb3b89a481",
+    "width": 1671,
+    "height": 2500,
+    "fetched_at": "2026-10-17T22:12:49.850Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "two-column",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.8614,
+    "hunks": 86,
+    "space_only_hunks": 73,
+    "c_chose": {
+      "A": 9,
+      "B": 4,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 7119,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.597Z",
+  "text_location": "repo",
+  "text_sha256": "7568ab49e5986d1bae16f64318cd01e87ee0e2a012e887b9cc3371c38666146e"
+}

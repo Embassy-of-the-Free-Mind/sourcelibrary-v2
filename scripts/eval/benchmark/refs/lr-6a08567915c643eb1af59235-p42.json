@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Rhetoricorum ad C. Herennium libri 4. incerto auctore. Ciceronis De inuentione libri 2. De oratore, ad Q. fratrem libri 3. Brutus, siue, De  (1550), the leaf itself: https://archive.org/download/bub_gb_0t0SbH8JQVIC/page/n41/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a08567915c643eb1af59235",
+  "page_number": 42,
+  "page_id": "6a08567915c643eb1af5925f",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1550,
+  "visible": true,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://archive.org/download/bub_gb_0t0SbH8JQVIC/page/n41/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "d4b75044bd1adc81790918e2ba139831d1e3a4ea9102759023ad71056f026303",
+    "width": 1582,
+    "height": 2500,
+    "fetched_at": "2026-10-17T22:12:27.075Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.8259,
+    "hunks": 23,
+    "space_only_hunks": 20,
+    "c_chose": {
+      "A": 0,
+      "B": 1,
+      "other": 2
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1649,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.586Z",
+  "text_location": "repo",
+  "text_sha256": "d70c7bebf96eb38a1c1233803854e112b21c141c16a17bc416c6d9ead03f9243"
+}

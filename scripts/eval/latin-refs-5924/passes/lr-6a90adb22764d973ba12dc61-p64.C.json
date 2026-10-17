@@ -1,0 +1,15 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "ut colligere eſt ex Dithmaro",
+  "A": "redege-",
+  "B": "rędege-",
+  "ctx_after": "runt, Henrico regio adoleſcentulo contra",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "redege-",
+   "note": "mark under e is an ink smudge with grey halo, not a caudata hook"
+  }
+ }
+]

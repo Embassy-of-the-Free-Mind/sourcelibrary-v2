@@ -1,0 +1,54 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "illud (Prædicantiū) genus in bene",
+  "A": "ordinata",
+  "B": "ordinatâ",
+  "ctx_after": "Re- publica & Eccleſia? Non",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ordinata",
+   "note": "mark over a is a speck like the one over tolerandum"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "publica & Eccleſia? Non ignotum",
+  "A": "enim",
+  "B": "enim.",
+  "ctx_after": "mihi horum præſtigiatorum ſimulatam pietatem",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "enim",
+   "note": "line-end dot is inked spacing, not punctuation"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "recipiendam, ſed etiam beneficiis donationibuſque",
+  "A": "afficiendam",
+  "B": "afficiendam.",
+  "ctx_after": "aſſeuerent, ex iiſque quidam rudi",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "afficiendam",
+   "note": "same inked spacing"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "in nos, Regeſque noſtros graſ-",
+  "A": "ſabitur?",
+  "B": "ſabitur. ?",
+  "ctx_after": "Quan-",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "ſabitur?",
+   "note": "inked spacing before ?"
+  }
+ }
+]

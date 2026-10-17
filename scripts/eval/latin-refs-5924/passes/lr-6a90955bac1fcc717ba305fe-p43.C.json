@@ -1,0 +1,76 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "alio viro poſt diuortium primi",
+  "A": "mariti.iteꝫ",
+  "B": "mariti.iteʒ",
+  "ctx_after": "eadem honeſtas impedit patrem cōtrahere",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "mariti.iteꝫ"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "legū non efficitur vel vxor.nec",
+  "A": "matrimoniuꝫ",
+  "B": "matrimoniuʒ",
+  "ctx_after": "appellatur.quo matrimonio diſ ſoluto non",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "matrimoniuꝫ"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "alias penas patitur. ¶5.Filius naturalis",
+  "A": "tantuꝫ",
+  "B": "tantuʒ",
+  "ctx_after": "curie datus patrie ſubijcitur poteſtati",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "tantuꝫ"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "filiorum.⁊ exinde fiāt dotalia inſtrumēta",
+  "A": "ī pr̄is",
+  "B": "i p̄ris",
+  "ctx_after": "ſui ptātē redigunt. ¶6.Liberi adoptiui",
+  "resolution": {
+   "k": 3,
+   "choice": "other",
+   "text": "i pr̄is",
+   "note": "plain i; stroke over r"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "dotalia inſtrumēta ī pr̄is ſui",
+  "A": "ptātē redigunt.",
+  "B": "p̄tātē redigunt᷑.",
+  "ctx_after": "¶6.Liberi adoptiui ſunt in ptāte",
+  "resolution": {
+   "k": 4,
+   "choice": "other",
+   "text": "ptātē redigunt᷑.",
+   "note": "plain p; -ur hook on t"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "redigunt. ¶6.Liberi adoptiui ſunt in",
+  "A": "ptāte",
+  "B": "p̄tāte",
+  "ctx_after": "noſtra ſicut naturales ⁊ legitimi.",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "ptāte"
+  }
+ }
+]

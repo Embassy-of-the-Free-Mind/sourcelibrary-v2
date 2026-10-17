@@ -1,0 +1,15 @@
+[
+ {
+  "k": 6,
+  "ctx_before": "monte Muteto & Mönchenſtein. TUSSILAGO,",
+  "A": "Roßhuben;",
+  "B": "Roßhuben:",
+  "ctx_after": "Quod tuſſi medeatur, etiam Farfara",
+  "resolution": {
+   "k": 6,
+   "choice": "A",
+   "text": "Roßhuben;",
+   "note": "mark has a descending tail"
+  }
+ }
+]

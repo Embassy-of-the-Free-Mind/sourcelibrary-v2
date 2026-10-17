@@ -1,0 +1,91 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "indagatione colligerent, ac poſtmodum virgulis",
+  "A": "quibusdam,",
+  "B": "quibuſdam,",
+  "ctx_after": "ſub iisdem formarum apicibus adnotarent.",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "quibusdam,",
+   "note": "round s"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "autem monumen- tum ab eodem",
+  "A": "lib.VII. expreſſe",
+  "B": "lib.vii.expreſſe",
+  "ctx_after": "Haraldo Hyldetando tribu- itur. Is",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "lib.VII. expreſſe",
+   "note": "small-cap numerals as capitals"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "ræ habuit. Aliud exemplum adducit",
+  "A": "lib.IX.",
+  "B": "lib.ix.",
+  "ctx_after": "ubi Regne- rum Lodbrog Regem",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "lib.IX."
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "geſtarum apices præ ſe ferentibus,",
+  "A": "hiſ-",
+  "B": "his-",
+  "ctx_after": "demq; ſuperne locatis, æternum victoriæ",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "his-",
+   "note": "round s before hyphen"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "agamus. Rectè qvocirca clariſs. Voſsius",
+  "A": "lib.I. de",
+  "B": "lib.1.de",
+  "ctx_after": "arte Gram- matica cap.XXXVIII. aſſerit",
+  "resolution": {
+   "k": 6,
+   "choice": "other",
+   "text": "lib. I. de",
+   "note": "small-cap I; spaced"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "lib.I. de arte Gram- matica",
+  "A": "cap.XXXVIII. aſſerit",
+  "B": "cap.xxxviii.aſſerit",
+  "ctx_after": "Danos literis ſuis quas RUNER",
+  "resolution": {
+   "k": 7,
+   "choice": "A",
+   "text": "cap.XXXVIII. aſſerit"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "locuples eſt Joſephus antiqvit. Judicarum",
+  "A": "lib.I. cap.III.",
+  "B": "lib.1.cap.iii.",
+  "ctx_after": "Sethum aut ejus poſteros duas",
+  "resolution": {
+   "k": 8,
+   "choice": "other",
+   "text": "lib. I. cap. III.",
+   "note": "spaced; small caps"
+  }
+ }
+]

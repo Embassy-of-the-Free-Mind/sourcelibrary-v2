@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "illi qui non aliter potuerit",
+  "A": "corrigi.",
+  "B": "corrigi,",
+  "ctx_after": "Cùm damnationem æternæ mortis anathema",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "corrigi,",
+   "note": "comma with tail at line end"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "ſuffragio priuatus tanquam deſperatus &",
+  "A": "dā-",
+  "B": "dã-",
+  "ctx_after": "natus habetur, non vero ita,",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "dã-",
+   "note": "wavy tilde"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "hoc v- triuſque excommunicationis vinculo",
+  "A": "quoſquā",
+  "B": "quoſquã",
+  "ctx_after": "ligare poſſe. Id docent Canoniſtę,",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "quoſquã",
+   "note": "same abbreviation sign as dã"
+  }
+ }
+]

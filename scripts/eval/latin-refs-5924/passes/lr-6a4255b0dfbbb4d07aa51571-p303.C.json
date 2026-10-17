@@ -1,0 +1,15 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "rejecta gra- viſſimum odorem exhalabant,",
+  "A": "anhelitusque",
+  "B": "anhelituſque",
+  "ctx_after": "fœtor cada-",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "anhelitusque",
+   "note": "round s; small stray mark above q taken as speck"
+  }
+ }
+]

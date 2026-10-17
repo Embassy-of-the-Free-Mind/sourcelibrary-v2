@@ -1,0 +1,80 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "quæcunque tantâ cum ἐξοχῇ ei",
+  "A": "tribuuntur,itâ",
+  "B": "tribuuntur,itá",
+  "ctx_after": "ut ſin- gula verba immutabilitatem",
+  "resolution": {
+   "k": 1,
+   "choice": "other",
+   "text": "tribuuntur,ità",
+   "note": "grave accent"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "ait: τουτέστιν· προεγνώ- σθησαν ὑπὸ",
+  "A": "θεοῦ",
+  "B": "Θεοῦ",
+  "ctx_after": "ὡς αὐτοῦ ὄντες ὁλοτελῶς καὶ",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "θεοῦ",
+   "note": "lowercase theta"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "ὁλοτελῶς καὶ προεξελέγησαν, ὥστε μὴ",
+  "A": "συναναστραφῆναι",
+  "B": "συνανατραπῆναι",
+  "ctx_after": "τοῖς σαθροτέροις. i. e. à",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "συνανατραπῆναι",
+   "note": "no sigma before tau"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "que differt à re ſignificatâ,",
+  "A": "itâ",
+  "B": "itá",
+  "ctx_after": "non abſurdùm, tribui electioni ſignaculum,",
+  "resolution": {
+   "k": 7,
+   "choice": "other",
+   "text": "ità",
+   "note": "grave accent"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "quia Apo- ſtolus apponit ſigillum",
+  "A": "Fundamento ut",
+  "B": "Fundamento,ut",
+  "ctx_after": "cauſam firmitatis; jam deſiſtere ab",
+  "resolution": {
+   "k": 8,
+   "choice": "B",
+   "text": "Fundamento,ut",
+   "note": "faint comma present"
+  }
+ },
+ {
+  "k": 12,
+  "ctx_before": "eſt character verè fidelis. B",
+  "A": "Quar.",
+  "B": "Quær.",
+  "ctx_after": "",
+  "resolution": {
+   "k": 12,
+   "choice": "A",
+   "text": "Quar.",
+   "note": "plain a in catchword"
+  }
+ }
+]

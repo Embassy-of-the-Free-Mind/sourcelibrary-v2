@@ -1,0 +1,100 @@
+OMNIUM GENERUM. 211
+C G in cubum C F ; ſed propter circulum qua-
+dratum A B in cubum B D æquale eſt quadrato
+cubo B E , erit igitur quadratum A C in cubum
+C D æquale quadrato C G in cubum C F, ſed
+etiam quadrato-cubus C H æquale eſt quadrato
+A C in cubum C D ; quare quadrato-cubus C H
+æqualis eſt quadrato C G in cubum C F, quod
+erat demonſtrandum.
+
+Erit eadem demonſtratio pro quocunque cir-
+culo ſive recto ſive obliquo, quemadmodum pro
+primario, quem ſecundum noſtram definitionem
+quadraticum appellamus.
+
+PROPOSITIO VIII.
+
+PROBLEMA.
+
+Ducere rectam L E contingentem circulum cujuſvis generis in puncto dato E.
+
+Ductis rectis A E , D E , agatur quælibet recta
+K I parallela ordinatis E B in circulo occurrens
+rectis A E , D E in K & I , & dividatur K I in
+tot partes æquales inter ſe, quot ſunt dimenſio-
+nes ordinatis E B in circulo , ſitque I L æqualis
+numero dimenſionum A B & L K æqualis nume-
+ro dimenſionum B D , erit L E contingens cir-
+culum in puncto E.
+
+Eſto circulus propoſitus A E D talis generis, ut
+quadrato-cubus ordinatarum E B ſit æqualis cu-
+bo A B in quadratum B D ; diviſâ K I in quinque
+partes inter ſe æquales aſſumatur I L æqualis tri-
+bus harum partium , numero ſcilicet dimenſio-
+num rectæ A B propter cubum , & erit L K æ-
+qualis numero dimenſionum B D quadrati ſcili-
+cet ; recta L E continget circulum in E.
+
+Si recta L E non contingat circulum ei occur-
+rat in puncto H ; per punctum H ductâ rectâ
+H C ordinatâ ad diametrum A D , & occurrente
+rectis A E , D E in punctis G & F, per præce-
+dentem propoſitionem cubus C G in quadratum
+C F erit æqualis quadrato cubo C H ; quamobrem
+cubus C G ſe habebit ad cubum C H , ut quadra-
+tum C H ad quadratum C F ;
+
+Si inter C F & C G intelligantur tot continuè
+proportionales C O , C N , C h , C M , ut ipſa-
+rum differentiæ inter ſe & rectas C F , C G, ſci-
+licet F O , O N , N h , h M , M G ſint æqua-
+les numero partium æqualium rectæ K I , vel di-
+menſionum potentiæ ordinatarum E B in circulo,
+erunt hæ differentiæ continuè proportionales per
+lemma primum , & prima F O erit minima om-
+nium ; ſed propter continuas proportionales qua-
+dratum C F ſe habebit ad quadratum C h , ut cu-
+bus C h ad cubum C G ; nam ſi continuis propor-
+tionalibus C M , C G addatur alia C g , erit qua-
+dratum C F ad quadratum C h , ut C F ad C g ,
+ſed etiam ut C F ad C g , ſic cubus C h ad cubum
+C G , nam ratio C F ad C g triplicata eſt rationis
+C h ad C G , & duplicata C F ad C h ; quamob-
+rem quadratum C F in cubum C G erit æquale
+quadrato-cubo C h quod etiam propter circulum
+æquale eſt quadrato cubo C H , igitur punctum
+h diviſionis geometricæ proportionis rectæ F G
+congruit puncto H , quod eſt ad circulum , &
+recta L E occurret etiam F G in puncto h; ſed pro-
+pter parallelas K I, F G,ut ſe habet K I ad K L, ſic
+F G ad G h; erit igitur G h æqualis duabus quin-
+tis totius F G contra quod demonſtratum eſt in
+lemmate tertio cum ſit F O omnium minima;
+quamobrem recta L E non occurret circulo ; erit
+igitur tangens L E in puncto E , quod erat facien-
+dum.
+
+Eandem methodum adhibebimus pro circulis
+cujuſcunque generis.
+
+PROPOSITIO IX.
+
+Si à quovis puncto E peripheriæ circuli cujuſvis generis tanquam à centro exeant radii or-
+dinationem angulorum conſtituentes, quorum tres ſint E A , E B , E D tranſeuntes per terminos
+diametri A & B, & inter eos medius E B ſit ordinata ad eandem diametrum. Radius E L
+poſt priores E D , E B , E A continget circulum in ipſo puncto E.
+
+Hæc propoſitio manifeſta eſt ex præcedente ;
+nam recta K I aſſumi poterit pro baſi ordinatio-
+nis angulorum à radiis D E I , B E , G E K , E L
+conſtitutorum , cujus centrum E , & in exemplo
+ſupra poſito erit angulus I E L potens tria , angu-
+lus L E A potens duo , angulus A E B potens tria,
+
+Figura
+præced.
+
+Figura
+præced.

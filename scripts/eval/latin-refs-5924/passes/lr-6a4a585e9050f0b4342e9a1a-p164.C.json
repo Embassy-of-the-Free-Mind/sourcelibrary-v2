@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "luculenter & ex- actè deſcribatur,",
+  "A": "ejusque",
+  "B": "ejuſque",
+  "ctx_after": "loco deſtilla- tio retortalis in",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ejusque",
+   "note": "round s"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "tio retortalis in arena à",
+  "A": "plerisq;",
+  "B": "pleriſq;",
+  "ctx_after": "uſur- petur, de eo multa",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "plerisq;",
+   "note": "round s"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "nudi eſt ignis de- ſcenſorius,",
+  "A": "Veteribus",
+  "B": "veteribus",
+  "ctx_after": "frequens. VII. Species ignis nudi",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "veteribus",
+   "note": "italic word-initial looped v, x-height, mid-sentence"
+  }
+ }
+]

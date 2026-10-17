@@ -1,0 +1,28 @@
+[
+ {
+  "k": 30,
+  "ctx_before": "ἐπενδύτης, Talm. פונדא, אפונדתא pro",
+  "A": "iiſdem",
+  "B": "iisdem",
+  "ctx_after": "interdum accipiantur: vid. Hieron epiſt.",
+  "resolution": {
+   "k": 30,
+   "choice": "B",
+   "text": "iisdem",
+   "note": "round s"
+  }
+ },
+ {
+  "k": 36,
+  "ctx_before": "§. 21. O. §. 22.",
+  "A": "vid. p. 26.",
+  "B": "vid.p.26-",
+  "ctx_after": "m. an. 59. O. §.",
+  "resolution": {
+   "k": 36,
+   "choice": "other",
+   "text": "vid.p,26.",
+   "note": "no spaces; comma after p; raised point after 26"
+  }
+ }
+]

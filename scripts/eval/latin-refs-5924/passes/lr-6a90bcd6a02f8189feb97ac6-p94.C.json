@@ -1,0 +1,78 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "puta: nō opibus præcedere: ſed",
+  "A": "q̄; plurimū omībus",
+  "B": "ꝗplurimū omibus",
+  "ctx_after": "ꝓdeſſe. Non ea quæ publica",
+  "resolution": {
+   "k": 0,
+   "choice": "other",
+   "text": "q̄;plurimū om̄ibus",
+   "note": "quam-sign set solid with plurimū; stroke stands over the m of omibus"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "cōtra ius: crudelit̄: violent̄: flagitioſe",
+  "A": "q̄d",
+  "B": "qd",
+  "ctx_after": "facit. Nulliꝰ iniuria te minꝰ",
+  "resolution": {
+   "k": 1,
+   "choice": "other",
+   "text": "ꝗd",
+   "note": "q has a bar through the descender, no stroke above"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "Nulliꝰ iniuria te minꝰ moueat:",
+  "A": "q̄; q̄",
+  "B": "ꝗ q̃",
+  "ctx_after": "priuati ad te pertīet Pub-",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "q̄; q̄"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "q̄; q̄ priuati ad te",
+  "A": "pertīet",
+  "B": "pertiet",
+  "ctx_after": "Pub- licā ꝑſonā eſſe te",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "pertīet",
+   "note": "stroke over i visible"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "Chriſto petens. Quid em̄ abſurdius:",
+  "A": "q̄;",
+  "B": "ꝗ",
+  "ctx_after": "princi- pem Chriſtianum Hannibalem: Alexandrum",
+  "resolution": {
+   "k": 7,
+   "choice": "A",
+   "text": "q̄;",
+   "note": "q with stroke and 3-shaped mark (quam), same sign as k2"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "deflectere. Exue po tius illud:",
+  "A": "q̄;",
+  "B": "ꝗ",
+  "ctx_after": "exuas Chriſtum. Ne dubita: habet",
+  "resolution": {
+   "k": 8,
+   "choice": "A",
+   "text": "q̄;"
+  }
+ }
+]

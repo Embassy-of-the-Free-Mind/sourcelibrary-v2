@@ -1,0 +1,15 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "quis autem hujus medicinæ u-",
+  "A": "niverſalis",
+  "B": "niverſaiis",
+  "ctx_after": "compos fieri poteſt, tunc calor",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "niverſaiis",
+   "note": "misprint as printed: two dotted i, no l"
+  }
+ }
+]

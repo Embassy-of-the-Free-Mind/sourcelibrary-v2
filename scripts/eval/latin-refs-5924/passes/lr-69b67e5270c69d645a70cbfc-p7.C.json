@@ -1,0 +1,15 @@
+[
+ {
+  "k": 37,
+  "ctx_before": "Emollitis fæcibus, ut jam reliquiæ",
+  "A": "educātur, clyſteres",
+  "B": "educãtur,clyſteres",
+  "ctx_after": "paulò acrio- res injiciantur, vel",
+  "resolution": {
+   "k": 37,
+   "choice": "other",
+   "text": "educātur,clyſteres",
+   "note": "straight bar; no space after comma"
+  }
+ }
+]
