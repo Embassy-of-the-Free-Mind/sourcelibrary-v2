@@ -105,11 +105,11 @@ export const posts: BlogPost[] = [
   },
   {
     slug: 'maya-ritual-in-the-colonial-dictionaries',
-    title: 'Maya Ritual in the Colonial Dictionaries',
+    title: 'Maya Religion in the Colonial Sources',
     subtitle:
-      'Uay, tzac, kinyah, pib: what the Motul dictionary, Pío Pérez and a 1639 report against idolaters record about Maya dreaming, transformation, conjuring and the count of days.',
+      'The Bacabs holding up the sky, katuns of carved stone, a diviner counting maize, the sun and the Pleiades as a disease’s parents: Maya religion from the friars who burned its books and the Maya who kept it.',
     date: '16 October 2026',
-    readTime: '10 min read',
+    readTime: '15 min read',
     kind: 'tours',
     image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg',
     imageAlt: 'A page of the Dresden Codex with columns of glyphs and two descending serpents',
