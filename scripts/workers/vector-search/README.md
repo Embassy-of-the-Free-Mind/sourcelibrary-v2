@@ -8,11 +8,12 @@ Every semantic page lookup (`semanticPageSearchGlobal` → `match_semantic`) cos
 vector, because Supabase reads its HNSW index for `page_translations` from disk (#2049). This service holds
 the same vectors in an 8-bit HNSW in RAM on l7a and answers in milliseconds. **The app calls it only when `VECTOR_SEARCH_MODE` is set** (`src/lib/vector-search.ts`): `shadow`
 runs it beside the RPC and logs `search_queries.vector_shadow`; `serve` uses its rows, falling back to
-the RPC on any error or `complete: false`. Default off.
+the RPC on any error or `complete: false`. Default off. The app reaches it at
+`https://vectors.sourcelibrary.org` (Caddy on l7a, phase 4, #6843).
 
 ## Contract
 
-`POST /match` — same as `match_semantic`, minus the text columns (the app hydrates those by primary key):
+`POST /match` — same as `match_semantic`; the text columns only when asked (`with_text`):
 
 ```json
 {"vector": [768 floats], "k": 15, "threshold": 0.3,
@@ -43,11 +44,19 @@ the RPC on any error or `complete: false`. Default off.
     all Chinese. The app treats it as a miss and asks the RPC.
   - Recall against an exact filtered scan: `scripts/eval/experiments/2026-10-17-vector-service-filtered-recall-6821.md`.
     Knobs (env): `VECTOR_SEARCH_MAX_ASK`, `_BUDGET_MS`, `_EXACT_MAX`, `_EXACT_FALLBACK_MAX`, `_EXACT_THREADS`.
-- `GET /health` → `{size, live_rows, book_map_size, built_at, last_delta_at, checkpoint, generation, …}`.
+- **`with_text: true`** (phase 4, serve mode) adds the RPC's other columns to every row: `book_language`
+  and `book_year` from the row store, `translation`, `book_title` and `book_author` from the **text store**
+  (`text/pages.sqlite`, one row per page_id, filled by `pull-text.mjs`, kept current by `sync-delta.mjs`).
+  The response says `text_ms` and `text_missing`. A row the store lacks comes back without those three
+  keys, and the app hydrates only that row from Supabase. Title and author are kept per row, as the RPC
+  returns them, not per book. Shadow calls do not ask for text: they compare page ids.
+- `GET /health` → `{size, live_rows, book_map_size, built_at, last_delta_at, checkpoint, generation, text_store, …}`.
 - `k` ≤ 1000. Bodies over 256 KB are refused.
 
-Listeners: `0.0.0.0:3458` needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on every route;
-`127.0.0.1:3459` needs none and also serves `/admin/apply` and `/admin/save` (used by `sync-delta.mjs`).
+Listeners: `127.0.0.1:3458` (`VECTOR_SEARCH_HOST`) needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on
+every route, `/health` included; Caddy terminates TLS for `vectors.sourcelibrary.org` and proxies to it
+(`infrastructure/caddy/Caddyfile.l7a`), and ufw allows 80/443, not 3458. `127.0.0.1:3459` needs no token
+and also serves `/admin/apply` and `/admin/save` (used by `sync-delta.mjs`); Caddy never proxies it.
 
 ## Files
 
@@ -57,12 +66,16 @@ Listeners: `0.0.0.0:3458` needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on 
 | `pull-embeddings.mjs` | Supabase → `shards/shard-<k>.{f32,jsonl}`, keyset on `page_id`, resumable |
 | `build-hnsw.mjs` | shards → `index/index-1.usearch` + `rows-1.jsonl` + `state.json`, streamed |
 | `server.mjs` | the service |
-| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service; `--save`, `--count-check` |
+| `pull-text.mjs` | Supabase → `text/pages.sqlite`: translation, book_title, book_author per served page (~26 GB, ~20 min), resumable |
+| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--save`, `--count-check` |
+| `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, last delta > 2 h, or row drift > 0.5% (counted every 6 h) |
+| `latency-eval.mjs` | end to end over HTTPS: service + text vs service + Supabase hydration vs the RPC, and a column-by-column check against the RPC |
 | `build-exact.mjs` | shards → `index/exact.{i8,keys,json}`: int8 vectors in (language, year) order for the exact filtered scan (~5.9 GB, ~4 min) |
 | `recall-eval.mjs` | overlap@45 vs exact float32 cosine, latency; no Gemini |
 | `filtered-recall-eval.mjs` | recall@45 of filtered queries vs an exact float32 filtered scan, per filter shape |
 | `bootstrap.sh` | pull → build → start → recall → first delta → phase-2 job |
-| `crontab.l7a` | the delta lines, **not installed** until the recall check has been read |
+| `../../../infrastructure/l7a-crontab` | the delta, nightly save and freshness lines (installed 2026-10-17) |
+| `../../../infrastructure/caddy/` | the Caddyfile and Caddy's slice drop-in |
 | `../../../infrastructure/systemd/vector-search.service` | the unit |
 
 ## Choices that are not obvious
@@ -88,7 +101,13 @@ Listeners: `0.0.0.0:3458` needs `Authorization: Bearer $VECTOR_SEARCH_TOKEN` on 
   into ONE buffer allocated at startup: a fresh 96 MB buffer per query cost 390 ms of reclaim in a
   slice at its `memory.high`.
 - **Postgres, not PostgREST**, for the pull: 5,000 rows with vectors in 1.9 s per stream from l7a against
-  ~11 s per 1,000 over REST. The `translation` column is not pulled.
+  ~11 s per 1,000 over REST. The `translation` column is not in the shards; `pull-text.mjs` pulls it into
+  the text store.
+- **The text store is SQLite on disk, not RAM.** ~26 GB does not fit the slice beside the index; 45 point
+  reads by primary key cost about a millisecond once cached. Writers (the pull, the delta) and the server
+  are separate processes on one WAL file; every upsert carries the row's `updated_at` and only replaces an
+  older one, so a pull and a delta can run in either order. The delta writes the text BEFORE it hands the
+  vector to the service, so a row the service can return already has its text.
 
 ## Install (l7a)
 
@@ -98,10 +117,18 @@ cp scripts/workers/vector-search/{*.mjs,bootstrap.sh,package*.json} /data/vector
 (cd /data/vector-search/app && npm ci)        # its own node_modules: usearch (prebuilt linux-arm64) + pg
 umask 077; printf 'VECTOR_SEARCH_TOKEN=%s\nVECTOR_SEARCH_PORT=3458\nVECTOR_SEARCH_LOCAL_PORT=3459\n' "$(openssl rand -hex 32)" > /etc/vector-search.env
 cp infrastructure/systemd/vector-search.service /etc/systemd/system/ && systemctl daemon-reload && systemctl enable vector-search
-ufw allow 3458/tcp comment 'vector-search #6821'
+# TLS (phase 4, #6843): Caddy in front, the service on loopback. See infrastructure/caddy/Caddyfile.l7a.
+apt-get install -y caddy && cp infrastructure/caddy/Caddyfile.l7a /etc/caddy/Caddyfile
+mkdir -p /etc/systemd/system/caddy.service.d && cp infrastructure/caddy/caddy-slice.conf /etc/systemd/system/caddy.service.d/slice.conf
+systemctl daemon-reload && systemctl restart caddy
+ufw allow 80/tcp; ufw allow 443/tcp                 # never 3458: the service listens on 127.0.0.1
+# Cron: append the three lines of infrastructure/l7a-crontab to root's crontab (back it up first).
 setsid nohup systemd-run --scope --quiet --unit=vector-search-bootstrap --slice=sourcelibrary.slice \
   bash /data/vector-search/app/bootstrap.sh >> /data/vector-search/logs/bootstrap.log 2>&1 < /dev/null &
 ```
 
 Disk: ~23 GB of float32 shards (kept: the recall evals, the exact path's float32 re-score and a rebuild
-read them) + ~7 GB per index generation + ~5.9 GB for `exact.i8`.
+read them) + ~7 GB per index generation + ~5.9 GB for `exact.i8` + ~26 GB for `text/pages.sqlite`.
+
+Rotating the token: `openssl rand -hex 32` into `/etc/vector-search.env` (mode 600), `systemctl restart
+vector-search` (~5 min until `/health` answers), then the same value in Vercel's `VECTOR_SEARCH_TOKEN`.

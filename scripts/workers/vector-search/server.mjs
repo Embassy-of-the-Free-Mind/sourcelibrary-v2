@@ -5,11 +5,17 @@
 //
 // Two listeners, same handler:
 //   127.0.0.1:$VECTOR_SEARCH_LOCAL_PORT (3459)    no auth; also serves /admin/* (sync-delta.mjs)
-//   0.0.0.0:$VECTOR_SEARCH_PORT (3458)            Bearer $VECTOR_SEARCH_TOKEN on every route; no /admin
+//   $VECTOR_SEARCH_HOST:$VECTOR_SEARCH_PORT (127.0.0.1:3458)  Bearer $VECTOR_SEARCH_TOKEN on every route; no /admin.
+//     Loopback since phase 4 (#6843): Caddy terminates TLS for vectors.sourcelibrary.org and proxies
+//     here (infrastructure/caddy/Caddyfile.l7a), so the token never crosses the network in cleartext.
 //
 // POST /match  {vector[768], k, threshold, filter_language?, filter_languages?, filter_exclude_languages?,
-//               year_min?, year_max?}  →  {rows: [{page_id, book_id, page_number, similarity}], ms, path,
-//               complete, filtered_rows, candidates, rounds}
+//               year_min?, year_max?, with_text?}  →  {rows: [{page_id, book_id, page_number, similarity}], ms,
+//               path, complete, filtered_rows, candidates, rounds}
+//   with_text: true (phase 4) adds match_semantic's other columns to each row — book_language and
+//   book_year from the row store, translation, book_title and book_author from the text store
+//   (text/pages.sqlite, pull-text.mjs + sync-delta.mjs) — so the app skips its Supabase hydration.
+//   A row the text store lacks comes back without those three keys, and the app hydrates just it.
 //   Same contract as match_semantic (scripts/migration/apply-semantic-language-prefilter.sql) minus
 //   the text columns, which the app hydrates by primary key. Filters are the RPC's predicates, on the
 //   same columns (page_translations.book_language / book_year, per row), compared by exact string
@@ -36,8 +42,10 @@ import { timingSafeEqual } from 'node:crypto';
 import {
   DIM, SHARD_DIR, indexConfigFor, readState, writeJsonAtomic, STATE_PATH, indexPath, rowsPath, loadUsearch, RowStore, log,
   EXACT_VEC_PATH, EXACT_KEYS_PATH, EXACT_META_PATH, overridesPath, quantizeI8, classLang, classYear,
+  TEXT_DB_PATH, openTextReader,
 } from './lib.mjs';
 
+const HOST = process.env.VECTOR_SEARCH_HOST || '127.0.0.1';
 const PORT = +(process.env.VECTOR_SEARCH_PORT || 3458);
 const LOCAL_PORT = +(process.env.VECTOR_SEARCH_LOCAL_PORT || 3459);
 const TOKEN = process.env.VECTOR_SEARCH_TOKEN || '';
@@ -102,6 +110,9 @@ try {
     }
   }
 } catch (e) { log('exact file not loaded:', e.message); exact = null; }
+let text = null;
+try { text = openTextReader(); log(text ? `text store: ${TEXT_DB_PATH}` : `no text store at ${TEXT_DB_PATH}: with_text returns the index columns only`); }
+catch (e) { log('text store not opened:', e.message); }
 const loadedAt = new Date().toISOString();
 let pending = 0; // changes applied since the last save
 
@@ -136,6 +147,7 @@ function parseMatch(b) {
     languages: nonEmpty(b.filter_languages) ? new Set(b.filter_languages) : null,
     exclude: nonEmpty(b.filter_exclude_languages) ? new Set(b.filter_exclude_languages) : null,
     yearMin: optInt(b.year_min, 'year_min'), yearMax: optInt(b.year_max, 'year_max'),
+    withText: b.with_text === true,
     withKeys: b.with_keys === true, // eval only (recall-eval.mjs): the usearch key = the shard row ordinal after a build
   };
 }
@@ -315,6 +327,22 @@ async function match(f) {
   return { rows: last.out, path: 'hnsw', complete: false, filtered_rows: count, candidates: ask, rounds };
 }
 
+/**
+ * match_semantic's remaining columns, in place. book_language/book_year come from the row store (the
+ * columns the filters use); the text columns from the text store, keyed by page_id. ~45 point reads,
+ * synchronous: measured in the PR at well under a millisecond each once the pages are cached.
+ */
+function addText(out) {
+  const t = performance.now(); let missing = 0;
+  for (const r of out) {
+    const key = rows.pageKey.get(r.page_id);
+    r.book_language = rows.language(key); r.book_year = rows.yearOf(key);
+    const tr = text?.get.get(r.page_id);
+    if (tr) { r.translation = tr.translation; r.book_title = tr.book_title; r.book_author = tr.book_author; } else missing++;
+  }
+  return { text_ms: +(performance.now() - t).toFixed(2), text_missing: missing };
+}
+
 // ── /admin (local listener only) ───────────────────────────────────────────────────────────────
 
 let adminBusy = Promise.resolve();
@@ -389,6 +417,7 @@ function health() {
     ok: true, size: index.size(), live_rows: rows.live, book_map_size: rows.booksLive,
     built_at: state.built_at, last_delta_at: state.last_delta_at, saved_at: state.saved_at ?? null,
     checkpoint: state.checkpoint, generation: state.generation, pending_changes: pending,
+    text_store: text ? { path: TEXT_DB_PATH, rows_hint: text.db.prepare('SELECT max(rowid) AS n FROM pages').get().n } : null,
     loaded_at: loadedAt, ef_search: EF, quantization: indexConfigFor(state).quantization, rss_gb: +(process.memoryUsage().rss / 1e9).toFixed(2),
     filtered: {
       exact_file: exact ? { rows: exact.meta.rows, built_at: exact.meta.built_at, overrides: overrides.size } : null,
@@ -415,7 +444,8 @@ function handler(local) {
         const t = process.hrtime.bigint();
         const f = parseMatch(await readBody(req, 256 * 1024));
         const r = await match(f);
-        return send(res, 200, { ...r, ms: Number(process.hrtime.bigint() - t) / 1e6 });
+        const tx = f.withText ? addText(r.rows) : null;
+        return send(res, 200, { ...r, ...tx, ms: Number(process.hrtime.bigint() - t) / 1e6 });
       }
       if (local && req.method === 'POST' && url === '/admin/apply') {
         const b = await readBody(req, 256 * 1024 * 1024);
@@ -432,5 +462,5 @@ function handler(local) {
 }
 
 http.createServer(handler(true)).listen(LOCAL_PORT, '127.0.0.1', () => log(`local  http://127.0.0.1:${LOCAL_PORT}`));
-http.createServer(handler(false)).listen(PORT, '0.0.0.0', () => log(`public http://0.0.0.0:${PORT} (bearer)`));
+http.createServer(handler(false)).listen(PORT, HOST, () => log(`bearer http://${HOST}:${PORT} (behind Caddy: https://vectors.sourcelibrary.org)`));
 for (const sig of ['SIGTERM', 'SIGINT']) process.on(sig, () => { log(sig, pending ? `— ${pending} unsaved changes; the next delta re-applies them from the saved checkpoint` : ''); process.exit(0); });

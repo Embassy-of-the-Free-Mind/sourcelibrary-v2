@@ -66,6 +66,65 @@ export function quantizeI8(src, out = new Int8Array(DIM), srcOff = 0, outOff = 0
   return out;
 }
 
+/**
+ * The text store (phase 4 of #6821): page_id → the RPC's text columns (translation, book_title,
+ * book_author), so serve mode needs no Supabase round trip after the search (#6843: 45 rows cost
+ * ~100 ms warm, 350 ms cold, against ~10 ms of search). SQLite (node:sqlite, no dependency), WAL,
+ * one row per page. `u` is the row's updated_at as epoch seconds: the pull and the delta both write
+ * here, and an upsert only replaces an older `u`, so the order they run in does not matter.
+ * book_title/book_author are kept per ROW, not per book: they are match_semantic's per-row columns,
+ * and the denormalised copy can drift within one book.
+ */
+export const TEXT_DIR = path.join(ROOT, 'text');
+export const TEXT_DB_PATH = path.join(TEXT_DIR, 'pages.sqlite');
+export const TEXT_SELECT = 'page_id, translation, book_title, book_author, extract(epoch from updated_at)::float8 AS u';
+
+/** Open the text store for writing (pull-text.mjs, sync-delta.mjs). Returns {db, upsert(r), remove(pid), tx(fn)}. */
+export function openTextStore(file = TEXT_DB_PATH) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const { DatabaseSync } = require('node:sqlite');
+  const db = new DatabaseSync(file);
+  db.exec(`PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL; PRAGMA busy_timeout = 60000;
+    CREATE TABLE IF NOT EXISTS pages (page_id TEXT PRIMARY KEY, u REAL NOT NULL, translation TEXT, book_title TEXT, book_author TEXT);
+    CREATE TABLE IF NOT EXISTS pull_ck (shard INTEGER PRIMARY KEY, last TEXT NOT NULL, rows INTEGER NOT NULL, done INTEGER NOT NULL);`);
+  const up = db.prepare(`INSERT INTO pages (page_id, u, translation, book_title, book_author) VALUES (?, ?, ?, ?, ?)
+    ON CONFLICT (page_id) DO UPDATE SET u = excluded.u, translation = excluded.translation,
+      book_title = excluded.book_title, book_author = excluded.book_author WHERE excluded.u >= pages.u`);
+  const rm = db.prepare('DELETE FROM pages WHERE page_id = ?');
+  return {
+    db,
+    upsert: (r) => up.run(r.page_id, Number(r.u), r.translation ?? null, r.book_title ?? null, r.book_author ?? null),
+    remove: (pid) => rm.run(pid),
+    tx: (fn) => { db.exec('BEGIN'); try { const v = fn(); db.exec('COMMIT'); return v; } catch (e) { db.exec('ROLLBACK'); throw e; } },
+  };
+}
+
+/**
+ * Key ranges for the pulls: page_ids are 24-hex ObjectIds; measured 2026-09-09 almost all lie in
+ * 69…6a, so that band is cut into 0x10-wide ranges and the ranges feed a pool of workers (the atlas
+ * edges, unchanged). The last edge is null = unbounded.
+ */
+export const PULL_EDGES = (() => {
+  const pad = (h) => h.padEnd(24, '0');
+  const e = ['', pad('68'), pad('69')];
+  for (let x = 0x6910; x < 0x6b00; x += 0x10) e.push(pad(x.toString(16)));
+  e.push(pad('6b'), null);
+  return e;
+})();
+
+/**
+ * Open the text store for the server's reads, or null when it does not exist. A read/write handle with
+ * query_only on, not SQLITE_OPEN_READONLY: a read-only handle cannot always attach a WAL that another
+ * process (the delta) is writing.
+ */
+export function openTextReader(file = TEXT_DB_PATH) {
+  if (!fs.existsSync(file)) return null;
+  const { DatabaseSync } = require('node:sqlite');
+  const db = new DatabaseSync(file);
+  db.exec('PRAGMA busy_timeout = 2000; PRAGMA query_only = 1;');
+  return { db, get: db.prepare('SELECT translation, book_title, book_author FROM pages WHERE page_id = ?') };
+}
+
 export function readState() {
   return fs.existsSync(STATE_PATH) ? JSON.parse(fs.readFileSync(STATE_PATH, 'utf8')) : null;
 }

@@ -7,6 +7,10 @@
 //    `embedding` becomes NULL, so match_semantic stops serving it) are removed too, in case the
 //    withholding UPDATE did not bump updated_at. Deleted rows are not seen here; --count-check reports
 //    the drift they leave (the nightly check in #6821).
+// 3. The text store (phase 4): the same rows' translation, book_title and book_author are written to
+//    text/pages.sqlite BEFORE the service sees the vector, so a row the service can return has its
+//    text; a removed row is deleted from it. Skipped when the store does not exist yet (pull-text.mjs
+//    creates it), so a delta never starts a partial store that serve mode would trust.
 // --save asks the service to write a new generation (tmp + rename, state.json last). Without it the
 // changes live in RAM, and a restart re-applies them from the last saved checkpoint, so the
 // half-hourly run never blocks queries on a 4 GB write; the nightly run saves.
@@ -17,7 +21,8 @@
 // PRIOR ART: scripts/workers/embed-gemini.mjs --incremental is the WRITER of these rows (Mongo →
 // page_translations); this is a reader of the same table. The atlas pull has no delta at all (it
 // re-pulls nightly), which takes hours at 4.5M rows.
-import { ROW_SELECT, pgClient, parseVector, log } from './lib.mjs';
+import fs from 'node:fs';
+import { ROW_SELECT, TEXT_DB_PATH, pgClient, parseVector, openTextStore, log } from './lib.mjs';
 
 const LOCAL = `http://127.0.0.1:${process.env.VECTOR_SEARCH_LOCAL_PORT || 3459}`;
 const BATCH = 500;
@@ -40,23 +45,30 @@ const h0 = await call('/health');
 let cp = h0.checkpoint;
 if (!cp?.updated_at) throw new Error('service reports no checkpoint');
 const c = await pgClient();
+const text = fs.existsSync(TEXT_DB_PATH) && !DRY ? openTextStore() : null;
 const t0 = Date.now(); let ups = 0, rms = 0, applied = { added: 0, replaced: 0, removed: 0 };
 const bump = (r) => { for (const k of Object.keys(applied)) applied[k] += r[k] || 0; };
 
 for (;;) {
   const { rows } = await c.query(
-    `SELECT ${ROW_SELECT}, embedding::text AS e, updated_at::text AS u FROM page_translations
+    `SELECT ${ROW_SELECT}, embedding::text AS e, updated_at::text AS ut, extract(epoch from updated_at)::float8 AS u,
+            translation, book_title, book_author FROM page_translations
      WHERE updated_at > $1::timestamptz OR (updated_at = $1::timestamptz AND page_id > $2)
      ORDER BY updated_at, page_id LIMIT ${BATCH}`, [cp.updated_at, cp.page_id]);
   if (!rows.length) break;
-  const upserts = [], removes = [];
+  const upserts = [], removes = [], texts = [];
   for (const r of rows) {
     const v = parseVector(r.e);
+    if (v) texts.push(r);
     if (v) upserts.push({ page_id: r.page_id, book_id: r.book_id, page_number: r.page_number, book_language: r.book_language, book_year: r.book_year, embedding: Array.from(v) });
     else removes.push(r.page_id);
   }
   const last = rows[rows.length - 1];
-  cp = { updated_at: last.u, page_id: last.page_id };
+  cp = { updated_at: last.ut, page_id: last.page_id };
+  if (text) text.tx(() => {
+    for (const r of texts) text.upsert(r);
+    for (const pid of removes) text.remove(pid);
+  });
   ups += upserts.length; rms += removes.length;
   if (!DRY) bump(await call('/admin/apply', { upserts, removes, checkpoint: cp }));
   if (rows.length < BATCH) break;
@@ -65,7 +77,15 @@ for (;;) {
 // Withheld since the checkpoint we started from (idempotent: removing an absent row is a no-op).
 const { rows: withheld } = await c.query(
   `SELECT page_id FROM page_translations WHERE withheld_at > $1::timestamptz AND embedding IS NULL`, [h0.checkpoint.updated_at]);
-if (withheld.length) { rms += withheld.length; if (!DRY) bump(await call('/admin/apply', { removes: withheld.map((r) => r.page_id) })); }
+if (withheld.length) {
+  rms += withheld.length;
+  if (!DRY) bump(await call('/admin/apply', { removes: withheld.map((r) => r.page_id) }));
+  if (text) text.tx(() => { for (const r of withheld) text.remove(r.page_id); });
+}
+text?.db.close();
+// Heartbeat: an empty apply stamps last_delta_at even when nothing changed, so freshness-check.mjs can
+// tell a quiet half hour from a delta that stopped running.
+if (!DRY) await call('/admin/apply', { checkpoint: cp });
 log(`delta from ${h0.checkpoint.updated_at}: ${ups} upserts, ${rms} removals seen; applied ${JSON.stringify(applied)}; checkpoint ${cp.updated_at} · ${((Date.now() - t0) / 1000).toFixed(1)} s${DRY ? ' (dry run)' : ''}`);
 
 let exit = 0;
