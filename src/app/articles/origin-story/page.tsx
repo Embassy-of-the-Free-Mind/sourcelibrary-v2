@@ -24,7 +24,7 @@ export default function OriginStoryPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Where Source Library Came From"
           subtitle="From one untranslated Ficino manuscript to 5,000 books and the ambition to translate the Renaissance"
           image="https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg"
@@ -43,7 +43,7 @@ export default function OriginStoryPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

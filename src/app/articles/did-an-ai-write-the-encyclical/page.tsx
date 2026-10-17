@@ -47,7 +47,7 @@ export default function DidAnAiWriteTheEncyclicalPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Did an AI Write the Pope's AI Encyclical?"
           subtitle="Magnifica Humanitas was flagged 46% AI-written. We re-ran the test against eight human encyclicals, and the smoking gun turned out to be a baseline."
           image="https://images.sourcelibrary.org/archived/6990505e7d19f3f2aac1e2b7/5.jpg"
@@ -66,7 +66,7 @@ export default function DidAnAiWriteTheEncyclicalPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -25,7 +25,7 @@ export default function PhilosophersStonePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="What Is the Philosopher's Stone? Eight Answers from the Primary Sources"
           subtitle="The most famous concept in alchemy means radically different things depending on which century, which tradition, and which text you pick up"
           image="https://images.sourcelibrary.org/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg"
@@ -50,7 +50,7 @@ export default function PhilosophersStonePage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

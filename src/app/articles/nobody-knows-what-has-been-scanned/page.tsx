@@ -43,7 +43,7 @@ export default function GlobalScanRegistryPage() {
       />
       <ContentPageLayout
         header={
-          <ContentHeader
+          <ContentHeader feature headerVariant="dark"
             title="Nobody Knows What Has Been Scanned"
             subtitle="The case for a global registry of digitized books"
             image="https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg"
@@ -62,7 +62,7 @@ export default function GlobalScanRegistryPage() {
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            All notes
+            All articles
           </Link>
         </div>
 

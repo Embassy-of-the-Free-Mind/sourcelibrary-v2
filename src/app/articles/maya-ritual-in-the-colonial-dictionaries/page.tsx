@@ -74,17 +74,6 @@ function FigRow({ children, cols = 2 }: { children: React.ReactNode; cols?: 2 | 
   return <div className={`grid grid-cols-1 ${cols === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} gap-6 my-10 items-start`}>{children}</div>;
 }
 
-function Cover({ book, page = 1, src, title, note }: { book: string; page?: number; src: string; title: React.ReactNode; note: string }) {
-  return (
-    <Link href={`/book/${book}?page=${page}`} className="block group">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt="" loading="lazy" className="w-full aspect-[3/4] object-cover object-top rounded-md shadow-md bg-stone-100 group-hover:shadow-lg transition-shadow" />
-      <p className="mt-2 text-sm text-primary leading-snug font-body group-hover:text-accent-rust">{title}</p>
-      <p className="text-xs text-muted font-body">{note}</p>
-    </Link>
-  );
-}
-
 function H2({ children, id }: { children: React.ReactNode; id?: string }) {
   return <h2 id={id} className="text-2xl md:text-3xl text-primary mt-16 mb-6">{children}</h2>;
 }
@@ -97,7 +86,7 @@ export default function MayaReligionPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Maya Religion in the Colonial Sources"
           subtitle="Gods, days, rites and books, from the friars who suppressed them and the Maya who kept them"
           image={HEADER_IMAGE}
@@ -116,7 +105,7 @@ export default function MayaReligionPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 
@@ -275,24 +264,6 @@ export default function MayaReligionPage() {
           <Fig book="6ad191c342debc962692561e" page={8} src={`${P}6ad191c342debc962692561e/0008.jpg`} alt="Ebtún land paper with a seal" caption={<>Ebtún land papers, 1561&ndash;1869.</>} />
         </FigRow>
 
-        <H2 id="available">The books</H2>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 my-8">
-          <Cover book={BACABS} page={11} src={`${P}${BACABS}/0011.jpg`} title={<em>Ritual of the Bacabs</em>} note="18th c., Yucatec" />
-          <Cover book={LANDA} page={327} src={`${A}${LANDA}/327.jpg`} title={<>Landa, <em>Relación</em></>} note="c. 1566, 1864 edition" />
-          <Cover book="6a87106327fd08cecf145caa" src={`${A}6a87106327fd08cecf145caa/1.jpg`} title={<><em>Popol Vuh</em> manuscript</>} note="c. 1701, K’iche’ and Spanish" />
-          <Cover book={LETTERS} page={8} src={`${P}${LETTERS}/0008.jpg`} title="Caste War letters" note="1848–1850, Yucatec" />
-          <Cover book="69dfd990220eedf04e13b0cf" page={10} src={`${A}69dfd990220eedf04e13b0cf/10.jpg`} title="Dresden Codex" note="Maya painted book" />
-          <Cover book="6acc3d72230e9a56175ccc93" page={5} src={`${A}6acc3d72230e9a56175ccc93/5.jpg`} title={<>Saz, <em>Libro de pláticas</em></>} note="1662, Kaqchikel" />
-          <Cover book={PIO_PEREZ} page={12} src={`${A}${PIO_PEREZ}/12.jpg`} title={<>Pío Pérez, <em>Diccionario</em></>} note="1866, Yucatec–Spanish" />
-          <Cover book={SANCHEZ} page={196} src={`${A}${SANCHEZ}/196.jpg`} title={<>Sánchez de Aguilar, <em>Informe</em></>} note="1639" />
-        </div>
-
-        <ul className="space-y-2 mb-8 list-disc pl-6 font-body text-secondary">
-          <li>By Maya authors: the <Leaf book={BACABS} page={1}><em>Ritual of the Bacabs</em></Leaf>; the books of Chilam Balam of <Leaf book={KAUA} page={1}>Kaua</Leaf>, <Leaf book="6a87102131598d129803de7b" page={1}>Kaua (1824 copy)</Leaf>, <Leaf book="699259a03d2d40d1b0592ce8" page={1}>Chumayel</Leaf>, <Leaf book="6a8ee3de880abaf2b45934c3" page={1}>Calkiní</Leaf>, <Leaf book="6a8d9b7c4cc19d0e10153aa9" page={1}>Teabo</Leaf>, <Leaf book="6a8da255aa8f57838adf7fe4" page={1}>Nah</Leaf> and the <Leaf book="6a8da256aa8f57838adf8025" page={1}>Ixil lunario</Leaf>; the <Leaf book={LETTERS} page={1}>Caste War letters</Leaf>; <Leaf book={LEGAL} page={1}>Maya wills and deeds, 1686&ndash;1849</Leaf>; the <Leaf book="6ad191c342debc962692561e" page={1}>Ebtún land papers</Leaf>; the <Leaf book="6a87106327fd08cecf145caa" page={1}><em>Popol Vuh</em> manuscript</Leaf></li>
-          <li>By their enemies: <Leaf book={LANDA} page={1}>Landa</Leaf>; <Leaf book={SANCHEZ} page={1}>Sánchez de Aguilar</Leaf>; the Yucatec <Leaf book={SERMONES} page={1}>sermons of 1846</Leaf>; <Leaf book="6acc3d72230e9a56175ccc93" page={1}>Saz&rsquo;s Kaqchikel <em>Pláticas</em></Leaf> (1662)</li>
-          <li>Dictionaries and grammars: the <Leaf book={MOTUL_1} page={1}>Motul, Maya–Spanish</Leaf> and <Leaf book={MOTUL_2} page={1}>Spanish–Maya</Leaf>; <Leaf book={PIO_PEREZ} page={1}>Pío Pérez</Leaf>; <Leaf book="6a9f3fa483c3b522416e48fa" page={1}>Beltrán</Leaf>; <Leaf book="6a9f3fa783c3b522416e4a0d" page={1}>the 1898 <em>Coordinación</em></Leaf></li>
-        </ul>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           Related:{' '}

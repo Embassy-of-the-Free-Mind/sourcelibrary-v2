@@ -24,7 +24,7 @@ export default function McpServerPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Claude Can Now Read Thousands of Rare Books"
           subtitle="An MCP server for primary source research in alchemy, Hermeticism, Renaissance philosophy, and early modern science"
           image="https://images.sourcelibrary.org/archived/699065973dc2ed39a49f1e71/4.jpg"
@@ -48,7 +48,7 @@ export default function McpServerPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

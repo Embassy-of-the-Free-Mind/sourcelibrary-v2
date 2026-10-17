@@ -32,7 +32,7 @@ export default function FishVoicedPriestPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Fish-Voiced Priest"
           subtitle="An AI read a thousand-year-old Greek hand and invented a character. Why the edition, not the manuscript, has to carry the text."
           image="https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg"
@@ -51,7 +51,7 @@ export default function FishVoicedPriestPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

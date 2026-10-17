@@ -32,7 +32,7 @@ export default function TechniqueIsLocalPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Technique Is Local, Crisis Is Universal"
           subtitle="Reading a Thousand Years of Meditation Manuals as Research Artifacts"
           image="https://images.sourcelibrary.org/pages/6a1d81af5afc14a085e6d7e6/spdxcs-0138.jpg"
@@ -51,7 +51,7 @@ export default function TechniqueIsLocalPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -26,7 +26,7 @@ export default function CannabisBanguePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Theire Soe Admirable Herbe"
           subtitle="How the West forgot, and remembered, cannabis"
           image="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg"
@@ -45,7 +45,7 @@ export default function CannabisBanguePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

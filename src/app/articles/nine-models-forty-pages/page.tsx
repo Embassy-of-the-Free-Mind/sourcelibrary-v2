@@ -63,7 +63,7 @@ export default function NineModelsFortyPagesPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Nine Models, Forty Pages"
           subtitle="Google's newest budget model lost to its own predecessor on historical documents, and an open-weight model reached parity on the pages it can read"
           image="https://images.sourcelibrary.org/archived/69a5e9bb787d6e9b8d42e183/120.jpg"
@@ -82,7 +82,7 @@ export default function NineModelsFortyPagesPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

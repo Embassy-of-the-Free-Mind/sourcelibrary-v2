@@ -26,7 +26,7 @@ export default function NakedPhilosophersPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Naked Philosophers"
           subtitle="How Alexander&rsquo;s India became the Rosicrucians&rsquo; ancestor"
           image="https://images.sourcelibrary.org/gallery/69c1bd308522835be8468096/69c1bd308522835be8468180-0.jpg"
@@ -45,7 +45,7 @@ export default function NakedPhilosophersPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 
@@ -342,37 +342,6 @@ export default function NakedPhilosophersPage() {
         </p>
 
         <section className="mt-14 pt-8 border-t border-border-light">
-          <h2 className="text-xl font-semibold text-primary mb-4 font-display">The books</h2>
-          <ul className="space-y-2 text-secondary text-sm leading-relaxed">
-            <li>
-              Philostratus, <em>Life of Apollonius of Tyana</em> (Aldine, Venice 1504).{' '}
-              <Link href="/book/philostratus-life-of-apollonius-of-tyana-aldine-press-philostratus" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-            <li>
-              Strabo, <em>Geography</em>, Vol. VII (Loeb, 1917): Onesicritus&rsquo; embassy.{' '}
-              <Link href="/book/the-geography-of-strabo-vol-vii-loeb-jones-1917-jones" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-            <li>
-              J. W. McCrindle, <em>Ancient India as Described by Megasthenes and Arrian</em> (1877): Calanus &amp; Dandamis.{' '}
-              <Link href="/book/ancient-india-as-described-by-megasthenes-and-arrian-mccrindle" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-            <li>
-              <em>Romance of Alexander</em> (Armenian manuscript, 1544): the medieval legend; source of the header miniature of Alexander and the three naked philosophers.{' '}
-              <Link href="/book/romance-of-alexander-anonymous/page/69c1bd308522835be8468180" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-            <li>
-              García de Orta, <em>History of Aromatics&hellip; of the Indies</em> (Clusius, 1567).{' '}
-              <Link href="/book/aromatum-et-simplicium-aliquot-medicamentorum-apud-indos-trans" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-            <li>
-              <em>Pymander</em> of Hermes Trismegistus, with Hannibal Rosseli&rsquo;s commentary (1584).{' '}
-              <Link href="/book/pymander-mercvrii-trismegisti-cum-commento-fratris-hermes-3" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-            <li>
-              Michael Maier, <em>Symbola Aureae Mensae Duodecim Nationum</em> (1617).{' '}
-              <Link href="/book/symbols-of-the-golden-table-of-the-twelve-nations-maier" className="text-accent-rust hover:text-accent-rust">Read &rarr;</Link>
-            </li>
-          </ul>
           <p className="text-xs text-muted mt-4 italic">
             Every quotation above is verbatim from Source Library&rsquo;s translation of the named edition, linked to
             its exact page. Translations CC-BY-SA-4.0.

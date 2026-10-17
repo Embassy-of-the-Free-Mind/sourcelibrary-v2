@@ -24,7 +24,7 @@ export default function WhatMakesAGoodScanPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="What Makes a Good Scan?"
           subtitle="Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100"
           image="https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg"
@@ -43,7 +43,7 @@ export default function WhatMakesAGoodScanPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -90,7 +90,7 @@ export default function LedgersAndHeavensPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="What bankers, merchants and mint reformers paid for and read"
           image={HERO}
@@ -106,7 +106,7 @@ export default function LedgersAndHeavensPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 
@@ -329,34 +329,6 @@ export default function LedgersAndHeavensPage() {
           could want, asked first for Hermes.
         </p>
 
-        <h2 className={h2}>The books</h2>
-
-        <ul className="list-disc pl-6 space-y-2 text-secondary font-body mb-8">
-          <li>
-            Plotinus, <Link href={BOOK.plotinus} className={linkClass}><em>Enneads</em></Link>, Ficino&apos;s Latin with his
-            preface (Basel, 1580); Hermes Trismegistus,{' '}
-            <Link href={BOOK.pimander} className={linkClass}><em>Pimander</em></Link> (Venice, 1481)
-          </li>
-          <li>
-            Luca Pacioli, <Link href={BOOK.summa} className={linkClass}><em>Summa de arithmetica</em></Link> (1494),{' '}
-            <Link href={BOOK.geijsbeek} className={linkClass}>the bookkeeping treatise in English</Link> (1914), and{' '}
-            <Link href={BOOK.divina} className={linkClass}><em>De divina proportione</em></Link> (1509)
-          </li>
-          <li>
-            Copernicus, Treatise on Money, in <Link href={BOOK.wolowski} className={linkClass}>Wolowski&apos;s 1864 edition</Link>
-          </li>
-          <li>
-            <Link href={BOOK.fama} className={linkClass}><em>Fama Fraternitatis</em> with the <em>General Reformation</em></Link> (1616)
-          </li>
-          <li>
-            Gerard de Malynes, <Link href={BOOK.canker} className={linkClass}><em>The Canker of England&apos;s Common Wealth</em></Link>{' '}
-            (1601); Edward Misselden, <Link href={BOOK.misselden} className={linkClass}><em>The Circle of Commerce</em></Link>{' '}
-            (1623); Samuel Hartlib, <Link href={BOOK.hartlib} className={linkClass}><em>Chymical, Medicinal, and Chyrurgical Addresses</em></Link> (1655)
-          </li>
-          <li>
-            François Quesnay, <Link href={BOOK.quesnay} className={linkClass}><em>Tableau économique</em></Link> (1758)
-          </li>
-        </ul>
 
         <p className="text-sm text-muted leading-relaxed">
           Quotations are the library&apos;s English translations, or for Malynes and Misselden the printed English, copied

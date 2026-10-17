@@ -34,7 +34,7 @@ const SORTERS: Record<Sort, (a: BlogPost, b: BlogPost) => number> = {
   title: (a, b) => a.title.localeCompare(b.title, 'en'),
 };
 
-function ArticleCard({ post, priority }: { post: BlogPost; priority: boolean }) {
+export function ArticleCard({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
   return (
     <Link href={postHref(post)} className="group block">
       <div className="relative aspect-[16/9] overflow-hidden bg-cover-bg">
@@ -62,7 +62,7 @@ function ArticleCard({ post, priority }: { post: BlogPost; priority: boolean }) 
       <h2 className="mt-2 font-serif text-2xl text-primary leading-snug">
         {post.title}
       </h2>
-      <p className="mt-2 text-secondary leading-relaxed font-body line-clamp-3">{post.subtitle}</p>
+      <p className="mt-2 text-secondary leading-relaxed font-body">{post.summary}</p>
     </Link>
   );
 }

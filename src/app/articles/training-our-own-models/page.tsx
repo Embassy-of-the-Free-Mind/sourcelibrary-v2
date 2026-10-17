@@ -52,7 +52,7 @@ export default function TrainingOurOwnModelsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="Our pages are good training data where we have measured them to be good. Reading the scripts Gemini gets wrong needs human-made text. Our first open translation model, trained on 18,600 Latin pages, is cheap to run but not yet good enough."
           image={HERO}
@@ -68,7 +68,7 @@ export default function TrainingOurOwnModelsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

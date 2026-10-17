@@ -25,7 +25,7 @@ export default function WhyTerminalsCantEditPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Why You Can&rsquo;t Click to Place Your Cursor in a Terminal"
           subtitle="The 1978 architecture decision that still shapes how 50 million developers work"
         >
@@ -48,7 +48,7 @@ export default function WhyTerminalsCantEditPage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

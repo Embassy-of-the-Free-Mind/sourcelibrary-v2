@@ -24,7 +24,7 @@ export default function ConfidentHallucinatorPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Confident Hallucinator"
           subtitle="What we learned evaluating AI OCR across five scripts and three model tiers"
           image="https://images.sourcelibrary.org/archived/6956eaf4f23ebf30578dba35/221.jpg"
@@ -43,7 +43,7 @@ export default function ConfidentHallucinatorPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

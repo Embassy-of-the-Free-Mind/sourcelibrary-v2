@@ -24,7 +24,7 @@ export default function OcrConsistencyPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="How Consistent Is AI OCR?"
           subtitle="1,448 duplicate scans reveal what happens when the same page is read twice"
           image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
@@ -43,7 +43,7 @@ export default function OcrConsistencyPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

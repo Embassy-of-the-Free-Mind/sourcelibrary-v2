@@ -28,7 +28,7 @@ export default function ManHisOwnMakerPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Man, His Own Maker"
           subtitle="Leo XIV&rsquo;s AI encyclical is the grandchild of the first book the Church ever banned"
           image="https://images.sourcelibrary.org/archived/adad5f6d-4f68-4009-9406-d0e083cf0acc/3.jpg"
@@ -47,7 +47,7 @@ export default function ManHisOwnMakerPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

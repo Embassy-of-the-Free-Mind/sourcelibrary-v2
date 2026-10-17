@@ -34,7 +34,7 @@ export default function FirstTranslationsPage() {
       />
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="First English Translations"
           subtitle="Nearly 2,000 books in Source Library have never been read in English before; over 900 are now fully translated"
           image="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
@@ -53,7 +53,7 @@ export default function FirstTranslationsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

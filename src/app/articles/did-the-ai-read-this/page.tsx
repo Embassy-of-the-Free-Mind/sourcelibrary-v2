@@ -24,7 +24,7 @@ export default function DidTheAIReadThisPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Did the AI Read This?"
           subtitle="Mapping which books in the library are in frontier-model training data"
           image="https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/12.jpg"
@@ -43,7 +43,7 @@ export default function DidTheAIReadThisPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

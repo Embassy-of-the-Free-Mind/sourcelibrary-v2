@@ -76,7 +76,7 @@ export default function HieroglyphOcrPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Can AI Read Hieroglyphs?"
           subtitle="Four approaches, four failures, and what we learned"
           image="https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg"
@@ -101,7 +101,7 @@ export default function HieroglyphOcrPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

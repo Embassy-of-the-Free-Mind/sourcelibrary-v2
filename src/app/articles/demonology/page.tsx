@@ -25,7 +25,7 @@ export default function DemonologyPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="What Are Demons? Five Answers from the Primary Sources"
           subtitle="The word &ldquo;demon&rdquo; names two almost opposite things, and the history of how it acquired its current meaning is one of the stranger reversals in intellectual history"
           image="https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/62.jpg"
@@ -50,7 +50,7 @@ export default function DemonologyPage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

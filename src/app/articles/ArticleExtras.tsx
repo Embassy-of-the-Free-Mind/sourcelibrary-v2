@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import HorizontalSlider from '@/components/HorizontalSlider';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 import { BASE_URL } from '@/components/seo/schema-utils';
 import revisions from '@/generated/blog-revisions.json';
-import { posts, LINKED_PAGES, KIND_INFO, postHref, type BlogPost } from './posts';
+import ArticleBooks from './ArticleBooks';
+import { ArticleCard } from './BlogIndex';
+import { posts, LINKED_PAGES, type BlogPost } from './posts';
 
 // Articles that render their own BlogPostSchema with hand-written fields.
 const OWN_SCHEMA = new Set([
@@ -18,7 +19,7 @@ const OWN_SCHEMA = new Set([
   'reading-classical-chinese',
 ]);
 
-const RELATED_COUNT = 8;
+const RELATED_COUNT = 9;
 
 function isoDate(date: string) {
   const t = Date.parse(date);
@@ -35,38 +36,22 @@ function relatedTo(post: BlogPost): BlogPost[] {
   return [...same, ...rest].slice(0, RELATED_COUNT);
 }
 
-function RelatedCard({ post }: { post: BlogPost }) {
-  return (
-    <div data-card className="snap-start shrink-0 basis-[80%] sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)] xl:basis-[calc((100%-3rem)/4)]">
-      <Link href={postHref(post)} className="group block">
-        <div className="relative aspect-[16/9] overflow-hidden bg-cover-bg">
-          <Image
-            src={post.image}
-            alt={post.imageAlt || ''}
-            fill
-            sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-            style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined}
-            loading="lazy"
-          />
-        </div>
-        <p className="mt-3 text-sm text-muted">
-          {KIND_INFO[post.kind].label}
-          <span className="mx-2 text-border-light" aria-hidden="true">|</span>
-          {post.date}
-        </p>
-        <h3 className="mt-1.5 font-serif text-xl text-primary leading-snug line-clamp-3">{post.title}</h3>
-      </Link>
-    </div>
-  );
-}
-
-// Below every listed article: its Article JSON-LD (unless the page writes its
-// own) and a slider of related articles. Rendered once from the layout.
-export default function ArticleExtras() {
+function useListedPost(): BlogPost | undefined {
   const pathname = usePathname();
   const slug = pathname?.replace(/^\/articles\//, '').replace(/\/$/, '');
-  const post = slug ? posts.find((p) => p.slug === slug) : undefined;
+  return slug ? posts.find((p) => p.slug === slug) : undefined;
+}
+
+// Directly after the article: the books it quotes, as book cards.
+export function ArticleBooksHere() {
+  const post = useListedPost();
+  return post ? <ArticleBooks slug={post.slug} /> : null;
+}
+
+// After the footer note: the article's JSON-LD (unless the page writes its
+// own) and a slider of related articles, three to a view.
+export default function ArticleExtras() {
+  const post = useListedPost();
   if (!post) return null;
 
   const rev = (revisions as Record<string, { revised?: string }>)[post.slug];
@@ -78,7 +63,7 @@ export default function ArticleExtras() {
         <BlogPostSchema
           slug={post.slug}
           title={post.title}
-          description={post.subtitle}
+          description={post.summary}
           datePublished={isoDate(post.date) ?? ''}
           dateModified={rev?.revised ? rev.revised.slice(0, 10) : undefined}
           image={image}
@@ -86,7 +71,7 @@ export default function ArticleExtras() {
       )}
       <section className="bg-cream print:hidden" aria-labelledby="related-articles">
         <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pb-20">
-          <div className="border-t border-border-light pt-10 mb-6 flex items-baseline justify-between gap-4">
+          <div className="border-t border-border-light pt-10 mb-2 flex items-baseline justify-between gap-4">
             <h2 id="related-articles" className="font-serif text-3xl text-primary">
               Related articles
             </h2>
@@ -94,9 +79,12 @@ export default function ArticleExtras() {
               All articles
             </Link>
           </div>
+          <p className="text-secondary font-body mb-2">More from the same category first, then the newest articles.</p>
           <HorizontalSlider ariaLabel="related articles">
             {relatedTo(post).map((p) => (
-              <RelatedCard key={p.slug} post={p} />
+              <div key={p.slug} data-card className="snap-start shrink-0 basis-[85%] sm:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]">
+                <ArticleCard post={p} />
+              </div>
             ))}
           </HorizontalSlider>
         </div>

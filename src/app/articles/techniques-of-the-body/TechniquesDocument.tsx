@@ -21,7 +21,7 @@ export const COPY: Record<DocLang, {
     heroAlt:
       'Two leaves of a Tibetan manuscript of the Nyang tradition: seven figures drawn in the sequence of the ’khrul ’khor, the “magical movement” exercises.',
     date: '15 September 2026',
-    back: 'All notes',
+    back: 'All articles',
     contents: 'Contents',
     backHref: '/articles',
   },
@@ -64,7 +64,7 @@ export default function TechniquesDocument({ lang, body }: { lang: DocLang; body
   return (
     <ContentPageLayout
       header={
-        <ContentHeader title={c.title} subtitle={c.description} image={HERO_PATH} imageAlt={c.heroAlt}>
+        <ContentHeader feature headerVariant="dark" title={c.title} subtitle={c.description} image={HERO_PATH} imageAlt={c.heroAlt}>
           <p className="text-stone-400 text-sm mt-4">{c.date}</p>
         </ContentHeader>
       }

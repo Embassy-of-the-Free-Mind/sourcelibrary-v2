@@ -52,7 +52,7 @@ export default function InterlinearExperimentPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/artwork/met-unknown-cuneiform-tablet-late-babylonian-grammatical-text.jpg" imageAlt={"Cuneiform tablet: Late Babylonian grammatical text, late 1st millennium BCE (The Metropolitan Museum of Art): a clay tablet ruled into columns of signs."} headerVariant="dark"
           title="Facing Page vs Interlinear"
           subtitle="How should the oldest literature on Earth be read?"
         >
@@ -69,7 +69,7 @@ export default function InterlinearExperimentPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

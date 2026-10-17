@@ -34,7 +34,7 @@ export default function HowLongToTranslatePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/artwork/art-usa-national-gallery-of-art0.jpg" imageAlt={"Detail of El Greco’s Saint Jerome, translator of the Vulgate: his hand on an open book beside an inkwell."} headerVariant="dark"
           title="How Long Would It Take to Translate the Renaissance?"
           subtitle="We did the division. At the current rate, the Latin Renaissance alone would take about ten thousand years."
         >
@@ -51,7 +51,7 @@ export default function HowLongToTranslatePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

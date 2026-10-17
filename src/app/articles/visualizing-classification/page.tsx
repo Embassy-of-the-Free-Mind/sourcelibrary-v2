@@ -24,7 +24,7 @@ export default function VisualizingClassificationPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Visualizing 20,000 Books Across Six Dimensions"
           subtitle="What does a faceted classification look like? Four views of the same library."
           image="https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg"
@@ -43,7 +43,7 @@ export default function VisualizingClassificationPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

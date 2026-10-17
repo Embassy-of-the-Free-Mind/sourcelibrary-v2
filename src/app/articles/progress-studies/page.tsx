@@ -25,7 +25,7 @@ export default function ProgressStudiesPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Deeper Roots"
           subtitle="How 2,500 newly translated books confirm what progress studies predicted: innovation didn&rsquo;t begin with the Industrial Revolution"
           image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg"
@@ -50,7 +50,7 @@ export default function ProgressStudiesPage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

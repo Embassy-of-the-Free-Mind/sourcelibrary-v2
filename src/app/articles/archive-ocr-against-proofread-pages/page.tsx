@@ -49,7 +49,7 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="122 English pages that volunteers proofread against the same scans. The Archive's text misreads about one printed number in seventy and leaves no mark where it did."
           image={HERO}
@@ -65,7 +65,7 @@ export default function ArchiveOcrAgainstProofreadPagesPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -26,7 +26,7 @@ export default function Singularity1486Page() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Singularity Was Published in 1486"
           subtitle="Transhumanism, panpsychism, and the planetary mind, in the original Latin and German"
           image="https://images.sourcelibrary.org/archived/695201a9ab34727b1f041826/250.jpg"
@@ -51,7 +51,7 @@ export default function Singularity1486Page() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

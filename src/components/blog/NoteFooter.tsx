@@ -42,8 +42,8 @@ export default function NoteFooter() {
 
   return (
     <div className="bg-cream print:hidden">
-      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-12">
-        <div className="border-t border-border-light pt-6 text-sm text-muted space-y-1.5">
+      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-16">
+        <div className="border border-border-light bg-white px-6 py-5 text-sm text-muted space-y-1.5">
           <p>
             An AI-assisted article from Source Library.{' '}
             <Link href="/articles/how-these-are-made" className="text-secondary underline decoration-border-light underline-offset-2 hover:decoration-secondary">

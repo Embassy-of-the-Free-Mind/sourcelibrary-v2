@@ -26,7 +26,7 @@ export default function HogwartsLibraryPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Real Hogwarts Library"
           subtitle="J.K. Rowling has said she &ldquo;learned a ridiculous amount about alchemy&rdquo; inventing the wizarding world. The books on Dumbledore&rsquo;s shelves are real, and most of them are here."
           image="https://upload.wikimedia.org/wikipedia/commons/9/9c/Joseph_Wright_of_Derby_The_Alchemist.jpg"
@@ -45,7 +45,7 @@ export default function HogwartsLibraryPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

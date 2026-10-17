@@ -27,7 +27,7 @@ export default function WordAlignmentPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader maxWidth="wide"
+        <ContentHeader feature headerVariant="dark" maxWidth="wide"
           title="Reading Through the Translation"
           subtitle="Click any English word to see the original that produced it"
           image="https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg"
@@ -47,7 +47,7 @@ export default function WordAlignmentPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -121,7 +121,7 @@ export default function AtlasOfLostInstrumentsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="An Atlas of Lost Instruments"
           subtitle="Nine things about sound that were discovered, invented, or fought over in books this library holds. And the one thing on their pages our AI still cannot read."
           image={HERO}
@@ -137,7 +137,7 @@ export default function AtlasOfLostInstrumentsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

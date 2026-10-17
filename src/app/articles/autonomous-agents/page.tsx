@@ -24,7 +24,7 @@ export default function AutonomousAgentsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg" imageAlt={"The opening of Hero of Alexandria's Pneumatica in a 16th-century Greek manuscript: a red interlace headpiece and initial over Greek minuscule."} headerVariant="dark"
           title="How We Added 950 Books in a Weekend"
           subtitle="A human curator and three AI agents, working in parallel"
         >
@@ -41,7 +41,7 @@ export default function AutonomousAgentsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -26,7 +26,7 @@ export default function DoesAiGetReligionPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/artwork/nga-israhel-van-meckenem-ornament-with-the-tree-of-jesse.jpg" imageAlt={"Israhel van Meckenem, Ornament with the Tree of Jesse (15th century): the generations from Jesse to Christ in scrolling vines."} headerVariant="dark"
           title="Does the AI Get Religion?"
           subtitle="The longest page in our library is one leaf of a Javanese Bible that the AI translated into eighty thousand words. Here is how it goes."
         >
@@ -43,7 +43,7 @@ export default function DoesAiGetReligionPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

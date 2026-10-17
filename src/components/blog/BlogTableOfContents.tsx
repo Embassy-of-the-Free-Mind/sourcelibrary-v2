@@ -113,9 +113,9 @@ export default function BlogTableOfContents() {
             <li key={e.id}>
               <button
                 onClick={() => handleClick(e.id)}
-                className={`text-left text-[13px] leading-snug transition-colors hover:text-accent-rust block w-full ${
+                className={`text-left text-[13px] leading-snug transition-colors hover:text-primary block w-full ${
                   activeId === e.id
-                    ? 'text-accent-rust font-medium'
+                    ? 'text-primary font-medium'
                     : 'text-muted'
                 }`}
               >
@@ -136,9 +136,9 @@ export default function BlogTableOfContents() {
                 <li key={e.id}>
                   <button
                     onClick={() => handleClick(e.id)}
-                    className={`text-left text-sm leading-snug transition-colors hover:text-accent-rust block w-full ${
+                    className={`text-left text-sm leading-snug transition-colors hover:text-primary block w-full ${
                       activeId === e.id
-                        ? 'text-accent-rust font-medium'
+                        ? 'text-primary font-medium'
                         : 'text-secondary'
                     }`}
                   >

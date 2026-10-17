@@ -74,10 +74,33 @@ describe('blog post list', () => {
     expect(clash.map((p) => p.slug)).toEqual([]);
   });
 
+  // The summary is the /articles card text and the meta description.
+  it('gives every post and linked page a short summary with no dashes', () => {
+    const bad = [...posts, ...LINKED_PAGES].filter(
+      (p) => !p.summary?.trim() || p.summary.length > 155 || p.summary.includes('—') || p.summary.includes(' – '),
+    );
+    expect(bad.map((p) => `${p.slug} (${p.summary?.length ?? 0})`)).toEqual([]);
+  });
+
   it('gives every linked page a kind, an address outside /articles and an image', () => {
     const bad = LINKED_PAGES.filter(
       (p) => !(BLOG_KINDS as readonly string[]).includes(p.kind) || !p.href?.startsWith('/') || p.href.startsWith('/articles') || !p.image,
     );
     expect(bad.map((p) => p.slug)).toEqual([]);
+  });
+
+  // The book grid and the share images read these generated files; a stale one
+  // shows the wrong books or the wrong picture in link previews.
+  it('has src/generated/article-books.json up to date', async () => {
+    const { buildArticleBooks } = await import('../scripts/maintenance/generate-article-books.mjs');
+    const stored = JSON.parse(readFileSync(path.join(__dirname, '..', 'src', 'generated', 'article-books.json'), 'utf8'));
+    expect(stored, 'run node scripts/maintenance/generate-article-books.mjs').toEqual(buildArticleBooks());
+  });
+
+  it('has src/generated/article-heroes.json up to date, with a hero for every listed post', async () => {
+    const { buildArticleHeroes } = await import('../scripts/maintenance/generate-article-heroes.mjs');
+    const stored = JSON.parse(readFileSync(path.join(__dirname, '..', 'src', 'generated', 'article-heroes.json'), 'utf8'));
+    expect(stored, 'run node scripts/maintenance/generate-article-heroes.mjs').toEqual(buildArticleHeroes());
+    expect(posts.filter((p) => !stored[p.slug]).map((p) => p.slug)).toEqual([]);
   });
 });

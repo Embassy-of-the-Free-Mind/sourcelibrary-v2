@@ -26,7 +26,7 @@ export default function CountingFirstTranslationsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="How Many First Translations, Really?"
           subtitle="A census of a claim: measuring both the firsts we over-claim and the firsts we miss"
           image="https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg"
@@ -45,7 +45,7 @@ export default function CountingFirstTranslationsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

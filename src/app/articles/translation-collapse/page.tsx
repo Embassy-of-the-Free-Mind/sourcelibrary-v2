@@ -26,7 +26,7 @@ export default function TranslationCollapsePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Quality control on four million machine-translated pages"
           subtitle="Detecting and repairing translation collapse"
           image="https://images.sourcelibrary.org/archived/69b2f434f9f1ad2b3b15154a/9.jpg"
@@ -45,7 +45,7 @@ export default function TranslationCollapsePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -33,7 +33,7 @@ export default function TranslationsAcrossCivilizationsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/archived/69938e765d28b693146d0f99/19.jpg" imageAlt={""} headerVariant="dark"
           title="What Ficino Heard"
           subtitle="Three translations of the Poimandres: 1481, 1650, 2026"
         >
@@ -62,7 +62,7 @@ export default function TranslationsAcrossCivilizationsPage() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

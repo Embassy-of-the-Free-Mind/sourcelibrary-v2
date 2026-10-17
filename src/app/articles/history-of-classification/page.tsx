@@ -29,7 +29,7 @@ export default function HistoryOfClassificationPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Ten Thousand Years of Tagging"
           subtitle="A history of how humans organize knowledge, told through the books that invented it"
           image="https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg"
@@ -48,7 +48,7 @@ export default function HistoryOfClassificationPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

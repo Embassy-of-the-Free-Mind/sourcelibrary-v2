@@ -128,7 +128,7 @@ export default function PreservedByEnemiesPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="How the books written to destroy a tradition became the record of it"
           image={HERO}
@@ -147,7 +147,7 @@ export default function PreservedByEnemiesPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -83,7 +83,7 @@ export default function TreesOfLifePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Trees of Life Across the Traditions"
           subtitle="World trees, sacred trees and tree diagrams from Kabbalah to Darwin, in the library’s own plates and pages"
           image={LEAD_IMAGE}
@@ -102,7 +102,7 @@ export default function TreesOfLifePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

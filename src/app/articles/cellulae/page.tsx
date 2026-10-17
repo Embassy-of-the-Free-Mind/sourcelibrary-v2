@@ -25,7 +25,7 @@ export default function CellulaePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Cellulae"
           subtitle="What two pages of a medieval manuscript reveal about biology, law, and the dangers of careful reasoning"
           image="https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg"
@@ -50,7 +50,7 @@ export default function CellulaePage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

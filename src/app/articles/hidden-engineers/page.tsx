@@ -25,7 +25,7 @@ export default function HiddenEngineersPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Hidden Engineers"
           subtitle="Steam engines in spell books, automata in alchemy, kites in natural magic: before engineering was a discipline, its knowledge lived in unexpected places"
           image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg"
@@ -50,7 +50,7 @@ export default function HiddenEngineersPage() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

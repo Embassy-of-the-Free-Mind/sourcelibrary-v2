@@ -24,7 +24,7 @@ export default function FireHorsePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Year of the Fire Horse"
           subtitle="Double Yang Fire, a 17th-Century Arsonist, and the Original Texts Behind Chinese Astrology"
           image="https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg"
@@ -43,7 +43,7 @@ export default function FireHorsePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

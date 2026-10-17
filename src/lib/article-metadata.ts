@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { posts } from '@/app/articles/posts';
 import revisions from '@/generated/blog-revisions.json';
+import heroes from '@/generated/article-heroes.json';
 import { FEED_TYPES } from '@/lib/feed-links';
 
 /**
@@ -17,11 +18,16 @@ import { FEED_TYPES } from '@/lib/feed-links';
  *
  * The slug is the folder name under src/app/articles. Dates come from the
  * post's `date` in posts.ts (published) and src/generated/blog-revisions.json
- * (revised), images fall back to the post's card image, then the site card.
+ * (revised); the share image is the article's hero (see below).
  */
 
 type Revision = { published?: string; revised?: string };
 const REVISIONS = revisions as Record<string, Revision>;
+const HEROES = heroes as Record<string, string>;
+
+function shareImage(src: string): string {
+  return `/_next/image?url=${encodeURIComponent(src)}&w=1200&q=75`;
+}
 
 // Unlisted pages that are withdrawn, superseded or off topic: still served for
 // old links, but kept out of search results. See UNLISTED_PAGES in posts.ts.
@@ -77,10 +83,17 @@ export function withArticleMeta(slug: string, meta: Metadata): Metadata {
   const rev = REVISIONS[slug];
   const fullTitle = plainTitle(meta.title);
   const title = plainTitle(meta.openGraph?.title as Metadata['title']) ?? (fullTitle ? stripSiteSuffix(fullTitle) : undefined);
-  const description = meta.openGraph?.description ?? meta.description ?? undefined;
-  const images =
-    meta.openGraph?.images ??
-    (post?.image ? [{ url: post.image, alt: post.imageAlt ?? post.title }] : [SITE_IMAGE]);
+  // A listed post's short summary wins over the page's own (often longer)
+  // description, so search snippets and share cards match the /articles card.
+  const description = post?.summary ?? meta.openGraph?.description ?? meta.description ?? undefined;
+  // The share image is the article's hero (src/generated/article-heroes.json),
+  // so a link preview shows the picture at the top of the page; then the card
+  // image, then the site card. Served through the image optimiser at 1200 wide:
+  // the originals are full scans, some over 8 MB, past what Facebook and X take.
+  const hero = HEROES[slug] ?? post?.image;
+  const images = hero
+    ? [{ url: shareImage(hero), width: 1200, alt: post?.imageAlt ?? post?.title ?? plainTitle(meta.title) ?? '' }]
+    : meta.openGraph?.images ?? [SITE_IMAGE];
   const publishedTime = (post && postDateIso(post.date)) ?? rev?.published;
   const modifiedTime = rev?.revised;
 
@@ -94,6 +107,7 @@ export function withArticleMeta(slug: string, meta: Metadata): Metadata {
     ...(modifiedTime ? { modifiedTime } : {}),
     type: 'article',
     ...meta.openGraph,
+    ...(post?.summary ? { description: post.summary } : {}),
     images,
   } as NonNullable<Metadata['openGraph']>;
 
@@ -103,7 +117,8 @@ export function withArticleMeta(slug: string, meta: Metadata): Metadata {
     ...(title ? { title } : {}),
     ...(description ? { description } : {}),
     ...meta.twitter,
-    images: meta.twitter?.images ?? images,
+    ...(post?.summary ? { description: post.summary } : {}),
+    images,
   } as NonNullable<Metadata['twitter']>;
 
   const robots =
@@ -111,6 +126,7 @@ export function withArticleMeta(slug: string, meta: Metadata): Metadata {
 
   return {
     ...meta,
+    ...(post?.summary ? { description: post.summary } : {}),
     alternates,
     openGraph,
     twitter,

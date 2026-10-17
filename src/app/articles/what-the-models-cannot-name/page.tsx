@@ -245,7 +245,7 @@ export default function WhatTheModelsCannotNamePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="A preregistered re-run of our May survey. For about half of the distinct works we hold, no frontier model can name the author from the title. That says what the models can recall, not what they were trained on."
           image={HERO}
@@ -261,7 +261,7 @@ export default function WhatTheModelsCannotNamePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

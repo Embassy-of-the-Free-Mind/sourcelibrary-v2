@@ -42,7 +42,7 @@ export default function DrebbelPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg" imageAlt={"Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing."} headerVariant="dark"
           title={TITLE}
           subtitle="Cornelis Drebbel (1572–1633) in his own words and in the words of the people who knew him."
         >
@@ -56,7 +56,7 @@ export default function DrebbelPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

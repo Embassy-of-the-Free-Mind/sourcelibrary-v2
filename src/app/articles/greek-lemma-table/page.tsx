@@ -37,7 +37,7 @@ export default function GreekLemmaTablePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Every Shape of Every Word"
           subtitle="We mapped 570,000 Greek word forms to their dictionary entries: the invisible table that turns a 400-year-old page into something you can read"
           image="https://images.sourcelibrary.org/archived/adefe2d5-88a7-4595-9885-903a93abee51/391.jpg"
@@ -56,7 +56,7 @@ export default function GreekLemmaTablePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

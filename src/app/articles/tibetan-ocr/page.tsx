@@ -24,7 +24,7 @@ export default function TibetanOcrPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Benchmarking AI OCR on 232,000 Pages of Bhutanese Buddhist Manuscripts"
           subtitle="Claude, Gemini, and the question of what &ldquo;good enough&rdquo; means for handwritten Tibetan"
           image="https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/600,/0/default.jpg"
@@ -43,7 +43,7 @@ export default function TibetanOcrPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

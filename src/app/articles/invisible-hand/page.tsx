@@ -24,7 +24,7 @@ export default function InvisibleHandPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Invisible Hand Has a History"
           subtitle="Tracing Market Theory from Aristotle to Bastiat in Original Editions"
           image="https://images.sourcelibrary.org/archived/69520c46ab34727b1f044141/7.jpg"
@@ -43,7 +43,7 @@ export default function InvisibleHandPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -275,7 +275,7 @@ export default function TwoThousandFirstTranslations() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader title="2,000 Books Never Read in English" subtitle="Source Library">
+        <ContentHeader feature headerVariant="dark" title="2,000 Books Never Read in English" subtitle="Source Library">
           <p className="text-stone-400 text-sm mt-4">
             March 2026 &middot; 12 min read
           </p>

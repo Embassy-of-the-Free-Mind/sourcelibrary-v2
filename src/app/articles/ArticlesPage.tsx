@@ -34,7 +34,7 @@ export default function ArticlesPage({ active = 'all', page = 1 }: { active?: Li
       <SiteHeader variant="dark" />
       <div className="relative">
         <HeroBackdrop />
-        <main className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-14 md:pt-20 pb-24">
+        <main data-articles-index className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-14 md:pt-20 pb-24">
           <BlogIndex posts={ALL_ARTICLES} active={active} initialPage={page} />
         </main>
       </div>

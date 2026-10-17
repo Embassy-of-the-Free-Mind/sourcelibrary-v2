@@ -29,7 +29,7 @@ export default function FreeReadingPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Reading We Did Not Have to Pay For"
           subtitle="Five and a half million of our pages were already read once, by a machine we did not run. Here is how we decided which of those readings to trust."
           image={HERO}
@@ -45,7 +45,7 @@ export default function FreeReadingPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

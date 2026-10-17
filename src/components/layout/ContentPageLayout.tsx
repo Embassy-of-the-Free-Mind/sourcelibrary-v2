@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import SiteHeader from './SiteHeader';
+import ParallaxImage from './ParallaxImage';
 
 /* ── Hero header: site header + dark gradient hero ── */
 
@@ -22,9 +23,12 @@ interface ContentHeaderProps {
   maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
   /** The site header above the hero: 'light' (default) or the solid 'dark' bar the book pages use. */
   headerVariant?: 'light' | 'dark';
+  /** Article hero: 80vh tall from `md` up, picture drifting with a slight parallax. */
+  feature?: boolean;
 }
 
-export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light' }: ContentHeaderProps) {
+export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false }: ContentHeaderProps) {
+  if (feature) heightClass = 'min-h-[420px] md:min-h-[80vh]';
   const headerWidthClass =
     maxWidth === 'full'
       ? ''
@@ -52,6 +56,8 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, imag
                   backgroundPosition: 'center',
                 }}
               />
+            ) : feature ? (
+              <ParallaxImage src={image} alt={imageAlt || ''} />
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img

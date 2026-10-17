@@ -137,7 +137,7 @@ export default function FourCommentariesOnNothingPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="Four traditions teach that the highest thing cannot be put into words, and each wrote commentaries to keep readers from turning that teaching into a doctrine. One page from each, with our machine translation, and the errors we found and fixed along the way."
           image={HERO}
@@ -153,7 +153,7 @@ export default function FourCommentariesOnNothingPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -51,7 +51,7 @@ export default function IIIFPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="How IIIF Helped Us Translate the Renaissance"
           subtitle="One image standard turned thirteen institutional archives into a single input layer for an AI pipeline, and let us hand the results back to the whole IIIF world."
           image="https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg"
@@ -73,7 +73,7 @@ export default function IIIFPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

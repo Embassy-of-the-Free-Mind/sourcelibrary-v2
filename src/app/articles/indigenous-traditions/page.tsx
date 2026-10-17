@@ -24,7 +24,7 @@ export default function IndigenousTraditionsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Sacred Texts That Were Never 'Texts'"
           subtitle="Oral Traditions, Field Recordings, and the Problem of Putting Living Religion on Paper"
           image="https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg"
@@ -43,7 +43,7 @@ export default function IndigenousTraditionsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

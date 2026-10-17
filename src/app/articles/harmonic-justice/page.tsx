@@ -86,7 +86,7 @@ export default function HarmonicJusticePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title={TITLE}
           subtitle="Money, proportion and the harmony of the state, before economics was a science"
           image={HERO}
@@ -102,7 +102,7 @@ export default function HarmonicJusticePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 
@@ -353,38 +353,6 @@ export default function HarmonicJusticePage() {
           exchange dealer) and what they read.
         </p>
 
-        <h2 className={h2}>The books</h2>
-
-        <ul className="list-disc pl-6 space-y-2 text-secondary font-body mb-8">
-          <li>
-            Aristotle, <Link href={BOOK.aristotle} className={linkClass}><em>Opera</em>, vol. 6</Link> (Aldine, Venice,
-            1495): <em>Nicomachean Ethics</em>, <em>Politics</em>, <em>Economics</em>
-          </li>
-          <li>
-            Nicole Oresme, <Link href={BOOK.oresme} className={linkClass}><em>Traictie de la première invention des monnoies</em></Link>{' '}
-            (ed. Wolowski, 1864)
-          </li>
-          <li>
-            Johannes Kepler, <Link href={BOOK.kepler} className={linkClass}><em>Harmonices mundi</em></Link> (Linz, 1619)
-          </li>
-          <li>
-            <Link href={BOOK.splendor} className={linkClass}><em>Splendor Solis</em></Link> (English translation, 1920)
-          </li>
-          <li>
-            Johann Joachim Becher, <Link href={BOOK.becher} className={linkClass}><em>Närrische Weißheit und weise Narrheit</em></Link> (1707)
-          </li>
-          <li>
-            Adam Smith, <Link href={BOOK.smithTms} className={linkClass}><em>The Theory of Moral Sentiments</em></Link> (1759)
-          </li>
-          <li>
-            For the mathematics of the three means: Nicomachus,{' '}
-            <Link href={BOOK.nicomachus} className={linkClass}><em>Introduction to Arithmetic</em></Link>. For harmony as
-            a picture of the whole world: Francesco Giorgi,{' '}
-            <Link href={BOOK.giorgi} className={linkClass}><em>De harmonia mundi totius</em></Link> (1525), and Robert
-            Fludd, <Link href={BOOK.fludd} className={linkClass}><em>The Symphonic Monochord of the World</em></Link>{' '}
-            (1622).
-          </li>
-        </ul>
 
         <p className="text-sm text-muted leading-relaxed">
           Quotations from the library are its English translations, copied from the pages they link to; Bodin&apos;s{' '}

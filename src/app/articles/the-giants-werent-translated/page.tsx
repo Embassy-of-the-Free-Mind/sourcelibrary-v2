@@ -26,7 +26,7 @@ export default function GiantsPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Giants Were Never Fully Translated"
           subtitle="The most-read book here has no English translation. Neither do the works of the men who made the canon."
           image="https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg"
@@ -45,7 +45,7 @@ export default function GiantsPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

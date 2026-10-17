@@ -41,7 +41,7 @@ export default function RashiOcrPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Rashi Problem"
           subtitle="When AI OCR hallucinates in Hebrew, and your quality metrics say it's fine"
           image="https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg"
@@ -60,7 +60,7 @@ export default function RashiOcrPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

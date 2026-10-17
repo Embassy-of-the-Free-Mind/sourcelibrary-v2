@@ -24,7 +24,7 @@ export default function ClusteringPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="What Does a Library of 3,400 Rare Books Look Like?"
           subtitle="Embedding-based clustering reveals the hidden structure of a historical collection"
           image="https://images.sourcelibrary.org/archived/6952dac677f38f6761bc683a/13.jpg"
@@ -43,7 +43,7 @@ export default function ClusteringPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

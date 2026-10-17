@@ -24,7 +24,7 @@ export default function FechnerBohmePage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Mystic Who Invented Psychophysics"
           subtitle="Gustav Fechner, Jakob Böhme, and the Secret History of Experimental Psychology"
           image="https://images.sourcelibrary.org/archived/6867c580aadfee9e955eca92/4.jpg"
@@ -43,7 +43,7 @@ export default function FechnerBohmePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 

@@ -40,6 +40,10 @@ export interface BlogPost {
   slug: string;
   title: string;
   subtitle: string;
+  // The card text on /articles and the page's meta description (og and
+  // twitter too, via withArticleMeta): 155 characters at most, facts from the
+  // article only (tests/blog-posts.test.ts).
+  summary: string;
   date: string;
   readTime: string;
   kind: BlogKind;
@@ -88,6 +92,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/vision',
     title: 'Our Vision: A Letter from the Founder',
     subtitle: 'Why Source Library exists, what it will take to translate the world’s untranslated books, and what that costs over five years.',
+    summary:
+      'Derek Lomas, who founded Source Library, on why it exists, what it takes to translate the world’s untranslated books, and the five-year budget.',
     date: '19 June 2026',
     readTime: '',
     kind: 'library',
@@ -98,6 +104,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/in-memoriam',
     title: 'In Memoriam: Joost R. Ritman (1941–2026)',
     subtitle: 'Remembering the founder of the Bibliotheca Philosophica Hermetica, the library where Source Library began.',
+    summary:
+      'Remembering Joost R. Ritman (1941 to 2026), founder of the Bibliotheca Philosophica Hermetica, where Source Library began. His motto: ad fontes.',
     date: '3 July 2026',
     readTime: '',
     kind: 'library',
@@ -109,6 +117,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/specimen/aldine',
     title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
     subtitle: 'Francesco Griffo’s roman type for Aldus, traced letter by letter from our copy of De Aetna (1496).',
+    summary:
+      'Francesco Griffo’s roman for Aldus, cut in 1496 for Bembo’s De Aetna and traced letter by letter from our copy: the type Garamond and Times descend from.',
     date: '20 August 2026',
     readTime: '',
     kind: 'stories',
@@ -120,6 +130,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/collections/drebbel/beeckman',
     title: 'Beeckman on Drebbel: the journal passages, 1619–1634',
     subtitle: 'What Isaac Beeckman wrote in his journal about Cornelis Drebbel’s machines, in his own words beside an English translation.',
+    summary:
+      'Isaac Beeckman’s journal entries on Cornelis Drebbel: the submarine, perpetual motion, the weather-glass, in his Dutch or Latin beside English.',
     date: '6 October 2026',
     readTime: '',
     kind: 'tours',
@@ -131,6 +143,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/about/meaning',
     title: 'Search by Meaning',
     subtitle: 'How the library finds passages that say the same thing in different words and languages, and where it still falls short.',
+    summary:
+      'How the library finds passages that say the same thing in different words and languages, using a 768-number index of each page, and its limits.',
     date: '8 October 2026',
     readTime: '',
     kind: 'research',
@@ -141,6 +155,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/about/by-the-numbers',
     title: 'By the Numbers',
     subtitle: 'How big the library is: books, pages, languages, centuries and the storage that holds it all.',
+    summary:
+      'A visual tour of the library’s size: books, pages, languages and centuries, how far the pages are through the pipeline, and the storage behind it.',
     date: '10 May 2026',
     readTime: '',
     kind: 'research',
@@ -151,6 +167,8 @@ export const LINKED_PAGES: BlogPost[] = [
     href: '/rithmomachia',
     title: 'Play Rithmomachia',
     subtitle: 'The medieval board game won by arithmetic, rebuilt from five Renaissance treatises. Play it in the browser.',
+    summary:
+      'The medieval board game won by arithmetic, playable in the browser, with rules from five Renaissance treatises and Lever and Fulke’s 1563 play.',
     date: '2 March 2026',
     readTime: '',
     kind: 'interactive',
@@ -164,6 +182,8 @@ export const posts: BlogPost[] = [
     title: 'Ledgers and Heavens',
     subtitle:
       'What the money-men paid for and read: Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus on coinage, a Rosicrucian debate on abolishing gold, and a financier’s chair of music.',
+    summary:
+      'What money-men paid for and read: Cosimo de’ Medici’s Hermes, Pacioli’s proportions, Copernicus on coinage and a Rosicrucian debate on gold.',
     date: '17 October 2026',
     readTime: '11 min read',
     kind: 'stories',
@@ -177,6 +197,8 @@ export const posts: BlogPost[] = [
     title: 'Harmonic Justice',
     subtitle:
       'Before economics was a science, money and fair exchange were problems of proportion. Aristotle, Oresme, Kepler correcting Bodin, the alchemists and Adam Smith on what makes an exchange fair and an order hold.',
+    summary:
+      'Before economics, fair exchange was a problem of proportion: Aristotle, Oresme, Kepler correcting Bodin, the alchemists and Adam Smith on money.',
     date: '16 October 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -190,6 +212,8 @@ export const posts: BlogPost[] = [
     title: 'Maya Religion in the Colonial Sources',
     subtitle:
       'The Bacabs holding up the sky, katuns of carved stone, a diviner counting maize, the sun and the Pleiades as a disease’s parents: Maya religion from the friars who burned its books and the Maya who kept it.',
+    summary:
+      'Maya religion from the friars who burned its books and the Maya who kept it: Landa, the Motul dictionary, the Bacabs and the Chilam Balam books.',
     date: '16 October 2026',
     readTime: '15 min read',
     kind: 'tours',
@@ -202,6 +226,8 @@ export const posts: BlogPost[] = [
     title: 'Preserved by Their Enemies',
     subtitle:
       'The books written to stamp out a religion are often the only record of it. Hippolytus and Epiphanius copied the Gnostics they refuted; in Mexico and Yucatán the friars who burned the books wrote down the spells, the omens and the alphabet.',
+    summary:
+      'Books written to stamp out a religion often keep its only record: Hippolytus and Epiphanius on the Gnostics, and Landa’s Maya alphabet.',
     date: '16 October 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -215,6 +241,8 @@ export const posts: BlogPost[] = [
     title: 'Beyond the North Wind: Hyperborea and the Amber Coast',
     subtitle:
       'The Greeks placed a blessed people beyond the north wind and said amber came from the edge of the world. Herodotus doubted both. Prussian and Lithuanian historians later claimed them for the Baltic, and a nineteenth-century folklorist showed which parts of their pagan past had been invented.',
+    summary:
+      'Herodotus doubted the blessed people beyond the north wind and the amber from the world’s edge. Later Prussian historians claimed both for the Baltic.',
     date: '16 October 2026',
     readTime: '33 min read',
     kind: 'stories',
@@ -226,6 +254,8 @@ export const posts: BlogPost[] = [
     title: 'Shipwrecks and Buried Treasure',
     subtitle:
       'Six chests of Charles V’s gold off Cadiz, a king’s revenues in the Baltic, an Armada ship in Tobermory Bay, a sexton’s pot of Saxon silver, digging money in Luoyang and a Tibetan guide that says where to dig.',
+    summary:
+      'Charles V’s gold off Cadiz, an Armada ship in Tobermory Bay, a sexton’s pot of Saxon silver and a Tibetan guide to where to dig treasure.',
     date: '16 October 2026',
     readTime: '8 min read',
     kind: 'tours',
@@ -238,6 +268,8 @@ export const posts: BlogPost[] = [
     title: 'Trees of Life Across the Traditions',
     subtitle:
       'Sefirot, Yggdrasil, the Siberian shaman’s tree, the Prussian oak, the Assyrian palm, the Codex Laud, Eden and Jesse, the Waqwaq tree, the goddess in the sycamore, the Egyptian persea, the Sanxingdui bronze tree, the lote tree, the wayang kayon, the Tibetan refuge tree, Böhme’s trees, the alchemists’ trees, the banyan, the kalpataru and the trees of logic, kinship and descent, in the plates and pages the library holds.',
+    summary:
+      'World trees and tree diagrams in the library’s plates: the sefirot, Yggdrasil, the Assyrian palm, the Waqwaq tree, the wayang kayon and Darwin.',
     date: '15 October 2026',
     readTime: '20 min read',
     kind: 'tours',
@@ -250,6 +282,8 @@ export const posts: BlogPost[] = [
     title: 'One Sentence of Hermes, Copied for Sixteen Hundred Years',
     subtitle:
       'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, five printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.',
+    summary:
+      'One Greek word misread by a late-antique translator of the Asclepius, followed through a manuscript, five printed editions, a commentary and our own OCR.',
     date: '8 October 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -263,6 +297,8 @@ export const posts: BlogPost[] = [
     title: 'Four Commentaries on Nothing',
     subtitle:
       'Nāgārjuna with Candrakīrti, the Diamond Sutra and the Chan master Wukong, a Latin dictionary of Kabbalah, and Dionysius with Johann Eck: four commentaries that warn readers not to turn “nothing” into a doctrine. What our machine translations of them got right and wrong, and what we fixed.',
+    summary:
+      'Candrakīrti on Nāgārjuna, Wukong on the Diamond Sutra, a Kabbalah dictionary and Eck on Dionysius, with our translation errors and fixes.',
     date: '7 October 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -276,6 +312,8 @@ export const posts: BlogPost[] = [
     title: 'What the Models Cannot Name',
     subtitle:
       'A preregistered re-run of our May survey. For about half of the distinct works we hold, none of Gemini 3.1 Pro, Claude Opus 5.5 or GPT-5.6 can name the author from the title; by volumes it is about a third. That measures what models can recall, not what they were trained on.',
+    summary:
+      'For about half the distinct works we hold, none of Gemini 3.1 Pro, Claude Opus 5.5 or GPT-5.6 can name the author from the title. A preregistered re-run.',
     date: '7 October 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -288,6 +326,8 @@ export const posts: BlogPost[] = [
     title: 'The Engraver Who Went Under the Thames',
     subtitle:
       'Cornelis Drebbel built a perpetual-motion clock, a submarine, early microscopes and the first thermostat, and wrote almost nothing. What we know comes from the 57 people around him: an interactive map of his circle, every tie marked by how well it is attested, and the passages in his own book.',
+    summary:
+      'Cornelis Drebbel built a submarine and a perpetual-motion clock and wrote almost nothing. A map of the 57 people around him, and his own book.',
     date: '6 October 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -299,6 +339,8 @@ export const posts: BlogPost[] = [
     title: 'Should a library train its own AI models?',
     subtitle:
       'Gemini reads and translates almost every page here. We measured that work slice by slice: where it is good, it can train a smaller open model of our own; where it is weak, as in early Greek print, only human-made text helps. What we have tried, what it would save, who else is doing this, and how our first open translation model fell short.',
+    summary:
+      'Where Gemini’s readings of our pages are good enough to train a smaller open model of our own, where they are not, and what it would save.',
     date: '4 October 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -311,6 +353,8 @@ export const posts: BlogPost[] = [
     title: 'Checking the Archive\u2019s OCR against proofread pages',
     subtitle:
       'On 122 English pages with an independent proofread transcription, our own reader is better on the same page in every cohort, and in a first, preliminary count the Internet Archive\u2019s OCR text silently misreads about one printed number in seventy. A correction to the free-reading note: if you quote a date from Archive text, check the image.',
+    summary:
+      'On 122 proofread English pages our reader beat the Internet Archive’s OCR, which in a first count misreads about one printed number in seventy.',
     date: '28 September 2026',
     readTime: '8 min read',
     kind: 'research',
@@ -322,6 +366,8 @@ export const posts: BlogPost[] = [
     title: 'How We Measure OCR Quality',
     subtitle:
       'One page per book, sealed before anyone looks, scored against a published edition, graded by how many referenced books the cell holds. The design behind every engine decision, and the day the "Chinese woodblock" cell turned out to be brush manuscript.',
+    summary:
+      'One page per book, sealed before anyone looks, scored against a published edition: how we test OCR engines, and a woodblock cell that was manuscript.',
     date: '20 September 2026',
     readTime: '12 min read',
     kind: 'research',
@@ -333,6 +379,8 @@ export const posts: BlogPost[] = [
     title: 'Techniques of the Body',
     subtitle:
       'Postures, breathing methods and exercises quoted from the books that prescribe them, in Chinese, Sanskrit, Tibetan, Greek, Latin, Hebrew, Arabic and the European vernaculars: seasonal exercises, haṭha yoga, breathing methods, the Pythagorean day, theurgy, penance, prayer, drill, the gymnasium and ritual. Each original beside its translation.',
+    summary:
+      'Postures, breathing and exercises from the books that prescribe them, from Ge Hong’s Baopuzi to a 1922 Marathi manual, beside translations.',
     date: '15 September 2026',
     readTime: '25 min read',
     kind: 'tours',
@@ -344,6 +392,8 @@ export const posts: BlogPost[] = [
     title: 'The Reading We Did Not Have to Pay For',
     subtitle:
       'Five and a half million of our unread pages came from the Internet Archive, which had already read them once. We tested that reading book by book against our own, took it where the two agree, and measured whether a cheap language model can rescue the rest. It cannot: it invents.',
+    summary:
+      'We tested the Internet Archive’s OCR of 5.5 million of our pages against ours, kept it where they agree, and found a cheap model cannot fix the rest.',
     date: '12 September 2026',
     readTime: '9 min read',
     kind: 'research',
@@ -355,6 +405,8 @@ export const posts: BlogPost[] = [
     title: 'An Atlas of Lost Instruments',
     subtitle:
       'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about sound that were discovered, invented, or fought over in books this library holds, and the 13,647 pages of music on them that no machine can yet read.',
+    summary:
+      'A keyed fiddle, a cat organ, a wind harp, the megaphone quarrel and a 31-note keyboard: nine events from the library’s music books.',
     date: '11 September 2026',
     readTime: '12 min read',
     kind: 'tours',
@@ -366,6 +418,8 @@ export const posts: BlogPost[] = [
     title: 'Technique Is Local, Crisis Is Universal',
     subtitle:
       'Reading a thousand years of meditation manuals as research artifacts: the Visuddhimagga prescribes practices by temperament, Iamblichus states a dose-response curve for ritual prayer, and every imaging tradition wrote the same safety warnings. Seven testable hypotheses from the contemplative archive, and one measurement suggesting the cross-cultural core of deep practice is not bliss, but crisis.',
+    summary:
+      'Meditation manuals read as research: the Visuddhimagga on temperament, Iamblichus on dose, shared safety warnings and seven testable hypotheses.',
     date: '27 August 2026',
     readTime: '11 min read',
     kind: 'stories',
@@ -378,6 +432,8 @@ export const posts: BlogPost[] = [
     title: 'Two Copies, Two Languages',
     subtitle:
       'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Measuring 21,481 books to settle it produced two headline findings that turned out to be the measuring instrument, and one cheap check that caught them both.',
+    summary:
+      'Our two copies of the 1495 Aldine Lascaris are catalogued Greek and Latin, both rightly. Measuring 21,481 books to fix it, and two false findings.',
     date: '21 August 2026',
     readTime: '8 min read',
     kind: 'research',
@@ -390,6 +446,8 @@ export const posts: BlogPost[] = [
     title: 'Graded by the Suda',
     subtitle:
       'One book in our library came with its own answer key: the Suda On Line, 31,000 entries translated by two hundred volunteer scholars over sixteen years. We aligned our AI translation with theirs, let each grade the other with the Greek as arbiter, and learned that a cheap AI judge fails silently: its incapacity arrives dressed as approval. Total API cost: $1.15.',
+    summary:
+      'Our AI translation of the Suda graded against the Suda On Line, 31,000 entries by 200 volunteers. A cheap AI judge fails silently. Cost: $1.15.',
     date: '11 August 2026',
     readTime: '9 min read',
     kind: 'research',
@@ -402,6 +460,8 @@ export const posts: BlogPost[] = [
     title: 'Every Shape of Every Word',
     subtitle:
       'We mapped 570,000 Greek word forms to their dictionary entries: the invisible table that turns a 400-year-old page into something you can read, checked against 132,000 words hand-verified by scholars.',
+    summary:
+      'A table of 570,000 Greek word forms and their dictionary entries, so you can tap a word in a 1590 book, checked against 132,000 verified words.',
     date: '10 August 2026',
     readTime: '5 min read',
     kind: 'research',
@@ -413,6 +473,8 @@ export const posts: BlogPost[] = [
     title: 'Nobody Knows What Has Been Scanned',
     subtitle:
       'No institution on earth can answer whether a book has already been digitized. We had to harvest 3.5 million records to answer it for one library, and found 3,655 books nobody has scanned. The case for a global registry.',
+    summary:
+      'No one can say whether a book has been digitised. We harvested 3.5 million records for one library, found 3,655 unscanned books, and ask for a registry.',
     date: '9 August 2026',
     readTime: '6 min read',
     kind: 'research',
@@ -424,6 +486,8 @@ export const posts: BlogPost[] = [
     title: 'Reciting, Not Reading',
     subtitle:
       'We covered four lines of Genesis with an opaque grey box. Our OCR transcribed them anyway: correctly, seamlessly, and without a word of warning. Then four different prompts failed to stop it, and the one thing that worked was not something we said.',
+    summary:
+      'We hid four lines of Genesis in a 1566 Vulgate under a grey box and our OCR transcribed them anyway. Four prompts failed to make it admit the gap.',
     date: '30 July 2026',
     readTime: '8 min read',
     kind: 'research',
@@ -436,6 +500,8 @@ export const posts: BlogPost[] = [
     title: 'Nine Models, Forty Pages',
     subtitle:
       "We benchmarked every OCR-capable model we could reach (Google's newest releases, three open-weight challengers, one self-hosted on a rented GPU) against the same forty historical pages, with a memorization control and paired statistics. The newest budget model lost to its own predecessor, and an open-weight model reached parity on the pages it can read.",
+    summary:
+      'Nine OCR-capable models, Google’s newest and three open-weight ones among them, on forty historical pages. The newest budget model lost to its predecessor.',
     date: '23 July 2026',
     readTime: '9 min read',
     kind: 'research',
@@ -448,6 +514,8 @@ export const posts: BlogPost[] = [
     title: 'The Playable Page',
     subtitle:
       'Old treatises are full of instruments diagrammed and silenced: monochord divisions, tetrachord arcs, string tables worked out to the integer.Three of them, replicated and strung: Galilei\'s two-string bench with its weight pan, the Lyre of Mercury\'s disputed numbers read as three different laws, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
+    summary:
+      'Three instruments from old treatises, strung to play: Galilei’s two-string bench, the Lyre of Mercury and a Boethius two-octave system.',
     date: '19 July 2026',
     readTime: '3 instruments',
     kind: 'interactive',
@@ -460,6 +528,8 @@ export const posts: BlogPost[] = [
     title: 'Chart a Word, Then Read the Page',
     subtitle:
       'A Google-Books-style ngram viewer over five centuries of alchemy, Hermetica, and early science, with the two things word-frequency charts have never done: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any peak to the actual readable pages. Plus an honest guide to what these curves can and cannot prove.',
+    summary:
+      'A word-frequency chart over five centuries of alchemy and early science that follows one concept across Latin, German and French, linked to the pages.',
     date: '19 July 2026',
     readTime: '7 min read',
     kind: 'interactive',
@@ -471,6 +541,8 @@ export const posts: BlogPost[] = [
     title: 'The Sound Laboratory',
     subtitle:
       'Ten interactive stations that put twenty-five centuries of claims about harmony to the test with your own ears: the smith\'s hammers weighed, the comma that won\'t close, Bharata\'s two vīṇās, Kepler\'s planets auditioned against modern orbits, Kircher\'s sympathetic strings, and Euler\'s formula for sweetness, graded by you. Headphones recommended.',
+    summary:
+      'Ten stations testing old claims about harmony by ear: the smith’s hammers, the Pythagorean comma, Bharata’s vīṇās, Kepler’s planets and Euler.',
     date: '16 July 2026',
     readTime: '10 experiments',
     kind: 'interactive',
@@ -482,6 +554,8 @@ export const posts: BlogPost[] = [
     title: 'The Nature of Harmony',
     subtitle:
       'For twenty-five centuries and across five civilizations, people said the world is built like music, and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom, told through the books one library holds.',
+    summary:
+      'Twenty-five centuries of the idea that the world is built like music, and the quarrel between those who heard an order and those who measured it.',
     date: '15 July 2026',
     readTime: '18 min read',
     kind: 'stories',
@@ -494,6 +568,8 @@ export const posts: BlogPost[] = [
     title: 'Show Me the Number',
     subtitle:
       'We keep saying AI should be in "harmony" with us: aligned, attuned, in tune. Is that a claim you can measure, or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law of human–AI harmony could live.',
+    summary:
+      'Whether AI ‘harmony’ with people can be measured or is only a comforting picture: Kepler’s test, synchrony and the Platonic Representation Hypothesis.',
     date: '15 July 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -507,6 +583,8 @@ export const posts: BlogPost[] = [
     title: 'The Fish-Voiced Priest',
     subtitle:
       'An AI read a thousand-year-old Greek hand in the Codex Marcianus and invented a character who is not on the page: it turned "I am Ion, the priest of the inner sanctuaries" into "the fish-voiced one," then footnoted its own mistake. Why, for a hard script, the printed critical edition has to carry the text while the manuscript carries the facsimile.',
+    summary:
+      'An AI reading the Codex Marcianus turned ‘Ion, the priest of the inner sanctuaries’ into ‘the fish-voiced one’. Why the critical edition carries the text.',
     date: '2 July 2026',
     readTime: '11 min read',
     kind: 'research',
@@ -518,6 +596,8 @@ export const posts: BlogPost[] = [
     title: 'Can AI Read Classical Chinese?',
     subtitle:
       'We hold ~1,600 Chinese works, most never translated into English. Measured against ctext.org, our OCR reads canonical printed text at ~98.5% character accuracy; measured against James Legge, our translations match or beat the standard scholarly editions on clean text. The honest catch is complex layouts and the works with no reference to check against.',
+    summary:
+      'Against ctext.org our OCR reads printed classical Chinese at about 98.5% character accuracy, and against Legge our translations hold up.',
     date: '25 June 2026',
     readTime: '13 min read',
     kind: 'research',
@@ -529,6 +609,8 @@ export const posts: BlogPost[] = [
     title: 'The Naked Philosophers',
     subtitle:
       'In 327 BCE Alexander\'s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. How a single image (eyewitness ethnography, moral exemplar, Hermetic ancestor) travelled three thousand miles and nineteen centuries, told through eight books in the library.',
+    summary:
+      'The naked sages Alexander’s fleet-captain met in 327 BCE, later made ancestors of a Rosicrucian Brotherhood, followed through eight books.',
     date: '21 June 2026',
     readTime: '8 min read',
     kind: 'stories',
@@ -540,6 +622,8 @@ export const posts: BlogPost[] = [
     title: 'The Giants Were Never Fully Translated',
     subtitle:
       'The most-read book on Source Library, Robert Fludd\'s Utriusque Cosmi Historia, has never been translated into English in full. Neither have the major works of Kircher; Ficino reached English only this century. On why "first full translation" is still a meaningful claim, and what the gap really looks like.',
+    summary:
+      'Fludd’s Utriusque Cosmi Historia, our most-read book, has never been fully translated into English, nor have Kircher’s major works.',
     date: '21 June 2026',
     readTime: '6 min read',
     kind: 'research',
@@ -552,6 +636,8 @@ export const posts: BlogPost[] = [
     title: 'How Many First Translations, Really?',
     subtitle:
       'We badge ~5,700 books as first-ever English translations. Are they? We sent an AI research agent to independently fact-check a random sample of both the badged books and the never-assessed ones, and found the bigger error was the firsts we missed, not the ones we over-claimed. On precision, recall, Wilson intervals, and why fame (not language) predicts a false claim.',
+    summary:
+      'An AI agent fact-checked a sample of our ~5,700 first-translation badges. The bigger error was the firsts we missed, and fame predicts a false claim.',
     date: '19 June 2026',
     readTime: '11 min read',
     kind: 'research',
@@ -563,6 +649,8 @@ export const posts: BlogPost[] = [
     title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
     subtitle:
       'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages, from the Shennong Bencao Jing to Baudelaire.',
+    summary:
+      'From Robert Hooke’s 1689 report on ‘bangue’ back to the Shennong Bencao Jing and on to Baudelaire: cannabis in sixty books and twelve languages.',
     date: '19 June 2026',
     readTime: '9 min read',
     kind: 'stories',
@@ -574,6 +662,8 @@ export const posts: BlogPost[] = [
     title: 'Quality Control on Four Million Machine-Translated Pages',
     subtitle:
       'A reader found a 1589 page that the AI returned as a single word instead of a translation. Pulling the thread surfaced 25,000 more, and the two times our own measurement was wrong before the model was. On detecting "translation collapse," why long pages and looping OCR drive it, and what it takes to check a generative system at scale.',
+    summary:
+      'A 1589 page translated as one word led us to 25,000 more. Finding ‘translation collapse’ in four million AI-translated pages, and our own errors.',
     date: '17 June 2026',
     readTime: '7 min read',
     kind: 'research',
@@ -585,6 +675,8 @@ export const posts: BlogPost[] = [
     title: 'How IIIF Helped Us Translate the Renaissance',
     subtitle:
       'One image standard turned thirteen institutional archives into a single input layer for an AI pipeline, and let us hand the results back to the whole IIIF world. With diagrams of the import pipeline, the real challenges (rate limits, the datacenter problem), the workflow when there is no manifest, why provenance matters, and appreciations. Notes for a lightning talk at IIIF 2026 in Leiden.',
+    summary:
+      'How the IIIF standard let us import books from thirteen archives and serve our OCR and translations back. Notes for a talk at IIIF 2026 in Leiden.',
     date: '2 June 2026',
     readTime: '20 min read',
     kind: 'library',
@@ -596,6 +688,8 @@ export const posts: BlogPost[] = [
     title: 'How Big Is the Library?',
     subtitle:
       'We counted every word: original OCR, AI translation, and enrichment. Roughly five to seven billion words, about the size of English Wikipedia. With the methodology, and the recitation-loop bug that nearly tripled the count.',
+    summary:
+      'We counted every word: OCR, translations and enrichment. Five to seven billion, about the size of English Wikipedia, and a bug that nearly tripled it.',
     date: '1 June 2026',
     readTime: '6 min read',
     kind: 'research',
@@ -606,6 +700,8 @@ export const posts: BlogPost[] = [
     slug: 'how-long-to-translate',
     title: 'How Long Would It Take to Translate the Renaissance?',
     subtitle: 'We measured the rate of new Latin translations and counted what is left. At the current pace, the Latin Renaissance alone would take about ten thousand years to finish.',
+    summary:
+      'We measured how fast new Latin translations appear and counted what is left. At this pace the Latin Renaissance alone would take ten thousand years.',
     date: '31 May 2026',
     readTime: '8 min read',
     kind: 'research',
@@ -617,6 +713,8 @@ export const posts: BlogPost[] = [
     title: 'Man, His Own Maker',
     subtitle:
       "Leo XIV's encyclical on AI is, strangely, the grandchild of the first printed book the Church ever banned, Pico's Oration on the Dignity of Man. Reading them across five centuries shows what AI really forces us to decide about the soul.",
+    summary:
+      'Leo XIV’s encyclical on AI read beside Pico della Mirandola, whose theses Innocent VIII banned in 1487, the first printed book the Church banned.',
     date: '30 May 2026',
     readTime: '15 min read',
     kind: 'stories',
@@ -628,6 +726,8 @@ export const posts: BlogPost[] = [
     slug: 'does-ai-get-religion',
     title: 'Does the AI Get Religion?',
     subtitle: 'The longest page in our library is one leaf of a Javanese Bible that the AI translated into 491,418 characters of "generations of generations of generations." It only happens with scripture.',
+    summary:
+      'One leaf of a Javanese Old Testament that the AI translated into 491,418 characters of ‘generations of generations’. It happens only with scripture.',
     date: '30 May 2026',
     readTime: '3 min read',
     kind: 'research',
@@ -639,6 +739,8 @@ export const posts: BlogPost[] = [
     title: "Did an AI Write the Pope's AI Encyclical?",
     subtitle:
       'Magnifica Humanitas was flagged 46% AI-written, with 127 em-dashes vs zero in a comparison encyclical. We re-ran the test against eight human encyclicals. Benedict XVI used dashes 2.5× more. The smoking gun is a baseline-selection artifact.',
+    summary:
+      'Magnifica Humanitas was flagged 46% AI-written, with 127 em dashes as the clue. Tested against eight human encyclicals, the clue is a baseline artefact.',
     date: '30 May 2026',
     readTime: '11 min read',
     kind: 'stories',
@@ -649,6 +751,8 @@ export const posts: BlogPost[] = [
     slug: 'carbon-ledger',
     title: 'The Carbon Ledger of a Digital Library',
     subtitle: "Source Library has OCR'd 4.1M pages and translated almost all of them using AI. We logged every API call. ~1.8 tonnes CO₂e, about seven round-trip flights AMS↔London. Six independent estimation methods, full data + sources.",
+    summary:
+      'We logged every API call behind the OCR and translation of 4.1 million pages: about 1.8 tonnes CO₂e, roughly seven return flights to London.',
     date: '26 May 2026',
     readTime: '10 min read',
     kind: 'library',
@@ -659,6 +763,8 @@ export const posts: BlogPost[] = [
     slug: 'did-the-ai-read-this',
     title: 'Did the AI Read This?',
     subtitle: 'A Bayesian survey of which books in our 16,871-volume OCR\'d corpus are already in frontier-model training data. About 43% are confidently new to AI; about 21% are confidently in training.',
+    summary:
+      'A Bayesian survey of 16,871 OCR’d volumes: about 43% looked confidently new to AI training, 21% confidently in it. Revised in an October re-run.',
     date: '18 May 2026',
     readTime: '8 min read',
     kind: 'research',
@@ -670,6 +776,8 @@ export const posts: BlogPost[] = [
     slug: 'hogwarts-library',
     title: 'The Real Hogwarts Library',
     subtitle: 'Nicolas Flamel was real. So was Cornelius Agrippa. So was Paracelsus. The books behind the wizarding world (alchemy, bestiaries, grimoires, Kabbalah) read in modern English.',
+    summary:
+      'Nicolas Flamel, Cornelius Agrippa and Paracelsus were real. The alchemy, bestiaries, grimoires and Kabbalah behind Hogwarts, in modern English.',
     date: '17 May 2026',
     readTime: '16 min read',
     kind: 'tours',
@@ -680,6 +788,8 @@ export const posts: BlogPost[] = [
     slug: 'what-makes-a-good-scan',
     title: 'What Makes a Good Scan?',
     subtitle: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
+    summary:
+      'Pixel statistics, AI judgement and a model that rated a blank page 95/100: designing a quality score for each of 100,000 illustrations in rare books.',
     date: '17 May 2026',
     readTime: '9 min read',
     kind: 'research',
@@ -689,6 +799,8 @@ export const posts: BlogPost[] = [
     slug: 'the-deletion',
     title: 'The Deletion',
     subtitle: 'How a Claude Code session in one of my ten open terminals hard-deleted 4,758 books from our rare-books library, with the actual prompts, the actual postmortem, and what it means for running AI agents against production data.',
+    summary:
+      'How a Claude Code session in one of ten open terminals hard-deleted 4,758 books on 13 April 2026, with the actual prompts and the postmortem.',
     date: '15 May 2026',
     readTime: '13 min read',
     kind: 'library',
@@ -699,6 +811,8 @@ export const posts: BlogPost[] = [
     slug: 'confident-hallucinator',
     title: 'The Confident Hallucinator',
     subtitle: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong: 100% consistency, 0% accuracy.',
+    summary:
+      'AI OCR tested across five scripts and three Gemini tiers. A model can be 100% consistent and 0% accurate, and thinking mode fixes what model size cannot.',
     date: '23 April 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -709,6 +823,8 @@ export const posts: BlogPost[] = [
     slug: 'tibetan-ocr',
     title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Manuscripts',
     subtitle: 'Claude, Gemini, and the question of what "good enough" means for handwritten Tibetan. We test three models on monastery manuscripts from Gangtey, Drametse, and Tshamdrak.',
+    summary:
+      'Three AI models tested on handwritten Tibetan from 1,358 Bhutanese manuscripts, 232,000 pages from Gangtey, Drametse and Tshamdrak.',
     date: '23 April 2026',
     readTime: '12 min read',
     kind: 'research',
@@ -719,6 +835,8 @@ export const posts: BlogPost[] = [
     slug: 'incunabula-knowledge-graph',
     title: 'Mapping the Incunabula',
     subtitle: 'An interactive knowledge graph connecting nearly 1,000 pre-1501 printed books by author, printer, place, and subject, revealing the networks behind the printing revolution.',
+    summary:
+      'An interactive graph linking nearly 1,000 books printed before 1501 by author, printer, place and subject: the networks of early print.',
     date: '22 April 2026',
     readTime: '8 min read',
     kind: 'interactive',
@@ -730,6 +848,8 @@ export const posts: BlogPost[] = [
     title: 'Facing Page vs Interlinear',
     subtitle:
       'Comparing our facing-page reader (scan and translation side by side) with interlinear display (original and translation woven line by line) for Sumerian, Akkadian, and Egyptian texts. How should the oldest literature on Earth be read?',
+    summary:
+      'Our facing-page reader against interlinear display, original and translation woven line by line, for Sumerian, Akkadian and Egyptian texts.',
     date: '20 April 2026',
     readTime: '8 min read',
     kind: 'library',
@@ -741,6 +861,8 @@ export const posts: BlogPost[] = [
     title: 'What Ficino Heard',
     subtitle:
       'The same Hermetic vision, rendered by a Renaissance philosopher in 1481, a 17th-century English scribe, and an AI in 2026. Three translations of the Poimandres, three centuries, one text.',
+    summary:
+      'The Poimandres in three translations side by side: Ficino’s Latin of 1481, a 17th-century English version and an AI translation made in 2026.',
     date: '19 April 2026',
     readTime: '10 min read',
     kind: 'stories',
@@ -750,6 +872,8 @@ export const posts: BlogPost[] = [
     slug: 'cellulae',
     title: 'Cellulae',
     subtitle: 'A word on page 32 of a medieval manuscript launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. They were written by the same man.',
+    summary:
+      'A word on page 32 of a Secretum Secretorum manuscript launched biology; the argument on page 33 helped criminalise rape victims for 800 years.',
     date: '16 April 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -759,6 +883,8 @@ export const posts: BlogPost[] = [
     slug: 'singularity-1486',
     title: 'The Singularity Was Published in 1486',
     subtitle: 'Transhumanism, panpsychism, and the planetary mind, in the original Latin and German. The source code for ideas we think are modern.',
+    summary:
+      'Pico della Mirandola’s 1486 Oration and other old texts on unfixed human nature, panpsychism and the planetary mind, in the Latin and German.',
     date: '15 April 2026',
     readTime: '12 min read',
     kind: 'stories',
@@ -770,6 +896,8 @@ export const posts: BlogPost[] = [
     slug: '10000-books',
     title: '10,000 Books',
     subtitle: 'Source Library passes 10,000 translated historical texts. The symbolic 10,000th: a 1517 Renaissance encyclopedia from the BPH, in English for the first time.',
+    summary:
+      'Source Library passes 10,000 translated books. The 10,000th is Champier’s Four Volumes of Divine and Human Marvels (1517), first in English.',
     date: '13 April 2026',
     readTime: '5 min read',
     kind: 'library',
@@ -781,6 +909,8 @@ export const posts: BlogPost[] = [
     slug: 'word-alignment',
     title: 'Reading Through the Translation',
     subtitle: 'Click any English word to see the Latin or Greek that produced it. On-demand alignment powered by Gemini embeddings.',
+    summary:
+      'Click any English word in a translation to see the Latin or Greek it came from, shown on Ficino’s De Voluptate. Alignment by Gemini embeddings.',
     date: '17 April 2026',
     readTime: '4 min read',
     kind: 'interactive',
@@ -790,6 +920,8 @@ export const posts: BlogPost[] = [
     slug: 'rashi-ocr',
     title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
     subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates, and our quality metrics gave it a passing grade.',
+    summary:
+      'Gemini reads Arabic, Sanskrit and Chinese well, but on the Rashi script of the 1558 Cremona Zohar it invents text, and our quality metrics passed it.',
     date: '24 March 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -800,6 +932,8 @@ export const posts: BlogPost[] = [
     slug: 'translation-rate',
     title: 'How Many Renaissance Books Get Translated Each Year?',
     subtitle: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other catalogs. The answer is smaller than anyone guesses.',
+    summary:
+      'We searched the UNESCO Index Translationum and other catalogues to count early modern books newly put into English each year. Fewer than you would guess.',
     date: '21 March 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -809,6 +943,8 @@ export const posts: BlogPost[] = [
     slug: 'visualizing-classification',
     title: 'Visualizing 20,000 Books Across Six Dimensions',
     subtitle: 'Four interactive D3 visualizations of our faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram.',
+    summary:
+      'Four interactive D3 views of the six-facet classification of 20,000 books: scatter plot, heatmap, Sankey flow and chord diagram.',
     date: '16 March 2026',
     readTime: '6 min read',
     kind: 'interactive',
@@ -818,6 +954,8 @@ export const posts: BlogPost[] = [
     slug: 'history-of-classification',
     title: 'Ten Thousand Years of Tagging',
     subtitle: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have.',
+    summary:
+      'Classification through books the library holds: Callimachus, Aristotle, Porphyry, Llull, Leibniz, Linnaeus, Ranganathan and our faceted tags.',
     date: '16 March 2026',
     readTime: '20 min read',
     kind: 'stories',
@@ -827,6 +965,8 @@ export const posts: BlogPost[] = [
     slug: 'counting-the-gap',
     title: 'We Spent a Day Counting What Hasn\'t Been Translated',
     subtitle: 'We matched 1.6 million early modern editions against translation catalogs. It started as a quick check and turned into an all-day rabbit hole.',
+    summary:
+      'We matched 1.6 million early modern editions against the Library of Congress and other catalogues. The corrected share translated is under 1%.',
     date: '15 March 2026',
     readTime: '8 min read',
     kind: 'research',
@@ -836,6 +976,8 @@ export const posts: BlogPost[] = [
     slug: 'untranslated-renaissance',
     title: 'How Much of the Renaissance Has Been Translated?',
     subtitle: '1.4 million editions, every English translation catalog we could find. The numbers are rough, but the gap is enormous.',
+    summary:
+      'A first translation census: 1.4 million early modern editions matched against every English translation catalogue we found. The gap is enormous.',
     date: '15 March 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -845,6 +987,8 @@ export const posts: BlogPost[] = [
     slug: 'origin-story',
     title: 'Where Source Library Came From',
     subtitle: 'One untranslated Ficino manuscript at the Embassy of the Free Mind, 5,000 books later.',
+    summary:
+      'How Source Library began in 2022 with Ficino’s untranslated Liber de Voluptate at the Embassy of the Free Mind, and grew to over 5,000 books.',
     date: '15 March 2026',
     readTime: '8 min read',
     kind: 'library',
@@ -856,6 +1000,8 @@ export const posts: BlogPost[] = [
     slug: 'hieroglyph-ocr',
     title: 'Can AI Read Hieroglyphs? (No.)',
     subtitle: 'Four approaches to hieroglyphic OCR, four failures. The Unicode block has 1,071 characters and Gemini can\'t reliably pick the right ones.',
+    summary:
+      'Four ways of getting Gemini 3 Flash to read hieroglyphs, from Unicode to glyph-by-glyph description, tested on Budge’s 1896 reader. All failed.',
     date: '14 March 2026',
     readTime: '12 min read',
     kind: 'research',
@@ -867,6 +1013,8 @@ export const posts: BlogPost[] = [
     slug: 'clustering',
     title: 'What Does a Library of 3,400 Rare Books Look Like?',
     subtitle: 'Embedding summaries and letting HDBSCAN find the structure. 48 clusters, six intellectual traditions, from alchemy to Sanskrit astronomy.',
+    summary:
+      'We embedded 3,424 book summaries and let HDBSCAN find the structure: 48 clusters, curated to 34 in seven traditions, from alchemy to Sanskrit astronomy.',
     date: '14 March 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -887,6 +1035,8 @@ export const posts: BlogPost[] = [
     slug: 'progress-studies',
     title: 'The Deeper Roots of Progress',
     subtitle: 'Mokyr, Howes, and Crawford ask why innovation happens. 5,000 newly translated books show where the experimental mindset came from.',
+    summary:
+      'Mokyr, Howes and Crawford ask why innovation happens. Newly translated books show experimental habits inside alchemy and natural magic.',
     date: '8 March 2026',
     readTime: '15 min read',
     kind: 'stories',
@@ -897,6 +1047,8 @@ export const posts: BlogPost[] = [
     slug: 'ocr-consistency',
     title: 'How Consistent Is AI OCR?',
     subtitle: 'A digitization error gave us 1,448 natural experiments: two photos of the same page, OCR\'d independently. Median disagreement: 1.8%.',
+    summary:
+      'A scanning error left 1,448 pages photographed more than once. OCR’d independently, the copies differ by a median 1.8% across six languages.',
     date: '7 March 2026',
     readTime: '12 min read',
     kind: 'research',
@@ -908,6 +1060,8 @@ export const posts: BlogPost[] = [
     slug: 'cuneiform-ocr',
     title: 'Can AI Read Cuneiform?',
     subtitle: 'Gemini identified the Code of Hammurabi and caught a 2,500-year-old forgery. It also hallucinated an entire document.',
+    summary:
+      'Gemini named Law 196 of the Code of Hammurabi and spotted a 2,500-year-old forgery, then invented a Sumerian document. AI on cuneiform tablets.',
     date: '7 March 2026',
     readTime: '20 min read',
     kind: 'research',
@@ -918,6 +1072,8 @@ export const posts: BlogPost[] = [
     slug: 'rithmomachia',
     title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras',
     subtitle: 'A mathematical board game played for six centuries. You capture by arithmetic and win by creating harmony.',
+    summary:
+      'Rithmomachia, the board game where you capture by arithmetic and win by harmony, from five treatises of 1496 to 1616, all now in English.',
     date: '2 March 2026',
     readTime: '18 min read',
     kind: 'tours',
@@ -928,6 +1084,8 @@ export const posts: BlogPost[] = [
     slug: 'hidden-engineers',
     title: 'The Hidden Engineers',
     subtitle: 'Before engineering was a discipline, its knowledge lived inside spell books and alchemy. One 16th-century manuscript binds Hero\'s steam engines with the Corpus Hermeticum.',
+    summary:
+      'Before engineering was a discipline it lived in books of magic and alchemy. One manuscript binds Hero’s steam engines with the Corpus Hermeticum.',
     date: '27 February 2026',
     readTime: '22 min read',
     kind: 'stories',
@@ -938,6 +1096,8 @@ export const posts: BlogPost[] = [
     slug: 'philosophers-stone',
     title: "What Is the Philosopher's Stone?",
     subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb. Eight primary sources, eight different answers.',
+    summary:
+      'Eight sources, eight answers on the Philosopher’s Stone: Lambspringk’s emblems, Ali Puli’s salt of nature, and Edward Kelly’s red powder.',
     date: '27 February 2026',
     readTime: '20 min read',
     kind: 'stories',
@@ -949,6 +1109,8 @@ export const posts: BlogPost[] = [
     slug: 'first-translation-methodology',
     title: 'How We Identify First Translations',
     subtitle: 'AI enrichment, bibliographic heuristics, six-level status system, and the limitations we know about.',
+    summary:
+      'How we decide a book has never been translated into English: AI enrichment, bibliographic heuristics, a six-level status system and known limits.',
     date: '23 February 2026',
     readTime: '10 min read',
     kind: 'research',
@@ -959,6 +1121,8 @@ export const posts: BlogPost[] = [
     slug: 'astrological-diagrams',
     title: 'Astrological Diagrams from Nine Centuries',
     subtitle: 'From the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics.',
+    summary:
+      'Astrological diagrams in the library, from the 10th-century Dunhuang Star Chart to Kepler’s cosmic harmonics, in Greek, Latin, Arabic and Chinese.',
     date: '22 February 2026',
     readTime: '15 min read',
     kind: 'tours',
@@ -969,6 +1133,8 @@ export const posts: BlogPost[] = [
     slug: 'demonology',
     title: 'What Are Demons? Five Answers from the Primary Sources',
     subtitle: 'The Hermetic daemon is your cosmic guardian. The Christian demon is a fallen angel. The same word, reversed.',
+    summary:
+      'What a demon is, from the primary sources: the Greek daimōn, the Hermetic guardian, the Islamic jinn and the Christian fallen angel.',
     date: '21 February 2026',
     readTime: '18 min read',
     kind: 'stories',
@@ -979,6 +1145,8 @@ export const posts: BlogPost[] = [
     slug: 'history-of-astrology',
     title: 'A History of Astrology Across Traditions',
     subtitle: 'Babylonian omen tablets to Kepler\'s geometrical cosmos, independently across five civilizations.',
+    summary:
+      'Astrology from Babylonian omen tablets to Kepler’s geometric cosmos, in Greek, Indian, Arabic, Chinese and European texts the library holds.',
     date: '21 February 2026',
     readTime: '22 min read',
     kind: 'stories',
@@ -989,6 +1157,8 @@ export const posts: BlogPost[] = [
     slug: 'first-translations',
     title: 'Over 500 First English Translations',
     subtitle: 'Lab manuals, radical theology, women alchemists, Sanskrit astrology, founding texts of biblical criticism. Never before in English.',
+    summary:
+      'Nearly 2,000 books here had never been in English: lab manuals, radical theology, women alchemists, Sanskrit astrology, early biblical criticism.',
     date: '20 February 2026',
     readTime: '20 min read',
     kind: 'tours',
@@ -999,6 +1169,8 @@ export const posts: BlogPost[] = [
     slug: 'mcp-server',
     title: 'Claude Can Now Read Thousands of Rare Books',
     subtitle: 'An MCP server giving Claude direct access to Source Library: historical texts, translations, entity graph, and 90,000+ illustrations.',
+    summary:
+      'An MCP server that gives Claude direct access to Source Library’s texts, translations, entity graph and illustrations. One command, no API key.',
     date: '18 February 2026',
     readTime: '8 min read',
     kind: 'library',
@@ -1009,6 +1181,8 @@ export const posts: BlogPost[] = [
     slug: 'fire-horse',
     title: 'The Year of the Fire Horse',
     subtitle: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology.',
+    summary:
+      '2026 is the Year of the Fire Horse, yang fire on yang fire. The Chinese texts behind the cycle, and why Japan’s birth rate fell in 1966.',
     date: '17 February 2026',
     readTime: '16 min read',
     kind: 'stories',
@@ -1019,6 +1193,8 @@ export const posts: BlogPost[] = [
     slug: 'indigenous-traditions',
     title: 'The Sacred Texts That Were Never \'Texts\'',
     subtitle: '90+ volumes: Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas. Every inhabited continent.',
+    summary:
+      'Over 90 volumes on indigenous traditions from every inhabited continent: Navajo ceremonies, Yoruba cosmology, Celtic place-lore, the Eddas.',
     date: '16 February 2026',
     readTime: '18 min read',
     kind: 'tours',
@@ -1029,6 +1205,8 @@ export const posts: BlogPost[] = [
     slug: 'fechner-bohme',
     title: 'The Mystic Who Invented Psychophysics',
     subtitle: 'Fechner founded experimental psychology. His real goal was proving the universe has a soul.',
+    summary:
+      'Gustav Fechner founded experimental psychology to prove the universe has a soul. Seventeen volumes of his German show the Böhme behind his law.',
     date: '16 February 2026',
     readTime: '15 min read',
     kind: 'stories',
@@ -1039,6 +1217,8 @@ export const posts: BlogPost[] = [
     slug: 'invisible-hand',
     title: 'The Invisible Hand Has a History',
     subtitle: 'Before Adam Smith: Florentine merchants, Salamanca theologians, Cambridge Platonists.',
+    summary:
+      'The invisible hand before Adam Smith: Aristotle, Florentine merchants, Salamanca theologians and Cambridge Platonists, in original editions.',
     date: '15 February 2026',
     readTime: '20 min read',
     kind: 'stories',
@@ -1050,6 +1230,8 @@ export const posts: BlogPost[] = [
     slug: 'chakra-tradition',
     title: 'Recovering the Chakra Tradition',
     subtitle: 'The primary tantric sources on chakras, nadis, and kundalini. Many translated for the first time.',
+    summary:
+      'The Sanskrit tantric sources on chakras, nadis and kundalini, several never before in a Western language, from the Internet Archive and Wellcome.',
     date: '15 February 2026',
     readTime: '12 min read',
     kind: 'tours',

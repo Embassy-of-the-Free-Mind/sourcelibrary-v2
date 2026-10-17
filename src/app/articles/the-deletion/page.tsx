@@ -24,7 +24,7 @@ export default function TheDeletionPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature image="https://images.sourcelibrary.org/artwork/art-a-group-of-men-at-right-pushing-philosophers-toward-a-fire-with-burning-books-at.jpg" imageAlt={"Marco Dente, c. 1515: men push a group of philosophers toward a fire in which books are burning."} headerVariant="dark"
           title="The Deletion"
           subtitle="How Claude Code accidentally deleted 4,758 books from our rare-books library"
         >
@@ -41,7 +41,7 @@ export default function TheDeletionPage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          All notes
+          All articles
         </Link>
       </div>
 
