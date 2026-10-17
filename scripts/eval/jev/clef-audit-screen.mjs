@@ -67,7 +67,7 @@ console.log('visible', all.length, 'sampled', sample.length, 'to do', todo.lengt
 const ocrText = (p) => (typeof p?.ocr === 'object' ? p.ocr?.data : p?.ocr) || '';
 const txLen = (t) => t.replace(/<image-desc[\s\S]*?<\/image-desc>/g, '').replace(/<[^>]+>[^<\n]*<\/[^>]+>/g, '').replace(/\s+/g, ' ').trim().length;
 const pageType = (t) => (t.match(/<page-type>([^<]+)<\/page-type>/) || [])[1] || null;
-const imgUrl = (p) => p?.cropped_photo || p?.display_photo || p?.archived_photo || null;
+const imgUrl = (p) => p?.cropped_photo || p?.display_photo || p?.archived_photo || null; // image-pick-ok: cropped_photo comes first, so a split page scores its own half; R2-only filter follows (same pick as clef-corpus-screen)
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function loadImage(url) {
