@@ -78,25 +78,12 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
-    slug: 'ledgers-and-heavens',
-    title: 'Ledgers and Heavens',
-    subtitle:
-      'What the money-men paid for and read: Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus on coinage, a Rosicrucian debate on abolishing gold, and a financier’s chair of music.',
-    date: '17 October 2026',
-    readTime: '11 min read',
-    kind: 'stories',
-    // Hollow dodecahedron woodcut from our 1509 De divina proportione (scan p. 248), checked by eye.
-    image: 'https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/248.jpg',
-    imageAlt:
-      'Woodcut of a hollow dodecahedron labelled "Dodecaedron Planum Vacuum", from Pacioli’s De divina proportione, 1509.',
-  },
-  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
-      'Before economics was a science, money and fair exchange were problems of proportion. Aristotle, Oresme, Kepler correcting Bodin, the alchemists and Adam Smith on what makes an exchange fair and an order hold.',
-    date: '16 October 2026',
-    readTime: '12 min read',
+      'Before economics was a science, money and fair exchange were problems of proportion. Aristotle and Oresme, Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus at the mint, Kepler correcting Bodin, the alchemists and a London exchange dealer, Quesnay and Adam Smith.',
+    date: '17 October 2026',
+    readTime: '18 min read',
     kind: 'stories',
     // English satirical print signed "Cross sculpsit": Money as a winged coin, Justice's scales on the ground.
     image: 'https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg',

@@ -437,6 +437,12 @@ const nextConfig: NextConfig = {
         destination: '/blog/techniques-of-the-body',
         permanent: true,
       },
+      // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
+      {
+        source: '/blog/ledgers-and-heavens',
+        destination: '/blog/harmonic-justice',
+        permanent: true,
+      },
       // Iconclass division pages retired (#4856) — codes were model-recalled and
       // largely wrong; subject browse now leads with plain subject terms.
       {
