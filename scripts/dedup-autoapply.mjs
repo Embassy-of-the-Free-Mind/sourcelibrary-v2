@@ -21,6 +21,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { withdrawPageVectors } from './lib/withdraw-page-vectors.mjs';
 import { GoogleGenAI } from '@google/genai';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -121,14 +122,18 @@ async function processBook(db, proposalPath) {
     // HIDE-ONLY: mark dup with negative page_number but DO NOT re-sequence
     // surviving pages. This preserves citation/bookmark stability (page 300
     // stays 300; if it's a dup, visible pages skip from 299 → 301).
+    const hiddenIds = [];
     for (const d of allAccepted) {
-      const dup = await db.collection('pages').findOne({ _id: new ObjectId(d.dup_id) }, { projection: { _id: 1, page_number: 1 } });
+      const dup = await db.collection('pages').findOne({ _id: new ObjectId(d.dup_id) }, { projection: { _id: 1, id: 1, page_number: 1 } });
       if (!dup || dup.page_number <= 0) continue;
       await db.collection('pages').updateOne(
         { _id: dup._id },
         { $set: { is_duplicate: true, duplicate_of: new ObjectId(d.canon_id), original_page_number: dup.page_number, page_number: -Math.abs(dup.page_number), dedup_source: 'reviewed-auto', dedup_method: d.method, updated_at: new Date() } }
       );
+      hiddenIds.push(dup.id);
     }
+    // A hidden duplicate must stop being served by semantic search (#6270).
+    await withdrawPageVectors(hiddenIds, { reason: 'archived', writer: 'dedup-autoapply' });
     const visible = await db.collection('pages').countDocuments({ book_id: p.book_id, page_number: { $gt: 0 } });
     await db.collection('books').updateOne({ id: p.book_id }, { $set: { pages_count: visible, updated_at: new Date() } });
   }
