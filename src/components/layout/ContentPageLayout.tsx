@@ -25,9 +25,12 @@ interface ContentHeaderProps {
   headerVariant?: 'light' | 'dark';
   /** Article hero: 65vh tall from `md` up, picture drifting with a slight parallax. */
   feature?: boolean;
+  /** With `feature`: where the back link above the title goes, and its words. */
+  backHref?: string;
+  backLabel?: string;
 }
 
-export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false }: ContentHeaderProps) {
+export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light', feature = false, backHref = '/articles', backLabel = 'All articles' }: ContentHeaderProps) {
   if (feature) heightClass = 'min-h-[400px] md:min-h-[65vh]';
   const headerWidthClass =
     maxWidth === 'full'
@@ -72,16 +75,28 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, imag
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
         )}
         <div className={`relative w-full ${headerWidthClass} mx-auto px-6 md:px-12 animate-fade-in-up`}>
+          {/* Article hero: the way back and the date line sit above the title. */}
+          {feature && (
+            <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-stone-300 [&_p]:m-0 [&_p]:text-stone-300">
+              <Link href={backHref} className="inline-flex items-center gap-2 text-white hover:text-stone-200 transition-colors">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span className="underline decoration-accent-gold/70 underline-offset-4">{backLabel}</span>
+              </Link>
+              {children}
+            </div>
+          )}
           <h1 className={`font-serif text-4xl md:text-5xl tracking-tight ${subtitle ? 'mb-4' : ''} ${image ? 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]' : ''}`}>{title}</h1>
           {subtitle && (
             <p className={`text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed ${image ? 'drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]' : ''}`}>{subtitle}</p>
           )}
-          {!image && children}
+          {!image && !feature && children}
         </div>
       </div>
 
       {/* Date/byline below hero when image is present */}
-      {image && children && (
+      {image && !feature && children && (
         <div className="bg-cream">
           <div className={`${headerWidthClass} mx-auto px-6 md:px-12 pt-6`}>
             {children}

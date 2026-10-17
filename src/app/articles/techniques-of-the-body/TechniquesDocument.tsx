@@ -64,7 +64,7 @@ export default function TechniquesDocument({ lang, body }: { lang: DocLang; body
   return (
     <ContentPageLayout
       header={
-        <ContentHeader feature headerVariant="dark" title={c.title} subtitle={c.description} image={HERO_PATH} imageAlt={c.heroAlt}>
+        <ContentHeader feature headerVariant="dark" backHref={c.backHref} backLabel={c.back} title={c.title} subtitle={c.description} image={HERO_PATH} imageAlt={c.heroAlt}>
           <p className="text-stone-400 text-sm mt-4">{c.date}</p>
         </ContentHeader>
       }
@@ -72,13 +72,7 @@ export default function TechniquesDocument({ lang, body }: { lang: DocLang; body
     >
       {/* Chinese and Devanagari faces are not in the site stylesheet; this page quotes both at length. */}
       <link rel="stylesheet" href={FONTS} />
-      <div className="mb-8 flex items-center justify-between gap-4 text-sm">
-        <Link href={c.backHref} className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          {c.back}
-        </Link>
+      <div className="mb-8 flex items-center justify-end gap-4 text-sm">
         <Link href={other.href} hrefLang={other.hrefLang} lang={other.hrefLang} className="text-muted hover:text-secondary transition-colors">
           {other.label}
         </Link>

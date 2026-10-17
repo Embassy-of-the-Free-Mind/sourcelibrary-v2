@@ -43,14 +43,24 @@ export default function NoteFooter() {
   return (
     <div className="bg-cream print:hidden">
       <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-16">
-        <div className="border border-border-light bg-white px-6 py-5 text-sm text-muted space-y-1.5">
-          <p>
-            An AI-assisted article from Source Library.{' '}
+        <div className="border border-border-light bg-white px-6 py-6 md:px-8 md:py-7">
+          <h2 className="font-serif text-xl text-primary">How this article was made</h2>
+          <div className="mt-3 space-y-3 font-body text-secondary leading-relaxed">
+            <p>
+              This is an AI-assisted article. Derek Lomas set the question; AI models searched the library, read the
+              sources and drafted the text, which was reviewed before it was published.
+            </p>
+            <p>
+              Every quotation is checked by machine against the scanned page it comes from and links to that page, so
+              you can read the original yourself. The article is a living document: it is revised when a reader finds
+              an error or the library gains a better source.
+            </p>
+          </div>
+          <p className="mt-5 pt-4 border-t border-border-light text-sm text-muted">
             <Link href="/articles/how-these-are-made" className="text-secondary underline decoration-border-light underline-offset-2 hover:decoration-secondary">
               How these articles are made
             </Link>
-          </p>
-          <p>
+            {' '}&middot;{' '}
             {revisedDate && <>Last revised {revisedDate} &middot; </>}
             <a
               href={`${REPO}/commits/main/${sourcePath}`}
