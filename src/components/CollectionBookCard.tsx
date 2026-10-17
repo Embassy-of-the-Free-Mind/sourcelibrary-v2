@@ -241,9 +241,11 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   });
   const verdict = translationVerdict(book);
   // English originals store their OCR as the "translation", so their translated
-  // count is copies. Many surfaces don't project translation_state, hence the
-  // language fallback.
-  const englishOriginal = !!book.translation_state?.english_original || isEnglishOriginal(book.language);
+  // count is copies, and a first English translation of an English edition can't
+  // be true (#3524). Many surfaces don't project translation_state, hence the
+  // language fallback. Not in the embed/tenant views, which stay as BPH approved.
+  const englishOriginal = !embed && (!!book.translation_state?.english_original || isEnglishOriginal(book.language));
+  const firstTranslationBadge = isPublishedFirstTranslation(book) && !englishOriginal;
   const byline = getEffectiveByline({ ...book, author: book.author || '' });
 
   return (
@@ -312,14 +314,14 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
           </span>
         )}
 
-        {(isPublishedFirstTranslation(book) || book.has_doi || book.preview) && (
+        {(firstTranslationBadge || book.has_doi || book.preview) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
             {book.preview && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(120,90,30,0.72)' }}>
                 <PreviewBadge lang={lang} />
               </span>
             )}
-            {isPublishedFirstTranslation(book) && (
+            {firstTranslationBadge && (
               <span className="text-[10px] font-medium text-white px-2 py-1 backdrop-blur-sm" style={{ background: 'rgba(20,16,12,0.5)' }}>
                 {labels.firstTranslation}
               </span>
