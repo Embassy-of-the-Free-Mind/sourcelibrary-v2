@@ -7,7 +7,7 @@
 # MemoryMin reserves the hot index set from reclaim. Phase 2 measured ~2 GB of the memory-mapped index charged to
 # the unit after a parity run, plus ~80 MB of process; 4G leaves room for it to grow under shadow, then serve,
 # traffic. cgroup v2 protection is hierarchical: a unit's MemoryMin counts only up to its parent's, so it is set
-# here AND on the unit. MemoryMax 10G matches the unit's own cap, so the box's worst case for Source Library is
+# here AND on the unit AND on search.slice, the parent the dash in this name implies (without it, all three are 0). MemoryMax 10G matches the unit's own cap, so the box's worst case for Source Library is
 # 14G (jobs) + 10G (search) of 31 GB, and the Cloud Layer globe (system.slice) keeps the rest.
 [Unit]
 Description=Source Library search services (keyword page service + its TLS front), outside the jobs slice

@@ -1,7 +1,7 @@
 # Keyword page service for the /api/search page lane (#6852). Installed at
 # /etc/systemd/system/keyword-search.service on the serving box (README in scripts/workers/keyword-search/):
 #
-#   cp infrastructure/systemd/search-services.slice infrastructure/systemd/keyword-search.service /etc/systemd/system/
+#   cp infrastructure/systemd/search.slice infrastructure/systemd/search-services.slice infrastructure/systemd/keyword-search.service /etc/systemd/system/
 #   systemctl daemon-reload && systemctl enable --now keyword-search
 #
 # Code: /data/keyword-search/app (a copy of scripts/workers/keyword-search). Python half (the service):
