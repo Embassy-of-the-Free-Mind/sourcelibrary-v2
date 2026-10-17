@@ -191,7 +191,7 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Alfred Burdon Ellis produced three regional studies (
-          <Link href="/book/699079b3db8b55d19ec67909" className="text-accent-rust hover:text-accent-rust underline"><em>The Yoruba-Speaking Peoples</em></Link>
+          <Link href="/book/the-yoruba-speaking-peoples-of-the-slave-coast-of-west-africa" className="text-accent-rust hover:text-accent-rust underline"><em>The Yoruba-Speaking Peoples</em></Link>
           ,{' '}
           <Link href="/book/699079b5db8b55d19ec67a1a" className="text-accent-rust hover:text-accent-rust underline"><em>The Tshi-Speaking Peoples of the Gold Coast</em></Link>
           , and{' '}

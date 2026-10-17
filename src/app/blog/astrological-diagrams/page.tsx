@@ -394,7 +394,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Johannes Kepler discovered the laws of planetary motion: the same Kepler who made his living as an imperial astrologer to Rudolf II. He believed both completely. The <em>Harmonices Mundi</em> (&ldquo;Harmony of the World,&rdquo; 1619){' '}
-          <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
+          <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
           {' '}contains his Third Law of Planetary Motion (the square of a planet&rsquo;s orbital period is proportional to the cube of its distance from the Sun), embedded within a vast Neoplatonic argument that the solar system is structured according to the five Platonic solids and musical ratios.
         </p>
 
@@ -411,7 +411,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 2: Atlas bearing an armillary sphere, the bookplate of the Burndy Library copy of <em>Harmonices Mundi</em>.{' '}
-              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <figure>
@@ -426,7 +426,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 74: The five Platonic solids, the &ldquo;cosmic figures&rdquo; that, in Kepler&rsquo;s theory, nest inside one another to produce the exact spacing of the planetary orbits.{' '}
-              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/the-harmony-of-the-world-kepler" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -580,7 +580,7 @@ export default function AstrologicalDiagramsPage() {
               { href: '/book/69906e6d8a353648e1ecfd91', text: 'John Dunstable, Judicial Astrology and Astronomy (c. 1440, Latin)' },
               { href: '/book/de-revolutionibus-1543-first-edition-copernicus', text: 'Nicolaus Copernicus, De revolutionibus orbium coelestium (1543, Latin)' },
               { href: '/book/6956eae3b5d89fc3ccb47a2a', text: 'Paracelsus, Astronomia Magna (1571, German)' },
-              { href: '/book/6952d12e77f38f6761bc5bec', text: 'Johannes Kepler, Harmonices Mundi (1619, Latin)' },
+              { href: '/book/the-harmony-of-the-world-kepler', text: 'Johannes Kepler, Harmonices Mundi (1619, Latin)' },
               { href: '/book/697a3055a3866af9498458ac', text: 'Jacques Gaffarel, Curiositez inouyes (1650, French)' },
               { href: '/book/6952db5477f38f6761bc7402', text: 'Athanasius Kircher, Itinerarium Exstaticum (1656, Latin)' },
               { href: '/book/a5d0c381-d4ea-42cd-8864-44457e7fda33', text: 'Athanasius Kircher, Ars Magna Lucis et Umbrae (1671, Latin)' },

@@ -480,7 +480,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe602f844de8615417e27"
+                href="/book/daemonologie-in-forme-of-a-dialogue-vi-i"
                 className="text-accent-rust hover:underline"
               >
                 Fourth Book of Occult Philosophy
@@ -568,7 +568,7 @@ export default function DemonologyPage() {
                 detail: 'The 72 demons: seals, ranks, and procedures',
               },
               {
-                href: '/book/694fe602f844de8615417e27',
+                href: '/book/daemonologie-in-forme-of-a-dialogue-vi-i',
                 title: 'Fourth Book of Occult Philosophy',
                 detail: 'Attributed to Agrippa: spirit contact theory',
               },

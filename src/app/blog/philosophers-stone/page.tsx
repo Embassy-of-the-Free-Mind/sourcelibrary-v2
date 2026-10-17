@@ -690,7 +690,7 @@ export default function PhilosophersStonePage() {
                 detail: 'Basel, 1571: systematic laboratory method',
               },
               {
-                href: '/book/69819203084978306e4933f6',
+                href: '/book/revealer-of-the-great-secret-of-the-philosophers-anonymous-2',
                 title: 'The Revealer of the Great Secret',
                 detail: '1688: recipe for potable gold and the red powder',
               },

@@ -426,12 +426,12 @@ export default function NatureOfHarmonyPage() {
             ['1596', 'Kepler, The Cosmographic Mystery', 'Latin', '/book/mysterium-cosmographicum-1596-first-edition-kepler'],
             ['1617', 'Fludd, Utriusque Cosmi Historia, vol. 1', 'Latin', '/book/utriusque-cosmi-historia-tomus-primus-de-macrocosmi-fludd'],
             ['1618', 'Descartes, Compendium of Music', 'Latin', '/book/musicae-compendium-descartes'],
-            ['1622', 'Kepler, Apology for the Harmony of the World', 'Latin', '/book/apology-for-the-harmony-of-the-world-kepler'],
+            ['1622', 'Kepler, Apology for the Harmony of the World', 'Latin', '/book/apologia-adversus-fludd-defense-against-fludd-kepler'],
             ['1636', 'Mersenne, Harmonie Universelle', 'French', '/book/traite-de-l-harmonie-universelle-mersenne'],
             ['1638', 'Galileo, Two New Sciences', 'Italian', '/book/discorsi-e-dimostrazioni-matematiche-intorno-a-due-nuove-galilei'],
             ['1650', 'Kircher, Musurgia Universalis', 'Latin', '/book/universal-musical-work-volume-ii-musurgia-universalis-kircher'],
             ['1678', 'Hooke, Of Spring', 'English', '/book/lectures-de-potentia-restitutiva-or-of-spring-hooke'],
-            ['1722', 'Rameau, Treatise on Harmony', 'French', '/book/traite-de-l-harmonie-rameau'],
+            ['1722', 'Rameau, Treatise on Harmony', 'French', '/book/traite-de-l-harmonie-reduite-a-ses-principes-naturels-rameau'],
             ['1863', 'Helmholtz, On the Sensations of Tone', 'German', '/book/on-the-sensations-of-tone-helmholtz'],
           ].map(([yr, title, lang, href]) => (
             <li key={href} className="flex gap-3 py-1 border-t border-border-light first:border-t-0">

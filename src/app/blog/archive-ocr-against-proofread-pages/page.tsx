@@ -39,8 +39,8 @@ const SPINOZA_BOOK = '/book/695434421479a63c11088c27';
 const SPINOZA_PAGE = '/book/ethic-demonstrated-in-geometrical-order-white-translation-spinoza/page/695434431479a63c11088ca1';
 const MOONEY_BOOK = '/book/699079c0db8b55d19ec67ceb';
 const MOONEY_PAGE = '/book/the-ghost-dance-religion-and-the-sioux-outbreak-of-1890-mooney/page/699079c0db8b55d19ec67deb';
-const PORPHYRY_BOOK = '/book/69ad747b059a2da73405f323';
-const PORPHYRY_PAGE = '/book/select-works-of-porphyry-on-abstinence-cave-of-the-nymphs-porphyry/page/69ad747b059a2da73405f3ea';
+const PORPHYRY_BOOK = '/book/select-works-of-porphyry-porphyry';
+const PORPHYRY_PAGE = '/book/select-works-of-porphyry-porphyry/page/69a99cc41cb97318b41732b1';
 const LANE_BOOK = '/book/699079eadb8b55d19ec685b8';
 const LANE_PAGE = '/book/arabian-society-in-the-middle-ages-lane/page/699079ebdb8b55d19ec686d9';
 
