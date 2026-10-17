@@ -1,0 +1,182 @@
+[
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b0f94",
+  "page_number": 94,
+  "codex_book": 1,
+  "header": "Apendiz. fo. 29.",
+  "left_chars": 465,
+  "right_chars": 1204
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b1031",
+  "page_number": 251,
+  "codex_book": 2,
+  "header": "Libro 2. delas cerimonjas.",
+  "left_chars": 1281,
+  "right_chars": 880
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b1045",
+  "page_number": 271,
+  "codex_book": 2,
+  "header": "Libro 2. delas cerimonias",
+  "left_chars": 828,
+  "right_chars": 781
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b10fe",
+  "page_number": 456,
+  "codex_book": 3,
+  "header": "",
+  "left_chars": 1067,
+  "right_chars": 844
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b1119",
+  "page_number": 483,
+  "codex_book": 3,
+  "header": "",
+  "left_chars": 1067,
+  "right_chars": 870
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b1136",
+  "page_number": 512,
+  "codex_book": 4,
+  "header": "de la arte adiunatoria fo. 7",
+  "left_chars": 708,
+  "right_chars": 635
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b11ad",
+  "page_number": 631,
+  "codex_book": 4,
+  "header": "",
+  "left_chars": 1074,
+  "right_chars": 1038
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b11e6",
+  "page_number": 688,
+  "codex_book": 5,
+  "header": "de los agueros.",
+  "left_chars": 818,
+  "right_chars": 718
+ },
+ {
+  "book": "69dfeba8090ad7d5c33b0f36",
+  "page": "69dfeba8090ad7d5c33b11fc",
+  "page_number": 710,
+  "codex_book": 5,
+  "header": "del libro. 5.",
+  "left_chars": 955,
+  "right_chars": 859
+ },
+ {
+  "book": "69dfebaa090ad7d5c33b1211",
+  "page": "69dfebaa090ad7d5c33b1283",
+  "page_number": 114,
+  "codex_book": 6,
+  "header": "y philosophia moral",
+  "left_chars": 1086,
+  "right_chars": 775
+ },
+ {
+  "book": "69dfebaa090ad7d5c33b1211",
+  "page": "69dfebaa090ad7d5c33b131f",
+  "page_number": 270,
+  "codex_book": 6,
+  "header": "y philosophia moral",
+  "left_chars": 820,
+  "right_chars": 823
+ },
+ {
+  "book": "69dfebaa090ad7d5c33b1211",
+  "page": "69dfebaa090ad7d5c33b13f0",
+  "page_number": 479,
+  "codex_book": 7,
+  "header": "libro. 7º de la astrologia",
+  "left_chars": 997,
+  "right_chars": 834
+ },
+ {
+  "book": "69dfebaa090ad7d5c33b1211",
+  "page": "69dfebaa090ad7d5c33b141a",
+  "page_number": 521,
+  "codex_book": 8,
+  "header": "",
+  "left_chars": 1406,
+  "right_chars": 853
+ },
+ {
+  "book": "69dfebaa090ad7d5c33b1211",
+  "page": "69dfebaa090ad7d5c33b1475",
+  "page_number": 612,
+  "codex_book": 8,
+  "header": "",
+  "left_chars": 1004,
+  "right_chars": 788
+ },
+ {
+  "book": "69dfebaa090ad7d5c33b1211",
+  "page": "69dfebaa090ad7d5c33b14ad",
+  "page_number": 668,
+  "codex_book": 9,
+  "header": "",
+  "left_chars": 1125,
+  "right_chars": 873
+ },
+ {
+  "book": "69dfebab090ad7d5c33b1512",
+  "page": "69dfebac090ad7d5c33b1527",
+  "page_number": 21,
+  "codex_book": 10,
+  "header": "libro decimo",
+  "left_chars": 1477,
+  "right_chars": 807
+ },
+ {
+  "book": "69dfebab090ad7d5c33b1512",
+  "page": "69dfebac090ad7d5c33b15a5",
+  "page_number": 147,
+  "codex_book": 10,
+  "header": "libro decimo",
+  "left_chars": 1030,
+  "right_chars": 574
+ },
+ {
+  "book": "69dfebab090ad7d5c33b1512",
+  "page": "69dfebac090ad7d5c33b16c8",
+  "page_number": 438,
+  "codex_book": 11,
+  "header": "delos animales del agua",
+  "left_chars": 673,
+  "right_chars": 655
+ },
+ {
+  "book": "69dfebab090ad7d5c33b1512",
+  "page": "69dfebac090ad7d5c33b1875",
+  "page_number": 867,
+  "codex_book": 12,
+  "header": "Libro duodecimo",
+  "left_chars": 1030,
+  "right_chars": 692
+ },
+ {
+  "book": "69dfebab090ad7d5c33b1512",
+  "page": "69dfebac090ad7d5c33b1896",
+  "page_number": 900,
+  "codex_book": 12,
+  "header": "dela conqvis ta mexicana",
+  "left_chars": 1128,
+  "right_chars": 666
+ }
+]
