@@ -191,7 +191,7 @@ async function previewColumnAvailable(): Promise<boolean> {
 }
 
 /** BOOK_SELECT, plus `preview` once the migration column is present. */
-async function bookSelect(): Promise<string> {
+export async function bookSelect(): Promise<string> {
   const preview = (await previewColumnAvailable()) ? ', preview' : '';
   return `${BOOK_SELECT}${preview}`;
 }
@@ -212,7 +212,7 @@ export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_des
 // Every sort ends on `id` so the order is total: offset pagination over a sort
 // with ties (two books sharing a sort_title, or a year and title) can otherwise
 // repeat a book on one page and skip another across the boundary.
-function applySort(query: any, sort: SortOption) {
+export function applySort(query: any, sort: SortOption) {
   return applySortKeys(query, sort).order('id', { ascending: true });
 }
 
@@ -361,7 +361,7 @@ export async function browseBooks(opts: {
  * one render, never a broken or empty grid — the catalogue's own data has
  * already been fetched and is returned unchanged.
  */
-async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
+export async function attachCardVariants(rows: CatalogBook[]): Promise<CatalogBook[]> {
   const needing = rows.filter(r => r.id && r.image_card === undefined);
   if (needing.length === 0) return rows;
   try {
