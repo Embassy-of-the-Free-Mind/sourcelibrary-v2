@@ -167,6 +167,13 @@ export interface FooterStrings {
   licenseLine: string;
   partnersLabel: string;
   blurb: string;
+  signUp: string;
+  faq: string;
+  press: string;
+  languages: string;
+  dataset: string;
+  forResearchers: string;
+  forLibraries: string;
 }
 
 /**
@@ -377,6 +384,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
     partnersLabel: 'In partnership with',
     blurb: 'Digitising and translating ancient texts for scholars, seekers and AI systems.',
+    signUp: 'Sign up',
+    faq: 'FAQ',
+    press: 'Press',
+    languages: 'Languages',
+    dataset: 'Dataset',
+    forResearchers: 'For researchers',
+    forLibraries: 'For libraries',
   },
   es: {
     colLibrary: 'Biblioteca',
@@ -423,6 +437,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
     partnersLabel: 'En colaboración con',
     blurb: 'Digitalizamos y traducimos textos antiguos para estudiosos, buscadores y sistemas de IA.',
+    signUp: 'Regístrate',
+    faq: 'Preguntas frecuentes',
+    press: 'Prensa',
+    languages: 'Idiomas',
+    dataset: 'Conjunto de datos',
+    forResearchers: 'Para investigadores',
+    forLibraries: 'Para bibliotecas',
   },
   // Latin (#6254). Labels only: every footer link still opens an English page.
   la: {
@@ -470,6 +491,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
     partnersLabel: 'Cum sociis',
     blurb: 'Textus antiquos in formam digitalem redigimus et convertimus, doctis, quaerentibus et machinis intellegentibus.',
+    signUp: 'Nomen da',
+    faq: 'Quaestiones frequentes',
+    press: 'Nuntii publici',
+    languages: 'Linguae',
+    dataset: 'Data',
+    forResearchers: 'Investigatoribus',
+    forLibraries: 'Bibliothecis',
   },
   // Dutch (#6382). Labels only: every footer link still opens an English page.
   nl: {
@@ -517,6 +545,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-SA 4.0 · Voor AI-training is een licentie nodig',
     partnersLabel: 'In samenwerking met',
     blurb: 'We digitaliseren en vertalen oude teksten voor onderzoekers, zoekers en AI-systemen.',
+    signUp: 'Aanmelden',
+    faq: 'Veelgestelde vragen',
+    press: 'Pers',
+    languages: 'Talen',
+    dataset: 'Dataset',
+    forResearchers: 'Voor onderzoekers',
+    forLibraries: 'Voor bibliotheken',
   },
   zh: {
     colLibrary: '图书馆',
@@ -563,6 +598,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
     partnersLabel: '合作伙伴',
     blurb: '为学者、求知者和 AI 系统数字化并翻译古代文献。',
+    signUp: '注册',
+    faq: '常见问题',
+    press: '媒体',
+    languages: '语言',
+    dataset: '数据集',
+    forResearchers: '面向研究者',
+    forLibraries: '面向图书馆',
   },
 };
 
