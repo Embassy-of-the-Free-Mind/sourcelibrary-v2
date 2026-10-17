@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { FEED_TYPES } from "@/lib/feed-links";
+import { FEED_LINKS } from "@/lib/feed-links";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
@@ -70,7 +70,6 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
     canonical: '/',
-    types: FEED_TYPES,
   },
   keywords: [
     'Hermetic texts',
@@ -147,6 +146,11 @@ export default async function RootLayout({
           title="Source Library"
           href="/opensearch.xml"
         />
+        {/* Feed autodiscovery. Here rather than in metadata.alternates.types, which any
+            route declaring its own alternates would replace wholesale (#3968). */}
+        {FEED_LINKS.map((feed) => (
+          <link key={feed.href} rel="alternate" type={feed.type} href={feed.href} title={feed.title} />
+        ))}
         {/* Analytics scripts loaded conditionally via AnalyticsScripts (consent-gated) */}
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
