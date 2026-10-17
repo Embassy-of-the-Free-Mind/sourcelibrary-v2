@@ -33,7 +33,6 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'collections', href: '/collections' },
       { key: 'search', href: '/search' },
       { key: 'askLibrarian', href: '/librarian' },
-      { key: 'languages', href: '/languages' },
     ],
   },
   {
@@ -44,7 +43,6 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'researchNotes', href: '/blog' },
       { key: 'identify', href: '/identify' },
       { key: 'forResearchers', href: '/for-researchers' },
-      { key: 'dataset', href: '/dataset' },
     ],
   },
   {
@@ -53,7 +51,6 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'signUp', href: '/auth/signin' },
       { key: 'contribute', href: '/contribute' },
       { key: 'checkPages', href: '/review' },
-      { key: 'forLibraries', href: '/for-libraries' },
       { key: 'developers', href: '/developers' },
       { key: 'connect', href: '/connect' },
       { key: 'sponsorship', href: '/sponsors' },
@@ -68,9 +65,6 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'faq', href: '/about/faq' },
       { key: 'models', href: '/about/models' },
       { key: 'qualityCenter', href: '/quality' },
-      { key: 'census', href: '/census' },
-      { key: 'progress', href: '/about/progress' },
-      { key: 'press', href: '/press-releases' },
     ],
   },
   {
