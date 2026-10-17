@@ -95,7 +95,7 @@ export default function HyperboreaPage() {
           image={LEAD_IMAGE}
           imageAlt={LEAD_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 30 min read</p>
+          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 33 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -765,6 +765,66 @@ export default function HyperboreaPage() {
           geometry arriving with Roman rule, they do not say.
         </P>
 
+        <P>
+          The form also travelled east. Much smaller dodecahedra of gold, with the same holes and knobs, have been
+          found at Óc Eo in the Mekong delta of Vietnam, a port of the kingdom of Funan where Roman gold medallions
+          of Antoninus Pius also turned up, and in Burma, Thailand, India and China. Louis Malleret, who excavated
+          Óc Eo, published them in 1961 and read them as a sign of Mediterranean influence carried by trade. If he
+          was right, the twelve-sided figure moved along Roman trade routes in both directions, to the Celtic
+          provinces in bronze and to the Indian Ocean in gold, which makes a purely druidic explanation harder to
+          hold.
+        </P>
+
+        <Section>What the ground shows</Section>
+
+        <P>
+          Texts cannot settle whether real people sent real things down Herodotus&apos;s chain. Finds can, and on
+          one point they now say something definite. Amber became a common offering in Greek sanctuaries in the
+          later eighth and seventh centuries BCE, the generations before Herodotus. The fullest study is Alessandro
+          Naso&apos;s report on the amber from the sanctuary of Artemis at Ephesos. Infrared analysis of thirty
+          samples there, made at the Vassar laboratory Curt Beck founded, showed that{' '}
+          <a
+            href="https://austriaca.at/0xc1aa5572%200x003f6cca.pdf"
+            className={linkClass}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            &ldquo;the amber objects found in Ephesos are of Baltic origin&rdquo;
+          </a>
+          . Some arrived raw and were carved on the spot. Comparing the pieces with finds from Verucchio on the
+          Adriatic coast of Italy and from Basilicata, Naso concludes that &ldquo;Baltic amber reached Ephesos via a
+          trade route along the Adriatic Sea.&rdquo; He also lists amber from the sanctuaries of Artemis Orthia at
+          Sparta, Hera at Perachora, Apollo at Eretria, more than two hundred pieces from Lindos, and half-worked
+          amber, ivory and bone from the sanctuary of Apollo at Delos.
+        </P>
+
+        <P>
+          The Adriatic leg is where Herodotus&apos;s offerings turn south, and where the amber went. In the early
+          Iron Age the main amber-working centres on that sea were Etruscan Verucchio on the Italian side and Novo
+          Mesto in Slovenia on the other, a site of the Hallstatt culture of the eastern Alps. A 2018 University of
+          Birmingham thesis on the dedications at Dodona goes as far as to propose{' '}
+          <a
+            href="https://etheses.bham.ac.uk/8375/1/Fotiadi18MARes.pdf"
+            className={linkClass}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            &ldquo;one main ideological and religious pathway&rdquo; running &ldquo;from the Baltic to the Adriatic,
+            through Dodona, Pindos and Thessaly to its final destination, the island of Delos&rdquo;
+          </a>
+          , charted by the myth of the Hyperborean gifts.
+        </P>
+
+        <P>
+          Three cautions. The same thesis, surveying what was dedicated at Dodona, does not list amber among it. Some
+          archaeologists doubt that a single &ldquo;amber route&rdquo; ever existed, rather than many short
+          exchanges; Aleksandar Palavestra titled a 2007 paper &ldquo;Was there an amber route?&rdquo; And nothing
+          says the Hyperborean bundles held amber. What the ground does show is a real flow of a northern material
+          into the sanctuaries of Apollo and Artemis, by way of the Adriatic, in the centuries when the Delians were
+          telling their story. For the druid hypothesis, it points away from Britain: the hands on the Adriatic leg
+          were Etruscan, Picene and eastern Alpine.
+        </P>
+
         <Section>Everyone&apos;s Hyperborea</Section>
 
         <P>
@@ -1197,6 +1257,25 @@ export default function HyperboreaPage() {
             <li>
               Beck, Curt W., et al. &ldquo;Analysis and Provenience of Minoan and Mycenaean Amber.&rdquo;{' '}
               <em>Greek, Roman and Byzantine Studies</em>, series of articles from 1966.
+            </li>
+            <li>
+              Naso, Alessandro. &ldquo;Amber for Artemis: Preliminary Report on the Amber Finds from the Sanctuary of
+              Artemis at Ephesos.&rdquo; Austrian Academy of Sciences.
+            </li>
+            <li>
+              Fotiadi, Maria. <em>Dedications at Ancient Dodona.</em> MA by Research thesis, University of
+              Birmingham, 2018.
+            </li>
+            <li>
+              Guggenberger, Michael, and Stephen Leach. &ldquo;The Gallo-Roman Dodecahedron and the Receptacle of All
+              Becoming.&rdquo; <em>The Antiquaries Journal</em> 105 (2025): 31–54.
+            </li>
+            <li>
+              Malleret, Louis. &ldquo;Les dodécaèdres d&apos;or du site d&apos;Oc-èo.&rdquo; <em>Artibus Asiae</em> 24
+              (1961).
+            </li>
+            <li>
+              Dodds, E. R. <em>The Greeks and the Irrational.</em> University of California Press, 1951.
             </li>
             <li>
               Godwin, Joscelyn. <em>Arktos: The Polar Myth in Science, Symbolism, and Nazi Survival.</em> Phanes Press,
