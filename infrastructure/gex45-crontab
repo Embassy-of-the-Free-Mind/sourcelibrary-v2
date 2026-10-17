@@ -14,7 +14,7 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # Resume DIED claude jobs (#5709).
 */10 * * * * /root/bin/claude-job.sh sweep >/dev/null 2>&1
 # Spare lane (#6395). Minutes 10,40: main */30, cloudlayer 5,35, l7a 25,55. Idle until Claude is logged in here.
-10,40 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
+10,40 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && [ -s /root/.claude/.credentials.json ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
 # Work board (/admin/work, #5705): this box's jobs. Only main pushes --github.
 */10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box gex45' >> /var/log/sourcelibrary/work-board.log 2>&1
 # Disk: alarm at 85% (#5534) and the nightly steward (no volume here, so it only reaps merged worktrees + agy WAL) (#6223).
