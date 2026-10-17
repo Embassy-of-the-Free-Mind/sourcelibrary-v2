@@ -62,8 +62,8 @@ export default function NatureOfHarmonyPage() {
           And from the very same fact grew an argument that has never once stopped. The instant someone declares the cosmos a
           harmony, someone else asks: can you prove it, or is that a lovely picture you have mistaken for a fact? Every age has
           had both people: pattern-seers who heard a deep order, and measurers who demanded a number. This is the history of
-          their quarrel, told across five civilizations and twenty-five centuries through the books, translated and citable to
-          the page, that a single library happens to hold. (The sequel,{' '}
+          their quarrel, told across five traditions and twenty-five centuries through books in Source Library, translated and citable to
+          the page. (The sequel,{' '}
           <Link href="/blog/show-me-the-number" className="text-accent-rust hover:text-accent-rust underline">Show Me the Number</Link>,
           asks whether the argument has finally met its strangest subject: artificial intelligence.)
         </p>
@@ -79,7 +79,7 @@ export default function NatureOfHarmonyPage() {
           proportions. The pattern-seer was born fully formed.
         </p>
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          So, at once, was his opponent. Within a century Aristoxenus (a pupil of Aristotle, and the earliest music theorist
+          So, soon enough, was his opponent. Within two centuries Aristoxenus (a pupil of Aristotle, and the earliest music theorist
           we can still read) told the Pythagoreans they had it backwards: music is judged by the trained ear, not by
           arithmetic, and an interval is what a listener actually hears, not what a ratio decrees. Measure the phenomenon; do
           not deduce it from numbers you happen to find beautiful. Twenty-two centuries before Helmholtz located consonance in
@@ -104,13 +104,14 @@ export default function NatureOfHarmonyPage() {
           And it was not a Western idea. The deepest version of resonance is Chinese. Two thousand years ago,{' '}
           <em>gǎnyìng</em> (感應), sympathetic resonance, was the master principle of the cosmos: things of the same kind
           answer one another across a field of <em>qi</em>, with no contact and no push. The stock image for it, in the{' '}
-          <em>Zhuangzi</em> and the <em>Huainanzi</em>, was precisely Hooke's, seventeen centuries early: pluck the <em>gong</em>{' '}
+          <em>Zhuangzi</em> and the <em>Huainanzi</em>, was the one Robert Hooke would use in London seventeen centuries later: pluck the <em>gong</em>{' '}
           string on one zither and the <em>gong</em> string of another, untouched across the room, sounds in reply. Where the
           West kept <em>harmony</em>, a static ratio, China made <em>resonance</em>, a living response, the deepest thing there
           is. Nor were the ratios a Western fingerprint: Chinese theorists generated their twelve pitch-pipes from the yellow
           bell by the cycle of fifths by the third century BCE, and around 1584 the prince{' '}
           <Link href="/book/complete-works-on-music-and-tuning-vols-4-5" className="text-accent-rust hover:text-accent-rust underline">Zhu Zaiyu</Link>{' '}
-          computed equal temperament (the twelfth root of two) a decade before any European, in the very decade Kepler was
+          computed equal temperament (the twelfth root of two) exactly, among the first anywhere to do so (the Flemish
+          mathematician Simon Stevin reached it independently at about the same time), in the very decade Kepler was
           nesting his Platonic solids.
         </p>
 
@@ -176,8 +177,8 @@ export default function NatureOfHarmonyPage() {
 
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">Fludd's world was one tuned string</h2>
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          In 1617 the pattern-seer reached his fullest flight. Robert Fludd (physician, alchemist, Hermeticist) published a
-          two-thousand-page account of the whole cosmos as a single musical instrument. At the centre of its famous
+          In 1617 the pattern-seer reached his fullest flight. Robert Fludd (physician, alchemist, Hermeticist) published the
+          first volume of a vast, many-volume account of the whole cosmos as a single musical instrument. At the centre of its famous
           frontispiece (above) he set an ape, chained beneath Nature's feet: not a beast of contempt, but <em>Art</em>, human
           skill, personified as Nature's ape, holding up a gridded model of the world it sits on. And the world itself, for
           Fludd, was one string.
@@ -212,7 +213,7 @@ export default function NatureOfHarmonyPage() {
         </figure>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          Fludd even ran the numbers, hanging real effects on every interval: the Moon sounding a fifth with the earth to drive
+          Fludd went further, hanging real effects on every interval: the Moon sounding a fifth with the earth to drive
           the tides, and so on. It is a full theory of the world, built on musical ratios, and it is also, as physics, almost
           entirely wrong. Which is exactly the measurer's opening.
         </p>
@@ -220,7 +221,8 @@ export default function NatureOfHarmonyPage() {
         <h2 className="font-serif text-3xl text-primary mb-6 mt-12">Kepler: show me the number</h2>
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Johannes Kepler, imperial mathematician, fresh from wringing three laws of planetary motion out of Tycho Brahe's
-          observations, appended to his own <em>Harmony of the World</em> a point-by-point demolition of Fludd. The remarkable
+          observations, appended a critique of Fludd to his own <em>Harmony of the World</em> (1619), and when Fludd answered, replied
+          point by point in an <em>Apology</em> (1622). The remarkable
           thing is that he was not attacking harmony. He believed in the music of the spheres as devoutly as Fludd did. He was
           attacking a <em>method</em>.
         </p>
@@ -264,7 +266,9 @@ export default function NatureOfHarmonyPage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Even the great empiricist could not fully sort the discovered from the imposed inside his own masterpiece.
           Measurement disciplines analogy; it does not purify it. Discovery is a mixture, always, and the work is telling
-          which is which.
+          which is which. Kepler put the same test to politics, correcting Jean Bodin&apos;s &ldquo;harmonic justice&rdquo;
+          against the evidence of the ear: see{' '}
+          <Link href="/blog/harmonic-justice" className="text-accent-rust hover:text-accent-rust underline">Harmonic Justice</Link>.
         </p>
 
         <hr className="border-border-light my-12" />
@@ -273,8 +277,8 @@ export default function NatureOfHarmonyPage() {
         <p className="text-secondary leading-relaxed mb-8 font-body">
           Fludd's cosmic string drew the measurers out. One was already at work before him:{' '}
           <Link href="/book/dialogo-della-musica-antica-et-della-moderna-galilei" className="text-accent-rust hover:text-accent-rust underline">Vincenzo Galilei</Link>{' '}
-          (lutenist, theorist, and father of the astronomer) who in 1581 did the unthinkable and <em>tested</em> the sacred
-          Pythagorean ratios. Hang weights on strings instead of shortening them, he found, and the octave no longer answers to
+          (lutenist, theorist, and father of the astronomer) who in the 1580s did the unthinkable and <em>tested</em> the sacred
+          Pythagorean ratios (he reported the result in 1589, in a discourse against Zarlino). Hang weights on strings instead of shortening them, he found, and the octave no longer answers to
           2:1 but to 4:1; the numbers are not holy, they depend on what you actually do to the string. His son{' '}
           <Link href="/book/discorsi-e-dimostrazioni-matematiche-intorno-a-due-nuove-galilei" className="text-accent-rust hover:text-accent-rust underline">Galileo</Link>{' '}
           finished the thought in 1638: consonance is sweet when the pulses two strings send to the eardrum fall into step, and
@@ -379,7 +383,7 @@ export default function NatureOfHarmonyPage() {
           response is a smooth curve peaking when the drive <em>matches</em> its own frequency. Whole numbers become privileged
           only under three conditions: a <strong>boundary</strong> that confines a wave (a string, an atom's orbit), a
           <strong> coupling</strong> tight enough that two oscillators lock (the mathematics of orbital resonance and the
-          empty Kirkwood gaps of the asteroid belt), or <strong>perception</strong> folding overtones together; for when Plomp
+          empty Kirkwood gaps of the asteroid belt), or <strong>perception</strong> folding overtones together. And when Plomp
           and Levelt measured which intervals actually sound consonant, in 1965, the governing variable was not integer ratio
           but roughness. Even musical harmony is ratio-<em>derived</em>, not ratio-<em>fundamental</em>. So Fludd was half right,
           in a way you can state exactly: ratio is real where there is a boundary, a closed loop, or genuine coupling, and
@@ -407,13 +411,13 @@ export default function NatureOfHarmonyPage() {
 
         <h3 className="font-serif text-lg text-primary mb-4 mt-8">The shelf</h3>
         <p className="text-secondary leading-relaxed mb-6 font-body text-base">
-          Every source in this essay (four traditions across twenty-five centuries, the original Greek, Sanskrit, Chinese,
-          Italian, French, Latin, or German behind each link) is held and translated at Source Library. A representative span,
+          Every source in this essay (twenty-five centuries, the original Greek, Sanskrit, Chinese,
+          Italian, French, Latin, German, or English behind each link) is held and translated at Source Library. A representative span,
           in order:
         </p>
         <ul className="text-secondary font-body text-base leading-relaxed mb-8 space-y-1 list-none pl-0">
           {[
-            ['c.700 BCE', 'Māṇḍūkya Upanishad', 'Sanskrit', '/book/the-thirteen-principal-upanishads-trans'],
+            ['undated', 'Māṇḍūkya Upanishad', 'Sanskrit', '/book/the-thirteen-principal-upanishads-trans'],
             ['c.360 BCE', 'Plato, Timaeus', 'Greek', '/book/timaeus-ms-digby-23-plato'],
             ['c.330 BCE', 'Aristoxenus, Harmonic Elements', 'Greek', '/book/aristoxeni-musici-antiquissimi-harmonicorum-elementorum-ed'],
             ['c.200 CE', 'Bharata, Nāṭyaśāstra', 'Sanskrit', '/book/natyashastra-muni'],
@@ -441,8 +445,7 @@ export default function NatureOfHarmonyPage() {
         </ul>
         <p className="text-muted text-sm mb-8 font-body italic">
           Primary-source quotations are verified verbatim against Source Library; the translations are Source Library's own
-          (the Descartes page revised by Claude Opus 4.8). Fludd's first volume and Kepler's <em>Apology</em> against him have,
-          as far as we can establish, never before appeared in English.
+          (the Descartes page revised by Claude Opus 4.8).
         </p>
 
       </article>
