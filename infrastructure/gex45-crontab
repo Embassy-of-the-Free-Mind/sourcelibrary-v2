@@ -1,0 +1,32 @@
+# GEX45-1 crontab (root@65.108.136.89, hostname gex45-1): the fourth job box (#5660).
+# The live crontab is the source of truth; this file is its snapshot. Re-snapshot after a change:
+#   ssh root@65.108.136.89 crontab -l > infrastructure/gex45-crontab   (then PR it)
+# Back up before editing: crontab -l > /root/crontab.bak-$(date -u +%Y%m%dT%H%M)
+#
+# Dedicated x86_64 box (i5-13500, 20 threads, 62 GB, RTX PRO 4000 Blackwell 24 GB). No volume: everything is
+# under /root. Job output goes to /root/jobs/<name>, which gex45-idle-alert.sh (cron on main) watches.
+# All Source Library work uses flock; logs in /var/log/sourcelibrary/. The box clock is UTC like main's
+# (it shipped as Europe/Berlin; set with `timedatectl set-timezone Etc/UTC` on 2026-10-17), so hours mean the same here.
+PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
+
+# ── Job-box plumbing (same lines as main, own minutes where two boxes would collide) ──
+# Pull main hourly, then reinstall the job wrapper + box mesh scripts from the committed checkout.
+17 * * * * flock -n /tmp/sl-auto-pull.lock /root/sourcelibrary/scripts/workers/auto-pull.sh >> /var/log/sourcelibrary/auto-pull.log 2>&1
+# Resume DIED claude jobs (#5709). Only with a wrapper that knows this host: one without the gex45 HOST block
+# takes it for main and mkdirs /mnt/HC_Volume_105839809 on the root disk (2026-10-17, before #5660's PR merged).
+*/10 * * * * grep -q 'HOST=gex45' /root/bin/claude-job.sh && /root/bin/claude-job.sh sweep >/dev/null 2>&1
+# Spare lane (#6395). Minutes 10,40: main */30, cloudlayer 5,35, l7a 25,55. Idle until Claude is logged in here.
+10,40 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && [ -s /root/.claude/.credentials.json ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
+# Work board (/admin/work, #5705): this box's jobs. Only main pushes --github.
+*/10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box gex45' >> /var/log/sourcelibrary/work-board.log 2>&1
+# Disk: alarm at 85% (#5534) and the nightly steward (no volume here, so it only reaps merged worktrees + agy WAL) (#6223).
+*/15 * * * * f=/root/sourcelibrary/scripts/workers/disk-alarm.sh; [ -x $f ] && $f >> /var/log/sourcelibrary/disk-alarm.log 2>&1
+40 4 * * * f=/root/sourcelibrary/scripts/workers/disk-steward.sh; [ -x $f ] && $f --apply >> /var/log/sourcelibrary/disk-steward.log 2>&1
+# agy (Gemini CLI) SQLite WAL checkpoint, hourly (#6223). Source: scripts/workers/agy-wal-checkpoint.py, copied to /root/bin.
+17 * * * * python3 /root/bin/agy-wal-checkpoint.py >> /var/log/sourcelibrary/agy-wal-checkpoint.log 2>&1
+# Load log, same format as main's, so a move off main can be measured on both sides.
+*/5 * * * * echo "$(date -u +'\%Y-\%m-\%dT\%H:\%M:\%SZ') $(uptime | sed 's/.*load average: //')" >> /var/log/sourcelibrary/cpu-load.log
+
+# ── Work moved off main (#5660, 2026-10-17). Each line is commented out in main's crontab; never run both. ──
+# Withhold stale translations hourly (#4523): idempotent (a withheld page no longer matches the predicate), Mongo-only state.
+20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1

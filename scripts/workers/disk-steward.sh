@@ -65,7 +65,10 @@ PY
 done
 
 # 2. Move idle /root folders to the volume.
-if [ ! -d "$VOL" ]; then echo "$(now) no volume at $VOL: step 2 skipped"; exit 0; fi
+# A mount point, not just a directory: a wrapper that mistakes its host for main mkdirs $VOL/worktrees on the root
+# disk, and "moving" /root folders onto the same disk would only rename them (gex45, 2026-10-17, #5660).
+if [ -n "${DISK_STEWARD_VOL:-}" ] && [ -d "$VOL" ]; then :
+elif ! mountpoint -q "$VOL" 2>/dev/null; then echo "$(now) no volume mounted at $VOL: step 2 skipped"; exit 0; fi
 mkdir -p "$DEST"
 for S in "$ROOT"/* "$ROOT"/.[!.]*; do
   [ -d "$S" ] && [ ! -L "$S" ] || continue

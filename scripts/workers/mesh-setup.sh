@@ -16,9 +16,10 @@
 # Requires /root/bin/box-rpc.sh on every box (the installer puts it there after a pull); refuses otherwise,
 # because an authorized command that does not exist locks the key out with a confusing error.
 set -u
-BOXES="main=46.224.122.120 cloudlayer=46.224.208.175 l7a=167.233.32.250"
+BOXES="main=46.224.122.120 cloudlayer=46.224.208.175 l7a=167.233.32.250 gex45=65.108.136.89"
 SSH="ssh -o BatchMode=yes -o ConnectTimeout=10"
 names() { for b in $BOXES; do echo "${b%%=*}"; done; }
+peers() { echo $(( $(names | wc -l) - 1 )); }  # mesh entries each box should hold: one per other box
 ip_of() { for b in $BOXES; do [ "${b%%=*}" = "$1" ] && echo "${b#*=}"; done; }
 say() { echo "[mesh-setup] $*"; }
 tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
@@ -53,9 +54,9 @@ install() {
       grep -v ' mesh@' authorized_keys > authorized_keys.new || true
       cat >> authorized_keys.new
       chmod 600 authorized_keys.new; mv -f authorized_keys.new authorized_keys
-      [ \$(grep -c ' mesh@' authorized_keys) -eq 2 ]" < "$tmp/$b.auth" || { say "$b: authorized_keys NOT updated"; return 1; }
+      [ \$(grep -c ' mesh@' authorized_keys) -eq $(peers) ]" < "$tmp/$b.auth" || { say "$b: authorized_keys NOT updated"; return 1; }
     $SSH "root@$(ip_of "$b")" "cat > /root/.ssh/known_hosts_mesh.new && chmod 644 /root/.ssh/known_hosts_mesh.new && mv -f /root/.ssh/known_hosts_mesh.new /root/.ssh/known_hosts_mesh" < "$tmp/$b.kh"
-    say "$b: 2 mesh entries, 2 pinned host keys (backup authorized_keys.bak-mesh-$ts)"
+    say "$b: $(peers) mesh entries, $(peers) pinned host keys (backup authorized_keys.bak-mesh-$ts)"
   done
 }
 
@@ -64,9 +65,9 @@ check() {
   for b in $(names); do
     out=$($SSH "root@$(ip_of "$b")" "/root/bin/box.sh others ping" 2>&1)
     echo "$out" | sed "s/^/  $b -> /"
-    [ "$(echo "$out" | grep -c '^pong ')" -eq 2 ] || bad=1
+    [ "$(echo "$out" | grep -c '^pong ')" -eq "$(peers)" ] || bad=1
   done
-  [ $bad -eq 0 ] && say "mesh OK: every box reaches both others" || { say "mesh INCOMPLETE"; return 1; }
+  [ $bad -eq 0 ] && say "mesh OK: every box reaches every other" || { say "mesh INCOMPLETE"; return 1; }
 }
 
 case "${1:-}" in
