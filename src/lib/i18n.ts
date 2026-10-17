@@ -119,18 +119,25 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
 
 export interface FooterStrings {
   // column titles
-  colLibrary: string;
-  colAbout: string;
-  colParticipate: string;
-  // Library column
-  browseBooks: string;
+  colFindBooks: string;
+  colLookListen: string;
+  colTakePart: string;
+  colHowItWorks: string;
+  colLegal: string;
+  // Find books
   browseAZ: string;
+  catalogue: string;
+  works: string;
   gallery: string;
   identify: string;
   collections: string;
   search: string;
   favorites: string;
-  // About column
+  // Look and listen
+  explore: string;
+  librarian: string;
+  podcast: string;
+  // How it works
   about: string;
   howItWorks: string;
   vision: string;
@@ -143,7 +150,8 @@ export interface FooterStrings {
   cookieSettings: string;
   terms: string;
   copyright: string;
-  // Participate column
+  licensing: string;
+  // Take part, and the top bar's two actions
   libraries: string;
   contribute: string;
   support: string;
@@ -155,6 +163,7 @@ export interface FooterStrings {
   checkPages: string;
   qualityCenter: string;
   licenseLine: string;
+  partnersLabel: string;
 }
 
 /**
@@ -321,16 +330,22 @@ export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
 
 export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
   en: {
-    colLibrary: 'Library',
-    colAbout: 'About',
-    colParticipate: 'Participate',
-    browseBooks: 'Browse Books',
+    colFindBooks: 'Find books',
+    colLookListen: 'Look and listen',
+    colTakePart: 'Take part',
+    colHowItWorks: 'How it works',
+    colLegal: 'Legal',
     browseAZ: 'Browse A–Z',
+    catalogue: 'Catalogue',
+    works: 'Works',
     gallery: 'Gallery',
     identify: 'Identify an Artwork',
     collections: 'Collections',
     search: 'Search',
     favorites: 'Favorites',
+    explore: 'Explore',
+    librarian: 'Librarian',
+    podcast: 'Podcast',
     about: 'About',
     howItWorks: 'How it works',
     vision: 'Our Vision',
@@ -343,6 +358,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Cookie Settings',
     terms: 'Terms',
     copyright: 'Copyright & DMCA',
+    licensing: 'Licensing',
     libraries: 'Libraries',
     contribute: 'Contribute',
     support: 'Support',
@@ -354,18 +370,25 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Check a few pages',
     qualityCenter: 'Quality Center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
+    partnersLabel: 'In partnership with',
   },
   es: {
-    colLibrary: 'Biblioteca',
-    colAbout: 'Acerca de',
-    colParticipate: 'Participar',
-    browseBooks: 'Explorar libros',
+    colFindBooks: 'Buscar libros',
+    colLookListen: 'Mirar y escuchar',
+    colTakePart: 'Participar',
+    colHowItWorks: 'Cómo funciona',
+    colLegal: 'Legal',
     browseAZ: 'Índice A–Z',
+    catalogue: 'Catálogo',
+    works: 'Obras',
     gallery: 'Galería',
     identify: 'Identificar una obra',
     collections: 'Colecciones',
     search: 'Buscar',
     favorites: 'Favoritos',
+    explore: 'Explorar',
+    librarian: 'Bibliotecario',
+    podcast: 'Pódcast',
     about: 'Acerca de',
     howItWorks: 'Cómo funciona',
     vision: 'Nuestra visión',
@@ -378,6 +401,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Preferencias de cookies',
     terms: 'Términos',
     copyright: 'Derechos de autor y DMCA',
+    licensing: 'Licencias',
     libraries: 'Bibliotecas',
     contribute: 'Contribuir',
     support: 'Apoyar',
@@ -389,19 +413,26 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Revisar algunas páginas',
     qualityCenter: 'Centro de calidad',
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
+    partnersLabel: 'En colaboración con',
   },
   // Latin (#6254). Labels only: every footer link still opens an English page.
   la: {
-    colLibrary: 'Bibliotheca',
-    colAbout: 'De nobis',
-    colParticipate: 'Particeps esto',
-    browseBooks: 'Libros perlustra',
+    colFindBooks: 'Libros inveni',
+    colLookListen: 'Specta et audi',
+    colTakePart: 'Particeps esto',
+    colHowItWorks: 'Quomodo fiat',
+    colLegal: 'De iure',
     browseAZ: 'Index A–Z',
+    catalogue: 'Catalogus',
+    works: 'Opera',
     gallery: 'Pinacotheca',
     identify: 'Opus artis agnosce',
     collections: 'Collectiones',
     search: 'Quaere',
     favorites: 'Dilecta',
+    explore: 'Explora',
+    librarian: 'Bibliothecarius',
+    podcast: 'Podcast',
     about: 'De nobis',
     howItWorks: 'Quomodo fiat',
     vision: 'Propositum nostrum',
@@ -414,6 +445,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Optiones crustulorum',
     terms: 'Condiciones',
     copyright: 'Ius auctoris et DMCA',
+    licensing: 'Licentiae',
     libraries: 'Bibliothecae',
     contribute: 'Operam confer',
     support: 'Sustenta',
@@ -425,19 +457,26 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Paucas paginas recense',
     qualityCenter: 'De qualitate',
     licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
+    partnersLabel: 'Cum sociis',
   },
   // Dutch (#6382). Labels only: every footer link still opens an English page.
   nl: {
-    colLibrary: 'Bibliotheek',
-    colAbout: 'Over ons',
-    colParticipate: 'Meedoen',
-    browseBooks: 'Boeken bekijken',
+    colFindBooks: 'Boeken vinden',
+    colLookListen: 'Kijken en luisteren',
+    colTakePart: 'Meedoen',
+    colHowItWorks: 'Hoe het werkt',
+    colLegal: 'Juridisch',
     browseAZ: 'Index A–Z',
+    catalogue: 'Catalogus',
+    works: 'Werken',
     gallery: 'Galerij',
     identify: 'Een kunstwerk herkennen',
     collections: 'Collecties',
     search: 'Zoeken',
     favorites: 'Favorieten',
+    explore: 'Verkennen',
+    librarian: 'Bibliothecaris',
+    podcast: 'Podcast',
     about: 'Over ons',
     howItWorks: 'Hoe het werkt',
     vision: 'Onze visie',
@@ -450,6 +489,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Cookie-instellingen',
     terms: 'Voorwaarden',
     copyright: 'Auteursrecht en DMCA',
+    licensing: 'Licenties',
     libraries: 'Bibliotheken',
     contribute: 'Bijdragen',
     support: 'Steunen',
@@ -461,18 +501,25 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: 'Een paar pagina’s controleren',
     qualityCenter: 'Kwaliteitscentrum',
     licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-SA 4.0 · Voor AI-training is een licentie nodig',
+    partnersLabel: 'In samenwerking met',
   },
   zh: {
-    colLibrary: '图书馆',
-    colAbout: '关于',
-    colParticipate: '参与',
-    browseBooks: '浏览书籍',
+    colFindBooks: '查找书籍',
+    colLookListen: '观看与收听',
+    colTakePart: '参与',
+    colHowItWorks: '工作原理',
+    colLegal: '法律信息',
     browseAZ: '按字母浏览',
+    catalogue: '目录',
+    works: '作品',
     gallery: '图库',
     identify: '识别艺术作品',
     collections: '专题',
     search: '搜索',
     favorites: '收藏',
+    explore: '探索',
+    librarian: '图书馆员',
+    podcast: '播客',
     about: '关于我们',
     howItWorks: '工作原理',
     vision: '我们的愿景',
@@ -485,6 +532,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     cookieSettings: 'Cookie 设置',
     terms: '条款',
     copyright: '版权与 DMCA',
+    licensing: '许可',
     libraries: '合作图书馆',
     contribute: '贡献',
     support: '支持',
@@ -496,6 +544,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     checkPages: '校对几页',
     qualityCenter: '质量中心',
     licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
+    partnersLabel: '合作伙伴',
   },
 };
 

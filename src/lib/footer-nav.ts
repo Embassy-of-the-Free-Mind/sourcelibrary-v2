@@ -13,53 +13,71 @@ import { type FooterStrings } from '@/lib/i18n';
  * constant and point at the English pages (deep pages have no `/es` route).
  */
 
-export type FooterLinkKey = Exclude<keyof FooterStrings, 'colLibrary' | 'colAbout' | 'colParticipate'>;
+export type FooterLinkKey = Exclude<keyof FooterStrings, 'colFindBooks' | 'colLookListen' | 'colTakePart' | 'colHowItWorks' | 'colLegal'>;
 
 export type FooterNavColumn = {
   titleKey: keyof FooterStrings;
   links: ReadonlyArray<{ key: FooterLinkKey; href: string }>;
 };
 
+// Grouped by what a visitor came to do. Give Feedback and Donate are not in
+// the table: they are the two buttons in the footer's top bar. The Legal
+// column renders as the small-print line at the bottom, not as a column, but
+// it lives here so the tenant filter covers it like everything else.
 export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
   {
-    titleKey: 'colLibrary',
+    titleKey: 'colFindBooks',
     links: [
-      { key: 'browseBooks', href: '/' },
-      { key: 'browseAZ', href: '/browse' },
-      { key: 'gallery', href: '/gallery' },
-      { key: 'identify', href: '/identify' },
-      { key: 'collections', href: '/collections' },
       { key: 'search', href: '/search' },
+      { key: 'browseAZ', href: '/browse' },
+      { key: 'catalogue', href: '/catalog' },
+      { key: 'works', href: '/works' },
+      { key: 'collections', href: '/collections' },
     ],
   },
   {
-    titleKey: 'colAbout',
+    titleKey: 'colLookListen',
+    links: [
+      { key: 'gallery', href: '/gallery' },
+      { key: 'identify', href: '/identify' },
+      { key: 'explore', href: '/explore' },
+      { key: 'librarian', href: '/librarian' },
+      { key: 'podcast', href: '/podcast' },
+      { key: 'researchNotes', href: '/blog' },
+    ],
+  },
+  {
+    titleKey: 'colTakePart',
+    links: [
+      { key: 'checkPages', href: '/review' },
+      { key: 'contribute', href: '/contribute' },
+      { key: 'libraries', href: '/libraries' },
+      { key: 'developers', href: '/developers' },
+      { key: 'connect', href: '/connect' },
+      { key: 'sponsorship', href: '/sponsors' },
+    ],
+  },
+  {
+    titleKey: 'colHowItWorks',
     links: [
       { key: 'about', href: '/about' },
-      { key: 'howItWorks', href: '/how-it-works' },
       { key: 'vision', href: '/vision' },
+      { key: 'howItWorks', href: '/how-it-works' },
+      { key: 'models', href: '/about/models' },
+      { key: 'qualityCenter', href: '/quality' },
       { key: 'census', href: '/census' },
       { key: 'progress', href: '/about/progress' },
-      { key: 'models', href: '/about/models' },
       { key: 'research', href: '/research' },
-      { key: 'researchNotes', href: '/blog' },
+    ],
+  },
+  {
+    titleKey: 'colLegal',
+    links: [
+      { key: 'licensing', href: '/licensing' },
       { key: 'privacy', href: '/privacy' },
       { key: 'cookieSettings', href: '#cookie-settings' },
       { key: 'terms', href: '/terms' },
       { key: 'copyright', href: '/dmca' },
-    ],
-  },
-  {
-    titleKey: 'colParticipate',
-    links: [
-      { key: 'libraries', href: '/libraries' },
-      { key: 'contribute', href: '/contribute' },
-      { key: 'checkPages', href: '/review' },
-      { key: 'qualityCenter', href: '/quality' },
-      { key: 'support', href: '/support' },
-      { key: 'sponsorship', href: '/sponsors' },
-      { key: 'connect', href: '/connect' },
-      { key: 'developers', href: '/developers' },
     ],
   },
 ];

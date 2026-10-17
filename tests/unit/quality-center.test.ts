@@ -133,9 +133,9 @@ describe('feedback themes', () => {
 });
 
 describe('footer door', () => {
-  it('links /quality from Participate, labelled in every locale, and hides it on partner hosts', () => {
-    const participate = FOOTER_NAV_COLUMNS.find(c => c.titleKey === 'colParticipate')!;
-    expect(participate.links.map(l => l.href)).toContain('/quality');
+  it('links /quality from How it works, labelled in every locale, and hides it on partner hosts', () => {
+    const howItWorks = FOOTER_NAV_COLUMNS.find(c => c.titleKey === 'colHowItWorks')!;
+    expect(howItWorks.links.map(l => l.href)).toContain('/quality');
     for (const strings of Object.values(FOOTER_STRINGS)) expect(strings.qualityCenter).toBeTruthy();
     expect(visibleFooterNavColumns(true).flatMap(c => c.links.map(l => l.href))).not.toContain('/quality');
   });
