@@ -29,7 +29,9 @@ if (!QFILE || !URL_ || !TOKEN || !SB || !ANON) { console.error('need --queries, 
 
 // Deterministic sample: the first N queries in key order after a seeded shuffle.
 const all = Object.entries(JSON.parse(fs.readFileSync(QFILE, 'utf8'))).filter(([, v]) => Array.isArray(v) && v.length === 768);
-let seed = 6843; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+// mulberry32 in 32-bit integer arithmetic (the double-arithmetic LCG is banned here: #5373). Standalone, as
+// the service's app directory on l7a has no scripts/eval/lib/paired-stats.mjs to import.
+let seed = 6843; const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 for (let i = all.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [all[i], all[j]] = [all[j], all[i]]; }
 const queries = all.slice(0, N);
 
