@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('fish-voiced-priest', {
   title: 'The Fish-Voiced Priest - Articles - Source Library',
   description:
     'An AI read a tenth-century Greek hand and invented a character who is not on the page. Why, for a hard script, the printed critical edition has to carry the text and the manuscript carries the facsimile.',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/fish-voiced-priest',
   },
-};
+});
 
 export default function FishVoicedPriestPage() {
   return (

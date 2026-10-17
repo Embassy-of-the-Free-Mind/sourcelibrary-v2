@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('fire-horse', {
   title: 'The Year of the Fire Horse - Articles - Source Library',
   description: 'Chinese New Year 2026 marks the Year of the Fire Horse, the only year in the 60-year cycle where both heavenly stem and earthly branch carry yang fire. Source Library holds the original Chinese texts that define this system, from Tang dynasty astrology manuals to the Five Elements classic.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/fire-horse',
   },
-};
+});
 
 export default function FireHorsePage() {
   return (

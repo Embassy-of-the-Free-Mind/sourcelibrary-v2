@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Source of every figure here: issue #6038 — the run-1 headline comment (2026-10-06) and the
 // "Run 2 result" comment (2026-10-07) — and the experiment files they cite:
@@ -17,7 +18,7 @@ const TITLE = 'What the Models Cannot Name';
 const DESCRIPTION =
   'For about half of the distinct works we hold, none of Gemini 3.1 Pro, Claude Opus 5.5 or GPT-5.6 can name the author from the title; by volumes it is about a third. This measures what models can recall, not what they were trained on. The method, its controls, and where it sits among published methods.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('what-the-models-cannot-name', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/what-the-models-cannot-name' },
-};
+});
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mt-14 mb-6';

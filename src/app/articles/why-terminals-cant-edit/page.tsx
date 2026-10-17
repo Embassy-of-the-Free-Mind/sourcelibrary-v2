@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('why-terminals-cant-edit', {
   title: 'Why You Can\'t Click to Place Your Cursor in a Terminal - Articles - Source Library',
   description:
     'Terminal emulators don\'t know what\'s on screen. They draw characters on a grid and forward keystrokes. That architectural decision from 1978 is why basic text editing feels broken in 2026.',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/why-terminals-cant-edit',
   },
-};
+});
 
 export default function WhyTerminalsCantEditPage() {
   return (

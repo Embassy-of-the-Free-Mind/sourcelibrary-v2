@@ -1,12 +1,13 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DRAFT. Every value in DATA marked `pending` is a placeholder for a number the
 // #4523 quality pass has not produced yet. The page renders a draft banner and
-// `[pending]` markers while any remain. Do NOT add this post to the /blog index
-// (src/app/blog/posts.ts) or flip DRAFT to false until every field is filled
+// `[pending]` markers while any remain. Do NOT add this post to the /articles index
+// (src/app/articles/posts.ts) or flip DRAFT to false until every field is filled
 // from /root/tibetan-reocr/quality-report-*.md and issue #4523.
 // ─────────────────────────────────────────────────────────────────────────────
 const DRAFT = true;
@@ -84,7 +85,7 @@ const OG_IMAGE = `https://images.sourcelibrary.org/archived/${DATA.pilotId}/3.jp
 const OG_ALT = 'A folio of the Neyphug Kanjur, a seventeenth-century Bhutanese manuscript canon, photographed by the Endangered Archives Programme. Black dbu-can script on brown paper, red rubrics at the margin.';
 const DESCRIPTION = 'Our transcriptions of 180,000 pages of Bhutanese manuscripts were fluent, consistent, and largely invented. We replaced them with a specialist model, checked the result against the Derge canon, and withheld every page we could not verify.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('tibetan-reocr', {
   title: 'Marked Unreadable - Articles - Source Library',
   description: DESCRIPTION,
   robots: DRAFT ? { index: false, follow: false } : undefined,
@@ -100,7 +101,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/tibetan-reocr',
   },
-};
+});
 
 function Pending({ v }: { v: string }) {
   if (v !== pending) return <>{v}</>;

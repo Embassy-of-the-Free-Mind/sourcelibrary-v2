@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('untranslated-renaissance', {
   title: 'How Much of the Renaissance Has Been Translated? We Tried to Count. - Articles - Source Library',
   description: 'We built the first draft of a translation census, matching 1.4 million early modern editions against every English translation catalog we could find. The results are provisional, incomplete, and worse than we expected.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/untranslated-renaissance',
   },
-};
+});
 
 export default function UntranslatedRenaissancePage() {
   return (
@@ -335,7 +336,7 @@ export default function UntranslatedRenaissancePage() {
             We are also adding to the count ourselves.{' '}
             <Link href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">Source Library</Link>{' '}
             has now translated over 5,000 books from the pre-modern period using AI, producing nearly{' '}
-            <Link href="https://sourcelibrary.org/blog/first-translations" className="text-accent-rust hover:text-accent-rust underline">2,000 first English translations</Link>.{' '}
+            <Link href="/articles/first-translations" className="text-accent-rust hover:text-accent-rust underline">2,000 first English translations</Link>.{' '}
             The broader project,{' '}
             <a href="https://secondrenaissance.ai" className="text-accent-rust hover:text-accent-rust underline">Second Renaissance</a>,{' '}
             is dedicated to making this work systematic. Every translation preserves the original text alongside the English for verification. Every page can be checked against the source. The original is never replaced; it is made accessible.
@@ -428,7 +429,7 @@ export default function UntranslatedRenaissancePage() {
         <div className="bg-warm rounded-xl p-6 md:p-8 border border-border-light mt-12 mb-8">
           <p className="font-serif text-lg text-primary mb-3">Explore what&apos;s been translated</p>
           <div className="grid md:grid-cols-2 gap-3">
-            <Link href="https://sourcelibrary.org/blog/first-translations" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
+            <Link href="/articles/first-translations" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
               <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">2,000 First English Translations</p>
               <p className="text-xs text-muted mt-1">Books that have never been read in English before</p>
             </Link>

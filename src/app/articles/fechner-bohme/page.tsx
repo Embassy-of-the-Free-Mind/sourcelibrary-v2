@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('fechner-bohme', {
   title: 'The Mystic Who Invented Psychophysics - Articles - Source Library',
   description: 'Gustav Fechner founded experimental psychology, but his real goal was proving the universe has a soul. His untranslated German works, now in Source Library, reveal the Böhmean mysticism behind the Weber-Fechner law.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/fechner-bohme',
   },
-};
+});
 
 export default function FechnerBohmePage() {
   return (

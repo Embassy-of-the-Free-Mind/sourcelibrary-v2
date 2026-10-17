@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('cannabis-bangue', {
   title: "Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis - Source Library",
   description:
     'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/cannabis-bangue',
   },
-};
+});
 
 export default function CannabisBanguePage() {
   return (

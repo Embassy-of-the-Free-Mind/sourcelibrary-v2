@@ -4,11 +4,12 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import DissonanceDemo from '@/components/blog/DissonanceDemo';
 import { BalmerSpectrum, ChladniFigure } from '@/components/blog/HarmonyVisuals';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Robert Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago: Nature as a crowned virgin chained to the divine name above and to an ape (Art) on the terrestrial globe below.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('nature-of-harmony', {
   title: 'The Nature of Harmony - Source Library',
   description:
     'For twenty-five centuries and across five civilizations, people said the world is built like music, and split at once into those who heard a deep order and those who demanded to measure it. A history of that quarrel, from a plucked string in antiquity to the whole-number ratios inside the atom.',
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     images: [{ url: HERO, alt: HERO_ALT }],
   },
   alternates: { canonical: '/articles/nature-of-harmony' },
-};
+});
 
 export default function NatureOfHarmonyPage() {
   return (

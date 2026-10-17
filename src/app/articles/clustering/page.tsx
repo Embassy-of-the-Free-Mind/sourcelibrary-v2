@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('clustering', {
   title: 'What Does a Library of 3,400 Rare Books Look Like? - Articles - Source Library',
   description: 'We embedded 3,400 historical book summaries, clustered them with UMAP and HDBSCAN, and discovered 34 curated groupings spanning seven intellectual traditions, from early modern alchemy to Sanskrit astronomy to Chinese military encyclopedias.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/clustering',
   },
-};
+});
 
 export default function ClusteringPage() {
   return (

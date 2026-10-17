@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('did-an-ai-write-the-encyclical', {
   title: "Did an AI Write the Pope's AI Encyclical? - Articles - Source Library",
   description:
     "Detectors flagged Magnifica Humanitas as 46% AI-written; the headline was 127 em-dashes vs zero in a comparison encyclical. We re-ran the test locally against eight human encyclicals. The smoking gun is a baseline-selection artifact.",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/did-an-ai-write-the-encyclical',
   },
-};
+});
 
 export default function DidAnAiWriteTheEncyclicalPage() {
   // ── em-dash baseline (dashes per 1,000 words), descending ──

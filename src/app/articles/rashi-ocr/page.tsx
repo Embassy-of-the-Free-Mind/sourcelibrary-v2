@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('rashi-ocr', {
   title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew - Articles - Source Library',
   description: 'Gemini reads Arabic, Sanskrit, Chinese, and Latin with measurable accuracy. But on Rashi script (the typeface used in the Zohar and Talmud for 500 years) it confidently produces text that isn\'t on the page. The scariest part: our quality metrics didn\'t catch it.',
   openGraph: {
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/rashi-ocr',
   },
-};
+});
 
 function ComparisonBlock({ label, text, verdict, verdictColor }: { label: string; text: string; verdict: string; verdictColor: string }) {
   return (

@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('translation-rate', {
   title: 'How Many Renaissance Books Get Translated Each Year? - Articles - Source Library',
   description: 'We queried 23,700+ records from the UNESCO Index Translationum, Library of Congress, and 20+ other translation catalogs to measure the annual rate of new English translations of early modern texts. The answer is smaller than anyone guesses.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/translation-rate',
   },
-};
+});
 
 export default function TranslationRatePage() {
   return (

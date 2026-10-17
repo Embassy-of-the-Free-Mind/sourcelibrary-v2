@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
 // fetched through the get_quote tool on 2026-10-16. Claims from outside the library link to their source.
@@ -14,7 +15,7 @@ const HERO = 'https://images.sourcelibrary.org/artwork/art-goltzius-print-satiri
 const HERO_ALT =
   'English satirical engraving signed "Cross sculpsit": Money, a coin with wings and bird legs, runs off to the right; a spendthrift labelled Prodigality scatters coins; the scales of Justice lie on the ground; hounds named Diligence, Industry, Labour, Rapine, Hazard and Deceit are held on leashes.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('harmonic-justice', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/harmonic-justice' },
-};
+});
 
 const BOOK = {
   aristotle: '/book/aristotle-opera-vol-6-metaphysica-aldine-editio-princeps-aristotle',

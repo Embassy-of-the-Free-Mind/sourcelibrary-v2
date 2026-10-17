@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('man-his-own-maker', {
   title: 'Man, His Own Maker - Articles - Source Library',
   description:
     "Leo XIV's encyclical on artificial intelligence is the grandchild of the first printed book the Catholic Church ever banned. Reading the two across five centuries shows what we are actually arguing about.",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/man-his-own-maker',
   },
-};
+});
 
 export const dynamic = 'force-dynamic';
 

@@ -2,10 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('reading-classical-chinese', {
   title: 'Can AI Read Classical Chinese? An OCR and Translation Benchmark - Source Library',
   description: 'We hold ~1,600 Chinese works, most never translated into English. Measured against ctext.org, our OCR reads canonical printed text at ~98.5% character accuracy; our translations match or beat the standard scholarly editions on clean text.',
   openGraph: {
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     images: [{ url: HERO }],
   },
   alternates: { canonical: '/articles/reading-classical-chinese' },
-};
+});
 
 export default function ReadingClassicalChinesePage() {
   return (

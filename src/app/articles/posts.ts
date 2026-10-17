@@ -68,7 +68,7 @@ export function postHref(post: BlogPost): string {
   return post.href ?? `/articles/${post.slug}`;
 }
 
-// Pages under src/app/blog that are not posts in the list, and why.
+// Pages under src/app/articles that are not posts in the list, and why.
 export const UNLISTED_PAGES: Record<string, string> = {
   'how-these-are-made': 'About the notes rather than a note; linked from the index header.',
   'tibetan-reocr': 'Draft (DRAFT = true, noindex) until its pending numbers are filled.',

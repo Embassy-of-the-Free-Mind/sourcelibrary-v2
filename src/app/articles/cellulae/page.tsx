@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('cellulae', {
   title: 'Cellulae: What Two Pages of a Medieval Manuscript Reveal About Biology, Law, and the Dangers of Careful Reasoning - Source Library',
   description:
     'A word on page 32 of a medieval manuscript launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. They were written by the same man.',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/cellulae',
   },
-};
+});
 
 export default function CellulaePage() {
   return (

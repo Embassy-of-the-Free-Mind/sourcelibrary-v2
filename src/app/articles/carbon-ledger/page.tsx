@@ -15,12 +15,13 @@ import { SensitivitySliders } from '@/components/blog/carbon-ledger/interactives
 import { TokenSankey } from '@/components/blog/carbon-ledger/interactives/TokenSankey';
 import { DailyTimeline } from '@/components/blog/carbon-ledger/interactives/DailyTimeline';
 import { fmtCO2, toEquivalents, fmtCount } from '@/components/blog/carbon-ledger/format';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HEADLINE_KG = 1805;
 const HEADLINE_LOW_KG = 220;
 const HEADLINE_HIGH_KG = 20000;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('carbon-ledger', {
   title: 'The Carbon Ledger of a Digital Library | Articles | Source Library',
   description:
     "Source Library has OCR'd 4.1 million pages and translated almost all of them into English using AI. We logged every API call. This is what it cost in dollars, tokens, and carbon.",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     images: [{ url: 'https://images.sourcelibrary.org/gallery/a5d0c381-d4ea-42cd-8864-44457e7fda33/69500509f426a210d109c5bd-0.jpg', alt: 'Allegorical frontispiece of Athanasius Kircher\'s Ars Magna Lucis et Umbrae (1671)' }],
   },
   alternates: { canonical: '/articles/carbon-ledger' },
-};
+});
 
 export default function CarbonLedgerPage() {
   const eq = toEquivalents(HEADLINE_KG);

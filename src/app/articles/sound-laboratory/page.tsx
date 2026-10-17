@@ -13,10 +13,11 @@ import KircherResonanceDemo from '@/components/blog/lab/KircherResonanceDemo';
 import YueJiAffectDemo from '@/components/blog/lab/YueJiAffectDemo';
 import EulerGradusDemo from '@/components/blog/lab/EulerGradusDemo';
 import { FolioFigure, FolioPair } from '@/components/blog/lab/FolioFigure';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-sadeler-fabel-van-de-smid-en-de-hond.jpg';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('sound-laboratory', {
   title: 'The Sound Laboratory - Source Library',
   description:
     'Ten interactive stations that put twenty-five centuries of claims about harmony to the test: the smith\'s hammers, the Pythagorean comma, Bharata\'s two vīṇās, Salmon\'s Royal Society trial, Tartini\'s third tone, Galileo\'s rhythm-into-pitch continuum, Kepler\'s planet-songs, Kircher\'s sympathetic strings, the Record of Music\'s six sounds, and Euler\'s formula for sweetness. Bring headphones.',
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [{ url: HERO, alt: 'A smith at his anvil, hammer raised. Aegidius Sadeler, 1608' }],
   },
-};
+});
 
 export default function SoundLaboratoryPage() {
   return (

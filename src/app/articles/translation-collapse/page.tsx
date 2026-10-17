@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('translation-collapse', {
   title: 'Quality Control on Four Million Machine-Translated Pages - Articles - Source Library',
   description:
     'How we found, measured, and repaired "translation collapse" (pages where the AI returns a fragment instead of a translation) and the two times our measurement was wrong before the model was.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/translation-collapse',
   },
-};
+});
 
 export default function TranslationCollapsePage() {
   return (

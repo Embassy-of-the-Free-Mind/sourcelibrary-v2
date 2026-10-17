@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('tibetan-ocr', {
   title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Buddhist Manuscripts - Source Library',
   description: 'We imported 1,358 manuscripts from Bhutanese monasteries and tested whether AI can read handwritten Tibetan pecha. Claude Opus achieved 100% consistency; Gemini Flash 80%. Cross-model agreement: 89.4%.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/tibetan-ocr',
   },
-};
+});
 
 export default function TibetanOcrPage() {
   return (

@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('autonomous-agents', {
   title: 'How We Added 950 Books in a Weekend - Articles - Source Library',
   description: 'A human curator and three autonomous AI agents working in parallel imported 950 books across 11 languages in a single weekend. How the human-AI curation pipeline works.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/autonomous-agents',
   },
-};
+});
 
 export default function AutonomousAgentsPage() {
   return (

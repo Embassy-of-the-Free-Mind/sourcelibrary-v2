@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { LiveAlignmentDemo } from './LiveAlignmentDemo';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('word-alignment', {
   title: 'Reading Through the Translation - Articles - Source Library',
   description:
     'Click any English word to see the original that produced it. On-demand cross-lingual alignment powered by Gemini embeddings.',
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/word-alignment',
   },
-};
+});
 
 export default function WordAlignmentPage() {
   return (

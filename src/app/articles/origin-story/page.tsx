@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('origin-story', {
   title: 'Where Source Library Came From - Articles - Source Library',
   description: 'From a single untranslated Ficino manuscript at the Embassy of the Free Mind to 5,000+ books and 2,000 first English translations: the origin story of Source Library.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/origin-story',
   },
-};
+});
 
 export default function OriginStoryPage() {
   return (
@@ -163,7 +164,7 @@ export default function OriginStoryPage() {
                 <p className="font-medium text-stone-800 mb-2">A mysterious donor and 5,000 books</p>
                 <p className="text-secondary leading-relaxed font-body">
                   At the beginning of this year, a donor whose identity I still don&apos;t fully understand funded the AI tokens needed to translate at scale. The collection grew to over 5,000 books. Nearly{' '}
-                  <Link href="https://sourcelibrary.org/blog/first-translations" className="text-accent-rust hover:text-accent-rust underline">2,000 first English translations</Link>{' '}
+                  <Link href="/articles/first-translations" className="text-accent-rust hover:text-accent-rust underline">2,000 first English translations</Link>{' '}
                   emerged: texts that had never been readable in English before. The pipeline now processes hundreds of pages per day, with OCR, translation, and image extraction running continuously.
                 </p>
               </div>
@@ -257,7 +258,7 @@ export default function OriginStoryPage() {
               Download the translation (PDF)
             </a>
             <Link
-              href="https://sourcelibrary.org/blog/first-translations"
+              href="/articles/first-translations"
               className="inline-flex items-center gap-2 bg-white text-stone-800 px-5 py-2.5 rounded-lg border border-border-light hover:border-accent-rust/30 transition-colors text-sm font-medium"
             >
               Explore 2,000 first translations

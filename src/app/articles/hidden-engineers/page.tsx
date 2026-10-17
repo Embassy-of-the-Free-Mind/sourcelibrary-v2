@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('hidden-engineers', {
   title: 'The Hidden Engineers: Steam Engines in Spell Books, Automata in Alchemy - Source Library',
   description:
     'Before engineering was a discipline, its knowledge lived inside books of magic, alchemy, and mystical philosophy. A 16th-century manuscript binds Hero of Alexandria\'s steam engines with the Corpus Hermeticum. Della Porta\'s "Natural Magic" is a pneumatics textbook. A Rosicrucian treatise contains a literal steam engine schematic.',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/hidden-engineers',
   },
-};
+});
 
 export default function HiddenEngineersPage() {
   return (

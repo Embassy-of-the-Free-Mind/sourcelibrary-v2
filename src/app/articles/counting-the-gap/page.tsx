@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('counting-the-gap', {
   title: 'We Spent a Day Counting What Hasn\'t Been Translated - Articles - Source Library',
   description: 'We downloaded the entire Library of Congress catalog, scraped a Renaissance bibliography, and matched it all against 1.6 million early modern editions. Here\'s what happened.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/counting-the-gap',
   },
-};
+});
 
 export default function CountingTheGapPage() {
   return (

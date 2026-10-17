@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('counting-first-translations', {
   title: 'How Many First Translations, Really? - Articles - Source Library',
   description:
     'We badge ~5,700 books as first-ever English translations. Are they? We sent an AI agent to fact-check a random sample of both the badged books and the never-assessed ones, and found the bigger error was the firsts we missed, not the ones we over-claimed.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/counting-first-translations',
   },
-};
+});
 
 export default function CountingFirstTranslationsPage() {
   return (

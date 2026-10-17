@@ -2,10 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 export const revalidate = 86400;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('nobody-knows-what-has-been-scanned', {
   title: 'Nobody Knows What Has Been Scanned - Articles - Source Library',
   description:
     'There is no global registry of digitized books. Every library that wants to scan responsibly has to privately rebuild the same census. We know, because we just did. The case for a shared one.',
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/nobody-knows-what-has-been-scanned',
   },
-};
+});
 
 export default function GlobalScanRegistryPage() {
   return (

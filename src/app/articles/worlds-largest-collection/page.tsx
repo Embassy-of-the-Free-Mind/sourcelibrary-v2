@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('worlds-largest-collection', {
   title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts | Source Library',
   description:
     'With 4,200+ translated books and 800,000+ translated pages, Source Library is the world\'s largest collection of ancient and early modern texts translated into English, including 2,400+ first-ever English translations.',
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/worlds-largest-collection',
   },
-};
+});
 
 // Comparison data — scholarly print series
 const PRINT_SERIES = [

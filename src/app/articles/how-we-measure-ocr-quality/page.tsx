@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6a3ceccb4701a906f10db3cb/118.jpg';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('how-we-measure-ocr-quality', {
   title: 'How We Measure OCR Quality - Articles - Source Library',
   description:
     'One page per book, sealed before anyone looks, scored against a published edition, graded by how many referenced books the cell holds. The experimental design behind every engine decision, and what it cannot tell you.',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/how-we-measure-ocr-quality',
   },
-};
+});
 
 const th = 'text-left py-3 pr-6 font-medium';
 const thR = 'text-right py-3 pr-6 font-medium';

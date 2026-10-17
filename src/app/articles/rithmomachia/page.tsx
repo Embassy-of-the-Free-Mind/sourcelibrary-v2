@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('rithmomachia', {
   title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Articles - Source Library',
   description: 'Five primary sources in five languages document Rithmomachia, the "Battle of Numbers," a mathematical board game played across Europe for six centuries. Now translated for the first time.',
   openGraph: {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/rithmomachia',
   },
-};
+});
 
 export default function RithmomachiaPage() {
   return (

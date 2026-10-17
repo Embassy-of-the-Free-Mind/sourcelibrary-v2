@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import PassageComparison from '@/components/comparison/PassageComparison';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('translations-across-civilizations', {
   title: 'What Ficino Heard: Translations Across Civilizations | Source Library',
   description:
     'The same Hermetic vision, rendered by a Renaissance philosopher in 1481, a 17th-century English scribe, and an AI in 2026. Three translations, three centuries, one text.',
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/translations-across-civilizations',
   },
-};
+});
 
 export default function TranslationsAcrossCivilizationsPage() {
   return (

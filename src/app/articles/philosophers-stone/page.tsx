@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('philosophers-stone', {
   title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources - Source Library",
   description:
     'The most famous concept in alchemy means radically different things depending on which text you read. An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb: eight primary sources, eight different answers.',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/philosophers-stone',
   },
-};
+});
 
 export default function PhilosophersStonePage() {
   return (

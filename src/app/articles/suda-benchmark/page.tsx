@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const OG_IMAGE = 'https://images.sourcelibrary.org/pages/69a99ce86c7545e2236e12de/0300.jpg';
 const OG_ALT =
@@ -8,7 +9,7 @@ const OG_ALT =
 const DESCRIPTION =
   'The Suda has 31,000 entries. Two hundred volunteer scholars spent sixteen years translating it; our pipeline did it as ordinary throughput. Then we aligned the two, let each grade the other, and measured something neither could see alone, for $1.15.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('suda-benchmark', {
   title: 'Graded by the Suda - Articles - Source Library',
   description: DESCRIPTION,
   openGraph: {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/suda-benchmark',
   },
-};
+});
 
 export default function SudaBenchmarkPage() {
   return (

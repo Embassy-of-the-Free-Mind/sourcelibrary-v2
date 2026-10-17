@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
 // fetched through the get_quote tool on 2026-10-17. The hero woodcut was checked by eye on our scan.
@@ -13,7 +14,7 @@ const HERO = 'https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33
 const HERO_ALT =
   'Woodcut of a hollow dodecahedron, its twelve pentagonal faces drawn as open frames, labelled "Dodecaedron Planum Vacuum", from Luca Pacioli’s De divina proportione, Venice, 1509.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('ledgers-and-heavens', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/ledgers-and-heavens' },
-};
+});
 
 const BOOK = {
   plotinus: '/book/enneads-1580-greek-latin-ficino-trans-plotinus-ficino',

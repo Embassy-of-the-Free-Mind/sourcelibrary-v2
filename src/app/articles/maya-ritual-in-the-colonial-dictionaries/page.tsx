@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HEADER_IMAGE = 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/40.jpg';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('maya-ritual-in-the-colonial-dictionaries', {
   title: 'Maya Religion in the Colonial Sources - Articles - Source Library',
   description:
     'The Maya gods, the count of days, the rites and the books, from the friars who suppressed them and the Maya who kept them: Landa, Sánchez de Aguilar, the Motul dictionary, the Ritual of the Bacabs and the books of Chilam Balam.',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/maya-ritual-in-the-colonial-dictionaries',
   },
-};
+});
 
 const A = 'https://images.sourcelibrary.org/archived/';
 const P = 'https://images.sourcelibrary.org/pages/';

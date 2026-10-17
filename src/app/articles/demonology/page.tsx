@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('demonology', {
   title: 'What Are Demons? Five Answers from the Primary Sources - Source Library',
   description:
     'The word "demon" names two almost opposite things. The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel trying to damn your soul. Source Library holds the texts that document this extraordinary reversal.',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/demonology',
   },
-};
+});
 
 export default function DemonologyPage() {
   return (

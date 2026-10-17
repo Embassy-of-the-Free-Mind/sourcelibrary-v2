@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('invisible-hand', {
   title: 'The Invisible Hand Has a History - Articles - Source Library',
   description: 'Before Adam Smith, Florentine merchants, Salamanca theologians, and Cambridge Platonists built the intellectual foundations of market theory. Source Library traces the hidden lineage from Aristotle to Bastiat in original editions.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/invisible-hand',
   },
-};
+});
 
 export default function InvisibleHandPage() {
   return (

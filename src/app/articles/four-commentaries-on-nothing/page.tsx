@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Every quotation below is our served English, copied verbatim from the page it links to, and
 // every quoted page was read against its image on 2026-10-07 (#6116). Six pages were
@@ -17,7 +18,7 @@ const TITLE = 'Four Commentaries on Nothing';
 const DESCRIPTION =
   'Nāgārjuna with Candrakīrti, the Diamond Sutra and the Chan master Wukong, a Latin dictionary of Kabbalah, and Dionysius with Johann Eck: four commentaries that warn readers not to turn “nothing” into a doctrine. What our machine translations of them got right and wrong, and what we fixed.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('four-commentaries-on-nothing', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/four-commentaries-on-nothing' },
-};
+});
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';

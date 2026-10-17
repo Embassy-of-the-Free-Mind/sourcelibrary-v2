@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('two-copies-two-languages', {
   title: 'Two Copies, Two Languages - Articles - Source Library',
   description:
     'We hold the same 1495 Aldine grammar twice. One copy is catalogued Greek, the other Latin, and both are right. Fixing that meant measuring 21,481 books, and twice the largest finding turned out to be the measuring instrument.',
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/two-copies-two-languages',
   },
-};
+});
 
 export default function TwoCopiesTwoLanguagesPage() {
   return (

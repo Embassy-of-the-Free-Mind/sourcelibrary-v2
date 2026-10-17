@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import DrebbelNetwork from '@/components/blog/DrebbelNetwork';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Sources: the research dossier for #5898 (sourcelibrary-ops research/drebbel-blog:
 // associates.md, primary-sources.md, our-holdings.md). Every Source Library quote below was
@@ -13,12 +14,12 @@ const TITLE = 'The Engraver Who Went Under the Thames';
 const DESCRIPTION =
   'Cornelis Drebbel built a perpetual-motion clock, a submarine, early microscopes and the first thermostat, and wrote almost nothing. What we know comes from the people around him. A map of his circle, with every tie marked by how well it is attested, and the passages in his own book.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('drebbel', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: { title: TITLE, description: DESCRIPTION },
   alternates: { canonical: '/articles/drebbel' },
-};
+});
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';

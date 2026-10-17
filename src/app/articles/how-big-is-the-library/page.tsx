@@ -2,10 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 export const revalidate = 86400;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('how-big-is-the-library', {
   title: 'How Big Is the Library? - Articles - Source Library',
   description:
     "We counted every word Source Library holds: original OCR, AI translation, and enrichment. The answer: roughly 5-7 billion words, about the size of English Wikipedia. Here is how we measured it, junk pages and all.",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/how-big-is-the-library',
   },
-};
+});
 
 // --- Data (measured 2026-06-01; see scripts/analytics/corpus-size.mjs) ---
 // Winsorized-mean basis (caps junk pages at 3,000 words/page). Median basis is

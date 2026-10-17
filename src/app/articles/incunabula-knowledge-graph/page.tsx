@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('incunabula-knowledge-graph', {
   title: 'Mapping the Incunabula: A Knowledge Graph of the First Printed Books - Articles - Source Library',
   description: 'An interactive force-directed graph connecting nearly 1,000 incunabula by author, printer, place, and subject, revealing the networks behind the printing revolution.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/incunabula-knowledge-graph',
   },
-};
+});
 
 export default function IncunabulaKnowledgeGraphPage() {
   return (

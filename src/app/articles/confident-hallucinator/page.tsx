@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('confident-hallucinator', {
   title: 'The Confident Hallucinator - Articles - Source Library',
   description: 'AI OCR evaluation across five scripts and three Gemini model tiers. A model can be perfectly consistent and completely wrong. Thinking mode fixes what model size cannot.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/confident-hallucinator',
   },
-};
+});
 
 export default function ConfidentHallucinatorPage() {
   return (

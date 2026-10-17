@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Source of every figure here: scripts/eval/results/en-ocr-ref-5124/report.md and the
 // EXPERIMENTS.md entry for run en-ocr-ref-5124-2026-09 (PR #5216, issue #5124). Nothing
@@ -14,7 +15,7 @@ const TITLE = 'Checking the Archive’s OCR against proofread pages';
 const DESCRIPTION =
   'On 122 English pages with an independent proofread transcription, the Internet Archive’s OCR text silently misreads about one printed number in seventy. Our own reader is better on the same page in every cohort. If you quote a date from Archive text, check the image.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('archive-ocr-against-proofread-pages', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/archive-ocr-against-proofread-pages' },
-};
+});
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';

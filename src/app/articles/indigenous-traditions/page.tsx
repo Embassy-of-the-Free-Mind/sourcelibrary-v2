@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('indigenous-traditions', {
   title: 'The Sacred Texts That Were Never "Texts" - Articles - Source Library',
   description: 'Source Library now holds 90+ volumes documenting indigenous spiritual traditions from every inhabited continent: Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas, Polynesian creation chants, and more. Most were recorded in the field by ethnographers who knew the traditions were vanishing.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/indigenous-traditions',
   },
-};
+});
 
 export default function IndigenousTraditionsPage() {
   return (

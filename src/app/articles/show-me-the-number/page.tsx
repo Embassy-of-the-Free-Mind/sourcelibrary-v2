@@ -3,11 +3,12 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { ArnoldTongues } from '@/components/blog/HarmonyVisuals';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Fludd's 1617 engraving of Nature and, at the centre of the cosmos, the ape of Art holding a gridded model of the world: the artificial imitator, four centuries early.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('show-me-the-number', {
   title: 'Show Me the Number: Is There a Law of Human–AI Harmony? - Source Library',
   description:
     'We keep saying AI should be in "harmony" with us: aligned, attuned, in tune. Is that a claim you can measure or a picture we find comforting? Kepler forged the test four hundred years ago. A sequel on synchrony, the Platonic Representation Hypothesis, and where a real law could live.',
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     images: [{ url: HERO, alt: HERO_ALT }],
   },
   alternates: { canonical: '/articles/show-me-the-number' },
-};
+});
 
 export default function ShowMeTheNumberPage() {
   return (

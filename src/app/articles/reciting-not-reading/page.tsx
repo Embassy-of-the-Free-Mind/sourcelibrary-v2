@@ -1,12 +1,13 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-const OG_IMAGE = 'https://sourcelibrary.org/blog/reciting-not-reading/mask-rect-zoom.jpg';
+const OG_IMAGE = '/articles/reciting-not-reading/mask-rect-zoom.jpg';
 const OG_ALT = 'A 1566 Vulgate page with a grey rectangle covering four lines of Genesis 1:2. Fragments of the covered lines remain visible at the right edge.';
 const DESCRIPTION = 'We covered four lines of Genesis with an opaque grey box. The model transcribed them anyway: correctly, seamlessly, and without a word of warning. Then four different prompts failed to stop it.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('reciting-not-reading', {
   title: 'Reciting, Not Reading - Articles - Source Library',
   description: DESCRIPTION,
   openGraph: {
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/reciting-not-reading',
   },
-};
+});
 
 export default function RecitingNotReadingPage() {
   return (

@@ -2,12 +2,13 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Pieter van den Keere's woodcut of the São Tiago on the Bassas da India, cut from
 // Langenes, Caert-thresoor (1598), p. 299 (Amsterdam University Library IIIF).
 const LEAD_IMAGE = '/articles/shipwrecks-and-buried-treasure/baixos-de-iudia.jpg';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('shipwrecks-and-buried-treasure', {
   title: 'Shipwrecks and Buried Treasure - Articles - Source Library',
   description:
     'Sunk chests of gold, a sexton’s pot of Saxon silver, a Spanish galleon in Tobermory Bay and a Tibetan guide that says where to dig: wrecks and hidden treasure in the pages Source Library holds.',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/shipwrecks-and-buried-treasure',
   },
-};
+});
 
 const linkClass = 'text-accent-rust hover:text-accent-rust underline';
 

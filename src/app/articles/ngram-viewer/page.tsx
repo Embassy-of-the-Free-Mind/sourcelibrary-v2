@@ -2,11 +2,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-khunrath-the-four-the-three-the-two-and-the-one.jpg';
 const HERO_ALT = "Heinrich Khunrath's engraving 'The Four, the Three, the Two, and the One' (1595): concentric rings of Latin, Greek, and Hebrew words circling a single figure.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('ngram-viewer', {
   title: 'The Ngram Viewer: Chart a Word, Then Read the Page - Source Library',
   description:
     'A Google-Books-style word-frequency viewer over five centuries of alchemy, Hermetica, and early science, with the two things Google ngrams cannot do: one curve that follows a concept across Latin, German, and French sources at once, and a click-through from any point on the chart to the actual readable pages.',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
     images: [{ url: HERO, alt: HERO_ALT }],
   },
   alternates: { canonical: '/articles/ngram-viewer' },
-};
+});
 
 function ChartLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (

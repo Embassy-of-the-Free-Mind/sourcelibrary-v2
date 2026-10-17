@@ -3,11 +3,12 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { FolioFigure, FolioPair } from '@/components/blog/lab/FolioFigure';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const IMG = 'https://images.sourcelibrary.org/archived';
 const HERO = `${IMG}/695573e7f63a757109172b1d/293.jpg`;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('atlas-of-lost-instruments', {
   title: 'An Atlas of Lost Instruments - Source Library',
   description:
     'A keyed fiddle, a cat organ, a harp the wind plays, a box that composes, a quarrel over the megaphone, a violinist who heard a note nobody played, sand that draws the shape of a sound, and a keyboard with thirty-one notes to the octave. Nine things about music that were discovered, invented, or fought over in books this library holds, and the one thing our AI still cannot read.',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [{ url: HERO, alt: 'Plate XXII of Praetorius\'s Theatrum Instrumentorum, 1620: folk instruments including a keyed fiddle' }],
   },
-};
+});
 
 const R = 'text-accent-rust hover:text-accent-rust underline';
 const P = 'text-secondary leading-relaxed mb-6 font-body';

@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('chakra-tradition', {
   title: 'Recovering the Chakra Tradition - Articles - Source Library',
   description: 'How Source Library is digitizing and translating the primary tantric sources on chakras, nadis, and kundalini, many for the first time in any Western language.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/chakra-tradition',
   },
-};
+});
 
 export default function ChakraTraditionPage() {
   return (

@@ -2,12 +2,13 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const LEAD_IMAGE = 'https://images.sourcelibrary.org/artwork/art-phaetons-sisters-changed-into-poplars-cygnus-into-a-swan.jpg';
 const LEAD_ALT =
   'Engraving after Hendrick Goltzius: the sisters of Phaethon turning into poplars beside his tomb on the river Eridanus, while Cygnus becomes a swan';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('hyperborea', {
   title: 'Beyond the North Wind: Hyperborea and the Amber Coast - Articles - Source Library',
   description:
     'The Greeks placed a blessed people beyond the north wind and said that amber came from the edge of the world. From Herodotus and Pindar to the Prussian and Lithuanian historians who claimed both for the Baltic, read in the books themselves.',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/hyperborea',
   },
-};
+});
 
 const linkClass = 'text-accent-rust hover:text-accent-rust underline';
 const captionLinkClass = 'text-accent-rust hover:text-accent-rust';

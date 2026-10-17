@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('cuneiform-ocr', {
   title: 'Can AI Read Cuneiform? - Articles - Source Library',
   description: 'We ran eight experiments testing Gemini and Claude on 107 cuneiform tablets, the oldest writing system on Earth. Claude Opus breaks through the 15% accuracy ceiling, a contamination test proves genuine visual analysis, and temperature tuning reveals opposite preferences across model families.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/cuneiform-ocr',
   },
-};
+});
 
 export default function CuneiformOcrPage() {
   return (

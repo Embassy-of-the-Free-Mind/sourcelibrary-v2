@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('hieroglyph-ocr', {
   title: 'Can AI Read Hieroglyphs? (No.) - Articles - Source Library',
   description: 'We tested four approaches to hieroglyphic OCR with Gemini 3 Flash: direct Unicode, Gardiner codes, self-correction, and glyph-by-glyph description. All four failed. Here is what we learned.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/hieroglyph-ocr',
   },
-};
+});
 
 function HieroBlock({ children, label }: { children: React.ReactNode; label?: string }) {
   return (

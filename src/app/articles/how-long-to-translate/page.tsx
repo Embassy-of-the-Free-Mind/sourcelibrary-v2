@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('how-long-to-translate', {
   title: 'How Long Would It Take to Translate the Renaissance? - Articles - Source Library',
   description:
     'We measured the rate of new Latin translations and counted what is left. At the current pace, finishing the Latin Renaissance alone would take roughly ten thousand years.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/how-long-to-translate',
   },
-};
+});
 
 const SCENARIOS = [
   { rate: '4 / year', who: 'I Tatti Renaissance Library, the flagship dedicated series (~100 volumes in 25 years)', years: '~89,000 years' },

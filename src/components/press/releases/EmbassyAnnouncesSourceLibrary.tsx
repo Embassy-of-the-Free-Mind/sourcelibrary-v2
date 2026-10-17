@@ -248,7 +248,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
           The project began in 2022, when Lomas encountered Marsilio Ficino&rsquo;s <em>Liber de
           Voluptate</em> in the BPH&rsquo;s collection: a philosophical dialogue on pleasure
           and virtue, written in 1457 and never translated into English. He commissioned a{' '}
-          <a href="https://sourcelibrary.org/blog/origin-story" className="text-accent-rust hover:underline">
+          <a href="/articles/origin-story" className="text-accent-rust hover:underline">
             professional translation from Oxford
           </a>
           , published it alongside scans of the original Latin, and that side-by-side format
@@ -308,7 +308,7 @@ export default function EmbassyAnnouncesSourceLibrary() {
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
           The{' '}
-          <a href="https://sourcelibrary.org/blog/counting-the-gap" className="text-accent-rust hover:underline">
+          <a href="/articles/counting-the-gap" className="text-accent-rust hover:underline">
             Universal Short Title Catalogue
           </a>{' '}
           records over 690,000 distinct non-English works printed between 1450 and 1700. We estimate

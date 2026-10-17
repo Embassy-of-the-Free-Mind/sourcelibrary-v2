@@ -2,12 +2,13 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const LEAD_IMAGE = 'https://images.sourcelibrary.org/artwork/art-tree-of-life-fludd-1.jpg';
 // Crops cut from the library's page images and artworks for this post.
 const IMG = '/articles/trees-of-life';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('trees-of-life', {
   title: 'Trees of Life Across the Traditions - Articles - Source Library',
   description:
     'World trees, sacred trees and tree diagrams from Kabbalah, Norse and Prussian myth, Assyria, Mesoamerica, Christianity, Islam, Java, Tibet, alchemy, logic and Darwin, shown in the plates and pages Source Library holds.',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/trees-of-life',
   },
-};
+});
 
 const linkClass = 'text-accent-rust hover:text-accent-rust underline';
 const captionLinkClass = 'text-accent-rust hover:text-accent-rust';

@@ -5,12 +5,13 @@ import GalileiStringsDemo from '@/components/blog/lab/GalileiStringsDemo';
 import LyreReadingsDemo from '@/components/blog/lab/LyreReadingsDemo';
 import BoethiusLadderDemo from '@/components/blog/lab/BoethiusLadderDemo';
 import { FolioFigure, FolioPair } from '@/components/blog/lab/FolioFigure';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6955739df63a7571091720cf/80.jpg';
 const HERO_ALT =
   'A page of the Boethius manuscript: two large hand-drawn diagrams of nested red arcs mapping the chromatic and enharmonic tetrachords, with string names and monochord numbers.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('playable-page', {
   title: 'The Playable Page - Source Library',
   description:
     'Old books are full of instruments diagrammed and silenced: monochord divisions, tetrachord arcs, interval tables. This note replicates three of them and strings them: Galilei\'s two-string bench, the Lyre of Mercury\'s disputed numbers, and the full two-octave system of ancient music from a Boethius manuscript, playable in all three genera.',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [{ url: HERO, alt: HERO_ALT }],
   },
-};
+});
 
 export default function PlayablePagePage() {
   return (

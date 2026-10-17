@@ -2,9 +2,10 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('2000-first-translations', {
   title: '2,000 Books Never Read in English | Source Library',
   description:
     'Data analysis of 2,000+ historical texts receiving their first English translation through AI, from 15th-century alchemical manuscripts to 19th-century Sanskrit treatises.',
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg' }],
   },
-};
+});
 
 // --- Static data from MongoDB aggregation (March 2026) ---
 
@@ -952,7 +953,7 @@ export default function TwoThousandFirstTranslations() {
           </div>
 
           <Link
-            href="https://sourcelibrary.org/blog/first-translation-methodology"
+            href="/articles/first-translation-methodology"
             className="inline-block text-base font-medium text-[#9e4a3a] hover:underline"
           >
             Read the full methodology documentation
@@ -962,7 +963,7 @@ export default function TwoThousandFirstTranslations() {
         {/* CTA */}
         <div className="mt-10 text-center">
           <Link
-            href="https://sourcelibrary.org/blog/first-translations"
+            href="/articles/first-translations"
             className="inline-block bg-[#9e4a3a] text-white font-medium text-base px-8 py-3 rounded-lg hover:bg-[#8a3f31] transition-colors"
           >
             Browse all first translations

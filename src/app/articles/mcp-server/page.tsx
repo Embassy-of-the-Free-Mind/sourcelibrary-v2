@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('mcp-server', {
   title: 'Claude Can Now Read Thousands of Rare Books - Articles - Source Library',
   description: 'We shipped an MCP server that gives Claude direct access to Source Library: thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations. One command to install.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/mcp-server',
   },
-};
+});
 
 export default function McpServerPage() {
   return (

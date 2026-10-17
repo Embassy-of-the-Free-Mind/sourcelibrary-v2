@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('did-the-ai-read-this', {
   title: 'Did the AI Read This? - Articles - Source Library',
   description: 'A Bayesian survey of which books in our 16,871-volume OCR\'d corpus are already in frontier-model training data. About 43% are confidently new to AI; about 21% are confidently in training.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/did-the-ai-read-this',
   },
-};
+});
 
 export default function DidTheAIReadThisPage() {
   return (

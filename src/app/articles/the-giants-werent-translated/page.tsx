@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('the-giants-werent-translated', {
   title: 'The Giants Were Never Fully Translated - Source Library',
   description:
     'The most-read book on Source Library, Robert Fludd&rsquo;s Utriusque Cosmi Historia, has never been translated into English in full. Neither have the major works of Kircher, and Ficino only reached English this century. Why "first full translation" is still meaningful.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/the-giants-werent-translated',
   },
-};
+});
 
 export default function GiantsPage() {
   return (

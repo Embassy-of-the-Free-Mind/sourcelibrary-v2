@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Sources of the figures here: OCR error rates from the #5660 bake-offs (comments of
 // 2026-10-03, PR #5684 and #5750); translation fidelity from the corpus audit
@@ -16,7 +17,7 @@ const TITLE = 'Should a library train its own AI models?';
 const DESCRIPTION =
   'Gemini reads and translates almost every page in this library. We have measured how good that work is, slice by slice. Where it is good, it can train a smaller open model of our own; where it is weak, we need human-made text to do better. What we have tried, what it would save, and who else is doing this.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('training-our-own-models', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/training-our-own-models' },
-};
+});
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';

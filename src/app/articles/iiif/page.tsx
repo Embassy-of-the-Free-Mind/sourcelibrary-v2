@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('iiif', {
   title: 'How IIIF Helped Us Translate the Renaissance - Articles - Source Library',
   description:
     'IIIF turned thirteen institutional image archives into a single input layer for an AI translation pipeline. We consume IIIF to import rare books, and we serve IIIF so any viewer can read our OCR and translation laid over the original page. A behind-the-scenes look, with diagrams.',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/iiif',
   },
-};
+});
 
 /* ── Brand palette for the diagrams ── */
 const INK = '#231a12';

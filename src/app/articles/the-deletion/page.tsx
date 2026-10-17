@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('the-deletion', {
   title: 'The Deletion: How Claude Code accidentally deleted 4,758 books | Articles | Source Library',
   description: 'A postmortem of the afternoon a Claude Code session in one of my ten open terminals hard-deleted nearly 5,000 books from production. With primary sources: the actual prompts and the actual postmortem.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/the-deletion',
   },
-};
+});
 
 export default function TheDeletionPage() {
   return (

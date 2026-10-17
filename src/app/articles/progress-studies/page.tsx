@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('progress-studies', {
   title: 'The Deeper Roots: Progress Studies and the Pre-Industrial Evidence Base - Source Library',
   description:
     'Progress studies predicted that useful knowledge drove innovation long before the Industrial Revolution. 2,500 newly translated books in Latin, German, Arabic, and Hebrew confirm it, with steam engines, laboratory equipment, and experimental science embedded in alchemy and natural magic.',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/progress-studies',
   },
-};
+});
 
 export default function ProgressStudiesPage() {
   return (

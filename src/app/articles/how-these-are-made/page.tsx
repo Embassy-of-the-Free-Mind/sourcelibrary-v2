@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('how-these-are-made', {
   title: 'How These Notes Are Made - Source Library',
   description:
     'The research notes on Source Library are AI-assisted reports from an ongoing project to digitize and translate historical texts, directed, reviewed, and published by Derek Lomas. Here is how they are made, and why.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
   },
-};
+});
 
 export default function HowTheseAreMadePage() {
   return (

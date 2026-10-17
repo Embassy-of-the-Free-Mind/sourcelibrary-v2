@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('what-makes-a-good-scan', {
   title: 'What Makes a Good Scan? - Articles - Source Library',
   description: 'Pixel statistics, AI judgment, and the moment a model rated a blank page 95/100. Designing a per-illustration quality system for 100,000 rare-book images.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/what-makes-a-good-scan',
   },
-};
+});
 
 export default function WhatMakesAGoodScanPage() {
   return (

@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('history-of-astrology', {
   title: 'A History of Astrology Across Traditions - Articles - Source Library',
   description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos, astrology was one of the longest-running intellectual projects in human history, pursued independently across Greek, Indian, Arabic, Chinese, and European traditions. Source Library holds the primary texts.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/history-of-astrology',
   },
-};
+});
 
 export default function HistoryOfAstrologyPage() {
   return (

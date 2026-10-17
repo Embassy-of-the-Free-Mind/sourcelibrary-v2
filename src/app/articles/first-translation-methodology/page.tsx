@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('first-translation-methodology', {
   title: 'How We Identify First Translations - Articles - Source Library',
   description: 'The methodology behind Source Library\'s first-translation classification: how AI enrichment, bibliographic heuristics, and human review work together to identify books that have never been translated into English.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/first-translation-methodology',
   },
-};
+});
 
 export default function FirstTranslationMethodologyPage() {
   return (

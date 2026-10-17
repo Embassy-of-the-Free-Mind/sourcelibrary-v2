@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('naked-philosophers', {
   title: 'The Naked Philosophers: How Alexander’s India Became the Rosicrucians’ Ancestor - Source Library',
   description:
     'In 327 BCE Alexander’s fleet-captain was sent to sit before fifteen naked, motionless sages who would not come when the king summoned them. Nineteen centuries later a Rosicrucian alchemist enrolled those same "gymnosophists" as ancestors of his Brotherhood. A story told through eight books in the library.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/naked-philosophers',
   },
-};
+});
 
 export default function NakedPhilosophersPage() {
   return (

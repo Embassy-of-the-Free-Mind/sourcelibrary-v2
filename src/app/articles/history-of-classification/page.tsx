@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('history-of-classification', {
   title: 'Ten Thousand Years of Tagging: A History of How Humans Organize Knowledge - Articles - Source Library',
   description: 'From Callimachus at Alexandria to LLM-assigned faceted tags, the history of classification runs through books we actually have. Aristotle, Porphyry, Llull, Leibniz, Linnaeus, Ranganathan, and the system we built from all of them.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/history-of-classification',
   },
-};
+});
 
 /* External link helper — opens in new tab */
 function ExtLink({ href, children }: { href: string; children: React.ReactNode }) {

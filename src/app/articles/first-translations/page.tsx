@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('first-translations', {
   title: 'First English Translations - Articles - Source Library',
   description: 'Nearly 2,000 books in Source Library are first-ever English translations, over 900 now fully translated. Alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
   openGraph: {
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/first-translations',
   },
-};
+});
 
 export default function FirstTranslationsPage() {
   return (
@@ -423,7 +424,7 @@ export default function FirstTranslationsPage() {
 
           <p className="text-secondary leading-relaxed font-body">
             Classification uses a multi-stage verification pipeline: an initial AI assessment from OCR text, followed by a deep verification step that searches real bibliographic databases (UNESCO&apos;s Index Translationum, Open Library, Google Books, and the Universal Short Title Catalogue) using Gemini function calling. The verification pipeline has now processed virtually all non-English books in the collection. Of the 1,971 first translations, 1,466 are confirmed with no English translation found in any catalog searched, 388 are first <em>complete</em> translations where only excerpts existed, and 109 are first modern translations of texts last rendered into English before 1800. The{' '}
-            <Link href="https://sourcelibrary.org/blog/first-translation-methodology" className="text-accent-rust hover:text-accent-rust underline">full methodology</Link>{' '}
+            <Link href="/articles/first-translation-methodology" className="text-accent-rust hover:text-accent-rust underline">full methodology</Link>{' '}
             is documented separately. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
           </p>
         </section>

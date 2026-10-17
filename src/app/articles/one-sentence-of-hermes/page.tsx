@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Every reading of a printed or written page below was checked against the scan on 2026-10-07/08,
 // and the crops in public/articles/one-sentence-of-hermes are cut from those scans. Quoted English is our
@@ -17,7 +18,7 @@ const TITLE = 'One Sentence of Hermes, Copied for Sixteen Hundred Years';
 const DESCRIPTION =
   'A late-antique translator misread one Greek word in the Asclepius. We followed the sentence through a manuscript, five printed editions, a commentary and a critical edition, and found our own OCR making the copyists’ mistakes.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('one-sentence-of-hermes', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/one-sentence-of-hermes' },
-};
+});
 
 const BOOK = {
   scott: '/book/69a97a1bf3f3d2fb7de26ca4',

@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 const HERO = 'https://images.sourcelibrary.org/pages/69b1863dc4be2cdd0edc573a/0011.jpg';
 const HERO_ALT = 'Title page of Oriatrike, or Physick Refined, the 1662 English Van Helmont, with an ink blot over one word.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('free-reading', {
   title: 'The Reading We Did Not Have to Pay For - Articles - Source Library',
   description:
     'Five and a half million of our untranscribed pages come from the Internet Archive, and the Archive already read them once. We tested that reading book by book against our own, took it where the two agree, and measured whether a cheap language model can rescue the rest.',
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/free-reading' },
-};
+});
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';

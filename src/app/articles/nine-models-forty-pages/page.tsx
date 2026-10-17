@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('nine-models-forty-pages', {
   title: 'Nine Models, Forty Pages - Articles - Source Library',
   description:
     "We benchmarked every OCR-capable model we could reach (Google's newest releases, three open-weight challengers, one self-hosted) on the same forty historical pages. The newest budget model lost to its own predecessor.",
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/nine-models-forty-pages',
   },
-};
+});
 
 function ResultRow({
   model,

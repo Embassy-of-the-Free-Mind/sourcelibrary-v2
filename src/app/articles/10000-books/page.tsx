@@ -2,10 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 export const revalidate = 86400;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('10000-books', {
   title: '10,000 Books - Articles - Source Library',
   description:
     'Source Library passed 10,000 books. The 10,000th: Champier\'s Four Volumes of Divine and Human Marvels (1517), a Renaissance encyclopedia never before translated into English.',
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/10000-books',
   },
-};
+});
 
 export default function TenThousandBooksPage() {
   return (

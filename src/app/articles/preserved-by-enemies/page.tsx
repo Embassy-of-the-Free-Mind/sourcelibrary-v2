@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
 // Every quotation below is copied from the stored text of the page it links to (#6559): the served English
 // translation, or, for Legge's Hippolytus and Harvey's notes, the printed English itself. Each passage the
@@ -16,7 +17,7 @@ const TITLE = 'Preserved by Their Enemies';
 const DESCRIPTION =
   'The books written to stamp out a religion are often the only record of it. Hippolytus and Epiphanius copied the Gnostics they refuted; in Mexico and Yucatán the friars who burned the books wrote down the spells, the omens and the alphabet.';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('preserved-by-enemies', {
   title: `${TITLE} - Articles - Source Library`,
   description: DESCRIPTION,
   openGraph: {
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: { card: 'summary_large_image', images: [{ url: HERO, alt: HERO_ALT }] },
   alternates: { canonical: '/articles/preserved-by-enemies' },
-};
+});
 
 const BOOK = {
   hippolytus1: '/book/refutation-of-all-heresies-vol-1-rome',

@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('does-ai-get-religion', {
   title: 'Does the AI Get Religion? | Articles | Source Library',
   description:
     "The longest page in our library is one leaf of a Javanese Old Testament that the AI translated into 491,418 characters of 'generations of generations of generations.' It does this only with scripture.",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/does-ai-get-religion',
   },
-};
+});
 
 export default function DoesAiGetReligionPage() {
   return (

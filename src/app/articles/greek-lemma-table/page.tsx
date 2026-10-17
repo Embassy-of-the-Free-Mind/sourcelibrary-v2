@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ShapeCloud from './ShapeCloud';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('greek-lemma-table', {
   title: 'Every Shape of Every Word - Articles - Source Library',
   description:
     'We mapped 570,000 Greek word forms to their dictionary entries: the invisible table that lets anyone tap a word in a 1590 book and understand it, and lets scholars trace a word across two centuries.',
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/greek-lemma-table',
   },
-};
+});
 
 export default function GreekLemmaTablePage() {
   return (

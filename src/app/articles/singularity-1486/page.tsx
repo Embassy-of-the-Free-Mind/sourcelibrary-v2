@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('singularity-1486', {
   title: 'The Singularity Was Published in 1486 - Articles - Source Library',
   description: 'Everything the techno-optimist movement thinks it invented (unfixed human nature, panpsychism, the planetary mind, immortality as an engineering problem) was already written down centuries ago. Here are the original passages.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/singularity-1486',
   },
-};
+});
 
 export const dynamic = 'force-dynamic';
 

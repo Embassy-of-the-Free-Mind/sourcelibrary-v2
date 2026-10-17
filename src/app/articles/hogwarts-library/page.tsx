@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('hogwarts-library', {
   title: 'The Real Hogwarts Library - Source Library',
   description:
     'Nicolas Flamel was a real 14th-century Parisian scribe. Cornelius Agrippa, Paracelsus, Helena Blavatsky: all real, all on Chocolate Frog Cards, all in here. A reader\'s tour of the historical books behind the Hogwarts curriculum.',
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/hogwarts-library',
   },
-};
+});
 
 export default function HogwartsLibraryPage() {
   return (

@@ -1,14 +1,15 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('interlinear-experiment', {
   title: 'Facing Page vs Interlinear: How Should Ancient Texts Be Read? - Source Library',
   description: 'Comparing our facing-page reader (scan + translation side by side) with interlinear display (original and translation woven line by line) for Sumerian, Akkadian, and Egyptian texts.',
   alternates: {
     canonical: '/articles/interlinear-experiment',
   },
-};
+});
 
 // Instructions of Shuruppag opening (ETCSL 5.6.1)
 const SHURUPPAG_LINES = [

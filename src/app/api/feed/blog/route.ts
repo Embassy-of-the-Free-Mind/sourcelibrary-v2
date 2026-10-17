@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { posts, KIND_INFO } from '@/app/articles/posts';
 
-// Atom feed for the Research Notes blog. Reads the same `posts` array the index
+// Atom feed for Articles (/articles). Reads the same `posts` array the index
 // renders, so the feed never drifts from the site.
 
 export const dynamic = 'force-static';

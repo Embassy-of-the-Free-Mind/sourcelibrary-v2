@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('visualizing-classification', {
   title: 'Visualizing 20,000 Books Across Six Dimensions - Source Library',
   description: 'Interactive visualizations of Source Library\'s faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram, showing how 17 traditions flow into 15 domains across 11 cultural spheres.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/visualizing-classification',
   },
-};
+});
 
 export default function VisualizingClassificationPage() {
   return (

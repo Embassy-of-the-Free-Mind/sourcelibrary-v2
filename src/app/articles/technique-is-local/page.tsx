@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('technique-is-local', {
   title: 'Technique Is Local, Crisis Is Universal - Articles - Source Library',
   description:
     'Reading meditation manuals as research artifacts: what the primary sources on contemplative practice say that contemporary meditation science has not yet tested.',
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/technique-is-local',
   },
-};
+});
 
 export default function TechniqueIsLocalPage() {
   return (

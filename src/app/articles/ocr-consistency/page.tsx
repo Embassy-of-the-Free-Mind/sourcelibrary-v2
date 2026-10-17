@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = withArticleMeta('ocr-consistency', {
   title: 'How Consistent Is AI OCR? - Articles - Source Library',
   description: 'A library\'s digitization error gave us 1,448 natural experiments. Two photographs of the same page, OCR\'d independently by Gemini: character-level comparison reveals a 1.8% median disagreement rate across six languages and four centuries of printed text.',
   openGraph: {
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/ocr-consistency',
   },
-};
+});
 
 export default function OcrConsistencyPage() {
   return (

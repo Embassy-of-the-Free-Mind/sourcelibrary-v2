@@ -356,7 +356,12 @@ const nextConfig: NextConfig = {
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
-        source: '/blog/:path*',
+        source: '/articles',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/articles/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
@@ -398,6 +403,12 @@ const nextConfig: NextConfig = {
     return [
       // Research Notes became Articles: /blog and every post under it moved
       // to /articles with the same slugs.
+      // Renamed posts come first: the generic /blog/:path* rule below would
+      // otherwise catch them and land on a 404 under the old slug. The prose
+      // note was replaced by the document itself (PR #4991), then given its
+      // own name.
+      { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/blog', destination: '/articles', permanent: true },
       { source: '/blog/:path*', destination: '/articles/:path*', permanent: true },
       // Merged/retired collection slugs → successors (issue #3002). True HTTP
@@ -433,12 +444,6 @@ const nextConfig: NextConfig = {
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',
-        permanent: true,
-      },
-      // The prose note was replaced by the document itself (PR #4991), then given its own name.
-      {
-        source: '/blog/where-the-instructions-are',
-        destination: '/blog/techniques-of-the-body',
         permanent: true,
       },
       // Iconclass division pages retired (#4856) — codes were model-recalled and

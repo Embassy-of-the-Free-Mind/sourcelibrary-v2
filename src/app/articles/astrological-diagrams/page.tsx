@@ -2,9 +2,10 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
-  title: 'Reading the Stars: Astrological Diagrams from Nine Centuries | Blog | Source Library',
+export const metadata: Metadata = withArticleMeta('astrological-diagrams', {
+  title: 'Reading the Stars: Astrological Diagrams from Nine Centuries - Articles - Source Library',
   description: 'A visual tour of Source Library\'s astrological collection: from the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics, with the original diagrams that mapped humanity\'s relationship to the heavens.',
   openGraph: {
     title: 'Reading the Stars: Astrological Diagrams from Nine Centuries',
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/articles/astrological-diagrams',
   },
-};
+});
 
 // Timeline data — chronological order
 const timelineEras = [
