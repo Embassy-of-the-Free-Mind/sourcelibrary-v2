@@ -24,6 +24,7 @@ import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { checkChapters, CHECKS_RUN } from '@/lib/chapter-checks';
 import type { Chapter } from '@/lib/types';
 import { GALLERY_VIEWER_HTML, GALLERY_VIEWER_RESOURCE_URI, MCP_APP_MIME_TYPE } from '@/lib/mcp-gallery-app';
+import { MCP_HEADERS, mcpApiGet, type McpCaller } from '@/lib/mcp-inprocess';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -52,12 +53,15 @@ import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
  * TypeScript, so it stays a literal. That is now the ONLY other copy, and the
  * audit's job is exactly to hold it against this one. Bump both together.
  */
-const SERVER_VERSION = '4.12.0';
+const SERVER_VERSION = '4.12.1';
 
 // ── API helpers (same as mcp-server/src/api.ts, self-calling) ──────
+//
+// The search tools no longer self-call: they run the search routes in this
+// function through mcpApiGet (src/lib/mcp-inprocess.ts, #6853), carrying the
+// caller's identity (#4307). The rest still go over HTTP.
 
 const API_BASE = 'https://sourcelibrary.org/api';
-const MCP_HEADERS = { 'User-Agent': 'SourceLibrary-MCP/4.3', 'Accept-Language': 'en' };
 
 async function apiGet(path: string, params?: URLSearchParams) {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
@@ -85,7 +89,7 @@ async function apiPost(path: string, body: unknown) {
 
 // ── Tool implementations (mirrors mcp-server/src/api.ts) ───────────
 
-async function searchLibrary(args: Record<string, unknown>) {
+async function searchLibrary(args: Record<string, unknown>, caller?: McpCaller) {
   const limit = Math.min(Number(args.limit) || 10, 100);
   const offset = Number(args.offset) || 0;
   const params = new URLSearchParams({ q: String(args.query), limit: String(limit), offset: String(offset) });
@@ -96,7 +100,7 @@ async function searchLibrary(args: Record<string, unknown>) {
   if (args.has_translation) params.set('has_translation', 'true');
   if (args.sort) params.set('sort', String(args.sort));
 
-  const result = await apiGet('/search', params) as Record<string, unknown>;
+  const result = await mcpApiGet('/search', params, caller) as Record<string, unknown>;
   const results = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
     id: r.book_id || r.id,
     type: r.type,
@@ -147,7 +151,7 @@ function conceptVocabularyBlock(query: unknown): Record<string, unknown> {
   };
 }
 
-async function searchPassages(args: Record<string, unknown>) {
+async function searchPassages(args: Record<string, unknown>, caller?: McpCaller) {
   const userLimit = Math.min(Number(args.limit) || 20, 50);
   const offset = Number(args.offset) || 0;
   // BUG 1 fix: the backend can return page-rows with empty/whitespace snippets,
@@ -172,7 +176,7 @@ async function searchPassages(args: Record<string, unknown>) {
   const textLang = langArg(args);
   if (textLang !== 'en') params.set('lang', textLang);
 
-  const result = await apiGet('/search', params) as Record<string, unknown>;
+  const result = await mcpApiGet('/search', params, caller) as Record<string, unknown>;
   const allPassages = ((result.results as Array<Record<string, unknown>>)?.map((r) => {
     const snippetType = r.snippet_type as string | undefined;
     // The snippet's language: the leaf's own for an OCR hit, otherwise the
@@ -227,7 +231,7 @@ async function searchPassages(args: Record<string, unknown>) {
   };
 }
 
-async function searchConcept(args: Record<string, unknown>) {
+async function searchConcept(args: Record<string, unknown>, caller?: McpCaller) {
   const userLimit = Math.min(Number(args.limit) || 15, 50);
   // BUG 1 fix (same pattern as searchPassages): the empty-snippet .filter(...)
   // below can empty the page when the backend's first rows carry blank snippets.
@@ -254,7 +258,7 @@ async function searchConcept(args: Record<string, unknown>) {
   const conceptLane = args.lane === 'concept' && conceptLang === 'en';
   if (conceptLane) params.set('lane', 'concept');
 
-  const result = await apiGet('/search/semantic', params) as Record<string, unknown>;
+  const result = await mcpApiGet('/search/semantic', params, caller) as Record<string, unknown>;
   const allPassages = ((result.results as Array<Record<string, unknown>>)?.map((r) => ({
     book_id: r.book_id,
     title: r.book_title,
@@ -1892,12 +1896,13 @@ function pagesServedByTool(name: string, result: unknown): number {
   return 0;
 }
 
-async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMarks?: boolean }) {
+async function handleToolCall(name: string, args: ToolArgs, opts?: { keepQuoteMarks?: boolean; caller?: McpCaller }) {
+  const caller = opts?.caller;
   switch (name) {
-    case 'search_library': return searchLibrary(args);
+    case 'search_library': return searchLibrary(args, caller);
     case 'search_translations':
-    case 'search_passages': return searchPassages(args);
-    case 'search_concept': return searchConcept(args);
+    case 'search_passages': return searchPassages(args, caller);
+    case 'search_concept': return searchConcept(args, caller);
     case 'search_within_book': return searchWithinBook(args);
     case 'list_books': return listBooks(args);
     case 'get_book': return getBook(args);
@@ -2275,7 +2280,10 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
       const callArgs = name === 'submit_page_review' || name === 'propose_correction'
         ? { ...argsObj, _client_user_agent: reqContext.userAgent }
         : argsObj;
-      const result = await handleToolCall(name, callArgs, toolOpts);
+      const result = await handleToolCall(name, callArgs, {
+        ...toolOpts,
+        caller: { identity: reqContext.identity, ip: reqContext.ip },
+      });
       // Record pages served under the REAL caller identity so the budget
       // above has something to sum. Fire-and-forget, like all usage logging.
       if (PAGE_BUDGET_TOOLS.has(name)) {

@@ -309,7 +309,7 @@ export function withApiAuth<C = unknown>(
 ) {
   const enforce = process.env.API_AUTH_ENFORCE === '1';
 
-  return async (request: NextRequest, ctx: C): Promise<Response> => {
+  const gated = async (request: NextRequest, ctx: C): Promise<Response> => {
     const start = Date.now();
     const decision = await requireApiAccess(request);
 
@@ -357,4 +357,10 @@ export function withApiAuth<C = unknown>(
 
     return response;
   };
+
+  // The route body without the gate, for a caller that has already passed it
+  // as itself: the MCP route runs /api/search in-process with the identity it
+  // resolved (src/lib/mcp-inprocess.ts, #4307). Gating it twice charged a
+  // second, shared pool.
+  return Object.assign(gated, { handler });
 }

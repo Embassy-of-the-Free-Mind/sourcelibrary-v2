@@ -5,11 +5,22 @@ vi.mock('@/lib/api-auth', () => ({ withApiAuth: (h: (...a: unknown[]) => unknown
 vi.mock('@/lib/mcp-usage', () => ({ logMcpToolCall: vi.fn(), logMcpInitialize: vi.fn() }));
 vi.mock('@/lib/api-usage', () => ({ getPagesServedLast24h: vi.fn(async () => 0), logApiUsage: vi.fn() }));
 
+// The search tools run the search routes in-process (#6853): stand the routes in for the backend.
+const { routeSeen } = vi.hoisted(() => ({ routeSeen: [] as string[] }));
+const fakeRoute = async (req: Request) => {
+  routeSeen.push(req.url);
+  return new Response(JSON.stringify({ query: 'x', total: 0, results: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+};
+vi.mock('@/app/api/search/route', () => ({ GET: Object.assign(fakeRoute, { handler: fakeRoute }) }));
+vi.mock('@/app/api/search/semantic/route', () => ({ GET: fakeRoute }));
+
 // #4251: an agent searching "daemon" was never told that Zoroastrian texts say daēva and Arabic
 // ones jinn, so it could not cross to them. tests/unit/concept-aliases.test.ts pins the
 // vocabulary; this pins that the two passage tools HAND IT OVER, say it was not searched, and
 // send the backend the caller's query unchanged. LIVE=1 runs it against production search.
 const LIVE = process.env.LIVE === '1';
+// Live, the tools go to production over HTTP rather than to the stand-in routes.
+if (LIVE) process.env.MCP_INPROCESS = '0';
 
 async function call(name: string, args: Record<string, unknown>) {
   const { POST } = await import('@/app/api/mcp/route');
@@ -30,7 +41,7 @@ describe('MCP passage search hands over the curated concept vocabulary', () => {
       return new Response(JSON.stringify({ query: 'x', total: 0, results: [] }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }));
   }
-  afterEach(() => { seen.length = 0; });
+  afterEach(() => { seen.length = 0; routeSeen.length = 0; });
 
   for (const tool of ['search_translations', 'search_concept']) {
     it(`${tool}("daemon") names the other traditions' words and says they were not searched`, async () => {
@@ -45,7 +56,7 @@ describe('MCP passage search hands over the curated concept vocabulary', () => {
       expect(out.concept_vocabulary_note).toMatch(/NOT synonyms/);
       if (!LIVE) {
         // The query reaches the backend as sent: nothing is expanded on the caller's behalf.
-        const sent = seen.filter((u) => u.includes('/api/search'));
+        const sent = [...seen, ...routeSeen].filter((u) => u.includes('/api/search'));
         expect(sent).toHaveLength(1);
         expect(new URL(sent[0]).searchParams.get('q')).toBe('daemon');
       }
