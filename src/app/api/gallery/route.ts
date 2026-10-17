@@ -349,6 +349,16 @@ export async function GET(request: NextRequest) {
       : null;
 
     let textItems: any[] = [];
+    // The book-context lane's semantic book lookup (see "Book-context fallback").
+    let contextBooksPromise: Promise<Awaited<ReturnType<typeof import('@/lib/semantic-search')['semanticBookSearch']>>> | null = null;
+    const startContextBooks = () => {
+      const p = timed('context', () => import('@/lib/semantic-search')
+        .then(({ semanticBookSearch }) => semanticBookSearch(searchQuery!, 8, { scope: searchScope, threshold: 0.5 })));
+      // Handled where it is awaited; this only keeps an unused or early-return
+      // lookup from surfacing as an unhandled rejection.
+      p.catch(() => {});
+      return p;
+    };
     // Accurate total for the Atlas Search path. The old estimate
     // (offset + items.length + 1) grew with every page — "ship" reported
     // "Found 41", then "Found 61", and "Page X of X+1" forever, so a reader
@@ -468,6 +478,13 @@ export async function GET(request: NextRequest) {
         // Atlas Search index not ready — fall back to $text
       }
 
+      // The book-context lane (below) runs when the text lanes find fewer than
+      // 3 plates. The $text fallback can only add rows when Atlas found none, so
+      // the lane's semantic book lookup starts now, beside that fallback and the
+      // CLIP wait, instead of after both (#6854). If the fallback then finds 3
+      // or more, the lookup is dropped unused.
+      if (!bookId && textItems.length < 3 && offset === 0) contextBooksPromise = startContextBooks();
+
       // Fallback: $text index (covers description, book_title, book_author)
       if (textItems.length === 0) {
         // Multi-word queries: quote the phrase so $text requires the words
@@ -481,7 +498,7 @@ export async function GET(request: NextRequest) {
         filter.$text = { $search: phraseQuery };
         const sortOrder: Record<string, any> = searchSortStage(sort) ?? { score: { $meta: 'textScore' }, gallery_quality: -1 };
         const projection = { _id: 0, score: { $meta: 'textScore' as const } };
-        // Capped at 1 s (#6854). A phrase $text query fetches every document
+        // Capped at 600 ms (#6854). A phrase $text query fetches every document
         // holding ANY of its words before it can check the phrase or the book:
         // "proposition 47 squares triangle" inside one book examined 20,283
         // documents in 2.4 s. And it rarely adds anything here, because the
@@ -489,7 +506,7 @@ export async function GET(request: NextRequest) {
         // found nothing for 59, and this lane added a grounded plate for 1.
         try {
           textItems = await timed('text_fallback', () => db.collection('gallery_images')
-            .find(filter, { projection, maxTimeMS: 1000 })
+            .find(filter, { projection, maxTimeMS: 600 })
             .sort(sortOrder)
             .skip(offset)
             .limit(limit + 1)
@@ -502,7 +519,7 @@ export async function GET(request: NextRequest) {
     } else {
       // Order from gallery-sort.ts (default: round-robin through books within each
       // quality score). Segmented sorts page across undated / unhashed rows last.
-      textItems = await findSorted(db.collection('gallery_images'), filter, sort, seed, offset, limit + 1);
+      textItems = await timed('browse', () => findSorted(db.collection('gallery_images'), filter, sort, seed, offset, limit + 1));
     }
 
     // Decide "is there another page?" from the RAW row count, before any
@@ -514,15 +531,14 @@ export async function GET(request: NextRequest) {
     const rawHasMore = textItems.length > limit;
     if (rawHasMore) textItems = textItems.slice(0, limit);
 
-    // The book-context fallback below depends only on the text lane's count, so
-    // its semantic book lookup starts now, beside the CLIP wait, instead of
-    // after it (+0.7–1 s on a query with no plate hits, #6854).
-    const contextBooksPromise = searchQuery && !bookId && textItems.length < 3 && offset === 0
-      ? timed('context', () => import('@/lib/semantic-search')
-        .then(({ semanticBookSearch }) => semanticBookSearch(searchQuery, 8, { scope: searchScope, threshold: 0.5 })))
-      : null;
-    // Handled where it is awaited; this only keeps an early return from leaving it unhandled.
-    contextBooksPromise?.catch(() => {});
+    // Same gate as before the lookup moved up: fewer than 3 plates on page 1.
+    // A query with no checkable words never reached the Atlas lane, so it
+    // starts here.
+    if (searchQuery && !bookId && textItems.length < 3 && offset === 0) {
+      contextBooksPromise ??= startContextBooks();
+    } else {
+      contextBooksPromise = null;
+    }
     const clipScores = await clipPromise;
     let items = textItems;
 
