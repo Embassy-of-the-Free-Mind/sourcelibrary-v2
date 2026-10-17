@@ -257,7 +257,7 @@ async function main() {
   if (!DRY_RUN) {
     const clearResult = await booksCol.updateMany(
       { resource_type: { $exists: true } },
-      { $set: { collections: [] } }
+      { $set: { collections: [] }, $currentDate: { updated_at: true } }
     );
     console.log(`Cleared collections on ${clearResult.modifiedCount} artworks`);
   }
@@ -299,7 +299,7 @@ async function main() {
         if (!DRY_RUN) {
           await booksCol.updateOne(
             { _id: artwork._id },
-            { $set: { collections: result.collections } }
+            { $set: { collections: result.collections }, $currentDate: { updated_at: true } }
           );
         }
 
