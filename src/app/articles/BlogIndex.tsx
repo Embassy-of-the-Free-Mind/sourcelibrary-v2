@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { BLOG_KINDS, KIND_INFO, postHref, type BlogKind, type BlogPost } from './posts';
 import { PAGE_SIZE, isKind, listingHref } from './listing';
 
@@ -185,13 +186,11 @@ export default function BlogIndex({
 
   // Categories used to be a hash on one page (/blog#tours, which the redirect
   // carries over as /articles#tours). Open that category instead.
+  const router = useRouter();
   useEffect(() => {
     const old = OLD_HASHES[window.location.hash.slice(1)];
-    if (active === 'all' && old) {
-      setKind(old);
-      history.replaceState(null, '', listingHref(old));
-    }
-  }, [active]);
+    if (active === 'all' && old) router.replace(listingHref(old));
+  }, [active, router]);
 
   const chooseKind = (next: Filter) => {
     setKind(next);

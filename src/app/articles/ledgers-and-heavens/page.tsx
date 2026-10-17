@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import SourceQuote from '@/components/articles/SourceQuote';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
 // fetched through the get_quote tool on 2026-10-17. The hero woodcut was checked by eye on our scan.
@@ -131,11 +132,17 @@ export default function LedgersAndHeavensPage() {
           Plotinus, and the order of the commission is the surprising part:
         </p>
 
-        <Quote href={PAGE.ficino8} cite="Marsilio Ficino, preface to his Latin Plotinus (Basel, 1580 edition), p. 8">
+        <SourceQuote
+          book="enneads-1580-greek-latin-ficino-trans-plotinus-ficino"
+          page={8}
+          src="https://images.sourcelibrary.org/archived/6952c9c777f38f6761bc2ffd/8.jpg"
+          pageAlt="The first page of Ficino's preface to his Latin Plotinus, Basel 1580, opening with a large woodcut initial M."
+          source="Marsilio Ficino, preface to his Latin Plotinus (Basel, 1580 edition)"
+        >
           After this, in the year 1463, when I was thirty years old, he commissioned me to translate first Hermes
           Trismegistus and soon after, Plato. I completed Hermes in a few months while he was still living; I then also
           began Plato.
-        </Quote>
+        </SourceQuote>
 
         <p className={p}>
           The richest banker in Europe, near the end of his life, wanted the Hermetic books before the dialogues of Plato.
