@@ -13,7 +13,7 @@ import { type FooterStrings } from '@/lib/i18n';
  * constant and point at the English pages (deep pages have no `/es` route).
  */
 
-export type FooterLinkKey = Exclude<keyof FooterStrings, 'colFindBooks' | 'colLookListen' | 'colTakePart' | 'colHowItWorks' | 'colLegal'>;
+export type FooterLinkKey = Exclude<keyof FooterStrings, 'colLibrary' | 'colDiscover' | 'colGetInvolved' | 'colAbout' | 'colLegal'>;
 
 export type FooterNavColumn = {
   titleKey: keyof FooterStrings;
@@ -26,31 +26,29 @@ export type FooterNavColumn = {
 // it lives here so the tenant filter covers it like everything else.
 export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
   {
-    titleKey: 'colFindBooks',
+    titleKey: 'colLibrary',
     links: [
-      { key: 'search', href: '/search' },
-      { key: 'browseAZ', href: '/browse' },
-      { key: 'catalogue', href: '/catalog' },
-      { key: 'works', href: '/works' },
+      { key: 'texts', href: '/catalog' },
+      { key: 'gallery', href: '/gallery' },
       { key: 'collections', href: '/collections' },
+      { key: 'search', href: '/search' },
+      { key: 'askLibrarian', href: '/librarian' },
     ],
   },
   {
-    titleKey: 'colLookListen',
+    titleKey: 'colDiscover',
     links: [
-      { key: 'gallery', href: '/gallery' },
-      { key: 'identify', href: '/identify' },
       { key: 'explore', href: '/explore' },
-      { key: 'librarian', href: '/librarian' },
       { key: 'podcast', href: '/podcast' },
       { key: 'researchNotes', href: '/blog' },
+      { key: 'identify', href: '/identify' },
     ],
   },
   {
-    titleKey: 'colTakePart',
+    titleKey: 'colGetInvolved',
     links: [
-      { key: 'checkPages', href: '/review' },
       { key: 'contribute', href: '/contribute' },
+      { key: 'checkPages', href: '/review' },
       { key: 'libraries', href: '/libraries' },
       { key: 'developers', href: '/developers' },
       { key: 'connect', href: '/connect' },
@@ -58,7 +56,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
     ],
   },
   {
-    titleKey: 'colHowItWorks',
+    titleKey: 'colAbout',
     links: [
       { key: 'about', href: '/about' },
       { key: 'vision', href: '/vision' },
@@ -67,7 +65,6 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'qualityCenter', href: '/quality' },
       { key: 'census', href: '/census' },
       { key: 'progress', href: '/about/progress' },
-      { key: 'research', href: '/research' },
     ],
   },
   {

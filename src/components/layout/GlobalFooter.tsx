@@ -194,7 +194,7 @@ export default function GlobalFooter() {
                   {col.links.map((link) => (
                     <li key={link.href}>{renderLink(link)}</li>
                   ))}
-                  {col.titleKey === 'colFindBooks' && hasFavorites && (
+                  {col.titleKey === 'colLibrary' && hasFavorites && (
                     <li>
                       <Link href="/favorites" className={linkClass}>{t.favorites}</Link>
                     </li>

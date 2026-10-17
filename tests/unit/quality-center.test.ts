@@ -133,8 +133,8 @@ describe('feedback themes', () => {
 });
 
 describe('footer door', () => {
-  it('links /quality from How it works, labelled in every locale, and hides it on partner hosts', () => {
-    const howItWorks = FOOTER_NAV_COLUMNS.find(c => c.titleKey === 'colHowItWorks')!;
+  it('links /quality from About, labelled in every locale, and hides it on partner hosts', () => {
+    const howItWorks = FOOTER_NAV_COLUMNS.find(c => c.titleKey === 'colAbout')!;
     expect(howItWorks.links.map(l => l.href)).toContain('/quality');
     for (const strings of Object.values(FOOTER_STRINGS)) expect(strings.qualityCenter).toBeTruthy();
     expect(visibleFooterNavColumns(true).flatMap(c => c.links.map(l => l.href))).not.toContain('/quality');

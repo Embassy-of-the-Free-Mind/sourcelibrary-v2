@@ -119,12 +119,14 @@ export const NAV_STRINGS: Record<Locale, NavStrings> = {
 
 export interface FooterStrings {
   // column titles
-  colFindBooks: string;
-  colLookListen: string;
-  colTakePart: string;
-  colHowItWorks: string;
+  colLibrary: string;
+  colDiscover: string;
+  colGetInvolved: string;
+  colAbout: string;
   colLegal: string;
   // Find books
+  texts: string;
+  askLibrarian: string;
   browseAZ: string;
   catalogue: string;
   works: string;
@@ -330,16 +332,18 @@ export const FEEDBACK_STRINGS: Record<Locale, FeedbackStrings> = {
 
 export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
   en: {
-    colFindBooks: 'Find books',
-    colLookListen: 'Look and listen',
-    colTakePart: 'Take part',
-    colHowItWorks: 'How it works',
+    colLibrary: 'Library',
+    colDiscover: 'Discover',
+    colGetInvolved: 'Get involved',
+    colAbout: 'About',
     colLegal: 'Legal',
+    texts: 'Texts',
+    askLibrarian: 'Ask the librarian',
     browseAZ: 'Browse A–Z',
     catalogue: 'Catalogue',
     works: 'Works',
     gallery: 'Gallery',
-    identify: 'Identify an Artwork',
+    identify: 'Identify an artwork',
     collections: 'Collections',
     search: 'Search',
     favorites: 'Favorites',
@@ -348,14 +352,14 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     podcast: 'Podcast',
     about: 'About',
     howItWorks: 'How it works',
-    vision: 'Our Vision',
-    census: 'Translation Census',
+    vision: 'Our vision',
+    census: 'Translation census',
     progress: 'Progress',
     models: 'AI models',
     research: 'Research',
-    researchNotes: 'Research Notes',
+    researchNotes: 'Research notes',
     privacy: 'Privacy',
-    cookieSettings: 'Cookie Settings',
+    cookieSettings: 'Cookie settings',
     terms: 'Terms',
     copyright: 'Copyright & DMCA',
     licensing: 'Licensing',
@@ -363,21 +367,23 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     contribute: 'Contribute',
     support: 'Support',
     donate: 'Donate',
-    sponsorship: 'Corporate Sponsorship',
+    sponsorship: 'Corporate sponsorship',
     connect: 'Connect to Claude & ChatGPT',
     developers: 'Developers',
     giveFeedback: 'Give feedback',
     checkPages: 'Check a few pages',
-    qualityCenter: 'Quality Center',
+    qualityCenter: 'Quality center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
     partnersLabel: 'In partnership with',
   },
   es: {
-    colFindBooks: 'Buscar libros',
-    colLookListen: 'Mirar y escuchar',
-    colTakePart: 'Participar',
-    colHowItWorks: 'Cómo funciona',
+    colLibrary: 'Biblioteca',
+    colDiscover: 'Descubrir',
+    colGetInvolved: 'Participar',
+    colAbout: 'Acerca de',
     colLegal: 'Legal',
+    texts: 'Textos',
+    askLibrarian: 'Pregunta al bibliotecario',
     browseAZ: 'Índice A–Z',
     catalogue: 'Catálogo',
     works: 'Obras',
@@ -417,11 +423,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
   },
   // Latin (#6254). Labels only: every footer link still opens an English page.
   la: {
-    colFindBooks: 'Libros inveni',
-    colLookListen: 'Specta et audi',
-    colTakePart: 'Particeps esto',
-    colHowItWorks: 'Quomodo fiat',
+    colLibrary: 'Bibliotheca',
+    colDiscover: 'Inveni',
+    colGetInvolved: 'Particeps esto',
+    colAbout: 'De nobis',
     colLegal: 'De iure',
+    texts: 'Textus',
+    askLibrarian: 'Bibliothecarium interroga',
     browseAZ: 'Index A–Z',
     catalogue: 'Catalogus',
     works: 'Opera',
@@ -461,11 +469,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
   },
   // Dutch (#6382). Labels only: every footer link still opens an English page.
   nl: {
-    colFindBooks: 'Boeken vinden',
-    colLookListen: 'Kijken en luisteren',
-    colTakePart: 'Meedoen',
-    colHowItWorks: 'Hoe het werkt',
+    colLibrary: 'Bibliotheek',
+    colDiscover: 'Ontdekken',
+    colGetInvolved: 'Meedoen',
+    colAbout: 'Over ons',
     colLegal: 'Juridisch',
+    texts: 'Teksten',
+    askLibrarian: 'Vraag de bibliothecaris',
     browseAZ: 'Index A–Z',
     catalogue: 'Catalogus',
     works: 'Werken',
@@ -504,11 +514,13 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     partnersLabel: 'In samenwerking met',
   },
   zh: {
-    colFindBooks: '查找书籍',
-    colLookListen: '观看与收听',
-    colTakePart: '参与',
-    colHowItWorks: '工作原理',
+    colLibrary: '图书馆',
+    colDiscover: '发现',
+    colGetInvolved: '参与',
+    colAbout: '关于',
     colLegal: '法律信息',
+    texts: '文献',
+    askLibrarian: '咨询图书馆员',
     browseAZ: '按字母浏览',
     catalogue: '目录',
     works: '作品',
