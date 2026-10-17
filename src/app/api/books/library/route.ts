@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
@@ -14,7 +15,9 @@ const DEFAULT_LIMIT = 100;
 
 // In-memory cache for common browse views (keyed by filter combination)
 const browseCache = new Map<string, { data: string; timestamp: number }>();
-const BROWSE_CACHE_TTL = 60_000; // 1 minute
+// 5 minutes (was 1). A cold browse costs ~1 s even on the covered index, and
+// list_books with no arguments arrives from crawlers minutes apart (#6854).
+const BROWSE_CACHE_TTL = 5 * 60_000;
 const MAX_CACHE_ENTRIES = 50;
 
 export async function GET(request: NextRequest) {
@@ -115,14 +118,26 @@ export async function GET(request: NextRequest) {
     // Collection is not in the search index so it stays as a post-$search $match.
     // When no search term, use a standard $match (cheaper for unfiltered browsing).
     let pipelineStart: Record<string, unknown>[];
+    // Default-sort searches are ordered by Atlas Search itself (relevance, then
+    // translated pages), so `$skip`/`$limit` stop the stream after one page.
+    // A `$sort` after `$search` has to pull EVERY hit through mongod first: an
+    // any-word match on "Catherine of Siena" is 22,034 books, and five of six
+    // such list_books calls exceeded the 30 s maxTimeMS on 2026-10-17 (#6854).
+    // Exact score ties used to break on has_translations then title; they now
+    // break on pages_translated, which puts translated editions first just the same.
+    const searchSortedByMongot = Boolean(search.trim()) && sort === 'recent-translation' && !collection;
 
     if (search.trim()) {
+      const searchStage = buildBookSearchStage(search, {
+        language: language || undefined,
+        category: category || undefined,
+        isFirstTranslation: firstTranslation || undefined,
+      });
+      if (searchSortedByMongot) {
+        searchStage.$search.sort = { score: { $meta: 'searchScore' }, pages_translated: -1 };
+      }
       pipelineStart = [
-        buildBookSearchStage(search, {
-          language: language || undefined,
-          category: category || undefined,
-          isFirstTranslation: firstTranslation || undefined,
-        }),
+        searchStage,
         ...(collection ? [{ $match: { collections: collection } }] : []),
         ...(workId ? [{ $match: { work_id: workId } }] : []),
         ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
@@ -152,8 +167,48 @@ export async function GET(request: NextRequest) {
       if (authorFilter) matchConditions.push(authorFilter.match);
       if (editionMatch) matchConditions.push(editionMatch);
       if (yearMatch) matchConditions.push(yearMatch);
+      // The aggregate below runs under an en/strength-1 collation, and an index
+      // with the default collation cannot serve a STRING predicate under another
+      // one. So `work_id` / `author_id` / `edition_key`, all indexed, were
+      // answered by scanning the collection: 3.8 s for Hippocrates' 28 books,
+      // 1.5 s for a work with 2 witnesses, while the same $match without
+      // collation took 9–70 ms (2026-10-17, #6854). Resolve those selective
+      // filters to _ids first, without collation; ObjectId bounds are not
+      // strings, so the _id index serves the collated query. Only those three
+      // filters go into the prefilter: they are machine-written keys (and the
+      // thesaurus' own variant strings), and 50 of 50 sampled authors and 50 of
+      // 50 works matched the same books with and without the collation. Free
+      // strings such as `language` stay out of it, since "latin" must still
+      // match "Latin"; the full collated $match runs on the narrowed set.
+      if (workId || authorFilter || editionMatch) {
+        const prefilter: Record<string, unknown>[] = [{ visible: true }, { pages_count: { $gt: 0 } }];
+        if (workId) prefilter.push({ work_id: workId });
+        if (authorFilter) prefilter.push(authorFilter.match);
+        if (editionMatch) prefilter.push(editionMatch);
+        const ids = await db.collection('books')
+          .find({ $and: prefilter }, { projection: { _id: 1 }, maxTimeMS: 10000 })
+          .limit(5000)
+          .toArray()
+          .then(rows => rows.map(r => r._id))
+          .catch(() => null);
+        // String _ids (479 legacy books) would put strings back in the bounds.
+        if (ids && ids.length < 5000 && ids.every(id => id instanceof ObjectId)) {
+          matchConditions.push({ _id: { $in: ids } });
+        }
+      }
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }
+
+    // Unfiltered default browse (list_books with no arguments: 17% of its
+    // calls, p50 4 s). The sort keys are computed, so no index can order it;
+    // what the index CAN do is cover it. `browse_default_sort_covered` holds
+    // every field the match and the sort read, so phase 1 orders 42K index
+    // entries without fetching a single 17 KB book document (2.3 s → 0.5–1.1 s),
+    // and phase 2 hydrates only the page. If the index is missing the hinted
+    // query errors and the route falls back to the one-pass pipeline below.
+    const plainBrowse = !search.trim() && sort === 'recent-translation' && !tenantId && !language && !category
+      && !collection && !library && !workId && !firstTranslation && !hasTranslation && !hasEdition
+      && !authorFilter && !editionMatch && !yearMatch;
 
     // Only compute the fields needed for the current sort mode
     // This avoids the expensive full-scan $addFields on every book
@@ -242,25 +297,63 @@ export async function GET(request: NextRequest) {
     // Run count and paginated results in parallel (avoids $facet double-scan)
     const basePipeline = [...pipelineStart, { $addFields: addFields }];
 
-    const [books, countResult] = await Promise.all([
-      db.collection('books').aggregate([
-        ...basePipeline,
-        buildSortStage(sort, collection || undefined, Boolean(search.trim())),
+    const sortStage = buildSortStage(sort, collection || undefined, Boolean(search.trim()));
+    const collation = { locale: 'en', strength: 1 };
+    const onePass = () => db.collection('books').aggregate([
+      ...basePipeline,
+      ...(searchSortedByMongot ? [] : [sortStage]),
+      { $skip: skip },
+      { $limit: limit },
+      { $project: bookProject },
+    ], { collation, maxTimeMS: 30000 }).toArray();
+    const twoPhaseBrowse = async () => {
+      const page = await db.collection('books').aggregate([
+        ...pipelineStart,
+        { $project: { _id: 1, id: 1, title: 1, last_translation_at: 1, last_processed: 1, quality_score: 1, pages_count: 1, pages_translated: 1, 'image_source.provider': 1 } },
+        { $addFields: addFields },
+        sortStage,
         { $skip: skip },
         { $limit: limit },
-        { $project: bookProject },
-      ], {
-        collation: { locale: 'en', strength: 1 },
-        maxTimeMS: 30000,
-      }).toArray(),
-      // Count query — skip the sort/project, just count matches
-      db.collection('books').aggregate([
+        { $project: { _id: 1 } },
+      ], { collation, hint: 'browse_default_sort_covered', maxTimeMS: 30000 }).toArray();
+      const order = new Map(page.map((d, i) => [String(d._id), i]));
+      const docs = await db.collection('books').aggregate([
+        { $match: { _id: { $in: page.map(d => d._id) } } },
+        { $addFields: addFields },
+        { $project: { ...bookProject, _id: 1 } },
+      ], { maxTimeMS: 10000 }).toArray();
+      return docs
+        .sort((a, b) => (order.get(String(a._id)) ?? 0) - (order.get(String(b._id)) ?? 0))
+        .map(({ _id, ...rest }) => rest); // eslint-disable-line @typescript-eslint/no-unused-vars
+    };
+
+    // The count. A search with no post-$search filter is counted by Atlas
+    // Search itself ($searchMeta, 11–290 ms); a `$count` after `$search` pulls
+    // every hit through mongod, 3.7–13 s on a common word. Any other count that
+    // fails or times out degrades to a lower bound, flagged as such, rather
+    // than failing the whole request as it used to.
+    const searchOnly = Boolean(search.trim()) && pipelineStart.length === 1;
+    const countPromise: Promise<{ total: number; estimate: boolean }> = (searchOnly
+      ? db.collection('books').aggregate([
+        { $searchMeta: { ...(pipelineStart[0].$search as Record<string, unknown>), count: { type: 'total' } } },
+      ], { maxTimeMS: 15000 }).toArray().then(r => (r[0]?.count?.total as number | undefined) ?? 0)
+      // Same collation as the results: without it `language=latin` listed
+      // Latin books under `total: 0`.
+      : db.collection('books').aggregate([
         ...pipelineStart,
         { $count: 'count' },
-      ], { maxTimeMS: 15000 }).toArray(),
+      ], { collation, maxTimeMS: 15000 }).toArray().then(r => (r[0]?.count as number | undefined) ?? 0)
+    ).then(total => ({ total, estimate: false }))
+      .catch(() => ({ total: -1, estimate: true }));
+
+    const [books, counted] = await Promise.all([
+      plainBrowse ? twoPhaseBrowse().catch(onePass) : onePass(),
+      countPromise,
     ]);
 
-    const total = countResult[0]?.count || 0;
+    const total = counted.estimate
+      ? skip + books.length + (books.length === limit ? 1 : 0)
+      : counted.total;
 
     const tenantIds = [...new Set(books.map((b: any) => b.tenantId).filter(Boolean))];
     const tenantSlugMap = new Map<string, string>();
@@ -286,13 +379,15 @@ export async function GET(request: NextRequest) {
     const responseData = JSON.stringify({
       books: booksWithTenantSlug,
       total,
+      // `total` is a lower bound (the count timed out), not the match count.
+      ...(counted.estimate ? { total_is_lower_bound: true } : {}),
       // Echo the canonicalized author when filtering, so a caller that passed
       // a variant slug learns the canonical one.
       ...(authorFilter ? { author: { id: authorFilter.canonicalSlug, name: authorFilter.canonicalName } } : {}),
     });
 
-    // Cache cacheable views
-    if (isCacheable) {
+    // Cache cacheable views (never a lower-bound total)
+    if (isCacheable && !counted.estimate) {
       if (browseCache.size >= MAX_CACHE_ENTRIES) {
         const oldest = [...browseCache.entries()].sort((a, b) => a[1].timestamp - b[1].timestamp)[0];
         if (oldest) browseCache.delete(oldest[0]);
