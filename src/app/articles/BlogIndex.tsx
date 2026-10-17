@@ -5,10 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { BLOG_KINDS, KIND_INFO, postHref, type BlogKind, type BlogPost } from './posts';
-import { CARD_SCRIM, FADE_PX } from './card-scrim';
+
 
 // How many posts besides the lead each kind shows on the "All" view.
-const PREVIEW_COUNT = 3;
+const PREVIEW_COUNT = 4;
 
 type Filter = BlogKind | 'all';
 
@@ -34,42 +34,32 @@ function Meta({ post }: { post: BlogPost }) {
   return <span className="text-sm text-muted">{metaText(post)}</span>;
 }
 
-// The lead of a kind, and the Latest card: the title is set on the picture,
-// over CARD_SCRIM (see card-scrim.ts for why that is legible on any image);
-// the summary sits on white underneath. Tall on a phone, wide from `sm` up.
+// The lead of a kind, and the Latest card: picture and words side by side on
+// a white panel from `lg` up, like the book page's cover beside its title;
+// stacked on a phone.
 function LeadCard({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
   return (
     <Link
       href={postHref(post)}
-      className="block bg-white rounded-xl overflow-hidden shadow-sm border border-border-light hover:shadow-lg transition-all group"
+      className="group grid lg:grid-cols-5 bg-white rounded-sm overflow-hidden border border-border-light hover:border-stone-300 transition-colors"
     >
-      <div className="relative aspect-[4/5] sm:aspect-[16/9] md:aspect-[2/1] overflow-hidden bg-cover-bg">
+      <div className="relative aspect-[3/2] lg:aspect-auto lg:min-h-[420px] lg:col-span-3 overflow-hidden bg-cover-bg">
         <Image
           src={post.image}
           alt={post.imageAlt || ''}
           fill
-          sizes="(max-width: 1024px) 100vw, 1024px"
+          sizes="(max-width: 1024px) 100vw, 900px"
           className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
           style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined}
           priority={priority}
         />
-        <div
-          className="absolute inset-x-0 bottom-0 px-6 pb-6 md:px-10 md:pb-8"
-          style={{ background: CARD_SCRIM, paddingTop: FADE_PX }}
-        >
-          <span className="block text-xs text-stone-300 tracking-wide uppercase mb-2">
-            {metaText(post)}
-          </span>
-          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white leading-tight line-clamp-3 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
-            {post.title}
-          </h3>
-        </div>
       </div>
-      <div className="px-6 py-5 md:px-10 md:py-6">
-        <p className="text-secondary leading-relaxed font-body md:text-lg line-clamp-3">{post.subtitle}</p>
-        <span className="inline-block mt-3 text-accent-rust text-sm font-medium group-hover:translate-x-1 transition-transform">
-          Read &rarr;
-        </span>
+      <div className="lg:col-span-2 flex flex-col justify-center px-6 py-6 md:px-10 md:py-10">
+        {metaText(post) && <span className="block text-sm text-muted mb-3">{metaText(post)}</span>}
+        <h3 className="font-serif text-2xl md:text-3xl xl:text-4xl text-primary leading-tight group-hover:text-accent-gold-dark transition-colors">
+          {post.title}
+        </h3>
+        <p className="mt-4 text-secondary leading-relaxed font-body md:text-lg line-clamp-4">{post.subtitle}</p>
       </div>
     </Link>
   );
@@ -79,12 +69,12 @@ function LeadCard({ post, priority = false }: { post: BlogPost; priority?: boole
 function PostCard({ post }: { post: BlogPost }) {
   return (
     <Link href={postHref(post)} className="group flex gap-4 sm:block">
-      <div className="relative w-24 h-24 sm:w-full sm:h-auto sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden border border-border-light bg-cover-bg">
+      <div className="relative w-24 h-24 sm:w-full sm:h-auto sm:aspect-[4/3] shrink-0 rounded-sm overflow-hidden border border-border-light bg-cover-bg">
         <Image
           src={post.image}
           alt={post.imageAlt || ''}
           fill
-          sizes="(max-width: 640px) 96px, (max-width: 1024px) 50vw, 33vw"
+          sizes="(max-width: 640px) 96px, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
           className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
           style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined}
         />
@@ -133,7 +123,7 @@ function KindSection({
       </div>
       <LeadCard post={lead} />
       {shown.length > 0 && (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+        <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-8">
           {shown.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
@@ -142,7 +132,7 @@ function KindSection({
       {preview && others.length > shown.length && (
         <Link
           href={kindHref(kind)}
-          className="inline-block mt-6 text-accent-rust text-sm font-medium hover:underline underline-offset-2"
+          className="inline-block mt-8 text-sm font-medium text-primary underline decoration-border-light underline-offset-4 hover:decoration-primary"
         >
           All {posts.length} in {info.label} &rarr;
         </Link>

@@ -38,16 +38,16 @@ export default function NoteFooter() {
   const revisedDate = rev
     ? new Date(rev.revised).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
     : null;
-  const sourcePath = rev?.path || `src/app/blog/${slug}/page.tsx`;
+  const sourcePath = rev?.path || `src/app/articles/${slug}/page.tsx`;
 
   return (
     <div className="bg-cream print:hidden">
       <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pb-12">
         <div className="border-t border-border-light pt-6 text-sm text-muted space-y-1.5">
           <p>
-            An AI-assisted research note from Source Library.{' '}
-            <Link href="/articles/how-these-are-made" className="text-accent-rust hover:underline">
-              How these notes are made
+            An AI-assisted article from Source Library.{' '}
+            <Link href="/articles/how-these-are-made" className="text-secondary underline decoration-border-light underline-offset-2 hover:decoration-secondary">
+              How these articles are made
             </Link>
           </p>
           <p>

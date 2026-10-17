@@ -20,9 +20,11 @@ interface ContentHeaderProps {
   heightClass?: string;
   /** Match the page's ContentPageLayout maxWidth so the hero aligns with the body. */
   maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
+  /** The site header above the hero: 'light' (default) or the solid 'dark' bar the book pages use. */
+  headerVariant?: 'light' | 'dark';
 }
 
-export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard' }: ContentHeaderProps) {
+export function ContentHeader({ title, subtitle, children, image, imageAlt, imageFit = 'cover', heightClass, maxWidth = 'standard', headerVariant = 'light' }: ContentHeaderProps) {
   const headerWidthClass =
     maxWidth === 'full'
       ? ''
@@ -33,7 +35,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt, imag
           : 'max-w-[var(--container-standard)]';
   return (
     <>
-      <SiteHeader variant="light" />
+      <SiteHeader variant={headerVariant} />
 
       <div className={`relative overflow-hidden text-white ${image ? `pt-16 pb-10 md:pt-24 md:pb-14 ${heightClass || 'min-h-[260px] md:min-h-[340px]'} flex flex-col justify-end` : 'py-16 md:py-20'}`}>
         {image ? (
