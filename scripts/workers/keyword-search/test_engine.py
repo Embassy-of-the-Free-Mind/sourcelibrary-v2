@@ -80,6 +80,7 @@ check("quoted query is a phrase (not 'materia prima')", sorted(ids(r["main"])), 
 r = e.lane({"query": "alchemy", "k": 25})
 check("fuzzy expands (alchymy found)", "p3" in ids(r["main"]) and r["fuzzy_terms"] >= 2, True)
 check("the exact word still ranks first", ids(r["main"])[0] != "p3", True)
+check("one long hyphenated word is fuzzy per token", e.lane({"query": "Drebbel-alchymy", "k": 25})["fuzzy_terms"] >= 3, True)
 check("two-character Chinese word", ids(e.lane({"query": "道德", "k": 5})["main"]), ["p8"])
 check("allow-list confines", sorted(ids(e.lane({"query": "stone", "k": 25, "book_ids": ["b6"]})["main"])), ["p10", "p11", "p9"])
 check("EMPTY allow-list returns nothing (#2760)", e.lane({"query": "stone", "k": 25, "book_ids": []})["main"], [])

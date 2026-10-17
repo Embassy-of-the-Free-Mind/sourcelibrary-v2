@@ -92,15 +92,16 @@ class Engine:
     def phrase_either(self, toks):
         return Q.boolean_query([(Occur.Should, self.phrase(f, toks, b)) for f, b in FIELDS])
 
-    def fuzzy(self, word):
-        """Lucene's fuzzy rewrite (TopTermsBlendedFreqScoringRewrite), per field: every expansion within one edit
-        that shares the first 4 characters, scored with the IDF of the most frequent one and boosted
-        1 - 1/min(len). Without the blend a rare misspelling outranks the word typed. Returns (query, n_terms)."""
-        prefix = word[:FUZZY_PREFIX]
+    def fuzzy(self, words):
+        """Lucene's fuzzy rewrite (TopTermsBlendedFreqScoringRewrite), per token and field: every expansion within
+        one edit that shares the first 4 characters, scored with the IDF of the most frequent one and boosted
+        1 - 1/min(len). Without the blend a rare misspelling outranks the word typed. Atlas applies the fuzzy
+        option to every token its analyzer emits ("pseudo-Paracelsian" is two). Returns (query, n_terms)."""
         n_docs = self.searcher.num_docs
         idf = lambda n: math.log(1 + (n_docs - n + 0.5) / (n + 0.5))
         clauses, terms = [], set()
-        for f, fb in FIELDS:
+        for word, f, fb in ((w, f, fb) for w in words for f, fb in FIELDS):
+            prefix = word[:FUZZY_PREFIX]
             cands = [(t, c) for t, c in self.searcher.terms_with_prefix(f, prefix) if t == word or (abs(len(t) - len(word)) <= 1 and within_one_edit(t, word))]
             cands.sort(key=lambda x: (x[0] != word, -x[1]))
             cands = cands[:FUZZY_MAX_EXPANSIONS]
@@ -112,7 +113,7 @@ class Engine:
                 clauses.append((Occur.Should, self.term(f, t, b)))
                 terms.add(t)
         if not clauses:
-            return self.any_terms([word]), 1
+            return self.any_terms(words), len(words)
         return Q.boolean_query(clauses), len(terms)
 
     def main_query(self, query):
@@ -122,8 +123,8 @@ class Engine:
             return (self.phrase_either(toks) if toks else None), toks, True, 0
         toks = list(dict.fromkeys(kwindex.tokenize(q)))
         words = q.split()
-        if len(words) == 1 and len(words[0]) >= FUZZY_MIN_LEN and len(toks) == 1:
-            fq, n = self.fuzzy(toks[0])
+        if len(words) == 1 and len(words[0]) >= FUZZY_MIN_LEN and toks:
+            fq, n = self.fuzzy(toks)
             return fq, toks, False, n
         return (self.any_terms(toks) if toks else None), toks, False, 0
 
@@ -189,15 +190,22 @@ class Engine:
         return [{"book_id": b, "pages": n} for b, n in rows[:buckets]]
 
     def best_per_book(self, s, q, books):
-        out = []
-        for b in books:
-            bi = self.books.idx.get(b)
-            if bi is None:
-                continue
-            bq = Q.boolean_query([(Occur.Must, q), (Occur.Must, Q.term_query(self.schema, "book_idx", bi)), (Occur.MustNot, self.not_content)])
-            hits = s.search(bq, 1, count=False).hits
-            out += self.rows(s, [(hits[0][0], hits[0][1], bi)] if hits else [])
-        return out
+        """bestPagePerBook: each book's best content page printing every term, in `books` order. One search over
+        all the books first (its top hits give most books their best page); one search per book left over."""
+        want = [self.books.idx[b] for b in books if b in self.books.idx]
+        if not want:
+            return []
+        best = {}
+        hits = s.search(self.filtered(q, set(want)), 40 * len(want), count=False).hits
+        for (score, addr), b in zip(hits, s.fast_field_values("book_idx", [a for _, a in hits])):
+            if b not in best:
+                best[b] = (score, addr, b)
+        for bi in want:
+            if bi not in best and len(hits) == 40 * len(want):  # the joint search was cut short: ask this book alone
+                h = s.search(self.filtered(q, {bi}), 1, count=False).hits
+                if h:
+                    best[bi] = (h[0][0], h[0][1], bi)
+        return self.rows(s, [best[bi] for bi in want if bi in best])
 
     def lane(self, p):
         t0 = time.perf_counter()

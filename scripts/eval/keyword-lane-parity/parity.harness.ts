@@ -16,13 +16,15 @@
  *     --config scripts/eval/keyword-lane-parity/vitest.config.mts parity.harness
  *
  * Env: OUT (required), KEYWORD_SEARCH_LOCAL (the service's local listener), SEED (default 6852),
- * DAYS (default 60), QUOTAS (JSON, default names 50 / phrases 40 / single 50 / non_latin 30 / multi 30).
+ * DAYS (default 60), QUOTAS (JSON, default names 50 / phrases 40 / single 50 / non_latin 30 / multi 30),
+ * SAMPLE_FROM (a previous OUT: re-run exactly its queries, so two runs compare like with like — the log
+ * grows every hour, so a fresh draw with the same seed is a different sample).
  * The query sample is drawn here, from unfiltered English `/api/search` rows on the main site, so it
  * is reproducible from the log at a date; the queries themselves stay in OUT (scratch), not in the repo.
  * Reads prod Mongo; writes nothing to any store.
  */
 import { test } from 'vitest';
-import { writeFileSync, appendFileSync } from 'node:fs';
+import { writeFileSync, appendFileSync, readFileSync } from 'node:fs';
 
 const QUOTAS: Record<string, number> = JSON.parse(process.env.QUOTAS || '{"names":50,"phrases":40,"single":50,"non_latin":30,"multi":30}');
 /** A letter in any script but Latin. */
@@ -64,6 +66,13 @@ test('keyword lane parity', async () => {
   };
   const want = { ...QUOTAS };
   const chosen: { q: string; stratum: string; n: number; prod_page_ms: number[] }[] = [];
+  if (process.env.SAMPLE_FROM) {
+    for (const l of readFileSync(process.env.SAMPLE_FROM, 'utf8').split('\n').filter(Boolean)) {
+      const r = JSON.parse(l);
+      chosen.push({ q: r.q, stratum: r.stratum, n: r.n_logged, prod_page_ms: r.prod_page_ms || [] });
+    }
+    for (const k of Object.keys(want)) want[k] = 0;
+  }
   for (const row of shuffle(pool, +(process.env.SEED || 6852))) {
     if (Object.values(want).every(v => v <= 0)) break;
     const s = await stratumOf(row.q);
@@ -139,7 +148,7 @@ test('keyword lane parity', async () => {
 
     const key = (p: any) => [p.book_id, p.page_number];
     appendFileSync(OUT, JSON.stringify({
-      i, q: query, stratum: c.stratum, n_logged: c.n, prod_page_ms: c.prod_page_ms, variants: variants.length, terms,
+      i, q: query, stratum: c.stratum, n_logged: c.n, prod_page_ms: c.prod_page_ms, variants: variants.length, variant_terms: variants, topic_words: topicWords, terms,
       atlas: {
         main: main.v.map(key), variants: variantPages.map(key), extra: extra.map(key), counts: liveCounted.slice(0, 200).map(x => [x.book_id, x.pages]),
         counts_raw_n: counts.v ? counts.v.length : null,

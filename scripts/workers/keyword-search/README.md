@@ -38,6 +38,30 @@ answers the same questions from one tantivy index. **The app calls it only when
 `search_queries.keyword_shadow`; `serve` uses its pages and falls back to Atlas on any error or
 timeout. Default off.
 
+## Measured (2026-10-17, main box; `scripts/eval/experiments/2026-10-17-keyword-service-parity-6852.md`)
+
+**Footprint and build:**
+- 9,341,133 pages from 72,173 books; 35.8 G characters of text. 42,187 of the 42,374 live books have text in it.
+- Index: 15.52 GB on disk.
+- Pull: 27.8 min. Build: 25.7 min at ~6.4K pages/s, 4 GB writer heap.
+- Service process: ~80 MB RSS. The index is memory-mapped, so it lives in the page cache, not the process.
+- First delta after the build: ~1,300 pages in 5 s.
+
+**Parity with the Atlas lane** (180 scored logged queries):
+
+| measure | value |
+|---|---|
+| books@20 | 0.963 |
+| page recall@20 | 0.903 |
+| lane recall | 0.933 |
+| roll-up books@30 | 1.00 |
+| top-1 | 1.00 |
+
+**Time:**
+- Service, warm: p50 20 ms, p90 147 ms, p99 362 ms.
+- Service, cold, read from a network volume: p50 195 ms, p90 491 ms.
+- Atlas lane, same queries: p50 787 ms, p90 2,200 ms.
+
 ## The Atlas lane's contract (what this reproduces)
 
 Read from `src/app/api/search/route.ts` (the `page` lane), `src/lib/atlas-search.ts`
