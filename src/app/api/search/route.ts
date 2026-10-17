@@ -25,7 +25,7 @@ import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchTranslatedEditions, namesOneVolume, readabilityTier, TIER_READABLE, type ReadabilitySource } from '@/lib/search/readable-edition';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence, ROLLUP_BUCKETS, type BookPageCount } from '@/lib/search/page-rollup';
-import { keywordSearchMode, callKeywordLane, hydrateKeywordRows, buildKeywordShadow, liveBookSet, type KeywordLaneParams, type KeywordLaneResult, type KeywordShadow } from '@/lib/keyword-search';
+import { keywordSearchMode, callKeywordLane, serveKeywordPages, indexOfWord, buildKeywordShadow, liveBookSet, type KeywordLaneParams, type KeywordLaneResult, type KeywordShadow } from '@/lib/keyword-search';
 import { searchCanonTexts } from '@/lib/search/canon-texts';
 import { phraseMatch } from '@/lib/passage-score';
 
@@ -98,7 +98,9 @@ function extractSnippet(text: string, query: string, contextChars = 150): string
   const cleaned = cleanText(text);
   const lowerText = cleaned.toLowerCase();
   const lowerQuery = query.toLowerCase();
-  const index = lowerText.indexOf(lowerQuery);
+  // The hit as a whole word first ("art" not inside "part"), then anywhere.
+  const word = indexOfWord(cleaned, query);
+  const index = word >= 0 ? word : lowerText.indexOf(lowerQuery);
 
   if (index === -1) {
     // If exact match not found, return start of text
@@ -439,16 +441,18 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
      * returns them (main, variant pages, roll-up pages), text hydrated from
      * Mongo by page id. The service's roll-up counts cover live books inside
      * the allow-list, which is the set the Atlas path's liveness check keeps.
+     * Service + hydration share KEYWORD_SERVE_BUDGET_MS (2.5 s), so the Atlas
+     * fallback keeps the rest of the lane's 8 s ceiling.
      * Null on any failure, and the Atlas path runs as before.
      */
     const serveKeywordLane = async (params: KeywordLaneParams): Promise<any[] | null> => {
       try {
-        const r = await callKeywordLane(params);
-        const rows = [...r.main, ...r.variants, ...r.extra];
-        const srcOf = new Map(rows.map(x => [x.page_id, x.src]));
-        const docs = await hydrateKeywordRows(db as any, rows, { query: matchQuery, variants: params.variants });
+        const { r, docs, rollupDegraded } = await serveKeywordPages(db as any, params, { query: matchQuery, variants: params.variants });
+        const srcOf = new Map([...r.main, ...r.variants, ...r.extra].map(x => [x.page_id, x.src]));
         const of = (src: string) => docs.filter(d => srcOf.get(d.id as string) === src);
         const main = of('main');
+        // As the Atlas path does when its counts are missing: the total is incomplete.
+        if (rollupDegraded) degradedLanes.push('page_rollup');
         for (const c of r.counts || []) matchPagesByBook.set(c.book_id, c.pages);
         return [...(pagesOnly ? rankPassages(matchQuery, main) : main), ...of('variant'), ...of('rollup')];
       } catch (err) {
@@ -640,8 +644,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           // contract: best passages, in score order). It counts the spelling
           // typed; name variants (#5888) arrive through the second query.
           const terms = (bookId || pagesOnly) ? null : rollupTerms(query);
+          let nameQuery: Awaited<ReturnType<typeof expandNameQuery>> | undefined;
           if (keywordMode === 'serve') {
-            const { variants, topicWords } = await expandNameQuery(query);
+            nameQuery = await expandNameQuery(query);
+            const { variants, topicWords } = nameQuery;
             const served = await serveKeywordLane(keywordParams(terms, pageLimit, filteredBookIds, variants, topicWords));
             keyword.lane = served ? 'served' : 'fallback';
             if (served) return served;
@@ -669,7 +675,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             : null);
           livePromise.catch(() => {}); // handled below; never an unhandled rejection
 
-          const { variants, topicWords } = await expandNameQuery(query);
+          const { variants, topicWords } = nameQuery ?? await expandNameQuery(query);
           if (keywordMode === 'shadow') {
             // Beside Atlas, never awaited by the response; compared after it (below).
             const started = performance.now();

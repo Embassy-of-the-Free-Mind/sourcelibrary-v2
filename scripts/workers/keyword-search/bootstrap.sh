@@ -38,7 +38,8 @@ while [ $# -gt 0 ]; do
   shift
 done
 step() { echo "$(date -u +%FT%TZ) == $*"; }
-next_job() { [ -n "$NEXT_JOB" ] && { step "starting $NEXT_JOB"; HOME=/root /root/bin/claude-job.sh start "$NEXT_JOB" "$NEXT_BRIEF"; }; }
+# Returns 0 with no --next: as the last command, a bare `[ -n "" ] && …` made a clean run exit 1.
+next_job() { [ -z "$NEXT_JOB" ] && return 0; step "starting $NEXT_JOB"; HOME=/root /root/bin/claude-job.sh start "$NEXT_JOB" "$NEXT_BRIEF"; }
 die() { step "FAILED: $*"; echo "{\"failed\":\"$*\",\"at\":\"$(date -u +%FT%TZ)\"}" > "$ROOT/bootstrap.failed"; next_job; exit 1; }
 T0=$(date +%s)
 mkdir -p "$APP" "$ROOT/logs"
