@@ -247,6 +247,57 @@ export default function MayaRitualDictionariesPage() {
           <Fig book={KAUA} page={11} src="https://images.sourcelibrary.org/archived/6a878ac1d71f2514794f9e40/11.jpg" alt="Photograph of an opening of the Book of Chilam Balam of Kaua: day names beside saints' names" caption={<>Chilam Balam of Kaua, p. 11 (Teobert Maler&rsquo;s photograph): the day names beside the saints.</>} />
         </FigRow>
 
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">From the books themselves</h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          A first reading of the newly readable books turned up these passages. Where the Spanish or Maya is quoted it was checked against the page image or the transcription; passages given only in English are the machine translation, linked so they can be checked.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">Katuns of stone</h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Sánchez de Aguilar on how the Maya counted their eras (<Leaf book={SANCHEZ} page={198}>p. 198</Leaf>): the years were set by direction, the first in the east, &ldquo;llamádole Cuch hab&rdquo;, and when five such four-year spans made twenty years &ldquo;llamauan Katun, y ponian vna piedra labrada sobre otra piedra labrada fixada con cal y arena en las paredes de sus templos&rdquo; (they called it a katun, and set one carved stone upon another, fixed with lime and sand, in the walls of their temples). He adds that the stones can still be seen in the old walls on which the friars built their cells in the convent of Mérida. On the same page: &ldquo;los primeros Religiosos recogieron, y quemaron estos libros inaduertidamente&rdquo; (the first friars gathered and burned these books, without thinking).
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          On the next page (<Leaf book={SANCHEZ} page={199}>p. 199</Leaf>) the town of Tixualahtun is &ldquo;lugar donde se pone vna piedra labrada sobre otra&rdquo;, which he compares to the royal archive at Simancas, and the count survives in speech: to say &ldquo;I am sixty&rdquo; was <em>oxppeluabil</em>, &ldquo;tengo tres eras de años, idest, tres piedras&rdquo; (I have three eras of years, that is, three stones). He learned this way of counting, he says, to preach to the Maya in their own terms.
+        </p>
+
+        <FigRow>
+          <Fig book={SANCHEZ} page={198} src="https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/198.jpg" alt="Printed page of Sánchez de Aguilar's Informe on the katun and the carved stones" caption={<>Sánchez de Aguilar 1639, p. 198: the burning of the books, <em>Xibilba</em>, and the katun of carved stones.</>} />
+          <Fig book={SANCHEZ} page={199} src="https://images.sourcelibrary.org/archived/69f8c1170c0c281d4bd32721/199.jpg" alt="Printed page of Sánchez de Aguilar's Informe on Tixualahtun and counting age in stones" caption={<>p. 199: <em>oxppeluabil</em>, &ldquo;tres piedras&rdquo;, sixty years.</>} />
+        </FigRow>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">A diviner&rsquo;s words</h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Diviners, Sánchez writes (<Leaf book={SANCHEZ} page={171}>p. 171</Leaf>), cast lots with a handful of maize, counting by twos. A girl once ran away from home; her mother called one of them, who &ldquo;echò suertes sobre los caminos&rdquo; (cast lots over the roads), and she was found in the town at the end of the road the lot chose. Sánchez punished him, and on examining him found that all he said while counting the maize was &ldquo;Huylan nones: Caylan pares&rdquo;, roughly &ldquo;away the odds, stay the pairs.&rdquo; He could not say whether he invoked the devil, &ldquo;porque el Sortilego era simplicissimo, y casi tonto.&rdquo;
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">The healer&rsquo;s parentage of a disease</h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The incantations of the <em>Ritual of the Bacabs</em> master a disease by naming its birth and its parents. Against a fire-illness (<Leaf book="6ad191a242debc96269252b6" page={252}>p. 252</Leaf>): &ldquo;petan kin ayum te ti cane, yx pic ʒab ana te ti cane&rdquo;, the round sun is your father there in the sky, <em>Ix Pic Tzab</em> is your mother there in the sky, a name the translation reads as the Pleiades. Other spells speak of their own words as <em>uoh</em> (<Leaf book="6ad191a242debc96269252b6" page={68}>p. 68</Leaf>), which Pío Pérez gives as &ldquo;Letra. | Escribir&rdquo; (a letter, to write) (<Leaf book={PIO_PEREZ} page={423}>p. 382</Leaf>). In machine translation, Ix Chel and Itzamna appear in the four colours of the directions (<Leaf book="6ad191a242debc96269252b6" page={142}>p. 142</Leaf>), and the curer brings to birth a rattlesnake in red, white, black and yellow (<Leaf book="6ad191a242debc96269252b6" page={220}>p. 220</Leaf>).
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">In the Maya scribes&rsquo; own almanac</h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The <em>Chilam Balam of Kaua</em> copies a European eclipse table into Maya and keeps the Maya idiom: &ldquo;chibil uen&rdquo; and &ldquo;chibil uich kin&rdquo;, the moon and the face of the sun bitten (<Leaf book={KAUA} page={121}>p. 121</Leaf>). It gives the Uayeb as &ldquo;hopel chich aban kin ti ma kaba kin&rdquo;, five days without names (<Leaf book={KAUA} page={73}>p. 73</Leaf>), and in its katun prophecies <em>kinich Kakmo</em>, the fire macaw, appears as the omen of 8 Ahau (<Leaf book={KAUA} page={168}>p. 168</Leaf>). The 1846 Yucatec sermons, in turn, name the ancient serpent of Genesis <em>uchben x kukican</em> (<Leaf book="6acc3dd5230e9a56175cd709" page={25}>p. 25</Leaf>).
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">The people</h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Venancio Pec, one of the leaders of the Caste War, in a postscript of January 1850, protests the hanging of a commander&rsquo;s wife: what fault has a poor woman, &ldquo;xchup na cubatel&rdquo;, a woman who just stays at home (<Leaf book="6ad191b742debc9626925415" page={56}>p. 56</Leaf>). In 1719 Ygnacio Canul of Temax left his heirs forest land &ldquo;actun Jonot Quen Balam&rdquo;, at the cave and cenote called Quen Balam, so that no one should take it from them; in 1821 members of the Canul family sold it for forty pesos (<Leaf book="6ad191c442debc962692562c" page={11}>p. 11</Leaf>, <Leaf book="6ad191c442debc962692562c" page={13}>p. 13</Leaf>). The letters also hold a message issued in the name of the Cross, signed &ldquo;Juan de la Cruz&rdquo;, with a Spanish translation made at the time (<Leaf book="6ad191b742debc9626925415" page={43}>pp. 43&ndash;45</Leaf>).
+        </p>
+
+        <FigRow cols={3}>
+          <Fig book="6ad191a242debc96269252b6" page={252} src="https://images.sourcelibrary.org/pages/6ad191a242debc96269252b6/0252.jpg" alt="Manuscript page of the Ritual of the Bacabs" caption={<><em>Ritual of the Bacabs</em>, p. 252: the sun the father, Ix Pic Tzab the mother.</>} />
+          <Fig book={KAUA} page={121} src="https://images.sourcelibrary.org/archived/6a878ac1d71f2514794f9e40/121.jpg" alt="Page of the Chilam Balam of Kaua with an eclipse table" caption={<>Kaua, p. 121: the moon and the sun &ldquo;bitten&rdquo;.</>} />
+          <Fig book="6ad191b742debc9626925415" page={56} src="https://images.sourcelibrary.org/pages/6ad191b742debc9626925415/0056.jpg" alt="Manuscript letter of Venancio Pec, 1850" caption={<>Venancio Pec, January 1850.</>} />
+        </FigRow>
+
         <h2 id="available" className="text-2xl md:text-3xl text-primary mt-16 mb-6">What you can read now</h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 my-8">
