@@ -28,6 +28,7 @@ const MOTUL_2 = '6acc3d6c230e9a56175ccae2';
 const PIO_PEREZ = '6acc3dfa230e9a56175cdd32';
 const SANCHEZ = '69f8c1170c0c281d4bd32721';
 const KAUA = '6a878ac1d71f2514794f9e40';
+const LANDA = '69f8c0f74c6a515115aedadd';
 
 function Leaf({ book, page, children }: { book: string; page: number; children: React.ReactNode }) {
   return (
@@ -298,6 +299,48 @@ export default function MayaRitualDictionariesPage() {
           <Fig book="6ad191b742debc9626925415" page={56} src="https://images.sourcelibrary.org/pages/6ad191b742debc9626925415/0056.jpg" alt="Manuscript letter of Venancio Pec, 1850" caption={<>Venancio Pec, January 1850.</>} />
         </FigRow>
 
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">Maya religion, as its destroyers recorded it</h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Diego de Landa, the Franciscan who presided over the burning of Maya books at Maní in 1562, wrote the fullest early account of the religion he suppressed. The library holds it in Brasseur de Bourbourg&rsquo;s 1864 edition, Spanish and French side by side. Every quotation below is from Landa&rsquo;s Spanish on the page linked.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          <strong>The days.</strong> &ldquo;Para estos ccclx dias tienen xx letras o carateres con que los nombran, dexando de poner nombre a los demas cinco, porque los tenian por aciagos y malos&rdquo; (for these 360 days they have twenty letters or characters by which they name them, leaving the other five without a name, because they held them to be unlucky and bad). The page then draws the twenty day signs, Kan to Akbal (<Leaf book={LANDA} page={327}>p. 204</Leaf>).
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          <strong>The Bacabs.</strong> &ldquo;Entre la muchedumbre de dioses que esta gente adorava, adoravan quatro llamados Bacab&hellip; Estos dezian eran quatro hermanos a los quales puso Dios quando crio el mundo a las quatro partes del, sustentando el cielo no se cayesse. Dezian tambien destos Bacabes que escaparon quando el mundo fue del diluvio destruido&rdquo; (among the multitude of gods they worshipped four called Bacab. These, they said, were four brothers whom God set at the four parts of the world when he made it, holding up the sky so that it should not fall; and they said these Bacabs escaped when the world was destroyed by the flood). Each was tied to one of the four year-bearer days, Kan, Muluc, Ix and Cauac, drawn on the same page (<Leaf book={LANDA} page={329}>p. 206</Leaf>).
+        </p>
+
+        <FigRow>
+          <Fig book={LANDA} page={327} src="https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/327.jpg" alt="Page of Landa's Relación with the twenty Maya day signs drawn in a grid" caption={<>Landa, p. 204: the twenty day signs.</>} />
+          <Fig book={LANDA} page={329} src="https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/329.jpg" alt="Page of Landa's Relación with the four year-bearer signs and the passage on the four Bacabs" caption={<>p. 206: the year-bearers Kan, Muluc, Ix, Cauac, and the four Bacabs holding up the sky.</>} />
+        </FigRow>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          <strong>The katuns as idols.</strong> Each twenty-year katun had its idol in the temple. Had there been no Spaniards, &ldquo;adoraran ellos el idolo de Buluc-Ahau hasta el año de LI&rdquo;, then set up an idol to Bolon-Ahau beside it to be honoured in turn, &ldquo;de manera que veneravan a estos sus katunes xx años&rdquo; (so that they venerated these katuns of theirs for twenty years) (<Leaf book={LANDA} page={439}>p. 316</Leaf>).
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          <strong>The books.</strong> On the same page: &ldquo;Hallamosles grande numero de libros destas sus letras, y porque no tenian cosa en que no uviesse superstición y falsedades del demonio se les quemamos todos, lo qual a maravilla sentian, y les dava pena&rdquo; (we found a great number of books in these letters of theirs, and because they had nothing in which there was not superstition and the devil&rsquo;s falsehoods, we burned them all, which they felt deeply and which grieved them). The next sentence begins &ldquo;De sus letras porne aqui un a, b, c&rdquo;; two pages on he writes <em>lé</em>, <em>ha</em> and &ldquo;Ma in kati, quiere dezir no quiero&rdquo; in Maya signs (<Leaf book={LANDA} page={441}>p. 318</Leaf>), the passage from which the phonetic reading of the script was eventually recovered.
+        </p>
+
+        <FigRow>
+          <Fig book={LANDA} page={439} src="https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/439.jpg" alt="Page of Landa's Relación on the katun idols and the burning of the books" caption={<>p. 316: the katun idols, and &ldquo;se les quemamos todos&rdquo;.</>} />
+          <Fig book={LANDA} page={441} src="https://images.sourcelibrary.org/archived/69f8c0f74c6a515115aedadd/441.jpg" alt="Page of Landa's Relación writing words in Maya glyphs" caption={<>p. 318: <em>Ma in kati</em>, &ldquo;no quiero&rdquo;, written in Maya signs.</>} />
+        </FigRow>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          <strong>Rebirth and death.</strong> Landa found among the Maya a rite he could only call baptism, &ldquo;con vocablo que quiere dezir nacer de nuevo&hellip; caput zihil quiere dezir nacer de nuevo&rdquo; (with a word that means to be born again) (<Leaf book={LANDA} page={267}>p. 144</Leaf>). Those who hanged themselves, he writes, went to their rest carried by &ldquo;la diosa de la horca que llamavan Ixtab&rdquo;, the goddess of the gallows, and at night the Maya told the hour &ldquo;por el luzero y las cabrillas&rdquo;, by Venus and the Pleiades (<Leaf book={LANDA} page={325}>p. 202</Leaf>).
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">What the extirpator found, two generations later</h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Sánchez de Aguilar&rsquo;s report shows the religion still practised around 1600, in the record of his own trials. The Maya drew blood &ldquo;en la lengua, y orejas, y ofreciendo en sus patenas de tablillas su sangre, y la de sus hijos, como lo auerigue muchas vezes en sus confessiones judiciales&rdquo; (from the tongue and ears, offering their blood and their children&rsquo;s on little wooden plates, as I established many times in their judicial confessions), then shared the offerings and cakes with everyone &ldquo;por via de comunion&rdquo; (<Leaf book={SANCHEZ} page={184}>p. 184</Leaf>). Fishermen of the coast toward Río Lagartos made offerings before fishing of &ldquo;candelas, reales de plata, y cuzcas, que son sus esmeraldas&rdquo; at shrines on the inlets and salt lagoons, which he had demolished in 1607 (<Leaf book={SANCHEZ} page={231}>p. 231</Leaf>). And two men, Alonso Chablé and Francisco Canul, declared themselves Pope and Bishop among the Maya, said Mass at night, ordained priests for the idols by anointing their hands with oil and chrism, and offered the idols their <em>balche</em>; in the margin, &ldquo;Nunca tal se ha visto en la Nueva-España&rdquo; (<Leaf book={SANCHEZ} page={214}>p. 214</Leaf>).
+        </p>
+
         <h2 id="available" className="text-2xl md:text-3xl text-primary mt-16 mb-6">What you can read now</h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 my-8">
@@ -330,7 +373,7 @@ export default function MayaRitualDictionariesPage() {
 
         <p className="text-secondary leading-relaxed mb-4 font-body"><strong>Written to convert, or to suppress</strong></p>
         <ul className="space-y-2 mb-6 list-disc pl-6 font-body text-secondary">
-          <li><Leaf book={SANCHEZ} page={1}>Sánchez de Aguilar, <em>Informe contra idolorum cultores</em></Leaf> (1639)</li>
+          <li><Leaf book={LANDA} page={1}>Diego de Landa, <em>Relación de las cosas de Yucatán</em></Leaf> (c. 1566; Brasseur de Bourbourg&rsquo;s 1864 edition) and <Leaf book={SANCHEZ} page={1}>Sánchez de Aguilar, <em>Informe contra idolorum cultores</em></Leaf> (1639)</li>
           <li>Sermons and catechisms in Yucatec: <Leaf book="6acc3dbd230e9a56175cd616" page={1}>Domínguez, <em>Pláticas</em></Leaf> (1758), the <Leaf book="6acc3dd5230e9a56175cd709" page={1}><em>Colección de sermones</em></Leaf> (1846), <Leaf book="6acc3ddc230e9a56175cd8f4" page={1}>Ruz, <em>Explicación</em></Leaf> (1847), <Leaf book="6acc3ddf230e9a56175cda8b" page={1}>Ripalda&rsquo;s catechism</Leaf> (1847) and the <Leaf book="6acc3e19230e9a56175cdf20" page={1}>Gospel of John</Leaf> (1869)</li>
           <li>In Kaqchikel: <Leaf book="6acc3d72230e9a56175ccc93" page={1}>Antonio del Saz, <em>Libro de pláticas</em></Leaf> (1662)</li>
         </ul>
