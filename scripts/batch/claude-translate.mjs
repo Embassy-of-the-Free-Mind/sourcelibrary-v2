@@ -11,7 +11,7 @@
  * languages under a cross-family judge). READ stage only; `cli-translate.mjs apply` writes.
  *
  *   node --env-file=.env.production.local scripts/batch/claude-translate.mjs read --page-ids-file=F --out=DIR
- *        [--model=opus] [--per-call=10] [--job=NAME]
+ *        [--model=opus] [--per-call=10] [--job=NAME] [--instructions-file=F]
  *   node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *
  * WHAT A CALL IS. Up to --per-call consecutive translatable pages of ONE book (translate-batch-seam planBlocks: a
@@ -25,6 +25,9 @@
  * break (block-drift.mjs) or whose leaf seam was bridged (leaf-break.mjs) is read again alone. The exact prompt
  * sent is saved under DIR/prompts/<hash>.txt, and `apply` checks the meta's hash against it; each call's whole reply
  * is kept under DIR/raw/<call id>.txt.
+ *
+ * --instructions-file=F: JSON { page_id: "one line" }, as in cli-translate.mjs read; a call appends each distinct line
+ * of its pages once, before the reply rules (#6865: one column instruction given to every arm of a comparison).
  *
  * HOW IT FAILS. A usage-limit reply stops the run (exit 3) with the pages done so far saved; re-running skips them.
  * Any other failed page gets an empty .txt and a non-zero `exit` in its meta, which `apply` skips and counts.
@@ -105,6 +108,7 @@ async function main() {
   const MODEL = arg('model') || 'opus';
   const PER_CALL = Math.max(1, Math.min(10, Number(arg('per-call') || 10)));
   const JOB = arg('job') || 'claude-translate';
+  const INSTRUCTIONS = arg('instructions-file') ? JSON.parse(fs.readFileSync(arg('instructions-file'), 'utf8')) : {};
   if (process.argv[2] !== 'read' || !OUT || !arg('page-ids-file')) { console.error('usage: claude-translate.mjs read --page-ids-file=F --out=DIR (see the header)'); process.exit(2); }
   const version = spawnSync(CLI, ['--version'], { encoding: 'utf8' }).stdout?.trim();
   if (!version) { console.error(`${CLI} is not installed or not on PATH`); process.exit(1); }
@@ -162,7 +166,8 @@ async function main() {
     const prevRead = prev ? readOf(prev.id) : '';
     const previousTranslation = prevRead && !cliChatterReason(prevRead) ? sanitizeTranslationTags(prevRead) : prev?.translation?.data || null;
     const built = buildBlockTranslationPrompt({ prompts, book, pages: group, previousTranslation, prevOcrText: prev?.ocr?.data || undefined, nextOcrText: next?.ocr?.data || undefined, pageBreak: PAGE_BREAK_SCOPED });
-    const sent = built.prompt + CALL_SUFFIX;
+    const instruction = [...new Set(group.map((p) => INSTRUCTIONS[p.id]).filter(Boolean))].join('\n\n') || null;
+    const sent = built.prompt + (instruction ? `\n\n${instruction}` : '') + CALL_SUFFIX;
     const sentHash = contentHash(sent);
     const promptFile = path.join('prompts', `${sentHash}.txt`);
     if (!fs.existsSync(path.join(OUT, promptFile))) fs.writeFileSync(path.join(OUT, promptFile), sent);
@@ -180,7 +185,7 @@ async function main() {
     if (r.cls === 'usage_limit') { stop = `usage limit: ${r.err || r.text.slice(0, 200)}`; return null; }
     const common = {
       model: r.model || MODEL, model_requested: MODEL, call_id: callId, call_pages: group.length, attempts: attempt + 1, started_at: t0.toISOString(), finished_at: new Date().toISOString(),
-      prompt_ref: built.promptRef, is_english_book: built.isEnglish, prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage,
+      prompt_ref: built.promptRef, is_english_book: built.isEnglish, prompt_sent_chars: sent.length, prompt_sent_hash: sentHash, prompt_sent_file: promptFile, call_usage: r.usage, ...(instruction && { instruction }),
       context: { previous_translation: !!previousTranslation, previous_from: prevRead && previousTranslation !== prev?.translation?.data ? 'cli-read' : previousTranslation ? 'stored' : null, prev_ocr: !!prev?.ocr?.data, next_ocr: !!next?.ocr?.data, page_break: 'scoped', block: group.map((p) => p.page_number) },
     };
     const pageMeta = (p, i) => ({ ...common, call_position: i + 1, ocr_hash: contentHash(p.ocr.data), ocr_updated_at: p.ocr.updated_at ?? null });
