@@ -1,0 +1,10 @@
+{
+  "name": "sourcelibrary-keyword-search",
+  "private": true,
+  "description": "Keyword page service for #6852. Installed apart from the app (see README.md): its own node_modules, never the repo's. SQLite is node:sqlite (built in, FTS5 included).",
+  "type": "module",
+  "engines": { "node": ">=22.13" },
+  "dependencies": {
+    "mongodb": "6.21.0"
+  }
+}

@@ -1,0 +1,38 @@
+# Keyword page service for the /api/search page lane (#6852). Installed at
+# /etc/systemd/system/keyword-search.service on the serving box (README in scripts/workers/keyword-search/):
+#
+#   cp infrastructure/systemd/keyword-search.service /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now keyword-search
+#
+# Code: /data/keyword-search/app (a copy of scripts/workers/keyword-search; node:sqlite is built in, and
+# the only package is mongodb for the pull and the delta — `npm ci` there, never in the repo).
+# Index: /data/keyword-search/index/keyword.sqlite. Secrets: /etc/keyword-search.env, mode 600:
+#   KEYWORD_SEARCH_TOKEN=<openssl rand -hex 32>
+#   KEYWORD_SEARCH_HOST=127.0.0.1    stays on localhost until the TLS proxy (#6843) fronts it
+#   KEYWORD_SEARCH_PORT=3460         Bearer token on every route
+#   KEYWORD_SEARCH_LOCAL_PORT=3461   127.0.0.1 only, no auth, /admin for sync-delta.mjs
+#
+# Memory: the process holds ~5 bytes per page per thread (book index + content flag) plus SQLite's page
+# cache (256 MB per connection); the index itself is read through the OS page cache, so the box's free
+# RAM is what keeps hot posting lists off the disk. MemoryHigh keeps the process from crowding the box.
+[Unit]
+Description=Source Library keyword page service (SQLite FTS5 over page text, #6852)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/data/keyword-search/app
+EnvironmentFile=/etc/keyword-search.env
+Environment=KEYWORD_SEARCH_ROOT=/data/keyword-search
+ExecStart=/usr/bin/node --disable-warning=ExperimentalWarning /data/keyword-search/app/server.mjs
+Restart=always
+RestartSec=15
+MemoryHigh=3G
+MemoryMax=4G
+Nice=-2
+StandardOutput=append:/data/keyword-search/logs/server.log
+StandardError=append:/data/keyword-search/logs/server.log
+
+[Install]
+WantedBy=multi-user.target
