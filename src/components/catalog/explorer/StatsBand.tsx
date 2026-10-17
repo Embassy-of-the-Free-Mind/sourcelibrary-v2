@@ -41,8 +41,11 @@ interface Props {
 export default function StatsBand({ stats, libraryTotal, searched, loading, stale, selectedLanguages, yearMin, yearMax, hasTranslation, onYears, onLanguage, onTranslated }: Props) {
   // Everything the JSX shows is worked out here, as plain values: the React
   // Compiler hoists member access above conditional guards (ui-navigation.md).
+  // No numbers (the count failed): dashes, never a previous search's figures.
   const total = stats?.total ?? 0;
   const translated = stats?.translated ?? 0;
+  const totalText = stats ? fmt(total) : '—';
+  const translatedText = stats ? `${stats.sample ? '~' : ''}${fmt(translated)}` : '—';
   const printed = stats?.printed ?? [];
   const maxBucket = Math.max(1, ...printed.map((p) => p.count));
   const bars = printed.map((p, i) => ({
@@ -78,13 +81,13 @@ export default function StatsBand({ stats, libraryTotal, searched, loading, stal
       className={`mt-7 flex gap-2 overflow-x-auto -mx-4 px-4 pb-1 snap-x snap-mandatory [scrollbar-width:none] sm:mx-0 sm:px-0 sm:grid sm:gap-3 sm:overflow-visible sm:grid-cols-2 lg:[grid-template-columns:1fr_1fr_1.6fr_1.6fr] ${muted}`}
     >
       <div className={`${box} flex-[0_0_42%] sm:flex-auto`}>
-        <div className="text-[22px] sm:text-[28px] font-medium leading-tight tabular-nums text-primary">{fmt(total)}</div>
+        <div className="text-[22px] sm:text-[28px] font-medium leading-tight tabular-nums text-primary">{totalText}</div>
         <div className="text-[13px] text-muted mt-0.5">{worksLabel}</div>
         {sampleNote && <div className="text-[11.5px] text-muted mt-1">{sampleNote}</div>}
       </div>
 
       <div className={`${box} flex-[0_0_42%] sm:flex-auto`}>
-        <div className="text-[22px] sm:text-[28px] font-medium leading-tight tabular-nums text-primary">{stats?.sample ? '~' : ''}{fmt(translated)}</div>
+        <div className="text-[22px] sm:text-[28px] font-medium leading-tight tabular-nums text-primary">{translatedText}</div>
         <div className="text-[13px] text-muted mt-0.5">translated into English</div>
         {showTranslatedLink && (
           <button type="button" onClick={onTranslated} className="mt-2 text-[12.5px] text-secondary underline underline-offset-[3px] hover:text-primary">
