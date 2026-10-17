@@ -14,10 +14,24 @@
  * #6853 ships; after that, point it at a pre-#6853 deployment URL (`vercel ls`).
  * Skipped unless PARITY_NEW_BASE is set.
  *
- * Search is not perfectly repeatable: a lane that times out returns a
- * `partial` answer with fewer rows (and is never cached). Each query is
- * therefore warmed on both sides first, compared up to three times, and a
- * pair is only judged when neither side is partial.
+ * Only `result.content` is compared: `_meta.upgrade_hint` depends on how many
+ * calls this IP has made to that instance, which differs between the two.
+ *
+ * Search is not perfectly repeatable, so a pair can differ for reasons that
+ * have nothing to do with how the route is called:
+ *  - a lane that times out returns a `partial` answer (never cached): such a
+ *    pair is not judged;
+ *  - the page roll-up stops at a 4 s budget, so a slow moment adds fewer books;
+ *  - the OLD side goes through the edge cache, and on 2026-10-17 alternated
+ *    between a stale and a current answer for the same URL (total 23 vs 24).
+ * Each query is therefore warmed on both sides and passes if any of four
+ * judged attempts is byte-identical.
+ *
+ * Both deployments must also run with the same search env. A Vercel PREVIEW
+ * did not on 2026-10-17: SEARCH_UNTRANSLATED_LANE=on is set for Production
+ * only, so a preview's /api/search/semantic itself answers differently from
+ * production's. Compare two production-env deployments, or run the new code
+ * locally with production's env (what #6853 did: 10/10 identical across two runs).
  */
 import { describe, it, expect } from 'vitest';
 
@@ -51,7 +65,8 @@ async function call(base: string, name: string, args: Record<string, unknown>): 
   const raw = await res.text();
   const line = raw.split('\n').find((l) => l.startsWith('data: '));
   const body = JSON.parse(line ? line.slice(6) : raw);
-  const text = JSON.stringify(body.result ?? body.error);
+  // `_meta` is per caller (upgrade_hint counts this IP's calls on that instance), not search output.
+  const text = JSON.stringify(body.result ? { content: body.result.content, isError: body.result.isError } : body.error);
   return { text, partial: /\\"partial\\": true|"isError":true/.test(text) };
 }
 
@@ -61,7 +76,8 @@ describe.skipIf(!NEW_BASE)(`MCP search parity: ${NEW_BASE} (in-process) vs ${OLD
       await Promise.all([call(OLD_BASE, tool, args), call(NEW_BASE!, tool, args)]);
       let last: [string, string] = ['', ''];
       let judged = 0;
-      for (let attempt = 0; attempt < 3; attempt++) {
+      for (let attempt = 0; attempt < 4; attempt++) {
+        if (attempt) await new Promise((r) => setTimeout(r, 3000));
         const [o, n] = await Promise.all([call(OLD_BASE, tool, args), call(NEW_BASE!, tool, args)]);
         if (o.partial || n.partial) continue;
         judged++;
