@@ -13,9 +13,11 @@
 #   KEYWORD_SEARCH_PORT=3460         Bearer token on every route
 #   KEYWORD_SEARCH_LOCAL_PORT=3461   127.0.0.1 only, no auth, /admin for sync-delta.mjs
 #
-# Memory: the process holds the live-book set and tantivy's per-segment structures (a few hundred MB) plus a
-# 200 MB writer heap for the delta. The index (~16 GB) is memory-mapped, so the box's free RAM is what keeps
-# hot posting lists off the disk; MemoryHigh bounds the process, not the page cache.
+# Memory: the process itself is ~80 MB (RssAnon), plus a 200 MB writer heap for the delta. The index
+# (~15 GB) is memory-mapped, and under cgroup v2 the page cache for the index pages the service reads is
+# charged to THIS unit (phase 2 on cloudlayer: file 1.99 GB, anon 79 MB in memory.stat, #6852). So
+# MemoryHigh is the size of the hot index set, not a process cap: at 3G it held ~3 GB of a 15 GB index.
+# 8G/10G sits inside sourcelibrary.slice's 14G; the cache above MemoryHigh is reclaimed, not killed.
 [Unit]
 Description=Source Library keyword page service (tantivy BM25 over page text, #6852)
 After=network-online.target
@@ -32,8 +34,8 @@ Environment=KEYWORD_SEARCH_ROOT=/data/keyword-search
 ExecStart=/data/keyword-search/venv/bin/python /data/keyword-search/app/server.py
 Restart=always
 RestartSec=15
-MemoryHigh=3G
-MemoryMax=4G
+MemoryHigh=8G
+MemoryMax=10G
 Nice=-2
 StandardOutput=append:/data/keyword-search/logs/server.log
 StandardError=append:/data/keyword-search/logs/server.log

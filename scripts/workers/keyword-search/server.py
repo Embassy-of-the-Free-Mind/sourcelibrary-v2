@@ -36,6 +36,9 @@ import kwindex
 
 MAX_BODY = 1 << 20
 FUZZY_MIN_LEN, FUZZY_PREFIX, FUZZY_MAX_EXPANSIONS = 6, 4, 50
+# The characters tried after a short token (see fuzzy_candidates): Latin letters, the accented and archaic
+# forms the corpus prints, digits.
+SHORT_FUZZY_ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789àáâãäåæçèéêëìíîïñòóôõöøœùúûüýÿßſ"
 FIELDS = (("tr", 2.0), ("ocr", 1.0))
 Occur = tantivy.Occur
 Q = tantivy.Query
@@ -101,8 +104,7 @@ class Engine:
         idf = lambda n: math.log(1 + (n_docs - n + 0.5) / (n + 0.5))
         clauses, terms = [], set()
         for word, f, fb in ((w, f, fb) for w in words for f, fb in FIELDS):
-            prefix = word[:FUZZY_PREFIX]
-            cands = [(t, c) for t, c in self.searcher.terms_with_prefix(f, prefix) if t == word or (abs(len(t) - len(word)) <= 1 and within_one_edit(t, word))]
+            cands = self.fuzzy_candidates(f, word)
             cands.sort(key=lambda x: (x[0] != word, -x[1]))
             cands = cands[:FUZZY_MAX_EXPANSIONS]
             if not cands:
@@ -115,6 +117,18 @@ class Engine:
         if not clauses:
             return self.any_terms(words), len(words)
         return Q.boolean_query(clauses), len(terms)
+
+    def fuzzy_candidates(self, f, word):
+        """[(term, doc_freq)] within one edit of `word` that keep its first 4 characters. A token of 4 characters
+        or fewer IS its prefix, so its only expansions are itself plus one more character: those are looked up
+        one by one instead of walking every term that starts with it. ("the" would list ~10^5 terms; a pasted
+        slug of short tokens took 1.3 s that way, measured 2026-10-17 on cloudlayer.)"""
+        if len(word) <= FUZZY_PREFIX and not any(ord(ch) > 0x24F for ch in word):
+            out = [(word, self.searcher.doc_freq(f, word))]
+            out += [(word + ch, self.searcher.doc_freq(f, word + ch)) for ch in SHORT_FUZZY_ALPHABET]
+            return [(t, c) for t, c in out if c > 0]
+        rows = self.searcher.terms_with_prefix(f, word[:FUZZY_PREFIX], limit=20000) if len(word) <= FUZZY_PREFIX else self.searcher.terms_with_prefix(f, word[:FUZZY_PREFIX])
+        return [(t, c) for t, c in rows if t == word or (abs(len(t) - len(word)) <= 1 and within_one_edit(t, word))]
 
     def main_query(self, query):
         q = (query or "").strip()
