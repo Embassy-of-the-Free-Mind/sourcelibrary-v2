@@ -23,6 +23,7 @@ import type { ApiIdentity } from '@/lib/api-auth';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { resolveHostFromHeaders } from '@/lib/analytics-ingest';
 import { deferDbWrite } from '@/lib/mcp-usage';
+import { inProcessCaller } from '@/lib/inprocess-caller';
 import type { VectorShadow } from '@/lib/vector-search';
 
 const COLLECTION = 'search_queries';
@@ -117,6 +118,9 @@ async function writeEntry(input: LogSearchQueryInput) {
   const tenant = getTenantContextFromRequest(input.request.headers);
   // Settled by now in practice (the service call is bounded at 400 ms and runs beside a ~1 s RPC).
   const vectorShadow = input.vector_shadow ? await input.vector_shadow.catch(() => null) : null;
+  // A search the MCP route ran in-process carries the MCP caller (#4307); the
+  // semantic route takes no identity argument of its own.
+  const identity = input.identity ?? inProcessCaller(input.request);
 
   await db.collection(COLLECTION).insertOne({
     ts: new Date(),
@@ -125,9 +129,9 @@ async function writeEntry(input: LogSearchQueryInput) {
     total: input.total ?? null,
     ms: input.ms,
     ok: input.ok,
-    identity_kind: input.identity?.kind || 'anon',
-    user_id: input.identity?.userId || null,
-    api_key_id: input.identity?.apiKeyId || null,
+    identity_kind: identity?.kind || 'anon',
+    user_id: identity?.userId || null,
+    api_key_id: identity?.apiKeyId || null,
     tenant_id: tenant?.id || null,
     tenant_slug: tenant?.slug || null,
     host: resolveHostFromHeaders(input.request.headers),
