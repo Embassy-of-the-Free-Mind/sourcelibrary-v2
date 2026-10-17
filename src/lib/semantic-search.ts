@@ -2,6 +2,10 @@ import { supabase, supabaseAdmin } from '@/lib/supabase';
 import { parseNavQuery, rankNavMatches, type NavCandidate, type NavPageType } from '@/lib/search/site-nav';
 import { expandLanguages } from '@/lib/language-utils';
 import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
+import {
+  vectorSearchMode, matchVectorService, hydrateServiceRows, overlapAtK,
+  type VectorMatchFilters, type VectorShadow, type VectorShadowSink,
+} from '@/lib/vector-search';
 
 /**
  * Thrown when a semantic-search RPC fails. Do NOT swallow this into an empty
@@ -441,6 +445,13 @@ export interface SemanticPageSearchOptions {
    * editions.
    */
   textLang?: string;
+  /**
+   * Set by a route that logs to `search_queries` (#6821): in VECTOR_SEARCH_MODE=shadow
+   * the global page search fills it with the page-vector service's comparison
+   * against the RPC, and the route logs it as `vector_shadow`. Without a sink no
+   * shadow call is made, since there is nowhere to record it.
+   */
+  vectorShadow?: VectorShadowSink;
 }
 
 /**
@@ -494,6 +505,32 @@ export async function semanticPageSearchGlobal(
   // filter_tenant_id and ignores it — which is why a tenant request never
   // reaches this point (see the scope branch above).
   const rpc = usesLangStore(opts.textLang) ? 'match_page_texts' : 'match_semantic';
+
+  // The page-vector service (#6821) holds page_translations only, so only the
+  // English store reaches it. `serve` returns its rows and falls back to the RPC
+  // on any failure; `shadow` runs it beside the RPC and returns the RPC's rows.
+  const mode = rpc === 'match_semantic' ? vectorSearchMode() : 'off';
+  const svcFilters: VectorMatchFilters = {
+    threshold: 0.3,
+    language: opts.language ?? null,
+    languages: expandedLanguages,
+    excludeLanguages: expandedExcludeLanguages,
+    yearMin: opts.yearMin ?? null,
+    yearMax: opts.yearMax ?? null,
+  };
+  if (mode === 'serve') {
+    const served = await serveFromVectorService(queryEmbedding, overRequest, svcFilters);
+    if (served) return shapePageRows(served, limit, opts.maxPerBook);
+  }
+  const shadowStarted = mode === 'shadow' && opts.vectorShadow ? performance.now() : null;
+  const shadowCall = shadowStarted !== null
+    ? matchVectorService(queryEmbedding, overRequest, svcFilters).then(
+      (r) => ({ ok: true as const, r, ms: performance.now() - shadowStarted }),
+      (e: Error) => ({ ok: false as const, error: e.message, ms: performance.now() - shadowStarted }),
+    )
+    : null;
+
+  const rpcStarted = performance.now();
   const { data, error } = usesLangStore(opts.textLang)
     ? await supabase.rpc('match_page_texts', {
       query_embedding: JSON.stringify(queryEmbedding),
@@ -518,11 +555,67 @@ export async function semanticPageSearchGlobal(
       filter_exclude_languages: expandedExcludeLanguages,
     });
 
+  const rpcMs = performance.now() - rpcStarted;
+
+  if (shadowCall && opts.vectorShadow) {
+    // Not awaited: the comparison is read by the route's logger after the response has gone.
+    const rpcRows = error ? null : ((data || []) as { page_id: string }[]);
+    opts.vectorShadow.result = shadowCall.then((s) => buildVectorShadow(s, rpcRows, rpcMs, overRequest, svcFilters));
+  }
+
   if (error) {
     throw new SemanticSearchError(rpc, error.message);
   }
 
   return shapePageRows((data || []) as any[], limit, opts.maxPerBook);
+}
+
+const isFilteredMatch = (f: VectorMatchFilters) => !!(f.language || f.languages?.length || f.excludeLanguages?.length
+  || f.yearMin !== null || f.yearMax !== null);
+
+/**
+ * `serve` mode: the service's rows in `match_semantic`'s shape, or null to fall
+ * back to the RPC. Null on any error, a timeout, or `complete: false` (the
+ * service widened as far as its budget allows and may have missed rows that
+ * pass the filter). A fallback costs the service's time on top of the RPC's.
+ */
+async function serveFromVectorService(embedding: number[], k: number, f: VectorMatchFilters): Promise<any[] | null> {
+  try {
+    const r = await matchVectorService(embedding, k, f);
+    if (r.complete === false) return null;
+    return await hydrateServiceRows(r.rows);
+  } catch (e) {
+    console.warn('[semantic-search] vector service failed, using match_semantic:', (e as Error).message);
+    return null;
+  }
+}
+
+/** Exported for tests. */
+export function buildVectorShadow(
+  s: { ok: true; r: { rows: { page_id: string }[]; ms: number; path?: string; complete?: boolean }; ms: number } | { ok: false; error: string; ms: number },
+  rpcRows: { page_id: string }[] | null,
+  rpcMs: number,
+  k: number,
+  f: VectorMatchFilters,
+): VectorShadow {
+  const out: VectorShadow = {
+    rpc_ms: Math.round(rpcMs),
+    svc_ms: s.ok ? Math.round(s.ms) : null,
+    k,
+    rpc_n: rpcRows?.length ?? 0,
+    svc_n: s.ok ? s.r.rows.length : null,
+    overlap_at_k: s.ok && rpcRows ? overlapAtK(s.r.rows, rpcRows, k) : null,
+    filtered: isFilteredMatch(f),
+  };
+  if (s.ok) {
+    out.svc_server_ms = Math.round(s.r.ms * 10) / 10;
+    if (s.r.path) out.svc_path = s.r.path;
+    if (s.r.complete !== undefined) out.svc_complete = s.r.complete;
+  } else {
+    out.svc_error = s.error.slice(0, 200);
+  }
+  if (!rpcRows) out.rpc_failed = true;
+  return out;
 }
 
 function shapePageRows(rows: any[], limit: number, maxPerBook?: number): SemanticPageResult[] {

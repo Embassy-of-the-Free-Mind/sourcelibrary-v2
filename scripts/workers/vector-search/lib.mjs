@@ -40,6 +40,32 @@ export function loadUsearch() { return require('usearch'); }
 export const indexPath = (gen) => path.join(INDEX_DIR, `index-${gen}.usearch`);
 export const rowsPath = (gen) => path.join(INDEX_DIR, `rows-${gen}.jsonl`);
 
+/**
+ * The exact-scan file for selective filters (build-exact.mjs, phase 3 of #6821): every build-time
+ * vector as int8, ordered by (book_language, book_year), so one language's rows, or one language
+ * over a year range, are one contiguous read. `exact.keys` maps a file row to its usearch key;
+ * `exact.json` holds the class table and the `built_at` of the index it was built from.
+ * Rows a delta adds or re-embeds are not in the file: the server keeps those in RAM and saves them
+ * with each generation (`overrides-<g>.bin`).
+ */
+export const EXACT_VEC_PATH = path.join(INDEX_DIR, 'exact.i8');
+export const EXACT_KEYS_PATH = path.join(INDEX_DIR, 'exact.keys');
+export const EXACT_META_PATH = path.join(INDEX_DIR, 'exact.json');
+export const overridesPath = (gen) => path.join(INDEX_DIR, `overrides-${gen}.bin`);
+
+/**
+ * float32 → int8, scaled per vector so its largest component is ±127. Cosine ignores scale, so the
+ * scale is not stored. Measured 2026-10-17 on 50K rows × 20 queries against float32 cosine:
+ * overlap@46 0.985, similarity error mean 0.0005 (a fixed [−1, 1] scale keeps ~5 levels, lib.mjs above).
+ */
+export function quantizeI8(src, out = new Int8Array(DIM), srcOff = 0, outOff = 0) {
+  let m = 0;
+  for (let i = 0; i < DIM; i++) { const a = Math.abs(src[srcOff + i]); if (a > m) m = a; }
+  const s = m > 0 ? 127 / m : 0;
+  for (let i = 0; i < DIM; i++) out[outOff + i] = Math.round(src[srcOff + i] * s);
+  return out;
+}
+
 export function readState() {
   return fs.existsSync(STATE_PATH) ? JSON.parse(fs.readFileSync(STATE_PATH, 'utf8')) : null;
 }
@@ -86,6 +112,11 @@ export const rowLine = (r) => JSON.stringify([r.page_id, r.book_id, r.page_numbe
 
 const NULL_YEAR = -2147483648;
 
+/** One number per (language index, year) pair: the filter planner counts rows by class, not by row. */
+export const classOf = (langIdx, year) => langIdx * 4294967296 + (year - NULL_YEAR);
+export const classLang = (c) => Math.floor(c / 4294967296);
+export const classYear = (c) => { const y = (c % 4294967296) + NULL_YEAR; return y === NULL_YEAR ? null : y; };
+
 /**
  * Key → page metadata, held as typed arrays (≈ 40 B per row plus the page_id strings), and
  * page_id → key for replacement. Languages and book ids are interned.
@@ -97,6 +128,7 @@ export class RowStore {
     this.pageKey = new Map();
     this.books = []; this.bookIdx = new Map(); this.bookRows = new Uint32Array(1024); this.booksLive = 0;
     this.langs = [null]; this.langIdx = new Map();
+    this.classCount = new Map(); // classOf(lang, year) → live rows: an exact filtered count without a scan
     this.alloc(capacity);
   }
   alloc(cap) {
@@ -127,6 +159,7 @@ export class RowStore {
     this.book[k] = b; this.pn[k] = r.page_number ?? 0; this.lang[k] = this.internLang(r.book_language);
     this.year[k] = r.book_year == null ? NULL_YEAR : r.book_year;
     this.alive[k] = 1; this.live++;
+    const c = classOf(this.lang[k], this.year[k]); this.classCount.set(c, (this.classCount.get(c) || 0) + 1);
     if (this.bookRows[b]++ === 0) this.booksLive++;
     this.pageIds[k] = r.page_id; this.pageKey.set(r.page_id, k);
     if (k >= this.n) this.n = k + 1;
@@ -135,6 +168,7 @@ export class RowStore {
   kill(k) {
     if (!this.alive[k]) return;
     this.alive[k] = 0; this.live--;
+    const c = classOf(this.lang[k], this.year[k]); this.classCount.set(c, this.classCount.get(c) - 1);
     const b = this.book[k]; if (--this.bookRows[b] === 0) this.booksLive--;
   }
   bookId(k) { return this.books[this.book[k]]; }

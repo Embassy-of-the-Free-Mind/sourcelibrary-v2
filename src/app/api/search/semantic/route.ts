@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { semanticBookSearch } from '@/lib/semantic-search';
 import { conceptPageSearch } from '@/lib/search/concept-search';
+import type { VectorShadowSink } from '@/lib/vector-search';
 import { defaultDiversity, parseDiversityParam } from '@/lib/search/diversity';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { getDb } from '@/lib/mongodb';
@@ -105,12 +106,14 @@ export async function GET(request: NextRequest) {
       // caps are counted), and each row comes back with its slug: embeddings
       // are not pruned when a book is hidden or deleted, and either would 404
       // on click (#2522, #4216).
-      const concept = await conceptPageSearch(searchQuery, limit, { scope, language, languages, excludeLanguages, yearMin, yearMax, maxPerBook, textLang, diversity, abstractLane: conceptLane });
+      const vectorShadow: VectorShadowSink = {}; // VECTOR_SEARCH_MODE=shadow (#6821)
+      const concept = await conceptPageSearch(searchQuery, limit, { scope, language, languages, excludeLanguages, yearMin, yearMax, maxPerBook, textLang, diversity, abstractLane: conceptLane, vectorShadow });
       const pages = concept.rows;
       const enriched = pages.filter(p => scopeAdmits(scope, p.book_id));
       logSearchQuery({
         request, route: 'search.semantic.page', query: query!,
         total: enriched.length, ms: Date.now() - _searchStart, ok: true,
+        vector_shadow: vectorShadow.result,
         filters: { language, languages, exclude_languages: excludeLanguages, year_min: yearMin, year_max: yearMax, max_per_book: maxPerBook, lang: textLang, diversity: concept.diversity, untranslated_lane: concept.lanes.untranslated, ...(conceptLane ? { lane: 'concept' } : {}) },
       });
       return NextResponse.json({
