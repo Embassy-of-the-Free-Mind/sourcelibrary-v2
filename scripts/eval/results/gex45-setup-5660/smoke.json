@@ -1,0 +1,52 @@
+{
+ "box": {
+  "host": "gex45-1",
+  "gpu": "NVIDIA RTX PRO 4000 Blackwell SFF Edition",
+  "workers": 3,
+  "backend": "server",
+  "max_side": 0,
+  "layout": 0,
+  "paddle_version": "3.2.1",
+  "paddleocr_version": "3.7.0",
+  "paddlex_version": "3.7.2",
+  "vl_model": "PaddleOCRVL() default pipeline",
+  "weights_files": [
+   "PaddleOCR-VL-1.6/model.safetensors"
+  ],
+  "vllm_version": "0.10.2",
+  "weights_sha256": "85a479d506a11e724e7285d395c551be69f41dbc16b6342d3cacfb189aed71db",
+  "pages_out": 3,
+  "pages_err": 0,
+  "infer_secs": 62,
+  "wall_secs_per_page": 20.67
+ },
+ "driver": "595.91.07 (nvidia-driver-595-server-open, Ubuntu noble)",
+ "cuda_driver_api": "13.2",
+ "cuda_toolkit": "12.9.86 (/usr/local/cuda-12.9)",
+ "kernel": "6.8.0-147-generic",
+ "recipe": "paddle-zh-box.sh BACKEND=server LAYOUT=0 VLLM_USE_FLASHINFER_SAMPLER=0, PADDLE_CU=cu129; the #5660 fleet recipe (zh/code REV 9d9c73e2 + bodyHanCount + longestCharRun)",
+ "smoke_3pp": {
+  "book": "6a3cbec1ec254ff6cae02ebb (御定韻府拾遺 vol 57)",
+  "pages": {
+   "28": "raw byte-identical to the fleet read; the lane refused it on 10-07 (loop share 0.823), so no stored text",
+   "29": "Han CER 0.0047 vs fleet raw and vs stored ocr.data (1 char)",
+   "30": "byte-identical; Han CER 0 vs stored"
+  }
+ },
+ "repro_300pp": {
+  "manifest": "first 300 rows of chunk c0050-w1 (#5660 fleet)",
+  "clients": 8,
+  "wall_secs_incl_load": 95,
+  "secs_per_page_incl_load": 0.32,
+  "errors": 0,
+  "byte_identical_to_fleet": 215,
+  "han_cer_vs_fleet": {
+   "median": 0.0,
+   "p95": 0.026,
+   "max": 0.169,
+   "over_0.05": 8
+  },
+  "note": "fleet read on Scaleway L4 g09; vLLM batching is not bit-deterministic across GPUs"
+ },
+ "writes": "none (dry run: box-local files only)"
+}

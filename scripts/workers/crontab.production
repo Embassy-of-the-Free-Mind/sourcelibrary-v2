@@ -214,6 +214,8 @@
 # Own lock and state file (hetzner-state.json), so it never clobbers the Scaleway pass. Guarded on the
 # rule module so the line is inert until #5736 is on main.
 25 * * * * cd /root/sourcelibrary && [ -f scripts/lib/infra-lease.mjs ] && flock -w 600 /tmp/sl-hetzner-lease.lock bash -c "set -a; source .env.production.local; [ -f /root/.hcloud.env ] && source /root/.hcloud.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --hetzner --apply" >> /var/log/sourcelibrary/hetzner-lease-watchdog.log 2>&1
+# GEX45-1 standing GPU box (#5660): a dedicated box bills the same idle, so it ALERTS (ntfy + #5660 comment) after 6 h with no new output under /root/pz/out or /root/jobs; never powers off.
+*/30 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/gex45-idle-alert.sh ] && flock -n /tmp/sl-gex45-idle.lock bash scripts/maintenance/gex45-idle-alert.sh >> /var/log/sourcelibrary/gex45-idle-alert.log 2>&1
 */30 * * * * bash /root/sourcelibrary/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
 30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
 # provenance coverage audit (#4613): every page written in the window carries its engine block + content_hash

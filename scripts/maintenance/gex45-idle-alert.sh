@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# gex45-idle-alert.sh — tell a human when the standing GPU box (Hetzner GEX45-1) has nothing to do (#5660).
+#
+# PRIOR ART: scripts/gpu/idle-poweroff.sh (a rented Scaleway GPU powers ITSELF off when idle) and
+# scripts/maintenance/gpu-lease-watchdog.mjs (stops expired/idle leases through the provider API). Neither fits:
+# the GEX45 is a dedicated Robot server at a flat $249/mo, so powering it off saves nothing — it bills the same off
+# as on. The failure to catch is a box that sits idle for weeks while we keep paying, and the fix is a person
+# noticing and either queueing work or cancelling it. So this ALERTS; it never powers anything off.
+#
+# Runs on the main Hetzner box from cron (infrastructure/hetzner-crontab, every 30 min). Keeps no secret on the GPU
+# box: it ssh-probes the box, and posts from here with the gh CLI already logged in on this box.
+#
+#   gex45-idle-alert.sh            probe, update state, alert on a state change (or a 24 h nag while idle)
+#   gex45-idle-alert.sh --dry-run  probe and print what it would send; state untouched
+#
+# "Output" = any regular file modified under OUTPUT_DIRS on the box (default: /root/pz/out /root/jobs). Every job
+# on the box writes there; that is the convention, and the reason this watcher can be dumb (#5660).
+# States: busy | idle (no new output for IDLE_HOURS, default 6) | unreachable (2 failed probes in a row).
+# On entering idle or unreachable, and every NAG_HOURS (24) while it lasts: ntfy NTFY_TOPIC + a comment on #ISSUE.
+# On returning to busy: one ntfy line. Nothing else repeats — a detector that repeats hourly trains you to ignore it.
+set -euo pipefail
+
+HOST=${GEX45_HOST:-root@65.108.136.89}
+OUTPUT_DIRS=${OUTPUT_DIRS:-/root/pz/out /root/jobs}
+IDLE_HOURS=${IDLE_HOURS:-6}
+NAG_HOURS=${NAG_HOURS:-24}
+NTFY_TOPIC=${NTFY_TOPIC:-https://ntfy.sh/sourcelibrary-uptime}
+ISSUE=${ISSUE:-5660}
+REPO=${REPO:-Embassy-of-the-Free-Mind/sourcelibrary-v2}
+STATE=${STATE_FILE:-/root/.gex45-idle-alert.json}
+DRY=0; [ "${1:-}" = "--dry-run" ] && DRY=1
+
+now=$(date +%s)
+log() { echo "$(date -u +%FT%TZ) $*"; }
+
+# probe: newest output mtime (epoch, 0 = none), GPU util %, GPU compute processes, uptime
+probe=$(ssh -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 "$HOST" "
+  newest=0
+  for d in $OUTPUT_DIRS; do [ -d \"\$d\" ] || continue
+    t=\$(find \"\$d\" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1 | cut -d. -f1)
+    [ -n \"\$t\" ] && [ \"\$t\" -gt \"\$newest\" ] && newest=\$t
+  done
+  util=\$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -d ' ')
+  procs=\$(nvidia-smi --query-compute-apps=process_name --format=csv,noheader 2>/dev/null | xargs -r -n1 basename | sort | uniq -c | tr -s ' ' | tr '\n' ';')
+  echo \"\$newest \${util:-NA} \$(cut -d. -f1 /proc/uptime) \${procs:-none}\"
+" 2>/dev/null) || probe=""
+
+prev=$(python3 -c "import json,sys; d=json.load(open('$STATE')); print(d.get('state','none'), d.get('since',0), d.get('alerted_at',0), d.get('fails',0))" 2>/dev/null || echo "none 0 0 0")
+read -r pstate psince palerted pfails <<<"$prev"
+
+if [ -z "$probe" ]; then
+  fails=$((pfails + 1)); state=$pstate; detail="ssh probe failed ($fails in a row)"
+  [ "$fails" -ge 2 ] && state=unreachable
+  newest=0; util=NA; procs=none
+else
+  fails=0
+  read -r newest util up procs <<<"$probe"
+  age_h=$(( newest > 0 ? (now - newest) / 3600 : 999999 ))
+  if [ "$newest" -gt 0 ] && [ $((now - newest)) -lt $((IDLE_HOURS * 3600)) ]; then state=busy; else state=idle; fi
+  last=$([ "$newest" -gt 0 ] && date -u -d @"$newest" +%FT%TZ || echo never)
+  detail="newest output $last ($( [ "$newest" -gt 0 ] && echo "${age_h} h ago" || echo "no file under $OUTPUT_DIRS")), GPU ${util}%, GPU processes: ${procs}"
+fi
+
+since=$psince; [ "$state" != "$pstate" ] && since=$now
+alert=0
+if [ "$state" = idle ] || [ "$state" = unreachable ]; then
+  if [ "$state" != "$pstate" ] || [ $((now - palerted)) -ge $((NAG_HOURS * 3600)) ]; then alert=1; fi
+fi
+resumed=0; { [ "$state" = busy ] && { [ "$pstate" = idle ] || [ "$pstate" = unreachable ]; }; } && resumed=1
+
+log "state=$state (was $pstate) · $detail · alert=$alert resumed=$resumed"
+
+msg_idle="GEX45-1 (Hetzner GPU box, \$249/mo flat) is ${state^^}: ${detail}. It bills the same idle as busy: queue work on it or decide to cancel (#${ISSUE})."
+if [ "$alert" = 1 ]; then
+  if [ "$DRY" = 1 ]; then log "[dry-run] would ntfy + comment on #$ISSUE: $msg_idle"
+  else
+    curl -fsS --max-time 20 -H "Title: GEX45 ${state}" -H "Tags: warning" -d "$msg_idle" "$NTFY_TOPIC" >/dev/null || log "ntfy FAILED"
+    gh issue comment "$ISSUE" --repo "$REPO" --body "**GEX45 idle alert** (\`scripts/maintenance/gex45-idle-alert.sh\`, $(date -u +%FT%TZ)): the box is **${state}**. ${detail}. A dedicated box bills the same when idle, so this does not power it off. Queue work under \`/root/jobs/<name>/\` on the box, or decide to cancel. Next reminder in ${NAG_HOURS} h if nothing changes." >/dev/null || log "gh comment FAILED"
+    palerted=$now
+  fi
+fi
+if [ "$resumed" = 1 ] && [ "$DRY" = 0 ]; then
+  curl -fsS --max-time 20 -H "Title: GEX45 busy again" -d "GEX45-1 is writing output again: ${detail}" "$NTFY_TOPIC" >/dev/null || log "ntfy FAILED"
+fi
+[ "$state" = busy ] && palerted=0
+
+if [ "$DRY" = 0 ]; then
+  python3 -c "import json; json.dump({'state':'$state','since':$since,'alerted_at':$palerted,'fails':$fails,'newest_output':$newest,'checked_at':$now}, open('$STATE','w'))"
+fi

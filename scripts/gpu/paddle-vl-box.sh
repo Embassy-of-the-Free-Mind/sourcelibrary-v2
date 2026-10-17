@@ -23,13 +23,18 @@ log() { echo "$(date -u +%FT%TZ) $*" | tee -a "$W/box.log"; }
 setup() {
   if [ ! -x "$W/venv/bin/python" ]; then
     apt-get -qq update >/dev/null 2>&1 || true
-    apt-get -qq install -y python3-venv libgl1 libglib2.0-0 >/dev/null 2>&1 || true
+    # python3-dev: vLLM's Triton compiles a CUDA helper at engine start and needs Python.h — the Scaleway GPU image
+    # ships it, a bare Ubuntu (the GEX45, #5660) does not: "Engine core initialization failed"
+    apt-get -qq install -y python3-venv python3-dev libgl1 libglib2.0-0 >/dev/null 2>&1 || true
     python3 -m venv "$W/venv"
   fi
   local P="$W/venv/bin/pip"
   $P install -q --upgrade pip >> "$W/setup.log" 2>&1
-  $P install -q paddlepaddle-gpu==3.2.1 -i https://www.paddlepaddle.org.cn/packages/stable/cu126/ >> "$W/setup.log" 2>&1 \
-    || { log "pin paddlepaddle-gpu==3.2.1 failed; installing latest cu126"; $P install -q paddlepaddle-gpu -i https://www.paddlepaddle.org.cn/packages/stable/cu126/ >> "$W/setup.log" 2>&1; }
+  # PADDLE_CU: cu126 for the L4/H100 boxes; a Blackwell card (RunPod RTX PRO 4000, the GEX45) needs cu129 — the
+  # cu126 wheel's layout predictor fails with "Unsupported GPU architecture" (measured 2026-10-02, #5600)
+  local CU=${PADDLE_CU:-cu126}
+  $P install -q paddlepaddle-gpu==3.2.1 -i https://www.paddlepaddle.org.cn/packages/stable/$CU/ >> "$W/setup.log" 2>&1 \
+    || { log "pin paddlepaddle-gpu==3.2.1 failed; installing latest $CU"; $P install -q paddlepaddle-gpu -i https://www.paddlepaddle.org.cn/packages/stable/$CU/ >> "$W/setup.log" 2>&1; }
   $P install -q "paddleocr[doc-parser]==3.7.0" "paddlex==3.7.2" >> "$W/setup.log" 2>&1 \
     || { log "pin paddleocr 3.7.0 / paddlex 3.7.2 failed; installing latest"; $P install -q "paddleocr[doc-parser]" >> "$W/setup.log" 2>&1; }
   log "setup ok: $($W/venv/bin/python -c 'import paddle,paddleocr,paddlex;print("paddle",paddle.__version__,"paddleocr",paddleocr.__version__,"paddlex",paddlex.__version__)') $(nvidia-smi --query-gpu=name,driver_version --format=csv,noheader)"
