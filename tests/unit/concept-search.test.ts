@@ -8,10 +8,13 @@ const state = {
   abstracts: [] as any[],
   abstractScopes: [] as any[],
   original: { rows: [] as any[], state: 'off' as string },
+  englishDelay: 0,
+  originalDelay: 0,
   books: [] as any[],
   pages: [] as any[],
   mongoFails: false,
 };
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const cursor = (rows: any[]) => ({ toArray: async () => rows });
 const db = {
   collection: (name: string) => ({
@@ -24,9 +27,9 @@ const db = {
 };
 vi.mock('@/lib/mongodb', () => ({ getDb: async () => db }));
 vi.mock('@/lib/semantic-search', () => ({
-  semanticPageSearchGlobal: async () => state.english,
+  semanticPageSearchGlobal: async () => { await sleep(state.englishDelay); return state.english; },
   semanticConceptSearch: async (_q: string, _n: number, o: any) => { state.abstractScopes.push(o.scope); return state.abstracts; },
-  semanticPageSearchUntranslated: async () => state.original,
+  semanticPageSearchUntranslated: async () => { await sleep(state.originalDelay); return state.original; },
 }));
 
 const en = (book: string, page: number, score: number) => ({ page_id: `${book}:${page}`, book_id: book, page_number: page, snippet: `en ${book} ${page}`, snippet_type: 'translation', score, book_title: book, book_author: null, book_language: 'Latin', book_year: 1600 });
@@ -35,7 +38,7 @@ const book = (id: string, tradition: string[], extra: Record<string, unknown> = 
 const GLOBAL = { kind: 'global' as const };
 
 beforeEach(() => {
-  state.english = []; state.abstracts = []; state.abstractScopes = []; state.original = { rows: [], state: 'off' }; state.books = []; state.pages = []; state.mongoFails = false;
+  state.english = []; state.abstracts = []; state.abstractScopes = []; state.original = { rows: [], state: 'off' }; state.books = []; state.pages = []; state.mongoFails = false; state.englishDelay = 0; state.originalDelay = 0;
 });
 
 describe('conceptPageSearch', () => {
@@ -148,5 +151,33 @@ describe('conceptPageSearch', () => {
     state.books = [book('l1', []), book('l2', [])];
     const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off', maxPerBook: 1 });
     expect(out.rows.map((r) => `${r.book_id}:${r.page_number}`)).toEqual(['l1:1', 'l2:1']);
+  });
+
+  it('the English answer does not wait out a slow original-text lane (#5729)', async () => {
+    const { conceptPageSearch, UNTRANSLATED_GRACE_MS } = await import('@/lib/search/concept-search');
+    state.english = [en('e0', 1, 0.8), en('e1', 1, 0.79)];
+    state.original = { rows: [orig('o0', 7, 0.85)], state: 'ok' };
+    state.books = ['e0', 'e1', 'o0'].map((b) => book(b, []));
+    state.pages = [{ id: 'o0:7', ocr: { data: 'Prima materia.' } }];
+    state.originalDelay = 4000;
+    const t0 = Date.now();
+    const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off' });
+    expect(Date.now() - t0).toBeLessThan(UNTRANSLATED_GRACE_MS + 400);
+    expect(out.rows.map((r) => r.book_id)).toEqual(['e0', 'e1']);
+    expect(out.lanes.untranslated).toBe('late');
+  });
+
+  it('a lane that answers within the grace after English is still fused', async () => {
+    const { conceptPageSearch, UNTRANSLATED_GRACE_MS } = await import('@/lib/search/concept-search');
+    state.english = [en('e0', 1, 0.8), en('e1', 1, 0.79)];
+    state.original = { rows: [orig('o0', 7, 0.85)], state: 'ok' };
+    state.books = ['e0', 'e1', 'o0'].map((b) => book(b, []));
+    state.pages = [{ id: 'o0:7', ocr: { data: 'Prima materia.' } }];
+    // Slower than English, but inside the grace measured from English's answer.
+    state.englishDelay = 300;
+    state.originalDelay = 300 + UNTRANSLATED_GRACE_MS / 2;
+    const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off' });
+    expect(out.lanes.untranslated).toBe('ok');
+    expect(out.rows.map((r) => r.book_id)).toContain('o0');
   });
 });

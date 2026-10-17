@@ -734,8 +734,12 @@ export function untranslatedLaneEnabled(): boolean {
   return (process.env.SEARCH_UNTRANSLATED_LANE || '').trim().toLowerCase() === 'on';
 }
 
-/** Why the lane returned what it did. Only `ok` carries rows. */
-export type UntranslatedLaneState = 'ok' | 'off' | 'unavailable' | 'failed' | 'closed';
+/**
+ * Why the lane returned what it did. Only `ok` carries rows. `late` is set by
+ * the caller (concept-search.ts): the lane was still running when the English
+ * answer was ready.
+ */
+export type UntranslatedLaneState = 'ok' | 'off' | 'unavailable' | 'failed' | 'closed' | 'late';
 
 export interface UntranslatedLaneResult {
   rows: SemanticPageResult[];
