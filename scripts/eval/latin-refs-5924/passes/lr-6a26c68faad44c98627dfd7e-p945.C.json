@@ -1,0 +1,40 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "febre juxta Autorem hunc pituita",
+  "A": "ob-",
+  "B": "ob",
+  "ctx_after": "ſtruens paucior eſt, & minus",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ob-",
+   "note": "faint hyphen printed"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "ſtagnat chylus, & ob moram",
+  "A": "Noſtra Cauſa.",
+  "B": "",
+  "ctx_after": "Cauſa ſe- cundum Carteſia- nos.",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "Noſtra Cauſa.",
+   "note": "right-margin note sits higher than left one"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "Cauſa ſe- cundum Carteſia- nos.",
+  "A": "",
+  "B": "Noſtra Cauſa.",
+  "ctx_after": "t acidior",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": ""
+  }
+ }
+]

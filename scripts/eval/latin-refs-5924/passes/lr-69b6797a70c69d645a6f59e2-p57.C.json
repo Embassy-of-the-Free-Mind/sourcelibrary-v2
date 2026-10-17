@@ -1,0 +1,53 @@
+[
+ {
+  "k": 2,
+  "ctx_before": "nuptiarum expers, ac propemo- dum",
+  "A": "innocens,",
+  "B": "innocens ,!",
+  "ctx_after": "virgo ſemper permanſit. Anaſtaſius Nicenus,",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "innocens,",
+   "note": "mark after comma is an inked quad/stray, not a letter"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "ſe. Theophilactus 900. Ad cap.",
+  "A": "I.",
+  "B": "1.",
+  "ctx_after": "Matthei. Non cognouit eam, ſcilicet",
+  "resolution": {
+   "k": 6,
+   "choice": "B",
+   "text": "1.",
+   "note": "x-height old-style 1, same glyph as in 1350/1300"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "eſt. Ioannes Cantacuzenus, 1350. Apologia",
+  "A": "I.",
+  "B": "1.",
+  "ctx_after": "Mons hic eſt Diua virgo,",
+  "resolution": {
+   "k": 7,
+   "choice": "B",
+   "text": "1."
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "ſecundū carnē pepe- rit:lapis autē",
+  "A": "abſq́;",
+  "B": "abſq;",
+  "ctx_after": "manuū opera abſciſſus, Chriſtus eſt,qui",
+  "resolution": {
+   "k": 9,
+   "choice": "A",
+   "text": "abſq́;",
+   "note": "accent over q visible"
+  }
+ }
+]

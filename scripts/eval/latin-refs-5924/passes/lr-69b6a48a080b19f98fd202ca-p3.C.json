@@ -1,0 +1,14 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "terra, erit ſolutum in cœlis.",
+  "A": "PROŒMIUM. VEteris",
+  "B": "PROOEMIUM. Veteris",
+  "ctx_after": "Eccleſiæ hiſtoriam vel pri- mis",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "PROŒMIUM. VEteris"
+  }
+ }
+]

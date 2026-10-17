@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "quadam amoto cippo decubare auſus",
+  "A": "ſit,Cunq;",
+  "B": "ſit.Cunq;",
+  "ctx_after": "oſſa ſuper quæ iacebat,in uocem",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "ſit.Cunq;",
+   "note": "point on baseline, no comma tail (cf. bas,)"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "uibrans ac percuſſuro ſimilis,eidem oc-",
+  "A": "currit,Cunq;",
+  "B": "currit.Cunq;",
+  "ctx_after": "nec ſic eum terrere potuiſſet,ſupera-",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "currit.Cunq;",
+   "note": "round point, no tail"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "expauidus,quicquid mortiferum dia- Macharis. abbas.",
+  "A": "Idem;",
+  "B": "Idem,",
+  "ctx_after": "Idem. ſſ iij",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "Idem;",
+   "note": "raised point above comma: semicolon"
+  }
+ }
+]

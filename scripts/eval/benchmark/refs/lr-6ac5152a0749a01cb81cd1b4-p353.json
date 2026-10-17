@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Andreae Lavrentii, Ferrerii Domini, Gall. Regis Christian. Consiliarij ac Medici primarij, & Academiae Monspeliensis Cancellarij Opera Omnia (1627), the leaf itself: https://digi.ub.uni-heidelberg.de/iiif/2/dulaurens1627bd1%3A333.jpg/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6ac5152a0749a01cb81cd1b4",
+  "page_number": 353,
+  "page_id": "6ac5152c0749a01cb81cd317",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1600s",
+  "year": 1627,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://digi.ub.uni-heidelberg.de/iiif/2/dulaurens1627bd1%3A333.jpg/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "2165b850814fd3369cd2dd321c5c1f08cee850fe89d5b0c7f8df066c3d5ba99d",
+    "width": 2126,
+    "height": 3800,
+    "fetched_at": "2026-10-17T22:11:15.628Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9776,
+    "hunks": 18,
+    "space_only_hunks": 4,
+    "c_chose": {
+      "A": 3,
+      "B": 11,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 6973,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.552Z",
+  "text_location": "repo",
+  "text_sha256": "b49837eb0eea7aa7ca9137b88fb07a3999eb050e35ca0b2c8d7c1a7b15f704a5"
+}

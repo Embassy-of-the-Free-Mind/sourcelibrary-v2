@@ -1,0 +1,15 @@
+[
+ {
+  "k": 2,
+  "ctx_before": "regni nomen non adhibeatur, niſi",
+  "A": "acceſſerit unctio:",
+  "B": "accesſerit unctio :",
+  "ctx_after": "Primus verò Rex qvi unctus",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "accesſerit unctio :",
+   "note": "round s then long s; space before colon"
+  }
+ }
+]

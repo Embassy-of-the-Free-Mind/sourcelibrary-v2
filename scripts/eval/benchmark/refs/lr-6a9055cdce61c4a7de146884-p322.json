@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Historia Philosophica : continens veterum phil., qui quidem praecipui fuerunt, studia ac dogmata, modernorum quaestionibus in primis exagita (1674), the leaf itself: https://archive.org/download/bub_gb_zXjxX4yFwF8C/page/n321/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a9055cdce61c4a7de146884",
+  "page_number": 322,
+  "page_id": "6a9055cdce61c4a7de1469c7",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1600s",
+  "year": 1674,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://archive.org/download/bub_gb_zXjxX4yFwF8C/page/n321/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "ae801f62c55db39e1b94a91b85d52b83fe7e9aa1471e85ebcb15f57437f99c58",
+    "width": 1561,
+    "height": 2500,
+    "fetched_at": "2026-10-17T22:31:10.645Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9569,
+    "hunks": 5,
+    "space_only_hunks": 4,
+    "c_chose": {
+      "A": 1,
+      "B": 0,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1214,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.610Z",
+  "text_location": "repo",
+  "text_sha256": "4b12c1088e83e60e0e26b8325b8bdfe70c958dad823388f1891ff4e04aff543f"
+}

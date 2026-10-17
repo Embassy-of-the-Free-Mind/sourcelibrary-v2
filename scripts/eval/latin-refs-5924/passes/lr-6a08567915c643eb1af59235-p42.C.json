@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "BRVTVS.",
+  "A": "Latinæq;",
+  "B": "Latinæq́;",
+  "ctx_after": "literæ fecerunt. utinam non tam",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "Latinæq́;",
+   "note": "accent over q printed"
+  }
+ },
+ {
+  "k": 21,
+  "ctx_before": "erat par, & omnes ſale",
+  "A": "facetijsq; ſuperabat .",
+  "B": "facetijsq́; ſuperabat.",
+  "ctx_after": "eius collega L. Beſtia bonis",
+  "resolution": {
+   "k": 21,
+   "choice": "other",
+   "text": "facetijsq́; ſuperabat .",
+   "note": "accented q as B; space before point as A"
+  }
+ },
+ {
+  "k": 22,
+  "ctx_before": "L. Beſtiam, C. Catonem, Sp.",
+  "A": "Albinum , ciuemq;",
+  "B": "Albinum, ciuemq́;",
+  "ctx_after": "præſtantiſſimum L. Opimium Gracchi inter-",
+  "resolution": {
+   "k": 22,
+   "choice": "other",
+   "text": "Albinum , ciuemq́;",
+   "note": "space before comma as A; accented q as B"
+  }
+ }
+]

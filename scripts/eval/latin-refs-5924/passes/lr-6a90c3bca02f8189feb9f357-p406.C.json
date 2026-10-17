@@ -1,0 +1,28 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "furit. Et Odyſſ: φ. οἷ",
+  "A": "τ'",
+  "B": "τ᾽",
+  "ctx_after": "αὐτῷ πρώτῳ κακὸν ἔυρετο οἰνο-",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "τ᾽",
+   "note": "Greek elision mark"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "οἷ τ' αὐτῷ πρώτῳ κακὸν",
+  "A": "ἔυρετο",
+  "B": "εὕρετο",
+  "ctx_after": "οἰνο- βαρείων, id eſt, Sibi",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "ἔυρετο",
+   "note": "breathing/accent on ε as printed"
+  }
+ }
+]

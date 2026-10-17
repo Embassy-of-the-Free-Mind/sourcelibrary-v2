@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Enchiridion de milite Christiano in quo taxatis vulgi substitionibus, ad priscae religionis puritat: veteris aeloquenetiae lituo nos prouoca (1515), the leaf itself: https://api.digitale-sammlungen.de/iiif/image/v2/bsb00014264_00094/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a90bcd6a02f8189feb97ac6",
+  "page_number": 94,
+  "page_id": "6a90bcd6a02f8189feb97b26",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1515,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00014264_00094/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "15be5e153f3b83aa4be6aa22a40c5b1b3e51cd328e95178893d2e62e5e47f932",
+    "width": 2513,
+    "height": 3429,
+    "fetched_at": "2026-10-17T22:31:33.819Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "roman",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9462,
+    "hunks": 10,
+    "space_only_hunks": 4,
+    "c_chose": {
+      "A": 4,
+      "B": 0,
+      "other": 2
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 2199,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.615Z",
+  "text_location": "repo",
+  "text_sha256": "cd7dbfa2b637f219981505916117722193e53fa2f1306c50d710509596efe2e0"
+}

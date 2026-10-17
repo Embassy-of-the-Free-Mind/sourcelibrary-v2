@@ -1,0 +1,78 @@
+[
+ {
+  "k": 31,
+  "ctx_before": "intimauit. Ille aūt laudabat eius",
+  "A": "ſniam :",
+  "B": "ſnīam:",
+  "ctx_after": "iubens ut nullo modo prætermitteret:&",
+  "resolution": {
+   "k": 31,
+   "choice": "A",
+   "text": "ſniam :",
+   "note": "space before colon; no visible stroke"
+  }
+ },
+ {
+  "k": 38,
+  "ctx_before": "ne fieret interdicta eſt:ab eo",
+  "A": "legiſlatore:cū",
+  "B": "legiſlatore: cu",
+  "ctx_after": "ius autoritatē non ualemus oīno",
+  "resolution": {
+   "k": 38,
+   "choice": "other",
+   "text": "legiſlatore:cu",
+   "note": "no space, no stroke on cu"
+  }
+ },
+ {
+  "k": 61,
+  "ctx_before": "incurrimus ꝗ timore trāſgreſſores legis",
+  "A": "efficimur:uerūetiam īmaniter",
+  "B": "efficimur: uerūetiam imaniter",
+  "ctx_after": "offendimus deū:qui ēt te iudice",
+  "resolution": {
+   "k": 61,
+   "choice": "A",
+   "text": "efficimur:uerūetiam īmaniter"
+  }
+ },
+ {
+  "k": 65,
+  "ctx_before": "cæde negociū illud euadere:aſſumens oēs",
+  "A": "amicos:& cūcta",
+  "B": "amicos: & cuncta",
+  "ctx_after": "ſua ſeruitia:in Tyberiadē pergit uolens",
+  "resolution": {
+   "k": 65,
+   "choice": "A",
+   "text": "amicos:& cūcta"
+  }
+ },
+ {
+  "k": 68,
+  "ctx_before": "uel cuiuſmodi eſſent:uel qualibet ordinibus",
+  "A": "haberent̄.",
+  "B": "haberent.",
+  "ctx_after": "Iudæi uero magnum qui dem",
+  "resolution": {
+   "k": 68,
+   "choice": "A",
+   "text": "haberent̄.",
+   "note": "stroke over t"
+  }
+ },
+ {
+  "k": 82,
+  "ctx_before": "primatibus ad Pe tronium uenere",
+  "A": "depræcantes",
+  "B": "deptæcantes",
+  "ctx_after": "ut bene de negocio præſenti",
+  "resolution": {
+   "k": 82,
+   "choice": "B",
+   "text": "deptæcantes",
+   "note": "misprint as printed"
+  }
+ }
+]

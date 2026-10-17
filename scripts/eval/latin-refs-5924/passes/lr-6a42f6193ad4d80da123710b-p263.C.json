@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "tum reperitur in relatiuis mutuis.",
+  "A": "Confi-",
+  "B": "Conſi-",
+  "ctx_after": "ſtit ergo hæc proprietas in",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "Conſi-",
+   "note": "blurred; no clear f crossbar, word is Conſiſtit"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "ſit tranſpoſitio tum in qualitate,",
+  "A": "tū",
+  "B": "cū",
+  "ctx_after": "in quantitate, de qua in",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "cū",
+   "note": "c without ascender, macron"
+  }
+ },
+ {
+  "k": 20,
+  "ctx_before": "eſſe poteſt, ſeu quod ſciri",
+  "A": "poteſt,",
+  "B": "poteſt.",
+  "ctx_after": "hoc modo non ſunt ſi-",
+  "resolution": {
+   "k": 20,
+   "choice": "other",
+   "text": "poteſt ,",
+   "note": "comma with a space before it"
+  }
+ }
+]

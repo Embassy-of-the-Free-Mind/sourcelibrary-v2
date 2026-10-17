@@ -1,0 +1,102 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "ſepe faciunt feminina. vt Pelleꝰ",
+  "A": "Pelides.",
+  "B": "[?]",
+  "ctx_after": "Pellis vel Pelleis. Pellidis vel",
+  "resolution": {
+   "k": 0,
+   "choice": "other",
+   "text": "pelides.",
+   "note": "first letter at gutter, lowercase p"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "ſunt tertie. ¶ De Formis",
+  "A": "Verboꝝ.",
+  "B": "Verborꝝ.",
+  "ctx_after": "Et Primo de Inchoatiuis: INchoatiua",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "Verboꝝ."
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "Verboꝝ. Et Primo de Inchoatiuis:",
+  "A": "INchoatiua",
+  "B": "Inchoatiua",
+  "ctx_after": "v̄ba ſunt / q̄ cū",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "INchoatiua",
+   "note": "drop cap I + capital N"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "Horreſco.i.īcipio horrere. Formant̄ Inchoatiua a",
+  "A": "vbis cuiuſcunq;",
+  "B": "v̄bis cuiuſcunqꝫ",
+  "ctx_after": "cōiugatiōis a ſcd̄a ꝑſona p̄ſentis",
+  "resolution": {
+   "k": 6,
+   "choice": "B",
+   "text": "v̄bis cuiuſcunqꝫ"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "ꝗ deberet facere hiaſco. Oīa",
+  "A": "quoq; inchoa",
+  "B": "quoqꝫ inchoa-",
+  "ctx_after": "tiua tertie cōiugatiōis ſunt /",
+  "resolution": {
+   "k": 8,
+   "choice": "other",
+   "text": "quoqꝫ inchoa",
+   "note": "z-form mark; no line-end hyphen printed"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "carent. ¶ Sequitur de Meditatiuis.",
+  "A": "MEditatiua ſunt / ſque",
+  "B": "Meditatiua ſunt/ que",
+  "ctx_after": "Meditationem ſignificāt cum Primitiuo. vt",
+  "resolution": {
+   "k": 10,
+   "choice": "A",
+   "text": "MEditatiua ſunt / ſque",
+   "note": "printed ſque (misprint)"
+  }
+ },
+ {
+  "k": 16,
+  "ctx_before": "tn̄ eſuriui facit / ꝗ",
+  "A": "hab; eſuritꝰ.",
+  "B": "habꝫ eſuriturꝰ.",
+  "ctx_after": "Neu- tra etiam Meditatiua ſunt",
+  "resolution": {
+   "k": 16,
+   "choice": "B",
+   "text": "habꝫ eſuriturꝰ."
+  }
+ },
+ {
+  "k": 19,
+  "ctx_before": "nō formāt. ¶ De Frequentatiuis.",
+  "A": "FRequentatiua ſunt /",
+  "B": "Frequentatiua ſunt/",
+  "ctx_after": "que frequentiam verbi ſi- gnificant.",
+  "resolution": {
+   "k": 19,
+   "choice": "A",
+   "text": "FRequentatiua ſunt /"
+  }
+ }
+]

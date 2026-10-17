@@ -1,0 +1,28 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "lini, fœnugræci, fol. malvæ, vio-",
+  "A": "lar,",
+  "B": "lar.",
+  "ctx_after": "camomil. capitum vervecum & vulpium.",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "lar,",
+   "note": "comma with descending tail"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "& in vino rubro loti,",
+  "A": "tâdem",
+  "B": "tādem",
+  "ctx_after": "cum aqua quadam convenienti conquaſſati",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "tādem",
+   "note": "straight slanted stroke, not circumflex"
+  }
+ }
+]

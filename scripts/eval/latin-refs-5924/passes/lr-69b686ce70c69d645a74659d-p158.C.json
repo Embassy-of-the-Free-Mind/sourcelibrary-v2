@@ -1,0 +1,114 @@
+[
+ {
+  "k": 3,
+  "ctx_before": "Calphu. Quem,ſine te,mœſti tenero donauimus",
+  "A": "hædo.",
+  "B": "hœdo.",
+  "ctx_after": "Donauit Virg. Quem pater ipſe",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "hœdo.",
+   "note": "same oe ligature as mœſti"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "donauit honore. Donum Idem. ——",
+  "A": "onerantq́;",
+  "B": "onerantq;",
+  "ctx_after": "altaria donis. Donorum Hel. Cin.",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "onerantq́;",
+   "note": "q with acute and comma"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "numerabis amicos. Donicum Lucret. Donicum",
+  "A": "refrenauit",
+  "B": "reſtenauit",
+  "ctx_after": "per membra voluntas. Donyſa Virg.",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "refrenauit",
+   "note": "f with crossbar"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "Barbarum. Iamb. Dormitat Idem. Indignor",
+  "A": "quandoq́;",
+  "B": "quandoq;",
+  "ctx_after": "bonus dormitat Homerus. Dormitantibus Sidon.",
+  "resolution": {
+   "k": 7,
+   "choice": "A",
+   "text": "quandoq́;"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "Qualis Nereia Doto. Draco Idem.",
+  "A": "Squamoſuſq́;",
+  "B": "Squamoſuſq;",
+  "ctx_after": "Draco & fulua ceruice leæna.",
+  "resolution": {
+   "k": 11,
+   "choice": "A",
+   "text": "Squamoſuſq́;"
+  }
+ },
+ {
+  "k": 12,
+  "ctx_before": "obſeſſa Draconibus ora. Draconigenæ Sidon.",
+  "A": "Quæq́;",
+  "B": "Quæq;",
+  "ctx_after": "Draconigenæ portas non clauſerat hoſti.",
+  "resolution": {
+   "k": 12,
+   "choice": "A",
+   "text": "Quæq́;"
+  }
+ },
+ {
+  "k": 13,
+  "ctx_before": "& Auunculus. Drachma Androm. ὀποῦ",
+  "A": "ἑαλωσίμου",
+  "B": "ἁλωσίμου",
+  "ctx_after": "τε δραχμὸς τρεῖς. Fin. hexam.",
+  "resolution": {
+   "k": 13,
+   "choice": "A",
+   "text": "ἑαλωσίμου",
+   "note": "epsilon with breathing printed before αλ"
+  }
+ },
+ {
+  "k": 14,
+  "ctx_before": "Drachma Androm. ὀποῦ ἑαλωσίμου τε",
+  "A": "δραχμὸς",
+  "B": "δραχμὰς",
+  "ctx_after": "τρεῖς. Fin. hexam. Drama Hilar.",
+  "resolution": {
+   "k": 14,
+   "choice": "B",
+   "text": "δραχμὰς"
+  }
+ },
+ {
+  "k": 15,
+  "ctx_before": "Ouid. Et Dromas & Canache",
+  "A": "Sticteq́;",
+  "B": "Sticteq;",
+  "ctx_after": "& Tigris & Alce. Dropax",
+  "resolution": {
+   "k": 15,
+   "choice": "A",
+   "text": "Sticteq́;"
+  }
+ }
+]

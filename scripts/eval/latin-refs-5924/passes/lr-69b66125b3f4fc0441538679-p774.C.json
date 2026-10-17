@@ -1,0 +1,76 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "conſolatorium verbum pro peccato- ribus",
+  "A": "dicit.S.",
+  "B": "dicit S.",
+  "ctx_after": "T. 1.ſen. diſt.48.art 4. ad",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "dicit.S."
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "& non illos exaudit, ſed",
+  "A": "illę",
+  "B": "ille",
+  "ctx_after": "ſunt Deo notę cuius cuncta",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "illę"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "concedente, in patria clare co-",
+  "A": "gtoſcemus,",
+  "B": "gnoſcemus,",
+  "ctx_after": "vt dicit Auguſt. Scimus ta",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "gtoſcemus,",
+   "note": "misprint gt as printed"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "pec cantibus, & ſine freno",
+  "A": "deterioràtibus,",
+  "B": "deteriorātibus,",
+  "ctx_after": "quia ingratitudo deſiccat fontem pie-",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "deteriorātibus,",
+   "note": "macron over a"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "ſine freno deterioràtibus, quia ingratitudo",
+  "A": "deſiccat",
+  "B": "deficcat",
+  "ctx_after": "fontem pie- tatis, & ignoramus",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "deſiccat"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "intelli gitur fore conditio- nalis.",
+  "A": "Qñq;",
+  "B": "Qn̄q;",
+  "ctx_after": "gra uitas pec- cātiū exce",
+  "resolution": {
+   "k": 6,
+   "choice": "A",
+   "text": "Qñq;"
+  }
+ }
+]

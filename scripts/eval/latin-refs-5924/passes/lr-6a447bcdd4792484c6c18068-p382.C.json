@@ -1,0 +1,15 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "offere- bat, alia omnia cogitantis",
+  "A": "modeſtiam",
+  "B": "modeſtiam.",
+  "ctx_after": "eſt expiſcatus; de qua vt",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "modeſtiam",
+   "note": "mark after m is inked spacing (joined by baseline smear), not a point; sentence continues"
+  }
+ }
+]

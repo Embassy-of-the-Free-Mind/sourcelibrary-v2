@@ -1,0 +1,185 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "erat timor.Sed vt dixi,nihil eſt",
+  "A": "poëta",
+  "B": "poeta",
+  "ctx_after": "hoc facilius, & expoſitius.[Finge tamen,ſi",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "poëta"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "dicere Helena ſe potius repetendam,q̄",
+  "A": "ſu-",
+  "B": "ſu",
+  "ctx_after": "periores aut quia marito ſuo",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "ſu",
+   "note": "no hyphen printed"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "conſerendo manus. Eminus contra,quaſi è",
+  "A": "manu,qn̄",
+  "B": "manu,q̄n",
+  "ctx_after": "telum longè iacitur. [In loco",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "manu,qn̄"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "quidem oſtendit ſe valde iratam,",
+  "A": "quòd",
+  "B": "quod",
+  "ctx_after": "Paris auſus ſit eam talibus",
+  "resolution": {
+   "k": 8,
+   "choice": "A",
+   "text": "quòd"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "ei aperiat conſilium,& viam vt",
+  "A": "poſsit",
+  "B": "poſſit",
+  "ctx_after": "ea potiri. Oſtenditur autem muliebre",
+  "resolution": {
+   "k": 9,
+   "choice": "A",
+   "text": "poſsit",
+   "note": "italic ſs ligature"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "ſollicitare velis. Quod rogat,illa timet:",
+  "A": "qd̄",
+  "B": "q̄d",
+  "ctx_after": "nō rogat,optat,vt inſtes. Dicit ergo.",
+  "resolution": {
+   "k": 10,
+   "choice": "A",
+   "text": "qd̄"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "rogat,illa timet: qd̄ nō rogat,optat,vt",
+  "A": "inſtes.",
+  "B": "inſtet.",
+  "ctx_after": "Dicit ergo. CVM tua epiſto-",
+  "resolution": {
+   "k": 11,
+   "choice": "A",
+   "text": "inſtes."
+  }
+ },
+ {
+  "k": 12,
+  "ctx_before": "nō rogat,optat,vt inſtes. Dicit ergo.",
+  "A": "CVM",
+  "B": "CVm",
+  "ctx_after": "tua epiſto- la)Qua conatus es",
+  "resolution": {
+   "k": 12,
+   "choice": "A",
+   "text": "CVM",
+   "note": "small caps"
+  }
+ },
+ {
+  "k": 18,
+  "ctx_before": "locis, Candida Penelope ſignum cognouit",
+  "A": "Vlyſsis,",
+  "B": "Vlyſſis,",
+  "ctx_after": "Legit ab Hippolyto ſcripta nouerca",
+  "resolution": {
+   "k": 18,
+   "choice": "A",
+   "text": "Vlyſsis,"
+  }
+ },
+ {
+  "k": 20,
+  "ctx_before": "nobile crimen, Et comes extincto",
+  "A": "Laodameia",
+  "B": "Laodamia",
+  "ctx_after": "uiro. Quibus facilè conuincuntur,niſi ad",
+  "resolution": {
+   "k": 20,
+   "choice": "A",
+   "text": "Laodameia"
+  }
+ },
+ {
+  "k": 21,
+  "ctx_before": "Paridis ſuaſiones infringere cona- tur,",
+  "A": "quædam",
+  "B": "quadam",
+  "ctx_after": "ſemina ſpargendo, ne omnino illius",
+  "resolution": {
+   "k": 21,
+   "choice": "A",
+   "text": "quædam"
+  }
+ },
+ {
+  "k": 22,
+  "ctx_before": "quod non rogat, optat, vt",
+  "A": "inſtes.",
+  "B": "inſtet.",
+  "ctx_after": "Poſtremò Paridis voluntatem impletura, vt",
+  "resolution": {
+   "k": 22,
+   "choice": "A",
+   "text": "inſtes."
+  }
+ },
+ {
+  "k": 23,
+  "ctx_before": "vt Clymene & Aethra comites",
+  "A": "fidiſsimæ",
+  "B": "fidiſſimæ",
+  "ctx_after": "exponerent, idq; cum feciſsent,cum Pari",
+  "resolution": {
+   "k": 23,
+   "choice": "A",
+   "text": "fidiſsimæ"
+  }
+ },
+ {
+  "k": 24,
+  "ctx_before": "comites fidiſsimæ exponerent, idq; cum",
+  "A": "feciſsent,cum",
+  "B": "feciſſent,cum",
+  "ctx_after": "Pari de, & Helena ad",
+  "resolution": {
+   "k": 24,
+   "choice": "A",
+   "text": "feciſsent,cum"
+  }
+ },
+ {
+  "k": 25,
+  "ctx_before": "Troiam aduectæ ſunt. HELENA PARIDI.",
+  "A": "NVNC",
+  "B": "NVnc",
+  "ctx_after": "oculos tua cum violarit epi-",
+  "resolution": {
+   "k": 25,
+   "choice": "A",
+   "text": "NVNC"
+  }
+ }
+]

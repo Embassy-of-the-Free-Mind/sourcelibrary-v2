@@ -1,0 +1,41 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "expreſsè concepta minimè in Scriptura",
+  "A": "reperiā-",
+  "B": "reperia-",
+  "ctx_after": "tur:tamen eadem ſententia abundè in",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "reperiā-",
+   "note": "abbreviation mark (curved stroke) over a = reperiantur"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "cœtui pa- rum fuit gratus.",
+  "A": "Quūmque",
+  "B": "Quúmque",
+  "ctx_after": "varij ſermones hinc atq; illinc",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "Quúmque",
+   "note": "acute on second u"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "varij ſermones hinc atq; illinc",
+  "A": "confusè permiſcerentur,Cardinalis",
+  "B": "confuſè permiſcerentur, Cardinalis",
+  "ctx_after": "Lothare- nus ſuorum inciuilitatem (",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "confusè permiſcerentur,Cardinalis",
+   "note": "round s in confusè; no space after comma"
+  }
+ }
+]

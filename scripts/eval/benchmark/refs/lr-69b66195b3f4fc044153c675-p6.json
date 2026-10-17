@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "De generis humani censu, capita doctrinae Theologicae (1587), the leaf itself: https://www.e-rara.ch/i3f/v21/1640998/full/1000,/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69b66195b3f4fc044153c675",
+  "page_number": 6,
+  "page_id": "69b66195b3f4fc044153c67b",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1587,
+  "visible": false,
+  "hidden_reason": "launch_curation",
+  "image": {
+    "url": "https://www.e-rara.ch/i3f/v21/1640998/full/1000,/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "058f1b8c33b40bae5511d3438bf638c4e0880d3e3b2efda440a0772245b8634e",
+    "width": 1000,
+    "height": 1431,
+    "fetched_at": "2026-10-17T22:25:29.527Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9052,
+    "hunks": 12,
+    "space_only_hunks": 9,
+    "c_chose": {
+      "A": 2,
+      "B": 1,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1516,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.604Z",
+  "text_location": "repo",
+  "text_sha256": "10962c27a3cd2443fa413357cfc162d940c3ebc1b3117fc0fb9d84a22342db4d"
+}

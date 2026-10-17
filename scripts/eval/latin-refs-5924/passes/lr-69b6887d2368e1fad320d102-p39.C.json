@@ -1,0 +1,63 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "",
+  "A": "XXXVI. Veniunt autem in reſtitutionem non ſolùm omnes res & jura hęreditaria, a) quæ mortis tempore in hæreditate reperta fuêre, ſed & quæ poſtea eidem obvenêre: b) non tamen ea, quæ aliunde, quàm ex judicio & volūtate defuncti hęres percepit. c)",
+  "B": "",
+  "ctx_after": "lis, cum verbo dixerit ſe",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "XXXVI. Veniunt autem in reſtitutionem non ſolùm omnes res & jura hęreditaria, a) quæ mortis tempore in hæreditate reperta fuêre, ſed & quæ poſtea eidem obvenêre: b) non tamen ea, quæ aliunde, quàm ex judicio & volūtate defuncti hęres percepit. c)",
+   "note": "convention: text before footnotes (top block is footnote continuation)"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "transfuſione, vide Cujac. in paratit.",
+  "A": "l. C.",
+  "B": "ff. t.",
+  "ctx_after": "ad SC. Treb. Donell. lib.",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "l. C."
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "com- petit, ad quem actiones",
+  "A": "tranſire",
+  "B": "transire",
+  "ctx_after": "poſſunt, id eſt, cui hæreditas",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "tranſire"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "Chiflet. lib. 4. c. 2.",
+  "A": "",
+  "B": "XXXVI. Veniunt autem in reſtitutionem non ſolùm omnes res & jura hęreditaria,",
+  "ctx_after": "a) l. 18. §. 2.",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": ""
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "lib. 4. c. 2. a)",
+  "A": "",
+  "B": "quæ mortis tempore in hæreditate reperta fuêre, ſed & quæ poſtea eidem obvenêre: b) non tamen ea, quæ aliunde, quàm ex judicio & volūtate defuncti hęres percepit. c) a)",
+  "ctx_after": "l. 18. §. 2. l.",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": ""
+  }
+ }
+]

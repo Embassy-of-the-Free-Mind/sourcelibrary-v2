@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "In Universam Aristotelis Logicam. Commentarii Cum Annexis Disputationibus Romae ab eodem olim praelecti (1620), the leaf itself: https://archive.org/download/bub_gb_d8uY0iROevsC/page/n262/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a42f6193ad4d80da123710b",
+  "page_number": 263,
+  "page_id": "6a42f6193ad4d80da123740e",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1600s",
+  "year": 1620,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://archive.org/download/bub_gb_d8uY0iROevsC/page/n262/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "905fde01329ffde47aedb661f5c1cf0b9ff43d48900d76819be0d7482eb5df98",
+    "width": 1835,
+    "height": 2500,
+    "fetched_at": "2026-10-17T22:10:53.845Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "two-column",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9216,
+    "hunks": 28,
+    "space_only_hunks": 25,
+    "c_chose": {
+      "A": 0,
+      "B": 2,
+      "other": 1
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 4152,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.537Z",
+  "text_location": "repo",
+  "text_sha256": "88f1e9d59d6442de007253b46b01f3ad750970297f81b80b36559476c5915928"
+}

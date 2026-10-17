@@ -1,0 +1,165 @@
+[
+ {
+  "k": 5,
+  "ctx_before": "Singularia ſunt, quæ ſingularum rerum",
+  "A": "fiunt:",
+  "B": "ſunt:",
+  "ctx_after": "veluti, Ro- go te hæres,",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "fiunt:"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "go te hæres, vt fundum",
+  "A": "illū",
+  "B": "illi",
+  "ctx_after": "Sempronio reddas reſtituas. Vniuerſalia verò,",
+  "resolution": {
+   "k": 7,
+   "choice": "B",
+   "text": "illi",
+   "note": "final letter blotted; i-shape"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "in hoc animali notari atque",
+  "A": "obſer ari",
+  "B": "obſeruari",
+  "ctx_after": "poſſe exiſtiment. Primis temporibus infirma",
+  "resolution": {
+   "k": 9,
+   "choice": "B",
+   "text": "obſeruari",
+   "note": "u sort uninked; gap is one letter wide"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "Primis temporibus infirma fuiſſe.] Sequitur",
+  "A": "ii.",
+  "B": "11.",
+  "ctx_after": "Primis temporib s fideicommiſſa vim",
+  "resolution": {
+   "k": 11,
+   "choice": "A",
+   "text": "ii.",
+   "note": "dotless roman numerals"
+  }
+ },
+ {
+  "k": 12,
+  "ctx_before": "infirma fuiſſe.] Sequitur ii. Primis",
+  "A": "temporib s",
+  "B": "temporibus",
+  "ctx_after": "fideicommiſſa vim nullam habebant, ſed",
+  "resolution": {
+   "k": 12,
+   "choice": "B",
+   "text": "temporibus",
+   "note": "u uninked"
+  }
+ },
+ {
+  "k": 16,
+  "ctx_before": "poterant hæreditatem vel legata.] Sequitur",
+  "A": "iii.",
+  "B": "111.",
+  "ctx_after": "Fideicommiſſa eorum cauſa inſtituta ſunt,",
+  "resolution": {
+   "k": 16,
+   "choice": "A",
+   "text": "iii."
+  }
+ },
+ {
+  "k": 18,
+  "ctx_before": "eique cautum vellet, ſcripſit vt",
+  "A": "hę",
+  "B": "hę-",
+  "ctx_after": "redes iuuarent, ſe curaturos vt",
+  "resolution": {
+   "k": 18,
+   "choice": "A",
+   "text": "hę",
+   "note": "no hyphen visible"
+  }
+ },
+ {
+  "k": 19,
+  "ctx_before": "ſe curaturos vt ex ſua",
+  "A": "cuiuſque",
+  "B": "quiuſque",
+  "ctx_after": "parte, ne minùs dimidium ad",
+  "resolution": {
+   "k": 19,
+   "choice": "A",
+   "text": "cuiuſque",
+   "note": "u damaged, word begins with c"
+  }
+ },
+ {
+  "k": 27,
+  "ctx_before": "poſt: Si te amicus tuus",
+  "A": "moriēns",
+  "B": "moriéns",
+  "ctx_after": "rogauerit, vt hęreditatem red das",
+  "resolution": {
+   "k": 27,
+   "choice": "B",
+   "text": "moriéns",
+   "note": "slanted accent mark"
+  }
+ },
+ {
+  "k": 33,
+  "ctx_before": "ditatemque reddidit. Fabius autem lib.",
+  "A": "ix.",
+  "B": "1x.",
+  "ctx_after": "cap. ii. de fideicommiſſi cauſa,",
+  "resolution": {
+   "k": 33,
+   "choice": "A",
+   "text": "ix."
+  }
+ },
+ {
+  "k": 34,
+  "ctx_before": "Fabius autem lib. ix. cap.",
+  "A": "ii.",
+  "B": "11.",
+  "ctx_after": "de fideicommiſſi cauſa, quam ipſe",
+  "resolution": {
+   "k": 34,
+   "choice": "A",
+   "text": "ii."
+  }
+ },
+ {
+  "k": 45,
+  "ctx_before": "vtrunque. Diuus Auguſtus primus.] Sequitur",
+  "A": "iiii.",
+  "B": "1111.",
+  "ctx_after": "Auguſtus pri mus omnium fideicommiſſa",
+  "resolution": {
+   "k": 45,
+   "choice": "A",
+   "text": "iiii."
+  }
+ },
+ {
+  "k": 56,
+  "ctx_before": "Fabij verbis explicare, qui lib.",
+  "A": "iii.",
+  "B": "111.",
+  "ctx_after": "cap. vi. ſic ſcribit: Nō",
+  "resolution": {
+   "k": 56,
+   "choice": "A",
+   "text": "iii."
+  }
+ }
+]

@@ -1,0 +1,80 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "3. v. 19. eundem Mediatorem",
+  "A": "ſcripſit.",
+  "B": "ſcripſit’.",
+  "ctx_after": "Ac de ſeipſo ad Rom.",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ſcripſit.",
+   "note": "hook is swash final t, not punctuation"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "Saluos faciam ali- quos ex",
+  "A": "ipſis.",
+  "B": "ipſis’.",
+  "ctx_after": "Ita nos Catholici lon- ge",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "ipſis.",
+   "note": "swash final s"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "Ita nos Catholici lon- ge",
+  "A": "inferiore",
+  "B": "inferiorè",
+  "ctx_after": "gradu hoc genus nomi- na",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "inferiore",
+   "note": "stroke right of e is a stray, not on the e"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "à maioribus noſtris edocti ſumus,",
+  "A": "indere",
+  "B": "‚indere",
+  "ctx_after": "con- ſueuimus. Catechiſmo P. Petri",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "indere",
+   "note": "mid-height speck, not a comma"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "noſtris edocti ſumus, indere con-",
+  "A": "ſueuimus.",
+  "B": "ſueuimus’.",
+  "ctx_after": "Catechiſmo P. Petri Ca- niſij",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "ſueuimus.",
+   "note": "swash final s"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "niſij cap. 3. q. 8.",
+  "A": "patet.",
+  "B": "patet’.",
+  "ctx_after": "Ipſa porrò domus capacem Au-",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "patet.",
+   "note": "swash final t"
+  }
+ }
+]

@@ -1,0 +1,140 @@
+[
+ {
+  "k": 2,
+  "ctx_before": "cantia.& aliquis antequàm bona fiſco",
+  "A": "denunciētur,",
+  "B": "denuncietur,",
+  "ctx_after": "quædam ex iis mihi vendat",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "denunciētur,",
+   "note": "stroke over e"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "bona fiſco denunciētur, quædam ex",
+  "A": "iis",
+  "B": "ijs",
+  "ctx_after": "mihi vendat & tradat bona",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "ijs",
+   "note": "second i descends (j)"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "cauſa errat,vſucapioni occaſionē nō prębet.",
+  "A": "Nouiſſimè",
+  "B": "Nouiſsimè",
+  "ctx_after": "autem & hoc ſcire oportet,",
+  "resolution": {
+   "k": 10,
+   "choice": "B",
+   "text": "Nouiſsimè",
+   "note": "italic ſs ligature"
+  }
+ },
+ {
+  "k": 14,
+  "ctx_before": "comparetur. Sed & veram eſſe",
+  "A": "poſſeſſionis",
+  "B": "poſſeſsionis",
+  "ctx_after": "cauſam oportet. Error enim falſæ",
+  "resolution": {
+   "k": 14,
+   "choice": "B",
+   "text": "poſſeſsionis"
+  }
+ },
+ {
+  "k": 22,
+  "ctx_before": "mihi,nec erat donata. Non falſæ",
+  "A": "poſſeſſionis opinio,vſucapionem",
+  "B": "poſſeſsionis opinio, vſucapionem",
+  "ctx_after": "impedit. ARGVM. Poſſeſſio quæ olim",
+  "resolution": {
+   "k": 22,
+   "choice": "other",
+   "text": "poſſeſsionis opinio,vſucapionem",
+   "note": "ſs ligature; no space after comma"
+  }
+ },
+ {
+  "k": 30,
+  "ctx_before": "Fundum alienum bona fide aliquis",
+  "A": "poſſidebat,&",
+  "B": "poſsidebat, &",
+  "ctx_after": "opus erat lōgo tempore vt",
+  "resolution": {
+   "k": 30,
+   "choice": "other",
+   "text": "poſsidebat,&",
+   "note": "ſs ligature; no space after comma"
+  }
+ },
+ {
+  "k": 33,
+  "ctx_before": "bonorum poſſeſſor ſi reliquo tempore",
+  "A": "poſſi- deat,ita",
+  "B": "poſsi- deat, ita",
+  "ctx_after": "rem habebit,vt auferri ab eo",
+  "resolution": {
+   "k": 33,
+   "choice": "other",
+   "text": "poſsi- deat,ita"
+  }
+ },
+ {
+  "k": 35,
+  "ctx_before": "habebit,vt auferri ab eo nō",
+  "A": "poſſit,etiam",
+  "B": "poſsit, etiam",
+  "ctx_after": "ſi fundum eſſe ſciuerit alienum.",
+  "resolution": {
+   "k": 35,
+   "choice": "other",
+   "text": "poſsit,etiam"
+  }
+ },
+ {
+  "k": 36,
+  "ctx_before": "fundum eſſe ſciuerit alienum. Nam",
+  "A": "poſſeſſionē",
+  "B": "poſſeſsionē",
+  "ctx_after": "bo- §.Nouiſſi- mè. §.Error. §.",
+  "resolution": {
+   "k": 36,
+   "choice": "B",
+   "text": "poſſeſsionē"
+  }
+ },
+ {
+  "k": 38,
+  "ctx_before": "Nam poſſeſſionē bo- §.Nouiſſi- mè.",
+  "A": "§.Error.",
+  "B": "",
+  "ctx_after": "§. Diuti- na. na fide",
+  "resolution": {
+   "k": 38,
+   "choice": "A",
+   "text": "§.Error.",
+   "note": "no space after §."
+  }
+ },
+ {
+  "k": 39,
+  "ctx_before": "bo- §.Nouiſſi- mè. §.Error. §.",
+  "A": "",
+  "B": "Error. §.",
+  "ctx_after": "Diuti- na. na fide",
+  "resolution": {
+   "k": 39,
+   "choice": "A",
+   "text": ""
+  }
+ }
+]

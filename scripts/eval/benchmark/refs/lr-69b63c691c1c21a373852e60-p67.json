@@ -1,0 +1,72 @@
+{
+  "source": "model-transcription",
+  "edition": "Paradoxorum medicinae libri tres : in quibus sane multa a nemine hactenus prodita, Arabum aetatisque nostrae medicorum errata non tantum ind (1535), the leaf itself: https://www.e-rara.ch/i3f/v21/543467/full/1000,/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69b63c691c1c21a373852e60",
+  "page_number": 67,
+  "page_id": "69b63c691c1c21a373852ea3",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1535,
+  "visible": false,
+  "hidden_reason": "launch_curation",
+  "image": {
+    "url": "https://www.e-rara.ch/i3f/v21/543467/full/1000,/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "6287dec50a199ce2faa98a3bab14a38dc1bbc3aa54f027bb97fe840312d5728a",
+    "width": 1000,
+    "height": 1583,
+    "fetched_at": "2026-10-17T22:12:40.905Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": {
+    "A": "roman",
+    "B": "mixed-roman-italic"
+  },
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.8073,
+    "hunks": 41,
+    "space_only_hunks": 33,
+    "c_chose": {
+      "A": 3,
+      "B": 4,
+      "other": 1
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 2928,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.593Z",
+  "text_location": "repo",
+  "text_sha256": "d1e39dc0d581cb39c4e798733e1e89778d67e61f9f80b90da1052c085664fd9e"
+}

@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Disputatio theologica ad Matthaei cap. XVI, vers. XVIII, XIX (1656), the leaf itself: https://www.e-rara.ch/i3f/v21/18129585/full/1000,/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69b6a48a080b19f98fd202ca",
+  "page_number": 3,
+  "page_id": "69b6a48a080b19f98fd202cd",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1600s",
+  "year": 1656,
+  "visible": false,
+  "hidden_reason": "launch_curation",
+  "image": {
+    "url": "https://www.e-rara.ch/i3f/v21/18129585/full/1000,/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "0cd0428c46535da88e2f5e986a33b2ec32b726ead2779d6f76f4d9d75b1c6604",
+    "width": 1000,
+    "height": 1233,
+    "fetched_at": "2026-10-17T22:11:10.033Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.8286,
+    "hunks": 14,
+    "space_only_hunks": 13,
+    "c_chose": {
+      "A": 1,
+      "B": 0,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1043,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.550Z",
+  "text_location": "repo",
+  "text_sha256": "2be4875a4c71e47f182bd05bede6a9be7108795fe7eb024c9b3f4d48d031e1e8"
+}

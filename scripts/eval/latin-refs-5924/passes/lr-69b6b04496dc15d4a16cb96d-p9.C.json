@@ -1,0 +1,28 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "ſpiritu,& perſecutionem propter juſtitiam patiuntur.",
+  "A": "Unum",
+  "B": "Vnum",
+  "ctx_after": "præmium,inquit, Auguſtinus,de ſerm.Domini cap.9. quod",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "Vnum",
+   "note": "swash italic V (looped top, hooked right)"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "veritatis pacificantem totum hominem, &",
+  "A": "ſuſcipientem",
+  "B": "[?]",
+  "ctx_after": "ſimilitudinem Dei: Octavo,verbis, Beati,qui perſe-",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "ſuſcipientem",
+   "note": "blot over ſuſ but strokes visible; word legible"
+  }
+ }
+]

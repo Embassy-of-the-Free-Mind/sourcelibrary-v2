@@ -1,0 +1,66 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "validæ Adverſus ingruentia, Fidei irreverentiam,",
+  "A": "ambitũ,",
+  "B": "ambitū,",
+  "ctx_after": "vim, dominationem, externam fœderum molem,",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ambitũ,",
+   "note": "wavy tilde"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "irreverentiam, ambitũ, vim, dominationem, externam",
+  "A": "fœderum",
+  "B": "fęderum",
+  "ctx_after": "molem, Quin etiam, Id, quod",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "fęderum",
+   "note": "e-caudata"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "tantò ſanctius præſtent, Quantò ceteris",
+  "A": "impunius",
+  "B": "impuniùs",
+  "ctx_after": "peccant. Fide ſublatâ, feris erunt",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "impuniùs",
+   "note": "grave over u"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "Niſi inligatam excidio malam, bonam",
+  "A": "incolumitàte",
+  "B": "incolumitâte",
+  "ctx_after": "regni. Aut, Eligendo illi conditionum",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "incolumitâte",
+   "note": "circumflex"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "Aut, Eligendo illi conditionum nexus",
+  "A": "injiciendi,",
+  "B": "inijciendi,",
+  "ctx_after": "Quibus ſolutis, ſolutus ille Imperio,",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "inijciendi,"
+  }
+ }
+]

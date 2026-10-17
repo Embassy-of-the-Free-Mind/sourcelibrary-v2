@@ -1,0 +1,15 @@
+[
+ {
+  "k": 4,
+  "ctx_before": "αὐτοῖς Sc. Αἰγυπτίοις ἔ- V",
+  "A": "τι",
+  "B": "τη",
+  "ctx_after": "",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "τι",
+   "note": "catchword tau + iota (ἔ-τι); trailing mark is a stray"
+  }
+ }
+]

@@ -1,0 +1,87 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "riguis, prouenit ſimilis fabæ, caule",
+  "A": "folijſque",
+  "B": "folijſq́ue",
+  "ctx_after": "denſâ congerie ſtipatis, breuioribus tantùm",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "folijſq́ue",
+   "note": "accented -q́ue printed"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "denſâ congerie ſtipatis, breuioribus tantùm",
+  "A": "gracilioribuſque,",
+  "B": "gracilioribuſq́ue,",
+  "ctx_after": "cui fructus in capite papaueri",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "gracilioribuſq́ue,"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "in capite papaueri ſimilis inciſuris,",
+  "A": "omnique",
+  "B": "omniq́ue",
+  "ctx_after": "alio modo, intus grana ſeu",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "omniq́ue"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "ſeparant lauando, & ſiccata tundunt,",
+  "A": "eoque",
+  "B": "eoq́ue",
+  "ctx_after": "pa- ne vtuntur. Mirum eſt,",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "eoq́ue"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "tum autem aperiri, donec matureſcant,",
+  "A": "floſque",
+  "B": "floſq́ue",
+  "ctx_after": "qui eſt can- didus decidat.",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "floſq́ue"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "mergi vſque in medias noctes,",
+  "A": "totumque",
+  "B": "totumq́ue",
+  "ctx_after": "abire in altum, vt ne",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "totumq́ue"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "poſſit inueniri. Verti deinde, pau-",
+  "A": "latimque",
+  "B": "latimq́ue",
+  "ctx_after": "ſubrigi, & ad exortum SOLIS",
+  "resolution": {
+   "k": 6,
+   "choice": "B",
+   "text": "latimq́ue"
+  }
+ }
+]

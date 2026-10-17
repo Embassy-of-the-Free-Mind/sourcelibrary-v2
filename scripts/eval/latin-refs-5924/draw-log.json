@@ -1,0 +1,806 @@
+{
+ "seed": 5924,
+ "rule": "per century: frame sorted by book_id, shuffled by Mulberry32(5924 + centuryStart); taken in that order until the target of books with a usable body leaf is met. Per book: leaves sorted by page_number, body = index [0.15·n, 0.9·n), body shuffled by Mulberry32(5924 ^ fnv1a(book_id)); the first 4 usable leaves (provider leaf URL, no split crop) are the candidates in order; the reader rejects non-text leaves and the next candidate is read.",
+ "frame_sizes": {
+  "1600s": 16427,
+  "1500s": 11954
+ },
+ "excluded_from_frame": {
+  "no_year_or_other_century": 22887,
+  "duplicate_of": 1186,
+  "under_min_pages": 1800
+ },
+ "books_in_draw_order": {
+  "1600s": [
+   {
+    "book_id": "69b686ce70c69d645a74659d",
+    "outcome": "accepted",
+    "slug": "lr-69b686ce70c69d645a74659d-p158",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6797a70c69d645a6f59e2",
+    "outcome": "accepted",
+    "slug": "lr-69b6797a70c69d645a6f59e2-p57",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a437bd657a09c2c0fcb4d33",
+    "outcome": "accepted",
+    "slug": "lr-6a437bd657a09c2c0fcb4d33-p262",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a425e51dfbbb4d07aa63e8c",
+    "outcome": "accepted",
+    "slug": "lr-6a425e51dfbbb4d07aa63e8c-p237",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90c07c3822dc24e54022d9",
+    "outcome": "accepted",
+    "slug": "lr-6a90c07c3822dc24e54022d9-p478",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90c3bca02f8189feb9f357",
+    "outcome": "accepted",
+    "slug": "lr-6a90c3bca02f8189feb9f357-p406",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90620ec21b989bffd7625f",
+    "outcome": "accepted",
+    "slug": "lr-6a90620ec21b989bffd7625f-p30",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42af56466deeb51e55d1f6",
+    "outcome": "accepted",
+    "slug": "lr-6a42af56466deeb51e55d1f6-p27",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90adb22764d973ba12dc61",
+    "outcome": "accepted",
+    "slug": "lr-6a90adb22764d973ba12dc61-p64",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b67e5270c69d645a70cbfc",
+    "outcome": "accepted",
+    "slug": "lr-69b67e5270c69d645a70cbfc-p7",
+    "rejected_leaves": [
+     "blank verso; only show-through of the title page\n"
+    ]
+   },
+   {
+    "book_id": "6a90b161b49e0620c6b7eb5d",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a26c3e3aad44c98627cbf3a",
+    "outcome": "accepted",
+    "slug": "lr-6a26c3e3aad44c98627cbf3a-p15",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42f6193ad4d80da123710b",
+    "outcome": "accepted",
+    "slug": "lr-6a42f6193ad4d80da123710b-p263",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6b60296dc15d4a16ea626",
+    "outcome": "accepted",
+    "slug": "lr-69b6b60296dc15d4a16ea626-p87",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b67a8070c69d645a6fb80e",
+    "outcome": "accepted",
+    "slug": "lr-69b67a8070c69d645a6fb80e-p11",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4a585e9050f0b4342e9a1a",
+    "outcome": "accepted",
+    "slug": "lr-6a4a585e9050f0b4342e9a1a-p164",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6b8058566c83814624dc2",
+    "outcome": "accepted",
+    "slug": "lr-69b6b8058566c83814624dc2-p289",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4f428c0de5c369a2509755",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6b9378566c8381462a96b",
+    "outcome": "accepted",
+    "slug": "lr-69b6b9378566c8381462a96b-p15",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b689dc2368e1fad3217c45",
+    "outcome": "accepted",
+    "slug": "lr-69b689dc2368e1fad3217c45-p7",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4a5bee9050f0b43431709b",
+    "outcome": "dropped-mislabelled",
+    "slug": null,
+    "rejected_leaves": [
+     "mostly not Latin (German, Fraktur)\n",
+     "mostly German (fraktur vernacular); only a 3-line Lat"
+    ]
+   },
+   {
+    "book_id": "6a42bbcf5207af7c42f6f1a7",
+    "outcome": "accepted",
+    "slug": "lr-6a42bbcf5207af7c42f6f1a7-p40",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6bdb18566c83814641d0c",
+    "outcome": "accepted",
+    "slug": "lr-69b6bdb18566c83814641d0c-p9",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69aec135b87be1eef391d639",
+    "outcome": "dropped-mislabelled",
+    "slug": null,
+    "rejected_leaves": [
+     "mostly not Latin (Greek text of Procopius)\n",
+     "entirely Greek text (Procopius De aedificiis), not La"
+    ]
+   },
+   {
+    "book_id": "6a1009fbf71729295096d465",
+    "outcome": "accepted",
+    "slug": "lr-6a1009fbf71729295096d465-p715",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6bedd8566c83814646f26",
+    "outcome": "accepted",
+    "slug": "lr-69b6bedd8566c83814646f26-p128",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6a48a080b19f98fd202ca",
+    "outcome": "accepted",
+    "slug": "lr-69b6a48a080b19f98fd202ca-p3",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42fbf7b519e35bbf24011b",
+    "outcome": "accepted",
+    "slug": "lr-6a42fbf7b519e35bbf24011b-p13",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a93fa912bb66652f9fc7fcf",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6ac5152a0749a01cb81cd1b4",
+    "outcome": "accepted",
+    "slug": "lr-6ac5152a0749a01cb81cd1b4-p353",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6b9158566c83814628f76",
+    "outcome": "accepted",
+    "slug": "lr-69b6b9158566c83814628f76-p19",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b699da080b19f98fcfbbc0",
+    "outcome": "accepted",
+    "slug": "lr-69b699da080b19f98fcfbbc0-p417",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4ac35333aff31aa523ee90",
+    "outcome": "accepted",
+    "slug": "lr-6a4ac35333aff31aa523ee90-p89",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6b04496dc15d4a16cb96d",
+    "outcome": "accepted",
+    "slug": "lr-69b6b04496dc15d4a16cb96d-p9",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6aaec080b19f98fd40db6",
+    "outcome": "accepted",
+    "slug": "lr-69b6aaec080b19f98fd40db6-p328",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6ac4f080b19f98fd47f41",
+    "outcome": "accepted",
+    "slug": "lr-69b6ac4f080b19f98fd47f41-p8",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90877cc223d60c78ed0ef4",
+    "outcome": "accepted",
+    "slug": "lr-6a90877cc223d60c78ed0ef4-p94",
+    "rejected_leaves": [
+     "mostly Hebrew (14 of 17 text lines Hebrew, only 3 lin"
+    ]
+   },
+   {
+    "book_id": "6a9058d67f6818cc17cd7565",
+    "outcome": "accepted",
+    "slug": "lr-6a9058d67f6818cc17cd7565-p164",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a907e604e70467f352333ac",
+    "outcome": "accepted",
+    "slug": "lr-6a907e604e70467f352333ac-p13",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6b8588566c838146263bc",
+    "outcome": "accepted",
+    "slug": "lr-69b6b8588566c838146263bc-p223",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6ac22080b19f98fd47814",
+    "outcome": "accepted",
+    "slug": "lr-69b6ac22080b19f98fd47814-p15",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42725728e9db2e39c135a7",
+    "outcome": "accepted",
+    "slug": "lr-6a42725728e9db2e39c135a7-p49",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4303a34e06bc233ecfcc50",
+    "outcome": "accepted",
+    "slug": "lr-6a4303a34e06bc233ecfcc50-p267",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b690c7080b19f98fce0926",
+    "outcome": "accepted",
+    "slug": "lr-69b690c7080b19f98fce0926-p15",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a26c68faad44c98627dfd7e",
+    "outcome": "accepted",
+    "slug": "lr-6a26c68faad44c98627dfd7e-p945",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6ac5035ceefc6804b9d7cca7",
+    "outcome": "accepted",
+    "slug": "lr-6ac5035ceefc6804b9d7cca7-p126",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4ed2f7b024f659a07ed19c",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b68a232368e1fad3218e75",
+    "outcome": "accepted",
+    "slug": "lr-69b68a232368e1fad3218e75-p104",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6ae3edc00a90e322afdc9",
+    "outcome": "accepted",
+    "slug": "lr-69b6ae3edc00a90e322afdc9-p18",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6afd296dc15d4a16c8270",
+    "outcome": "accepted",
+    "slug": "lr-69b6afd296dc15d4a16c8270-p70",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6887d2368e1fad320d102",
+    "outcome": "accepted",
+    "slug": "lr-69b6887d2368e1fad320d102-p39",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69ee643b7b983848aff567f7",
+    "outcome": "accepted",
+    "slug": "lr-69ee643b7b983848aff567f7-p149",
+    "rejected_leaves": [
+     "runic script: 13 of 37 lines are runic verse in paral"
+    ]
+   },
+   {
+    "book_id": "69b6a692080b19f98fd2b55b",
+    "outcome": "accepted",
+    "slug": "lr-69b6a692080b19f98fd2b55b-p23",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a507f2978825bd7fde3dde2",
+    "outcome": "dropped-mislabelled",
+    "slug": null,
+    "rejected_leaves": [
+     "handwriting (manuscript notes on logic, not print)\n",
+     "handwriting (manuscript leaf)\n"
+    ]
+   },
+   {
+    "book_id": "69b51ea6cf111105c42a2b3f",
+    "outcome": "accepted",
+    "slug": "lr-69b51ea6cf111105c42a2b3f-p204",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42626f744db9e3105adafe",
+    "outcome": "accepted",
+    "slug": "lr-6a42626f744db9e3105adafe-p286",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90e847544007b776b38e58",
+    "outcome": "accepted",
+    "slug": "lr-6a90e847544007b776b38e58-p785",
+    "rejected_leaves": [
+     "index\n"
+    ]
+   },
+   {
+    "book_id": "6a907c707f9d520dd42e84a4",
+    "outcome": "accepted",
+    "slug": "lr-6a907c707f9d520dd42e84a4-p20",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6a4fa080b19f98fd2192d",
+    "outcome": "accepted",
+    "slug": "lr-69b6a4fa080b19f98fd2192d-p41",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b6a72a080b19f98fd2c751",
+    "outcome": "accepted",
+    "slug": "lr-69b6a72a080b19f98fd2c751-p11",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a94089ba4ad12cb35ec9127",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a9076604e70467f3522e921",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b69808080b19f98fcf59a7",
+    "outcome": "accepted",
+    "slug": "lr-69b69808080b19f98fcf59a7-p12",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a906d7132545072610bb8e6",
+    "outcome": "accepted",
+    "slug": "lr-6a906d7132545072610bb8e6-p227",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a9055cdce61c4a7de146884",
+    "outcome": "accepted",
+    "slug": "lr-6a9055cdce61c4a7de146884-p322",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a447bcdd4792484c6c18068",
+    "outcome": "accepted",
+    "slug": "lr-6a447bcdd4792484c6c18068-p382",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4255b0dfbbb4d07aa51571",
+    "outcome": "accepted",
+    "slug": "lr-6a4255b0dfbbb4d07aa51571-p303",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69d0debc6a2800e56ff7f427",
+    "outcome": "dropped-no-usable-leaf",
+    "slug": null,
+    "rejected_leaves": [
+     "full-page botanical plate (Vicia sepium), no text blo",
+     "full-page botanical plate (Hedera terrestris), engrav",
+     "full-page illustration (botanical plate)\n",
+     "full-page illustration (engraved botanical plate)\n"
+    ]
+   },
+   {
+    "book_id": "6a9422864beab000b183a516",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4a584b9050f0b4342e8c64",
+    "outcome": "accepted",
+    "slug": "lr-6a4a584b9050f0b4342e8c64-p80",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69af0d9d2705dcc541045867",
+    "outcome": "dropped-no-usable-leaf",
+    "slug": null,
+    "rejected_leaves": [
+     "table of mostly numbers (astronomical observation tab",
+     "table of mostly numbers (astronomical observation tab",
+     "table of mostly numbers (astronomical observation tab",
+     "table of mostly numbers (astronomical observation log"
+    ]
+   },
+   {
+    "book_id": "6a4259b5dfbbb4d07aa5afd4",
+    "outcome": "accepted",
+    "slug": "lr-6a4259b5dfbbb4d07aa5afd4-p84",
+    "rejected_leaves": [
+     "index (Greek-term index, letters M–Π)\n",
+     "index (Index Graecarum vocum) with page numbers, half"
+    ]
+   }
+  ],
+  "1500s": [
+   {
+    "book_id": "6a4268b7aedf4c943f91f35b",
+    "outcome": "accepted",
+    "slug": "lr-6a4268b7aedf4c943f91f35b-p106",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90baa5fea824c80682c4b4",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a08557415c643eb1af55fa5",
+    "outcome": "accepted",
+    "slug": "lr-6a08557415c643eb1af55fa5-p192",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a9097f05fecff234ca5eb2b",
+    "outcome": "accepted",
+    "slug": "lr-6a9097f05fecff234ca5eb2b-p600",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a26be3d0e247ebad6de6f77",
+    "outcome": "dropped-mislabelled",
+    "slug": null,
+    "rejected_leaves": [
+     "mostly not Latin (German vernacular, Schwabacher)\n",
+     "mostly not Latin (German vernacular in Fraktur/Schwab"
+    ]
+   },
+   {
+    "book_id": "6a941c8158e968ecd979f393",
+    "outcome": "accepted",
+    "slug": "lr-6a941c8158e968ecd979f393-p98",
+    "rejected_leaves": [
+     "index (alphabetical index of legal references, INDEX ",
+     "index (legal subject index with Digest references)\n",
+     "index (Digest subject index, entries Minor–Molae)\n"
+    ]
+   },
+   {
+    "book_id": "69b66125b3f4fc0441538679",
+    "outcome": "accepted",
+    "slug": "lr-69b66125b3f4fc0441538679-p774",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69bd9cf76120d54bd037254f",
+    "outcome": "accepted",
+    "slug": "lr-69bd9cf76120d54bd037254f-p140",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b650ca18b87551bfca20ca",
+    "outcome": "accepted",
+    "slug": "lr-69b650ca18b87551bfca20ca-p20",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b65d3fb3f4fc0441517802",
+    "outcome": "accepted",
+    "slug": "lr-69b65d3fb3f4fc0441517802-p178",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4306ba22c0c8edb0f88ee5",
+    "outcome": "accepted",
+    "slug": "lr-6a4306ba22c0c8edb0f88ee5-p163",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b654f218b87551bfccf7b1",
+    "outcome": "accepted",
+    "slug": "lr-69b654f218b87551bfccf7b1-p206",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b66195b3f4fc044153c675",
+    "outcome": "accepted",
+    "slug": "lr-69b66195b3f4fc044153c675-p6",
+    "rejected_leaves": [
+     "mostly not Latin (German epitaph in gothic, 7 of 11 l"
+    ]
+   },
+   {
+    "book_id": "6a4a59849050f0b4342fa2b2",
+    "outcome": "dropped-mislabelled",
+    "slug": null,
+    "rejected_leaves": [
+     "mostly not Latin (bilingual two-column page; the liga",
+     "mostly not Latin (Greek/Latin parallel text, Greek co"
+    ]
+   },
+   {
+    "book_id": "69b6590718b87551bfcf91e6",
+    "outcome": "accepted",
+    "slug": "lr-69b6590718b87551bfcf91e6-p288",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a426d18175f31ca3ec5391c",
+    "outcome": "accepted",
+    "slug": "lr-6a426d18175f31ca3ec5391c-p58",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a08567915c643eb1af59235",
+    "outcome": "accepted",
+    "slug": "lr-6a08567915c643eb1af59235-p42",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69bd9d836120d54bd03774f6",
+    "outcome": "accepted",
+    "slug": "lr-69bd9d836120d54bd03774f6-p553",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b666edb3f4fc0441560ba8",
+    "outcome": "accepted",
+    "slug": "lr-69b666edb3f4fc0441560ba8-p8",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90d5430cdb00394ba531cd",
+    "outcome": "accepted",
+    "slug": "lr-6a90d5430cdb00394ba531cd-p362",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4a5cb69050f0b43431f544",
+    "outcome": "accepted",
+    "slug": "lr-6a4a5cb69050f0b43431f544-p217",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b64fac18b87551bfc96b00",
+    "outcome": "dropped-no-usable-leaf",
+    "slug": null,
+    "rejected_leaves": [
+     "table of mostly numbers (ascension table)\n",
+     "table of mostly numbers (Tabula ascensionum obliquaru",
+     "table of mostly numbers (astronomical table, zodiac s",
+     "table of numbers\n"
+    ]
+   },
+   {
+    "book_id": "6a4ad22c33aff31aa5243306",
+    "outcome": "accepted",
+    "slug": "lr-6a4ad22c33aff31aa5243306-p33",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a506a2678825bd7fddf0013",
+    "outcome": "accepted",
+    "slug": "lr-6a506a2678825bd7fddf0013-p19",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b63c691c1c21a373852e60",
+    "outcome": "accepted",
+    "slug": "lr-69b63c691c1c21a373852e60-p67",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a905f881da1ecc792bd26b6",
+    "outcome": "accepted",
+    "slug": "lr-6a905f881da1ecc792bd26b6-p613",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a243c360f0e4f405e62d28d",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a41aec44f7292ab3ec107f2",
+    "outcome": "accepted",
+    "slug": "lr-6a41aec44f7292ab3ec107f2-p28",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42b98a5207af7c42f683b0",
+    "outcome": "accepted",
+    "slug": "lr-6a42b98a5207af7c42f683b0-p207",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a4e134ad96a1b7b49bb484f",
+    "outcome": "unreachable",
+    "slug": null,
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90d8a5ac6ee7328f80c8fe",
+    "outcome": "dropped-mislabelled",
+    "slug": null,
+    "rejected_leaves": [
+     "mostly not Latin (German vernacular gothic text)\n",
+     "mostly not Latin (German vernacular, Schwabacher)\n"
+    ]
+   },
+   {
+    "book_id": "6a4260f7744db9e3105a80d6",
+    "outcome": "accepted",
+    "slug": "lr-6a4260f7744db9e3105a80d6-p110",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b62fe81c1c21a3737fc0b3",
+    "outcome": "accepted",
+    "slug": "lr-69b62fe81c1c21a3737fc0b3-p132",
+    "rejected_leaves": [
+     "index (Index rerum et verborum)\n"
+    ]
+   },
+   {
+    "book_id": "69b659b918b87551bfcfdd7a",
+    "outcome": "dropped-no-usable-leaf",
+    "slug": null,
+    "rejected_leaves": [
+     "obscured (32 [?])",
+     "obscured (27 [?])",
+     "obscured (7 [?])",
+     "obscured (27 [?])"
+    ]
+   },
+   {
+    "book_id": "69b641d01c1c21a37388850b",
+    "outcome": "accepted",
+    "slug": "lr-69b641d01c1c21a37388850b-p29",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b66318b3f4fc044154804f",
+    "outcome": "accepted",
+    "slug": "lr-69b66318b3f4fc044154804f-p294",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b66156b3f4fc044153aef9",
+    "outcome": "accepted",
+    "slug": "lr-69b66156b3f4fc044153aef9-p162",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90bcd6a02f8189feb97ac6",
+    "outcome": "accepted",
+    "slug": "lr-6a90bcd6a02f8189feb97ac6-p94",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a42bdb497284560a2b078dc",
+    "outcome": "accepted",
+    "slug": "lr-6a42bdb497284560a2b078dc-p26",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a943b2545a4780cb83dd409",
+    "outcome": "accepted",
+    "slug": "lr-6a943b2545a4780cb83dd409-p108",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a90955bac1fcc717ba305fe",
+    "outcome": "accepted",
+    "slug": "lr-6a90955bac1fcc717ba305fe-p43",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6ac514204ba7223afe068770",
+    "outcome": "accepted",
+    "slug": "lr-6ac514204ba7223afe068770-p705",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b63d7e1c1c21a37385c5aa",
+    "outcome": "accepted",
+    "slug": "lr-69b63d7e1c1c21a37385c5aa-p6",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b66582b3f4fc0441555ece",
+    "outcome": "accepted",
+    "slug": "lr-69b66582b3f4fc0441555ece-p3",
+    "rejected_leaves": [
+     "blank verso; only show-through from the facing title "
+    ]
+   },
+   {
+    "book_id": "69b6535318b87551bfcbc552",
+    "outcome": "accepted",
+    "slug": "lr-69b6535318b87551bfcbc552-p46",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6ac52d70ed10b8de509f0a53",
+    "outcome": "accepted",
+    "slug": "lr-6ac52d70ed10b8de509f0a53-p155",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "69b65f40b3f4fc04415277f3",
+    "outcome": "accepted",
+    "slug": "lr-69b65f40b3f4fc04415277f3-p57",
+    "rejected_leaves": []
+   },
+   {
+    "book_id": "6a424dd8c1f44d759e6cf921",
+    "outcome": "accepted",
+    "slug": "lr-6a424dd8c1f44d759e6cf921-p368",
+    "rejected_leaves": []
+   }
+  ]
+ },
+ "excluded_after_adjudication": [
+  {
+   "slug": "lr-6a906d7132545072610bb8e6-p227",
+   "book_id": "6a906d7132545072610bb8e6",
+   "century": "1600s",
+   "reason": "final text has 17 [?] (leaf obscured at an edge)"
+  }
+ ]
+}

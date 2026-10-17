@@ -1,0 +1,15 @@
+[
+ {
+  "k": 9,
+  "ctx_before": "ſed potius ad harum pręſidium",
+  "A": "facientes. Hœnon. disp. po- lit. ult.",
+  "B": "facientes.Hœnon.diſp.po- lit.ult.",
+  "ctx_after": "3. Æquabiles ſive æquales; cùm",
+  "resolution": {
+   "k": 9,
+   "choice": "other",
+   "text": "facientes.Hœnon.disp.po- lit.ult.",
+   "note": "no spaces after points (B); round s in disp (A)"
+  }
+ }
+]

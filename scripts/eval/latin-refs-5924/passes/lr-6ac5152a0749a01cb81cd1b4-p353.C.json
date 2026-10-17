@@ -1,0 +1,173 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "prodeunt; vitales quidem ſunt; ſed",
+  "A": "debiliſſimi",
+  "B": "debiliſsimi",
+  "ctx_after": "& tota prima quadragenaria laborant.",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "debiliſsimi",
+   "note": "italic ſs ligature"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "φῆς, eleganter, ſed ænigmaticῶς ἐς",
+  "A": "ἔκπλωσιν",
+  "B": "ἐκπλωσιν",
+  "ctx_after": "2. M. οὐκ ἔστι καὶ",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "ἔκπλωσιν",
+   "note": "breathing+acute printed"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "in conceptionis tempore errores contingere",
+  "A": "apertiſſimis verbu",
+  "B": "apertiſsimis verbis",
+  "ctx_after": "declarat. Sunt (inquit) quæ putent",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "apertiſsimis verbis"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "emittit. Ergo cum id ſemen",
+  "A": "valentiſſimum",
+  "B": "valentiſsimum",
+  "ctx_after": "ſit non corrumpitur, ſed attractum",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "valentiſsimum"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "de ſeptimeſtr. partu. Apud Homerum",
+  "A": "Oyſſ.",
+  "B": "Odyſſ.",
+  "ctx_after": "λ. Neptunus ſic Nympham alloquitur",
+  "resolution": {
+   "k": 6,
+   "choice": "A",
+   "text": "Oyſſ.",
+   "note": "misprint as printed"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "alloquitur χαῖρε γύναι φιλότητι περιπλομένου",
+  "A": "δ'",
+  "B": "δ᾽",
+  "ctx_after": "ἐνιαυτοῦ τέ- ξεις ἀγλαὰ τέκνα,",
+  "resolution": {
+   "k": 7,
+   "choice": "B",
+   "text": "δ᾽"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "decimum menſem terminum ſtatuit geſtationis",
+  "A": "longiſſimum,",
+  "B": "longiſsimum,",
+  "ctx_after": "Ἐν δέκα μησὶ (inquit) γίνεται",
+  "resolution": {
+   "k": 8,
+   "choice": "B",
+   "text": "longiſsimum,"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "Ἐν δέκα μησὶ (inquit) γίνεται",
+  "A": "τῶ-",
+  "B": "πῶ-",
+  "ctx_after": "τα τὸ μακρότατον, id eſt,",
+  "resolution": {
+   "k": 9,
+   "choice": "A",
+   "text": "τῶ-"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "conceptionis ſpeciem refert; ſæpe etiam",
+  "A": "ſuppreſſis",
+  "B": "ſuppreſsis",
+  "ctx_after": "menſtruis intumeſcit, tuncque ſe con-",
+  "resolution": {
+   "k": 10,
+   "choice": "B",
+   "text": "ſuppreſsis"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "cepiſſe putant, & ab ea",
+  "A": "ſuppreſſionis",
+  "B": "ſuppreſsionis",
+  "ctx_after": "hora diem geſtationis numerant. Ariſtoteles",
+  "resolution": {
+   "k": 11,
+   "choice": "B",
+   "text": "ſuppreſsionis"
+  }
+ },
+ {
+  "k": 13,
+  "ctx_before": "vno didicit Hippocrate, cum tamen",
+  "A": "ingratiſſimus",
+  "B": "ingratiſsimus",
+  "ctx_after": "vir eius nunquam memine- rit",
+  "resolution": {
+   "k": 13,
+   "choice": "B",
+   "text": "ingratiſsimus"
+  }
+ },
+ {
+  "k": 15,
+  "ctx_before": "enim menſem terminum ſtatuit Hippocrates",
+  "A": "longiſſi-",
+  "B": "longiſsi-",
+  "ctx_after": "mum & Vlpianus poſt decem",
+  "resolution": {
+   "k": 15,
+   "choice": "B",
+   "text": "longiſsi-"
+  }
+ },
+ {
+  "k": 16,
+  "ctx_before": "& perfectum terminum eſſe geſtationis",
+  "A": "longiſſimum;",
+  "B": "longiſsimum;",
+  "ctx_after": "vndecim autem menſes completos non",
+  "resolution": {
+   "k": 16,
+   "choice": "B",
+   "text": "longiſsimum;"
+  }
+ },
+ {
+  "k": 17,
+  "ctx_before": "ſecundo hærede lege agente bonorum",
+  "A": "poſſeſſionem",
+  "B": "poſſeſsionem",
+  "ctx_after": "contra eum dediſſe, cum mater",
+  "resolution": {
+   "k": 17,
+   "choice": "B",
+   "text": "poſſeſsionem"
+  }
+ }
+]
