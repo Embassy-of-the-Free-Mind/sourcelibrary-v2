@@ -3,16 +3,21 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
-// fetched through the get_quote tool on 2026-10-16. Claims from outside the library link to their source.
+// fetched through the get_quote tool on 2026-10-16 and 2026-10-17. Claims from outside the library link
+// to their source. This note absorbed "Ledgers and Heavens" (2026-10-17); that URL redirects here.
 // The hero print is signed "Cross sculpsit" on the plate; our artwork record attributes it to Goltzius,
 // which the signature contradicts, so the caption describes only what the print shows.
+// The dodecahedron woodcut (our 1509 De divina proportione, scan p. 248) was checked by eye.
 
 const TITLE = 'Harmonic Justice';
 const DESCRIPTION =
-  'Before economics was a science, prices and money were problems of proportion, worked out with the tools used on music and the heavens. Aristotle, Oresme, Bodin, Kepler, the alchemists and Adam Smith on what makes an exchange fair and an order hold.';
+  'Before economics was a science, money and fair exchange were problems of proportion, worked out with the tools used on music and the heavens. Philosophers, a banker, a friar who taught merchants, Copernicus at the mint, Kepler correcting Bodin, the alchemists, a London exchange dealer and Adam Smith.';
 const HERO = 'https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg';
 const HERO_ALT =
   'English satirical engraving signed "Cross sculpsit": Money, a coin with wings and bird legs, runs off to the right; a spendthrift labelled Prodigality scatters coins; the scales of Justice lie on the ground; hounds named Diligence, Industry, Labour, Rapine, Hazard and Deceit are held on leashes.';
+const DODECAHEDRON = 'https://images.sourcelibrary.org/archived/69de988c1b234a773e438b33/248.jpg';
+const DODECAHEDRON_ALT =
+  'Woodcut of a hollow dodecahedron, its twelve pentagonal faces drawn as open frames, labelled "Dodecaedron Planum Vacuum", from Luca Pacioli’s De divina proportione, Venice, 1509.';
 
 export const metadata: Metadata = {
   title: `${TITLE} - Research Notes - Source Library`,
@@ -29,9 +34,20 @@ export const metadata: Metadata = {
 const BOOK = {
   aristotle: '/book/aristotle-opera-vol-6-metaphysica-aldine-editio-princeps-aristotle',
   oresme: '/book/traictie-de-la-premiere-invention-des-monnoies-oresme',
+  plotinus: '/book/enneads-1580-greek-latin-ficino-trans-plotinus-ficino',
+  pimander: '/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus',
+  summa: '/book/summa-de-arithmetica-geometria-proportioni-et-proportionalit',
+  geijsbeek: '/book/ancient-double-entry-bookkeeping-lucas-pacioli-s-treatise-tr',
+  divina: '/book/de-divina-proportione-illust',
+  wolowski: '/book/traictie-de-la-premiere-invention-des-monnoies-de-nicole-ed',
   kepler: '/book/the-harmony-of-the-world-kepler',
+  fama: '/book/fama-fraternitatis-oder-entdeckung-der-brudersch-des-ordens-fraternitatis',
   splendor: '/book/splendor-solis-the-splendour-of-the-sun-trismosin',
+  canker: '/book/the-canker-of-england-s-common-wealth-malynes',
+  misselden: '/book/the-circle-of-commerce-misselden',
+  hartlib: '/book/chymical-medicinal-and-chyrurgical-addresses-made-to-samuel-hartlib',
   becher: '/book/narrische-weiszheit-und-weise-narrheit-oder-ein-hundert-so-becher',
+  quesnay: '/book/economic-table-tableau-oeconomique-quesnay',
   smithTms: '/book/the-theory-of-moral-sentiments-smith',
   nicomachus: '/book/nicomachus-of-gerasa-introduction-to-arithmetic-d-ooge',
   fludd: '/book/the-symphonic-monochord-of-the-world-fludd',
@@ -42,16 +58,30 @@ const BOOK = {
 const PAGE = {
   aristotle584: `${BOOK.aristotle}/page/69b220b356715b0e32473529`,
   oresme143: `${BOOK.oresme}/page/6991e16bb53cae6bb60240a3`,
+  ficino8: `${BOOK.plotinus}/page/699258fb8812793469fdf450`,
+  pacioli41: `${BOOK.geijsbeek}/page/6991e7e6c91ce7d733e50270`,
+  divina23: `${BOOK.divina}?page=23`,
+  divina24: `${BOOK.divina}/page/69de988c1b234a773e438b4b`,
+  copernicus265: `${BOOK.wolowski}/page/69af5923522dc3dfdf725842`,
   kepler203: `${BOOK.kepler}/page/697dd31799fd5fbfe8f83432`,
   kepler204: `${BOOK.kepler}/page/697dd31799fd5fbfe8f83433`,
+  fama145: `${BOOK.fama}/page/69b51e639a81ef7feb3d4623`,
   splendor129: `${BOOK.splendor}/page/695906d94953388fe7ac7595`,
+  hartlib171: `${BOOK.hartlib}/page/6ab5a4019e89e2a1f413932d`,
   becher7: `${BOOK.becher}/page/6a42727728e9db2e39c14057`,
   smith344: `${BOOK.smithTms}/page/69569c011479a63c11090b3f`,
+};
+
+const Q = {
+  misselden7: '/q/BnEPM4oI7IkqhzBgYb9',
 };
 
 const EXT = {
   oresmeGrant: 'https://en.wikipedia.org/wiki/Nicole_Oresme',
   kaye: 'https://assets.cambridge.org/97805215/72767/toc/9780521572767_toc.pdf',
+  malynes: 'https://en.wikipedia.org/wiki/Gerard_de_Malynes',
+  greshamCollege: 'https://en.wikipedia.org/wiki/Gresham_College',
+  greshamMusic: 'https://en.wikipedia.org/wiki/Gresham_Professor_of_Music',
   smithAstronomy: 'https://www.adamsmithworks.org/speakings/smith-s-scientific-milestones',
   keynesNewton: 'https://mathshistory.st-andrews.ac.uk/Extras/Keynes_Newton/',
 };
@@ -87,11 +117,11 @@ export default function HarmonicJusticePage() {
       header={
         <ContentHeader
           title={TITLE}
-          subtitle="Money, proportion and the harmony of the state, before economics was a science"
+          subtitle="Money, proportion and the heavens, before economics was a science"
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">16 October 2026 &middot; 12 min read</p>
+          <p className="text-stone-400 text-sm mt-4">17 October 2026 &middot; 18 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -110,8 +140,9 @@ export default function HarmonicJusticePage() {
           Economics became a separate science in the eighteenth century. Before that, the people who thought about
           prices, money and trade did it as philosophers, astronomers, music theorists and alchemists, and they used
           the tools they used on the heavens: proportion, the theory of means, and the idea that a whole holds
-          together when its parts stand in the right ratios. That vocabulary has mostly left economics. This note
-          follows it through six books in the library.
+          together when its parts stand in the right ratios. The people who handled money for a living read the same
+          books. This note follows both through the library, from Aristotle to Adam Smith: a banker, a friar who taught
+          merchants, an astronomer at the mint, a London exchange dealer and a financier among them.
         </p>
 
         <p className={p}>
@@ -195,6 +226,118 @@ export default function HarmonicJusticePage() {
           ways.
         </p>
 
+        <h2 className={h2}>The banker who put Hermes first</h2>
+
+        <p className={p}>
+          In the 1430s the Medici bank was the largest in Europe, and Cosimo de&apos; Medici, who ran it, was the first
+          citizen of Florence. When the Council of Florence brought Greek scholars to the city in 1439, Cosimo heard the
+          Byzantine philosopher Gemistus Pletho lecture on Plato and conceived the idea of a Platonic academy. Twenty-four
+          years later he gave the work to a young protégé, Marsilio Ficino. Ficino tells the story in the preface to his
+          Plotinus, and the order of the commission is the surprising part:
+        </p>
+
+        <Quote href={PAGE.ficino8} cite="Marsilio Ficino, preface to his Latin Plotinus (Basel, 1580 edition), p. 8">
+          After this, in the year 1463, when I was thirty years old, he commissioned me to translate first Hermes
+          Trismegistus and soon after, Plato. I completed Hermes in a few months while he was still living; I then also
+          began Plato.
+        </Quote>
+
+        <p className={p}>
+          The richest banker in Europe, near the end of his life, wanted the Hermetic books before the dialogues of Plato.
+          Ficino&apos;s Latin <em>Pimander</em>, dedicated &ldquo;to Cosimo de&apos; Medici, father of his country,&rdquo;
+          became one of the most reprinted philosophical books of the Renaissance. The library holds the{' '}
+          <Link href={BOOK.pimander} className={linkClass}>
+            Venice edition of 1481
+          </Link>
+          .
+        </p>
+
+        <h2 className={h2}>Pacioli&apos;s two proportions</h2>
+
+        <p className={p}>
+          Luca Pacioli was a Franciscan friar and a teacher of mathematics to merchants&apos; sons. In 1494 he printed a
+          vast <Link href={BOOK.summa} className={linkClass}><em>Summa</em> of arithmetic, geometry, proportion and
+          proportionality</Link>. Tucked inside it is a short treatise that became famous on its own: the first printed
+          account of double-entry bookkeeping, &ldquo;the system used in Venice.&rdquo; Its opening chapter is about what a
+          merchant needs. The English is John Geijsbeek&apos;s 1914 translation of Pacioli&apos;s Italian:
+        </p>
+
+        <Quote href={PAGE.pacioli41} cite="Luca Pacioli, Summa (1494), treatise on accounts, ch. 1, in Geijsbeek's translation (1914), p. 33">
+          It has happened that many people without capital of their own but with good credit carried on large
+          transactions. By means of their credit, which they faithfully maintained, they became very wealthy. &hellip; In
+          the great republics, nothing was considered superior to the word of a good merchant, and oaths were taken based
+          on that word. &hellip; This is not strange because, according to the Christian religion, we are saved by faith,
+          and without it, it is impossible to please God.
+        </Quote>
+
+        <p className={p}>
+          Credit and faith are the same word, and Pacioli means the pun. The third thing a merchant needs, after cash and
+          arithmetic, is order: books arranged so &ldquo;that one may understand each of them at a glance by using the
+          debit and credit method,&rdquo; because &ldquo;Where there is no order, there is confusion.&rdquo; Every entry has
+          a twin, and the two columns must balance.
+        </p>
+
+        <p className={p}>
+          Fifteen years later the same friar published{' '}
+          <Link href={BOOK.divina} className={linkClass}>
+            <em>De divina proportione</em>
+          </Link>{' '}
+          (Venice, 1509), with woodcuts of the regular solids after drawings by his friend Leonardo da Vinci. Its subject is
+          the ratio that divides a line so that the whole is to the larger part as the larger is to the smaller, what we
+          call the golden ratio. Pacioli lists the ways it resembles God. The third:
+        </p>
+
+        <Quote href={PAGE.divina23} cite="Luca Pacioli, De divina proportione (Venice, 1509), Part I, ch. 5. Copy: Getty Research Institute">
+          The third convenience is that, just as God properly cannot be defined nor understood by us through words, so this
+          our proportion can never be assigned by an intelligible number nor expressed by any rational quantity: but it is
+          always occult and secret, and called irrational by mathematicians.
+        </Quote>
+
+        <figure className="my-10">
+          <Link href={BOOK.divina}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={DODECAHEDRON} alt={DODECAHEDRON_ALT} className="w-full max-w-md mx-auto rounded-lg border border-stone-200" />
+          </Link>
+          <figcaption className="text-sm text-muted mt-3 leading-relaxed text-center">
+            A hollow dodecahedron, one of the woodcuts after Leonardo in <em>De divina proportione</em> (Venice, 1509).
+          </figcaption>
+        </figure>
+
+        <p className={p}>
+          He returns to the fourth on the next page: that like God it never changes, &ldquo;holding the primacy of unity among all
+          quantities indifferently, and never changing,&rdquo; and he quotes Boethius on the unmoved mover: &ldquo;Remaining
+          stable, it gives all things to be moved.&rdquo;{' '}
+          <Link href={PAGE.divina24} className={linkClass}>
+            (p. 24)
+          </Link>{' '}
+          So one man wrote down the two proportions an early-modern merchant lived between. The ledger&apos;s proportion
+          must come out exactly, in whole ducats, or the books are false. The divine proportion can never be written as a
+          ratio of whole numbers at all, and that is what makes it divine.
+        </p>
+
+        <h2 className={h2}>Copernicus at the mint</h2>
+
+        <p className={p}>
+          In the 1520s, while he was working out a sun-centred astronomy, Nicolaus Copernicus also wrote a treatise on
+          coinage for the Prussian estates, where several debased currencies were circulating at once. Wolowski&apos;s
+          1864 volume prints it after Oresme&apos;s treatise, in the editor&apos;s French translation of the Latin:
+        </p>
+
+        <Quote href={PAGE.copernicus265} cite="Copernicus, Treatise on Money, in Wolowski's French translation (Paris, 1864), p. 265">
+          However innumerable the plagues that ordinarily bring about the decadence of kingdoms, principalities, and
+          republics, the following four are, in my sense, the most formidable: discord, mortality, the sterility of the
+          land, and the deterioration of the currency. &hellip; Money is therefore, in a way, a common measure for the
+          estimation of values; but this measure must always be fixed and conform to the established rule. Otherwise, there
+          would, of necessity, be disorder in the State: buyers and sellers would be deceived at every moment, just as if
+          the ell, the bushel, or the weight did not maintain a certain quantity.
+        </Quote>
+
+        <p className={p}>
+          The fourth plague is the dangerous one, he says, because it works &ldquo;not all at once, but little by little,
+          by a somewhat latent action.&rdquo; This is Oresme&apos;s argument again, from a man with the same two
+          subjects: the astronomer who moved the earth wanted the measure of value to stay still.
+        </p>
+
         <h2 className={h2}>Bodin and Kepler: harmonic justice, checked against the ear</h2>
 
         <p className={p}>
@@ -242,6 +385,32 @@ export default function HarmonicJusticePage() {
           is the ear, not the authority.
         </p>
 
+        <h2 className={h2}>A Rosicrucian debate on abolishing gold</h2>
+
+        <p className={p}>
+          The Rosicrucian manifesto <em>Fama Fraternitatis</em> first appeared in 1614, printed together with a piece called
+          the <em>General Reformation of the Whole World</em>, a German version of a satire from Traiano Boccalini&apos;s{' '}
+          <em>News from Parnassus</em> (1612). In it the sages of antiquity meet to reform humankind. One proposal is to
+          banish &ldquo;the two scentless and villainous metals, gold and silver,&rdquo; for good. The library&apos;s 1616
+          edition prints the reply:
+        </p>
+
+        <Quote href={PAGE.fama145} cite="General Reformation, in Fama Fraternitatis (1616), pp. 144–145. Copy: Bayerische Staatsbibliothek, Munich">
+          &hellip;people collected gold and silver because it was a measure and a counterweight of compensation for all
+          things. And for the sustenance of the human race, it was absolutely necessary that one have a metal, or at least
+          something else that would be held in such value, in exchange for which one could trade other things &hellip; as
+          experience had clearly shown in India, where shells, which people use instead of money, are valued much higher
+          than any gold and silver.
+        </Quote>
+
+        <p className={p}>
+          Cleobulus, one of the Seven Sages, then suggests that if a metal must go, it should be iron, which makes daggers,
+          and that gold and silver be kept for the purpose &ldquo;for which they were created by God, namely, that all other
+          things should be valued and paid for through them.&rdquo; Whatever the brotherhood was, the book that announced it
+          to Europe came bound with Aristotle&apos;s point: money is a measure, held by agreement, that people cannot do
+          without.
+        </p>
+
         <h2 className={h2}>The alchemists: wealth that multiplies without being spent</h2>
 
         <p className={p}>
@@ -262,9 +431,46 @@ export default function HarmonicJusticePage() {
         </p>
 
         <p className={p}>
-          The people who held this hope were not all recluses. Johann Joachim Becher (1635&ndash;1682) was an
-          alchemist, a physician, an economic adviser to the emperor in Vienna, and a promoter of manufactories and
-          trading companies. One of his books in the library is a ledger of his own projects. Its title promises{' '}
+          The people who held this picture of metals were not all recluses. Gerard de Malynes was a merchant, an adviser
+          to the crown on trade and coinage, and the most combative writer on foreign exchange in Jacobean London (
+          <Ext href={EXT.malynes}>biography</Ext>). In{' '}
+          <Link href={BOOK.canker} className={linkClass}>
+            <em>The Canker of England&apos;s Common Wealth</em>
+          </Link>{' '}
+          (1601) and later books he argued that exchange rates should be held to the &ldquo;par,&rdquo; the true metal
+          content of each coin. His opponent Edward Misselden, in{' '}
+          <Link href={BOOK.misselden} className={linkClass}>
+            <em>The Circle of Commerce</em>
+          </Link>{' '}
+          (1623), complained that &ldquo;Malyne&apos;s Par&rdquo; had been &ldquo;made a Mystery in Exchange&rdquo;{' '}
+          <Link href={Q.misselden7} className={linkClass}>
+            (p. 7)
+          </Link>
+          .
+        </p>
+
+        <p className={p}>
+          Misselden was more right than he knew. Malynes&apos;s law-merchant handbook, <em>Lex Mercatoria</em> (1622),
+          includes a chapter on how metals are generated in the earth, and in 1655 Samuel Hartlib, the great London
+          collector of reform schemes, reprinted it as an appendix to a book of chemical recipes. It opens:
+        </p>
+
+        <Quote href={PAGE.hartlib171} cite="Gerard Malynes, from Lex Mercatoria, reprinted in Hartlib, Chymical, Medicinal, and Chyrurgical Addresses (London, 1655), p. 171">
+          All Philosophers by the light of Nature and long observation have determined, that the sperme or seed of all
+          things created of the four elements, doth in a secret manner lowre within the two elements of water and earth;
+          and that Nature doth continually work to produce perfect things, but is hindered therein by accidental causes.
+        </Quote>
+
+        <p className={p}>
+          On the next page he turns to &ldquo;the operation of the Sun and Moon, and the other Planets and Stars, in the
+          generation of all things.&rdquo; For the man who wanted every coin held to its true weight in silver, the silver
+          itself was a slow work of nature under the planets.
+        </p>
+
+        <p className={p}>
+          Johann Joachim Becher (1635&ndash;1682) carried the same mixture into the next generation. He was an alchemist,
+          a physician, an economic adviser to the emperor in Vienna, and a promoter of manufactories and trading
+          companies. One of his books in the library is a ledger of his own projects. Its title promises{' '}
           <Link href={PAGE.becher7} className={linkClass}>
             &ldquo;one hundred political, physical, mechanical and mercantile concepts and propositions, some of which
             went well and some came to nothing&rdquo;
@@ -273,11 +479,43 @@ export default function HarmonicJusticePage() {
           edition). A generation later Isaac Newton, who spent decades on alchemy, was running the Royal Mint.
         </p>
 
+        <h2 className={h2}>A financier&apos;s chair of music</h2>
+
+        <p className={p}>
+          Thomas Gresham managed the English crown&apos;s debts in Antwerp and built London&apos;s Royal Exchange. His name
+          was later attached to Gresham&apos;s law, that bad money drives out good. When he died in 1579 his will founded a
+          college in his house with seven professors, to lecture in divinity, law, physic, rhetoric, geometry, astronomy
+          and music (<Ext href={EXT.greshamCollege}>Gresham College</Ext>). Three of the four mathematical arts of the old
+          curriculum, geometry, astronomy and music, were endowed by a financier for the City of London.
+        </p>
+
+        <p className={p}>
+          In 1651 the Gresham chair of music went to William Petty (
+          <Ext href={EXT.greshamMusic}>list of professors</Ext>), who went on to found what he called &ldquo;political
+          arithmetic,&rdquo; the measurement of a nation&apos;s people, land and income. His work is covered in{' '}
+          <Link href="/blog/invisible-hand" className={linkClass}>
+            The Invisible Hand Has a History
+          </Link>
+          . The founder of economic statistics had first held a chair of music.
+        </p>
+
+        <h2 className={h2}>The physician&apos;s table</h2>
+
+        <p className={p}>
+          François Quesnay was physician to the court of Louis XV, and his{' '}
+          <Link href={BOOK.quesnay} className={linkClass}>
+            <em>Tableau économique</em>
+          </Link>{' '}
+          (1758) drew the whole economy of France as a circulation: revenue passing back and forth between the farmers, the
+          landowners and the artisans in a zigzag of lines, the kind of circulation a physician would draw. It was a
+          diagram of an order that sustains itself if nothing blocks it.
+        </p>
+
         <h2 className={h2}>Adam Smith: the invisible hand is a providence</h2>
 
         <p className={p}>
-          The phrase everyone knows first appears in Smith&apos;s <em>Theory of Moral Sentiments</em> (1759), in a
-          passage about the land and how its produce is shared:
+          A year later the phrase everyone knows first appeared, in Smith&apos;s <em>Theory of Moral Sentiments</em>{' '}
+          (1759), in a passage about the land and how its produce is shared:
         </p>
 
         <Quote href={PAGE.smith344} cite="Adam Smith, The Theory of Moral Sentiments (1759), p. 350">
@@ -330,26 +568,26 @@ export default function HarmonicJusticePage() {
 
         <p className={p}>
           The second is critical, and it is older. Aristotle says the measure is a convention that holds only with
-          respect to need. Oresme says it belongs to the community and should not be moved at will. Kepler says that
-          if you call a distribution harmonic, show the ratios and test them against something other than authority.
-          The alchemists, read soberly, describe the thing to be wary of: wealth that seems to multiply without being
-          spent.
+          respect to need. Oresme says it belongs to the community and should not be moved at will, and Copernicus,
+          from the mint, says the same. Kepler says that if you call a distribution harmonic, show the ratios and test
+          them against something other than authority. The alchemists, read soberly, describe the thing to be wary of:
+          wealth that seems to multiply without being spent.
         </p>
 
         <p className={p}>
-          What these writers shared was the assumption that an economy is one case of a general problem: how unlike
+          The people who dealt in money reached for the heavens for specific reasons. Copernicus wanted a measure that
+          would stay fixed, like the motions he was charting. Pacioli wanted books that balance, and he set beside them a
+          proportion so perfect it could not be written down. Malynes wanted coin held to its true metal and looked for
+          that truth in the generation of metals. The sages of the <em>General Reformation</em> concluded that people will
+          always need a measure, and the only question is what it is made of. Cosimo, who had all the money he could want,
+          asked first for Hermes.
+        </p>
+
+        <p className={p}>
+          What all these writers shared was the assumption that an economy is one case of a general problem: how unlike
           things can be brought into a ratio that holds. They asked it about justice, music and the heavens at once.
           Modern economics kept the mathematics of the question and set aside the part about justice. The older books
           ask which ratios are fair in the same breath as which ones are stable.
-        </p>
-
-        <p className={p}>
-          A sequel,{' '}
-          <Link href="/blog/ledgers-and-heavens" className={linkClass}>
-            Ledgers and Heavens
-          </Link>
-          , follows the people who handled money for a living (the Medici, Pacioli, Copernicus at the mint, a London
-          exchange dealer) and what they read.
         </p>
 
         <h2 className={h2}>The books</h2>
@@ -361,16 +599,38 @@ export default function HarmonicJusticePage() {
           </li>
           <li>
             Nicole Oresme, <Link href={BOOK.oresme} className={linkClass}><em>Traictie de la première invention des monnoies</em></Link>{' '}
-            (ed. Wolowski, 1864)
+            (ed. Wolowski, 1864), with Copernicus&apos;s Treatise on Money in{' '}
+            <Link href={BOOK.wolowski} className={linkClass}>another copy of the same edition</Link>
+          </li>
+          <li>
+            Plotinus, <Link href={BOOK.plotinus} className={linkClass}><em>Enneads</em></Link>, Ficino&apos;s Latin with his
+            preface (Basel, 1580); Hermes Trismegistus,{' '}
+            <Link href={BOOK.pimander} className={linkClass}><em>Pimander</em></Link> (Venice, 1481)
+          </li>
+          <li>
+            Luca Pacioli, <Link href={BOOK.summa} className={linkClass}><em>Summa de arithmetica</em></Link> (1494),{' '}
+            <Link href={BOOK.geijsbeek} className={linkClass}>the bookkeeping treatise in English</Link> (1914), and{' '}
+            <Link href={BOOK.divina} className={linkClass}><em>De divina proportione</em></Link> (1509)
           </li>
           <li>
             Johannes Kepler, <Link href={BOOK.kepler} className={linkClass}><em>Harmonices mundi</em></Link> (Linz, 1619)
           </li>
           <li>
+            <Link href={BOOK.fama} className={linkClass}><em>Fama Fraternitatis</em> with the <em>General Reformation</em></Link> (1616)
+          </li>
+          <li>
             <Link href={BOOK.splendor} className={linkClass}><em>Splendor Solis</em></Link> (English translation, 1920)
           </li>
           <li>
+            Gerard de Malynes, <Link href={BOOK.canker} className={linkClass}><em>The Canker of England&apos;s Common Wealth</em></Link>{' '}
+            (1601); Edward Misselden, <Link href={BOOK.misselden} className={linkClass}><em>The Circle of Commerce</em></Link>{' '}
+            (1623); Samuel Hartlib, <Link href={BOOK.hartlib} className={linkClass}><em>Chymical, Medicinal, and Chyrurgical Addresses</em></Link> (1655)
+          </li>
+          <li>
             Johann Joachim Becher, <Link href={BOOK.becher} className={linkClass}><em>Närrische Weißheit und weise Narrheit</em></Link> (1707)
+          </li>
+          <li>
+            François Quesnay, <Link href={BOOK.quesnay} className={linkClass}><em>Tableau économique</em></Link> (1758)
           </li>
           <li>
             Adam Smith, <Link href={BOOK.smithTms} className={linkClass}><em>The Theory of Moral Sentiments</em></Link> (1759)
@@ -386,9 +646,11 @@ export default function HarmonicJusticePage() {
         </ul>
 
         <p className="text-sm text-muted leading-relaxed">
-          Quotations from the library are its English translations, copied from the pages they link to; Bodin&apos;s{' '}
-          <em>République</em> itself is not yet in the library, so his theory is given here in Kepler&apos;s account
-          of it.
+          Quotations are the library&apos;s English translations, or for Malynes and Misselden the printed English, copied
+          from the pages they link to. Where a book is itself a translation (Geijsbeek&apos;s Pacioli, Wolowski&apos;s
+          Copernicus), the wording is the translator&apos;s. Bodin&apos;s <em>République</em> is not yet in the library,
+          so his theory is given here in Kepler&apos;s account of it. Gresham&apos;s will and Petty&apos;s professorship
+          are cited from outside the library.
         </p>
       </article>
     </ContentPageLayout>
