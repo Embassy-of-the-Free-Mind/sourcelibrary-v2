@@ -25,6 +25,7 @@ const LOCAL = `http://127.0.0.1:${process.env.VECTOR_SEARCH_LOCAL_PORT || 3459}`
 const NTFY_TOPIC = process.env.VECTOR_SEARCH_NTFY || 'https://ntfy.sh/sourcelibrary-uptime';
 const STATE_FILE = path.join(LOG_DIR, 'freshness-state.json');
 const STALE_MS = 2 * 3600e3;
+const RESTART_GRACE_MS = 45 * 60e3; // > one delta interval
 const RECONCILE_STALE_MS = 6 * 3600e3;
 const DRIFT_MAX = 0.005;
 const DRY = process.argv.includes('--dry-run');
@@ -43,7 +44,10 @@ try {
 
 if (h) {
   const at = h.last_delta_at ? Date.parse(h.last_delta_at) : null;
-  if (at === null || now - at > STALE_MS) {
+  // A restart reloads last_delta_at from the last SAVE (up to a day old) until the next half-hourly delta
+  // runs; that is not staleness. Without this grace a restart paged "stale" on 2026-10-17.
+  const justLoaded = h.loaded_at && now - Date.parse(h.loaded_at) < RESTART_GRACE_MS;
+  if (!justLoaded && (at === null || now - at > STALE_MS)) {
     fails.push({ kind: 'stale', line: `last delta ${h.last_delta_at ?? 'never'}${at ? ` (${ago(at)})` : ''}; checkpoint ${h.checkpoint?.updated_at}` });
   }
 }
