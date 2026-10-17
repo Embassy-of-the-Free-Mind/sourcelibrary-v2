@@ -20,8 +20,13 @@ self() {
   for b in $BOXES; do case " $mine " in *" ${b#*=} "*) echo "${b%%=*}"; return 0 ;; esac; done
   case "$(hostname)" in clawdbot) echo main ;; earthai-live) echo cloudlayer ;; earthai-l7a) echo l7a ;; gex45-1) echo gex45 ;; *) return 1 ;; esac
 }
+meshed() { grep -q "^$(ip_of "$1") " "$KH" 2>/dev/null; }  # its host key is pinned: mesh-setup.sh has run for it
 call() {  # $1 box, rest = verb [arg]; stdin passes through
-  local ip try rc=255 in=""; ip=$(ip_of "$1") || { echo "box.sh: no box named $1" >&2; return 2; }; shift
+  local ip try rc=255 in=""; ip=$(ip_of "$1") || { echo "box.sh: no box named $1" >&2; return 2; }
+  # A box in the table that mesh-setup.sh has not reached yet (gex45 on 2026-10-17, #5660) is refused at once,
+  # not retried for 15 s and then paged as "mesh down".
+  meshed "$1" || { echo "box.sh: $1 is not in the mesh yet (run scripts/workers/mesh-setup.sh install from the laptop)" >&2; return 3; }
+  shift
   if [ ! -t 0 ]; then in=$(mktemp); cat > "$in"; fi
   for try in 1 2 3; do
     ssh -i "$KEY" -o IdentitiesOnly=yes -o BatchMode=yes -o ConnectTimeout=8 -o ServerAliveInterval=15 \
@@ -52,6 +57,7 @@ case "${1:-}" in
     src=/root/.claude-limits/latest.json; [ -s "$src" ] || exit 0
     st=/root/.claude-limits/push-state; mkdir -p "$st"
     for b in $(others); do
+      meshed "$b" || continue
       if call "$b" put-limits < "$src" >/dev/null 2>&1; then
         [ -f "$st/$b.fails" ] && [ "$(cat "$st/$b.fails")" -ge 6 ] && \
           curl -s -m 10 -H "Title: Box mesh back: main -> $b" -H "Priority: low" -d "Usage meter copies to $b again." https://ntfy.sh/sourcelibrary-uptime >/dev/null 2>&1
