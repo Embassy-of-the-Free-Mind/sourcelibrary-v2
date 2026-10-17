@@ -5,7 +5,8 @@
 #
 # Dedicated x86_64 box (i5-13500, 20 threads, 62 GB, RTX PRO 4000 Blackwell 24 GB). No volume: everything is
 # under /root. Job output goes to /root/jobs/<name>, which gex45-idle-alert.sh (cron on main) watches.
-# All Source Library work uses flock; logs in /var/log/sourcelibrary/.
+# All Source Library work uses flock; logs in /var/log/sourcelibrary/. The box clock is UTC like main's
+# (it shipped as Europe/Berlin; set with `timedatectl set-timezone Etc/UTC` on 2026-10-17), so hours mean the same here.
 PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 # ── Job-box plumbing (same lines as main, own minutes where two boxes would collide) ──
