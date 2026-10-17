@@ -66,10 +66,13 @@ class Engine:
         self.schema = self.index.schema
         self.writer = self.index.writer(heap_size=200_000_000, num_threads=1) if writer else None
         self.wlock = threading.Lock()
-        self.live = None
+        self.books = kwindex.Books.load()
+        self.built_at = (kwindex.read_json(kwindex.STATE_PATH, {}) or {}).get("built_at")
+        self.live_ids = None   # book ids posted by the sync; None = not posted yet (every book counts)
+        self.live_idx = None   # the same as book_idx integers
         ids = kwindex.read_json(kwindex.LIVE_PATH)
         if ids:
-            self.live = set(ids)
+            self.set_live(ids, save=False)
         self.not_content = Q.term_query(self.schema, "content", 0)
         self.searcher = self.index.searcher()
 
@@ -125,34 +128,45 @@ class Engine:
         return (self.any_terms(toks) if toks else None), toks, False, 0
 
     # ----- execution ----------------------------------------------------------------------------------
+    def allow_query(self, allow):
+        return Q.term_set_query(self.schema, "book_idx", sorted(allow))
+
     def filtered(self, q, allow):
         cl = [(Occur.Must, q), (Occur.MustNot, self.not_content)]
         if allow is not None:
-            cl.append((Occur.Must, Q.term_set_query(self.schema, "book_id", list(allow))))
+            cl.append((Occur.Must, self.allow_query(allow)))
         return Q.boolean_query(cl)
 
     def ok_book(self, b, allow):
-        return (self.live is None or b in self.live) and (allow is None or b in allow)
+        return (self.live_idx is None or b in self.live_idx) and (allow is None or b in allow)
+
+    def rows(self, s, picked):
+        """[(score, addr, book_idx)] → result rows, from fast fields (the stored doc only for a non-hex id)."""
+        if not picked:
+            return []
+        addrs = [a for _, a, _ in picked]
+        pn = s.fast_field_values("page_number", addrs)
+        hi = s.fast_field_values("pid_hi", addrs)
+        lo = s.fast_field_values("pid_lo", addrs)
+        out = []
+        for (score, addr, b), n, h, l in zip(picked, pn, hi, lo):
+            pid = kwindex.join_page_id(h or 0, l or 0) or s.doc(addr).get_first("page_id")
+            out.append({"page_id": pid, "book_id": self.books.ids[b], "page_number": n, "score": round(score, 4)})
+        return out
 
     def top(self, s, q, k, allow, exclude=()):
-        """Top k content pages of live (and allowed) books: search, drop the rest, widen until k or exhausted."""
-        if q is None or k <= 0:
+        """Top k content pages of live (and allowed) books: search, drop the rest by their fast book_idx,
+        widen until k or exhausted."""
+        if q is None or k <= 0 or (allow is not None and not allow):
             return []
         fq = self.filtered(q, allow)
-        limit = k * 2 + 20
+        limit = k + 25 + len(exclude)
         while True:
             hits = s.search(fq, limit, count=False).hits
-            out = []
-            for score, addr in hits:
-                d = s.doc(addr)
-                b = d.get_first("book_id")
-                pid = d.get_first("page_id")
-                if pid in exclude or not self.ok_book(b, allow):
-                    continue
-                out.append({"page_id": pid, "book_id": b, "page_number": d.get_first("page_number"), "score": round(score, 4)})
-                if len(out) >= k:
-                    return out
-            if len(hits) < limit or limit >= 20000:
+            bidx = s.fast_field_values("book_idx", [a for _, a in hits])
+            picked = [(score, addr, b) for (score, addr), b in zip(hits, bidx) if b is not None and self.ok_book(b, allow)]
+            out = [r for r in self.rows(s, picked[: k + len(exclude)]) if r["page_id"] not in exclude][:k]
+            if len(out) >= k or len(hits) < limit or limit >= 20000:
                 return out
             limit *= 4
 
@@ -164,22 +178,25 @@ class Engine:
 
     def counts(self, s, q, allow, buckets):
         if allow is not None:
-            q = Q.boolean_query([(Occur.Must, q), (Occur.Must, Q.term_set_query(self.schema, "book_id", list(allow)))])
+            if not allow:
+                return []
+            q = Q.boolean_query([(Occur.Must, q), (Occur.Must, self.allow_query(allow))])
         size = min(max(buckets * 4, 1000), 65000)
-        res = s.aggregate(q, {"b": {"terms": {"field": "book_id", "size": size}}})
-        rows = [(x["key"], x["doc_count"]) for x in res["b"]["buckets"] if self.ok_book(x["key"], allow)]
+        res = s.aggregate(q, {"b": {"terms": {"field": "book_idx", "size": size}}})
+        rows = [(int(x["key"]), x["doc_count"]) for x in res["b"]["buckets"]]
+        rows = [(self.books.ids[b], n) for b, n in rows if self.ok_book(b, allow)]
         rows.sort(key=lambda x: (-x[1], x[0]))
         return [{"book_id": b, "pages": n} for b, n in rows[:buckets]]
 
     def best_per_book(self, s, q, books):
         out = []
         for b in books:
-            bq = Q.boolean_query([(Occur.Must, q), (Occur.Must, Q.term_query(self.schema, "book_id", b)), (Occur.MustNot, self.not_content)])
+            bi = self.books.idx.get(b)
+            if bi is None:
+                continue
+            bq = Q.boolean_query([(Occur.Must, q), (Occur.Must, Q.term_query(self.schema, "book_idx", bi)), (Occur.MustNot, self.not_content)])
             hits = s.search(bq, 1, count=False).hits
-            if hits:
-                score, addr = hits[0]
-                d = s.doc(addr)
-                out.append({"page_id": d.get_first("page_id"), "book_id": b, "page_number": d.get_first("page_number"), "score": round(score, 4)})
+            out += self.rows(s, [(hits[0][0], hits[0][1], bi)] if hits else [])
         return out
 
     def lane(self, p):
@@ -187,7 +204,9 @@ class Engine:
         ms = {}
         s = self.searcher
         k = min(max(1, int(p.get("k") or 25)), 1000)
-        allow = set(p["book_ids"]) if isinstance(p.get("book_ids"), list) else None
+        allow = None
+        if isinstance(p.get("book_ids"), list):
+            allow = {self.books.idx[b] for b in p["book_ids"] if b in self.books.idx}
         mq, toks, is_phrase, n_fuzzy = self.main_query(p["query"])
         t = time.perf_counter()
         main = [dict(r, src="main") for r in self.top(s, mq, k, allow)]
@@ -227,6 +246,10 @@ class Engine:
                 "tokens": toks, "phrase": is_phrase, "fuzzy_terms": n_fuzzy, "ms": ms}
 
     # ----- writes (delta) -----------------------------------------------------------------------------
+    def same_build(self):
+        """False once a rebuild has replaced state.json (and books.json) under this running process."""
+        return (kwindex.read_json(kwindex.STATE_PATH, {}) or {}).get("built_at") == self.built_at
+
     def apply(self, body):
         res = {"upserted": 0, "removed": 0}
         with self.wlock:
@@ -235,18 +258,25 @@ class Engine:
                 res["removed"] += 1
             for r in body.get("upserts") or []:
                 self.writer.delete_documents_by_term("page_id", r["i"])
-                self.writer.add_document(kwindex.page_document(r))
+                self.writer.add_document(kwindex.page_document(r, self.books))
                 res["upserted"] += 1
             if res["upserted"] or res["removed"]:
                 self.writer.commit()
                 self.index.reload()
                 self.searcher = self.index.searcher()
+            if self.books.dirty:
+                if self.live_ids is not None:
+                    self.live_idx = {self.books.idx[b] for b in self.live_ids if b in self.books.idx}
+                if self.same_build():
+                    self.books.save()
         return res
 
-    def set_live(self, ids):
-        self.live = set(ids)
-        kwindex.write_json_atomic(kwindex.LIVE_PATH, sorted(self.live))
-        return {"live_books": len(self.live)}
+    def set_live(self, ids, save=True):
+        self.live_ids = set(ids)
+        self.live_idx = {self.books.idx[b] for b in self.live_ids if b in self.books.idx}
+        if save:
+            kwindex.write_json_atomic(kwindex.LIVE_PATH, sorted(self.live_ids))
+        return {"live_books": len(self.live_ids), "live_books_indexed": len(self.live_idx)}
 
 
 def main():
@@ -257,15 +287,14 @@ def main():
     if not token and host != "127.0.0.1":
         sys.exit("KEYWORD_SEARCH_TOKEN is required on a public listener")
     engine = Engine()
-    state = kwindex.read_json(kwindex.STATE_PATH, {}) or {}
-    loaded_built_at = state.get("built_at")
     stats = {"served": 0, "errors": 0, "started_at": datetime.now(timezone.utc).isoformat()}
-    log(f"index {kwindex.INDEX_DIR}: {engine.searcher.num_docs:,} pages, live set {len(engine.live) if engine.live else 'not posted yet'}")
+    log(f"index {kwindex.INDEX_DIR}: {engine.searcher.num_docs:,} pages, {len(engine.books.ids):,} books, live set {len(engine.live_ids) if engine.live_ids else 'not posted yet'}")
 
     def health():
         st = kwindex.read_json(kwindex.STATE_PATH, {}) or {}
         return {"ok": True, "pages": engine.searcher.num_docs, "segments": engine.searcher.num_segments,
-                "live_books": len(engine.live) if engine.live is not None else None,
+                "live_books": len(engine.live_ids) if engine.live_ids is not None else None,
+                "live_books_indexed": len(engine.live_idx) if engine.live_idx is not None else None,
                 "built_at": st.get("built_at"), "checkpoint": st.get("checkpoint"), "last_delta_at": st.get("last_delta_at"), **stats}
 
     def make(local):
@@ -333,7 +362,7 @@ def main():
                         # A rebuild wrote a new state.json (checkpoint = its pull's start) while this process
                         # still serves the old index: a delta must not move the NEW index's checkpoint past
                         # changes it has not applied. The restart after the rebuild clears this.
-                        if st.get("built_at") != loaded_built_at:
+                        if st.get("built_at") != engine.built_at:
                             return self.send(409, {"error": "state.json belongs to another build; restart the service"})
                         st["checkpoint"] = body.get("checkpoint")
                         st["last_delta_at"] = datetime.now(timezone.utc).isoformat()

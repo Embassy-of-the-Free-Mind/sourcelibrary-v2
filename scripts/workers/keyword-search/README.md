@@ -5,9 +5,35 @@ PRIOR ART: `github.com/JDerekLomas/sourcelibrary-atlas` `scripts/local-corpus/` 
 `scripts/workers/vector-search/` here, whose layout (pull → build → server with a local admin
 listener → delta) and app wiring (off / shadow / serve) this copies. Each file names what it took.
 
+## Engine: tantivy, because FTS5 was measured too slow
+
+SQLite FTS5 was tried first, as the brief asked. It was dropped on a measurement: the same 815,900 pages
+(8.7% of the corpus) indexed both ways, the same top-25 queries, warm cache, on main:
+
+| query | matching pages | FTS5 top 25 | tantivy top 25 |
+|---|---|---|---|
+| god | 139,318 | 175 ms | 2.3 ms |
+| nature | 142,229 | 313 ms | 2.1 ms |
+| nature of god | 237,091 | 323 ms | 3.6 ms |
+| the | 593,761 | 978 ms | 8.4 ms |
+| alchemy | 13,735 | 23 ms | 0.3 ms |
+| "prima materia" (phrase) | 828 | 5 ms | 1.0 ms |
+
+FTS5 scores every page a term matches. It has no top-k pruning, so its time grows with the posting
+list: about 2–4 s for a common word over the whole corpus, slower than the Atlas lane it would replace.
+Its roll-up count (a full iteration) doubled that. tantivy's block-max WAND skips blocks that cannot
+reach the top k. tantivy-py 0.26 also gives:
+- a Rust regex tokenizer, so index and query share one analyzer;
+- `terms_with_prefix`, for the fuzzy expansion;
+- a terms aggregation, for the roll-up counts;
+- delete-by-term, for the delta.
+
+So the service is Python (`server.py`, `kwindex.py`, `build_index.py`). The pull and the delta stay in
+Node (`pull-pages.mjs`, `sync-delta.mjs`), beside the app's Mongo code.
+
 The `/api/search` page lane asks Atlas Search (`pages_search`) up to four questions per query and
 takes **1.3 s at the median, 2.9 s at p90** in production, with an 8 s ceiling (#6852). This service
-answers the same questions from one SQLite FTS5 index. **The app calls it only when
+answers the same questions from one tantivy index. **The app calls it only when
 `KEYWORD_SEARCH_MODE` is set** (`src/lib/keyword-search.ts`): `shadow` runs it beside Atlas and logs
 `search_queries.keyword_shadow`; `serve` uses its pages and falls back to Atlas on any error or
 timeout. Default off.
@@ -54,15 +80,14 @@ section and `engine.mjs` change with them.
 - **Live books only.** Every list is confined to books that are visible, `pages_count > 0` and not
   hidden: the set `sync-delta.mjs` posts. So the 25 slots and the 200 count buckets are not spent on
   books the route would drop. The parity eval compares against Atlas's *live* pages for that reason.
-- **Stopwords dropped** from an unquoted query that has other words (`lib.mjs` `STOPWORDS`). Atlas
-  keeps them, but their IDF is ~0, and FTS5 scores every page a term matches: "the" alone would mean
-  reading every page.
-- **Fuzzy** is expanded against the index vocabulary (one edit, same first 4 characters, at most
-  50 terms). Expansions are scored as Lucene's fuzzy rewrite does: blended IDF, boost 1 − 1/len.
-  Without that, a rare misspelling outranks the word the reader typed.
-- **Analyzer**: `lib.mjs` `tokenize` approximates UAX#29 in JS (apostrophe/period between letters
-  join; Han and Hiragana one token per character). FTS5 then splits only on the spaces it inserts.
-  Known gaps: Thai/Lao/Khmer runs stay whole; a word-final capital sigma lowercases to ς, not σ.
+- **Fuzzy** is expanded against the index vocabulary (`terms_with_prefix`: one edit, same first 4
+  characters, at most 50 terms per field). Expansions are scored as Lucene's fuzzy rewrite does:
+  blended IDF, boost 1 − 1/len. Without that, a rare misspelling outranks the word the reader typed.
+- **Analyzer**: `kwindex.py` `TOKEN_PATTERN`, a tantivy regex tokenizer plus a lowercase filter. It
+  approximates UAX#29: an apostrophe or period between letters joins them; Han and Hiragana are one
+  token per character. Known gap: Thai/Lao/Khmer runs stay whole (StandardTokenizer segments them by
+  dictionary).
+- **Stopwords are kept**, as in Atlas: WAND makes them cheap.
 
 ## Contract
 
@@ -76,16 +101,16 @@ section and `engine.mjs` change with them.
    "variants": [… "src": "variant"],
    "counts":   [{"book_id": "…", "pages": 51}],      // null when no roll-up was asked
    "extra":    [… "src": "rollup"],
-   "match": "\"drebbel\" OR \"furnace\"", "fuzzy": false,
+   "tokens": ["drebbel", "furnace"], "phrase": false, "fuzzy_terms": 0,
    "ms": {"main": 3.1, "variants": 1.2, "counts": 4.0, "extra": 2.2, "total": 11.0}, "server_ms": 11.6}
 ```
 
 - `book_ids`: `null` means every live book; an array is an allow-list, and `[]` returns nothing.
-- `score` is −bm25 (higher is better), with column weights 2 (translation) and 1 (OCR).
+- `score` is tantivy's BM25: translation clauses boosted 2, OCR 1, summed as Atlas sums its clauses.
 - No text is returned. The app hydrates with one `pages.find({id: {$in}})` and drops any page that
   is gone, renumbered to ≤ 0, retyped as non-content, or moved to another book. That read-side check
   is what makes the delta's blind spots harmless (below).
-- `GET /health` → `{ok, pages_max_rowid, books, live_books, built_at, checkpoint, last_delta_at, threads, busy, queued, served, errors}`.
+- `GET /health` → `{ok, pages, segments, live_books, built_at, checkpoint, last_delta_at, served, errors}`.
 - Bodies over 1 MB are refused on the public listener.
 
 Listeners:
@@ -95,16 +120,35 @@ Listeners:
 
 The public listener binds to 127.0.0.1 until the TLS proxy (#6843) fronts it.
 
+## Install (the serving box)
+
+```bash
+git -C /root/sourcelibrary fetch origin <branch> && git -C /root/sourcelibrary worktree add /data/scratch/kw <branch>
+mkdir -p /data/keyword-search/logs
+setsid nohup systemd-run --scope --quiet --unit=keyword-search-bootstrap --slice=sourcelibrary.slice \
+  bash /data/scratch/kw/scripts/workers/keyword-search/bootstrap.sh /data/scratch/kw \
+  >> /data/keyword-search/logs/bootstrap.log 2>&1 < /dev/null &
+```
+
+`bootstrap.sh` copies the app, makes the venv, runs `test_engine.py`, writes `/etc/keyword-search.env`
+(a fresh token; host 127.0.0.1), and installs the unit. It then streams the pull into the build, starts
+the service, runs the first delta and appends the cron line (crontab backed up first). It needs ~28 GB
+free: the index is ~16 GB, plus merge headroom. The process is small; the index is memory-mapped, so
+free RAM is what keeps it fast. Python 3.9+ with tantivy-py's wheels (x86_64 and aarch64).
+
 ## Files
 
 | file | does |
 |---|---|
-| `lib.mjs` | paths, the tokenizer, the schema, query-string builders, the Mongo client (zlib wire compression) |
-| `pull-pages.mjs` | Mongo `pages` → `shards/*.jsonl.gz`, per book on the `(book_id, page_number)` index, resumable |
-| `build-fts.mjs` | shards → `index/keyword.sqlite` (tokenizing on worker threads), then `optimize` |
-| `engine.mjs` | the lane over the index: main, variants, counts, extra |
-| `server.mjs` | HTTP, a pool of query threads (each with its own read-only connection), one writer for the delta |
+| `kwindex.py` | paths, the schema, the analyzer (one definition for index and queries) |
+| `build_index.py` | shards, or a pipe from the pull, → `index/` (built in `index.building`, renamed when complete) |
+| `server.py` | the engine (main, variants, counts, extra) and the two HTTP listeners; holds the one index writer |
+| `test_engine.py` | self-test on a tiny index (run by `bootstrap.sh` before it installs anything) |
+| `lib.mjs` | paths, the Mongo client (zlib wire compression), the page row |
+| `pull-pages.mjs` | Mongo `pages` → `shards/*.jsonl.gz`, or `--stdout`, per book on the `(book_id, page_number)` index |
 | `sync-delta.mjs` | pages whose translation/OCR changed since the checkpoint, plus the live-book set, posted to the running service |
+| `bootstrap.sh` | install → pull \| build → start → first delta → cron, on the serving box |
+| `requirements.txt` | tantivy (the Python half's only package) |
 | `../../eval/keyword-lane-parity/` | the parity eval against the Atlas lane on logged queries |
 | `../../../infrastructure/systemd/keyword-search.service` | the unit |
 | `crontab` | the delta line |

@@ -13,7 +13,7 @@
  *
  *   OUT=$JOB_SCRATCH/parity.jsonl KEYWORD_SEARCH_LOCAL=http://127.0.0.1:3461 \
  *     node --env-file=/root/sourcelibrary/.env.production.local node_modules/.bin/vitest run \
- *     --config scripts/eval/keyword-lane-parity/vitest.config.mts
+ *     --config scripts/eval/keyword-lane-parity/vitest.config.mts parity.harness
  *
  * Env: OUT (required), KEYWORD_SEARCH_LOCAL (the service's local listener), SEED (default 6852),
  * DAYS (default 60), QUOTAS (JSON, default names 50 / phrases 40 / single 50 / non_latin 30 / multi 30).

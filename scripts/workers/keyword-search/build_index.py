@@ -48,7 +48,7 @@ w = idx.writer(heap_size=int(a.heap_gb * 1e9), num_threads=a.threads)
 t0 = time.time()
 n = dupes = chars = 0
 seen = set()
-books = set()
+books = kwindex.Books()
 
 
 def lines(f):
@@ -69,8 +69,7 @@ for f in shards:
             dupes += 1
             continue
         seen.add(r["i"])
-        books.add(r["b"])
-        w.add_document(kwindex.page_document(r))
+        w.add_document(kwindex.page_document(r, books))
         n += 1
         chars += len(r.get("tr") or "") + len(r.get("o") or "")
         if f == "-" and time.time() - last_log > 60:
@@ -93,9 +92,10 @@ if os.path.exists(kwindex.INDEX_DIR):
     os.rename(kwindex.INDEX_DIR, old)
 os.rename(tmp, kwindex.INDEX_DIR)
 shutil.rmtree(old, ignore_errors=True)
+books.save()  # the map for THIS index, written before state.json commits the build
 # The delta's first checkpoint is the pull's start: a page edited during the pull is read again.
 kwindex.write_json_atomic(kwindex.STATE_PATH, {
-    "built_at": built_at, "pages": n, "books": len(books), "text_chars": chars, "index_bytes": size,
+    "built_at": built_at, "pages": n, "books": len(books.ids), "text_chars": chars, "index_bytes": size,
     "pull_started_at": pull.get("pull_started_at"), "checkpoint": {"u": pull.get("pull_started_at")},
 })
-print(f"done: {kwindex.INDEX_DIR} {size / 1e9:.2f} GB, {n:,} pages, {len(books)} books, {(time.time() - t0) / 60:.1f} min total", flush=True)
+print(f"done: {kwindex.INDEX_DIR} {size / 1e9:.2f} GB, {n:,} pages, {len(books.ids)} books, {(time.time() - t0) / 60:.1f} min total", flush=True)
