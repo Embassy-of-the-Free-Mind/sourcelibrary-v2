@@ -43,6 +43,8 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'podcast', href: '/podcast' },
       { key: 'researchNotes', href: '/blog' },
       { key: 'identify', href: '/identify' },
+      { key: 'forResearchers', href: '/for-researchers' },
+      { key: 'dataset', href: '/dataset' },
     ],
   },
   {
@@ -52,9 +54,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
       { key: 'contribute', href: '/contribute' },
       { key: 'checkPages', href: '/review' },
       { key: 'forLibraries', href: '/for-libraries' },
-      { key: 'forResearchers', href: '/for-researchers' },
       { key: 'developers', href: '/developers' },
-      { key: 'dataset', href: '/dataset' },
       { key: 'connect', href: '/connect' },
       { key: 'sponsorship', href: '/sponsors' },
     ],

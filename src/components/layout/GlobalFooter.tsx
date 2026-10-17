@@ -13,6 +13,7 @@ import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { visibleFooterNavColumns, type FooterLinkKey } from '@/lib/footer-nav';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useLocale, useLocalePath, FOOTER_STRINGS } from '@/lib/i18n';
+import { useStableSession } from '@/hooks/useStableSession';
 
 type Partner = {
   name: string;
@@ -70,6 +71,8 @@ export default function GlobalFooter() {
   // is registry-guarded, so everything else still points at its English page.
   const localePath = useLocalePath();
   const [hasFavorites, setHasFavorites] = useState(false);
+  // Signed-in readers see Account where everyone else sees Sign up.
+  const { status: sessionStatus } = useStableSession();
   // Global-only surfaces 404 on partner subdomains (the list and its rationale
   // live in src/lib/tenant-global-paths.ts — #3364, #3370). SiteHeader has
   // filtered on that list since #3364; the footer never did, so on
@@ -105,6 +108,8 @@ export default function GlobalFooter() {
   const renderLink = ({ key, href }: { key: FooterLinkKey; href: string }, className = linkClass) =>
     key === 'cookieSettings' ? (
       <button onClick={() => clearConsent()} className={className}>{t[key]}</button>
+    ) : key === 'signUp' && sessionStatus === 'authenticated' ? (
+      <Link href="/account" className={className}>{t.account}</Link>
     ) : (
       <Link href={localePath(href)} className={className}>{t[key]}</Link>
     );

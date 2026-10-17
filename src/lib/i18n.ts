@@ -174,6 +174,7 @@ export interface FooterStrings {
   dataset: string;
   forResearchers: string;
   forLibraries: string;
+  account: string;
 }
 
 /**
@@ -383,7 +384,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'Quality center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
     partnersLabel: 'In partnership with',
-    blurb: 'Digitising and translating ancient texts for scholars, seekers and AI systems.',
+    blurb: "Rare texts from the world's libraries, transcribed and translated for a new renaissance.",
     signUp: 'Sign up',
     faq: 'FAQ',
     press: 'Press',
@@ -391,6 +392,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     dataset: 'Dataset',
     forResearchers: 'For researchers',
     forLibraries: 'For libraries',
+    account: 'Account',
   },
   es: {
     colLibrary: 'Biblioteca',
@@ -436,7 +438,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'Centro de calidad',
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
     partnersLabel: 'En colaboración con',
-    blurb: 'Digitalizamos y traducimos textos antiguos para estudiosos, buscadores y sistemas de IA.',
+    blurb: 'Textos raros de las bibliotecas del mundo, transcritos y traducidos para un nuevo renacimiento.',
     signUp: 'Regístrate',
     faq: 'Preguntas frecuentes',
     press: 'Prensa',
@@ -444,6 +446,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     dataset: 'Conjunto de datos',
     forResearchers: 'Para investigadores',
     forLibraries: 'Para bibliotecas',
+    account: 'Cuenta',
   },
   // Latin (#6254). Labels only: every footer link still opens an English page.
   la: {
@@ -490,7 +493,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'De qualitate',
     licenseLine: 'Exemplaria primigenia in dominio publico · Conversiones CC BY-SA 4.0 · Ad intellegentiam artificialem erudiendam licentia requiritur',
     partnersLabel: 'Cum sociis',
-    blurb: 'Textus antiquos in formam digitalem redigimus et convertimus, doctis, quaerentibus et machinis intellegentibus.',
+    blurb: 'Textus rari ex bibliothecis orbis terrarum, descripti et conversi ad novam renascentiam.',
     signUp: 'Nomen da',
     faq: 'Quaestiones frequentes',
     press: 'Nuntii publici',
@@ -498,6 +501,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     dataset: 'Data',
     forResearchers: 'Investigatoribus',
     forLibraries: 'Bibliothecis',
+    account: 'Ratio tua',
   },
   // Dutch (#6382). Labels only: every footer link still opens an English page.
   nl: {
@@ -544,7 +548,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: 'Kwaliteitscentrum',
     licenseLine: 'Originelen in het publieke domein · Vertalingen CC BY-SA 4.0 · Voor AI-training is een licentie nodig',
     partnersLabel: 'In samenwerking met',
-    blurb: 'We digitaliseren en vertalen oude teksten voor onderzoekers, zoekers en AI-systemen.',
+    blurb: 'Zeldzame teksten uit de bibliotheken van de wereld, getranscribeerd en vertaald voor een nieuwe renaissance.',
     signUp: 'Aanmelden',
     faq: 'Veelgestelde vragen',
     press: 'Pers',
@@ -552,6 +556,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     dataset: 'Dataset',
     forResearchers: 'Voor onderzoekers',
     forLibraries: 'Voor bibliotheken',
+    account: 'Account',
   },
   zh: {
     colLibrary: '图书馆',
@@ -597,7 +602,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     qualityCenter: '质量中心',
     licenseLine: '原本属公共领域 · 译文采用 CC BY-SA 4.0 许可 · 用于 AI 训练须获授权',
     partnersLabel: '合作伙伴',
-    blurb: '为学者、求知者和 AI 系统数字化并翻译古代文献。',
+    blurb: '来自世界各地图书馆的珍稀文献，经转录与翻译，迎接新的文艺复兴。',
     signUp: '注册',
     faq: '常见问题',
     press: '媒体',
@@ -605,6 +610,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     dataset: '数据集',
     forResearchers: '面向研究者',
     forLibraries: '面向图书馆',
+    account: '账户',
   },
 };
 
