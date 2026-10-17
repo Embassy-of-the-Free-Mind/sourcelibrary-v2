@@ -98,6 +98,7 @@ export const LINKED_PAGES: BlogPost[] = [
     readTime: '',
     kind: 'library',
     image: '/vision/hero.jpg',
+    imageAlt: 'An opening of an early printed Latin book in black-letter type, with the heading “Epistola responsiva” on the right-hand page.',
   },
   {
     slug: 'in-memoriam',
@@ -149,6 +150,7 @@ export const LINKED_PAGES: BlogPost[] = [
     readTime: '',
     kind: 'research',
     image: 'https://images.sourcelibrary.org/archived/86fe639a-5f3d-4e9e-9d99-128742a10809/84.jpg',
+    imageAlt: 'A manuscript page of close English handwriting, numbered 70 at the top.',
   },
   {
     slug: 'by-the-numbers',
@@ -161,6 +163,7 @@ export const LINKED_PAGES: BlogPost[] = [
     readTime: '',
     kind: 'research',
     image: 'https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg',
+    imageAlt: 'Engraving headed “Clef XII”: an alchemist in his laboratory beside a furnace, a lion devouring a serpent at his feet, the sun and moon in the window.',
   },
   {
     slug: 'play-rithmomachia',
@@ -173,6 +176,7 @@ export const LINKED_PAGES: BlogPost[] = [
     readTime: '',
     kind: 'interactive',
     image: 'https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg',
+    imageAlt: 'Engraved board for rithmomachia, the battle of numbers: a chequered board with rows of numbered square, triangular and round pieces.',
   },
 ];
 
@@ -794,6 +798,7 @@ export const posts: BlogPost[] = [
     readTime: '9 min read',
     kind: 'research',
     image: 'https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg',
+    imageAlt: 'Woodcut of Ramon Llull, labelled “Raymundus Lullus”, pelted with stones by a crowd outside a walled harbour town, above a printed table of his Art’s alphabet.',
   },
   {
     slug: 'the-deletion',
@@ -867,6 +872,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/archived/69938e765d28b693146d0f99/19.jpg',
+    imageAlt: 'First page of the Greek text of the Pimander of Hermes Trismegistus, with an ornamental headpiece and a large decorated initial.',
   },
   {
     slug: 'cellulae',
@@ -878,6 +884,7 @@ export const posts: BlogPost[] = [
     readTime: '12 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg',
+    imageAlt: 'Engraved plate from the Philosophical Transactions, vol. III, plate V: a branching anatomical specimen surrounded by numbered figures of instruments, shells and coins.',
   },
   {
     slug: 'singularity-1486',
@@ -915,6 +922,7 @@ export const posts: BlogPost[] = [
     readTime: '4 min read',
     kind: 'interactive',
     image: 'https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg',
+    imageAlt: 'Engraving of a damaged papyrus column, headed “Col. 8”, written in Greek capitals and torn by vertical cracks.',
   },
   {
     slug: 'rashi-ocr',
@@ -938,6 +946,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     kind: 'research',
     image: 'https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg',
+    imageAlt: 'Decorated title of The Book of the Divine Consolation of the Blessed Angela da Foligno, a large initial A framing a woman reading, inside a border of leafy scrolls.',
   },
   {
     slug: 'visualizing-classification',
@@ -949,6 +958,7 @@ export const posts: BlogPost[] = [
     readTime: '6 min read',
     kind: 'interactive',
     image: 'https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg',
+    imageAlt: 'A tree printed in a Sanskrit book, its leaves and roots labelled in Devanagari, above two paragraphs of text.',
   },
   {
     slug: 'history-of-classification',
@@ -960,6 +970,7 @@ export const posts: BlogPost[] = [
     readTime: '20 min read',
     kind: 'stories',
     image: 'https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg',
+    imageAlt: 'Title page of the Catalogus von Chymischen Büchern of the Roth-Scholtz library, Nuremberg and Altdorf, 1725, with an engraved library scene.',
   },
   {
     slug: 'counting-the-gap',
@@ -971,6 +982,7 @@ export const posts: BlogPost[] = [
     readTime: '8 min read',
     kind: 'research',
     image: 'https://images.sourcelibrary.org/pages/697c8e0fbaa544415f85b6c6/0132-full.jpg',
+    imageAlt: 'Hand-coloured plate titled “Der Baum der Erkenntnis Gutes und Böses”: a tree whose branches end in globes and circles of symbols, with German text around it.',
   },
   {
     slug: 'untranslated-renaissance',
@@ -982,6 +994,7 @@ export const posts: BlogPost[] = [
     readTime: '10 min read',
     kind: 'research',
     image: 'https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/1000,/0/default.jpg',
+    imageAlt: 'Engraving of a man in profile with diagrams of the sensible, imaginable and intellectual worlds connected to his head, from a page headed “De tripl. anim. in corp. vision.”',
   },
   {
     slug: 'origin-story',

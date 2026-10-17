@@ -89,6 +89,12 @@ describe('blog post list', () => {
     expect(bad.map((p) => p.slug)).toEqual([]);
   });
 
+  // The card picture's alt text, read by screen readers and search engines.
+  it('describes every card picture (imageAlt)', () => {
+    const bad = [...posts, ...LINKED_PAGES].filter((p) => !p.imageAlt?.trim());
+    expect(bad.map((p) => p.slug)).toEqual([]);
+  });
+
   // The book grid and the share images read these generated files; a stale one
   // shows the wrong books or the wrong picture in link previews.
   it('has src/generated/article-books.json up to date', async () => {
