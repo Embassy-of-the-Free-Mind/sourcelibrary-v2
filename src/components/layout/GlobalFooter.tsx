@@ -139,7 +139,7 @@ export default function GlobalFooter() {
             <div className="col-start-1 md:col-start-2 lg:col-start-4 flex gap-1.5">
               <FeedbackWidget
                 label={t.giveFeedback}
-                className="inline-flex items-center h-[34px] px-[13px] rounded-full border border-white/20 text-sm font-medium text-white/70 hover:text-white hover:border-white/40 whitespace-nowrap transition-colors"
+                className="inline-flex items-center h-[34px] px-[13px] border border-white/20 text-sm font-medium text-white/70 hover:text-white hover:border-white/40 whitespace-nowrap transition-colors"
               />
               {showDonate && (
                 <Link
@@ -147,7 +147,7 @@ export default function GlobalFooter() {
                   // The header's Support pill reports the same event, so the
                   // two entry points stay comparable (#3364 era instrumentation).
                   onClick={() => trackEvent('give_nav_click', { source: 'footer', url: '/give' })}
-                  className="inline-flex items-center h-[34px] px-[13px] rounded-full bg-accent-rust hover:bg-[#ad5442] text-sm font-medium text-[#f6ece8] hover:text-white whitespace-nowrap no-underline transition-colors"
+                    className="inline-flex items-center h-[34px] px-[13px] bg-accent-rust hover:bg-[#ad5442] text-sm font-medium text-[#f6ece8] hover:text-white whitespace-nowrap no-underline transition-colors"
                 >
                   {t.donate}
                 </Link>
@@ -189,7 +189,7 @@ export default function GlobalFooter() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 lg:gap-x-8 gap-y-10 pt-10 md:pt-0">
             {navColumns.map((col) => (
               <div key={col.titleKey}>
-                <h3 className="text-sm font-semibold text-white mb-3.5">{t[col.titleKey]}</h3>
+                <h3 className="font-sans text-sm tracking-normal leading-snug text-white mb-3.5" style={{ fontWeight: 600 }}>{t[col.titleKey]}</h3>
                 <ul className="space-y-2.5">
                   {col.links.map((link) => (
                     <li key={link.href}>{renderLink(link)}</li>

@@ -366,7 +366,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     sponsorship: 'Corporate Sponsorship',
     connect: 'Connect to Claude & ChatGPT',
     developers: 'Developers',
-    giveFeedback: 'Give Feedback',
+    giveFeedback: 'Give feedback',
     checkPages: 'Check a few pages',
     qualityCenter: 'Quality Center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
