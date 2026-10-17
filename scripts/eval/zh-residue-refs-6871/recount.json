@@ -1,0 +1,42 @@
+{
+ "at": "2026-10-17T22:23:23.344Z",
+ "held_books": 3481,
+ "classes": {
+  "other": {
+   "books_listed": 3199,
+   "books_held": 3199,
+   "books_with_unread": 2400,
+   "pages_unread": 8106,
+   "books_not_held_with_unread": 0
+  },
+  "mixed": {
+   "books_listed": 131,
+   "books_held": 131,
+   "books_with_unread": 130,
+   "pages_unread": 17784,
+   "books_not_held_with_unread": 0
+  },
+  "table": {
+   "books_listed": 109,
+   "books_held": 109,
+   "books_with_unread": 109,
+   "pages_unread": 15280,
+   "books_not_held_with_unread": 0
+  },
+  "seal": {
+   "books_listed": 42,
+   "books_held": 42,
+   "books_with_unread": 42,
+   "pages_unread": 5878,
+   "books_not_held_with_unread": 0
+  },
+  "reverted": {
+   "revision_rows": 372,
+   "pages": 372,
+   "pages_found": 372,
+   "pages_unread": 372,
+   "books": 11
+  }
+ },
+ "held_pages_unread": 47420
+}
