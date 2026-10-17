@@ -150,12 +150,6 @@ interface CollectionBookCardProps {
    * beneath, or the original alone when no gloss exists yet. Default English.
    */
   lang?: Locale;
-  /**
-   * Draw the cover at this width/height instead of 3:4 — the catalogue's
-   * justified rows show every scan at its own proportions. Omit for the
-   * uniform grid every other surface uses.
-   */
-  coverAspect?: number;
 }
 
 function pctOf(n?: number, d?: number): number {
@@ -178,7 +172,7 @@ function Status({ label, pctValue, doneClass, done }: { label: string; pctValue:
  * language pill · year · pages, and a single OCR/Translated status line (books
  * only). Keeps the robust data handling: artwork, embed placeholders, DOI.
  */
-export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en', coverAspect }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix, href, lang = 'en' }: CollectionBookCardProps) {
   const labels = CARD_LABELS[lang];
   const shownTitle = localizedTitle(book, lang);
   const originalLine = lang === 'en' ? null : originalTitleIfDifferent(book, lang);
@@ -246,8 +240,6 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   });
   const verdict = translationVerdict(book);
   const byline = getEffectiveByline({ ...book, author: book.author || '' });
-  const coverClass = coverAspect ? 'relative bg-warm overflow-hidden' : 'relative aspect-[3/4] bg-warm overflow-hidden';
-  const coverStyle = coverAspect ? { aspectRatio: String(coverAspect) } : undefined;
 
   return (
     <Link
@@ -255,7 +247,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
       className="group flex flex-col h-full border border-border-light bg-white hover:border-accent-rust/40 hover:shadow-md transition-[border-color,box-shadow] animate-fade-in-up"
     >
       {/* Cover */}
-      <div className={coverClass} style={coverStyle}>
+      <div className="relative aspect-[3/4] bg-warm overflow-hidden">
         {!imageLoaded && !imageError && thumbnailUrl && (
           <div className="absolute inset-0 bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
         )}
