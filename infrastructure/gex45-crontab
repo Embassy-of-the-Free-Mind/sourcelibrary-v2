@@ -11,8 +11,9 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # ── Job-box plumbing (same lines as main, own minutes where two boxes would collide) ──
 # Pull main hourly, then reinstall the job wrapper + box mesh scripts from the committed checkout.
 17 * * * * flock -n /tmp/sl-auto-pull.lock /root/sourcelibrary/scripts/workers/auto-pull.sh >> /var/log/sourcelibrary/auto-pull.log 2>&1
-# Resume DIED claude jobs (#5709).
-*/10 * * * * /root/bin/claude-job.sh sweep >/dev/null 2>&1
+# Resume DIED claude jobs (#5709). Only with a wrapper that knows this host: one without the gex45 HOST block
+# takes it for main and mkdirs /mnt/HC_Volume_105839809 on the root disk (2026-10-17, before #5660's PR merged).
+*/10 * * * * grep -q 'HOST=gex45' /root/bin/claude-job.sh && /root/bin/claude-job.sh sweep >/dev/null 2>&1
 # Spare lane (#6395). Minutes 10,40: main */30, cloudlayer 5,35, l7a 25,55. Idle until Claude is logged in here.
 10,40 * * * * f=/root/sourcelibrary/scripts/workers/spare-lane.py; [ -f $f ] && [ -s /root/.claude/.credentials.json ] && /usr/bin/python3 $f >> /var/log/sourcelibrary/spare-lane.log 2>&1  # #6395
 # Work board (/admin/work, #5705): this box's jobs. Only main pushes --github.

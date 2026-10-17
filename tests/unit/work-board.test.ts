@@ -3,6 +3,8 @@
  * the real sources — claude-job.sh's own echo lines, a real chain script, a real issue comment
  * (#3825, 2026-10-03), and the transcript line `gh issue create` leaves — never written toward an answer.
  */
+import fs from 'node:fs';
+import path from 'node:path';
 import { describe, it, expect } from 'vitest';
 import {
   createdFromTranscript, decisionLines, firstLine, jobState, parseChainScript, parseJobScriptPaths,
@@ -29,6 +31,14 @@ describe('work-board-push: box side', () => {
     });
     const onGuest = (p: string) => p.startsWith('/data/');
     expect(parseJobScriptPaths(src, onGuest).JD).toBe('/data/scratch/sl/claude-jobs');
+  });
+
+  it('reads the gex45 branch of the real wrapper on gex45 (#5660)', () => {
+    const src = fs.readFileSync(path.join(__dirname, '../../scripts/workers/claude-job.sh'), 'utf8');
+    const gex45 = new Set(['/root/sourcelibrary', '/var/log/sourcelibrary/claude-jobs', '/root/claude-jobs', '/root/worktrees']);
+    expect(parseJobScriptPaths(src, (p: string) => gex45.has(p))).toEqual({
+      SL: '/root/sourcelibrary', LOGD: '/var/log/sourcelibrary/claude-jobs', JD: '/root/claude-jobs', WT: '/root/worktrees',
+    });
   });
 
   it('states: tmux alive is running; done file is done; GAVE UP; marker; else dead', () => {
