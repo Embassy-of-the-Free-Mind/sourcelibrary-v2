@@ -54,7 +54,7 @@ export default function ChakraTraditionPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          The standardization into a six-chakra system (plus the transcendent <em>sahasrara</em> at the crown) came relatively late, crystallizing in the 16th century <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> of Purnananda Yati. It was this text, translated by Arthur Avalon (Sir John Woodroffe) in 1919 as part of <em>The Serpent Power</em>, that became the basis for nearly everything the West knows about chakras. But Avalon&apos;s translation, brilliant and pioneering as it was, drew from a single lineage. The broader tradition is far richer, more varied, and in many cases more sophisticated than that one text can convey.
+          The standardization into a six-chakra system (plus the transcendent <em>sahasrara</em> at the crown) came relatively late, crystallizing in the 16th century <Link href="/book/description-of-the-six-chakras-purnananda" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> of Purnananda Yati. It was this text, translated by Arthur Avalon (Sir John Woodroffe) in 1919 as part of <em>The Serpent Power</em>, that became the basis for nearly everything the West knows about chakras. But Avalon&apos;s translation, brilliant and pioneering as it was, drew from a single lineage. The broader tradition is far richer, more varied, and in many cases more sophisticated than that one text can convey.
         </p>
 
         <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
@@ -75,11 +75,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6953e2ff77f38f6761beb2fa" className="hover:text-accent-gold-dark transition-colors">The Tantraloka of Abhinavagupta</Link>
+          <Link href="/book/tantraloka-vol-1-with-jayaratha-commentary-jayaratha" className="hover:text-accent-gold-dark transition-colors">The Tantraloka of Abhinavagupta</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The <Link href="/book/6953e2ff77f38f6761beb2fa" className="text-accent-rust hover:text-accent-rust underline"><em>Tantraloka</em></Link> (&ldquo;Light on Tantra&rdquo;) is the masterwork of the Kashmiri Shaiva philosopher Abhinavagupta (c. 950&ndash;1016 CE). At nearly 4,000 pages in its Sanskrit editions, it is the most comprehensive synthesis of tantric philosophy and practice ever composed. No complete English translation exists. Source Library is currently translating the full text (3,931 pages), which would represent the first time the complete <em>Tantraloka</em> has been available in English.
+          The <Link href="/book/tantraloka-vol-1-with-jayaratha-commentary-jayaratha" className="text-accent-rust hover:text-accent-rust underline"><em>Tantraloka</em></Link> (&ldquo;Light on Tantra&rdquo;) is the masterwork of the Kashmiri Shaiva philosopher Abhinavagupta (c. 950&ndash;1016 CE). At nearly 4,000 pages in its Sanskrit editions, it is the most comprehensive synthesis of tantric philosophy and practice ever composed. No complete English translation exists. Source Library is currently translating the full text (3,931 pages), which would represent the first time the complete <em>Tantraloka</em> has been available in English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -95,11 +95,11 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/69e13b030dae29249d20bde5" className="hover:text-accent-gold-dark transition-colors">The Netra Tantra</Link>
+          <Link href="/book/netra-tantra-with-kemarjas-udyota" className="hover:text-accent-gold-dark transition-colors">The Netra Tantra</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          A Shaiva text focused on the deity Amriteshvara, the <Link href="/book/69e13b030dae29249d20bde5" className="text-accent-rust hover:text-accent-rust underline"><em>Netra Tantra</em></Link> (&ldquo;Tantra of the Eye&rdquo;) contains important material on kundalini yoga and the relationship between breath, consciousness, and the energy channels. Our edition, with K&#7779;emar&#257;ja&apos;s commentary, runs to 318 pages. Like the <em>Svacchanda Tantra</em>, it has never had a complete published English translation.
+          A Shaiva text focused on the deity Amriteshvara, the <Link href="/book/netra-tantra-with-kemarjas-udyota" className="text-accent-rust hover:text-accent-rust underline"><em>Netra Tantra</em></Link> (&ldquo;Tantra of the Eye&rdquo;) contains important material on kundalini yoga and the relationship between breath, consciousness, and the energy channels. Our edition, with K&#7779;emar&#257;ja&apos;s commentary, runs to 318 pages. Like the <em>Svacchanda Tantra</em>, it has never had a complete published English translation.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
@@ -111,19 +111,19 @@ export default function ChakraTraditionPage() {
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6991d46921124c9ad6944323" className="hover:text-accent-gold-dark transition-colors">The Sat-Cakra-Nirupana &amp; Paduka-Pancaka</Link>
+          <Link href="/book/description-of-the-six-chakras-purnananda" className="hover:text-accent-gold-dark transition-colors">The Sat-Cakra-Nirupana &amp; Paduka-Pancaka</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Purnananda Yati&apos;s 16th-century <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> (&ldquo;Description of the Six Centres&rdquo;) is the most influential single text on the chakra system. It provides the detailed descriptions of each chakra (number of petals, colour, seed syllable, presiding deity, element) that are now widely reproduced. Source Library holds the <Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline">Sanskrit original (107 pages)</Link>, allowing readers to compare the source text against Avalon&apos;s influential translation. The Wellcome Collection also holds a separate <Link href="/book/6991d8938c1030b12444bfdb" className="text-accent-rust hover:text-accent-rust underline">manuscript edition</Link> and a remarkable <Link href="/book/6991d8978c1030b12444c035" className="text-accent-rust hover:text-accent-rust underline">illustrated version</Link> with hand-painted chakra diagrams.
+          Purnananda Yati&apos;s 16th-century <Link href="/book/description-of-the-six-chakras-purnananda" className="text-accent-rust hover:text-accent-rust underline"><em>Sat-Cakra-Nirupana</em></Link> (&ldquo;Description of the Six Centres&rdquo;) is the most influential single text on the chakra system. It provides the detailed descriptions of each chakra (number of petals, colour, seed syllable, presiding deity, element) that are now widely reproduced. Source Library holds the <Link href="/book/description-of-the-six-chakras-purnananda" className="text-accent-rust hover:text-accent-rust underline">Sanskrit original (107 pages)</Link>, allowing readers to compare the source text against Avalon&apos;s influential translation. The Wellcome Collection also holds a separate <Link href="/book/description-of-the-six-chakras-satchakranirupanam-yati" className="text-accent-rust hover:text-accent-rust underline">manuscript edition</Link> and a remarkable <Link href="/book/illustrated-six-chakras-swaroop" className="text-accent-rust hover:text-accent-rust underline">illustrated version</Link> with hand-painted chakra diagrams.
         </p>
 
         <h3 className="text-xl text-stone-800 mb-3 mt-10">
-          <Link href="/book/6991d89a8c1030b12444c076" className="hover:text-accent-gold-dark transition-colors">The Hathayogapradipika</Link>
+          <Link href="/book/light-on-hatha-yoga-hathayogapradipika-with-commentaries-svatmarama" className="hover:text-accent-gold-dark transition-colors">The Hathayogapradipika</Link>
         </h3>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Svatmarama&apos;s 15th-century manual is the most widely known hatha yoga text, and its treatment of <em>pranayama</em>, <em>bandhas</em>, <em>mudras</em>, and kundalini awakening represents the practical application of the subtle body theory developed in the tantric texts. Source Library holds multiple editions, including a <Link href="/book/6991d89a8c1030b12444c076" className="text-accent-rust hover:text-accent-rust underline">version from the Wellcome Collection</Link> with both the <em>Jyotsna</em> and <em>Manobhilasini</em> commentaries (200 pages), offering layers of interpretation rarely available in translation.
+          Svatmarama&apos;s 15th-century manual is the most widely known hatha yoga text, and its treatment of <em>pranayama</em>, <em>bandhas</em>, <em>mudras</em>, and kundalini awakening represents the practical application of the subtle body theory developed in the tantric texts. Source Library holds multiple editions, including a <Link href="/book/light-on-hatha-yoga-hathayogapradipika-with-commentaries-svatmarama" className="text-accent-rust hover:text-accent-rust underline">version from the Wellcome Collection</Link> with both the <em>Jyotsna</em> and <em>Manobhilasini</em> commentaries (200 pages), offering layers of interpretation rarely available in translation.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -150,13 +150,13 @@ export default function ChakraTraditionPage() {
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d46721124c9ad6944195" className="text-accent-rust hover:text-accent-rust underline"><strong>Tantraraja Tantra</strong></Link>: A major Shakta text focused on the goddess Tripurasundari, containing detailed practices involving chakra visualization and mantra that operate within a framework quite different from the Shaiva texts. 396 pages.
+              <Link href="/book/tantraraja-tantra-woodroffe-mishra" className="text-accent-rust hover:text-accent-rust underline"><strong>Tantraraja Tantra</strong></Link>: A major Shakta text focused on the goddess Tripurasundari, containing detailed practices involving chakra visualization and mantra that operate within a framework quite different from the Shaiva texts. 396 pages.
             </span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6991d8a08c1030b12444c14c" className="text-accent-rust hover:text-accent-rust underline"><strong>Paramesvaratantra</strong></Link> (828 CE): A unique early witness from the Cambridge Digital Library, this palm-leaf manuscript is one of the oldest dateable tantric texts in existence. 124 pages from the original manuscript.
+              <Link href="/book/paramesvaratantra-ms-add-1049-1" className="text-accent-rust hover:text-accent-rust underline"><strong>Paramesvaratantra</strong></Link> (828 CE): A unique early witness from the Cambridge Digital Library, this palm-leaf manuscript is one of the oldest dateable tantric texts in existence. 124 pages from the original manuscript.
             </span>
           </li>
           <li className="flex items-start gap-3">
@@ -168,7 +168,7 @@ export default function ChakraTraditionPage() {
           <li className="flex items-start gap-3">
             <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span>
-              <Link href="/book/6953e30277f38f6761beb46f" className="text-accent-rust hover:text-accent-rust underline"><strong>Kularnava Tantra</strong></Link>: One of the most important Kaula texts, containing teachings on guru-disciple initiation, the transformation of desire into spiritual practice, and the subtle body as a site of ritual action. Source Library also holds <Link href="/book/6953e30577f38f6761beb59f" className="text-accent-rust hover:text-accent-rust underline">Arthur Avalon&apos;s English translation</Link> for comparison.
+              <Link href="/book/kularnava-tantra-traditional" className="text-accent-rust hover:text-accent-rust underline"><strong>Kularnava Tantra</strong></Link>: One of the most important Kaula texts, containing teachings on guru-disciple initiation, the transformation of desire into spiritual practice, and the subtle body as a site of ritual action. Source Library also holds <Link href="/book/kularnava-tantra-english-translation-arthur-avalon-woodroffe" className="text-accent-rust hover:text-accent-rust underline">Arthur Avalon&apos;s English translation</Link> for comparison.
             </span>
           </li>
         </ul>
@@ -209,7 +209,7 @@ export default function ChakraTraditionPage() {
             </thead>
             <tbody className="divide-y divide-stone-200">
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6953e2ff77f38f6761beb2fa" className="text-accent-rust hover:text-accent-rust underline">Tantraloka, Vol. 1 (with Jayaratha&apos;s commentary)</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/tantraloka-vol-1-with-jayaratha-commentary-jayaratha" className="text-accent-rust hover:text-accent-rust underline">Tantraloka, Vol. 1 (with Jayaratha&apos;s commentary)</Link></td>
                 <td className="py-3 pr-4">372</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Translated</td>
@@ -221,55 +221,55 @@ export default function ChakraTraditionPage() {
                 <td className="py-3">Translated</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/69e13b030dae29249d20bde5" className="text-accent-rust hover:text-accent-rust underline">Netra Tantra</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/netra-tantra-with-kemarjas-udyota" className="text-accent-rust hover:text-accent-rust underline">Netra Tantra</Link></td>
                 <td className="py-3 pr-4">318</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Translated</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d46721124c9ad6944195" className="text-accent-rust hover:text-accent-rust underline">Tantraraja Tantra</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/tantraraja-tantra-woodroffe-mishra" className="text-accent-rust hover:text-accent-rust underline">Tantraraja Tantra</Link></td>
                 <td className="py-3 pr-4">396</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d89a8c1030b12444c076" className="text-accent-rust hover:text-accent-rust underline">Hathayogapradipika (with commentaries)</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/light-on-hatha-yoga-hathayogapradipika-with-commentaries-svatmarama" className="text-accent-rust hover:text-accent-rust underline">Hathayogapradipika (with commentaries)</Link></td>
                 <td className="py-3 pr-4">200</td>
                 <td className="py-3 pr-4">Wellcome Collection</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d8ac8c1030b12444c781" className="text-accent-rust hover:text-accent-rust underline">Kriyakandakramavali</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/kriyakandakramavali-ms-add-1406" className="text-accent-rust hover:text-accent-rust underline">Kriyakandakramavali</Link></td>
                 <td className="py-3 pr-4">156</td>
                 <td className="py-3 pr-4">Cambridge Digital Library</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d8a08c1030b12444c14c" className="text-accent-rust hover:text-accent-rust underline">Paramesvaratantra (828 CE)</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/paramesvaratantra-ms-add-1049-1" className="text-accent-rust hover:text-accent-rust underline">Paramesvaratantra (828 CE)</Link></td>
                 <td className="py-3 pr-4">124</td>
                 <td className="py-3 pr-4">Cambridge Digital Library</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d46921124c9ad6944323" className="text-accent-rust hover:text-accent-rust underline">Sat-Cakra-Nirupana</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/description-of-the-six-chakras-purnananda" className="text-accent-rust hover:text-accent-rust underline">Sat-Cakra-Nirupana</Link></td>
                 <td className="py-3 pr-4">107</td>
                 <td className="py-3 pr-4">Internet Archive</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d8938c1030b12444bfdb" className="text-accent-rust hover:text-accent-rust underline">Satchakranirupanam</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/description-of-the-six-chakras-satchakranirupanam-yati" className="text-accent-rust hover:text-accent-rust underline">Satchakranirupanam</Link></td>
                 <td className="py-3 pr-4">88</td>
                 <td className="py-3 pr-4">Wellcome Collection</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d8978c1030b12444c035" className="text-accent-rust hover:text-accent-rust underline">Satchakranirupanacitram (Illustrated)</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/illustrated-six-chakras-swaroop" className="text-accent-rust hover:text-accent-rust underline">Satchakranirupanacitram (Illustrated)</Link></td>
                 <td className="py-3 pr-4">63</td>
                 <td className="py-3 pr-4">Wellcome Collection</td>
                 <td className="py-3">Digitized</td>
               </tr>
               <tr>
-                <td className="py-3 pr-4"><Link href="/book/6991d8a38c1030b12444c221" className="text-accent-rust hover:text-accent-rust underline">Vajramratatantra</Link></td>
+                <td className="py-3 pr-4"><Link href="/book/vajramrtatantra-ms-or-158-1" className="text-accent-rust hover:text-accent-rust underline">Vajramratatantra</Link></td>
                 <td className="py-3 pr-4">12</td>
                 <td className="py-3 pr-4">Cambridge Digital Library</td>
                 <td className="py-3">Digitized</td>

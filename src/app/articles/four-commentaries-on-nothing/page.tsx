@@ -2,6 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import SourceQuote from '@/components/articles/SourceQuote';
+import PageFigure from '@/components/articles/PageFigure';
+import CommentaryTimeline from './CommentaryTimeline';
 
 // Every quotation below is our served English, copied verbatim from the page it links to, and
 // every quoted page was read against its image on 2026-10-07 (#6116). Six pages were
@@ -33,42 +36,44 @@ export const metadata: Metadata = withArticleMeta('four-commentaries-on-nothing'
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mb-6';
-const A = 'text-accent-rust hover:underline';
 const TH = 'text-left font-medium text-primary py-2 pr-4 border-b border-border-light';
 const TD = 'py-2 pr-4 align-top border-b border-border-light text-secondary';
-const QUOTE = 'border-l-4 border-accent-rust pl-6 my-8 text-secondary font-body leading-relaxed';
-const CITE = 'block text-sm text-muted mt-3 not-italic';
+const QUOTE = 'border-l-2 border-accent-gold/60 pl-5 my-8 text-secondary font-body leading-relaxed';
 
 const ISSUE = (n: number) => `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/${n}`;
 
-const PRASANNAPADA = 'https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=515';
-const PRASANNAPADA_514 = 'https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=514';
-const RUYI_51 = 'https://sourcelibrary.org/book/69f1345d365e3fcae574e290?page=51';
-const HWAAMSA_40 = 'https://sourcelibrary.org/book/69e014d347b76785d4ec8145?page=40';
-const FIVE_LAMPS_152 = 'https://sourcelibrary.org/book/6a3cc1c2ec254ff6cae0ee53?page=152';
-const FIVE_LAMPS_153 = 'https://sourcelibrary.org/book/6a3cc1c2ec254ff6cae0ee53?page=153';
-const KNORR_164 = 'https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=164';
-const KNORR_163 = 'https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=163';
-const ECK_65 = 'https://sourcelibrary.org/book/69c87ff96c6f3cc53c858fd5?page=65';
-const ECK_66 = 'https://sourcelibrary.org/book/69c87ff96c6f3cc53c858fd5?page=66';
+// Book ids (the reader accepts the id in place of a slug).
+const ID = {
+  prasannapada: '6a3067d0c4fd77fb5b9f8378',
+  ruyi: '69f1345d365e3fcae574e290',
+  hwaamsa: '69e014d347b76785d4ec8145',
+  fiveLamps: '6a3cc1c2ec254ff6cae0ee53',
+  knorr: '69804b901fb2ba7cf1d43a18',
+  eck: '69c87ff96c6f3cc53c858fd5',
+  sancai: '6992cd7543713c66ea63699e',
+};
+const READ = (id: string, page: number) => `/book/${id}?page=${page}`;
+// Page scans; every one used below was checked by eye against the article on 2026-10-18.
+const SCAN = (id: string, page: number) =>
+  `https://images.sourcelibrary.org/pages/${id}/${String(page).padStart(4, '0')}.jpg`;
+
+const PRASANNAPADA_514 = READ(ID.prasannapada, 514);
+const HWAAMSA_40 = READ(ID.hwaamsa, 40);
+const FIVE_LAMPS_152 = READ(ID.fiveLamps, 152);
+const KNORR_163 = READ(ID.knorr, 163);
+const ECK_65 = READ(ID.eck, 65);
+const ECK_66 = READ(ID.eck, 66);
 
 function Issue({ n }: { n: number }) {
-  return (
-    <a href={ISSUE(n)} className={A}>
-      #{n}
-    </a>
-  );
+  return <a href={ISSUE(n)}>#{n}</a>;
 }
 
-function Page({ src, alt, caption, href }: { src: string; alt: string; caption: React.ReactNode; href: string }) {
+// Tall single pages are held to a reading width so one page does not fill the screen.
+function Fig(props: React.ComponentProps<typeof PageFigure>) {
   return (
-    <figure className="my-8">
-      <a href={href}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} loading="lazy" className="w-full max-w-md mx-auto rounded-lg shadow-md" />
-      </a>
-      <figcaption className="text-center text-sm text-muted mt-3 italic">{caption}</figcaption>
-    </figure>
+    <div className="mx-auto max-w-md">
+      <PageFigure {...props} />
+    </div>
   );
 }
 
@@ -105,29 +110,29 @@ function AyinAniDiagram() {
 
 // Eck 1519, scan 65: four columns on the paper, three in our transcription.
 function EckColumnsDiagram() {
-  const box = 'rounded border px-2 py-2 text-xs leading-snug';
+  const box = 'min-w-0 rounded border px-1 sm:px-2 py-2 text-[11px] tracking-tight sm:tracking-normal sm:text-xs leading-snug hyphens-auto [overflow-wrap:anywhere]';
   const ok = `${box} border-border-light text-secondary`;
-  const bad = `${box} border-accent-rust text-secondary`;
+  const bad = `${box} border-2 border-primary text-secondary`;
   return (
     <figure className="my-8">
-      <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-3 items-stretch text-sm font-body">
-        <div className="text-muted self-center">Printed</div>
-        <div className="grid grid-cols-4 gap-2">
+      <div lang="en" className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 sm:gap-y-3 items-stretch text-sm font-body">
+        <div className="text-muted sm:self-center">Printed</div>
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-2 sm:mb-0">
           <div className={ok}><strong>(no heading)</strong><br />Greek</div>
           <div className={ok}><strong>Sarracenus</strong><br />his Latin</div>
           <div className={ok}><strong>Ficinus</strong><br />Ficino’s Latin</div>
-          <div className={ok}><strong>Camaldulen.</strong><br />Traversari’s Latin</div>
+          <div className={ok}><strong>Camaldu&shy;len.</strong><br />Traversari’s Latin</div>
         </div>
-        <div className="text-muted self-center">Transcribed</div>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="text-muted sm:self-center">Transcribed</div>
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mb-2 sm:mb-0">
           <div className={bad}><strong>Sarracenus</strong><br />Greek</div>
           <div className={bad}><strong>Ficinus</strong><br />Sarracenus’s Latin</div>
-          <div className={`${box} border-dashed border-accent-rust text-muted`}>Ficino’s Latin: missing</div>
-          <div className={ok}><strong>Camaldulen.</strong><br />Traversari’s Latin</div>
+          <div className={`${box} border-2 border-dashed border-primary text-muted`}>Ficino’s Latin: missing</div>
+          <div className={ok}><strong>Camaldu&shy;len.</strong><br />Traversari’s Latin</div>
         </div>
       </div>
       <figcaption className="text-center text-sm text-muted mt-3 italic">
-        Scan 65 of Eck’s 1519 edition, as printed and as transcribed. Boxes outlined in red are wrong.
+        Scan 65 of Eck’s 1519 edition, as printed and as transcribed. Boxes with a heavy outline are wrong.
       </figcaption>
     </figure>
   );
@@ -176,7 +181,14 @@ export default function FourCommentariesOnNothingPage() {
             falls apart. Candrakīrti’s commentary, the <em>Prasannapadā</em> (seventh century), answers
             with a clay pot. If the pot existed by its own nature, it would need no clay and no potter:
           </p>
-          <blockquote className={QUOTE}>
+          <SourceQuote
+            book={ID.prasannapada}
+            page={515}
+            printedPage={503}
+            src={SCAN(ID.prasannapada, 515)}
+            pageAlt="Page 503 of La Vallée Poussin’s 1903 edition of the Prasannapadā: Sanskrit in Devanagari with verse 24.18 set off between rules, and Tibetan in the footnotes."
+            source={<>Candrakīrti, <em>Prasannapadā</em>, ed. La Vallée Poussin (1903), quoting Nāgārjuna 24.18</>}
+          >
             Therefore, by accepting intrinsic nature, you contradict all of these things starting with
             the effect. In this way, if you accept intrinsic nature, nothing at all is logical. However,
             for us who maintain the shunyata (emptiness) of the intrinsic nature of things, all of this
@@ -186,23 +198,22 @@ export default function FourCommentariesOnNothingPage() {
             That which is dependent origination, we call that emptiness.
             <br />
             That is a dependent designation; it alone is the middle way.
-            <cite className={CITE}>
-              Candrakīrti, <em>Prasannapadā</em>, ed. La Vallée Poussin (1903), p. 503, quoting
-              Nāgārjuna 24.18. <a href={PRASANNAPADA} className={A}>Read the page</a>
-            </cite>
-          </blockquote>
-          <Page
-            src="https://images.sourcelibrary.org/pages/6a3067d0c4fd77fb5b9f8378/0515.jpg"
-            alt="Page 503 of La Vallée Poussin’s 1903 edition of the Prasannapadā: Sanskrit in Devanagari with verse 24.18 set off between rules, and Tibetan in the footnotes."
-            caption={<>Verse 24.18 between rules; the Tibetan version in the footnotes.</>}
-            href={PRASANNAPADA}
-          />
+          </SourceQuote>
           <p className={P}>
             For Candrakīrti, things are empty because they arise from conditions: the pot depends on
             clay, a wheel and a potter. The verse’s second line applies the same point to the word
             “emptiness”, which is also “a dependent designation”. The reader is not meant to treat
             emptiness as a thing that exists.
           </p>
+          <Fig
+            src={SCAN(ID.prasannapada, 7)}
+            alt="Title page of the 1903 St Petersburg edition: Mūlamadhyamakakārikās de Nāgārjuna avec la Prasannapadā commentaire de Candrakīrti, published by Louis de la Vallée Poussin, Bibliotheca Buddhica IV."
+            href={READ(ID.prasannapada, 7)}
+            source={<>Nāgārjuna and Candrakīrti, ed. La Vallée Poussin, Bibliotheca Buddhica IV (St Petersburg, 1903)</>}
+          >
+            The title page of the edition quoted here: Nāgārjuna’s verses “with the Prasannapadā,
+            commentary of Candrakīrti”.
+          </Fig>
           <p className={P}>
             <strong>The English.</strong> It keeps the Sanskrit terms (<em>śūnyatā</em>,{' '}
             <em>svabhāva</em>, <em>pratītyasamutpāda</em>) and glosses each once. Where the 1903 editor
@@ -210,7 +221,7 @@ export default function FourCommentariesOnNothingPage() {
             translations do worst on commentary: measured against published translations, they leave
             something out on 70 percent of pages, mostly by shortening the commentary (
             <Issue n={5695} />). On this page the commentary is complete. On the{' '}
-            <a href={PRASANNAPADA_514} className={A}>page before</a> it was not: the English stopped
+            <Link href={PRASANNAPADA_514}>page before</Link> it was not: the English stopped
             after verse 15 and left the rest of the page untranslated. That page has now been
             translated again.
           </p>
@@ -225,22 +236,18 @@ export default function FourCommentariesOnNothingPage() {
             A commentary printed in 1787 at the Haizhuang monastery in Guangzhou (金剛般若波羅蜜經如義)
             puts its notes above the sutra on every leaf. Above this passage it says:
           </p>
-          <blockquote className={QUOTE}>
+          <SourceQuote
+            book={ID.ruyi}
+            page={51}
+            src={SCAN(ID.ruyi, 51)}
+            pageAlt="A leaf of the 1787 Guangzhou Diamond Sutra commentary: the commentary in small characters in the upper register, the sutra in large characters below."
+            source={<><em>Jingang bore boluomi jing ruyi</em> (Guangzhou, 1787), Bavarian State Library copy</>}
+          >
             Previously, all external appearances were emptied; here, the mind itself is emptied. As the
             saying goes, “If the skin no longer exists, where can the hair attach itself?” The writing in
             this chapter is ingenious and the meaning is profound, like a range of peaks where a single
             mountain top suddenly rises ten thousand feet high, making it difficult for people to grasp.
-            <cite className={CITE}>
-              <em>Jingang bore boluomi jing ruyi</em> (Guangzhou, 1787).{' '}
-              <a href={RUYI_51} className={A}>Read the page</a>
-            </cite>
-          </blockquote>
-          <Page
-            src="https://images.sourcelibrary.org/pages/69f1345d365e3fcae574e290/0051.jpg"
-            alt="A leaf of the 1787 Guangzhou Diamond Sutra commentary: the commentary in small characters in the upper register, the sutra in large characters below."
-            caption={<>Commentary above, sutra below. Bavarian State Library copy.</>}
-            href={RUYI_51}
-          />
+          </SourceQuote>
           <p className={P}>
             The last clause in Chinese is 使人扳攬不及: the peak is too high for anyone to reach up and
             take hold of it. That is the commentator’s point. He does not offer a better account of the
@@ -255,9 +262,18 @@ export default function FourCommentariesOnNothingPage() {
             Buddha-eye.” It did the same with the sand of the Ganges two lines later, and with the
             flesh-eye and the heavenly eye on the facing leaf. A 1496 Korean woodblock of the same
             sutra, also in this library, has the{' '}
-            <a href={HWAAMSA_40} className={A}>same sentence</a> right: “Indeed, World-Honored One, the
+            <Link href={HWAAMSA_40}>same sentence</Link> right: “Indeed, World-Honored One, the
             Tathāgata has the Buddha eye.”
           </p>
+          <Fig
+            src={SCAN(ID.hwaamsa, 40)}
+            alt="A page of the 1496 Korean woodblock of the Diamond Sutra: columns of large Chinese characters with small reading marks beside them, in a ruled frame."
+            href={HWAAMSA_40}
+            source={<>The 1496 Korean woodblock of the <em>Diamond Sutra</em></>}
+          >
+            The Korean woodblock. The first column opens with the end of Subhūti’s answer,
+            是世尊如來有佛眼, “World-Honored One, the Tathāgata has the Buddha eye”.
+          </Fig>
           <p className={P}>
             We tested the two models we use. We translated the affected pages again, three times each,
             with the cheaper model that made the error and with the stronger one we have used for
@@ -283,39 +299,37 @@ export default function FourCommentariesOnNothingPage() {
               </tbody>
             </table>
           </div>
-          <Page
+          <Fig
             src="https://images.sourcelibrary.org/archived/6992cd7543713c66ea63699e/74.jpg"
             alt="Woodcut of the Chan master Huineng seated on a mat beside a rock and a vase of flowers, labelled 慧能大師."
-            caption={<>“Great Master Huineng” (慧能大師), the Sixth Patriarch, to whom the line “Originally there is not a single thing” is attributed. <em>Sancai tuhui</em> (1609), vol. 29.</>}
-            href="https://sourcelibrary.org/book/6992cd7543713c66ea63699e?page=74"
-          />
+            href={READ(ID.sancai, 74)}
+            source={<><em>Sancai tuhui</em> (1609), vol. 29</>}
+          >
+            “Great Master Huineng” (慧能大師), the Sixth Patriarch, to whom the line “Originally there
+            is not a single thing” is attributed.
+          </Fig>
           <p className={P}>
             Chan turned the same teaching into dialogue. Xiufu Wukong was a tenth-century master at
             the Qingliang monastery, which the ruler of the Southern Tang built and invited him to lead. His name, 悟空,
             means “awakened to emptiness”. His exchanges with monks are recorded in the{' '}
-            <em>Compendium of the Five Lamps</em> (五燈會元), compiled in 1252; ours is a Qing-dynasty
-            print. A monk asks, “What is the Way?” He answers with the best-known line in Chan, from the
+            <em>Compendium of the Five Lamps</em> (五燈會元), compiled in 1252; ours is the Qing-dynasty
+            copy made for the Siku Quanshu imperial library. A monk asks, “What is the Way?” He answers with the best-known line in Chan, from the
             verse attributed to Huineng:
           </p>
-          <blockquote className={QUOTE}>
+          <SourceQuote
+            book={ID.fiveLamps}
+            page={153}
+            src={SCAN(ID.fiveLamps, 153)}
+            pageAlt="A page of the Compendium of the Five Lamps: eight columns of Chinese characters read top to bottom, right to left, opening with Huineng’s line 本來無一物何處有塵埃."
+            source={<><em>Compendium of the Five Lamps</em>, vol. 8, the monk’s question on <Link href={FIVE_LAMPS_152}>scan 152</Link></>}
+          >
             Originally there is not a single thing; where could dust collect? The monk bowed. The Master
             said: Do not misunderstand. A monk asked: What is meant by “one speck of dust entering into
             right concentration”? The Master said: Form is emptiness. The monk asked: What is meant by
             “arising from the samadhi of all dust particles”? The Master said: Emptiness is form. The
             monk asked: I will not ask about other matters, but what is the single phrase for realizing
             emptiness? The Master said: It is two phrases.
-            <cite className={CITE}>
-              <em>Compendium of the Five Lamps</em>, vol. 8, scans{' '}
-              <a href={FIVE_LAMPS_152} className={A}>152</a>–153.{' '}
-              <a href={FIVE_LAMPS_153} className={A}>Read the page</a>
-            </cite>
-          </blockquote>
-          <Page
-            src="https://images.sourcelibrary.org/pages/6a3cc1c2ec254ff6cae0ee53/0153.jpg"
-            alt="A page of a Qing-dynasty print of the Compendium of the Five Lamps: eight columns of Chinese characters read top to bottom, right to left."
-            caption={<>The page opens with Huineng’s line, 本來無一物何處有塵埃.</>}
-            href={FIVE_LAMPS_153}
-          />
+          </SourceQuote>
           <p className={P}>
             The monk bows as if he has been given a doctrine, and Wukong tells him not to misunderstand.
             Asked for the single phrase for realizing emptiness, he answers that it is two: the Heart
@@ -356,37 +370,36 @@ export default function FourCommentariesOnNothingPage() {
             long time it was the fullest account of Kabbalah in Latin. Its entry for <em>Ayin</em>,
             “nothing”, includes:
           </p>
-          <blockquote className={QUOTE}>
+          <SourceQuote
+            book={ID.knorr}
+            page={164}
+            printedPage={81}
+            src="https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6980bf6ac0fed4b65dfe5999.jpg"
+            pageAlt="Page 81 of Knorr von Rosenroth’s Kabbala denudata, 1677: Latin text with Hebrew words, the entry on Ayin and the start of the entry on En Sof."
+            source={<>Knorr von Rosenroth, <em>Kabbala denudata</em> (1677), Bibliotheca Philosophica Hermetica copy, Amsterdam</>}
+          >
             All agree that Ayin is a title of the Crown; and this is because no one can grasp it; but if
             a question is raised concerning it, the answer must be: that which is perceived or understood
             of it is Ayin. Rabbi Moses, however, provides another reason: namely, that a “Principle” is
             usually called “Non-being”; and this is the Principle of all Principles.
-            <cite className={CITE}>
-              Knorr von Rosenroth, <em>Kabbala denudata</em> (1677), p. 81.{' '}
-              <a href={KNORR_164} className={A}>Read the page</a>
-            </cite>
-          </blockquote>
-          <Page
-            src="https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6980bf6ac0fed4b65dfe5999.jpg"
-            alt="Page 81 of Knorr von Rosenroth’s Kabbala denudata, 1677: Latin text with Hebrew words, the entry on Ayin and the start of the entry on En Sof."
-            caption={<>The Bibliotheca Philosophica Hermetica copy, Amsterdam.</>}
-            href={KNORR_164}
-          />
+          </SourceQuote>
           <p className={P}>
             Here Ayin is the name of the Crown, Kether, the highest of the ten sefirot. It is called
             “nothing” because whatever is understood of it is not it. On the{' '}
-            <a href={KNORR_163} className={A}>page before</a>, Knorr notes that אין, <em>ayin</em>,
+            <Link href={KNORR_163}>page before</Link>, Knorr notes that אין, <em>ayin</em>,
             “nothing”, and אני, <em>ani</em>, “I”, are written with the same three letters. Ayin stands
             for the first sefirah and Ani for the last, and blessing flows down through the channels from
             the one to the other.
           </p>
           <AyinAniDiagram />
-          <Page
+          <Fig
             src="https://images.sourcelibrary.org/cropped/69804b901fb2ba7cf1d43a18/6982913e7a27b2f1693ad779.jpg"
             alt="An engraved diagram of the ten sefirot as linked circles on a central trunk, set inside concentric rings, with a paper flap folded over the lower part of the plate."
-            caption={<>One of the sefirot diagrams among the plates of the <em>Kabbala denudata</em>, with its paper flap still in place.</>}
-            href="https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=1690"
-          />
+            href={READ(ID.knorr, 1690)}
+            source={<>Knorr von Rosenroth, <em>Kabbala denudata</em> (1677)</>}
+          >
+            One of the sefirot diagrams among the plates, with its paper flap still in place.
+          </Fig>
           <p className={P}>
             <strong>The English.</strong> It keeps Ayin, Kether, En-Soph and Malchuth as names, gives
             the Hebrew, and puts Knorr’s Latin <em>Nihil</em> in a note. It also adds a guess in a
@@ -412,16 +425,18 @@ export default function FourCommentariesOnNothingPage() {
             a paraphrase by Thomas Gallus, abbot of Vercelli, and Eck’s own commentary. Eck sums up the
             chapter:
           </p>
-          <blockquote className={QUOTE}>
+          <SourceQuote
+            book={ID.eck}
+            page={66}
+            src={SCAN(ID.eck, 66)}
+            pageAlt="A page of Eck’s 1519 Dionysius: the end of chapter five in Greek and three Latin columns, then Thomas Gallus’s paraphrase and Eck’s commentary side by side."
+            source={<>Johann Eck, commentary on Dionysius, <em>De mystica theologia</em> (1519), Embassy of the Free Mind</>}
+          >
             Finally, he takes away all beings and non-beings in general. He adds that He is not
             understood by anyone, nor does He understand anything. Finally, he concludes that there is
             no speech or knowledge of God, because He is above every assertion and negation, and simply
             absolute from all, and more eminent than all.
-            <cite className={CITE}>
-              Johann Eck, commentary on Dionysius, <em>De mystica theologia</em> (1519).{' '}
-              <a href={ECK_66} className={A}>Read the page</a>
-            </cite>
-          </blockquote>
+          </SourceQuote>
           <p className={P}>
             God is above negation as well as assertion, so “God is not” is no more an answer than “God
             is”. Like Candrakīrti, Dionysius applies his denial to the denial itself.
@@ -436,20 +451,32 @@ export default function FourCommentariesOnNothingPage() {
             be able to see it. We have found the same tendency before: a transcription of a Vatican
             Zohar manuscript contained well-known passages that are not on the leaf.
           </p>
-          <Page
-            src={HERO}
-            alt="The Greek column of Eck’s 1519 Dionysius, ending with the words τῶν λόγων, beside three Latin columns."
-            caption={<>Top left: the Greek ends ἐπέκεινα τῶν λόγων. Eck (1519), Embassy of the Free Mind.</>}
+          <Fig
+            src="/articles/four-commentaries-on-nothing/eck-1519-greek-column.jpg"
+            alt="Detail of Eck’s 1519 Dionysius: the Greek column ending with the words ἐπέκεινα τῶν λόγων, beside Sarracenus’s Latin ending “super tota”."
             href={ECK_66}
-          />
+            source={<>Eck (1519), Embassy of the Free Mind</>}
+          >
+            A detail of the page quoted above. The Greek ends ἐπέκεινα τῶν λόγων; Sarracenus’s Latin beside
+            it ends <em>super tota</em>.
+          </Fig>
           <p className={P}>
-            The <a href={ECK_65} className={A}>facing page</a>, where the chapter begins, has a larger
+            The <Link href={ECK_65}>facing page</Link>, where the chapter begins, has a larger
             error. The printed page has four columns, each with a heading: the Greek, then Sarracenus,
             Ficino and Traversari. Our transcription has three. It moved each heading one column to the
             left, so the Greek is labelled “Sarracenus”, and it left out Ficino’s column, so
             Sarracenus’s Latin appears under Ficino’s name. The English translates this rearranged text
             accurately, so nothing in it warns the reader.
           </p>
+          <Fig
+            src={SCAN(ID.eck, 65)}
+            alt="The opening of chapter five in Eck’s 1519 Dionysius: Greek in the first column, then Latin columns headed Sarracenus, Ficinus and Camaldulen."
+            href={ECK_65}
+            source={<>Eck (1519), Embassy of the Free Mind</>}
+          >
+            Chapter five begins: the Greek column has no heading, and the three Latin columns are
+            headed Sarracenus, Ficinus and Camaldulen.
+          </Fig>
           <EckColumnsDiagram />
         </section>
 
@@ -469,6 +496,7 @@ export default function FourCommentariesOnNothingPage() {
             says that God is above negation as well as assertion. In each case the commentary is there to
             correct the reader.
           </p>
+          <CommentaryTimeline />
         </section>
 
         <section className="mb-16">
@@ -509,6 +537,15 @@ export default function FourCommentariesOnNothingPage() {
             commentary, and the doubled pages in Knorr. These need new transcriptions or new scans,
             and are tracked in <Issue n={6116} />.
           </p>
+          <Fig
+            src={SCAN(ID.prasannapada, 514)}
+            alt="Page 502 of the 1903 Prasannapadā: Sanskrit in Devanagari with verses 15 and 16 of chapter 24 set off between rules, and footnotes in Tibetan and Latin script."
+            href={PRASANNAPADA_514}
+            source={<><em>Prasannapadā</em>, ed. La Vallée Poussin (1903), p. 502</>}
+          >
+            The Prasannapadā page our first English left half untranslated: it stopped after verse
+            15, the first verse set between rules.
+          </Fig>
           <p className={P}>
             All of these translations are unreviewed drafts, and each page says so. If you read
             Sanskrit, Classical Chinese, Hebrew, Greek or Latin and find an error, the feedback link on

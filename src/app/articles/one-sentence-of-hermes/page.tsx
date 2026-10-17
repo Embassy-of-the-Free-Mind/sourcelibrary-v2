@@ -2,6 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import SourceQuote from '@/components/articles/SourceQuote';
+import SentenceStepper from './SentenceStepper';
 
 // Every reading of a printed or written page below was checked against the scan on 2026-10-07/08,
 // and the crops in public/articles/one-sentence-of-hermes are cut from those scans. Quoted English is our
@@ -31,25 +34,58 @@ export const metadata: Metadata = withArticleMeta('one-sentence-of-hermes', {
 });
 
 const BOOK = {
-  scott: '/book/69a97a1bf3f3d2fb7de26ca4',
-  scottText: '/book/6953a93977f38f6761bd58f4',
-  ms: '/book/69b4c08d86a5921d5bc445cf',
-  basel: '/book/69c4ec33a3a4a7c546ee6123',
-  rosseli: '/book/69b51e19261c58d63664f8d4',
-  patrizi: '/book/69b51ebb47b06ecd5819628b',
-  apuleius: '/book/6a10090bf717292950967757',
-  aldine: '/book/69b51eb747b06ecd58195d39',
-  tournes: '/book/6952ca2a77f38f6761bc33bf',
+  scott: '/book/hermetica-vol-1-scott',
+  scottText: '/book/hermetica-vol-i-texts-and-translation-ed',
+  ms: '/book/hermes-trismegistus-translated-by-apuleius-ficino-ficino',
+  basel: '/book/pymander-asclepius-and-on-the-mysteries-of-the-egyptians-trismegistus',
+  rosseli: '/book/asclepius-mercurii-trismegisti-6-de-immortalitate-animae-hermes',
+  patrizi: '/book/magia-philosophica-hoc-est-francisci-patricii-summi-patrizi',
+  apuleius: '/book/lucii-apuleii-opera-tomus-ii-s-n',
+  aldine: '/book/jamblichus-de-mysteriis-aegyptiorum-chaldaeorum-assyriorum-iamblichus',
+  tournes: '/book/mysteries-of-egypt-neoplatonic-collection-porphyry',
 };
 
-const linkClass = 'text-accent-rust underline hover:text-accent-gold-dark';
+// Whole-page images, checked by eye on 2026-10-18. The archived scan number is the reader page,
+// except in the 1532 Basel copy, whose spreads the reader splits: its p. 159 is reader page 163,
+// served as a cropped single page.
+const IMG = (bookId: string, page: number) => `https://images.sourcelibrary.org/archived/${bookId}/${page}.jpg`;
+const ID = {
+  scott: '69a97a1bf3f3d2fb7de26ca4',
+  scottText: '6953a93977f38f6761bd58f4',
+  rosseli: '69b51e19261c58d63664f8d4',
+  tournes: '6952ca2a77f38f6761bc33bf',
+};
+const BASEL_159 = 'https://images.sourcelibrary.org/cropped/69c4ec33a3a4a7c546ee6123/69f6c956d3af044f8303df91.jpg';
 
-function Figure({ src, alt, children }: { src: string; alt: string; children: React.ReactNode }) {
+const SRC = {
+  basel: (
+    <>
+      <em>Pymander, Asclepius, De mysteriis Aegyptiorum</em> (Basel, 1532)
+    </>
+  ),
+  aldine: (
+    <>
+      <em>Iamblichus de mysteriis Aegyptiorum</em> (Venice: Aldus, 1516)
+    </>
+  ),
+  patrizi: (
+    <>
+      Francesco Patrizi, <em>Magia philosophica</em> (Hamburg, 1593)
+    </>
+  ),
+  apuleius: (
+    <>
+      Apuleius, <em>Opera</em>, vol. 2 (1778)
+    </>
+  ),
+};
+
+// Tall single pages are held to a reading width so one page doesn't fill the screen.
+function Fig(props: React.ComponentProps<typeof PageFigure>) {
   return (
-    <figure className="my-8">
-      <img src={src} alt={alt} className="w-full rounded-lg border border-stone-200" />
-      <figcaption className="text-sm text-muted mt-3 leading-relaxed">{children}</figcaption>
-    </figure>
+    <div className="mx-auto max-w-md">
+      <PageFigure {...props} />
+    </div>
   );
 }
 
@@ -127,13 +163,9 @@ export default function OneSentenceOfHermesPage() {
           God.
         </p>
 
-        <Figure src={HERO} alt={HERO_ALT}>
-          The passage in the Basel edition of 1532, p. 159 (
-          <Link href={`${BOOK.basel}?page=163`} className={linkClass}>
-            read the page
-          </Link>
-          ). Copy: Bibliotheca Philosophica Hermetica, Amsterdam.
-        </Figure>
+        <PageFigure src={HERO} alt={HERO_ALT} href={`${BOOK.basel}?page=163`} source={<>{SRC.basel}, p. 159</>}>
+          The passage as the Basel printer set it. Copy: Bibliotheca Philosophica Hermetica, Amsterdam.
+        </PageFigure>
 
         <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">What went wrong in the translation</h2>
 
@@ -142,11 +174,24 @@ export default function OneSentenceOfHermesPage() {
           asked why. His argument is short. A copyist garbles a phrase once, at random. This
           phrase is wrong in the same way three times, so the fault is not in the copying of the Latin but in the
           translation itself (
-          <Link href={`${BOOK.scott}?page=226`} className={linkClass}>
+          <Link href={`${BOOK.scott}?page=226`}>
             Scott&rsquo;s commentary, pp. 214&ndash;15
           </Link>
           ).
         </p>
+
+        <Fig
+          src={IMG(ID.scott, 226)}
+          alt="A page of Walter Scott's commentary headed 'Asclepius', page 214, listing the three parallel phrases numbered (1), (2) and (3), with Greek words set in the text further down."
+          href={`${BOOK.scott}?page=226`}
+          source={
+            <>
+              Walter Scott, <em>Hermetica</em>, vol. 3 (Oxford, 1926), p. 214
+            </>
+          }
+        >
+          Scott sets out the three parallel phrases, (1) to (3), and then the Greek he thinks lies behind them.
+        </Fig>
 
         <p className="text-secondary leading-relaxed mb-6">
           He then works backwards to the Greek. Suppose Hermes wrote <em>ἡ γνῶσις ἡ κατὰ τὸ ποιόν</em>, &ldquo;the
@@ -156,18 +201,29 @@ export default function OneSentenceOfHermesPage() {
           mind&rdquo;, and then, treating <em>ποιόν</em> and <em>ποσόν</em> (&ldquo;of what kind&rdquo;, &ldquo;how
           much&rdquo;) as questions, into <em>qualis aut quanta sit</em>. Read with <em>κατά</em> restored, the passage
           sets out three grades of knowledge, each matched to a kind of mind. This is how Scott translates it (
-          <Link href={`${BOOK.scottText}?page=361`} className={linkClass}>
+          <Link href={`${BOOK.scottText}?page=361`}>
             p. 357
           </Link>
           ):
         </p>
 
-        <blockquote className="border-l-4 border-accent-gold/40 pl-5 my-6 text-stone-700">
+        <SourceQuote
+          book={ID.scottText}
+          page={361}
+          printedPage={357}
+          src={IMG(ID.scottText, 361)}
+          pageAlt="Page 357 of Scott's Hermetica, vol. 1: his English of Asclepius III, with numbered footnotes giving the Latin and the Greek he proposes."
+          source={
+            <>
+              Walter Scott, <em>Hermetica</em>, vol. 1 (Oxford, 1924), <em>Asclepius</em> III, Scott&rsquo;s translation
+            </>
+          }
+        >
           The knowledge which corresponds to the character and extent of the human mind is based wholly on man&rsquo;s
           memory of the past; it is the retentiveness of his memory that has given him dominion over the earth. The
           knowledge which corresponds to the nature and character of the cosmic mind is such as can be procured from
           all the sensible things in the Kosmos.
-        </blockquote>
+        </SourceQuote>
 
         <p className="text-secondary leading-relaxed mb-8">
           Scott marks every Greek word he supplies with a question mark, and says that the sense he recovers cannot be
@@ -179,47 +235,72 @@ export default function OneSentenceOfHermesPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The broken phrase is in every copy we hold, word for word: the{' '}
-          <Link href={`${BOOK.ms}?page=440`} className={linkClass}>
+          <Link href={`${BOOK.ms}?page=440`}>
             fifteenth-century manuscript
           </Link>{' '}
           now in the Biblioteca Laurenziana in Florence, the{' '}
-          <Link href={`${BOOK.aldine}?page=268`} className={linkClass}>
+          <Link href={`${BOOK.aldine}?page=268`}>
             Aldine edition of 1516
           </Link>
           , the{' '}
-          <Link href={`${BOOK.basel}?page=163`} className={linkClass}>
+          <Link href={`${BOOK.basel}?page=163`}>
             Basel edition of 1532
           </Link>
           , Jean de Tournes&rsquo;s{' '}
-          <Link href={`${BOOK.tournes}?page=530`} className={linkClass}>
+          <Link href={`${BOOK.tournes}?page=530`}>
             Lyon edition of 1549
           </Link>
           , Francesco Patrizi&rsquo;s{' '}
-          <Link href={`${BOOK.patrizi}?page=163`} className={linkClass}>
+          <Link href={`${BOOK.patrizi}?page=163`}>
             <em>Magia philosophica</em> of 1593
           </Link>{' '}
           and the{' '}
-          <Link href={`${BOOK.apuleius}?page=182`} className={linkClass}>
+          <Link href={`${BOOK.apuleius}?page=182`}>
             1778 edition of Apuleius
           </Link>
           . None of them flags it or tries to mend it. Faced with a sentence they could not understand in a book
           ascribed to Hermes, these copyists and editors preserved it exactly.
         </p>
 
+        <Fig
+          src={IMG(ID.tournes, 530)}
+          alt="A small octavo page headed 'Mercurii Trism.', page 528, set in italic-free roman type, with the passage from 'Intelligentia enim sensus humani' in the upper half."
+          href={`${BOOK.tournes}?page=530`}
+          source={
+            <>
+              Lyon: Jean de Tournes, 1549, p. 528
+            </>
+          }
+        >
+          The Lyon edition of 1549, with <em>qualis, aut quanta sit</em> in place and, like the Aldine, <em>naturae,
+          &amp; qualitatis, &amp; sensus mundi</em> in the third sentence.
+        </Fig>
+
         <p className="text-secondary leading-relaxed mb-6">
           In 1590 the Calabrian Franciscan Hannibal Rosseli, teaching in Kraków, reached this sentence in his
           six-volume commentary on Hermes. He sets it as the heading of a chapter (
-          <Link href={`${BOOK.rosseli}?page=367`} className={linkClass}>
+          <Link href={`${BOOK.rosseli}?page=367`}>
             Book VI, Commentary XI
           </Link>
           ) and spends two pages explaining it through Boethius and Augustine. In our translation of his Latin:
         </p>
 
-        <blockquote className="border-l-4 border-accent-gold/40 pl-5 my-6 text-stone-700">
+        <SourceQuote
+          book={ID.rosseli}
+          page={367}
+          src={IMG(ID.rosseli, 367)}
+          pageAlt="Page 367 of Rosseli's commentary: the text of Hermes set as a heading, 'Commentum XI', a woodcut initial, and a long passage in italic with notes in the margin."
+          source={
+            <>
+              Hannibal Rosseli, <em>Asclepius Mercurii Trismegisti cum commento</em> (Kraków, 1590), Book VI, Commentary
+              XI, ch. 1, Source Library translation
+            </>
+          }
+        >
           Rightly, therefore, was it said by the most wise Mercury that the intelligence of the human sense&mdash;that
           is, to understand, or the act of understanding of the human intellect&mdash;proceeds from the memory of the
           past
-        </blockquote>
+        </SourceQuote>
 
         <p className="text-secondary leading-relaxed mb-8">
           His gloss drops <em>qualis aut quanta sit</em> and keeps the part that makes sense. A few lines earlier on
@@ -234,7 +315,7 @@ export default function OneSentenceOfHermesPage() {
           records that the medieval manuscripts already disagree over the third sentence. One group reads{' '}
           <em>et qualitate</em>, another <em>ex qualitate</em>, a third <em>qualitate et</em>, and Scott prints the
           emendation <em>et qualitatis</em> (
-          <Link href={`${BOOK.scottText}?page=360`} className={linkClass}>
+          <Link href={`${BOOK.scottText}?page=360`}>
             p. 356
           </Link>
           ). The printed editions inherit the split. The Aldine of 1516 has{' '}
@@ -243,17 +324,31 @@ export default function OneSentenceOfHermesPage() {
           <em>naturae et qualitatis sensus mundi</em>.
         </p>
 
-        <Figure
-          src={`${DIR}/1516-aldine.jpg`}
-          alt="The passage in the Aldine edition of 1516, set in small roman type across a folio page."
+        <Fig
+          src={IMG(ID.scottText, 360)}
+          alt="Page 356 of Scott's Hermetica, vol. 1: his Latin text of the Asclepius with numbered lines, and below it a dense critical apparatus recording the manuscript readings."
+          href={`${BOOK.scottText}?page=360`}
+          source={
+            <>
+              Walter Scott, <em>Hermetica</em>, vol. 1 (Oxford, 1924), p. 356
+            </>
+          }
         >
-          The Aldine edition (Venice, 1516), in which the <em>Asclepius</em> follows Ficino&rsquo;s translations of
-          Iamblichus, Proclus and the <em>Pimander</em> (
-          <Link href={`${BOOK.aldine}?page=268`} className={linkClass}>
-            read the page
-          </Link>
-          ). Copy: Bayerische Staatsbibliothek.
-        </Figure>
+          Scott&rsquo;s Latin text, with the apparatus at the foot of the page where the manuscripts&rsquo; readings of
+          the third sentence are set out.
+        </Fig>
+
+        <div className="mx-auto max-w-2xl">
+          <PageFigure
+            src={`${DIR}/1516-aldine.jpg`}
+            alt="The passage in the Aldine edition of 1516, set in small roman type across a folio page."
+            href={`${BOOK.aldine}?page=268`}
+            source={SRC.aldine}
+          >
+            The Aldine edition, in which the <em>Asclepius</em> follows Ficino&rsquo;s translations of Iamblichus, Proclus
+            and the <em>Pimander</em>. Copy: Bayerische Staatsbibliothek.
+          </PageFigure>
+        </div>
 
         <p className="text-secondary leading-relaxed mb-6">
           Sixteen years separate the Aldine from the Basel edition, and in that time a clause went missing. After{' '}
@@ -265,38 +360,47 @@ export default function OneSentenceOfHermesPage() {
           to the Basel line, not the Aldine one.
         </p>
 
-        <Figure
-          src={`${DIR}/1778-asclepius-32.jpg`}
-          alt="The same passage in the 1778 Apuleius: “naturae et qualitatis sensus mundi”, and “Aeternitas quae ſecunda est”."
-        >
-          The same lines in the 1778 edition of Apuleius, p. 175 (
-          <Link href={`${BOOK.apuleius}?page=182`} className={linkClass}>
-            read the page
-          </Link>
-          ). Compare the third sentence with the 1532 text above.
-        </Figure>
+        <div className="mx-auto max-w-lg">
+          <PageFigure
+            src={`${DIR}/1778-asclepius-32.jpg`}
+            alt="The same passage in the 1778 Apuleius: “naturae et qualitatis sensus mundi”, and “Aeternitas quae ſecunda est”."
+            href={`${BOOK.apuleius}?page=182`}
+            source={<>{SRC.apuleius}, p. 175</>}
+          >
+            The same lines in the 1778 edition of Apuleius. Compare the third sentence with the 1532 text above.
+          </PageFigure>
+        </div>
 
         <p className="text-secondary leading-relaxed mb-6">
           Patrizi&rsquo;s 1593 edition adds a slip of its own a few lines further on. The 1778 text reads:
         </p>
 
-        <blockquote className="border-l-4 border-accent-gold/40 pl-5 my-6 italic text-stone-700">
-          Hoc autem differt intellectus a <strong>sensu</strong>, quod intellectus noster ad qualitatem{' '}
-          <strong>sensus</strong> mundi intelligendam&hellip;
-        </blockquote>
+        <SourceQuote
+          book="6a10090bf717292950967757"
+          page={182}
+          printedPage={175}
+          src="https://images.sourcelibrary.org/archived/6a10090bf717292950967757/182.jpg"
+          pageAlt="Page 175 of the 1778 Apuleius, a single column of Latin; the passage beginning 'Hoc autem differt intellectus a sensu' is near the foot of the page."
+          source={SRC.apuleius}
+        >
+          <span lang="la" className="italic">
+            Hoc autem differt intellectus a <strong>sensu</strong>, quod intellectus noster ad qualitatem{' '}
+            <strong>sensus</strong> mundi intelligendam&hellip;
+          </span>
+        </SourceQuote>
 
         <p className="text-secondary leading-relaxed mb-6">Patrizi&rsquo;s page has:</p>
 
-        <Figure
-          src={`${DIR}/1593-eye-skip.jpg`}
-          alt="Patrizi 1593: “Hoc enim differt intellectus à ſenſu mundi, intelligendam, & dinoſcendam mentis præuenit intentionem.”"
-        >
-          Patrizi, <em>Magia philosophica</em> (Hamburg, 1593), p. 164 (
-          <Link href={`${BOOK.patrizi}?page=164`} className={linkClass}>
-            read the page
-          </Link>
-          ). Copy: Bayerische Staatsbibliothek.
-        </Figure>
+        <div className="mx-auto max-w-lg">
+          <PageFigure
+            src={`${DIR}/1593-eye-skip.jpg`}
+            alt="Patrizi 1593: “Hoc enim differt intellectus à ſenſu mundi, intelligendam, & dinoſcendam mentis præuenit intentionem.”"
+            href={`${BOOK.patrizi}?page=164`}
+            source={SRC.patrizi}
+          >
+            The lines at the foot of Patrizi&rsquo;s page. Copy: Bayerische Staatsbibliothek.
+          </PageFigure>
+        </div>
 
         <p className="text-secondary leading-relaxed mb-8">
           The words between <em>sensu</em> and the next <em>sensus</em>, &ldquo;quod intellectus noster ad
@@ -324,18 +428,27 @@ export default function OneSentenceOfHermesPage() {
           the other is the classic mistake of anyone new to early print.
         </p>
 
-        <Figure
+        <PageFigure
           src={`${DIR}/1532-secunda.jpg`}
           alt="Basel 1532: “Aeternitas, quæ ſecunda eſt ex ſenſibili mundo”."
+          href={`${BOOK.basel}?page=163`}
+          source={<>{SRC.basel}, p. 159</>}
         >
-          Basel, 1532: <em>quae secunda est ex sensibili mundo</em>. The first letter of <em>secunda</em> has the same
-          form as the two long s letters in <em>sensibili</em> beside it; compare the crossed <em>f</em> in <em>effectus</em> in the
-          full passage above.
-        </Figure>
+          <em>quae secunda est ex sensibili mundo</em>. The first letter of <em>secunda</em> has the same form as the two
+          long s letters in <em>sensibili</em> beside it; compare the crossed <em>f</em> in <em>effectus</em> in the full
+          passage above.
+        </PageFigure>
 
-        <Figure src={`${DIR}/1593-secunda.jpg`} alt="Patrizi 1593: “Æternitas quę ſecunda eſt ex ſenſibili mundo”.">
-          Patrizi, 1593: the same word, the same long s.
-        </Figure>
+        <div className="mx-auto max-w-lg">
+          <PageFigure
+            src={`${DIR}/1593-secunda.jpg`}
+            alt="Patrizi 1593: “Æternitas quę ſecunda eſt ex ſenſibili mundo”."
+            href={`${BOOK.patrizi}?page=164`}
+            source={SRC.patrizi}
+          >
+            The same word, the same long s.
+          </PageFigure>
+        </div>
 
         <p className="text-secondary leading-relaxed mb-6">
           All five printed editions whose scans we checked print <em>secunda</em>, with the long s. Our OCR read
@@ -356,7 +469,7 @@ export default function OneSentenceOfHermesPage() {
             <tbody>
               <tr>
                 <td className={td}>
-                  <Link href={`${BOOK.aldine}?page=268`} className={linkClass}>
+                  <Link href={`${BOOK.aldine}?page=268`}>
                     Venice, 1516
                   </Link>
                 </td>
@@ -366,7 +479,7 @@ export default function OneSentenceOfHermesPage() {
               </tr>
               <tr>
                 <td className={td}>
-                  <Link href={`${BOOK.basel}?page=163`} className={linkClass}>
+                  <Link href={`${BOOK.basel}?page=163`}>
                     Basel, 1532
                   </Link>
                 </td>
@@ -376,7 +489,7 @@ export default function OneSentenceOfHermesPage() {
               </tr>
               <tr>
                 <td className={td}>
-                  <Link href={`${BOOK.tournes}?page=530`} className={linkClass}>
+                  <Link href={`${BOOK.tournes}?page=530`}>
                     Lyon, 1549
                   </Link>
                 </td>
@@ -386,7 +499,7 @@ export default function OneSentenceOfHermesPage() {
               </tr>
               <tr>
                 <td className={td}>
-                  <Link href={`${BOOK.patrizi}?page=164`} className={linkClass}>
+                  <Link href={`${BOOK.patrizi}?page=164`}>
                     Patrizi, 1593
                   </Link>
                 </td>
@@ -396,7 +509,7 @@ export default function OneSentenceOfHermesPage() {
               </tr>
               <tr>
                 <td className={td}>
-                  <Link href={`${BOOK.apuleius}?page=182`} className={linkClass}>
+                  <Link href={`${BOOK.apuleius}?page=182`}>
                     Apuleius, 1778
                   </Link>
                 </td>
@@ -437,17 +550,15 @@ export default function OneSentenceOfHermesPage() {
           fluent Latin that is not on the page.
         </p>
 
-        <Figure
+        <PageFigure
           src={`${DIR}/manuscript-laurenziana.jpg`}
           alt="The passage in the Laurenziana manuscript, Plut. 89 sup. 71, with the word “confundi” written in the right margin."
+          href={`${BOOK.ms}?page=440`}
+          source="Biblioteca Medicea Laurenziana, Plut. 89 sup. 71"
         >
-          Biblioteca Medicea Laurenziana, Plut. 89 sup. 71 (
-          <Link href={`${BOOK.ms}?page=440`} className={linkClass}>
-            read the leaf
-          </Link>
-          ). In the right margin someone has written <em>cõfundi</em>, the word the printed editions have at that point
-          in the line.
-        </Figure>
+          In the right margin someone has written <em>cõfundi</em>, the word the printed editions have at that point in
+          the line.
+        </PageFigure>
 
         <div className="overflow-x-auto my-6">
           <table className="min-w-full border-collapse border border-stone-200 text-sm">
@@ -490,11 +601,18 @@ export default function OneSentenceOfHermesPage() {
           of&rdquo;. Our English of the 1532 text reads:
         </p>
 
-        <blockquote className="border-l-4 border-accent-gold/40 pl-5 my-6 text-stone-700">
+        <SourceQuote
+          book="69c4ec33a3a4a7c546ee6123"
+          page={163}
+          printedPage={159}
+          src={BASEL_159}
+          pageAlt="Page 159 of the Basel edition of 1532, headed 'Asclepius', with the sentence on the intelligence of the human sense in the middle of the page."
+          source={<>{SRC.basel}, Source Library translation</>}
+        >
           For the intelligence of the human sense, of whatever sort or size it may be, exists entirely in the memory of
           past things. Through that tenacity of memory, man was made the governor of the earth. But the intellect of
           nature and the sense of the world can be perceived from all sensible things that are in the world.
-        </blockquote>
+        </SourceQuote>
 
         <p className="text-secondary leading-relaxed mb-8">
           It is a fair rendering of the Latin, and it gives no sign that the Latin is in trouble. &ldquo;Of whatever
@@ -503,6 +621,8 @@ export default function OneSentenceOfHermesPage() {
         </p>
 
         <h2 className="text-2xl font-serif font-bold mt-12 mb-4 text-primary">Three kinds of error</h2>
+
+        <SentenceStepper />
 
         <p className="text-secondary leading-relaxed mb-4">
           Followed through these copies, the errors in this one sentence fall into three groups.
@@ -542,7 +662,7 @@ export default function OneSentenceOfHermesPage() {
           <em>secunda</em> (printed with a long s) as <em>fecunda</em>, and the 1516 transcription skips two lines. The
           manuscript transcription had at least three readings that are not on the leaf. These are logged with the
           other manuscript and early-print OCR cases on{' '}
-          <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4877" className={linkClass}>
+          <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4877">
             issue #4877
           </a>
           . The 1516 Aldine has since been re-read with a stronger model, and its Latin transcription of this passage now matches the page; the English translation beside it had not yet been redone. The other editions and the manuscript had not been corrected when this was published. If you find an error on any page, the feedback button on
@@ -550,14 +670,10 @@ export default function OneSentenceOfHermesPage() {
         </p>
 
         <p className="text-sm text-muted leading-relaxed">
-          Sources: Walter Scott, <em>Hermetica</em>, vol. 1 (Oxford, 1924), for the Latin text and translation of the{' '}
-          <em>Asclepius</em>, and vol. 3 (1926) for his commentary on chapter 32; the Laurenziana manuscript Plut. 89 sup. 71;{' '}
-          <em>Iamblichus de mysteriis Aegyptiorum</em> and other works (Venice: Aldus, 1516), and the Lyon edition of the same collection (Jean de
-          Tournes, 1549);{' '}
-          <em>Pymander, Asclepius, De mysteriis Aegyptiorum</em> (Basel, 1532); Hannibal Rosseli,{' '}
-          <em>Asclepius Mercurii Trismegisti cum commento</em> (Kraków, 1590); Francesco Patrizi,{' '}
-          <em>Magia philosophica</em> (Hamburg, 1593); Apuleius, <em>Opera</em>, vol. 2 (1778). All are
-          linked above and readable in full in the library.
+          Sources: Walter Scott&rsquo;s <em>Hermetica</em>, vol. 1 (Oxford, 1924) for the Latin text and translation
+          of the <em>Asclepius</em>, and vol. 3 (1926) for his commentary on chapter 32; the manuscript and the printed
+          editions are linked where they appear. Quoted English is Scott&rsquo;s own or Source Library&rsquo;s
+          translation of the page it links to.
         </p>
       </article>
     </ContentPageLayout>

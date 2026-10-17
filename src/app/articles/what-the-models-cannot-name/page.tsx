@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import IntervalChart, { type IntervalRow } from './IntervalChart';
 
 // Source of every figure here: issue #6038 — the run-1 headline comment (2026-10-06) and the
 // "Run 2 result" comment (2026-10-07) — and the experiment files they cite:
@@ -32,7 +34,7 @@ export const metadata: Metadata = withArticleMeta('what-the-models-cannot-name',
 
 const P = 'text-secondary leading-relaxed mb-6 font-body';
 const H2 = 'font-serif text-2xl md:text-3xl text-primary mt-14 mb-6';
-const A = 'text-accent-rust hover:underline';
+const SCROLL = 'md:hidden mt-2 text-xs text-muted font-sans';
 const CAP = 'text-center text-sm text-muted mt-3 italic';
 const TH = 'text-left font-medium text-primary py-2 pr-4 border-b border-border-light';
 const TD = 'py-2 pr-4 align-top border-b border-border-light text-secondary';
@@ -44,68 +46,41 @@ const RULE = '#d6d3d1';
 const PAPER = '#fafaf9';
 const LAPIS = '#1e40af';
 const OCHRE = '#b45309';
-const STOP = '#991b1b';
 
-type Row = { label: string; v: number; lo?: number; hi?: number; color: string; strong?: boolean; note?: string };
+// Books shown or linked. Page images checked by eye on 2026-10-18.
+const BOOK = {
+  iliad: '/book/iliad-and-odyssey-homerus',
+  alkoran: '/book/the-quran-alkoran',
+  horologium: '/book/horologjum-eterne-sapientie-in-quo-pro-pulcre-ac-devote-seuse',
+  mmk: '/book/mulamadhyamakakarika-nagarjuna',
+};
 
-/** Horizontal bars, with 95% intervals where the source gives one, all marks on one linear scale. */
-function IntervalChart({ rows, max, ticks, label }: { rows: Row[]; max: number; ticks: number[]; label: string }) {
-  const L = 200;
-  const R = 640;
-  const top = 18;
-  const step = 34;
-  const x = (v: number) => L + ((R - L) * v) / max;
-  const bottom = top + rows.length * step;
-  return (
-    <svg viewBox={`0 0 720 ${bottom + 30}`} className="w-full h-auto" role="img" aria-label={label}>
-      {ticks.map((t) => (
-        <g key={t}>
-          <line x1={x(t)} x2={x(t)} y1={top - 8} y2={bottom} stroke={RULE} strokeWidth={1} />
-          <text x={x(t)} y={bottom + 18} fontSize={11} fill={MUTED} textAnchor="middle">{t}%</text>
-        </g>
-      ))}
-      {rows.map((r, i) => {
-        const y = top + i * step + step / 2;
-        const end = Math.max(r.hi !== undefined ? x(r.hi) : 0, x(r.v));
-        return (
-          <g key={r.label}>
-            <text x={L - 12} y={y + 4} fontSize={12.5} fill={INK} textAnchor="end" fontWeight={r.strong ? 700 : 400}>{r.label}</text>
-            <rect x={L} y={y - 7} width={Math.max(1.5, x(r.v) - L)} height={14} rx={2} fill={r.color} opacity={0.85} />
-            {r.lo !== undefined && r.hi !== undefined && (
-              <g stroke={INK} strokeWidth={1.4}>
-                <line x1={x(r.lo)} x2={x(r.hi)} y1={y} y2={y} />
-                <line x1={x(r.lo)} x2={x(r.lo)} y1={y - 5} y2={y + 5} />
-                <line x1={x(r.hi)} x2={x(r.hi)} y1={y - 5} y2={y + 5} />
-              </g>
-            )}
-            <text x={end + 8} y={y + 4} fontSize={12} fill={INK} stroke={PAPER} strokeWidth={4} paintOrder="stroke">
-              {r.v.toFixed(1)}%{r.note ? <tspan fill={MUTED}>{`  ${r.note}`}</tspan> : null}
-            </text>
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
+const ISSUE = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6038';
+const CHART_SOURCE = (
+  <>
+    Numbers from run 2 of <a href={ISSUE}>issue #6038</a> (7 October 2026, preregistered); intervals are 95%
+    Wilson intervals on its counts.
+  </>
+);
 
-const UNITS: Row[] = [
-  { label: 'works', v: 52.2, lo: 47.4, hi: 56.9, color: OCHRE, strong: true, note: '217 of 416' },
-  { label: 'volumes', v: 38.6, lo: 30.2, hi: 48.2, color: OCHRE },
-  { label: 'pages', v: 35.3, lo: 27.4, hi: 43.9, color: OCHRE },
+const UNITS: IntervalRow[] = [
+  { label: 'works', v: 52.2, lo: 47.4, hi: 56.9, strong: true, note: '217 of 416' },
+  { label: 'volumes', v: 38.6, lo: 30.2, hi: 48.2, strong: true },
+  { label: 'pages', v: 35.3, lo: 27.4, hi: 43.9, strong: true },
 ];
-const MODELS: Row[] = [
-  { label: 'Claude Opus 5.5', v: 56.7, color: MUTED },
-  { label: 'Gemini 3.1 Pro', v: 62.5, color: MUTED },
-  { label: 'GPT-5.6 Sol', v: 63.9, color: MUTED },
-  { label: 'none of the three', v: 52.2, lo: 47.4, hi: 56.9, color: OCHRE, strong: true },
+const MODELS: IntervalRow[] = [
+  { label: 'Claude Opus 5.5', v: 56.7 },
+  { label: 'Gemini 3.1 Pro', v: 62.5 },
+  { label: 'GPT-5.6 Sol', v: 63.9 },
+  { label: 'none of the three', v: 52.2, lo: 47.4, hi: 56.9, strong: true },
 ];
-const SLICES: Row[] = [
-  { label: 'disputations, orations', v: 75.9, lo: 65.5, hi: 84.0, color: OCHRE, note: 'n = 79' },
-  { label: 'Latin', v: 62.6, lo: 56.7, hi: 68.1, color: OCHRE, note: 'n = 270' },
-  { label: 'German', v: 56.4, lo: 41.0, hi: 70.7, color: OCHRE, note: 'n = 39' },
-  { label: 'scripture, commentary', v: 48.5, lo: 32.5, hi: 64.8, color: OCHRE, note: 'n = 33' },
-  { label: 'English', v: 11.8, lo: 4.7, hi: 26.6, color: OCHRE, note: 'n = 34' },
-  { label: 'Chinese', v: 0, lo: 0, hi: 20.4, color: OCHRE, note: '0 of 15' },
+const SLICES: IntervalRow[] = [
+  { label: 'disputations, orations', v: 75.9, lo: 65.5, hi: 84.0, strong: true, note: 'n = 79' },
+  { label: 'Latin', v: 62.6, lo: 56.7, hi: 68.1, strong: true, note: 'n = 270' },
+  { label: 'German', v: 56.4, lo: 41.0, hi: 70.7, strong: true, note: 'n = 39' },
+  { label: 'scripture, commentary', v: 48.5, lo: 32.5, hi: 64.8, strong: true, note: 'n = 33' },
+  { label: 'English', v: 11.8, lo: 4.7, hi: 26.6, strong: true, note: 'n = 34' },
+  { label: 'Chinese', v: 0, lo: 0, hi: 20.4, strong: true, note: '0 of 15' },
 ];
 
 function Arrowheads() {
@@ -114,7 +89,6 @@ function Arrowheads() {
       <marker id="rx-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={INK} /></marker>
       <marker id="rx-lapis" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={LAPIS} /></marker>
       <marker id="rx-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={MUTED} /></marker>
-      <marker id="rx-stop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={STOP} /></marker>
     </defs>
   );
 }
@@ -124,7 +98,7 @@ const CHANNELS = ['modern translation', 'critical edition', 'catalogue, Wikipedi
 function TwoQuestionsDiagram() {
   const box = { fill: PAPER, stroke: INK, strokeWidth: 1 };
   return (
-    <svg viewBox="0 0 860 350" className="w-full h-auto min-w-[640px]" role="img" aria-label="A work reaches a model through translations, editions, catalogues and citations. Asking the model and checking its answer shows whether it knows the work. Whether it trained on our own scan cannot be tested from outside.">
+    <svg viewBox="0 0 860 350" className="w-full h-auto min-w-[640px] font-sans" role="img" aria-label="A work reaches a model through translations, editions, catalogues and citations. Asking the model and checking its answer shows whether it knows the work. Whether it trained on our own scan cannot be tested from outside.">
       <Arrowheads />
       <rect x={10} y={120} width={160} height={70} rx={3} {...box} />
       <text x={90} y={148} fontSize={14} fontWeight={700} fill={INK} textAnchor="middle">The work</text>
@@ -155,7 +129,7 @@ function TwoQuestionsDiagram() {
       <text x={770} y={84} fontSize={14} fontWeight={700} fill={LAPIS} textAnchor="middle">Recall</text>
       <text x={770} y={104} fontSize={12} fill={INK} textAnchor="middle">knows the work</text>
       <text x={770} y={122} fontSize={12} fill={INK} textAnchor="middle">this note measures it</text>
-      <rect x={690} y={228} width={160} height={84} rx={3} fill={PAPER} stroke={STOP} strokeWidth={1.2} strokeDasharray="4 3" />
+      <rect x={690} y={228} width={160} height={84} rx={3} fill={PAPER} stroke={MUTED} strokeWidth={1.2} strokeDasharray="4 3" />
       <text x={770} y={254} fontSize={14} fontWeight={700} fill={INK} textAnchor="middle">Exposure</text>
       <text x={770} y={274} fontSize={12} fill={INK} textAnchor="middle">trained on our text</text>
       <text x={770} y={292} fontSize={12} fill={INK} textAnchor="middle">not testable from outside</text>
@@ -178,7 +152,7 @@ function PipelineDiagram() {
   const W = 156;
   const gap = 20;
   return (
-    <svg viewBox="0 0 880 270" className="w-full h-auto min-w-[640px]" role="img" aria-label="Five steps: preregister; draw a seeded random 500 works; run controls that must pass; ask three frontier models to name the author from the title alone; score the named author against our catalogue.">
+    <svg viewBox="0 0 880 270" className="w-full h-auto min-w-[640px] font-sans" role="img" aria-label="Five steps: preregister; draw a seeded random 500 works; run controls that must pass; ask three frontier models to name the author from the title alone; score the named author against our catalogue.">
       <Arrowheads />
       {STEPS.map((s, i) => {
         const x = 6 + i * (W + gap + 2);
@@ -193,9 +167,9 @@ function PipelineDiagram() {
           </g>
         );
       })}
-      <path d="M440,142 L440,198" stroke={STOP} strokeWidth={1.2} markerEnd="url(#rx-stop)" />
-      <text x={450} y={176} fontSize={11} fill={STOP}>a gate fails</text>
-      <rect x={335} y={202} width={210} height={52} rx={3} fill={PAPER} stroke={STOP} strokeWidth={1.2} strokeDasharray="4 3" />
+      <path d="M440,142 L440,198" stroke={INK} strokeWidth={1.2} markerEnd="url(#rx-ink)" />
+      <text x={450} y={176} fontSize={11} fill={INK}>a gate fails</text>
+      <rect x={335} y={202} width={210} height={52} rx={3} fill={PAPER} stroke={MUTED} strokeWidth={1.2} strokeDasharray="4 3" />
       <text x={440} y={224} fontSize={12} fill={INK} textAnchor="middle">that model is reported,</text>
       <text x={440} y={242} fontSize={12} fill={INK} textAnchor="middle">not counted (Haiku)</text>
       <text x={794} y={172} fontSize={11} fill={MUTED} textAnchor="middle">unknown =</text>
@@ -218,7 +192,7 @@ const METHODS: { name: string; cite: string; x: number; y: number; color: string
 function MethodsMap() {
   const cell = { fill: PAPER, stroke: RULE };
   return (
-    <svg viewBox="0 0 860 380" className="w-full h-auto min-w-[640px]" role="img" aria-label="Published methods placed by what they ask about, a text or a work, and what access they need, token probabilities or plain questions. Only plain-question methods work on closed frontier models. This note is the work-level, plain-question method.">
+    <svg viewBox="0 0 860 380" className="w-full h-auto min-w-[640px] font-sans" role="img" aria-label="Published methods placed by what they ask about, a text or a work, and what access they need, token probabilities or plain questions. Only plain-question methods work on closed frontier models. This note is the work-level, plain-question method.">
       <rect x={150} y={20} width={350} height={160} {...cell} />
       <rect x={500} y={20} width={350} height={160} {...cell} />
       <rect x={150} y={180} width={350} height={160} {...cell} />
@@ -260,7 +234,7 @@ export default function WhatTheModelsCannotNamePage() {
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           In May we estimated that about 43% of our transcribed books were &ldquo;confidently new to AI
-          training&rdquo; (<Link href="/articles/did-the-ai-read-this" className={A}>Did the AI Read This?</Link>).
+          training&rdquo; (<Link href="/articles/did-the-ai-read-this">Did the AI Read This?</Link>).
           We have now measured the question twice more on today&apos;s library, with current models,
           controls, and the method and its stopping rules written down before any model was asked. The
           result: for <strong>about half of the distinct works we hold (52%, 95% interval 47&ndash;57%)</strong>,
@@ -280,10 +254,11 @@ export default function WhatTheModelsCannotNamePage() {
           &ldquo;Is this book in the training data?&rdquo; hides two questions. The first is whether the model
           knows the <em>work</em>: whether a translation, an edition, a catalogue entry or a scholarly citation
           has reached it. The second is whether it trained on <em>our file</em>, the scan and transcription we
-          hold. A model can know the Iliad well without ever having seen our 1535 printing of it.
+          hold. A model can know the Iliad well without ever having seen <Link href={BOOK.iliad}>our 1535 printing</Link> of it.
         </p>
         <figure className="my-10">
           <div className="overflow-x-auto"><TwoQuestionsDiagram /></div>
+          <p className={SCROLL}>Scroll sideways to see the whole diagram.</p>
           <figcaption className={CAP}>
             A work reaches a model through many channels. Asking the model, and checking its answer, tests
             what it can recall. Whether it trained on our own text cannot be tested from outside.
@@ -293,10 +268,10 @@ export default function WhatTheModelsCannotNamePage() {
           The second question is the one the research literature calls <em>membership inference</em>, and the
           literature is discouraging. Duan and colleagues ran the standard tests on models whose training data
           is public and found they{' '}
-          <a href="https://arxiv.org/abs/2402.07841v2" className={A}>barely beat random guessing</a>. Das and
+          <a href="https://arxiv.org/abs/2402.07841v2">barely beat random guessing</a>. Das and
           colleagues showed that many published successes came from comparing two different kinds of text, and
           that a test which never looks at the model{' '}
-          <a href="https://arxiv.org/pdf/2406.16201" className={A}>can do better</a>. Our own May test agreed:
+          <a href="https://arxiv.org/pdf/2406.16201">can do better</a>. Our own May test agreed:
           given the first 80 characters of our transcription, a model continued books it &ldquo;knew&rdquo;
           only 1.17 times better than books it did not. So this note answers the first question and does not
           claim the second.
@@ -314,6 +289,7 @@ export default function WhatTheModelsCannotNamePage() {
         </p>
         <figure className="my-10">
           <div className="overflow-x-auto"><PipelineDiagram /></div>
+          <p className={SCROLL}>Scroll sideways to see the whole diagram.</p>
           <figcaption className={CAP}>
             Each step was fixed in a preregistration before the first model call, including the result that
             would make us retract the earlier figure.
@@ -335,7 +311,7 @@ export default function WhatTheModelsCannotNamePage() {
           excluded.
         </p>
         <div className="overflow-x-auto mb-6">
-          <table className="w-full text-sm border-collapse font-body">
+          <table className="w-full text-sm border-collapse font-sans">
             <thead>
               <tr>
                 <th className={TH}>control</th>
@@ -354,14 +330,25 @@ export default function WhatTheModelsCannotNamePage() {
         </div>
         <p className={P}>
           The famous works the models &ldquo;miss&rdquo; are catalogue quirks: our record for the Diamond
-          Sūtra names its translator, the Qur&apos;an is catalogued under Muhammad. The one invented title two
+          Sūtra names its translator, <Link href={BOOK.alkoran}>the Qur&apos;an</Link> is catalogued under Muhammad. The one invented title two
           models accepted turned out to be a near twin of a real 1619 treatise on comets, a fault in the decoy
           rather than a bluff. A second run of Pro agreed with the first on 98% of works.
         </p>
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/6970e3689b09d309d780a282/0009.jpg"
+            alt="Title page of Mahomets Alkoran, a Dutch Qur'an after Du Ryer's French translation, printed at Leiden by Hendrik van Damme in 1707."
+            href={`${BOOK.alkoran}?page=9`}
+            source={<><em>Mahomets Alkoran</em>, Leiden, 1707</>}
+          >
+            The title page of our Dutch Qur&apos;an, after Du Ryer&apos;s French translation. The catalogue files
+            it under Muhammad, one of the quirks behind the famous works the models &ldquo;miss&rdquo;.
+          </PageFigure>
+        </div>
 
         <h2 className={H2}>The result</h2>
         <figure className="my-10">
-          <IntervalChart rows={UNITS} max={80} ticks={[0, 20, 40, 60, 80]} label="Share of the random sample whose author no frontier model can name: 52.2% of works, 38.6% of volumes, 35.3% of pages." />
+          <IntervalChart rows={UNITS} max={80} ticks={[0, 20, 40, 60, 80]} title="No model names the author: works, volumes, pages" measure="unnamed by all three models" source={CHART_SOURCE} />
           <figcaption className={CAP}>
             Share of the random sample whose author none of the three models can name, counted three ways,
             with 95% intervals.
@@ -370,19 +357,30 @@ export default function WhatTheModelsCannotNamePage() {
         <p className={P}>
           The three counts answer different questions. By works it is about half. By volumes and pages it is
           about a third, because the famous works fill many volumes. Reading every mismatch by eye, some
-          &ldquo;wrong&rdquo; answers name the right person under another spelling (Suso for Seuse, Sylvius for
+          &ldquo;wrong&rdquo; answers name the right person under another spelling (<Link href={BOOK.horologium}>Suso for Seuse</Link>, Sylvius for
           Dubois) or correct an error in our catalogue. Counting those as known gives 47.7% [43.1&ndash;52.6]
           of works.
         </p>
+        <div className="max-w-md mx-auto">
+          <PageFigure
+            src="https://images.sourcelibrary.org/pages/6a5172599e29dd4d2097eeeb/0003.jpg"
+            alt="Title page of Heinrich Seuse's Horologium aeternae sapientiae, printed in red and black around a woodcut of the Virgin and Child in a halo of rays."
+            href={`${BOOK.horologium}?page=3`}
+            source={<>Heinrich Seuse, <em>Horologium aeternae sapientiae</em></>}
+          >
+            Our catalogue names the author Seuse. Opus and GPT-5.6 answered &ldquo;Henry Suso&rdquo;, the same
+            man, and the mechanical scorer marked both answers wrong.
+          </PageFigure>
+        </div>
         <figure className="my-10">
-          <IntervalChart rows={MODELS} max={80} ticks={[0, 20, 40, 60, 80]} label="Share of works whose author each model cannot name: Opus 56.7%, Pro 62.5%, GPT-5.6 63.9%; none of the three 52.2%." />
+          <IntervalChart rows={MODELS} max={80} ticks={[0, 20, 40, 60, 80]} title="Works whose author the model cannot name, by model" measure="of works with no author named" source={CHART_SOURCE} />
           <figcaption className={CAP}>
             Share of works whose author each model cannot name. The models know different works, so together
             they leave fewer unknown than any one alone.
           </figcaption>
         </figure>
         <figure className="my-10">
-          <IntervalChart rows={SLICES} max={100} ticks={[0, 25, 50, 75, 100]} label="Share of works no model can name, by genre and language: disputations 75.9%, Latin 62.6%, German 56.4%, scripture and commentary 48.5%, English 11.8%, Chinese 0 of 15." />
+          <IntervalChart rows={SLICES} max={100} ticks={[0, 25, 50, 75, 100]} title="Works no model can name, by genre and language" measure="unnamed by all three models" source={CHART_SOURCE} />
           <figcaption className={CAP}>
             The same measure by genre and by language, with 95% intervals. Small groups have wide intervals.
           </figcaption>
@@ -396,29 +394,39 @@ export default function WhatTheModelsCannotNamePage() {
           One correction to our first re-run matters for anyone reading about our Tibetan and Sanskrit
           holdings. That run reported 63% of that shelf as unrecognised. The figure came from volume labels
           and monastery records, not from the great works. All 17 works by the Nālandā masters that we hold,
-          among them the Abhidharmakośa, the Madhyamakakārikā and the Bodhicaryāvatāra, are known to every
+          among them the Abhidharmakośa, the <Link href={BOOK.mmk}>Madhyamakakārikā</Link> and the Bodhicaryāvatāra, are known to every
           model. Of seven Tibetan commentaries on them, five are not, but seven is too few to generalise from.
         </p>
+        <PageFigure
+          src="https://images.sourcelibrary.org/archived/69e8b28a2ff2a8dc09e77ff4/2.jpg"
+          alt="Facing English and Sanskrit title pages of the Madhyamakaśāstra of Nāgārjuna with Candrakīrti's commentary Prasannapadā, edited by P. L. Vaidya, Mithila Institute, Darbhanga, 1960."
+          href={`${BOOK.mmk}?page=2`}
+          source={<>Nāgārjuna, <em>Madhyamakaśāstra</em>, ed. P. L. Vaidya (Darbhanga, 1960)</>}
+        >
+          Nāgārjuna&apos;s verses with Candrakīrti&apos;s commentary, in the Buddhist Sanskrit Texts series: one of
+          the 17 works by the Nālandā masters that every model knows.
+        </PageFigure>
 
         <h2 className={H2}>Where this sits among published methods</h2>
         <figure className="my-10">
           <div className="overflow-x-auto"><MethodsMap /></div>
+          <p className={SCROLL}>Scroll sideways to see the whole diagram.</p>
           <figcaption className={CAP}>
             Methods placed by what they ask about and what access they need. Closed frontier models allow only
             the right-hand column.
           </figcaption>
         </figure>
         <p className={P}>
-          Most published methods ask about the text. <a href="https://arxiv.org/pdf/2310.16789" className={A}>Min-K% Prob</a>{' '}
-          and <a href="https://arxiv.org/abs/2406.06443v1" className={A}>dataset inference</a> need the
+          Most published methods ask about the text. <a href="https://arxiv.org/pdf/2310.16789">Min-K% Prob</a>{' '}
+          and <a href="https://arxiv.org/abs/2406.06443v1">dataset inference</a> need the
           model&apos;s token probabilities, which closed models do not expose. The{' '}
-          <a href="https://www.ischool.berkeley.edu/news/2023/new-research-prof-david-bamman-reveals-chatgpt-seems-be-trained-copyrighted-books" className={A}>name-cloze test</a>{' '}
+          <a href="https://www.ischool.berkeley.edu/news/2023/new-research-prof-david-bamman-reveals-chatgpt-seems-be-trained-copyrighted-books">name-cloze test</a>{' '}
           asks a model to fill in a masked character name in a novel, and{' '}
-          <a href="https://proceedings.mlr.press/v235/duarte24a.html" className={A}>DE-COP</a> asks it to pick a
+          <a href="https://proceedings.mlr.press/v235/duarte24a.html">DE-COP</a> asks it to pick a
           verbatim passage out of paraphrases. Both work on famous English books a model can partly reproduce.
           Against seventeenth-century Latin or a Tibetan manuscript they have nothing to detect. The closest
           relative of this note is work on long-tail knowledge such as{' '}
-          <a href="https://arxiv.org/pdf/2308.10168" className={A}>Head-to-Tail</a>, which found that model
+          <a href="https://arxiv.org/pdf/2308.10168">Head-to-Tail</a>, which found that model
           accuracy falls from famous to obscure subjects. What this note adds is the guard rails: invented
           titles, an obscure-but-known control tier, a fact that is scored rather than a feeling that is
           reported, and a preregistered rule for when to retract.
@@ -435,7 +443,7 @@ export default function WhatTheModelsCannotNamePage() {
           transcriptions appear in the public web crawls that models are trained on, whether a model can answer
           questions about what a text says, and whether a machine-readable text of the work already exists
           elsewhere. The data, prompts, preregistrations and scripts are in{' '}
-          <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6038" className={A}>issue #6038</a>.
+          <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/6038">issue #6038</a>.
         </p>
       </article>
     </ContentPageLayout>

@@ -215,7 +215,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/69526359ab34727b1f046d5a">
+            <Link href="/book/mutus-liber-the-silent-book-saulat">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg"
@@ -225,14 +225,14 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The <em>Mutus Liber</em>, Plate 4 (1677): alchemists collect morning dew on linen sheets stretched in a meadow, while Sol and Luna preside from above. The whole &ldquo;wordless book&rdquo; teaches the Stone in pictures alone.{' '}
-              <Link href="/book/69526359ab34727b1f046d5a" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/mutus-liber-the-silent-book-saulat" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
           </figure>
 
           <figure className="my-12">
-            <Link href="/book/699065973dc2ed39a49f1e71">
+            <Link href="/book/bodleian-library-ms-bodl-rolls-1-attributed">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.sourcelibrary.org/gallery/699065973dc2ed39a49f1e71/699065983dc2ed39a49f1e72-0.jpg"
@@ -242,7 +242,7 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The opening of the Ripley Scroll, c. 1450: Hermes Trismegistus holding an alchemical flask and a toad. Six metres of illustrated alchemy, kept rolled.{' '}
-              <Link href="/book/699065973dc2ed39a49f1e71" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/bodleian-library-ms-bodl-rolls-1-attributed" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
@@ -315,7 +315,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/6957ef6bcbe1dcad7b76beff">
+            <Link href="/book/hortus-sanitatis-meydenbach">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.sourcelibrary.org/gallery/6957ef6bcbe1dcad7b76beff/6957ef6bcbe1dcad7b76c099-0.jpg"
@@ -325,7 +325,7 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The apothecary&rsquo;s shop, from the <em>Hortus Sanitatis</em> (1491), the universal Garden of Health. Hand-coloured woodcut.{' '}
-              <Link href="/book/6957ef6bcbe1dcad7b76beff" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/hortus-sanitatis-meydenbach" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
@@ -421,7 +421,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/6958e968813ea03889c32a24">
+            <Link href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.sourcelibrary.org/gallery/6958e968813ea03889c32a24/6958e968813ea03889c32bb1-0.jpg"
@@ -431,7 +431,7 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               A seven-headed hydra, from Ulisse Aldrovandi&rsquo;s <em>Serpentum et Draconum Historiae</em> (1640). Aldrovandi catalogued these alongside actual snakes; the line between zoology and fantastic beasts was thinner than ours.{' '}
-              <Link href="/book/6958e968813ea03889c32a24" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
@@ -600,7 +600,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/69593025a41e40e9146a4acd">
+            <Link href="/book/a-true-faithful-relation-of-dr-john-dee-and-some-spirits-casaubon">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.sourcelibrary.org/gallery/69593025a41e40e9146a4acd/69593026a41e40e9146a4b2b-0.jpg"
@@ -610,7 +610,7 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Holy Table from John Dee&rsquo;s Enochian system: the actual apparatus on which Dee and Edward Kelley conversed with what they took to be angels. Reproduced in Meric Casaubon&rsquo;s 1659 edition.{' '}
-              <Link href="/book/69593025a41e40e9146a4acd" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/a-true-faithful-relation-of-dr-john-dee-and-some-spirits-casaubon" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
@@ -756,7 +756,7 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            <Link href="/book/69904dd67d19f3f2aac1d49d">
+            <Link href="/book/utriusque-cosmi-historia-1617-fludd">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.sourcelibrary.org/gallery/69904dd67d19f3f2aac1d49d/69904dd77d19f3f2aac1d500-0.jpg"
@@ -766,7 +766,7 @@ export default function HogwartsLibraryPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Robert Fludd, <em>Monochordum Mundanum</em> (the World Monochord), 1617. The divine hand reaches from a cloud to tune the universe like a musical instrument. Fludd&rsquo;s book contains the most elaborate memory diagrams in the European tradition.{' '}
-              <Link href="/book/69904dd67d19f3f2aac1d49d" className="text-accent-rust hover:text-accent-rust not-italic">
+              <Link href="/book/utriusque-cosmi-historia-1617-fludd" className="text-accent-rust hover:text-accent-rust not-italic">
                 View in Source Library &rarr;
               </Link>
             </figcaption>
@@ -905,7 +905,7 @@ export default function HogwartsLibraryPage() {
               { href: '/book/mutus-liber-the-silent-book-saulat', title: 'Mutus Liber', detail: '1677: fifteen wordless engravings of the Philosopher\'s Stone' },
               { href: '/book/aureum-vellus-oder-guldin-schatz-und-kunstkammer-1-1-solis', title: 'Splendor Solis', detail: '1598: 22 illuminated miniatures of the Great Work' },
               { href: '/book/atalanta-fugiens-hoc-est-emblemata-nova-de-secretis-naturae-maier', title: 'Michael Maier, Atalanta Fugiens', detail: '1617: alchemy as emblems, epigrams, and three-voice fugues' },
-              { href: '/book/699065973dc2ed39a49f1e71', title: 'The Ripley Scroll', detail: 'c. 1450: a 6-metre illustrated alchemical manuscript' },
+              { href: '/book/bodleian-library-ms-bodl-rolls-1-attributed', title: 'The Ripley Scroll', detail: 'c. 1450: a 6-metre illustrated alchemical manuscript' },
               { href: '/book/hortus-sanitatis-meydenbach', title: 'Hortus Sanitatis', detail: '1491: the proto-bestiary and herbal in one volume' },
               { href: '/book/harley-ms-4751-anonymous', title: 'British Library Harley MS 4751', detail: '13th c.: illuminated bestiary with basilisks, phoenixes, unicorns' },
               { href: '/book/the-key-of-solomon-pseudo-solomon', title: 'The Key of Solomon', detail: '17th c.: the working grimoire that consecrates the wand' },

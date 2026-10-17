@@ -61,7 +61,7 @@ export default function RashiOcrPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-12">
-          The script is Rashi. The book is the <a href="https://sourcelibrary.org/book/6990630be7b7642c081de08b" className="text-accent-rust hover:underline">Zohar, Cremona 1558 edition</a>: 548 pages of Kabbalistic commentary in Aramaic, printed in the semi-cursive Hebrew typeface that has been standard for rabbinic literature since the 15th century.
+          The script is Rashi. The book is the <a href="https://sourcelibrary.org/book/the-zohar-sefer-ha-zohar-attributed" className="text-accent-rust hover:underline">Zohar, Cremona 1558 edition</a>: 548 pages of Kabbalistic commentary in Aramaic, printed in the semi-cursive Hebrew typeface that has been standard for rabbinic literature since the 15th century.
         </p>
 
         {/* --- The Discovery --- */}
@@ -70,7 +70,7 @@ export default function RashiOcrPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We were reviewing <a href="https://sourcelibrary.org/book/6990630be7b7642c081de08b/page/6990630ce7b7642c081de094" className="text-accent-rust hover:underline">page 8 of the Zohar</a>, a body text page in dense Rashi script. The OCR looked plausible at first glance: Hebrew and Aramaic words, Kabbalistic vocabulary, structured paragraphs. The English translation read like polished Zohar commentary.
+          We were reviewing <a href="https://sourcelibrary.org/book/the-zohar-sefer-ha-zohar-attributed/page/6990630ce7b7642c081de094" className="text-accent-rust hover:underline">page 8 of the Zohar</a>, a body text page in dense Rashi script. The OCR looked plausible at first glance: Hebrew and Aramaic words, Kabbalistic vocabulary, structured paragraphs. The English translation read like polished Zohar commentary.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">

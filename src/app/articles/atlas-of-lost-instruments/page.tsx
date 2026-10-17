@@ -158,7 +158,7 @@ export default function AtlasOfLostInstrumentsPage() {
         <p className={P}>
           Michael Praetorius spent the years around 1619 doing something nobody had done: cataloguing
           every instrument he could find, with measured woodcuts, in the second volume of his{' '}
-          <Link href="/book/695573e7f63a757109172b1d" className={R}><em>Syntagma Musicum</em></Link>.
+          <Link href="/book/syntagma-musicum-ii-de-organographia-praetorius" className={R}><em>Syntagma Musicum</em></Link>.
           Most of the plates show the court instruments you would expect. Plate XXII does not. It is a
           page of folk instruments, and lying across the middle of it is a bowed fiddle whose strings are
           stopped not by fingers but by a row of wooden keys. Praetorius calls it a <em>Schl&uuml;ssel
@@ -169,7 +169,7 @@ export default function AtlasOfLostInstrumentsPage() {
           src={`${IMG}/695573e7f63a757109172b1d/293.jpg`}
           alt="Plate XXII of the Theatrum Instrumentorum: a keyed fiddle, a straw fiddle, bells, a hurdy-gurdy and a tambourine"
           caption="Plate XXII. The keyed fiddle lies horizontally in the foreground; below it a xylophone of wooden bars laid across bundles of straw, which Praetorius names, without affection, the straw fiddle."
-          href="/book/695573e7f63a757109172b1d?page=293"
+          href="/book/syntagma-musicum-ii-de-organographia-praetorius?page=293"
           sourceLabel="Praetorius, Syntagma Musicum II, 1619"
         />
         <p className={P}>
@@ -187,7 +187,7 @@ export default function AtlasOfLostInstrumentsPage() {
           in the history of music. Kircher does not claim to have built it. He reports it, in the tone of
           a man passing on a good story.
         </p>
-        <Quote cite="Kircher, The Minor Art of Consonance and Dissonance, 1662, p. 140" href="/book/69b51ed5c35d928cea4efe76?page=140">
+        <Quote cite="Kircher, The Minor Art of Consonance and Dissonance, 1662, p. 140" href="/book/kircherus-jesuita-germanus-germaniae-redonatus-sive-artis-kircher?page=140">
           It is not long ago that such an instrument was made in Rome by an ingenious performer for a
           prince to dispel his melancholy. He took all the living cats of different sizes, as many as he
           could obtain, and enclosed them in a box &hellip; in such a way that their tails stuck out through
@@ -199,7 +199,7 @@ export default function AtlasOfLostInstrumentsPage() {
           src={`${IMG}/69b6b0fa96dc15d4a16cfb67/438.jpg`}
           alt="Engraving from Schott's Magia Universalis, 1674: a man holds a scroll of music before four donkeys; below, a keyboard with a row of cat heads above the keys"
           caption="Kircher's student Kaspar Schott engraved it twenty-four years later, above a man conducting four donkeys. Figure II is the cat organ, nine heads in a row."
-          href="/book/69b6b0fa96dc15d4a16cfb67?page=438"
+          href="/book/p-gasparis-schotti-magiae-universalis-naturae-et-artis-pars-schott?page=438"
           sourceLabel="Schott, Magia Universalis, 1674"
         />
 
@@ -263,7 +263,7 @@ export default function AtlasOfLostInstrumentsPage() {
           in English and Latin announcing a new instrument: a conical trumpet, the biggest over sixteen
           feet long, through which a voice could be carried the better part of a mile. He had tested it on the Thames.
         </p>
-        <Quote cite="Morland, Tuba Stentoro-Phonica, 1671, p. 5" href="/book/69aebe60c0472fef6455a8f2?page=5">
+        <Quote cite="Morland, Tuba Stentoro-Phonica, 1671, p. 5" href="/book/tuba-stentoro-phonica-morland?page=5">
           I carried this instrument down the river past the Bridge (accompanied by one or two gentlemen
           of my acquaintance) as far as a place called Cuckold&apos;s Point. Leaving it there in the hands
           of a Waterman, we rowed down very near Deptford. There, despite the noise of sailors &hellip;
@@ -288,14 +288,14 @@ export default function AtlasOfLostInstrumentsPage() {
             src={`${IMG}/69aebe60c0472fef6455a8f2/10.jpg`}
             alt="Engraving of a man in profile blowing into a long flared speaking trumpet, with lines showing the spread of the sound"
             caption="Morland's Iconismus II: the voice leaves the bell in straight lines."
-            href="/book/69aebe60c0472fef6455a8f2?page=10"
+            href="/book/tuba-stentoro-phonica-morland?page=10"
             sourceLabel="Morland, 1671"
           />
           <FolioFigure
             src={`${IMG}/695575b757e3b773024f22ad/156.jpg`}
             alt="Page of Kircher's Phonurgia Nova opening the section on the construction of the conical tube"
             caption="Kircher's answer: the section on building the conical tube, fifteen palms long."
-            href="/book/695575b757e3b773024f22ad?page=156"
+            href="/book/phonurgia-nova-kircher?page=156"
             sourceLabel="Kircher, 1673"
           />
         </FolioPair>
@@ -316,7 +316,7 @@ export default function AtlasOfLostInstrumentsPage() {
           treatise claiming that two notes played loudly and perfectly in tune produce a third note,
           lower than either, that no one is playing. He gave the recipe.
         </p>
-        <Quote cite="Tartini, Trattato di musica, 1754, p. 28" href="/book/6990585617295890441358e0?page=28">
+        <Quote cite="Tartini, Trattato di musica, 1754, p. 28" href="/book/trattato-di-musica-secondo-la-vera-scienza-dell-armonia-tartini?page=28">
           The same result will occur if the stated intervals are played by two violin players standing
           five or six paces apart, each playing their note at the same time, and always with a strong,
           sustained bowing. A listener placed exactly in the middle between the two players will hear
@@ -348,7 +348,7 @@ export default function AtlasOfLostInstrumentsPage() {
           href="/book/entdeckungen-uber-die-theorie-des-klanges-chladni-2?page=111"
           sourceLabel="Chladni, Entdeckungen über die Theorie des Klanges, 1787"
         />
-        <Quote cite="Chladni, Entdeckungen über die Theorie des Klanges, 1787, p. 55" href="/book/6990627b40bf901934ab9b7f?page=55">
+        <Quote cite="Chladni, Entdeckungen über die Theorie des Klanges, 1787, p. 55" href="/book/entdeckungen-uber-die-theorie-des-klanges-chladni-2?page=55">
           All the acoustic figures where 4, 5, or more circles exist entirely on their own, I have never
           seen in a regular form, but always modified &hellip; The pitch does not change at all in this
           process; however, the nature of the vibrations is greatly altered.
@@ -356,7 +356,7 @@ export default function AtlasOfLostInstrumentsPage() {
         <p className={P}>
           This is the founding experiment of acoustics as a laboratory science, and this is the first
           edition of it. Napoleon, after watching the demonstration, paid for Chladni&apos;s larger{' '}
-          <Link href="/book/6990580b17295890441351e7" className={R}><em>Acoustics</em></Link> of 1802 to be
+          <Link href="/book/die-akustik-chladni" className={R}><em>Acoustics</em></Link> of 1802 to be
           put into French. As far as we can find, nobody ever put the <em>Discoveries</em> into English.
           Until now it has been a book you could look at but not read.
         </p>
@@ -374,7 +374,7 @@ export default function AtlasOfLostInstrumentsPage() {
           the blind organist of Salamanca, took the machine apart with arithmetic in 1577 and asked the
           only question that matters about a thirty-one-note keyboard: can anyone hear the difference?
         </p>
-        <Quote cite="Salinas, De Musica Libri Septem, 1577, p. 178" href="/book/695575b157e3b773024f206d?page=178">
+        <Quote cite="Salinas, De Musica Libri Septem, 1577, p. 178" href="/book/de-musica-libri-septem-salinas?page=178">
           These parts of a Comma, unless they exceed or equal half of a Comma, are perceived by the ears
           either not at all or only very slightly, as can be tested in consonances. &hellip; Indeed, the
           ear&apos;s sense is in no way able to judge the excesses by which one temperament exceeds
@@ -393,7 +393,7 @@ export default function AtlasOfLostInstrumentsPage() {
           src={`${IMG}/695573bdf63a7571091726c0/159.jpg`}
           alt="Woodcut of a harpsichord with split keys, from Zarlino's Istitutioni Harmoniche, 1558"
           caption={<>Zarlino&apos;s instrument for all three Greek genera, with the keys split to reach the extra notes. The epigraph above it, from Alciato: &ldquo;it is hard, unless for a learned man, to keep so many strings in tune.&rdquo;</>}
-          href="/book/695573bdf63a7571091726c0?page=159"
+          href="/book/le-istitutioni-harmoniche-zarlino?page=159"
           sourceLabel="Zarlino, Le Istitutioni Harmoniche, 1558"
         />
 
@@ -404,7 +404,7 @@ export default function AtlasOfLostInstrumentsPage() {
         <Station plate={beyond}>
         <p className={P}>
           Seven centuries before Praetorius, al-Farabi wrote the{' '}
-          <Link href="/book/69dea2514d19ec2e9ba762be" className={R}><em>Grand Book of Music</em></Link>,
+          <Link href="/book/kitab-al-musiqa-al-kabir-grand-book-of-music" className={R}><em>Grand Book of Music</em></Link>,
           the largest treatise on music of the medieval world, in Baghdad around 950. It measures the
           frets of the oud and the tunbur, describes how performers tune open strings &ldquo;by the
           method of sensory perception through the smaller consonances,&rdquo; and tables the rhythms
@@ -414,7 +414,7 @@ export default function AtlasOfLostInstrumentsPage() {
         </p>
         <p className={P}>
           And in 1555, the same year as Vicentino, a Franciscan named Juan Bermudo printed the{' '}
-          <Link href="/book/69557dd157e3b773024f4041" className={R}><em>Declaraci&oacute;n de Instrumentos
+          <Link href="/book/declaracion-de-instrumentos-musicales-bermudo" className={R}><em>Declaraci&oacute;n de Instrumentos
           Musicales</em></Link> in Osuna: the first detailed account of the vihuela, the Spanish guitar&apos;s
           ancestor, with fret positions calculated from the monochord and a defence of a new
           seven-course instrument of his own design. It is the closest thing to a recording we have of
@@ -426,14 +426,14 @@ export default function AtlasOfLostInstrumentsPage() {
             src={`${IMG}/69dea2514d19ec2e9ba762be/12.jpg`}
             alt="A page of the printed Arabic text of al-Farabi's Grand Book of Music"
             caption="The editor's summary of al-Farabi's plan: strings, genera, melodies, and the rhythms of the ancient Arabs. Our copy is the Cairo edition of the text."
-            href="/book/69dea2514d19ec2e9ba762be?page=12"
+            href="/book/kitab-al-musiqa-al-kabir-grand-book-of-music?page=12"
             sourceLabel="al-Farabi, Kitab al-Musiqa al-Kabir, c. 950"
           />
           <FolioFigure
             src={`${IMG}/69557dd157e3b773024f4041/237.jpg`}
             alt="Woodcut of a seven-course vihuela with every fret marked, from Bermudo's Declaración, 1555"
             caption="Bermudo's seven-course vihuela, with every semitone marked on the fingerboard."
-            href="/book/69557dd157e3b773024f4041?page=237"
+            href="/book/declaracion-de-instrumentos-musicales-bermudo?page=237"
             sourceLabel="Bermudo, Declaración, 1555"
           />
         </FolioPair>
@@ -457,7 +457,7 @@ export default function AtlasOfLostInstrumentsPage() {
           of the sixteenth century, 3,760 in the square neumes of chant, 386 in tablature. Not one of
           them is machine-readable as music. The exception proves the rule: the only music in the
           library you can press play on is an{' '}
-          <Link href="/book/6a58f512c6cd8f9871069afb?page=21" className={R}>1852 Shaker hymnal</Link>,
+          <Link href="/book/a-sacred-repository-of-anthems-and-hymns-for-devotional-canterbury?page=21" className={R}>1852 Shaker hymnal</Link>,
           and it works because the Shakers printed pitch as letters, which is reading, not seeing.
         </p>
         <p className={P}>

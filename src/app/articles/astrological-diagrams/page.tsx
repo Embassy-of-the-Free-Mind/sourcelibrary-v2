@@ -153,7 +153,7 @@ export default function AstrologicalDiagramsPage() {
             </p>
             <p className="text-secondary leading-relaxed">
               The manuscript is held at the Bibliothèque nationale de France (Pelliot chinois 3594) and is now{' '}
-              <Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust underline">
+              <Link href="/book/dunhuang-star-chart" className="text-accent-rust hover:text-accent-rust underline">
                 in Source Library
               </Link>
               {' '}with a full English translation.
@@ -173,7 +173,7 @@ export default function AstrologicalDiagramsPage() {
               </div>
               <figcaption className="text-xs text-muted mt-2 text-center">
                 Pelliot chinois 3594, c. 900 CE. One of the oldest comprehensive star atlases in the world.{' '}
-                <Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust">
+                <Link href="/book/dunhuang-star-chart" className="text-accent-rust hover:text-accent-rust">
                   View in collection →
                 </Link>
               </figcaption>
@@ -188,9 +188,9 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The Egyptian astronomer Claudius Ptolemy, working in Alexandria around 150&nbsp;CE, produced two texts that would dominate Western cosmology for fifteen centuries. The <em>Almagest</em> (now{' '}
-          <Link href="/book/6993881874305116d72cf0ab" className="text-accent-rust hover:text-accent-rust underline">in the collection</Link>
+          <Link href="/book/vat-gr-1594-ptolemy" className="text-accent-rust hover:text-accent-rust underline">in the collection</Link>
           ) was the mathematical atlas of the heavens. The <em>Tetrabiblos</em> (&ldquo;Four Books&rdquo;) was the interpretive companion, explaining how planetary positions at birth determine character, health, and fate. In Latin translation it circulated as the <em>Quadripartitum</em>, and the 1484 Venetian printed edition{' '}
-          <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust underline">now in Source Library</Link>
+          <Link href="/book/tetrabiblos-and-centiloquy-commentary" className="text-accent-rust hover:text-accent-rust underline">now in Source Library</Link>
           {' '}is one of the earliest printed astrological books in existence.
         </p>
 
@@ -208,7 +208,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 8: The horoscope chart. Twelve triangular and diamond-shaped &ldquo;houses&rdquo; labelled in Latin: the basic framework of Western natal astrology.{' '}
-              <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/tetrabiblos-and-centiloquy-commentary" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <figure>
@@ -223,7 +223,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 22: The twelve zodiac signs and their geometric <em>aspects</em>, the angular relationships (opposition, trine, square) that determine planetary influence.{' '}
-              <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/tetrabiblos-and-centiloquy-commentary" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -238,7 +238,7 @@ export default function AstrologicalDiagramsPage() {
           </p>
           <p className="text-muted text-sm">
             Claudius Ptolemy, <em>Tetrabiblos</em>, Book I, translated in{' '}
-            <Link href="/book/69906057ef12272ffdc8ce25" className="text-accent-rust hover:text-accent-rust underline">Source Library</Link>
+            <Link href="/book/tetrabiblos-trans" className="text-accent-rust hover:text-accent-rust underline">Source Library</Link>
           </p>
         </div>
 
@@ -260,7 +260,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Abu Ma&rsquo;shar, <em>Introductorium in Astronomiam</em>, Venice 1489. One of the most influential Arabic texts translated into Latin.{' '}
-              <Link href="/book/69905e3c2fd6a039938a1980" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/introduction-to-astronomy-albumasar" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <div className="order-1 md:order-2">
@@ -272,7 +272,7 @@ export default function AstrologicalDiagramsPage() {
             </p>
             <p className="text-secondary leading-relaxed">
               The 1489 Venetian incunable{' '}
-              <Link href="/book/69905e3c2fd6a039938a1980" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
+              <Link href="/book/introduction-to-astronomy-albumasar" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
               {' '}is a landmark of early printing: one of the first Arabic-derived scientific texts to reach a mass audience.
             </p>
           </div>
@@ -293,7 +293,7 @@ export default function AstrologicalDiagramsPage() {
             </p>
             <p className="text-secondary leading-relaxed">
               The manuscript{' '}
-              <Link href="/book/69906e6d8a353648e1ecfd91" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
+              <Link href="/book/john-dunstable-s-compilation-of-judicial-astrology-compiler" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
               {' '}is a rare survival: a complete Latin treatise on judicial and horary astrology from 15th-century England, now with English translation.
             </p>
           </div>
@@ -309,7 +309,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               John Dunstable, <em>Judicial Astrology and Astronomy</em>, c.&nbsp;1440. The composer-astronomer&rsquo;s astrological compilation.{' '}
-              <Link href="/book/69906e6d8a353648e1ecfd91" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/john-dunstable-s-compilation-of-judicial-astrology-compiler" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -359,7 +359,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Theophrastus Bombastus von Hohenheim (Paracelsus) was the most controversial physician of the 16th century: a wandering empiricist who rejected university medicine, burned Galenic textbooks, and insisted that the physician must understand the stars before he could understand the body. His <em>Astronomia Magna oder die gantze Philosophia sagax der grossen und kleinen Welt</em> (&ldquo;The Great Astronomy, or the Complete Sagacious Philosophy of the Great and Small World,&rdquo; published 1571){' '}
-          <Link href="/book/6956eae3b5d89fc3ccb47a2a" className="text-accent-rust hover:text-accent-rust underline">is now in Source Library in German</Link>
+          <Link href="/book/astronomia-magna-philosophia-sagax-hohenheim" className="text-accent-rust hover:text-accent-rust underline">is now in Source Library in German</Link>
           {' '}with English translation.
         </p>
 
@@ -373,7 +373,7 @@ export default function AstrologicalDiagramsPage() {
           </p>
           <p className="text-muted text-sm">
             Paracelsus, <em>Astronomia Magna</em> (1571),{' '}
-            <Link href="/book/6956eae3b5d89fc3ccb47a2a" className="text-accent-rust hover:text-accent-rust underline">translated in Source Library</Link>
+            <Link href="/book/astronomia-magna-philosophia-sagax-hohenheim" className="text-accent-rust hover:text-accent-rust underline">translated in Source Library</Link>
           </p>
         </div>
 
@@ -384,7 +384,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Johannes Kepler discovered the laws of planetary motion: the same Kepler who made his living as an imperial astrologer to Rudolf II. He believed both completely. The <em>Harmonices Mundi</em> (&ldquo;Harmony of the World,&rdquo; 1619){' '}
-          <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
+          <Link href="/book/harmony-of-the-world-with-mysterium-cosmographicum-kepler" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
           {' '}contains his Third Law of Planetary Motion (the square of a planet&rsquo;s orbital period is proportional to the cube of its distance from the Sun), embedded within a vast Neoplatonic argument that the solar system is structured according to the five Platonic solids and musical ratios.
         </p>
 
@@ -401,7 +401,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 2: Atlas bearing an armillary sphere, the bookplate of the Burndy Library copy of <em>Harmonices Mundi</em>.{' '}
-              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/harmony-of-the-world-with-mysterium-cosmographicum-kepler" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <figure>
@@ -416,7 +416,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 74: The five Platonic solids, the &ldquo;cosmic figures&rdquo; that, in Kepler&rsquo;s theory, nest inside one another to produce the exact spacing of the planetary orbits.{' '}
-              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust">View →</Link>
+              <Link href="/book/harmony-of-the-world-with-mysterium-cosmographicum-kepler" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -432,7 +432,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Jacques Gaffarel was librarian to Cardinal Richelieu and one of the strangest figures in the history of French letters. His <em>Curiositez inouyes sur la sculpture talismanique des Persans. Horoscope des Patriarches, et Lecture des Estoilles</em> (&ldquo;Unheard-of Curiosities on the Talismanic Sculpture of the Persians, the Horoscope of the Patriarchs, and the Reading of the Stars,&rdquo; 1650){' '}
-          <Link href="/book/697a3055a3866af9498458ac" className="text-accent-rust hover:text-accent-rust underline">is in Source Library in French</Link>
+          <Link href="/book/unheard-of-curiosities-concerning-the-talismanic-sculpture-gaffarel" className="text-accent-rust hover:text-accent-rust underline">is in Source Library in French</Link>
           {' '}with English translation. It argues three remarkable claims.
         </p>
 
@@ -451,7 +451,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Athanasius Kircher (1602–1680) was the most prolific scholarly polymath of the 17th century: a Jesuit priest who wrote 40 books on music, cryptography, China, Egyptology, geology, optics, magnetism, and the construction of mechanical organs. Two of his major works are{' '}
-          <Link href="/book/6952db5477f38f6761bc7402" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
+          <Link href="/book/the-ecstatic-journey-a-voyage-through-the-celestial-realms-kircher" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
           . The <em>Itinerarium Exstaticum</em> (1656) is an extraordinary cosmological dialogue in which Kircher is taken on an ecstatic journey through the heavens by the angel Cosmiel, visiting each planet in turn and receiving an account of its properties. Think Dante&rsquo;s <em>Paradiso</em> rewritten by a natural philosopher who has read Copernicus, Galileo, and Kepler.
         </p>
 
@@ -560,19 +560,19 @@ export default function AstrologicalDiagramsPage() {
           <h3 className="text-xl font-semibold text-primary mb-4">All astrological works mentioned in this post</h3>
           <ul className="space-y-2 text-secondary">
             {[
-              { href: '/book/6992ca1ad4d545ae73fed806', text: 'Pelliot chinois 3594, Dunhuang Star Chart (c. 900 CE, Chinese)' },
-              { href: '/book/6993881874305116d72cf0ab', text: 'Ptolemy, Almagest / Syntaxis Mathematica (c. 150 CE, Greek)' },
-              { href: '/book/69906057ef12272ffdc8ce25', text: 'Ptolemy, Tetrabiblos (c. 150 CE, Greek; 1822 edition)' },
-              { href: '/book/69906313e7b7642c081de828', text: 'Ptolemy / Hali, Quadripartitum et Centiloquium (1484, Latin)' },
-              { href: '/book/69905e3c2fd6a039938a1980', text: 'Abu Ma\'shar, Introductorium in Astronomiam (1489, Arabic/Latin)' },
-              { href: '/book/695361cd9c494f9f9f042f19', text: 'Maslama al-Majriti, Ghayat al-Hakim / Picatrix (960 CE, Arabic)' },
+              { href: '/book/dunhuang-star-chart', text: 'Pelliot chinois 3594, Dunhuang Star Chart (c. 900 CE, Chinese)' },
+              { href: '/book/vat-gr-1594-ptolemy', text: 'Ptolemy, Almagest / Syntaxis Mathematica (c. 150 CE, Greek)' },
+              { href: '/book/tetrabiblos-trans', text: 'Ptolemy, Tetrabiblos (c. 150 CE, Greek; 1822 edition)' },
+              { href: '/book/tetrabiblos-and-centiloquy-commentary', text: 'Ptolemy / Hali, Quadripartitum et Centiloquium (1484, Latin)' },
+              { href: '/book/introduction-to-astronomy-albumasar', text: 'Abu Ma\'shar, Introductorium in Astronomiam (1489, Arabic/Latin)' },
+              { href: '/book/ghayat-al-hakim-arabic-ms-al-majriti', text: 'Maslama al-Majriti, Ghayat al-Hakim / Picatrix (960 CE, Arabic)' },
               { href: '/book/brihat-jataka-vivritti-bhattotpala-comm', text: 'Varahamihira / Bhattotpala, Brihat Jataka (966 CE, Sanskrit)' },
-              { href: '/book/69906e6d8a353648e1ecfd91', text: 'John Dunstable, Judicial Astrology and Astronomy (c. 1440, Latin)' },
+              { href: '/book/john-dunstable-s-compilation-of-judicial-astrology-compiler', text: 'John Dunstable, Judicial Astrology and Astronomy (c. 1440, Latin)' },
               { href: '/book/de-revolutionibus-1543-first-edition-copernicus', text: 'Nicolaus Copernicus, De revolutionibus orbium coelestium (1543, Latin)' },
-              { href: '/book/6956eae3b5d89fc3ccb47a2a', text: 'Paracelsus, Astronomia Magna (1571, German)' },
-              { href: '/book/6952d12e77f38f6761bc5bec', text: 'Johannes Kepler, Harmonices Mundi (1619, Latin)' },
-              { href: '/book/697a3055a3866af9498458ac', text: 'Jacques Gaffarel, Curiositez inouyes (1650, French)' },
-              { href: '/book/6952db5477f38f6761bc7402', text: 'Athanasius Kircher, Itinerarium Exstaticum (1656, Latin)' },
+              { href: '/book/astronomia-magna-philosophia-sagax-hohenheim', text: 'Paracelsus, Astronomia Magna (1571, German)' },
+              { href: '/book/harmony-of-the-world-with-mysterium-cosmographicum-kepler', text: 'Johannes Kepler, Harmonices Mundi (1619, Latin)' },
+              { href: '/book/unheard-of-curiosities-concerning-the-talismanic-sculpture-gaffarel', text: 'Jacques Gaffarel, Curiositez inouyes (1650, French)' },
+              { href: '/book/the-ecstatic-journey-a-voyage-through-the-celestial-realms-kircher', text: 'Athanasius Kircher, Itinerarium Exstaticum (1656, Latin)' },
               { href: '/book/a5d0c381-d4ea-42cd-8864-44457e7fda33', text: 'Athanasius Kircher, Ars Magna Lucis et Umbrae (1671, Latin)' },
             ].map((item) => (
               <li key={item.href} className="flex items-start gap-2">

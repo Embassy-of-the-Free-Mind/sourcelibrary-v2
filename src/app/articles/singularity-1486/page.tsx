@@ -436,7 +436,7 @@ export default function Singularity1486Page() {
             &ldquo;But if we know that we do not drift about as soul-less as the downy feather, how do we know it? Only because we ourselves <em>are</em> these beings.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/69906315ef12272ffdc8f0a7?page=37" className="text-accent-rust hover:underline">Fechner, <em>Nanna</em>, p. 37 &rarr;</Link>
+            <Link href="/book/nanna-oder-uber-das-seelenleben-der-pflanzen-fechner?page=37" className="text-accent-rust hover:underline">Fechner, <em>Nanna</em>, p. 37 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -449,7 +449,7 @@ export default function Singularity1486Page() {
             &ldquo;I certainly do not know what inherent privilege running and screaming would have over blooming and scenting to be the sole carriers of soul-activity and sensation; nor do I see why the delicately built and adorned form of the clean plant should be any less worthy of harboring a soul than the misshapen form of a dirty worm.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/69906315ef12272ffdc8f0a7?page=34" className="text-accent-rust hover:underline">Fechner, <em>Nanna</em>, p. 34 &rarr;</Link>
+            <Link href="/book/nanna-oder-uber-das-seelenleben-der-pflanzen-fechner?page=34" className="text-accent-rust hover:underline">Fechner, <em>Nanna</em>, p. 34 &rarr;</Link>
           </p>
         </blockquote>
 

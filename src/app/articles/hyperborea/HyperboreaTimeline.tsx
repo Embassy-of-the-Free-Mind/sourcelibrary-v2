@@ -47,7 +47,7 @@ const ENTRIES: Entry[] = [
   { who: 'Christoph Hartknoch', year: 1684, when: '1684', lane: 'baltic', claim: 'Diodorus’s amber island Basilia was Samland. He does not claim the Hyperboreans for Prussia.', href: '/book/old-and-new-prussia-with-the-pagan-religion-of-the-old-hartknoch?page=36' },
   { who: 'John Toland', year: 1740, nudge: -7, when: '1740', lane: 'britain', claim: 'The Hebrides were the Hyperboreans of Diodorus, and Abaris a Druid.', href: '/book/a-critical-history-of-the-celtic-religion-and-learning-toland?page=203' },
   { who: 'William Stukeley', year: 1740, nudge: 7, when: '1740', lane: 'britain', claim: 'Diodorus’s account seems to hold some reports of Stonehenge itself.', href: '/book/stonehenge-stukeley?page=161' },
-  { who: 'John Wood', year: 1747, when: '1747', lane: 'britain', claim: 'Abaris and Bladud, the legendary founder of Bath, were one and the same man.', href: '/book/69ee471d6dd925d126f416a9?page=9' },
+  { who: 'John Wood', year: 1747, when: '1747', lane: 'britain', claim: 'Abaris and Bladud, the legendary founder of Bath, were one and the same man.', href: '/book/choir-gaure-vulgarly-called-stonehenge-on-salisbury-plain-wood?page=9' },
   { who: 'William Borlase', year: 1769, when: '1769', lane: 'britain', claim: 'Read Diodorus’s round temple into Cornwall.', href: '/book/antiquities-historical-and-monumental-of-the-county-of-borlase?page=114' },
   { who: 'Jean-Sylvain Bailly', year: 1775, when: '1770s', lane: 'pole', claim: 'The sciences were invented by a lost northern people.' },
   { who: 'Richard Payne Knight', year: 1786, when: '1786', lane: 'britain', claim: 'The island can be no other than Britain.', href: '/book/an-account-of-the-remains-of-the-worship-of-priapus?page=140' },

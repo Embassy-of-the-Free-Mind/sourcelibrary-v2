@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import PageFigure from '@/components/articles/PageFigure';
+import SourceQuote from '@/components/articles/SourceQuote';
+import LossToPrint from './LossToPrint';
 
 // Pieter van den Keere's woodcut of the São Tiago on the Bassas da India, cut from
 // Langenes, Caert-thresoor (1598), p. 299 (Amsterdam University Library IIIF).
@@ -27,40 +29,46 @@ export const metadata: Metadata = withArticleMeta('shipwrecks-and-buried-treasur
   },
 });
 
-const linkClass = 'text-accent-rust hover:text-accent-rust underline';
+// Page images are the library's archived scans, each checked by eye on 2026-10-18.
+// Münster and Pernety are photographed as spreads, so they use the cropped single page.
+const IMG = (bookId: string, page: number) => `https://images.sourcelibrary.org/archived/${bookId}/${page}.jpg`;
+const CROPPED = (bookId: string, pageId: string) => `https://images.sourcelibrary.org/cropped/${bookId}/${pageId}.jpg`;
 
 function Section({ children }: { children: React.ReactNode }) {
   return <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">{children}</h2>;
 }
 
-// One find: a heading, what the book says, the passage in translation, and the
-// page it is on.
+// One find: a heading, what the book says, and the passage beside the page it is
+// on. Passages from books printed in English are given as printed (long s made
+// round); the rest are the library's translations.
 function Find({
   title,
-  href,
+  book,
+  page,
+  printedPage,
+  src,
+  pageAlt,
   source,
   quote,
   children,
 }: {
   title: string;
-  href: string;
+  book: string;
+  page: number;
+  printedPage?: number | string;
+  src: string;
+  pageAlt: string;
   source: React.ReactNode;
-  quote: string;
+  quote: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
     <div className="mb-12">
       <h3 className="text-xl text-primary mb-3">{title}</h3>
       <p className="text-secondary leading-relaxed mb-4">{children}</p>
-      <blockquote className="border-l-2 border-accent-gold/40 pl-5 italic text-secondary leading-relaxed mb-3">
+      <SourceQuote book={book} page={page} printedPage={printedPage} src={src} source={source} pageAlt={pageAlt}>
         {quote}
-      </blockquote>
-      <p className="text-sm text-muted">
-        {source}.{' '}
-        <Link href={href} className={linkClass}>
-          Read the page
-        </Link>
-      </p>
+      </SourceQuote>
     </div>
   );
 }
@@ -89,37 +97,36 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           local report; none has been checked against an excavation.
         </p>
 
-        <figure className="mb-10">
-          <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
-            <Link href="/book/69b4cd11d5b6c3815e1a3ccf?page=299">
-              <Image
-                src={LEAD_IMAGE}
-                alt="Woodcut titled Baixos de Iudia: a carrack broken on the reef, survivors on the rocks and in the water"
-                width={1400}
-                height={1028}
-                className="w-full h-auto"
-                unoptimized
-              />
-            </Link>
-          </div>
-          <figcaption className="text-xs text-muted mt-2 text-center">
-            The <em>São Tiago</em> on the Bassas da India shoals, 1585, woodcut signed PK (Pieter van den Keere), in
-            Barent Langenes, <em>Caert-thresoor</em> (1598). A man in the foreground carries a chest out of
-            the water.{' '}
-            <Link href="/book/69b4cd11d5b6c3815e1a3ccf?page=299" className="text-accent-rust hover:text-accent-rust">
-              View in collection →
-            </Link>
-          </figcaption>
-        </figure>
+        <PageFigure
+          src={LEAD_IMAGE}
+          alt="Woodcut titled Baixos de Iudia: a carrack broken on the reef, survivors on the rocks and in the water"
+          href="/book/barent-langenes-caert-thresoor-1598-langenes?page=299"
+          source={
+            <>
+              Barent Langenes, <em>Caert-thresoor</em> (1598), p. 113
+            </>
+          }
+        >
+          The <em>São Tiago</em> on the Bassas da India shoals, 1585, woodcut signed PK (Pieter van den Keere). A man in
+          the foreground carries a chest out of the water.
+        </PageFigure>
 
         <Section>Sunk with their cargo</Section>
 
         <Find
           title="Six chests of the Emperor’s gold, off Cadiz"
-          href="/book/69b525c46be6046083031e1b?page=90"
+          book="69b525c46be6046083031e1b"
+          page={90}
+          printedPage={73}
+          src={IMG('69b525c46be6046083031e1b', 90)}
+          pageAlt="Page 73 of the Dutch edition of Ulrich Schmidt’s voyage, in black letter, with marginal notes on the wreck at Cadiz"
           source={
             <>
-              Ulrich Schmidt, voyage to the Río de la Plata, in <em>Gedenkwaardige scheeps-togten</em> (Leiden, 1706)
+              Ulrich Schmidt, voyage to the Río de la Plata, in{' '}
+              <Link href="/book/gedenkwaardige-scheeps-togten-na-rio-de-la-plata-in-t-schmidt">
+                <em>Gedenkwaardige scheeps-togten</em>
+              </Link>{' '}
+              (Leiden, 1706)
             </>
           }
           quote="Besides all the goods of the merchants and others, there sank here into the abyss six chests of gold and silver, belonging to his Imperial Majesty Charles V."
@@ -132,10 +139,18 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="A king’s revenues in the Baltic"
-          href="/book/69c8716b6c6f3cc53c857589?page=1331"
+          book="69c8716b6c6f3cc53c857589"
+          page={1331}
+          printedPage="1189 (mclxxxix)"
+          src={CROPPED('69c8716b6c6f3cc53c857589', '69f7743f6028036f8e2397ab')}
+          pageAlt="Page of Münster’s Cosmographey with a woodcut of a three-masted ship beside the account of King Christopher’s lost treasure"
           source={
             <>
-              Sebastian Münster, <em>Cosmographey</em> (Basel, 1598 edition)
+              Sebastian Münster,{' '}
+              <Link href="/book/cosmographey-das-ist-beschreibung-aller-laender-munster">
+                <em>Cosmographey</em>
+              </Link>{' '}
+              (Basel, 1598 edition)
             </>
           }
           quote="All the silver and gold sank with the ship. It is thought that over 1,000,000 guilders’ worth was sunk. The King barely reached land with his ship."
@@ -147,13 +162,21 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="A chest of dollars and gold in the Caspian"
-          href="/book/69e961ab2beefe2f6f72c3b6?page=460"
+          book="69e961ab2beefe2f6f72c3b6"
+          page={460}
+          printedPage={425}
+          src={IMG('69e961ab2beefe2f6f72c3b6', 460)}
+          pageAlt="Page 425 of Hakluyt’s Principal Navigations, black-letter text headed Christopher Burrough, with the marginal note The English suffer shipwracke"
           source={
             <>
-              Richard Hakluyt, <em>The Principal Navigations</em> (London, 1599), p. 425
+              Richard Hakluyt,{' '}
+              <Link href="/book/the-principal-navigations-voyages-traffiques-and-discoveries-hakluyt">
+                <em>The Principal Navigations</em>
+              </Link>{' '}
+              (London, 1599)
             </>
           }
-          quote="A chest containing dollars and gold, which they had received for company commodities sold at Bachu, fell into the water among the rocks while they were unloading the ship and was lost."
+          quote="There was a Carobia or cheste, wherein were dollers, and golde, which they had receiued for the commodities of the company, which they sold at Bachu, which at the taking out of the Busse, fell by the barkes side into the water amongst the rockes, and so was lost."
         >
           English merchants trading for Persian silk hired a small Armenian cargo boat to carry their goods from
           Bildih, near Baku, to Derbent. A storm broke the cables and drove the boat onto the rocks. Everyone got
@@ -162,13 +185,21 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="Pieces of eight off Maldonado"
-          href="/book/6909f75fcf28baa1b4cb0f71?page=249"
+          book="6909f75fcf28baa1b4cb0f71"
+          page={249}
+          printedPage={241}
+          src={CROPPED('6909f75fcf28baa1b4cb0f71', '69f6a9d6b6ebee470a7a2abc')}
+          pageAlt="Page 241 of Pernety’s account of the voyage to the Falklands, in French, describing the anchorage at Maldonado and the English silver ship"
           source={
             <>
-              Antoine-Joseph Pernety, <em>History of a Voyage to the Falkland Islands</em> (1770)
+              Antoine-Joseph Pernety,{' '}
+              <Link href="/book/history-of-a-voyage-to-the-falkland-islands-pernety">
+                <em>History of a Voyage to the Falkland Islands</em>
+              </Link>{' '}
+              (1770), vol. 1
             </>
           }
-          quote="An English ship, loaded with piastres, was lost there thirty years ago. The inhabitants of the island near the place where it broke apart still seek today to save a part of this cargo. They had fished up with a dragnet two thousand four hundred of them the day before our arrival."
+          quote="An English ship, loaded with piastres, or pieces of eight, was lost there thirty years ago. The inhabitants of the island near the place where it broke apart still seek today to save a part of this cargo. They had fished up with a dragnet two thousand four hundred of them the day before our arrival."
         >
           Pernety sailed with Bougainville in 1763 and stopped at the anchorage by Maldonado Island, at the mouth of the
           Río de la Plata, which he calls one of the worst on the coast. Thirty years after the wreck, the islanders
@@ -177,13 +208,21 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="An Armada ship in Tobermory Bay"
-          href="/book/69906a4dd69de0e6980706cf?page=264"
+          book="69906a4dd69de0e6980706cf"
+          page={264}
+          printedPage={240}
+          src={IMG('69906a4dd69de0e6980706cf', 264)}
+          pageAlt="Page 240 of Andrew Lang’s Cock Lane and Common-Sense, on second sight, mentioning the Armada vessel sunk in Tobermory Bay"
           source={
             <>
-              Andrew Lang, <em>Cock Lane and Common-Sense</em> (1894)
+              Andrew Lang,{' '}
+              <Link href="/book/cock-lane-and-common-sense-lang">
+                <em>Cock Lane and Common-Sense</em>
+              </Link>{' '}
+              (1894)
             </>
           }
-          quote="Busy trying to recover treasure from a ship of the Spanish Armada that had sunk in Tobermory Bay... recently, the fluke of a ship’s anchor even brought up a doubloon. However, the main treasure still lies at the bottom of Tobermory Bay."
+          quote="Engaged in trying to recover treasures from the vessel of the Armada sunk in Tobermory Bay. … lately, the fluke of a ship’s anchor brought up a doubloon. But the treasure still lies in Tobermory Bay."
         >
           Lang is writing about second sight in the Highlands, and the wreck comes in sideways: one of his witnesses
           stayed on Mull with Sir William Sacheverell, who was trying to raise the galleon. Lang adds that a cannon
@@ -192,25 +231,41 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="Wrecks on Bermuda"
-          href="/book/69ea0f7013a685002bb8e200?page=204"
+          book="69ea0f7013a685002bb8e200"
+          page={203}
+          printedPage={173}
+          src={IMG('69ea0f7013a685002bb8e200', 203)}
+          pageAlt="Page 173 of John Smith’s Generall Historie, headed A briefe relation of Henrie May, signed Written by me Henry May"
           source={
             <>
-              John Smith, <em>The Generall Historie of Virginia, New-England, and the Summer Isles</em> (London, 1624)
+              John Smith,{' '}
+              <Link href="/book/the-generall-historie-of-virginia-new-england-and-the-smith">
+                <em>The Generall Historie of Virginia, New-England, and the Summer Isles</em>
+              </Link>{' '}
+              (London, 1624)
             </>
           }
-          quote="Our men found various crosses and pieces of Spanish money here and there. Two or three wrecks also they found, which by certain inscriptions appeared to be some Spanish, some Dutch, some French."
+          quote="Our men found diuers crosses, peeces of Spanish monies here and there. Two or three wracks also they found, by certaine inscriptions to bee some Spanish, some Dutch, some French."
         >
           Smith collects what was known of the islands before the English settled them, including a story that the
           name comes from a Spanish ship called <em>Bermudas</em> wrecked there with a cargo of hogs, and the account
-          of Henry May, cast away on the north-west of the islands in December 1593 because the pilots were “either drunk or careless of their charge”.
+          of Henry May, cast away on the north-west of the islands in December 1593 because the pilots were “either drunke, or carelesse of their charge”.
         </Find>
 
         <Find
           title="The São Tiago on the Bassas da India"
-          href="/book/69ea0f7e13a685002bb8e4d8?page=244"
+          book="69ea0f7e13a685002bb8e4d8"
+          page={244}
+          printedPage={116}
+          src={IMG('69ea0f7e13a685002bb8e4d8', 244)}
+          pageAlt="Page 116 of Linschoten’s Itinerario, two columns of Dutch black letter with marginal notes, including the year 1586 and the loss of the Sant Iago"
           source={
             <>
-              Jan Huyghen van Linschoten, <em>Itinerario</em> (Amsterdam, 1595)
+              Jan Huyghen van Linschoten,{' '}
+              <Link href="/book/itinerario-voyage-ofte-schipvaert-naer-oost-indien-linschoten">
+                <em>Itinerario</em>
+              </Link>{' '}
+              (Amsterdam, 1595)
             </>
           }
           quote="There were still missing 2 ships of the company that had left Lisbon with them, namely the ship Sant Salvator and the Admiral-ship Sant Iago, of which there was still no news."
@@ -225,13 +280,20 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="A pot of Saxon silver in a Suffolk churchyard"
-          href="/book/69567835be7c607c5f03b7e5?page=406"
+          book="69567835be7c607c5f03b7e5"
+          page={406}
+          printedPage={356}
+          src={IMG('69567835be7c607c5f03b7e5', 406)}
+          pageAlt="Page 356 of the Philosophical Transactions: An Account of some Saxon Coyns found in Suffolk, with the margin note Some say there was no Pot"
           source={
             <>
-              <em>Philosophical Transactions of the Royal Society</em>, vol. 16 (1686–87), p. 356
+              <Link href="/book/philosophical-transactions-of-the-royal-society-vol-16-1686-london">
+                <em>Philosophical Transactions of the Royal Society</em>
+              </Link>
+              , vol. 16 (1686–87)
             </>
           }
-          quote="In May 1687, at Hundon near Clare in Suffolk, the sexton, as he was digging a grave in the churchyard, found a skull; and near it his spade broke a yellow earthenware pot, in which were many silver pieces of Saxon money."
+          quote="In May 1687, at Honedon nigh Clare in Suffolk, the Sexton, as he was digging a Grave in the Church-yard, met with a Skull; and near it his Spade broke a Yellow Earthen Pot, wherein were many Silver pieces of Saxon Mony."
         >
           Sir Philip Skippon reported the find to the Royal Society and tried to read the coins. He found scarcely two
           inscriptions alike and guessed that each moneyer had his own stamp, citing King Æthelstan’s law on how many
@@ -240,10 +302,17 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="Digging money in Luoyang"
-          href="/book/6992cbe8018b80967354c531?page=74"
+          book="6992cbe8018b80967354c531"
+          page={74}
+          src={IMG('6992cbe8018b80967354c531', 74)}
+          pageAlt="Leaf of the Dream Pool Essays in Chinese, six columns of large characters beginning with Luoyang"
           source={
             <>
-              Shen Kuo, <em>Dream Pool Essays</em> (eleventh century)
+              Shen Kuo,{' '}
+              <Link href="/book/mengxi-bitan-dream-pool-essays-vols-19-24-kuo">
+                <em>Dream Pool Essays</em>
+              </Link>{' '}
+              (eleventh century)
             </>
           }
           quote="Opening the casket, they found several hundred ounces of yellow gold. When sold, the value of the gold matched the exact cost of purchasing the mansion, with the excavation fee included, without differing by a single coin."
@@ -255,13 +324,21 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="The sailor who built a harbour wall"
-          href="/book/69ee470e6dd925d126f413f3?page=165"
+          book="69ee470e6dd925d126f413f3"
+          page={165}
+          printedPage={152}
+          src={IMG('69ee470e6dd925d126f413f3', 165)}
+          pageAlt="Page 152 of Stukeley’s Itinerarium Curiosum, Iter VI, with the margin note Honey-ditches, a Camp"
           source={
             <>
-              William Stukeley, <em>Itinerarium Curiosum</em> (London, 1724)
+              William Stukeley,{' '}
+              <Link href="/book/itinerarium-curiosum-or-an-account-of-the-antiquities-and-stukeley">
+                <em>Itinerarium Curiosum</em>
+              </Link>{' '}
+              (London, 1724)
             </>
           }
-          quote="They told me it was built many years ago by one Courd, once a poor sailor, who, being somewhere in the Mediterranean, was told by a certain Greek that much treasure was hid upon Hogsdon Hill near here."
+          quote="They told me it was built many years ago by one Courd, once a poor sailor, who being somewhere in the Mediterranean, was told by a certain greek that much treasure was hid upon Hogsdon hill near here."
         >
           Stukeley was looking at a long pier of piled rocks near the Roman site he calls Honey Ditches, by Seaton in
           Devon. Local people said Courd dug up the treasure and paid for the wall himself, that many had dug on the
@@ -272,10 +349,16 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="A Tibetan guide to a hidden valley"
-          href="/book/69e7928980b52390feb16323?page=11"
+          book="69e7928980b52390feb16323"
+          page={11}
+          src={IMG('69e7928980b52390feb16323', 11)}
+          pageAlt="Photograph of two leaves of a Tibetan manuscript in black ink on paper, laid on a grey board between measuring tapes"
           source={
             <>
-              <em>sbas gnas kyi lam yig kun gsal me long</em>, Ogyen Choling collection, Bhutan
+              <Link href="/book/sbas-gnas-kyi-lam-yig-kun-gsal-me-long-collection">
+                <em>sbas gnas kyi lam yig kun gsal me long</em>
+              </Link>
+              , Ogyen Choling collection, Bhutan
             </>
           }
           quote="In the middle-lower part of that, there is a white boulder the size of a yak. Underneath it is a vase-treasure about the size of a hand. By digging two fathoms deep, it will be found."
@@ -287,13 +370,20 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="A fifth part, by the angel’s leave"
-          href="/book/6955d95d8407b7c9ae212d38?page=85"
+          book="6955d95d8407b7c9ae212d38"
+          page={85}
+          printedPage={33}
+          src={IMG('6955d95d8407b7c9ae212d38', 85)}
+          pageAlt="Page 33 of Mathers’s translation of Abra-Melin, with footnotes on Herbipolis, the Latin name of Würzburg"
           source={
             <>
-              <em>The Book of the Sacred Magic of Abra-Melin the Mage</em>, tr. S. L. MacGregor Mathers
+              <Link href="/book/the-book-of-the-sacred-magic-of-abra-melin-the-mage-simeon">
+                <em>The Book of the Sacred Magic of Abra-Melin the Mage</em>
+              </Link>
+              , tr. S. L. MacGregor Mathers
             </>
           }
-          quote="It is permitted to ask the Angel for a sum of coined money proportional to your birth, status, and station... This money is taken from Hidden Treasures. However, it is important to note that God permits one to take a fifth part of all treasures."
+          quote="It is permissible to demand from the Angel a sum of coined money proportionate unto thy birth, quality and capacity, the which without difficulty will be granted unto thee. Such money is taken from the Hidden Treasures. It is, however, necessary to note that in all Treasures one is allowed to take the fifth part, God permitting the same."
         >
           The author says his own treasure was assigned to him at Würzburg, and that he raised it with the operation
           in the eighth chapter of the third book.
@@ -301,10 +391,16 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="A carbuncle between Swabia and Bavaria"
-          href="/book/6a267ec86c1f37c9c4f3cbed?page=4"
+          book="6a267ec86c1f37c9c4f3cbed"
+          page={4}
+          src={IMG('6a267ec86c1f37c9c4f3cbed', 4)}
+          pageAlt="Page of the 1632 Paracelsus prophecy pamphlet in German black letter, ending Philippus Theophrastus, followed by a letter of Gustav Adolph of Sweden"
           source={
             <>
-              <em>Warhaffte Beschreibung einer Prophecey D. Theophrasti Paracelsi</em> (1632)
+              <Link href="/book/warhaffte-beschreibung-einer-prophecey-d-theophrasti-paracelsus">
+                <em>Warhaffte Beschreibung einer Prophecey D. Theophrasti Paracelsi</em>
+              </Link>{' '}
+              (1632)
             </>
           }
           quote="The carbuncle stone lies together with the other precious stones in a small casket... The key lies on top of it, and it is buried in a golden coffin, the golden one in a silver one, the silver one in a tin coffin, and in the place where God would have it."
@@ -322,10 +418,18 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="The 1502 gold fleet, and a nugget like a loaf of bread"
-          href="/book/69ea06f14c15c76fe934a77a?page=41"
+          book="69ea06f14c15c76fe934a77a"
+          page={41}
+          printedPage={13}
+          src={IMG('69ea06f14c15c76fe934a77a', 41)}
+          pageAlt="Page 13 of a modern printing of Las Casas’s Brevísima relación, in Spanish, on the kingdoms of Hispaniola"
           source={
             <>
-              Bartolomé de las Casas, <em>Brevísima relación de la destrucción de las Indias</em> (Seville, 1552), p. 13
+              Bartolomé de las Casas,{' '}
+              <Link href="/book/brevisima-relacion-de-la-destruccion-de-las-indias-casas">
+                <em>Brevísima relación de la destrucción de las Indias</em>
+              </Link>{' '}
+              (Seville, 1552)
             </>
           }
           quote="The ship was lost at sea, and along with him, many Christians and a large quantity of gold drowned; among the items lost was a large nugget that was like a loaf of bread and weighed three thousand six hundred castellanos."
@@ -334,21 +438,45 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           sailed with the fleet that left Santo Domingo in 1502 carrying the outgoing governor, Francisco de
           Bobadilla, against Columbus’s warning that a storm was coming. Oviedo gives the same story from the island
           (
-          <Link href="/book/695910f5ecb01322b306854d?page=194" className={linkClass}>
-            Historia general, vol. 1, ch. VII
+          <Link href="/book/historia-general-y-natural-de-las-indias-vol-1-oviedo?page=194">
+            Oviedo, Historia general, vol. 1, ch. VII
           </Link>
           ). Most of the fleet sank in the hurricane, and later accounts disagree on the number of ships.
         </Find>
 
+        <div className="mx-auto max-w-md">
+          <PageFigure
+            src={IMG('695910f5ecb01322b306854d', 194)}
+            alt="Page 74 of Oviedo’s Historia general, volume 1, with the heading Capitulo VII and its summary in small type"
+            href="/book/historia-general-y-natural-de-las-indias-vol-1-oviedo?page=194"
+            source={
+              <>
+                Gonzalo Fernández de Oviedo, <em>Historia general y natural de las Indias</em>, vol. 1 (1851), p. 74
+              </>
+            }
+          >
+            Oviedo’s chapter VII: the summary under the heading names Bobadilla’s fleet, lost at sea with much gold,
+            and the admiral’s warning that it should not sail.
+          </PageFigure>
+        </div>
+
         <Find
           title="Prince Rupert’s prize money"
-          href="/book/6a4a3ea3f0f4a3b75e90cdbc?page=78"
+          book="6a4a3ea3f0f4a3b75e90cdbc"
+          page={78}
+          printedPage={68}
+          src={IMG('6a4a3ea3f0f4a3b75e90cdbc', 78)}
+          pageAlt="Page 68 of Clarendon’s History, book XIV, 1655, with the margin note Prince Rupert gives an ill account of his fleet"
           source={
             <>
-              Edward Hyde, Earl of Clarendon, <em>The History of the Rebellion and Civil Wars in England</em>, book XIV
+              Edward Hyde, Earl of Clarendon,{' '}
+              <Link href="/book/the-history-of-the-rebellion-and-civil-wars-in-england-vol-5-edward-hy">
+                <em>The History of the Rebellion and Civil Wars in England</em>
+              </Link>
+              , book XIV
             </>
           }
-          quote="What treasure had been gathered, which, he confessed, had amounted to great value, had been all lost in the ship in which he himself was."
+          quote="What treasure had been gotten together, which, he confessed, had amounted to great value, had been all lost in the ship in which himself was."
         >
           Rupert’s Royalist squadron spent 1650 to 1653 taking prizes at sea. Clarendon reports the prince’s account to
           Charles II: the treasure went down with his own ship, and more with the ship in which his brother Maurice was
@@ -359,10 +487,18 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="The loot of Kaffa, 1475"
-          href="/book/6991e7ecc91ce7d733e50311?page=283"
+          book="6991e7ecc91ce7d733e50311"
+          page={283}
+          printedPage={270}
+          src={IMG('6991e7ecc91ce7d733e50311', 283)}
+          pageAlt="Page 270 of Pagnini’s Della decima, Italian chronicle text, with the stamp Digitized by Google"
           source={
             <>
-              An Italian chronicle printed in Giovanni Francesco Pagnini, <em>Della decima</em> (Florence, 1765), p. 270
+              An Italian chronicle printed in Giovanni Francesco Pagnini,{' '}
+              <Link href="/book/della-decima-e-di-varie-altre-gravezze-pagnini">
+                <em>Della decima</em>
+              </Link>{' '}
+              (Florence, 1765); scan digitised by Google
             </>
           }
           quote="He carried away many souls, and many treasures, and many goods, and loaded everything onto a Genoese ship, and coming in the direction of Constantinople the said ship broke and perished, and went to the bottom of the Sea, and everything was lost."
@@ -374,10 +510,18 @@ export default function ShipwrecksAndBuriedTreasurePage() {
 
         <Find
           title="Moctezuma’s gold in the lagoon"
-          href="/book/695910f9ecb01322b3068858?page=533"
+          book="695910f9ecb01322b3068858"
+          page={533}
+          printedPage={517}
+          src={IMG('695910f9ecb01322b3068858', 533)}
+          pageAlt="Page 517 of Oviedo’s Historia general, volume 2, book XXXIII, chapter XLVIII, two columns of Spanish"
           source={
             <>
-              Gonzalo Fernández de Oviedo, <em>Historia general y natural de las Indias</em>, vol. 2, p. 517
+              Gonzalo Fernández de Oviedo,{' '}
+              <Link href="/book/historia-general-y-natural-de-las-indias-vol-2-oviedo">
+                <em>Historia general y natural de las Indias</em>
+              </Link>
+              , vol. 2
             </>
           }
           quote="They told where they had thrown the gold into the lagoon, and part of it was found; but not a third part of what had been lost."
@@ -396,7 +540,7 @@ export default function ShipwrecksAndBuriedTreasurePage() {
             <strong>The São Tiago</strong> was found on the Bassas da India and salvaged: guns identified by the Natal
             Museum, coins and jewellery, an astrolabe, and a bronze falconet raised in 1985 that is now in Lisbon’s
             Museu de Marinha (
-            <a href="https://shiplib.org/?p=4602" className={linkClass}>
+            <a href="https://shiplib.org/?p=4602">
               ShipLib
             </a>
             ). The atoll is a French nature reserve and visits need a permit.
@@ -406,7 +550,7 @@ export default function ShipwrecksAndBuriedTreasurePage() {
             by the Pieces of Eight Company in 1906 to 1908 and by the Duke of Argyll between 2008 and 2014. No
             significant treasure has come up, the hull lies deep in mud, and the records suggest it carried soldiers,
             not money (
-            <a href="https://canmore.org.uk/site/22320" className={linkClass}>
+            <a href="https://canmore.org.uk/site/22320">
               Canmore
             </a>
             ).
@@ -421,12 +565,12 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           <li>
             <strong>The Cadiz wreck</strong> has no identified site that we could find. Schmidt’s own pages date it:
             he reached Lisbon on 30 September 1553 (
-            <Link href="/book/69b525c46be6046083031e1b?page=88" className={linkClass}>
+            <Link href="/book/gedenkwaardige-scheeps-togten-na-rio-de-la-plata-in-t-schmidt?page=88">
               p. 71
             </Link>
             ). The captain’s name is also the name of the Antwerp merchant family Schmidt mentions as owners of
             sugar estates at São Vicente in Brazil (
-            <Link href="/book/69b525c46be6046083031e1b?page=85" className={linkClass}>
+            <Link href="/book/gedenkwaardige-scheeps-togten-na-rio-de-la-plata-in-t-schmidt?page=85">
               p. 68
             </Link>
             ), but he does not say they owned this ship.
@@ -441,12 +585,14 @@ export default function ShipwrecksAndBuriedTreasurePage() {
           <li>
             <strong>The Caspian chest</strong> is recorded only in Hakluyt. The voyage itself, Christopher Burrough’s
             of 1580, is well documented (
-            <a href="https://www.iranicaonline.org/articles/borough-christopher-merchant/" className={linkClass}>
+            <a href="https://www.iranicaonline.org/articles/borough-christopher-merchant/">
               Encyclopaedia Iranica
             </a>
             ).
           </li>
         </ul>
+
+        <LossToPrint />
 
         <Section>How these pages were found</Section>
 
@@ -463,7 +609,7 @@ export default function ShipwrecksAndBuriedTreasurePage() {
         <p className="text-secondary leading-relaxed mb-6">
           The search only reaches pages that have been translated and that use one of the search words, so wrecks
           told in other words, or in books not yet translated, are missing. The passages are read from the
-          translations; follow the links for the original page beside them.
+          translations; follow the links for the original page beside them. Passages from books printed in English (Hakluyt, Smith, the Philosophical Transactions, Stukeley, Clarendon, Lang and Mathers’s Abra-Melin) are given as printed, with the long s made round.
         </p>
       </article>
     </ContentPageLayout>

@@ -40,7 +40,7 @@ export default function TranslationCollapsePage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a"><em>The Extant Fragments of Dicaearchus</em></a>, printed by Henri Estienne in 1589, contains a page of Latin commentary on the monuments of ancient Athens: the theatre, the temple of Athena, the Parthenon. On <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a/page/69b2f434f9f1ad2b3b15156c">our copy of that page</a> the source scan is clean, but the English translation read, in full: a note saying &ldquo;continued from previous page,&rdquo; and one word, &ldquo;structure.&rdquo; About twenty lines of Latin and Greek were not translated at all.
+          <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/dicaearchi-messenii-quae-supersunt-estienne"><em>The Extant Fragments of Dicaearchus</em></a>, printed by Henri Estienne in 1589, contains a page of Latin commentary on the monuments of ancient Athens: the theatre, the temple of Athena, the Parthenon. On <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/dicaearchi-messenii-quae-supersunt-estienne/page/69b2f434f9f1ad2b3b15156c">our copy of that page</a> the source scan is clean, but the English translation read, in full: a note saying &ldquo;continued from previous page,&rdquo; and one word, &ldquo;structure.&rdquo; About twenty lines of Latin and Greek were not translated at all.
         </p>
 
         <p>
@@ -72,7 +72,7 @@ export default function TranslationCollapsePage() {
         </p>
 
         <p>
-          One thing does: <strong>length.</strong> Collapsed pages have a median OCR body of <strong>11,374 characters against 1,751 for healthy pages</strong>, roughly six times longer. On a long, dense page the weaker model is most likely to abandon translation and fall back to summarizing. Two further patterns fit this. Collapses <strong>cluster</strong>: 41% sit within two pages of another collapse, far above their base rate, so they arrive in runs rather than scattered. And they are partly <strong>stochastic</strong>: the Dicaearchus passage was scanned twice in this volume, and the <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b2f434f9f1ad2b3b15154a/page/69b2f434f9f1ad2b3b15155e">second copy</a> translated in full. Same input, different output. Which long page tips over is, at the margin, chance.
+          One thing does: <strong>length.</strong> Collapsed pages have a median OCR body of <strong>11,374 characters against 1,751 for healthy pages</strong>, roughly six times longer. On a long, dense page the weaker model is most likely to abandon translation and fall back to summarizing. Two further patterns fit this. Collapses <strong>cluster</strong>: 41% sit within two pages of another collapse, far above their base rate, so they arrive in runs rather than scattered. And they are partly <strong>stochastic</strong>: the Dicaearchus passage was scanned twice in this volume, and the <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/dicaearchi-messenii-quae-supersunt-estienne/page/69b2f434f9f1ad2b3b15155e">second copy</a> translated in full. Same input, different output. Which long page tips over is, at the margin, chance.
         </p>
 
         <h2 id="worst" className="font-serif text-2xl md:text-3xl text-primary">The worst cases are not translation failures</h2>
@@ -130,7 +130,7 @@ export default function TranslationCollapsePage() {
         <h2 id="outcome" className="font-serif text-2xl md:text-3xl text-primary">Outcome</h2>
 
         <p>
-          Where the model choice is reliable (Latin and Greek), we re-translated under those constraints. <strong>556 collapsed pages in published books were repaired</strong>, the Dicaearchus page among them, with prior versions retained. (You can still find unrepaired collapses elsewhere: <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/69b52c133dd6d9423027d89c/page/69b52c133dd6d9423027d995">this page of Aelian&rsquo;s <em>On the Nature of Animals</em></a>, held back by a separate content filter.) The remaining backlog is mostly in unpublished books, and its hardest part (the non-Latin tail) needs OCR work before any translation model can help.
+          Where the model choice is reliable (Latin and Greek), we re-translated under those constraints. <strong>556 collapsed pages in published books were repaired</strong>, the Dicaearchus page among them, with prior versions retained. (You can still find unrepaired collapses elsewhere: <a className="text-accent-rust hover:underline" href="https://sourcelibrary.org/book/aelian-on-the-nature-of-animals-aelian/page/69b52c133dd6d9423027d995">this page of Aelian&rsquo;s <em>On the Nature of Animals</em></a>, held back by a separate content filter.) The remaining backlog is mostly in unpublished books, and its hardest part (the non-Latin tail) needs OCR work before any translation model can help.
         </p>
 
         <p>

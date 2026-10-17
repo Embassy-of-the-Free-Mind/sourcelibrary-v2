@@ -57,11 +57,11 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Washington Matthews spent years among the Navajo in the 1880s and 1890s, producing three works now in Source Library that constitute the foundational record of Navajo ceremonialism.{' '}
-          <Link href="/book/699249a2a2d53df4853bdc70" className="text-accent-rust hover:text-accent-rust underline"><em>The Mountain Chant: A Navajo Ceremony</em></Link>
+          <Link href="/book/the-mountain-chant-a-navajo-ceremony-matthews" className="text-accent-rust hover:text-accent-rust underline"><em>The Mountain Chant: A Navajo Ceremony</em></Link>
           {' '}(1887) documents one of the great healing ceremonies, including the songs, sand paintings, and ritual sequences that compose it.{' '}
-          <Link href="/book/699249a5a2d53df4853bdf7e" className="text-accent-rust hover:text-accent-rust underline"><em>The Night Chant: A Navaho Ceremony</em></Link>
+          <Link href="/book/the-night-chant-a-navaho-ceremony-matthews" className="text-accent-rust hover:text-accent-rust underline"><em>The Night Chant: A Navaho Ceremony</em></Link>
           {' '}records the nine-night <em>Yei-bei-chai</em>, the most complex of all Navajo ceremonies, with its masked dancers representing the <em>yei</em> (holy people).{' '}
-          <Link href="/book/699249a9a2d53df4853be52d" className="text-accent-rust hover:text-accent-rust underline"><em>Navaho Myths, Prayers and Songs</em></Link>
+          <Link href="/book/navaho-myths-prayers-and-songs-matthews" className="text-accent-rust hover:text-accent-rust underline"><em>Navaho Myths, Prayers and Songs</em></Link>
           {' '}provides the broader mythological context in which these ceremonies operate.
         </p>
 
@@ -71,11 +71,11 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           For the Hopi, the collection holds{' '}
-          <Link href="/book/699249b3a2d53df4853beb43" className="text-accent-rust hover:text-accent-rust underline"><em>The Traditions of the Hopi</em></Link>
+          <Link href="/book/the-traditions-of-the-hopi-voth" className="text-accent-rust hover:text-accent-rust underline"><em>The Traditions of the Hopi</em></Link>
           {' '}(H. R. Voth) and Edmund Nequatewa&apos;s <em>Truth of a Hopi</em>, the latter notable as a Hopi author&apos;s own account, a corrective to the outsider&apos;s perspective. For the Zuni, Frank Hamilton Cushing&apos;s{' '}
-          <Link href="/book/69a565b95a8a09c1b325e47f" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Fetishes</em></Link>
+          <Link href="/book/zuni-fetiches-cushing" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Fetishes</em></Link>
           {' '}and{' '}
-          <Link href="/book/6992597c3d2d40d1b058fa83" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Breadstuff</em></Link>
+          <Link href="/book/zuni-breadstuff-cushing" className="text-accent-rust hover:text-accent-rust underline"><em>Zuni Breadstuff</em></Link>
           {' '}document a tradition in which the sacred is embedded in every aspect of daily life, with agriculture, craft, architecture, and ceremony forming an indivisible whole.
         </p>
 
@@ -87,17 +87,17 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Frances Densmore&apos;s{' '}
-          <Link href="/book/6992595d3d2d40d1b058d41f" className="text-accent-rust hover:text-accent-rust underline"><em>Teton Sioux Music</em></Link>
+          <Link href="/book/teton-sioux-music-densmore" className="text-accent-rust hover:text-accent-rust underline"><em>Teton Sioux Music</em></Link>
           {' '}takes a different approach: rather than narrative, it documents the songs themselves (dream songs, war songs, healing songs, love songs) with musical transcriptions. For a tradition in which song is the primary vehicle of spiritual power, this is arguably closer to the source than any prose account.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           James Mooney&apos;s{' '}
-          <Link href="/book/699079c0db8b55d19ec67ceb" className="text-accent-rust hover:text-accent-rust underline"><em>The Ghost-Dance Religion and the Sioux Outbreak of 1890</em></Link>
+          <Link href="/book/the-ghost-dance-religion-and-the-sioux-outbreak-of-1890-mooney" className="text-accent-rust hover:text-accent-rust underline"><em>The Ghost-Dance Religion and the Sioux Outbreak of 1890</em></Link>
           {' '}is a landmark: the first serious ethnographic study of a Native American religious movement by a government scholar, written in the immediate aftermath of Wounded Knee. For the Pawnee, George Dorsey&apos;s{' '}
-          <Link href="/book/69907c765f855ec553e75919" className="text-accent-rust hover:text-accent-rust underline"><em>The Pawnee Mythology</em></Link>
+          <Link href="/book/the-pawnee-mythology-part-i-dorsey" className="text-accent-rust hover:text-accent-rust underline"><em>The Pawnee Mythology</em></Link>
           {' '}and{' '}
-          <Link href="/book/69907d2b554109373feddfa4" className="text-accent-rust hover:text-accent-rust underline"><em>Traditions of the Skidi Pawnee</em></Link>
+          <Link href="/book/traditions-of-the-skidi-pawnee-dorsey" className="text-accent-rust hover:text-accent-rust underline"><em>Traditions of the Skidi Pawnee</em></Link>
           {' '}document one of the most astronomically sophisticated religious systems in North America, in which the arrangement of villages on the earth mirrors the arrangement of stars in the sky.
         </p>
 
@@ -105,31 +105,31 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The collection spans the continent. For the Cherokee, James Mooney&apos;s{' '}
-          <Link href="/book/69907c3b5f855ec553e723bb" className="text-accent-rust hover:text-accent-rust underline"><em>Myths of the Cherokee</em></Link>
+          <Link href="/book/myths-of-the-cherokee-mooney" className="text-accent-rust hover:text-accent-rust underline"><em>Myths of the Cherokee</em></Link>
           {' '}and the{' '}
-          <Link href="/book/69a55355bab4924e15759949" className="text-accent-rust hover:text-accent-rust underline"><em>Sacred Formulas of the Cherokees</em></Link>
+          <Link href="/book/the-sacred-formulas-of-the-cherokees-mooney" className="text-accent-rust hover:text-accent-rust underline"><em>Sacred Formulas of the Cherokees</em></Link>
           {' '}preserve healing chants in the Cherokee syllabary, one of the few cases where an indigenous writing system was used to record sacred knowledge. For the Iroquois,{' '}
-          <Link href="/book/699249bea2d53df4853bf40c" className="text-accent-rust hover:text-accent-rust underline"><em>The Iroquois Book of Rites</em></Link>
+          <Link href="/book/the-iroquois-book-of-rites-hale" className="text-accent-rust hover:text-accent-rust underline"><em>The Iroquois Book of Rites</em></Link>
           {' '}(Horatio Hale) documents the condolence ceremonies of the Six Nations, the ritual core of the oldest continuous democratic confederation in the Americas.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Henry Rowe Schoolcraft&apos;s{' '}
-          <Link href="/book/69e719750b32e23d63bf76a3" className="text-accent-rust hover:text-accent-rust underline"><em>Algic Researches</em></Link>
+          <Link href="/book/algic-researches-indian-tales-and-legends-schoolcraft" className="text-accent-rust hover:text-accent-rust underline"><em>Algic Researches</em></Link>
           {' '}(1839) was the first systematic collection of Native American oral literature in English: the Ojibwe and Ottawa stories that inspired Longfellow&apos;s <em>Hiawatha</em>. The <em>Walam Olum</em> (Daniel G. Brinton) claims to be the Lenape creation narrative recorded in pictographs, a contested document whose authenticity has been debated for over a century, but which remains an important artefact of 19th-century attempts to understand indigenous cosmology.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           On the Northwest Coast, the collection holds major works by Franz Boas (
-          <Link href="/book/699259813d2d40d1b05907e6" className="text-accent-rust hover:text-accent-rust underline"><em>Tsimshian Mythology</em></Link>
+          <Link href="/book/tsimshian-mythology-boas" className="text-accent-rust hover:text-accent-rust underline"><em>Tsimshian Mythology</em></Link>
           ,{' '}
-          <Link href="/book/6992598b3d2d40d1b05915ba" className="text-accent-rust hover:text-accent-rust underline"><em>The Mythology of the Bella Coola Indians</em></Link>
+          <Link href="/book/the-mythology-of-the-bella-coola-indians-boas" className="text-accent-rust hover:text-accent-rust underline"><em>The Mythology of the Bella Coola Indians</em></Link>
           , and{' '}
-          <Link href="/book/699259843d2d40d1b0590fe6" className="text-accent-rust hover:text-accent-rust underline"><em>The Secret Societies of the Kwakiutl Indians</em></Link>
+          <Link href="/book/the-social-organization-and-the-secret-societies-of-the-boas" className="text-accent-rust hover:text-accent-rust underline"><em>The Secret Societies of the Kwakiutl Indians</em></Link>
           ), documenting traditions in which mythology, art, social hierarchy, and ceremony are inseparable. John Swanton&apos;s{' '}
-          <Link href="/book/6992598e3d2d40d1b0591644" className="text-accent-rust hover:text-accent-rust underline"><em>Tlingit Myths and Texts</em></Link>
+          <Link href="/book/tlingit-myths-and-texts-swanton" className="text-accent-rust hover:text-accent-rust underline"><em>Tlingit Myths and Texts</em></Link>
           {' '}and{' '}
-          <Link href="/book/699259913d2d40d1b059198b" className="text-accent-rust hover:text-accent-rust underline"><em>Haida Texts and Myths</em></Link>
+          <Link href="/book/haida-texts-and-myths-skidegate-dialect-swanton" className="text-accent-rust hover:text-accent-rust underline"><em>Haida Texts and Myths</em></Link>
           {' '}preserve the oral literature of the great seafaring cultures of the northern Pacific.
         </p>
 
@@ -152,22 +152,22 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The most important survivor is the{' '}
-          <Link href="/book/6992499aa2d53df4853bd50d" className="text-accent-rust hover:text-accent-rust underline"><em>Popol Vuh</em></Link>
+          <Link href="/book/the-popol-vuh-mythic-and-heroic-sagas-of-the-kiches-spence" className="text-accent-rust hover:text-accent-rust underline"><em>Popol Vuh</em></Link>
           , the K&apos;iche&apos; Maya creation epic, which tells the story of the Hero Twins&apos; descent into Xibalba, the underworld, and the creation of humanity from maize. Source Library holds Lewis Spence&apos;s English edition; Brasseur de Bourbourg&apos;s French-K&apos;iche&apos; bilingual edition of 1861, the first scholarly publication of the text, remains philologically important.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           For the Aztec world, the <em>Codex Chimalpopoca</em>
           {' '}preserves two Nahuatl texts: the <em>Annals of Cuauhtitl&aacute;n</em> and the <em>Legend of the Suns</em>, which contain the Aztec creation mythology: the five ages of the world, each destroyed and remade. The{' '}
-          <Link href="/book/6953cbc877f38f6761be004a" className="text-accent-rust hover:text-accent-rust underline"><em>Codex Nuttall</em></Link>
+          <Link href="/book/codex-nuttall-nuttall" className="text-accent-rust hover:text-accent-rust underline"><em>Codex Nuttall</em></Link>
           {' '}is a pre-Columbian Mixtec screenfold manuscript, one of the few surviving original books from the Americas before European contact. The{' '}
-          <Link href="/book/6958eb06d3a8928334817227" className="text-accent-rust hover:text-accent-rust underline"><em>De la Cruz-Badiano Aztec Herbal</em></Link>
+          <Link href="/book/the-de-la-cruz-badiano-aztec-herbal-of-1552-gates" className="text-accent-rust hover:text-accent-rust underline"><em>De la Cruz-Badiano Aztec Herbal</em></Link>
           {' '}(1552) is the earliest American medical text, compiled by an Aztec physician at the College of Santa Cruz just three decades after the conquest.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Daniel G. Brinton&apos;s{' '}
-          <Link href="/book/699259a20a821b68631b199e" className="text-accent-rust hover:text-accent-rust underline"><em>Ancient Nahuatl Poetry</em></Link>
+          <Link href="/book/ancient-nahuatl-poetry-brinton" className="text-accent-rust hover:text-accent-rust underline"><em>Ancient Nahuatl Poetry</em></Link>
           {' '}translates Aztec songs and hymns, a reminder that Nahuatl literature was mythological but also lyrical, philosophical, and elegiac.
         </p>
 
@@ -181,35 +181,35 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Alfred Burdon Ellis produced three regional studies (
-          <Link href="/book/699079b3db8b55d19ec67909" className="text-accent-rust hover:text-accent-rust underline"><em>The Yoruba-Speaking Peoples</em></Link>
+          <Link href="/book/the-yoruba-speaking-peoples-of-the-slave-coast-of-west-ellis" className="text-accent-rust hover:text-accent-rust underline"><em>The Yoruba-Speaking Peoples</em></Link>
           ,{' '}
-          <Link href="/book/699079b5db8b55d19ec67a1a" className="text-accent-rust hover:text-accent-rust underline"><em>The Tshi-Speaking Peoples of the Gold Coast</em></Link>
+          <Link href="/book/the-tshi-speaking-peoples-of-the-gold-coast-of-west-africa-ellis" className="text-accent-rust hover:text-accent-rust underline"><em>The Tshi-Speaking Peoples of the Gold Coast</em></Link>
           , and{' '}
-          <Link href="/book/699079bcdb8b55d19ec67b8a" className="text-accent-rust hover:text-accent-rust underline"><em>The Ewe-Speaking Peoples</em></Link>
+          <Link href="/book/the-ewe-speaking-peoples-of-the-slave-coast-of-west-africa-ellis" className="text-accent-rust hover:text-accent-rust underline"><em>The Ewe-Speaking Peoples</em></Link>
           ) that together map the religious landscape of the entire Gulf of Guinea. R. E. Dennett&apos;s{' '}
-          <Link href="/book/69907c5a5f855ec553e74a1c" className="text-accent-rust hover:text-accent-rust underline"><em>Nigerian Studies</em></Link>
+          <Link href="/book/nigerian-studies-religious-and-political-system-of-the-dennett" className="text-accent-rust hover:text-accent-rust underline"><em>Nigerian Studies</em></Link>
           {' '}provides a deeper focus on Yoruba religion, including the orisha system that would later become the basis of Afro-Caribbean traditions like Candombl&eacute; and Santer&iacute;a.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Robert Sutherland Rattray&apos;s{' '}
-          <Link href="/book/69a552ed9760c5efd612058b" className="text-accent-rust hover:text-accent-rust underline"><em>Ashanti</em></Link>
+          <Link href="/book/ashanti-rattray" className="text-accent-rust hover:text-accent-rust underline"><em>Ashanti</em></Link>
           {' '}and <em>Religion and Art in Ashanti</em> are among the finest ethnographic works of the early 20th century. Rattray, a colonial administrator who became a genuine scholar of Ashanti culture, documented a religious system of extraordinary complexity, the <em>sunsum</em> (spirit), <em>kra</em> (soul), <em>ntoro</em> (patrilineal spirit), and <em>mogya</em> (matrilineal blood) forming a multi-layered anthropology of the person that most Western psychology has yet to equal.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Mary Kingsley&apos;s{' '}
-          <Link href="/book/69a552e542054c7ce7176515" className="text-accent-rust hover:text-accent-rust underline"><em>West African Studies</em></Link>
+          <Link href="/book/west-african-studies-kingsley" className="text-accent-rust hover:text-accent-rust underline"><em>West African Studies</em></Link>
           {' '}and{' '}
-          <Link href="/book/69907c5f5f855ec553e74b98" className="text-accent-rust hover:text-accent-rust underline"><em>Travels in West Africa</em></Link>
+          <Link href="/book/travels-in-west-africa-kingsley" className="text-accent-rust hover:text-accent-rust underline"><em>Travels in West Africa</em></Link>
           {' '}offer a more personal account. Kingsley was one of the first Europeans to argue that African religious systems were genuine philosophies, not &ldquo;superstition,&rdquo; a position that was radical in the 1890s.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           For Central and South Africa, Henri Junod&apos;s{' '}
-          <Link href="/book/69907cac5f855ec553e76c3f" className="text-accent-rust hover:text-accent-rust underline"><em>The Life of a South African Tribe, Vol. 1</em></Link>
+          <Link href="/book/the-life-of-a-south-african-tribe-vol-1-the-social-life-junod" className="text-accent-rust hover:text-accent-rust underline"><em>The Life of a South African Tribe, Vol. 1</em></Link>
           {' '}and{' '}
-          <Link href="/book/69907a2cdb8b55d19ec6922b" className="text-accent-rust hover:text-accent-rust underline"><em>Vol. 2: The Psychic Life</em></Link>
+          <Link href="/book/the-life-of-a-south-african-tribe-vol-2-the-psychic-life-junod" className="text-accent-rust hover:text-accent-rust underline"><em>Vol. 2: The Psychic Life</em></Link>
           {' '}document the Tsonga people with a depth that makes the second volume&apos;s subtitle no exaggeration: it is genuinely a study of an entire people&apos;s inner world, from dreams and divination to ancestor veneration and the concept of the afterlife.
         </p>
 
@@ -230,17 +230,17 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           More remarkable still, the collection includes the original medieval manuscripts:{' '}
-          <Link href="/book/699249baa2d53df4853bf179" className="text-accent-rust hover:text-accent-rust underline"><em>The White Book of Mabinogion</em></Link>
+          <Link href="/book/the-white-book-of-mabinogion-evans" className="text-accent-rust hover:text-accent-rust underline"><em>The White Book of Mabinogion</em></Link>
           {' '}and{' '}
-          <Link href="/book/695581a757e3b773024f6bd3" className="text-accent-rust hover:text-accent-rust underline"><em>The Red Book of Hergest</em></Link>
+          <Link href="/book/the-text-of-the-mabinogion-red-book-of-hergest-eds" className="text-accent-rust hover:text-accent-rust underline"><em>The Red Book of Hergest</em></Link>
           , the actual medieval Welsh texts from which all modern translations derive. Scholars can read the Middle Welsh originals alongside the English.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           The Irish tradition is represented by{' '}
-          <Link href="/book/695583c65336c55c8910f256" className="text-accent-rust hover:text-accent-rust underline"><em>Silva Gadelica</em></Link>
+          <Link href="/book/silva-gadelica-a-collection-of-tales-in-irish-vol-i-irish-grady" className="text-accent-rust hover:text-accent-rust underline"><em>Silva Gadelica</em></Link>
           {' '}(Standish O&apos;Grady), a collection of tales from Irish manuscripts covering the F&iacute;anna cycle, saints&apos; lives, and wonder voyages.{' '}
-          <Link href="/book/6955839857e3b773024f88c2" className="text-accent-rust hover:text-accent-rust underline"><em>The Metrical Dindshenchas</em></Link>
+          <Link href="/book/the-metrical-dindshenchas-irish-place-lore-in-verse-academy" className="text-accent-rust hover:text-accent-rust underline"><em>The Metrical Dindshenchas</em></Link>
           {' '}is an extraordinary document: place-lore in verse, in which every hill, river, and plain in Ireland has a mythological origin story. It is a map of sacred geography: the land as a text, to be read by those who know the stories.
         </p>
 
@@ -250,9 +250,9 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The collection also includes two works on druidism:{' '}
-          <Link href="/book/6977ace4235fbd25a5194779" className="text-accent-rust hover:text-accent-rust underline"><em>Celtic Researches</em></Link>
+          <Link href="/book/celtic-researches-on-the-origin-traditions-language-of-the-davies" className="text-accent-rust hover:text-accent-rust underline"><em>Celtic Researches</em></Link>
           {' '}(Edward Davies, 1804) and{' '}
-          <Link href="/book/697b079910a96682ef80935d" className="text-accent-rust hover:text-accent-rust underline"><em>An Enquiry into the Patriarchal and Druidical Religion</em></Link>
+          <Link href="/book/an-enquiry-into-the-patriarchal-and-druidical-religion-cooke" className="text-accent-rust hover:text-accent-rust underline"><em>An Enquiry into the Patriarchal and Druidical Religion</em></Link>
           {' '}(William Cooke, 1754). Both reflect 18th-century antiquarian attempts to reconstruct druidic religion from classical sources, place names, and surviving folk customs: speculative but historically important as the earliest attempts to recover Europe&apos;s own indigenous spirituality.
         </p>
 
@@ -260,25 +260,25 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The Norse tradition is better attested than the Celtic, thanks to Iceland&apos;s manuscript culture. Source Library holds the core texts:{' '}
-          <Link href="/book/699249a8a2d53df4853be2b3" className="text-accent-rust hover:text-accent-rust underline"><em>The Poetic Edda</em></Link>
+          <Link href="/book/the-poetic-edda-bellows" className="text-accent-rust hover:text-accent-rust underline"><em>The Poetic Edda</em></Link>
           {' '}(Henry Adams Bellows) and{' '}
-          <Link href="/book/699249aca2d53df4853be568" className="text-accent-rust hover:text-accent-rust underline">Olive Bray&apos;s edition</Link>
+          <Link href="/book/the-elder-or-poetic-edda-bray" className="text-accent-rust hover:text-accent-rust underline">Olive Bray&apos;s edition</Link>
           , containing the <em>V&ouml;lusp&aacute;</em> (the Seeress&apos;s Prophecy of the world&apos;s creation and destruction), the <em>H&aacute;vam&aacute;l</em> (Odin&apos;s wisdom poetry), and the great mythological and heroic lays. Snorri Sturluson&apos;s{' '}
-          <Link href="/book/699249b1a2d53df4853be918" className="text-accent-rust hover:text-accent-rust underline"><em>Prose Edda</em></Link>
+          <Link href="/book/the-prose-edda-sturluson" className="text-accent-rust hover:text-accent-rust underline"><em>Prose Edda</em></Link>
           {' '}systematises the mythology into a narrative framework, from the creation out of Ginnungagap to Ragnar&ouml;k. For those who read Icelandic, the collection includes{' '}
-          <Link href="/book/699249b5a2d53df4853bec9b" className="text-accent-rust hover:text-accent-rust underline"><em>Edda Snorra Sturlusonar</em></Link>
+          <Link href="/book/edda-snorra-sturlusonar-original-icelandic-sturluson" className="text-accent-rust hover:text-accent-rust underline"><em>Edda Snorra Sturlusonar</em></Link>
           {' '}in the original Old Norse.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           A rare find:{' '}
-          <Link href="/book/69790f99eb0dcfd399123426" className="text-accent-rust hover:text-accent-rust underline"><em>Cimbrische Heyden-Religion</em></Link>
+          <Link href="/book/cimbrian-pagan-religion-arnkiel" className="text-accent-rust hover:text-accent-rust underline"><em>Cimbrische Heyden-Religion</em></Link>
           {' '}(Arnkiel, 1691) is one of the earliest scholarly attempts to reconstruct pre-Christian Nordic and Germanic religion, written in the late 17th century, when folk customs and place names still preserved traces of the old religion that have since been lost.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Jacques Martin&apos;s{' '}
-          <Link href="/book/6988a5a2c9cb59aebe69eda0" className="text-accent-rust hover:text-accent-rust underline"><em>La religion des Gaulois</em></Link>
+          <Link href="/book/the-religion-of-the-gauls-martin" className="text-accent-rust hover:text-accent-rust underline"><em>La religion des Gaulois</em></Link>
           {' '}(1727) does for the continental Celtic and Gaulish traditions what Arnkiel did for the Norse: an 18th-century French antiquarian&apos;s reconstruction of pre-Roman Gaul&apos;s religious practices from classical descriptions, inscriptions, and material culture.
         </p>
 
@@ -301,11 +301,11 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Sir George Grey&apos;s{' '}
-          <Link href="/book/699249e0a2d53df4853c0c82" className="text-accent-rust hover:text-accent-rust underline"><em>Polynesian Mythology</em></Link>
+          <Link href="/book/polynesian-mythology-grey" className="text-accent-rust hover:text-accent-rust underline"><em>Polynesian Mythology</em></Link>
           {' '}(1855) was the first major collection of M&amacr;ori traditions in English, compiled when Grey was Governor of New Zealand. Edward Shortland&apos;s{' '}
-          <Link href="/book/699249e5a2d53df4853c0e06" className="text-accent-rust hover:text-accent-rust underline"><em>Maori Religion and Mythology</em></Link>
+          <Link href="/book/maori-religion-and-mythology-shortland" className="text-accent-rust hover:text-accent-rust underline"><em>Maori Religion and Mythology</em></Link>
           {' '}and John White&apos;s{' '}
-          <Link href="/book/699249e7a2d53df4853c0e9c" className="text-accent-rust hover:text-accent-rust underline"><em>Ancient History of the Maori</em></Link>
+          <Link href="/book/ancient-history-of-the-maori-vol-1-white" className="text-accent-rust hover:text-accent-rust underline"><em>Ancient History of the Maori</em></Link>
           {' '}expand the record. Together, these works preserve the M&amacr;ori cosmogony (the emergence of the world from Te Kore, the void, through Te P&omacr;, darkness, to Te Ao M&amacr;rama, the world of light), one of the great creation narratives of the Pacific.
         </p>
 
@@ -315,7 +315,7 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           For Aboriginal Australia, Baldwin Spencer and F. J. Gillen&apos;s{' '}
-          <Link href="/book/69a553040aade5c1d01fe95d" className="text-accent-rust hover:text-accent-rust underline"><em>The Native Tribes of Central Australia</em></Link>
+          <Link href="/book/the-native-tribes-of-central-australia-gillen" className="text-accent-rust hover:text-accent-rust underline"><em>The Native Tribes of Central Australia</em></Link>
           {' '}(1899) remains a foundational text. Their account of the <em>Alcheringa</em> (Dreaming), the eternal present in which ancestral beings shaped the land, and which is re-enacted through ceremony, was the first detailed description of a religious system that challenges Western categories of time, space, and personhood at a fundamental level. The Dreaming is not a past event but an ongoing reality accessed through ritual, song, and the reading of landscape.
         </p>
 
@@ -325,23 +325,23 @@ export default function IndigenousTraditionsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The collection also holds the major comparative works that attempted, for better and worse, to make sense of indigenous traditions within a global framework. James George Frazer&apos;s{' '}
-          <Link href="/book/69907cd85f855ec553e77a81" className="text-accent-rust hover:text-accent-rust underline"><em>The Golden Bough</em></Link>
+          <Link href="/book/the-golden-bough-a-study-in-comparative-religion-frazer" className="text-accent-rust hover:text-accent-rust underline"><em>The Golden Bough</em></Link>
           {' '}is the most famous and most problematic: a vast synthesis of magic, religion, and myth from around the world, enormously influential but shaped by the evolutionary assumption that all religion progresses from &ldquo;primitive&rdquo; magic through religion to science. Edward Tylor&apos;s{' '}
-          <Link href="/book/69906a49d69de0e6980704da" className="text-accent-rust hover:text-accent-rust underline"><em>Primitive Culture</em></Link>
+          <Link href="/book/primitive-culture-researches-into-the-development-of-tylor" className="text-accent-rust hover:text-accent-rust underline"><em>Primitive Culture</em></Link>
           {' '}(two volumes) introduced the concept of &ldquo;animism&rdquo; as the earliest form of religion, a framework that has been criticised and revised but never entirely replaced.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Andrew Lang&apos;s{' '}
-          <Link href="/book/69906ad11cf6ed5fbc8f7ffc" className="text-accent-rust hover:text-accent-rust underline"><em>The Making of Religion</em></Link>
+          <Link href="/book/the-making-of-religion-lang" className="text-accent-rust hover:text-accent-rust underline"><em>The Making of Religion</em></Link>
           {' '}challenged both Frazer and Tylor, arguing that the concept of a &ldquo;High God&rdquo; was present in many so-called primitive traditions from the beginning, not a late development from animism, as the evolutionary theorists claimed.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Daniel G. Brinton&apos;s{' '}
-          <Link href="/book/699079d9db8b55d19ec6801c" className="text-accent-rust hover:text-accent-rust underline"><em>Myths of the New World</em></Link>
+          <Link href="/book/myths-of-the-new-world-a-treatise-on-the-symbolism-and-brinton" className="text-accent-rust hover:text-accent-rust underline"><em>Myths of the New World</em></Link>
           {' '}and{' '}
-          <Link href="/book/69907c635f855ec553e74f06" className="text-accent-rust hover:text-accent-rust underline"><em>Religions of Primitive Peoples</em></Link>
+          <Link href="/book/religions-of-primitive-peoples-brinton" className="text-accent-rust hover:text-accent-rust underline"><em>Religions of Primitive Peoples</em></Link>
           {' '}represent the best of the 19th-century American comparative tradition; Brinton was a linguist as well as an ethnographer, and his sensitivity to the actual languages of indigenous peoples gives his work a concreteness that Frazer&apos;s armchair synthesis lacks.
         </p>
 
@@ -464,7 +464,7 @@ export default function IndigenousTraditionsPage() {
               Search the collection
             </Link>
             <Link
-              href="/book/699249a5a2d53df4853bdf7e"
+              href="/book/the-night-chant-a-navaho-ceremony-matthews"
               className="inline-flex items-center gap-2 border border-accent-rust text-accent-rust px-6 py-3 rounded-lg hover:bg-accent-gold/8 transition-colors"
             >
               Read the Night Chant

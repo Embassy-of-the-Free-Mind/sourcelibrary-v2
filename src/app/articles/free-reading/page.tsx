@@ -206,17 +206,17 @@ export default function FreeReadingPage() {
           <p className={P}>
             The books that gained the most are the ones that were nearly done. Max M&uuml;ller&apos;s 1881
             translation of Kant&apos;s{' '}
-            <Link href="/book/6954346c1479a63c11089602" className="text-accent-rust hover:underline">Critique of Pure Reason</Link>{' '}
+            <Link href="/book/critique-of-pure-reason-muller-translation-1881-kant" className="text-accent-rust hover:underline">Critique of Pure Reason</Link>{' '}
             had 214 pages read and 380 unread; it gained 369 pages at agreement 0.93 and is now complete
             but for eleven leaves with too little text to take. The{' '}
-            <Link href="/book/699246d6bc722ec0ee814ea5" className="text-accent-rust hover:underline">general index to the Sacred Books of the East</Link>{' '}
+            <Link href="/book/sacred-books-of-the-east-general-index-sbe-vol-50-ed" className="text-accent-rust hover:underline">general index to the Sacred Books of the East</Link>{' '}
             gained 118 pages and is now searchable end to end.{' '}
-            <Link href="/book/69aea4994f4f1b07d870c4c7" className="text-accent-rust hover:underline">A Report upon the Herculaneum Manuscripts</Link>{' '}
+            <Link href="/book/a-report-upon-the-herculaneum-manuscripts-hayter" className="text-accent-rust hover:underline">A Report upon the Herculaneum Manuscripts</Link>{' '}
             (1811),{' '}
-            <Link href="/book/69bf60dc065df5d87d778866" className="text-accent-rust hover:underline">Facts and Documents Illustrative of the History, Doctrine and Rites of the Ancient Albigenses</Link>{' '}
+            <Link href="/book/facts-and-documents-illustrative-of-the-history-doctrine-maitland" className="text-accent-rust hover:underline">Facts and Documents Illustrative of the History, Doctrine and Rites of the Ancient Albigenses</Link>{' '}
             (1832), the first volume of Blavatsky&apos;s{' '}
-            <Link href="/book/6953e32877f38f6761beb98c" className="text-accent-rust hover:underline">Secret Doctrine</Link>, and Evans-Wentz&apos;s{' '}
-            <Link href="/book/699249c9a2d53df4853bff47" className="text-accent-rust hover:underline">Fairy-Faith in Celtic Countries</Link>{' '}
+            <Link href="/book/secret-doctrine-vol-i-cosmogenesis-blavatsky" className="text-accent-rust hover:underline">Secret Doctrine</Link>, and Evans-Wentz&apos;s{' '}
+            <Link href="/book/the-fairy-faith-in-celtic-countries-evans-wentz" className="text-accent-rust hover:underline">Fairy-Faith in Celtic Countries</Link>{' '}
             each gained between forty and seventy pages.
           </p>
         </section>
@@ -380,14 +380,14 @@ export default function FreeReadingPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td className={TD}><Link href="/book/6954346c1479a63c11089602" className="text-accent-rust hover:underline">Kant, Critique of Pure Reason, tr. M&uuml;ller (1881)</Link></td><td className={TD}>369</td><td className={TD}>0.93</td></tr>
-                <tr><td className={TD}><Link href="/book/699246d6bc722ec0ee814ea5" className="text-accent-rust hover:underline">Sacred Books of the East, General Index</Link></td><td className={TD}>118</td><td className={TD}>0.90</td></tr>
-                <tr><td className={TD}><Link href="/book/69bf60dc065df5d87d778866" className="text-accent-rust hover:underline">Facts and Documents on the Ancient Albigenses (1832)</Link></td><td className={TD}>65</td><td className={TD}>0.92</td></tr>
-                <tr><td className={TD}><Link href="/book/69aea4994f4f1b07d870c4c7" className="text-accent-rust hover:underline">A Report upon the Herculaneum Manuscripts (1811)</Link></td><td className={TD}>54</td><td className={TD}>0.88</td></tr>
-                <tr><td className={TD}><Link href="/book/6953e32877f38f6761beb98c" className="text-accent-rust hover:underline">Blavatsky, The Secret Doctrine, vol. I (1899 printing)</Link></td><td className={TD}>51</td><td className={TD}>0.93</td></tr>
-                <tr><td className={TD}><Link href="/book/699249c9a2d53df4853bff47" className="text-accent-rust hover:underline">Evans-Wentz, The Fairy-Faith in Celtic Countries (1911)</Link></td><td className={TD}>46</td><td className={TD}>0.94</td></tr>
-                <tr><td className={TD}><Link href="/book/69bd959cd9007d72ade0c81c" className="text-accent-rust hover:underline">Cumont, The Oriental Religions in Roman Paganism (1911)</Link></td><td className={TD}>30</td><td className={TD}>0.92</td></tr>
-                <tr><td className={TD}><Link href="/book/69905961aaa7f10ed4cfaf55" className="text-accent-rust hover:underline">Heindel, The Rosicrucian Cosmo-Conception (1910)</Link></td><td className={TD}>30</td><td className={TD}>0.94</td></tr>
+                <tr><td className={TD}><Link href="/book/critique-of-pure-reason-muller-translation-1881-kant" className="text-accent-rust hover:underline">Kant, Critique of Pure Reason, tr. M&uuml;ller (1881)</Link></td><td className={TD}>369</td><td className={TD}>0.93</td></tr>
+                <tr><td className={TD}><Link href="/book/sacred-books-of-the-east-general-index-sbe-vol-50-ed" className="text-accent-rust hover:underline">Sacred Books of the East, General Index</Link></td><td className={TD}>118</td><td className={TD}>0.90</td></tr>
+                <tr><td className={TD}><Link href="/book/facts-and-documents-illustrative-of-the-history-doctrine-maitland" className="text-accent-rust hover:underline">Facts and Documents on the Ancient Albigenses (1832)</Link></td><td className={TD}>65</td><td className={TD}>0.92</td></tr>
+                <tr><td className={TD}><Link href="/book/a-report-upon-the-herculaneum-manuscripts-hayter" className="text-accent-rust hover:underline">A Report upon the Herculaneum Manuscripts (1811)</Link></td><td className={TD}>54</td><td className={TD}>0.88</td></tr>
+                <tr><td className={TD}><Link href="/book/secret-doctrine-vol-i-cosmogenesis-blavatsky" className="text-accent-rust hover:underline">Blavatsky, The Secret Doctrine, vol. I (1899 printing)</Link></td><td className={TD}>51</td><td className={TD}>0.93</td></tr>
+                <tr><td className={TD}><Link href="/book/the-fairy-faith-in-celtic-countries-evans-wentz" className="text-accent-rust hover:underline">Evans-Wentz, The Fairy-Faith in Celtic Countries (1911)</Link></td><td className={TD}>46</td><td className={TD}>0.94</td></tr>
+                <tr><td className={TD}><Link href="/book/the-oriental-religions-in-roman-paganism-cumont" className="text-accent-rust hover:underline">Cumont, The Oriental Religions in Roman Paganism (1911)</Link></td><td className={TD}>30</td><td className={TD}>0.92</td></tr>
+                <tr><td className={TD}><Link href="/book/the-rosicrucian-cosmo-conception-or-christian-occult-science-heindel" className="text-accent-rust hover:underline">Heindel, The Rosicrucian Cosmo-Conception (1910)</Link></td><td className={TD}>30</td><td className={TD}>0.94</td></tr>
               </tbody>
             </table>
           </div>

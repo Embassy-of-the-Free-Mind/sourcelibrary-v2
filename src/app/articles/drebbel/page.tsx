@@ -90,7 +90,7 @@ export default function DrebbelPage() {
             Drebbel was born in Alkmaar and trained as an engraver under Hendrick Goltzius in Haarlem. In 1595
             he married Goltzius&rsquo;s younger sister, Sophia. Two years later he engraved a large plan of his
             home town, and we hold it:{' '}
-            <Link href="/book/69b525de2f891867c1ae5d21" className={A}>the 1597 map of Alkmaar</Link>, signed
+            <Link href="/book/kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel" className={A}>the 1597 map of Alkmaar</Link>, signed
             &ldquo;Cornelius Drebbel sculptor&rdquo;.
           </p>
           <p className={P}>
@@ -110,7 +110,7 @@ export default function DrebbelPage() {
             and Prince Henry lodged him at Eltham. In 1612 the clergyman Thomas Tymme published the first picture
             of it, describing &ldquo;a most strange and wittie invention of another Archimedes &hellip; as it was
             presented to the Kings most royall hands, by Cornelius Drebble of Alchmar in Holland&rdquo; (
-            <Link href="/book/6ac3ade2864e04424c043050" className={A}>Tymme, <em>A Dialogue Philosophicall</em></Link>).
+            <Link href="/book/a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm" className={A}>Tymme, <em>A Dialogue Philosophicall</em></Link>).
             Tymme used it as an argument that the earth stands still. Thirty-six years later John Wilkins found
             that absurd.
           </p>
@@ -136,7 +136,7 @@ export default function DrebbelPage() {
             liquid that went up and down with the tide. The Jesuit Gaspar Schott wrote in 1657 that Drebbel
             &ldquo;is said to have enclosed two opposing and highly antipathetic liquids in a glass ring, which
             fought against each other in a perpetual struggle&rdquo; (
-            <Link href="/book/69a5f6cd1cf742c3604142ea?page=475" className={A}>Schott, page 475</Link>). The
+            <Link href="/book/mechanica-hydraulico-pneumatica-schott?page=475" className={A}>Schott, page 475</Link>). The
             likeliest explanation today is that the liquid rose and fell with changes in air temperature and
             pressure: a thermometer and barometer made into a clock.
           </p>
@@ -199,7 +199,7 @@ export default function DrebbelPage() {
           <p className={P}>
             Athanasius Kircher took that glass &ldquo;sphere of elements&rdquo; seriously enough to argue about
             how it could be made (
-            <Link href="/book/69527376ab34727b1f04948a?page=727" className={A}>Kircher, <em>Magnes</em>, page 727</Link>).
+            <Link href="/book/magnes-sive-de-arte-magnetica-kircher?page=727" className={A}>Kircher, <em>Magnes</em>, page 727</Link>).
           </p>
         </section>
 
@@ -227,15 +227,15 @@ export default function DrebbelPage() {
             restored it from &ldquo;a Chymicall liquor&rdquo; carried in the boat. The French traveller Balthasar
             de Monconys heard much the same in London in 1663: Drebbel &ldquo;knew how to extract a subtle spirit
             from the air&rdquo; (
-            <Link href="/book/6a44359d0235c9147000dd12?page=43" className={A}>Monconys, page 43</Link>).
+            <Link href="/book/journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys?page=43" className={A}>Monconys, page 43</Link>).
           </p>
           <p className={P}>
             By 1648 Wilkins could write in{' '}
-            <Link href="/book/69aebe60c0472fef6455a8f3" className={A}><em>Mathematicall Magick</em></Link> that a
+            <Link href="/book/mathematicall-magick-wilkins" className={A}><em>Mathematicall Magick</em></Link> that a
             submarine was &ldquo;beyond all Question, because it hath been already experimented here in England by
             Cornelius Dreble&rdquo;. In Paris, Marin Mersenne called it &ldquo;well known that a small ship was
             constructed by Cornelius Drebbel in England, which swam while submerged under the waters&rdquo; (
-            <Link href="/book/69af0dab9f13b61d0a6c6105?page=309" className={A}>Mersenne, page 309</Link>).
+            <Link href="/book/cogitata-physico-mathematica-mersenne?page=309" className={A}>Mersenne, page 309</Link>).
           </p>
         </section>
 
@@ -256,7 +256,7 @@ export default function DrebbelPage() {
             cite={
               <>
                 Christiaan Huygens, <em>Opuscula postuma</em> (1703),{' '}
-                <Link href="/book/69b6c2618566c838146599f0?page=245" className={A}>page 245</Link>.
+                <Link href="/book/christiani-hugenii-zelemii-dum-viveret-toparchae-opuscula-huygens?page=245" className={A}>page 245</Link>.
               </>
             }
           >
@@ -317,12 +317,12 @@ export default function DrebbelPage() {
           <h2 className={H2}>Reading Drebbel in Source Library</h2>
           <ul className="list-disc pl-6 space-y-2 text-secondary font-body mb-6">
             <li>Drebbel, <Link href={TREATISES} className={A}><em>Two Treatises on the Nature of the Elements and the Fifth Essence</em></Link> (Latin, 1621, with English translation)</li>
-            <li>Drebbel, <Link href="/book/6a9058b07f6818cc17cd5a93" className={A}><em>Ein kurtzer Tractat von der Natur der Elementen</em></Link> (German, 1608)</li>
-            <li>Drebbel, <Link href="/book/69b525de2f891867c1ae5d21" className={A}>map of Alkmaar</Link> (1597)</li>
-            <li>Tymme, <Link href="/book/6ac3ade2864e04424c043050" className={A}><em>A Dialogue Philosophicall</em></Link> (1612)</li>
-            <li>Wilkins, <Link href="/book/69aebe60c0472fef6455a8f3" className={A}><em>Mathematicall Magick</em></Link> (1648)</li>
-            <li>Boyle, <Link href="/book/6ac3af023b2f03f7e59cba4e" className={A}><em>The General History of the Air</em></Link> (1692)</li>
-            <li>Monconys, <Link href="/book/6a44359d0235c9147000dd12" className={A}><em>Journal of the Voyages</em></Link> (1666)</li>
+            <li>Drebbel, <Link href="/book/ein-kurtzer-tractat-von-der-natur-der-elementen-drebbel" className={A}><em>Ein kurtzer Tractat von der Natur der Elementen</em></Link> (German, 1608)</li>
+            <li>Drebbel, <Link href="/book/kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel" className={A}>map of Alkmaar</Link> (1597)</li>
+            <li>Tymme, <Link href="/book/a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm" className={A}><em>A Dialogue Philosophicall</em></Link> (1612)</li>
+            <li>Wilkins, <Link href="/book/mathematicall-magick-wilkins" className={A}><em>Mathematicall Magick</em></Link> (1648)</li>
+            <li>Boyle, <Link href="/book/the-general-history-of-the-air-boyle-robert" className={A}><em>The General History of the Air</em></Link> (1692)</li>
+            <li>Monconys, <Link href="/book/journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys" className={A}><em>Journal of the Voyages</em></Link> (1666)</li>
           </ul>
           <p className="text-sm text-muted font-body">
             Translations quoted from Source Library editions are machine translations made with AI, and each page

@@ -242,7 +242,7 @@ export default function HyperboreaPage() {
             &ldquo;perhaps this arrow was the magnetic needle,&rdquo;
           </Link>{' '}
           and the Welsh antiquary Edward Davies suggested it had been{' '}
-          <Link href="/book/6977ace4235fbd25a5194779?page=293">
+          <Link href="/book/celtic-researches-on-the-origin-traditions-language-of-the-davies?page=293">
             an arrow of straw
           </Link>
           , like the straw the Hyperborean offerings came wrapped in.
@@ -630,16 +630,16 @@ export default function HyperboreaPage() {
           There is a bolder version of the British case: that the Hyperborean offerings reaching Delos in
           Herodotus&apos;s lifetime were sent by Pythagorean druids. Roman and Greek writers did describe the druids
           in Pythagorean terms. Caesar, in the 50s BCE, says that the druids&apos; discipline{' '}
-          <Link href="/book/6a085cfb49638a50931ce60a?page=189">
+          <Link href="/book/c-iulii-caesaris-commentariorum-de-bello-gallico-libri-8-ciu-2?page=189">
             &ldquo;is thought to have been invented in Britain and transferred from there into Gaul,&rdquo;
           </Link>{' '}
           that they keep their teaching out of writing although they use Greek letters for accounts, and that they
           teach above all{' '}
-          <Link href="/book/6a085cfb49638a50931ce60a?page=190">
+          <Link href="/book/c-iulii-caesaris-commentariorum-de-bello-gallico-libri-8-ciu-2?page=190">
             &ldquo;that souls do not perish, but after death pass to others.&rdquo;
           </Link>{' '}
           Their Apollo, he adds,{' '}
-          <Link href="/book/6a085cfb49638a50931ce60a?page=191">
+          <Link href="/book/c-iulii-caesaris-commentariorum-de-bello-gallico-libri-8-ciu-2?page=191">
             &ldquo;drives away diseases&rdquo;
           </Link>
           , which is what Abaris did at Sparta. Diodorus says outright that among the Gauls{' '}
@@ -658,7 +658,7 @@ export default function HyperboreaPage() {
           <PageFigure
             src="/articles/hyperborea/caesar-1561-druids.jpg"
             alt="Page of Latin italic type from a 1561 edition of Caesar's Commentaries, on the druids"
-            href="/book/6a085cfb49638a50931ce60a?page=189"
+            href="/book/c-iulii-caesaris-commentariorum-de-bello-gallico-libri-8-ciu-2?page=189"
             source={<>Caesar, <em>Commentarii</em>, with corrections by Paolo Manuzio (1561)</>}
             credit="Scan: Early European Books, © 2010 ProQuest LLC, reproduced by courtesy of the Biblioteca Nazionale Centrale di Firenze."
           >
@@ -760,15 +760,15 @@ export default function HyperboreaPage() {
           </Link>{' '}
           and drowned at sea for the impiety. Plato gave it to the cosmos. In the <em>Timaeus</em>, after assigning
           four regular solids to the four elements,{' '}
-          <Link href="/book/69942e25d607f8e57e4b7950?page=550">
+          <Link href="/book/de-aeternitate-mundi-contra-proclum-rabe?page=550">
             &ldquo;God used this one for the whole&rdquo;
           </Link>
           ; in the <em>Phaedo</em> the true earth seen from above looks{' '}
-          <Link href="/book/69937767b0a84a57639639fe?page=287">
+          <Link href="/book/phaedo-plato?page=287">
             &ldquo;like balls made of twelve pieces of leather.&rdquo;
           </Link>{' '}
           Plutarch, in his <em>Platonic Questions</em>, read the twelve faces as the zodiac: the figure, he wrote,{' '}
-          <Link href="/book/69905f1140bc3a0478efa1d3?page=209">
+          <Link href="/book/timaeus-greek-text-with-commentary-archer-hind?page=209">
             seems to imitate the zodiac and the year
           </Link>
           . The Geneva object spells out the same idea.
@@ -873,7 +873,7 @@ export default function HyperboreaPage() {
             doubted&rdquo;
           </Link>{' '}
           (1740). John Wood{' '}
-          <Link href="/book/69ee471d6dd925d126f416a9?page=9">
+          <Link href="/book/choir-gaure-vulgarly-called-stonehenge-on-salisbury-plain-wood?page=9">
             made Abaris and Bladud, the legendary founder of Bath, &ldquo;one and the same man&rdquo;
           </Link>{' '}
           (1747), William Borlase{' '}
@@ -1185,7 +1185,7 @@ export default function HyperboreaPage() {
             <em>Deliciae Prussicae</em>
           </Link>{' '}
           from the Lithuanian villages of East Prussia, the{' '}
-          <Link href="/book/6a209d3889e8715c5947a52c">
+          <Link href="/book/dainos-lithuanian-folk-songs-reza">
             <em>dainos</em>
           </Link>{' '}
           or folk songs, and Mannhardt&apos;s compendium of every source he could find. They are in the{' '}

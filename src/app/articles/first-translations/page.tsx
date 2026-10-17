@@ -135,8 +135,8 @@ export default function FirstTranslationsPage() {
                 Among these is the work of{' '}
                 <Link href="https://sourcelibrary.org/book/698255f12f8186e7ada0c92c" className="text-accent-rust hover:text-accent-rust underline font-medium">Dorothea Juliana Walchin</Link>, a woman alchemist active in the early 18th century. Her three books (
                 <Link href="https://sourcelibrary.org/book/698255f12f8186e7ada0c92c" className="text-accent-rust hover:text-accent-rust underline"><em>Das mineralische Gluten</em></Link>,{' '}
-                <Link href="https://sourcelibrary.org/book/6984e84ebcfafeceb11019c1" className="text-accent-rust hover:text-accent-rust underline"><em>Der philosophische Perl-Baum</em></Link>, and{' '}
-                <Link href="https://sourcelibrary.org/book/6988a5a1f3319e17203eb918" className="text-accent-rust hover:text-accent-rust underline"><em>Schl&uuml;ssel zu dem Cabinet</em></Link>
+                <Link href="https://sourcelibrary.org/book/the-philosophical-pearl-tree-walchin" className="text-accent-rust hover:text-accent-rust underline"><em>Der philosophische Perl-Baum</em></Link>, and{' '}
+                <Link href="https://sourcelibrary.org/book/key-to-the-cabinet-of-the-secret-treasury-of-nature-walchin" className="text-accent-rust hover:text-accent-rust underline"><em>Schl&uuml;ssel zu dem Cabinet</em></Link>
                 ) have never appeared in English. They are practical alchemical treatises written by a woman in a field overwhelmingly dominated by men, and their existence is barely noted in the standard histories.
               </p>
             </div>
@@ -158,7 +158,7 @@ export default function FirstTranslationsPage() {
             </p>
             <p className="text-sm text-muted">
               Students have read <em>about</em> it for 250 years. Now they can{' '}
-              <Link href="https://sourcelibrary.org/book/69776dfe4896622ce9e30c70" className="text-accent-rust hover:text-accent-rust not-italic underline">
+              <Link href="https://sourcelibrary.org/book/letters-to-a-friend-in-switzerland-semler" className="text-accent-rust hover:text-accent-rust not-italic underline">
                 read it
               </Link>.
             </p>
@@ -175,7 +175,7 @@ export default function FirstTranslationsPage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Among the most striking is the{' '}
-            <Link href="https://sourcelibrary.org/book/697c8e0f6000fdec2f130606" className="text-accent-rust hover:text-accent-rust underline"><em>Frawen Zimmer des Gottseligen Hocherleuchten Gottesgelehrten</em></Link>{' '}
+            <Link href="https://sourcelibrary.org/book/the-ladies-chamber-of-the-sisters-of-the-rosy-cross-anonymous" className="text-accent-rust hover:text-accent-rust underline"><em>Frawen Zimmer des Gottseligen Hocherleuchten Gottesgelehrten</em></Link>{' '}
             (1620), the &ldquo;Women&apos;s Chamber of the Rosy Cross.&rdquo; Published just six years after the <em>Fama Fraternitatis</em>, this text addresses women&apos;s participation in the Rosicrucian movement at a time when the standard narrative assumes the movement was entirely male. It has never appeared in English.
           </p>
 
@@ -213,7 +213,7 @@ export default function FirstTranslationsPage() {
             />
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               A page from the <em>Brihat Samhita</em>, one of the foundational texts of Indian astrology.{' '}
-              <Link href="https://sourcelibrary.org/book/69905f4140bc3a0478efb47b" className="text-accent-rust hover:text-accent-rust not-italic">Read in Source Library &rarr;</Link>
+              <Link href="https://sourcelibrary.org/book/brihat-samhita-the-great-compilation-varahamihira" className="text-accent-rust hover:text-accent-rust not-italic">Read in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -263,7 +263,7 @@ export default function FirstTranslationsPage() {
                 />
               </div>
               <div className="p-5 md:p-6">
-                <Link href="https://sourcelibrary.org/book/6952898bab34727b1f04d709" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                <Link href="https://sourcelibrary.org/book/easy-and-charitable-chemistry-for-ladies-meurdrac" className="text-accent-rust hover:text-accent-rust underline font-medium">
                   Marie Meurdrac, <em>La chymie charitable et facile en faveur des dames</em>
                 </Link>
                 <p className="text-sm text-muted mt-1 mb-3">Paris, 1666</p>
@@ -287,7 +287,7 @@ export default function FirstTranslationsPage() {
                   />
                 </div>
                 <div className="p-5 md:p-6">
-                  <Link href="https://sourcelibrary.org/book/6984e84d875ef560e34aef4e" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                  <Link href="https://sourcelibrary.org/book/minor-works-opuscula-schurman" className="text-accent-rust hover:text-accent-rust underline font-medium">
                     Anna Maria van Schurman, <em>Opuscula</em>
                   </Link>
                   <p className="text-sm text-muted mt-1 mb-3">Leiden, 1648</p>
@@ -309,7 +309,7 @@ export default function FirstTranslationsPage() {
                   />
                 </div>
                 <div className="p-5 md:p-6">
-                  <Link href="https://sourcelibrary.org/book/69529036b184004c526a17f8" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                  <Link href="https://sourcelibrary.org/book/on-famous-and-select-women-foresti" className="text-accent-rust hover:text-accent-rust underline font-medium">
                     Jacopo Filippo Foresti, <em>De claris selectisque mulieribus</em>
                   </Link>
                   <p className="text-sm text-muted mt-1 mb-3">Ferrara, 1497</p>
@@ -372,7 +372,7 @@ export default function FirstTranslationsPage() {
                 />
               </div>
               <div className="p-5 md:p-6">
-                <Link href="https://sourcelibrary.org/book/6909a2e7cf28baa1b4caec93" className="text-accent-rust hover:text-accent-rust underline font-medium">
+                <Link href="https://sourcelibrary.org/book/on-the-ancient-hermetic-medicine-of-the-egyptians-and-the-conring" className="text-accent-rust hover:text-accent-rust underline font-medium">
                   Hermann Conring, <em>De Hermetica Medicina</em>
                 </Link>
                 <p className="text-sm text-muted mt-1 mb-3">Helmstedt, 1649 &middot; 433 pages</p>

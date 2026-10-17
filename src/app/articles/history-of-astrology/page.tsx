@@ -71,20 +71,20 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Source Library holds the{' '}
-          <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust underline">1484 first printed edition of the <em>Quadripartitum</em></Link>
+          <Link href="/book/tetrabiblos-and-centiloquy-commentary" className="text-accent-rust hover:text-accent-rust underline">1484 first printed edition of the <em>Quadripartitum</em></Link>
           {' '}(the Latin title of the <em>Tetrabiblos</em>), produced in Venice by Erhard Ratdolt, the same printer who published the first printed edition of Euclid. It is one of the most beautiful incunabula in the collection, with woodcut diagrams of the zodiac signs and elaborate typographic conventions for astronomical notation that Ratdolt had developed for the Euclid.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           But for the raw material of Hellenistic astrology (the technical vocabulary, the felt texture of astrological thought), the more revealing source is{' '}
-          <Link href="/book/68d5571a110616ec557a3708" className="text-accent-rust hover:text-accent-rust underline">Marcus Manilius&apos;s <em>Astronomica</em></Link>
+          <Link href="/book/eight-books-on-astronomy-maternus" className="text-accent-rust hover:text-accent-rust underline">Marcus Manilius&apos;s <em>Astronomica</em></Link>
           {' '}(c. 10 CE), the only complete astrological poem to survive from antiquity. Manilius wrote in hexameters, the metre of Virgil and Lucretius, and he was building a grand cosmological poem in their tradition, except his subject was the technical machinery of astrology in full detail. The poem is extraordinary for the vocabulary it establishes. Our translation renders the Greek/Latin technical terms transparently:
         </p>
 
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;The sign rising at the eastern horizon at the moment of birth &mdash; what the Greeks call the <em>horoskopos</em>, the hour-observer &mdash; is called the Ascendant by Roman astrologers. It is the foundation of the nativity chart&hellip; The <em>epochē</em>, or position of a planet, is its precise degree within its sign. The <em>moira</em>, literally the &lsquo;portion&rsquo; or &lsquo;share,&rsquo; refers to the degree itself as a unit of fate.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/68d5571a110616ec557a3708" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/eight-books-on-astronomy-maternus" className="hover:text-accent-rust transition-colors">
               Manilius, <em>Astronomica</em> (1533), Book I, sourcelibrary.org
             </Link>
           </footer>
@@ -120,14 +120,14 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The other major text is the{' '}
-          <Link href="/book/699060198cbcc9a4dba2c10a" className="text-accent-rust hover:text-accent-rust underline"><em>Saravali</em></Link>
+          <Link href="/book/the-essence-of-astrology-saravali-varma" className="text-accent-rust hover:text-accent-rust underline"><em>Saravali</em></Link>
           {' '}(c. 850 CE) by Kalyana Varma, which systematically covers the effects of every planetary combination at birth. Its opening chapters establish something that has no Greek equivalent: the doctrine of <em>Kalapurusha</em>, the cosmic man whose body is the zodiac itself:
         </p>
 
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;Aries is the head of the Kalapurusha, Taurus the face, Gemini the arms, Cancer the chest, Leo the heart and stomach, Virgo the hips and lower abdomen, Libra the generative organs, Scorpio the genitals and anus, Sagittarius the thighs, Capricorn the knees, Aquarius the calves, and Pisces the feet. Thus the zodiac is the body of time itself.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/699060198cbcc9a4dba2c10a" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/the-essence-of-astrology-saravali-varma" className="hover:text-accent-rust transition-colors">
               Kalyana Varma, <em>Saravali</em> (c. 850 CE), Chapter 2, sourcelibrary.org
             </Link>
           </footer>
@@ -147,14 +147,14 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Abu Ma&apos;shar al-Balkhi (787&ndash;886 CE) is the figure who most shaped how medieval Europe would understand astrology. His <em>Kitāb al-Mudkhal al-Kabīr</em> (&ldquo;Great Introduction to Astrology&rdquo;), translated into Latin in the 12th century and reprinted across Europe throughout the 15th, was the gateway text through which Aristotelian cosmology and Ptolemaic astrology entered the medieval university curriculum together. Source Library holds the{' '}
-          <Link href="/book/69905e3c2fd6a039938a1980" className="text-accent-rust hover:text-accent-rust underline">1489 Venice edition of his <em>Introductorium in Astronomiam</em></Link>
+          <Link href="/book/introduction-to-astronomy-albumasar" className="text-accent-rust hover:text-accent-rust underline">1489 Venice edition of his <em>Introductorium in Astronomiam</em></Link>
           {' '}(the Latin title), and its translated pages reveal a writer who is at once a technical astronomer and a philosopher defending the legitimacy of his discipline:
         </p>
 
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;Among all the arts and sciences that are concerned with the knowledge of hidden things, none is more noble, more certain in its foundations, or more beneficial in its effects than astrology, which derives its principles from the observed motions of the stars and applies them through rigorous demonstration to the affairs of the world below.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/69905e3c2fd6a039938a1980" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/introduction-to-astronomy-albumasar" className="hover:text-accent-rust transition-colors">
               Abu Ma&apos;shar, <em>Introductorium in Astronomiam</em> (Venice, 1489), Preface, sourcelibrary.org
             </Link>
           </footer>
@@ -166,14 +166,14 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Perhaps the most visually extraordinary astrological text in the Arabic tradition is the anonymous{' '}
-          <Link href="/book/6953b59b77f38f6761bd990c" className="text-accent-rust hover:text-accent-rust underline"><em>Book of Curiosities of the Sciences and Marvels for the Eyes</em></Link>
+          <Link href="/book/bodleian-library-ms-arab-c-90-egypt" className="text-accent-rust hover:text-accent-rust underline"><em>Book of Curiosities of the Sciences and Marvels for the Eyes</em></Link>
           {' '}(Kitāb Gharāʾib al-funūn wa-mulaḥ al-ʿuyūn), written in Egypt around 1020 CE and surviving in a 13th-century manuscript now at the Bodleian Library at Oxford. It contains the oldest surviving map of the world drawn on a flat surface (predating European mappae mundi), along with maps of the Mediterranean, the Indian Ocean, maps of individual rivers, and a series of extraordinary star charts. The cosmological framework is precise:
         </p>
 
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;The distance from the Earth to the Moon is 106,000 parasangs. From the Moon to Mercury is 106,000 parasangs. From Mercury to Venus is 212,000 parasangs. From Venus to the Sun is 424,000 parasangs. From the Sun to Mars is 848,000 parasangs. From Mars to Jupiter is 1,696,000 parasangs. From Jupiter to Saturn is 3,392,000 parasangs. And from Saturn to the sphere of the fixed stars is 19,000,000 parasangs.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/6953b59b77f38f6761bd990c" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/bodleian-library-ms-arab-c-90-egypt" className="hover:text-accent-rust transition-colors">
               <em>Book of Curiosities</em> (c. 1020 CE), Chapter on the Heavens, sourcelibrary.org
             </Link>
           </footer>
@@ -192,7 +192,7 @@ export default function HistoryOfAstrologyPage() {
           />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             The five planets as sovereign figures, from the{' '}
-            <Link href="/book/6953b56577f38f6761bd979d" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/book-of-wonders-al-isfahani" className="hover:text-accent-rust transition-colors">
               <em>Kit&#257;b al-Bul&#7717;&#257;n</em> (Book of Wonders)
             </Link>
             , an Arabic astrological manuscript compiled c.&nbsp;1399, held at the Bodleian Library, Oxford.
@@ -213,14 +213,14 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Source Library holds the{' '}
-          <Link href="/book/6992cac0d4d545ae73feea71" className="text-accent-rust hover:text-accent-rust underline">五星三命通考 (<em>Wuxing Sanming Tongkao</em>, &ldquo;Comprehensive Study of the Five Stars and Three Fates&rdquo;)</Link>
+          <Link href="/book/five-stars-three-fates-complete-guide-to-astrology-vol-1-tiangang" className="text-accent-rust hover:text-accent-rust underline">五星三命通考 (<em>Wuxing Sanming Tongkao</em>, &ldquo;Comprehensive Study of the Five Stars and Three Fates&rdquo;)</Link>
           {' '}(1657 CE), one of the major synthesis texts of the Chinese astrological tradition. Its cosmological foundation is the <em>He Tu</em> (River Map) and <em>Luo Shu</em> (Luo Scroll), mythical diagrams said to have been revealed to the legendary Emperor Fu Xi on the back of a dragon-horse emerging from the Yellow River, and to the Emperor Yu on the back of a turtle from the Luo River. Our translation renders the key cosmological passage:
         </p>
 
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;Heaven and Earth established the foundation; yin and yang created the mechanism. The River Map gave rise to the eight trigrams; the Luo Scroll gave rise to the nine palaces. The five stars wheel through the heavens; the three fates govern human destiny. To understand the heavenly pattern is to understand the human pattern. They are not two things.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/6992cac0d4d545ae73feea71" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/five-stars-three-fates-complete-guide-to-astrology-vol-1-tiangang" className="hover:text-accent-rust transition-colors">
               <em>Wuxing Sanming Tongkao</em> (1657 CE), Introduction, sourcelibrary.org
             </Link>
           </footer>
@@ -235,7 +235,7 @@ export default function HistoryOfAstrologyPage() {
           />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             The <em>He Tu</em> (River Map) from the{' '}
-            <Link href="/book/6992cac0d4d545ae73feea71" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/five-stars-three-fates-complete-guide-to-astrology-vol-1-tiangang" className="hover:text-accent-rust transition-colors">
               <em>Wuxing Sanming Tongkao</em> (1657)
             </Link>
             , one of the foundational cosmological diagrams of Chinese astrology, said to have been revealed to Emperor Fu Xi on the back of a dragon-horse emerging from the Yellow River.
@@ -263,7 +263,7 @@ export default function HistoryOfAstrologyPage() {
           />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             The <em>Homo Signorum</em> (&ldquo;Zodiac Man&rdquo;) from{' '}
-            <Link href="/book/699068948034a3640265b709" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/margarita-philosophica-reisch" className="hover:text-accent-rust transition-colors">
               Gregor Reisch, <em>Margarita Philosophica</em> (1503)
             </Link>
             , the Renaissance encyclopedia that mapped each zodiac sign to a region of the human body. This diagram was used in European medical education for three centuries.
@@ -272,14 +272,14 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The Renaissance deepened this tradition by recovering more of the Greek sources. No figure did more to shape Renaissance astrology than Marsilio Ficino (1433&ndash;1499), the Florentine philosopher who translated the entire Platonic corpus for Cosimo de&apos; Medici and who developed an elaborate system of what we might now call astrological medicine in his{' '}
-          <Link href="/book/694f396c23a1d0c2ad1d8698" className="text-accent-rust hover:text-accent-rust underline"><em>De vita libri tres</em></Link>
+          <Link href="/book/three-books-on-life-1489-first-edition-ficino" className="text-accent-rust hover:text-accent-rust underline"><em>De vita libri tres</em></Link>
           {' '}(&ldquo;Three Books on Life,&rdquo; 1489). The book is dedicated to Lorenzo de&apos; Medici, and its preface establishes the project with characteristic Renaissance confidence:
         </p>
 
         <blockquote className="border-l-4 border-accent-gold/20 pl-6 my-8 text-secondary italic leading-relaxed">
           &ldquo;I have undertaken to show that a life which is both healthy and long may be obtained from the heavens, provided only that one understands the nature of the stars, the temperament of one&apos;s own body, and the correspondence between the two. For the heavens are not alien to us; they are the outer expression of the same rational order that is within us.&rdquo;
           <footer className="mt-3 text-sm not-italic text-muted">
-            <Link href="/book/694f396c23a1d0c2ad1d8698" className="hover:text-accent-rust transition-colors">
+            <Link href="/book/three-books-on-life-1489-first-edition-ficino" className="hover:text-accent-rust transition-colors">
               Marsilio Ficino, <em>De vita libri tres</em> (Florence, 1489), Preface, sourcelibrary.org
             </Link>
           </footer>
@@ -390,17 +390,17 @@ export default function HistoryOfAstrologyPage() {
               <p className="text-xs font-semibold tracking-widest uppercase text-muted mb-3">Greek &amp; Latin</p>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/tetrabiblos-and-centiloquy-commentary" className="text-accent-rust hover:text-accent-rust text-sm">
                     Ptolemy, <em>Quadripartitum</em> (Venice, 1484)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/68d5571a110616ec557a3708" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/eight-books-on-astronomy-maternus" className="text-accent-rust hover:text-accent-rust text-sm">
                     Manilius, <em>Astronomica</em> (1533)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/694f396c23a1d0c2ad1d8698" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/three-books-on-life-1489-first-edition-ficino" className="text-accent-rust hover:text-accent-rust text-sm">
                     Ficino, <em>De vita libri tres</em> (Florence, 1489)
                   </Link>
                 </li>
@@ -420,7 +420,7 @@ export default function HistoryOfAstrologyPage() {
               <p className="text-xs font-semibold tracking-widest uppercase text-muted mb-3">Sanskrit, Arabic &amp; Chinese</p>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/book/699060198cbcc9a4dba2c10a" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/the-essence-of-astrology-saravali-varma" className="text-accent-rust hover:text-accent-rust text-sm">
                     Kalyana Varma, <em>Saravali</em> (c. 850 CE)
                   </Link>
                 </li>
@@ -430,17 +430,17 @@ export default function HistoryOfAstrologyPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/6953b59b77f38f6761bd990c" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/bodleian-library-ms-arab-c-90-egypt" className="text-accent-rust hover:text-accent-rust text-sm">
                     Anon., <em>Book of Curiosities</em> (c. 1020 CE)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/69905e3c2fd6a039938a1980" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/introduction-to-astronomy-albumasar" className="text-accent-rust hover:text-accent-rust text-sm">
                     Abu Ma&apos;shar, <em>Introductorium in Astronomiam</em> (Venice, 1489)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/book/6992cac0d4d545ae73feea71" className="text-accent-rust hover:text-accent-rust text-sm">
+                  <Link href="/book/five-stars-three-fates-complete-guide-to-astrology-vol-1-tiangang" className="text-accent-rust hover:text-accent-rust text-sm">
                     Anon., <em>Wuxing Sanming Tongkao</em> (1657 CE)
                   </Link>
                 </li>

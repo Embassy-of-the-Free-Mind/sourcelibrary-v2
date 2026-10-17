@@ -148,7 +148,7 @@ export default function ReadingClassicalChinesePage() {
           &ldquo;The modest, retiring, virtuous, young lady: With lutes, small and large, let us give her friendly welcome.&rdquo;
         </blockquote>
         <p className="text-secondary leading-relaxed mb-4">
-          Our translation of the <a href="/book/69d5ae594dc55b8478de1380/page/69d5ae594dc55b8478de13a2" className="text-accent-rust hover:underline">same page</a>:
+          Our translation of the <a href="/book/book-of-odes-documents-changes-combined-japanese-edition-various/page/69d5ae594dc55b8478de13a2" className="text-accent-rust hover:underline">same page</a>:
         </p>
         <blockquote className="border-l-4 border-accent-gold/40 pl-6 my-4 text-secondary italic">
           &ldquo;The modest, retiring, virtuous young lady; With lutes and zithers, we befriend her.&rdquo;
@@ -164,7 +164,7 @@ export default function ReadingClassicalChinesePage() {
           &ldquo;The Dao that can be trodden is not the enduring and unchanging Dao.&rdquo;
         </blockquote>
         <p className="text-secondary leading-relaxed mb-4">
-          Our translation of <a href="/book/69935b692c63944063133f67/page/69935b6a2c63944063133f74" className="text-accent-rust hover:underline">the page</a>:
+          Our translation of <a href="/book/dao-de-jing-yuan-yi-tao-te-ching-with-commentary-laozi/page/69935b6a2c63944063133f74" className="text-accent-rust hover:underline">the page</a>:
         </p>
         <blockquote className="border-l-4 border-accent-gold/40 pl-6 my-4 text-secondary italic">
           &ldquo;The Way that can be spoken of is not the constant Way; the name that can be named is not the constant name. The nameless is the beginning of Heaven and Earth; the named is the mother of the ten thousand things.&rdquo;

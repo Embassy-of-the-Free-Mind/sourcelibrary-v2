@@ -5,14 +5,14 @@
 // Chumayel, Calkiní, Teabo, Nah and the Ixil lunario; Beltrán; the 1898
 // Coordinación.
 export const EXTRA_BOOKS = [
-  '/book/6a87106327fd08cecf145caa',
-  '/book/6acc3d72230e9a56175ccc93',
-  '/book/6a87102131598d129803de7b',
-  '/book/699259a03d2d40d1b0592ce8',
-  '/book/6a8ee3de880abaf2b45934c3',
-  '/book/6a8d9b7c4cc19d0e10153aa9',
-  '/book/6a8da255aa8f57838adf7fe4',
-  '/book/6a8da256aa8f57838adf8025',
-  '/book/6a9f3fa483c3b522416e48fa',
-  '/book/6a9f3fa783c3b522416e4a0d',
+  '/book/popol-vuh-ximenez-manuscript-ayer-ms-1515',
+  '/book/libro-de-platicas-antonio-del-saz',
+  '/book/libro-de-chilam-balam-de-kaua-scribes',
+  '/book/the-book-of-chilam-balam-of-chumayel-gordon',
+  '/book/chilam-balam-de-calkini',
+  '/book/chilam-balam-de-teabo-1621',
+  '/book/chilam-balam-de-nah',
+  '/book/chilam-balam-de-ixil-lunario-maya',
+  '/book/arte-del-idioma-maya-reducido-a-sucintas-reglas-y-semilexicon-yucateco',
+  '/book/coordinacion-alfabetica-de-las-voces-del-idioma-maya-pedro-beltran-de',
 ];

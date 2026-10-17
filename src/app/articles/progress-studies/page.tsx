@@ -175,7 +175,7 @@ export default function ProgressStudiesPage() {
             steam-powered rotating spheres, automatic temple doors, and singing bird automata)
             and the <em>Corpus Hermeticum</em>, the foundational text of Western
             mystical philosophy. The same scribe, the same royal binding.{' '}
-            <Link href="/book/695230c6ab34727b1f044784?page=93" className="text-accent-rust hover:underline">
+            <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=93" className="text-accent-rust hover:underline">
               The aeolipile diagram</Link>{' '}
             is sixty pages from the vision of divine light.
           </p>
@@ -191,7 +191,7 @@ export default function ProgressStudiesPage() {
             &ldquo;natural magic&rdquo; and delivers a pneumatics textbook. Book XIX is a
             systematic treatment of hydraulics and air-pressure devices, citing Hero by name.
             Book XX gives{' '}
-            <Link href="/book/694fe5f9f844de8615417df4?page=706" className="text-accent-rust hover:underline">
+            <Link href="/book/magia-naturalis-libri-xx-1607-porta?page=706" className="text-accent-rust hover:underline">
               exact specifications for building a kite</Link>{' '}
             (frame proportions, covering materials, wind conditions) and concludes
             that &ldquo;the ingenious man will be able to foresee the principles by which even
@@ -207,11 +207,11 @@ export default function ProgressStudiesPage() {
             thousand years. They invented the <em>athanor</em>, a self-feeding furnace
             that maintains constant temperature for days, solving a real thermodynamics problem
             before thermostats existed. The <em>bain-marie</em>, attributed to{' '}
-            <Link href="/book/69751588a88d83c830d99e17?page=6" className="text-accent-rust hover:underline">
+            <Link href="/book/the-art-of-gold-making-artis-auriferae-morienus?page=6" className="text-accent-rust hover:underline">
               Maria the Prophetess</Link>{' '}
             in late antiquity, survives in every chemistry laboratory and restaurant kitchen
             in the world. The{' '}
-            <Link href="/book/694fe601f844de8615417e21?page=2" className="text-accent-rust hover:underline">
+            <Link href="/book/theatrum-chemicum-vol-iii-1602-zetzner?page=2" className="text-accent-rust hover:underline">
               <em>Theatrum Chemicum</em></Link>{' '}
             (1659), six folio volumes with over two hundred treatises, scatters
             precise technical instructions for building laboratory equipment among its
@@ -294,7 +294,7 @@ export default function ProgressStudiesPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/695294d8b184004c526a23f1?page=51"
+                href="/book/the-advancement-of-learning-1605-first-edition-bacon?page=51"
                 className="text-accent-rust hover:underline"
               >
                 Francis Bacon, <em>The Advancement of Learning</em>, 1605
@@ -365,10 +365,10 @@ export default function ProgressStudiesPage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The intellectual tradition out of which modern science emerged is preserved in the
             texts that Source Library holds. The{' '}
-            <Link href="/book/694fe601f844de8615417e21" className="text-accent-rust hover:underline">
+            <Link href="/book/theatrum-chemicum-vol-iii-1602-zetzner" className="text-accent-rust hover:underline">
               <em>Theatrum Chemicum</em></Link>,
             the{' '}
-            <Link href="/book/69751588a88d83c830d99e17" className="text-accent-rust hover:underline">
+            <Link href="/book/the-art-of-gold-making-artis-auriferae-morienus" className="text-accent-rust hover:underline">
               <em>Artis Auriferae</em></Link>,
             the Hermetic and Neoplatonic texts that Ficino translated, the Kabbalistic works
             that shaped Renaissance natural philosophy: these are the source code of the

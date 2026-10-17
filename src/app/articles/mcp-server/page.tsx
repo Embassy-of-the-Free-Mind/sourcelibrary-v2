@@ -92,19 +92,19 @@ export default function McpServerPage() {
         <ul className="space-y-2 mb-8 ml-4">
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Ficino&apos;s <Link href="/book/690989d5cf28baa1b4cae1c9" className="text-accent-rust hover:text-accent-rust underline"><em>Pymander</em></Link>: the 1471 translation that launched the Hermetic revival</span>
+            <span>Ficino&apos;s <Link href="/book/pymander-asclepius-on-the-mysteries-of-the-egyptians-on-trismegistus" className="text-accent-rust hover:text-accent-rust underline"><em>Pymander</em></Link>: the 1471 translation that launched the Hermetic revival</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Copernicus&apos;s <Link href="/book/694f49d3f9b1ecc07965e424" className="text-accent-rust hover:text-accent-rust underline"><em>De Revolutionibus</em></Link>, which quotes Hermes on the Sun&apos;s centrality</span>
+            <span>Copernicus&apos;s <Link href="/book/on-the-revolutions-of-the-heavenly-spheres-1543-first-copernicus" className="text-accent-rust hover:text-accent-rust underline"><em>De Revolutionibus</em></Link>, which quotes Hermes on the Sun&apos;s centrality</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>The <Link href="/book/695203a5ab34727b1f041c53" className="text-accent-rust hover:text-accent-rust underline"><em>Musaeum Hermeticum</em></Link>: 543 pages of alchemical texts under his name</span>
+            <span>The <Link href="/book/the-hermetic-museum-various-sendivogius" className="text-accent-rust hover:text-accent-rust underline"><em>Musaeum Hermeticum</em></Link>: 543 pages of alchemical texts under his name</span>
           </li>
           <li className="text-secondary flex items-start gap-2">
             <span className="text-accent-rust mt-1.5 text-xs">&#9679;</span>
-            <span>Kepler&apos;s <Link href="/book/6fc11c7d-782a-47c3-a855-f3b4415e797b" className="text-accent-rust hover:text-accent-rust underline"><em>Harmonices Mundi</em></Link>, the <Link href="/book/6da19aeb-aec0-411c-b890-73035c92273d" className="text-accent-rust hover:text-accent-rust underline"><em>Fama Fraternitatis</em></Link>, Kircher&apos;s <Link href="/book/6952050fab34727b1f04216b" className="text-accent-rust hover:text-accent-rust underline"><em>Musurgia Universalis</em></Link>, and more</span>
+            <span>Kepler&apos;s <Link href="/book/6fc11c7d-782a-47c3-a855-f3b4415e797b" className="text-accent-rust hover:text-accent-rust underline"><em>Harmonices Mundi</em></Link>, the <Link href="/book/6da19aeb-aec0-411c-b890-73035c92273d" className="text-accent-rust hover:text-accent-rust underline"><em>Fama Fraternitatis</em></Link>, Kircher&apos;s <Link href="/book/universal-music-making-musurgia-universalis-volume-i-kircher" className="text-accent-rust hover:text-accent-rust underline"><em>Musurgia Universalis</em></Link>, and more</span>
           </li>
         </ul>
 

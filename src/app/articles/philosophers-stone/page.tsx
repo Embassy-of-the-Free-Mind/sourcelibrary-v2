@@ -54,7 +54,7 @@ export default function PhilosophersStonePage() {
         </p>
 
         <figure className="my-12">
-          <Link href="/book/69804b952c52aad359879321?page=6">
+          <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804ceaefc8a337f6e2717b.jpg&x=0.105&y=0.264&w=0.65&h=0.518"
@@ -64,7 +64,7 @@ export default function PhilosophersStonePage() {
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Frontispiece to Lambspringk&rsquo;s <em>De Lapide Philosophico</em>, Frankfurt 1625. The philosopher stands beside the <em>athanor</em>, the alchemical furnace.{' '}
-            <Link href="/book/69804b952c52aad359879321?page=6" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+            <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=6" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
           </figcaption>
         </figure>
 
@@ -98,7 +98,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69804b952c52aad359879321?page=12"
+                href="/book/on-the-philosopher-s-stone-lambspringk?page=12"
                 className="text-accent-rust hover:underline"
               >
                 Lambspringk, <em>De Lapide Philosophico</em>, p. 87
@@ -107,7 +107,7 @@ export default function PhilosophersStonePage() {
           </div>
 
           <figure className="my-10">
-            <Link href="/book/69804b952c52aad359879321?page=12">
+            <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=12">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804e6e3103227c95c0959b.jpg&x=0.095&y=0.23&w=0.645&h=0.515"
@@ -117,7 +117,7 @@ export default function PhilosophersStonePage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Two Fish: Soul and Spirit swimming in the Sea of the Body.{' '}
-              <Link href="/book/69804b952c52aad359879321?page=12" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=12" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -135,7 +135,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69804b952c52aad359879321?page=13"
+                href="/book/on-the-philosopher-s-stone-lambspringk?page=13"
                 className="text-accent-rust hover:underline"
               >
                 Lambspringk, p. 88
@@ -145,7 +145,7 @@ export default function PhilosophersStonePage() {
           </div>
 
           <figure className="my-10">
-            <Link href="/book/69804b952c52aad359879321?page=20">
+            <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=20">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980516d4fdb08d66f63917e.jpg&x=0.092&y=0.256&w=0.65&h=0.508"
@@ -155,7 +155,7 @@ export default function PhilosophersStonePage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Stag and the Unicorn: Soul and Spirit in the Forest of the Body.{' '}
-              <Link href="/book/69804b952c52aad359879321?page=20" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=20" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -173,7 +173,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69804b952c52aad359879321?page=26"
+                href="/book/on-the-philosopher-s-stone-lambspringk?page=26"
                 className="text-accent-rust hover:underline"
               >
                 Lambspringk, p. 17
@@ -182,7 +182,7 @@ export default function PhilosophersStonePage() {
           </div>
 
           <figure className="my-10">
-            <Link href="/book/69804b952c52aad359879321?page=26">
+            <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=26">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69805353591f8fe93522148a.jpg&x=0.088&y=0.233&w=0.655&h=0.512"
@@ -192,7 +192,7 @@ export default function PhilosophersStonePage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Ouroboros: the dragon that devours itself, symbol of cyclical transformation.{' '}
-              <Link href="/book/69804b952c52aad359879321?page=26" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=26" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -228,7 +228,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69804b95370ddc6f3e47c57d?page=9"
+                href="/book/the-child-bed-of-the-philosopher-s-stone-anonymous?page=9"
                 className="text-accent-rust hover:underline"
               >
                 The Child-Bed of the Philosopher&rsquo;s Stone, p. 6
@@ -251,7 +251,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69804b95370ddc6f3e47c57d?page=8"
+                href="/book/the-child-bed-of-the-philosopher-s-stone-anonymous?page=8"
                 className="text-accent-rust hover:underline"
               >
                 The Child-Bed, p. 5
@@ -298,7 +298,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6977b866112cb9b4f70c3ff8?page=5"
+                href="/book/centrum-naturae-concentratum-or-the-salt-of-nature-puli?page=5"
                 className="text-accent-rust hover:underline"
               >
                 Ali Puli, <em>Centrum Naturae Concentratum</em>, title page
@@ -346,7 +346,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6978ee3a01b1963bc31ee9f0?page=19"
+                href="/book/on-the-chemical-miracle-called-the-philosopher-s-stone-bernhardus-trevisanu?page=19"
                 className="text-accent-rust hover:underline"
               >
                 Bernhardus Trevisanus, <em>De Chymico Miraculo</em>, p. 9
@@ -395,7 +395,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6952d13377f38f6761bc5e29?page=23"
+                href="/book/alchemical-writings-stone-of-philosophers-kelly?page=23"
                 className="text-accent-rust hover:underline"
               >
                 Edward Kelly, <em>Alchemical Writings</em>, Biographical Preface, p. xix
@@ -404,7 +404,7 @@ export default function PhilosophersStonePage() {
           </div>
 
           <figure className="my-10">
-            <Link href="/book/6952d13377f38f6761bc5e29?page=9">
+            <Link href="/book/alchemical-writings-stone-of-philosophers-kelly?page=9">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F9.jpg&x=0.234&y=0.674&w=0.408&h=0.177"
@@ -414,7 +414,7 @@ export default function PhilosophersStonePage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Emblem from Kelly&rsquo;s <em>Alchemical Writings</em>: &ldquo;Thus may we be blessed with peace, and a propitious God.&rdquo;{' '}
-              <Link href="/book/6952d13377f38f6761bc5e29?page=9" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/alchemical-writings-stone-of-philosophers-kelly?page=9" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -434,7 +434,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6952d13377f38f6761bc5e29?page=26"
+                href="/book/alchemical-writings-stone-of-philosophers-kelly?page=26"
                 className="text-accent-rust hover:underline"
               >
                 Kelly, Biographical Preface, p. xxii
@@ -451,7 +451,7 @@ export default function PhilosophersStonePage() {
           </p>
 
           <figure className="my-10">
-            <Link href="/book/6952d13377f38f6761bc5e29?page=190">
+            <Link href="/book/alchemical-writings-stone-of-philosophers-kelly?page=190">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F190.jpg&x=0.326&y=0.486&w=0.456&h=0.284"
@@ -461,7 +461,7 @@ export default function PhilosophersStonePage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Trinity emblem from Kelly&rsquo;s <em>Theatre of Terrestrial Astronomy</em>: a three-headed deity on a globe, framed by sun, moon, and divine triangle.{' '}
-              <Link href="/book/6952d13377f38f6761bc5e29?page=190" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/alchemical-writings-stone-of-philosophers-kelly?page=190" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
         </section>
@@ -497,7 +497,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6985ca72d480ab10e5c48434?page=7"
+                href="/book/on-the-method-of-making-the-philosopher-s-stone-ventura?page=7"
                 className="text-accent-rust hover:underline"
               >
                 Ventura, <em>De Ratione Conficiendi Lapidis</em>, Dedication
@@ -567,7 +567,7 @@ export default function PhilosophersStonePage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6988a5a1215deb318410d5ea?page=9"
+                href="/book/the-saturnian-kingdoms-barma?page=9"
                 className="text-accent-rust hover:underline"
               >
                 The Saturnian Kingdoms, Preface
@@ -609,7 +609,7 @@ export default function PhilosophersStonePage() {
           </p>
 
           <figure className="my-10">
-            <Link href="/book/69804b952c52aad359879321?page=34">
+            <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=34">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980556c71f286663524db07.jpg&x=0.084&y=0.216&w=0.656&h=0.514"
@@ -619,7 +619,7 @@ export default function PhilosophersStonePage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The King on the Dragon: mastery achieved. Lambspringk, Figure 10.{' '}
-              <Link href="/book/69804b952c52aad359879321?page=34" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+              <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=34" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -644,42 +644,42 @@ export default function PhilosophersStonePage() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                href: '/book/69804b952c52aad359879321',
+                href: '/book/on-the-philosopher-s-stone-lambspringk',
                 title: 'Lambspringk, De Lapide Philosophico',
                 detail: 'Frankfurt, 1625: 15 allegorical engravings with Latin verse',
               },
               {
-                href: '/book/69804b95370ddc6f3e47c57d',
+                href: '/book/the-child-bed-of-the-philosopher-s-stone-anonymous',
                 title: 'The Child-Bed of the Philosopher\'s Stone',
                 detail: 'Anonymous, 1692: the Stone as universal root',
               },
               {
-                href: '/book/6977b866112cb9b4f70c3ff8',
+                href: '/book/centrum-naturae-concentratum-or-the-salt-of-nature-puli',
                 title: 'Ali Puli, Centrum Naturae Concentratum',
                 detail: '1694: "The Salt of Nature Regenerated"',
               },
               {
-                href: '/book/6978ee3a01b1963bc31ee9f0',
+                href: '/book/on-the-chemical-miracle-called-the-philosopher-s-stone-bernhardus-trevisanu',
                 title: 'Bernhardus Trevisanus, De Chymico Miraculo',
                 detail: 'Strasbourg, 1583: forty years of failed experiments',
               },
               {
-                href: '/book/6952d13377f38f6761bc5e29',
+                href: '/book/alchemical-writings-stone-of-philosophers-kelly',
                 title: 'Edward Kelly, Alchemical Writings',
                 detail: '1893 edition of 16th-century texts: transmutation claims',
               },
               {
-                href: '/book/6985ca72d480ab10e5c48434',
+                href: '/book/on-the-method-of-making-the-philosopher-s-stone-ventura',
                 title: 'Ventura, De Ratione Conficiendi Lapidis',
                 detail: 'Basel, 1571: systematic laboratory method',
               },
               {
-                href: '/book/69819203084978306e4933f6',
+                href: '/book/revealer-of-the-great-secret-of-the-philosophers-in-which-th-anonymous-4933f6',
                 title: 'The Revealer of the Great Secret',
                 detail: '1688: recipe for potable gold and the red powder',
               },
               {
-                href: '/book/6988a5a1215deb318410d5ea',
+                href: '/book/the-saturnian-kingdoms-barma',
                 title: 'Huginus à Barma, The Saturnian Kingdoms',
                 detail: '1657/1779: the Stone hidden in Saturn\'s lead',
               },

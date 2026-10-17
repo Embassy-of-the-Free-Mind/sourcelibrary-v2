@@ -152,7 +152,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6952062aab34727b1f0432aa"
+                href="/book/poimandres-corpus-hermeticum-ficino"
                 className="text-accent-rust hover:underline"
               >
                 Pimander (Corpus Hermeticum), 1493
@@ -177,7 +177,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6953a93977f38f6761bd58f4"
+                href="/book/hermetica-vol-i-texts-and-translation-ed"
                 className="text-accent-rust hover:underline"
               >
                 Hermetica (Scott translation), Vol. I
@@ -236,7 +236,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/6953b56577f38f6761bd979d"
+                href="/book/book-of-wonders-al-isfahani"
                 className="text-accent-rust hover:underline"
               >
                 Kitab al-Bulhan
@@ -318,7 +318,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/69523495ab34727b1f044a45"
+                href="/book/the-hammer-of-witches-sprenger"
                 className="text-accent-rust hover:underline"
               >
                 Malleus Maleficarum
@@ -353,7 +353,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe5f9f844de8615417df6"
+                href="/book/polygraphie-1561-french-translator"
                 className="text-accent-rust hover:underline"
               >
                 Daemonologie
@@ -422,7 +422,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/695285d5ab34727b1f04c36f"
+                href="/book/the-lesser-key-of-solomon-goetia-laurence"
                 className="text-accent-rust hover:underline"
               >
                 The Lesser Key of Solomon (Goetia)
@@ -464,7 +464,7 @@ export default function DemonologyPage() {
             </p>
             <p className="text-sm text-muted">
               <Link
-                href="/book/694fe602f844de8615417e27"
+                href="/book/king-james-daemonologie-1597-first-edition-england"
                 className="text-accent-rust hover:underline"
               >
                 Fourth Book of Occult Philosophy
@@ -527,37 +527,37 @@ export default function DemonologyPage() {
           <div className="grid md:grid-cols-2 gap-4">
             {[
               {
-                href: '/book/6952062aab34727b1f0432aa',
+                href: '/book/poimandres-corpus-hermeticum-ficino',
                 title: 'Pimander (Corpus Hermeticum)',
                 detail: 'Marsilio Ficino translation, 1493: editio princeps',
               },
               {
-                href: '/book/6953a93977f38f6761bd58f4',
+                href: '/book/hermetica-vol-i-texts-and-translation-ed',
                 title: 'Hermetica (Scott translation)',
                 detail: 'Walter Scott, Vol. I, includes Asclepius',
               },
               {
-                href: '/book/69523495ab34727b1f044a45',
+                href: '/book/the-hammer-of-witches-sprenger',
                 title: 'Malleus Maleficarum',
                 detail: 'Kramer & Sprenger, 1486 first edition',
               },
               {
-                href: '/book/694fe5f9f844de8615417df6',
+                href: '/book/polygraphie-1561-french-translator',
                 title: 'Daemonologie',
                 detail: 'King James VI of Scotland, Edinburgh 1597',
               },
               {
-                href: '/book/695285d5ab34727b1f04c36f',
+                href: '/book/the-lesser-key-of-solomon-goetia-laurence',
                 title: 'Lesser Key of Solomon (Goetia)',
                 detail: 'The 72 demons: seals, ranks, and procedures',
               },
               {
-                href: '/book/694fe602f844de8615417e27',
+                href: '/book/king-james-daemonologie-1597-first-edition-england',
                 title: 'Fourth Book of Occult Philosophy',
                 detail: 'Attributed to Agrippa: spirit contact theory',
               },
               {
-                href: '/book/6953b56577f38f6761bd979d',
+                href: '/book/book-of-wonders-al-isfahani',
                 title: 'Kitab al-Bulhan',
                 detail: 'Bodleian MS Arab d. 84: illustrated jinn taxonomy',
               },
