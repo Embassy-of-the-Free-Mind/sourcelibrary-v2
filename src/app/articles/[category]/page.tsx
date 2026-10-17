@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ArticlesPage from '../ArticlesPage';
-import { BLOG_KINDS, KIND_INFO, type BlogKind } from '../posts';
+import { BLOG_KINDS } from '../posts';
+import { isKind, listingMetadata } from '../listing';
 
 // One page per category (/articles/tours). Articles themselves are static
 // folders beside this one, which Next matches first, so a category name must
@@ -12,19 +13,9 @@ export function generateStaticParams() {
   return BLOG_KINDS.map((category) => ({ category }));
 }
 
-function isKind(value: string): value is BlogKind {
-  return (BLOG_KINDS as readonly string[]).includes(value);
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const { category } = await params;
-  if (!isKind(category)) return {};
-  const info = KIND_INFO[category];
-  return {
-    title: `${info.label} - Articles - Source Library`,
-    description: info.definition,
-    alternates: { canonical: `/articles/${category}` },
-  };
+  return isKind(category) ? listingMetadata(category) : {};
 }
 
 export default async function ArticlesCategoryPage({ params }: { params: Promise<{ category: string }> }) {

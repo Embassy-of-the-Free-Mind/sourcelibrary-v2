@@ -1,36 +1,15 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 
-// The /articles hero: a marbled paper from a book in the collection, faint
-// behind the title, drifting slightly slower than the page on scroll.
-// PREVIEW: ?paper=1..3 picks the paper and ?tone=colour shows it in colour,
-// so the options can be compared on the page. Keep one, delete the rest.
+// The /articles hero: a French curl marbled endpaper from Morland's History of
+// the Evangelical Churches of the Valleys of Piemont (1658), faint behind the
+// title and drifting slightly slower than the page on scroll.
 
-interface Paper {
-  file: string;
-  credit: string;
-  href: string;
-}
-
-const PAPERS: Record<string, Paper> = {
-  '1': {
-    file: '/articles/hero/marbled-hall-box27.jpg',
-    credit: 'Combed marbled paper, Manly P. Hall Collection, Box 27',
-    href: '/book/manly-p-hall-collection-box-27-collection',
-  },
-  '2': {
-    file: '/articles/hero/marbled-stone-caprichos.jpg',
-    credit: 'Stone marbled endpaper, Los Caprichos (1799)',
-    href: '/book/los-caprichos-ldut1824',
-  },
-  '3': {
-    file: '/articles/hero/marbled-curl-piemont.jpg',
-    credit: 'French curl marbled endpaper, Morland, History of the Evangelical Churches of Piemont (1658)',
-    href: '/book/the-history-of-the-evangelical-churches-of-the-valleys-of-morland',
-  },
-};
+const PAPER = '/articles/hero/marbled-curl-piemont.jpg';
+const CREDIT = 'French curl marbled endpaper, Morland, History of the Evangelical Churches of Piemont (1658)';
+const BOOK = '/book/the-history-of-the-evangelical-churches-of-the-valleys-of-morland';
 
 // How much slower than the page the paper moves (0 = fixed to the page).
 const PARALLAX = 0.3;
@@ -38,16 +17,7 @@ const PARALLAX = 0.3;
 const OVERSCAN = 160;
 
 export default function HeroBackdrop() {
-  const [paper, setPaper] = useState('1');
-  const [colour, setColour] = useState(false);
   const layer = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const pick = params.get('paper');
-    if (pick && PAPERS[pick]) setPaper(pick);
-    setColour(params.get('tone') === 'colour');
-  }, []);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -66,8 +36,6 @@ export default function HeroBackdrop() {
     };
   }, []);
 
-  const p = PAPERS[paper];
-
   return (
     <>
       <div
@@ -76,16 +44,14 @@ export default function HeroBackdrop() {
       >
         <div
           ref={layer}
-          className={`absolute inset-x-0 bg-cover bg-center mix-blend-multiply will-change-transform ${
-            colour ? 'opacity-[0.2]' : 'opacity-[0.14] grayscale sepia'
-          }`}
-          style={{ top: -OVERSCAN, bottom: -OVERSCAN, backgroundImage: `url(${p.file})` }}
+          className="absolute inset-x-0 bg-cover bg-center opacity-[0.2] mix-blend-multiply will-change-transform"
+          style={{ top: -OVERSCAN, bottom: -OVERSCAN, backgroundImage: `url(${PAPER})` }}
         />
       </div>
       <div className="absolute inset-x-0 top-4 hidden md:block">
         <div className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 flex justify-end">
-          <Link href={p.href} className="relative z-10 text-xs text-muted hover:text-secondary transition-colors">
-            {p.credit}
+          <Link href={BOOK} className="relative z-10 text-xs text-muted hover:text-secondary transition-colors">
+            {CREDIT}
           </Link>
         </div>
       </div>

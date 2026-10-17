@@ -75,7 +75,13 @@ export default function BlogTableOfContents() {
       return 500;
     })();
 
-    const onScroll = () => setVisible(window.scrollY > threshold);
+    // Hide again once the article ends (the related-articles slider comes up),
+    // so the panel never sits over it.
+    const onScroll = () => {
+      const related = document.getElementById('related-articles');
+      const ended = related ? related.getBoundingClientRect().top < window.innerHeight * 0.85 : false;
+      setVisible(window.scrollY > threshold && !ended);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);

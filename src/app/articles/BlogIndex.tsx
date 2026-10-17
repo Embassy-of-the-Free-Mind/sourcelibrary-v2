@@ -4,11 +4,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLOG_KINDS, KIND_INFO, postHref, type BlogKind, type BlogPost } from './posts';
+import { PAGE_SIZE, isKind, listingHref } from './listing';
 
 type Filter = BlogKind | 'all';
 type Sort = 'newest' | 'oldest' | 'title';
-
-const PAGE_SIZE = 30;
 
 const SORTS: { value: Sort; label: string }[] = [
   { value: 'newest', label: 'Newest first' },
@@ -22,13 +21,6 @@ const OLD_HASHES: Record<string, BlogKind> = {
   counting: 'research', reading: 'research', research: 'research',
 };
 
-function kindHref(kind: Filter) {
-  return kind === 'all' ? '/articles' : `/articles/${kind}`;
-}
-
-function isKind(value: string): value is BlogKind {
-  return (BLOG_KINDS as readonly string[]).includes(value);
-}
 
 // Lower-case and strip accents, so "hatha" finds "haṭha".
 function fold(text: string) {
@@ -67,7 +59,7 @@ function ArticleCard({ post, priority }: { post: BlogPost; priority: boolean }) 
           </>
         )}
       </p>
-      <h2 className="mt-2 font-serif text-2xl text-primary leading-snug group-hover:text-accent-gold-dark transition-colors">
+      <h2 className="mt-2 font-serif text-2xl text-primary leading-snug">
         {post.title}
       </h2>
       <p className="mt-2 text-secondary leading-relaxed font-body line-clamp-3">{post.subtitle}</p>
@@ -117,18 +109,74 @@ function PillSelect<T extends string>({
   );
 }
 
+const INTRO =
+  'Stories followed through the books, reading tours, research notes and things to try. Every claim is grounded in primary sources from the collection.';
+
+function PageButton({
+  n,
+  current,
+  href,
+  onClick,
+  children,
+  disabled,
+  wide,
+}: {
+  n: number;
+  current: number;
+  href: string | null;
+  onClick: () => void;
+  children: React.ReactNode;
+  disabled?: boolean;
+  wide?: boolean;
+}) {
+  const isCurrent = !wide && n === current;
+  const cls = wide
+    ? `h-10 px-4 inline-flex items-center text-sm ${disabled ? 'text-muted cursor-default' : 'text-primary hover:underline underline-offset-4'}`
+    : `h-10 w-10 inline-flex items-center justify-center border text-sm transition-colors ${
+        isCurrent ? 'bg-primary text-white border-primary' : 'border-border-light text-primary hover:border-primary'
+      }`;
+  if (disabled) return <span className={cls}>{children}</span>;
+  // Before a search or a re-sort, every page has its own address, so the
+  // numbers are real links that a crawler can follow.
+  if (href) {
+    return (
+      <Link href={href} aria-current={isCurrent ? 'page' : undefined} className={cls}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <button type="button" onClick={onClick} aria-current={isCurrent ? 'page' : undefined} className={cls}>
+      {children}
+    </button>
+  );
+}
+
 // Every article in one list, newest first, with a search box and two
-// dropdowns. The category is in the path (/articles/tours) so a filtered view
-// can be shared; search and sort are local to the visit.
-export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]; active?: Filter }) {
+// dropdowns. The category is in the path (/articles/tours) and so is the page
+// (/articles/page/2), so both can be shared and crawled; search and sort are
+// local to the visit and page on the client.
+export default function BlogIndex({
+  posts,
+  active = 'all',
+  initialPage = 1,
+}: {
+  posts: BlogPost[];
+  active?: Filter;
+  initialPage?: number;
+}) {
   const [kind, setKind] = useState<Filter>(active);
   const [query, setQuery] = useState('');
   const [sort, setSort] = useState<Sort>('newest');
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(initialPage);
   const listTop = useRef<HTMLDivElement>(null);
+  const mounted = useRef(false);
 
   // A new search, category or sort starts again at page 1.
-  useEffect(() => setPage(1), [kind, query, sort]);
+  useEffect(() => {
+    if (mounted.current) setPage(1);
+    mounted.current = true;
+  }, [kind, query, sort]);
 
   const goTo = (next: number) => {
     setPage(next);
@@ -141,13 +189,13 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
     const old = OLD_HASHES[window.location.hash.slice(1)];
     if (active === 'all' && old) {
       setKind(old);
-      history.replaceState(null, '', kindHref(old));
+      history.replaceState(null, '', listingHref(old));
     }
   }, [active]);
 
   const chooseKind = (next: Filter) => {
     setKind(next);
-    history.replaceState(null, '', kindHref(next));
+    history.replaceState(null, '', listingHref(next));
   };
 
   const shown = useMemo(() => {
@@ -165,6 +213,8 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
   const pages = Math.max(1, Math.ceil(shown.length / PAGE_SIZE));
   const current = Math.min(page, pages);
   const pageItems = shown.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
+  const linkable = query === '' && sort === 'newest';
+  const hrefFor = (n: number) => (linkable ? listingHref(kind, n) : null);
 
   const filtered = kind !== 'all' || query !== '' || sort !== 'newest';
   const kindOptions: { value: Filter; label: string }[] = [
@@ -174,6 +224,13 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
 
   return (
     <div>
+      <h1 className="font-serif text-5xl md:text-7xl text-primary tracking-tight">
+        {kind === 'all' ? 'Articles' : KIND_INFO[kind].label}
+      </h1>
+      <p className="mt-6 mb-10 max-w-3xl text-lg md:text-xl text-secondary font-body leading-relaxed">
+        {kind === 'all' ? INTRO : KIND_INFO[kind].definition}
+      </p>
+
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
           <label className="block w-full md:w-96">
@@ -214,8 +271,6 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
         </div>
       </div>
 
-      {kind !== 'all' && <p className="mt-8 max-w-3xl text-secondary font-body text-lg">{KIND_INFO[kind].definition}</p>}
-
       <div ref={listTop} className="scroll-mt-6" />
       {shown.length > 0 ? (
         <div className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
@@ -229,35 +284,17 @@ export default function BlogIndex({ posts, active = 'all' }: { posts: BlogPost[]
 
       {pages > 1 && (
         <nav aria-label="Pages" className="mt-16 flex items-center justify-center gap-2">
-          <button
-            type="button"
-            onClick={() => goTo(current - 1)}
-            disabled={current === 1}
-            className="h-10 px-4 text-sm text-primary disabled:text-muted disabled:cursor-default hover:underline underline-offset-4"
-          >
+          <PageButton n={current - 1} current={current} href={hrefFor(current - 1)} onClick={() => goTo(current - 1)} disabled={current === 1} wide>
             &larr; Previous
-          </button>
+          </PageButton>
           {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => goTo(n)}
-              aria-current={n === current ? 'page' : undefined}
-              className={`h-10 w-10 border text-sm transition-colors ${
-                n === current ? 'bg-primary text-white border-primary' : 'border-border-light text-primary hover:border-primary'
-              }`}
-            >
+            <PageButton key={n} n={n} current={current} href={hrefFor(n)} onClick={() => goTo(n)}>
               {n}
-            </button>
+            </PageButton>
           ))}
-          <button
-            type="button"
-            onClick={() => goTo(current + 1)}
-            disabled={current === pages}
-            className="h-10 px-4 text-sm text-primary disabled:text-muted disabled:cursor-default hover:underline underline-offset-4"
-          >
+          <PageButton n={current + 1} current={current} href={hrefFor(current + 1)} onClick={() => goTo(current + 1)} disabled={current === pages} wide>
             Next &rarr;
-          </button>
+          </PageButton>
         </nav>
       )}
     </div>
