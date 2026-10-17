@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import ArticleImage from './ArticleImage';
 
 /**
  * A page, plate, detail or screenshot in an article, shown whole at its own
@@ -31,10 +32,7 @@ export default function PageFigure({
   wide?: boolean;
   children?: ReactNode;
 }) {
-  const img = (
-    /* eslint-disable-next-line @next/next/no-img-element */
-    <img src={src} alt={alt} loading="lazy" className="w-full h-auto" />
-  );
+  const img = <ArticleImage src={src} alt={alt} sizes={wide ? '(max-width: 768px) 100vw, 1060px' : undefined} />;
   return (
     <figure className={`not-prose my-10 ${wide ? 'md:-mx-16' : ''}`}>
       <div className="border border-border-light bg-white p-2">{href ? <Link href={href}>{img}</Link> : img}</div>

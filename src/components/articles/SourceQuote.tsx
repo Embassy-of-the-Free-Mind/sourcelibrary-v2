@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import ArticleImage from './ArticleImage';
 
 /**
  * A quotation from a book in the library, with the page it comes from beside
@@ -50,8 +51,8 @@ export default function SourceQuote({
         </figcaption>
       </blockquote>
       <Link href={href} className="block border border-border-light bg-white p-2" aria-label={`Open p. ${page} in the reader`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={pageAlt ?? `The printed page, p. ${page}`} loading="lazy" className="w-full h-auto" />
+
+        <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
       </Link>
     </figure>
   );

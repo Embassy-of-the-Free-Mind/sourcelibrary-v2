@@ -20,6 +20,27 @@ Articles need a lot of pictures. Text-only articles are boring, and the library 
 - **Screenshots** of Source Library itself (the reader, a search, a chart) are welcome where they show what the article describes.
 - **Alt text** on every picture: what it shows, in a sentence.
 
+### Image size and weight
+
+- **Always show pictures through `PageFigure` or `SourceQuote`** (both use `ArticleImage`): they go through the image optimiser, so a 500 KB page scan arrives as a 30 to 80 KB AVIF or WebP at the width it is shown. Don't write a bare `<img>` in an article.
+- A picture from a host the optimiser can't fetch from falls back to the original file. If you use a new outside host often, add it to `images.remotePatterns` in `next.config.ts` and to `OPTIMISABLE` in `ArticleImage.tsx`.
+- **Files you add to `public/articles/<slug>/`:** JPEG at quality 80, longest side at most 2,000 px (2,400 for a map that needs the detail), progressive. PNG only for diagrams with flat colour or transparency. Aim under 400 KB.
+- **Crop to the picture, not off the notice.** Never crop out a copyright or provenance notice printed on a scan (for example the Early European Books / ProQuest line). Keep it on the image and repeat it in the `credit` line.
+- **Tall single pages:** hold them to a reading width (a `max-w-md` or `max-w-lg` wrapper) so one page doesn't fill the screen.
+
+## SEO
+
+Most of this is automatic once the page wraps its metadata in `withArticleMeta`; the parts that need a person:
+
+- **Title:** says what the article is about in plain words, ideally under 60 characters before the " - Articles - Source Library" suffix. Unique across the site.
+- **`summary`** (posts.ts) is the meta description and the card text: 110 to 155 characters, concrete, with the names a reader would search for (people, books, places, dates).
+- **One H1** (the hero title); sections as H2, sub-sections H3, in order. The contents panel is built from the H2s.
+- **Alt text** on every picture, and an `imageAlt` on the posts.ts entry: what the picture shows, in a sentence.
+- **Links:** relative (`/book/...`, `/articles/...`), never `https://sourcelibrary.org/...` (the tenant lockdown rule). Link the books and other articles where they are mentioned, with words that say what the target is, not "here".
+- **Hero image** is the share image: a strong picture that still reads when cropped to 1200 × 630.
+- **Automatic, don't hand-write:** canonical, Open Graph and Twitter tags, article dates, feed links, Article and breadcrumb JSON-LD, sitemap entry, share-image resizing. A page that sets its own `openGraph` or `alternates` still gets these through the helper.
+- **Withdrawn or superseded pages:** add the slug to `UNLISTED_PAGES` and to `NOINDEX_SLUGS` in `src/lib/article-metadata.ts`; consider a redirect to the successor.
+
 ## Quotes
 
 - **Quoting a book in the library: show the page.** Use `SourceQuote` (`src/components/articles/SourceQuote.tsx`): the quotation, optionally the original-language text, the source, and the printed page beside it, linked to that page in the reader.
@@ -61,4 +82,6 @@ Articles need a lot of pictures. Text-only articles are boring, and the library 
 4. No `text-accent-rust` or other red text in the article.
 5. Every book drawn on is linked (or in `books.ts`); no hand-written book list.
 6. `posts.ts` entry with `kind`, `summary` (155 characters at most), `image`, `date`, `readTime`.
-7. `npx vitest run tests/blog-posts.test.ts` passes.
+7. SEO: title under 60 characters, summary 110 to 155, alt text on every picture and on the posts.ts entry, relative links.
+8. Pictures through PageFigure / SourceQuote; any new file in public/articles under 400 KB and 2,000 px; notices on scans left intact.
+9. `npx vitest run tests/blog-posts.test.ts` passes.

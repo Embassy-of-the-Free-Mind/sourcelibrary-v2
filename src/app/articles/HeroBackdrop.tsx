@@ -7,7 +7,7 @@ import Link from 'next/link';
 // the Evangelical Churches of the Valleys of Piemont (1658), faint behind the
 // title and drifting slightly slower than the page on scroll.
 
-const PAPER = '/articles/hero/marbled-curl-piemont.jpg';
+const PAPER = '/articles/hero/marbled-curl-piemont.webp';
 const CREDIT = 'French curl marbled endpaper, Morland, History of the Evangelical Churches of Piemont (1658)';
 const BOOK = '/book/the-history-of-the-evangelical-churches-of-the-valleys-of-morland';
 
