@@ -4,28 +4,32 @@
 #   cp infrastructure/systemd/keyword-search.service /etc/systemd/system/
 #   systemctl daemon-reload && systemctl enable --now keyword-search
 #
-# Code: /data/keyword-search/app (a copy of scripts/workers/keyword-search; node:sqlite is built in, and
-# the only package is mongodb for the pull and the delta — `npm ci` there, never in the repo).
-# Index: /data/keyword-search/index/keyword.sqlite. Secrets: /etc/keyword-search.env, mode 600:
+# Code: /data/keyword-search/app (a copy of scripts/workers/keyword-search). Python half (the service):
+# /data/keyword-search/venv with requirements.txt (tantivy). Node half (pull, delta): the mongodb driver
+# from /root/sourcelibrary/node_modules. bootstrap.sh does all of it. Index: /data/keyword-search/index.
+# Secrets: /etc/keyword-search.env, mode 600:
 #   KEYWORD_SEARCH_TOKEN=<openssl rand -hex 32>
 #   KEYWORD_SEARCH_HOST=127.0.0.1    stays on localhost until the TLS proxy (#6843) fronts it
 #   KEYWORD_SEARCH_PORT=3460         Bearer token on every route
 #   KEYWORD_SEARCH_LOCAL_PORT=3461   127.0.0.1 only, no auth, /admin for sync-delta.mjs
 #
-# Memory: the process holds ~5 bytes per page per thread (book index + content flag) plus SQLite's page
-# cache (256 MB per connection); the index itself is read through the OS page cache, so the box's free
-# RAM is what keeps hot posting lists off the disk. MemoryHigh keeps the process from crowding the box.
+# Memory: the process holds the live-book set and tantivy's per-segment structures (a few hundred MB) plus a
+# 200 MB writer heap for the delta. The index (~16 GB) is memory-mapped, so the box's free RAM is what keeps
+# hot posting lists off the disk; MemoryHigh bounds the process, not the page cache.
 [Unit]
-Description=Source Library keyword page service (SQLite FTS5 over page text, #6852)
+Description=Source Library keyword page service (tantivy BM25 over page text, #6852)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
+# On the guest boxes every Source Library process runs in this slice (MemoryMax 14G, CPUWeight 30), so the
+# host's own service is never starved (JOB-HOSTS.md). The memory-mapped index's page cache is charged here too.
+Slice=sourcelibrary.slice
 WorkingDirectory=/data/keyword-search/app
 EnvironmentFile=/etc/keyword-search.env
 Environment=KEYWORD_SEARCH_ROOT=/data/keyword-search
-ExecStart=/usr/bin/node --disable-warning=ExperimentalWarning /data/keyword-search/app/server.mjs
+ExecStart=/data/keyword-search/venv/bin/python /data/keyword-search/app/server.py
 Restart=always
 RestartSec=15
 MemoryHigh=3G

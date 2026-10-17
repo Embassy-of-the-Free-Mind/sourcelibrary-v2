@@ -148,7 +148,7 @@ test('keyword lane parity', async () => {
       live_atlas_books: liveAtlas,
       svc: svc.error ? { error: svc.error, http_ms: svcHttpMs } : {
         main: svc.main.map(key), variants: svc.variants.map(key), extra: svc.extra.map(key), counts: (svc.counts || []).map((x: any) => [x.book_id, x.pages]),
-        match: svc.match, fuzzy: svc.fuzzy, ms: svc.ms, server_ms: svc.server_ms, http_ms: svcHttpMs, hydrate_ms: hydrateMs,
+        tokens: svc.tokens, fuzzy: svc.fuzzy_terms, ms: svc.ms, server_ms: svc.server_ms, http_ms: svcHttpMs, hydrate_ms: hydrateMs,
       },
     }) + '\n');
     if (i % 10 === 0) console.log(`${i + 1}/${chosen.length} ${c.stratum} atlas ${atlasMs} ms · svc ${svcHttpMs} ms`);

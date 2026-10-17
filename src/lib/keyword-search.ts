@@ -2,7 +2,7 @@
  * Client for the keyword page service (#6852): the `/api/search` page lane's
  * Atlas `pages_search` questions — the 25 best pages, the name-variant pages,
  * the page roll-up's counts and its best page per added book — answered from a
- * SQLite FTS5 index on Hetzner in one round trip instead of up to four Atlas
+ * tantivy (BM25) index on Hetzner in one round trip instead of up to four Atlas
  * `$search` calls (1.3 s p50, 2.9 s p90 for the lane in production). Service
  * code and contract: scripts/workers/keyword-search/ (README.md).
  *

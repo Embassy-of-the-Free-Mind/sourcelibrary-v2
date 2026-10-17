@@ -1,0 +1,3 @@
+# Python half of the keyword page service (#6852): venv/bin/pip install -r requirements.txt
+# tantivy-py, the official tantivy bindings (MIT): https://github.com/quickwit-oss/tantivy-py — no network access at runtime.
+tantivy==0.26.2

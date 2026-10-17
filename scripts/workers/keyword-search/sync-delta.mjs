@@ -15,7 +15,8 @@
 // drops a page that is gone or has page_number <= 0 (src/lib/keyword-search.ts).
 //
 // The service applies the writes in its own process (POST /admin/apply on 127.0.0.1), as the vector
-// service's delta does, so the readers' book/content arrays stay in step with the table.
+// service's delta does: tantivy allows one writer per index, and the service holds it. The text goes as
+// it is; the service tokenizes it with the index's own analyzer (kwindex.py).
 //
 // PRIOR ART: scripts/workers/vector-search/sync-delta.mjs — same shape over Supabase page_translations,
 // keyset on (updated_at, page_id). `pages` has no compound (updated_at, _id) index, only one per field, so
@@ -50,7 +51,7 @@ log(`checkpoint tr ${cp.tr} ocr ${cp.ocr}`);
 
 const { client, db } = await mongo();
 const t0 = Date.now();
-const total = { added: 0, replaced: 0, removed: 0, read: 0 };
+const total = { upserted: 0, removed: 0, read: 0 };
 for (const [key, field] of [['tr', 'translation.updated_at'], ['ocr', 'ocr.updated_at']]) {
   const cur = db.collection('pages')
     .find({ [field]: { $gte: new Date(cp[key]) } }, { projection: { ...PAGE_PROJECTION, page_number: 1 } })
@@ -60,7 +61,7 @@ for (const [key, field] of [['tr', 'translation.updated_at'], ['ocr', 'ocr.updat
   let up = [], rm = [], n = 0, last = null;
   const flush = async () => {
     if (!up.length && !rm.length) return;
-    if (!DRY) { const r = await call('/admin/apply', { upserts: up, removes: rm }); for (const k of ['added', 'replaced', 'removed']) total[k] += r[k] || 0; }
+    if (!DRY) { const r = await call('/admin/apply', { upserts: up, removes: rm }); for (const k of ['upserted', 'removed']) total[k] += r[k] || 0; }
     up = []; rm = [];
   };
   for await (const p of cur) {

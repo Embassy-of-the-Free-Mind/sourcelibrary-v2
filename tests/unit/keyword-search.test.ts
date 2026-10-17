@@ -1,4 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+// @ts-expect-error — plain .mjs, installed apart from the app (scripts/workers/keyword-search/README.md)
+import { pageRow } from '../../scripts/workers/keyword-search/lib.mjs';
 import {
   keywordSearchMode, callKeywordLane, recallOf, buildKeywordShadow, synthesizeHighlights, hydrateKeywordRows,
   type KeywordLaneResult,
@@ -9,7 +13,9 @@ import {
 //   - the shadow's recall is measured against what readers get today — Atlas's pages of LIVE books,
 //     since the route drops hidden books at its join — and a service failure is recorded, not thrown;
 //   - serve hydrates from Mongo and drops a page the index still holds but Mongo no longer serves
-//     (gone, renumbered to ≤ 0, retyped as non-content, moved book): the read-side check the delta needs.
+//     (gone, renumbered to ≤ 0, retyped as non-content, moved book): the read-side check the delta needs;
+//   - the service drops the same non-content page types as the Atlas lane, and indexes only pages the
+//     lane can match. (The engine itself is Python: scripts/workers/keyword-search/test_engine.py.)
 
 const SVC = 'http://keywords.test:3460';
 function jsonResponse(obj: unknown, status = 200): Response {
@@ -122,5 +128,20 @@ describe('hydrateKeywordRows', () => {
     expect(out.map(d => d.id)).toEqual(['p6', 'p1']);
     expect(out[1]).toMatchObject({ page_number: 3, searchScore: 9, highlights: [{ path: 'translation.data' }] });
     expect(out[0].highlights).toBeUndefined(); // "alchemia" does not contain "alchemy"
+  });
+});
+
+describe('the service side stays in step with the Atlas lane', () => {
+  it("kwindex.py's non-content page types are the app's", () => {
+    const py = readFileSync('scripts/workers/keyword-search/kwindex.py', 'utf8');
+    const m = py.match(/^NON_CONTENT_PAGE_TYPES = \[([^\]]*)\]/m);
+    expect(m).not.toBeNull();
+    const list = [...m![1].matchAll(/"([^"]+)"/g)].map(x => x[1]);
+    expect(list.sort()).toEqual([...NON_CONTENT_PAGE_TYPES].sort());
+  });
+  it('pageRow skips pages the lane cannot match (page_number ≤ 0, no text)', () => {
+    expect(pageRow({ id: 'p', book_id: 'b', page_number: 0, ocr: { data: 'x' } })).toBeNull();
+    expect(pageRow({ id: 'p', book_id: 'b', page_number: 3 })).toBeNull();
+    expect(pageRow({ id: 'p', book_id: 'b', page_number: 3, page_type: 'blank', ocr: { data: 'x' } })).toMatchObject({ i: 'p', b: 'b', n: 3, t: 'blank', o: 'x', tr: '' });
   });
 });
