@@ -11,6 +11,7 @@
  * 20s navigationTimeout does not. We override per-test where needed.
  */
 import { test, expect, type Response } from '@playwright/test';
+import { isEdgeChallenge, EDGE_CHALLENGE_REASON } from './edge-challenge';
 
 // Pages to check. Add new ones here as the site grows.
 const FAST_PAGES = [
@@ -57,6 +58,7 @@ test.describe('Smoke: fast pages load', () => {
   for (const path of FAST_PAGES) {
     test(`${path} returns 200 and renders content`, async ({ page }) => {
       const response = await page.goto(path, { waitUntil: 'domcontentloaded' });
+      test.skip(isEdgeChallenge(response), EDGE_CHALLENGE_REASON);
       expect(response?.status(), `${path} returned ${response?.status()}`).toBe(200);
 
       const title = await page.title();
@@ -82,6 +84,7 @@ test.describe('Smoke: DB-heavy pages load', () => {
         waitUntil: 'domcontentloaded',
         timeout: 45_000,
       });
+      test.skip(isEdgeChallenge(response), EDGE_CHALLENGE_REASON);
       expect(response?.status(), `${path} returned ${response?.status()}`).toBe(200);
 
       const title = await page.title();
@@ -143,6 +146,8 @@ test.describe('Smoke: no broken internal links', () => {
         try {
           await sleep(500);
           const res = await request.get(href);
+          // Ignore a Cloudflare challenge — the edge rule, not a broken link (#6485)
+          if (isEdgeChallenge(res)) continue;
           // Ignore 429 (rate limit) — not a broken link
           if (res.status() >= 400 && res.status() !== 429) {
             broken.push(`${href} → ${res.status()}`);
