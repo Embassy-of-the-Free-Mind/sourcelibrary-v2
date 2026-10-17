@@ -35,6 +35,7 @@ export type SearchFilterKey =
   | 'collection'
   | 'library'
   | 'dates'
+  | 'workDate'       // when the WORK was written (#6873), not the edition year
   | 'hasTranslation'
   | 'firstTranslation'
   | 'hasDoi';
@@ -58,6 +59,7 @@ export const LANE_FILTER_PARAMS: Record<SearchLane, Partial<Record<SearchFilterK
     library: ['library'],
     hasTranslation: ['has_translation'],
     firstTranslation: ['first_translation'],
+    workDate: ['work_from', 'work_to'],
   },
   'browse-images': {
     dates: ['yearStart', 'yearEnd'],

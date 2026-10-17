@@ -6,6 +6,7 @@ import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-conte
 import { translationPercent } from '@/lib/translation-completeness';
 import { buildSortStage, type SortOption } from '@/lib/book-sort';
 import { resolveAuthorBookFilter } from '@/lib/author-thesaurus';
+import { parseWorkYear, workYearMatch } from '@/lib/work-dates';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -60,6 +61,11 @@ export async function GET(request: NextRequest) {
     const yearToRaw = parseInt(searchParams.get('year_to') || '', 10);
     const yearFrom = Number.isFinite(yearFromRaw) ? yearFromRaw : null;
     const yearTo = Number.isFinite(yearToRaw) ? yearToRaw : null;
+    // When the WORK was written (#6873), not when this copy was made: the
+    // work date of #6721 (`source_work_dates_meta.work.year`, negative = BCE).
+    // A 1502 printing of Herodotus matches work_to=-400, not year_to=-400.
+    const workFrom = parseWorkYear(searchParams.get('work_from'));
+    const workTo = parseWorkYear(searchParams.get('work_to'));
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
     const { slug: tenantSlugHeader, id: tenantIdHeader } = getTenantContextFromRequest(request);
     const tenantSlugParam = searchParams.get('tenant_slug') || '';
@@ -77,7 +83,7 @@ export async function GET(request: NextRequest) {
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}|a:${authorIdParam}|yf:${yearFrom}|yt:${yearTo}|ek:${editionKeyParam}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|he:${hasEdition}|lang:${language}|cat:${category}|col:${collection}|lib:${library}|w:${workId}|a:${authorIdParam}|yf:${yearFrom}|yt:${yearTo}|wf:${workFrom}|wt:${workTo}|ek:${editionKeyParam}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -112,6 +118,7 @@ export async function GET(request: NextRequest) {
     const yearMatch: Record<string, unknown> | null = (yearFrom !== null || yearTo !== null)
       ? { year: { ...(yearFrom !== null ? { $gte: yearFrom } : {}), ...(yearTo !== null ? { $lte: yearTo } : {}) } }
       : null;
+    const workMatch = workYearMatch(workFrom, workTo);
 
     // When a search term is present, use Atlas Search ($search must be first stage).
     // Language, category, firstTranslation are pushed as Atlas Search filters.
@@ -148,6 +155,7 @@ export async function GET(request: NextRequest) {
         ...(authorFilter ? [{ $match: authorFilter.match }] : []),
         ...(editionMatch ? [{ $match: editionMatch }] : []),
         ...(yearMatch ? [{ $match: yearMatch }] : []),
+        ...(workMatch ? [{ $match: workMatch }] : []),
         ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
     } else {
@@ -167,6 +175,7 @@ export async function GET(request: NextRequest) {
       if (authorFilter) matchConditions.push(authorFilter.match);
       if (editionMatch) matchConditions.push(editionMatch);
       if (yearMatch) matchConditions.push(yearMatch);
+      if (workMatch) matchConditions.push(workMatch);
       // The aggregate below runs under an en/strength-1 collation, and an index
       // with the default collation cannot serve a STRING predicate under another
       // one. So `work_id` / `author_id` / `edition_key`, all indexed, were
@@ -208,7 +217,7 @@ export async function GET(request: NextRequest) {
     // query errors and the route falls back to the one-pass pipeline below.
     const plainBrowse = !search.trim() && sort === 'recent-translation' && !tenantId && !language && !category
       && !collection && !library && !workId && !firstTranslation && !hasTranslation && !hasEdition
-      && !authorFilter && !editionMatch && !yearMatch;
+      && !authorFilter && !editionMatch && !yearMatch && !workMatch;
 
     // Only compute the fields needed for the current sort mode
     // This avoids the expensive full-scan $addFields on every book
@@ -262,6 +271,9 @@ export async function GET(request: NextRequest) {
       // `published` is free text and `author` is an uncanonicalized string.
       author_id: 1,
       year: 1,
+      // When the work was written and what that date rests on (#6721, #6873).
+      'source_work_dates_meta.work.display': 1,
+      'source_work_dates_meta.work.basis': 1,
       // The rest of the identity stack (#4509). `work_id` was filterable via
       // ?work_id= but never returned, so a consumer could not learn a book's
       // work without a per-book call — the same defect the author facet had.
@@ -366,8 +378,10 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const booksWithTenantSlug = books.map((book: any) => ({
+    const booksWithTenantSlug = books.map(({ source_work_dates_meta: workMeta, ...book }: any) => ({
       ...book,
+      // { display, basis } — basis `model_knowledge` is an estimate, the rest are sourced.
+      work_date: workMeta?.work?.display ? workMeta.work : null,
       // Computed, not projected. The stored `translation_percent` is absent on
       // 8,928 of 19,419 live books — its writer (`sync-page-counts`) is archived
       // — and this route feeds MCP `list_books`, so callers were getting nothing

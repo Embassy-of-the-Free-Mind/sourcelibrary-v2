@@ -82,3 +82,21 @@ describe('search api-client date range', () => {
     expect(url).toContain('date_to=1700');
   });
 });
+
+describe('search api-client work-date range (#6873)', () => {
+  it('sends work_from/work_to — the names /api/books/browse and /api/books/library read', async () => {
+    const { search } = await import('@/lib/api-client/search');
+    await search.browse({ work_from: -500, work_to: -401 });
+
+    const url = captured[0];
+    expect(url).toContain('/api/books/browse');
+    expect(url).toContain('work_from=-500');
+    expect(url).toContain('work_to=-401');
+  });
+
+  it('keeps a bound of 0 rather than dropping it as falsy', async () => {
+    const { search } = await import('@/lib/api-client/search');
+    await search.browse({ work_from: -100, work_to: 0 });
+    expect(captured[0]).toContain('work_to=0');
+  });
+});
