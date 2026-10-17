@@ -68,7 +68,7 @@ and also serves `/admin/apply`, `/admin/ids` and `/admin/save` (used by `sync-de
 | `server.mjs` | the service |
 | `pull-text.mjs` | Supabase → `text/pages.sqlite`: translation, book_title, book_author per served page (19.3 GB at 7.64M rows, ~30 min), resumable |
 | `text-fingerprints.mjs` | once, for a store made before the `fp` table: fills each row's fingerprint from the store itself and sets `meta.fp_complete` |
-| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--reconcile` (page-id diff against Supabase, plus the text fingerprints; `--hash` adds the md5), `--save`, `--count-check` |
+| `sync-delta.mjs` | rows updated (or withheld) since the checkpoint → the running service and the text store, then a heartbeat; `--reconcile` (page-id diff against Supabase, plus the text fingerprints; `--hash` adds the md5 for a seventh of the rows), `--save`, `--count-check` |
 | `freshness-check.mjs` | ntfy `sourcelibrary-uptime` once per state change: service down, `/health` slower than 1 s, last delta > 2 h, last reconcile > 6 h, or row drift > 0.5% (from the reconcile's count; no database read) |
 | `match-latency-probe.mjs` | steady `/match` load at a fixed rate, p50/p90/p99 per window: what a reconcile or a save does to query latency |
 | `latency-eval.mjs` | end to end over HTTPS: service + text vs service + Supabase hydration vs the RPC, and a column-by-column check against the RPC |
@@ -114,8 +114,11 @@ and also serves `/admin/apply`, `/admin/ids` and `/admin/save` (used by `sync-de
   so bumping it in the writers would break what the column means for `--restale`. Instead the store keeps a
   fingerprint per row (`fp`: byte lengths of translation and of title + author, and an md5 of all three),
   written with every row write. The reconcile's scan reads the lengths beside each page_id — Postgres
-  takes `octet_length` from the TOAST header, so the scan costs what the id-only scan did — and the nightly
-  run adds `--hash`, which detoasts every translation on Supabase and catches a same-length edit. A row
+  takes `octet_length` from the TOAST header; the fingerprint lookups add ~40 s, in sorted batches — and the
+  nightly run adds `--hash`, which catches a same-length edit. The md5 detoasts every translation it covers
+  on Supabase, and the full pass ran past 28 min, IO-bound (2026-10-17), pushing `match_semantic`'s HNSW
+  index out of Supabase's cache with it, so `--hash` covers one seventh of the rows a night
+  (`abs(hashtext(page_id)) % 7` = the UTC weekday): every row weekly. `--hash-part all` forces the full pass. A row
   whose fingerprint differs, or that the store lacks, has its text re-read and replaced (its vector is
   left alone). The JS and SQL fingerprints agreed on 3,000 of 3,000 store rows, 2,010 of them non-ASCII
   (2026-10-17).

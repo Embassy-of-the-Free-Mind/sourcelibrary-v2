@@ -73,6 +73,14 @@ describe('text store fingerprints', () => {
     expect(textFingerprint({ translation: '' }).tl).toBe(0);
   });
 
+  it('fpMany returns the same fingerprints as fp, and leaves out rows the store lacks', () => {
+    for (let i = 0; i < 2500; i++) store.upsert(row({ page_id: `p${String(i).padStart(5, '0')}`, translation: `t${i}` }));
+    const ask = ['p02000', 'zz-absent', 'p00007', 'p01999'];
+    const got = store.fpMany(ask);
+    expect([...got.keys()].sort()).toEqual(['p00007', 'p01999', 'p02000']);
+    for (const pid of got.keys()) expect(Buffer.compare(Buffer.from(got.get(pid).h), Buffer.from(store.fp(pid).h))).toBe(0);
+  });
+
   it('a row the store lacks never matches; remove drops the fingerprint', () => {
     expect(fpMatches(scanRow(row()), store.fp('p1'))).toBe(false);
     store.upsert(row());

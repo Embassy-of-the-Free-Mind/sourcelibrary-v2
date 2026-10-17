@@ -1,5 +1,5 @@
 // Bring the running vector service up to date with page_translations.
-//   node --env-file=/root/sourcelibrary/.env.production.local sync-delta.mjs [--save] [--count-check] [--reconcile [--hash]] [--dry-run]
+//   node --env-file=/root/sourcelibrary/.env.production.local sync-delta.mjs [--save] [--count-check] [--reconcile [--hash [--hash-part N|all]]] [--dry-run]
 //
 // 1. Rows with updated_at after the service's checkpoint (keyset on updated_at, page_id): a row with a
 //    vector is added or replaced (re-embedded pages keep their key), a row whose vector is NULL is
@@ -22,7 +22,8 @@
 //    holds that Supabase no longer serves (deleted rows too), and applies both. The result goes to
 //    logs/reconcile.json, where freshness-check.mjs reads the drift instead of counting again.
 // 5. The same scan carries each row's text fingerprint (lib.mjs textFingerprint): byte lengths every
-//    run, plus an md5 with --hash (nightly; it detoasts every translation on Supabase). In-place edits
+//    run, plus an md5 with --hash (nightly, one seventh of the rows by hashtext(page_id) — the UTC
+//    weekday's, or --hash-part N|all — because it detoasts every translation it covers on Supabase). In-place edits
 //    of page_translations.translation leave updated_at alone — resyncMirrors, backfill-clean-snippets,
 //    translation-cleanup-a2-5700, repair-text-shift-run — and updated_at is the Mongo source time by
 //    design, so steps 1–4 would keep serving the pre-edit snippet in serve mode (#6859 review). A row
@@ -40,7 +41,7 @@
 // re-pulls nightly), which takes hours at 4.5M rows.
 import fs from 'node:fs';
 import {
-  ROW_SELECT, TEXT_DB_PATH, PULL_EDGES, RECONCILE_PATH, FP_LEN_SQL, FP_HASH_SQL, rangeOfPageId, pgClient, parseVector, encodeVec,
+  ROW_SELECT, TEXT_DB_PATH, PULL_EDGES, RECONCILE_PATH, FP_LEN_SQL, fpHashSql, rangeOfPageId, pgClient, parseVector, encodeVec,
   openTextStore, fpMatches, writeJsonAtomic, log,
 } from './lib.mjs';
 
@@ -51,6 +52,10 @@ const COUNT = process.argv.includes('--count-check');
 const RECONCILE = process.argv.includes('--reconcile');
 const DRY = process.argv.includes('--dry-run');
 const HASH = process.argv.includes('--hash');
+// --hash covers one seventh of the rows (lib.mjs fpHashSql): the UTC weekday's, or --hash-part N, or all.
+const HASH_PARTS = 7;
+const hashPartArg = (() => { const i = process.argv.indexOf('--hash-part'); return i > 0 ? process.argv[i + 1] : null; })();
+const HASH_PART = !HASH || hashPartArg === 'all' ? null : hashPartArg !== null ? Number(hashPartArg) % HASH_PARTS : new Date().getUTCDay();
 
 async function call(path, body) {
   const r = await fetch(LOCAL + path, {
@@ -113,17 +118,19 @@ if (RECONCILE) {
   // every run; --hash (nightly) adds the md5. Skipped until text-fingerprints.mjs has filled `fp`.
   const fpReady = text ? text.fpComplete() : null;
   const textCheck = text && fpReady ? (HASH ? 'hash' : 'length') : null;
+  const textLabel = textCheck === 'hash' ? `hash ${HASH_PART === null ? 'all' : `${HASH_PART}/${HASH_PARTS}`} + length` : textCheck;
   const stale = []; let textAbsent = 0;
   await c.query('BEGIN'); // a cursor lives in a transaction (the pooler keeps one backend for it)
   try {
-    await c.query(`DECLARE served NO SCROLL CURSOR FOR SELECT page_id${textCheck ? `, ${FP_LEN_SQL}` : ''}${textCheck === 'hash' ? `, ${FP_HASH_SQL}` : ''}
+    await c.query(`DECLARE served NO SCROLL CURSOR FOR SELECT page_id${textCheck ? `, ${FP_LEN_SQL}` : ''}${textCheck === 'hash' ? `, ${fpHashSql(HASH_PART, HASH_PARTS)}` : ''}
                    FROM page_translations WHERE embedding IS NOT NULL`);
     for (;;) {
       const { rows } = await c.query(`FETCH ${textCheck === 'hash' ? 50000 : 200000} FROM served`);
+      const fps = textCheck ? text.fpMany(rows.map((r) => r.page_id)) : null;
       for (const r of rows) {
         const k = rangeOfPageId(r.page_id); if (k < 0) onEdge++; else buckets[k].push(r.page_id);
-        if (textCheck) {
-          const f = text.fp(r.page_id);
+        if (fps) {
+          const f = fps.get(r.page_id);
           if (!fpMatches(r, f)) { stale.push(r.page_id); if (!f) textAbsent++; }
         }
       }
@@ -185,7 +192,7 @@ if (RECONCILE) {
   const result = {
     at: new Date().toISOString(), supabase_served: ids, on_edge: onEdge, service_live_before: liveBefore, service_live_after: liveAfter,
     drift_before: liveBefore - ids, drift_after: liveAfter - ids, missing, fetched, extra,
-    text_check: textCheck ?? (text ? 'skipped: fingerprints not filled (text-fingerprints.mjs)' : 'skipped: no text store'),
+    text_check: textLabel ?? (text ? 'skipped: fingerprints not filled (text-fingerprints.mjs)' : 'skipped: no text store'),
     text_stale: textStale.length, text_absent: textAbsent, text_fixed: textFixed, text_stale_sample: textStale.slice(0, 20),
     scan_s: scanS, total_s: (Date.now() - tr) / 1000, dry_run: DRY,
   };

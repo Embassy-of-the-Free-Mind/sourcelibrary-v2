@@ -89,13 +89,23 @@ export const TEXT_SELECT = 'page_id, translation, book_title, book_author, extra
  *   tl, ml  byte lengths of translation and of title + author. Postgres reads octet_length from the
  *           TOAST header without detoasting, so the 2-hourly scan costs what the id-only scan cost
  *           (measured 2026-10-17: same 33 ms on a 6.8K-row range). Misses a same-length edit.
- *   h       md5 of the three columns, the nightly pass: it detoasts every translation on Supabase
- *           (~4× the id scan on a 1% block sample, 22 s vs 5.7 s), so it is not run every 2 h.
+ *   h       md5 of the three columns, the nightly pass: it detoasts every translation it covers on
+ *           Supabase (the full pass ~35 min, IO-bound), so it runs on one seventh of the rows a night
+ *           (fpHashSql) and never every 2 h.
  * FP_LEN_SQL / FP_HASH_SQL are the same functions in SQL; they must agree byte for byte with
  * textFingerprint() (UTF-8 lengths; NULL → -1 for translation, '' for title and author).
  */
 export const FP_LEN_SQL = 'coalesce(octet_length(translation), -1) AS tl, coalesce(octet_length(book_title), 0) + coalesce(octet_length(book_author), 0) AS ml';
 export const FP_HASH_SQL = "decode(md5(coalesce(translation, '') || chr(31) || coalesce(book_title, '') || chr(31) || coalesce(book_author, '')), 'hex') AS h";
+/**
+ * The md5 for one part of the rows only (abs(hashtext(page_id)) % parts = part), NULL elsewhere — a NULL
+ * h is compared on lengths alone (fpMatches). The full md5 pass reads every translation's TOAST on
+ * Supabase: measured 2026-10-17 at ~35 min, IO-bound (DataFileRead), which would also push the
+ * match_semantic HNSW index out of Supabase's cache every night. One seventh a night covers every row
+ * weekly in ~5 min; CASE does not detoast the rows it skips. part = null → every row.
+ */
+export const fpHashSql = (part, parts = 7) => (part === null ? FP_HASH_SQL
+  : `CASE WHEN abs(hashtext(page_id)) % ${parts} = ${part} THEN ${FP_HASH_SQL.replace(/ AS h$/, '')} END AS h`);
 export function textFingerprint(r) {
   const t = r.translation ?? null, title = r.book_title ?? '', author = r.book_author ?? '';
   return {
@@ -107,7 +117,7 @@ export function textFingerprint(r) {
 
 /**
  * Open the text store for writing (pull-text.mjs, sync-delta.mjs, text-fingerprints.mjs).
- * Returns {db, upsert(r), replace(r), remove(pid), fp(pid), fpComplete(), tx(fn)}.
+ * Returns {db, upsert(r), replace(r), remove(pid), fp(pid), fpMany(pids), fpComplete(), tx(fn)}.
  * `fp` (page_id → tl, ml, h) is written beside every row write, in the same transaction; a store made
  * before it existed is filled once by text-fingerprints.mjs, which sets meta.fp_complete. Until then
  * the reconcile skips its text comparison (an empty fp table would read as 7.6M stale rows).
@@ -130,6 +140,7 @@ export function openTextStore(file = TEXT_DB_PATH) {
   const rep = db.prepare('INSERT OR REPLACE INTO pages (page_id, u, translation, book_title, book_author) VALUES (?, ?, ?, ?, ?)');
   const putFp = db.prepare('INSERT OR REPLACE INTO fp (page_id, tl, ml, h) VALUES (?, ?, ?, ?)');
   const getFp = db.prepare('SELECT tl, ml, h FROM fp WHERE page_id = ?');
+  const getFps = db.prepare('SELECT page_id, tl, ml, h FROM fp WHERE page_id IN (SELECT value FROM json_each(?))');
   const rm = db.prepare('DELETE FROM pages WHERE page_id = ?'), rmFp = db.prepare('DELETE FROM fp WHERE page_id = ?');
   const args = (r) => [r.page_id, Number(r.u), r.translation ?? null, r.book_title ?? null, r.book_author ?? null];
   const writeFp = (r) => { const f = textFingerprint(r); putFp.run(r.page_id, f.tl, f.ml, f.h); };
@@ -139,6 +150,14 @@ export function openTextStore(file = TEXT_DB_PATH) {
     replace: (r) => { const res = rep.run(...args(r)); writeFp(r); return res; },
     remove: (pid) => { rmFp.run(pid); return rm.run(pid); },
     fp: (pid) => getFp.get(pid),
+    // Many at once, for the reconcile: ~13 µs a point lookup is ~100 s over 7.6M rows, and the scan's
+    // order is the heap's. Sorted batches of 1,000 through json_each walk the B-tree in order: 200K
+    // lookups in 0.56 s against 3.1 s one by one (measured on l7a, 2026-10-17).
+    fpMany: (pids) => {
+      const out = new Map(); const sorted = [...pids].sort();
+      for (let i = 0; i < sorted.length; i += 1000) for (const r of getFps.all(JSON.stringify(sorted.slice(i, i + 1000)))) out.set(r.page_id, r);
+      return out;
+    },
     fpComplete: () => db.prepare("SELECT v FROM meta WHERE k = 'fp_complete'").get()?.v ?? null,
     tx: (fn) => { db.exec('BEGIN'); try { const v = fn(); db.exec('COMMIT'); return v; } catch (e) { db.exec('ROLLBACK'); throw e; } },
   };

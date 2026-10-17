@@ -9,14 +9,17 @@
 # first 26 h; sync-delta.mjs header, step 4).
 # Each reconcile also compares the text store's fingerprints with Supabase's (byte lengths; header-only, so
 # no slower), and replaces stale text (in-place edits leave updated_at alone; sync-delta.mjs step 5).
-# 03:40 UTC: delta + reconcile --hash (md5 of every translation, which catches a same-length edit), then save a new generation (tmp + rename) and compare the row count with
+# 03:40 UTC: delta + reconcile --hash (md5 of one seventh of the translations, the weekday's: every row weekly;
+# it catches a same-length edit), then save a new generation (tmp + rename) and compare the row count with
 # Supabase (exit 4 and a COUNT DRIFT line when the drift is above 0.1%).
+# The reconcile lines cap the heap at 2 GB: uncapped, the client-side diff peaked at 2.35 GB RSS (mostly GC
+# slack) against 1.27 GB capped at 1.5 GB, same wall time (2026-10-17).
 # All three share one flock (text-fingerprints.mjs, run once by hand, takes it too), so the nightly save never overlaps a delta and no two deltas run at once; the
 # half-hourly one skips (-n) when the lock is held, the nightly one waits up to 15 min for it.
 # :10 and :40: freshness-check.mjs — ntfy sourcelibrary-uptime once per state change when the service is
 # down, the last delta is older than 2 h, the last reconcile older than 6 h, or the row count drifts more
 # than 0.5% from the reconcile's Supabase count. It reads no database.
 */30 * * * * flock -n /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs >> /data/vector-search/logs/delta.log 2>&1
-45 */2 * * * flock -w 600 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --reconcile >> /data/vector-search/logs/delta.log 2>&1
-40 3 * * * flock -w 900 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --reconcile --hash --save --count-check >> /data/vector-search/logs/delta.log 2>&1
+45 */2 * * * flock -w 600 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --max-old-space-size=2048 --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --reconcile >> /data/vector-search/logs/delta.log 2>&1
+40 3 * * * flock -w 900 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --max-old-space-size=2048 --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --reconcile --hash --save --count-check >> /data/vector-search/logs/delta.log 2>&1
 10,40 * * * * flock -n /tmp/vector-search-freshness.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/freshness-check.mjs >> /data/vector-search/logs/freshness.log 2>&1
