@@ -177,12 +177,22 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     const ctl = new AbortController();
     statsCtl.current = ctl;
     setStatsLoading(true);
-    try {
-      const r = await fetch(`/api/catalog/stats?${key}`, { signal: ctl.signal });
-      const j = await r.json();
-      if (statsCtl.current === ctl && r.ok) setStats(j);
-    } catch { /* keep the previous numbers */ }
-    if (statsCtl.current === ctl) setStatsLoading(false);
+    // One retry: the first count of a new filter set can time out on a cold
+    // database. If both fail the band shows dashes — never the previous
+    // search's numbers under the new one.
+    let got: BandStats | null = null;
+    for (let attempt = 0; attempt < 2 && !got; attempt++) {
+      try {
+        if (attempt) await new Promise((r) => setTimeout(r, 1200));
+        const r = await fetch(`/api/catalog/stats?${key}`, { signal: ctl.signal });
+        if (r.ok) got = await r.json();
+      } catch (err) {
+        if ((err as Error).name === 'AbortError') return;
+      }
+    }
+    if (statsCtl.current !== ctl) return;
+    setStats(got);
+    setStatsLoading(false);
   }, [stats]);
 
   const loadList = useCallback(async (next: CatalogState, pageNo: number) => {
