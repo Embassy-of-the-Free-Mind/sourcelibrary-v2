@@ -20,10 +20,13 @@
  *           known-item and name-variant checks are at parity or better
  *           (scripts/eval/experiments/2026-10-17-keyword-*-2049.md).
  *
- * Global scope only: not for a `book_id` search (that lane admits a book that
- * is not visible), not on a tenant, not for `?lang=` (that lane is Postgres).
- * The service only ever returns pages of live books (visible, pages_count > 0,
- * not hidden), intersected with the allow-list the caller passes.
+ * Global scope, and a `book_id` search on a LIVE book (#2049: /api/search
+ * with `book_id`, and /api/books/[id]/search), whose book is the allow-list. A
+ * book that is not live stays on Atlas: those lanes admit a hidden book, and
+ * the service holds none. Not on a tenant, not for `?lang=` (that lane is
+ * Postgres). The service only ever returns pages of live books (visible,
+ * pages_count > 0, not hidden), intersected with the allow-list the caller
+ * passes.
  *
  * PRIOR ART: src/lib/vector-search.ts — the same off/shadow/serve shape, env
  * names and Bearer transport for the page-vector service (#6821). Its rows are
