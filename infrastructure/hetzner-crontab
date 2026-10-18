@@ -209,3 +209,9 @@
 13 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs --canary" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
 # agy (Gemini CLI) SQLite WAL checkpoint, hourly (#6223). The WAL reached 20 GB on 2026-10-16 and filled root. Source: scripts/workers/agy-wal-checkpoint.py, copied to /root/bin.
 17 * * * * python3 /root/bin/agy-wal-checkpoint.py >> /var/log/sourcelibrary/agy-wal-checkpoint.log 2>&1 # agy WAL hit 20G and filled root (#6223)
+
+# Synthetic search probe (#2049, eval check 6): 10 fixed queries through /api/search, /api/search/semantic?level=page and MCP
+# search_library / search_concept; JSONL log /var/log/sourcelibrary/search-probe.jsonl; ntfy sourcelibrary-uptime when a surface p90 > 2x its
+# trailing 24 h or on 3 failing runs in a row. No model call of its own (fixed queries); ~3,840 Vercel invocations/day. Until the PR merges, the
+# copy in the search-evals job scratch runs; the repo copy wins as soon as /root/sourcelibrary has it.
+4,19,34,49 * * * * cd /root/sourcelibrary && P=scripts/audit/search-probe.mjs && { [ -f "$P" ] || P=/mnt/HC_Volume_105839809/jobs/search-evals/probe/search-probe.mjs; } && flock -n /tmp/sl-search-probe.lock timeout 600 node "$P" >> /var/log/sourcelibrary/search-probe.log 2>&1

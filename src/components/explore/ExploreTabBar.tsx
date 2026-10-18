@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 // reader, since these pages have no other cross-navigation.
 const TABS = [
   { href: '/timeline', label: 'Timeline' },
+  { href: '/timeline/written', label: 'Centuries' },
   { href: '/explore/timeline', label: 'People' },
   { href: '/explore/map', label: 'Map' },
   { href: '/explore/constellation', label: 'Constellation' },

@@ -23,6 +23,12 @@
     "revised": "2026-10-18T00:06:39+02:00",
     "revisions": 2
   },
+  "aldine-roman": {
+    "path": "src/app/articles/aldine-roman/page.tsx",
+    "published": "2026-08-20T07:35:14-06:00",
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 11
+  },
   "archive-ocr-against-proofread-pages": {
     "path": "src/app/articles/archive-ocr-against-proofread-pages/page.tsx",
     "published": "2026-09-28T15:18:00+02:00",
@@ -46,6 +52,18 @@
     "published": "2026-03-09T19:39:23+01:00",
     "revised": "2026-10-18T00:33:26+02:00",
     "revisions": 13
+  },
+  "beeckman-on-drebbel": {
+    "path": "src/app/articles/beeckman-on-drebbel/page.tsx",
+    "published": "2026-10-06T15:18:26+02:00",
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 3
+  },
+  "by-the-numbers": {
+    "path": "src/app/articles/by-the-numbers/page.tsx",
+    "published": "2026-05-10T21:54:35+02:00",
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 8
   },
   "cannabis-bangue": {
     "path": "src/app/articles/cannabis-bangue/page.tsx",
@@ -188,8 +206,8 @@
   "harmonic-justice": {
     "path": "src/app/articles/harmonic-justice/page.tsx",
     "published": "2026-10-16T09:47:33-07:00",
-    "revised": "2026-10-18T01:01:41+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 8
   },
   "hidden-engineers": {
     "path": "src/app/articles/hidden-engineers/page.tsx",
@@ -248,8 +266,8 @@
   "hyperborea": {
     "path": "src/app/articles/hyperborea/page.tsx",
     "published": "2026-10-16T07:00:09-07:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 11
   },
   "iiif": {
     "path": "src/app/articles/iiif/page.tsx",
@@ -344,8 +362,8 @@
   "one-sentence-of-hermes": {
     "path": "src/app/articles/one-sentence-of-hermes/page.tsx",
     "published": "2026-10-08T12:50:47+02:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 7
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 8
   },
   "origin-story": {
     "path": "src/app/articles/origin-story/page.tsx",
@@ -374,8 +392,8 @@
   "preserved-by-enemies": {
     "path": "src/app/articles/preserved-by-enemies/page.tsx",
     "published": "2026-10-16T07:51:21-07:00",
-    "revised": "2026-10-18T01:01:41+02:00",
-    "revisions": 6
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 7
   },
   "progress-studies": {
     "path": "src/app/articles/progress-studies/page.tsx",
@@ -406,6 +424,12 @@
     "published": "2026-03-02T11:34:13+04:00",
     "revised": "2026-10-18T00:33:26+02:00",
     "revisions": 15
+  },
+  "search-by-meaning": {
+    "path": "src/app/articles/search-by-meaning/page.tsx",
+    "published": "2026-10-08T00:27:44+02:00",
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 3
   },
   "shipwrecks-and-buried-treasure": {
     "path": "src/app/articles/shipwrecks-and-buried-treasure/page.tsx",
@@ -500,8 +524,8 @@
   "trees-of-life": {
     "path": "src/app/articles/trees-of-life/page.tsx",
     "published": "2026-10-15T16:41:46-07:00",
-    "revised": "2026-10-18T01:32:44+02:00",
-    "revisions": 10
+    "revised": "2026-10-18T16:06:16+02:00",
+    "revisions": 11
   },
   "two-copies-two-languages": {
     "path": "src/app/articles/two-copies-two-languages/page.tsx",

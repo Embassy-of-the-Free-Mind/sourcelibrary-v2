@@ -73,6 +73,11 @@ export interface SearchStrings {
   filterLibrary: string;
   filterPublishedAfter: string;
   filterPublishedBefore: string;
+  /** When the WORK was written, as opposed to when the copy was printed (#6873). */
+  filterWrittenIn: string;
+  anyTime: string;
+  writtenInNote: (period: string) => string;
+  browseByCentury: string;
   allLanguages: string;
   allCategories: string;
   allCollections: string;
@@ -257,6 +262,10 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     filterLibrary: 'Library',
     filterPublishedAfter: 'Published after',
     filterPublishedBefore: 'Published before',
+    filterWrittenIn: 'Work written',
+    anyTime: 'Any time',
+    writtenInNote: (period) => `Works written: ${period}. The year on each card is when that copy was made.`,
+    browseByCentury: 'Browse works by century',
     allLanguages: 'All Languages',
     allCategories: 'All Categories',
     allCollections: 'All Collections',
@@ -397,6 +406,10 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = withEnglishFallback
     filterLibrary: 'Biblioteca',
     filterPublishedAfter: 'Publicado después de',
     filterPublishedBefore: 'Publicado antes de',
+    filterWrittenIn: 'Obra escrita',
+    anyTime: 'Cualquier época',
+    writtenInNote: (period) => `Obras escritas: ${period}. El año de cada tarjeta es el de esa copia.`,
+    browseByCentury: 'Obras por siglo',
     allLanguages: 'Todos los idiomas',
     allCategories: 'Todas las materias',
     allCollections: 'Todas las colecciones',

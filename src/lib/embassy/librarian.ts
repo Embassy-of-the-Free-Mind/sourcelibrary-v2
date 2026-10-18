@@ -26,7 +26,7 @@ import {
   isNativeEdition,
   type LocalizedBookMap,
 } from '@/lib/localized';
-import { GoogleGenAI, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
+import { GoogleGenAI, ThinkingLevel, Type, type FunctionDeclaration, type GenerateContentResponse } from '@google/genai';
 import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
@@ -64,6 +64,17 @@ import collectionRedirects from '@/lib/collection-redirects.json';
 const MODEL = 'gemini-3-flash-preview';
 const MAX_ROUNDS = 6;
 const TEMPERATURE = 0.7;
+
+/**
+ * Faster tool rounds (#6904): thinking LOW on every round that offers tools,
+ * plus a prompt line asking for all first-round searches at once, in
+ * parallel. The forced no-tools synthesis keeps the default thinking level.
+ * Blind A/B on 40 readers' questions (scripts/eval/experiments/
+ * 2026-10-18-librarian-speed-6904.md): time to done p50 20.5 → 11.7 s, first
+ * text 3.3 → 2.0 s, two Opus judges B 20 / A 18 / tie 2. On by default;
+ * LIBRARIAN_FAST_TOOL_ROUNDS=0 turns it off.
+ */
+const FAST_TOOL_ROUNDS_DEFAULT = process.env.LIBRARIAN_FAST_TOOL_ROUNDS !== '0';
 /** Broken slugs we attempt to repair in one turn; the rest are disclaimed. */
 const MAX_REPAIR_SLUGS = 12;
 /** Wall-clock ceiling on the whole repair loop, guarding the turn's deadline. */
@@ -1405,6 +1416,7 @@ function buildSystemPrompt(
   messageIndex: number,
   collectionOpts?: { catalog?: string; collectionContext?: string | null },
   lang: Locale = 'en',
+  fastToolRounds = false,
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -1423,7 +1435,7 @@ ${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not eve
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds);
 }
 
 /**
@@ -1452,7 +1464,7 @@ Links: the tool results give URLs under \`${base}/book/…\` — copy them exact
 `;
 }
 
-function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en'): string {
+function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -1519,7 +1531,9 @@ ${notebookContext}
 ## Know when to stop searching
 
 After 2-3 rounds of searching (4-6 tool calls total), stop and synthesize what you've found. A focused, well-cited response from 2-4 sources is far better than an exhaustive survey of everything tangentially related.
-
+${fastToolRounds ? `
+In your FIRST round, write your opening sentences (Step 1) and then issue every search you will need, all at once: the tools run in parallel, so several calls in one round cost the reader no extra wait, while each further round adds seconds. Use a later round only to follow up something specific that a first-round result turned up.
+` : ''}
 - Found 2-3 strong passages? Stop searching, write your response.
 - First search returned nothing? Try one more angle, then acknowledge the gap.
 - Don't run the same search with slightly different wording — if keyword search missed, try semantic (or vice versa), then move on.
@@ -1557,32 +1571,34 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null; lang?: Locale },
+  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   const lang: Locale = options?.lang ?? 'en';
+  const fastToolRounds = options?.fastToolRounds ?? FAST_TOOL_ROUNDS_DEFAULT;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
   const _t0 = Date.now();
 
   const ai = new GoogleGenAI({ apiKey });
 
-  // Load research notebook if thread exists
-  const notebook = threadId ? await loadNotebook(threadId) : null;
-  const notebookContext = formatNotebookForPrompt(notebook);
   // User messages in history = prior user turns. This message is the next one.
   const messageIndex = history.filter(m => m.role === 'user').length + 1;
 
-  // Collection catalog (so the model can map a topic → the right slug) and the
-  // optional collection context (when the Librarian was opened from a collection
-  // page, searches lean toward it by default). Resolve the context to a real
-  // slug so a stray value can't silently break weighting.
+  // The research notebook (if the thread has one), the collection catalog (so
+  // the model can map a topic → the right slug) and the optional collection
+  // context (when the Librarian was opened from a collection page, searches
+  // lean toward it by default) are independent: load them together (#6904).
+  // Resolve the context to a real slug so a stray value can't silently break
+  // weighting.
   const { formatCatalogForPrompt, resolveCollectionSlug } = await import('@/lib/embassy/collection-catalog');
-  const [catalog, collectionContext] = await Promise.all([
+  const [notebook, catalog, collectionContext] = await Promise.all([
+    threadId ? loadNotebook(threadId) : null,
     formatCatalogForPrompt(),
     resolveCollectionSlug(options?.collection),
   ]);
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang);
+  const notebookContext = formatNotebookForPrompt(notebook);
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
@@ -1696,6 +1712,7 @@ export async function* streamAgenticResponse(
       config: {
         tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
         temperature: TEMPERATURE,
+        ...(fastToolRounds ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } } : {}),
       },
     });
 

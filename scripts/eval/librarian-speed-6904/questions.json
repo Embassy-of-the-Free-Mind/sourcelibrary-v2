@@ -1,0 +1,216 @@
+{
+  "frozen": "2026-10-18",
+  "source": "embassy_messages: authorType human, first message of a chat thread created in the 30 days to 2026-10-18; 371 distinct candidates; 40 hand-picked for topic variety, excluding personal details (names, birthdays, symptoms, locations) and requests for social-media material.",
+  "aVsA": [
+    "q01",
+    "q06",
+    "q11",
+    "q16",
+    "q21",
+    "q26",
+    "q31",
+    "q36"
+  ],
+  "questions": [
+    {
+      "id": "q01",
+      "q": "What did Ficino write about melancholy and Saturn?",
+      "lang": "en"
+    },
+    {
+      "id": "q02",
+      "q": "How do Chan, Sufi and Kabbalist texts describe the annihilation of the self?",
+      "lang": "en"
+    },
+    {
+      "id": "q03",
+      "q": "When was the first time fungi were mentioned in books?",
+      "lang": "en"
+    },
+    {
+      "id": "q04",
+      "q": "what do we have on bees?",
+      "lang": "en"
+    },
+    {
+      "id": "q05",
+      "q": "How did early modern physicians and natural philosophers understand the four elements in relation to temperament, health and disease?",
+      "lang": "en"
+    },
+    {
+      "id": "q06",
+      "q": "What is the typology of the winds, and did interpretations of that typology change over time?",
+      "lang": "en"
+    },
+    {
+      "id": "q07",
+      "q": "What do early modern sources say about the weapon salve?",
+      "lang": "en"
+    },
+    {
+      "id": "q08",
+      "q": "what did newton published from alchemy?",
+      "lang": "en"
+    },
+    {
+      "id": "q09",
+      "q": "What did Paracelsus teach about medicine?",
+      "lang": "en"
+    },
+    {
+      "id": "q10",
+      "q": "How many books by Paracelsus does the library hold?",
+      "lang": "en"
+    },
+    {
+      "id": "q11",
+      "q": "What is the relationship between music and magic?",
+      "lang": "en"
+    },
+    {
+      "id": "q12",
+      "q": "How did alchemists describe the philosopher's stone?",
+      "lang": "en"
+    },
+    {
+      "id": "q13",
+      "q": "Who was Hermes Trismegistus?",
+      "lang": "en"
+    },
+    {
+      "id": "q14",
+      "q": "How do I identify an engraving I photographed in a museum?",
+      "lang": "en"
+    },
+    {
+      "id": "q15",
+      "q": "How do Daoist and Vedantic texts speak of the source that is beyond names?",
+      "lang": "en"
+    },
+    {
+      "id": "q16",
+      "q": "Spagyric Art",
+      "lang": "en"
+    },
+    {
+      "id": "q17",
+      "q": "What does the Emerald Tablet say about 'as above, so below'? Quote the Latin.",
+      "lang": "en"
+    },
+    {
+      "id": "q18",
+      "q": "What ciphers and secret alphabets appear in these books?",
+      "lang": "en"
+    },
+    {
+      "id": "q19",
+      "q": "How did Renaissance physicians use music to cure illness?",
+      "lang": "en"
+    },
+    {
+      "id": "q20",
+      "q": "What do you know about the book of Enoch",
+      "lang": "en"
+    },
+    {
+      "id": "q21",
+      "q": "How did Cornelis Drebbel's self-regulating oven work, and who described it after his death?",
+      "lang": "en"
+    },
+    {
+      "id": "q22",
+      "q": "Find a passage in a Tibetan text about emptiness and give me the page link.",
+      "lang": "en"
+    },
+    {
+      "id": "q23",
+      "q": "descriptions or illustrations of tattooing?",
+      "lang": "en"
+    },
+    {
+      "id": "q24",
+      "q": "What books explore resonance as magic?",
+      "lang": "en"
+    },
+    {
+      "id": "q25",
+      "q": "Chess history",
+      "lang": "en"
+    },
+    {
+      "id": "q26",
+      "q": "What did Michael Maier write about the Atalanta Fugiens emblems and music?",
+      "lang": "en"
+    },
+    {
+      "id": "q27",
+      "q": "What does the Zhuangzi say about the heavenly and the human, and is there a parallel in the Ikhwān al-Ṣafāʾ?",
+      "lang": "en"
+    },
+    {
+      "id": "q28",
+      "q": "Does anyone talk about silent reading?",
+      "lang": "en"
+    },
+    {
+      "id": "q29",
+      "q": "How were dreams interpreted as medical symptoms?",
+      "lang": "en"
+    },
+    {
+      "id": "q30",
+      "q": "abstinence from beans",
+      "lang": "en"
+    },
+    {
+      "id": "q31",
+      "q": "What did Monconys see at Doctor Keiffer's house at Stratford-le-Bow in 1663? Quote him.",
+      "lang": "en"
+    },
+    {
+      "id": "q32",
+      "q": "What is the Kabbalah's tree of life?",
+      "lang": "en"
+    },
+    {
+      "id": "q33",
+      "q": "What is the oldest form of divination?",
+      "lang": "en"
+    },
+    {
+      "id": "q34",
+      "q": "mnemonic system",
+      "lang": "en"
+    },
+    {
+      "id": "q35",
+      "q": "What does the symbol of the green lion mean in the alchemical process ?",
+      "lang": "en"
+    },
+    {
+      "id": "q36",
+      "q": "What did Paracelsus say about the archeus in digestion?",
+      "lang": "en"
+    },
+    {
+      "id": "q37",
+      "q": "Qué significa la  Lemniscata, su origen y evolución",
+      "lang": "en"
+    },
+    {
+      "id": "q38",
+      "q": "炼金术师们解释过四大元素符号为什么是三角形并且加上横线吗",
+      "lang": "en"
+    },
+    {
+      "id": "q39",
+      "q": "Vertel me over de betekenis van de Ouroboros",
+      "lang": "en"
+    },
+    {
+      "id": "q40",
+      "q": "Existe el kybalion en esta biblioteca?",
+      "lang": "en"
+    }
+  ]
+}

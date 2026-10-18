@@ -3,7 +3,6 @@
 # getPageSource) and delete its line; do not add lines — waive with // image-pick-ok: <reason>.
 scripts/analysis/check-urls.mjs	console.log(' archived_photo:', page?.archived_photo || 'null');
 scripts/analysis/get-fludd-pages.mjs	const img = page?.cropped_photo || page?.archived_photo || page?.photo;
-scripts/audit/detect-fabricated-ocr.mjs	rows.push({ page: d.page_number, langs, text, model: d.ocr?.model, source: d.ocr?.source, img: d.display_photo || d.archived_photo || d.photo });
 scripts/audit/ia-model-ocr-off-leaf.mjs	const m = String(p.photo || '').match(/\/page\/n(\d+)\//); const shown = p.display_photo || p.cropped_photo || p.photo;
 scripts/audit/ia-ocr-leaf-drift.mjs	bulk_pages: pages.filter((p) => p.archive_metadata?.source === 'bulk_jp2').length, archived_pages: pages.filter((p) => /^https?:/.test(p.archived_photo || '')).length,
 scripts/audit/ia-ocr-leaf-drift.mjs	const usable = pages.filter((p) => /\/page\/n\d+\//.test(p.photo || '') && /^https?:/.test(p.archived_photo || '') && E(p.page_number - 1) >= 1);

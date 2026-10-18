@@ -1,0 +1,31 @@
+# l7a's slice file, installed as /etc/systemd/system/search.slice on l7a (earthai-l7a; box-prefixed in the repo
+# like gex45-sourcelibrary.slice, because cloudlayer's infrastructure/systemd/search.slice is a different file:
+# the parent of its search-services.slice, #6852). Do NOT copy that one onto l7a — keyword-search's
+# bootstrap.sh does, so it must not run on l7a as it stands; it would drop this slice's MemoryMin to 4G.
+# This slice holds the always-on search services — the page-vector
+# service (vector-search.service) and Caddy in front of it — OUT of sourcelibrary.slice, where the Claude
+# jobs run (#6821, incident 2026-10-17).
+#
+# Why: on 2026-10-17 from ~21:04 UTC every shadow call timed out (15/15 at 400 ms). Two `sl-tsc` runs took
+# sourcelibrary.slice to 13.9 GB against its MemoryHigh=12G, and the kernel throttled every process in the
+# slice — the service too (state D, wchan mem_cgroup_handle_over_high, memory.pressure full ~80%) — so
+# /health hung even on loopback. A job's memory spike must never stall a reader's query.
+#
+#   cp infrastructure/systemd/l7a-search.slice /etc/systemd/system/search.slice
+#   systemctl daemon-reload            # the units name Slice=search.slice; restart them to move
+#
+# MemoryMin protects the service's anonymous working set (~9.0 GB: the e4m3 index + row store, measured
+# 2026-10-17) from reclaim; MemoryLow above it keeps some of the text store's page cache (45 point reads:
+# 24.6 ms cold, 1.3 ms cached). No MemoryHigh, on purpose: that is the throttle that caused the stall.
+# MemoryMax is the runaway guard — at it the kernel drops clean page cache first, and only a real leak
+# would OOM-kill the service (Restart=always brings it back from the last saved generation).
+# CPUWeight 50: above the jobs' 30 (a query beats a build), below the box's own tick (default 100).
+[Unit]
+Description=Source Library search services (page-vector service + Caddy), apart from the job slice
+
+[Slice]
+MemoryMin=9G
+MemoryLow=11G
+MemoryMax=13G
+CPUWeight=50
+IOWeight=50

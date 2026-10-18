@@ -1,0 +1,1511 @@
+{
+ "seed": 68712,
+ "at": "2026-10-18T05:47:21.505Z",
+ "excluded_first_draw_books": 107,
+ "pool": {
+  "table": 85,
+  "mixed": 94
+ },
+ "draws": [
+  {
+   "class": "table",
+   "book_id": "6a3ceb4d95fcd455630553b4",
+   "title": "周易圖書質疑·卷一~卷二 (vol 1)",
+   "pages_count": 154,
+   "page_id": "6a3ceb4d95fcd455630554ba",
+   "page": 140,
+   "photo": "https://archive.org/download/06067994.cn/page/n139/full/full/0/default.jpg",
+   "image_w": 781,
+   "image_h": 1037,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceb4d95fcd45563055480",
+     "page": 82,
+     "photo": "https://archive.org/download/06067994.cn/page/n81/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceb4d95fcd4556305547d",
+     "page": 79,
+     "photo": "https://archive.org/download/06067994.cn/page/n78/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceaf895fcd45563052443",
+   "title": "欽定詩經樂譜全書·卷十五 (vol 10)",
+   "pages_count": 148,
+   "page_id": "6a3ceaf895fcd4556305246c",
+   "page": 41,
+   "photo": "https://archive.org/download/06067002.cn/page/n40/full/full/0/default.jpg",
+   "image_w": 754,
+   "image_h": 1047,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceaf895fcd45563052483",
+     "page": 64,
+     "photo": "https://archive.org/download/06067002.cn/page/n63/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceaf895fcd4556305247c",
+     "page": 57,
+     "photo": "https://archive.org/download/06067002.cn/page/n56/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3c6d5201fe4f593c1ba001",
+   "title": "春秋長歷·卷十 (vol 6)",
+   "pages_count": 86,
+   "page_id": "6a3c6d5201fe4f593c1ba04b",
+   "page": 74,
+   "photo": "https://archive.org/download/06047159.cn/page/n73/full/full/0/default.jpg",
+   "image_w": 772,
+   "image_h": 1041,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3c6d5201fe4f593c1ba047",
+     "page": 70,
+     "photo": "https://archive.org/download/06047159.cn/page/n69/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3c6d5201fe4f593c1ba04e",
+     "page": 77,
+     "photo": "https://archive.org/download/06047159.cn/page/n76/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cb9663d799518cd71db9a",
+   "title": "樂律表微·卷八 (vol 4)",
+   "pages_count": 76,
+   "page_id": "6a3cb9663d799518cd71dbc8",
+   "page": 46,
+   "photo": "https://archive.org/download/06050563.cn/page/n45/full/full/0/default.jpg",
+   "image_w": 767,
+   "image_h": 1041,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cb9663d799518cd71dbdb",
+     "page": 65,
+     "photo": "https://archive.org/download/06050563.cn/page/n64/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cb9663d799518cd71dbae",
+     "page": 20,
+     "photo": "https://archive.org/download/06050563.cn/page/n19/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cbf23f9474f825c165dc2",
+   "title": "數學·卷五 (vol 3)",
+   "pages_count": 72,
+   "page_id": "6a3cbf23f9474f825c165e55",
+   "page": 16,
+   "photo": "https://archive.org/download/06057478.cn/page/n15/full/full/0/default.jpg",
+   "image_w": 1107,
+   "image_h": 1486,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cbf23f9474f825c165e89",
+     "page": 68,
+     "photo": "https://archive.org/download/06057478.cn/page/n67/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cbf23f9474f825c165e54",
+     "page": 15,
+     "photo": "https://archive.org/download/06057478.cn/page/n14/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ced974701a906f10e1a77",
+   "title": "數度衍·卷十五~卷十七 (vol 7)",
+   "pages_count": 125,
+   "page_id": "6a3ced974701a906f10e1aa9",
+   "page": 50,
+   "photo": "https://archive.org/download/06071545.cn/page/n49/full/full/0/default.jpg",
+   "image_w": 766,
+   "image_h": 1045,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ced974701a906f10e1ab3",
+     "page": 60,
+     "photo": "https://archive.org/download/06071545.cn/page/n59/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ced974701a906f10e1aac",
+     "page": 53,
+     "photo": "https://archive.org/download/06071545.cn/page/n52/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceaff95fcd455630527e7",
+   "title": "欽定詩經樂譜全書·卷二十二 (vol 17)",
+   "pages_count": 98,
+   "page_id": "6a3ceaff95fcd455630528be",
+   "page": 85,
+   "photo": "https://archive.org/download/06067009.cn/page/n84/full/full/0/default.jpg",
+   "image_w": 763,
+   "image_h": 1058,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceaff95fcd455630528ba",
+     "page": 81,
+     "photo": "https://archive.org/download/06067009.cn/page/n80/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceaff95fcd455630528a5",
+     "page": 60,
+     "photo": "https://archive.org/download/06067009.cn/page/n59/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceaf495fcd4556305210e",
+   "title": "欽定詩經樂譜全書·卷八~卷九 (vol 6)",
+   "pages_count": 154,
+   "page_id": "6a3ceaf495fcd45563052190",
+   "page": 130,
+   "photo": "https://archive.org/download/06066998.cn/page/n129/full/full/0/default.jpg",
+   "image_w": 763,
+   "image_h": 1060,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceaf495fcd45563052196",
+     "page": 136,
+     "photo": "https://archive.org/download/06066998.cn/page/n135/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceaf495fcd45563052191",
+     "page": 131,
+     "photo": "https://archive.org/download/06066998.cn/page/n130/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cf0118642f0445b1622d6",
+   "title": "御製歷象考成·下編·卷五~卷十 (vol 13)",
+   "pages_count": 193,
+   "page_id": "6a3cf0118642f0445b16232a",
+   "page": 84,
+   "photo": "https://archive.org/download/06076265.cn/page/n83/full/full/0/default.jpg",
+   "image_w": 654,
+   "image_h": 938,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0118642f0445b162308",
+     "page": 50,
+     "photo": "https://archive.org/download/06076265.cn/page/n49/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0118642f0445b162310",
+     "page": 58,
+     "photo": "https://archive.org/download/06076265.cn/page/n57/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cf0198642f0445b162874",
+   "title": "御製歷象考成·表·卷十一~卷十二 (vol 22)",
+   "pages_count": 189,
+   "page_id": "6a3cf0198642f0445b1628ed",
+   "page": 121,
+   "photo": "https://archive.org/download/06076274.cn/page/n120/full/full/0/default.jpg",
+   "image_w": 655,
+   "image_h": 918,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0198642f0445b1628af",
+     "page": 59,
+     "photo": "https://archive.org/download/06076274.cn/page/n58/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0198642f0445b162924",
+     "page": 176,
+     "photo": "https://archive.org/download/06076274.cn/page/n175/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cec5e8642f0445b15bd7b",
+   "title": "帝王經世圖譜·卷一~卷三 (vol 8)",
+   "pages_count": 171,
+   "page_id": "6a3cec5e8642f0445b15bdcc",
+   "page": 81,
+   "photo": "https://archive.org/download/06072272.cn/page/n80/full/full/0/default.jpg",
+   "image_w": 639,
+   "image_h": 916,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec5e8642f0445b15bdca",
+     "page": 79,
+     "photo": "https://archive.org/download/06072272.cn/page/n78/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec5e8642f0445b15be0e",
+     "page": 147,
+     "photo": "https://archive.org/download/06072272.cn/page/n146/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ced944701a906f10e1919",
+   "title": "數度衍·卷六~卷七 (vol 3)",
+   "pages_count": 123,
+   "page_id": "6a3ced944701a906f10e1971",
+   "page": 88,
+   "photo": "https://archive.org/download/06071541.cn/page/n87/full/full/0/default.jpg",
+   "image_w": 766,
+   "image_h": 1046,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ced944701a906f10e1959",
+     "page": 64,
+     "photo": "https://archive.org/download/06071541.cn/page/n63/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ced944701a906f10e1940",
+     "page": 39,
+     "photo": "https://archive.org/download/06071541.cn/page/n38/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cf0158642f0445b162595",
+   "title": "御製歷象考成·表·卷六之一~卷六之二 (vol 18)",
+   "pages_count": 196,
+   "page_id": "6a3cf0158642f0445b162608",
+   "page": 115,
+   "photo": "https://archive.org/download/06076270.cn/page/n114/full/full/0/default.jpg",
+   "image_w": 650,
+   "image_h": 916,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0158642f0445b1625ea",
+     "page": 85,
+     "photo": "https://archive.org/download/06076270.cn/page/n84/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0158642f0445b1625ef",
+     "page": 90,
+     "photo": "https://archive.org/download/06076270.cn/page/n89/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceaf795fcd455630523dd",
+   "title": "欽定詩經樂譜全書·卷十四 (vol 9)",
+   "pages_count": 99,
+   "page_id": "6a3ceaf795fcd45563052427",
+   "page": 74,
+   "photo": "https://archive.org/download/06067001.cn/page/n73/full/full/0/default.jpg",
+   "image_w": 746,
+   "image_h": 1054,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceaf795fcd455630523f8",
+     "page": 27,
+     "photo": "https://archive.org/download/06067001.cn/page/n26/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceaf795fcd4556305241a",
+     "page": 61,
+     "photo": "https://archive.org/download/06067001.cn/page/n60/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3c6b1739b4508b04e408b3",
+   "title": "鄉黨圖考·卷一 (vol 1)",
+   "pages_count": 78,
+   "page_id": "6a3c6b1739b4508b04e409a9",
+   "page": 71,
+   "photo": "https://archive.org/download/06055237.cn/page/n70/full/full/0/default.jpg",
+   "image_w": 771,
+   "image_h": 1070,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3c6b1739b4508b04e409a0",
+     "page": 62,
+     "photo": "https://archive.org/download/06055237.cn/page/n61/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3c6b1739b4508b04e4097d",
+     "page": 27,
+     "photo": "https://archive.org/download/06055237.cn/page/n26/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceb4d95fcd455630553b3",
+   "title": "周易圖書質疑·卷三~卷五 (vol 2)",
+   "pages_count": 120,
+   "page_id": "6a3ceb4d95fcd45563055413",
+   "page": 95,
+   "photo": "https://archive.org/download/06067995.cn/page/n94/full/full/0/default.jpg",
+   "image_w": 761,
+   "image_h": 1030,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceb4d95fcd455630553ff",
+     "page": 75,
+     "photo": "https://archive.org/download/06067995.cn/page/n74/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceb4d95fcd45563055408",
+     "page": 84,
+     "photo": "https://archive.org/download/06067995.cn/page/n83/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ced904701a906f10e1617",
+   "title": "幾何論約·卷三~卷五 (vol 2)",
+   "pages_count": 134,
+   "page_id": "6a3ced904701a906f10e1740",
+   "page": 62,
+   "photo": "https://archive.org/download/06071534.cn/page/n61/full/full/0/default.jpg",
+   "image_w": 767,
+   "image_h": 1041,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ced904701a906f10e1748",
+     "page": 70,
+     "photo": "https://archive.org/download/06071534.cn/page/n69/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ced904701a906f10e1765",
+     "page": 99,
+     "photo": "https://archive.org/download/06071534.cn/page/n98/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cf01a8642f0445b162a28",
+   "title": "御製歷象考成·表·卷十五 (vol 25)",
+   "pages_count": 157,
+   "page_id": "6a3cf01a8642f0445b162a59",
+   "page": 49,
+   "photo": "https://archive.org/download/06076277.cn/page/n48/full/full/0/default.jpg",
+   "image_w": 644,
+   "image_h": 915,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf01a8642f0445b162a44",
+     "page": 28,
+     "photo": "https://archive.org/download/06076277.cn/page/n27/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf01a8642f0445b162a78",
+     "page": 80,
+     "photo": "https://archive.org/download/06076277.cn/page/n79/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceaf995fcd455630524da",
+   "title": "欽定詩經樂譜全書·卷十六 (vol 11)",
+   "pages_count": 102,
+   "page_id": "6a3ceaf995fcd4556305252d",
+   "page": 83,
+   "photo": "https://archive.org/download/06067003.cn/page/n82/full/full/0/default.jpg",
+   "image_w": 767,
+   "image_h": 1072,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceaf995fcd45563052500",
+     "page": 38,
+     "photo": "https://archive.org/download/06067003.cn/page/n37/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceaf995fcd45563052520",
+     "page": 70,
+     "photo": "https://archive.org/download/06067003.cn/page/n69/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cc14cec254ff6cae0b068",
+   "title": "易圖明辨·卷六~卷七 (vol 4)",
+   "pages_count": 144,
+   "page_id": "6a3cc14cec254ff6cae0b09b",
+   "page": 51,
+   "photo": "https://archive.org/download/06063131.cn/page/n50/full/full/0/default.jpg",
+   "image_w": 763,
+   "image_h": 1041,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cc14cec254ff6cae0b0e9",
+     "page": 129,
+     "photo": "https://archive.org/download/06063131.cn/page/n128/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cc14cec254ff6cae0b0c8",
+     "page": 96,
+     "photo": "https://archive.org/download/06063131.cn/page/n95/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceb4e95fcd455630554cb",
+   "title": "周易圖書質疑·卷六~卷八 (vol 3)",
+   "pages_count": 144,
+   "page_id": "6a3ceb4e95fcd45563055508",
+   "page": 61,
+   "photo": "https://archive.org/download/06067996.cn/page/n60/full/full/0/default.jpg",
+   "image_w": 771,
+   "image_h": 1034,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceb4e95fcd45563055525",
+     "page": 90,
+     "photo": "https://archive.org/download/06067996.cn/page/n89/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceb4e95fcd4556305554b",
+     "page": 128,
+     "photo": "https://archive.org/download/06067996.cn/page/n127/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cf00e8642f0445b16214c",
+   "title": "御製歷象考成·表·卷一~卷二 (vol 14)",
+   "pages_count": 207,
+   "page_id": "6a3cf00e8642f0445b1621f9",
+   "page": 173,
+   "photo": "https://archive.org/download/06076266.cn/page/n172/full/full/0/default.jpg",
+   "image_w": 655,
+   "image_h": 927,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf00e8642f0445b1621b4",
+     "page": 104,
+     "photo": "https://archive.org/download/06076266.cn/page/n103/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf00e8642f0445b16218c",
+     "page": 64,
+     "photo": "https://archive.org/download/06076266.cn/page/n63/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cec598642f0445b15ba6a",
+   "title": "帝王經世圖譜·卷七~卷八 (vol 4)",
+   "pages_count": 156,
+   "page_id": "6a3cec598642f0445b15bba1",
+   "page": 139,
+   "photo": "https://archive.org/download/06070994.cn/page/n138/full/full/0/default.jpg",
+   "image_w": 777,
+   "image_h": 1029,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec598642f0445b15bb42",
+     "page": 44,
+     "photo": "https://archive.org/download/06070994.cn/page/n43/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec598642f0445b15bb9f",
+     "page": 137,
+     "photo": "https://archive.org/download/06070994.cn/page/n136/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceb5495fcd455630557b9",
+   "title": "周易圖書質疑·卷十二~卷十四 (vol 5)",
+   "pages_count": 114,
+   "page_id": "6a3ceb5495fcd4556305581d",
+   "page": 100,
+   "photo": "https://archive.org/download/06067998.cn/page/n99/full/full/0/default.jpg",
+   "image_w": 790,
+   "image_h": 1038,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceb5495fcd455630557cd",
+     "page": 20,
+     "photo": "https://archive.org/download/06067998.cn/page/n19/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceb5495fcd45563055819",
+     "page": 96,
+     "photo": "https://archive.org/download/06067998.cn/page/n95/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ced934701a906f10e188e",
+   "title": "數度衍·卷二~卷五 (vol 2)",
+   "pages_count": 136,
+   "page_id": "6a3ced934701a906f10e18eb",
+   "page": 93,
+   "photo": "https://archive.org/download/06071540.cn/page/n92/full/full/0/default.jpg",
+   "image_w": 785,
+   "image_h": 1037,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ced934701a906f10e18a9",
+     "page": 27,
+     "photo": "https://archive.org/download/06071540.cn/page/n26/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ced934701a906f10e190b",
+     "page": 125,
+     "photo": "https://archive.org/download/06071540.cn/page/n124/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "table",
+   "book_id": "6a3cec5b8642f0445b15bbb7",
+   "title": "帝王經世圖譜·卷十一~卷十二 (vol 6)",
+   "pages_count": 138,
+   "page_id": "6a3cec5b8642f0445b15bc0c",
+   "page": 84,
+   "photo": "https://archive.org/download/06070996.cn/page/n83/full/full/0/default.jpg",
+   "image_w": 773,
+   "image_h": 1055,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec5b8642f0445b15bbe7",
+     "page": 47,
+     "photo": "https://archive.org/download/06070996.cn/page/n46/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec5b8642f0445b15bc02",
+     "page": 74,
+     "photo": "https://archive.org/download/06070996.cn/page/n73/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ceb3495fcd455630546bf",
+   "title": "圖繪寶鑑·卷一~卷三 (vol 1)",
+   "pages_count": 209,
+   "page_id": "6a3ceb3495fcd4556305477b",
+   "page": 188,
+   "photo": "https://archive.org/download/06067767.cn/page/n187/full/full/0/default.jpg",
+   "image_w": 801,
+   "image_h": 1038,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ceb3495fcd45563054769",
+     "page": 170,
+     "photo": "https://archive.org/download/06067767.cn/page/n169/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ceb3495fcd45563054750",
+     "page": 145,
+     "photo": "https://archive.org/download/06067767.cn/page/n144/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ced9f4701a906f10e1e6f",
+   "title": "莊氏算學·卷四~卷六 (vol 4)",
+   "pages_count": 104,
+   "page_id": "6a3ced9f4701a906f10e1ea3",
+   "page": 52,
+   "photo": "https://archive.org/download/06071556.cn/page/n51/full/full/0/default.jpg",
+   "image_w": 778,
+   "image_h": 1044,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ced9f4701a906f10e1e97",
+     "page": 40,
+     "photo": "https://archive.org/download/06071556.cn/page/n39/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ced9f4701a906f10e1ec6",
+     "page": 87,
+     "photo": "https://archive.org/download/06071556.cn/page/n86/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "table",
+   "book_id": "6a3ced984701a906f10e1bb0",
+   "title": "數度衍·卷十八~卷二十 (vol 8)",
+   "pages_count": 130,
+   "page_id": "6a3ced984701a906f10e1bec",
+   "page": 60,
+   "photo": "https://archive.org/download/06071546.cn/page/n59/full/full/0/default.jpg",
+   "image_w": 750,
+   "image_h": 1041,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3ced984701a906f10e1c1e",
+     "page": 110,
+     "photo": "https://archive.org/download/06071546.cn/page/n109/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3ced984701a906f10e1bdf",
+     "page": 47,
+     "photo": "https://archive.org/download/06071546.cn/page/n46/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "table",
+   "book_id": "6a3c75f501fe4f593c1f7dfa",
+   "title": "表記集傳·卷一 (vol 1)",
+   "pages_count": 172,
+   "page_id": "6a3c75f501fe4f593c1f7e19",
+   "page": 31,
+   "photo": "https://archive.org/download/06048496.cn/page/n30/full/full/0/default.jpg",
+   "image_w": 787,
+   "image_h": 1041,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3c75f501fe4f593c1f7e79",
+     "page": 127,
+     "photo": "https://archive.org/download/06048496.cn/page/n126/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3c75f501fe4f593c1f7e0f",
+     "page": 21,
+     "photo": "https://archive.org/download/06048496.cn/page/n20/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec158642f0445b15966c",
+   "title": "琴譜合璧·卷十一 (vol 10)",
+   "pages_count": 84,
+   "page_id": "6a3cec158642f0445b159694",
+   "page": 40,
+   "photo": "https://archive.org/download/06070908.cn/page/n39/full/full/0/default.jpg",
+   "image_w": 1044,
+   "image_h": 1443,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec158642f0445b1596ae",
+     "page": 66,
+     "photo": "https://archive.org/download/06070908.cn/page/n65/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec158642f0445b159685",
+     "page": 25,
+     "photo": "https://archive.org/download/06070908.cn/page/n24/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf03b8642f0445b163908",
+   "title": "御製律呂正義後編·卷四十一 (vol 22)",
+   "pages_count": 199,
+   "page_id": "6a3cf03b8642f0445b1639af",
+   "page": 166,
+   "photo": "https://archive.org/download/06076433.cn/page/n165/full/full/0/default.jpg",
+   "image_w": 643,
+   "image_h": 937,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf03b8642f0445b1639ab",
+     "page": 162,
+     "photo": "https://archive.org/download/06076433.cn/page/n161/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf03b8642f0445b163972",
+     "page": 105,
+     "photo": "https://archive.org/download/06076433.cn/page/n104/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf05d8642f0445b164adc",
+   "title": "御製律呂正義後編·卷九十七~卷九十八 (vol 51)",
+   "pages_count": 199,
+   "page_id": "6a3cf05d8642f0445b164b7d",
+   "page": 161,
+   "photo": "https://archive.org/download/06076462.cn/page/n160/full/full/0/default.jpg",
+   "image_w": 654,
+   "image_h": 939,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf05d8642f0445b164b67",
+     "page": 139,
+     "photo": "https://archive.org/download/06076462.cn/page/n138/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf05d8642f0445b164b0c",
+     "page": 48,
+     "photo": "https://archive.org/download/06076462.cn/page/n47/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf04f8642f0445b16450e",
+   "title": "御製律呂正義後編·卷八十一~卷八十二 (vol 41)",
+   "pages_count": 207,
+   "page_id": "6a3cf04f8642f0445b16458b",
+   "page": 125,
+   "photo": "https://archive.org/download/06076452.cn/page/n124/full/full/0/default.jpg",
+   "image_w": 655,
+   "image_h": 933,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf04f8642f0445b1645cd",
+     "page": 191,
+     "photo": "https://archive.org/download/06076452.cn/page/n190/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf04f8642f0445b164564",
+     "page": 86,
+     "photo": "https://archive.org/download/06076452.cn/page/n85/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf04a8642f0445b1641ee",
+   "title": "御製律呂正義後編·卷七十一~卷七十四 (vol 38)",
+   "pages_count": 121,
+   "page_id": "6a3cf04a8642f0445b164296",
+   "page": 47,
+   "photo": "https://archive.org/download/06076449.cn/page/n46/full/full/0/default.jpg",
+   "image_w": 646,
+   "image_h": 930,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf04a8642f0445b1642b5",
+     "page": 78,
+     "photo": "https://archive.org/download/06076449.cn/page/n77/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf04a8642f0445b164288",
+     "page": 33,
+     "photo": "https://archive.org/download/06076449.cn/page/n32/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf02c8642f0445b163206",
+   "title": "御製律呂正義後編·卷十七~卷十八 (vol 10)",
+   "pages_count": 218,
+   "page_id": "6a3cf02c8642f0445b163221",
+   "page": 27,
+   "photo": "https://archive.org/download/06076421.cn/page/n26/full/full/0/default.jpg",
+   "image_w": 641,
+   "image_h": 925,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf02c8642f0445b16323e",
+     "page": 56,
+     "photo": "https://archive.org/download/06076421.cn/page/n55/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf02c8642f0445b163271",
+     "page": 107,
+     "photo": "https://archive.org/download/06076421.cn/page/n106/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cebfc8642f0445b158b3c",
+   "title": "欽定西域同文志·卷十三~卷十四 (vol 20)",
+   "pages_count": 123,
+   "page_id": "6a3cebfd8642f0445b158b97",
+   "page": 91,
+   "photo": "https://archive.org/download/06078140.cn/page/n90/full/full/0/default.jpg",
+   "image_w": 663,
+   "image_h": 933,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cebfd8642f0445b158b6e",
+     "page": 50,
+     "photo": "https://archive.org/download/06078140.cn/page/n49/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cebfd8642f0445b158bae",
+     "page": 114,
+     "photo": "https://archive.org/download/06078140.cn/page/n113/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cebfc8642f0445b158b3b",
+   "title": "欽定西域同文志·卷十一~卷十二 (vol 19)",
+   "pages_count": 162,
+   "page_id": "6a3cebfd8642f0445b158c33",
+   "page": 124,
+   "photo": "https://archive.org/download/06078139.cn/page/n123/full/full/0/default.jpg",
+   "image_w": 653,
+   "image_h": 937,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cebfd8642f0445b158c0a",
+     "page": 83,
+     "photo": "https://archive.org/download/06078139.cn/page/n82/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cebfd8642f0445b158c1b",
+     "page": 100,
+     "photo": "https://archive.org/download/06078139.cn/page/n99/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf03e8642f0445b163a4d",
+   "title": "御製律呂正義後編·卷四十五~卷四十六 (vol 24)",
+   "pages_count": 165,
+   "page_id": "6a3cf03e8642f0445b163b8e",
+   "page": 150,
+   "photo": "https://archive.org/download/06076435.cn/page/n149/full/full/0/default.jpg",
+   "image_w": 656,
+   "image_h": 907,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf03e8642f0445b163b7c",
+     "page": 132,
+     "photo": "https://archive.org/download/06076435.cn/page/n131/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf03e8642f0445b163b69",
+     "page": 113,
+     "photo": "https://archive.org/download/06076435.cn/page/n112/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf0238642f0445b162c03",
+   "title": "御製律呂正義後編·卷首下 (vol 2)",
+   "pages_count": 115,
+   "page_id": "6a3cf0238642f0445b162c16",
+   "page": 19,
+   "photo": "https://archive.org/download/06076413.cn/page/n18/full/full/0/default.jpg",
+   "image_w": 650,
+   "image_h": 924,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0238642f0445b162c21",
+     "page": 30,
+     "photo": "https://archive.org/download/06076413.cn/page/n29/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0238642f0445b162c2d",
+     "page": 42,
+     "photo": "https://archive.org/download/06076413.cn/page/n41/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf0338642f0445b1634a0",
+   "title": "御製律呂正義後編·卷二十八~卷二十九 (vol 15)",
+   "pages_count": 127,
+   "page_id": "6a3cf0338642f0445b1634d0",
+   "page": 47,
+   "photo": "https://archive.org/download/06076426.cn/page/n46/full/full/0/default.jpg",
+   "image_w": 649,
+   "image_h": 935,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0338642f0445b1634df",
+     "page": 62,
+     "photo": "https://archive.org/download/06076426.cn/page/n61/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0338642f0445b1634e5",
+     "page": 68,
+     "photo": "https://archive.org/download/06076426.cn/page/n67/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cc328af74b230c690cfd9",
+   "title": "正蒙初義·卷十五~卷十七 (vol 7)",
+   "pages_count": 211,
+   "page_id": "6a3cc328af74b230c690d02b",
+   "page": 82,
+   "photo": "https://archive.org/download/06071428.cn/page/n81/full/full/0/default.jpg",
+   "image_w": 759,
+   "image_h": 1030,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cc328af74b230c690cfef",
+     "page": 22,
+     "photo": "https://archive.org/download/06071428.cn/page/n21/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cc328af74b230c690d05a",
+     "page": 129,
+     "photo": "https://archive.org/download/06071428.cn/page/n128/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cc323af74b230c690cc01",
+   "title": "注解正蒙·卷下 (vol 2)",
+   "pages_count": 152,
+   "page_id": "6a3cc323af74b230c690cc1f",
+   "page": 30,
+   "photo": "https://archive.org/download/06071421.cn/page/n29/full/full/0/default.jpg",
+   "image_w": 755,
+   "image_h": 1029,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cc323af74b230c690cc33",
+     "page": 50,
+     "photo": "https://archive.org/download/06071421.cn/page/n49/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cc323af74b230c690cc80",
+     "page": 127,
+     "photo": "https://archive.org/download/06071421.cn/page/n126/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf03e8642f0445b163a4c",
+   "title": "御製律呂正義後編·卷四十七 (vol 25)",
+   "pages_count": 169,
+   "page_id": "6a3cf03e8642f0445b163ab1",
+   "page": 100,
+   "photo": "https://archive.org/download/06076436.cn/page/n99/full/full/0/default.jpg",
+   "image_w": 666,
+   "image_h": 930,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf03e8642f0445b163abd",
+     "page": 112,
+     "photo": "https://archive.org/download/06076436.cn/page/n111/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf03e8642f0445b163ae0",
+     "page": 147,
+     "photo": "https://archive.org/download/06076436.cn/page/n146/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cc325af74b230c690cd50",
+   "title": "正蒙初義·卷二~卷三 (vol 2)",
+   "pages_count": 143,
+   "page_id": "6a3cc325af74b230c690ce43",
+   "page": 113,
+   "photo": "https://archive.org/download/06071423.cn/page/n112/full/full/0/default.jpg",
+   "image_w": 750,
+   "image_h": 1025,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cc325af74b230c690ce35",
+     "page": 99,
+     "photo": "https://archive.org/download/06071423.cn/page/n98/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cc325af74b230c690ce17",
+     "page": 69,
+     "photo": "https://archive.org/download/06071423.cn/page/n68/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cc325af74b230c690cd4f",
+   "title": "正蒙初義·卷七~卷八 (vol 4)",
+   "pages_count": 130,
+   "page_id": "6a3cc325af74b230c690cdaa",
+   "page": 90,
+   "photo": "https://archive.org/download/06071425.cn/page/n89/full/full/0/default.jpg",
+   "image_w": 742,
+   "image_h": 1034,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cc325af74b230c690cd6f",
+     "page": 31,
+     "photo": "https://archive.org/download/06071425.cn/page/n30/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cc325af74b230c690cda4",
+     "page": 84,
+     "photo": "https://archive.org/download/06071425.cn/page/n83/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf0368642f0445b1635b4",
+   "title": "御製律呂正義後編·卷三十~卷三十一 (vol 16)",
+   "pages_count": 125,
+   "page_id": "6a3cf0368642f0445b163626",
+   "page": 113,
+   "photo": "https://archive.org/download/06076427.cn/page/n112/full/full/0/default.jpg",
+   "image_w": 659,
+   "image_h": 927,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0368642f0445b16362b",
+     "page": 118,
+     "photo": "https://archive.org/download/06076427.cn/page/n117/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0368642f0445b1635eb",
+     "page": 54,
+     "photo": "https://archive.org/download/06076427.cn/page/n53/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf0858642f0445b16526a",
+   "title": "御製律呂正義後編·卷一百十七~卷一百十八 (vol 63)",
+   "pages_count": 165,
+   "page_id": "6a3cf0858642f0445b16536f",
+   "page": 87,
+   "photo": "https://archive.org/download/06076474.cn/page/n86/full/full/0/default.jpg",
+   "image_w": 650,
+   "image_h": 926,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0858642f0445b165342",
+     "page": 42,
+     "photo": "https://archive.org/download/06076474.cn/page/n41/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0858642f0445b1653aa",
+     "page": 146,
+     "photo": "https://archive.org/download/06076474.cn/page/n145/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cebee8642f0445b158487",
+   "title": "欽定西域同文志·卷十二~卷十三 (vol 7)",
+   "pages_count": 142,
+   "page_id": "6a3cebee8642f0445b15850d",
+   "page": 133,
+   "photo": "https://archive.org/download/06070854.cn/page/n132/full/full/0/default.jpg",
+   "image_w": 757,
+   "image_h": 1037,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cebee8642f0445b1584c4",
+     "page": 60,
+     "photo": "https://archive.org/download/06070854.cn/page/n59/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cebee8642f0445b1584f9",
+     "page": 113,
+     "photo": "https://archive.org/download/06070854.cn/page/n112/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf0738642f0445b1651d0",
+   "title": "御製律呂正義後編·卷一百十二~卷一百十三 (vol 61)",
+   "pages_count": 150,
+   "page_id": "6a3cf0738642f0445b165220",
+   "page": 80,
+   "photo": "https://archive.org/download/06076472.cn/page/n79/full/full/0/default.jpg",
+   "image_w": 652,
+   "image_h": 927,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0738642f0445b165247",
+     "page": 119,
+     "photo": "https://archive.org/download/06076472.cn/page/n118/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0738642f0445b1651ff",
+     "page": 47,
+     "photo": "https://archive.org/download/06076472.cn/page/n46/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cebe78642f0445b1581d2",
+   "title": "欽定西域同文志·卷一 (vol 1)",
+   "pages_count": 100,
+   "page_id": "6a3cebe78642f0445b158229",
+   "page": 87,
+   "photo": "https://archive.org/download/06070848.cn/page/n86/full/full/0/default.jpg",
+   "image_w": 769,
+   "image_h": 1043,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cebe78642f0445b158213",
+     "page": 65,
+     "photo": "https://archive.org/download/06070848.cn/page/n64/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cebe78642f0445b158206",
+     "page": 52,
+     "photo": "https://archive.org/download/06070848.cn/page/n51/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec148642f0445b1595c8",
+   "title": "琴譜合璧·卷十 (vol 9)",
+   "pages_count": 84,
+   "page_id": "6a3cec148642f0445b159613",
+   "page": 75,
+   "photo": "https://archive.org/download/06070907.cn/page/n74/full/full/0/default.jpg",
+   "image_w": 1047,
+   "image_h": 1425,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec148642f0445b1595e9",
+     "page": 33,
+     "photo": "https://archive.org/download/06070907.cn/page/n32/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec148642f0445b15960f",
+     "page": 71,
+     "photo": "https://archive.org/download/06070907.cn/page/n70/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec108642f0445b159473",
+   "title": "琴譜合璧·卷四 (vol 4)",
+   "pages_count": 96,
+   "page_id": "6a3cec108642f0445b1594a7",
+   "page": 52,
+   "photo": "https://archive.org/download/06070902.cn/page/n51/full/full/0/default.jpg",
+   "image_w": 1047,
+   "image_h": 1428,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec108642f0445b1594c0",
+     "page": 77,
+     "photo": "https://archive.org/download/06070902.cn/page/n76/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec108642f0445b1594bd",
+     "page": 74,
+     "photo": "https://archive.org/download/06070902.cn/page/n73/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec048642f0445b158e3c",
+   "title": "欽定西域同文志·卷二十一~卷二十二 (vol 24)",
+   "pages_count": 105,
+   "page_id": "6a3cec048642f0445b158ed6",
+   "page": 45,
+   "photo": "https://archive.org/download/06078144.cn/page/n44/full/full/0/default.jpg",
+   "image_w": 654,
+   "image_h": 926,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec048642f0445b158ecc",
+     "page": 35,
+     "photo": "https://archive.org/download/06078144.cn/page/n34/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec048642f0445b158eff",
+     "page": 86,
+     "photo": "https://archive.org/download/06078144.cn/page/n85/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec128642f0445b15957d",
+   "title": "琴譜合璧·卷五 (vol 5)",
+   "pages_count": 72,
+   "page_id": "6a3cec128642f0445b1595a6",
+   "page": 41,
+   "photo": "https://archive.org/download/06070903.cn/page/n40/full/full/0/default.jpg",
+   "image_w": 1046,
+   "image_h": 1454,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec128642f0445b15959a",
+     "page": 29,
+     "photo": "https://archive.org/download/06070903.cn/page/n28/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec128642f0445b159594",
+     "page": 23,
+     "photo": "https://archive.org/download/06070903.cn/page/n22/full/full/0/default.jpg"
+    }
+   ],
+   "spare": false
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf02b8642f0445b1630ae",
+   "title": "御製律呂正義後編·卷十四~卷十六 (vol 9)",
+   "pages_count": 162,
+   "page_id": "6a3cf02b8642f0445b163138",
+   "page": 138,
+   "photo": "https://archive.org/download/06076420.cn/page/n137/full/full/0/default.jpg",
+   "image_w": 657,
+   "image_h": 935,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf02b8642f0445b1630cd",
+     "page": 31,
+     "photo": "https://archive.org/download/06076420.cn/page/n30/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf02b8642f0445b163126",
+     "page": 120,
+     "photo": "https://archive.org/download/06076420.cn/page/n119/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec188642f0445b159768",
+   "title": "琴譜合璧·卷十二 (vol 11)",
+   "pages_count": 82,
+   "page_id": "6a3cec188642f0445b159783",
+   "page": 27,
+   "photo": "https://archive.org/download/06070909.cn/page/n26/full/full/0/default.jpg",
+   "image_w": 1050,
+   "image_h": 1448,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec188642f0445b159786",
+     "page": 30,
+     "photo": "https://archive.org/download/06070909.cn/page/n29/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec188642f0445b1597b2",
+     "page": 74,
+     "photo": "https://archive.org/download/06070909.cn/page/n73/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf0668642f0445b164d27",
+   "title": "御製律呂正義後編·卷一百二~卷一百三 (vol 55)",
+   "pages_count": 175,
+   "page_id": "6a3cf0668642f0445b164e4a",
+   "page": 132,
+   "photo": "https://archive.org/download/06076466.cn/page/n131/full/full/0/default.jpg",
+   "image_w": 653,
+   "image_h": 932,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf0668642f0445b164de5",
+     "page": 31,
+     "photo": "https://archive.org/download/06076466.cn/page/n30/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf0668642f0445b164df0",
+     "page": 42,
+     "photo": "https://archive.org/download/06076466.cn/page/n41/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cf04e8642f0445b16442d",
+   "title": "御製律呂正義後編·卷七十九~卷八十 (vol 40)",
+   "pages_count": 222,
+   "page_id": "6a3cf04e8642f0445b1644ae",
+   "page": 129,
+   "photo": "https://archive.org/download/06076451.cn/page/n128/full/full/0/default.jpg",
+   "image_w": 656,
+   "image_h": 928,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cf04e8642f0445b164488",
+     "page": 91,
+     "photo": "https://archive.org/download/06076451.cn/page/n90/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cf04e8642f0445b1644a1",
+     "page": 116,
+     "photo": "https://archive.org/download/06076451.cn/page/n115/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  },
+  {
+   "class": "mixed",
+   "book_id": "6a3cec008642f0445b158d07",
+   "title": "欽定西域同文志·卷十五~卷十六 (vol 21)",
+   "pages_count": 121,
+   "page_id": "6a3cec008642f0445b158d67",
+   "page": 96,
+   "photo": "https://archive.org/download/06078141.cn/page/n95/full/full/0/default.jpg",
+   "image_w": 651,
+   "image_h": 930,
+   "body_window": true,
+   "alternates": [
+    {
+     "page_id": "6a3cec008642f0445b158d41",
+     "page": 58,
+     "photo": "https://archive.org/download/06078141.cn/page/n57/full/full/0/default.jpg"
+    },
+    {
+     "page_id": "6a3cec008642f0445b158d69",
+     "page": 98,
+     "photo": "https://archive.org/download/06078141.cn/page/n97/full/full/0/default.jpg"
+    }
+   ],
+   "spare": true
+  }
+ ]
+}

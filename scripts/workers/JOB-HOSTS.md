@@ -16,7 +16,7 @@
 |---|---|---|---|
 | main (`hetzner`) | `root@46.224.122.120` | every pipeline worker and cron | no slice; root disk fills (#6223) |
 | cloudlayer (`earthai-live`, ARM) | `root@46.224.208.175` | the live Cloud Layer globe | `sourcelibrary.slice`: 14 GB, CPUWeight 30 |
-| l7a (`earthai-l7a`, ARM) | `root@167.233.32.250` | the 0.6 km archive tick, every ten minutes | `sourcelibrary.slice`: 14 GB, CPUWeight 30 |
+| l7a (`earthai-l7a`, ARM) | `root@167.233.32.250` | the 0.6 km archive tick, every ten minutes | `sourcelibrary.slice`: 14 GB, CPUWeight 30 — jobs only; the page-vector service and Caddy are in `search.slice` (9 GB min, 13 GB max, #6821) |
 | gex45 (`gex45-1`, **x86_64 + GPU**) | `root@65.108.136.89` | the GPU stack in `/root/pz`; work moved off main (`infrastructure/gex45-crontab`) | none: dedicated i5-13500 (20 threads), 62 GB, 436 GB root |
 
 The boxes reach each other through the **box mesh** (below), and the laptop reaches all four as root. Main, cloudlayer and l7a are ARM (cax41, 16 shared vCPU); the ARM boxes have no Python ML tools (kraken, CLIP, onnx).

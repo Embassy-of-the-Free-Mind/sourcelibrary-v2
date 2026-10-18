@@ -18,6 +18,11 @@ describe('isQuotaError', () => {
     expect(isQuotaError({ out: JSON.stringify({ response: t2 }), err: '', j: { response: t2 }, text: t2 })).toBe(false);
   });
 
+  it('a token count or duration of 429 in the envelope is not a quota error', () => {
+    const j = { conversation_id: 'c2', status: 'SUCCESS', response: page, duration_seconds: 23.429, num_turns: 1, usage: { input_tokens: 429, output_tokens: 195, thinking_tokens: 0, total_tokens: 624 } };
+    expect(isQuotaError({ out: JSON.stringify(j), err: '', j, text: page })).toBe(false);
+  });
+
   it('a real quota error is still caught, in stderr, in the envelope, or as a short reply', () => {
     expect(isQuotaError({ out: '', err: 'Error: 429 RESOURCE_EXHAUSTED: Individual quota reached', j: {}, text: '' })).toBe(true);
     const j = { error: { code: 429, message: 'Individual quota reached. Resets in 2h48m' } };
