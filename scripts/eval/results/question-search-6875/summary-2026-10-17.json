@@ -1,0 +1,975 @@
+{
+ "n_questions": 30,
+ "arms": {
+  "A": {
+   "name": "search_translations (served)",
+   "strict": {
+    "mean": 0.5366666666666667,
+    "ci": [
+     0.46333333333333343,
+     0.61
+    ]
+   },
+   "lenient": {
+    "mean": 0.9133333333333332,
+    "ci": [
+     0.8733333333333332,
+     0.9499999999999996
+    ]
+   }
+  },
+  "B": {
+   "name": "search_concept (served)",
+   "strict": {
+    "mean": 0.6966666666666667,
+    "ci": [
+     0.6333333333333333,
+     0.7566666666666669
+    ]
+   },
+   "lenient": {
+    "mean": 0.95,
+    "ci": [
+     0.9266666666666664,
+     0.9733333333333332
+    ]
+   }
+  },
+  "C": {
+   "name": "Jev re-rank, full pool",
+   "strict": {
+    "mean": 0.97,
+    "ci": [
+     0.9266666666666664,
+     0.9966666666666666
+    ]
+   },
+   "lenient": {
+    "mean": 1,
+    "ci": [
+     1,
+     1
+    ]
+   }
+  },
+  "D": {
+   "name": "Jev re-rank, first 300 + A + B",
+   "strict": {
+    "mean": 0.98,
+    "ci": [
+     0.9566666666666666,
+     0.9966666666666666
+    ]
+   },
+   "lenient": {
+    "mean": 1,
+    "ci": [
+     1,
+     1
+    ]
+   }
+  }
+ },
+ "diffs": {
+  "C-A": {
+   "strict": {
+    "delta": 0.433,
+    "ci": [
+     0.353,
+     0.513
+    ],
+    "wins": 29,
+    "losses": 1,
+    "sign_p": 0
+   },
+   "lenient": {
+    "delta": 0.087,
+    "ci": [
+     0.05,
+     0.127
+    ],
+    "wins": 16,
+    "losses": 0,
+    "sign_p": 0
+   }
+  },
+  "C-B": {
+   "strict": {
+    "delta": 0.273,
+    "ci": [
+     0.203,
+     0.343
+    ],
+    "wins": 26,
+    "losses": 1,
+    "sign_p": 0
+   },
+   "lenient": {
+    "delta": 0.05,
+    "ci": [
+     0.027,
+     0.073
+    ],
+    "wins": 12,
+    "losses": 0,
+    "sign_p": 0.0005
+   }
+  },
+  "D-A": {
+   "strict": {
+    "delta": 0.443,
+    "ci": [
+     0.367,
+     0.513
+    ],
+    "wins": 30,
+    "losses": 0,
+    "sign_p": 0
+   },
+   "lenient": {
+    "delta": 0.087,
+    "ci": [
+     0.05,
+     0.127
+    ],
+    "wins": 16,
+    "losses": 0,
+    "sign_p": 0
+   }
+  },
+  "D-B": {
+   "strict": {
+    "delta": 0.283,
+    "ci": [
+     0.223,
+     0.347
+    ],
+    "wins": 27,
+    "losses": 0,
+    "sign_p": 0
+   },
+   "lenient": {
+    "delta": 0.05,
+    "ci": [
+     0.027,
+     0.077
+    ],
+    "wins": 12,
+    "losses": 0,
+    "sign_p": 0.0005
+   }
+  },
+  "C-D": {
+   "strict": {
+    "delta": -0.01,
+    "ci": [
+     -0.033,
+     0.007
+    ],
+    "wins": 1,
+    "losses": 2,
+    "sign_p": 1
+   },
+   "lenient": {
+    "delta": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "wins": 0,
+    "losses": 0,
+    "sign_p": 1
+   }
+  },
+  "B-A": {
+   "strict": {
+    "delta": 0.16,
+    "ci": [
+     0.09,
+     0.227
+    ],
+    "wins": 23,
+    "losses": 5,
+    "sign_p": 0.0009
+   },
+   "lenient": {
+    "delta": 0.037,
+    "ci": [
+     0,
+     0.077
+    ],
+    "wins": 11,
+    "losses": 4,
+    "sign_p": 0.1185
+   }
+  }
+ },
+ "by_kind": {
+  "experience": {
+   "A": 0.425,
+   "B": 0.712,
+   "C": 0.912,
+   "D": 0.95,
+   "n": 8
+  },
+  "practice": {
+   "A": 0.525,
+   "B": 0.762,
+   "C": 1,
+   "D": 1,
+   "n": 8
+  },
+  "claim": {
+   "A": 0.588,
+   "B": 0.637,
+   "C": 0.975,
+   "D": 0.975,
+   "n": 8
+  },
+  "object": {
+   "A": 0.633,
+   "B": 0.667,
+   "C": 1,
+   "D": 1,
+   "n": 6
+  }
+ },
+ "latency_ms": {
+  "A_served_median": 6604,
+  "B_served_median": 618,
+  "pool_keyword_deep_median": 17939,
+  "pool_semantic_median": 603,
+  "jev_call_median": 256,
+  "jev_rerank_full_median": 12446,
+  "jev_rerank_small_median": 2264,
+  "concurrency": 48
+ },
+ "cost_usd": {
+  "jev_full_per_query": 0.06751939179999997,
+  "jev_small_per_query": 0.011319138837599284,
+  "jev_total": 2.025581753999999,
+  "pool_median": 1808
+ },
+ "per_question": [
+  {
+   "id": "q01",
+   "q": "a passage where someone describes leaving their body",
+   "A": 0.3,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.6,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+B",
+    "sem+kw+B+A",
+    "kw",
+    "sem+B",
+    "sem",
+    "kw+sem",
+    "kw",
+    "sem+B+A",
+    "sem+B",
+    "sem"
+   ]
+  },
+  {
+   "id": "q02",
+   "q": "someone describing a vision of light during prayer or meditation",
+   "A": 0.4,
+   "B": 0.6,
+   "C": 0.9,
+   "D": 0.9,
+   "A_len": 0.9,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "kw",
+    "kw",
+    "sem+B+A",
+    "sem+B+A",
+    "sem+B+A",
+    "sem+kw",
+    "kw",
+    "B",
+    "sem+kw"
+   ]
+  },
+  {
+   "id": "q03",
+   "q": "a writer describing what it is like to be possessed by a spirit or demon",
+   "A": 0.2,
+   "B": 0.4,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+B",
+    "sem",
+    "sem+B+A",
+    "sem",
+    "kw",
+    "kw",
+    "kw",
+    "sem",
+    "sem",
+    "sem+B+A"
+   ]
+  },
+  {
+   "id": "q04",
+   "q": "an account of a dream that the dreamer believed foretold the future",
+   "A": 0.5,
+   "B": 0.6,
+   "C": 0.4,
+   "D": 0.7,
+   "A_len": 0.9,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "kw",
+    "kw",
+    "kw",
+    "kw",
+    "kw",
+    "kw",
+    "kw",
+    "sem+B+A",
+    "kw"
+   ]
+  },
+  {
+   "id": "q05",
+   "q": "someone describing the feeling of union with God",
+   "A": 0.5,
+   "B": 0.7,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+kw",
+    "sem+kw",
+    "sem",
+    "B",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q06",
+   "q": "an alchemist describing what he saw happen in the vessel during the work, such as the colours changing",
+   "A": 0.5,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.8,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+B",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "kw"
+   ]
+  },
+  {
+   "id": "q07",
+   "q": "a person describing hearing a divine voice speak to them",
+   "A": 0.4,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "sem",
+    "kw",
+    "kw",
+    "sem+B+A",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q08",
+   "q": "an account of someone healed by a miracle",
+   "A": 0.6,
+   "B": 1,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "kw",
+    "sem",
+    "kw",
+    "kw",
+    "kw",
+    "sem",
+    "kw",
+    "sem",
+    "kw"
+   ]
+  },
+  {
+   "id": "q09",
+   "q": "instructions for how to breathe during meditation",
+   "A": 0.8,
+   "B": 0.9,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+B+A",
+    "sem+B",
+    "sem",
+    "sem+B+A",
+    "kw",
+    "kw",
+    "sem",
+    "kw",
+    "kw",
+    "kw+A"
+   ]
+  },
+  {
+   "id": "q10",
+   "q": "how to draw and consecrate a magic circle",
+   "A": 0.6,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw+sem+A",
+    "kw+sem",
+    "sem+kw",
+    "sem+B+A",
+    "kw",
+    "kw",
+    "kw",
+    "sem+kw",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q11",
+   "q": "step by step instructions for making the philosophers' stone",
+   "A": 0.5,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.9,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+B+A",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "kw"
+   ]
+  },
+  {
+   "id": "q12",
+   "q": "instructions for fasting before a ritual or spiritual exercise",
+   "A": 0.6,
+   "B": 0.6,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+kw",
+    "sem+kw",
+    "kw",
+    "sem+kw+B+A",
+    "sem",
+    "kw",
+    "sem+B+A",
+    "kw",
+    "sem",
+    "sem+kw"
+   ]
+  },
+  {
+   "id": "q13",
+   "q": "how to make a talisman under a particular planet",
+   "A": 0.6,
+   "B": 0.9,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "sem+kw",
+    "sem+kw+B+A",
+    "sem",
+    "kw",
+    "sem+kw",
+    "kw",
+    "kw",
+    "kw",
+    "kw"
+   ]
+  },
+  {
+   "id": "q14",
+   "q": "a method for memorising things by placing images in imagined rooms or places",
+   "A": 0.5,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.7,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "sem+kw",
+    "sem",
+    "sem",
+    "sem",
+    "kw+sem+B+A",
+    "sem+kw+B",
+    "sem",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q15",
+   "q": "instructions for distilling spirit of wine",
+   "A": 0.3,
+   "B": 0.7,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.9,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "kw",
+    "kw",
+    "sem",
+    "sem",
+    "sem",
+    "kw",
+    "kw",
+    "sem+B",
+    "sem+kw"
+   ]
+  },
+  {
+   "id": "q16",
+   "q": "how to cast a horoscope or erect a figure of the heavens",
+   "A": 0.3,
+   "B": 0.6,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.9,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "kw",
+    "sem+kw",
+    "sem+kw",
+    "sem",
+    "kw",
+    "sem",
+    "sem",
+    "sem",
+    "sem+B"
+   ]
+  },
+  {
+   "id": "q17",
+   "q": "the claim that man is a small world that mirrors the great world",
+   "A": 0.8,
+   "B": 1,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.9,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q18",
+   "q": "an argument that metals grow in the earth like plants",
+   "A": 0.7,
+   "B": 0.6,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 0.8,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "kw+A",
+    "sem",
+    "sem+kw",
+    "kw",
+    "sem",
+    "sem",
+    "sem+kw",
+    "sem",
+    "sem+kw"
+   ]
+  },
+  {
+   "id": "q19",
+   "q": "the claim that the soul existed before the body",
+   "A": 0.8,
+   "B": 0.9,
+   "C": 0.9,
+   "D": 0.9,
+   "A_len": 0.9,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "kw",
+    "sem",
+    "sem",
+    "sem",
+    "kw",
+    "sem+kw",
+    "sem",
+    "sem",
+    "kw"
+   ]
+  },
+  {
+   "id": "q20",
+   "q": "a passage arguing that all religions share one ancient wisdom",
+   "A": 0.5,
+   "B": 0.6,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.8,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+kw",
+    "sem+B",
+    "kw",
+    "kw",
+    "kw+sem",
+    "kw",
+    "sem+kw+A",
+    "kw",
+    "sem+kw",
+    "kw"
+   ]
+  },
+  {
+   "id": "q21",
+   "q": "the claim that the stars incline but do not compel the human will",
+   "A": 0.5,
+   "B": 0.7,
+   "C": 0.9,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw+A",
+    "sem+B+A",
+    "kw",
+    "sem+B+A",
+    "sem",
+    "kw",
+    "kw",
+    "sem",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q22",
+   "q": "an argument that God created the world through the Hebrew letters",
+   "A": 0.2,
+   "B": 0.4,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.7,
+   "B_len": 0.8,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem+B+A",
+    "kw",
+    "kw",
+    "sem",
+    "kw",
+    "kw"
+   ]
+  },
+  {
+   "id": "q23",
+   "q": "a passage arguing that the earth moves around the sun",
+   "A": 0.3,
+   "B": 0.3,
+   "C": 1,
+   "D": 0.9,
+   "A_len": 0.9,
+   "B_len": 0.9,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "sem",
+    "sem+B+A",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "sem",
+    "kw",
+    "kw"
+   ]
+  },
+  {
+   "id": "q24",
+   "q": "the idea in medicine that like cures like",
+   "A": 0.9,
+   "B": 0.6,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.9,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw",
+    "sem",
+    "sem+kw",
+    "sem",
+    "sem",
+    "sem",
+    "kw",
+    "sem",
+    "sem",
+    "sem"
+   ]
+  },
+  {
+   "id": "q25",
+   "q": "a description of an alchemical furnace and how to build it",
+   "A": 0.5,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+kw",
+    "sem",
+    "kw",
+    "kw",
+    "kw+sem",
+    "sem",
+    "sem",
+    "sem+kw",
+    "sem",
+    "kw"
+   ]
+  },
+  {
+   "id": "q26",
+   "q": "a description of a magic mirror or scrying stone",
+   "A": 0.9,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+B+A",
+    "sem+kw",
+    "kw",
+    "kw",
+    "sem+B",
+    "sem+kw+B+A",
+    "sem+kw",
+    "sem+kw",
+    "sem+kw",
+    "sem"
+   ]
+  },
+  {
+   "id": "q27",
+   "q": "a passage describing an astrolabe and its parts",
+   "A": 0.3,
+   "B": 0.4,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem+kw",
+    "sem+kw",
+    "sem",
+    "kw",
+    "sem+kw+B+A",
+    "sem",
+    "sem",
+    "sem+kw",
+    "sem+kw",
+    "sem+kw"
+   ]
+  },
+  {
+   "id": "q28",
+   "q": "a description of the Emerald Tablet or where it was found",
+   "A": 0.9,
+   "B": 0.7,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.9,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "sem",
+    "sem",
+    "kw+sem",
+    "sem",
+    "kw",
+    "kw+sem",
+    "sem+kw",
+    "sem+kw",
+    "kw",
+    "sem"
+   ]
+  },
+  {
+   "id": "q29",
+   "q": "a description of the mandrake root and what people believed about it",
+   "A": 0.7,
+   "B": 0.5,
+   "C": 1,
+   "D": 1,
+   "A_len": 1,
+   "B_len": 1,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw+A",
+    "sem",
+    "sem",
+    "kw+sem+A",
+    "sem",
+    "sem+kw",
+    "sem",
+    "kw",
+    "kw",
+    "sem"
+   ]
+  },
+  {
+   "id": "q30",
+   "q": "a description of prayer beads or a rosary and how they are used",
+   "A": 0.5,
+   "B": 0.8,
+   "C": 1,
+   "D": 1,
+   "A_len": 0.8,
+   "B_len": 0.8,
+   "C_len": 1,
+   "D_len": 1,
+   "C_found_by": [
+    "kw+sem+B",
+    "sem+kw+B+A",
+    "sem+kw",
+    "sem+kw",
+    "sem+kw+B+A",
+    "kw",
+    "kw",
+    "kw",
+    "kw",
+    "sem"
+   ]
+  }
+ ]
+}

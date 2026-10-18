@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Chartiludium institute sumarie doctore thoma murner memorante et ludente. (1518), the leaf itself: https://api.digitale-sammlungen.de/iiif/image/v2/bsb10202713_00043/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a90955bac1fcc717ba305fe",
+  "page_number": 43,
+  "page_id": "6a90955bac1fcc717ba30629",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1518,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10202713_00043/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "6791f69bd34ee232c8e9f9153224b96cc3f50d216d2bf0df43edc49ea6f8098f",
+    "width": 1530,
+    "height": 2327,
+    "fetched_at": "2026-10-17T22:31:46.877Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "gothic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9365,
+    "hunks": 6,
+    "space_only_hunks": 0,
+    "c_chose": {
+      "A": 4,
+      "B": 0,
+      "other": 2
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 935,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.618Z",
+  "text_location": "repo",
+  "text_sha256": "5d669c7269f9adc7f9a7445aa02c4fd423b897d995b088313b148f6df2d7a5a4"
+}

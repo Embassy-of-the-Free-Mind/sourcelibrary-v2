@@ -1,0 +1,44 @@
+# TLS in front of the keyword page service on cloudlayer (earthai-live, 46.224.208.175), #6852.
+# The same shape as l7a's vector front (Caddyfile.l7a, #6843). Installed at /etc/caddy/Caddyfile
+# (Ubuntu's caddy package; its unit runs `caddy run --config` on it):
+#
+#   apt-get install -y caddy
+#   cp infrastructure/caddy/Caddyfile.cloudlayer /etc/caddy/Caddyfile && systemctl reload caddy
+#   cp infrastructure/caddy/caddy-search-slice.conf /etc/systemd/system/caddy.service.d/slice.conf && systemctl daemon-reload && systemctl restart caddy
+#   ufw allow 80/tcp; ufw allow 443/tcp        # 80 for the ACME HTTP-01 challenge and the https redirect
+#
+# Before installing: the live Cloud Layer globe runs on this box. Check `ss -ltnp` for 80/443 first; if
+# either is taken, this file does not apply as is.
+#
+# DNS: keywords.sourcelibrary.org A 46.224.208.175, Cloudflare DNS-only (grey cloud), created 2026-10-17.
+# A proxied record would put the edge hop in front of a ~20 ms service, and Let's Encrypt would see
+# Cloudflare, not this box.
+#
+# The service listens on 127.0.0.1:3460 (KEYWORD_SEARCH_HOST/PORT in /etc/keyword-search.env, server.py) and
+# checks the Bearer token itself on every route, /health included, so Caddy only terminates TLS: no auth, no
+# caching here. The admin listener (127.0.0.1:3461) is never proxied.
+{
+	# No ACME account email: the certificate needs none; Caddy renews on its own ~30 days before expiry.
+	admin localhost:2019
+}
+
+keywords.sourcelibrary.org {
+	# The largest legitimate body is one POST /lane with a book allow-list (filtered searches): tens of
+	# thousands of 24-character ids at most.
+	request_body {
+		max_size 4MB
+	}
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:3460 {
+		transport http {
+			keepalive 120s
+		}
+	}
+	log {
+		output file /var/log/caddy/keywords.log {
+			roll_size 20MiB
+			roll_keep 5
+		}
+		format json
+	}
+}

@@ -1,0 +1,27 @@
+[
+ {
+  "k": 3,
+  "ctx_before": "“a me inventa fuit 35°.",
+  "A": "51'. 26''.",
+  "B": "51′. 26″.",
+  "ctx_after": "& a “Marcab 43°. 16'.",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "51′. 26″.",
+   "note": "minute/second strokes printed over the digits; prime chars"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "26''. & a “Marcab 43°.",
+  "A": "16'. 50'';",
+  "B": "16′. 50″;",
+  "ctx_after": "quæ diſtantiæ “(prout ex Ephemeridibus",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "16′. 50″;"
+  }
+ }
+]

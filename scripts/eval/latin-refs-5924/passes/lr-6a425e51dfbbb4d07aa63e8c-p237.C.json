@@ -1,0 +1,15 @@
+[
+ {
+  "k": 10,
+  "ctx_before": "vinum aut aqua pro- pinari",
+  "A": "poſſit.",
+  "B": "posſit.",
+  "ctx_after": "Dices forte, me germanizare, quod",
+  "resolution": {
+   "k": 10,
+   "choice": "B",
+   "text": "posſit.",
+   "note": "round s then long s"
+  }
+ }
+]

@@ -1,0 +1,41 @@
+[
+ {
+  "k": 4,
+  "ctx_before": "cor- pus Chriſti: ergo per",
+  "A": "conſecrationē",
+  "B": "conſecrationẽ",
+  "ctx_after": "fit corpus Chri- ſti, &",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "conſecrationẽ",
+   "note": "wavy stroke, tilde"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "de Sacram. cap. 4. Damaſc.",
+  "A": "lib.",
+  "B": "lib",
+  "ctx_after": "4. de fide cap. 14.",
+  "resolution": {
+   "k": 6,
+   "choice": "B",
+   "text": "lib",
+   "note": "no point after lib"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "loco ſuperiùs citato. Sed contra",
+  "A": "benè",
+  "B": "bene",
+  "ctx_after": "re- torquetur. Etiam hæ propoſitiones",
+  "resolution": {
+   "k": 7,
+   "choice": "B",
+   "text": "bene",
+   "note": "no accent printed"
+  }
+ }
+]

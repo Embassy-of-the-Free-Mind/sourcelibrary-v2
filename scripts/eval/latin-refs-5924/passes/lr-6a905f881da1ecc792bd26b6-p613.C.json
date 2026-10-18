@@ -1,0 +1,40 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "ſi- gnificant, ſed ſummum ad",
+  "A": "poſſibiles.",
+  "B": "poßibiles.",
+  "ctx_after": "De nomini- bus autem rerum",
+  "resolution": {
+   "k": 0,
+   "choice": "other",
+   "text": "poſsibiles.",
+   "note": "italic ß ligature = ſs, plain letters"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "reſpectu harum differētiarum: quia reſpe-",
+  "A": "",
+  "B": "ctu re-",
+  "ctx_after": "Ampliatio nominum non ſigni- ficantium",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "",
+   "note": "catchword goes last, after marginalia"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "pliantur, quonam pacto ac- cipiantur.",
+  "A": "ctu re-",
+  "B": "",
+  "ctx_after": "",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "ctu re-"
+  }
+ }
+]

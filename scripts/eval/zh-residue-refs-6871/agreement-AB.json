@@ -1,0 +1,3885 @@
+{
+ "pair": [
+  "A",
+  "B"
+ ],
+ "pages": [
+  {
+   "cls": "table",
+   "page_id": "6a3cc149ec254ff6cae0afa3",
+   "book_id": "6a3cc149ec254ff6cae0af4f",
+   "title": "易圖明辨·卷一~卷二 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    139,
+    139
+   ],
+   "cer_order": 0.007194244604316547,
+   "cer_bag": 0.007194244604316502,
+   "cer_nobox": 0.007194244604316547,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cf0128642f0445b162564",
+   "book_id": "6a3cf0128642f0445b16246f",
+   "title": "御製歷象考成·表·卷五 (vol 17)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    194,
+    194
+   ],
+   "cer_order": 0.005154639175257732,
+   "cer_bag": 0.005154639175257714,
+   "cer_nobox": 0.005154639175257732,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.97
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cc14fec254ff6cae0b1b7",
+   "book_id": "6a3cc14fec254ff6cae0b185",
+   "title": "易圖明辨·卷八~卷十 (vol 5)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "diagram",
+    "diagram"
+   ],
+   "len": [
+    59,
+    59
+   ],
+   "cer_order": 0.01694915254237288,
+   "cer_bag": 0.016949152542372836,
+   "cer_nobox": 0.01694915254237288,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.92
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cbf26f9474f825c165fc3",
+   "book_id": "6a3cbf26f9474f825c165f8f",
+   "title": "數學九章·卷一: Mathematical Treatise in Nine Sections (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    143,
+    143
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.96,
+    0.96
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cf0098642f0445b161f75",
+   "book_id": "6a3cf0098642f0445b161eff",
+   "title": "御製歷象考成·上編·卷十二~卷十四 (vol 8)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    114,
+    115
+   ],
+   "cer_order": 0.17391304347826086,
+   "cer_bag": 0.02608695652173909,
+   "cer_nobox": 0.16216216216216217,
+   "box": [
+    4,
+    4
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.8,
+    0.85
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3ceafe95fcd45563052696",
+   "book_id": "6a3ceafe95fcd4556305267a",
+   "title": "欽定詩經樂譜全書·卷二十 (vol 15)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    102,
+    102
+   ],
+   "cer_order": 0.22549019607843138,
+   "cer_bag": 0.22549019607843135,
+   "cer_nobox": 0.22549019607843138,
+   "box": [
+    0,
+    1
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.55,
+    0.72
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3ceaf495fcd45563052259",
+   "book_id": "6a3ceaf495fcd455630521ab",
+   "title": "欽定詩經樂譜全書·卷六~卷七 (vol 5)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "mixed"
+   ],
+   "len": [
+    86,
+    86
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.93
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cb9673d799518cd71dcba",
+   "book_id": "6a3cb9673d799518cd71dc66",
+   "title": "律呂闡微·卷三~卷五 (vol 2)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    176,
+    176
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.97
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3ceb04bea37be90d20eff6",
+   "book_id": "6a3ceb04bea37be90d20ef73",
+   "title": "欽定詩經樂譜全書·卷二十三 (vol 18)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    126,
+    126
+   ],
+   "cer_order": 0.07142857142857142,
+   "cer_bag": 0.0714285714285714,
+   "cer_nobox": 0.07142857142857142,
+   "box": [
+    8,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.85
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3ceb0295fcd455630529f6",
+   "book_id": "6a3ceb0295fcd455630528cf",
+   "title": "欽定詩經樂譜全書·卷二十六~卷二十八 (vol 21)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    102,
+    102
+   ],
+   "cer_order": 0.49019607843137253,
+   "cer_bag": 0.4901960784313726,
+   "cer_nobox": 0.49019607843137253,
+   "box": [
+    50,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.55
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cbf28f9474f825c1660ba",
+   "book_id": "6a3cbf28f9474f825c16603d",
+   "title": "數學九章·卷三上~卷四下: Mathematical Treatise in Nine Sections (vol 3)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    104,
+    104
+   ],
+   "cer_order": 0.038461538461538464,
+   "cer_bag": 0.038461538461538436,
+   "cer_nobox": 0.038461538461538464,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.96
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3c70af39b4508b04e50983",
+   "book_id": "6a3c70af39b4508b04e50962",
+   "title": "春秋大事表·卷二之三 (vol 4)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    101,
+    101
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.93
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cec5d8642f0445b15bd62",
+   "book_id": "6a3cec5d8642f0445b15bcd8",
+   "title": "帝王經世圖譜·卷四~卷五 (vol 9)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    160,
+    160
+   ],
+   "cer_order": 0.0125,
+   "cer_bag": 0.012499999999999956,
+   "cer_nobox": 0.0125,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cf0198642f0445b16299b",
+   "book_id": "6a3cf0198642f0445b162934",
+   "title": "御製歷象考成·表·卷十三 (vol 23)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    707,
+    707
+   ],
+   "cer_order": 0.007072135785007072,
+   "cer_bag": 0.0014144271570014633,
+   "cer_nobox": 0.007072135785007072,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.95
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cec618642f0445b15bef5",
+   "book_id": "6a3cec618642f0445b15bebe",
+   "title": "帝王經世圖譜·卷六~卷七 (vol 10)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    160,
+    160
+   ],
+   "cer_order": 0.00625,
+   "cer_bag": 0.006249999999999978,
+   "cer_nobox": 0.00625,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.96,
+    0.97
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cec558642f0445b15b8fb",
+   "book_id": "6a3cec558642f0445b15b8bc",
+   "title": "帝王經世圖譜·卷一~卷二 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    33,
+    33
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.97
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cf0068642f0445b161e62",
+   "book_id": "6a3cf0068642f0445b161d90",
+   "title": "御製歷象考成·上編·卷八 (vol 6)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    170,
+    170
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.99
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cb9633d799518cd71d9d2",
+   "book_id": "6a3cb9633d799518cd71d9af",
+   "title": "樂律表微·卷三~卷五 (vol 2)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    145,
+    145
+   ],
+   "cer_order": 0.027586206896551724,
+   "cer_bag": 0.02758620689655178,
+   "cer_nobox": 0.027586206896551724,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.95
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3cf0168642f0445b162700",
+   "book_id": "6a3cf0168642f0445b16265c",
+   "title": "御製歷象考成·表·卷七之一~卷七之二 (vol 19)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    710,
+    710
+   ],
+   "cer_order": 0.5633802816901409,
+   "cer_bag": 0.0014084507042253502,
+   "cer_nobox": 0.5633802816901409,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.96
+   ]
+  },
+  {
+   "cls": "table",
+   "page_id": "6a3ceb0595fcd45563052b6c",
+   "book_id": "6a3ceb0595fcd45563052a46",
+   "title": "欽定詩經樂譜全書·卷二十五 (vol 20)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    114,
+    114
+   ],
+   "cer_order": 0.017543859649122806,
+   "cer_bag": 0.01754385964912286,
+   "cer_nobox": 0.034482758620689655,
+   "box": [
+    56,
+    56
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.95
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf02b8642f0445b163182",
+   "book_id": "6a3cf02b8642f0445b1630ad",
+   "title": "御製律呂正義後編·卷十~卷十一 (vol 7)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "notes"
+   ],
+   "len": [
+    59,
+    59
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.98
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0488642f0445b164198",
+   "book_id": "6a3cf0488642f0445b164175",
+   "title": "御製律呂正義後編·卷六十五 (vol 35)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "prose"
+   ],
+   "len": [
+    166,
+    166
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.99
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf03f8642f0445b163be9",
+   "book_id": "6a3cf03e8642f0445b163ba0",
+   "title": "御製律呂正義後編·卷四十八~卷四十九 (vol 26)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    116,
+    78
+   ],
+   "cer_order": 0.3706896551724138,
+   "cer_bag": 0.3362068965517241,
+   "cer_nobox": 0.3739130434782609,
+   "box": [
+    1,
+    2
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    22,
+    5
+   ],
+   "conf": [
+    0.75,
+    0.6
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf04b8642f0445b16436f",
+   "book_id": "6a3cf04b8642f0445b1642e5",
+   "title": "御製律呂正義後編·卷六十八~卷七十 (vol 37)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "diagram",
+    "diagram"
+   ],
+   "len": [
+    11,
+    11
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cbd93f9474f825c1629f0",
+   "book_id": "6a3cbd93f9474f825c1629d4",
+   "title": "御製滿珠蒙古漢字三合切音清文鑑·卷十三 (vol 11)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    192,
+    192
+   ],
+   "cer_order": 0.203125,
+   "cer_bag": 0.08333333333333337,
+   "cer_nobox": 0.203125,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    25,
+    25
+   ],
+   "conf": [
+    0.6,
+    0.6
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0478642f0445b164115",
+   "book_id": "6a3cf0478642f0445b1640ed",
+   "title": "御製律呂正義後編·卷六十二 (vol 33)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    72,
+    72
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cbd8ef9474f825c1625c6",
+   "book_id": "6a3cbd8ef9474f825c162597",
+   "title": "御製滿珠蒙古漢字三合切音清文鑑·卷六~卷七 (vol 5)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    152,
+    155
+   ],
+   "cer_order": 0.5290322580645161,
+   "cer_bag": 0.3096774193548387,
+   "cer_nobox": 0.5263157894736842,
+   "box": [
+    68,
+    41
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    19,
+    18
+   ],
+   "conf": [
+    0.5,
+    0.55
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf03a8642f0445b16387b",
+   "book_id": "6a3cf03a8642f0445b163856",
+   "title": "御製律呂正義後編·卷三十八~卷三十九 (vol 20)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    89,
+    89
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.98
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0708642f0445b1651c1",
+   "book_id": "6a3cf0708642f0445b164ff9",
+   "title": "御製律呂正義後編·卷一百八~卷一百九 (vol 58)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    130,
+    130
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.97
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cebee8642f0445b158431",
+   "book_id": "6a3cebed8642f0445b1583e4",
+   "title": "欽定西域同文志·卷十~卷十一 (vol 6)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    107,
+    108
+   ],
+   "cer_order": 0.009259259259259259,
+   "cer_bag": 0.0092592592592593,
+   "cer_nobox": 0.009433962264150943,
+   "box": [
+    2,
+    2
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    2,
+    2
+   ],
+   "conf": [
+    0.85,
+    0.85
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0708642f0445b165093",
+   "book_id": "6a3cf0708642f0445b164ff8",
+   "title": "御製律呂正義後編·卷一百十 (vol 59)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    126,
+    126
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cec148642f0445b159663",
+   "book_id": "6a3cec148642f0445b15961f",
+   "title": "琴譜合璧·卷九 (vol 8)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    113,
+    113
+   ],
+   "cer_order": 0.09734513274336283,
+   "cer_bag": 0.053097345132743334,
+   "cer_nobox": 0.12857142857142856,
+   "box": [
+    44,
+    43
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    3,
+    4
+   ],
+   "conf": [
+    0.6,
+    0.85
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0568642f0445b164804",
+   "book_id": "6a3cf0568642f0445b164762",
+   "title": "御製律呂正義後編·卷九十~卷九十一 (vol 47)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    160,
+    160
+   ],
+   "cer_order": 0.00625,
+   "cer_bag": 0.006249999999999978,
+   "cer_nobox": 0.00625,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.97
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf03b8642f0445b163a3e",
+   "book_id": "6a3cf03b8642f0445b163909",
+   "title": "御製律呂正義後編·卷四十二~卷四十四 (vol 23)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    188,
+    187
+   ],
+   "cer_order": 0.0425531914893617,
+   "cer_bag": 0.04255319148936165,
+   "cer_nobox": 0.043478260869565216,
+   "box": [
+    4,
+    4
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.85,
+    0.85
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cc059ec254ff6cae05d33",
+   "book_id": "6a3cc059ec254ff6cae05cfd",
+   "title": "啟蒙意見·卷三~卷四 (vol 2)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "diagram",
+    "diagram"
+   ],
+   "len": [
+    68,
+    68
+   ],
+   "cer_order": 0.04411764705882353,
+   "cer_bag": 0.044117647058823484,
+   "cer_nobox": 0.04411764705882353,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.9,
+    0.93
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cec048642f0445b158e58",
+   "book_id": "6a3cec048642f0445b158e3b",
+   "title": "欽定西域同文志·卷二十三~卷二十四 (vol 25)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    123,
+    123
+   ],
+   "cer_order": 0.024390243902439025,
+   "cer_bag": 0.008130081300813052,
+   "cer_nobox": 0.024390243902439025,
+   "box": [
+    1,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    8,
+    8
+   ],
+   "conf": [
+    0.85,
+    0.8
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0528642f0445b164701",
+   "book_id": "6a3cf0528642f0445b1646e4",
+   "title": "御製律呂正義後編·卷八十五 (vol 44)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    128,
+    128
+   ],
+   "cer_order": 0.015625,
+   "cer_bag": 0.015625,
+   "cer_nobox": 0.015625,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cec018642f0445b158e06",
+   "book_id": "6a3cec018642f0445b158d83",
+   "title": "欽定西域同文志·卷十九~卷二十 (vol 23)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    92,
+    93
+   ],
+   "cer_order": 0.03225806451612903,
+   "cer_bag": 0.032258064516129004,
+   "cer_nobox": 0.03225806451612903,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    10,
+    10
+   ],
+   "conf": [
+    0.85,
+    0.85
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0338642f0445b16356d",
+   "book_id": "6a3cf0338642f0445b1634a1",
+   "title": "御製律呂正義後編·卷二十六~卷二十七 (vol 14)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    127,
+    127
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.98
+   ]
+  },
+  {
+   "cls": "mixed",
+   "page_id": "6a3cf0328642f0445b1633bd",
+   "book_id": "6a3cf0328642f0445b163381",
+   "title": "御製律呂正義後編·卷二十一~卷二十三 (vol 12)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    39,
+    39
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.98
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3c70ec01fe4f593c1d6443",
+   "book_id": "6a3c70ec01fe4f593c1d6438",
+   "title": "說文繫傳·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "mixed"
+   ],
+   "len": [
+    72,
+    73
+   ],
+   "cer_order": 0.0136986301369863,
+   "cer_bag": 0.013698630136986356,
+   "cer_nobox": 0.0136986301369863,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    1,
+    1
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.9,
+    0.95
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cefe54701a906f10f2db1",
+   "book_id": "6a3cefe54701a906f10f2d71",
+   "title": "錢錄·卷十二~卷十四 (vol 4)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    36,
+    36
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cefe74701a906f10f2ef9",
+   "book_id": "6a3cefe74701a906f10f2ec7",
+   "title": "錢錄·卷十五~卷十六 (vol 5)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "diagram",
+    "diagram"
+   ],
+   "len": [
+    1,
+    1
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.9
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd50ec254ff6cadf7d6f",
+   "book_id": "6a3cbd4fec254ff6cadf7d5f",
+   "title": "復古編·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    168,
+    168
+   ],
+   "cer_order": 0.125,
+   "cer_bag": 0.11904761904761907,
+   "cer_nobox": 0.11976047904191617,
+   "box": [
+    8,
+    1
+   ],
+   "heads": [
+    10,
+    10
+   ],
+   "cer_heads": 0.2,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.78,
+    0.82
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cec0a8642f0445b159180",
+   "book_id": "6a3cec098642f0445b159153",
+   "title": "篆隸考異·卷四 (vol 3)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    221,
+    221
+   ],
+   "cer_order": 0.03167420814479638,
+   "cer_bag": 0.03167420814479638,
+   "cer_nobox": 0.03225806451612903,
+   "box": [
+    4,
+    4
+   ],
+   "heads": [
+    10,
+    10
+   ],
+   "cer_heads": 0.1,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.8,
+    0.85
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3c70f401fe4f593c1d6964",
+   "book_id": "6a3c70f401fe4f593c1d68e1",
+   "title": "說文繫傳·卷二十三~卷二十五 (vol 9)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    207,
+    207
+   ],
+   "cer_order": 0.05314009661835749,
+   "cer_bag": 0.0531400966183575,
+   "cer_nobox": 0.05339805825242718,
+   "box": [
+    2,
+    1
+   ],
+   "heads": [
+    11,
+    11
+   ],
+   "cer_heads": 0.18181818181818182,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.93
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbb7a3dce6cfad74a40b8",
+   "book_id": "6a3cbb793dce6cfad74a408a",
+   "title": "隸辨·卷六 (vol 6)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    159,
+    159
+   ],
+   "cer_order": 0.018867924528301886,
+   "cer_bag": 0.018867924528301883,
+   "cer_nobox": 0.018867924528301886,
+   "box": [
+    1,
+    0
+   ],
+   "heads": [
+    12,
+    12
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.85,
+    0.88
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cb9d93dce6cfad74976dd",
+   "book_id": "6a3cb9d93dce6cfad7497656",
+   "title": "汗簡·卷下之一~卷上之二 (vol 3)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    86,
+    86
+   ],
+   "cer_order": 0.09302325581395349,
+   "cer_bag": 0.09302325581395354,
+   "cer_nobox": 0.09302325581395349,
+   "box": [
+    0,
+    1
+   ],
+   "heads": [
+    16,
+    16
+   ],
+   "cer_heads": 0.1875,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.8,
+    0.8
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd5dec254ff6cadf8262",
+   "book_id": "6a3cbd5dec254ff6cadf81b2",
+   "title": "漢隸字源·卷一 (vol 6)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    74,
+    74
+   ],
+   "cer_order": 0.06756756756756757,
+   "cer_bag": 0.06756756756756754,
+   "cer_nobox": 0.06756756756756757,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.96,
+    0.96
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd78ec254ff6cadf912e",
+   "book_id": "6a3cbd78ec254ff6cadf9102",
+   "title": "六書故·卷二十八~卷二十九 (vol 14)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    136,
+    136
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    2,
+    2
+   ],
+   "heads": [
+    4,
+    4
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.93
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbb773dce6cfad74a3fe1",
+   "book_id": "6a3cbb763dce6cfad74a3fc9",
+   "title": "隸辨·卷五 (vol 5)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "mixed"
+   ],
+   "len": [
+    159,
+    159
+   ],
+   "cer_order": 0.012578616352201259,
+   "cer_bag": 0.012578616352201255,
+   "cer_nobox": 0.012578616352201259,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    10,
+    10
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.93
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cb9bd3dce6cfad74965a6",
+   "book_id": "6a3cb9bd3dce6cfad7496520",
+   "title": "說文解字·卷十二上~卷十三下 (vol 7)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    172,
+    172
+   ],
+   "cer_order": 0.05232558139534884,
+   "cer_bag": 0.05232558139534882,
+   "cer_nobox": 0.05660377358490566,
+   "box": [
+    13,
+    17
+   ],
+   "heads": [
+    16,
+    16
+   ],
+   "cer_heads": 0.0625,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.85,
+    0.85
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd75ec254ff6cadf902e",
+   "book_id": "6a3cbd74ec254ff6cadf8f66",
+   "title": "六書故·卷二十~卷二十一 (vol 11)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    143,
+    143
+   ],
+   "cer_order": 0.013986013986013986,
+   "cer_bag": 0.013986013986013957,
+   "cer_nobox": 0.013986013986013986,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    4,
+    4
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.9,
+    0.9
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbb713dce6cfad74a3d64",
+   "book_id": "6a3cbb713dce6cfad74a3cad",
+   "title": "隸辨·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "notes"
+   ],
+   "len": [
+    160,
+    160
+   ],
+   "cer_order": 0.025,
+   "cer_bag": 0.025000000000000022,
+   "cer_nobox": 0.025,
+   "box": [
+    3,
+    0
+   ],
+   "heads": [
+    11,
+    11
+   ],
+   "cer_heads": 0.09090909090909091,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.92,
+    0.88
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd6aec254ff6cadf88fc",
+   "book_id": "6a3cbd6aec254ff6cadf8855",
+   "title": "漢隸字源·卷五~卷六 (vol 14)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "seal"
+   ],
+   "len": [
+    76,
+    76
+   ],
+   "cer_order": 0.013157894736842105,
+   "cer_bag": 0.013157894736842146,
+   "cer_nobox": 0.013157894736842105,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    18,
+    18
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.92,
+    0.85
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbb7a3dce6cfad74a42b7",
+   "book_id": "6a3cbb7a3dce6cfad74a4240",
+   "title": "隸辨·卷八 (vol 8)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    127,
+    127
+   ],
+   "cer_order": 0.023622047244094488,
+   "cer_bag": 0.023622047244094446,
+   "cer_nobox": 0.023622047244094488,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.96,
+    0.98
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd67ec254ff6cadf87c4",
+   "book_id": "6a3cbd66ec254ff6cadf8726",
+   "title": "漢隸字源·卷二~卷三 (vol 12)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "seal",
+    "seal"
+   ],
+   "len": [
+    101,
+    100
+   ],
+   "cer_order": 0.009900990099009901,
+   "cer_bag": 0.00990099009900991,
+   "cer_nobox": 0.009900990099009901,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    24,
+    24
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.85,
+    0.9
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd68ec254ff6cadf8840",
+   "book_id": "6a3cbd68ec254ff6cadf880a",
+   "title": "六書故·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    168,
+    168
+   ],
+   "cer_order": 0.011904761904761904,
+   "cer_bag": 0.011904761904761862,
+   "cer_nobox": 0.011904761904761904,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.96
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd60ec254ff6cadf8474",
+   "book_id": "6a3cbd60ec254ff6cadf844e",
+   "title": "漢隸字源·卷三~卷四 (vol 8)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "seal"
+   ],
+   "len": [
+    101,
+    101
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    24,
+    24
+   ],
+   "cer_heads": 0.0,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.95
+   ]
+  },
+  {
+   "cls": "seal",
+   "page_id": "6a3cbd7ff9474f825c161e5d",
+   "book_id": "6a3cbd7ff9474f825c161e38",
+   "title": "漢隸分韻·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    131,
+    131
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.96,
+    0.97
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cea4ddb5eb2b676734e06",
+   "book_id": "6a3cea4ddb5eb2b676734e05",
+   "title": "日講春秋解義·卷二~卷五 (vol 2)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3c6e2c01fe4f593c1c0712",
+   "book_id": "6a3c6e2c01fe4f593c1c064a",
+   "title": "讀詩質疑·卷二十二~卷二十四下 (vol 12)",
+   "kind": [
+    "blank",
+    "blank"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.95
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cc269ec254ff6cae1106a",
+   "book_id": "6a3cc269ec254ff6cae10fda",
+   "title": "書集傳纂疏·卷三 (vol 10)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    7,
+    7
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cbb923dce6cfad74a4fe8",
+   "book_id": "6a3cbb913dce6cfad74a4fa2",
+   "title": "周禮注疏·卷四~卷五 (vol 23)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cebcc8642f0445b15749c",
+   "book_id": "6a3cebcc8642f0445b15749b",
+   "title": "周易傳義大全·卷二十四 (vol 13)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cb93f3dce6cfad7493d90",
+   "book_id": "6a3cb93e3dce6cfad7493d66",
+   "title": "春秋分記·卷六十~卷六十二 (vol 18)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    7,
+    7
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.98
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cb8de3dce6cfad7490f89",
+   "book_id": "6a3cb8de3dce6cfad7490ec8",
+   "title": "朱子禮纂·卷四~卷五 (vol 2)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    6,
+    6
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.98
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cc2dfaf74b230c690a298",
+   "book_id": "6a3cc2dfaf74b230c690a1f6",
+   "title": "毛詩注疏·卷三 (vol 29)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    6,
+    6
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.9
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3c773b01fe4f593c200a3f",
+   "book_id": "6a3c773b01fe4f593c2008c2",
+   "title": "欽定音韻述微·卷七~卷九 (vol 3)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    304,
+    304
+   ],
+   "cer_order": 0.05263157894736842,
+   "cer_bag": 0.052631578947368474,
+   "cer_nobox": 0.05333333333333334,
+   "box": [
+    4,
+    10
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.88,
+    0.9
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cee214701a906f10e66f9",
+   "book_id": "6a3cee214701a906f10e66f8",
+   "title": "御定淵鑑類函·卷一百八十六~卷一百八十七 (vol 103)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    6,
+    0
+   ],
+   "cer_order": 1.0,
+   "cer_bag": 1.0,
+   "cer_nobox": 1.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3ced904701a906f10e1618",
+   "book_id": "6a3ced904701a906f10e1616",
+   "title": "仁齋直指·卷二十五~卷二十六 (vol 13)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    6,
+    0
+   ],
+   "cer_order": 1.0,
+   "cer_bag": 1.0,
+   "cer_nobox": 1.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3c772a01fe4f593c200151",
+   "book_id": "6a3c772a01fe4f593c20007c",
+   "title": "周易本義集成·卷一 (vol 1)",
+   "kind": [
+    "non-body",
+    "blank"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.97
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3c6e3a39b4508b04e4c062",
+   "book_id": "6a3c6e3a39b4508b04e4bfcc",
+   "title": "春秋輯傳·卷十二~卷十三 (vol 12)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    7,
+    7
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cecc64701a906f10db20f",
+   "book_id": "6a3cecc64701a906f10db20e",
+   "title": "玉海·卷一百十二~卷一百十三 (vol 61)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    6
+   ],
+   "cer_order": 1.0,
+   "cer_bag": 1.0,
+   "cer_nobox": 1.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cc232f9474f825c1756eb",
+   "book_id": "6a3cc232f9474f825c1756ea",
+   "title": "易翼說·卷七 (vol 4)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    6,
+    0
+   ],
+   "cer_order": 1.0,
+   "cer_bag": 1.0,
+   "cer_nobox": 1.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cc11aec254ff6cae094ce",
+   "book_id": "6a3cc11aec254ff6cae09466",
+   "title": "御纂周易折中·卷七~卷八 (vol 18)",
+   "kind": [
+    "blank",
+    "blank"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3ceccc4701a906f10db47a",
+   "book_id": "6a3ceccc4701a906f10db45e",
+   "title": "玉海·卷一百二十二 (vol 67)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.98,
+    0.98
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cc2a1af74b230c6908169",
+   "book_id": "6a3cc2a1af74b230c6908116",
+   "title": "墨莊漫錄·卷二~卷四 (vol 2)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    6,
+    6
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cc04cec254ff6cae053ed",
+   "book_id": "6a3cc04cec254ff6cae0536f",
+   "title": "法苑珠林·卷一百十四~卷一百十六: Fayuan Zhulin (vol 42)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "other",
+   "page_id": "6a3cee354701a906f10e7239",
+   "book_id": "6a3cee354701a906f10e7238",
+   "title": "御定淵鑑類函·卷二百十二~卷二百十三 (vol 120)",
+   "kind": [
+    "non-body",
+    "non-body"
+   ],
+   "layout": [
+    "prose",
+    "prose"
+   ],
+   "len": [
+    0,
+    0
+   ],
+   "cer_order": null,
+   "cer_bag": null,
+   "cer_nobox": null,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.99,
+    0.99
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c5e9240c88a541d8e3890",
+   "book_id": "6a3c5e9240c88a541d8e379e",
+   "title": "御定康熙字典·卷一 (vol 36)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "table",
+    "table"
+   ],
+   "len": [
+    192,
+    192
+   ],
+   "cer_order": 0.036458333333333336,
+   "cer_bag": 0.03125,
+   "cer_nobox": 0.03723404255319149,
+   "box": [
+    5,
+    4
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.82,
+    0.85
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c5ea040c88a541d8e4105",
+   "book_id": "6a3c5ea040c88a541d8e407b",
+   "title": "御定康熙字典·卷十四 (vol 49)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    351,
+    351
+   ],
+   "cer_order": 0.011396011396011397,
+   "cer_bag": 0.01139601139601143,
+   "cer_nobox": 0.011396011396011397,
+   "box": [
+    0,
+    3
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.9,
+    0.95
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c5eaf40c88a541d8e4c92",
+   "book_id": "6a3c5eaf40c88a541d8e4bb7",
+   "title": "御定康熙字典·卷二十八 (vol 63)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    352,
+    351
+   ],
+   "cer_order": 0.05965909090909091,
+   "cer_bag": 0.051136363636363646,
+   "cer_nobox": 0.061224489795918366,
+   "box": [
+    9,
+    8
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.92,
+    0.9
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c5fa0879008ba7e1567c2",
+   "book_id": "6a3c5fa0879008ba7e15678e",
+   "title": "圖書編·卷七十九 (vol 63)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "diagram",
+    "diagram"
+   ],
+   "len": [
+    128,
+    128
+   ],
+   "cer_order": 0.0625,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0625,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.95
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c5fc4879008ba7e157cc6",
+   "book_id": "6a3c5fc4879008ba7e157c93",
+   "title": "圖書編·卷一百二十六 (vol 96)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    210,
+    210
+   ],
+   "cer_order": 0.02857142857142857,
+   "cer_bag": 0.02857142857142858,
+   "cer_nobox": 0.02857142857142857,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.94,
+    0.96
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c6242879008ba7e161fad",
+   "book_id": "6a3c6242879008ba7e161f85",
+   "title": "西清古鑑·卷三十九 (vol 59)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "diagram",
+    "diagram"
+   ],
+   "len": [
+    52,
+    45
+   ],
+   "cer_order": 0.6538461538461539,
+   "cer_bag": 0.17307692307692313,
+   "cer_nobox": 0.47058823529411764,
+   "box": [
+    18,
+    18
+   ],
+   "heads": [
+    19,
+    20
+   ],
+   "cer_heads": 0.15,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.6,
+    0.45
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c635d93327f06e834fae4",
+   "book_id": "6a3c635d93327f06e834fa92",
+   "title": "御定佩文韻府·卷一百一之一 (vol 269)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    375,
+    375
+   ],
+   "cer_order": 0.016,
+   "cer_bag": 0.016000000000000014,
+   "cer_nobox": 0.016,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.93,
+    0.95
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c63740339d4df9abcbe92",
+   "book_id": "6a3c63740339d4df9abcbe44",
+   "title": "御定佩文韻府·卷一之三 (vol 293)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "notes",
+    "notes"
+   ],
+   "len": [
+    370,
+    370
+   ],
+   "cer_order": 0.013513513513513514,
+   "cer_bag": 0.013513513513513487,
+   "cer_nobox": 0.013513513513513514,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    0,
+    0
+   ],
+   "conf": [
+    0.95,
+    0.96
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c6527af3c49b59c5cb1fa",
+   "book_id": "6a3c6527af3c49b59c5cb158",
+   "title": "御製增訂清文鑑·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    19,
+    19
+   ],
+   "cer_order": 0.21052631578947367,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.21052631578947367,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    4,
+    4
+   ],
+   "conf": [
+    0.97,
+    0.98
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c6527af3c49b59c5cb25e",
+   "book_id": "6a3c6527af3c49b59c5cb158",
+   "title": "御製增訂清文鑑·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    123,
+    125
+   ],
+   "cer_order": 0.096,
+   "cer_bag": 0.09599999999999997,
+   "cer_nobox": 0.096,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    24,
+    25
+   ],
+   "conf": [
+    0.85,
+    0.8
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c6527af3c49b59c5cb19b",
+   "book_id": "6a3c6527af3c49b59c5cb158",
+   "title": "御製增訂清文鑑·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    29,
+    29
+   ],
+   "cer_order": 0.27586206896551724,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.27586206896551724,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    5,
+    5
+   ],
+   "conf": [
+    0.95,
+    0.98
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c6527af3c49b59c5cb244",
+   "book_id": "6a3c6527af3c49b59c5cb158",
+   "title": "御製增訂清文鑑·卷一 (vol 1)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    124,
+    109
+   ],
+   "cer_order": 0.3467741935483871,
+   "cer_bag": 0.19354838709677424,
+   "cer_nobox": 0.3247863247863248,
+   "box": [
+    7,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    30,
+    6
+   ],
+   "conf": [
+    0.6,
+    0.65
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c653d39b4508b04e2d485",
+   "book_id": "6a3c653d39b4508b04e2d425",
+   "title": "御製增訂清文鑑·卷二十五 (vol 24)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    35,
+    35
+   ],
+   "cer_order": 0.0,
+   "cer_bag": 0.0,
+   "cer_nobox": 0.0,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    8,
+    8
+   ],
+   "conf": [
+    0.6,
+    0.8
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c653d39b4508b04e2d4b5",
+   "book_id": "6a3c653d39b4508b04e2d425",
+   "title": "御製增訂清文鑑·卷二十五 (vol 24)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    111,
+    111
+   ],
+   "cer_order": 0.12612612612612611,
+   "cer_bag": 0.018018018018018056,
+   "cer_nobox": 0.12612612612612611,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    18,
+    6
+   ],
+   "conf": [
+    0.82,
+    0.7
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c653d39b4508b04e2d439",
+   "book_id": "6a3c653d39b4508b04e2d425",
+   "title": "御製增訂清文鑑·卷二十五 (vol 24)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    88,
+    84
+   ],
+   "cer_order": 0.29545454545454547,
+   "cer_bag": 0.10227272727272729,
+   "cer_nobox": 0.29545454545454547,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    19,
+    17
+   ],
+   "conf": [
+    0.8,
+    0.8
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c653d39b4508b04e2d4a2",
+   "book_id": "6a3c653d39b4508b04e2d425",
+   "title": "御製增訂清文鑑·卷二十五 (vol 24)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    123,
+    123
+   ],
+   "cer_order": 0.016260162601626018,
+   "cer_bag": 0.016260162601625994,
+   "cer_nobox": 0.016260162601626018,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    24,
+    24
+   ],
+   "conf": [
+    0.85,
+    0.85
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c654439b4508b04e2d846",
+   "book_id": "6a3c654439b4508b04e2d820",
+   "title": "御製增訂清文鑑·卷三十一~卷三十二 (vol 30)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    78,
+    79
+   ],
+   "cer_order": 0.0759493670886076,
+   "cer_bag": 0.025316455696202556,
+   "cer_nobox": 0.0759493670886076,
+   "box": [
+    0,
+    0
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    22,
+    22
+   ],
+   "conf": [
+    0.75,
+    0.75
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c654439b4508b04e2d916",
+   "book_id": "6a3c654439b4508b04e2d820",
+   "title": "御製增訂清文鑑·卷三十一~卷三十二 (vol 30)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    83,
+    81
+   ],
+   "cer_order": 0.13253012048192772,
+   "cer_bag": 0.1325301204819277,
+   "cer_nobox": 0.13580246913580246,
+   "box": [
+    2,
+    8
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    17,
+    16
+   ],
+   "conf": [
+    0.8,
+    0.7
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c654439b4508b04e2d86d",
+   "book_id": "6a3c654439b4508b04e2d820",
+   "title": "御製增訂清文鑑·卷三十一~卷三十二 (vol 30)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    124,
+    113
+   ],
+   "cer_order": 0.3064516129032258,
+   "cer_bag": 0.16129032258064513,
+   "cer_nobox": 0.3064516129032258,
+   "box": [
+    0,
+    1
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    26,
+    20
+   ],
+   "conf": [
+    0.75,
+    0.75
+   ]
+  },
+  {
+   "cls": "reverted",
+   "page_id": "6a3c654439b4508b04e2d83e",
+   "book_id": "6a3c654439b4508b04e2d820",
+   "title": "御製增訂清文鑑·卷三十一~卷三十二 (vol 30)",
+   "kind": [
+    "body",
+    "body"
+   ],
+   "layout": [
+    "mixed",
+    "mixed"
+   ],
+   "len": [
+    109,
+    109
+   ],
+   "cer_order": 0.10091743119266056,
+   "cer_bag": 0.1009174311926605,
+   "cer_nobox": 0.10091743119266056,
+   "box": [
+    0,
+    3
+   ],
+   "heads": [
+    0,
+    0
+   ],
+   "cer_heads": null,
+   "foreign": [
+    26,
+    26
+   ],
+   "conf": [
+    0.75,
+    0.7
+   ]
+  }
+ ],
+ "classes": {
+  "table": {
+   "pages": 20,
+   "text_pages": 20,
+   "chars": 3646,
+   "cer_order_pooled": 0.1434,
+   "cer_bag_pooled": 0.0283,
+   "cer_nobox_pooled": 0.1436,
+   "cer_order_median": 0.0125,
+   "pages_over_10pct": 4,
+   "kind_disagree": 0,
+   "head_pages": 0,
+   "heads": 0,
+   "cer_heads_pooled": null,
+   "box_share": 0.0246
+  },
+  "mixed": {
+   "pages": 20,
+   "text_pages": 19,
+   "chars": 2252,
+   "cer_order_pooled": 0.087,
+   "cer_bag_pooled": 0.0568,
+   "cer_nobox_pooled": 0.0887,
+   "cer_order_median": 0.009259259259259259,
+   "pages_over_10pct": 3,
+   "kind_disagree": 0,
+   "head_pages": 0,
+   "heads": 0,
+   "cer_heads_pooled": null,
+   "box_share": 0.0475
+  },
+  "seal": {
+   "pages": 20,
+   "text_pages": 19,
+   "chars": 2498,
+   "cer_order_pooled": 0.032,
+   "cer_bag_pooled": 0.0316,
+   "cer_nobox_pooled": 0.032,
+   "cer_order_median": 0.013986013986013986,
+   "pages_over_10pct": 1,
+   "kind_disagree": 0,
+   "head_pages": 14,
+   "heads": 171,
+   "cer_heads_pooled": 0.0585,
+   "box_share": 0.0118
+  },
+  "reverted": {
+   "pages": 20,
+   "text_pages": 19,
+   "chars": 3060,
+   "cer_order_pooled": 0.0856,
+   "cer_bag_pooled": 0.048,
+   "cer_nobox_pooled": 0.0819,
+   "cer_order_median": 0.0759493670886076,
+   "pages_over_10pct": 8,
+   "kind_disagree": 0,
+   "head_pages": 1,
+   "heads": 20,
+   "cer_heads_pooled": 0.15,
+   "box_share": 0.0142
+  },
+  "other": {
+   "pages": 20,
+   "text_pages": 1,
+   "chars": 304,
+   "cer_order_pooled": 0.0526,
+   "cer_bag_pooled": 0.0526,
+   "cer_nobox_pooled": 0.0533,
+   "cer_order_median": 0.05263157894736842,
+   "pages_over_10pct": 0,
+   "kind_disagree": 1,
+   "head_pages": 0,
+   "heads": 0,
+   "cer_heads_pooled": null,
+   "box_share": 0.023
+  }
+ }
+}

@@ -1,0 +1,15 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "repere. Iſte locus Hipp. eſt",
+  "A": "ἀμφίδοξος.",
+  "B": "ἀδιόρθωτος.",
+  "ctx_after": "Galenus tamen approbat. Et quæſtio",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "ἀμφίδοξος.",
+   "note": "ligatured Greek reads amphidoxos (-oxos ending, delta-omicron-xi)"
+  }
+ }
+]

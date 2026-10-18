@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Nova fabricandi horaria mobilia, & permanentia, tam acu magnetico, quam sine acu ad omnem latitudinem, ratio nuper excogitata, et nunc primu (1596), the leaf itself: https://archive.org/download/bub_gb_oEA9qcYmBRMC/page/n27/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a41aec44f7292ab3ec107f2",
+  "page_number": 28,
+  "page_id": "6a41aec44f7292ab3ec1080e",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1596,
+  "visible": true,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://archive.org/download/bub_gb_oEA9qcYmBRMC/page/n27/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "9de8a22b45e2892221f10c0a05c0589a9270049ac4779c864d90c6cdb9633d2d",
+    "width": 1754,
+    "height": 2500,
+    "fetched_at": "2026-10-17T22:12:45.958Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.9954,
+    "hunks": 1,
+    "space_only_hunks": 0,
+    "c_chose": {
+      "A": 0,
+      "B": 0,
+      "other": 1
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1371,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.595Z",
+  "text_location": "repo",
+  "text_sha256": "58c47f1c1714c485ad14330ca8f563836ccadfa8a3fcb283c1341bab419050c6"
+}

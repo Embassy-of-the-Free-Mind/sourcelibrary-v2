@@ -1,0 +1,77 @@
+[
+ {
+  "k": 8,
+  "ctx_before": "dicamus. verſ.ſed quid ecce.4. XIIX.",
+  "A": "PROCURATOR;",
+  "B": "Procurator;",
+  "ctx_after": "quia quod poſſum per me,",
+  "resolution": {
+   "k": 8,
+   "choice": "A",
+   "text": "PROCURATOR;",
+   "note": "small caps as capitals"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "l.procurator.1.ff.de procur. l.refectionis.11.§.ſi prope.1.verſ.ego fabrique",
+  "A": "mei.ibiq; Paul.de Caſtro.ff. comm.præd. Caccialup.tr.de debit.ſuſp.quæſt.princ.2.gloſ.",
+  "B": "mei. ibiq; Paul. de Caſtro. ff. comm. præd. Caccialup. tr. de debit. ſuſp. quæſt. princ. 2. gloſſ.",
+  "ctx_after": "& text.in l.1.C. ubi quis",
+  "resolution": {
+   "k": 11,
+   "choice": "other",
+   "text": "mei.ibiq; Paul.de Caſtro.ff. comm.præd. Caccialup.tr.de debit.ſuſp.quæſt.princ.2.gloſs.",
+   "note": "A spacing; italic ß ligature = ſs"
+  }
+ },
+ {
+  "k": 31,
+  "ctx_before": "viros, quibus veriſimiliter creditor ipſe",
+  "A": "peperciſſet, arg.l.non ſolum.39.§.fin.ff.de",
+  "B": "pepercisſet, arg. l. non ſolum. 39. §. fin. ff. de",
+  "ctx_after": "procur. Periclitantur ergo com- miſſiones",
+  "resolution": {
+   "k": 31,
+   "choice": "A",
+   "text": "peperciſſet, arg.l.non ſolum.39.§.fin.ff.de"
+  }
+ },
+ {
+  "k": 43,
+  "ctx_before": "Vant.de nullit.tit. quib.mod.ſen.null.def.poſſ.n.101.n.105.Peckius tr.h.c.3.n.5. XXI.",
+  "A": "PORTATOR LITERARUM;",
+  "B": "Portator Literarum;",
+  "ctx_after": "quia ut cautes fluctuum appulſu",
+  "resolution": {
+   "k": 43,
+   "choice": "A",
+   "text": "PORTATOR LITERARUM;"
+  }
+ },
+ {
+  "k": 51,
+  "ctx_before": "Rebuff.d.loc. de lit.oblig.art.2.gl.1.n.75. verſ.præterea ſi",
+  "A": "quis,",
+  "B": "quis.",
+  "ctx_after": "Petrus Peckius tr.de jur.ſiſten.c.3. XXII.",
+  "resolution": {
+   "k": 51,
+   "choice": "B",
+   "text": "quis.",
+   "note": "point, not comma"
+  }
+ },
+ {
+  "k": 53,
+  "ctx_before": "Petrus Peckius tr.de jur.ſiſten.c.3. XXII.",
+  "A": "LEGA-",
+  "B": "Lega-",
+  "ctx_after": "",
+  "resolution": {
+   "k": 53,
+   "choice": "A",
+   "text": "LEGA-"
+  }
+ }
+]

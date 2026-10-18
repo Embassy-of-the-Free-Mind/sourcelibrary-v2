@@ -1,0 +1,15 @@
+[
+ {
+  "k": 9,
+  "ctx_before": "propter veritatis doctrinam, non propter",
+  "A": "vllum ſcelus ,",
+  "B": "vilum ſcelus,",
+  "ctx_after": "tandē occiſus eſt. Ergo intemperatæ",
+  "resolution": {
+   "k": 9,
+   "choice": "other",
+   "text": "vilum ſcelus ,",
+   "note": "vilum as printed; space before comma"
+  }
+ }
+]

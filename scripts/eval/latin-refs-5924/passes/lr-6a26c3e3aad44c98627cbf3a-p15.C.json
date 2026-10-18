@@ -1,0 +1,15 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "medicina, lepram, 41. De Calcinatione.",
+  "A": "Quam",
+  "B": "Quàm",
+  "ctx_after": "ſolvas, priùs efficies ex corpore",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "Quàm",
+   "note": "grave accent printed (sits slightly right, over a/m)"
+  }
+ }
+]

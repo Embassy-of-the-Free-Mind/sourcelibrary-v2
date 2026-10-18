@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Joh. Henrici Ursini De Zoroastre Bactriano, Hermete Trismegisto, Sanchoniathone Phoenicio, Eorumque scriptis, & aliis, contra Mosaicae Scrip (1661), the leaf itself: https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234344_00164/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a9058d67f6818cc17cd7565",
+  "page_number": 164,
+  "page_id": "6a9058d67f6818cc17cd7609",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1600s",
+  "year": 1661,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234344_00164/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "27d7ccb1de5d3b1624ead40d8434a38f9c4800530bfdf5983af91b51d79bb3cf",
+    "width": 1018,
+    "height": 1811,
+    "fetched_at": "2026-10-17T22:11:28.478Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-roman-italic",
+  "layout": "single",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.994,
+    "hunks": 1,
+    "space_only_hunks": 0,
+    "c_chose": {
+      "A": 0,
+      "B": 1,
+      "other": 0
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 1086,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.559Z",
+  "text_location": "repo",
+  "text_sha256": "9fb0795ce347f79e94bc9098707bda1cec7bcb4af5fd258afc65ee06e9c07062"
+}

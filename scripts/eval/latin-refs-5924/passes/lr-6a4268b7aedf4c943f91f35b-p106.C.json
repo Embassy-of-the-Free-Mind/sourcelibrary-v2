@@ -1,0 +1,90 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "actus vel eſt bo- nus",
+  "A": "vl̄",
+  "B": "vꝉ",
+  "ctx_after": "malus:nullus ergo indiuidualis actꝰ eſt",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "vꝉ",
+   "note": "stroke through l ascender"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "pri- mi/qōne prima:⁊ Bonauēture in",
+  "A": "ſcđo.xlj.diſtinc.ꝗ",
+  "B": "ſcd̄o.xlj.diſtinc.ꝗ",
+  "ctx_after": "datur actus indifferēs inter bonū",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "ſcđo.xlj.diſtinc.ꝗ",
+   "note": "stroke through round-d ascender"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "mala tranſ- greſſiue.Nec eſt mala",
+  "A": "omiſſiue:qđ",
+  "B": "omiſſiue:qd̄",
+  "ctx_after": "patet:qꝛ non eſt caren tia",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "omiſſiue:qđ"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "nis dei:vt videt᷑ dicere Greg.in",
+  "A": "ſcđo",
+  "B": "ſcd̄o",
+  "ctx_after": "diſt.xxxviij.vel intel- ligis aptitudialiter:id eſt",
+  "resolution": {
+   "k": 6,
+   "choice": "A",
+   "text": "ſcđo"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "ſpe cie ab illis ex",
+  "A": "ꝗbꝰ",
+  "B": "q̄bꝰ",
+  "ctx_after": "genitꝰ eſt.ſed poſſibile ē ꝗ",
+  "resolution": {
+   "k": 7,
+   "choice": "B",
+   "text": "q̄bꝰ",
+   "note": "bar above q, not on descender"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "rit habitū dilectionis dei.igit᷑. non",
+  "A": "ſcōm:puta",
+  "B": "ſcd̄m:puta",
+  "ctx_after": "ꝗ habitua liter referri.i.aptitudinaliter natus",
+  "resolution": {
+   "k": 8,
+   "choice": "other",
+   "text": "ſcđm:puta",
+   "note": "round d with stroke, not o"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "habitua liter referri.i.aptitudinaliter natus ſit",
+  "A": "ꝗtum",
+  "B": "q̄tum",
+  "ctx_after": "eſt ex ſe/re- ferri:qꝛ ille",
+  "resolution": {
+   "k": 9,
+   "choice": "B",
+   "text": "q̄tum"
+  }
+ }
+]

@@ -1,0 +1,15 @@
+[
+ {
+  "k": 2,
+  "ctx_before": "ſervus deceſſit, aut nummos obtulit,",
+  "A": "eosque",
+  "B": "eoſque",
+  "ctx_after": "non accipiente muliere perdiderit, B",
+  "resolution": {
+   "k": 2,
+   "choice": "other",
+   "text": "eosq́ue",
+   "note": "round s; acute over q"
+  }
+ }
+]

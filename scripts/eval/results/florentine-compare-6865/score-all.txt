@@ -1,0 +1,35 @@
+argon-flash      gemini-3.8-flash-high  nahuatl  argon=3.88 flash=3.10 argon−flash +0.78 (+0.20,+1.32) pages argon>/=/<flash [13, 2, 5] same pick 17/20 pos +1.00/+0.55
+argon-flash      gemini-3.8-flash-high  spanish  argon=4.83 flash=4.45 argon−flash +0.38 (+0.03,+0.78) pages argon>/=/<flash [8, 8, 4] same pick 14/20 pos +0.50/+0.25
+argon-flash      claude opus            nahuatl  argon=4.00 flash=3.20 argon−flash +0.80 (+0.53,+1.05) pages argon>/=/<flash [15, 4, 1] same pick 18/20 pos +0.70/+0.90
+argon-flash      claude opus            spanish  argon=4.85 flash=4.58 argon−flash +0.28 (+0.00,+0.60) pages argon>/=/<flash [5, 13, 2] same pick 17/20 pos +0.35/+0.20
+opus-argon       gemini-3.8-flash-high  nahuatl  argon=4.00 opus=2.83 argon−opus +1.18 (+0.93,+1.43) pages argon>/=/<opus [18, 1, 1] same pick 18/20 pos +1.45/+0.90
+opus-argon       gemini-3.8-flash-high  spanish  argon=4.80 opus=4.47 argon−opus +0.33 (+0.03,+0.65) pages argon>/=/<opus [11, 6, 3] same pick 13/20 pos +0.50/+0.15
+opus-argon       claude opus            nahuatl  argon=3.80 opus=3.60 argon−opus +0.20 (-0.07,+0.50) pages argon>/=/<opus [8, 8, 4] same pick 15/20 pos +0.05/+0.35
+opus-argon       claude opus            spanish  argon=4.80 opus=4.58 argon−opus +0.23 (+0.03,+0.45) pages argon>/=/<opus [7, 11, 2] same pick 16/20 pos +0.30/+0.15
+opus-flash       gemini-3.8-flash-high  nahuatl  flash=3.45 opus=3.02 flash−opus +0.42 (-0.10,+0.93) pages flash>/=/<opus [12, 3, 5] same pick 16/20 pos +0.55/+0.30
+opus-flash       gemini-3.8-flash-high  spanish  flash=4.67 opus=4.62 flash−opus +0.05 (-0.28,+0.35) pages flash>/=/<opus [8, 8, 4] same pick 15/20 pos +0.20/-0.10
+opus-flash       claude opus            nahuatl  flash=3.27 opus=3.85 flash−opus -0.57 (-0.97,-0.15) pages flash>/=/<opus [6, 2, 12] same pick 18/20 pos -0.60/-0.55
+opus-flash       claude opus            spanish  flash=4.60 opus=4.67 flash−opus -0.07 (-0.33,+0.15) pages flash>/=/<opus [4, 11, 5] same pick 15/20 pos -0.05/-0.10
+opus-lite        gemini-3.8-flash-high  nahuatl  lite=1.82 opus=4.38 lite−opus -2.55 (-2.83,-2.27) pages lite>/=/<opus [0, 0, 20] same pick 20/20 pos -2.60/-2.50
+opus-lite        gemini-3.8-flash-high  spanish  lite=3.75 opus=4.80 lite−opus -1.05 (-1.52,-0.60) pages lite>/=/<opus [0, 8, 12] same pick 18/20 pos -1.00/-1.10
+opus-lite        claude opus            nahuatl  lite=1.85 opus=4.05 lite−opus -2.20 (-2.48,-1.88) pages lite>/=/<opus [0, 1, 19] same pick 19/20 pos -2.20/-2.20
+opus-lite        claude opus            spanish  lite=4.05 opus=4.78 lite−opus -0.72 (-1.18,-0.35) pages lite>/=/<opus [0, 8, 12] same pick 17/20 pos -0.80/-0.65
+
+| arm | column | judge | mean fidelity (all pairs) | omitted · added · mistranslated per page | summarised (share of judgements) | n judgements |
+|---|---|---|---|---|---|---|
+| argon | nahuatl | claude opus | 3.90 | 0.2 · 0.6 · 1.9 | 0/80 | 80 |
+| argon | nahuatl | gemini-3.8-flash-high | 3.94 | 0.3 · 0.6 · 1.4 | 0/80 | 80 |
+| flash | nahuatl | claude opus | 3.24 | 0.6 · 0.7 · 3.4 | 0/80 | 80 |
+| flash | nahuatl | gemini-3.8-flash-high | 3.27 | 0.8 · 0.6 · 2.5 | 0/80 | 80 |
+| lite | nahuatl | claude opus | 1.85 | 2.8 · 2.1 · 5.1 | 8/40 | 40 |
+| lite | nahuatl | gemini-3.8-flash-high | 1.82 | 2.6 · 1.5 · 5.8 | 7/40 | 40 |
+| opus | nahuatl | claude opus | 3.83 | 0.7 · 0.2 · 1.9 | 0/120 | 120 |
+| opus | nahuatl | gemini-3.8-flash-high | 3.41 | 1.0 · 0.5 · 2.4 | 0/120 | 120 |
+| argon | spanish | claude opus | 4.83 | 0.0 · 0.1 · 0.2 | 0/80 | 80 |
+| argon | spanish | gemini-3.8-flash-high | 4.81 | 0.0 · 0.1 · 0.2 | 0/80 | 80 |
+| flash | spanish | claude opus | 4.59 | 0.1 · 0.0 · 0.5 | 0/80 | 80 |
+| flash | spanish | gemini-3.8-flash-high | 4.56 | 0.2 · 0.0 · 0.4 | 0/80 | 80 |
+| lite | spanish | claude opus | 4.05 | 0.4 · 0.2 · 1.1 | 2/40 | 40 |
+| lite | spanish | gemini-3.8-flash-high | 3.75 | 0.4 · 0.1 · 1.2 | 0/40 | 40 |
+| opus | spanish | claude opus | 4.67 | 0.2 · 0.1 · 0.4 | 0/120 | 120 |
+| opus | spanish | gemini-3.8-flash-high | 4.63 | 0.2 · 0.1 · 0.3 | 0/120 | 120 |

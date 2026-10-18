@@ -1,0 +1,28 @@
+[
+ {
+  "k": 2,
+  "ctx_before": "ca origo habeat, εὐαρεστεῖται ὁ",
+  "A": "Θεὸς,",
+  "B": "Θεός,",
+  "ctx_after": "id eſt, delectatur Deus. 5.",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "Θεὸς,",
+   "note": "grave on omicron"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "ſunt propè innumerabiles, Barbariſmi, Solœciſmi,",
+  "A": "ἀνακόλουθα,",
+  "B": "Ἀνακόλουθα,",
+  "ctx_after": "Hyperbata, obſcurè & am- biguè",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "Ἀνακόλουθα,",
+   "note": "capital alpha with breathing"
+  }
+ }
+]

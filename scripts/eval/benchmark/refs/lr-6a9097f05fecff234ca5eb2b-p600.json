@@ -1,0 +1,69 @@
+{
+  "source": "model-transcription",
+  "edition": "Lexicon, nunc demum à mendis exactissime repurgatum accessere ad postremam hanc editionem Jacobi montani viri literatissimi castigationes (1534), the leaf itself: https://api.digitale-sammlungen.de/iiif/image/v2/bsb10989130_00600/full/full/0/default.jpg",
+  "licence": "CC0-1.0",
+  "kind": "same-leaf-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a9097f05fecff234ca5eb2b",
+  "page_number": 600,
+  "page_id": "6a9097f05fecff234ca5ed83",
+  "script": "latin",
+  "reference_kind": "same-leaf-transcription",
+  "century": "1500s",
+  "year": 1534,
+  "visible": false,
+  "hidden_reason": null,
+  "image": {
+    "url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10989130_00600/full/full/0/default.jpg",
+    "field": "pages.photo",
+    "sha256": "66afc0009c380b8961c65ec5f35c85ea35bd731302f716afd1931e38ab62d729",
+    "width": 1755,
+    "height": 2382,
+    "fetched_at": "2026-10-17T22:12:05.312Z"
+  },
+  "made_by": {
+    "engine": "model",
+    "model": "claude-opus-5-5",
+    "how": "three independent reads of the leaf image (full view + overlapping bands): A and B blind diplomatic transcriptions; C re-read the image at every word where A and B differ and chose or corrected; final = A with C's readings",
+    "prompt_hash": "transcribe fc2954e1ebbd0905 / adjudicate 4378420d852f0e42",
+    "finish_reason": "stop",
+    "readers": [
+      "claude-opus-5-5 (A, blind)",
+      "claude-opus-5-5 (B, blind)",
+      "claude-opus-5-5 (C, adjudicator)"
+    ],
+    "read_at": "2026-10-17"
+  },
+  "typeface": "mixed-gothic-roman",
+  "layout": "two-column",
+  "convention": "latin-refs-5924@1 (README)",
+  "passes": {
+    "ab_word_agreement": 0.6217,
+    "hunks": 146,
+    "space_only_hunks": 121,
+    "c_chose": {
+      "A": 20,
+      "B": 1,
+      "other": 4
+    }
+  },
+  "unit": {
+    "kind": "page",
+    "chars": 6992,
+    "unread_words": 0
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-17",
+    "note": "transcribed from this leaf's own image",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "scripts/eval/latin-refs-5924.mjs",
+  "built_at": "2026-10-17T23:04:34.577Z",
+  "text_location": "repo",
+  "text_sha256": "2abe3bad7608bc2c0f5d53d72adb730e21f88e2d66d0f34ec0561464ac6030a6"
+}

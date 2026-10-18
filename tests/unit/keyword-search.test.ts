@@ -5,6 +5,7 @@ import { NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
 import { pageRow } from '../../scripts/workers/keyword-search/lib.mjs';
 import {
   keywordSearchMode, callKeywordLane, recallOf, buildKeywordShadow, synthesizeHighlights, hydrateKeywordRows,
+  serveKeywordPages, indexOfWord, KEYWORD_SERVE_BUDGET_MS,
   type KeywordLaneResult,
 } from '@/lib/keyword-search';
 
@@ -109,6 +110,88 @@ describe('synthesizeHighlights', () => {
       .toEqual({ path: 'translation.data', texts: [{ value: 'Drebbel', type: 'hit' }] });
     expect(synthesizeHighlights({ translation: { data: 'a furnace' }, ocr: { data: 'fornax Drebelii' } }, ['Drebelii', 'Drebbel'])?.[0].path).toBe('ocr.data');
     expect(synthesizeHighlights({ translation: { data: 'nothing' }, ocr: { data: '' } }, ['drebbel'])).toBeUndefined();
+  });
+  // #6863 review: the snippet was centred on the first query word found as a substring.
+  it('skips stopwords while the query has another word', () => {
+    const page = { translation: { data: 'Of the making of the philosophers stone, the art is long.' } };
+    expect(synthesizeHighlights(page, ['the philosophers stone'])?.[0].texts[0].value).toBe('philosophers');
+    // A query of stopwords only still gets its hit.
+    expect(synthesizeHighlights({ translation: { data: 'Of the stone' } }, ['the'])?.[0].texts[0].value).toBe('the');
+  });
+  it('matches whole words, not substrings', () => {
+    // "art" inside "part" is not a hit; the later whole word is.
+    expect(synthesizeHighlights({ translation: { data: 'The first part. Then the art itself.' } }, ['art'])?.[0].texts[0])
+      .toEqual({ value: 'art', type: 'hit' });
+    // Only a substring in the translation: the OCR's whole word wins.
+    expect(synthesizeHighlights({ translation: { data: 'a particle' }, ocr: { data: 'ars et art' } }, ['art'])?.[0])
+      .toEqual({ path: 'ocr.data', texts: [{ value: 'art', type: 'hit' }] });
+    expect(synthesizeHighlights({ translation: { data: 'counterpart' } }, ['art'])).toBeUndefined();
+  });
+});
+
+describe('indexOfWord', () => {
+  it('finds whole words in any case, with diacritics and apostrophes as letters', () => {
+    expect(indexOfWord('Sol et Luna; solve', 'sol')).toBe(0);
+    expect(indexOfWord('dissolve, then Sol.', 'sol')).toBe(15);
+    expect(indexOfWord('Æther and æthereal', 'æther')).toBe(0);
+    expect(indexOfWord('chimère', 'chim')).toBe(-1);
+    expect(indexOfWord("the philosopher's stone", "philosopher's")).toBe(4);
+    expect(indexOfWord('a (b) c', '(b)')).toBe(2); // regex syntax is literal
+    expect(indexOfWord('Ἑρμῆς ὁ τρισμέγιστος', 'ἑρμῆς')).toBe(0);
+  });
+  it('in a script written without spaces, any occurrence counts', () => {
+    expect(indexOfWord('老子道德經', '道德')).toBe(2);
+  });
+});
+
+describe('serveKeywordPages', () => {
+  const row = (id: string) => ({ page_id: id, book_id: 'b1', page_number: 1, score: 1, src: 'main' as const });
+  const lane = (counts: KeywordLaneResult['counts']): KeywordLaneResult => ({ main: [row('p1')], variants: [], counts, extra: [], ms: {} });
+  const dbWith = (toArray: () => Promise<unknown[]>, seen: number[] = []) => ({
+    collection: () => ({ find: () => ({ maxTimeMS: (ms: number) => { seen.push(ms); return { toArray }; } }) }),
+  }) as any;
+  const doc = { id: 'p1', book_id: 'b1', page_number: 1, translation: { data: 'x' } };
+
+  // #6863 review: service 1.5 s + hydration 5 s, then Atlas, overran the lane's 8 s ceiling.
+  it('budgets the service and hydration together, leaving the Atlas fallback room in the 8 s lane', () => {
+    expect(KEYWORD_SERVE_BUDGET_MS).toBeLessThanOrEqual(8000 - 4600); // Atlas lane p99 is 4.6 s
+  });
+  it('gives hydration only what the service left, as maxTimeMS', async () => {
+    global.fetch = vi.fn(async () => { await new Promise(r => setTimeout(r, 120)); return jsonResponse(lane([])); }) as unknown as typeof fetch;
+    const seen: number[] = [];
+    const out = await serveKeywordPages(dbWith(async () => [doc], seen), { query: 'x', k: 25 }, { query: 'x' }, 500);
+    expect(out.docs.map(d => d.id)).toEqual(['p1']);
+    expect(seen[0]).toBeLessThanOrEqual(500 - 100);
+    expect(seen[0]).toBeGreaterThan(50);
+  });
+  it('rejects when hydration runs past the budget, even if Mongo ignores maxTimeMS', async () => {
+    global.fetch = vi.fn(async () => jsonResponse(lane([]))) as unknown as typeof fetch;
+    const slow = () => new Promise<unknown[]>(r => setTimeout(() => r([doc]), 1000));
+    const t = performance.now();
+    await expect(serveKeywordPages(dbWith(slow), { query: 'x', k: 25 }, { query: 'x' }, 200)).rejects.toThrow(/over budget/);
+    expect(performance.now() - t).toBeLessThan(600);
+  });
+  it('rejects without hydrating when the service spent the budget', async () => {
+    global.fetch = vi.fn(async () => { await new Promise(r => setTimeout(r, 180)); return jsonResponse(lane([])); }) as unknown as typeof fetch;
+    const toArray = vi.fn(async () => [doc]);
+    await expect(serveKeywordPages(dbWith(toArray), { query: 'x', k: 25 }, { query: 'x' }, 200)).rejects.toThrow(/no budget left/);
+    expect(toArray).not.toHaveBeenCalled();
+  });
+  it('caps the service call at the budget when the budget is shorter than its own timeout', async () => {
+    global.fetch = vi.fn((_u: string, init: RequestInit) => new Promise((_, reject) => {
+      init.signal!.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'TimeoutError' })));
+    })) as unknown as typeof fetch;
+    await expect(serveKeywordPages(dbWith(async () => []), { query: 'x', k: 25 }, { query: 'x' }, 150)).rejects.toThrow(/timeout after 150 ms/);
+  });
+  // #6863 review: in serve mode a missing `counts` was not marked degraded.
+  it('marks the roll-up degraded when one was asked and no counts came back', async () => {
+    const rollup = { terms: ['x'] };
+    global.fetch = vi.fn(async () => jsonResponse(lane(null))) as unknown as typeof fetch;
+    expect((await serveKeywordPages(dbWith(async () => [doc]), { query: 'x', k: 25, rollup }, { query: 'x' })).rollupDegraded).toBe(true);
+    global.fetch = vi.fn(async () => jsonResponse(lane([]))) as unknown as typeof fetch;
+    expect((await serveKeywordPages(dbWith(async () => [doc]), { query: 'x', k: 25, rollup }, { query: 'x' })).rollupDegraded).toBe(false);
+    global.fetch = vi.fn(async () => jsonResponse(lane(null))) as unknown as typeof fetch;
+    expect((await serveKeywordPages(dbWith(async () => [doc]), { query: 'x', k: 25, rollup: null }, { query: 'x' })).rollupDegraded).toBe(false);
   });
 });
 

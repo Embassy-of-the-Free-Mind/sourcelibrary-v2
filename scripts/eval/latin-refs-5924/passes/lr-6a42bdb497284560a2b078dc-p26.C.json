@@ -1,0 +1,152 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "etiam inanes obſignabat. & in",
+  "A": "uetuſtiſsi-",
+  "B": "uetuſtiſſi-",
+  "ctx_after": "mo Plinio locus hic è",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "uetuſtiſsi-",
+   "note": "italic ſs ligature"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "mo Plinio locus hic è",
+  "A": "XVI.",
+  "B": "x v i.",
+  "ctx_after": "libro: È quibus montani prætenuia",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "XVI.",
+   "note": "spaced small caps"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "poſteriorem ferè, quæ diphthongum confla-",
+  "A": "ret,omittere",
+  "B": "ret, onuttere",
+  "ctx_after": "ſolitos. Ad tormina,& ſi aluus",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "ret,omittere",
+   "note": "no space after comma; m+i minims"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "quæ diphthongum confla- ret,omittere ſolitos.",
+  "A": "",
+  "B": "51",
+  "ctx_after": "Ad tormina,& ſi aluus non",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "",
+   "note": "marginal number goes after text"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "& ſi aluus non conſiſtet,",
+  "A": "διάρροιαν.",
+  "B": "διάῤῥοιαν.",
+  "ctx_after": "Cicero in epiſtola ad Gallum",
+  "resolution": {
+   "k": 8,
+   "choice": "B",
+   "text": "διάῤῥοιαν."
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "Gallum hoc confirmat: Tanta me",
+  "A": "διάρροια arripuit,ut",
+  "B": "διάῤῥοια arripuit, ut",
+  "ctx_after": "hodie primùm uideatur cœpiſſe conſiſtere.",
+  "resolution": {
+   "k": 9,
+   "choice": "other",
+   "text": "διάῤῥοια arripuit,ut",
+   "note": "breathings on rho; no space after comma"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "hodie primùm uideatur cœpiſſe conſiſtere.",
+  "A": "",
+  "B": "53",
+  "ctx_after": "Alium, lentim. Ita hic,& omnibus",
+  "resolution": {
+   "k": 10,
+   "choice": "A",
+   "text": ""
+  }
+ },
+ {
+  "k": 15,
+  "ctx_before": "etiam hominum ſententia de- cernit.",
+  "A": "",
+  "B": "53",
+  "ctx_after": "Aut quaſillum. Ita ſanè eſt",
+  "resolution": {
+   "k": 15,
+   "choice": "A",
+   "text": ""
+  }
+ },
+ {
+  "k": 16,
+  "ctx_before": "debet, non Quaſsillum, ut in",
+  "A": "impreſsis",
+  "B": "impreſſis",
+  "ctx_after": "hic ſem- per erat, quod",
+  "resolution": {
+   "k": 16,
+   "choice": "A",
+   "text": "impreſsis"
+  }
+ },
+ {
+  "k": 17,
+  "ctx_before": "per erat, quod etiam uerſiculo",
+  "A": "politiſsimi",
+  "B": "politiſſimi",
+  "ctx_after": "Poëtæ confir- matur, Sit tibi",
+  "resolution": {
+   "k": 17,
+   "choice": "A",
+   "text": "politiſsimi"
+  }
+ },
+ {
+  "k": 19,
+  "ctx_before": "tibi cura togæ potior,preſſumq́; quaſillum.",
+  "A": "",
+  "B": "53",
+  "ctx_after": "Porcam præcidaneam. Sex. Pompeius, quam",
+  "resolution": {
+   "k": 19,
+   "choice": "A",
+   "text": ""
+  }
+ },
+ {
+  "k": 21,
+  "ctx_before": "mentio ipſius eſt, à Nonio",
+  "A": "51 53 53 53",
+  "B": "",
+  "ctx_after": "adduc",
+  "resolution": {
+   "k": 21,
+   "choice": "A",
+   "text": "51 53 53 53",
+   "note": "marginalia before catchword"
+  }
+ }
+]

@@ -1,0 +1,15 @@
+[
+ {
+  "k": 5,
+  "ctx_before": "ex cauſis, ne itarem ad",
+  "A": "conuiuia;",
+  "B": "conuiuia:",
+  "ctx_after": "non tamen reiicio, aut excludo",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "conuiuia:",
+   "note": "lower point round, no comma tail"
+  }
+ }
+]

@@ -1,0 +1,40 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "86 Conſtantinus Abb. Caiet. tæ",
+  "A": "ſunt,",
+  "B": "ſuntm,",
+  "ctx_after": "idque circa A. C. DCCIII.",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "ſunt,",
+   "note": "no m; small raised hook on t only"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "iam Archiepiſcopus, cum ſuffraganeis ſuis",
+  "A": "Ceulfo",
+  "B": "Ceuulfo",
+  "ctx_after": "Lindiſenſi, & Vnuuona Legiceſtrienſi Epi-",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "Ceuulfo"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "ſe condito loco inſigni locauit.",
+  "A": "Jlla",
+  "B": "Illa",
+  "ctx_after": "patefactio Bedæ fi- dem q",
+  "resolution": {
+   "k": 4,
+   "choice": "A",
+   "text": "Jlla",
+   "note": "descending J-form, unlike the I in 'Is' above"
+  }
+ }
+]

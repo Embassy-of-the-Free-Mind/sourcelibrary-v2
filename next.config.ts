@@ -409,6 +409,9 @@ const nextConfig: NextConfig = {
       // own name.
       { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
       { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
+      { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
       { source: '/blog', destination: '/articles', permanent: true },
       { source: '/blog/:path*', destination: '/articles/:path*', permanent: true },
       // Merged/retired collection slugs → successors (issue #3002). True HTTP

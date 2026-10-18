@@ -1,0 +1,28 @@
+[
+ {
+  "k": 3,
+  "ctx_before": "Gelaite / qvod in ejus",
+  "A": "tranſitu",
+  "B": "tranſit",
+  "ctx_after": "Fiſcum, qvi de ſecuritate providet",
+  "resolution": {
+   "k": 3,
+   "choice": "B",
+   "text": "tranſit",
+   "note": "one faint letter after i (verb: in ejus transit Fiscum)"
+  }
+ },
+ {
+  "k": 12,
+  "ctx_before": "und wollen / daß keinem",
+  "A": "fremden",
+  "B": "frembden",
+  "ctx_after": "Potentaten einiger Mu- ſterplatz oder",
+  "resolution": {
+   "k": 12,
+   "choice": "A",
+   "text": "fremden",
+   "note": "no b printed"
+  }
+ }
+]

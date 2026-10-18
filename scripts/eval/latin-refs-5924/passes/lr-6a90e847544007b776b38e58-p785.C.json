@@ -1,0 +1,80 @@
+[
+ {
+  "k": 8,
+  "ctx_before": "ſuavium : quod idem ac",
+  "A": "Γλυκέριον.",
+  "B": "γλυκέιον.",
+  "ctx_after": "Sed hoc femininum , quia",
+  "resolution": {
+   "k": 8,
+   "choice": "A",
+   "text": "Γλυκέριον.",
+   "note": "capital Γ; ρι ligature (same glyph as in κόριον, line 1); period present"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "animantium nominibus femineis ſatis apertum",
+  "A": ":.",
+  "B": ":",
+  "ctx_after": "ſive ap- pellativa ſint, ut",
+  "resolution": {
+   "k": 11,
+   "choice": "A",
+   "text": ":.",
+   "note": "raised point after colon"
+  }
+ },
+ {
+  "k": 14,
+  "ctx_before": "de feminarum propriis, quàm mulierum.",
+  "A": "Nam,ut mâs viro,ita",
+  "B": "Nam, ut mas viro, ita",
+  "ctx_after": "femina latiùs ſe muliere extendit",
+  "resolution": {
+   "k": 14,
+   "choice": "A",
+   "text": "Nam,ut mâs viro,ita",
+   "note": "circumflex on a; tight spacing"
+  }
+ },
+ {
+  "k": 20,
+  "ctx_before": "antea Homerus in Bœotiâ :",
+  "A": "—",
+  "B": "——",
+  "ctx_after": "Καὶ ἐΰκτιτον Αἶπυ. — Bene",
+  "resolution": {
+   "k": 20,
+   "choice": "A",
+   "text": "—",
+   "note": "one continuous rule"
+  }
+ },
+ {
+  "k": 21,
+  "ctx_before": ": — Καὶ ἐΰκτιτον Αἶπυ.",
+  "A": "—",
+  "B": "——",
+  "ctx_after": "Bene ædificatum Æpy. 44, 27,",
+  "resolution": {
+   "k": 21,
+   "choice": "A",
+   "text": "—",
+   "note": "one continuous rule"
+  }
+ },
+ {
+  "k": 22,
+  "ctx_before": "---- Dat Tarraco pubem Vitifera.",
+  "A": "-----",
+  "B": "------",
+  "ctx_after": "44 , verſ. penult. poſt",
+  "resolution": {
+   "k": 22,
+   "choice": "B",
+   "text": "------",
+   "note": "six dash segments"
+  }
+ }
+]

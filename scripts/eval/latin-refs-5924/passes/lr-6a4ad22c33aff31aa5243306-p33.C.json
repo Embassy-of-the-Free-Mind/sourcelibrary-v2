@@ -1,0 +1,28 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "dolore, cui ingentem ſpem, ſui",
+  "A": ".nominis",
+  "B": "nominis",
+  "ctx_after": "excitauerat, Pe- trus Bembus amico",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": ".nominis",
+   "note": "printed point stands before nominis"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "hoſpiti poſuit. Calphurni cineres ſunt",
+  "A": "hîc,",
+  "B": "hic,",
+  "ctx_after": "poſſeſſor Olimpi Eſt animus, volitat",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "hîc,",
+   "note": "circumflex printed (raised) over i"
+  }
+ }
+]

@@ -1,0 +1,28 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "aut lega- ta teſtamento, aut",
+  "A": "poſſeßione",
+  "B": "poſſeſsione",
+  "ctx_after": "retenta. Confectum eſt. Hactenus Cicero,addamus",
+  "resolution": {
+   "k": 0,
+   "choice": "B",
+   "text": "poſſeſsione",
+   "note": "italic ſs ligature written as plain letters"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "domi- nantis gubernatur. His nihil",
+  "A": "fortaßis",
+  "B": "fortaſsis",
+  "ctx_after": "addi poteſt, Completa eſt itaq;",
+  "resolution": {
+   "k": 1,
+   "choice": "B",
+   "text": "fortaſsis",
+   "note": "italic ſs ligature written as plain letters"
+  }
+ }
+]

@@ -1,0 +1,15 @@
+[
+ {
+  "k": 8,
+  "ctx_before": "obligatos, eam viribus omnibus propagare,",
+  "A": "diſſentientesq;",
+  "B": "diſſentienteſq;",
+  "ctx_after": "ſuæ imprimis fi- dei commiſſos,",
+  "resolution": {
+   "k": 8,
+   "choice": "A",
+   "text": "diſſentientesq;",
+   "note": "round s before q"
+  }
+ }
+]

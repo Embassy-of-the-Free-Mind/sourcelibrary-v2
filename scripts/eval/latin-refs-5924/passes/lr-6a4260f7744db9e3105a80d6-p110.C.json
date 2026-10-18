@@ -1,0 +1,77 @@
+[
+ {
+  "k": 1,
+  "ctx_before": "30. dierum: Ego utor rarò",
+  "A": "hoc medicamento,",
+  "B": "hòc medicamento ,",
+  "ctx_after": "& mando, ut tunc temporis",
+  "resolution": {
+   "k": 1,
+   "choice": "other",
+   "text": "hòc medicamento,",
+   "note": "accent on hòc printed; comma kept with word"
+  }
+ },
+ {
+  "k": 4,
+  "ctx_before": "formulas compoſitionum. quarum hæc eſt",
+  "A": "una. Recipe Hydrarg.",
+  "B": "una.Recipe Hydrarg",
+  "ctx_after": "extincti ſaliua unc. ij. olei",
+  "resolution": {
+   "k": 4,
+   "choice": "B",
+   "text": "una.Recipe Hydrarg"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "Recipe Hydrarg. extincti ſaliua unc.",
+  "A": "ij.",
+  "B": "iij.",
+  "ctx_after": "olei ueteris unc. iiij. olei",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "iij."
+  }
+ },
+ {
+  "k": 21,
+  "ctx_before": "ab igne, & medicamentum incipit",
+  "A": "refrigerari, addimus Hydrargyr.",
+  "B": "refrigerari,addimus Hydrargyr",
+  "ctx_after": "& diù concutimus, ut optimè",
+  "resolution": {
+   "k": 21,
+   "choice": "other",
+   "text": "refrigerari,addimus Hydrargyr.",
+   "note": "no space after comma; point after Hydrargyr"
+  }
+ },
+ {
+  "k": 63,
+  "ctx_before": "extrahunt liquorem, cuius ope præcipita",
+  "A": "",
+  "B": "tum",
+  "ctx_after": "Prima com- poſ. ung. 2.",
+  "resolution": {
+   "k": 63,
+   "choice": "B",
+   "text": "tum",
+   "note": "turn-line of præcipita-tum, part of text"
+  }
+ },
+ {
+  "k": 65,
+  "ctx_before": "ung. 2. compoſ. Pręcipitati præparatio.",
+  "A": "tum",
+  "B": "",
+  "ctx_after": "",
+  "resolution": {
+   "k": 65,
+   "choice": "B",
+   "text": ""
+  }
+ }
+]

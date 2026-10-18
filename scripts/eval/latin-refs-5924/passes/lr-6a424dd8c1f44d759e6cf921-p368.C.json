@@ -1,0 +1,106 @@
+[
+ {
+  "k": 2,
+  "ctx_before": "chari albi an̄ lib. j.",
+  "A": "ß.",
+  "B": "ſs.",
+  "ctx_after": "coquantur in electarium ſo- lidum",
+  "resolution": {
+   "k": 2,
+   "choice": "B",
+   "text": "ſs.",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "ʒ ij, diadacrydij ℥ j.",
+  "A": "ß,",
+  "B": "ſs,",
+  "ctx_after": "caphuræ ℈ ß. concinnentur tabellæ",
+  "resolution": {
+   "k": 5,
+   "choice": "B",
+   "text": "ſs,",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "℥ j. ß, caphuræ ℈",
+  "A": "ß.",
+  "B": "ſs.",
+  "ctx_after": "concinnentur tabellæ ponde- ris ʒ",
+  "resolution": {
+   "k": 6,
+   "choice": "B",
+   "text": "ſs.",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "tabellæ ponde- ris ʒ ij.",
+  "A": "ß.",
+  "B": "ſs.",
+  "ctx_after": "Doſis tabella vna. Tota compoſitio",
+  "resolution": {
+   "k": 7,
+   "choice": "B",
+   "text": "ſs.",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "& cribro tranſmiſſæ lib. j.",
+  "A": "ß,",
+  "B": "ſs,",
+  "ctx_after": "ſucci cydoniorum lib. ß, ſacchari",
+  "resolution": {
+   "k": 8,
+   "choice": "B",
+   "text": "ſs,",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "j. ß, ſucci cydoniorum lib.",
+  "A": "ß,",
+  "B": "ſs,",
+  "ctx_after": "ſacchari albiſſ. lib. ij. coquantur",
+  "resolution": {
+   "k": 9,
+   "choice": "B",
+   "text": "ſs,",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "à ʒ iij. ad ℥",
+  "A": "ß.",
+  "B": "ſs.",
+  "ctx_after": "Tota com poſitio eſt lib.",
+  "resolution": {
+   "k": 11,
+   "choice": "B",
+   "text": "ſs.",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ },
+ {
+  "k": 13,
+  "ctx_before": "ſeminis cnici, hermodactylorū an̄ ℥",
+  "A": "ß,",
+  "B": "ſs,",
+  "ctx_after": "roſarum rubrarum, ſucci glycyrrhizæ, cina-",
+  "resolution": {
+   "k": 13,
+   "choice": "B",
+   "text": "ſs,",
+   "note": "ſs ligature (semis) as plain letters"
+  }
+ }
+]

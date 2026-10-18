@@ -1,0 +1,28 @@
+[
+ {
+  "k": 21,
+  "ctx_before": "vbi ad veram gloriæ &",
+  "A": "αὐτάρκείας",
+  "B": "αὐτάρκειας",
+  "ctx_after": "ἰσότητος perue- niemus in vita",
+  "resolution": {
+   "k": 21,
+   "choice": "other",
+   "text": "αὐταρκείας",
+   "note": "accent only on ει visible"
+  }
+ },
+ {
+  "k": 26,
+  "ctx_before": "mammona vt recipiāt vos ſuo",
+  "A": "tem-",
+  "B": "ten-",
+  "ctx_after": "pore in æterna tabernacula, ſignificans",
+  "resolution": {
+   "k": 26,
+   "choice": "B",
+   "text": "ten-",
+   "note": "misprint as printed"
+  }
+ }
+]

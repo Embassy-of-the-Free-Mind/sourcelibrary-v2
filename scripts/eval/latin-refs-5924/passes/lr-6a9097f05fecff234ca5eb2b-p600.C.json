@@ -1,0 +1,313 @@
+[
+ {
+  "k": 8,
+  "ctx_before": "lis euerſas eſſe ciuitates. Pedeſtria",
+  "A": "auguria(πεζικοὶ οἰωνοί)",
+  "B": "auguria (πεζικοὶ οἰωνοὶ)",
+  "ctx_after": "dicebantur quæ à lupo, vulpe,ſerpente,equo,&",
+  "resolution": {
+   "k": 8,
+   "choice": "other",
+   "text": "auguria(πεζικοὶ οἰωνοὶ)",
+   "note": "no space before paren; final accent reads grave"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "οἰωνοί) dicebantur quæ à lupo,",
+  "A": "vulpe,ſerpente,equo,& cęteris",
+  "B": "vulpe, ſerpente, equo, & cæteris",
+  "ctx_after": "animalibus quadru pedibus dabantur.Cc. Pedetentim(κατὰ",
+  "resolution": {
+   "k": 9,
+   "choice": "A",
+   "text": "vulpe,ſerpente,equo,& cęteris",
+   "note": "no spaces after commas; e-caudata"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "vulpe,ſerpente,equo,& cęteris animalibus quadru pedibus",
+  "A": "dabantur.Cc. Pedetentim(κατὰ πόδας",
+  "B": "dabantur. Cc. Pedetentim (κατὰ ποδὸς",
+  "ctx_after": "βάσιν) aduerbiū compoſitū à pede,&",
+  "resolution": {
+   "k": 10,
+   "choice": "other",
+   "text": "dabantur.Cc. Pedetentim(κατὰ ποδὸς",
+   "note": "A spacing, Greek ποδὸς as printed"
+  }
+ },
+ {
+  "k": 14,
+  "ctx_before": "tamē:quod Donatus exponit pro caute.",
+  "A": "Pedibus(ποσὶν,πεζῆ)aduerbialiter",
+  "B": "Pedibus (ποσὶν, πεζῇ) aduerbialiter",
+  "ctx_after": "protulit Cic. quū inquit,Ingreſſus iter",
+  "resolution": {
+   "k": 14,
+   "choice": "A",
+   "text": "Pedibus(ποσὶν,πεζῆ)aduerbialiter"
+  }
+ },
+ {
+  "k": 17,
+  "ctx_before": "pede, ſignificat laqueū quo pedes",
+  "A": "illigant᷑. Verg.lib.primo",
+  "B": "illigant. Verg. lib. primo",
+  "ctx_after": "Georg. Tum gruibus pedicas,& retia",
+  "resolution": {
+   "k": 17,
+   "choice": "A",
+   "text": "illigant᷑. Verg.lib.primo",
+   "note": "mark over final t"
+  }
+ },
+ {
+  "k": 20,
+  "ctx_before": "ponere ceruis. Pedicinus,idem eſt quod",
+  "A": "pes",
+  "B": "nes",
+  "ctx_after": "ſimiliter & Pediolus. Pedicoſus ſiue",
+  "resolution": {
+   "k": 20,
+   "choice": "A",
+   "text": "pes",
+   "note": "weakly inked p, descender visible"
+  }
+ },
+ {
+  "k": 22,
+  "ctx_before": "Pediolus. Pedicoſus ſiue Pediculoſus(φθειρῶν) quū",
+  "A": "deducit᷑",
+  "B": "deducit",
+  "ctx_after": "à pes,ſiue à pediculus,qui eſt",
+  "resolution": {
+   "k": 22,
+   "choice": "A",
+   "text": "deducit᷑"
+  }
+ },
+ {
+  "k": 27,
+  "ctx_before": "ſcabit. Quandoq; vero à pædor,",
+  "A": "ſcribit᷑",
+  "B": "ſcribit",
+  "ctx_after": "cum diphthōgo,& ſignificat quod mali",
+  "resolution": {
+   "k": 27,
+   "choice": "A",
+   "text": "ſcribit᷑"
+  }
+ },
+ {
+  "k": 29,
+  "ctx_before": "ſignificat quod mali odoris eſt",
+  "A": "(πιναρός)Var.",
+  "B": "(πιναρὸς) Var.",
+  "ctx_after": "de re Ruſt Solida terra",
+  "resolution": {
+   "k": 29,
+   "choice": "A",
+   "text": "(πιναρός)Var."
+  }
+ },
+ {
+  "k": 30,
+  "ctx_before": "odoris eſt (πιναρός)Var. de re",
+  "A": "Ruſt",
+  "B": "Ruſt.",
+  "ctx_after": "Solida terra pauita,maxi- me ſi",
+  "resolution": {
+   "k": 30,
+   "choice": "A",
+   "text": "Ruſt",
+   "note": "no point after Ruſt"
+  }
+ },
+ {
+  "k": 33,
+  "ctx_before": "gratia oblitiſcār. In auctoritate Varronis",
+  "A": "lib.I.cap.71.de",
+  "B": "lib. 1. cap. 71. de",
+  "ctx_after": "re ruſt.inſulſiſſi me legit Calepinus",
+  "resolution": {
+   "k": 33,
+   "choice": "A",
+   "text": "lib.I.cap.71.de"
+  }
+ },
+ {
+  "k": 52,
+  "ctx_before": "habēt,quibus ſuſpēdi poſſunt. Item Pedi-",
+  "A": "culus(φθεὶρ)vermis",
+  "B": "culus (φθείρ) vermis",
+  "ctx_after": "in capite.Pediculi quoq; terrę, ſcarabei",
+  "resolution": {
+   "k": 52,
+   "choice": "A",
+   "text": "culus(φθεὶρ)vermis"
+  }
+ },
+ {
+  "k": 68,
+  "ctx_before": "eſt, vado, à quo Repedo",
+  "A": "(ὑποποδίζω)",
+  "B": "(ἀναποδίζω)",
+  "ctx_after": "quod eſt quaſi pede itero,",
+  "resolution": {
+   "k": 68,
+   "choice": "B",
+   "text": "(ἀναποδίζω)"
+  }
+ },
+ {
+  "k": 71,
+  "ctx_before": "itero, redeo.Eſt & Impedo,de quo",
+  "A": "ali bi.Pedare",
+  "B": "alí bi. Pedare",
+  "ctx_after": "etiā eſt viti vel alteri",
+  "resolution": {
+   "k": 71,
+   "choice": "A",
+   "text": "ali bi.Pedare"
+  }
+ },
+ {
+  "k": 79,
+  "ctx_before": "contra pedo. Idem in eodem,",
+  "A": "vinꝰ",
+  "B": "vin'",
+  "ctx_after": "tu curtis Iudæis oppedere? nulla",
+  "resolution": {
+   "k": 79,
+   "choice": "A",
+   "text": "vinꝰ",
+   "note": "same superscript sort as vermibꝰ"
+  }
+ },
+ {
+  "k": 80,
+  "ctx_before": "curtis Iudæis oppedere? nulla Mihi",
+  "A": "vnquàm",
+  "B": "vnquam",
+  "ctx_after": "religio eſt. Pedum(λαγωβόλος,καλαῦροψ)paſtorale baculū,ſeu virga",
+  "resolution": {
+   "k": 80,
+   "choice": "A",
+   "text": "vnquàm"
+  }
+ },
+ {
+  "k": 85,
+  "ctx_before": "longe à Præneſti- nis,à quo",
+  "A": "Pedani(πεδανοί)popult.Liui.lib.8. Neqꝫ tamen,niſi",
+  "B": "Pedani (πεδανοὶ) popult. Liui. lib. 8. Neq; tamen, niſi",
+  "ctx_after": "admodum paucis populis,Pedani adiuti ſunt.",
+  "resolution": {
+   "k": 85,
+   "choice": "other",
+   "text": "Pedani(πεδανοὶ)popult.Liui.lib.8. Neqꝫ tamen,niſi",
+   "note": "A spacing; final accent grave"
+  }
+ },
+ {
+  "k": 88,
+  "ctx_before": "ager propior erat, Pedū peruenere.",
+  "A": "Pega(παγασαί)Theſſaliæ oppidū,quod",
+  "B": "Pega (πηγασαί) Theſſaliæ oppidū, quod",
+  "ctx_after": "poſtea Deme trias(δημητριάς)dictū eſt. Propter",
+  "resolution": {
+   "k": 88,
+   "choice": "other",
+   "text": "Pega(παγασαὶ)Theſſaliæ oppidū,quod",
+   "note": "A letters/spacing; final accent grave"
+  }
+ },
+ {
+  "k": 89,
+  "ctx_before": "peruenere. Pega(παγασαί)Theſſaliæ oppidū,quod poſtea Deme",
+  "A": "trias(δημητριάς)dictū",
+  "B": "trias (Δημητριάς) dictū",
+  "ctx_after": "eſt. Propter quod nauis longa",
+  "resolution": {
+   "k": 89,
+   "choice": "A",
+   "text": "trias(δημητριάς)dictū",
+   "note": "lowercase delta, no spaces"
+  }
+ },
+ {
+  "k": 100,
+  "ctx_before": "Pege dicitur,quem Pegaſus ictu vngulæ",
+  "A": "fingit᷑",
+  "B": "fingit",
+  "ctx_after": "aperuiſſe. Ouidius, At mihi Pegaſides",
+  "resolution": {
+   "k": 100,
+   "choice": "A",
+   "text": "fingit᷑"
+  }
+ },
+ {
+  "k": 125,
+  "ctx_before": "in domibus , ſuper quo",
+  "A": "tanquàm iumēto ,",
+  "B": "tanquā iumēto,",
+  "ctx_after": "veſtes & ſimilia tenerētur ſuſpen",
+  "resolution": {
+   "k": 125,
+   "choice": "A",
+   "text": "tanquàm iumēto ,"
+  }
+ },
+ {
+  "k": 128,
+  "ctx_before": "ſena- tuſconſultum Pomponius de Origine",
+  "A": "iuris,",
+  "B": "iuris.",
+  "ctx_after": "Fuit & Pega- ſus Triarchi",
+  "resolution": {
+   "k": 128,
+   "choice": "A",
+   "text": "iuris,"
+  }
+ },
+ {
+  "k": 136,
+  "ctx_before": "machina quædam lignea,in qua ſtatuæ",
+  "A": "collocant᷑,&",
+  "B": "collocant, &",
+  "ctx_after": "quaſi figūtur ad illas ſuſtinēdas.Interdū",
+  "resolution": {
+   "k": 136,
+   "choice": "A",
+   "text": "collocant᷑,&"
+  }
+ },
+ {
+  "k": 137,
+  "ctx_before": "lignea,in qua ſtatuæ collocant᷑,& quaſi",
+  "A": "figūtur",
+  "B": "rigētur",
+  "ctx_after": "ad illas ſuſtinēdas.Interdū πήγματα cū",
+  "resolution": {
+   "k": 137,
+   "choice": "A",
+   "text": "figūtur"
+  }
+ },
+ {
+  "k": 144,
+  "ctx_before": "quæ eminebant paulatim in ſe",
+  "A": "reſidentibus.Ioſeph.libro.7.",
+  "B": "reſidentibus. Ioſeph. libro 7.",
+  "ctx_after": "Maxime autem erat ſtu- por",
+  "resolution": {
+   "k": 144,
+   "choice": "A",
+   "text": "reſidentibus.Ioſeph.libro.7.",
+   "note": "raised point before 7"
+  }
+ }
+]

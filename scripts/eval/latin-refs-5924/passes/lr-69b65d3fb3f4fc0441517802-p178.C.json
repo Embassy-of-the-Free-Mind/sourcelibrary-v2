@@ -1,0 +1,152 @@
+[
+ {
+  "k": 0,
+  "ctx_before": "fidem inhabitationem iuſtificationi præire? Itaque",
+  "A": "tàm",
+  "B": "tam",
+  "ctx_after": "perpetua certáque eſt iſta enuntiatio,",
+  "resolution": {
+   "k": 0,
+   "choice": "A",
+   "text": "tàm"
+  }
+ },
+ {
+  "k": 1,
+  "ctx_before": "ſalus. Quomodo verò in- fantes",
+  "A": "fidè",
+  "B": "fide",
+  "ctx_after": "ſeruari dicantur, alia quæſtio eſt",
+  "resolution": {
+   "k": 1,
+   "choice": "A",
+   "text": "fidè",
+   "note": "grave visible"
+  }
+ },
+ {
+  "k": 2,
+  "ctx_before": "inſtrumenti. Atqui Caluinus vtitur voce",
+  "A": "Medy.",
+  "B": "Medij.",
+  "ctx_after": "Præterea poteſt aliquod eſſe inſtrumentum",
+  "resolution": {
+   "k": 2,
+   "choice": "A",
+   "text": "Medy.",
+   "note": "italic y-form printed"
+  }
+ },
+ {
+  "k": 3,
+  "ctx_before": "ſiue inſtru- mentum iuſtificationis, quum",
+  "A": "potiùs",
+  "B": "potius",
+  "ctx_after": "dicendum ſit fide apprehendi Chriſtum",
+  "resolution": {
+   "k": 3,
+   "choice": "A",
+   "text": "potiùs"
+  }
+ },
+ {
+  "k": 5,
+  "ctx_before": "Dixi, inquis, ex Epheſ.5. &",
+  "A": "Ezec.16, Primùm",
+  "B": "Ezec. 16. Primum",
+  "ctx_after": "lauari Eccleſiam & mundari, deinde",
+  "resolution": {
+   "k": 5,
+   "choice": "A",
+   "text": "Ezec.16, Primùm",
+   "note": "comma after 16, grave on u"
+  }
+ },
+ {
+  "k": 6,
+  "ctx_before": "Beza, & colligit ſiue fingit",
+  "A": "nèſcio",
+  "B": "neſcio",
+  "ctx_after": "quæ abſurda, vt lectores à",
+  "resolution": {
+   "k": 6,
+   "choice": "A",
+   "text": "nèſcio"
+  }
+ },
+ {
+  "k": 7,
+  "ctx_before": "conſideratione meo- rum argumentorum abducat.",
+  "A": "Primùm",
+  "B": "Primum",
+  "ctx_after": "ergo dicit Beza ſi remiſſio",
+  "resolution": {
+   "k": 7,
+   "choice": "A",
+   "text": "Primùm",
+   "note": "faint grave on u"
+  }
+ },
+ {
+  "k": 8,
+  "ctx_before": "nobis inhabitationem, hinc ſequi nos",
+  "A": "priùs",
+  "B": "prius",
+  "ctx_after": "iuſtificari quàm Chriſtum poſſideamus, adeò",
+  "resolution": {
+   "k": 8,
+   "choice": "A",
+   "text": "priùs"
+  }
+ },
+ {
+  "k": 9,
+  "ctx_before": "inuenit, quem theſaurum in ſuum",
+  "A": "cœleſte",
+  "B": "cæleſte",
+  "ctx_after": "tabernaculum, vt id inde diſtribuat,",
+  "resolution": {
+   "k": 9,
+   "choice": "B",
+   "text": "cæleſte"
+  }
+ },
+ {
+  "k": 10,
+  "ctx_before": "Sint ſanè res diuerſæ, Patris",
+  "A": "εὐδοκία",
+  "B": "δόξα",
+  "ctx_after": "in nobis ſeruandis, Filii ſatisfactio",
+  "resolution": {
+   "k": 10,
+   "choice": "A",
+   "text": "εὐδοκία",
+   "note": "kappa in x-like ϰ form; 6 letters, not δόξα"
+  }
+ },
+ {
+  "k": 11,
+  "ctx_before": "ſubiiſſe? nequa- quam, inquies, idcirco",
+  "A": "adieci",
+  "B": "adiici",
+  "ctx_after": "oportere grata fide illa beneficia",
+  "resolution": {
+   "k": 11,
+   "choice": "A",
+   "text": "adieci"
+  }
+ },
+ {
+  "k": 12,
+  "ctx_before": "negare audebis nos ſimul ac",
+  "A": "codē",
+  "B": "eodē",
+  "ctx_after": "Sacramento tum remiſsionem peccarum tum",
+  "resolution": {
+   "k": 12,
+   "choice": "A",
+   "text": "codē",
+   "note": "misprint, c without bar"
+  }
+ }
+]
