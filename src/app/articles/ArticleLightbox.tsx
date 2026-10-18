@@ -54,12 +54,24 @@ function qualifies(img: HTMLImageElement): boolean {
 function describe(img: HTMLImageElement): Shot {
   const holder = img.closest<HTMLElement>('[data-lightbox-href]');
   const figure = img.closest('figure');
-  const caption =
-    holder?.dataset.lightboxCaption ||
-    figure?.querySelector('figcaption')?.textContent?.replace(/\s+/g, ' ').trim() ||
-    img.alt ||
-    '';
-  const href = holder?.dataset.lightboxHref || img.closest('a')?.getAttribute('href') || null;
+  // The caption's own text, without its links' call-to-action words
+  // ("Open the plate →", "Read the page →"): the viewer offers the link itself.
+  const figcaption = figure?.querySelector('figcaption');
+  let captionText = '';
+  let captionHref: string | null = null;
+  if (figcaption) {
+    const copy = figcaption.cloneNode(true) as HTMLElement;
+    copy.querySelectorAll('a').forEach((a) => {
+      if (/→|↗|^\s*(open|read|view)\b/i.test(a.textContent || '')) {
+        captionHref ??= a.getAttribute('href');
+        a.remove();
+      } else a.insertAdjacentText('beforebegin', ' ');
+    });
+    copy.querySelectorAll('br, p, div, span').forEach((el) => el.insertAdjacentText('beforebegin', ' '));
+    captionText = (copy.textContent || '').replace(/\s+/g, ' ').trim();
+  }
+  const caption = holder?.dataset.lightboxCaption || captionText || img.alt || '';
+  const href = holder?.dataset.lightboxHref || img.closest('a')?.getAttribute('href') || captionHref || null;
   return { src: sized(img, 1920), thumb: sized(img, 150), original: originalSrc(img), alt: img.alt || '', caption, href };
 }
 
@@ -137,6 +149,7 @@ export default function ArticleLightbox() {
       role="dialog"
       aria-modal="true"
       aria-label="Pictures in this article"
+      data-article-lightbox
       className="fixed inset-0 z-[10000] flex flex-col text-stone-200"
       style={{ background: "#14110e" }}
       onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
@@ -163,7 +176,14 @@ export default function ArticleLightbox() {
           </button>
         )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img key={shot.src} src={shot.src} alt={shot.alt} className="max-h-full max-w-full object-contain select-none" />
+        <img
+          key={shot.src}
+          src={shot.src}
+          alt={shot.alt}
+          className="max-h-full max-w-full object-contain select-none bg-no-repeat bg-center bg-contain"
+          // The small version shows at once, stretched, until the large one arrives.
+          style={{ backgroundImage: `url("${shot.thumb}")` }}
+        />
         {shots.length > 1 && (
           <button type="button" onClick={() => step(1)} aria-label="Next picture" className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-white/20 text-white hover:bg-white/10">
             ›

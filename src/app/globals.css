@@ -1246,3 +1246,6 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 /* Pictures in an article open the lightbox (src/app/articles/ArticleLightbox.tsx). */
 .article-page main.has-lightbox img { cursor: zoom-in; }
 .article-page main.has-lightbox [data-no-lightbox] img { cursor: auto; }
+
+/* The lightbox is dark: a white focus ring there, not the site's rust one. */
+[data-article-lightbox] :focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }
