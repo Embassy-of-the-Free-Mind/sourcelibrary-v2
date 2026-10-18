@@ -54,8 +54,14 @@ function cut(text, [anchor, len], key, side) {
   if (!text) throw new Error(`${key}: no ${side} text stored`);
   const at = anchor ? text.indexOf(anchor) : 0;
   if (at < 0) throw new Error(`${key}: ${side} anchor "${anchor}" is no longer in the stored text`);
-  const piece = text.slice(at, at + len);
-  return { text: piece, before: at > 0, after: at + len < text.length };
+  let piece = text.slice(at, at + len);
+  const after = at + len < text.length;
+  if (after) {
+    // End on a whole word: a space in English, a tsheg or shad in Tibetan.
+    const stop = side === 'Tibetan' ? Math.max(piece.lastIndexOf('་'), piece.lastIndexOf('།')) : piece.lastIndexOf(' ');
+    if (stop > len / 2) piece = piece.slice(0, side === 'Tibetan' ? stop + 1 : stop);
+  }
+  return { text: piece, before: at > 0, after };
 }
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -119,10 +125,15 @@ async function pageStates(ids) {
   return t;
 }
 
-const census = {};
-for (const [g, list] of Object.entries(groups)) {
-  census[g] = { books: list.length, ...(await pageStates(list.map((b) => b.id))) };
-  console.log(g, JSON.stringify(census[g]));
+// --examples-only re-cuts the excerpts and keeps the census (and its date) from the existing file.
+const examplesOnly = process.argv.includes('--examples-only');
+const previous = examplesOnly ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : null;
+const census = previous ? previous.census : {};
+if (!previous) {
+  for (const [g, list] of Object.entries(groups)) {
+    census[g] = { books: list.length, ...(await pageStates(list.map((b) => b.id))) };
+    console.log(g, JSON.stringify(census[g]));
+  }
 }
 
 // ── Examples ────────────────────────────────────────────────────────────────────────────
@@ -153,7 +164,7 @@ for (const ex of EXAMPLES) {
 await client.close();
 const out = {
   _generated: 'by scripts/eval/tibetan-expert-page/build-examples.mjs, read-only from Mongo; do not edit by hand',
-  measured: new Date().toISOString().slice(0, 10),
+  measured: previous ? previous.measured : new Date().toISOString().slice(0, 10),
   census,
   examples,
 };
