@@ -264,20 +264,17 @@ describe('wiring', () => {
     expect(src).toContain('isGlobalOnlyNavHref');
   });
 
-  it('the site nav filters dropdown children, not just top-level links', () => {
-    // `/works` sits under the Browse dropdown and is global-only. Filtering only
-    // `link.href` would leave it in a partner's header pointing at a page the
-    // proxy 404s — the exact failure this shared list exists to prevent.
-    //
-    // The child's href may be normalised on the way into the predicate — the nav
-    // localizes hrefs, so a Spanish header holds `/es/works` and the lookup runs
-    // on `canonicalPath(child.href)`. What this guard is for is that `child.href`
-    // REACHES the predicate at all; pinning the exact argument expression made it
-    // fail on a change that strengthened the very thing it protects.
+  it('the site nav runs every link through the predicate', () => {
+    // The header has no dropdowns since the 2026-10-18 reorder, so every item is
+    // a top-level link and the one filter must see each `link.href`. The href may
+    // be normalised on the way in (the nav localizes hrefs, so a Spanish header
+    // holds `/es/explore` and the lookup runs on `canonicalPath(link.href)`);
+    // what matters is that `link.href` REACHES the predicate at all.
     const src = read('src/components/layout/SiteHeader.tsx');
-    expect(src, 'children must be run through the predicate too').toMatch(
-      /children.*?\.filter\(\s*child\s*=>\s*!isGlobalOnlyNavHref\([^)]*child\.href/s
+    expect(src, 'links must be run through the predicate').toMatch(
+      /\.filter\(\s*link\s*=>\s*!\(isTenantHost && isGlobalOnlyNavHref\([^)]*link\.href/s
     );
+    expect(src, 'no dropdown children left unfiltered').not.toMatch(/children\??:/);
   });
 
   it('no component links to the Librarian on a partner host without a host gate', () => {
