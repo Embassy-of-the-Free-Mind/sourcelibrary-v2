@@ -148,7 +148,8 @@ const GROUPS: Group[] = [
 function renderGroup(g: Group): string {
   const lines = [`User-agent: ${g.userAgent}`, `Content-Signal: ${CONTENT_SIGNAL}`];
   for (const a of g.allow ?? []) lines.push(`Allow: ${a}`);
-  for (const d of g.disallow ?? []) lines.push(`Disallow: ${d}`);
+  // Deduped: a page in src/lib/page-status.ts can also be in DEFAULT_DISALLOW.
+  for (const d of new Set(g.disallow ?? [])) lines.push(`Disallow: ${d}`);
   return lines.join('\n');
 }
 
