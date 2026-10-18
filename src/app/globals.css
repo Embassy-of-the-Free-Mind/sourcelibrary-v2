@@ -383,6 +383,14 @@ body:has([data-reader-v2]) {
   outline: none;
 }
 
+/* Same for the Library's search and ask bars: the bar's own border (darker,
+   with a 1px ring) is the focus state, so the rust ring does not read as an
+   error around the field. */
+[data-catalog-bar] input:focus,
+[data-catalog-bar] input:focus-visible {
+  outline: none;
+}
+
 /* …except the edit-mode textareas, which have no wrapper to carry the state
    and so had no focus indicator at all. It is the surface an editor types the
    most in. */
