@@ -55,6 +55,10 @@ export interface PageStatusEntry {
 export const PAGE_STATUS: Record<string, PageStatusEntry> = {
   // Empty on purpose: this change adds the mechanism only. Pages move in
   // follow-up PRs, one state at a time.
+  // DEMO ONLY (preview/page-status-demo, never merged):
+  '/roadmap': { state: 'archived', since: '2026-10-18', note: 'Blank page.', sendTo: '/about' },
+  '/processing': { state: 'internal', since: '2026-10-18', note: 'Pipeline dashboard.' },
+  '/ideas': { state: 'draft', since: '2026-10-18', note: 'Unfinished.' },
 };
 
 interface CompiledPattern {
