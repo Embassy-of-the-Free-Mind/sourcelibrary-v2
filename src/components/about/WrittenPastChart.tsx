@@ -148,10 +148,7 @@ export default function WrittenPastChart() {
 
       <div className={`${GRID} text-xs text-muted pb-2 mb-2 border-b border-border-light`}>
         <span />
-        <span className="flex justify-between">
-          <span>0</span>
-          <span className="font-semibold text-secondary tabular-nums">{axisMax}</span>
-        </span>
+        <span className="text-right font-semibold text-secondary tabular-nums">{axisMax}</span>
         <span className="text-right">size · translated</span>
       </div>
 
