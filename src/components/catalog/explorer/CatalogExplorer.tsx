@@ -72,13 +72,14 @@ const SORT_LABELS: [CatalogSort, string][] = [
 /**
  * Things to try, chosen to be fun and each tested on the real page for good
  * results (2026-10-18): e.g. Witches 81 works, Comets 77, Kabbalah 252; asking
- * "secret codes and ciphers" leads with Polygraphy and Steganography, "cures
- * for melancholy" with The Anatomy of Melancholy. A different few each day.
+ * "secret codes and ciphers" leads with Polygraphy and Steganography, "the
+ * philosophers' stone" with De Lapide Philosophorum (157 works). Keep them
+ * playful, not sad. A different few each day.
  * Before adding one, run it and read the first page of results.
  */
 const SEARCH_POOL = ['Witches', 'Comets', 'Tarot', 'John Dee', 'Isaac Newton', 'Kabbalah', 'Ghosts', 'Hermes Trismegistus', 'Latin alchemy'];
 const ASK_POOL = [
-  'how to turn lead into gold', 'secret codes and ciphers', 'cures for melancholy', 'spells to summon angels',
+  'how to turn lead into gold', 'secret codes and ciphers', 'the philosophers’ stone', 'spells to summon angels',
   'the music of the spheres', 'dragons and monsters', 'witch trials in German', 'ghosts and spirits before 1800',
 ];
 /** `n` items from `pool`, rotating by the UTC day — the same on server and browser, so no hydration mismatch. */
