@@ -25,7 +25,7 @@ import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
-import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const ARG = (k, d = null) => { const a = process.argv.find((x) => x.startsWith(k + '=')); return a ? a.slice(k.length + 1) : d; };
 const APPLY = process.argv.includes('--apply');
@@ -72,10 +72,8 @@ for (const p of T.to_write) {
   } });
   T.written += res.modifiedCount;
 }
-// one definition of the counters (recount-page-stats.mjs uses the same pipeline)
-const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
-if (counts) await db.collection('books').updateOne({ $or: [{ id: bookId }, { _id: bookId }] }, { $set: {
-  pages_count: counts.total, pages_ocr: counts.with_ocr, pages_translated: counts.with_translation, pages_translatable: counts.translatable, updated_at: now } });
+// the one writer of the book's page counters (#5325)
+const counts = (await recountBook(db, bookId, { reason: 'set-blank-leaves-by-eye' })).after;
 await client.close();
 try { execFileSync(process.execPath, ['scripts/workers/sync-pages-content.mjs', `--book=${bookId}`], { stdio: 'pipe', timeout: 300000, env: process.env }); T.mirror = 'synced'; }
 catch (e) { T.mirror = 'FAILED: ' + String(e.message).slice(0, 160); }

@@ -311,6 +311,7 @@ function screen(book, docs) {
       tagged++;
       for (const l of langs) counts.set(l, (counts.get(l) || 0) + 1);
     }
+    // image-pick-ok: img is a link printed in the report for a person to open, never read by a model or cropped
     rows.push({ page: d.page_number, langs, text, model: d.ocr?.model, source: d.ocr?.source, img: d.display_photo || d.archived_photo || d.photo,
       type: d.page_type || null, num: printedPageNumber(d.ocr?.data) });
   }
