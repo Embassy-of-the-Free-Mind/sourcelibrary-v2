@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
   if (body.all) {
     const staticPaths = [
       '/', '/collections', '/browse', '/gallery', '/libraries',
-      '/languages', '/about', '/embassy', '/blog', '/artwork',
+      '/languages', '/about', '/embassy', '/articles', '/artwork',
       '/encyclopedia', '/explore', '/categories', '/catalog',
       '/taxonomy', '/search', '/timeline',
     ];

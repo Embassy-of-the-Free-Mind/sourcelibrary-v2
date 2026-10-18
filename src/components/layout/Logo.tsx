@@ -23,9 +23,15 @@ interface LogoProps {
    * link would only become correct after hydration.
    */
   lang?: Locale;
+  /**
+   * Full control over when the wordmark shows, for the site header: on a phone
+   * it shows only the rings until the menu opens, then the wordmark slides in.
+   * Replaces the built-in visibility classes; the caller owns spacing too.
+   */
+  wordmarkClassName?: string;
 }
 
-export default function Logo({ white, compact, mini, alwaysWordmark, lang = 'en' }: LogoProps) {
+export default function Logo({ white, compact, mini, alwaysWordmark, lang = 'en', wordmarkClassName }: LogoProps) {
   const strokeColor = white ? 'white' : 'currentColor';
 
   const iconSize = mini
@@ -47,14 +53,14 @@ export default function Logo({ white, compact, mini, alwaysWordmark, lang = 'en'
   // leaving just the three rings on phones/tablets. Reader feedback: the logo
   // read as "smooshed" and "should collapse to just the circles" (#3085).
   // The marketing/site header keeps its wordmark from `sm` up.
-  const wordmarkVisibility = alwaysWordmark
+  const wordmarkVisibility = wordmarkClassName ?? (alwaysWordmark
     ? 'inline'
-    : mini ? 'hidden lg:inline' : 'hidden sm:inline';
+    : mini ? 'hidden lg:inline' : 'hidden sm:inline');
 
   return (
     <Link
       href={localePath('/', lang)}
-      className={`inline-flex items-center ${mini ? 'gap-1.5' : 'gap-3'} ${
+      className={`inline-flex items-center ${wordmarkClassName ? '' : mini ? 'gap-1.5' : 'gap-3'} ${
         white
           ? 'text-white hover:opacity-80'
           : 'text-primary hover:text-secondary'

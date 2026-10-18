@@ -223,9 +223,9 @@ const en: HomeStrings = {
   discoverSubtitle: 'Translated primary sources from the collection.',
   discoverEmpty: 'Browse the collection to discover translated primary sources.',
 
-  blogHeading: 'Research Notes',
-  blogSubtitle: 'AI-assisted research on the collection and its history',
-  blogAllPosts: 'All posts',
+  blogHeading: 'Articles',
+  blogSubtitle: 'Stories, reading tours and research drawn from the books in the library, each quotation linked to the page it comes from',
+  blogAllPosts: 'All articles',
   tagDeepDive: 'Deep dive',
   tagCollection: 'Collection',
 
@@ -341,9 +341,9 @@ const es: HomeStrings = {
   discoverSubtitle: 'Fuentes primarias traducidas de la colección.',
   discoverEmpty: 'Explora la colección para descubrir fuentes primarias traducidas.',
 
-  blogHeading: 'Notas de investigación',
-  blogSubtitle: 'Investigación asistida por IA sobre la colección y su historia',
-  blogAllPosts: 'Todas las entradas',
+  blogHeading: 'Artículos',
+  blogSubtitle: 'Historias, recorridos de lectura e investigación a partir de los libros de la biblioteca, cada cita enlazada a la página de la que procede',
+  blogAllPosts: 'Todos los artículos',
   tagDeepDive: 'Análisis',
   tagCollection: 'Colección',
 
@@ -469,7 +469,7 @@ const la: HomeStrings = {
   // The posts themselves are English, so the heading says so (i18n.md rule 4:
   // what is not in the page's language is labelled, never passed off).
   blogHeading: 'Commentarii (Anglice)',
-  blogSubtitle: 'Investigationes de bibliotheca eiusque historia, intellegentia artificiali adiuvante',
+  blogSubtitle: 'Historiae, itinera legendi et investigationes ex libris bibliothecae, singulis locis ad paginam suam coniunctis',
   blogAllPosts: 'Omnes commentarii',
   tagDeepDive: 'Disquisitio',
   tagCollection: 'Collectio',
@@ -592,9 +592,9 @@ const nl: HomeStrings = {
 
   // The posts themselves are English, so the heading says so (i18n.md rule 4:
   // what is not in the page's language is labelled, never passed off).
-  blogHeading: 'Onderzoeksnotities (in het Engels)',
-  blogSubtitle: 'Onderzoek naar de collectie en haar geschiedenis, met hulp van AI',
-  blogAllPosts: 'Alle berichten',
+  blogHeading: 'Artikelen (in het Engels)',
+  blogSubtitle: 'Verhalen, leesrondleidingen en onderzoek uit de boeken van de bibliotheek, elk citaat gekoppeld aan de pagina waar het vandaan komt',
+  blogAllPosts: 'Alle artikelen',
   tagDeepDive: 'Verdieping',
   tagCollection: 'Collectie',
 
@@ -717,8 +717,8 @@ const zh: HomeStrings = {
 
   // The posts themselves are English, so the heading says so (i18n.md rule 4:
   // what is not in the page's language is labelled, never passed off).
-  blogHeading: '研究笔记（英文）',
-  blogSubtitle: '借助 AI 开展的关于馆藏及其历史的研究',
+  blogHeading: '文章（英文）',
+  blogSubtitle: '取材于馆藏图书的故事、阅读导览与研究，每段引文都链接到其所在的原页',
   blogAllPosts: '全部文章',
   tagDeepDive: '深度解读',
   tagCollection: '专题',

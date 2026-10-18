@@ -7,6 +7,9 @@
 //              is older than 2 h
 //   reconcile  the last reconcile (sync-delta.mjs --reconcile, every 2 h) is older than 6 h or never ran:
 //              most new rows reach the service only through it (sync-delta.mjs header, step 4)
+//   slow       the local /health took over 1 s (it is a few ms when healthy). The tell of the 2026-10-17
+//              incident: the service was alive but throttled by its cgroup's memory.high, so it answered
+//              nothing in time and "down" never fired within the old 10 s timeout (#6821).
 //   drift      |service live rows − Supabase `embedding IS NOT NULL` rows| > 0.5% of Supabase, with the
 //              Supabase count taken by the last reconcile's scan (logs/reconcile.json) rather than by a
 //              second ~1 min scan of page_translations here. The service side is read now, so rows the
@@ -28,6 +31,7 @@ const STALE_MS = 2 * 3600e3;
 const RESTART_GRACE_MS = 45 * 60e3; // > one delta interval
 const RECONCILE_STALE_MS = 6 * 3600e3;
 const DRIFT_MAX = 0.005;
+const SLOW_MS = 1000;
 const DRY = process.argv.includes('--dry-run');
 
 const prev = (() => { try { return JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); } catch { return { key: '' }; } })();
@@ -36,11 +40,16 @@ const fails = [];
 const ago = (t) => `${((now - t) / 3600e3).toFixed(1)} h ago`;
 
 let h = null;
+const th = performance.now();
 try {
   const r = await fetch(`${LOCAL}/health`, { signal: AbortSignal.timeout(10000) });
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   h = await r.json();
 } catch (e) { fails.push({ kind: 'down', line: `service /health did not answer: ${e.message}` }); }
+const healthMs = performance.now() - th;
+if (h && healthMs > SLOW_MS) {
+  fails.push({ kind: 'slow', line: `/health took ${healthMs.toFixed(0)} ms (> ${SLOW_MS}): memory pressure? cat /sys/fs/cgroup/search.slice/memory.pressure` });
+}
 
 if (h) {
   const at = h.last_delta_at ? Date.parse(h.last_delta_at) : null;
@@ -64,7 +73,7 @@ if (h && rec) {
 }
 
 const key = fails.map((f) => f.kind).sort().join(',');
-const summary = fails.length ? fails.map((f) => `${f.kind}: ${f.line}`).join('\n') : `ok · ${h.live_rows.toLocaleString()} rows · last delta ${h.last_delta_at}`;
+const summary = fails.length ? fails.map((f) => `${f.kind}: ${f.line}`).join('\n') : `ok · ${h.live_rows.toLocaleString()} rows · last delta ${h.last_delta_at} · /health ${healthMs.toFixed(0)} ms`;
 log(`freshness: ${summary.replace(/\n/g, ' | ')}`);
 
 if (key !== prev.key && !DRY) {

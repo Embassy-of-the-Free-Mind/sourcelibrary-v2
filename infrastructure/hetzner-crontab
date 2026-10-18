@@ -175,6 +175,13 @@
 # mirror it to books_catalog. What "popular", the sitemap and the OCR queues sort by. ~1 min, no paid calls.
 55 4 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/rebuild-human-read-count-5048.mjs ] && flock -n /tmp/sl-human-reads.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/rebuild-human-read-count-5048.mjs --apply" >> /var/log/sourcelibrary/human-reads.log 2>&1
 
+# Cover card variants (#4342): the 500px -card.avif that book grids load instead of the full
+# display scan (often 300 KB to 5 MB). Nothing in import or cover-change writes it, and every cover
+# write clears image_card, so without this the backlog regrows. Picks up only live books whose
+# image_card is not a string; idempotent. No paid calls: R2 read + write, ~3 books/s. --limit caps a
+# bad night. Measured 2026-10-18: 1,210 books in its reach, ~6 min for the first run. (daily 5:05am)
+5 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-cover-cards.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-cover-cards.mjs --limit=3000" >> /var/log/sourcelibrary/cover-cards.log 2>&1
+
 # Browse pre-warm + homepage stats (daily 5:15am)
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 
@@ -209,3 +216,9 @@
 13 6 * * 1 cd /root/sourcelibrary && flock -n /tmp/sl-edge-crawl.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/edge-crawl-alert.mjs --canary" >> /var/log/sourcelibrary/edge-crawl.log 2>&1
 # agy (Gemini CLI) SQLite WAL checkpoint, hourly (#6223). The WAL reached 20 GB on 2026-10-16 and filled root. Source: scripts/workers/agy-wal-checkpoint.py, copied to /root/bin.
 17 * * * * python3 /root/bin/agy-wal-checkpoint.py >> /var/log/sourcelibrary/agy-wal-checkpoint.log 2>&1 # agy WAL hit 20G and filled root (#6223)
+
+# Synthetic search probe (#2049, eval check 6): 10 fixed queries through /api/search, /api/search/semantic?level=page and MCP
+# search_library / search_concept; JSONL log /var/log/sourcelibrary/search-probe.jsonl; ntfy sourcelibrary-uptime when a surface p90 > 2x its
+# trailing 24 h or on 3 failing runs in a row. No model call of its own (fixed queries); ~3,840 Vercel invocations/day. Until the PR merges, the
+# copy in the search-evals job scratch runs; the repo copy wins as soon as /root/sourcelibrary has it.
+4,19,34,49 * * * * cd /root/sourcelibrary && P=scripts/audit/search-probe.mjs && { [ -f "$P" ] || P=/mnt/HC_Volume_105839809/jobs/search-evals/probe/search-probe.mjs; } && flock -n /tmp/sl-search-probe.lock timeout 600 node "$P" >> /var/log/sourcelibrary/search-probe.log 2>&1

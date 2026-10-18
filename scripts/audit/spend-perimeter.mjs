@@ -159,6 +159,7 @@ const UNATTENDED = [
     note: 'decision queue drainer: reads decision_answers, runs safe-merge.sh / gh pr comment for answers Derek gave on /platform/admin/decisions; no model call (#6258)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
+  { match: 'backfill-cover-cards.mjs', spends: false, gated: false, note: 'sharp resize of R2 cover scans to 500px AVIF + Mongo pointer (#4342), no model calls' },
   { match: 'rebuild-human-read-count-5048.mjs', spends: false, gated: false, note: 'Mongo/Postgres recompute of books.human_read_count (#5048), no model calls' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'build-gallery-subject-index.mjs', spends: false, gated: false,
@@ -166,6 +167,9 @@ const UNATTENDED = [
   { match: 'cron-caller.mjs', spends: true, gated: false,
     note: 'CALLS VERCEL CRONS — social-post reaches tweet-generator (Gemini). Small and fixed-rate (8/day), but outside the dial.',
     pauseKey: null, pauseWhy: 'outside the pause as it is outside the dial: a Vercel route, and no live src/ route reads processing_control' },
+  { match: 'search-probe.mjs', spends: true, gated: false,
+    note: 'synthetic search probe (#2049): 10 FIXED queries through /api/search, semantic page and MCP every 15 min; no model call of its own, but a cold Vercel instance embeds each query once (Gemini, ~10 tokens; ≲ $0.01/day). Fixed-rate, outside the dial.',
+    pauseKey: null, pauseWhy: 'outside the pause as it is outside the dial: it calls public routes, which read no processing_control' },
   // Non-sourcelibrary lines on the same box.
   { match: 'moltbook', spends: false, gated: false, note: 'not this project' },
   { match: 'oura', spends: false, gated: false, note: 'not this project' },

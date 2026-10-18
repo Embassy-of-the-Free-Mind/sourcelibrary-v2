@@ -143,12 +143,12 @@ describe('proxy behavior', () => {
     // Source Library's own institutional pages (#3370)
     '/about',
     '/about/progress',
-    '/vision',
+    '/articles/vision',
     '/census',
     '/research',
     '/ideas',
     '/ideas/prima-materia',
-    '/blog',
+    '/articles',
     '/contribute',
     '/support',
     '/sponsors',
@@ -162,6 +162,19 @@ describe('proxy behavior', () => {
   ])('404s %s on a tenant subdomain', async (p) => {
     const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
     expect(res?.status).toBe(404);
+  });
+
+  // In Memoriam moved under /articles on the main site only (2026-10-18).
+  it('redirects /in-memoriam to /articles/in-memoriam on the main site', async () => {
+    const res = await proxy(req('https://sourcelibrary.org/in-memoriam', 'sourcelibrary.org'));
+    expect(res?.status).toBe(308);
+    expect(res?.headers.get('location')).toBe('https://sourcelibrary.org/articles/in-memoriam');
+  });
+
+  it('keeps /in-memoriam on a tenant subdomain', async () => {
+    const res = await proxy(req('https://bph.sourcelibrary.org/in-memoriam', 'bph.sourcelibrary.org'));
+    expect(res?.status).not.toBe(404);
+    expect(res?.headers.get('location') ?? '').not.toContain('/articles/');
   });
 
   it.each(TENANT_REACHABLE_INSTITUTIONAL_PATHS)(
@@ -264,20 +277,17 @@ describe('wiring', () => {
     expect(src).toContain('isGlobalOnlyNavHref');
   });
 
-  it('the site nav filters dropdown children, not just top-level links', () => {
-    // `/works` sits under the Browse dropdown and is global-only. Filtering only
-    // `link.href` would leave it in a partner's header pointing at a page the
-    // proxy 404s — the exact failure this shared list exists to prevent.
-    //
-    // The child's href may be normalised on the way into the predicate — the nav
-    // localizes hrefs, so a Spanish header holds `/es/works` and the lookup runs
-    // on `canonicalPath(child.href)`. What this guard is for is that `child.href`
-    // REACHES the predicate at all; pinning the exact argument expression made it
-    // fail on a change that strengthened the very thing it protects.
+  it('the site nav runs every link through the predicate', () => {
+    // The header has no dropdowns since the 2026-10-18 reorder, so every item is
+    // a top-level link and the one filter must see each `link.href`. The href may
+    // be normalised on the way in (the nav localizes hrefs, so a Spanish header
+    // holds `/es/explore` and the lookup runs on `canonicalPath(link.href)`);
+    // what matters is that `link.href` REACHES the predicate at all.
     const src = read('src/components/layout/SiteHeader.tsx');
-    expect(src, 'children must be run through the predicate too').toMatch(
-      /children.*?\.filter\(\s*child\s*=>\s*!isGlobalOnlyNavHref\([^)]*child\.href/s
+    expect(src, 'links must be run through the predicate').toMatch(
+      /\.filter\(\s*link\s*=>\s*!\(isTenantHost && isGlobalOnlyNavHref\([^)]*link\.href/s
     );
+    expect(src, 'no dropdown children left unfiltered').not.toMatch(/children\??:/);
   });
 
   it('no component links to the Librarian on a partner host without a host gate', () => {
@@ -309,6 +319,7 @@ describe('wiring', () => {
       /^src\/app\/librarian\//,
       /^src\/app\/es\/librarian\//,
       /^src\/app\/about\//,
+      /^src\/app\/articles\//,
       /^src\/app\/api\/embassy\//,
     ];
     // Not a rendered link: warm lists, route metadata, the locale registry,

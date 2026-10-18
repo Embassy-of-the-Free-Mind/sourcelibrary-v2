@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { isHighlightMember } from '@/lib/collections-utils';
 
 export const maxDuration = 60;
 
@@ -28,6 +29,19 @@ export async function GET() {
     tier: string;
     issues: string[];
   }
+
+  // Highlights that point at a non-member (#6899). One query for every highlight id; the page
+  // already hides them (isHighlightMember), so this is how the rot gets SEEN rather than silently
+  // emptying a "Start here" band. Same for the stock note a 2026-03 bulk fill left on ~1,000 cards.
+  type HighlightRef = { book_id?: string; tier?: number; note?: string };
+  const hlIds = [...new Set(collections.flatMap((c) => ((c.highlighted_books || []) as HighlightRef[]).map((h) => h?.book_id).filter(Boolean)))] as string[];
+  const hlBooks = new Map(
+    (await db.collection('books')
+      .find({ id: { $in: hlIds }, visible: true }, { projection: { _id: 0, id: 1, collections: 1, pages_count: 1, resource_type: 1 } })
+      .toArray()).map((b) => [b.id as string, b]),
+  );
+  const STOCK_NOTE = /^A key work in the .* collection\.?$/;
+  let nonMemberTotal = 0;
 
   const results: ScoredResult[] = [];
   const ops = [];
@@ -98,6 +112,13 @@ export async function GET() {
     if (tiers.has(1) && tiers.has(2) && tiers.has(3)) score += 3;
     else if (tiers.has(1) && tiers.has(2)) score += 2;
 
+    const hl = (col.highlighted_books || []) as HighlightRef[];
+    const nonMembers = hl.filter((h) => !isHighlightMember(h?.book_id ? hlBooks.get(h.book_id) : null, col.slug)).length;
+    if (nonMembers > 0) { issues.push('non_member_highlights'); nonMemberTotal += nonMembers; }
+    const firstTier1 = hl.find((h) => h?.tier === 1);
+    if (firstTier1 && !isHighlightMember(firstTier1.book_id ? hlBooks.get(firstTier1.book_id) : null, col.slug)) issues.push('start_here_not_member');
+    if (hl.some((h) => STOCK_NOTE.test(h?.note || ''))) issues.push('stock_highlight_notes');
+
     if (col.mentioned_books?.length > 0) score += 3;
     if (col.curated_gallery_images?.length > 0) score += 3;
     if (draftSlugs.has(col.slug)) score += 5;
@@ -128,5 +149,7 @@ export async function GET() {
     tiers: tierCounts,
     average: parseFloat(avg),
     needsAttention: results.filter(r => r.tier === 'C' || r.tier === 'D').map(r => r.slug),
+    nonMemberHighlights: nonMemberTotal,
+    nonMemberHighlightCollections: results.filter(r => r.issues.includes('non_member_highlights')).map(r => r.slug),
   });
 }

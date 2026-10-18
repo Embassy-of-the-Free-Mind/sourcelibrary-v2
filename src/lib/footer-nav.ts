@@ -40,7 +40,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
     links: [
       { key: 'explore', href: '/explore' },
       { key: 'podcast', href: '/podcast' },
-      { key: 'researchNotes', href: '/blog' },
+      { key: 'researchNotes', href: '/articles' },
       { key: 'identify', href: '/identify' },
       { key: 'forResearchers', href: '/for-researchers' },
     ],
@@ -60,7 +60,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
     titleKey: 'colAbout',
     links: [
       { key: 'about', href: '/about' },
-      { key: 'vision', href: '/vision' },
+      { key: 'vision', href: '/articles/vision' },
       { key: 'howItWorks', href: '/how-it-works' },
       { key: 'faq', href: '/about/faq' },
       { key: 'models', href: '/about/models' },

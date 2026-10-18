@@ -9,7 +9,7 @@
     { "reason": "page-image storage keys (the #3362 class: a book-independent key shares images between books and nothing fails loudly)",
       "globs": ["src/lib/r2-key.ts", "scripts/lib/r2-key.mjs", "src/lib/storage.ts"] },
     { "reason": "public copy Derek has not seen",
-      "globs": ["src/content/**", "src/app/vision/**", "src/app/blog/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
+      "globs": ["src/content/**", "src/app/vision/**", "src/app/articles/**", "src/app/about/**", "src/app/press/**", "src/app/press-release/**", "src/app/press-releases/**", "src/generated/blog*", "src/lib/email-templates.ts", "src/lib/adoption-email.ts", "src/lib/feedback-reply-email.ts", "src/lib/email-digest-generator.ts", "public/connect/**"] },
     { "reason": "public copy Derek has not seen: interface strings in a language other than English",
       "_doc": "#6403. An added entry keyed by a non-English site locale (`nl: {`, `zh: '…'`, `es: (n) =>`) is copy a reader of that language will see: a new language block in a dictionary, or a component's inline per-locale map. #6384 added ~1,000 lines of Dutch and Chinese per language and was classed AUTO. Keep the locale list in step with PREFIXED_LOCALES (src/lib/locale-path.ts). It does not see an edit to one string inside an existing block.",
       "diffPatterns": ["^\\s*['\"]?(es|la|nl|zh)['\"]?\\s*:\\s*[{'\"`(]"] },

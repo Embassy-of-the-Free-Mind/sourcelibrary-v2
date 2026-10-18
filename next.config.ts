@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 80, 85, 90],
+    qualities: [60, 75, 80, 85, 90], // 60: article heroes, under a dark gradient (ParallaxImage)
     minimumCacheTTL: 31536000, // 1 year — R2 images are immutable, maximize CDN cache hits
     deviceSizes: [640, 828, 1200, 1920], // Matches grid breakpoints: mobile, tablet, desktop, wide
     imageSizes: [150, 400, 800], // Matches thumbnail tiers: thumb, card, display
@@ -356,7 +356,12 @@ const nextConfig: NextConfig = {
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
-        source: '/blog/:path*',
+        source: '/articles',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/articles/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
@@ -396,6 +401,32 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Research Notes became Articles: /blog and every post under it moved
+      // to /articles with the same slugs.
+      // Renamed posts come first: the generic /blog/:path* rule below would
+      // otherwise catch them and land on a 404 under the old slug. The prose
+      // note was replaced by the document itself (PR #4991), then given its
+      // own name.
+      { source: '/blog/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      { source: '/articles/where-the-instructions-are', destination: '/articles/techniques-of-the-body', permanent: true },
+      // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
+      { source: '/blog/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      // Superseded posts (UNLISTED_PAGES in src/app/articles/posts.ts): send readers
+      // to the post that replaced each one. The page files are kept.
+      { source: '/blog/2000-first-translations', destination: '/articles/counting-first-translations', permanent: true },
+      { source: '/articles/2000-first-translations', destination: '/articles/counting-first-translations', permanent: true },
+      { source: '/blog/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
+      { source: '/articles/worlds-largest-collection', destination: '/articles/how-big-is-the-library', permanent: true },
+      { source: '/articles/ledgers-and-heavens', destination: '/articles/harmonic-justice', permanent: true },
+      // Pages moved under /articles (2026-10-18). /in-memoriam is redirected in
+      // src/proxy.ts instead, on the main site only: partner reading rooms keep it.
+      { source: '/vision', destination: '/articles/vision', permanent: true },
+      { source: '/specimen/aldine', destination: '/articles/aldine-roman', permanent: true },
+      { source: '/collections/drebbel/beeckman', destination: '/articles/beeckman-on-drebbel', permanent: true },
+      { source: '/about/meaning', destination: '/articles/search-by-meaning', permanent: true },
+      { source: '/about/by-the-numbers', destination: '/articles/by-the-numbers', permanent: true },
+      { source: '/blog', destination: '/articles', permanent: true },
+      { source: '/blog/:path*', destination: '/articles/:path*', permanent: true },
       // Merged/retired collection slugs → successors (issue #3002). True HTTP
       // 308s at the routing layer — the page-level permanentRedirect in
       // /collections/[id] only yields a streamed meta-refresh because the
@@ -429,30 +460,6 @@ const nextConfig: NextConfig = {
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',
-        permanent: true,
-      },
-      // The prose note was replaced by the document itself (PR #4991), then given its own name.
-      {
-        source: '/blog/where-the-instructions-are',
-        destination: '/blog/techniques-of-the-body',
-        permanent: true,
-      },
-      // Superseded notes (UNLISTED_PAGES in src/app/blog/posts.ts): send readers
-      // to the post that replaced each one. The page files are kept.
-      {
-        source: '/blog/2000-first-translations',
-        destination: '/blog/counting-first-translations',
-        permanent: true,
-      },
-      {
-        source: '/blog/worlds-largest-collection',
-        destination: '/blog/how-big-is-the-library',
-        permanent: true,
-      },
-      // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
-      {
-        source: '/blog/ledgers-and-heavens',
-        destination: '/blog/harmonic-justice',
         permanent: true,
       },
       // Iconclass division pages retired (#4856) — codes were model-recalled and

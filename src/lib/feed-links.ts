@@ -20,6 +20,6 @@ export const FEED_TYPES: NonNullable<NonNullable<Metadata['alternates']>['types'
   'application/atom+xml': [
     { url: '/api/feed/books', title: 'Source Library - New Books' },
     { url: '/api/feed/gallery', title: 'Source Library Gallery' },
-    { url: '/api/feed/blog', title: 'Source Library - Research Notes' },
+    { url: '/api/feed/blog', title: 'Source Library - Articles' },
   ],
 };

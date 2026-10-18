@@ -13,7 +13,7 @@ name: blog-link-check
 on:
   pull_request:
     paths:
-      - 'src/app/blog/**'
+      - 'src/app/articles/**'
       - 'src/app/**/page.tsx'
       - 'src/components/**/*.tsx'
       - 'scripts/maintenance/check-blog-links.mjs'

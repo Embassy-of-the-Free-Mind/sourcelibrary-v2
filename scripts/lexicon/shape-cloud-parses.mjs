@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { toBetacode, fromBetacode } from './morpheus-crunch.mjs';
 
-const DATA = 'src/app/blog/greek-lemma-table/shape-data.json';
+const DATA = 'src/app/articles/greek-lemma-table/shape-data.json';
 
 const EXPAND = {
   pres: 'present', imperf: 'imperfect', fut: 'future', aor: 'aorist',

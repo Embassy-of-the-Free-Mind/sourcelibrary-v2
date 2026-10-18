@@ -1,0 +1,611 @@
+[
+ {
+  "arm": "bge-m3",
+  "full": {
+   "kind": "text",
+   "model": "BAAI/bge-m3",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 2000,
+   "batch": 32,
+   "max_seq_len": 1024,
+   "dim": 1024,
+   "median_tokens": 893,
+   "share_truncated": 0.418,
+   "wall_secs": 37.7,
+   "items_per_s": 53.1,
+   "items_per_hour": 191086,
+   "torch_peak_alloc_mib": 1916,
+   "torch_peak_reserved_mib": 2308,
+   "peak_mib": 2652
+  }
+ },
+ {
+  "arm": "bge-m3-2k",
+  "full": {
+   "kind": "text",
+   "model": "BAAI/bge-m3",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 2000,
+   "batch": 32,
+   "max_seq_len": 2048,
+   "dim": 1024,
+   "median_tokens": 893,
+   "share_truncated": 0.134,
+   "wall_secs": 64.5,
+   "items_per_s": 31.0,
+   "items_per_hour": 111570,
+   "torch_peak_alloc_mib": 2781,
+   "torch_peak_reserved_mib": 3270,
+   "peak_mib": 3614
+  }
+ },
+ {
+  "arm": "clip-b32",
+  "full": {
+   "kind": "image",
+   "model": "openai/clip-vit-base-patch32",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 1000,
+   "batch": 64,
+   "input_px": [
+    224,
+    224
+   ],
+   "dim": 512,
+   "wall_secs": 4.9,
+   "items_per_s": 204.5,
+   "items_per_hour": 736358,
+   "gpu_only_items_per_s": 3098.3,
+   "cpu_workers": 8,
+   "torch_peak_alloc_mib": 421,
+   "torch_peak_reserved_mib": 450,
+   "peak_mib": 802
+  }
+ },
+ {
+  "arm": "dots-ocr",
+  "full": {
+   "mode": "dots",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 8000,
+   "wall_secs": 496.5,
+   "items_per_hour": 725,
+   "secs_per_item": 4.965,
+   "out_tok_per_s": 387.8,
+   "mean_out_tok": 1926,
+   "hit_cap": 11,
+   "peak_mib": 20136,
+   "load_secs": 80,
+   "kv": "(EngineCore pid=179709) INFO 10-18 01:31:35 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "not_run": "server did not start at util 0.38"
+  }
+ },
+ {
+  "arm": "dots-ocr-tight",
+  "full": {
+   "mode": "dots",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 7500,
+   "wall_secs": 360.9,
+   "items_per_hour": 998,
+   "secs_per_item": 3.609,
+   "out_tok_per_s": 455.7,
+   "mean_out_tok": 1645,
+   "hit_cap": 7,
+   "peak_mib": 9960,
+   "load_secs": 45,
+   "kv": "(EngineCore pid=253893) INFO 10-18 03:19:34 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "dots-ocr-tight.fail-8k",
+  "full": {
+   "mode": "dots",
+   "items": 100,
+   "ok": 0,
+   "errors": 100,
+   "clients": 16,
+   "max_tokens": 8000,
+   "wall_secs": 0.6,
+   "items_per_hour": 0,
+   "secs_per_item": 0.615,
+   "out_tok_per_s": null,
+   "mean_out_tok": null,
+   "hit_cap": 0,
+   "peak_mib": 8382,
+   "load_secs": 45,
+   "kv": "(EngineCore pid=188595) INFO 10-18 02:07:52 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "glm-ocr",
+  "full": {
+   "mode": "glm",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 246.2,
+   "items_per_hour": 1462,
+   "secs_per_item": 2.462,
+   "out_tok_per_s": 478.2,
+   "mean_out_tok": 1177,
+   "hit_cap": 13,
+   "peak_mib": 21516,
+   "load_secs": 70,
+   "kv": "(EngineCore pid=174742) INFO 10-18 01:07:30 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "mode": "glm",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 278.0,
+   "items_per_hour": 1295,
+   "secs_per_item": 2.78,
+   "out_tok_per_s": 424.0,
+   "mean_out_tok": 1179,
+   "hit_cap": 13,
+   "peak_mib": 10710,
+   "load_secs": 40,
+   "kv": "(EngineCore pid=175553) INFO 10-18 01:13:03 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "glm-ocr@b30",
+  "beside": {
+   "mode": "glm",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 292.1,
+   "items_per_hour": 1232,
+   "secs_per_item": 2.921,
+   "out_tok_per_s": 390.0,
+   "mean_out_tok": 1139,
+   "hit_cap": 12,
+   "peak_mib": 8792,
+   "load_secs": 25,
+   "kv": "(EngineCore pid=186155) INFO 10-18 01:59:54 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "ll-qwen25vl7b-awq",
+  "ll-img": {
+   "mode": "ll-img",
+   "items": 85,
+   "ok": 85,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 198.6,
+   "items_per_hour": 1541,
+   "secs_per_item": 2.336,
+   "out_tok_per_s": null,
+   "mean_out_tok": null,
+   "hit_cap": 0,
+   "peak_mib": 20160
+  },
+  "ll-text": {
+   "mode": "ll-text",
+   "items": 85,
+   "ok": 85,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 29.9,
+   "items_per_hour": 10249,
+   "secs_per_item": 0.351,
+   "out_tok_per_s": null,
+   "mean_out_tok": null,
+   "hit_cap": 0,
+   "peak_mib": 20160
+  }
+ },
+ {
+  "arm": "mineru25-pro",
+  "full": {
+   "mode": "mineru",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 0,
+   "wall_secs": 103.2,
+   "items_per_hour": 3488,
+   "secs_per_item": 1.032,
+   "out_tok_per_s": null,
+   "mean_out_tok": null,
+   "hit_cap": 0,
+   "peak_mib": 20164,
+   "load_secs": 135,
+   "kv": "(EngineCore pid=123357) INFO 10-18 00:24:22 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "mode": "mineru",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 0,
+   "wall_secs": 105.6,
+   "items_per_hour": 3410,
+   "secs_per_item": 1.056,
+   "out_tok_per_s": null,
+   "mean_out_tok": null,
+   "hit_cap": 0,
+   "peak_mib": 9026,
+   "load_secs": 30,
+   "kv": "(EngineCore pid=124148) INFO 10-18 00:29:03 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "olmocr2-fp8",
+  "full": {
+   "mode": "olmocr",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 329.7,
+   "items_per_hour": 1092,
+   "secs_per_item": 3.297,
+   "out_tok_per_s": 205.4,
+   "mean_out_tok": 677,
+   "hit_cap": 0,
+   "peak_mib": 20656,
+   "load_secs": 70,
+   "kv": "(EngineCore pid=121676) INFO 10-18 00:15:08 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "not_run": "server did not start at util 0.38"
+  }
+ },
+ {
+  "arm": "olmocr2-fp8-tight",
+  "full": {
+   "not_run": "server did not start at util 0.38"
+  }
+ },
+ {
+  "arm": "paddle-vl",
+  "layout0": {
+   "arm": "gex45bench-l0",
+   "backend": "server",
+   "workers": 8,
+   "max_side": 0,
+   "layout": 0,
+   "page_batch": 1,
+   "pages": 100,
+   "errors": 0,
+   "wall_secs": 100.1,
+   "load_secs_max": 3.2,
+   "wall_secs_after_load": 96.9,
+   "items_per_hour": 3715,
+   "peak_mib": 9448
+  },
+  "layout1": {
+   "arm": "gex45bench-l1",
+   "backend": "server",
+   "workers": 8,
+   "max_side": 0,
+   "layout": 1,
+   "page_batch": 1,
+   "pages": 100,
+   "errors": 0,
+   "wall_secs": 135.2,
+   "load_secs_max": 21.4,
+   "wall_secs_after_load": 113.8,
+   "items_per_hour": 3163,
+   "peak_mib": 16904
+  }
+ },
+ {
+  "arm": "paddle-vl@b33",
+  "layout0": {
+   "arm": "gex45bench-l0",
+   "backend": "server",
+   "workers": 8,
+   "max_side": 0,
+   "layout": 0,
+   "page_batch": 1,
+   "pages": 100,
+   "errors": 0,
+   "wall_secs": 103.5,
+   "load_secs_max": 3.2,
+   "wall_secs_after_load": 100.3,
+   "items_per_hour": 3589,
+   "peak_mib": 5380
+  }
+ },
+ {
+  "arm": "qwen25vl7b-awq",
+  "full": {
+   "mode": "generic",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 422.2,
+   "items_per_hour": 853,
+   "secs_per_item": 4.222,
+   "out_tok_per_s": 266.6,
+   "mean_out_tok": 1126,
+   "hit_cap": 13,
+   "peak_mib": 20494,
+   "load_secs": 160,
+   "kv": "(EngineCore pid=119775) INFO 10-18 00:02:33 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "not_run": "server did not start at util 0.38"
+  }
+ },
+ {
+  "arm": "qwen25vl7b-awq-tight",
+  "full": {
+   "mode": "generic",
+   "items": 100,
+   "ok": 100,
+   "errors": 0,
+   "clients": 16,
+   "max_tokens": 4500,
+   "wall_secs": 424.3,
+   "items_per_hour": 849,
+   "secs_per_item": 4.243,
+   "out_tok_per_s": 271.2,
+   "mean_out_tok": 1150,
+   "hit_cap": 15,
+   "peak_mib": 10278,
+   "load_secs": 55,
+   "kv": "(EngineCore pid=182270) INFO 10-18 01:44:23 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "qwen25vl7b-awq-tight.fail-nocap",
+  "full": {
+   "not_run": "server did not start at util 0.38"
+  }
+ },
+ {
+  "arm": "qwen3-14b-awq",
+  "full": {
+   "mode": "llm",
+   "items": 400,
+   "ok": 400,
+   "errors": 0,
+   "clients": 32,
+   "max_tokens": 512,
+   "wall_secs": 255.1,
+   "items_per_hour": 5644,
+   "secs_per_item": 0.638,
+   "out_tok_per_s": 34.0,
+   "mean_out_tok": 22,
+   "hit_cap": 0,
+   "peak_mib": 19488,
+   "load_secs": 75,
+   "kv": "(EngineCore pid=184110) INFO 10-18 01:53:39 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "not_run": "server did not start at util 0.38"
+  }
+ },
+ {
+  "arm": "qwen3-8b-awq",
+  "full": {
+   "mode": "llm",
+   "items": 400,
+   "ok": 400,
+   "errors": 0,
+   "clients": 32,
+   "max_tokens": 512,
+   "wall_secs": 130.9,
+   "items_per_hour": 11004,
+   "secs_per_item": 0.327,
+   "out_tok_per_s": 108.5,
+   "mean_out_tok": 36,
+   "hit_cap": 0,
+   "peak_mib": 19768,
+   "load_secs": 160,
+   "kv": "(EngineCore pid=94867) INFO 10-17 22:55:40 [utils.py:343] Using LBNHC KV cache layout."
+  },
+  "beside": {
+   "mode": "llm",
+   "items": 400,
+   "ok": 400,
+   "errors": 0,
+   "clients": 32,
+   "max_tokens": 512,
+   "wall_secs": 138.7,
+   "items_per_hour": 10384,
+   "secs_per_item": 0.347,
+   "out_tok_per_s": 102.3,
+   "mean_out_tok": 35,
+   "hit_cap": 0,
+   "peak_mib": 9522,
+   "load_secs": 35,
+   "kv": "(EngineCore pid=97067) INFO 10-17 23:00:29 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "qwen3-8b-awq@b30",
+  "beside": {
+   "not_run": "server did not start at util 0.30"
+  }
+ },
+ {
+  "arm": "qwen3-8b-awq@b34",
+  "beside": {
+   "not_run": "server did not start at util 0.34"
+  }
+ },
+ {
+  "arm": "qwen3-8b-awq@b36",
+  "beside": {
+   "mode": "llm",
+   "items": 400,
+   "ok": 399,
+   "errors": 1,
+   "clients": 32,
+   "max_tokens": 512,
+   "wall_secs": 164.6,
+   "items_per_hour": 8725,
+   "secs_per_item": 0.413,
+   "out_tok_per_s": 86.1,
+   "mean_out_tok": 36,
+   "hit_cap": 0,
+   "peak_mib": 8012,
+   "load_secs": 60,
+   "kv": "(EngineCore pid=248155) INFO 10-18 02:55:46 [utils.py:343] Using LBNHC KV cache layout."
+  }
+ },
+ {
+  "arm": "qwen3-emb-0.6b",
+  "full": {
+   "kind": "text",
+   "model": "Qwen/Qwen3-Embedding-0.6B",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 2000,
+   "batch": 32,
+   "max_seq_len": 1024,
+   "dim": 1024,
+   "median_tokens": 791,
+   "share_truncated": 0.368,
+   "wall_secs": 85.8,
+   "items_per_s": 23.3,
+   "items_per_hour": 83886,
+   "torch_peak_alloc_mib": 5682,
+   "torch_peak_reserved_mib": 6188,
+   "peak_mib": 6534
+  }
+ },
+ {
+  "arm": "qwen3-emb-0.6b-2k",
+  "full": {
+   "kind": "text",
+   "model": "Qwen/Qwen3-Embedding-0.6B",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 2000,
+   "batch": 32,
+   "max_seq_len": 2048,
+   "dim": 1024,
+   "median_tokens": 791,
+   "share_truncated": 0.102,
+   "wall_secs": 153.5,
+   "items_per_s": 13.0,
+   "items_per_hour": 46919,
+   "torch_peak_alloc_mib": 10259,
+   "torch_peak_reserved_mib": 11534,
+   "peak_mib": 11880
+  }
+ },
+ {
+  "arm": "qwen3-emb-4b",
+  "full": {
+   "kind": "text",
+   "model": "Qwen/Qwen3-Embedding-4B",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 2000,
+   "batch": 32,
+   "max_seq_len": 1024,
+   "dim": 2560,
+   "median_tokens": 791,
+   "share_truncated": 0.368,
+   "wall_secs": 384.3,
+   "items_per_s": 5.2,
+   "items_per_hour": 18737,
+   "torch_peak_alloc_mib": 15023,
+   "torch_peak_reserved_mib": 16836,
+   "peak_mib": 17182
+  }
+ },
+ {
+  "arm": "qwen3-emb-4b-2k",
+  "full": {
+   "kind": "text",
+   "model": "Qwen/Qwen3-Embedding-4B",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 2000,
+   "batch": 8,
+   "max_seq_len": 2048,
+   "dim": 2560,
+   "median_tokens": 791,
+   "share_truncated": 0.102,
+   "wall_secs": 538.5,
+   "items_per_s": 3.7,
+   "items_per_hour": 13370,
+   "torch_peak_alloc_mib": 11406,
+   "torch_peak_reserved_mib": 12648,
+   "peak_mib": 12994
+  }
+ },
+ {
+  "arm": "siglip2-base",
+  "full": {
+   "kind": "image",
+   "model": "google/siglip2-base-patch16-224",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 1000,
+   "batch": 64,
+   "input_px": [
+    224,
+    224
+   ],
+   "dim": 768,
+   "wall_secs": 4.6,
+   "items_per_s": 219.4,
+   "items_per_hour": 789919,
+   "gpu_only_items_per_s": 844.0,
+   "cpu_workers": 8,
+   "torch_peak_alloc_mib": 1003,
+   "torch_peak_reserved_mib": 1080,
+   "peak_mib": 1432
+  }
+ },
+ {
+  "arm": "siglip2-so400m",
+  "full": {
+   "kind": "image",
+   "model": "google/siglip2-so400m-patch14-384",
+   "dtype": "bf16",
+   "torch": "2.13.0+cu132",
+   "items": 1000,
+   "batch": 64,
+   "input_px": [
+    384,
+    384
+   ],
+   "dim": 1152,
+   "wall_secs": 24.0,
+   "items_per_s": 41.7,
+   "items_per_hour": 150212,
+   "gpu_only_items_per_s": 45.1,
+   "cpu_workers": 8,
+   "torch_peak_alloc_mib": 3453,
+   "torch_peak_reserved_mib": 3812,
+   "peak_mib": 4164
+  }
+ }
+]

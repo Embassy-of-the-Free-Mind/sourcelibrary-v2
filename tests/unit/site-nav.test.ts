@@ -12,7 +12,7 @@ const PAGES: NavCandidate[] = [
   page('/review/page-check', ['Page check', 'review page check']),
   page('/research/quality', ['How Page Quality Is Measured (draft)', 'quality', 'research quality']),
   page('/research/quality/summary', ['Page Quality — Summary', 'summary', 'research quality summary']),
-  page('/blog/how-we-measure-ocr-quality', ['How We Measure OCR Quality', 'how we measure ocr quality'], 'blog'),
+  page('/articles/how-we-measure-ocr-quality', ['How We Measure OCR Quality', 'how we measure ocr quality'], 'blog'),
   page('/research', ['Research', 'research questions']),
   page('/about/research', ['How Our Translations Work', 'research', 'about research']),
   page('/libraries', ['Libraries']),
@@ -21,7 +21,7 @@ const PAGES: NavCandidate[] = [
   page('/author/cornelius-drebbel', ['Cornelius Drebbel', 'Drebbel, Cornelis'], 'author', 7),
   page('/author/christiaan-huygens', ['Christiaan Huygens', 'Huygens, Christiaan'], 'author', 32),
   page('/author/huygens-constantijn', ['Huygens, Constantijn'], 'author', 1),
-  page('/blog/philosophers-stone', ["What Is the Philosopher's Stone? Eight Answers from the Primary Sources", 'philosophers stone'], 'blog'),
+  page('/articles/philosophers-stone', ["What Is the Philosopher's Stone? Eight Answers from the Primary Sources", 'philosophers stone'], 'blog'),
 ];
 const urls = (q: string) => rankNavMatches(q, PAGES).map((m) => m.candidate.url);
 
@@ -35,7 +35,7 @@ describe('rankNavMatches', () => {
   it('puts the page the query names exactly above pages that merely contain the word', () => {
     expect(urls('quality')[0]).toBe('/research/quality');
     // "quality" is one word of five in the essay's title: a word in a name, not the name.
-    expect(urls('quality')).not.toContain('/blog/how-we-measure-ocr-quality');
+    expect(urls('quality')).not.toContain('/articles/how-we-measure-ocr-quality');
     expect(urls('for libraries')).toEqual(['/for-libraries']);
   });
 
@@ -53,7 +53,7 @@ describe('rankNavMatches', () => {
   it('reads a type word as a filter, not as part of the name', () => {
     expect(urls('Drebbel collection')).toEqual(['/collections/drebbel']);
     expect(urls('drebbel author')).toEqual(['/author/cornelius-drebbel']);
-    expect(urls('philosophers stone essay')).toEqual(['/blog/philosophers-stone']);
+    expect(urls('philosophers stone essay')).toEqual(['/articles/philosophers-stone']);
     // "page" asks for no particular type.
     expect(urls('huygens page')[0]).toBe('/author/christiaan-huygens');
   });

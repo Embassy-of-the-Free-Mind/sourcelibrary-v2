@@ -322,7 +322,7 @@ export default function RithmomachiaGuidePage() {
         <Link href="/rithmomachia" className="text-accent-rust hover:underline">
           Play the game &rarr;
         </Link>
-        <Link href="/blog/rithmomachia" className="text-accent-rust hover:underline">
+        <Link href="/articles/rithmomachia" className="text-accent-rust hover:underline">
           Full rules with primary sources &rarr;
         </Link>
       </div>

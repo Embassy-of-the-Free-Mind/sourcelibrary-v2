@@ -19,7 +19,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const BLOG = path.join(ROOT, 'src/app/blog');
+const BLOG = path.join(ROOT, 'src/app/articles');
 const OUT = path.join(ROOT, 'src/generated/blog-revisions.json');
 
 const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();

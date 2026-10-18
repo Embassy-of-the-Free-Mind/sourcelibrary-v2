@@ -1,0 +1,2592 @@
+[
+ {
+  "key": "m001",
+  "set": "meaning",
+  "vol": 1,
+  "folio": 260,
+  "side": "b",
+  "rkts": 367,
+  "mng1": {
+   "no": 8,
+   "section": "Ka Dandr a",
+   "start": [
+    247,
+    "a"
+   ],
+   "end": [
+    273,
+    "b"
+   ],
+   "vol": 1,
+   "page": 493
+  },
+  "derge": {
+   "toh": "D367",
+   "section": "rgyud",
+   "vol_letter": "ka",
+   "start": [
+    193,
+    "a",
+    6
+   ],
+   "end": [
+    212,
+    "a",
+    7
+   ],
+   "vol": 77
+  },
+  "derge_file": "077_རྒྱུད་འབུམ།_ཀ.txt",
+  "side_index": 27,
+  "n_sides": 54,
+  "titles": {
+   "mong": "Qamuγ onul quriyaγsan neretü qamuγ burqan-luγ-a tegsi barilduγči ḍākinī jalī ǰirγalang-un degedü qoyitu-yin qoyitu dandr-a",
+   "skt": "Sarvakalpasamuccaya-nāma-sarvabuddhasamayogaḍākinī-jālasaṃbara-uttarottaratantra",
+   "tib": "Rtog pa thams cad 'dus pa zhes bya ba sa'angs rgyas thams cad dang mnyam par sbyor ba mkha' gro sgyu ma bde ba'i mchog gi rgyud phyi ma'i phyi ma",
+   "skt_in_mong": "Sarva-kalpa-samuccaya nāma sarva-buddha-samāyoga-ḍākinī-jāla-sambara-uttarottara-tantra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠠᠮᠣᠭ ᠣᠨᠣᠯ ᠬᠣᠷᠢᠶᠠᠭᠰᠠᠨ ᠨᠡᠷᠡᠳᠦ ᠬᠠᠮᠣᠭ ᠪᠣᠷᠬᠠᠨ ᠯᠣᠭ᠎ᠠ ᠳᠡᠭᠰᠢ ᠪᠠᠷᠢᠯᠳᠣᠭᠴᠢ ᠳᠠᠺᠢᠨᠢ ᠵᠠᠯᠢ ᠵᠢᠷᠭᠠᠯᠠᠨᠭ  ᠣᠨ ᠳᠡᠭᠡᠳᠦ ᠬᠣᠶᠢᠳᠣ ᠶᠢᠨ ᠬᠣᠶᠢᠳᠣ ᠳᠠᠨᠳᠷ᠎ᠠ",
+  "book_id": "6ac0295271182233c6fc40ab",
+  "page_number": 520,
+  "page_label": "f. 260b",
+  "image": "m001_v1_260b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0295271182233c6fc40ab/0520.jpg"
+ },
+ {
+  "key": "m003",
+  "set": "meaning",
+  "vol": 3,
+  "folio": 318,
+  "side": "b",
+  "rkts": 376,
+  "mng1": {
+   "no": 23,
+   "section": "Ga dandr a",
+   "start": [
+    313,
+    "b"
+   ],
+   "end": [
+    323,
+    "b"
+   ],
+   "vol": 3,
+   "page": 626
+  },
+  "derge": {
+   "toh": "D376",
+   "section": "rgyud",
+   "vol_letter": "ga",
+   "start": [
+    44,
+    "b",
+    6
+   ],
+   "end": [
+    52,
+    "b",
+    5
+   ],
+   "vol": 79
+  },
+  "derge_file": "079_རྒྱུད་འབུམ།_ག.txt",
+  "side_index": 10,
+  "n_sides": 21,
+  "titles": {
+   "mong": "Dörben yoginis-un qabsulduqui ündüsün neretü",
+   "skt": "Caturyoginīsaṃpuṭa-tantra-nāma",
+   "tib": "Rnal 'byor ma bzhi'i kha sbyor kyi rgyud ces bya ba",
+   "skt_in_mong": "Catur-yoginī-saṃpuṭa-tantra"
+  },
+  "mng1_title_unicode": "᠀ ᠳᠦᠷᠪᠡᠨ ᠶᠣᠭᠢᠨᠢᠰ  ᠣᠨ ᠬᠠᠪᠰᠣᠯᠳᠣᠬᠣᠢ ᠦᠨᠳᠦᠰᠦᠨ ᠨᠡᠷᠡᠳᠦ",
+  "book_id": "6ac029709a86d56c1aa166b2",
+  "page_number": 636,
+  "page_label": "f. 318b",
+  "image": "m003_v3_318b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029709a86d56c1aa166b2/0636.jpg"
+ },
+ {
+  "key": "m005",
+  "set": "meaning",
+  "vol": 5,
+  "folio": 9,
+  "side": "a",
+  "rkts": 432,
+  "mng1": {
+   "no": 70,
+   "section": "Ca dandr a",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    16,
+    "a"
+   ],
+   "vol": 5,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D432",
+   "section": "rgyud",
+   "vol_letter": "ca",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    12,
+    "a",
+    7
+   ],
+   "vol": 81
+  },
+  "derge_file": "081_རྒྱུད་འབུམ།_ཅ.txt",
+  "side_index": 15,
+  "n_sides": 30,
+  "titles": {
+   "mong": "Qutuγ-tu ačala-yin onul-un ündüsün-ü qaγan",
+   "skt": "Ārya-acalakalpa-tantrarājā",
+   "tib": "'Phags pa mi g.yo ba'i rtog pa'i rgyud kyi rgyal po",
+   "skt_in_mong": "Āryācala-kalpa-tantra-rāja"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠠᠴᠠᠯᠠ ᠶᠢᠨ ᠣᠨᠣᠯ  ᠣᠨ ᠦᠨᠳᠦᠰᠦᠨ ᠦ ᠬᠠᠭᠠᠨ",
+  "book_id": "6ac029849a86d56c1aa16dca",
+  "page_number": 17,
+  "page_label": "f. 9a",
+  "image": "m005_v5_9a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029849a86d56c1aa16dca/0017.jpg"
+ },
+ {
+  "key": "m006",
+  "set": "meaning",
+  "vol": 6,
+  "folio": 403,
+  "side": "a",
+  "rkts": 459,
+  "mng1": {
+   "no": 94,
+   "section": "Ca Dandr a",
+   "start": [
+    398,
+    "b"
+   ],
+   "end": [
+    407,
+    "a"
+   ],
+   "vol": 6,
+   "page": 796
+  },
+  "derge": {
+   "toh": "D459",
+   "section": "rgyud",
+   "vol_letter": "ja",
+   "start": [
+    30,
+    "b",
+    1
+   ],
+   "end": [
+    36,
+    "b",
+    3
+   ],
+   "vol": 83
+  },
+  "derge_file": "083_རྒྱུད་འབུམ།_ཇ.txt",
+  "side_index": 9,
+  "n_sides": 18,
+  "titles": {
+   "mong": "Čoγtu doγsin včir ǰirüken-ü niγuča-yin qoyitu dandr-a",
+   "skt": "Śrī-vajracaṇḍacittaguhya-tantra-uttara",
+   "tib": "Dpal rdo rje gtum po thugs gsang ba'i rgyud phyi ma",
+   "skt_in_mong": "Śrī-vajra-caṇḍa-citta-guhya-uttara-tantra"
+  },
+  "mng1_title_unicode": "᠀ ᠴᠣᠭᠳᠣ ᠳᠣᠭᠰᠢᠨ ᠸᠴᠢᠷ ᠵᠢᠷᠦᠺᠡᠨ ᠦ ᠨᠢᠭᠣᠴᠠ ᠶᠢᠨ ᠬᠣᠶᠢᠳᠣ ᠳᠠᠨᠳᠷ᠎ᠠ",
+  "book_id": "6ac029869a86d56c1aa170ed",
+  "page_number": 795,
+  "page_label": "f. 403a",
+  "image": "m006_v6_403a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029869a86d56c1aa170ed/0795.jpg"
+ },
+ {
+  "key": "m009",
+  "set": "meaning",
+  "vol": 9,
+  "folio": 348,
+  "side": "b",
+  "rkts": 17,
+  "mng1": {
+   "no": 121,
+   "section": "Ta Dandr a",
+   "start": [
+    344,
+    "a"
+   ],
+   "end": [
+    353,
+    "a"
+   ],
+   "vol": 9,
+   "page": 687
+  },
+  "derge": {
+   "toh": "D17",
+   "section": "sher phyin",
+   "vol_letter": "ka",
+   "start": [
+    133,
+    "a",
+    1
+   ],
+   "end": [
+    139,
+    "b",
+    6
+   ],
+   "vol": 34
+  },
+  "derge_file": "034_ཤེས་རབ་སྣ་ཚོགས།.txt",
+  "side_index": 9,
+  "n_sides": 19,
+  "titles": {
+   "mong": "Qutuγ-tu bilig-ün činadu kiǰaγar-a kürügsen ǰaγun tabin yosutu",
+   "skt": "Ārya-prajñāpāramitānayaśatapañcāśatikā",
+   "tib": "'Phags pa shes rab kyi pha rol tu phyin pa'i tshul brgya lnga bcu pa",
+   "skt_in_mong": "Ārya-prajñāpāramitā-naya-śatapañcāśatikā"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠪᠢᠯᠢᠭ  ᠣᠨ ᠴᠢᠨᠠᠳᠣ ᠺᠢᠵᠠᠭᠠᠷ᠎ᠠ ᠺᠦᠷᠦᠭᠰᠡᠨ ᠵᠠᠭᠣᠨ ᠳᠠᠪᠢᠨ ᠶᠣᠰᠣᠳᠣ",
+  "book_id": "6ac0298b9a86d56c1aa179bb",
+  "page_number": 696,
+  "page_label": "f. 348b",
+  "image": "m009_v9_348b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0298b9a86d56c1aa179bb/0696.jpg"
+ },
+ {
+  "key": "m011",
+  "set": "meaning",
+  "vol": 11,
+  "folio": 217,
+  "side": "a",
+  "rkts": 499,
+  "mng1": {
+   "no": 131,
+   "section": "Da dandr a",
+   "start": [
+    213,
+    "b"
+   ],
+   "end": [
+    220,
+    "a"
+   ],
+   "vol": 11,
+   "page": 426
+  },
+  "derge": {
+   "toh": "D500",
+   "section": "rgyud",
+   "vol_letter": "da",
+   "start": [
+    172,
+    "b",
+    1
+   ],
+   "end": [
+    176,
+    "b",
+    7
+   ],
+   "vol": 87
+  },
+  "derge_file": "087_རྒྱུད་འབུམ།_ད.txt",
+  "side_index": 7,
+  "n_sides": 14,
+  "titles": {
+   "mong": "Včir γurban γaǰar-tur bitügči neretü onul-un qaγan",
+   "skt": "Vajrabhūmitricaraṇi-rājakalpa-nāma",
+   "tib": "Rdo rje sa gsum du rgyu ba zhes bya ba'i rtog pa'i rgyal po",
+   "skt_in_mong": "Vajra-bhūmi-tricaraṇa-rāja-kalpa nāma"
+  },
+  "mng1_title_unicode": "᠀ ᠸᠴᠢᠷ ᠭᠣᠷᠪᠠᠨ ᠭᠠᠵᠠᠷ ᠳᠣᠷ ᠪᠢᠳᠦᠭᠴᠢ ᠨᠡᠷᠡᠳᠦ ᠣᠨᠣᠯ  ᠣᠨ ᠬᠠᠭᠠᠨ",
+  "book_id": "6ac0298f9a86d56c1aa18000",
+  "page_number": 433,
+  "page_label": "f. 217a",
+  "image": "m011_v11_217a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0298f9a86d56c1aa18000/0433.jpg"
+ },
+ {
+  "key": "m013",
+  "set": "meaning",
+  "vol": 13,
+  "folio": 10,
+  "side": "b",
+  "rkts": 542,
+  "mng1": {
+   "no": 165,
+   "section": "Pa Dandr a",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    19,
+    "b"
+   ],
+   "vol": 13,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D544",
+   "section": "rgyud",
+   "vol_letter": "pa",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    13,
+    "a",
+    6
+   ],
+   "vol": 89
+  },
+  "derge_file": "089_རྒྱུད་འབུམ།_པ.txt",
+  "side_index": 18,
+  "n_sides": 37,
+  "titles": {
+   "mong": "Bütügsen γaγča baγatur ner-e-tü yeke dandr-a-yin qaγan",
+   "skt": "Siddhi-ekavīramahātantrarājā-nāma",
+   "tib": "Dpa' bo gcig bu grub pa zhes bya ba'i rgyud kyi rgyal po chen po",
+   "skt_in_mong": "Siddhaikavīra-mahātantrarāja"
+  },
+  "mng1_title_unicode": "᠀ ᠪᠦᠳᠦᠭᠰᠡᠨ ᠭᠠᠭᠴᠠ ᠪᠠᠭᠠᠳᠣᠷ ᠨᠡᠷ᠎ᠡ ᠳᠦ ᠶᠡᠺᠡ ᠳᠠᠨᠳᠷ᠎ᠠ ᠶᠢᠨ ᠬᠠᠭᠠᠨ",
+  "book_id": "6ac029949a86d56c1aa18628",
+  "page_number": 20,
+  "page_label": "f. 10b",
+  "image": "m013_v13_10b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029949a86d56c1aa18628/0020.jpg"
+ },
+ {
+  "key": "m015",
+  "set": "meaning",
+  "vol": 15,
+  "folio": 298,
+  "side": "a",
+  "rkts": 665,
+  "mng1": {
+   "no": 353,
+   "section": "Ba Dandr a",
+   "start": [
+    293,
+    "b"
+   ],
+   "end": [
+    302,
+    "b"
+   ],
+   "vol": 15,
+   "page": 586
+  },
+  "derge": {
+   "toh": "D671",
+   "section": "rgyud",
+   "vol_letter": "ba",
+   "start": [
+    202,
+    "b",
+    6
+   ],
+   "end": [
+    209,
+    "b",
+    5
+   ],
+   "vol": 91
+  },
+  "derge_file": "091_རྒྱུད་འབུམ།_བ.txt",
+  "side_index": 9,
+  "n_sides": 19,
+  "titles": {
+   "mong": "Čoγ-tai qara ökin tngri-yin maγtaγal-un qaγan-u dandr-a",
+   "skt": "Śrī-devīkālīpramarāja-tantra",
+   "tib": "Dpal lha mo nag mo'i bstod pa rgyal po'i rgyud",
+   "skt_in_mong": "Śrī-devī-kālī-praśaṃsā-rāja-tantra"
+  },
+  "mng1_title_unicode": "᠀ ᠴᠣᠭ ᠳᠠᠢ ᠬᠠᠷᠠ ᠦᠺᠢᠨ ᠳᠨᠭᠷᠢ ᠶᠢᠨ ᠮᠠᠭᠳᠠᠭᠠᠯ  ᠣᠨ ᠬᠠᠭᠠᠨ ᠦ ᠳᠠᠨᠳᠷ᠎ᠠ",
+  "book_id": "6ac029999a86d56c1aa18c05",
+  "page_number": 595,
+  "page_label": "f. 298a",
+  "image": "m015_v15_298a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029999a86d56c1aa18c05/0595.jpg"
+ },
+ {
+  "key": "m016",
+  "set": "meaning",
+  "vol": 16,
+  "folio": 323,
+  "side": "b",
+  "rkts": 676,
+  "mng1": {
+   "no": 371,
+   "section": "Ma Dandr a",
+   "start": [
+    319,
+    "a"
+   ],
+   "end": [
+    327,
+    "b"
+   ],
+   "vol": 16,
+   "page": 637
+  },
+  "derge": {
+   "toh": "D682",
+   "section": "rgyud",
+   "vol_letter": "ba",
+   "start": [
+    278,
+    "b",
+    1
+   ],
+   "end": [
+    284,
+    "a",
+    7
+   ],
+   "vol": 91
+  },
+  "derge_file": "091_རྒྱུད་འབུམ།_བ.txt",
+  "side_index": 9,
+  "n_sides": 18,
+  "titles": {
+   "mong": "Qutuγ-tu tusatu salm-a-yin ǰirüken neretü yeke kölgen sudur",
+   "skt": "Ārya-amoghapāśahr̥daya-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa don yod zhags pa'i snying po zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Āryāmoghapāśa-hr̥daya nāma mahāyāna-sūtra id: 553 Mong N° 542 Text in volume 57 Peking eql 526 Peking cf Crossref. Mong 371 Title Mong Qutuγ-tu tusatu salm-a-yin ǰirüken neretü yeke kölgen sudur Title Skt Ārya-amoghapāśahr̥daya-nāma-mahāyāna-sūtra Title Tib 'Phags pa don yod zhags pa'i snying po zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 23 Ref. Mong. side 578 Comment Sanskrit Mong. Āryāmoghapāśa-hr̥daya nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠳᠣᠰᠠᠳᠣ ᠰᠠᠯᠮ᠎ᠠ ᠶᠢᠨ ᠵᠢᠷᠦᠺᠡᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac0299b9a86d56c1aa18f37",
+  "page_number": 646,
+  "page_label": "f. 323b",
+  "image": "m016_v16_323b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0299b9a86d56c1aa18f37/0646.jpg"
+ },
+ {
+  "key": "m018",
+  "set": "meaning",
+  "vol": 18,
+  "folio": 179,
+  "side": "b",
+  "rkts": 751,
+  "mng1": {
+   "no": 422,
+   "section": "Tsha Dandr a",
+   "start": [
+    172,
+    "a"
+   ],
+   "end": [
+    187,
+    "a"
+   ],
+   "vol": 18,
+   "page": 343
+  },
+  "derge": {
+   "toh": "D757",
+   "section": "rgyud",
+   "vol_letter": "wa",
+   "start": [
+    8,
+    "a",
+    7
+   ],
+   "end": [
+    19,
+    "a",
+    5
+   ],
+   "vol": 96
+  },
+  "derge_file": "096_རྒྱུད་འབུམ།_ཝ.txt",
+  "side_index": 15,
+  "n_sides": 31,
+  "titles": {
+   "mong": "Qutuγ-tu yeke küčütü neretü yeke kölgen sudur",
+   "skt": "Ārya-mahābala-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa stobs po che zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-mahābala-nāma-mahāyāna-sūtra id: 599 Mong N° 588 Text in volume 2 Peking eql 572 Peking cf Crossref. Mong 422 Title Mong Qutuγ-tu yeke küčütü neretü yeke kölgen sudur Title Skt Ārya-mahābala-nāma-mahāyāna-sūtra Title Tib 'Phags pa stobs po che zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 24 Ref. Mong. side 78 Comment Sanskrit Mong. Ārya-mahābala-nāma-mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠶᠡᠺᠡ ᠺᠦᠴᠦᠳᠦ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac0299f9a86d56c1aa19590",
+  "page_number": 358,
+  "page_label": "f. 179b",
+  "image": "m018_v18_179b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0299f9a86d56c1aa19590/0358.jpg"
+ },
+ {
+  "key": "m020",
+  "set": "meaning",
+  "vol": 20,
+  "folio": 405,
+  "side": "a",
+  "rkts": 829,
+  "mng1": {
+   "no": 467,
+   "section": "Wa Dandr a",
+   "start": [
+    396,
+    "b"
+   ],
+   "end": [
+    413,
+    "a"
+   ],
+   "vol": 20,
+   "page": 792
+  },
+  "derge": {
+   "toh": "D835",
+   "section": "rnying rgyud",
+   "vol_letter": "kha",
+   "start": [
+    299,
+    "a",
+    1
+   ],
+   "end": [
+    311,
+    "a",
+    7
+   ],
+   "vol": 98
+  },
+  "derge_file": "098_རྙིང་རྒྱུད།_ཁ.txt",
+  "side_index": 17,
+  "n_sides": 34,
+  "titles": {
+   "mong": "Qutuγ-tu arγ-a-yin čalm-a lingqu-a erike neretü",
+   "skt": "—",
+   "tib": "'Phags pa thabs kyi zhags pa pad mo'i phreng zhes bya ba",
+   "skt_in_mong": "Ārya-upāya-pāśa-padmāvali nāma"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠠᠷᠭ᠎ᠠ ᠶᠢᠨ ᠴᠠᠯᠮ᠎ᠠ ᠯᠢᠨᠭᠬᠣ᠎ᠠ ᠡᠷᠢᠺᠡ ᠨᠡᠷᠡᠳᠦ",
+  "book_id": "6ac029a49a86d56c1aa19cd8",
+  "page_number": 807,
+  "page_label": "f. 405a",
+  "image": "m020_v20_405a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029a49a86d56c1aa19cd8/0807.jpg"
+ },
+ {
+  "key": "m023",
+  "set": "meaning",
+  "vol": 23,
+  "folio": 347,
+  "side": "b",
+  "rkts": 508,
+  "mng1": {
+   "no": 561,
+   "section": "'a Dandr a",
+   "start": [
+    347,
+    "a"
+   ],
+   "end": [
+    348,
+    "a"
+   ],
+   "vol": 23,
+   "page": 693
+  },
+  "derge": {
+   "toh": "D509",
+   "section": "rgyud",
+   "vol_letter": "na",
+   "start": [
+    24,
+    "b",
+    6
+   ],
+   "end": [
+    25,
+    "b",
+    1
+   ],
+   "vol": 88
+  },
+  "derge_file": "088_རྒྱུད་འབུམ།_ན.txt",
+  "side_index": 1,
+  "n_sides": 3,
+  "titles": {
+   "mong": "Bodhi ǰirüken-ü arban tümen čimeg-ün tarni",
+   "skt": "Bodhigarbhedriṣṇalakṣadhāraṇī",
+   "tib": "Byang chub kyi snying po'i rgyan 'bum gyi gzungs",
+   "skt_in_mong": "Bodhigarbhedriṣṇalakṣa-dhāraṇī"
+  },
+  "mng1_title_unicode": "᠀ ᠪᠣᠳᠾᠢ ᠵᠢᠷᠦᠺᠡᠨ ᠦ ᠠᠷᠪᠠᠨ ᠳᠦᠮᠡᠭᠡᠳ ᠴᠢᠮᠡᠭ  ᠣᠨ ᠳᠠᠷᠨᠢ",
+  "book_id": "6ac029a99a86d56c1aa1a60c",
+  "page_number": 694,
+  "page_label": "f. 347b",
+  "image": "m023_v23_347b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029a99a86d56c1aa1a60c/0694.jpg"
+ },
+ {
+  "key": "m046",
+  "set": "meaning",
+  "vol": 46,
+  "folio": 199,
+  "side": "b",
+  "rkts": 12,
+  "mng1": {
+   "no": 766,
+   "section": "Ka Naiman minggatu",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    397,
+    "a"
+   ],
+   "vol": 46,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D12",
+   "section": "brgyad stong",
+   "vol_letter": "ka",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    286,
+    "a",
+    6
+   ],
+   "vol": 33
+  },
+  "derge_file": "033_བརྒྱད་སྟོང་པ།.txt",
+  "side_index": 396,
+  "n_sides": 792,
+  "titles": {
+   "mong": "Qutuγ-tu bilig-ün činadu kürügsen naiman mingγ-a-tu",
+   "skt": "Ārya-aṣṭasāhasrikā-prajñāpāramitā",
+   "tib": "'Phags pa shes rab kyi pha rol tu phyin pa brgyad stong pa",
+   "skt_in_mong": "Āryāṣṭasāhasrikā prajñāpāramitā"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠪᠢᠯᠢᠭ  ᠣᠨ ᠴᠢᠨᠠᠳᠣ ᠺᠦᠷᠦᠭᠰᠡᠨ ᠨᠠᠢᠮᠠᠨ ᠮᠢᠨᠭᠭ᠎ᠠ ᠳᠣ",
+  "book_id": "6ac029e29a86d56c1aa1ef8c",
+  "page_number": 398,
+  "page_label": "f. 199b",
+  "image": "m046_v46_199b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029e29a86d56c1aa1ef8c/0398.jpg"
+ },
+ {
+  "key": "m047",
+  "set": "meaning",
+  "vol": 47,
+  "folio": 319,
+  "side": "a",
+  "rkts": 33,
+  "mng1": {
+   "no": 781,
+   "section": "Cha Eldeb bilig baramid",
+   "start": [
+    312,
+    "b"
+   ],
+   "end": [
+    325,
+    "a"
+   ],
+   "vol": 47,
+   "page": 624
+  },
+  "derge": {
+   "toh": "D33",
+   "section": "sher phyin",
+   "vol_letter": "ka",
+   "start": [
+    250,
+    "a",
+    5
+   ],
+   "end": [
+    259,
+    "b",
+    4
+   ],
+   "vol": 34
+  },
+  "derge_file": "034_ཤེས་རབ་སྣ་ཚོགས།.txt",
+  "side_index": 13,
+  "n_sides": 26,
+  "titles": {
+   "mong": "Adagavandi-yin ordu qarsi-yin sudur",
+   "skt": "Āṭānāṭīya-sūtra",
+   "tib": "Lcang lo can kyi pho brang gi mdo",
+   "skt_in_mong": "Āṭānāṭīya-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠠᠳᠠᠭᠠᠸᠠᠨᠳᠢ ᠶᠢᠨ ᠣᠷᠳᠣ ᠬᠠᠷᠰᠢ ᠶᠢᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac029e49a86d56c1aa1f2a5",
+  "page_number": 635,
+  "page_label": "f. 319a",
+  "image": "m047_v47_319a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029e49a86d56c1aa1f2a5/0635.jpg"
+ },
+ {
+  "key": "m049",
+  "set": "meaning",
+  "vol": 49,
+  "folio": 254,
+  "side": "a",
+  "rkts": 54,
+  "mng1": {
+   "no": 801,
+   "section": "Kha Erdeni dabqurliq",
+   "start": [
+    246,
+    "b"
+   ],
+   "end": [
+    261,
+    "b"
+   ],
+   "vol": 49,
+   "page": 492
+  },
+  "derge": {
+   "toh": "D54",
+   "section": "dkon brtsegs",
+   "vol_letter": "kha",
+   "start": [
+    184,
+    "b",
+    6
+   ],
+   "end": [
+    195,
+    "a",
+    7
+   ],
+   "vol": 40
+  },
+  "derge_file": "040_དཀོན་བརྩེགས།_ཁ.txt",
+  "side_index": 15,
+  "n_sides": 31,
+  "titles": {
+   "mong": "Qutuγ-tu qamuγ-ača qaγalγ-a neretü bölüg-ün yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Ārya-samanta-mukha-parivarta nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠬᠠᠮᠣᠭ᠎ᠠᠴᠠ ᠬᠠᠭᠠᠯᠭ᠎ᠠ ᠨᠡᠷᠡᠳᠦ ᠪᠦᠯᠦᠭ  ᠣᠨ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac029e99a86d56c1aa1f863",
+  "page_number": 507,
+  "page_label": "f. 254a",
+  "image": "m049_v49_254a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029e99a86d56c1aa1f863/0507.jpg"
+ },
+ {
+  "key": "m051",
+  "set": "meaning",
+  "vol": 51,
+  "folio": 353,
+  "side": "a",
+  "rkts": 63,
+  "mng1": {
+   "no": 811,
+   "section": "Nga Erdeni dabqurliq",
+   "start": [
+    333,
+    "a"
+   ],
+   "end": [
+    373,
+    "a"
+   ],
+   "vol": 51,
+   "page": 665
+  },
+  "derge": {
+   "toh": "D63",
+   "section": "dkon brtsegs",
+   "vol_letter": "nga",
+   "start": [
+    257,
+    "a",
+    7
+   ],
+   "end": [
+    288,
+    "a",
+    4
+   ],
+   "vol": 42
+  },
+  "derge_file": "042_དཀོན་བརྩེགས།_ང.txt",
+  "side_index": 40,
+  "n_sides": 81,
+  "titles": {
+   "mong": "Qutuγ-tu doγsin küčütü-yin öčigsen neretü yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Ārya-gr̥hapati-ugra-paripr̥cchā nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠳᠣᠭᠰᠢᠨ ᠺᠦᠴᠦᠳᠦ ᠶᠢᠨ ᠦᠴᠢᠭᠰᠡᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac029ee9a86d56c1aa1fe97",
+  "page_number": 705,
+  "page_label": "f. 353a",
+  "image": "m051_v51_353a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029ee9a86d56c1aa1fe97/0705.jpg"
+ },
+ {
+  "key": "m053",
+  "set": "meaning",
+  "vol": 53,
+  "folio": 91,
+  "side": "b",
+  "rkts": 84,
+  "mng1": {
+   "no": 832,
+   "section": "Cha Erdeni dabqurliq",
+   "start": [
+    85,
+    "b"
+   ],
+   "end": [
+    97,
+    "a"
+   ],
+   "vol": 53,
+   "page": 170
+  },
+  "derge": {
+   "toh": "D84",
+   "section": "dkon brtsegs",
+   "vol_letter": "cha",
+   "start": [
+    95,
+    "a",
+    1
+   ],
+   "end": [
+    104,
+    "b",
+    1
+   ],
+   "vol": 44
+  },
+  "derge_file": "044_དཀོན་བརྩེགས།_ཆ.txt",
+  "side_index": 12,
+  "n_sides": 24,
+  "titles": {
+   "mong": "Qutuγ-tu teyin ariγun bisirel-tü ökin-ü öčigsen neretü yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Ārya-dārikā-vimalaśraddha-paripr̥cchā nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠳᠡᠶᠢᠨ ᠠᠷᠢᠭᠣᠨ ᠪᠢᠰᠢᠷᠡᠯ ᠳᠦ ᠦᠺᠢᠨ ᠦ ᠦᠴᠢᠭᠰᠡᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac029f39a86d56c1aa204d6",
+  "page_number": 182,
+  "page_label": "f. 91b",
+  "image": "m053_v53_91b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029f39a86d56c1aa204d6/0182.jpg"
+ },
+ {
+  "key": "m060",
+  "set": "meaning",
+  "vol": 60,
+  "folio": 224,
+  "side": "b",
+  "rkts": 94,
+  "mng1": {
+   "no": 849,
+   "section": "Ka Eldeb",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    447,
+    "a"
+   ],
+   "vol": 60,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D94",
+   "section": "mdo sde",
+   "vol_letter": "ka",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    340,
+    "a",
+    5
+   ],
+   "vol": 45
+  },
+  "derge_file": "045_མདོ་སྡེ།_ཀ.txt",
+  "side_index": 446,
+  "n_sides": 892,
+  "titles": {
+   "mong": "Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur",
+   "skt": "Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1387 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 34 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1388 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 61 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1389 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 87 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1390 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 113 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1391 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 139 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1392 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 168 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1393 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 200 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1394 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 228 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1395 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 264 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1396 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 296 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1397 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 336 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1398 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 372 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1399 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 409 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1402 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 520 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1403 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 559 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1404 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 591 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1405 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 631 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1406 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 670 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1407 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 697 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1408 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 734 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1409 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 770 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1410 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 810 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1411 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 850 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1401 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 482 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra id: 1400 Mong N° 849 Text in volume 1 Peking eql 762 Peking cf Crossref. Mong Title Mong Qutuγ-tu sayin čaγ-un neretü yeke kölgen sudur Title Skt Ārya-bhadrakalpikā-nāma-mahāyāna-sūtra Title Tib 'Phags pa bskal pa bzang po pa zhes bya ba theg pa chen po'i mdo Ref. Mong. volume 60 Ref. Mong. side 449 Comment Sanskrit Mong. Ārya-bhadrakalpikā nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠰᠠᠶᠢᠨ ᠴᠠᠭ  ᠣᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a089a86d56c1aa21621",
+  "page_number": 448,
+  "page_label": "f. 224b",
+  "image": "m060_v60_224b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a089a86d56c1aa21621/0448.jpg"
+ },
+ {
+  "key": "m062",
+  "set": "meaning",
+  "vol": 62,
+  "folio": 411,
+  "side": "b",
+  "rkts": 100,
+  "mng1": {
+   "no": 855,
+   "section": "Ga Eldeb",
+   "start": [
+    392,
+    "b"
+   ],
+   "end": [
+    430,
+    "a"
+   ],
+   "vol": 62,
+   "page": 784
+  },
+  "derge": {
+   "toh": "D100",
+   "section": "mdo sde",
+   "vol_letter": "ga",
+   "start": [
+    276,
+    "a",
+    1
+   ],
+   "end": [
+    305,
+    "a",
+    7
+   ],
+   "vol": 47
+  },
+  "derge_file": "047_མདོ་སྡེ།_ག.txt",
+  "side_index": 38,
+  "n_sides": 76,
+  "titles": {
+   "mong": "Qutuγ-tu qamuγ burqan-u višai-du orusiγulqui belge bilig-ün gegen čimeg neretü yeke kölgen sudur",
+   "skt": "Ārya-sarvabuddhaviṣayāvatārajñānālokālaṃkāra-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa sangs rgyas thams cad kyi yul la 'jug pa'i ye shes snang ba'i rgyan ces bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-sarva-buddha-viṣay-āvatāra-jñānāloka-ālaṃkāra nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "ᠠᠢ ᠳᠣ ᠣᠷᠣᠰᠢᠭᠣᠯᠬᠣᠢ ᠪᠡᠯᠭᠡ ᠪᠢᠯᠢᠭ  ᠣᠨ ᠭᠡᠭᠡᠨ ᠴᠢᠮᠡᠭ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a0c9a86d56c1aa21cae",
+  "page_number": 822,
+  "page_label": "f. 411b",
+  "image": "m062_v62_411b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a0c9a86d56c1aa21cae/0822.jpg"
+ },
+ {
+  "key": "m064",
+  "set": "meaning",
+  "vol": 64,
+  "folio": 382,
+  "side": "a",
+  "rkts": 109,
+  "mng1": {
+   "no": 864,
+   "section": "Ca Eldeb",
+   "start": [
+    377,
+    "a"
+   ],
+   "end": [
+    387,
+    "a"
+   ],
+   "vol": 64,
+   "page": 753
+  },
+  "derge": {
+   "toh": "D109",
+   "section": "mdo sde",
+   "vol_letter": "ca",
+   "start": [
+    285,
+    "a",
+    1
+   ],
+   "end": [
+    292,
+    "a",
+    7
+   ],
+   "vol": 49
+  },
+  "derge_file": "049_མདོ་སྡེ།_ཅ.txt",
+  "side_index": 10,
+  "n_sides": 21,
+  "titles": {
+   "mong": "Qutuγ-tu gay-a terigün-ü aγulan neretü yeke kölgen sudur",
+   "skt": "Ārya-gayāśīrṣa-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa ga ya mgo'i ri zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-gayāśīrṣa nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠭᠠᠶ᠎ᠠ ᠳᠡᠷᠢᠭᠦᠨ ᠦ ᠠᠭᠣᠯᠠᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a129a86d56c1aa2230f",
+  "page_number": 763,
+  "page_label": "f. 382a",
+  "image": "m064_v64_382a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a129a86d56c1aa2230f/0763.jpg"
+ },
+ {
+  "key": "m066",
+  "set": "meaning",
+  "vol": 66,
+  "folio": 374,
+  "side": "a",
+  "rkts": 118,
+  "mng1": {
+   "no": 873,
+   "section": "Ja Eldeb",
+   "start": [
+    369,
+    "a"
+   ],
+   "end": [
+    379,
+    "a"
+   ],
+   "vol": 66,
+   "page": 737
+  },
+  "derge": {
+   "toh": "D118",
+   "section": "mdo sde",
+   "vol_letter": "ja",
+   "start": [
+    290,
+    "b",
+    1
+   ],
+   "end": [
+    298,
+    "a",
+    7
+   ],
+   "vol": 51
+  },
+  "derge_file": "051_མདོ་སྡེ།_ཇ.txt",
+  "side_index": 10,
+  "n_sides": 21,
+  "titles": {
+   "mong": "Qutuγ-tu erdeni-yin kiǰaγar neretü yeke kölgen sudur",
+   "skt": "Ārya-ratnakoṭir-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa rin po che'i mtha' zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-ratna-koṭir nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠡᠷᠳᠡᠨᠢ ᠶᠢᠨ ᠺᠢᠵᠠᠭᠠᠷ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a169a86d56c1aa22937",
+  "page_number": 747,
+  "page_label": "f. 374a",
+  "image": "m066_v66_374a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a169a86d56c1aa22937/0747.jpg"
+ },
+ {
+  "key": "m071",
+  "set": "meaning",
+  "vol": 71,
+  "folio": 226,
+  "side": "b",
+  "rkts": 128,
+  "mng1": {
+   "no": 885,
+   "section": "Na Eldeb",
+   "start": [
+    224,
+    "a"
+   ],
+   "end": [
+    228,
+    "b"
+   ],
+   "vol": 71,
+   "page": 447
+  },
+  "derge": {
+   "toh": "D128",
+   "section": "mdo sde",
+   "vol_letter": "da",
+   "start": [
+    171,
+    "a",
+    1
+   ],
+   "end": [
+    174,
+    "b",
+    4
+   ],
+   "vol": 55
+  },
+  "derge_file": "055_མདོ་སྡེ།_ད.txt",
+  "side_index": 5,
+  "n_sides": 10,
+  "titles": {
+   "mong": "Qutuγ-tu nom-un činar öber-ün mön činar qoγusun-u mön činar-ača ködelüsi ügei ber öber-e öber-e qamuγ-tur üǰügülkü-yin sudur",
+   "skt": "Ārya-dharmatāsvabhāvaśūnyatācalapratisarvāloka-sūtra",
+   "tib": "'Phags pa chos nyid rang gi ngo bo stong pa nyid las mi g.yo bar tha dad par thams cad la snang ba'i mdo",
+   "skt_in_mong": "Ārya-dharmatā-svabhāva-śūnyatācala-pratisarvāloka-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠨᠣᠮ  ᠣᠨ ᠴᠢᠨᠠᠷ ᠦᠪᠡᠷ  ᠣᠨ ᠮᠦᠨ ᠴᠢᠨᠠᠷ ᠬᠣᠭᠣᠰᠣᠨ ᠦ ᠮᠦᠨ ᠴᠢᠨᠠᠷ᠎ᠠᠴᠠ ᠺᠦᠳᠡᠯᠦᠰᠢ ᠦᠭᠡᠢ ᠪᠡᠷ ᠦᠪᠡᠷ᠎ᠡ ᠦᠪᠡᠷ᠎ᠡ ᠬᠠᠮᠣᠭ ᠳᠣᠷ ᠦᠵᠦᠭᠦᠯᠺᠦ ᠶᠢᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a1f9a86d56c1aa2367b",
+  "page_number": 452,
+  "page_label": "f. 226b",
+  "image": "m071_v71_226b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a1f9a86d56c1aa2367b/0452.jpg"
+ },
+ {
+  "key": "m072",
+  "set": "meaning",
+  "vol": 72,
+  "folio": 231,
+  "side": "b",
+  "rkts": 137,
+  "mng1": {
+   "no": 894,
+   "section": "Pa Eldeb",
+   "start": [
+    226,
+    "b"
+   ],
+   "end": [
+    236,
+    "b"
+   ],
+   "vol": 72,
+   "page": 452
+  },
+  "derge": {
+   "toh": "D137",
+   "section": "mdo sde",
+   "vol_letter": "na",
+   "start": [
+    179,
+    "a",
+    4
+   ],
+   "end": [
+    187,
+    "b",
+    2
+   ],
+   "vol": 56
+  },
+  "derge_file": "056_མདོ་སྡེ།_ན.txt",
+  "side_index": 10,
+  "n_sides": 21,
+  "titles": {
+   "mong": "Qutuγ-tu samadis-un manglai(-yin degedü nigen keseg)",
+   "skt": "Ārya-samādhi-yagra-uttama",
+   "tib": "'Phags pa ting nge 'dzin mchog dam pa",
+   "skt_in_mong": "Ārya-samādhi-agrottama"
+  },
+  "mng1_title_unicode": "ᠶᠢᠨ ᠳᠡᠭᠡᠳᠦ ᠨᠢᠭᠡᠨ ᠺᠡᠰᠡᠭ",
+  "book_id": "6ac02a219a86d56c1aa239c2",
+  "page_number": 446,
+  "page_label": "f. 231b",
+  "image": "m072_v72_231b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a219a86d56c1aa239c2/0446.jpg"
+ },
+ {
+  "key": "m074",
+  "set": "meaning",
+  "vol": 74,
+  "folio": 263,
+  "side": "a",
+  "rkts": 154,
+  "mng1": {
+   "no": 910,
+   "section": "Ba Eldeb",
+   "start": [
+    258,
+    "a"
+   ],
+   "end": [
+    268,
+    "a"
+   ],
+   "vol": 74,
+   "page": 515
+  },
+  "derge": {
+   "toh": "D154",
+   "section": "mdo sde",
+   "vol_letter": "pha",
+   "start": [
+    198,
+    "a",
+    3
+   ],
+   "end": [
+    205,
+    "a",
+    6
+   ],
+   "vol": 58
+  },
+  "derge_file": "058_མདོ་སྡེ།_ཕ.txt",
+  "side_index": 10,
+  "n_sides": 21,
+  "titles": {
+   "mong": "Qutuγ-tu sagar-a luus-un qaγan-u öčigsen neretü yeke kölgen sudur",
+   "skt": "Ārya-sāgaranāgarājaparipr̥cchā-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa klu'i rgyal po rgya mtshos zhus pa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-sāgara-nāgarāja-paripr̥cchā nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠰᠠᠭᠠᠷ᠎ᠠ ᠯᠣᠣᠰ  ᠣᠨ ᠬᠠᠭᠠᠨ ᠦ ᠦᠴᠢᠭᠰᠡᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a249a86d56c1aa23f9b",
+  "page_number": 525,
+  "page_label": "f. 263a",
+  "image": "m074_v74_263a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a249a86d56c1aa23f9b/0525.jpg"
+ },
+ {
+  "key": "m076",
+  "set": "meaning",
+  "vol": 76,
+  "folio": 4,
+  "side": "b",
+  "rkts": 172,
+  "mng1": {
+   "no": 928,
+   "section": "Tsa Eldeb",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    7,
+    "a"
+   ],
+   "vol": 76,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D172",
+   "section": "mdo sde",
+   "vol_letter": "ma",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    5,
+    "a",
+    7
+   ],
+   "vol": 60
+  },
+  "derge_file": "060_མདོ་སྡེ།_མ.txt",
+  "side_index": 6,
+  "n_sides": 12,
+  "titles": {
+   "mong": "Qutuγ-tu mañjuśrī-yin öčigsen neretü yeke kölgen sudur",
+   "skt": "Ārya-mañjuśrīparipr̥cchā-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa 'jam dpal gyis dris pa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-mañjuśrī-paripr̥cchā nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "ᠶᠢᠨ ᠦᠴᠢᠭᠰᠡᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a279a86d56c1aa245f8",
+  "page_number": 8,
+  "page_label": "f. 4b",
+  "image": "m076_v76_4b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a279a86d56c1aa245f8/0008.jpg"
+ },
+ {
+  "key": "m078",
+  "set": "meaning",
+  "vol": 78,
+  "folio": 111,
+  "side": "b",
+  "rkts": 204,
+  "mng1": {
+   "no": 961,
+   "section": "Dza Eldeb",
+   "start": [
+    104,
+    "b"
+   ],
+   "end": [
+    118,
+    "a"
+   ],
+   "vol": 78,
+   "page": 208
+  },
+  "derge": {
+   "toh": "D204",
+   "section": "mdo sde",
+   "vol_letter": "tsha",
+   "start": [
+    81,
+    "b",
+    2
+   ],
+   "end": [
+    92,
+    "a",
+    5
+   ],
+   "vol": 62
+  },
+  "derge_file": "062_མདོ་སྡེ།_ཚ.txt",
+  "side_index": 14,
+  "n_sides": 28,
+  "titles": {
+   "mong": "Qutuγ-tu ǰula ergügsen neretü yeke kölgen sudur",
+   "skt": "Ārya-pradīpadānīya-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa mar me 'brul ba zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-pradīpa-dānīya nāma mahāyāna sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠵᠣᠯᠠ ᠡᠷᠭᠦᠭᠰᠡᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a2b9a86d56c1aa24c36",
+  "page_number": 222,
+  "page_label": "f. 111b",
+  "image": "m078_v78_111b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a2b9a86d56c1aa24c36/0222.jpg"
+ },
+ {
+  "key": "m081",
+  "set": "meaning",
+  "vol": 81,
+  "folio": 383,
+  "side": "a",
+  "rkts": 242,
+  "mng1": {
+   "no": 999,
+   "section": "Za Eldeb",
+   "start": [
+    381,
+    "a"
+   ],
+   "end": [
+    385,
+    "a"
+   ],
+   "vol": 81,
+   "page": 761
+  },
+  "derge": {
+   "toh": "D242",
+   "section": "mdo sde",
+   "vol_letter": "zha",
+   "start": [
+    303,
+    "a",
+    7
+   ],
+   "end": [
+    306,
+    "a",
+    7
+   ],
+   "vol": 65
+  },
+  "derge_file": "065_མདོ་སྡེ།_ཞ.txt",
+  "side_index": 4,
+  "n_sides": 9,
+  "titles": {
+   "mong": "Qutuγ-tu uγuγada ǰoriqu-yin kürdün neretü yeke kölgen-ü sudur",
+   "skt": "Āryapariṇāmacakra-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa yongs su bsngo ba'i 'khor lo zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-parināma-cakra nāma mahāyāna sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠣᠭᠣᠭᠠᠳᠠ ᠵᠣᠷᠢᠬᠣ ᠶᠢᠨ ᠺᠦᠷᠳᠦᠨ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠦ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a309a86d56c1aa255cd",
+  "page_number": 761,
+  "page_label": "f. 383a",
+  "image": "m081_v81_383a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a309a86d56c1aa255cd/0761.jpg"
+ },
+ {
+  "key": "m082",
+  "set": "meaning",
+  "vol": 82,
+  "folio": 89,
+  "side": "a",
+  "rkts": 252,
+  "mng1": {
+   "no": 1009,
+   "section": "ha Eldeb",
+   "start": [
+    83,
+    "a"
+   ],
+   "end": [
+    95,
+    "a"
+   ],
+   "vol": 82,
+   "page": 165
+  },
+  "derge": {
+   "toh": "D252",
+   "section": "mdo sde",
+   "vol_letter": "za",
+   "start": [
+    61,
+    "a",
+    2
+   ],
+   "end": [
+    69,
+    "b",
+    2
+   ],
+   "vol": 66
+  },
+  "derge_file": "066_མདོ་སྡེ།_ཟ.txt",
+  "side_index": 12,
+  "n_sides": 25,
+  "titles": {
+   "mong": "Qutuγ-tu dörben bütügel neretü yeke kölgen sudur",
+   "skt": "Ārya-catuṣkanirhāra-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa bzhi pa sgrub pa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-catuṣka-nirhāra nāma mahāyāna sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠳᠦᠷᠪᠡᠨ ᠪᠦᠳᠦᠭᠡᠯ ᠨᠡᠷᠡᠳᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a319a86d56c1aa258cf",
+  "page_number": 177,
+  "page_label": "f. 89a",
+  "image": "m082_v82_89a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a319a86d56c1aa258cf/0177.jpg"
+ },
+ {
+  "key": "m084",
+  "set": "meaning",
+  "vol": 84,
+  "folio": 47,
+  "side": "b",
+  "rkts": 275,
+  "mng1": {
+   "no": 1032,
+   "section": "Ra Eldeb",
+   "start": [
+    42,
+    "a"
+   ],
+   "end": [
+    52,
+    "b"
+   ],
+   "vol": 84,
+   "page": 83
+  },
+  "derge": {
+   "toh": "D275",
+   "section": "mdo sde",
+   "vol_letter": "ya",
+   "start": [
+    36,
+    "a",
+    1
+   ],
+   "end": [
+    44,
+    "b",
+    2
+   ],
+   "vol": 68
+  },
+  "derge_file": "068_མདོ་སྡེ།_ཡ.txt",
+  "side_index": 11,
+  "n_sides": 22,
+  "titles": {
+   "mong": "Qutuγ-tu burqan-u orun kemegdekü yeke kölgen sudur",
+   "skt": "Ārya-buddhabhūmi-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa sangs rgyas kyi sa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-buddha-bhūmi nāma mahāyāna-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠬᠣᠳᠣᠭ ᠳᠣ ᠪᠣᠷᠬᠠᠨ ᠦ ᠣᠷᠣᠨ ᠺᠡᠮᠡᠭᠳᠡᠺᠦ ᠶᠡᠺᠡ ᠺᠦᠯᠭᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a349a86d56c1aa25ef0",
+  "page_number": 94,
+  "page_label": "f. 47b",
+  "image": "m084_v84_47b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a349a86d56c1aa25ef0/0094.jpg"
+ },
+ {
+  "key": "m088",
+  "set": "meaning",
+  "vol": 88,
+  "folio": 205,
+  "side": "b",
+  "rkts": 308,
+  "mng1": {
+   "no": 1068,
+   "section": "Ha Eldeb",
+   "start": [
+    199,
+    "a"
+   ],
+   "end": [
+    211,
+    "b"
+   ],
+   "vol": 88,
+   "page": 397
+  },
+  "derge": {
+   "toh": "D308",
+   "section": "mdo sde",
+   "vol_letter": "sa",
+   "start": [
+    145,
+    "b",
+    4
+   ],
+   "end": [
+    155,
+    "a",
+    1
+   ],
+   "vol": 72
+  },
+  "derge_file": "072_མདོ་སྡེ།_ས.txt",
+  "side_index": 13,
+  "n_sides": 26,
+  "titles": {
+   "mong": "Nasun yegüdkel yambar bolqu-yi očigsen sudur",
+   "skt": "Āyuṣpattiyathākāraparipr̥cchā-sūtra",
+   "tib": "Tshe 'pho ba ji ltar 'gyur ba zhus pa'i mdo",
+   "skt_in_mong": "Āyupattiyathākāra-paripr̥cchā-sūtra"
+  },
+  "mng1_title_unicode": "᠀ ᠨᠠᠰᠣᠨ ᠶᠡᠭᠦᠳᠺᠡᠯ ᠶᠠᠮᠪᠠᠷ ᠪᠣᠯᠬᠣ ᠶᠢ ᠣᠴᠢᠭᠰᠡᠨ ᠰᠣᠳᠣᠷ",
+  "book_id": "6ac02a3c9a86d56c1aa26b80",
+  "page_number": 410,
+  "page_label": "f. 205b",
+  "image": "m088_v88_205b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a3c9a86d56c1aa26b80/0410.jpg"
+ },
+ {
+  "key": "n024a",
+  "set": "name",
+  "unit": "n024",
+  "vol": 24,
+  "folio": 120,
+  "side": "b",
+  "rkts": 313,
+  "mng1": {
+   "no": 615,
+   "section": "Ya Dandr a",
+   "start": [
+    120,
+    "b"
+   ],
+   "end": [
+    123,
+    "b"
+   ],
+   "vol": 24,
+   "page": 240
+  },
+  "derge": {
+   "toh": "D313",
+   "section": "mdo sde",
+   "vol_letter": "sa",
+   "start": [
+    161,
+    "b",
+    1
+   ],
+   "end": [
+    163,
+    "b",
+    5
+   ],
+   "vol": 72
+  },
+  "titles": {
+   "mong": "Qutuγ-tu sayin ka-ra-tri neretü sudur",
+   "skt": "Ārya-bhadrakarātrī-nāma-sūtra",
+   "tib": "'Phags pa mtshan mo bzang po zhes bya ba'i mdo",
+   "skt_in_mong": "Ārya-bhadraka-rātri-nāma-sūtra id: 626 Mong N° 615 Text in volume 29 Peking eql 599_979 Peking cf Crossref. Mong 1073 Title Mong Qutuγ-tu sayin söni neretü sudur Title Skt Ārya-bhadrakarātrī-nāma-sūtra Title Tib 'Phags pa mtshan mo bzang po zhes bya ba'i mdo Ref. Mong. volume 24 Ref. Mong. side 240 Comment Sanskrit Mong. Ārya-bhadra-rātrī-nāma-sūtra"
+  },
+  "book_id": "6ac029ac9a86d56c1aa1a8f2",
+  "page_number": 240,
+  "page_label": "f. 120b",
+  "image": "n024a_v24_120b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029ac9a86d56c1aa1a8f2/0240.jpg"
+ },
+ {
+  "key": "n024b",
+  "set": "name",
+  "unit": "n024",
+  "vol": 24,
+  "folio": 121,
+  "side": "a",
+  "rkts": 313,
+  "mng1": {
+   "no": 615,
+   "section": "Ya Dandr a",
+   "start": [
+    120,
+    "b"
+   ],
+   "end": [
+    123,
+    "b"
+   ],
+   "vol": 24,
+   "page": 240
+  },
+  "derge": {
+   "toh": "D313",
+   "section": "mdo sde",
+   "vol_letter": "sa",
+   "start": [
+    161,
+    "b",
+    1
+   ],
+   "end": [
+    163,
+    "b",
+    5
+   ],
+   "vol": 72
+  },
+  "titles": {
+   "mong": "Qutuγ-tu sayin ka-ra-tri neretü sudur",
+   "skt": "Ārya-bhadrakarātrī-nāma-sūtra",
+   "tib": "'Phags pa mtshan mo bzang po zhes bya ba'i mdo",
+   "skt_in_mong": "Ārya-bhadraka-rātri-nāma-sūtra id: 626 Mong N° 615 Text in volume 29 Peking eql 599_979 Peking cf Crossref. Mong 1073 Title Mong Qutuγ-tu sayin söni neretü sudur Title Skt Ārya-bhadrakarātrī-nāma-sūtra Title Tib 'Phags pa mtshan mo bzang po zhes bya ba'i mdo Ref. Mong. volume 24 Ref. Mong. side 240 Comment Sanskrit Mong. Ārya-bhadra-rātrī-nāma-sūtra"
+  },
+  "book_id": "6ac029ac9a86d56c1aa1a8f2",
+  "page_number": 241,
+  "page_label": "f. 121a",
+  "image": "n024b_v24_121a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029ac9a86d56c1aa1a8f2/0241.jpg"
+ },
+ {
+  "key": "n070a",
+  "set": "name",
+  "unit": "n070",
+  "vol": 70,
+  "folio": 373,
+  "side": "a",
+  "rkts": 126,
+  "mng1": {
+   "no": 883,
+   "section": "Da Eldeb",
+   "start": [
+    373,
+    "a"
+   ],
+   "end": [
+    377,
+    "a"
+   ],
+   "vol": 70,
+   "page": 745
+  },
+  "derge": {
+   "toh": "D126",
+   "section": "mdo sde",
+   "vol_letter": "tha",
+   "start": [
+    293,
+    "a",
+    7
+   ],
+   "end": [
+    296,
+    "a",
+    7
+   ],
+   "vol": 54
+  },
+  "titles": {
+   "mong": "Qutuγ-tu altan qumagi neretü yeke kölgen sudur",
+   "skt": "Ārya-suvarṇabālukopama-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa gser gyi bye ma lta bu zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-suvarṇa-bālukopamā nāma mahāyāna-sūtra"
+  },
+  "book_id": "6ac02a1e9a86d56c1aa23385",
+  "page_number": 745,
+  "page_label": "f. 373a",
+  "image": "n070a_v70_373a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a1e9a86d56c1aa23385/0745.jpg"
+ },
+ {
+  "key": "n070b",
+  "set": "name",
+  "unit": "n070",
+  "vol": 70,
+  "folio": 373,
+  "side": "b",
+  "rkts": 126,
+  "mng1": {
+   "no": 883,
+   "section": "Da Eldeb",
+   "start": [
+    373,
+    "a"
+   ],
+   "end": [
+    377,
+    "a"
+   ],
+   "vol": 70,
+   "page": 745
+  },
+  "derge": {
+   "toh": "D126",
+   "section": "mdo sde",
+   "vol_letter": "tha",
+   "start": [
+    293,
+    "a",
+    7
+   ],
+   "end": [
+    296,
+    "a",
+    7
+   ],
+   "vol": 54
+  },
+  "titles": {
+   "mong": "Qutuγ-tu altan qumagi neretü yeke kölgen sudur",
+   "skt": "Ārya-suvarṇabālukopama-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa gser gyi bye ma lta bu zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-suvarṇa-bālukopamā nāma mahāyāna-sūtra"
+  },
+  "book_id": "6ac02a1e9a86d56c1aa23385",
+  "page_number": 746,
+  "page_label": "f. 373b",
+  "image": "n070b_v70_373b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a1e9a86d56c1aa23385/0746.jpg"
+ },
+ {
+  "key": "n077a",
+  "set": "name",
+  "unit": "n077",
+  "vol": 77,
+  "folio": 321,
+  "side": "a",
+  "rkts": 193,
+  "mng1": {
+   "no": 949,
+   "section": "Tsha Eldeb",
+   "start": [
+    321,
+    "a"
+   ],
+   "end": [
+    326,
+    "b"
+   ],
+   "vol": 77,
+   "page": 641
+  },
+  "derge": {
+   "toh": "D193",
+   "section": "mdo sde",
+   "vol_letter": "tsa",
+   "start": [
+    246,
+    "a",
+    7
+   ],
+   "end": [
+    250,
+    "b",
+    3
+   ],
+   "vol": 61
+  },
+  "titles": {
+   "mong": "Qutuγ-tu čoγtu yeke ökin tngri-dür vivanggirid üǰügülügsen",
+   "skt": "Ārya-śrīmahādevī-vyākaraṇa",
+   "tib": "'Phags pa lha mo chen mo dpal lung bstan pa",
+   "skt_in_mong": "Ārya-śrīmahādevī-vyākaraṇa"
+  },
+  "book_id": "6ac02a299a86d56c1aa2491b",
+  "page_number": 641,
+  "page_label": "f. 321a",
+  "image": "n077a_v77_321a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a299a86d56c1aa2491b/0641.jpg"
+ },
+ {
+  "key": "n077b",
+  "set": "name",
+  "unit": "n077",
+  "vol": 77,
+  "folio": 321,
+  "side": "b",
+  "rkts": 193,
+  "mng1": {
+   "no": 949,
+   "section": "Tsha Eldeb",
+   "start": [
+    321,
+    "a"
+   ],
+   "end": [
+    326,
+    "b"
+   ],
+   "vol": 77,
+   "page": 641
+  },
+  "derge": {
+   "toh": "D193",
+   "section": "mdo sde",
+   "vol_letter": "tsa",
+   "start": [
+    246,
+    "a",
+    7
+   ],
+   "end": [
+    250,
+    "b",
+    3
+   ],
+   "vol": 61
+  },
+  "titles": {
+   "mong": "Qutuγ-tu čoγtu yeke ökin tngri-dür vivanggirid üǰügülügsen",
+   "skt": "Ārya-śrīmahādevī-vyākaraṇa",
+   "tib": "'Phags pa lha mo chen mo dpal lung bstan pa",
+   "skt_in_mong": "Ārya-śrīmahādevī-vyākaraṇa"
+  },
+  "book_id": "6ac02a299a86d56c1aa2491b",
+  "page_number": 642,
+  "page_label": "f. 321b",
+  "image": "n077b_v77_321b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a299a86d56c1aa2491b/0642.jpg"
+ },
+ {
+  "key": "n063a",
+  "set": "name",
+  "unit": "n063",
+  "vol": 63,
+  "folio": 364,
+  "side": "b",
+  "rkts": 103,
+  "mng1": {
+   "no": 858,
+   "section": "Nga Eldeb",
+   "start": [
+    364,
+    "b"
+   ],
+   "end": [
+    379,
+    "a"
+   ],
+   "vol": 63,
+   "page": 728
+  },
+  "derge": {
+   "toh": "D103",
+   "section": "mdo sde",
+   "vol_letter": "nga",
+   "start": [
+    275,
+    "a",
+    1
+   ],
+   "end": [
+    285,
+    "b",
+    4
+   ],
+   "vol": 48
+  },
+  "titles": {
+   "mong": "Qutuγ-tu sedkisi ügei gegegen köbegün-e uqaγuluγsan ner-e-tü nom-un ǰüil",
+   "skt": "Ārya-acintya prabhāsa nirdeśa-nāma-dharmaparyāya",
+   "tib": "'Phags pa khye'u snang ba bsam gyis mi khyab pas bstan pa zhes bya ba'i chos kyi rnam grangs",
+   "skt_in_mong": "Ārya-acintya-prabhāsa-nirdeśa nāma dharma-paryāya"
+  },
+  "book_id": "6ac02a0f9a86d56c1aa2200d",
+  "page_number": 728,
+  "page_label": "f. 364b",
+  "image": "n063a_v63_364b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a0f9a86d56c1aa2200d/0728.jpg"
+ },
+ {
+  "key": "n063b",
+  "set": "name",
+  "unit": "n063",
+  "vol": 63,
+  "folio": 365,
+  "side": "a",
+  "rkts": 103,
+  "mng1": {
+   "no": 858,
+   "section": "Nga Eldeb",
+   "start": [
+    364,
+    "b"
+   ],
+   "end": [
+    379,
+    "a"
+   ],
+   "vol": 63,
+   "page": 728
+  },
+  "derge": {
+   "toh": "D103",
+   "section": "mdo sde",
+   "vol_letter": "nga",
+   "start": [
+    275,
+    "a",
+    1
+   ],
+   "end": [
+    285,
+    "b",
+    4
+   ],
+   "vol": 48
+  },
+  "titles": {
+   "mong": "Qutuγ-tu sedkisi ügei gegegen köbegün-e uqaγuluγsan ner-e-tü nom-un ǰüil",
+   "skt": "Ārya-acintya prabhāsa nirdeśa-nāma-dharmaparyāya",
+   "tib": "'Phags pa khye'u snang ba bsam gyis mi khyab pas bstan pa zhes bya ba'i chos kyi rnam grangs",
+   "skt_in_mong": "Ārya-acintya-prabhāsa-nirdeśa nāma dharma-paryāya"
+  },
+  "book_id": "6ac02a0f9a86d56c1aa2200d",
+  "page_number": 729,
+  "page_label": "f. 365a",
+  "image": "n063b_v63_365a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a0f9a86d56c1aa2200d/0729.jpg"
+ },
+ {
+  "key": "n052a",
+  "set": "name",
+  "unit": "n052",
+  "vol": 52,
+  "folio": 337,
+  "side": "b",
+  "rkts": 79,
+  "mng1": {
+   "no": 827,
+   "section": "Ca Erdeni dabqurliq",
+   "start": [
+    337,
+    "b"
+   ],
+   "end": [
+    364,
+    "a"
+   ],
+   "vol": 52,
+   "page": 674
+  },
+  "derge": {
+   "toh": "D79",
+   "section": "dkon brtsegs",
+   "vol_letter": "ca",
+   "start": [
+    266,
+    "b",
+    6
+   ],
+   "end": [
+    284,
+    "b",
+    7
+   ],
+   "vol": 43
+  },
+  "titles": {
+   "mong": "Qutuγ-tu sedkisi ügei burqan-u orud-i uqaγulqui neretü yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Ārya-acintya-buddha-viṣaya-nirdeśa nāma mahāyāna-sūtra"
+  },
+  "book_id": "6ac029f09a86d56c1aa2018b",
+  "page_number": 674,
+  "page_label": "f. 337b",
+  "image": "n052a_v52_337b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029f09a86d56c1aa2018b/0674.jpg"
+ },
+ {
+  "key": "n052b",
+  "set": "name",
+  "unit": "n052",
+  "vol": 52,
+  "folio": 338,
+  "side": "a",
+  "rkts": 79,
+  "mng1": {
+   "no": 827,
+   "section": "Ca Erdeni dabqurliq",
+   "start": [
+    337,
+    "b"
+   ],
+   "end": [
+    364,
+    "a"
+   ],
+   "vol": 52,
+   "page": 674
+  },
+  "derge": {
+   "toh": "D79",
+   "section": "dkon brtsegs",
+   "vol_letter": "ca",
+   "start": [
+    266,
+    "b",
+    6
+   ],
+   "end": [
+    284,
+    "b",
+    7
+   ],
+   "vol": 43
+  },
+  "titles": {
+   "mong": "Qutuγ-tu sedkisi ügei burqan-u orud-i uqaγulqui neretü yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Ārya-acintya-buddha-viṣaya-nirdeśa nāma mahāyāna-sūtra"
+  },
+  "book_id": "6ac029f09a86d56c1aa2018b",
+  "page_number": 675,
+  "page_label": "f. 338a",
+  "image": "n052b_v52_338a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029f09a86d56c1aa2018b/0675.jpg"
+ },
+ {
+  "key": "n075a",
+  "set": "name",
+  "unit": "n075",
+  "vol": 75,
+  "folio": 390,
+  "side": "b",
+  "rkts": 171,
+  "mng1": {
+   "no": 927,
+   "section": "Ma Eldeb",
+   "start": [
+    390,
+    "b"
+   ],
+   "end": [
+    396,
+    "a"
+   ],
+   "vol": 75,
+   "page": 780
+  },
+  "derge": {
+   "toh": "D171",
+   "section": "mdo sde",
+   "vol_letter": "ba",
+   "start": [
+    310,
+    "b",
+    4
+   ],
+   "end": [
+    314,
+    "a",
+    7
+   ],
+   "vol": 59
+  },
+  "titles": {
+   "mong": "Qutuγ-tai emegen eke-yin öčigsen neretü yeke kölgen sudur",
+   "skt": "Ārya-mahālalikāparipr̥cchā-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa bgres mos zhus pa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-mahālalikā-paripr̥cchā nāma mahāyāna-sūtra"
+  },
+  "book_id": "6ac02a259a86d56c1aa242dd",
+  "page_number": 780,
+  "page_label": "f. 390b",
+  "image": "n075a_v75_390b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a259a86d56c1aa242dd/0780.jpg"
+ },
+ {
+  "key": "n075b",
+  "set": "name",
+  "unit": "n075",
+  "vol": 75,
+  "folio": 391,
+  "side": "a",
+  "rkts": 171,
+  "mng1": {
+   "no": 927,
+   "section": "Ma Eldeb",
+   "start": [
+    390,
+    "b"
+   ],
+   "end": [
+    396,
+    "a"
+   ],
+   "vol": 75,
+   "page": 780
+  },
+  "derge": {
+   "toh": "D171",
+   "section": "mdo sde",
+   "vol_letter": "ba",
+   "start": [
+    310,
+    "b",
+    4
+   ],
+   "end": [
+    314,
+    "a",
+    7
+   ],
+   "vol": 59
+  },
+  "titles": {
+   "mong": "Qutuγ-tai emegen eke-yin öčigsen neretü yeke kölgen sudur",
+   "skt": "Ārya-mahālalikāparipr̥cchā-nāma-mahāyāna-sūtra",
+   "tib": "'Phags pa bgres mos zhus pa zhes bya ba theg pa chen po'i mdo",
+   "skt_in_mong": "Ārya-mahālalikā-paripr̥cchā nāma mahāyāna-sūtra"
+  },
+  "book_id": "6ac02a259a86d56c1aa242dd",
+  "page_number": 781,
+  "page_label": "f. 391a",
+  "image": "n075b_v75_391a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac02a259a86d56c1aa242dd/0781.jpg"
+ },
+ {
+  "key": "n012a",
+  "set": "name",
+  "unit": "n012",
+  "vol": 12,
+  "folio": 51,
+  "side": "a",
+  "rkts": 541,
+  "mng1": {
+   "no": 164,
+   "section": "Na Dandr a",
+   "start": [
+    51,
+    "a"
+   ],
+   "end": [
+    387,
+    "a"
+   ],
+   "vol": 12,
+   "page": 101
+  },
+  "derge": {
+   "toh": "D543",
+   "section": "rgyud",
+   "vol_letter": "na",
+   "start": [
+    105,
+    "a",
+    1
+   ],
+   "end": [
+    351,
+    "a",
+    6
+   ],
+   "vol": 88
+  },
+  "titles": {
+   "mong": "Qutuγ-tu mañjuśrī-yin iǰaγur ündüsün",
+   "skt": "Ārya-mañjuśrīmūlatantra",
+   "tib": "'Phags pa 'jam dpal gyi rtsa ba'i rgyud",
+   "skt_in_mong": "Ārya-mañjuśrī-mūla-tantra"
+  },
+  "book_id": "6ac029919a86d56c1aa1831e",
+  "page_number": 101,
+  "page_label": "f. 51a",
+  "image": "n012a_v12_51a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029919a86d56c1aa1831e/0101.jpg"
+ },
+ {
+  "key": "n012b",
+  "set": "name",
+  "unit": "n012",
+  "vol": 12,
+  "folio": 51,
+  "side": "b",
+  "rkts": 541,
+  "mng1": {
+   "no": 164,
+   "section": "Na Dandr a",
+   "start": [
+    51,
+    "a"
+   ],
+   "end": [
+    387,
+    "a"
+   ],
+   "vol": 12,
+   "page": 101
+  },
+  "derge": {
+   "toh": "D543",
+   "section": "rgyud",
+   "vol_letter": "na",
+   "start": [
+    105,
+    "a",
+    1
+   ],
+   "end": [
+    351,
+    "a",
+    6
+   ],
+   "vol": 88
+  },
+  "titles": {
+   "mong": "Qutuγ-tu mañjuśrī-yin iǰaγur ündüsün",
+   "skt": "Ārya-mañjuśrīmūlatantra",
+   "tib": "'Phags pa 'jam dpal gyi rtsa ba'i rgyud",
+   "skt_in_mong": "Ārya-mañjuśrī-mūla-tantra"
+  },
+  "book_id": "6ac029919a86d56c1aa1831e",
+  "page_number": 102,
+  "page_label": "f. 51b",
+  "image": "n012b_v12_51b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029919a86d56c1aa1831e/0102.jpg"
+ },
+ {
+  "key": "n010a",
+  "set": "name",
+  "unit": "n010",
+  "vol": 10,
+  "folio": 1,
+  "side": "b",
+  "rkts": 489,
+  "mng1": {
+   "no": 123,
+   "section": "Tha Dandr a",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    105,
+    "b"
+   ],
+   "vol": 10,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D490",
+   "section": "rgyud",
+   "vol_letter": "tha",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    82,
+    "a",
+    7
+   ],
+   "vol": 86
+  },
+  "titles": {
+   "mong": "Čoγtu včir ǰirüken čimegsen neretü ündüsün-ü yeke qaγan",
+   "skt": "Śrī-vajramaṇḍālaṃkāra-nāma-mahātantrarājā",
+   "tib": "Dpal rdo rje snying po rgyan ces bya ba'i rgyud kyi rgyal po chen po",
+   "skt_in_mong": "Śrī-vajra-maṇḍālaṃkāra nāma mahātantra-rāja"
+  },
+  "book_id": "6ac0298d9a86d56c1aa17ce2",
+  "page_number": 2,
+  "page_label": "f. 1b",
+  "image": "n010a_v10_1b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0298d9a86d56c1aa17ce2/0002.jpg"
+ },
+ {
+  "key": "n010b",
+  "set": "name",
+  "unit": "n010",
+  "vol": 10,
+  "folio": 2,
+  "side": "a",
+  "rkts": 489,
+  "mng1": {
+   "no": 123,
+   "section": "Tha Dandr a",
+   "start": [
+    1,
+    "b"
+   ],
+   "end": [
+    105,
+    "b"
+   ],
+   "vol": 10,
+   "page": 2
+  },
+  "derge": {
+   "toh": "D490",
+   "section": "rgyud",
+   "vol_letter": "tha",
+   "start": [
+    1,
+    "b",
+    1
+   ],
+   "end": [
+    82,
+    "a",
+    7
+   ],
+   "vol": 86
+  },
+  "titles": {
+   "mong": "Čoγtu včir ǰirüken čimegsen neretü ündüsün-ü yeke qaγan",
+   "skt": "Śrī-vajramaṇḍālaṃkāra-nāma-mahātantrarājā",
+   "tib": "Dpal rdo rje snying po rgyan ces bya ba'i rgyud kyi rgyal po chen po",
+   "skt_in_mong": "Śrī-vajra-maṇḍālaṃkāra nāma mahātantra-rāja"
+  },
+  "book_id": "6ac0298d9a86d56c1aa17ce2",
+  "page_number": 3,
+  "page_label": "f. 2a",
+  "image": "n010b_v10_2a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac0298d9a86d56c1aa17ce2/0003.jpg"
+ },
+ {
+  "key": "n021a",
+  "set": "name",
+  "unit": "n021",
+  "vol": 21,
+  "folio": 169,
+  "side": "a",
+  "rkts": 834,
+  "mng1": {
+   "no": 472,
+   "section": "Zha Dandr a",
+   "start": [
+    169,
+    "a"
+   ],
+   "end": [
+    269,
+    "b"
+   ],
+   "vol": 21,
+   "page": 337
+  },
+  "derge": {
+   "toh": "D840",
+   "section": "rnying rgyud",
+   "vol_letter": "ga",
+   "start": [
+    130,
+    "a",
+    1
+   ],
+   "end": [
+    202,
+    "a",
+    3
+   ],
+   "vol": 99
+  },
+  "titles": {
+   "mong": "Čoγtu heruka nigülesküi čenggegči dandr-a gün narin niγuča-yin degedü neretü",
+   "skt": "Śrīherukakaruṇākrīḍitatantraguhyagaṃbhīrottama-nāma",
+   "tib": "Dpal he ru ka snying rje rol pa'i rgyud gsang ba zab mo'i mchog ces bya ba",
+   "skt_in_mong": "Śrī-heruka-karuṇā-krīḍita-tantra-guhya-gambhīrottama nāma"
+  },
+  "book_id": "6ac029a59a86d56c1aa1a013",
+  "page_number": 337,
+  "page_label": "f. 169a",
+  "image": "n021a_v21_169a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029a59a86d56c1aa1a013/0337.jpg"
+ },
+ {
+  "key": "n021b",
+  "set": "name",
+  "unit": "n021",
+  "vol": 21,
+  "folio": 169,
+  "side": "b",
+  "rkts": 834,
+  "mng1": {
+   "no": 472,
+   "section": "Zha Dandr a",
+   "start": [
+    169,
+    "a"
+   ],
+   "end": [
+    269,
+    "b"
+   ],
+   "vol": 21,
+   "page": 337
+  },
+  "derge": {
+   "toh": "D840",
+   "section": "rnying rgyud",
+   "vol_letter": "ga",
+   "start": [
+    130,
+    "a",
+    1
+   ],
+   "end": [
+    202,
+    "a",
+    3
+   ],
+   "vol": 99
+  },
+  "titles": {
+   "mong": "Čoγtu heruka nigülesküi čenggegči dandr-a gün narin niγuča-yin degedü neretü",
+   "skt": "Śrīherukakaruṇākrīḍitatantraguhyagaṃbhīrottama-nāma",
+   "tib": "Dpal he ru ka snying rje rol pa'i rgyud gsang ba zab mo'i mchog ces bya ba",
+   "skt_in_mong": "Śrī-heruka-karuṇā-krīḍita-tantra-guhya-gambhīrottama nāma"
+  },
+  "book_id": "6ac029a59a86d56c1aa1a013",
+  "page_number": 338,
+  "page_label": "f. 169b",
+  "image": "n021b_v21_169b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029a59a86d56c1aa1a013/0338.jpg"
+ },
+ {
+  "key": "n048a",
+  "set": "name",
+  "unit": "n048",
+  "vol": 48,
+  "folio": 324,
+  "side": "b",
+  "rkts": 49,
+  "mng1": {
+   "no": 796,
+   "section": "Ka Erdeni dabqurliq",
+   "start": [
+    324,
+    "b"
+   ],
+   "end": [
+    374,
+    "b"
+   ],
+   "vol": 48,
+   "page": 648
+  },
+  "derge": {
+   "toh": "D49",
+   "section": "dkon brtsegs",
+   "vol_letter": "ka",
+   "start": [
+    237,
+    "b",
+    1
+   ],
+   "end": [
+    270,
+    "a",
+    5
+   ],
+   "vol": 39
+  },
+  "titles": {
+   "mong": "Qutuγ-tu čaγlasi ügei gerel-i ǰokiyaγči kemeküi yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Āryāmitābha-vyūha-nāma-mahāyāna-sūtra"
+  },
+  "book_id": "6ac029e79a86d56c1aa1f574",
+  "page_number": 648,
+  "page_label": "f. 324b",
+  "image": "n048a_v48_324b.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029e79a86d56c1aa1f574/0648.jpg"
+ },
+ {
+  "key": "n048b",
+  "set": "name",
+  "unit": "n048",
+  "vol": 48,
+  "folio": 325,
+  "side": "a",
+  "rkts": 49,
+  "mng1": {
+   "no": 796,
+   "section": "Ka Erdeni dabqurliq",
+   "start": [
+    324,
+    "b"
+   ],
+   "end": [
+    374,
+    "b"
+   ],
+   "vol": 48,
+   "page": 648
+  },
+  "derge": {
+   "toh": "D49",
+   "section": "dkon brtsegs",
+   "vol_letter": "ka",
+   "start": [
+    237,
+    "b",
+    1
+   ],
+   "end": [
+    270,
+    "a",
+    5
+   ],
+   "vol": 39
+  },
+  "titles": {
+   "mong": "Qutuγ-tu čaγlasi ügei gerel-i ǰokiyaγči kemeküi yeke kölgen sudur",
+   "skt": "Ārya-mahāratnakūṭa-dharmaparyāya-śatasāhasrika-grantha",
+   "tib": "'Phags pa dkon mchog brtsegs pa chen po'i chos kyi rnam grangs le'u stong phrag brgya pa",
+   "skt_in_mong": "Āryāmitābha-vyūha-nāma-mahāyāna-sūtra"
+  },
+  "book_id": "6ac029e79a86d56c1aa1f574",
+  "page_number": 649,
+  "page_label": "f. 325a",
+  "image": "n048b_v48_325a.jpg",
+  "src": "https://images.sourcelibrary.org/pages/6ac029e79a86d56c1aa1f574/0649.jpg"
+ }
+]

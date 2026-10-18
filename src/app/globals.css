@@ -383,6 +383,21 @@ body:has([data-reader-v2]) {
   outline: none;
 }
 
+/* The phone menu hides the cookie banner while it is open (SiteMenuPanel). */
+html[data-site-menu-open] [data-cookie-banner] {
+  display: none;
+}
+
+/* Same for the site header's search fields: the desktop field's focus state is
+   its underline and the phone menu's is its wrapper border, so the global ring
+   would draw a second, rust box inside them. */
+[data-site-header] input:focus,
+[data-site-header] input:focus-visible,
+#site-menu input:focus,
+#site-menu input:focus-visible {
+  outline: none;
+}
+
 /* …except the edit-mode textareas, which have no wrapper to carry the state
    and so had no focus indicator at all. It is the surface an editor types the
    most in. */
@@ -1221,3 +1236,46 @@ html[data-sl-hide-ai="1"] [data-view-section="ai-summary-catalog"] {
 .hero-load-in > :nth-child(3) { animation-delay: 0.5s; }
 .hero-load-in > :nth-child(4) { animation-delay: 0.6s; }
 .hero-load-in > :nth-child(n+5) { animation-delay: 0.7s; }
+
+/* ── Article pages (src/app/articles/layout.tsx wraps them in .article-page) ──
+   No red text in articles. Links read as body text with a thin gold underline
+   that darkens on hover; the old rust link and text classes the articles were
+   written with are neutralised here rather than in each of the 88 files. */
+.article-page main:not([data-articles-index]) a:not([class*="bg-"]):not([data-card] *) {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent-gold) 70%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.15s;
+}
+.article-page main:not([data-articles-index]) a:not([class*="bg-"]):hover {
+  color: inherit;
+  text-decoration-color: var(--text-primary);
+}
+.article-page main:not([data-articles-index]) .text-accent-rust,
+.article-page main:not([data-articles-index]) [class*="hover:text-accent-rust"]:hover {
+  color: var(--text-primary);
+}
+
+/* Pictures in an article open the lightbox (src/app/articles/ArticleLightbox.tsx);
+   a picture inside a link (an article or book card) follows the link instead. */
+.article-page main.has-lightbox img { cursor: zoom-in; }
+.article-page main.has-lightbox [data-no-lightbox] img,
+.article-page main.has-lightbox a img { cursor: pointer; }
+
+/* Phones: article text one step smaller, captions and notes with it. Body
+   18 -> 15px, lead paragraphs 20 -> 17, quotes and large text 18 -> 15,
+   captions and small notes 14 -> 12, the smallest 12 -> 11. Headings keep
+   their size. Only inside the article body (main), not the hero or panels. */
+@media (max-width: 639px) {
+  .article-page main:not([data-articles-index]) .prose-content { --reader-font-size: 15px; }
+  .article-page main:not([data-articles-index]) .text-xl:not(h1, h2, h3, h4) { font-size: 1.0625rem; line-height: 1.6; }
+  .article-page main:not([data-articles-index]) .text-lg:not(h1, h2, h3, h4) { font-size: 0.9375rem; line-height: 1.65; }
+  .article-page main:not([data-articles-index]) .text-base:not(h1, h2, h3, h4) { font-size: 0.9375rem; }
+  .article-page main:not([data-articles-index]) .text-sm { font-size: 0.75rem; line-height: 1.55; }
+  .article-page main:not([data-articles-index]) .text-xs { font-size: 0.6875rem; }
+}
+
+/* The lightbox is dark: a white focus ring there, not the site's rust one. */
+[data-article-lightbox] :focus-visible { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 2px; }

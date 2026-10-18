@@ -26,86 +26,84 @@ export function useLocalePath(): (href: string) => string {
 // ---------- Shared site-shell strings (header nav) ----------
 
 export interface NavStrings {
-  collections: string;
+  library: string;
   gallery: string;
-  identify: string;
-  browse: string;
-  catalogue: string;
-  works: string;
+  collections: string;
+  articles: string;
   explore: string;
-  librarian: string;
+  about: string;
+  /** Short on purpose: the desktop row has to fit in every language (#site-menu). */
+  askLibrarian: string;
   search: string;
   menu: string;
   support: string;
 }
 
+// The header order is Library, Gallery, Collections, Articles, Explore, About,
+// Ask the librarian, then search, language, sign in and support. Labels are the
+// short forms: at 1280px the whole row has to fit in Spanish, Latin and Dutch
+// too, and the long forms ("Pregunta al bibliotecario", "Visualizaciones")
+// pushed Support off the edge. The full names stay in the footer.
 export const NAV_STRINGS: Record<Locale, NavStrings> = {
   en: {
-    collections: 'Collections',
+    library: 'Library',
     gallery: 'Gallery',
-    identify: 'Identify',
-    browse: 'Browse',
-    catalogue: 'Catalogue',
-    works: 'Works',
+    collections: 'Collections',
+    articles: 'Articles',
     explore: 'Explore',
-    librarian: 'Librarian',
+    about: 'About',
+    askLibrarian: 'Ask the librarian',
     search: 'Search',
     menu: 'Navigation menu',
     support: 'Support',
   },
   es: {
-    collections: 'Colecciones',
+    library: 'Biblioteca',
     gallery: 'Galería',
-    identify: 'Identificar',
-    browse: 'Explorar',
-    catalogue: 'Catálogo',
-    works: 'Obras',
-    // NOT 'Explorar' — that is already this nav's label for Browse. The hub is
-    // a set of interactive visualizations, so name it for what it holds.
-    explore: 'Visualizaciones',
-    librarian: 'Bibliotecario',
+    collections: 'Colecciones',
+    articles: 'Artículos',
+    // Free now that Browse has left the header (it used to own 'Explorar').
+    explore: 'Explorar',
+    about: 'Nosotros',
+    askLibrarian: 'Bibliotecario',
     search: 'Buscar',
     menu: 'Menú de navegación',
     support: 'Donar',
   },
   // Latin (#6254). Draft copy, to be read by a Latinist before launch.
   la: {
-    collections: 'Collectiones',
+    library: 'Bibliotheca',
     gallery: 'Pinacotheca',
-    identify: 'Agnosce',
-    browse: 'Perlustra',
-    catalogue: 'Catalogus',
-    works: 'Opera',
+    collections: 'Collectiones',
+    articles: 'Commentarii',
     explore: 'Tabulae',
-    librarian: 'Bibliothecarius',
+    about: 'De nobis',
+    askLibrarian: 'Bibliothecarius',
     search: 'Quaere',
     menu: 'Index navigationis',
     support: 'Sustenta',
   },
   // Dutch (#6382). Draft copy, to be read by a native speaker before launch.
   nl: {
-    collections: 'Collecties',
+    library: 'Bibliotheek',
     gallery: 'Galerij',
-    identify: 'Herkennen',
-    browse: 'Bladeren',
-    catalogue: 'Catalogus',
-    works: 'Werken',
-    // NOT 'Bladeren' — that is Browse. The hub is a set of visualizations.
+    collections: 'Collecties',
+    articles: 'Artikelen',
     explore: 'Verkennen',
-    librarian: 'Bibliothecaris',
+    about: 'Over ons',
+    askLibrarian: 'Bibliothecaris',
     search: 'Zoeken',
     menu: 'Navigatiemenu',
     support: 'Steun ons',
   },
   zh: {
-    collections: '专题',
+    library: '书库',
     gallery: '图库',
-    identify: '识图',
-    browse: '浏览',
-    catalogue: '目录',
-    works: '作品',
+    collections: '专题',
+    articles: '文章',
     explore: '可视化',
-    librarian: '图书馆员',
+    about: '关于',
+    askLibrarian: '图书馆员',
     search: '搜索',
     menu: '导航菜单',
     support: '支持',
@@ -366,7 +364,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     progress: 'Progress',
     models: 'AI models',
     research: 'Research',
-    researchNotes: 'Research notes',
+    researchNotes: 'Articles',
     privacy: 'Privacy',
     cookieSettings: 'Cookie settings',
     terms: 'Terms',
@@ -420,7 +418,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     progress: 'Progreso',
     models: 'Modelos de IA',
     research: 'Investigación',
-    researchNotes: 'Notas de investigación',
+    researchNotes: 'Artículos',
     privacy: 'Privacidad',
     cookieSettings: 'Preferencias de cookies',
     terms: 'Términos',
@@ -530,7 +528,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     progress: 'Voortgang',
     models: 'AI-modellen',
     research: 'Onderzoek',
-    researchNotes: 'Onderzoeksnotities',
+    researchNotes: 'Artikelen',
     privacy: 'Privacy',
     cookieSettings: 'Cookie-instellingen',
     terms: 'Voorwaarden',
@@ -584,7 +582,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     progress: '进展',
     models: 'AI 模型',
     research: '研究',
-    researchNotes: '研究笔记',
+    researchNotes: '文章',
     privacy: '隐私',
     cookieSettings: 'Cookie 设置',
     terms: '条款',

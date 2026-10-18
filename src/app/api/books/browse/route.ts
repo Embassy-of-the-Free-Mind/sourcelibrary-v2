@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
  *
  * Query params: same as /api/books/library
  *   limit, skip, language, category, collection, library,
- *   first_translation, has_translation, sort
+ *   first_translation, has_translation, sort, work_from, work_to
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -30,8 +30,14 @@ export async function GET(request: NextRequest) {
   const hasTranslation = searchParams.get('has_translation') === 'true';
   const sort = searchParams.get('sort') || 'recent-translation';
 
+  // When the work was written (#6873). books_catalog carries no work date, so a
+  // work-date range is answered by the MongoDB endpoint, which filters on the
+  // indexed `source_work_dates_meta.work.year`.
+  const workFrom = searchParams.get('work_from') || '';
+  const workTo = searchParams.get('work_to') || '';
+
   // Text search still needs Atlas Search — redirect to the MongoDB endpoint
-  if (search.trim()) {
+  if (search.trim() || workFrom || workTo) {
     const url = new URL('/api/books/library', request.url);
     url.search = searchParams.toString();
     return NextResponse.redirect(url, 307);

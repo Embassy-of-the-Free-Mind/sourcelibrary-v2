@@ -61,6 +61,18 @@ describe('search lane filter table', () => {
     expect(laneHonours('unified', 'dates')).toBe(true);
     expect(laneHonours('index', 'dates')).toBe(true);
     expect(laneHonours('browse-images', 'dates')).toBe(true);
+    expect(laneHonours('browse-books', 'workDate')).toBe(true);
+  });
+
+  it('offers the work-date filter only in browse, the one lane that applies it (#6873)', () => {
+    // The search lanes read books_catalog, Atlas and vector stores, none of
+    // which carry the work date; a control there would light up and filter nothing.
+    for (const lane of ['unified', 'books', 'index', 'images', 'browse-images'] as SearchLane[]) {
+      expect(laneHonours(lane, 'workDate')).toBe(false);
+    }
+    // And the browse route hands the range to the Mongo route that filters it.
+    expect(reads(readFileSync(join(root, 'src/app/api/books/library/route.ts'), 'utf8'), 'work_from')).toBe(true);
+    expect(reads(readFileSync(join(root, 'src/app/api/books/library/route.ts'), 'utf8'), 'work_to')).toBe(true);
   });
 
   it('every lane keeps at least one filter, so the Filters toggle is never an empty panel', () => {

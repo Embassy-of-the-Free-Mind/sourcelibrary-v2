@@ -487,7 +487,7 @@ export default async function SponsorsPage() {
               /support
             </Link>
             . For our vision and founding-donor plan, see{' '}
-            <Link href="/vision" className="underline hover:text-stone-300">
+            <Link href="/articles/vision" className="underline hover:text-stone-300">
               /vision
             </Link>
             .

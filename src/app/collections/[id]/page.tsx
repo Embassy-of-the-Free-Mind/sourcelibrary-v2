@@ -20,7 +20,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, isHighlightMember, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl, toDisplayVariantUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isTranslationReadable } from '@/lib/first-translation/derive';
@@ -400,7 +400,7 @@ const COMPACT_LIMIT = 14;
 // the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
 // meta row and is never shown inside a partner room.
 const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }> = {
-  drebbel: { href: '/collections/drebbel/beeckman', label: 'Beeckman on Drebbel, in his own words' },
+  drebbel: { href: '/articles/beeckman-on-drebbel', label: 'Beeckman on Drebbel, in his own words' },
 };
 
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
@@ -862,8 +862,10 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   const curatedBookMap = new Map(
     (highlights as Record<string, unknown>[]).map(b => [b.id as string, b]),
   );
+  // Members only (#6899): a highlight whose book left the collection, or never
+  // joined it, must not open the page as "Start here".
   const mergedHighlights = curatedHighlights
-    .filter((h: CuratedHighlight) => curatedBookMap.has(h.book_id))
+    .filter((h: CuratedHighlight) => isHighlightMember(curatedBookMap.get(h.book_id) as Record<string, unknown> | undefined, id))
     .map((h: CuratedHighlight) => {
       const book = curatedBookMap.get(h.book_id) as Record<string, unknown>;
       return {

@@ -99,7 +99,7 @@ export default function ReadingPlanPage() {
           subtitle="What it costs to read every book we hold, how quality comes first, and what we still need to find out"
         >
           <p className="text-stone-400 text-sm mt-4">
-            Figures as of {AS_OF} &middot; part of the <Link href="/vision" className="underline hover:text-stone-200">five-year plan</Link>
+            Figures as of {AS_OF} &middot; part of the <Link href="/articles/vision" className="underline hover:text-stone-200">five-year plan</Link>
           </p>
         </ContentHeader>
       }
@@ -175,7 +175,7 @@ export default function ReadingPlanPage() {
           </p>
           <p className="text-secondary leading-relaxed mt-4">
             Not included: picking out illustrations, search indexing, servers and human review. Those are in the{' '}
-            <Link href="/vision" className="text-accent-rust hover:underline">five-year budget</Link>, which sets aside 2.3
+            <Link href="/articles/vision" className="text-accent-rust hover:underline">five-year budget</Link>, which sets aside 2.3
             cents a page so that every book can be read more than once as models improve.
           </p>
         </section>

@@ -50,13 +50,16 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // books, which was the last foreign-book link the leak audit could find on
   // bph.sourcelibrary.org. `/about` covers `/about/progress` by prefix.
   '/about',
-  '/vision',
   '/census',
   '/research',
   // Ideas across traditions (#6173): every page is a list of books from the
   // whole library, chosen for spanning traditions. Same reasoning as /works.
   '/ideas',
-  '/blog',
+  // Works by the century they were written (#6873): every live dated book in
+  // the corpus, grouped by work. Same reasoning as /works. Only this subtree:
+  // the printing-date /timeline is a separate question.
+  '/timeline/written',
+  '/articles',
   '/contribute',
   '/support',
   // `/give` is /support's one-screen twin and the header's Support button. Both

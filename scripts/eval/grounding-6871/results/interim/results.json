@@ -1,0 +1,387 @@
+{
+ "scored_pages": {
+  "real": 707,
+  "plant": 0
+ },
+ "primary": {
+  "all": {
+   "pages": 707,
+   "pos_pages": 485,
+   "units": 326681,
+   "pos_units": 3937,
+   "auroc_gain": 0.6039,
+   "p10_gain": 0.0256,
+   "r10_gain": 0.2126,
+   "thr10_gain": 0.104,
+   "auroc_base": 0.5448,
+   "p10_base": 0.0191,
+   "r10_base": 0.1588,
+   "auroc_inll": 0.7031,
+   "p10_inll": 0.0379,
+   "r10_inll": 0.3142,
+   "base_rate": 0.0121,
+   "ci_gain": [
+    0.571,
+    0.6385
+   ],
+   "ci_base": [
+    0.4954,
+    0.5831
+   ],
+   "ci_diff": [
+    -0.0091,
+    0.1398
+   ],
+   "bar": false
+  },
+  "arabic": {
+   "pages": 26,
+   "pos_pages": 19,
+   "units": 9044,
+   "pos_units": 195,
+   "auroc_gain": 0.5776,
+   "p10_gain": 0.042,
+   "r10_gain": 0.1949,
+   "thr10_gain": 0.1144,
+   "auroc_base": 0.652,
+   "p10_base": 0.0409,
+   "r10_base": 0.1897,
+   "auroc_inll": 0.7489,
+   "p10_inll": 0.0653,
+   "r10_inll": 0.3026,
+   "base_rate": 0.0216,
+   "ci_gain": [
+    0.4952,
+    0.6488
+   ],
+   "ci_base": [
+    0.5833,
+    0.7183
+   ],
+   "ci_diff": [
+    -0.2099,
+    0.0454
+   ],
+   "bar": false
+  },
+  "chinese": {
+   "pages": 32,
+   "pos_pages": 15,
+   "units": 7830,
+   "pos_units": 119,
+   "auroc_gain": 0.5416,
+   "p10_gain": 0.0281,
+   "r10_gain": 0.1849,
+   "thr10_gain": -0.3321,
+   "auroc_base": 0.629,
+   "p10_base": 0.0358,
+   "r10_base": 0.2353,
+   "auroc_inll": 0.6771,
+   "p10_inll": 0.0307,
+   "r10_inll": 0.2017,
+   "base_rate": 0.0152,
+   "ci_gain": [
+    0.4541,
+    0.6278
+   ],
+   "ci_base": [
+    0.5243,
+    0.7481
+   ],
+   "ci_diff": [
+    -0.2407,
+    0.0594
+   ],
+   "bar": false
+  },
+  "german": {
+   "pages": 13,
+   "pos_pages": 10,
+   "units": 2656,
+   "pos_units": 97,
+   "auroc_gain": 0.352,
+   "p10_gain": 0.0226,
+   "r10_gain": 0.0619,
+   "thr10_gain": -0.251,
+   "auroc_base": 0.64,
+   "p10_base": 0.0679,
+   "r10_base": 0.1856,
+   "auroc_inll": 0.5213,
+   "p10_inll": 0.0264,
+   "r10_inll": 0.0722,
+   "base_rate": 0.0365,
+   "ci_gain": [
+    0.2031,
+    0.5548
+   ],
+   "ci_base": [
+    0.5525,
+    0.7254
+   ],
+   "ci_diff": [
+    -0.5104,
+    -0.0126
+   ],
+   "bar": false
+  },
+  "greek": {
+   "pages": 135,
+   "pos_pages": 98,
+   "units": 71371,
+   "pos_units": 760,
+   "auroc_gain": 0.6338,
+   "p10_gain": 0.022,
+   "r10_gain": 0.2066,
+   "thr10_gain": -0.0027,
+   "auroc_base": 0.5277,
+   "p10_base": 0.009,
+   "r10_base": 0.0842,
+   "auroc_inll": 0.719,
+   "p10_inll": 0.0342,
+   "r10_inll": 0.3211,
+   "base_rate": 0.0106,
+   "ci_gain": [
+    0.5976,
+    0.6678
+   ],
+   "ci_base": [
+    0.4941,
+    0.5645
+   ],
+   "ci_diff": [
+    0.0386,
+    0.1652
+   ],
+   "bar": false
+  },
+  "hebrew": {
+   "pages": 6,
+   "pos_pages": 3,
+   "units": 4032,
+   "pos_units": 28,
+   "auroc_gain": 0.7453,
+   "p10_gain": 0.0273,
+   "r10_gain": 0.3929,
+   "thr10_gain": 0.0177,
+   "auroc_base": 0.6261,
+   "p10_base": 0.005,
+   "r10_base": 0.0714,
+   "auroc_inll": 0.8532,
+   "p10_inll": 0.0347,
+   "r10_inll": 0.5,
+   "base_rate": 0.0069,
+   "ci_gain": [
+    0.6362,
+    0.8824
+   ],
+   "ci_base": [
+    0.4243,
+    0.7595
+   ],
+   "ci_diff": [
+    -0.0531,
+    0.2502
+   ],
+   "bar": false
+  },
+  "latin": {
+   "pages": 495,
+   "pos_pages": 340,
+   "units": 231748,
+   "pos_units": 2738,
+   "auroc_gain": 0.6085,
+   "p10_gain": 0.0274,
+   "r10_gain": 0.2319,
+   "thr10_gain": 0.3112,
+   "auroc_base": 0.539,
+   "p10_base": 0.0187,
+   "r10_base": 0.1585,
+   "auroc_inll": 0.6885,
+   "p10_inll": 0.0378,
+   "r10_inll": 0.3199,
+   "base_rate": 0.0118,
+   "ci_gain": [
+    0.5595,
+    0.6558
+   ],
+   "ci_base": [
+    0.4722,
+    0.5939
+   ],
+   "ci_diff": [
+    -0.0315,
+    0.1796
+   ],
+   "bar": false
+  }
+ },
+ "plant": {
+  "all": {
+   "pages": 0,
+   "pos_pages": 0,
+   "units": 0,
+   "pos_units": 0
+  },
+  "word": {
+   "pages": 0,
+   "pos_pages": 0,
+   "units": 0,
+   "pos_units": 0
+  },
+  "sentence": {
+   "pages": 0,
+   "pos_pages": 0,
+   "units": 0,
+   "pos_units": 0
+  }
+ },
+ "by_kind": {
+  "garbled": {
+   "pages": 707,
+   "pos_pages": 40,
+   "units": 323181,
+   "pos_units": 437,
+   "auroc_gain": 0.6528,
+   "p10_gain": 0.0033,
+   "r10_gain": 0.2471,
+   "thr10_gain": 0.1096,
+   "auroc_base": 0.5952,
+   "p10_base": 0.0027,
+   "r10_base": 0.1991,
+   "auroc_inll": 0.8301,
+   "p10_inll": 0.0066,
+   "r10_inll": 0.4897,
+   "base_rate": 0.0014,
+   "ci_gain": [
+    0.5145,
+    0.7267
+   ],
+   "ci_base": [
+    0.5303,
+    0.6937
+   ],
+   "ci_diff": [
+    -0.1591,
+    0.193
+   ]
+  },
+  "invented": {
+   "pages": 707,
+   "pos_pages": 48,
+   "units": 323211,
+   "pos_units": 467,
+   "auroc_gain": 0.8615,
+   "p10_gain": 0.009,
+   "r10_gain": 0.6231,
+   "thr10_gain": 0.1067,
+   "auroc_base": 0.2539,
+   "p10_base": 0.0007,
+   "r10_base": 0.0514,
+   "auroc_inll": 0.5384,
+   "p10_inll": 0.0036,
+   "r10_inll": 0.2505,
+   "base_rate": 0.0014,
+   "ci_gain": [
+    0.7883,
+    0.8962
+   ],
+   "ci_base": [
+    0.1372,
+    0.4605
+   ],
+   "ci_diff": [
+    0.3381,
+    0.7593
+   ]
+  },
+  "sub_char": {
+   "pages": 707,
+   "pos_pages": 279,
+   "units": 323564,
+   "pos_units": 820,
+   "auroc_gain": 0.5229,
+   "p10_gain": 0.0025,
+   "r10_gain": 0.0988,
+   "thr10_gain": 0.1106,
+   "auroc_base": 0.6141,
+   "p10_base": 0.0055,
+   "r10_base": 0.2183,
+   "auroc_inll": 0.7293,
+   "p10_inll": 0.0081,
+   "r10_inll": 0.3195,
+   "base_rate": 0.0025,
+   "ci_gain": [
+    0.4948,
+    0.5513
+   ],
+   "ci_base": [
+    0.5806,
+    0.6482
+   ],
+   "ci_diff": [
+    -0.1475,
+    -0.0332
+   ]
+  },
+  "sub_lexical": {
+   "pages": 707,
+   "pos_pages": 330,
+   "units": 324957,
+   "pos_units": 2213,
+   "auroc_gain": 0.5698,
+   "p10_gain": 0.011,
+   "r10_gain": 0.1622,
+   "thr10_gain": 0.1083,
+   "auroc_base": 0.5705,
+   "p10_base": 0.0104,
+   "r10_base": 0.1527,
+   "auroc_inll": 0.703,
+   "p10_inll": 0.0203,
+   "r10_inll": 0.2987,
+   "base_rate": 0.0068,
+   "ci_gain": [
+    0.5421,
+    0.5976
+   ],
+   "ci_base": [
+    0.5472,
+    0.5949
+   ],
+   "ci_diff": [
+    -0.0473,
+    0.0439
+   ]
+  }
+ },
+ "all_located_pages": {
+  "all": {
+   "pages": 396,
+   "pos_pages": 292,
+   "units": 172387,
+   "pos_units": 2417,
+   "auroc_gain": 0.6226,
+   "p10_gain": 0.0341,
+   "r10_gain": 0.2433,
+   "thr10_gain": 0.3818,
+   "auroc_base": 0.5609,
+   "p10_base": 0.0234,
+   "r10_base": 0.1671,
+   "auroc_inll": 0.761,
+   "p10_inll": 0.0573,
+   "r10_inll": 0.4084,
+   "base_rate": 0.014,
+   "ci_gain": [
+    0.595,
+    0.6474
+   ],
+   "ci_base": [
+    0.5344,
+    0.5876
+   ],
+   "ci_diff": [
+    0.0121,
+    0.1099
+   ]
+  }
+ }
+}
