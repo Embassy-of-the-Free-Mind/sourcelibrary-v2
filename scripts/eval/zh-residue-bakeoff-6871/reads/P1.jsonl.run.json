@@ -1,0 +1,13 @@
+{
+ "arm": "zhbake6871-l1",
+ "backend": "server",
+ "workers": 8,
+ "max_side": 0,
+ "layout": 1,
+ "page_batch": 1,
+ "pages": 100,
+ "errors": 0,
+ "wall_secs": 95.4,
+ "load_secs_max": 5.6,
+ "wall_secs_after_load": 89.8
+}

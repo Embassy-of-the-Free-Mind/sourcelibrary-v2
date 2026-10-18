@@ -1,0 +1,7 @@
+{
+ "model": "gemini-3.1-flash-lite",
+ "temperature": 1,
+ "wall_secs": 71.162,
+ "in_tok": 120956,
+ "out_tok": 61682
+}
