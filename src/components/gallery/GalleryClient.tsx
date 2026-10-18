@@ -11,7 +11,6 @@ import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import LikeButton from '@/components/ui/LikeButton';
 import { canLoadMore } from '@/lib/gallery-pagination';
 import { BookLoader } from '@/components/ui/BookLoader';
-import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import GalleryControls, { type GalleryUrlState } from '@/components/gallery/GalleryControls';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
@@ -32,15 +31,6 @@ interface BookCollectionOption {
 
 interface GalleryClientProps {
   initialData: GalleryResponse;
-  initialCollections?: Array<{
-    id: string;
-    slug: string;
-    title: string;
-    description: string;
-    imageCount: number;
-    featured: boolean;
-    coverImage: { url: string; description: string } | null;
-  }>;
   bookCollections?: BookCollectionOption[];
   /** bookId the SSR payload was pre-filtered on (if any). Used to skip the initial client refetch when the URL filter already matches the SSR result. */
   initialBookId?: string;
@@ -76,7 +66,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export default function GalleryClient({ initialData, initialCollections, bookCollections = [], initialBookId = '' }: GalleryClientProps) {
+export default function GalleryClient({ initialData, bookCollections = [], initialBookId = '' }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -312,15 +302,6 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const hasMore = canLoadMore(data, allItems.length, currentOffset);
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery;
-  // Mirrors /api/gallery's isPlainBrowse: standalone artworks are only mixed in
-  // when no book/collection/library/subject/search scope is set. A scoped view
-  // is book plates only, so saying "plates & standalone artworks" there was wrong.
-  const artworksIncluded = !bookId && !collectionFilter && !libraryFilter && !subjectFilter && !topicFilter && !imageSearchQuery
-    && sourceFilter !== 'illustration';
-  const resultsKind = !artworksIncluded ? 'book plates'
-    : sourceFilter === 'artwork' ? 'standalone artworks'
-    : 'plates & standalone artworks';
-  const showCollections = !hasFilters;
 
   // Every filter that narrows the query — including the ones `hasFilters`
   // ignores, since any of them can be the reason a view came back empty
@@ -342,16 +323,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           update={updateParams}
           data={data}
           loading={loading}
-          resultsKind={resultsKind}
           bookCollections={bookCollections}
           isTenantHost={isTenantHost}
         />
         <div className="mt-6" />
-
-        {/* Featured Collections */}
-        {showCollections && (
-          <FeaturedCollections initialCollections={initialCollections} />
-        )}
 
         {/* Loading State */}
         {loading && (

@@ -6,6 +6,8 @@ import { Camera, ChevronDown } from 'lucide-react';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import FilterChips, { type Chip } from '@/components/search-kit/FilterChips';
 import ApplyFooter from '@/components/search-kit/ApplyFooter';
+import GalleryStatsBand from '@/components/gallery/GalleryStatsBand';
+import type { GalleryStats } from '@/lib/gallery-stats';
 import { readRequest } from '@/lib/catalog/read-request';
 import { guideTerms } from '@/lib/catalog/ask-client';
 import { SUBJECT_CATEGORIES, topicLabel } from '@/lib/image-subjects';
@@ -15,7 +17,7 @@ import { gallery, books, type GalleryResponse } from '@/lib/api-client';
 
 /**
  * The gallery's controls, in the Library's shape: Search the gallery and Ask
- * the librarian side by side, one line of numbers, Advanced search under them,
+ * the librarian side by side, the stats band, Advanced search under them,
  * and the applied filters as chips.
  *
  * Everything here reads and writes the gallery's own URL parameters (q, topic,
@@ -80,8 +82,6 @@ function ofTheDay<T>(pool: readonly T[], n: number, offset = 0): T[] {
 /** The gallery's subject vocabulary as the request reader takes it. */
 const TOPIC_VOCAB = SUBJECT_CATEGORIES.flatMap((c) => [{ value: c.id, label: c.label }, ...c.terms.map((t) => ({ value: t.id, label: t.label }))]);
 
-const fmt = (n: number) => n.toLocaleString('en-GB');
-const yearText = (y: number | null | undefined) => (y == null ? '' : y < 0 ? `${-y} BCE` : String(y));
 
 interface Props {
   state: GalleryUrlState;
@@ -91,12 +91,11 @@ interface Props {
   update: (p: Params) => void;
   data: GalleryResponse | null;
   loading: boolean;
-  resultsKind: string;
   bookCollections: { slug: string; name: string; book_count: number; parent?: string | null }[];
   isTenantHost: boolean;
 }
 
-export default function GalleryControls({ state, replace, update, data, loading, resultsKind, bookCollections, isTenantHost }: Props) {
+export default function GalleryControls({ state, replace, update, data, loading, bookCollections, isTenantHost }: Props) {
   const [searchText, setSearchText] = useState(state.q);
   const [askText, setAskText] = useState('');
   const [asked, setAsked] = useState('');
@@ -160,13 +159,15 @@ export default function GalleryControls({ state, replace, update, data, loading,
   const clearAll = () => { setSearchText(''); setAskText(''); setAsked(''); setSuggestions([]); replace({}); };
 
   /* --- the numbers --- */
-  const total = data?.total ?? 0;
   const searched = chips.length > 0;
-  const minYear = data?.filters?.yearRange?.minYear;
-  const maxYear = data?.filters?.yearRange?.maxYear;
-  // The span is the whole gallery's (the API does not narrow it), so it only describes the unfiltered view.
-  const span = !searched && minYear != null && maxYear != null ? `${yearText(minYear)} to ${yearText(maxYear)}` : '';
-  const countText = loading ? '…' : fmt(total);
+  const { stats, galleryTotal, statsLoading } = useGalleryStats(state, searched);
+  const total = loading ? null : (data?.total ?? null);
+  const yearMin = state.yearStart ? parseInt(state.yearStart, 10) : undefined;
+  const yearMax = state.yearEnd ? parseInt(state.yearEnd, 10) : undefined;
+  const yearsFromBand = (from: number | null, to: number | null) => {
+    const same = yearMin === (from ?? undefined) && yearMax === (to ?? undefined);
+    update({ yearStart: same || from == null ? '' : String(from), yearEnd: same || to == null ? '' : String(to) });
+  };
 
   const sortValue = state.sort;
   const sortLabelBest = state.q ? 'Best match' : 'Best quality';
@@ -186,13 +187,20 @@ export default function GalleryControls({ state, replace, update, data, loading,
         }}
       />
 
-      {/* One line of numbers, on every screen: what is in view. */}
-      <div aria-label="What is in view" className={`mt-4 sm:mt-6 pt-2.5 sm:pt-3 border-t border-border-light flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-[13px] sm:text-[14px] text-secondary transition-opacity ${loading || dirty ? 'opacity-40' : ''}`}>
-        <span><b className="font-semibold text-primary tabular-nums">{countText}</b> {searched ? (total === 1 ? 'image found' : 'images found') : 'images'}</span>
-        <span aria-hidden className="text-border-medium">·</span>
-        <span>{resultsKind}</span>
-        {span && <><span aria-hidden className="text-border-medium">·</span><span className="tabular-nums">{span}</span></>}
-      </div>
+      <GalleryStatsBand
+        stats={stats}
+        total={total}
+        galleryTotal={galleryTotal}
+        searched={searched}
+        stale={loading || statsLoading || dirty}
+        source={state.source}
+        type={state.type}
+        yearMin={yearMin}
+        yearMax={yearMax}
+        onYears={yearsFromBand}
+        onType={(t) => update({ type: t })}
+        onSource={(src) => update({ source: src })}
+      />
 
       <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 mt-3 sm:mt-4 pb-3 sm:pb-3.5 border-b border-border-light">
         <button type="button" onClick={() => setAdvOpen((o) => !o)} aria-expanded={advOpen}
@@ -240,6 +248,47 @@ export default function GalleryControls({ state, replace, update, data, loading,
       )}
     </div>
   );
+}
+
+/* ---------------------------------------------------------------- stats */
+
+const STATS_KEYS = ['q', 'topic', 'subject', 'type', 'library', 'collection', 'bookId', 'yearStart', 'yearEnd', 'minQuality', 'includeArchive', 'source'];
+
+/**
+ * The band's numbers for the applied filters, from /api/gallery/stats, plus the
+ * whole gallery's image count for "of N". A failed count shows dashes, never
+ * the previous search's figures.
+ */
+function useGalleryStats(state: GalleryUrlState, searched: boolean) {
+  const p = galleryParams(state);
+  const qs = new URLSearchParams(STATS_KEYS.filter((k) => p[k]).map((k) => [k, p[k]])).toString();
+  const [result, setResult] = useState<{ key: string; stats: GalleryStats | null } | null>(null);
+  const [galleryTotal, setGalleryTotal] = useState<number | null>(null);
+
+  useEffect(() => {
+    const ctl = new AbortController();
+    fetch(`/api/gallery/stats?${qs}`, { signal: ctl.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => setResult({ key: qs, stats: j && typeof j.total === 'number' ? j : null }))
+      .catch((e) => { if ((e as Error).name !== 'AbortError') setResult({ key: qs, stats: null }); });
+    return () => ctl.abort();
+  }, [qs]);
+
+  // The whole gallery, once, for "of N"; the unfiltered band already has it.
+  useEffect(() => {
+    if (galleryTotal != null) return;
+    if (!qs && result?.key === '' && result.stats) { queueMicrotask(() => setGalleryTotal(result.stats!.total)); return; }
+    if (!searched) return;
+    const ctl = new AbortController();
+    fetch('/api/gallery/stats', { signal: ctl.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => { if (j && typeof j.total === 'number') setGalleryTotal(j.total); })
+      .catch(() => {});
+    return () => ctl.abort();
+  }, [galleryTotal, qs, result, searched]);
+
+  const current = result?.key === qs ? result : null;
+  return { stats: current?.stats ?? (result?.stats ?? null), galleryTotal, statsLoading: !current };
 }
 
 /* ------------------------------------------------------------- Advanced */
