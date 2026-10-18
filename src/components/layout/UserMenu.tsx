@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocale, localePath, CHROME_STRINGS } from '@/lib/i18n';
 import { adminMenuLinks } from '@/lib/admin-links';
+import { User as UserIcon } from 'lucide-react';
 
 interface UserMenuProps {
-  variant?: 'hero' | 'default';
+  /** 'nav': the site header's dark bar, where signing in is a filled button. */
+  variant?: 'hero' | 'default' | 'nav';
 }
 
 export default function UserMenu({ variant = 'default' }: UserMenuProps) {
@@ -37,6 +39,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
 
   // Show sign-in link for anonymous users.
   if (!session) {
+    if (variant === 'nav') {
+      return (
+        <Link
+          href={localePath('/auth/signin', locale)}
+          className="inline-flex items-center gap-1.5 h-[34px] px-3 text-[13.5px] font-medium whitespace-nowrap bg-accent-rust text-white hover:bg-[#b0553f] transition-colors"
+        >
+          <UserIcon className="w-4 h-4" aria-hidden="true" />
+          {CHROME_STRINGS[locale].signIn}
+        </Link>
+      );
+    }
     const textColor = variant === 'hero' ? 'text-white/80 hover:text-white' : '';
     const textStyle = variant === 'hero' ? {} : { color: 'var(--text-muted)' };
 
@@ -71,7 +84,7 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   // the initials fallback invisible (white text on a near-white bar) — which
   // is what every reader sees whenever the Google avatar image fails to load,
   // e.g. lh3.googleusercontent intermittently 503s in-browser.
-  const onDark = variant === 'hero';
+  const onDark = variant === 'hero' || variant === 'nav';
   const avatarBorder = isMember
     ? 'var(--accent-gold)'
     : onDark ? 'rgba(255,255,255,0.3)' : 'var(--border-light)';

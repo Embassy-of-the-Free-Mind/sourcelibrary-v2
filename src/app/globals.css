@@ -383,6 +383,16 @@ body:has([data-reader-v2]) {
   outline: none;
 }
 
+/* Same for the site header's search fields: the desktop field's focus state is
+   its underline and the phone menu's is its wrapper border, so the global ring
+   would draw a second, rust box inside them. */
+[data-site-header] input:focus,
+[data-site-header] input:focus-visible,
+#site-menu input:focus,
+#site-menu input:focus-visible {
+  outline: none;
+}
+
 /* …except the edit-mode textareas, which have no wrapper to carry the state
    and so had no focus indicator at all. It is the surface an editor types the
    most in. */

@@ -113,7 +113,7 @@ export default async function BhutanLibraryPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/45 to-stone-950/70" />
 
         <div className="relative">
-          <SiteHeader variant="transparent" />
+          <SiteHeader variant="dark" />
 
           <div className="px-6 md:px-12 max-w-5xl mx-auto pt-12 pb-16 md:pt-20 md:pb-24">
             <p className="text-accent-gold/90 text-sm md:text-base uppercase tracking-[0.2em] mb-4">
