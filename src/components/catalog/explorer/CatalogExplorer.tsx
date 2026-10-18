@@ -422,7 +422,8 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   const pagedWorkCards = workCards.slice(pageStart, pageStart + CATALOG_PAGE_SIZE);
   const goToPage = (n: number) => {
     run({ ...s, page: n }, { keepPage: true });
-    document.getElementById('catalog-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // A jump: Safari stops a smooth scroll when the results swap underneath it.
+    document.getElementById('catalog-results')?.scrollIntoView({ behavior: 'auto', block: 'start' });
   };
   const printed = stats?.printed ?? [];
   const advKey = filtersKey(s) + (s.topic ?? '');

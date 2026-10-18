@@ -148,3 +148,14 @@ describe('catalogue wire format', () => {
     expect(s.yearMin).toBeUndefined();
   });
 });
+
+describe('default order', () => {
+  it('is most relevant for a search link and most read without words, and survives a round trip', () => {
+    expect(parseCatalogState(new URLSearchParams('q=alchemy')).sort).toBe('relevance');
+    expect(parseCatalogState(new URLSearchParams('language=Latin')).sort).toBe('popular');
+    const chosen = parseCatalogState(new URLSearchParams('q=alchemy&sort=popular'));
+    expect(chosen.sort).toBe('popular');
+    expect(parseCatalogState(writeCatalogState(chosen)).sort).toBe('popular');
+    expect(writeCatalogState(parseCatalogState(new URLSearchParams('q=alchemy'))).toString()).toBe('q=alchemy');
+  });
+});

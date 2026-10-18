@@ -218,11 +218,19 @@ export async function mergedGalleryBrowse(
     if (!datedFirst) return findIn(af, skip, n);
     // Counted as all minus undated: both are fast (~0.2 s); counting the dated
     // ones directly took ~1.7 s and timed out under load.
-    const [allCount, undatedCount] = await Promise.all([
-      galleryMemo(filterKey('art-count', af), () => db.collection('books').countDocuments(af, { maxTimeMS: 8000 }) as Promise<number>),
-      galleryMemo(filterKey('art-undated', undated), () => db.collection('books').countDocuments(undated, { maxTimeMS: 8000 }) as Promise<number>),
-    ]);
-    const datedCount = allCount - undatedCount;
+    let datedCount: number;
+    try {
+      const [allCount, undatedCount] = await Promise.all([
+        galleryMemo(filterKey('art-count', af), () => db.collection('books').countDocuments(af, { maxTimeMS: 8000 }) as Promise<number>),
+        galleryMemo(filterKey('art-undated', undated), () => db.collection('books').countDocuments(undated, { maxTimeMS: 8000 }) as Promise<number>),
+      ]);
+      datedCount = allCount - undatedCount;
+    } catch {
+      // A failed count must not fail the page: serve the plain order (undated
+      // first) and mark the response degraded so no shared cache keeps it.
+      degraded = true;
+      return findIn(af, skip, n);
+    }
     const fromDated = await findIn(dated, skip, Math.min(n, Math.max(0, datedCount - skip)));
     const rest = n - fromDated.length;
     return [...fromDated, ...(await findIn(undated, Math.max(0, skip - datedCount), rest))];

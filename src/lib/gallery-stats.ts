@@ -16,6 +16,9 @@ import { PRINTED_BUCKETS } from '@/lib/catalog/filters';
 import { mergedBrowseFilters } from '@/lib/gallery-merge';
 import { galleryFilter } from '@/lib/gallery-scope';
 import { queryTerms } from '@/lib/search-grounding';
+
+/** Words that match nearly every description on their own. */
+const SMALL_WORDS = new Set(['a', 'an', 'and', 'the', 'of', 'in', 'on', 'at', 'to', 'for', 'from', 'by', 'with', 'or', 'as', 'is', 'et', 'de', 'la', 'le', 'der', 'die', 'das', 'und', 'von']);
 import {
   parseGalleryNarrowing, narrowingMatch, galleryMinQuality, resolveGalleryBookIds, intersectBookIds,
   gallerySearchStage, gallerySearchMatch,
@@ -122,11 +125,18 @@ async function setFacets(db: Db, sp: URLSearchParams, ctx: GalleryStatsContext, 
     const qTerms = queryTerms(searchQuery);
     // A query with no checkable words returns nothing on the gallery, so it counts nothing.
     if (!qTerms?.judgeable) return { plates: EMPTY, artworks: EMPTY };
+    // Only small words ("the", "of the"): every description matches, the count
+    // takes ~19 s, and the grid's own lane gives up at 8 s with a short estimate.
+    // No numbers rather than numbers that disagree; the band shows the grid's.
+    if (qTerms.terms.every((t) => SMALL_WORDS.has(t))) throw new Error('only small words');
     const r = await gi.aggregate([
       gallerySearchStage(qTerms.terms, minQuality),
       gallerySearchMatch({ tenantBooks: ctx.tenantBooks, bookId, bookIds, maxPerBook, narrowing }),
       plateStages,
-    ], OPTS).toArray();
+      // The grid's Atlas lane gives up at 8 s; so does this, or a query of
+      // small words ("the": ~150,000 matches) counted for 18 s and disagreed
+      // with the grid's own fallback total. A failed count shows the grid's.
+    ], { ...OPTS, maxTimeMS: 8000 }).toArray();
     return { plates: readFacets(r[0]), artworks: EMPTY };
   }
 

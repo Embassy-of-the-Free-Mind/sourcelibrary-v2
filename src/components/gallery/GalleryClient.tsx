@@ -253,7 +253,9 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
     if (n > 1) params.set('page', String(n)); else params.delete('page');
     const qs = params.toString();
     router.push(`${tenantPrefix}/gallery${qs ? `?${qs}` : ''}`, { scroll: false });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // A jump, not a smooth scroll: Safari stops a smooth scroll when the grid swaps
+    // to the next page underneath it, and left the reader mid-page (2026-10-18).
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [searchParams, router, tenantPrefix]);
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery;

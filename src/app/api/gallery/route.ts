@@ -202,8 +202,9 @@ export async function GET(request: NextRequest) {
     const bookId = searchParams.get('bookId') || searchParams.get('book');
     // Allow higher limit when fetching all images for a single book (for navigation)
     const maxLimit = bookId ? 1000 : 200;
-    const limit = Math.min(parseInt(searchParams.get('limit') || '24'), maxLimit);
-    const offset = parseInt(searchParams.get('offset') || '0');
+    // Clamped: a negative or non-numeric offset reached Mongo's $skip and was a 500.
+    const limit = Math.min(Math.max(1, parseInt(searchParams.get('limit') || '24') || 24), maxLimit);
+    const offset = Math.max(0, parseInt(searchParams.get('offset') || '0') || 0);
     const collectionSlug = searchParams.get('collection');
     const libraryFilter = searchParams.get('library');
     // `topic` expands to every raw subject string mapped to it; either way the
