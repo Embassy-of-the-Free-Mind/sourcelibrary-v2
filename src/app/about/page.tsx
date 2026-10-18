@@ -1,22 +1,128 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import type { ReactNode } from 'react';
+import ContentPageLayout from '@/components/layout/ContentPageLayout';
+import SiteHeader from '@/components/layout/SiteHeader';
+import HeroScrim from '@/components/HeroScrim';
+import WrittenPastChart from '@/components/about/WrittenPastChart';
 import { getSiteStats } from '@/lib/site-stats';
 
 export const metadata: Metadata = {
   title: 'About - Source Library',
-  description: 'Source Library continues the mission of Cosimo de\' Medici and Marsilio Ficino, making rare Hermetic and Renaissance texts freely available to all.',
+  description: 'Source Library scans rare books and manuscripts, translates them with AI beside the original page, and makes them free to read, quote and cite. An initiative of the Embassy of the Free Mind, Amsterdam.',
   alternates: {
     canonical: '/about',
   },
 };
 
+const link = 'text-accent-rust hover:underline';
+const h2 = 'font-serif text-3xl md:text-4xl text-primary leading-tight tracking-tight';
+
+// Facts checked 2026-10-19 against embassyofthefreemind.com (/collection,
+// /governance-team, /research) and the SEP entry on Ficino. The BPH is on
+// UNESCO's DUTCH Memory of the World register (2022), not the international
+// one; Dijstelberge's title is Librarian; Ficino translated all of Plato and
+// Plotinus but only selections of Iamblichus and Proclus.
+const ADVISORY_BOARD: [string, string][] = [
+  ['Wouter Hanegraaff', 'University of Amsterdam'],
+  ['Lawrence Principe', 'Johns Hopkins University'],
+  ['Bernard McGinn', 'University of Chicago, emer.'],
+  ['Georgiana Hedesan', 'Oxford University'],
+  ['Didier Kahn', 'CNRS, France'],
+  ['Yuval Harari', 'Ben Gurion University of the Negev'],
+  ['Matthew Melvin-Koushki', 'University of South Carolina'],
+  ['Mike Driedger', 'Brock University, Canada'],
+  ['Vladimír Urbánek', 'Academy of Sciences, Czech Republic'],
+];
+
+const STEPS: { title: string; body: ReactNode }[] = [
+  {
+    title: 'Scan',
+    body: 'We digitise rare books at the Embassy of the Free Mind and bring in scans from libraries around the world.',
+  },
+  {
+    title: 'Read',
+    body: 'AI transcribes every page, old typefaces, abbreviations and handwriting included.',
+  },
+  {
+    title: 'Translate',
+    body: 'Each page is translated into English and shown next to the scan, so any line can be checked against the original.',
+  },
+  {
+    title: 'Share',
+    body: (
+      <>
+        Everything is free to read and cite. Published editions get a DOI through{' '}
+        <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer" className={link}>Zenodo</a>, and researchers and AI tools can use the{' '}
+        <Link href="/developers" className={link}>API and MCP server</Link>, or{' '}
+        <Link href="/connect" className={link}>connect it to Claude or ChatGPT</Link>.
+      </>
+    ),
+  },
+];
+
+function AboutHero({ stats }: { stats: { value: string; label: string; href?: string }[] }) {
+  return (
+    <>
+      <SiteHeader variant="light" />
+      <section className="about-hero relative overflow-hidden text-white">
+        {/* A wall of real covers from the library, drifting slowly behind the scrim. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/about/covers-wall.jpg"
+          alt=""
+          aria-hidden="true"
+          className="about-hero-wall absolute top-0 left-0 h-full w-[115%] max-w-none object-cover object-left-top"
+          fetchPriority="high"
+        />
+        <div className="hidden md:block"><HeroScrim variant="side" /></div>
+        <div className="md:hidden"><HeroScrim variant="bottom" /></div>
+
+        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-28 pb-10 md:pt-40 md:pb-14 min-h-[560px] md:min-h-[72vh] flex flex-col justify-end">
+          <h1 className="font-serif text-4xl md:text-6xl tracking-tight leading-[1.05] max-w-3xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
+            The written past, open to everyone
+          </h1>
+          <p className="mt-5 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">
+            We scan rare books and manuscripts, read and translate them with AI, and put every translation next to the page it came from. Free to read, quote and cite.
+          </p>
+
+          <dl className="mt-10 md:mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 border-t border-white/20">
+            {stats.map((s) => {
+              const inner = (
+                <>
+                  <dd className="text-2xl md:text-3xl font-semibold tabular-nums text-white">{s.value}</dd>
+                  <dt className="text-sm text-stone-300 mt-1 leading-tight group-hover:text-white transition-colors">{s.label}</dt>
+                </>
+              );
+              return (
+                <div key={s.label} className="pt-5 pr-4 pb-1 flex flex-col-reverse justify-end">
+                  {s.href ? (
+                    <Link href={s.href} className="group flex flex-col-reverse justify-end">{inner}</Link>
+                  ) : (
+                    inner
+                  )}
+                </div>
+              );
+            })}
+          </dl>
+        </div>
+
+        <style>{`
+          @keyframes about-wall-drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-12%,0,0); } }
+          .about-hero-wall { animation: about-wall-drift 90s linear infinite alternate; }
+          @media (prefers-reduced-motion: reduce) { .about-hero-wall { animation: none; } }
+        `}</style>
+      </section>
+    </>
+  );
+}
+
 export default async function AboutPage() {
   const stats = await getSiteStats();
-  const fmt = (n: number) => n.toLocaleString('en-US');
+  const fmt = (n: number) => n.toLocaleString('en-GB');
 
   const headlineStats: { value: string; label: string; href?: string }[] = [
-    { value: fmt(stats.totalBooks), label: 'books digitized', href: '/search' },
+    { value: fmt(stats.totalBooks), label: 'books digitised', href: '/search' },
     // stats.languageCount is now an honest distinct-language count: compound
     // labels are split into atomic languages and variants/junk are dropped
     // (scripts/lib/language-count.mjs). ~105 as of 2026-06-26, so 100+ is a
@@ -24,345 +130,216 @@ export default async function AboutPage() {
     { value: '100+', label: 'languages' },
     { value: fmt(stats.readableInEnglish), label: 'readable in English', href: '/search?has_translation=true' },
     { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
-    { value: fmt(stats.illustrationCount), label: 'illustrations cataloged', href: '/gallery' },
+    { value: fmt(stats.illustrationCount), label: 'illustrations catalogued', href: '/gallery' },
   ];
 
   return (
-    <ContentPageLayout
-      header={
-        <ContentHeader
-          title="Source Library transforms 2500+ years of wisdom texts into a living archive, freely available to all."
-          image="https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg"
-          imageAlt="Robert Fludd's Anima Mundi, the World Soul binding the cosmos, from Utriusque Cosmi (1617)"
-        />
-      }
-      bg="bg-cream"
-    >
-      <div className="prose-content max-w-none">
-        {/* The big idea */}
-        <p className="text-2xl md:text-3xl text-primary leading-snug mb-8 font-serif">
-          The last time the world translated its ancient wisdom, it set off the Renaissance. We think we can do it again, this time for the age of AI.
-        </p>
+    <ContentPageLayout header={<AboutHero stats={headlineStats} />} bg="bg-cream" maxWidth="wide" noPadding>
+      {/* The gap */}
+      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
+        <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16">
+          <div>
+            <h2 className={h2}>How much of the written past can anyone read today?</h2>
+            <p className="mt-6 text-lg text-secondary leading-relaxed">
+              Very little. Start with the books one small country printed before 1700, then keep zooming out.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              Machine reading and translation are now good enough to make a first pass at all of it, quickly, with the original page always beside the English so anyone can check it. That is the job Source Library has taken on.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              It also matters for AI. Give a capable model the actual texts, every line checkable against its scan, and it becomes a research instrument. Ask it <em>what is mind?</em> and it can set{' '}
+              <Link href="/q/BhIfljO2ApigrcHcTeD" className={link}>Plato&apos;s Greek</Link> beside{' '}
+              <Link href="/q/BgRsFohtofMtBqdNmop" className={link}>Śaṅkara&apos;s Sanskrit</Link>, a Tibetan master&apos;s{' '}
+              <Link href="/q/BijCMw143jlgk5jBxGl" className={link}>pointing-out instructions</Link> and{' '}
+              <Link href="/q/Bojb0GnS1vOWqoRET4E" className={link}>Xunzi&apos;s Chinese</Link>, quoting each and linking to the page it sits on.
+            </p>
+          </div>
+          <div>
+            <WrittenPastChart />
+            <p className="mt-6 text-xs text-muted leading-relaxed">
+              Europe: distinct works printed before 1700 in the Universal Short Title Catalogue, matched against 30 translation catalogues (May 2026). Beyond Europe: published estimates counted in manuscripts or titles, so they can&apos;t share a scale with printed works.{' '}
+              <Link href="/research/translation-gap" className={link}>How we measured it</Link>
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <p className="text-xl text-secondary leading-relaxed mb-6">
-          Source Library is a digital library of historical primary sources: the foundational works of philosophy, science, religion, and mysticism from cultures across the world, in more than 50 languages. It spans the Sanskrit and Tibetan canons, the Chinese classics, the sciences of the Arabic and Hebrew worlds, the Hermetic and Neoplatonist currents of the Renaissance, and far beyond. We digitize rare books and manuscripts, translate them with AI alongside the original scanned page, and make them free to read, quote, and cite.
-        </p>
+      {/* What we do */}
+      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
+        <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
+          <figure>
+            <Link
+              href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/69520c46ab34727b1f044154"
+              className="block border border-border-light bg-white"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
+                alt="An alchemical emblem from Michael Maier's Atalanta Fugiens (1618)"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </Link>
+            <figcaption className="text-sm text-muted mt-3">
+              An emblem from Michael Maier&apos;s <em>Atalanta Fugiens</em>, 1618. Open it to read the translation beside the page.
+            </figcaption>
+          </figure>
+          <div>
+            <h2 className={h2}>What we do</h2>
+            <ol className="mt-8 space-y-7">
+              {STEPS.map((s, i) => (
+                <li key={s.title} className="grid grid-cols-[2.5rem_1fr] gap-3">
+                  <span className="text-sm font-semibold text-muted tabular-nums pt-0.5">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 className="text-lg font-semibold text-primary">{s.title}</h3>
+                    <p className="mt-1 text-secondary leading-relaxed">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-8 text-secondary">
+              Follow one real page from the scan to the checks that run after it is published:{' '}
+              <Link href="/how-it-works" className={link}>How Source Library works</Link>.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        <p className="text-xl text-secondary leading-relaxed mb-12">
-          Based at the <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam, home to the Bibliotheca Philosophica Hermetica (a rare-book library inscribed on UNESCO&apos;s Memory of the World register), we work to preserve this heritage while opening it to new research, new readers, and a new renaissance in the study of philosophy, mysticism, and free thought.
-        </p>
+      {/* Where it started */}
+      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
+        <div className="grid md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 lg:gap-16 items-start">
+          <div className="md:order-1 order-2">
+            <h2 className={h2}>Where it started</h2>
+            <p className="mt-6 text-secondary leading-relaxed">
+              When a Greek manuscript of the <em>Corpus Hermeticum</em> reached Florence around 1460, Cosimo de&apos; Medici had the young scholar Marsilio Ficino translate it before he turned to Plato. Ficino went on to put all of Plato and Plotinus into Latin, along with selected works of Iamblichus, Proclus and other Neoplatonists. Those translations helped set off the Renaissance.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              Five and a half centuries later, Derek Lomas found he couldn&apos;t read Ficino&apos;s own books. He came across Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam and couldn&apos;t read it, because most of what the Renaissance wrote has never been translated. He started Source Library there in 2022, under the bust of Ficino that still watches over the work.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              Derek studied cognitive science at Yale, did his PhD in human-computer interaction at Carnegie Mellon, and teaches at TU Delft. His{' '}
+              <Link href="/articles/vision" className={link}>founder&apos;s letter</Link> sets out where the project goes next.
+            </p>
+          </div>
+          <figure className="md:order-2 order-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/about/derek-ficino.jpg"
+              alt="Derek Lomas standing beside a bronze bust of Marsilio Ficino at the Embassy of the Free Mind"
+              width={690}
+              height={630}
+              className="w-full h-auto border border-border-light"
+              loading="lazy"
+            />
+            <figcaption className="text-sm text-muted mt-3">
+              Derek Lomas with the bust of Marsilio Ficino at the Embassy of the Free Mind.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-        {/* Stats band */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-px bg-border-light rounded-xl overflow-hidden border border-border-light mb-16">
-          {headlineStats.map((s) => {
-            const inner = (
-              <div className="bg-cream h-full p-5 text-center flex flex-col justify-center transition-colors group-hover:bg-white">
-                <div className="text-2xl md:text-3xl font-semibold text-primary tabular-nums">{s.value}</div>
-                <div className="text-xs md:text-sm text-muted mt-1 leading-tight">{s.label}</div>
-              </div>
-            );
-            return s.href ? (
-              <Link key={s.label} href={s.href} className="group block">
-                {inner}
+      {/* Partner */}
+      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
+        <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
+          <figure>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/vision/embassy.jpg"
+              alt="The Embassy of the Free Mind in the Huis met de Hoofden, Keizersgracht, Amsterdam"
+              width={600}
+              height={800}
+              className="w-full h-auto border border-border-light"
+              loading="lazy"
+            />
+            <figcaption className="text-sm text-muted mt-3">The Huis met de Hoofden on the Keizersgracht, Amsterdam.</figcaption>
+          </figure>
+          <div>
+            <h2 className={h2}>Our partner: the Embassy of the Free Mind</h2>
+            <p className="mt-6 text-lg text-secondary leading-relaxed">
+              Source Library is an initiative of the{' '}
+              <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className={link}>Embassy of the Free Mind</a>, a museum and library in the Huis met de Hoofden on Amsterdam&apos;s Keizersgracht. The Embassy gives the project its home, its books and its scholars.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              Its library is the Bibliotheca Philosophica Hermetica, which Joost R. Ritman began collecting in 1957: over 28,000 volumes on Hermetic philosophy, alchemy, mysticism and religion, including some 5,000 manuscripts. The collection is on UNESCO&apos;s Dutch Memory of the World Register and holds the{' '}
+              <a href="https://www.guinnessworldrecords.com/world-records/777560-largest-library-dedicated-to-magic-and-mysticism" target="_blank" rel="noopener noreferrer" className={link}>Guinness World Record</a>{' '}
+              for the largest library dedicated to magic and mysticism.
+            </p>
+            <p className="mt-4 text-secondary leading-relaxed">
+              Librarian <strong className="font-semibold text-primary">Paul Dijstelberge</strong>, a historian of the book, guides our work with the collection, and senior researcher <strong className="font-semibold text-primary">Carlos Gilly</strong>, at the BPH for over thirty years, is a leading authority on Rosicrucianism.
+            </p>
+
+            <h3 className="mt-10 text-base font-semibold text-primary">
+              The Embassy&apos;s{' '}
+              <a href="https://www.embassyofthefreemind.com/research" target="_blank" rel="noopener noreferrer" className={link}>Academic Advisory Board</a>
+            </h3>
+            <ul className="mt-4 grid sm:grid-cols-2 gap-x-8 gap-y-2.5">
+              {ADVISORY_BOARD.map(([name, institution]) => (
+                <li key={name} className="text-sm leading-snug">
+                  <span className="text-primary">{name}</span>
+                  <span className="text-muted">, {institution}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Supporters + join */}
+      <section className="px-6 md:px-12 py-16 md:py-24">
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+          <div>
+            <h2 className={h2}>With the support of</h2>
+            <p className="mt-6 text-secondary leading-relaxed">
+              Source Library and the Embassy of the Free Mind are made possible by people who believe in this work. We are grateful to the{' '}
+              <strong className="font-semibold text-primary">Wisdom Frontiers Society</strong> of La Jolla, California, and the{' '}
+              <a href="https://gambrellfoundation.org" target="_blank" rel="noopener noreferrer" className={link}>Gambrell Foundation</a>{' '}
+              of Charlotte, North Carolina.
+            </p>
+            <a
+              href="https://gambrellfoundation.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="The Gambrell Foundation"
+              className="mt-8 inline-block hover:opacity-80 transition-opacity"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/partners/gambrell-foundation.svg" alt="The Gambrell Foundation" className="h-14 w-auto object-contain" />
+            </a>
+          </div>
+          <div className="border border-border-medium p-8 md:p-10">
+            <h2 className={h2}>Join the work</h2>
+            <p className="mt-4 text-secondary leading-relaxed">
+              We want this to outlast us: a lasting home for humanity&apos;s written heritage, from books to oral histories to expeditions in the field. Read the plan, explore the library, or help pay for the next translation.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/support" className="px-5 py-2.5 bg-accent-rust text-white hover:opacity-90 transition-opacity font-medium">
+                Support the project
               </Link>
-            ) : (
-              <div key={s.label} className="group">{inner}</div>
-            );
-          })}
-        </div>
-
-        {/* Why it matters */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Why It Matters
-        </h2>
-
-        <p className="text-secondary mb-6 leading-relaxed">
-          The Renaissance itself was written largely in Latin. As the UCLA Renaissance scholar Debora Shuger has observed, <a href="https://newsroom.ucla.edu/stories/learning-the-little-known-language-229883" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">&ldquo;90 percent of the Latin texts from the Renaissance have never been available in translation.&rdquo;</a> The rest is legible only to specialists. And beyond Latin lie thousands upon thousands of texts in Chinese, Sanskrit, Arabic, Hebrew, and Egyptian, much of it never digitized, let alone translated.
-        </p>
-
-        <p className="text-secondary mb-12 leading-relaxed">
-          And this is about more than what AI was trained on. Give a capable model real access to primary sources at scale (the actual texts, every line checkable against the original scan) and it becomes a serious instrument of research and synthesis. Ask a question the whole world has asked (<em>what is mind?</em>) and it can set <a href="/q/BhIfljO2ApigrcHcTeD" className="text-accent-rust hover:underline">Plato&apos;s Greek</a> beside <a href="/q/BgRsFohtofMtBqdNmop" className="text-accent-rust hover:underline">Śaṅkara&apos;s Sanskrit</a>, a Tibetan master&apos;s <a href="/q/BijCMw143jlgk5jBxGl" className="text-accent-rust hover:underline">pointing-out instructions</a>, and <a href="/q/Bojb0GnS1vOWqoRET4E" className="text-accent-rust hover:underline">Xunzi&apos;s Chinese</a>, quoting each and linking to the page it sits on. Source Library is built for exactly that: a library both people and AI can actually read and cite, open through a public API and MCP.
-        </p>
-
-        {/* A glimpse — show, don't tell */}
-        <figure className="mb-16">
-          <Link
-            href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/69520c46ab34727b1f044154"
-            className="block group overflow-hidden rounded-xl border border-border-light shadow-sm"
-          >
-            <img
-              src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
-              alt="An alchemical emblem from Michael Maier's Atalanta Fugiens (1618)"
-              className="w-full h-auto object-contain bg-white transition-transform duration-500 group-hover:scale-[1.02]"
-            />
-          </Link>
-          <figcaption className="text-sm text-muted mt-3 text-center">
-            One of millions of pages now readable and quotable: an emblem from Michael Maier&apos;s <em>Atalanta Fugiens</em>, 1618. Every translation sits beside the original scan, so any line can be verified, quoted, and trusted.
-          </figcaption>
-        </figure>
-
-        {/* Mission Section */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          What We Do
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-border-light">
-            <h3 className="font-semibold text-primary mb-2">Digitize</h3>
-            <p className="text-secondary">
-              Capture rare manuscripts and early printed books from archives worldwide, making them accessible to all.
-            </p>
-          </div>
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-border-light">
-            <h3 className="font-semibold text-primary mb-2">Translate</h3>
-            <p className="text-secondary">
-              AI-assisted translation from Latin, German, and other languages, with originals preserved for verification.
-            </p>
-          </div>
-          <div className="bg-white rounded-xl p-6 shadow-sm border border-border-light">
-            <h3 className="font-semibold text-primary mb-2">Cite</h3>
-            <p className="text-secondary">
-              DOI-backed scholarly editions via <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Zenodo</a>, enabling proper academic citation of primary sources.
-            </p>
-          </div>
-        </div>
-        <p className="text-lg text-secondary -mt-10 mb-16">
-          Every step, followed on one real page from the scan to the checks that run after it is published:{' '}
-          <Link href="/how-it-works" className="text-accent-rust hover:underline">How Source Library works</Link>.
-        </p>
-
-        {/* Historical Context */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          In the Spirit of the Renaissance
-        </h2>
-
-        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
-          <p className="text-secondary italic mb-4">
-            &ldquo;Wisdom belongs to everyone.&rdquo;
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <div>
-            <h3 className="text-xl text-stone-800 mb-1">
-              Cosimo de&apos; Medici
-            </h3>
-            <p className="text-muted text-sm mb-3">1389–1464 · Florence</p>
-            <p className="text-secondary text-sm leading-relaxed">
-              In 1460, when a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, Cosimo ordered its translation before even Plato, sensing that Hermes Trismegistus held the key to ancient wisdom. He founded the Platonic Academy in his villa at Careggi, creating the first institution dedicated to freely sharing philosophical knowledge since antiquity.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-xl text-stone-800 mb-1">
-              Marsilio Ficino
-            </h3>
-            <p className="text-muted text-sm mb-3">1433–1499 · Philosopher & Translator</p>
-            <p className="text-secondary text-sm leading-relaxed">
-              Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin, making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all seekers of truth.
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-16">
-          <p className="text-stone-700 leading-relaxed">
-            <strong>Source Library continues their work.</strong> Just as Cosimo funded translations to make ancient wisdom freely available, and Ficino labored to render Greek and Latin texts accessible to readers across Europe, we use modern tools to digitize, translate, and openly share these same traditions with the world.
-          </p>
-        </div>
-
-        {/* Technology Section */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          How It Works
-        </h2>
-
-        <p className="text-secondary mb-6">
-          Source Library uses AI to make historical texts accessible while maintaining scholarly standards:
-        </p>
-
-        <ul className="space-y-3 text-secondary mb-12">
-          <li className="flex items-start gap-3">
-            <span className="text-accent-rust mt-1">•</span>
-            <span><strong>OCR:</strong> Gemini vision models read historical typefaces and handwriting</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="text-accent-rust mt-1">•</span>
-            <span><strong>Translation:</strong> Context-aware translation preserving technical terminology</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="text-accent-rust mt-1">•</span>
-            <span><strong>Original preserved:</strong> Every translation includes the original language text</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="text-accent-rust mt-1">•</span>
-            <span><strong>DOI citations:</strong> Published editions receive DOIs via Zenodo</span>
-          </li>
-          <li className="flex items-start gap-3">
-            <span className="text-accent-rust mt-1">•</span>
-            <span><strong>API & MCP:</strong> <Link href="/developers" className="text-accent-rust hover:underline">Programmatic access</Link> for researchers and AI systems, or <Link href="/connect" className="text-accent-rust hover:underline">connect it to Claude or ChatGPT</Link> in a minute</span>
-          </li>
-        </ul>
-
-        {/* Who's Behind This */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Who&apos;s Behind This
-        </h2>
-
-        <div className="flex flex-col sm:flex-row gap-6 items-start mb-6">
-          <img
-            src="/founder-derek.jpg"
-            alt="Derek Lomas, founder of Source Library"
-            className="w-32 h-40 object-cover rounded-lg border border-border-light shadow-sm flex-shrink-0"
-          />
-          <p className="text-secondary leading-relaxed">
-            Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English, and that AI was finally making it possible to change that. Read his <Link href="/articles/vision" className="text-accent-rust hover:underline">founder&apos;s letter</Link> on where the project is headed.
-          </p>
-        </div>
-
-        {/* Partners */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          In Partnership with the Embassy of the Free Mind
-        </h2>
-
-        <div className="flex flex-wrap items-center gap-8 mb-8">
-          <img
-            src="https://images.sourcelibrary.org/assets/partners-unesco.avif"
-            alt="UNESCO Memory of the World"
-            className="h-20 w-auto object-contain"
-          />
-        </div>
-
-        <p className="text-secondary mb-4 leading-relaxed">
-          The <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam is home to the Bibliotheca Philosophica Hermetica, a 25,000-volume research library inscribed on the <strong>UNESCO Memory of the World</strong> register. Library Director <strong>Paul Dijstelberge</strong> (PhD, former assistant professor for the history of the book at the University of Amsterdam; former curator at the Allard Pierson) provides scholarly guidance for Source Library&apos;s work with the BPH collection.
-        </p>
-
-        <p className="text-secondary mb-4 leading-relaxed">
-          The Embassy&apos;s <a href="https://embassyofthefreemind.com/en/research/281-staff" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Academic Advisory Board</a> includes leading international scholars in the fields covered by the collection:
-        </p>
-
-        <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
-          {[
-            ['Wouter Hanegraaff', 'University of Amsterdam'],
-            ['Lawrence Principe', 'Johns Hopkins University'],
-            ['Bernard McGinn', 'University of Chicago, emer.'],
-            ['Georgiana Hedesan', 'Oxford University'],
-            ['Didier Kahn', 'CNRS, France'],
-            ['Yuval Harari', 'Ben Gurion University of the Negev'],
-            ['Matthew Melvin-Koushki', 'University of South Carolina'],
-            ['Mike Driedger', 'Brock University, Canada'],
-            ['Vladimir Urbanek', 'Academy of Sciences, Czech Republic'],
-          ].map(([name, institution]) => (
-            <div key={name} className="flex flex-col border-l-2 border-accent-gold/20 pl-3">
-              <span className="text-stone-800 text-sm font-medium">{name}</span>
-              <span className="text-muted text-xs">{institution}</span>
+              <Link href="/articles/vision" className="px-5 py-2.5 border border-stone-400 text-primary hover:bg-[var(--bg-warm)] transition-colors font-medium">
+                Read the vision
+              </Link>
+              <Link href="/" className="px-5 py-2.5 border border-stone-400 text-primary hover:bg-[var(--bg-warm)] transition-colors">
+                Browse the library
+              </Link>
             </div>
+          </div>
+        </div>
+
+        <nav aria-label="More about Source Library" className="mt-16 pt-8 border-t border-border-light flex flex-wrap gap-x-8 gap-y-3 text-secondary">
+          {[
+            ['/how-it-works', 'How it works'],
+            ['/census', 'Translation Census'],
+            ['/about/progress', 'Our progress'],
+            ['/about/sources', 'Source libraries'],
+            ['/about/faq', 'FAQ'],
+            ['/developers', 'API and MCP server'],
+          ].map(([href, label]) => (
+            <Link key={href} href={href} className="hover:text-accent-rust transition-colors">
+              {label} →
+            </Link>
           ))}
-        </div>
-
-        <p className="text-secondary mb-8 leading-relaxed">
-          Senior researcher <strong>Dr. Carlos Gilly</strong> (University of Basel), a pillar of the BPH for over thirty years and one of the world&apos;s foremost scholars of Rosicrucianism and early modern Hermetism, contributes to the Institute&apos;s research and curation.
-        </p>
-
-        {/* Supporters */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          With the Generous Support Of
-        </h2>
-
-        <p className="text-secondary mb-8 leading-relaxed">
-          Source Library and the Embassy of the Free Mind are made possible by the
-          generosity of those who believe in this work. We gratefully acknowledge the{' '}
-          <strong>Wisdom Frontiers Society</strong> of La Jolla, California, and the{' '}
-          <a href="https://gambrellfoundation.org" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline"><strong>Gambrell Foundation</strong></a>{' '}
-          of Charlotte, North Carolina, for their support.
-        </p>
-
-        <div className="flex flex-wrap items-center gap-10 mb-8">
-          <a
-            href="https://gambrellfoundation.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="The Gambrell Foundation"
-            className="inline-block hover:opacity-80 transition-opacity"
-          >
-            <img
-              src="/partners/gambrell-foundation.svg"
-              alt="The Gambrell Foundation"
-              className="h-16 w-auto object-contain"
-            />
-          </a>
-        </div>
-
-      </div>
-
-      {/* Navigation blocks live OUTSIDE .prose-content: `.prose-content a` forces
-          link color to accent-rust, which would make button labels (e.g. white-on-rust)
-          invisible. Keeping them out lets the Tailwind text-* utilities win. */}
-
-      {/* Closing call to action */}
-      <div className="bg-stone-900 text-cream rounded-2xl p-8 md:p-10 mt-16 mb-12">
-        <h2 className="text-2xl md:text-3xl text-white mb-3">Join the work</h2>
-        <p className="text-stone-300 leading-relaxed mb-6 max-w-2xl">
-          We are building a lasting institution for the stewardship of humanity&apos;s wisdom, from books to oral histories to expeditions in the field. Read the vision, explore the library, or help make the next translation possible.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          <Link
-            href="/articles/vision"
-            className="px-5 py-2.5 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors font-medium"
-          >
-            Read the vision
-          </Link>
-          <Link
-            href="/support"
-            className="px-5 py-2.5 bg-accent-rust text-white rounded-full hover:opacity-90 transition-opacity font-medium"
-          >
-            Support the project
-          </Link>
-          <Link
-            href="/"
-            className="px-5 py-2.5 border border-stone-600 text-cream rounded-full hover:bg-stone-800 transition-colors"
-          >
-            Browse the library
-          </Link>
-        </div>
-      </div>
-
-      {/* Secondary links */}
-      <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
-        <Link
-          href="/how-it-works"
-          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-        >
-          How it works
-        </Link>
-        <Link
-          href="/census"
-          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-        >
-          Translation Census
-        </Link>
-        <Link
-          href="/about/progress"
-          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-        >
-          Our Progress
-        </Link>
-        <Link
-          href="/about/sources"
-          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-        >
-          Source Libraries
-        </Link>
-        <Link
-          href="/about/faq"
-          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-        >
-          FAQ
-        </Link>
-        <Link
-          href="/developers"
-          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-        >
-          API & MCP Server
-        </Link>
-      </div>
+        </nav>
+      </section>
     </ContentPageLayout>
   );
 }
