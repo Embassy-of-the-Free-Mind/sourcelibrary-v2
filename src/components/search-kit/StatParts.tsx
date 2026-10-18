@@ -33,6 +33,22 @@ export function useCountUp(target: number): number {
   return shown;
 }
 
+/**
+ * False until the chart has data and one frame has painted with it at zero,
+ * then true for good: the bars grow in once, on first load. Later changes use
+ * the bars' own transitions.
+ */
+function useReveal(ready: boolean): boolean {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    if (!ready || shown) return;
+    let inner = 0;
+    const outer = requestAnimationFrame(() => { inner = requestAnimationFrame(() => setShown(true)); });
+    return () => { cancelAnimationFrame(outer); cancelAnimationFrame(inner); };
+  }, [ready, shown]);
+  return shown;
+}
+
 export const fmt = (n: number) => n.toLocaleString('en-GB');
 export const yearLabel = (y: number | null) => (y == null ? '' : y < 0 ? `${-y} BCE` : String(y));
 const bucketLabel = (from: number | null, to: number | null) =>
@@ -53,6 +69,7 @@ export function PrintedBars({ printed, yearMin, yearMax, onYears, what, classNam
   what: string;
   className: string;
 }) {
+  const revealed = useReveal(printed.some((p) => p.count > 0));
   const maxBucket = Math.max(1, ...printed.map((p) => p.count));
   const bars = printed.map((p, i) => ({
     key: i,
@@ -75,7 +92,8 @@ export function PrintedBars({ printed, yearMin, yearMax, onYears, what, classNam
           aria-pressed={b.on}
           onClick={() => onYears(b.from, b.to)}
           className={`flex-1 min-w-0 p-0 border-0 transition-[height,background-color] duration-500 ease-out motion-reduce:transition-none ${b.on ? 'bg-primary' : 'bg-border-medium'} hover:bg-accent-rust`}
-          style={{ height: `${(100 * b.height) / 40}%` }}
+          // Grows in left to right on first load: ~0.7s, 35ms apart.
+          style={{ height: revealed ? `${(100 * b.height) / 40}%` : '0%', transitionDelay: revealed ? `${b.key * 35}ms` : undefined, transitionDuration: '700ms' }}
         />
       ))}
     </div>
@@ -117,14 +135,18 @@ export function ShareBox({ title, parts, selected, onPick }: {
   const sum = top.reduce((a, l) => a + l.count, 0) + rest || 1;
   const named = top.map((l, i) => ({ value: l.value, pct: Math.round((100 * l.count) / sum), color: SWATCHES[i], flex: l.count, on: selected.includes(l.value) }));
   const restPct = Math.round((100 * rest) / sum);
+  const revealed = useReveal(nonzero.length > 0);
+  // Before the reveal every part is zero wide; then they open out to their shares.
+  const grow = (n: number) => (revealed ? n : 0);
+  const legend = revealed ? 'opacity-100' : 'opacity-0';
   return (
     <div className={statBox}>
       <div className="text-[13px] text-muted mb-2">{title}</div>
       <div className="flex h-2.5 gap-0.5" aria-hidden>
-        {named.map((l) => <i key={l.value} className="block h-full transition-[flex-grow] duration-500 ease-out motion-reduce:transition-none" style={{ flex: l.flex, background: l.color }} />)}
-        {rest > 0 && <i className="block h-full transition-[flex-grow] duration-500 ease-out motion-reduce:transition-none" style={{ flex: rest, background: OTHERS }} />}
+        {named.map((l, i) => <i key={l.value} className="block h-full transition-[flex-grow] duration-700 ease-out motion-reduce:transition-none" style={{ flex: grow(l.flex), background: l.color, transitionDelay: `${i * 80}ms` }} />)}
+        {rest > 0 && <i className="block h-full transition-[flex-grow] duration-700 ease-out motion-reduce:transition-none" style={{ flex: grow(rest), background: OTHERS, transitionDelay: `${named.length * 80}ms` }} />}
       </div>
-      <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-2.5 text-[12px] text-secondary">
+      <div className={`flex flex-wrap gap-x-3 gap-y-0.5 mt-2.5 text-[12px] text-secondary transition-opacity duration-500 delay-300 motion-reduce:transition-none ${legend}`}>
         {named.map((l) => (
           <button key={l.value} type="button" onClick={() => onPick(l.value)} aria-pressed={l.on} className="inline-flex items-center gap-1.5 p-0 border-0 bg-transparent text-[12px] text-inherit group">
             <span className="w-2 h-2" style={{ background: l.color }} aria-hidden />

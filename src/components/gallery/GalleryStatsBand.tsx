@@ -9,6 +9,8 @@ interface Props {
   total: number | null;
   /** Images in the whole gallery, for "of N". */
   galleryTotal: number | null;
+  /** Artworks a search found by title, which the stats route does not count. */
+  titleArtworks: number;
   searched: boolean;
   stale: boolean;
   source: string;
@@ -29,13 +31,13 @@ const kindLabel = (k: string) => k.charAt(0).toUpperCase() + k.slice(1).replace(
  * kind of image they are. Every mark narrows the gallery. Four boxes on
  * desktop, two by two on a tablet, one line and a slim chart on a phone.
  */
-export default function GalleryStatsBand({ stats, total, galleryTotal, searched, stale, source, type, yearMin, yearMax, onYears, onType, onSource }: Props) {
+export default function GalleryStatsBand({ stats, total, galleryTotal, titleArtworks, searched, stale, source, type, yearMin, yearMax, onYears, onType, onSource }: Props) {
   // Plain values for the JSX: the React Compiler hoists member access above conditional guards (ui-navigation.md).
-  const images = stats?.total ?? total ?? 0;
+  const images = stats ? stats.total + titleArtworks : (total ?? 0);
   const known = stats != null || total != null;
   const imagesShown = useCountUp(images);
   const books = stats?.books ?? 0;
-  const artworks = stats?.artworks ?? 0;
+  const artworks = (stats?.artworks ?? 0) + titleArtworks;
   const artworksOnly = source === 'artwork';
   const second = artworksOnly ? artworks : books;
   const secondShown = useCountUp(second);
@@ -45,7 +47,10 @@ export default function GalleryStatsBand({ stats, total, galleryTotal, searched,
     ? `${images === 1 ? 'image' : 'images'} found${galleryTotal ? `, of ${fmt(galleryTotal)}` : ''}`
     : 'images in the gallery';
   const secondLabel = artworksOnly ? (artworks === 1 ? 'artwork' : 'artworks') : (books === 1 ? 'book illustrated' : 'books illustrated');
-  const sourceLink = artworksOnly ? 'Show everything' : artworks > 0 ? `plus ${fmt(artworks)} ${artworks === 1 ? 'artwork' : 'artworks'}` : '';
+  const artworksText = `plus ${fmt(artworks)} ${artworks === 1 ? 'artwork' : 'artworks'}`;
+  // Switching to artworks only is a browse filter; a search's title artworks are only described.
+  const sourceLink = artworksOnly ? 'Show everything' : (stats?.artworks ?? 0) > 0 ? artworksText : '';
+  const artworksNote = !sourceLink && titleArtworks > 0 ? artworksText : '';
   const printed = stats?.printed ?? [];
   const firstYear = yearLabel(stats?.yearFirst ?? null);
   const lastYear = yearLabel(stats?.yearLast ?? null);
@@ -91,6 +96,7 @@ export default function GalleryStatsBand({ stats, total, galleryTotal, searched,
       <div className={statBox}>
         <div className="text-[28px] font-medium leading-tight tabular-nums text-primary">{secondText}</div>
         <div className="text-[13px] text-muted mt-0.5 leading-snug">{secondLabel}</div>
+        {artworksNote && <div className="mt-2 text-[12.5px] text-secondary">{artworksNote}</div>}
         {sourceLink && (
           <button type="button" onClick={() => onSource(artworksOnly ? '' : 'artwork')} className="mt-2 text-[12.5px] text-secondary underline underline-offset-[3px] hover:text-primary">
             {sourceLink}

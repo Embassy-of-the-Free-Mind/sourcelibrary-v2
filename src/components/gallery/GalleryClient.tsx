@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import LikeButton from '@/components/ui/LikeButton';
-import { canLoadMore } from '@/lib/gallery-pagination';
+import CatalogPagination from '@/components/collections/CatalogPagination';
 import { BookLoader } from '@/components/ui/BookLoader';
 import GalleryControls, { type GalleryUrlState } from '@/components/gallery/GalleryControls';
 import { formatAuthor, toGalleryCardUrl } from '@/lib/utils';
@@ -100,9 +100,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [loading, setLoading] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentOffset, setCurrentOffset] = useState(initialData.items.length);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   // Monotonic id of the newest filter fetch — see the fetch effect below.
   const fetchSeqRef = useRef(0);
@@ -140,7 +138,11 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
   const seedParam = searchParams.get('seed');
   const seed = seedParam !== null ? parseInt(seedParam, 10) : undefined;
 
-  const limit = 48;
+  // Pages of 100 (about twenty rows of five), turned with the catalogue's own
+  // pagination; ?page= keeps a page shareable and the back button working.
+  const limit = 100;
+  const pageParam = parseInt(searchParams.get('page') || '1', 10);
+  const page = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
 
   // Update URL params
   const updateParams = useCallback((updates: Record<string, string>) => {
@@ -152,7 +154,9 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
         params.delete(key);
       }
     });
+    // Any change but a page turn goes back to page 1.
     params.delete('offset');
+    params.delete('page');
     router.push(`${tenantPrefix}/gallery?${params.toString()}`);
   }, [searchParams, router, tenantPrefix]);
 
@@ -180,7 +184,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
     // The SSR payload is illustration-only; for the merged default ('all') or
     // artwork-only we must fetch on mount to pull artworks in. Only skip when the
     // request matches what the server already rendered (illustration-only, no filters).
-    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration') {
+    if (isInitialLoad && !hasNonBookFilters && bookId === initialBookId && sourceFilter === 'illustration' && page === 1) {
       setIsInitialLoad(false);
       return;
     }
@@ -191,7 +195,6 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
     // alongside leftover items and a live "Load more" from the old query
     // (#3605) — two inconsistent pieces of state in one view.
     setAllItems([]);
-    setCurrentOffset(0);
 
     // Only the newest request may write state. Two fetches can overlap when
     // filters change quickly, and an older one resolving last used to restore
@@ -206,7 +209,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
       try {
         const json = await gallery.list({
           limit,
-          offset: 0,
+          offset: (page - 1) * limit,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
           maxPerBook,
@@ -228,14 +231,6 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
         const firstPage = !sortParam && !imageSearchQuery ? shuffle([...json.items]) : json.items;
         setData({ ...json, items: firstPage });
         setAllItems(firstPage);
-        // Paginate by page boundary, NOT cumulative item count. The merged
-        // browse derives its page from `floor(offset / limit)`, so the next
-        // offset must be a clean multiple of `limit`. Tracking the running
-        // item count desynced whenever a page returned < limit items (e.g. a
-        // type filter where artworks don't contribute → 36/page), which made
-        // `floor(36/limit)` re-fetch page 0 → Load More showed duplicates or
-        // appeared to do nothing.
-        setCurrentOffset(limit);
       } catch (e) {
         if (requestId !== fetchSeqRef.current) return;
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
@@ -246,60 +241,20 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
 
     fetchGallery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter, sortParam, seed]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, includeArchive, sourceFilter, sortParam, seed, page]);
 
-  // Load more handler — appends next batch to accumulated items
-  const handleLoadMore = useCallback(async () => {
-    // Guard on the in-flight flag only. The old `|| !data` early-out returned
-    // silently and issued no request at all, which the reader experiences as a
-    // dead button (#3605); `data` is not an input to the request anyway.
-    if (loadingMore) return;
-    setLoadingMore(true);
-    try {
-      const json = await gallery.list({
-        limit,
-        offset: currentOffset,
-        bookId: bookId || undefined,
-        collection: collectionFilter || undefined,
-        maxPerBook,
-        library: libraryFilter || undefined,
-        query: imageSearchQuery || undefined,
-        type: typeFilter || undefined,
-        subject: subjectFilter || undefined,
-        topic: topicFilter || undefined,
-        yearFrom: yearStart ? parseInt(yearStart) : undefined,
-        yearTo: yearEnd ? parseInt(yearEnd) : undefined,
-        minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
-        source: sourceFilter !== 'all' ? (sourceFilter as 'illustration' | 'artwork') : undefined,
-        sort: sortParam || undefined,
-        seed,
-      });
-      // Advance by a full page (see initial-fetch note). Dedup on append is a
-      // belt-and-suspenders guard against any residual overlap (e.g. the
-      // search path prepends one-off "lead" artworks on page 0).
-      setAllItems(prev => {
-        const seen = new Set(prev.map(it => `${it.pageId}-${it.detectionIndex}`));
-        const fresh = json.items.filter((it: GalleryItem) => !seen.has(`${it.pageId}-${it.detectionIndex}`));
-        return [...prev, ...fresh];
-      });
-      setCurrentOffset(prev => prev + limit);
-      // Carry the response's own total AND hasMore forward. Trusting only the
-      // stale total left the button live after a page that returned nothing,
-      // so it kept fetching empty pages and appearing dead.
-      setData(prev => prev
-        ? { ...prev, total: json.total ?? prev.total, hasMore: json.hasMore }
-        : json);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load more images');
-    } finally {
-      setLoadingMore(false);
-    }
-  }, [loadingMore, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, topicFilter, maxPerBook, yearStart, yearEnd, qualityParam, limit, sourceFilter, sortParam, seed]);
-
-  // Prefer the server's reliable hasMore flag; fall back to total-vs-offset,
-  // and never offer to extend an empty result set — a "Load more" button
-  // rendered next to "No images found" is never right (#3605).
-  const hasMore = canLoadMore(data, allItems.length, currentOffset);
+  // Pages from the response: the server's hasMore is authoritative (the plates-only
+  // browse reports an estimated total), so the last page is the one that says no more.
+  const totalPages = data?.hasMore === false
+    ? page
+    : Math.max(page + (data?.hasMore ? 1 : 0), Math.ceil((data?.total ?? 0) / limit));
+  const goToPage = useCallback((n: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (n > 1) params.set('page', String(n)); else params.delete('page');
+    const qs = params.toString();
+    router.push(`${tenantPrefix}/gallery${qs ? `?${qs}` : ''}`, { scroll: false });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [searchParams, router, tenantPrefix]);
 
   const hasFilters = bookId || collectionFilter || typeFilter || subjectFilter || topicFilter || libraryFilter || imageSearchQuery;
 
@@ -374,28 +329,9 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
         {!loading && data && allItems.length > 0 && (
           <>
             {/* Uneven masonry cropped by a fixed-height container + fade mask (handled inside). */}
-            <GalleryMasonry items={allItems} hasMore={hasMore} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
-            <div className="mt-2" />
-
-            {/* Load More */}
-            {hasMore && (
-              <div className="mt-8 text-center">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={loadingMore}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full text-sm font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors shadow-sm disabled:opacity-50"
-                >
-                  {loadingMore ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  )}
-                  {loadingMore ? 'Loading…' : 'Load more'}
-                </button>
-              </div>
-            )}
+            {/* Every image on the page is shown: no crop and fade, since the next page starts after the last one. */}
+            <GalleryMasonry items={allItems} hasMore={false} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
+            <CatalogPagination currentPage={page} totalPages={totalPages} onPageChange={goToPage} />
           </>
         )}
       </div>
@@ -423,10 +359,19 @@ function GalleryMasonry({ items, hasMore, tenantPrefix, collectionScope }: { ite
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Natural round-robin — deliberately NOT height-balanced.
+  // Each tile goes to the shortest column so far (heights from aspect ratios,
+  // no DOM measurement), so a page ends nearly level. Round-robin used to be
+  // deliberate, for the old Load more's crop-and-fade; with pages, every tile is
+  // shown and a ragged bottom left one column hanging far below the rest.
   const columns = useMemo(() => {
     const colArr: GalleryItem[][] = Array.from({ length: cols }, () => []);
-    items.forEach((item, i) => colArr[i % cols].push(item));
+    const heights = Array.from({ length: cols }, () => 0);
+    for (const item of items) {
+      let c = 0;
+      for (let i = 1; i < cols; i++) if (heights[i] < heights[c] - 0.01) c = i;
+      colArr[c].push(item);
+      heights[c] += 1 / (item.aspect && item.aspect > 0 ? item.aspect : 0.75) + 0.06;
+    }
     return colArr;
   }, [items, cols]);
 

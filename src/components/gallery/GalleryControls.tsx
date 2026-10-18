@@ -162,6 +162,10 @@ export default function GalleryControls({ state, replace, update, data, loading,
   const searched = chips.length > 0;
   const { stats, galleryTotal, statsLoading } = useGalleryStats(state, searched);
   const total = loading ? null : (data?.total ?? null);
+  // A search's first page also carries artworks matched by title ("ship of
+  // fools" finds three, and no plates). /api/gallery/stats cannot reproduce
+  // that lane, so the band adds the ones the page holds; they all come on page one.
+  const titleArtworks = state.q && !loading ? (data?.items ?? []).filter((i) => i.source === 'artwork').length : 0;
   const yearMin = state.yearStart ? parseInt(state.yearStart, 10) : undefined;
   const yearMax = state.yearEnd ? parseInt(state.yearEnd, 10) : undefined;
   const yearsFromBand = (from: number | null, to: number | null) => {
@@ -170,7 +174,7 @@ export default function GalleryControls({ state, replace, update, data, loading,
   };
 
   const sortValue = state.sort;
-  const sortLabelBest = state.q ? 'Best match' : 'Best quality';
+  const sortLabelBest = state.q ? 'Most relevant' : 'Best quality';
 
   return (
     <div>
@@ -178,6 +182,12 @@ export default function GalleryControls({ state, replace, update, data, loading,
         search={{
           id: 'gallery-search', label: 'Search the images', placeholder: 'Dragons, comets, a book',
           value: searchText, onChange: setSearchText, onSubmit: search, examples: searchExamples,
+          // Entry point to /identify (#4232); hidden on partner hosts, where /identify is global-only.
+          aside: isTenantHost ? undefined : (
+            <Link href="/identify" className="inline-flex items-center gap-1.5 text-[12.5px] text-muted hover:text-primary" title="Photograph or upload a picture to find it in the library">
+              <Camera className="w-3.5 h-3.5" aria-hidden /> Search by image
+            </Link>
+          ),
         }}
         ask={{
           id: 'gallery-ask', label: 'Ask the librarian', placeholder: 'What would you like to see?',
@@ -191,6 +201,7 @@ export default function GalleryControls({ state, replace, update, data, loading,
         stats={stats}
         total={total}
         galleryTotal={galleryTotal}
+        titleArtworks={titleArtworks}
         searched={searched}
         stale={loading || statsLoading || dirty}
         source={state.source}
@@ -211,12 +222,6 @@ export default function GalleryControls({ state, replace, update, data, loading,
         </button>
         <FilterChips chips={chips} onRemove={removeChip} onClearAll={clearAll} />
         <div className="order-2 sm:order-none ml-auto flex items-center gap-2 sm:gap-2.5">
-          {/* Entry point to /identify (#4232); hidden on partner hosts, where /identify is global-only. */}
-          {!isTenantHost && (
-            <Link href="/identify" className="hidden md:inline-flex items-center gap-1.5 text-xs text-muted hover:text-primary mr-1" title="Photograph an artwork to find it in the library">
-              <Camera className="w-3.5 h-3.5" aria-hidden /> Seen it somewhere?
-            </Link>
-          )}
           <label className="sr-only" htmlFor="gallery-sort">Sort</label>
           <select id="gallery-sort" value={sortValue}
             onChange={(e) => {
