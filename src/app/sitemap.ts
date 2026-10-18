@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { posts as blogPostList } from '@/app/blog/posts';
 import { canonWorkForWorkId } from '@/lib/canon-works';
+import { languageSlug } from '@/lib/language-utils';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -222,7 +223,7 @@ function staticPages(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/libraries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE_URL}/explore`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/explore/map`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${BASE_URL}/explore/timeline`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/gallery/collections`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/curated`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
@@ -496,7 +497,7 @@ async function getLanguages(): Promise<MetadataRoute.Sitemap> {
     ], { maxTimeMS: 10000 }).toArray();
 
     return languages.map((lang) => ({
-      url: `${BASE_URL}/languages/${(lang._id as string).toLowerCase().replace(/\s+/g, '-')}`,
+      url: `${BASE_URL}/languages/${languageSlug(lang._id as string)}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.5,

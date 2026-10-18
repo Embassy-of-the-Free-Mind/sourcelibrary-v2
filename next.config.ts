@@ -437,6 +437,18 @@ const nextConfig: NextConfig = {
         destination: '/blog/techniques-of-the-body',
         permanent: true,
       },
+      // Superseded notes (UNLISTED_PAGES in src/app/blog/posts.ts): send readers
+      // to the post that replaced each one. The page files are kept.
+      {
+        source: '/blog/2000-first-translations',
+        destination: '/blog/counting-first-translations',
+        permanent: true,
+      },
+      {
+        source: '/blog/worlds-largest-collection',
+        destination: '/blog/how-big-is-the-library',
+        permanent: true,
+      },
       // Ledgers and Heavens was folded into Harmonic Justice as one post (2026-10-17).
       {
         source: '/blog/ledgers-and-heavens',
@@ -506,8 +518,10 @@ const nextConfig: NextConfig = {
         destination: '/press-releases',
         permanent: true,
       },
+      // ...except the unlisted English guide to the Trouw interview (#4049),
+      // a live page under /press/ that this catch-all was swallowing.
       {
-        source: '/press/:path*',
+        source: '/press/:path((?!trouw-interview-english$).*)',
         destination: '/press-releases',
         permanent: true,
       },
