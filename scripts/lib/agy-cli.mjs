@@ -22,7 +22,9 @@ export const QUOTA = /RESOURCE_EXHAUSTED|quota reached|quota exceeded|exhausted 
 // one Latin page matched `\b429\b`, was taken for a quota stop 39 times, and held the whole read run for 6.5 h.
 const QUOTA_REPLY_MAX = 400;
 export function isQuotaError({ out = '', err = '', j = {}, text = '' }) {
-  const envelope = j && Object.keys(j).length ? JSON.stringify({ ...j, response: undefined }) : out;
+  // The envelope's counters are numbers, not errors: a page whose usage.input_tokens was 429 matched `\b429\b` on
+  // every retry and stopped its whole read (#6559, 2026-10-18).
+  const envelope = j && Object.keys(j).length ? JSON.stringify({ ...j, response: undefined, usage: undefined, duration_seconds: undefined, num_turns: undefined, conversation_id: undefined }) : out;
   if (QUOTA.test(err) || QUOTA.test(envelope)) return true;
   return text.length > 0 && text.length <= QUOTA_REPLY_MAX && QUOTA.test(text);
 }
