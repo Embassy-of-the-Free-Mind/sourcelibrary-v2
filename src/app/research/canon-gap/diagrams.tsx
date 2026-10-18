@@ -219,6 +219,7 @@ const ENGINE_NAMES: [RegExp, string][] = [
   [/^cbeta/, 'CBETA typed text'],
   [/^sefaria/, 'Sefaria typed text'],
   [/^gemini-3-flash/, 'Gemini 3 Flash'],
+  [/^gemini-3\.8-flash/, 'Gemini 3.8 Flash'],
   [/^gemini-3\.1-flash-lite/, 'Gemini 3.1 Flash-Lite'],
   [/^gemini-2\.5-flash/, 'Gemini 2.5 Flash'],
   [/^PaddleOCR-VL/i, 'PaddleOCR-VL'],
@@ -226,7 +227,7 @@ const ENGINE_NAMES: [RegExp, string][] = [
   [/^ia-/, 'Internet Archive OCR'],
   [/^mineru/, 'MinerU'],
   [/^manual$/, 'hand-entered'],
-  [/^unrecorded$/, 'model not recorded'],
+  [/^(unrecorded|unknown)$/, 'model not recorded'],
 ];
 const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? id;
 
