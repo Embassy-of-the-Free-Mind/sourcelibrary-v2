@@ -12,6 +12,10 @@
  *           comparison (`VectorShadow`) is logged on the search_queries row.
  *   serve   the service's rows, text hydrated by primary key, with the RPC as
  *           the fallback on any error, timeout or `complete: false`.
+ *           Production serves from 2026-10-18, with the service at ef 1024:
+ *           0.948 of the exact top-40 on real reader queries against the
+ *           RPC's 0.909 (scripts/eval/experiments/
+ *           2026-10-18-vector-ef-on-reader-queries-6821.md).
  *
  * Global scope only. Tenant scope and the language-keyed `page_texts` store
  * stay on Supabase: the service holds neither a tenant's book set nor those
