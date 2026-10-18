@@ -7,9 +7,9 @@ canons: []
 n_books: 50
 n_pages: 50
 verdict: "Preregistration only: production Paddle (PaddleOCR-VL-1.6, layout off) behind a frozen output guard, against agy Gemini 3.8 Flash, on a fresh draw of 25 table + 25 mixed held Chinese pages from books not in the first reference set. No result here."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: "2026-10-18-zh-guarded-paddle-6871.md"
 issue: [6871]
 ---
 PRIOR ART: `2026-10-18-zh-residue-bakeoff-6871.md` (the bake-off whose failures the guard is built from: P0 ties agy Flash on table and mixed, but loops, collapses on dense numeric tables and loops on a blank leaf); `scripts/eval/zh-residue-refs-6871/` (the reference recipe and both reader briefs, reused unchanged); `scripts/eval/zh-residue-bakeoff-6871/score.py` (metrics, imported unchanged).

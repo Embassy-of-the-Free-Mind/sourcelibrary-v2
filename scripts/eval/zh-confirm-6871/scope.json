@@ -1,0 +1,19 @@
+{
+ "at": "2026-10-18T06:11:59.224Z",
+ "table": {
+  "books": 109,
+  "books_held": 109,
+  "unread": 15280,
+  "qwj_books": 0,
+  "qwj_unread": 0,
+  "in_scope_unread": 15280
+ },
+ "mixed": {
+  "books": 131,
+  "books_held": 131,
+  "unread": 17784,
+  "qwj_books": 15,
+  "qwj_unread": 2408,
+  "in_scope_unread": 15376
+ }
+}
