@@ -1,12 +1,11 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { BOOK, CREDIT, PAPER } from './HeroBackdrop';
+import { PAPER } from './HeroBackdrop';
 
 // The /articles marbled paper behind a section further down a page (the
 // homepage Articles section). Full strength from the top of the section, fading
-// out so it ends a third of the way down the first card's picture; drifts
+// out so it ends halfway down the first card's picture; drifts
 // slightly slower than the page while the section is on screen.
 
 const PARALLAX = 0.15;
@@ -16,14 +15,14 @@ export default function MarbledBackdrop() {
   const box = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
 
-  // Ends a third of the way down the first card picture in the section.
+  // Ends halfway down the first card picture in the section.
   useEffect(() => {
     const fit = () => {
       const el = box.current;
       const pic = el?.parentElement?.querySelector<HTMLElement>('[data-card] img');
       if (!el || !pic) return;
       const top = pic.getBoundingClientRect().top - el.getBoundingClientRect().top;
-      el.style.height = `${Math.round(top + pic.offsetHeight / 3)}px`;
+      el.style.height = `${Math.round(top + pic.offsetHeight / 2)}px`;
     };
     fit();
     window.addEventListener('resize', fit);
@@ -55,28 +54,19 @@ export default function MarbledBackdrop() {
   }, []);
 
   return (
-    <>
+    <div
+      ref={box}
+      className="absolute inset-x-0 top-0 h-[70%] overflow-hidden pointer-events-none"
+      style={{
+        maskImage: 'linear-gradient(to bottom, black 55%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent)',
+      }}
+    >
       <div
-        ref={box}
-        className="absolute inset-x-0 top-0 h-[70%] overflow-hidden pointer-events-none"
-        style={{
-          maskImage: 'linear-gradient(to bottom, black 55%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent)',
-        }}
-      >
-        <div
-          ref={layer}
-          className="absolute inset-x-0 bg-cover bg-center opacity-[0.2] mix-blend-multiply will-change-transform"
-          style={{ top: -OVERSCAN, bottom: -OVERSCAN, backgroundImage: `url(${PAPER})` }}
-        />
-      </div>
-      <div className="absolute inset-x-0 top-4 hidden md:block">
-        <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex justify-end">
-          <Link href={BOOK} className="relative z-10 text-xs text-muted hover:text-secondary transition-colors">
-            {CREDIT}
-          </Link>
-        </div>
-      </div>
-    </>
+        ref={layer}
+        className="absolute inset-x-0 bg-cover bg-center opacity-[0.2] mix-blend-multiply will-change-transform"
+        style={{ top: -OVERSCAN, bottom: -OVERSCAN, backgroundImage: `url(${PAPER})` }}
+      />
+    </div>
   );
 }
