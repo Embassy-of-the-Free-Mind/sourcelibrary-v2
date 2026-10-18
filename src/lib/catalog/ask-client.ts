@@ -64,14 +64,27 @@ export function searchUrl(f: CatalogFilters, topic: string): string {
 
 // Searches already started — by typing, or by hovering an example — so asking
 // finds them in flight. A response with degraded lanes is not kept.
-const started = new Map<string, Promise<{ results?: SearchHit[]; degraded_lanes?: unknown[] | null }>>();
+const started = new Map<string, Promise<SearchBody>>();
+
+type SearchBody = { results?: SearchHit[]; degraded_lanes?: unknown[] | null };
+
+async function fetchSearch(url: string): Promise<SearchBody> {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`search ${r.status}`);
+  return r.json();
+}
 
 function search(url: string) {
   let p = started.get(url);
   if (!p) {
-    p = fetch(url).then((r) => {
-      if (!r.ok) throw new Error(`search ${r.status}`);
-      return r.json();
+    // A lane that times out comes back empty and marked degraded; when that
+    // leaves nothing at all, ask once more rather than show "no works".
+    p = fetchSearch(url).then(async (j) => {
+      if (j?.degraded_lanes?.length && !j.results?.length) {
+        await new Promise((r) => setTimeout(r, 800));
+        return fetchSearch(url);
+      }
+      return j;
     });
     started.set(url, p);
     p.then((j) => { if (j?.degraded_lanes?.length) started.delete(url); }, () => started.delete(url));
