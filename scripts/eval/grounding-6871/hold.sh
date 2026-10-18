@@ -6,13 +6,16 @@
 # the lock). This one bounds the hold to ~20 min (#6871 shared-GPU rule) and turns prefix caching off, so a re-run is
 # a real second pass and not a cache hit.
 #
-#   hold.sh <out.jsonl> [--cap 2400] [--only ids.txt] [--limit N]     env: SECS (1080), UTIL (0.85)
+#   hold.sh <out.jsonl> [--cap 2400] [--only ids.txt] [--limit N]     env: SECS (1080), UTIL (0.85),
+#     NOLOCK=1 when the caller already holds /root/gpu.lock (a gpu-queue task: a second flock would wait forever)
 set -uo pipefail
 J=/root/jobs/grounding-6871; VL=/root/bench/vl; OUT=$1; shift
 export VLLM_USE_FLASHINFER_SAMPLER=0 HF_HUB_OFFLINE=1
 log() { echo "$(date -u +%FT%TZ) $*" >> "$J/hold.log"; }
-exec 9>/root/gpu.lock
-flock -w 300 9 || { log "lock busy after 300 s — not run"; exit 75; }
+if [ "${NOLOCK:-0}" != 1 ]; then
+  exec 9>/root/gpu.lock
+  flock -w 300 9 || { log "lock busy after 300 s — not run"; exit 75; }
+fi
 log "lock taken for $OUT $*; GPU $(nvidia-smi --query-gpu=memory.used --format=csv,noheader)"
 stop() {
   [ -n "${SP:-}" ] && { pkill -TERM -P "$SP" 2>/dev/null; kill "$SP" 2>/dev/null; sleep 8; pkill -KILL -P "$SP" 2>/dev/null; kill -9 "$SP" 2>/dev/null; }

@@ -97,12 +97,27 @@ def collect(ids, kinds, LLx=LL):
     return pages
 
 
+class WAuc:
+    """AUROC under page weights (a page-cluster bootstrap draws weights, not copies): one sort, then O(n) per draw"""
+    def __init__(self, v, y):
+        o = np.argsort(v, kind='stable'); self.o, self.y = o, y[o]; vs = v[o]
+        self.lo = np.searchsorted(vs, vs, 'left'); self.hi = np.searchsorted(vs, vs, 'right')
+
+    def __call__(self, w):
+        w = w[self.o]; wn = np.where(self.y, 0.0, w); c = np.concatenate([[0.0], np.cumsum(wn)])
+        below = c[self.lo]; tie = c[self.hi] - c[self.lo]
+        wp = np.where(self.y, w, 0.0)
+        P, N = wp.sum(), wn.sum()
+        return float((wp * (below + 0.5 * tie)).sum() / (P * N)) if P and N else None
+
+
 def metrics(pages, B=2000, seed=6871):
     keys = list(pages)
-    arr = {k: np.asarray(pages[k], float) for k in keys}
-    flat = np.concatenate([arr[k] for k in keys]) if keys else np.zeros((0, 4))
+    arr = [np.asarray(pages[k], float) for k in keys]
+    flat = np.concatenate(arr) if keys else np.zeros((0, 4))
+    pid = np.concatenate([np.full(len(a), i) for i, a in enumerate(arr)]) if keys else np.zeros(0, int)
     y = flat[:, 3] == 1 if len(flat) else np.zeros(0, bool)
-    out = {'pages': len(keys), 'pos_pages': int(sum(1 for k in keys if arr[k][:, 3].any())), 'units': int(len(flat)), 'pos_units': int(y.sum())}
+    out = {'pages': len(keys), 'pos_pages': int(sum(1 for a in arr if a[:, 3].any())), 'units': int(len(flat)), 'pos_units': int(y.sum())}
     if y.sum() < 5: return out
     for c, name in ((0, 'gain'), (1, 'base'), (2, 'inll')):
         out[f'auroc_{name}'] = round(auroc(flat[y, c], flat[~y, c]), 4)
@@ -112,11 +127,12 @@ def metrics(pages, B=2000, seed=6871):
         out[f'r10_{name}'] = round(float(y[fl].sum() / y.sum()), 4)
         if name == 'gain': out['thr10_gain'] = round(float(-thr), 4)   # flag a unit when its mean image gain is below this
     out['base_rate'] = round(float(y.mean()), 4)
-    rnd = random.Random(seed); bs = {'gain': [], 'base': [], 'diff': []}
+    rnd = np.random.default_rng(seed); ag_, ab_ = WAuc(flat[:, 0], y), WAuc(flat[:, 1], y)
+    bs = {'gain': [], 'base': [], 'diff': []}
     for _ in range(B):
-        f2 = np.concatenate([arr[rnd.choice(keys)] for _ in keys]); y2 = f2[:, 3] == 1
-        if not y2.any() or y2.all(): continue
-        ag, ab = auroc(f2[y2, 0], f2[~y2, 0]), auroc(f2[y2, 1], f2[~y2, 1])
+        cnt = np.bincount(rnd.integers(0, len(keys), len(keys)), minlength=len(keys)).astype(float)
+        w = cnt[pid]; ag, ab = ag_(w), ab_(w)
+        if ag is None or ab is None: continue
         bs['gain'].append(ag); bs['base'].append(ab); bs['diff'].append(ag - ab)
     for k, v in bs.items(): out[f'ci_{k}'] = [round(float(np.quantile(v, 0.025)), 4), round(float(np.quantile(v, 0.975)), 4)]
     return out
