@@ -249,7 +249,7 @@ export const posts: BlogPost[] = [
     summary:
       'Maya numerals, zero and the Long Count, tried by hand beside the Dresden Codex, Landa and Bowditch, with the Venus table and the 819-day count.',
     date: '18 October 2026',
-    readTime: '13 min read',
+    readTime: '15 min read',
     kind: 'interactive',
     // A Venus page of the Dresden Codex (reader page 27), identified by eye.
     image: 'https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/27.jpg',

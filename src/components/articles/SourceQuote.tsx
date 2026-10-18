@@ -28,6 +28,7 @@ export default function SourceQuote({
   source,
   original,
   pageAlt,
+  linkToPage = false,
   children,
 }: {
   book: string;
@@ -38,6 +39,8 @@ export default function SourceQuote({
   source: ReactNode;
   original?: ReactNode;
   pageAlt?: string;
+  /** Clicking the page image opens the page in the reader instead of the lightbox. */
+  linkToPage?: boolean;
   children: ReactNode;
 }) {
   const href = `/book/${book}?page=${page}`;
@@ -50,9 +53,15 @@ export default function SourceQuote({
           {source}, <Link href={href}>p. {printedPage ?? page}</Link>
         </figcaption>
       </blockquote>
-      <div data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
-        <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
-      </div>
+      {linkToPage ? (
+        <Link href={href} className="block">
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
+        </Link>
+      ) : (
+        <div data-lightbox-href={href} data-lightbox-caption={typeof source === 'string' ? `${source}, p. ${printedPage ?? page}` : undefined}>
+          <ArticleImage src={src} alt={pageAlt ?? `The printed page, p. ${page}`} sizes="(max-width: 768px) 100vw, 256px" />
+        </div>
+      )}
     </figure>
   );
 }
