@@ -66,7 +66,9 @@ const text = (v: string | null): string | undefined => {
   const raw = (v ?? '').trim();
   // A whole-query "phrase" keeps its pair of quotes (query.ts reads them); any other quote goes.
   const phrase = /^"[^"]+"$/.test(raw);
-  const inner = (phrase ? raw.slice(1, -1) : raw).replace(/[,()"\\{}]/g, ' ').replace(/\s+/g, ' ').trim();
+  // % and _ are LIKE wildcards: "%" matched every record through the slow text
+  // path and timed out about one time in fifteen. They never help a title match.
+  const inner = (phrase ? raw.slice(1, -1) : raw).replace(/[,()"\\{}%_]/g, ' ').replace(/\s+/g, ' ').trim();
   const t = (phrase && inner ? `"${inner}"` : inner).slice(0, 200);
   return t || undefined;
 };

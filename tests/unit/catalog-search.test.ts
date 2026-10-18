@@ -159,3 +159,16 @@ describe('default order', () => {
     expect(writeCatalogState(parseCatalogState(new URLSearchParams('q=alchemy'))).toString()).toBe('q=alchemy');
   });
 });
+
+describe('text filters', () => {
+  it('drop characters the filter syntax cannot take, keeping phrases and apostrophes', () => {
+    const q = (v: string) => parseCatalogFilters(new URLSearchParams({ q: v })).q;
+    expect(q('"')).toBeUndefined();
+    expect(q('\\')).toBeUndefined();
+    expect(q('%')).toBeUndefined();
+    expect(q('%%_')).toBeUndefined();
+    expect(q('"venus humanitas"')).toBe('"venus humanitas"');
+    expect(q("l'alchimie")).toBe("l'alchimie");
+    expect(q('dragon"')).toBe('dragon');
+  });
+});
