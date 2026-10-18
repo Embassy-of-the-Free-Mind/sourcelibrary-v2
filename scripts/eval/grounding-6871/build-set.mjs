@@ -20,6 +20,7 @@ import zlib from 'node:zlib';
 import path from 'node:path';
 import { MongoClient, ObjectId } from 'mongodb';
 import { normaliseForCer } from '../../batch/ocr-convergence/lib.mjs';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const RUN = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../../batch/ocr-convergence/results/run');
 const SETS = ['calib', 'gate', 'main200b', 'q300'];
@@ -48,7 +49,7 @@ for (let i = 0; i < rows.length; i += 200) {
   const ids = rows.slice(i, i + 200).map((r) => r.page_id);
   const oids = ids.filter((x) => /^[0-9a-f]{24}$/.test(x)).map((x) => new ObjectId(x));
   for (const p of await db.collection('pages').find({ $or: [{ id: { $in: ids } }, { _id: { $in: oids } }] },
-    { projection: { id: 1, 'ocr.data': 1, 'ocr.updated_at': 1, archived_photo: 1, photo: 1 } }).toArray()) {
+    { projection: { id: 1, 'ocr.data': 1, 'ocr.updated_at': 1, archived_photo: 1, photo: 1, cropped_photo: 1, split_from_spread: 1, enhanced_photo: 1, photo_original: 1 } }).toArray()) {
     byId.set(p.id || String(p._id), p);
     byId.set(String(p._id), p);
   }
@@ -70,7 +71,7 @@ for (const r of rows) {
   }
   if (!text) { stat.missing++; continue; }
   stat[source]++;
-  fh.write(JSON.stringify({ ...r, text, source, image: p?.archived_photo || p?.photo || null }) + '\n');
+  fh.write(JSON.stringify({ ...r, text, source, image: p ? getPageSource(p) : null }) + '\n');
 }
 fh.end();
 await cli.close();

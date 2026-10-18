@@ -4,6 +4,8 @@
 #
 # PRIOR ART: hold.sh (this folder; the same serve → score → stop, bounded to 18 min per lock hold). Those holds
 # scored 928 of 2,219 items, then a 10 h gpu-queue task took the lock; this finishes the run inside the queue.
+# 213 of those 928 rows were dropped (main.pre-split-fix.jsonl keeps them): their page is split from a spread and was
+# scored against the whole spread (build-set.mjs now picks the image with getPageSource), so they are scored again.
 # 50-grounding-6871 (#6871 row A; 50- per the inbox note of 2026-10-18T05:43Z: Mongolian 10-, Latin 20-, then this): image vs no-image likelihood of stored OCR reads, Qwen2.5-VL-7B AWQ.
 #   1. main pass, the remaining items (ll-score.py resumes: items already in main.jsonl are skipped)
 #   2. noise floor: the 300 seeded pages again with a FRESH server (rerun.jsonl), then at a 1,200 px cap (res1200.jsonl)
