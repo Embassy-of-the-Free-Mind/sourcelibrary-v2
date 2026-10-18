@@ -93,7 +93,7 @@ export default function MayaMathematicsPage() {
           scholars who first worked out its arithmetic, Ernst Förstemann and Charles Bowditch.
         </p>
 
-        <nav aria-label="On this page" className="not-prose my-10 grid gap-4 sm:grid-cols-2 rounded-lg border border-border-light bg-white/60 p-5 font-sans text-sm">
+        <nav aria-label="On this page" data-card className="not-prose my-10 grid gap-4 sm:grid-cols-2 rounded-lg border border-border-light bg-white/60 p-5 font-sans text-sm">
           {[
             { href: '#numbers', title: 'Numbers', text: 'Counting by twenties, the bar, the dot and the shell, and how the scribes multiplied.', tries: 'Write a number' },
             { href: '#days', title: 'Days', text: 'The Long Count, the 260-day count and the 365-day year, and the 52 years it takes them to meet.', tries: 'Convert a date; turn the wheels and gears; the Kaua rows' },
