@@ -17,9 +17,11 @@
  *           RPC's 0.909 (scripts/eval/experiments/
  *           2026-10-18-vector-ef-on-reader-queries-6821.md).
  *
- * Global scope only. Tenant scope and the language-keyed `page_texts` store
- * stay on Supabase: the service holds neither a tenant's book set nor those
- * vectors. Only `semanticPageSearchGlobal` calls this, after its scope branch.
+ * Global scope, plus named books (#2049): `semanticPageSearchScoped` asks it
+ * `match_pages_in_books`' question with `bookIds` (≤ VECTOR_SEARCH_MAX_BOOK_IDS),
+ * which the service answers with an exact scan of those books' rows. Tenant
+ * scope and the language-keyed `page_texts` store stay on Supabase: the service
+ * holds neither a tenant's book set nor those vectors.
  *
  * Transport: HTTPS to https://vectors.sourcelibrary.org (Caddy on l7a in front
  * of the service's loopback listener, #6843) with a Bearer token.
@@ -41,6 +43,9 @@ export type VectorSearchMode = 'off' | 'shadow' | 'serve';
 /** The service call's budget, network included. The RPC it stands beside takes ~1.1 s. */
 export const VECTOR_SEARCH_TIMEOUT_MS = 400;
 
+/** The service's cap on `book_ids` (scripts/workers/vector-search/server.mjs MAX_BOOK_IDS). */
+export const VECTOR_SEARCH_MAX_BOOK_IDS = 50;
+
 export function vectorSearchMode(): VectorSearchMode {
   if (!process.env.VECTOR_SEARCH_URL || !process.env.VECTOR_SEARCH_TOKEN) return 'off';
   const m = process.env.VECTOR_SEARCH_MODE;
@@ -55,6 +60,8 @@ export interface VectorMatchFilters {
   excludeLanguages: string[] | null;
   yearMin: number | null;
   yearMax: number | null;
+  /** `match_pages_in_books`: only these books' pages, scanned exactly. */
+  bookIds?: string[] | null;
 }
 
 export interface VectorServiceRow {
@@ -112,6 +119,7 @@ export async function matchVectorService(
         filter_exclude_languages: f.excludeLanguages,
         year_min: f.yearMin,
         year_max: f.yearMax,
+        ...(f.bookIds?.length ? { book_ids: f.bookIds } : {}),
         ...(withText ? { with_text: true } : {}),
       }),
       signal: AbortSignal.timeout(timeoutMs),
