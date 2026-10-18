@@ -14,6 +14,8 @@ import { WRITTEN_PAST_ROWS, WRITTEN_PAST_STEPS } from '@/lib/written-past-data';
 const STEP_MS = 5500;
 const GREEN = '#15803d';
 const fmt = (n: number) => n.toLocaleString('en-GB');
+const compact = (n: number) => (n >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : fmt(n));
+const GRID = 'grid grid-cols-[5.75rem_minmax(0,1fr)_auto] sm:grid-cols-[7.5rem_minmax(0,1fr)_8.5rem] items-center gap-x-3';
 
 export default function WrittenPastChart() {
   const [step, setStep] = useState(0);
@@ -88,7 +90,7 @@ export default function WrittenPastChart() {
 
   return (
     <div ref={rootRef} className="written-past">
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted mb-5">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] text-muted mb-4">
         <span className="inline-flex items-center gap-2">
           <i className="inline-block w-3.5 h-3.5" style={{ background: GREEN }} />
           translated into English
@@ -136,13 +138,17 @@ export default function WrittenPastChart() {
         </div>
       </div>
 
-      <p className="mt-5 mb-8 text-lg md:text-xl text-primary leading-snug min-h-[3.5em] md:min-h-[2.6em]" aria-live="polite">
+      <p className="mt-4 mb-5 text-base md:text-lg text-primary leading-snug min-h-[4.2em] sm:min-h-[2.8em]" aria-live="polite">
         {WRITTEN_PAST_STEPS[step].caption}
       </p>
 
-      <div className="flex justify-between text-xs text-muted pb-2 mb-3 border-b border-border-light">
-        <span>0</span>
-        <span className="font-semibold text-secondary tabular-nums">{axisMax}</span>
+      <div className={`${GRID} text-xs text-muted pb-2 mb-2 border-b border-border-light`}>
+        <span />
+        <span className="flex justify-between">
+          <span>0</span>
+          <span className="font-semibold text-secondary tabular-nums">{axisMax}</span>
+        </span>
+        <span className="text-right">size · translated</span>
       </div>
 
       <div>
@@ -151,33 +157,19 @@ export default function WrittenPastChart() {
           const w = on ? (r.n / max) * 100 : 0;
           const t = on && r.translated != null ? Math.max(0.15, (r.translated / max) * 100) : 0;
           const pct = r.translated != null ? ((r.translated / r.n) * 100).toFixed(2) : null;
+          const size = r.open ? 'uncounted' : r.none ? 'no estimate' : r.estimate ? `${compact(r.n)} mss.` : fmt(r.n);
           return (
             <div
               key={r.key}
-              className="wp-row overflow-hidden"
-              style={{
-                maxHeight: on ? (solo ? 220 : 90) : 0,
-                opacity: on ? 1 : 0,
-                marginBottom: on ? (solo ? 0 : 12) : 0,
-              }}
+              className={`wp-row ${GRID} overflow-hidden`}
+              style={{ height: on ? (solo ? 64 : 28) : 0, opacity: on ? 1 : 0 }}
               aria-hidden={!on}
+              title={r.unit}
             >
-              <div className={`flex flex-wrap items-baseline gap-x-2 leading-snug ${solo ? 'mb-3' : 'mb-1'}`}>
-                <span className={`${r.highlight ? 'font-semibold text-primary' : 'text-secondary'} ${solo ? 'text-2xl' : 'text-[15px]'}`}>
-                  {r.name}
-                </span>
-                <span className={`text-muted ${solo ? 'text-base' : 'text-[13px]'}`}>
-                  {!r.open && !r.none && <b className="font-semibold text-primary tabular-nums">{fmt(r.n)} </b>}
-                  {(r.key === 'nl' || r.unit !== WRITTEN_PAST_ROWS[0].unit) && r.unit}
-                  {pct && (
-                    <>
-                      {' · '}
-                      <b className="font-semibold text-primary tabular-nums">{pct}%</b> translated
-                    </>
-                  )}
-                </span>
-              </div>
-              <div className="relative" style={{ height: solo ? 44 : 14 }}>
+              <span className={`truncate ${r.highlight ? 'font-semibold text-primary' : 'text-secondary'} ${solo ? 'text-xl' : 'text-sm'}`}>
+                {r.name}
+              </span>
+              <div className="relative" style={{ height: solo ? 36 : 12 }}>
                 {r.none ? (
                   <div className="absolute inset-0 border border-dashed" style={{ borderColor: 'rgba(21,128,61,.4)' }} />
                 ) : (
@@ -197,13 +189,22 @@ export default function WrittenPastChart() {
                   </>
                 )}
               </div>
+              <span className={`text-right tabular-nums whitespace-nowrap text-muted ${solo ? 'text-base' : 'text-[13px]'}`}>
+                <span className="text-primary">{size}</span>
+                {pct && (
+                  <>
+                    {' · '}
+                    <b className="font-semibold" style={{ color: GREEN }}>{pct}%</b>
+                  </>
+                )}
+              </span>
             </div>
           );
         })}
       </div>
 
       <style>{`
-        .written-past .wp-row { transition: max-height .6s ease, opacity .5s ease, margin .6s ease; }
+        .written-past .wp-row { transition: height .6s ease, opacity .5s ease; }
         .written-past .wp-bar { transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
         .written-past .wp-hatch { background: repeating-linear-gradient(135deg, rgba(21,128,61,.18) 0 5px, rgba(21,128,61,.05) 5px 10px); }
         .written-past .wp-open { -webkit-mask-image: linear-gradient(90deg, #000 75%, transparent); mask-image: linear-gradient(90deg, #000 75%, transparent); }

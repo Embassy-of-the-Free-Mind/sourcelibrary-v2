@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
-import HeroScrim from '@/components/HeroScrim';
+import AboutHero, { type HeroStat } from '@/components/about/AboutHero';
 import WrittenPastChart from '@/components/about/WrittenPastChart';
 import { getSiteStats } from '@/lib/site-stats';
 
@@ -15,7 +15,9 @@ export const metadata: Metadata = {
   },
 };
 
-const link = 'text-accent-rust hover:underline';
+// Links as in the articles (.claude/docs/article-rules.md): body colour, thin
+// gold underline that darkens on hover. No red text.
+const link = 'underline decoration-1 underline-offset-[0.2em] decoration-accent-gold/70 hover:decoration-primary transition-colors';
 const h2 = 'font-serif text-3xl md:text-4xl text-primary leading-tight tracking-tight';
 
 // Facts checked 2026-10-19 against embassyofthefreemind.com (/collection,
@@ -61,83 +63,29 @@ const STEPS: { title: string; body: ReactNode }[] = [
   },
 ];
 
-function AboutHero({ stats }: { stats: { value: string; label: string; href?: string }[] }) {
-  return (
-    <>
-      <SiteHeader variant="light" />
-      <section className="about-hero relative overflow-hidden text-white">
-        {/* A wall of real covers from the library, drifting slowly behind the scrim. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/about/covers-wall.jpg"
-          alt=""
-          aria-hidden="true"
-          className="about-hero-wall absolute top-0 left-0 h-full w-[115%] max-w-none object-cover object-left-top"
-          fetchPriority="high"
-        />
-        <div className="hidden md:block"><HeroScrim variant="side" /></div>
-        <div className="md:hidden"><HeroScrim variant="bottom" /></div>
-
-        <div className="relative max-w-[var(--container-wide)] mx-auto px-6 md:px-12 pt-28 pb-10 md:pt-40 md:pb-14 min-h-[560px] md:min-h-[72vh] flex flex-col justify-end">
-          <h1 className="font-serif text-4xl md:text-6xl tracking-tight leading-[1.05] max-w-3xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
-            The written past, open to everyone
-          </h1>
-          <p className="mt-5 text-lg md:text-xl text-stone-200 max-w-2xl leading-relaxed">
-            We scan rare books and manuscripts, read and translate them with AI, and put every translation next to the page it came from. Free to read, quote and cite.
-          </p>
-
-          <dl className="mt-10 md:mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 border-t border-white/20">
-            {stats.map((s) => {
-              const inner = (
-                <>
-                  <dd className="text-2xl md:text-3xl font-semibold tabular-nums text-white">{s.value}</dd>
-                  <dt className="text-sm text-stone-300 mt-1 leading-tight group-hover:text-white transition-colors">{s.label}</dt>
-                </>
-              );
-              return (
-                <div key={s.label} className="pt-5 pr-4 pb-1 flex flex-col-reverse justify-end">
-                  {s.href ? (
-                    <Link href={s.href} className="group flex flex-col-reverse justify-end">{inner}</Link>
-                  ) : (
-                    inner
-                  )}
-                </div>
-              );
-            })}
-          </dl>
-        </div>
-
-        <style>{`
-          @keyframes about-wall-drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-12%,0,0); } }
-          .about-hero-wall { animation: about-wall-drift 90s linear infinite alternate; }
-          @media (prefers-reduced-motion: reduce) { .about-hero-wall { animation: none; } }
-        `}</style>
-      </section>
-    </>
-  );
-}
-
 export default async function AboutPage() {
   const stats = await getSiteStats();
   const fmt = (n: number) => n.toLocaleString('en-GB');
 
-  const headlineStats: { value: string; label: string; href?: string }[] = [
-    { value: fmt(stats.totalBooks), label: 'books digitised', href: '/search' },
+  // Number colours follow the site's badge colours where one fits (green =
+  // translated, yellow = first translation).
+  const headlineStats: HeroStat[] = [
+    { value: fmt(stats.totalBooks), label: 'books digitised', href: '/search', color: '#60a5fa' },
     // stats.languageCount is now an honest distinct-language count: compound
     // labels are split into atomic languages and variants/junk are dropped
     // (scripts/lib/language-count.mjs). ~105 as of 2026-06-26, so 100+ is a
     // defensible floor.
-    { value: '100+', label: 'languages' },
-    { value: fmt(stats.readableInEnglish), label: 'readable in English', href: '/search?has_translation=true' },
-    { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true' },
-    { value: fmt(stats.illustrationCount), label: 'illustrations catalogued', href: '/gallery' },
+    { value: '100+', label: 'languages', color: '#c4b5fd' },
+    { value: fmt(stats.readableInEnglish), label: 'readable in English', href: '/search?has_translation=true', color: '#4ade80' },
+    { value: fmt(stats.firstTranslationCount), label: 'first-ever English translations', href: '/search?first_translation=true', color: '#facc15' },
+    { value: fmt(stats.illustrationCount), label: 'illustrations catalogued', href: '/gallery', color: '#fb923c' },
   ];
 
   return (
-    <ContentPageLayout header={<AboutHero stats={headlineStats} />} bg="bg-cream" maxWidth="wide" noPadding>
+    <ContentPageLayout header={<><SiteHeader variant="light" /><AboutHero stats={headlineStats} /></>} bg="bg-cream" maxWidth="wide" noPadding>
       {/* The gap */}
-      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
-        <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16">
+      <section className="px-6 md:px-12 py-14 md:py-16 border-b border-border-light">
+        <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
           <div>
             <h2 className={h2}>How much of the written past can anyone read today?</h2>
             <p className="mt-6 text-lg text-secondary leading-relaxed">
@@ -156,8 +104,8 @@ export default async function AboutPage() {
           </div>
           <div>
             <WrittenPastChart />
-            <p className="mt-6 text-xs text-muted leading-relaxed">
-              Europe: distinct works printed before 1700 in the Universal Short Title Catalogue, matched against 30 translation catalogues (May 2026). Beyond Europe: published estimates counted in manuscripts or titles, so they can&apos;t share a scale with printed works.{' '}
+            <p className="mt-5 text-xs text-muted leading-relaxed">
+              Europe: distinct works printed before 1700 in the Universal Short Title Catalogue, matched against 30 translation catalogues (May 2026). Tibetan: works in the BDRC catalogue. Arabic script and India: estimated surviving manuscripts (mss.), counted in copies, not works. Chinese: 200,000 titles and 500,000 editions catalogued to 1912, a floor. Still uncounted: Japanese, Korean, Persian, Hebrew, Armenian, Ethiopian, Byzantine Greek and medieval Latin manuscripts.{' '}
               <Link href="/research/translation-gap" className={link}>How we measured it</Link>
             </p>
           </div>
@@ -221,7 +169,7 @@ export default async function AboutPage() {
               <Link href="/articles/vision" className={link}>founder&apos;s letter</Link> sets out where the project goes next.
             </p>
           </div>
-          <figure className="md:order-2 order-1">
+          <figure className="md:order-2 order-1 max-w-[440px] md:ml-auto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/about/derek-ficino.jpg"
@@ -254,7 +202,7 @@ export default async function AboutPage() {
             <figcaption className="text-sm text-muted mt-3">The Huis met de Hoofden on the Keizersgracht, Amsterdam.</figcaption>
           </figure>
           <div>
-            <h2 className={h2}>Our partner: the Embassy of the Free Mind</h2>
+            <h2 className={h2}>Our partners</h2>
             <p className="mt-6 text-lg text-secondary leading-relaxed">
               Source Library is an initiative of the{' '}
               <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className={link}>Embassy of the Free Mind</a>, a museum and library in the Huis met de Hoofden on Amsterdam&apos;s Keizersgracht. The Embassy gives the project its home, its books and its scholars.
@@ -266,6 +214,12 @@ export default async function AboutPage() {
             </p>
             <p className="mt-4 text-secondary leading-relaxed">
               Librarian <strong className="font-semibold text-primary">Paul Dijstelberge</strong>, a historian of the book, guides our work with the collection, and senior researcher <strong className="font-semibold text-primary">Carlos Gilly</strong>, at the BPH for over thirty years, is a leading authority on Rosicrucianism.
+            </p>
+
+            <p className="mt-4 text-secondary leading-relaxed">
+              Two more partners help build it.{' '}
+              <a href="https://frond-studio.com" target="_blank" rel="noopener noreferrer" className={link}>Frond Studio</a>, a design and technology studio, works on how Source Library looks and reads.{' '}
+              <a href="https://folium-studio.com" target="_blank" rel="noopener noreferrer" className={link}>Folium</a>, Frond&apos;s platform for libraries, museums and archives, takes what we have learned here to other collections. The Embassy&apos;s own catalogue runs on it.
             </p>
 
             <h3 className="mt-10 text-base font-semibold text-primary">
@@ -334,7 +288,7 @@ export default async function AboutPage() {
             ['/about/faq', 'FAQ'],
             ['/developers', 'API and MCP server'],
           ].map(([href, label]) => (
-            <Link key={href} href={href} className="hover:text-accent-rust transition-colors">
+            <Link key={href} href={href} className={link}>
               {label} →
             </Link>
           ))}
