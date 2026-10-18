@@ -85,7 +85,8 @@ const PAGE_PROJECTION = {
   // Feeds both `isJunkRepresentativePage` and the cover scorer. 1200 chars is
   // the scorer's window (`scorePageForCover`). Must stay in step with the book
   // page's projection or the two would pick different pages.
-  ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] },
+  // Empty for a page flagged `ocr.unreadable` (#4523), exactly as on the book page.
+  ocr_head: { $cond: [{ $eq: ['$ocr.unreadable', true] }, '', { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] }] },
 } as const;
 
 /** The projected page shape this route reasons about. */

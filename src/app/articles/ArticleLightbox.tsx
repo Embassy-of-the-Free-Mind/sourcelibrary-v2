@@ -179,8 +179,9 @@ export default function ArticleLightbox() {
               Open the source page
             </Link>
           )}
-          <a href={shot.original} target="_blank" rel="noopener noreferrer" className="text-white underline decoration-accent-gold/70 underline-offset-4 hover:decoration-white">
-            Full resolution
+          <a href={shot.original} target="_blank" rel="noopener noreferrer" title="Opens the original scan in a new tab" className="text-white underline decoration-accent-gold/70 underline-offset-4 hover:decoration-white">
+            Full resolution (new tab) <span aria-hidden="true">↗</span>
+            <span className="sr-only">, opens in a new tab</span>
           </a>
         </p>
       </div>

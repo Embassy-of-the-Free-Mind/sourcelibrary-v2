@@ -644,7 +644,9 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           // `isJunkRepresentativePage`), without pulling whole pages of text.
           // 1200 is the cover scorer's window (`scorePageForCover`) — keep in
           // step with ensure-cover's projection.
-          ocr_head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] },
+          // A page flagged `ocr.unreadable` (#4523) has text we know is wrong:
+          // it must not reach the page payload, so it projects as empty.
+          ocr_head: { $cond: [{ $eq: ['$ocr.unreadable', true] }, '', { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 1200] }] },
         },
         maxTimeMS: 5000,
       })
