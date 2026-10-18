@@ -17,6 +17,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
+import { getPageSource } from '../../lib/page-image-url.mjs';
 
 const OUT = path.join(process.cwd(), 'src/data/tibetan-expert-page.json');
 
@@ -86,10 +87,14 @@ async function pageStates(ids) {
             $group: {
               _id: {
                 reader: { $ifNull: ['$ocr.model', '$ocr.source'] },
-                has: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+                has: { $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $ne: ['$ocr.data', ''] }] },
                 unreadable: { $eq: ['$ocr.unreadable', true] },
                 en: {
-                  $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, { $ifNull: ['$translation.model', 'unknown'] }, null],
+                  $cond: [
+                    { $and: [{ $eq: [{ $type: '$translation.data' }, 'string'] }, { $ne: ['$translation.data', ''] }] },
+                    { $ifNull: ['$translation.model', 'unknown'] },
+                    null,
+                  ],
                 },
               },
               n: { $sum: 1 },
@@ -134,7 +139,7 @@ for (const ex of EXAMPLES) {
     book_id: book.id,
     title: book.display_title || book.title,
     page: ex.page,
-    image: p.archived_photo || p.photo,
+    image: getPageSource(p),
     tibetan_source: p.ocr?.text_edition?.name || p.ocr?.engine?.model_label || p.ocr?.model || null,
     not_legible: !!p.ocr?.unreadable,
     english_model: p.translation?.model || null,

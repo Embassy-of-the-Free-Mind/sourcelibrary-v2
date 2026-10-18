@@ -25,9 +25,9 @@
       "not_legible": 0,
       "english": 128329,
       "english_by_model": {
-        "unknown": 4,
         "gemini-3-flash-preview": 104700,
-        "gemini-3.8-flash-low": 23625
+        "gemini-3.8-flash-low": 23625,
+        "unknown": 4
       }
     },
     "other": {
