@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import {
   addDays,
   describeNumeral,
@@ -17,7 +19,7 @@ import {
   toPlaces,
   finishLesson,
 } from '@/lib/learn-maya-course';
-import { COURSE_ITEMS, DAY_FIG, ENTRIES, LESSONS, OPEN_LESSONS, SYLLABLES, isItem } from '@/app/learn/maya/course';
+import { CARVED_NOTE, COURSE_ITEMS, DAY_FIG, ENTRIES, INTRO, LESSONS, MAP_CREDITS, NODE_GLYPH, OPEN_LESSONS, SYLLABLES, WAYEB_NOTE, isItem } from '@/app/learn/maya/course';
 
 /** /learn/maya v2 (#6921): the course's wrong-answer explanations and its "last time you missed" review. */
 
@@ -151,5 +153,71 @@ describe('the course content', () => {
       }
       if (item.kind === 'tap') expect(item.zones[item.answer]).toBeDefined();
     }
+  });
+});
+
+/**
+ * The course's English (Derek, 2026-10-18): plain, short, no AI speak. Every
+ * authored string is checked: the lesson data, lesson 0, the feature lines,
+ * the feedback lines in the lib, and the text written into the page component.
+ */
+describe('the writing', () => {
+  const BANNED: [RegExp, string][] = [
+    [/\bdelv/i, 'delve'], [/\brich\b/i, 'rich'], [/tapestr/i, 'tapestry'], [/testament/i, 'testament'],
+    [/seamless/i, 'seamless'], [/\brobust/i, 'robust'], [/\bjourney/i, 'journey'], [/\bunlock/i, 'unlock'],
+    [/\bdive in/i, 'dive in'], [/fascinat/i, 'fascinating'], [/worth noting/i, 'hedge'], [/\binterestingly\b/i, 'hedge'],
+    [/\bin fact\b/i, 'hedge'], [/\bessentially\b/i, 'hedge'], [/\bremarkabl/i, 'praise'], [/\bincredibl/i, 'praise'],
+    [/\bamazing\b/i, 'praise'], [/\bpowerful\b/i, 'praise'], [/\bbeautiful/i, 'praise'],
+    [/\b(great job|well done|nice work|awesome|you('ve| have) got this|keep it up|you did it)\b/i, 'cheerleading'],
+    [/!/, 'exclamation'], [/\bnot (just|only|merely)\b/i, 'antithesis'], [/\bnot [^.,;:]{1,40}, but\b/i, 'antithesis'],
+    [/\bis the point\b/i, '"the X is the point"'], [/\blet[’']s\b/i, "let's"], [/\bimagine\b/i, 'imagine'],
+    [/—/, 'em dash'], [/\bthe secret\b/i, 'drama'], [/\bmagic/i, 'drama'],
+  ];
+
+  const deep = (v: unknown, out: string[] = []): string[] => {
+    if (typeof v === 'string') out.push(v);
+    else if (Array.isArray(v)) v.forEach((x) => deep(x, out));
+    else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) if (!['src', 'href', 'id', 'url', 'page_url'].includes(k)) deep(x, out);
+    return out;
+  };
+  /** Strip [label](href) to label, and drop URLs and image paths. */
+  const plain = (s: string) => s.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\*/g, '');
+  const prose = (s: string) => /[a-z]{2,} [a-z]/i.test(s) && !/^(https?:|\/)/.test(s);
+
+  const data = [LESSONS, INTRO, SYLLABLES, DAY_FIG, WAYEB_NOTE, CARVED_NOTE, MAP_CREDITS, NODE_GLYPH].flatMap((x) => deep(x)).filter(prose).map(plain);
+  const src = (f: string) => readFileSync(join(process.cwd(), f), 'utf8');
+  // Text written straight into JSX, and the quoted strings in the feedback helpers.
+  const jsx = [...src('src/app/learn/maya/MayaCourse.tsx').matchAll(/>([^<>{}]+)</g)].map((m) => m[1].trim()).filter((t) => prose(t) && !/[=;(&|]/.test(t));
+  const literals = (f: string) => [...src(f).matchAll(/(['`])((?:(?!\1)[^\n\\])+)\1/g)].map((m) => m[2]).filter((t) => prose(t) && !/className|^[a-z-]+( [a-z-:/[\]#0-9.]+)+$/.test(t));
+  const strings = [...data, ...jsx, ...literals('src/app/learn/maya/MayaCourse.tsx'), ...literals('src/lib/learn-maya-course.ts')];
+
+  it('collects the course text', () => {
+    expect(strings.length).toBeGreaterThan(150);
+    expect(strings).toContain('Every sign ends in a vowel. At the end of a word that vowel is silent, and usually repeats the one before: ba-la-ma is balam.');
+  });
+
+  it('has none of the banned phrases', () => {
+    const hits = strings.flatMap((s) => BANNED.filter(([re]) => re.test(s)).map(([, why]) => `${why}: ${s}`));
+    expect(hits).toEqual([]);
+  });
+
+  it('asks questions only in prompts', () => {
+    const stated = [LESSONS.flatMap((l) => [l.title, l.blurb, ...l.recap, ...l.steps.flatMap((st) => (isItem(st) ? [st.why] : [st.title, st.body, st.note ?? '']))]), INTRO.flatMap((s) => [s.title, s.body, s.note ?? ''])].flat();
+    expect(stated.map(plain).filter((s) => s.includes('?'))).toEqual([]);
+  });
+
+  it('keeps every card to about 25 words', () => {
+    const words = (s: string) => plain(s).split(/\s+/).filter(Boolean).length;
+    const long: string[] = [];
+    for (const s of INTRO) if (words(`${s.title} ${s.body}`) > 30) long.push(s.title);
+    for (const l of LESSONS) {
+      for (const st of l.steps) {
+        if (isItem(st)) { if (words(st.prompt) > 30 || words(st.why) > 30) long.push(st.id); }
+        else if (words(`${st.title} ${st.body}`) > 30) long.push(st.title);
+      }
+      for (const r of l.recap) if (words(r) > 25) long.push(r);
+    }
+    for (const k of Object.values(SYLLABLES)) if (words(k.feature) > 16) long.push(k.value);
+    expect(long).toEqual([]);
   });
 });
