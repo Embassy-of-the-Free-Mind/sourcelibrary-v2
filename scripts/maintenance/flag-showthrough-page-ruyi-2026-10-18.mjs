@@ -27,7 +27,7 @@
 import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const BOOK = '69f1345d365e3fcae574e290';
@@ -37,7 +37,7 @@ const REASON = 'show_through_misread_as_colophon_2026_10_18';
 const SWEEP = 'flag-showthrough-page-ruyi-2026-10-18';
 
 await withMongo(async (db) => {
-  const P = db.collection('pages'), B = db.collection('books');
+  const P = db.collection('pages');
   const page = await P.findOne({ book_id: BOOK, page_number: PAGE_NUMBER }, { projection: { _id: 1, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.unreadable': 1, 'ocr.source': 1, 'translation.data': 1 } });
   if (!page) { console.error('page not found'); process.exit(1); }
   const text = String(page.ocr?.data || '');
@@ -55,8 +55,7 @@ await withMongo(async (db) => {
     { $set: { 'ocr.unreadable': true, 'ocr.unreadable_reason': REASON, updated_at: now } },
   );
   console.log(`flagged: ${r.modifiedCount}`);
-  const [counts] = await P.aggregate(buildVisiblePageCountPipeline(BOOK)).toArray();
-  if (counts) await B.updateOne({ id: BOOK }, { $set: { pages_count: counts.total, pages_ocr: counts.with_ocr, pages_translated: counts.with_translation, updated_at: now } });
+  const counts = await recountBook(db, BOOK, { reason: REASON, now });
   console.log(`counts: ${JSON.stringify(counts)}`);
   await recordSweepAction(db, { sweep: SWEEP, book_id: BOOK, action: 'flagged-unreadable', detail: { page_numbers: [PAGE_NUMBER], reason: REASON } });
   const rv = await fetch(`https://sourcelibrary.org/api/admin/revalidate-book/${BOOK}`, { method: 'POST', headers: { Authorization: `Bearer ${process.env.CRON_SECRET}` } });
