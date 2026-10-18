@@ -27,7 +27,8 @@ FONT_DIRS = [os.environ.get('MONGOL_FONT_DIR', ''), os.path.join(HERE, 'fonts')]
 # Paper and ink colours (RGB), measured by eye-picking on 5 real leaves (v001, v047, v077, v087, v098): paper runs
 # from grey-green to warm beige, ink from pale pink to brick red.
 PAPER = [(190, 186, 172), (198, 192, 176), (182, 178, 164), (204, 197, 180), (176, 172, 158), (194, 186, 166)]
-INK = [(196, 128, 110), (186, 112, 96), (204, 146, 128), (176, 98, 84), (210, 160, 140), (168, 92, 80)]
+INK = [(176, 124, 104), (168, 112, 94), (186, 138, 118), (160, 104, 88), (190, 148, 128), (150, 98, 84)]  # muted brick: the
+# first palette (saturated pink) was visibly off beside real crops (contact sheet, 2026-10-18)
 PUNCT = ['\u1803', '\u1803', '\u1802', '\u1804']  # full stop (the '::' of the blocks), comma, colon
 
 
@@ -185,6 +186,8 @@ def column(text, neighbours, rng):
     al = (ink * opacity)[..., None]
     img = img * (1 - al) + inkc * al
     img += rng.normal(0, rng.uniform(1.5, 5.0), img.shape)  # grain
+    if rng.random() < 0.6:  # scans differ in colour: pull part of the way to grey
+        g = img.mean(2, keepdims=True); img = img + (g - img) * rng.uniform(0.1, 0.6)
     img = np.clip(img, 0, 255).astype(np.uint8)
     # optics + scan: blur, downscale to the model's height, JPEG
     img = cv2.GaussianBlur(img, (0, 0), rng.uniform(0.3, 1.4))

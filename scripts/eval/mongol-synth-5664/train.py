@@ -134,7 +134,7 @@ def train(args):
         report_to='none', bf16=True, remove_unused_columns=False, dataset_text_field='',
         dataset_kwargs={'skip_prepare_dataset': True}, max_length=args.max_len, dataloader_num_workers=4,
     )
-    trainer = SFTTrainer(model=model, tokenizer=tok, data_collator=UnslothVisionDataCollator(model, tok),
+    trainer = SFTTrainer(model=model, tokenizer=tok, data_collator=UnslothVisionDataCollator(model, tok, resize='max'),  # no resize: the default (512 px long side) would train at ~48 px high and infer at 84
                          train_dataset=ds, args=cfg, callbacks=[Clock()])
     stats = trainer.train(resume_from_checkpoint=resume[-1] if resume else None)
     final = os.path.join(args.out, 'adapter-final')

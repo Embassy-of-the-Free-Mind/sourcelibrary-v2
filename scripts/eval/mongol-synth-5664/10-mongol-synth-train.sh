@@ -19,7 +19,7 @@ set -uo pipefail
 J=/root/jobs/mongol-synth-5664
 OUT=$PWD
 TRAIN_HOURS=${TRAIN_HOURS:-8.3}
-MAX_STEPS=${MAX_STEPS:-5000}
+MAX_STEPS=${MAX_STEPS:-6000}   # smoke test: 4.3 s/step at batch 16 (48 px images); ~5 s at 84 px -> ~6K steps in 8.3 h
 source "$J/venv/bin/activate"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True HF_HUB_OFFLINE=1
 cd "$J"   # unsloth writes its compiled cache to the cwd
