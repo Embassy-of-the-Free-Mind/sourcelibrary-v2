@@ -82,9 +82,11 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   }, [open, level, viewport, linksKey, placeRings]);
 
   const stagger = (i: number) => ({
-    transitionDelay: open ? `${120 + i * 45}ms` : '0ms',
+    transitionDelay: open ? `${220 + i * 75}ms` : '0ms',
   });
-  const item = `transition-[opacity,transform] duration-500 ease-[cubic-bezier(.2,.8,.2,1)] ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3.5'}`;
+  // Soft entrance: a long fade, a short drift and a blur that clears, so the
+  // items settle in rather than snap. Closing is quick and plain.
+  const item = `transition-[opacity,transform,filter] ease-[cubic-bezier(.25,.6,.3,1)] ${open ? 'duration-[1100ms] opacity-100 translate-y-0 blur-0' : 'duration-200 opacity-0 translate-y-2 blur-[3px]'}`;
 
   let i = 0;
   return (
@@ -94,7 +96,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
       role="dialog"
       aria-modal="true"
       aria-hidden={!open}
-      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 transition-[opacity,visibility] duration-300 ${
+      className={`fixed inset-0 z-40 flex flex-col overflow-y-auto bg-cream text-primary px-[22px] pt-[64px] pb-6 transition-[opacity,visibility] ${open ? 'duration-500' : 'duration-300'} ${
         open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       }`}
     >
@@ -118,7 +120,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
               transformOrigin: '12px 12px',
               transform: open ? 'scale(1)' : 'scale(0.2)',
               opacity: open ? 1 : 0,
-              transition: `transform 1.2s cubic-bezier(.2,.8,.2,1) ${open ? k * 80 : 0}ms, opacity .6s`,
+              transition: `transform 1.6s cubic-bezier(.25,.6,.3,1) ${open ? 150 + k * 110 : 0}ms, opacity 1s`,
             }}
           />
         ))}
