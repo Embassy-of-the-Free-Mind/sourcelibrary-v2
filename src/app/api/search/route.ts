@@ -494,7 +494,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
               // with slack for a book hidden since the snapshot; with filters, up to
               // 2,000 candidates go through the same `find`, which applies them.
               const unfiltered = Object.keys(bookFilters).length === 2;
-              const matched = await matchBookMetadata(db as any, wordRegexes, unfiltered ? limit * 2 : 2000);
+              const matched = matchBookMetadata(db as any, wordRegexes, unfiltered ? limit * 2 : 2000);
               if (matched && (matched.complete || unfiltered)) {
                 if (matched.ids.length === 0) return [];
                 const rank = new Map(matched.ids.map((id, i) => [id, i]));

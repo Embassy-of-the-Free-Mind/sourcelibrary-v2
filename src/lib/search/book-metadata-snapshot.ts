@@ -9,11 +9,15 @@
  * a book in 2 of them. The lane was waiting on it for nothing most of the time.
  *
  * This keeps those five fields of every live book in memory per instance
- * (~11 MB over the wire, 1.6–2.2 s to load; loaded on the first fallback, then
- * refreshed in the background every SNAPSHOT_TTL_MS while it is being used) and
- * runs the same RegExp objects over them in a few milliseconds. Rows are held
- * in the order of the `browse_default_sort_covered` index, the order the Mongo
- * query read them in, so the first `limit` matches are the books it returned.
+ * (~11 MB over the wire, 1.6–3.0 s to load) and runs the same RegExp objects
+ * over them in a few milliseconds. An instance's first fallback starts the load
+ * in the background and runs the Mongo query as before, so no search waits for
+ * it; after that the snapshot is refreshed in the background every
+ * SNAPSHOT_TTL_MS while it is being used. A failed load is not retried for
+ * RETRY_AFTER_FAILURE_MS. Rows are held in `browse_default_sort_covered` order,
+ * one of the two indexes the Mongo planner picks for that query (it switches
+ * between them from run to run), so the match SET is the same and the order is
+ * as stable as it was.
  *
  * Staleness: a book made visible less than SNAPSHOT_TTL_MS ago can be missing
  * from the fallback; one hidden since is dropped by the caller's `find`, which
@@ -28,6 +32,7 @@
 import type { Db } from 'mongodb';
 
 const SNAPSHOT_TTL_MS = 30 * 60 * 1000;
+const RETRY_AFTER_FAILURE_MS = 5 * 60 * 1000;
 const FIELDS = ['categories', 'subject_keywords', 'language', 'title', 'display_title'] as const;
 /** The key order of the books index the Mongo fallback read in (forward). */
 const INDEX_ORDER = {
@@ -40,6 +45,7 @@ interface Snapshot { rows: SnapshotRow[]; loadedAt: number }
 
 let current: Snapshot | null = null;
 let loading: Promise<Snapshot> | null = null;
+let failedAt = 0;
 
 /** Every string a field holds: the string itself, or each string in an array (as a Mongo regex sees them). */
 function strings(v: unknown): string[] {
@@ -65,7 +71,8 @@ async function load(db: Db): Promise<Snapshot> {
   return { rows, loadedAt: Date.now() };
 }
 
-function refresh(db: Db): Promise<Snapshot> {
+/** Load (or reload) the snapshot; concurrent callers share one load. */
+export function loadBookMetadataSnapshot(db: Db): Promise<Snapshot> {
   if (!loading) {
     loading = load(db)
       .then(s => { current = s; return s; })
@@ -74,21 +81,26 @@ function refresh(db: Db): Promise<Snapshot> {
   return loading;
 }
 
+function refreshInBackground(db: Db): void {
+  if (loading || Date.now() - failedAt < RETRY_AFTER_FAILURE_MS) return;
+  loadBookMetadataSnapshot(db).catch(err => {
+    failedAt = Date.now();
+    console.warn('[search] book metadata snapshot failed to load:', err instanceof Error ? err.message : String(err));
+  });
+}
+
 /**
  * Ids of live books where every regex matches at least one of the five fields,
- * in index order, at most `cap` of them. Null when the snapshot could not be
- * loaded: the caller then runs the Mongo query as before.
+ * in index order, at most `cap` of them. Null while the snapshot is not loaded
+ * (this call starts the load): the caller then runs the Mongo query as before.
  */
-export async function matchBookMetadata(db: Db, regexes: RegExp[], cap: number): Promise<{ ids: string[]; complete: boolean } | null> {
-  let snap = current;
+export function matchBookMetadata(db: Db, regexes: RegExp[], cap: number): { ids: string[]; complete: boolean } | null {
+  const snap = current;
   if (!snap) {
-    try { snap = await refresh(db); } catch (err) {
-      console.warn('[search] book metadata snapshot failed to load:', err instanceof Error ? err.message : String(err));
-      return null;
-    }
-  } else if (Date.now() - snap.loadedAt > SNAPSHOT_TTL_MS) {
-    refresh(db).catch(err => console.warn('[search] book metadata snapshot refresh failed:', err instanceof Error ? err.message : String(err)));
+    refreshInBackground(db);
+    return null;
   }
+  if (Date.now() - snap.loadedAt > SNAPSHOT_TTL_MS) refreshInBackground(db);
   const ids: string[] = [];
   for (const row of snap.rows) {
     if (regexes.every(rx => row.values.some(v => rx.test(v)))) {
@@ -103,4 +115,5 @@ export async function matchBookMetadata(db: Db, regexes: RegExp[], cap: number):
 export function resetBookMetadataSnapshot(): void {
   current = null;
   loading = null;
+  failedAt = 0;
 }

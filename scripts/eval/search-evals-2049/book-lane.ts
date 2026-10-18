@@ -24,7 +24,7 @@ import { MongoClient } from 'mongodb';
 import { supabase } from '@/lib/supabase';
 import { catalogOrFilter } from '@/lib/books-catalog';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
-import { matchBookMetadata } from '@/lib/search/book-metadata-snapshot';
+import { matchBookMetadata, loadBookMetadataSnapshot } from '@/lib/search/book-metadata-snapshot';
 // @ts-expect-error — plain-JS module, no declarations
 import { makeRng } from '../lib/paired-stats.mjs';
 
@@ -85,7 +85,7 @@ async function main() {
   }
 
   const bookFilters = { visible: true, pages_count: { $gt: 0 } };
-  const load = await t(() => matchBookMetadata(db as any, [/^$/], 1));
+  const load = await t(() => loadBookMetadataSnapshot(db as any));
   console.error(`snapshot load ${load.ms} ms`);
   const out: any[] = [];
   for (const { q, logged_book_ms } of sample) {
@@ -116,7 +116,7 @@ async function main() {
             }).project(PROJECTION).limit(LIMIT).maxTimeMS(3000).toArray());
             books = f.v;
             const sn = await t(async () => {
-              const m = await matchBookMetadata(db as any, rx, LIMIT * 2);
+              const m = matchBookMetadata(db as any, rx, LIMIT * 2);
               const rank = new Map((m?.ids || []).map((id, i) => [id, i]));
               return (await db.collection('books').find({ id: { $in: m?.ids || [] }, ...bookFilters }).project(PROJECTION).maxTimeMS(5000).toArray())
                 .sort((a: any, b: any) => (rank.get(a.id) ?? 0) - (rank.get(b.id) ?? 0)).slice(0, LIMIT).map((b: any) => b.id);

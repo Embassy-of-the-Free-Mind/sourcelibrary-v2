@@ -6,7 +6,7 @@ scripts: []
 canons: []
 n_books: null
 n_pages: null
-verdict: "The /api/search book lane was slow because of its regex metadata fallback. On 40 sampled reader queries it fired on 16, read every live book from Mongo (42,372 docs) at 0.9–2.2 s, and found a book on only 2 of them. The same RegExp objects run over an in-memory snapshot of the five fields take 27 ms p50 and 34 ms p90, and return the same match set on 40 of 40 sampled queries and 150 of 150 further multi-word queries. With that, the lane goes from p50 385–456 / p90 1,341–1,658 ms to p50 219 / p90 386 ms, measured from the main box. What is left is single-word queries, about 30% of the sample: books_catalog has no index on language or subject_keywords, so they filter the whole 229 MB heap (p90 656 ms)."
+verdict: "Production logged the book lane as degraded on 10% of /api/search calls in 7 days, and the regex fallback timing out is the likely cause. The /api/search book lane was slow because of its regex metadata fallback. On 40 sampled reader queries it fired on 16, read every live book from Mongo (42,372 docs) at 0.9–2.2 s, and found a book on only 2 of them. The same RegExp objects run over an in-memory snapshot of the five fields take 27 ms p50 and 34 ms p90, and return the same match set on 40 of 40 sampled queries and 150 of 150 further multi-word queries. With that, the lane goes from p50 385–456 / p90 1,341–1,925 ms to p50 219–260 / p90 386–428 ms, measured from the main box. What is left is single-word queries, about 30% of the sample: books_catalog has no index on language or subject_keywords, so they filter the whole 229 MB heap (p90 656 ms)."
 status: adopted
 decision: "In-memory fallback shipped in the PR for #2049. Two GIN indexes on books_catalog are proposed as a DECISION and not applied."
 issue: [2049]
@@ -48,6 +48,11 @@ PRIOR ART: `2026-10-17-search-services-burst-isolation-2049.md` and the other #2
 | today's lane, run 1 | 456 | 1,658 | 2,541 |
 | today's lane, run 2 | 385 | 1,341 | 2,338 |
 | **with the in-memory fallback** | **219** | **386** | **686** |
+| today's lane, run 3 (final code) | 391 | 1,925 | 3,346 |
+| **with the in-memory fallback, run 3** | **260** | **428** | **695** |
+
+- **The p90 is now the catalogue query.** Across the two runs the new lane's p90 is 386 and 428 ms, which is the Supabase part's own p90. Below 400 ms needs the single-word fix (end of this entry).
+- **The legacy fallback failed outright on 3 of the 16 queries in run 3.** It hit its 3 s `maxTimeMS`, and in the route that throws: the whole book lane returns nothing and the response is marked `partial`. Production shows how common that is. In the 7 days to 2026-10-18, `degraded_lanes` included `book` on **875 of 8,589** logged `/api/search` calls (10%), and `stage_ms.book` ≥ 1 s on 2,750 (32%). The log does not record why a lane degraded, so this is the most likely cause, not a proven one. A recount after the deploy will tell.
 
 Production logs higher than the same code measured from here, also on queries where the fallback does not fire: Eusebius Caesariensis logged 627 ms against 197 ms here. The four lanes run at once on one Vercel instance. The after-deploy number has to come from `search_queries`.
 
@@ -93,4 +98,4 @@ CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_bc_subject_keywords
 
 - **Expected effect on results.** For a word with at most 40 matches (the lane's limit), the set cannot change. For a common word, the planner may move from read-count order to bitmap (physical) order, which changes which 40 of the many matches are sampled. Check that with the same harness after the indexes are built.
 
-*Replicated?* The lane was timed twice on the same panel. The set-equality check ran on a second, independent sample.
+*Replicated?* The lane was timed three times on the same panel. The set-equality check ran on a second, independent sample.
