@@ -145,7 +145,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         action={search.action}
         role="search"
         onSubmit={onClose}
-        className={`relative z-10 flex items-center gap-2.5 mt-4 mb-3.5 px-3.5 border border-border-medium bg-cream text-muted ${CONTROL_H[level]} ${item}`}
+        className={`relative z-10 flex items-center gap-2.5 mt-4 mb-3.5 px-3.5 border border-border-medium focus-within:border-primary bg-cream text-muted ${CONTROL_H[level]} ${item}`}
         style={stagger(i++)}
       >
         <Search className="w-[18px] h-[18px] shrink-0" aria-hidden="true" />
