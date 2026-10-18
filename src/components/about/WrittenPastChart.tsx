@@ -12,7 +12,9 @@ import { WRITTEN_PAST_ROWS, WRITTEN_PAST_STEPS } from '@/lib/written-past-data';
  */
 
 const STEP_MS = 5500;
-const GREEN = '#15803d';
+// Source Library's rust accent (--accent-rust #9e4a3a) and tints of it: one
+// hue for the whole chart. Rust only colours marks, never text.
+const RUST = '#9e4a3a';
 const fmt = (n: number) => n.toLocaleString('en-GB');
 const compact = (n: number) => (n >= 1e6 ? `${+(n / 1e6).toFixed(1)}M` : fmt(n));
 const GRID = 'grid grid-cols-[5.75rem_minmax(0,1fr)_auto] sm:grid-cols-[7.5rem_minmax(0,1fr)_8.5rem] items-center gap-x-3';
@@ -84,23 +86,25 @@ export default function WrittenPastChart() {
   };
 
   const shown = WRITTEN_PAST_ROWS.filter((r) => r.step <= step);
-  const max = Math.max(...shown.map((r) => r.n));
+  // At the last step China joins: India shrinks to 72% of the track and the
+  // Chinese bar runs the full width and off the end, since it is larger and uncounted.
+  const max = step >= 4 ? 10000000 / 0.72 : Math.max(...shown.map((r) => r.n));
   const solo = step === 0;
-  const axisMax = step >= 4 ? 'uncounted →' : `${fmt(max)} ${step >= 2 ? 'manuscripts' : 'works'}`;
+  const axisMax = step >= 4 ? 'beyond any count →' : `${fmt(max)} ${step >= 2 ? 'manuscripts' : 'works'}`;
 
   return (
     <div ref={rootRef} className="written-past">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] text-muted mb-4">
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5" style={{ background: GREEN }} />
+          <i className="inline-block w-3.5 h-3.5" style={{ background: RUST }} />
           translated into English
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5" style={{ background: 'rgba(21,128,61,.22)' }} />
+          <i className="inline-block w-3.5 h-3.5" style={{ background: 'rgba(158,74,58,.22)' }} />
           no English translation
         </span>
         <span className="inline-flex items-center gap-2">
-          <i className="inline-block w-3.5 h-3.5 wp-hatch border" style={{ borderColor: 'rgba(21,128,61,.35)' }} />
+          <i className="inline-block w-3.5 h-3.5 wp-hatch border" style={{ borderColor: 'rgba(158,74,58,.35)' }} />
           estimate, counted in other units
         </span>
       </div>
@@ -131,7 +135,7 @@ export default function WrittenPastChart() {
               <span className="block text-[11px] sm:text-sm font-medium tracking-tight sm:tracking-normal">{s.name}</span>
               <i
                 className="absolute left-0 bottom-0 h-[3px]"
-                style={{ background: GREEN, width: i < step ? '100%' : i === step ? `${progress * 100}%` : '0%' }}
+                style={{ background: RUST, width: i < step ? '100%' : i === step ? `${progress * 100}%` : '0%' }}
               />
             </button>
           ))}
@@ -154,10 +158,10 @@ export default function WrittenPastChart() {
       <div>
         {WRITTEN_PAST_ROWS.map((r) => {
           const on = r.step <= step;
-          const w = on ? (r.n / max) * 100 : 0;
+          const w = on ? (r.open ? 100 : (r.n / max) * 100) : 0;
           const t = on && r.translated != null ? Math.max(0.15, (r.translated / max) * 100) : 0;
           const pct = r.translated != null ? ((r.translated / r.n) * 100).toFixed(2) : null;
-          const size = r.open ? 'uncounted' : r.none ? 'no estimate' : r.estimate ? `${compact(r.n)} mss.` : fmt(r.n);
+          const size = r.open ? 'likely largest' : r.none ? 'no estimate' : r.estimate ? `${compact(r.n)} mss.` : fmt(r.n);
           return (
             <div
               key={r.key}
@@ -171,7 +175,7 @@ export default function WrittenPastChart() {
               </span>
               <div className="relative" style={{ height: solo ? 36 : 12 }}>
                 {r.none ? (
-                  <div className="absolute inset-0 border border-dashed" style={{ borderColor: 'rgba(21,128,61,.4)' }} />
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 truncate text-[13px] leading-4 text-muted">{r.unit}</div>
                 ) : (
                   <>
                     <div
@@ -179,12 +183,12 @@ export default function WrittenPastChart() {
                       style={{
                         width: `${w}%`,
                         minWidth: on ? 2 : 0,
-                        background: r.estimate || r.open ? undefined : r.highlight ? 'rgba(21,128,61,.34)' : 'rgba(21,128,61,.22)',
-                        borderColor: 'rgba(21,128,61,.35)',
+                        background: r.estimate || r.open ? undefined : r.highlight ? 'rgba(158,74,58,.34)' : 'rgba(158,74,58,.22)',
+                        borderColor: 'rgba(158,74,58,.35)',
                       }}
                     />
                     {r.translated != null && (
-                      <div className="wp-bar absolute left-0 top-0 h-full" style={{ width: `${t}%`, minWidth: on ? 2 : 0, background: GREEN }} />
+                      <div className="wp-bar absolute left-0 top-0 h-full" style={{ width: `${t}%`, minWidth: on ? 2 : 0, background: RUST }} />
                     )}
                   </>
                 )}
@@ -194,7 +198,7 @@ export default function WrittenPastChart() {
                 {pct && (
                   <>
                     {' · '}
-                    <b className="font-semibold" style={{ color: GREEN }}>{pct}%</b>
+                    <b className="font-semibold text-primary">{pct}%</b>
                   </>
                 )}
               </span>
@@ -206,8 +210,8 @@ export default function WrittenPastChart() {
       <style>{`
         .written-past .wp-row { transition: height .6s ease, opacity .5s ease; }
         .written-past .wp-bar { transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
-        .written-past .wp-hatch { background: repeating-linear-gradient(135deg, rgba(21,128,61,.18) 0 5px, rgba(21,128,61,.05) 5px 10px); }
-        .written-past .wp-open { -webkit-mask-image: linear-gradient(90deg, #000 75%, transparent); mask-image: linear-gradient(90deg, #000 75%, transparent); }
+        .written-past .wp-hatch { background: repeating-linear-gradient(135deg, rgba(158,74,58,.18) 0 5px, rgba(158,74,58,.05) 5px 10px); }
+        .written-past .wp-open { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
         @media (prefers-reduced-motion: reduce) {
           .written-past .wp-row, .written-past .wp-bar { transition: none; }
         }

@@ -48,7 +48,7 @@ export const WRITTEN_PAST_ROWS: WrittenPastRow[] = [
   { key: 'ara', name: 'Arabic script', n: 3500000, translated: null, unit: 'surviving manuscripts (estimate); the works themselves are uncounted', step: 2, estimate: true },
   { key: 'ind', name: 'India', n: 10000000, translated: null, unit: 'manuscripts (national estimate)', step: 3, estimate: true },
   { key: 'chi', name: 'Chinese', n: 10000000, translated: null, unit: '200,000 titles and 500,000 editions catalogued to 1912, before manuscripts and local printing. The true size is uncounted.', step: 4, open: true },
-  { key: 'rest', name: 'Also uncounted', n: 10000000, translated: null, unit: 'Japanese, Korean, Persian, Hebrew, Armenian, Ethiopian, Byzantine Greek, medieval Latin manuscripts', step: 4, none: true },
+  { key: 'rest', name: 'Not yet counted', n: 10000000, translated: null, unit: 'Japanese, Korean, Persian, Hebrew, Armenian, Ethiopian, Byzantine Greek, medieval Latin…', step: 4, none: true },
 ];
 
 export const WRITTEN_PAST_STEPS: { name: string; caption: string }[] = [
