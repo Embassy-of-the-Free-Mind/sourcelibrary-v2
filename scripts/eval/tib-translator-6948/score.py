@@ -8,7 +8,8 @@ score.py — $0. Scores #6948 by its preregistration (experiments/2026-10-18-tib
 Reads $JOB_SCRATCH/judge/out-J*.jsonl, the arm files and scripts/eval/results/tib-translator-6948/key.json; writes
 scripts/eval/results/tib-translator-6948/scores.json. NUMBERS ONLY: no judge quotes, no reference or arm text.
 """
-import json, os, glob, random, statistics, importlib.util, collections, datetime
+import json, os, sys, glob, random, statistics, importlib.util, collections, datetime
+sys.dont_write_bytecode = True  # score-xl.py has a TRACKED __pycache__ entry; importing it must not rewrite that file
 
 S = os.environ["JOB_SCRATCH"]
 OUT = "scripts/eval/results/tib-translator-6948"
