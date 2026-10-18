@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import {
   CORRELATIONS, DAY_NAMES, DAY_NAMES_COLONIAL, GMT, LONG_COUNT_UNITS, MONTHS,
   calendrical, gregorianFromJdn, haab, jdnFromGregorian, lcm, longCount, lordOfNight, tzolkin, vigesimal,
@@ -217,91 +217,6 @@ export function DateCounter() {
         {[-7200, -360, -20, -1, 1, 20, 360, 7200].map((k) => (
           <button key={k} className={btn} onClick={() => step(k)}>{k > 0 ? '+' : '−'}{fmt(Math.abs(k))}</button>
         ))}
-      </div>
-    </Card>
-  );
-}
-
-// ---------------------------------------------------------------------------------------------
-// 3. The 260-day count as two wheels, and the 52 years before a pair comes back.
-
-export function CycleWheels() {
-  // k = days since 4 Ajaw 8 Kumk'u. The wheels' angles only ever move forward, by the step taken
-  // modulo each wheel, so a jump of 18,980 days turns them the short way instead of spinning.
-  const [{ k, numTurn, nameTurn }, setState] = useState({ k: 0, numTurn: 3, nameTurn: 19 });
-  const [playing, setPlaying] = useState(false);
-  const [speed, setSpeed] = useState(1);
-  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
-  const advance = (d: number) =>
-    setState((s) => ({ k: s.k + d, numTurn: s.numTurn + (d % 13), nameTurn: s.nameTurn + (d % 20) }));
-  const reset = () => setState({ k: 0, numTurn: 3, nameTurn: 19 });
-
-  useEffect(() => {
-    if (!playing) return;
-    timer.current = setInterval(() => advance(speed), 220);
-    return () => { if (timer.current) clearInterval(timer.current); };
-  }, [playing, speed]);
-
-  const tz = tzolkin(k);
-  const hb = haab(k);
-  const R1 = 68, R2 = 124;
-  const numRot = -(numTurn * 360) / 13;
-  const nameRot = -(nameTurn * 360) / 20;
-  const sincePair = k % 18980;
-
-  return (
-    <Card
-      title="Thirteen numbers, twenty names"
-      caption="Both wheels turn one step a day. Thirteen and twenty share no factor, so the same number and name meet again only after 13 × 20 = 260 days. Add the 365-day year and a full combination returns after 18,980 days, the 52-year Calendar Round."
-    >
-      <div className="grid gap-6 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)] items-center">
-        <svg viewBox="-150 -150 300 300" className="w-full max-w-[300px] mx-auto" role="img" aria-label={`Wheels showing ${tz.number} ${DAY_NAMES[tz.index]}`}>
-          <circle r={R2 + 16} fill="none" stroke="var(--color-border-medium)" />
-          <circle r={R1 + 18} fill="none" stroke="var(--color-border-medium)" />
-          <circle r={R1 - 18} fill="none" stroke="var(--color-border-light)" />
-          <g style={{ transition: 'transform 200ms', transform: `rotate(${nameRot}deg)` }}>
-            {DAY_NAMES.map((name, i) => {
-              const a = (i * 360) / 20;
-              const on = i === tz.index;
-              return (
-                <text key={name} transform={`rotate(${a}) translate(0 ${-R2}) rotate(0)`} textAnchor="middle" dominantBaseline="middle" fontSize={on ? 11 : 8.5} fontWeight={on ? 700 : 400} fill={on ? INK : 'var(--color-muted)'} fontFamily="var(--font-sans, sans-serif)">
-                  {name}
-                </text>
-              );
-            })}
-          </g>
-          <g style={{ transition: 'transform 200ms', transform: `rotate(${numRot}deg)` }}>
-            {Array.from({ length: 13 }, (_, i) => {
-              const a = (i * 360) / 13;
-              const on = i + 1 === tz.number;
-              return (
-                <text key={i} transform={`rotate(${a}) translate(0 ${-R1})`} textAnchor="middle" dominantBaseline="middle" fontSize={on ? 16 : 12} fontWeight={on ? 700 : 400} fill={on ? INK : 'var(--color-muted)'} fontFamily="var(--font-sans, sans-serif)">
-                  {i + 1}
-                </text>
-              );
-            })}
-          </g>
-          <path d={`M0 ${-R2 - 18} l-5 -8 h10 z`} fill={SHELL} />
-          <text y={6} textAnchor="middle" fontSize={13} fill={INK} fontFamily="var(--font-sans, sans-serif)">{tz.number} {DAY_NAMES[tz.index]}</text>
-        </svg>
-        <div>
-          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm mb-5">
-            <dt className="text-muted">Today in the wheels</dt><dd className="text-primary">{tz.number} {DAY_NAMES[tz.index]} {hb.day} {MONTHS[hb.month]}</dd>
-            <dt className="text-muted">Days counted</dt><dd className="font-mono text-primary">{fmt(k)}</dd>
-            <dt className="text-muted">Into this Calendar Round</dt><dd className="font-mono text-primary">{fmt(sincePair)} of 18,980</dd>
-          </dl>
-          <div className="flex flex-wrap gap-2">
-            <button className={playing ? btnOn : btn} onClick={() => setPlaying((p) => !p)}>{playing ? 'Pause' : 'Play'}</button>
-            {[1, 13, 20, 73].map((s) => <button key={s} className={speed === s ? btnOn : btn} onClick={() => setSpeed(s)}>{s} day{s > 1 ? 's' : ''} a step</button>)}
-          </div>
-          <div className="flex flex-wrap gap-2 mt-3">
-            <button className={btn} onClick={() => advance(1)}>+1 day</button>
-            <button className={btn} onClick={() => advance(260)}>+260 days</button>
-            <button className={btn} onClick={() => advance(365)}>+365 days</button>
-            <button className={btn} onClick={() => advance(18980)}>+18,980 days</button>
-            <button className={btn} onClick={() => { reset(); setPlaying(false); }}>Back to 4 Ajaw 8 Kumk&apos;u</button>
-          </div>
-        </div>
       </div>
     </Card>
   );

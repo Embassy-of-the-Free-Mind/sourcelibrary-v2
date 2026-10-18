@@ -4,7 +4,8 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { withArticleMeta } from '@/lib/article-metadata';
 import PageFigure from '@/components/articles/PageFigure';
 import SourceQuote from '@/components/articles/SourceQuote';
-import { CycleWheels, CyclesMeet, DateCounter, KauaSequences, NumeralBuilder } from './MayaInteractives';
+import { CyclesMeet, DateCounter, KauaSequences, NumeralBuilder } from './MayaInteractives';
+import { GearTrain } from './MayaGears';
 
 // Every quotation below is copied from the stored text of the page it links to (#6925): the served English
 // translation for Landa, the Motul dictionary, the Kaua book and Förstemann's commentary (Förstemann's is the
@@ -217,7 +218,7 @@ export default function MayaMathematicsPage() {
 
         <DateCounter />
 
-        <h2 className={h2}>Two wheels, and fifty-two years</h2>
+        <h2 className={h2}>Gears, and fifty-two years</h2>
 
         <p className={p}>
           The 260-day count pairs a number from 1 to 13 with one of twenty day names. Both advance every day: 1 Imix,
@@ -229,7 +230,14 @@ export default function MayaMathematicsPage() {
           <Link href="/articles/maya-ritual-in-the-colonial-dictionaries">another article</Link>.
         </p>
 
-        <CycleWheels />
+        <p className={p}>
+          The counts behave like meshing gears with one tooth for each day: a gear of 13 teeth, one of 20 and one of
+          365, all turning a tooth a day. The colonial books drew the k&apos;atuns on a wheel; gears are a modern picture
+          of the same arithmetic. Each gear has a gold mark that starts on the reading line. Turn them and see how long it takes for
+          all the marks to come back to it together.
+        </p>
+
+        <GearTrain />
 
         <p className={p}>
           The same arithmetic explains three rows of numbers in the Book of Chilam Balam of Kaua, a Yucatec manuscript
@@ -306,6 +314,8 @@ export default function MayaMathematicsPage() {
         </p>
 
         <CyclesMeet />
+
+        <GearTrain initial="venus" />
 
         <h2 className={h2}>A multiplication table, and the moon</h2>
 
@@ -411,7 +421,8 @@ export default function MayaMathematicsPage() {
           2023 that it was meant to be run twenty times: 20 × 819 = 16,380 days, which is a whole number of 260-day
           counts and of 780-day Mars cycles, and close to whole numbers of the other visible planets (
           <a href="https://doi.org/10.1017/S0956536122000323"><em>Ancient Mesoamerica</em>, 2023</a>). Choose the
-          819-day count and Mars in the cycles above to see where they meet. It is the same method as the Venus pages.
+          819-day count and Mars in the cycles above, or the third set of gears, to see where they meet. It is the same
+          method as the Venus pages.
         </p>
 
         <p className={p}>
