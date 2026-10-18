@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getConsent, setConsent, type ConsentState } from '@/lib/consent';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
-import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
+import { CHROME_STRINGS, useChromeLocale } from '@/lib/i18n';
 
 /**
  * Minimal cookie consent banner — thin bar at the bottom of the screen.
@@ -15,7 +15,7 @@ import { CHROME_STRINGS, useLocale } from '@/lib/i18n';
  */
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
-  const chrome = CHROME_STRINGS[useLocale()];
+  const chrome = CHROME_STRINGS[useChromeLocale()];
   const isEmbedded = useIsEmbedded();
 
   useEffect(() => {

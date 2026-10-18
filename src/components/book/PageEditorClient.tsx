@@ -422,6 +422,7 @@ export default function PageEditorClient({
         <Link
           key={code}
           href={localeHref(code, readerPath)}
+          hrefLang={code}
           aria-current={lang === code ? 'page' : undefined}
           className="px-2 sm:px-2.5 py-1.5 transition-colors focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
           style={{

@@ -199,6 +199,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
               key={l.locale}
               href={l.href}
               hrefLang={l.locale}
+              rel={l.href.includes('?') ? 'nofollow' : undefined}
               lang={l.locale}
               tabIndex={open ? 0 : -1}
               aria-current={l.current ? 'page' : undefined}

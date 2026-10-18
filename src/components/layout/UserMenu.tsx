@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react';
 import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useLocale, localePath, CHROME_STRINGS } from '@/lib/i18n';
+import { useChromeLocale, localePath, CHROME_STRINGS } from '@/lib/i18n';
 import { adminMenuLinks } from '@/lib/admin-links';
 import { User as UserIcon } from 'lucide-react';
 
@@ -15,7 +15,7 @@ interface UserMenuProps {
 
 export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   const { data: session, status } = useStableSession();
-  const locale = useLocale();
+  const locale = useChromeLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

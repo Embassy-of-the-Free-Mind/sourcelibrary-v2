@@ -1,5 +1,6 @@
+import { useSyncExternalStore } from 'react';
 import { usePathname } from 'next/navigation';
-import { localeFromPathname, localePath, type Locale } from '@/lib/locale-path';
+import { localeFromPathname, localePath, type Locale, type PrefixedLocale } from '@/lib/locale-path';
 
 // The site-shell locale layer: the pure primitives (re-exported from
 // `locale-path.ts` so every existing `@/lib/i18n` import keeps working) plus
@@ -11,6 +12,35 @@ export * from '@/lib/locale-path';
 /** Client hook: current locale from the URL. */
 export function useLocale(): Locale {
   return localeFromPathname(usePathname());
+}
+
+// The `?lang=` carried through English-only pages (#6938). `LocaleCarry` in the
+// root layout is the only writer: it reads `useSearchParams` inside its own
+// Suspense boundary, so no page loses static rendering by reading it here.
+let carried: PrefixedLocale | null = null;
+const carriedListeners = new Set<() => void>();
+
+export function setCarriedLocale(next: PrefixedLocale | null): void {
+  if (next === carried) return;
+  carried = next;
+  carriedListeners.forEach((fn) => fn());
+}
+
+function subscribeCarried(fn: () => void): () => void {
+  carriedListeners.add(fn);
+  return () => { carriedListeners.delete(fn); };
+}
+
+/**
+ * Client hook: the language of the site CHROME (header, footer, menus). The URL
+ * prefix when there is one, else a carried `?lang=`. Page content keeps using
+ * `useLocale()`: an English page with `?lang=la` is still an English page.
+ * English during prerender and hydration, so the static HTML is unchanged.
+ */
+export function useChromeLocale(): Locale {
+  const fromPath = useLocale();
+  const fromQuery = useSyncExternalStore(subscribeCarried, () => carried, () => null);
+  return fromPath !== 'en' ? fromPath : (fromQuery ?? 'en');
 }
 
 /**

@@ -8,6 +8,7 @@ import BrokenImageReporter from "@/components/BrokenImageReporter";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
 import CookieConsent from "@/components/providers/CookieConsent";
+import LocaleCarry from "@/components/providers/LocaleCarry";
 import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
 import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
@@ -166,6 +167,7 @@ export default async function RootLayout({
         </Providers>
         <ClientToaster />
         <CookieConsent />
+        <LocaleCarry />
         <AnalyticsScripts />
         <PageTracker />
         <BrokenImageReporter />

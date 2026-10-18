@@ -135,6 +135,59 @@ export function canonicalPath(pathname: string | null | undefined): string {
   return pathname;
 }
 
+// ---------- Carrying the language through English-only pages (#6938) ----------
+//
+// Most pages (`/gallery`, `/catalog`, `/articles`, `/about`, …) have no twin, so
+// a reader on `/la` who clicked Library used to land on plain English and stay
+// there: the prefix was the only place the language lived, and the page had
+// none. Now such a link carries `?lang=la`. The page CONTENT is still English
+// (nothing pretends otherwise, and the language menu says so); the chrome reads
+// the parameter (`useChromeLocale`), and the next link to a page that has a
+// twin goes back under the prefix.
+//
+// This is not the retired preference store of rule 6 (#4112): the language is
+// in the address bar, it lasts only as long as you follow links that carry it,
+// and a shared or fresh URL without it opens in English. The HTML is identical
+// with or without it — only client chrome reads it — so it never branches the
+// edge cache. Applied to every internal link by `LocaleCarry` (root layout).
+
+export const CARRIED_LOCALE_PARAM = 'lang';
+
+/** The prefixed locale named by `?lang=`, or null (English, absent or unknown). */
+export function carriedLocale(search: string | null | undefined): PrefixedLocale | null {
+  if (!search) return null;
+  const v = new URLSearchParams(search).get(CARRIED_LOCALE_PARAM);
+  return (PREFIXED_LOCALES as string[]).includes(v ?? '') ? (v as PrefixedLocale) : null;
+}
+
+// Paths that are not reader-facing pages: leave them exactly as written.
+const NOT_A_PAGE = /^\/(?:api|_next)\/|\.[a-z0-9]{2,5}$/i;
+
+/**
+ * An internal link (`/path?query#hash`) rewritten to stay in `lang`: under the
+ * prefix where a twin exists, else with `?lang=` on the English page. A link
+ * already under some locale's prefix is left alone (it was chosen on purpose,
+ * e.g. a language-menu entry). English, external and non-page links pass
+ * through unchanged.
+ */
+export function carryLocale(href: string, lang: Locale): string {
+  if (lang === 'en' || !href.startsWith('/') || href.startsWith('//')) return href;
+  const hashAt = href.indexOf('#');
+  const hash = hashAt >= 0 ? href.slice(hashAt) : '';
+  const beforeHash = hashAt >= 0 ? href.slice(0, hashAt) : href;
+  const qAt = beforeHash.indexOf('?');
+  const path = qAt >= 0 ? beforeHash.slice(0, qAt) : beforeHash;
+  if (NOT_A_PAGE.test(path) || localeFromPathname(path) !== 'en') return href;
+  const params = new URLSearchParams(qAt >= 0 ? beforeHash.slice(qAt + 1) : '');
+  if (hasLocalizedPath(path, lang)) {
+    params.delete(CARRIED_LOCALE_PARAM);
+    const q = params.toString();
+    return `${path === '/' ? `/${lang}` : `/${lang}${path}`}${q ? `?${q}` : ''}${hash}`;
+  }
+  params.set(CARRIED_LOCALE_PARAM, lang);
+  return `${path}?${params.toString()}${hash}`;
+}
+
 /**
  * Whether the current page has a real twin in `lang` (i.e. switching keeps the
  * reader on the same page rather than dumping them on that locale's homepage).
@@ -157,7 +210,9 @@ export function localeHref(target: Locale, pathname: string | null | undefined):
   const canonical = canonicalPath(pathname);
   if (target === 'en') return canonical;
   if (hasLocalizedPath(canonical, target)) return canonical === '/' ? `/${target}` : `/${target}${canonical}`;
-  return `/${target}`;
+  // No twin: stay on this page and carry the language in the query, so the
+  // header, footer and the next page that HAS a twin come back in it (#6938).
+  return `${canonical}?${CARRIED_LOCALE_PARAM}=${target}`;
 }
 
 /**
