@@ -1,0 +1,1926 @@
+{
+  "ab": {
+    "n": 40,
+    "A": 22,
+    "other": 14,
+    "tie": 4,
+    "undecided": 0,
+    "onlyA": 7,
+    "onlyOther": 11,
+    "both": 8,
+    "otherName": "B"
+  },
+  "aa": {
+    "n": 8,
+    "A": 5,
+    "other": 3,
+    "tie": 0,
+    "undecided": 0,
+    "onlyA": 1,
+    "onlyOther": 4,
+    "both": 1,
+    "otherName": "A2"
+  },
+  "N": 0.25,
+  "L": 0.2,
+  "p": 0.24298495403491005,
+  "groundingOk": false,
+  "rows": [
+    {
+      "pair": "q01-AA",
+      "other": "A2",
+      "j1": "A",
+      "j2": "A2",
+      "j3": "A",
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A2": true,
+            "A": false
+          },
+          "why": {
+            "A2": "Cites Complete Works p.525 for Saturn 'carries the investigator toward the highest things' and 'innermost secrets', but that page covers only humoral proportions and says nothing about Saturn.",
+            "A": ""
+          },
+          "reason": "Y's quotations (p.19, p.240, p.104) all match the retrieved pages, and its Saturn passage answers the question directly. X misattributes its Saturn claims to p.525, though it covers the three causes well; Y's factual slip that Agrippa was Ficino's student and its repeated closing paragraphs are not grounding failures."
+        },
+        {
+          "win": "A2",
+          "g": {
+            "A": true,
+            "A2": true
+          },
+          "why": {
+            "A": "Cites p.104 for diet advice 'for scholars' against Saturn, but that page addresses the elderly ('Saturn represents the elderly'); the quote 'hostile to men who live an openly common life' comes from p.240, not p.104.",
+            "A2": "Attributes 'carries the investigator toward the highest things' and 'innermost secrets' to Complete Works p.525, but that page only covers humoral proportions; the phrases appear on other pages (1489 p.18, ficino-2 p.23)."
+          },
+          "reason": "Each answer misattributes one cited claim, but Y covers more of Ficino's argument (the celestial, natural and human causes, all supported by its cited pages) and has no repeated text or Agrippa-as-student error. X misreads the advice for the elderly as advice for scholars."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A2": true,
+            "A": false
+          },
+          "why": {
+            "A2": "Cites Complete Works p.525 for Saturn 'carries the investigator toward the highest things' and 'innermost secrets'; p.525 discusses only humoral proportions and never mentions Saturn ('innermost secrets' is on a different book's p.23).",
+            "A": ""
+          },
+          "reason": "Both answers quote p.19 accurately, but Y's Saturn material comes straight from p.240 and its regimen advice from p.104. X attributes its main Saturn claim to a page that doesn't support it. Y's minor flaws are a repeated closing paragraph, calling Agrippa Ficino's student, and framing p.104's advice for the elderly as advice for scholars."
+        }
+      ]
+    },
+    {
+      "pair": "q01-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Quotes Saturnine minds being 'taken up' into the highest realms and cites p.240, but that phrase is not on p.240; it also cites p.22 for the Saturn link and gives the date as 1589."
+          },
+          "reason": "X's blockquotes from p.19 and p.240 match the pages, and its regimen advice is correctly sourced to p.104. Its errors are background: it calls Agrippa Ficino's student and repeats its closing paragraphs. Y invents a quoted phrase and attributes a claim to a page that doesn't support it."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Page 22 for linking melancholy genius to Saturn and for 'densest, drier part of the blood', but that page mentions neither; the quoted phrase 'taken up' does not appear on Page 240",
+            "A": ""
+          },
+          "reason": "Y's blockquotes from Pages 19 and 240 and its regimen details from Page 104 all match the page text, while X attaches claims to Page 22 that the page does not support and quotes a phrase that is not on Page 240. Y has a duplicated closing paragraph and wrongly calls Agrippa Ficino's student, but neither problem involves a cited page."
+        }
+      ]
+    },
+    {
+      "pair": "q02-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "B",
+      "j3": "A",
+      "final": "A",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Jikji p.57 is credited with the image of a \"feverish person breaking into a sweat\" and with the deluded mind \"establishing names\"; neither appears on that page or on any other page given.",
+            "A": "Jikji p.57 is credited with \"profound, limitless emptiness\" and the \"true Dharma-body\", but both come from Hanshan p.82. The Awrad \"vessel of my existence\"/\"between-ness\" wording is cited to p.49 but appears on p.53."
+          },
+          "reason": "X has a quotation that appears on none of the pages given, and it files Ibn Tufayl under Kabbalah; Y's errors are wording found on other retrieved pages but cited to the wrong page. Y's long Ibn Arabi blockquote and its Rumi and Tree of Life p.165 citations are well supported, so it serves the reader somewhat better."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Attributes \"profound, limitless emptiness\" that is the \"true Dharma-body\" to Jikji p.57, but those phrases come from Hanshan's Dream-Roaming Records p.82; the candle-and-sun image is also not on Rumi p.193.",
+            "B": "Attributes a \"feverish person breaking into a sweat\" to Jikji p.57, which is not on that page; it also oddly places Ibn Tufayl under Kabbalah."
+          },
+          "reason": "Both answers misattribute one Jikji passage, but Y otherwise cites more accurately and draws on more primary sources (al-Sarraj, the Meccan Revelations, Hamzah Fansuri, Hanshan), all supported by the pages. X leans on fewer sources and makes looser interpretive claims."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "The quoted phrase 'feverish person breaking into a sweat' does not appear on Jikji p57 or on any other page given. X also puts Ibn Tufayl under Kabbalah.",
+            "A": "Y attributes 'profound, limitless emptiness' and 'true Dharma-body' to Jikji p57, but they come from Hanshan p82. It also attributes 'vessel of my existence' and 'between-ness' to Awrad p49, but they are on p53."
+          },
+          "reason": "X contains an invented quotation and files Ibn Tufayl under Kabbalah, while Y's quotations all appear on retrieved pages, though some are cited to the wrong page. Y also adds a well-grounded Rumi passage and a Tree of Life p165 quote, so it serves the reader better."
+        }
+      ]
+    },
+    {
+      "pair": "q03-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "X cites Bock p.1014 for Pliny's 'phlegm of trees' (pituita arborum), which is not on that page, and the page credits the thunderstorm idea to a poet, not to Pliny. It quotes Dioscorides calling fungi 'destructive and pernicious' and cites Theophrastus p.60, which has no such words. It also says that page shows fungi emerging after rain and growing on tree trunks, which the page does not say.",
+            "B": ""
+          },
+          "reason": "Each of Y's claims (Dioscorides on poplar bark, Pliny on silver vessels, Galen on poplar fungi, Sterbeeck on Tuscany, Gleditsch on Micheli) matches its cited page. X has several claims that its cited pages do not support or that the pages assign to someone else, though its Porphyry blockquote is accurate."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": true
+          },
+          "why": {
+            "B": "",
+            "A": "Cites Theophrastus p.60 for fungi being 'imperfect' and appearing after rain, but the page says neither. Quotes Dioscorides calling some species 'destructive and pernicious', which is not on the page. Cites Bock p.1014 for Pliny's 'phlegm of trees' (pituita arborum), which is not on the page."
+          },
+          "reason": "Every claim in X that cites a page (Dioscorides on poplar bark, Pliny on silver vessels, Galen via Mattioli, Sterbeeck on Tuscany, Micheli on fructification) is supported by the page text. Y attributes several claims and one quotation to pages that do not contain them, and it reuses the Theophrastus page as the citation for Dioscorides."
+        }
+      ]
+    },
+    {
+      "pair": "q04-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "A",
+      "j3": "A",
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": true
+          },
+          "why": {
+            "B": "",
+            "A": "Cites The Platonist p.52 for Porphyry calling souls 'bees' as 'efficient causes of sweetness', but the page text given says there is no English text on that page, so it does not support the claim."
+          },
+          "reason": "Every claim and quotation that X attributes to a page it was given (Cantimpré pp.334–335, Ambrose's hexagonal cells in the Bestiary) is supported by that page's text, while Y's Platonist claim has no support on the page given. Y covers more sources (Hartlib, Horapollo, Valeriano), but grounding outweighs breadth."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "The Platonist p.52 claim ('souls are called \"bees\"... efficient causes of sweetness') can't be checked because that page has no English text; Geoponika pp.232/234 and Fludd p.130 are not among the pages given.",
+            "B": ""
+          },
+          "reason": "Every claim Y makes that can be checked matches its pages, including the Cantimpré blockquote, which matches p.334 almost word for word. X's checkable claims are also supported (Hartlib, Horapollo, Valeriano), and X better answers 'what do we have' by covering a wider range of linked sources and collections."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": "The claim that The Platonist p.52 quotes Porphyry calling souls 'bees' can't be checked: the page retrieved has no English text."
+          },
+          "reason": "Every claim both answers make about the pages given checks out: X's Cantimpré blockquote matches p.334, and Y's claims for Hartlib p.69, Horapollo p.119 and Valeriano p.141 match those pages. Y answers 'what do we have' better because it covers more of the collection's bee sources (practical beekeeping, hieroglyphs, emblems, Neoplatonism) and links them to specific pages and collections."
+        }
+      ]
+    },
+    {
+      "pair": "q05-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers quote their cited pages accurately, but Y backs each step (krasis, eukrasia, dyscrasia from the environment, idiosyncrasy) with a verified passage from Galen or Hippocrates. Much of X's temperament and treatment material is uncited background, and its Fludd citations point to pages not among those retrieved."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "The given pages support every quotation and page-level claim in X: Galen p.781 on mixture, Hippocrates p.76 on proportioned humors, Galen p.86 on humid conditions and Writings p.42 on idiosyncrasy. Y's Galen p.63 quote is accurate, but much of the rest is uncited general background or rests on Fludd pages that were not retrieved, so X serves the reader with better-verified sources."
+        }
+      ]
+    },
+    {
+      "pair": "q06-AA",
+      "other": "A2",
+      "j1": "A2",
+      "j2": "A2",
+      "j3": null,
+      "final": "A2",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A2",
+          "g": {
+            "A": true,
+            "A2": false
+          },
+          "why": {
+            "A": "Cites Popular Treatises p.58, a medieval text, as evidence that 'By the 17th century, the winds were categorized by their physical properties'; the page does not support that dating.",
+            "A2": ""
+          },
+          "reason": "Y's quotations from Popular Treatises p.57 and Honterus p.14 match the given pages closely, and it gives more primary sources tied to specific pages for how interpretations changed. X cites a medieval page as 17th-century evidence, repeats its opening paragraph, and links to an artwork page that doesn't exist."
+        },
+        {
+          "win": "A2",
+          "g": {
+            "A2": false,
+            "A": true
+          },
+          "why": {
+            "A2": "",
+            "A": "Cites a medieval treatise (Popular Treatises p.58) as evidence that 'By the 17th century, the winds were categorized by their physical properties'; the page does not support a 17th-century shift. It also links an artwork page that does not exist."
+          },
+          "reason": "X's quotations from Popular Treatises p.57 and Honterus p.14 match the pages, and it traces the typology from the four chief winds to the twelve-wind scheme. Y quotes p.58 correctly but uses that medieval page as proof of a 17th-century change and has a broken artwork link."
+        }
+      ]
+    },
+    {
+      "pair": "q06-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Says Bacon noted the classical names 'were often discarded by practical sailors'. The cited Bacon page only says 'We concern ourselves with them not at all' and does not mention sailors.",
+            "A": "Says 'By the 17th century, the winds were categorized by their physical properties' and cites Popular Treatises p.58 as support, but that page is a medieval treatise. It also repeats its opening paragraph and links to an artwork page that does not exist."
+          },
+          "reason": "X answers the 'change over time' part directly with an accurate Pliny quote on the move from four to eight to twelve winds, plus an accurate Bacon quote. Y's quotes are accurate too, but it uses a medieval text as evidence for 17th-century developments and contains a broken link."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Y quotes Pliny p.102 and Bacon p.39 accurately, and both quotes speak directly to how the typology changed over time; X's one quotation is accurate but thin. X also offers the medieval Popular Treatises p.58 as its example of '17th century' scientific categorization, repeats its own opening paragraph, and links to an artwork page that does not exist."
+        }
+      ]
+    },
+    {
+      "pair": "q07-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Cites Fludd p.288 for the claim that the 'spirit of the wounded person' stays connected to the blood on the weapon, but that page is about celestial influence versus Foster. Cites Theatrum p.7 for a debate over 'atoms' or 'vital spirits', but that page is only a title page listing authors.",
+            "B": ""
+          },
+          "reason": "Every quotation and claim in Y matches the cited pages (Goclenius, Libavius, Saltzmann, Theatrum p.370), and Y covers both the defenders and the critics. X has an accurate Porta recipe, but its Fludd and Theatrum claims go beyond what those pages say, and it links a book record that is not in the collection."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": true
+          },
+          "why": {
+            "B": "",
+            "A": "Fludd p.288 cited for 'spirit of the wounded person remains connected to the blood on the weapon', but that page only argues that stellar influence is not blocked by distance or obstacles; Theatrum p.7 is a title page and does not support 'debated whether these effects were caused by atoms or vital spirits'"
+          },
+          "reason": "Both answers quote Goclenius, Libavius and the Theatrum accurately, and Y adds the valuable Porta recipe, but Y's Fludd citation is not supported by the cited page and its image link is broken. X's quotations all check out against the pages, though it slightly overstates Saltzmann's position, since the page credits most cures to nature and blames the demon only for extraordinary ones."
+        }
+      ]
+    },
+    {
+      "pair": "q08-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Blockquote attributed to Boyle, Philosophical Works Vol. 2, p.110: \"When mercury sublimate is re-sublimed with fresh mercury... salts are dry earth and watery acid united by attraction?\" This is not on that page, which is about antimony lixivium and salt tests. It also cannot be true: Boyle died in 1691, before Newton's 1710 text.",
+            "A": "Cites Principia p.13 for the General Scholium's 'most subtle spirit', but p.13 is only the title page. It also cites p.51 for 'starry salt' and 'Philosophic Phosphorus', which appear on p.43, not p.51."
+          },
+          "reason": "Both answers give the same correct core answer: Newton published almost nothing on alchemy apart from De Natura Acidorum and hints in the Opticks Queries. X invents a quotation and pins it on Boyle anachronistically, while Y's failures are a mis-cited page and loose page attribution, which are less serious."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites Principia p.13 for the General Scholium's 'most subtle spirit', but that page is only the title page; also attributes 'starry salt' and 'Philosophic Phosphorus' to MS Add.3973 p.51, when they appear on p.43.",
+            "B": "Blockquote 'When mercury sublimate is re-sublimed with fresh mercury... united by attraction?' is attributed to Boyle's Philosophical Works p.110 as Boyle quoting Newton, but the page has no such text, and Boyle died before 1710."
+          },
+          "reason": "Both answers have grounding problems, but Y's invented quotation, falsely presented as Boyle quoting Newton, is worse than X's citations to the wrong pages. X also covers what Newton published more fully and correctly, including Opticks, De Natura Acidorum in Harris's Lexicon Technicum, and the posthumous manuscripts."
+        }
+      ]
+    },
+    {
+      "pair": "q09-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "Minor: glosses Philosophy as 'knowledge of earth and water' citing Paragranum p.5, which only lists the four pillars",
+            "B": "Cites Avicenna Canon p.272 for 'flowers of mercury' and 'sulfur' cures for leprosy and impetigo as Paracelsian mineral remedies, but the page is a humoral treatment of impetigo and scabies with no mercury; Vicarius p.19 never mentions Paracelsus"
+          },
+          "reason": "X's quotes from Paragranum p.5, Trei Tractat p.20 and Erster Theil p.86 match the retrieved pages closely, so its answer rests on Paracelsus's own words. Y gives no Paracelsus quotations, and its two cited sources either don't support or misattribute the claims made about them."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Avicenna's Canon p.272 for 'flowers of mercury and sulfur as potent cures for skin diseases like leprosy and impetigo', but the page says nothing of this; it also cites Vicarius p.19 as showing Paracelsus 'explicitly rejected' the four elements, but that page never mentions Paracelsus and only poses the question.",
+            "A": ""
+          },
+          "reason": "All three of Answer Y's block quotes (Paragranum on the four pillars, the salt-and-rust passage, and 'medicine should not stand in belief, but in the eyes') appear on the cited pages, and they answer the question directly. Answer X's two source citations don't support what it claims, and one of them is an off-topic Avicenna page."
+        }
+      ]
+    },
+    {
+      "pair": "q10-AB",
+      "other": "B",
+      "j1": "tie",
+      "j2": "A",
+      "j3": "tie",
+      "final": "tie",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "tie",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers give the same count of 120, which presumably comes from a catalogue tool result we cannot see, and both link to specific Paracelsus books without attributing any quotation or claim to a page. X lists more titles and adds some background, but that is a difference of length and style, not of grounding or how well it answers."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers give the same catalogue count of 120, and neither attributes anything to page text, so neither has a grounding failure. Y links five relevant books across Paracelsus's surgical, medical, alchemical and prophetic writings, while X links three, which gives Y a slight edge on useful sources."
+        },
+        {
+          "win": "tie",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers give the same count of 120 from the catalogue and list similar linked books, and no page text was retrieved for either, so neither attributes anything to a page that the text fails to support. X is longer and adds general background, but the two differ only in style and length."
+        }
+      ]
+    },
+    {
+      "pair": "q11-AA",
+      "other": "A2",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "A2": true
+          },
+          "why": {
+            "A": "",
+            "A2": "Fludd's 'Mundane Monochord... stretching from the center of the Earth to the highest heavens' is cited to Kircher Vol. II p.406, but that page is about the Vitruvian instrument and regional pitch differences."
+          },
+          "reason": "Both quote their sources accurately, and Y's Ficino and tarantism material is richer, but Y cites Kircher Vol. II p.406 for a Fludd monochord claim that page does not support. X's quotations are supported by the Kircher page, though it awkwardly places a Kircher quote under its Ficino heading."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A2": true,
+            "A": false
+          },
+          "why": {
+            "A2": "Cites Kircher's Universal Art of Music Vol. II, p. 406 for Fludd's 'Mundane Monochord' stretching from earth to heaven, but that page is about the Vitruvian instrument and regional pitch differences.",
+            "A": ""
+          },
+          "reason": "X has strong, well-grounded Ficino material, but it attributes Fludd's monochord to a page that doesn't support it. Y's two Kircher quotations and its Zarlino claim check out against the given pages, though it awkwardly places a Kircher quote under its Ficino heading and repeats its opening."
+        }
+      ]
+    },
+    {
+      "pair": "q11-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Blockquote 'From this are drawn the greatest arguments for Natural Magic... statues are moved by one certain sound and not another' is attributed to Musurgia II p.241, but that page does not contain it; it also attributes the term 'Secrets of Music (Musicorum Arcanorum)' to p.241, when the phrase comes from Phonurgia p.185.",
+            "A": ""
+          },
+          "reason": "Both of Y's Kircher quotations appear word for word on p.181, and its Zarlino claim fits the monochord diagram with planetary symbols on p.148. X puts an invented quotation in a blockquote attributed to p.241."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Blockquote 'From this are drawn the greatest arguments for Natural Magic... statues are moved by one certain sound and not another' does not appear on the given p.241 text; the term 'Musicorum Arcanorum' is attributed to p.241 but comes from Phonurgia p.185"
+          },
+          "reason": "X's Kircher quotations match p.181 closely and its other claims are only mildly embellished, although the second Kircher quote sits awkwardly under the Ficino heading. Y's main blockquote is not found on the cited page, and it attributes a term to the wrong book."
+        }
+      ]
+    },
+    {
+      "pair": "q12-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Cites Khunrath p.265 for the Stone 'instantly raising its vibrations to that of gold', but the page only says it enters and permeates metals; 'Triune Son' is also not on the page.",
+            "B": ""
+          },
+          "reason": "The quotations in Y from Basil Valentine, the Czech text, Fleischer, Hoghelande and the Rosarium all match the retrieved pages. X adds unsupported claims (the 'vibrations' wording, 'Triune') to its Khunrath citations, and it repeats its opening paragraph."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": true
+          },
+          "why": {
+            "B": "",
+            "A": "Cites Khunrath p.265 for the Stone being 'projected' onto 'molten lead or mercury' and 'instantly raising its vibrations to that of gold'; the page says only that it enters and permeates metals. It also cites p.177 for 'cleanse the stained metals of all leprosy', which is on p.43, and p.43 for 'granting longevity', which is on p.177."
+          },
+          "reason": "X's quotations from Basil Valentine, Petrus Bonus, Fleischer, Hoghelande and the Rosarium all match the retrieved pages. Y relies on Khunrath and adds embellishments the pages do not support, and it mixes up its page citations."
+        }
+      ]
+    },
+    {
+      "pair": "q13-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "B",
+      "j3": "A",
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Attributes the 'characters of letters in the figures of animals and trees' claim and the 'hermetic seal of alchemical vessels' gloss to Kybalion p.22, but that page has neither; the first comes from Ficino's argument.",
+            "A": ""
+          },
+          "reason": "Y's quotations and its cited claims (the Ficino veneration passage, Kybalion p.22 on Thoth and Hermes, Scott p.9 on the Egyptian superlative) match the retrieved pages, and Y explains the title and Casaubon's redating well. X misattributes Ficino's material to the Kybalion page; Y's main flaw is that its whole body is printed twice, which counts only as a style issue."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Cites Kybalion p.22 for the claim that Hermes invented 'characters of letters in the figures of animals and trees' and for the 'hermetic seal of alchemical vessels'; the letters phrase comes from Ficino's p.7, and the Kybalion page mentions neither."
+          },
+          "reason": "X repeats its entire body twice, which seriously hurts readability, and it adds little sourcing beyond the Ficino quote and Scott p.9. Y gives a tighter answer with well-grounded Scott quotations and the Ficino quote, despite one minor misattribution to the Kybalion."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Kybalion p.22 for the quoted phrase \"characters of letters in the figures of animals and trees\", but that phrase comes from Ficino's argument (Pimander p.7), not the Kybalion page; the 'hermetic seal of alchemical vessels' point also isn't on p.22.",
+            "A": ""
+          },
+          "reason": "Y's quotes from Ficino and Scott and its 'Egyptian superlative' claim (Scott p.9) match the pages given, while X puts a Ficino quotation under a Kybalion citation. Both answers repeat their own text, and Y repeats its whole body, but that only matters as a tiebreak."
+        }
+      ]
+    },
+    {
+      "pair": "q14-AB",
+      "other": "B",
+      "j1": "tie",
+      "j2": "tie",
+      "j3": null,
+      "final": "tie",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "tie",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers send the reader to the same Identify an Artwork tool and explain how to use it in nearly the same way, and neither cites a retrieved book page. X's quotation is attributed to the site rather than to a book page, likely from tool output not shown here, so the two differ only in style."
+        },
+        {
+          "win": "tie",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers send the reader to the same Identify an Artwork tool and give the same background on the illustration database, and neither cites a book page. Y's quotation is attributed to the site, not a page, so it probably comes from a tool result not shown here; the two differ only in style."
+        }
+      ]
+    },
+    {
+      "pair": "q15-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Attributes to Daozong liushu p.44 the claim that the Dao 'exists in a cycle that precedes even the \"Supreme Ultimate\"'; the Supreme Ultimate appears on p.778, not p.44.",
+            "A": "Cites Chuang Tzu p.323 for 'at the beginning of the beginning, even Nothing did not exist', which is on p.177. Also cites Brahma Sutra Bhashya p.169 for the Inner Self as 'not an object (avishaya)' and Brahman as 'higher than understanding'; neither phrase is in the page text given."
+          },
+          "reason": "Each answer has one mixed-up page citation, but X's many direct quotations from Daoist and Vedantic pages are all accurate, while Y adds unsupported claims about Shankara. X also covers both traditions with more primary sources despite a leaked process sentence."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites Giles p.323 for \"at the beginning of the beginning, even Nothing did not exist,\" but that line is on p.177. Shankara p.169 does not support \"not an object (avishaya)\" or \"higher than understanding.\" Carus p.314 does not show the \"know where to stop\" line.",
+            "B": "Cites Daozong p.44 for the Dao preceding \"even the 'Supreme Ultimate',\" but that claim is on p.778, not p.44."
+          },
+          "reason": "Most of Y's quotations match their cited pages exactly (Six Daoist Classics p.18, Daozong p.778, Vivekachudamani p.115, Hume pp.62/165), and it brings in more relevant primary sources. X has several claims its cited pages don't support, though Y has a leaked 'I will now search' line."
+        }
+      ]
+    },
+    {
+      "pair": "q16-AA",
+      "other": "A2",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A2": false,
+            "A": false
+          },
+          "why": {
+            "A2": "",
+            "A": ""
+          },
+          "reason": "Y backs its account with accurate quotations from Sendivogius/Paracelsus p.274, which uses the term 'Spagyric Art' directly, and an accurate paraphrase of Rhumel p.304; the Mylius quote cites p.1326, which is not among the pages given. X's only quotation is accurate, but it comes from Indian Rasa Shastra rather than the spagyric tradition, and most of its spagyric content is uncited general background."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "A2": false
+          },
+          "why": {
+            "A": "",
+            "A2": ""
+          },
+          "reason": "X quotes and paraphrases the retrieved pages accurately. Its Sendivogius p.274 passage on separating vegetables by the Spagyric Art and its Rhumel p.304 point on dissolving gold gently both match their pages; the Mylius quote cites p.1326, which was not retrieved. Y's only page quote (Rasa-Jala-Nidhi p.121) is accurate, but it leads into an Indic tangent, and its account of the spagyric art itself rests on general background rather than cited primary sources."
+        }
+      ]
+    },
+    {
+      "pair": "q16-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers quote the spagyric separation passage accurately (Sendivogius p.274 and Paracelsus p.335), and X's Rhumel claim matches p.304; X's Mylius quote cites p.1326, which was not provided, so it is not counted against X. X stays closer to the spagyric sources, while Y wrongly equates Mercury with 'phlegm', which the cited page lists as a separate product, and spends space on a Rasashastra aside and a broken link."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers quote the separation-of-vegetables passage accurately (Paracelsus p.335 / Sendivogius p.274), and Y adds a well-supported Rhumel point on dissolving gold gently and separating 'pure from the impure'; Y's Mylius quote cites p.1326, which was not among the pages given. X spends space on a loosely related Indic digression and links to a book not in the collection, so Y covers spagyric art more directly with more relevant sources."
+        }
+      ]
+    },
+    {
+      "pair": "q17-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both quote the Latin of verse 2, which matches the translation on the cited Tablet page 1, and neither misstates a page that was provided. Y also gives a faithful English translation and an accurate account of how the text was found, while X repeats its opening paragraph and adds an unsupported '1541 edition' detail; Y's one dead link counts only slightly against it."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers quote the same Latin verse, and it agrees with the Page 1 translation and the Latin notes in the Theatrum chemicum page; their other Page 1 claims are supported too. X gives the full English rendering clearly, while Y repeats its opening paragraph and adds an unsupported '1541 edition' detail, though X's link to a missing book record is a minor flaw."
+        }
+      ]
+    },
+    {
+      "pair": "q18-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Cites Steganographia p.342 for Trithemius's 'alphabets of the Normans, the ancient Franks, and the Secret Alphabet of Honorius of Thebes'; that page covers only invisible inks and the dermatic method and names none of these alphabets."
+          },
+          "reason": "Answer X's claims about Agrippa's three scripts and its quotation from p.464 all match the cited pages. Answer Y attributes to Steganographia p.342 a list of alphabets the page never mentions, which is a grounding failure, though its other citations hold up."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Trithemius p.342 for alphabets 'of the Normans, the ancient Franks, and the Secret Alphabet of Honorius of Thebes', but that page covers invisible inks and Dermatic writing and names none of these alphabets.",
+            "A": ""
+          },
+          "reason": "The cited pages support Y's claims about the three Agrippa scripts, its blockquote from p.464 and the Euphrates note on p.319, and Y also covers the Theban alphabet, the nine-chambers/Pigpen cipher and della Porta. X attributes to Trithemius p.342 a list of alphabets that page does not contain."
+        }
+      ]
+    },
+    {
+      "pair": "q19-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "B",
+      "j3": "tie",
+      "final": "tie",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers rest on Ficino's p.666 letter, and the parts of their quotations that cannot be checked fall in page text that is cut off, so neither has a clear grounding failure; X does stretch p.159 when it says singing was 'considered superior to instrumental music'. Y's Kircher love-sickness claim matches p.462 closely, and its Fludd octave-health passage answers the medical question more directly than X's tarantism quotation, which goes beyond the visible page text."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers build on Ficino's spiritus theory with plausible quotations from page 666, but Y grounds that mechanism in Three Books on Life p.159, which the page supports. It also answers the cure question more directly with Kircher's tarantism chapter from Phonurgia Nova p.238, whereas X leans on a Fludd 'healthy life' quotation that the retrieved p.1007 text only partly supports."
+        },
+        {
+          "win": "tie",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers rest on Ficino p.666 quotes, and Y's Fludd octave quote, that fall in the cut-off part of the pages, so they cannot be checked; what is visible supports X's Kircher tarantism passage and Y's Kircher love-sickness cure. X covers the reader's question more directly with tarantism and David's lyre, while Y adds Fludd's view of health as an octave, so overall they come out roughly equal."
+        }
+      ]
+    },
+    {
+      "pair": "q20-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Charles p.15 (a table of contents) for the Watchers details (Semyaza, Azazel, Hermon, metallurgy, cosmetics). Attributes the phrase 'fragmentary survival of an entire literature' to 1 Enoch Ethiopic p.39, but that phrase is on Dillmann p.46. Cites Milik p.16 for James Bruce, Laurence, Charles and the Essenes, which that page does not mention.",
+            "A": ""
+          },
+          "reason": "Y's quotes and claims match the pages it cites: Charles p.82 for the Watchers' descent and Henoch p.38 for Azazel, Semyaza and Armaros. X gives a broader overview, but several of its page citations do not support what is attributed to them."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Cites Charles p.15 (a table of contents) for the Watchers/Nephilim/forbidden-arts/Flood paragraph, which that page doesn't support; also puts the phrase 'fragmentary survival of an entire literature' on 1 Enoch p.39, but it actually appears on Dillmann p.46, and it cites Milik p.16 for James Bruce and the Essenes, which that page doesn't mention"
+          },
+          "reason": "The given pages back up X's quotations and claims about the Watchers' oath and the forbidden arts (Charles p.82, Henoch p.38). Y gives a broader overview of the three books of Enoch, but several of its page citations don't support what they're cited for."
+        }
+      ]
+    },
+    {
+      "pair": "q21-AA",
+      "other": "A2",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A2": true,
+            "A": false
+          },
+          "why": {
+            "A2": "Cites Oud Holland p.299 for Oldenburg having 'accompanied Monconys to visit Kuffler and confirmed the authenticity of the inventions', but that page is about the submarine and says nothing of this.",
+            "A": ""
+          },
+          "reason": "X quotes Monconys's primary description (p.52) usefully, but one of its claims is attributed to a page that does not support it. Y's claims about the U-tube and lever mechanism, Monconys's drawings, the Kuffler manuscript and Boyle all match the cited Jaeger pages."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "A2": true
+          },
+          "why": {
+            "A": "",
+            "A2": "Cites Oud Holland p.299 for 'Henry Oldenburg... accompanied Monconys to visit Kuffler and confirmed the authenticity of the inventions'; that page is about Drebbel's submarine air and does not mention Oldenburg."
+          },
+          "reason": "Y quotes Monconys's own description accurately and has more primary-source detail, but it attributes the Oldenburg claim to a page that does not support it. X's cited claims about the U-tube, lever and lid, the Kuffler manuscript, Monconys's 1663 visit and Boyle all match the Jaeger pages, so X wins on grounding."
+        }
+      ]
+    },
+    {
+      "pair": "q21-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Names the son-in-law 'Augustus Kuffler', but the page gives only 'A. Kuffler' (Abraham in the genealogy); calls the furnace 'a circulation oven about two feet square', which p.90 says of the bread ovens; says Jaeger has Digby/Boyle 'observed the Kuffler family's demonstrations', which the page does not say."
+          },
+          "reason": "Answer X's mechanism (alcohol, mercury U-tube, lever, lid) and its witnesses (Monconys in 1663, the Kuffler manuscript, Boyle in 1660) match pp. 88–90 closely. Answer Y covers more, including the air-retort version, Digby and the 1634 patent, but it misnames Kuffler and gives the bread oven's description to the furnace."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Names Drebbel's son-in-law 'Augustus Kuffler', but Jaeger's pages give 'A. Kuffler', and the genealogy page shows Abraham Kuffler. It also presents the bread oven's 'circulation oven about two feet square' as Monconys's description of the regulated furnace, and its 'partially inside the furnace and partially outside' U-tube detail is not on Jaeger's pages.",
+            "A": ""
+          },
+          "reason": "Y's account of the mechanism, of Monconys's 1663 visit, of the Cambridge Kuffler manuscript and of Boyle's 1660 remark matches Jaeger pp. 88–90, and it links those exact pages. X gets Kuffler's name wrong, mixes up the two kinds of oven, and gives no page links for its Jaeger material."
+        }
+      ]
+    },
+    {
+      "pair": "q22-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "tie",
+      "j3": "A",
+      "final": "A",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "The block quote from vol. 103 p.505 goes past the page text, which ends at 'it is that self'; the part from 'meaning of non-existence... no permanent entities' is not on the page given. It also cites vol. 80 p.143 for 'Emptiness of Emptiness... merely a conceptual tool', but that page does not discuss śūnyatā-śūnyatā.",
+            "A": "Its bullet on 'Emptiness of Emptiness' cites vol. 102 p.330, which never mentions śūnyatā-śūnyatā. Its bullet on 'Internal Emptiness... sense faculties' cites vol. 108 p.499, which only covers external and internal-external emptiness."
+          },
+          "reason": "Both answers attribute some bullet-point claims to pages that do not support them, but every quotation in Y matches its cited page, while X's main quotation goes past its page. Y also answers the request directly with an accurate, well-linked core passage on emptiness as dependent origination."
+        },
+        {
+          "win": "tie",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites vol. 102 p.330 for 'Emptiness of Emptiness (śūnyatā-śūnyatā)', but that page never discusses it; the 'Internal Emptiness … sense faculties' gloss is also only loosely supported by vol. 108 p.499.",
+            "B": "Cites vol. 80 p.143 for 'Śūnyatā-śūnyatā … merely a conceptual tool', but that page covers other types of emptiness and does not support this claim."
+          },
+          "reason": "Both answers give accurate block quotes with page links (X: vol. 102 p.330 and vol. 108 p.499; Y: vol. 103 p.505 and vol. 94 p.571), and each attaches one bullet to a page that doesn't support it. They answer the request about equally well, so neither clearly wins."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Cites vol. 80 p.143 for 'Emptiness of Emptiness… merely a conceptual tool', but that page never discusses śūnyatā-śūnyatā. The vol. 103 p.505 blockquote also runs past where the given page text ends ('it is that self').",
+            "A": "Cites vol. 102 p.330 for 'Emptiness of Emptiness', but that page does not discuss it. Internal emptiness is cited to vol. 108 p.499, which starts with external emptiness and does not define internal emptiness."
+          },
+          "reason": "Both answers give real, linked Tengyur passages on emptiness, and both have minor misattributed bullet citations. All of Y's blockquotes can be checked word for word against the given pages, while part of X's main quotation goes beyond the page text shown, so Y is a little better grounded."
+        }
+      ]
+    },
+    {
+      "pair": "q23-AB",
+      "other": "B",
+      "j1": "tie",
+      "j2": "B",
+      "j3": "tie",
+      "final": "tie",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "tie",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "\"Pelloutier quotes Pomponius Mela, stating that the nobility among the Agathyrsi were distinguished by 'broad, dyed, and denser marks'\": on the page this quote comes from Ammianus Marcellinus, and it is on page 338, not the cited 339.",
+            "B": "\"Scribonius Largus notes that Assyrians were 'punctured with certain marks'\": on the page this is Rhodius's commentary quoting Lucian, not Scribonius; it also links the Agathyrsi quote to 'sources like Pomponius Mela' when the page gives it to Ammianus."
+          },
+          "reason": "Both answers are mostly well grounded, and each misattributes one quoted source. X has more ethnographic accounts (Picart, Léry, Donnelly, Pliny) and Y has the accurate della Porta tattooing recipe and the Igorot account, so neither serves the reader clearly better."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": true
+          },
+          "why": {
+            "B": "",
+            "A": "\"Pelloutier quotes Pomponius Mela, stating that the nobility among the Agathyrsi were distinguished by 'broad, dyed, and denser marks'\": on p.338 this quote is from Ammianus Marcellinus, not Mela, and Y cites p.339 for it"
+          },
+          "reason": "Both answers are well sourced, and Y draws on more works (Pliny, Donnelly, Picart, Léry). X wins because every check against the given pages holds up (Porta, Scribonius, the Igorot account, Pelloutier), while Y credits the Agathyrsi quote to Mela when the page shows it is from Ammianus."
+        },
+        {
+          "win": "tie",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "The cited pages support nearly all claims in both answers, and both make the same minor slip of crediting Ammianus's 'broad, dyed, and denser marks' to Pomponius Mela; X adds good Picart, Léry, Donnelly and Pliny material, while Y adds an accurate della Porta quotation and the Igorot account. Both answer the question with relevant linked sources and the same illustration, so neither clearly serves the reader better."
+        }
+      ]
+    },
+    {
+      "pair": "q24-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "B",
+      "j3": "A",
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers are well grounded, though X's Mainz blockquote, cited to Minor Art p.190, opens with wording ('I hear a larger chelys') that comes from Musurgia p.962; this is translation drift of the same passage, not an invention. Y's quotes from Kircher p.181 and Agrippa p.209 match their pages word for word, and Agrippa on star-tuned music as natural magic answers the question more directly than X's 19th-century Keely material."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers are well grounded: X's Kircher p.181 and Agrippa p.209 quotes match their pages, and Y's Kircher p.190, Keely p.397 and Schott p.227 claims are supported, though Y's Mainz quote blends wording from the parallel Musurgia/Magnes passage. Y answers 'what books' more directly, with a linked list of works (Kircher, Fludd, Schott, Kepler) plus Keely, so it serves the reader slightly better."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers are well grounded. X's lute quote mixes wording from Musurgia p.962 into a quote cited to p.190, though its content is on p.190; Y's quotes from Kircher p.181 and Agrippa p.209 are exact and closely tied to the theme of resonance as magic, so Y is slightly stronger."
+        }
+      ]
+    },
+    {
+      "pair": "q25-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Cites Vignay p.154 for 'The King's Pawn often represented merchants, while the Rook's Pawn represented farm laborers', but the page mentions only laborers and smiths, not merchants or a King's Pawn; tavern-keepers come from a different page (Cessolis p.82).",
+            "B": ""
+          },
+          "reason": "Y's al-Biruni quotation matches pp.239–240, and its Xiangqi and shatranj claims are supported by the Sancai Tuhui and Book of Chess pages; it also covers more of the game's history (Indian, Persian, Chinese and European). X is mostly grounded but adds unsupported detail to its p.154 citation and is narrower on origins."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "X traces the history more completely, from al-Biruni's Indian four-player game through shatranj and Chinese xiangqi to Alfonso X, and its blockquote matches the Alberuni pages closely. Y is also well grounded but spends most of its length on Cessolis's moral allegory, which leaves the reader's broad history question less fully answered."
+        }
+      ]
+    },
+    {
+      "pair": "q26-AA",
+      "other": "A2",
+      "j1": "A2",
+      "j2": "A2",
+      "j3": null,
+      "final": "A2",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A2",
+          "g": {
+            "A": false,
+            "A2": false
+          },
+          "why": {
+            "A": "",
+            "A2": ""
+          },
+          "reason": "Y's main blockquote ('Adapted partly to the eyes and understanding... with 50 musical fugues... of three voices... seen, read, meditated upon, understood, distinguished, sung, and heard') matches the given page 15 of the English MS closely; it calls the title page a 'preface', a minor slip. X's quote and its claims about the fugue voices cite Atalanta Fleeing pp. 7, 8 and 13, none of which were given, so nothing in X can be checked, while Y gives verified grounding on the emblem, epigram and three-voice fugue structure the reader asked about."
+        },
+        {
+          "win": "A2",
+          "g": {
+            "A2": false,
+            "A": false
+          },
+          "why": {
+            "A2": "",
+            "A": ""
+          },
+          "reason": "Answer X's main blockquote ('Adapted partly to the eyes and understanding... sung, and heard not without exceptional delight') matches the title page given (page 15) closely; its other citations point to pages that were not given. Answer Y's quotes and claims come only from pages not given (7, 8, 13), so none can be checked, and its mapping of the voices to Mercury, Sulfur and Salt is more speculative."
+        }
+      ]
+    },
+    {
+      "pair": "q26-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "B",
+      "j3": "A",
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Page 15 for 'two voices correspond to a single melody while a third provides the foundation'; the page only says 'three voices, of which two may correspond to one single melody', with nothing about a third voice as foundation.",
+            "A": ""
+          },
+          "reason": "Both answers cover the eyes/ears/mind design and the three-voice fugues, but X attributes a detail to page 15 that the page does not support, and Y's quotations and claims rest on pages not shown, so no failure can be counted against them. Y also adds more substance, such as the 'asses at the lyre' point and Merian's engravings."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Answer Y's quotations ('adapted partly to the eyes... ears and recreation of the mind, with 50 musical fugues'; 'seen, read, meditated upon, understood... sung, and heard not without exceptional delight') match the English MS title page it cites. None of Answer X's cited pages (7, 8 and 13 of another edition) are among the pages given, so its quotations and its account of the voices can't be checked; both answers address the question, but Y is better shown to rest on its sources."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers explain the eyes/ears/mind design and the 50 three-voice fugues, and their quotations are either on the given page 15 or cited to pages not supplied. X stretches page 15 by saying a third voice 'provides the foundation' and adds less well-supported emblem details, while Y covers Maier's own reasons (recreation of the mind, 'asses at the lyre') more fully, so Y is slightly better."
+        }
+      ]
+    },
+    {
+      "pair": "q27-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites Ibn Tufayl p.138 ('voluntary Agent of ultimate perfection') as the Ikhwan al-Safa's view; attributes 'not use human effort to assist Heaven' and 'Heavenly Leveling' to p.131, which contains neither; the 'Lesser/Greater Copy' and 'Perfect Man' claims about the Ikhwan are unsupported",
+            "B": "Quotes 'fetters of nature and the darkness of the bodily world' from Propaedeutik p.102, which only says the soul 'longs to ascend into the world of the spheres'"
+          },
+          "reason": "Y's Zhuangzi quotations (pp.131, 112, 55) and its Ikhwan macrocosm citation (Dieterici p.46) all match their pages, leaving one embellished phrase. X misattributes Ibn Tufayl's text to the Ikhwan and assigns several claims to a page that does not contain them."
+        },
+        {
+          "win": "B",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Attributes the quoted phrase \"fetters of nature and the darkness of the bodily world\" to Propaedeutik p.102, but that page does not contain it.",
+            "A": "Uses Ibn Tufayl p.138 (\"voluntary Agent of ultimate perfection\") as evidence for what the Ikhwān al-Ṣafāʾ believed, though it is a different author. Attributes the quoted \"divine mechanism\" to Propaedeutik p.136, which does not contain it. Credits \"Heavenly Leveling\" (Tian Ni) to Guo Xiang p.131, which does not mention it."
+          },
+          "reason": "Answer X's Zhuangzi quotations (pp.131, 112, 55) and its Dieterici macrocosm claim all match the pages, and it has only one invented phrase. Answer Y has several misattributions, the worst being Ibn Tufayl presented as the Ikhwān's view."
+        }
+      ]
+    },
+    {
+      "pair": "q28-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Attributes the Roman Senate's \"wholesomeness of silence\" to Schneider page 3, but that phrase appears only on page 23.",
+            "A": "Says Atkinson p.177 treats \"shades of tone that are not vocalized\" as an inner ear, but the page is about musicians hearing tones the untrained ear misses. It also says Pythagoras imposed silence \"to foster internal reflection,\" which page 3 does not say."
+          },
+          "reason": "X answers the question directly with the classic Augustine/Ambrose passage and Quintilian on learning by heart in silence, all quoted accurately; its one slip is a minor page mix-up. Y has only one real silent-reading example (Sei Shōnagon), pads the rest with loosely related material, and misreads the Atkinson page."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Atkinson p.177 is said to discuss detecting 'shades of tone that are not vocalized' through 'the mind's internal ear', but the page is about musicians hearing tones the untrained ear cannot detect. The Pythagoras gloss 'to foster internal reflection rather than outward display' is also not on p.3.",
+            "B": "Minor: the Senate's 'wholesomeness of silence' comes from p.23, while the answer cites p.3."
+          },
+          "reason": "Y answers the question with the classic Augustine–Ambrose passage on silent reading and Quintilian's discussion of memorizing in silence, and every quotation matches its page. X has only one real silent-reading example (Sei Shōnagon), pads the rest with loosely related material, and misrepresents the Atkinson page."
+        }
+      ]
+    },
+    {
+      "pair": "q29-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites Ars Medica p.182 for yellow-bile dreams of \"fire, lightning, or fighting\", but the page mentions only a lit fire. It also gives p.189 for black bile as \"gloomy, foul-smelling places\", while that page assigns those images to wind and putrefaction.",
+            "B": "Cites De insomniis p.16 for Galen listing dreams \"alongside pulse, urine, and skin eruptions\" to identify \"individual nature\"; that page says none of this. It also attributes \"precept of art\" to Artemidorus p.37, but the phrase comes from De insomniis p.16."
+          },
+          "reason": "X's main quotations from Galen p.189 and the Sushruta pages match the text closely, and its errors are small embellishments. Y misattributes a central claim and a quoted phrase to the wrong pages, though its Albertus and Artemidorus material is well grounded otherwise."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites De insomniis p.16 as Galen listing dreams 'alongside pulse, urine, and skin eruptions' to identify 'individual nature'; the page does not mention Galen, pulse, urine or that phrase.",
+            "A": ""
+          },
+          "reason": "Y's blockquotes from Galen p.189 and Sushruta p.271 match the page text closely, and it adds the Galenic warning that anxiety can also cause dreams, from Ars medica p.182. X reads the Albertus and Artemidorus pages correctly, but it misattributes the De insomniis page and puts words on it that are not there."
+        }
+      ]
+    },
+    {
+      "pair": "q30-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Attributes to Fictitious Stories p.184 the claim that beans 'contained the same substance as human heads' or 'would appear like a human child'; the page only says a peeled bean resembles genitals and that a boiled bean exposed to the moon produces blood.",
+            "B": "Blockquote 'The Pythagorean view on abstinence from beans signifies that one must abstain from the Republic... for the votes of the ancients were contained in beans' attributed to Beroaldo p.212 does not appear on that page; Taylor p.12 quote is real but does not support the bean/vital-breath claim."
+          },
+          "reason": "Both answers have a grounding failure, but Y's is an invented blockquote while X's is a distorted paraphrase, and X's other citations (Hierocles pp.178/181, Pausanias p.252) are accurate. X also stays closer to the bean question, while Y wanders into wool garments and passages that do not mention beans."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Blockquote attributed to Beroaldo p.212, 'The Pythagorean view on abstinence from beans signifies that one must abstain from the Republic... votes of the ancients were contained in beans', is not on the page, which only says Pliny, Varro, Gellius and Cicero explain the condemnation. The Taylor p.12 quote is real but has nothing to do with beans.",
+            "A": "Cites p.184 for beans having 'the same substance as human heads' and, when buried and dug up, looking 'like a human child'. The page only mentions resemblance to genitals and producing blood after boiling and exposure to the moon."
+          },
+          "reason": "X invents a block quotation for the political reading and uses an off-topic quote to support the soul claim, while Y's error is a smaller embellishment. Y's other citations (Hierocles pp.178 and 181, Frazer on Herodotus) are well grounded and on topic."
+        }
+      ]
+    },
+    {
+      "pair": "q31-AA",
+      "other": "A2",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "A2": true
+          },
+          "why": {
+            "A": "",
+            "A2": "Says the Egyptian ovens account (p.1) concerns 'a technology Kuffler was attempting to commercialize', which that page does not support; also says Monconys 'was shown' the perpetual motion device, but p.50 says only that these stories were 'confirmed to me'."
+          },
+          "reason": "X quotes the line where Monconys says what he actually saw ('a furnace that I have seen... 280 pounds of bread'), and the quote matches p.51; its other claims fit pp.50–51 and Jaeger p.88, apart from small slips such as calling the bread oven 'self-regulating'. Y mainly quotes things Monconys was told rather than saw, says he was shown devices that p.50 only reports as confirmed stories, and adds an Egyptian-ovens claim about Kuffler that its cited page does not support."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A2": true,
+            "A": false
+          },
+          "why": {
+            "A2": "Says the 'two feet square' bread oven used a thermostat 'regulator', but page 51 gives the regulator to a separate 'philosopher's furnace'. Claims Kuffler was 'attempting to commercialize' the Egyptian hatching ovens, which the cited page does not support. Its main quote is hearsay ('confirmed to me'), though X presents it as devices Monconys was shown.",
+            "A": ""
+          },
+          "reason": "Y quotes exactly what Monconys says he saw ('a furnace that I have seen'), and its claims about Oldenburg, the seawater still and Jaeger's thermostat description all match the pages. X merges two different furnaces and adds a commercialization claim no page supports."
+        }
+      ]
+    },
+    {
+      "pair": "q31-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "Both answers quote page 50 accurately, but only Y answers what Monconys actually saw: it accurately quotes his account of the bread furnace on page 51 and mentions the seawater still, and its account of the regulated oven is supported by Jaeger p.88. X stops at page 50, which covers inventions Monconys was told about rather than ones he saw; Y's two broken collection links are a minor flaw."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers quote Monconys accurately from pp. 50–51, but only X reports what he actually saw at Kuffler's house: the bread oven (quoted verbatim from p. 51) and the self-regulating furnace, which Jaeger p. 88 supports. Y quotes the arrival passage and Drebbel stories he was only told about, and leaves out the furnaces, so it doesn't answer 'what did he see'. X's two broken collection links are a minor flaw."
+        }
+      ]
+    },
+    {
+      "pair": "q32-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "A",
+      "j3": "B",
+      "final": "B",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Cites Kabbalistic ilan (Gaster Amulet 75) p.2 for Binah = 'YHWH Elohim' and Yesod = 'El Chai'. The fragmentary ilan page names neither sefirah, and for Binah Kabbala Denudata gives just 'YHWH'.",
+            "B": ""
+          },
+          "reason": "Both answers explain the Tree correctly, and X's Vital quotations are accurate and valuable, but X pins specific divine-name claims on a damaged ilan page that does not support them. Y's checkable citations hold up: the Ginsburg list, the Adam Kadmon mapping and the Meʾirat ʿEnayim diagram."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Cites Ginsburg p.25 for the 'ten circles connected by twenty-two paths' and glosses like 'first flash of intuition', but that page is only a list of names; it also cites Meʾirat ʿEnayim p.5 for Ein Sof 'reveals itself', which that page doesn't say.",
+            "A": "Cites Gaster Amulet 75 p.2 for Binah as 'source of judgments' (YHWH Elohim), Tiferet = YHWH and Yesod = El Chai, but that damaged ilan page supports none of these; the judgments line comes from Vital p.47."
+          },
+          "reason": "Both misattribute some details, but Y's Vital quotations (p.47, p.308) match the pages exactly, and its Kircher and Kabbala Denudata citations back up the divine names, the pillars and the 22 paths. X repeats its opening, and more of its claims rest on pages that don't support them."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Cites Gaster ilan p.2 for 'Binah... associated with YHWH Elohim', Tiferet = YHWH and Yesod = El Chai, but that page supports none of these. Its own cited Kabbala denudata table gives Binah's name as YHWH alone.",
+            "B": ""
+          },
+          "reason": "X's Vital quotations and Kabbala denudata list are accurate, but it attributes divine names to the damaged ilan page, which doesn't support them, and its Binah name contradicts the table. Y's checkable claims (Me'irat Enayim diagram, Ginsburg's list of Sefirot, Ginsburg's Adam Kadmon body mapping) all match the pages, so it is the safer answer to the question."
+        }
+      ]
+    },
+    {
+      "pair": "q33-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Jastrow p.357 for the gods writing on the organs and for omens being used 'for state decisions, such as choosing priestesses or deciding whether to go to war'. That page only describes the priest checking the parts of the animal for signs.",
+            "A": ""
+          },
+          "reason": "Y's quotations from Šulgi, Kornmann and Dumuzid's Dream all match the retrieved pages, while X attributes details to Jastrow p.357 that the page does not contain. Both answer the question in a similar way, but Y's sources are better supported and more varied."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Cites Jastrow p.357 for gods writing on organs and omens used 'for choosing priestesses or deciding whether to go to war'; that page only describes the priest checking signs on the animal."
+          },
+          "reason": "Both answers quote Šulgi correctly, and X's Kornmann and Dumuzid citations match their pages. Y attributes claims to Jastrow p.357 that the page does not support, and its opening paragraph says the same thing twice."
+        }
+      ]
+    },
+    {
+      "pair": "q34-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "A": false,
+            "B": true
+          },
+          "why": {
+            "A": "",
+            "B": "Attributes to Latin Works p.104 a 'Thirty Seals' system with grids, concentric wheels and Llull's influence, none of which that page mentions"
+          },
+          "reason": "X's quotations from Bruno p.164, Fludd p.383 and the Llull/Agrippa p.248 page all appear on the cited pages, and it gives a broad, well-linked overview, though the whole answer is repeated in a duplicated notebook section. Y offers a useful Margarita mnemonic list, but it claims more for p.104 than the page supports and leaves a placeholder where a quotation was removed."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Answer X cites p.104 for Bruno's 'agents' (living figures who act out scenes), a 'Thirty Seals' system of grids and concentric wheels, and Llull's influence. That page has none of these; it mentions only conceptacula, houses and a courtyard.",
+            "A": ""
+          },
+          "reason": "Answer Y's quotations from the Bruno p.164, Fludd p.383 and Llull/Agrippa p.248 pages are all on the given pages, though its Bruno quote opens with words from the translator's note, not Bruno. Answer X loads unsupported claims onto Bruno p.104 and leaves a removed-quote placeholder, while Y's main flaw is a duplicated 'research notebook' section, which is only a matter of style."
+        }
+      ]
+    },
+    {
+      "pair": "q35-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "B",
+      "j3": "A",
+      "final": "A",
+      "gA": false,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Says the Green Lion is the \"root, mother, and main source\" from which the universal tincture is drawn, citing Fleischer p.8. That page says this of the philosophers' mercury, as the source of all perfect metals, and never mentions the green lion.",
+            "A": ""
+          },
+          "reason": "Y's blockquote from Fleischer p.7 matches the page text closely, and its Ripley Scroll citations point to a page that was not provided. X stretches Fleischer p.8 into a statement about the Green Lion that the page does not make; Y's main flaw is that the whole answer is printed twice, which is only a style problem."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers quote Fleischer accurately, but neither page mentions the green lion, so both rely on equating the lion with philosophical mercury. Answer Y is preferred because it covers more meanings of the symbol and cites an extra page, while Answer X repeats its whole text twice and leans on Ripley Scroll citations that are not among the pages given."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Cites Fleischer p.8 for the Green Lion being the 'root, mother, and main source' from which the universal tincture is drawn. The page says this of the philosophers' mercury as the source 'of all perfect metals' and never mentions the green lion.",
+            "A": ""
+          },
+          "reason": "Y quotes Fleischer p.7 accurately, while X misapplies the p.8 phrase to the Green Lion and changes what it is the source of. Y repeats its whole answer twice, but that is a style flaw and does not outweigh X's grounding error."
+        }
+      ]
+    },
+    {
+      "pair": "q36-AA",
+      "other": "A2",
+      "j1": "A2",
+      "j2": "A2",
+      "j3": null,
+      "final": "A2",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A2",
+          "g": {
+            "A2": true,
+            "A": true
+          },
+          "why": {
+            "A2": "Cites Helmont p.665 for the 'six digestions', but that page does not discuss them; the blockquote cited to Pharmacandi p.14 also joins in 'the Artist of Nature begins to separate', which comes from p.17",
+            "A": "Cites Suchten p.99 for the Archeus as 'inner alchemist (Vulcanius)' who 'separates the pure from the impure', but the page says neither; also cites Helmont p.665 for the 'six digestions', which that page does not support"
+          },
+          "reason": "Both answers quote the Suchten and Pharmacandi passages broadly correctly, and both make one or more unsupported page attributions. X is coherent and also uses the relevant Theatrum Chemicum p.280 passage, while Y repeats most of its content twice and includes a caption with no image."
+        },
+        {
+          "win": "A2",
+          "g": {
+            "A": true,
+            "A2": true
+          },
+          "why": {
+            "A": "Cites Suchten p.99 for the Archeus as 'inner alchemist (Vulcanius)' in the stomach that separates pure from impure, but p.99 only says it makes flesh from bread and blood from wine. Cites Helmont p.665 for the 'six digestions', which that page does not discuss.",
+            "A2": "Cites Helmont p.665 for the 'six digestions', which that page does not support. The Pharmacandi p.14 quote also adds 'the Artist of Nature begins to separate', which actually comes from p.17."
+          },
+          "reason": "Y's quotes are accurate, and it adds the Theatrum Chemicum p.280 passage, which really does describe the Archeus as an internal chemist at its furnace. X repeats itself, contains a leftover caption for an image it removed, and misattributes its opening claims to Suchten p.99."
+        }
+      ]
+    },
+    {
+      "pair": "q36-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "A",
+      "j3": "B",
+      "final": "B",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites Suchten p.99 for the Archeus as 'inner alchemist (Vulcanius)' who 'separates the pure from the impure'; that page only says it makes flesh from bread and blood from wine, and the Vulcan image comes from Pharmacandi p.14.",
+            "B": "Cites Suchten p.97 for weakened Archeus causing 'accumulation of Tartar (stony deposits)... cause of many diseases'; the page only mentions the book De Tartaro and fortifying the stomach to digest."
+          },
+          "reason": "Both answers quote their sources accurately but stretch some of their citations. Y adds Bacon's direct account of Paracelsus's 'internal Craftsman' separation theory, which is accurately quoted, while X repeats its whole body twice and pins unsupported claims on its opening citation."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Cites Bacon p.1220 for the Archeus as the 'internal alchemist residing in the stomach' that separates food's essence 'from its poisonous dross'; that page does not mention the stomach or poison. It also presents Bacon's mockery of Paracelsus as Paracelsus's own account, and cites Suchten p.97 for Tartar 'stony deposits', which that page does not mention.",
+            "A": "Cites Suchten p.99 for the Archeus as 'inner alchemist (Vulcanius)... stationed in the stomach'; that page has neither Vulcan nor the stomach (the Vulcan image is on Pharmacandi p.14)."
+          },
+          "reason": "Both answers overreach in what they attribute to cited pages, but X leans on Bacon, a hostile critic, as its main source and misreads that page, while Y quotes Paracelsus's own 'master Vulcan' passage and the Suchten passage accurately. Y repeats a large block of its text, but that is only a style flaw."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Cites Suchten p.99 for the Archeus as 'inner alchemist (Vulcanius) stationed in the stomach' that 'separates the pure from the impure', but that page only says it makes flesh from bread and blood from wine; cites Helmont p.665 for the Archeus 'transforming blood into living tissue', which that page does not say.",
+            "B": "Cites Bacon p.1220 for the Archeus 'residing in the stomach' and separating essence 'from its poisonous dross', but the page mentions neither the stomach nor poison; cites Suchten p.97 for Tartar as stony deposits that cause disease, which the page does not support."
+          },
+          "reason": "Both answers make claims their cited pages don't support, but Y adds an accurate, relevant quotation from Bacon's account of Paracelsus's 'internal Craftsman' that separates food into the body's parts. X repeats most of its own content twice, and its errors are more central to its argument."
+        }
+      ]
+    },
+    {
+      "pair": "q37-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": true,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": true
+          },
+          "why": {
+            "B": "",
+            "A": "Cites Leibniz Monadology p.49 as saying, in his letters to Bernoulli, that 'la naturaleza proviene del infinito y va hacia el infinito'; the page only cites a Bernoulli letter about undivided corpuscles."
+          },
+          "reason": "X's claims about Kircher's ∞ as a shorthand sign for 'mil' and about Swedenborg's endless multiplication are backed by the retrieved pages. Y covers more, including Bernoulli and the word's origin, but it puts an unsupported claim on a cited Leibniz page."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Cites Leibniz Monadology p.49 for Leibniz saying 'la naturaleza proviene del infinito y va hacia el infinito' in his letters to Bernoulli, but that page is about atoms being divisible and the unit of substance, not infinity.",
+            "B": ""
+          },
+          "reason": "Y's account of how CIƆ became the ∞ sign 'in shorthand' (βραχυγραφικῶς) matches Kircher's Arithmologia pp.51–52, and its Swedenborg point about endless multiplication matches the retrieved page. X attributes a claim to a Leibniz page that does not support it, and it gives less on how the symbol developed from Kircher's text."
+        }
+      ]
+    },
+    {
+      "pair": "q38-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "A",
+      "j3": "B",
+      "final": "B",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "A": true,
+            "B": false
+          },
+          "why": {
+            "A": "Attributes to Manly P. Hall Ms 102 p.50 an explanation that vapour turns into air and fire and that small symbol differences mark degrees of 'subtilization'; that page has no text that supports it.",
+            "B": ""
+          },
+          "reason": "Y answers the question with Kriegsmann's actual explanation: the quote on p.32 and the lines-versus-surfaces passage on p.33 both match the page text, though Y glosses over the fact that Kriegsmann assigns the triangle to fire and the circle to water. X cites Kriegsmann's dissent correctly but makes an unsupported claim about the Hall manuscript and gives the meaning of the bar with no source."
+        },
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": false
+          },
+          "why": {
+            "B": "Says Kriegsmann explains the triangle was chosen for 'the elements' generally and implies his 'lines' for air and earth explain the barred triangles; p.32-33 actually give the triangle to fire, the circle to water and plain lines to earth and air. The Naudé p.10 page does not show the four element symbols.",
+            "A": ""
+          },
+          "reason": "Y reports Kriegsmann's p.33 dissent accurately: he calls the inverted triangle for water a scribe's mistake for a circle and rejects the usual earth and air signs. X misreads Kriegsmann's scheme as supporting the triangle-and-bar system, and its Naudé page does not show what it claims."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Y answers the question directly with Kriegsmann's own explanation, and its pp.32–33 quotations are supported: the triangle is the simplest surface, and air and earth are marked with lines while fire and water are marked with surfaces. However, Y slightly misreads Kriegsmann's lines as the bars, and its Naudé citation is weak. X correctly reports Kriegsmann's claim that the inverted triangle for water was a scribal mistake, but it leaves out his actual reasoning and pins its main explanation of the bars to a Hall manuscript page that has no text."
+        }
+      ]
+    },
+    {
+      "pair": "q39-AB",
+      "other": "B",
+      "j1": "A",
+      "j2": "A",
+      "j3": null,
+      "final": "A",
+      "gA": true,
+      "gO": true,
+      "readers": [
+        {
+          "win": "A",
+          "g": {
+            "B": true,
+            "A": true
+          },
+          "why": {
+            "B": "Uses the Khunrath p.224 phrase 'band... vernietiger... nieuwe geboorte' for the Ouroboros, but that page is about Sal Sapientiae and never mentions a serpent; the Bosch p.645 'Feniks' link rests only on the two emblems sharing a plate; a leftover placeholder for a removed quotation",
+            "A": "Cites Manly P. Hall Vol. 9 p.172 for 'afsnijden van de staart van de dubbele slang', but the page given has no text to support it"
+          },
+          "reason": "Y bases its answer on Horapollo p.215, which directly supports the Kosmos/scales/shedding-skin reading, and its Libavius vessel claim matches the page. X's main citations are stretched to fit the Ouroboros, and it still shows a leftover placeholder where a quotation was removed."
+        },
+        {
+          "win": "A",
+          "g": {
+            "A": true,
+            "B": true
+          },
+          "why": {
+            "A": "Says the ouroboros in the vessel shows that the spirit 'niet ontsnapt, maar circuleert' and attributes this to Libavius p.53; the page only shows the diagram, credits it to Kuhdorfer and gives no such reading.",
+            "B": "Treats Khunrath p.224 ('BAND... destroyer... New Birth') as a description of the ouroboros, but the page is about the Sal Sapientiae and never mentions the serpent."
+          },
+          "reason": "Both answers stretch their cited pages, but X's Horapollo citation (scales as stars, yearly shedding as renewal) directly supports the symbol's meaning. Y misapplies the Khunrath passage, and its leftover placeholder for a removed quotation and repeated opening paragraph weaken it."
+        }
+      ]
+    },
+    {
+      "pair": "q40-AB",
+      "other": "B",
+      "j1": "B",
+      "j2": "B",
+      "j3": null,
+      "final": "B",
+      "gA": false,
+      "gO": false,
+      "readers": [
+        {
+          "win": "B",
+          "g": {
+            "B": false,
+            "A": false
+          },
+          "why": {
+            "B": "",
+            "A": ""
+          },
+          "reason": "X confirms the book is held and links specific Kybalion pages: both of its quotes match pages 5 and 18, and the Atkinson link is supported by the publisher's catalogue on page 196. Y's claims are supported, but two of its quotes were stripped and left as placeholder text, it opens with an English paragraph in an answer to a Spanish question, and it links no pages."
+        },
+        {
+          "win": "B",
+          "g": {
+            "A": false,
+            "B": false
+          },
+          "why": {
+            "A": "",
+            "B": ""
+          },
+          "reason": "Both answers confirm the 1908 Kybalion is in the collection, and their remaining claims are supported by the pages given. Y gives verified quotations linked to pages 5 and 18 and cites the Yogi Publication Society list on page 196, while X has two removed-quotation placeholders and no page links."
+        }
+      ]
+    }
+  ]
+}

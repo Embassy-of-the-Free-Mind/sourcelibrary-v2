@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { after } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
-import { ObjectId } from 'mongodb';
+import { ObjectId, type Db } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
 import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { isBareGreeting, greetingReply, isKeepalivePing, pingReply, duplicateReply, sameMessage } from '@/lib/embassy/greeting';
 import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/lib/embassy/replay-cache';
-import { chatRequestSchema } from '@/lib/embassy/chat-request';
+import { chatRequestSchema, type ChatRequest } from '@/lib/embassy/chat-request';
 import { threadVisibility } from '@/lib/embassy/thread-visibility';
 import { toUserId } from '@/lib/user-id';
 
@@ -46,56 +46,86 @@ const ANON_DAILY_CEILING = Number(process.env.LIBRARIAN_ANON_DAILY_CEILING) || 5
  *   done       — stream complete
  *   error      — something went wrong
  */
+/**
+ * The anonymous gates, in their original order: the per-IP limit first, so a
+ * visitor already over it never spends a slot of the global ceiling. Returns
+ * the 429 to send, or null when the turn may go ahead.
+ */
+async function anonymousGate(request: NextRequest): Promise<NextResponse | null> {
+  // Shared (Mongo-backed) counter, not the in-memory one: the in-memory
+  // limiter is private to each Vercel instance, so a steady low-rate hitter
+  // fanned across lambdas never trips it — a bot opened 3,106 threads in a
+  // week that way, each a full Gemini turn (#4704). Falls back to in-memory
+  // only when Mongo is slow or down.
+  const rl = await checkRateLimitShared(
+    { name: 'librarian-chat', limit: 5, windowSeconds: 3600 },
+    getClientIp(request),
+  );
+  if (!rl.allowed) {
+    return NextResponse.json(
+      {
+        error: 'You\'ve used your 5 free questions this hour. Sign in (free) to keep talking with the Librarian.',
+        code: 'SIGNIN_REQUIRED',
+      },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+    );
+  }
+  // Global daily ceiling on ANONYMOUS turns, all IPs together — a per-IP cap
+  // is worthless against rotation. Baseline anonymous traffic is a few dozen
+  // turns a day; a ceiling ~10x that never touches real visitors, and when it
+  // does trip the door stays open via free sign-in.
+  const ceiling = await checkRateLimitShared(
+    { name: 'librarian-chat-anon-global', limit: ANON_DAILY_CEILING, windowSeconds: 86400 },
+    'all',
+  );
+  if (!ceiling.allowed) {
+    return NextResponse.json(
+      {
+        error: 'The Librarian\'s free desk is fully booked for today. Sign in (free) to keep talking.',
+        code: 'SIGNIN_REQUIRED',
+      },
+      { status: 429, headers: { 'Retry-After': String(ceiling.retryAfter) } },
+    );
+  }
+  return null;
+}
+
 export async function POST(request: NextRequest) {
+  // Everything before the model call used to run one step after another,
+  // about 1.0 s before the reader saw a thread id (#6904). It now runs in
+  // parallel wherever the steps are independent. Two orderings are kept on
+  // purpose: the rate limits finish before any write and before the model is
+  // called, and the thread and message writes wait for the ownership check.
+  //
   // The Librarian is open to everyone — no login required. Signed-in users get
   // their threads tied to their account; anonymous visitors get ephemeral
   // public threads. We rate-limit anonymous traffic per-IP because this is an
   // expensive agentic endpoint (multiple tool calls, up to maxDuration each).
-  const session = await auth();
+  const bodyPromise = request.json().then(
+    (value: unknown) => ({ ok: true as const, value }),
+    (error: unknown) => ({ ok: false as const, error }),
+  );
+  const [session, db] = await Promise.all([auth(), getDb()]);
   const userId = session?.user?.id ?? null;
 
-  if (!userId) {
-    // Shared (Mongo-backed) counter, not the in-memory one: the in-memory
-    // limiter is private to each Vercel instance, so a steady low-rate hitter
-    // fanned across lambdas never trips it — a bot opened 3,106 threads in a
-    // week that way, each a full Gemini turn (#4704). Falls back to in-memory
-    // only when Mongo is slow or down.
-    const rl = await checkRateLimitShared(
-      { name: 'librarian-chat', limit: 5, windowSeconds: 3600 },
-      getClientIp(request),
-    );
-    if (!rl.allowed) {
-      return NextResponse.json(
-        {
-          error: 'You\'ve used your 5 free questions this hour. Sign in (free) to keep talking with the Librarian.',
-          code: 'SIGNIN_REQUIRED',
-        },
-        { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
-      );
-    }
-    // Global daily ceiling on ANONYMOUS turns, all IPs together — a per-IP cap
-    // is worthless against rotation. Baseline anonymous traffic is a few dozen
-    // turns a day; a ceiling ~10x that never touches real visitors, and when it
-    // does trip the door stays open via free sign-in.
-    const ceiling = await checkRateLimitShared(
-      { name: 'librarian-chat-anon-global', limit: ANON_DAILY_CEILING, windowSeconds: 86400 },
-      'all',
-    );
-    if (!ceiling.allowed) {
-      return NextResponse.json(
-        {
-          error: 'The Librarian\'s free desk is fully booked for today. Sign in (free) to keep talking.',
-          code: 'SIGNIN_REQUIRED',
-        },
-        { status: 429, headers: { 'Retry-After': String(ceiling.retryAfter) } },
-      );
-    }
-  }
+  const gatePromise = userId ? Promise.resolve(null) : anonymousGate(request);
+  const body = await bodyPromise;
+  const parsed = body.ok ? chatRequestSchema.safeParse(body.value) : null;
 
-  const body = await request.json();
-  const parsed = chatRequestSchema.safeParse(body);
+  const now = new Date();
+  // Read-only lookups start alongside the rate limits; none of them writes,
+  // and their results are used only after the gate has passed.
+  const lookups = parsed?.success ? startLookups(db, userId, parsed.data, now) : null;
+  lookups?.catch(() => { /* surfaced by the await below, or moot after a 429 */ });
+
+  const denied = await gatePromise;
+  if (denied) return denied;
+
+  // No parse result only when the body was not JSON: throw as before.
+  if (!parsed) throw body.ok ? new Error('unparsed request body') : body.error;
   if (!parsed.success) {
     const fieldErrors = parsed.error.flatten().fieldErrors;
+    const raw = (body.ok ? body.value : null) as { message?: unknown; history?: unknown } | null;
     // The client renders `error` verbatim as the Librarian's reply, so it must
     // read like a sentence, not a status code. Surface the first real issue.
     const firstIssue = parsed.error.issues[0]?.message;
@@ -103,13 +133,12 @@ export async function POST(request: NextRequest) {
       ? firstIssue
       : 'I couldn\'t read that request. Please refresh the page and try again.';
     try {
-      const db = await getDb();
       await db.collection('embassy_errors').insertOne({
         kind: 'invalid_request',
         fieldErrors,
-        messagePreview: typeof body?.message === 'string' ? body.message.slice(0, 500) : null,
-        messageLength: typeof body?.message === 'string' ? body.message.length : null,
-        historyLength: Array.isArray(body?.history) ? body.history.length : null,
+        messagePreview: typeof raw?.message === 'string' ? raw.message.slice(0, 500) : null,
+        messageLength: typeof raw?.message === 'string' ? raw.message.length : null,
+        historyLength: Array.isArray(raw?.history) ? raw.history.length : null,
         createdAt: new Date(),
       });
     } catch { /* best effort */ }
@@ -120,48 +149,19 @@ export async function POST(request: NextRequest) {
   }
 
   const { threadId, message, history = [], visibility, stream = false, collection = null, lang } = parsed.data;
-  const db = await getDb();
-
-  // Get user display name (anonymous visitors skip the lookup)
-  const user = userId
-    ? await db.collection('users').findOne(
-        { _id: toUserId(userId) as any },
-        { projection: { name: 1, membership: 1 } },
-      )
-    : null;
+  const { user, replay, thread, lastTwo, bareGreeting, keepalive } = await lookups!;
   const displayName = user?.membership?.profile?.displayName || user?.name || 'A visitor';
 
-  const now = new Date();
   let activeThreadId: string;
-  // A bare "hello" gets the desk's welcome, not six searches (see greeting.ts).
-  // The thread it opens is kept but unlisted — there is nothing in it to read.
-  const bareGreeting = isBareGreeting(message);
-  // A keepalive ("ping — daily auth check (automated, ignore)") gets a one-line
-  // acknowledgement and no model call. One client sent twelve of these to one
-  // thread, one a day, each answered with a full turn (#4853).
-  const keepalive = !bareGreeting && isKeepalivePing(message);
   // Set below for an existing thread whose last completed turn had this exact
   // message: a retry loop or a re-posting client. The earlier answer stands.
   let duplicateOfLast = false;
-  // An identical first-turn question answered within the last week is replayed
-  // from that answer — no model call, instant, and the feed keeps one copy of
-  // a canonical question instead of one per asker (see replay-cache.ts).
-  // Only for a fresh thread on the default library; a collection context
-  // changes the search weighting, so those always run the agent.
-  const replay: ReplayableAnswer | null =
-    !threadId && history.length === 0 && !collection && !bareGreeting && !keepalive
-      ? await findReplayableAnswer(db, message, lang, now).catch(() => null)
-      : null;
 
   if (threadId) {
     // Continue existing thread — verify ownership. Signed-in users may only
     // continue their own threads; anonymous visitors may only continue
     // anonymous (creatorId: null) threads, so they can't append to a
     // logged-in user's conversation.
-    const thread = await db.collection('embassy_threads').findOne({
-      _id: new ObjectId(threadId),
-      creatorId: userId,
-    });
     if (!thread) {
       return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
     }
@@ -169,68 +169,68 @@ export async function POST(request: NextRequest) {
 
     // Only when the previous turn completed (an AI message follows the last
     // human one) — a resend after a timeout still runs.
-    if (!bareGreeting && !keepalive) {
-      const lastTwo = await db.collection('embassy_messages')
-        .find({ threadId: new ObjectId(threadId) }, { projection: { authorType: 1, content: 1 } })
-        .sort({ createdAt: -1 })
-        .limit(2)
-        .toArray();
-      duplicateOfLast =
-        lastTwo.length === 2 &&
-        lastTwo[0].authorType === 'ai' &&
-        lastTwo[1].authorType === 'human' &&
-        typeof lastTwo[1].content === 'string' &&
-        sameMessage(lastTwo[1].content, message);
-    }
+    duplicateOfLast =
+      !!lastTwo &&
+      lastTwo.length === 2 &&
+      lastTwo[0].authorType === 'ai' &&
+      lastTwo[1].authorType === 'human' &&
+      typeof lastTwo[1].content === 'string' &&
+      sameMessage(lastTwo[1].content, message);
 
     // Apply the listing toggle to a conversation already under way. It used to
     // be read only in the create branch below, so a reader who turned listing
     // off after saying something personal was silently ignored — the one
     // moment the control most needs to work.
     const desired = threadVisibility(userId, visibility === 'public');
-    if (thread.visibility !== desired) {
-      await db.collection('embassy_threads').updateOne(
-        { _id: new ObjectId(threadId) },
-        { $set: { visibility: desired } },
-      );
-    }
-
-    await db.collection('embassy_messages').insertOne({
-      threadId: new ObjectId(threadId),
-      authorType: 'human',
-      authorId: userId,
-      authorName: displayName,
-      content: message,
-      createdAt: now,
-    });
+    await Promise.all([
+      thread.visibility !== desired
+        ? db.collection('embassy_threads').updateOne(
+            { _id: new ObjectId(threadId) },
+            { $set: { visibility: desired } },
+          )
+        : null,
+      db.collection('embassy_messages').insertOne({
+        threadId: new ObjectId(threadId),
+        authorType: 'human',
+        authorId: userId,
+        authorName: displayName,
+        content: message,
+        createdAt: now,
+      }),
+    ]);
   } else {
     // Listed by default for everyone, signed in or not — no name travels with
     // it (see lib/embassy/thread-visibility). Opting out lands on 'private'
     // for a signed-in reader and 'unlisted' for an anonymous one, which keeps
     // the conversation reachable by id so they can get back to it.
-    const result = await db.collection('embassy_threads').insertOne({
-      type: 'chat',
-      title: message.slice(0, 120),
-      firstMessageKey: firstMessageKey(message),
-      creatorId: userId,
-      creatorName: displayName,
-      visibility: bareGreeting || keepalive || replay ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
-      aiEnabled: true,
-      lang,
-      messageCount: 0,
-      createdAt: now,
-      lastMessageAt: now,
-    });
-    activeThreadId = result.insertedId.toString();
-
-    await db.collection('embassy_messages').insertOne({
-      threadId: result.insertedId,
-      authorType: 'human',
-      authorId: userId,
-      authorName: displayName,
-      content: message,
-      createdAt: now,
-    });
+    // The id is minted here so the thread and its first message are written
+    // together rather than one after the other.
+    const newThreadId = new ObjectId();
+    await Promise.all([
+      db.collection('embassy_threads').insertOne({
+        _id: newThreadId,
+        type: 'chat',
+        title: message.slice(0, 120),
+        firstMessageKey: firstMessageKey(message),
+        creatorId: userId,
+        creatorName: displayName,
+        visibility: bareGreeting || keepalive || replay ? 'unlisted' : threadVisibility(userId, visibility === 'public'),
+        aiEnabled: true,
+        lang,
+        messageCount: 0,
+        createdAt: now,
+        lastMessageAt: now,
+      }),
+      db.collection('embassy_messages').insertOne({
+        threadId: newThreadId,
+        authorType: 'human',
+        authorId: userId,
+        authorName: displayName,
+        content: message,
+        createdAt: now,
+      }),
+    ]);
+    activeThreadId = newThreadId.toString();
   }
 
   // Collect full text + sources + token usage for DB write
@@ -513,4 +513,54 @@ export async function POST(request: NextRequest) {
       'X-Accel-Buffering': 'no',
     },
   });
+}
+
+/**
+ * The read-only lookups a turn needs before it can write anything, run in
+ * parallel: the reader's display name, a replayable earlier answer, and for a
+ * continued thread the ownership check and its last two messages.
+ */
+async function startLookups(
+  db: Db,
+  userId: string | null,
+  req: ChatRequest,
+  now: Date,
+) {
+  const { threadId, message, history = [], collection = null, lang } = req;
+  // A bare "hello" gets the desk's welcome, not six searches (see greeting.ts).
+  // The thread it opens is kept but unlisted — there is nothing in it to read.
+  const bareGreeting = isBareGreeting(message);
+  // A keepalive ("ping — daily auth check (automated, ignore)") gets a one-line
+  // acknowledgement and no model call. One client sent twelve of these to one
+  // thread, one a day, each answered with a full turn (#4853).
+  const keepalive = !bareGreeting && isKeepalivePing(message);
+  const [user, replay, thread, lastTwo] = await Promise.all([
+    // Get user display name (anonymous visitors skip the lookup)
+    userId
+      ? db.collection('users').findOne(
+          { _id: toUserId(userId) as any },
+          { projection: { name: 1, membership: 1 } },
+        )
+      : null,
+    // An identical first-turn question answered within the last week is replayed
+    // from that answer — no model call, instant, and the feed keeps one copy of
+    // a canonical question instead of one per asker (see replay-cache.ts).
+    // Only for a fresh thread on the default library; a collection context
+    // changes the search weighting, so those always run the agent.
+    !threadId && history.length === 0 && !collection && !bareGreeting && !keepalive
+      ? findReplayableAnswer(db, message, lang, now).catch(() => null) as Promise<ReplayableAnswer | null>
+      : null,
+    threadId
+      ? db.collection('embassy_threads').findOne({ _id: new ObjectId(threadId), creatorId: userId })
+      : null,
+    // Read before the ownership check lands; used only once it has passed.
+    threadId && !bareGreeting && !keepalive
+      ? db.collection('embassy_messages')
+          .find({ threadId: new ObjectId(threadId) }, { projection: { authorType: 1, content: 1 } })
+          .sort({ createdAt: -1 })
+          .limit(2)
+          .toArray()
+      : null,
+  ]);
+  return { user, replay, thread, lastTwo, bareGreeting, keepalive };
 }
