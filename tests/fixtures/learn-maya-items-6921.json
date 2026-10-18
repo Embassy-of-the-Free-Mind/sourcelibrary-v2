@@ -1,0 +1,310 @@
+[
+ {
+  "_id": "num-32-up-g2-1",
+  "rung": "numeral",
+  "order": 238,
+  "status": "live",
+  "prompt": {
+   "kind": "count",
+   "text": "What number is this?"
+  },
+  "image": {
+   "book_id": "69dfd990220eedf04e13b0cf",
+   "leaf": 32,
+   "codex_page": 53,
+   "src": "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/32.jpg",
+   "box": [
+    0.2,
+    0.178,
+    0.085,
+    0.035
+   ],
+   "color": "black"
+  },
+  "answer": {
+   "value": 13
+  },
+  "note": "Painted 13. The running total needs 14 (177 + 177 = 354); Förstemann reads the painted 13 and corrects it to 14.",
+  "teach": "A bar is five and a dot is one: 2 bars and 3 dots make 13.",
+  "ai": {
+   "reading": "13",
+   "confident": true,
+   "model": "claude-opus-5-5",
+   "run": "dresden-opus-test arm B (#6559)"
+  },
+  "evidence": [
+   {
+    "kind": "leaf",
+    "label": "Dresden Codex, page 53",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=32"
+   },
+   {
+    "kind": "forstemann",
+    "label": "Förstemann, Commentary (1906)",
+    "url": "https://sourcelibrary.org/book/6a09ff94fa20006dbaba9ecb?page=167"
+   }
+  ],
+  "gold": {
+   "is_gold": true,
+   "basis": "forstemann-painted-value",
+   "checked_by_eye": true
+  },
+  "links": {
+   "word_id": "word-oxlahun"
+  }
+ },
+ {
+  "_id": "day-32-day-g4-3",
+  "rung": "day-sign",
+  "order": 62,
+  "status": "heldout",
+  "prompt": {
+   "kind": "pick",
+   "text": "Which day sign is this?",
+   "options": [
+    "Caban",
+    "Eb",
+    "Lamat",
+    "Manik"
+   ]
+  },
+  "image": {
+   "book_id": "69dfd990220eedf04e13b0cf",
+   "leaf": 32,
+   "codex_page": 53,
+   "src": "https://images.sourcelibrary.org/archived/69dfd990220eedf04e13b0cf/32.jpg",
+   "box": [
+    0.655,
+    0.333,
+    0.07,
+    0.036
+   ],
+   "color": "black"
+  },
+  "answer": {
+   "sign": "Lamat",
+   "coefficient": 3,
+   "position": 8
+  },
+  "note": null,
+  "teach": "Lamat is split into four by a cross, with a small ring in each quarter.",
+  "ai": {
+   "reading": "Lamat",
+   "confident": true,
+   "model": "claude-opus-5-5",
+   "run": "dresden-opus-test arm B (#6559)"
+  },
+  "evidence": [
+   {
+    "kind": "leaf",
+    "label": "Dresden Codex, page 53",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=32"
+   },
+   {
+    "kind": "forstemann",
+    "label": "Förstemann, Commentary (1906)",
+    "url": "https://sourcelibrary.org/book/6a09ff94fa20006dbaba9ecb?page=167"
+   },
+   {
+    "kind": "dictionary",
+    "label": "Pío Pérez, Diccionario de la lengua maya (1866–77), p. 234",
+    "url": "https://sourcelibrary.org/book/6acc3dfa230e9a56175cdd32?page=234"
+   }
+  ],
+  "gold": {
+   "is_gold": true,
+   "basis": "forstemann+arithmetic",
+   "checked_by_eye": true
+  },
+  "links": {}
+ },
+ {
+  "_id": "word-zac",
+  "rung": "word",
+  "order": 116,
+  "status": "live",
+  "prompt": {
+   "kind": "gloss",
+   "text": "What does this word mean?"
+  },
+  "word": {
+   "headword": "zac",
+   "form": "Sac",
+   "source": {
+    "book_id": "6ad191bb42debc9626925592",
+    "page_number": 2,
+    "title": "Chilam Balam of Chumayel",
+    "line": "Sac yx chuuah cabob. ti xaman Sac ix",
+    "url": "https://sourcelibrary.org/book/6ad191bb42debc9626925592?page=2"
+   }
+  },
+  "answer": {
+   "gloss_es": "ZAC: undécimo mes de los indios; empezaba en 1.° de Febrero. | Blanco. | Nube en el ojo.",
+   "gloss_en": "ZAC: the eleventh month of the Indians; it began on February 1. | White. | A cloud in the eye.",
+   "keywords": [
+    "eleventh",
+    "month",
+    "february",
+    "white",
+    "cloud",
+    "eye"
+   ],
+   "number": null
+  },
+  "note": null,
+  "teach": "In the Chumayel each direction has a colour: red in the east (lakin), white in the north (xaman), black in the west (chikin), yellow in the south (nohol).",
+  "ai": {
+   "reading": "the eleventh month of the Indians; it began on February 1. | White. | A cloud in the eye.",
+   "confident": true,
+   "model": "claude-opus-5-5",
+   "run": "site translation of the dictionary page"
+  },
+  "evidence": [
+   {
+    "kind": "dictionary",
+    "label": "Pío Pérez, Diccionario de la lengua maya (1866–77), p. 453",
+    "url": "https://sourcelibrary.org/book/6acc3dfa230e9a56175cdd32?page=453",
+    "text": "ZAC: undécimo mes de los indios; empezaba en 1.° de Febrero. | Blanco. | Nube en el ojo."
+   },
+   {
+    "kind": "source",
+    "label": "Chilam Balam of Chumayel, p. 2",
+    "url": "https://sourcelibrary.org/book/6ad191bb42debc9626925592?page=2"
+   }
+  ],
+  "gold": {
+   "is_gold": false,
+   "basis": null,
+   "checked_by_eye": false
+  },
+  "links": {
+   "glyph_sign": null
+  }
+ },
+ {
+  "_id": "word-cimil",
+  "rung": "word",
+  "order": 106,
+  "status": "live",
+  "prompt": {
+   "kind": "gloss",
+   "text": "What does this word mean?"
+  },
+  "word": {
+   "headword": "cimil",
+   "form": "cimil",
+   "source": {
+    "book_id": "6ad191bb42debc9626925592",
+    "page_number": 20,
+    "title": "Chilam Balam of Chumayel",
+    "line": "cimil toon xan: manan yutz kin ton",
+    "url": "https://sourcelibrary.org/book/6ad191bb42debc9626925592?page=20"
+   }
+  },
+  "answer": {
+   "gloss_es": "CIMIL: enfermedad, | Muerte.",
+   "gloss_en": "CIMIL: illness. | Death.",
+   "keywords": [
+    "illness",
+    "death"
+   ],
+   "number": null
+  },
+  "note": null,
+  "teach": "The day sign Cimi carries this word in its name.",
+  "ai": {
+   "reading": "illness. | Death.",
+   "confident": true,
+   "model": "claude-opus-5-5",
+   "run": "site translation of the dictionary page"
+  },
+  "evidence": [
+   {
+    "kind": "dictionary",
+    "label": "Pío Pérez, Diccionario de la lengua maya (1866–77), p. 91",
+    "url": "https://sourcelibrary.org/book/6acc3dfa230e9a56175cdd32?page=91",
+    "text": "CIMIL: enfermedad, | Muerte."
+   },
+   {
+    "kind": "source",
+    "label": "Chilam Balam of Chumayel, p. 20",
+    "url": "https://sourcelibrary.org/book/6ad191bb42debc9626925592?page=20"
+   }
+  ],
+  "gold": {
+   "is_gold": false,
+   "basis": null,
+   "checked_by_eye": false
+  },
+  "links": {
+   "glyph_sign": "Cimi",
+   "day_sign_ids": [
+    "day-32-day-g1-3",
+    "day-32-day-g4-1",
+    "day-32-day-g44-1"
+   ]
+  }
+ },
+ {
+  "_id": "word-ho",
+  "rung": "word",
+  "order": 93,
+  "status": "live",
+  "prompt": {
+   "kind": "gloss",
+   "text": "What does this word mean?"
+  },
+  "word": {
+   "headword": "ho",
+   "form": "ho",
+   "source": {
+    "book_id": "6ad191bb42debc9626925592",
+    "page_number": 23,
+    "title": "Chilam Balam of Chumayel",
+    "line": "Cumku 21 Junio ti yayab ho pel kin",
+    "url": "https://sourcelibrary.org/book/6ad191bb42debc9626925592?page=23"
+   }
+  },
+  "answer": {
+   "gloss_es": "HO: cinco. Tambien se llama así la ciudad de Mérida.",
+   "gloss_en": "HO: five. The city of Mérida is also called by this name.",
+   "keywords": [
+    "five",
+    "city",
+    "mérida",
+    "name"
+   ],
+   "number": 5
+  },
+  "note": null,
+  "teach": "On the codex, 5 is 1 bar.",
+  "ai": {
+   "reading": "five. The city of Mérida is also called by this name.",
+   "confident": true,
+   "model": "claude-opus-5-5",
+   "run": "site translation of the dictionary page"
+  },
+  "evidence": [
+   {
+    "kind": "dictionary",
+    "label": "Pío Pérez, Diccionario de la lengua maya (1866–77), p. 171",
+    "url": "https://sourcelibrary.org/book/6acc3dfa230e9a56175cdd32?page=171",
+    "text": "HO: cinco. Tambien se llama así la ciudad de Mérida."
+   },
+   {
+    "kind": "source",
+    "label": "Chilam Balam of Chumayel, p. 23",
+    "url": "https://sourcelibrary.org/book/6ad191bb42debc9626925592?page=23"
+   }
+  ],
+  "gold": {
+   "is_gold": false,
+   "basis": null,
+   "checked_by_eye": false
+  },
+  "links": {
+   "glyph_sign": null,
+   "numeral_ids": []
+  }
+ }
+]

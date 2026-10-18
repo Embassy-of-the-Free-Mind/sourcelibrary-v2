@@ -1,0 +1,2209 @@
+{
+ "_doc": "Inputs for scripts/learn/build-maya-items.mjs (#6921). Boxes are normalised [x,y,w,h] on https://images.sourcelibrary.org/archived/<dresden>/<leaf>.jpg, measured and checked by eye against the leaf. Values: Förstemann 1906 and the table arithmetic (dresden-opus-test, #6559). ai_*: Opus arm-B reading from that test. Words: es_match/en_match are regexes the builder uses to pull the entry verbatim from the dictionary page OCR and its translation.",
+ "books": {
+  "dresden": "69dfd990220eedf04e13b0cf",
+  "forstemann": "6a09ff94fa20006dbaba9ecb",
+  "motul1": "6acc3d5f230e9a56175cc731",
+  "motul2": "6acc3d6c230e9a56175ccae2",
+  "pioperez": "6acc3dfa230e9a56175cdd32",
+  "chumayel": "6ad191bb42debc9626925592",
+  "chumayel1913": "699259a03d2d40d1b0592ce8",
+  "bacabs": "6ad191a242debc96269252b6",
+  "castewar": "6ad191b742debc9626925415"
+ },
+ "day_sign_dictionary_pages": {
+  "Imix": 197,
+  "Ik": 197,
+  "Akbal": 49,
+  "Kan": 208,
+  "Chicchan": 112,
+  "Cimi": 91,
+  "Manik": 256,
+  "Lamat": 234,
+  "Muluc": 268,
+  "Oc": 295,
+  "Chuen": 121,
+  "Eb": 139,
+  "Ben": 64,
+  "Men": 261,
+  "Cib": 89,
+  "Caban": 79,
+  "Etznab": 145,
+  "Cauac": 85,
+  "Ahau": 44
+ },
+ "heldout": [
+  "num-41-s3b-3",
+  "num-32-up-g5-1",
+  "num-27-dist-c4-20",
+  "num-41-pos-R5",
+  "day-32-day-g4-3",
+  "day-32-day-g43-1",
+  "day-09-day-c1-4",
+  "word-kak",
+  "word-haab",
+  "word-xaman"
+ ],
+ "numerals": [
+  {
+   "id": "num-41-pos-L1",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.63,
+    0.37,
+    0.15,
+    0.035
+   ],
+   "value": 8,
+   "color": "black",
+   "ai_value": 8
+  },
+  {
+   "id": "num-41-pos-R1",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.785,
+    0.37,
+    0.14,
+    0.035
+   ],
+   "value": 8,
+   "color": "black",
+   "ai_value": 8
+  },
+  {
+   "id": "num-41-pos-L2",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.63,
+    0.418,
+    0.15,
+    0.048
+   ],
+   "value": 16,
+   "color": "black",
+   "ai_value": 16
+  },
+  {
+   "id": "num-41-pos-R2",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.785,
+    0.418,
+    0.14,
+    0.048
+   ],
+   "value": 16,
+   "color": "black",
+   "ai_value": 16
+  },
+  {
+   "id": "num-41-pos-L3",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.63,
+    0.494,
+    0.15,
+    0.044
+   ],
+   "value": 15,
+   "color": "black",
+   "ai_value": 15
+  },
+  {
+   "id": "num-41-pos-R3",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.785,
+    0.494,
+    0.14,
+    0.044
+   ],
+   "value": 14,
+   "color": "black",
+   "ai_value": 14
+  },
+  {
+   "id": "num-41-pos-L4",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.63,
+    0.552,
+    0.15,
+    0.048
+   ],
+   "value": 16,
+   "color": "black",
+   "ai_value": 16
+  },
+  {
+   "id": "num-41-pos-R4",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.785,
+    0.552,
+    0.14,
+    0.048
+   ],
+   "value": 15,
+   "color": "black",
+   "ai_value": 15
+  },
+  {
+   "id": "num-41-pos-L5",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.63,
+    0.615,
+    0.15,
+    0.04
+   ],
+   "value": 1,
+   "color": "black",
+   "ai_value": 1
+  },
+  {
+   "id": "num-41-pos-R5",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.785,
+    0.615,
+    0.14,
+    0.04
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-41-s3a-1",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.055,
+    0.548,
+    0.125,
+    0.025
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-41-s3b-1",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.185,
+    0.548,
+    0.115,
+    0.025
+   ],
+   "value": 4,
+   "color": "red",
+   "ai_value": 4
+  },
+  {
+   "id": "num-41-s3b-2",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.12,
+    0.595,
+    0.13,
+    0.035
+   ],
+   "value": 6,
+   "color": "red",
+   "ai_value": 6
+  },
+  {
+   "id": "num-41-s3a-2",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.255,
+    0.592,
+    0.11,
+    0.038
+   ],
+   "value": 6,
+   "color": "black",
+   "ai_value": 6
+  },
+  {
+   "id": "num-41-s3a-3",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.05,
+    0.655,
+    0.12,
+    0.03
+   ],
+   "value": 7,
+   "color": "black",
+   "ai_value": 7
+  },
+  {
+   "id": "num-41-s3b-3",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.18,
+    0.652,
+    0.13,
+    0.04
+   ],
+   "value": 11,
+   "color": "red",
+   "ai_value": 11
+  },
+  {
+   "id": "num-41-s3b-4",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.12,
+    0.712,
+    0.13,
+    0.035
+   ],
+   "value": 10,
+   "color": "red",
+   "ai_value": 10
+  },
+  {
+   "id": "num-41-s3a-4",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.25,
+    0.71,
+    0.12,
+    0.04
+   ],
+   "value": 12,
+   "color": "black",
+   "ai_value": 12
+  },
+  {
+   "id": "num-41-s3a-5",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.05,
+    0.765,
+    0.12,
+    0.025
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-41-s3b-5",
+   "leaf": 41,
+   "codex_page": 62,
+   "forstemann_page": 189,
+   "box": [
+    0.18,
+    0.765,
+    0.13,
+    0.035
+   ],
+   "value": 7,
+   "color": "red",
+   "ai_value": 7
+  },
+  {
+   "id": "num-27-pos-c1-360",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.08,
+    0.622,
+    0.1,
+    0.026
+   ],
+   "value": 3,
+   "color": "black",
+   "ai_value": 3
+  },
+  {
+   "id": "num-27-pos-c2-360",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.19,
+    0.622,
+    0.095,
+    0.026
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-27-pos-c3-360",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.285,
+    0.622,
+    0.095,
+    0.026
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-27-pos-c4-360",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.385,
+    0.622,
+    0.095,
+    0.026
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-27-pos-c1-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.07,
+    0.658,
+    0.11,
+    0.03
+   ],
+   "value": 16,
+   "color": "black",
+   "ai_value": 16
+  },
+  {
+   "id": "num-27-pos-c2-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.19,
+    0.66,
+    0.095,
+    0.025
+   ],
+   "value": 2,
+   "color": "black",
+   "ai_value": 2
+  },
+  {
+   "id": "num-27-pos-c3-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.285,
+    0.66,
+    0.1,
+    0.024
+   ],
+   "value": 15,
+   "color": "black",
+   "ai_value": 15
+  },
+  {
+   "id": "num-27-pos-c4-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.385,
+    0.66,
+    0.1,
+    0.025
+   ],
+   "value": 15,
+   "color": "black",
+   "ai_value": 15
+  },
+  {
+   "id": "num-27-pos-c2-1",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.185,
+    0.685,
+    0.1,
+    0.03
+   ],
+   "value": 14,
+   "color": "black",
+   "ai_value": 14
+  },
+  {
+   "id": "num-27-pos-c3-1",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.29,
+    0.698,
+    0.09,
+    0.017
+   ],
+   "value": 4,
+   "color": "black",
+   "ai_value": 4
+  },
+  {
+   "id": "num-27-pos-c4-1",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.385,
+    0.693,
+    0.1,
+    0.026
+   ],
+   "value": 12,
+   "color": "black",
+   "ai_value": 12
+  },
+  {
+   "id": "num-27-dist-c2-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.18,
+    0.897,
+    0.095,
+    0.02
+   ],
+   "value": 4,
+   "color": "red",
+   "ai_value": 4
+  },
+  {
+   "id": "num-27-dist-c3-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.285,
+    0.898,
+    0.09,
+    0.026
+   ],
+   "value": 12,
+   "color": "red",
+   "ai_value": 12
+  },
+  {
+   "id": "num-27-dist-c4-20",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.38,
+    0.9,
+    0.09,
+    0.028
+   ],
+   "value": 0,
+   "color": "red",
+   "ai_value": 0,
+   "note": "The shell sign is zero: this distance is 0 twenties + 8 = 8 days."
+  },
+  {
+   "id": "num-27-dist-c3-1",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.285,
+    0.936,
+    0.09,
+    0.024
+   ],
+   "value": 10,
+   "color": "red",
+   "ai_value": 10
+  },
+  {
+   "id": "num-27-dist-c4-1",
+   "leaf": 27,
+   "codex_page": 48,
+   "forstemann_page": 143,
+   "box": [
+    0.38,
+    0.936,
+    0.09,
+    0.024
+   ],
+   "value": 8,
+   "color": "red",
+   "ai_value": 8
+  },
+  {
+   "id": "num-32-up-g1-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.09,
+    0.176,
+    0.09,
+    0.042
+   ],
+   "value": 17,
+   "color": "black",
+   "ai_value": 17
+  },
+  {
+   "id": "num-32-up-g2-20",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.2,
+    0.135,
+    0.085,
+    0.035
+   ],
+   "value": 17,
+   "color": "black",
+   "ai_value": 17
+  },
+  {
+   "id": "num-32-up-g2-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.2,
+    0.178,
+    0.085,
+    0.035
+   ],
+   "value": 13,
+   "color": "black",
+   "ai_value": 13,
+   "note": "Painted 13. The running total needs 14 (177 + 177 = 354); Förstemann reads the painted 13 and corrects it to 14."
+  },
+  {
+   "id": "num-32-up-g3-360",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.295,
+    0.135,
+    0.06,
+    0.03
+   ],
+   "value": 1,
+   "color": "black",
+   "ai_value": 1
+  },
+  {
+   "id": "num-32-up-g3-20",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.29,
+    0.163,
+    0.08,
+    0.024
+   ],
+   "value": 7,
+   "color": "black",
+   "ai_value": 7
+  },
+  {
+   "id": "num-32-up-g3-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.29,
+    0.186,
+    0.08,
+    0.028
+   ],
+   "value": 2,
+   "color": "black",
+   "ai_value": 2
+  },
+  {
+   "id": "num-32-up-g4-20",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.63,
+    0.178,
+    0.09,
+    0.024
+   ],
+   "value": 15,
+   "color": "black",
+   "ai_value": 15
+  },
+  {
+   "id": "num-32-up-g4-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.63,
+    0.204,
+    0.09,
+    0.026
+   ],
+   "value": 14,
+   "color": "black",
+   "ai_value": 14,
+   "note": "Painted 14. The running total needs 19 (502 + 177 = 679); Förstemann notes a bar is missing and corrects it to 19."
+  },
+  {
+   "id": "num-32-up-g5-20",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.73,
+    0.17,
+    0.08,
+    0.03
+   ],
+   "value": 6,
+   "color": "black",
+   "ai_value": 6
+  },
+  {
+   "id": "num-32-up-g5-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.73,
+    0.195,
+    0.08,
+    0.035
+   ],
+   "value": 16,
+   "color": "black",
+   "ai_value": 16
+  },
+  {
+   "id": "num-32-lo-g41-b",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.075,
+    0.636,
+    0.105,
+    0.036
+   ],
+   "value": 13,
+   "color": "black",
+   "ai_value": 13
+  },
+  {
+   "id": "num-32-lo-g41-c",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.08,
+    0.672,
+    0.085,
+    0.035
+   ],
+   "value": 16,
+   "color": "black",
+   "ai_value": 16
+  },
+  {
+   "id": "num-32-lo-g42-0",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.18,
+    0.638,
+    0.1,
+    0.024
+   ],
+   "value": 0,
+   "color": "red",
+   "ai_value": 0,
+   "note": "The red shell is zero, holding the 360s place empty."
+  },
+  {
+   "id": "num-32-lo-g43-c",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.645,
+    0.643,
+    0.085,
+    0.022
+   ],
+   "value": 12,
+   "color": "black",
+   "ai_value": 12
+  },
+  {
+   "id": "num-32-lo-g44-d",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.74,
+    0.666,
+    0.095,
+    0.042
+   ],
+   "value": 18,
+   "color": "black",
+   "ai_value": 18
+  },
+  {
+   "id": "num-32-lo-g45-c",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.855,
+    0.635,
+    0.08,
+    0.032
+   ],
+   "value": 11,
+   "color": "black",
+   "ai_value": 11
+  },
+  {
+   "id": "num-32-lo-g45-d",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.855,
+    0.678,
+    0.08,
+    0.035
+   ],
+   "value": 15,
+   "color": "black",
+   "ai_value": 15
+  }
+ ],
+ "day_signs": [
+  {
+   "id": "day-32-day-g1-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.125,
+    0.326,
+    0.07,
+    0.034
+   ],
+   "sign": "Cimi",
+   "coefficient": 8,
+   "ai_sign": "Cimi",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g2-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.215,
+    0.258,
+    0.07,
+    0.032
+   ],
+   "sign": "Imix",
+   "coefficient": 1,
+   "ai_sign": "Imix",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g2-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.215,
+    0.292,
+    0.07,
+    0.033
+   ],
+   "sign": "Ik",
+   "coefficient": 2,
+   "ai_sign": "Ik",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g2-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.215,
+    0.326,
+    0.07,
+    0.034
+   ],
+   "sign": "Akbal",
+   "coefficient": 3,
+   "ai_sign": "Akbal",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g3-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.305,
+    0.258,
+    0.07,
+    0.032
+   ],
+   "sign": "Muluc",
+   "coefficient": 6,
+   "ai_sign": "Muluc",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g3-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.305,
+    0.292,
+    0.07,
+    0.033
+   ],
+   "sign": "Oc",
+   "coefficient": 7,
+   "ai_sign": "Oc",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g3-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.305,
+    0.326,
+    0.07,
+    0.034
+   ],
+   "sign": "Chuen",
+   "coefficient": 8,
+   "ai_sign": "Chuen",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g4-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.655,
+    0.258,
+    0.07,
+    0.032
+   ],
+   "sign": "Cimi",
+   "coefficient": 1,
+   "ai_sign": "Cimi",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g4-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.655,
+    0.292,
+    0.07,
+    0.033
+   ],
+   "sign": "Manik",
+   "coefficient": 2,
+   "ai_sign": "Manik",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g4-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.655,
+    0.333,
+    0.07,
+    0.036
+   ],
+   "sign": "Lamat",
+   "coefficient": 3,
+   "ai_sign": "Lamat",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g5-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.755,
+    0.258,
+    0.07,
+    0.032
+   ],
+   "sign": "Akbal",
+   "coefficient": 9,
+   "ai_sign": "Akbal",
+   "ai_confident": false
+  },
+  {
+   "id": "day-32-day-g5-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.755,
+    0.292,
+    0.07,
+    0.033
+   ],
+   "sign": "Kan",
+   "coefficient": 10,
+   "ai_sign": "Kan",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g5-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.755,
+    0.333,
+    0.07,
+    0.036
+   ],
+   "sign": "Chicchan",
+   "coefficient": 11,
+   "ai_sign": "Chicchan",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g41-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.125,
+    0.73,
+    0.07,
+    0.035
+   ],
+   "sign": "Kan",
+   "coefficient": 4,
+   "ai_sign": "Kan",
+   "ai_confident": false
+  },
+  {
+   "id": "day-32-day-g41-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.125,
+    0.773,
+    0.07,
+    0.035
+   ],
+   "sign": "Chicchan",
+   "coefficient": 5,
+   "ai_sign": "Chicchan",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g42-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.222,
+    0.73,
+    0.07,
+    0.035
+   ],
+   "sign": "Eb",
+   "coefficient": 9,
+   "ai_sign": "Eb",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g42-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.222,
+    0.773,
+    0.07,
+    0.035
+   ],
+   "sign": "Ben",
+   "coefficient": 10,
+   "ai_sign": "Ben",
+   "ai_confident": false
+  },
+  {
+   "id": "day-32-day-g42-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.222,
+    0.818,
+    0.07,
+    0.037
+   ],
+   "sign": "Ix",
+   "coefficient": 11,
+   "ai_sign": "Ix",
+   "ai_confident": false
+  },
+  {
+   "id": "day-32-day-g43-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.655,
+    0.73,
+    0.07,
+    0.035
+   ],
+   "sign": "Muluc",
+   "coefficient": 4,
+   "ai_sign": "Muluc",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g43-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.655,
+    0.773,
+    0.07,
+    0.035
+   ],
+   "sign": "Oc",
+   "coefficient": 5,
+   "ai_sign": "Oc",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g43-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.655,
+    0.818,
+    0.07,
+    0.037
+   ],
+   "sign": "Chuen",
+   "coefficient": 6,
+   "ai_sign": "Chuen",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g44-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.765,
+    0.73,
+    0.07,
+    0.035
+   ],
+   "sign": "Cimi",
+   "coefficient": 12,
+   "ai_sign": "Cimi",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g44-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.765,
+    0.773,
+    0.07,
+    0.035
+   ],
+   "sign": "Manik",
+   "coefficient": 13,
+   "ai_sign": "Manik",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g44-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.765,
+    0.818,
+    0.07,
+    0.037
+   ],
+   "sign": "Lamat",
+   "coefficient": 1,
+   "ai_sign": "Lamat",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g45-1",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.87,
+    0.73,
+    0.07,
+    0.035
+   ],
+   "sign": "Akbal",
+   "coefficient": 7,
+   "ai_sign": "Akbal",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g45-2",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.87,
+    0.773,
+    0.07,
+    0.035
+   ],
+   "sign": "Kan",
+   "coefficient": 8,
+   "ai_sign": "Kan",
+   "ai_confident": true
+  },
+  {
+   "id": "day-32-day-g45-3",
+   "leaf": 32,
+   "codex_page": 53,
+   "forstemann_page": 167,
+   "box": [
+    0.87,
+    0.818,
+    0.07,
+    0.037
+   ],
+   "sign": "Chicchan",
+   "coefficient": 9,
+   "ai_sign": "Chicchan",
+   "ai_confident": true
+  },
+  {
+   "id": "day-09-day-c1-1",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.035,
+    0.693,
+    0.08,
+    0.034
+   ],
+   "sign": "Cauac",
+   "coefficient": 3,
+   "ai_sign": "Cauac",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c1-2",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.035,
+    0.74,
+    0.08,
+    0.04
+   ],
+   "sign": "Chuen",
+   "coefficient": 3,
+   "ai_sign": "Chuen",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c1-3",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.035,
+    0.795,
+    0.08,
+    0.037
+   ],
+   "sign": "Akbal",
+   "coefficient": 3,
+   "ai_sign": "Akbal",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c1-4",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.035,
+    0.84,
+    0.08,
+    0.04
+   ],
+   "sign": "Men",
+   "coefficient": 3,
+   "ai_sign": "Men",
+   "ai_confident": true
+  },
+  {
+   "id": "day-09-day-c2-1",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.135,
+    0.693,
+    0.075,
+    0.034
+   ],
+   "sign": "Ben",
+   "coefficient": 3,
+   "ai_sign": "Ben",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c2-2",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.135,
+    0.74,
+    0.075,
+    0.04
+   ],
+   "sign": "Chicchan",
+   "coefficient": 3,
+   "ai_sign": "Chicchan",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c2-3",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.135,
+    0.795,
+    0.075,
+    0.037
+   ],
+   "sign": "Caban",
+   "coefficient": 3,
+   "ai_sign": "Caban",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c2-4",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.135,
+    0.84,
+    0.075,
+    0.04
+   ],
+   "sign": "Muluc",
+   "coefficient": 3,
+   "ai_sign": "Muluc",
+   "ai_confident": false
+  },
+  {
+   "id": "day-09-day-c2-5",
+   "leaf": 9,
+   "codex_page": 9,
+   "forstemann_page": 40,
+   "box": [
+    0.135,
+    0.883,
+    0.075,
+    0.044
+   ],
+   "sign": "Imix",
+   "coefficient": 3,
+   "ai_sign": "Imix",
+   "ai_confident": false
+  }
+ ],
+ "words": [
+  {
+   "id": "word-hun",
+   "headword": "hun",
+   "form": "hun",
+   "dict": "pioperez",
+   "dict_page": 189,
+   "es_match": "^HUN: uno",
+   "en_match": "^HUN: one",
+   "source": {
+    "key": "chumayel",
+    "page": 38,
+    "line": "hun tul yx nuc = Bolon tul yale: yume cij"
+   },
+   "number": 1
+  },
+  {
+   "id": "word-ca",
+   "headword": "ca",
+   "form": "ca",
+   "dict": "pioperez",
+   "dict_page": 78,
+   "es_match": "^CA: numeral",
+   "en_match": "^CA: ",
+   "source": {
+    "key": "chumayel",
+    "page": 3,
+    "line": "lam: v ca tul = ah kin chable: v yahauob:"
+   },
+   "number": 2
+  },
+  {
+   "id": "word-ox",
+   "headword": "ox",
+   "form": "Ox",
+   "dict": "pioperez",
+   "dict_page": 300,
+   "es_match": "^OX: n[uú]mero cardinal",
+   "en_match": "^OX: a cardinal number",
+   "source": {
+    "key": "chumayel",
+    "page": 8,
+    "line": "Ox kin ɔaman nobi: Ca binti Cul: Sac"
+   },
+   "number": 3
+  },
+  {
+   "id": "word-can-83",
+   "headword": "can",
+   "form": "Can",
+   "dict": "pioperez",
+   "dict_page": 83,
+   "es_match": "^CAN, CANIL: numeral",
+   "en_match": "^CAN, CANIL: ",
+   "source": {
+    "key": "chumayel",
+    "page": 10,
+    "line": "tan: Can tul vinicobe: buluc ahau."
+   },
+   "number": 4
+  },
+  {
+   "id": "word-ho",
+   "headword": "ho",
+   "form": "ho",
+   "dict": "pioperez",
+   "dict_page": 171,
+   "es_match": "^HO: cinco",
+   "en_match": "^HO: five",
+   "source": {
+    "key": "chumayel",
+    "page": 23,
+    "line": "Cumku 21 Junio ti yayab ho pel kin"
+   },
+   "number": 5
+  },
+  {
+   "id": "word-uac",
+   "headword": "uac",
+   "form": "uac",
+   "dict": "pioperez",
+   "dict_page": 411,
+   "es_match": "^UAC: seis",
+   "en_match": "^UAC: six",
+   "source": {
+    "key": "chumayel",
+    "page": 34,
+    "line": "Hex v uac chic than bin katabac ti"
+   },
+   "number": 6
+  },
+  {
+   "id": "word-uuc",
+   "headword": "uuc",
+   "form": "uuc",
+   "dict": "pioperez",
+   "dict_page": 423,
+   "es_match": "^UUC: siete",
+   "en_match": "^UUC: seven",
+   "source": {
+    "key": "chumayel",
+    "page": 75,
+    "line": "ti maya pan u heɔ katun ti uuc ahau."
+   },
+   "number": 7
+  },
+  {
+   "id": "word-uaxac",
+   "headword": "uaxac",
+   "form": "uaxac",
+   "dict": "pioperez",
+   "dict_page": 415,
+   "es_match": "^UAXAC: ocho",
+   "en_match": "^UAXAC: eight",
+   "source": {
+    "key": "chumayel",
+    "page": 75,
+    "line": "ti lahun chable. u heɔ katun ti uaxac ahau katun —"
+   },
+   "number": 8
+  },
+  {
+   "id": "word-bolon",
+   "headword": "bolon",
+   "form": "Bolon",
+   "dict": "pioperez",
+   "dict_page": 71,
+   "es_match": "^BOLON: nueve",
+   "en_match": "^BOLON: nine",
+   "source": {
+    "key": "chumayel",
+    "page": 38,
+    "line": "lay hun tul noh xibe = Bolon tul v mehene—y"
+   },
+   "number": 9
+  },
+  {
+   "id": "word-lahun",
+   "headword": "lahun",
+   "form": "lahun",
+   "dict": "pioperez",
+   "dict_page": 232,
+   "es_match": "^LAHUN: diez",
+   "en_match": "^LAHUN: ten",
+   "source": {
+    "key": "chumayel",
+    "page": 17,
+    "line": "lahun ahau katun: vch ci v cha"
+   },
+   "number": 10
+  },
+  {
+   "id": "word-buluc",
+   "headword": "buluc",
+   "form": "Buluc",
+   "dict": "pioperez",
+   "dict_page": 74,
+   "es_match": "^BULUC: once",
+   "en_match": "^BULUC: eleven",
+   "source": {
+    "key": "chumayel",
+    "page": 13,
+    "line": "Buluc. Ahau. katun: Cu maan ti pop: Cu maan"
+   },
+   "number": 11
+  },
+  {
+   "id": "word-lahca",
+   "headword": "lahca",
+   "form": "Lahca",
+   "dict": "pioperez",
+   "dict_page": 232,
+   "es_match": "^LAHCA: doce",
+   "en_match": "^LAHCA: twelve",
+   "source": {
+    "key": "chumayel",
+    "page": 84,
+    "line": "Y Lahca ahau. te chabi. Oɔ mal u tunile."
+   },
+   "number": 12
+  },
+  {
+   "id": "word-oxlahun",
+   "headword": "oxlahun",
+   "form": "Oxlahun",
+   "dict": "pioperez",
+   "dict_page": 300,
+   "es_match": "^OXLAHUN: trece",
+   "en_match": "^OXLAHUN: thirteen",
+   "source": {
+    "key": "chumayel",
+    "page": 56,
+    "line": "V taahte Oxlahun Ahau. Chicul u"
+   },
+   "number": 13
+  },
+  {
+   "id": "word-kal",
+   "headword": "kal",
+   "form": "kal",
+   "dict": "motul1",
+   "dict_page": 480,
+   "es_match": "^kal\\. cuenta de veintes",
+   "en_match": "^kal: a count of twenties",
+   "source": {
+    "key": "chumayel",
+    "page": 18,
+    "line": "ah y tzaob hool hun kal haab. v talel yu"
+   },
+   "number": 20
+  },
+  {
+   "id": "word-ik",
+   "headword": "ik",
+   "form": "yk",
+   "dict": "pioperez",
+   "dict_page": 197,
+   "es_match": "^IK, IKAL: viento",
+   "en_match": "^IK, IKAL",
+   "source": {
+    "key": "chumayel",
+    "page": 19,
+    "line": "akab: tulis yk. cuxim kal xan"
+   },
+   "glyph": "Ik"
+  },
+  {
+   "id": "word-akab",
+   "headword": "akab",
+   "form": "akab",
+   "dict": "pioperez",
+   "dict_page": 49,
+   "es_match": "^AKAB, AKABIL",
+   "en_match": "^AKAB",
+   "source": {
+    "key": "chumayel",
+    "page": 28,
+    "line": "marzo lah cet kin y akab —"
+   },
+   "glyph": "Akbal"
+  },
+  {
+   "id": "word-kan",
+   "headword": "kan",
+   "form": "Kan",
+   "dict": "pioperez",
+   "dict_page": 208,
+   "es_match": "^KAN: amarillo",
+   "en_match": "^KAN: yellow",
+   "source": {
+    "key": "chumayel",
+    "page": 1,
+    "line": "bilob: Kan tok tun. v kunil: V nohol"
+   },
+   "glyph": "Kan"
+  },
+  {
+   "id": "word-cimil",
+   "headword": "cimil",
+   "form": "cimil",
+   "dict": "pioperez",
+   "dict_page": 91,
+   "es_match": "^CIMIL: enfermedad",
+   "en_match": "^CIMIL: (illness|sickness|disease)",
+   "source": {
+    "key": "chumayel",
+    "page": 20,
+    "line": "cimil toon xan: manan yutz kin ton"
+   },
+   "glyph": "Cimi"
+  },
+  {
+   "id": "word-can-82",
+   "headword": "can",
+   "form": "can",
+   "dict": "pioperez",
+   "dict_page": 82,
+   "es_match": "^CAN, CANIL: culebra",
+   "en_match": "^CAN, CANIL: (snake|serpent)",
+   "source": {
+    "key": "chumayel",
+    "page": 20,
+    "line": "nan ahau can ti lay v hel ahau"
+   },
+   "glyph": "Chicchan"
+  },
+  {
+   "id": "word-eb",
+   "headword": "eb",
+   "form": "Eb",
+   "dict": "pioperez",
+   "dict_page": 139,
+   "es_match": "^EB, EBIL",
+   "en_match": "^EB, EBIL",
+   "source": {
+    "key": "chumayel1913",
+    "page": 145,
+    "line": "ci caan y luum: Ca Eb: ument ci yax Eb ="
+   },
+   "glyph": "Eb"
+  },
+  {
+   "id": "word-oc",
+   "headword": "oc",
+   "form": "oc",
+   "dict": "pioperez",
+   "dict_page": 295,
+   "es_match": "^OC: pi[ée] y pierna",
+   "en_match": "^OC: (foot|the foot)",
+   "source": {
+    "key": "chumayel",
+    "page": 33,
+    "line": "kula: Heyx sasac ɔiminlae: lay y oc"
+   },
+   "glyph": "Oc"
+  },
+  {
+   "id": "word-men",
+   "headword": "men",
+   "form": "men",
+   "dict": "pioperez",
+   "dict_page": 261,
+   "es_match": "^MEN: art[ií]fice",
+   "en_match": "^MEN: (artisan|craftsman|maker)",
+   "source": {
+    "key": "chumayel",
+    "page": 65,
+    "line": "hun men"
+   },
+   "glyph": "Men"
+  },
+  {
+   "id": "word-cib",
+   "headword": "cib",
+   "form": "cib",
+   "dict": "pioperez",
+   "dict_page": 89,
+   "es_match": "^CIB: vela",
+   "en_match": "^CIB: (candle|wax)",
+   "source": {
+    "key": "chumayel1913",
+    "page": 147,
+    "line": "ci ument ci yax cib: Vchci u ça silhal:"
+   },
+   "glyph": "Cib"
+  },
+  {
+   "id": "word-cab",
+   "headword": "cab",
+   "form": "cab",
+   "dict": "pioperez",
+   "dict_page": 79,
+   "es_match": "^CAB: tierra",
+   "en_match": "^CAB: (earth|land)",
+   "source": {
+    "key": "chumayel",
+    "page": 28,
+    "line": "okel tabal vay yokol cab lae"
+   },
+   "glyph": "Caban"
+  },
+  {
+   "id": "word-ahau",
+   "headword": "ahau",
+   "form": "ahau",
+   "dict": "pioperez",
+   "dict_page": 44,
+   "es_match": "^AHAU: rey",
+   "en_match": "^AHAU: (king|ruler|sovereign)",
+   "source": {
+    "key": "chumayel",
+    "page": 9,
+    "line": "Lao bi ahau v nup v thanobe: ti yahau"
+   },
+   "glyph": "Ahau"
+  },
+  {
+   "id": "word-chac",
+   "headword": "chac",
+   "form": "Chac",
+   "dict": "pioperez",
+   "dict_page": 106,
+   "es_match": "^CHAC, CHACIL",
+   "en_match": "^CHAC, CHACIL",
+   "source": {
+    "key": "chumayel",
+    "page": 2,
+    "line": "Chac yx chuuah cabob ti lakin: chac"
+   }
+  },
+  {
+   "id": "word-ek",
+   "headword": "ek",
+   "form": "Ek",
+   "dict": "pioperez",
+   "dict_page": 140,
+   "es_match": "^EEK: negro",
+   "en_match": "^EEK: black",
+   "source": {
+    "key": "chumayel",
+    "page": 2,
+    "line": "Ek yx chuuah cab u cabob. ti chikin. Ek"
+   }
+  },
+  {
+   "id": "word-zac",
+   "headword": "zac",
+   "form": "Sac",
+   "dict": "pioperez",
+   "dict_page": 453,
+   "es_match": "^ZAC: und[ée]cimo",
+   "en_match": "^ZAC: ",
+   "source": {
+    "key": "chumayel",
+    "page": 2,
+    "line": "Sac yx chuuah cabob. ti xaman Sac ix"
+   }
+  },
+  {
+   "id": "word-yax",
+   "headword": "yax",
+   "form": "yax",
+   "dict": "pioperez",
+   "dict_page": 446,
+   "es_match": "^YAX [óo] YAAX",
+   "en_match": "^YAX (or|ó) YAAX",
+   "source": {
+    "key": "chumayel",
+    "page": 1,
+    "line": "ymix yax che: Kan ymix yax che."
+   }
+  },
+  {
+   "id": "word-lakin",
+   "headword": "lakin",
+   "form": "lakin",
+   "dict": "pioperez",
+   "dict_page": 233,
+   "es_match": "^LAKIN",
+   "en_match": "^LAKIN",
+   "source": {
+    "key": "chumayel",
+    "page": 16,
+    "line": "ti lakin u talelob: ca a v lob = Op"
+   }
+  },
+  {
+   "id": "word-chikin",
+   "headword": "chikin",
+   "form": "chikin",
+   "dict": "pioperez",
+   "dict_page": 114,
+   "es_match": "^CHIKIN",
+   "en_match": "^CHIKIN",
+   "source": {
+    "key": "chumayel",
+    "page": 1,
+    "line": "Ek tok tun: v kunil. ti chikin: Ek ymix"
+   }
+  },
+  {
+   "id": "word-xaman",
+   "headword": "xaman",
+   "form": "xaman",
+   "dict": "pioperez",
+   "dict_page": 430,
+   "es_match": "^XAMAN",
+   "en_match": "^XAMAN",
+   "source": {
+    "key": "chumayel",
+    "page": 90,
+    "line": "Nom tal ti la kin = tal ti xaman ="
+   }
+  },
+  {
+   "id": "word-nohol",
+   "headword": "nohol",
+   "form": "nohol",
+   "dict": "pioperez",
+   "dict_page": 286,
+   "es_match": "^NOHOL",
+   "en_match": "^NOHOL",
+   "source": {
+    "key": "chumayel",
+    "page": 2,
+    "line": "Kan yx chuuah cabob ti nohol. Kan tal u"
+   }
+  },
+  {
+   "id": "word-kin",
+   "headword": "kin",
+   "form": "kin",
+   "dict": "pioperez",
+   "dict_page": 217,
+   "es_match": "^KIN: sol",
+   "en_match": "^KIN: ",
+   "source": {
+    "key": "chumayel",
+    "page": 33,
+    "line": "yalabal tie: kak chumuc kin. cabin xic v"
+   }
+  },
+  {
+   "id": "word-haa",
+   "headword": "haa",
+   "form": "haa",
+   "dict": "motul1",
+   "dict_page": 412,
+   "es_match": "^Haa\\. agua",
+   "en_match": "^Haa",
+   "source": {
+    "key": "chumayel",
+    "page": 5,
+    "line": "ti u panahob hai: Ca tal ob: Cucu chil haa:"
+   }
+  },
+  {
+   "id": "word-tun",
+   "headword": "tun",
+   "form": "tun",
+   "dict": "pioperez",
+   "dict_page": 380,
+   "es_match": "^TUN, TUNIL",
+   "en_match": "^TUN, TUNIL",
+   "source": {
+    "key": "chumayel",
+    "page": 1,
+    "line": "bolon pel. Vij v canan maob: Chac tok tun"
+   }
+  },
+  {
+   "id": "word-che",
+   "headword": "che",
+   "form": "che",
+   "dict": "pioperez",
+   "dict_page": 109,
+   "es_match": "^CHE, CHEIL",
+   "en_match": "^CHE, CHEIL",
+   "source": {
+    "key": "chumayel",
+    "page": 104,
+    "line": "che, y tunich; elom"
+   }
+  },
+  {
+   "id": "word-uinic",
+   "headword": "uinic",
+   "form": "uinicob",
+   "dict": "pioperez",
+   "dict_page": 421,
+   "es_match": "^UINIC: hombre",
+   "en_match": "^UINIC: ",
+   "source": {
+    "key": "chumayel",
+    "page": 16,
+    "line": "tumenel ɔulob: sac uinicob = y"
+   }
+  },
+  {
+   "id": "word-ku",
+   "headword": "ku",
+   "form": "ku",
+   "dict": "motul1",
+   "dict_page": 512,
+   "es_match": "^ku\\. dios",
+   "en_match": "^ku",
+   "source": {
+    "key": "chumayel1913",
+    "page": 109,
+    "line": "ɔoci: v caput cuxtal hahal ku hahal Ds: Cauci"
+   }
+  },
+  {
+   "id": "word-katun",
+   "headword": "katun",
+   "form": "katun",
+   "dict": "motul1",
+   "dict_page": 490,
+   "es_match": "^katun\\. especie de veintenos",
+   "en_match": "^katun",
+   "source": {
+    "key": "chumayel",
+    "page": 11,
+    "line": "Vaxac ahau v kaba katun: vch ci v tap"
+   }
+  },
+  {
+   "id": "word-haab",
+   "headword": "haab",
+   "form": "haab",
+   "dict": "pioperez",
+   "dict_page": 146,
+   "es_match": "^HAAB, HAABIL",
+   "en_match": "^HAAB",
+   "source": {
+    "key": "chumayel",
+    "page": 20,
+    "line": "ox kal haab yan toon: tu luk"
+   }
+  },
+  {
+   "id": "word-uinal",
+   "headword": "uinal",
+   "form": "uinal",
+   "dict": "pioperez",
+   "dict_page": 421,
+   "es_match": "^UINAL",
+   "en_match": "^UINAL",
+   "source": {
+    "key": "chumayel1913",
+    "page": 145,
+    "line": "mim: y U muu: Çi uinal: çihci kin ="
+   }
+  },
+  {
+   "id": "word-cah",
+   "headword": "cah",
+   "form": "cah",
+   "dict": "pioperez",
+   "dict_page": 80,
+   "es_match": "^CAH, CAHAL, CAHIL",
+   "en_match": "^CAH, CAHAL",
+   "source": {
+    "key": "chumayel",
+    "page": 80,
+    "line": "men multepal ych cah mayapan lal lae —"
+   }
+  },
+  {
+   "id": "word-kak",
+   "headword": "kak",
+   "form": "kak",
+   "dict": "pioperez",
+   "dict_page": 205,
+   "es_match": "^KAK: fuego",
+   "en_match": "^KAK: fire",
+   "source": {
+    "key": "chumayel",
+    "page": 16,
+    "line": "e lob tumen kak: tu cahal Ysrael"
+   }
+  },
+  {
+   "id": "word-caan",
+   "headword": "caan",
+   "form": "Caan",
+   "dict": "pioperez",
+   "dict_page": 78,
+   "es_match": "^CAAN, CAANIL",
+   "en_match": "^CAAN",
+   "source": {
+    "key": "chumayel1913",
+    "page": 145,
+    "line": "V kaba çihci: Caan y luum: Eb haa: luum"
+   }
+  },
+  {
+   "id": "word-luum",
+   "headword": "luum",
+   "form": "luum",
+   "dict": "pioperez",
+   "dict_page": 248,
+   "es_match": "^LUUM",
+   "en_match": "^LUUM",
+   "source": {
+    "key": "chumayel",
+    "page": 26,
+    "line": "V chun luum Campech. u pucçikal luum. Mani —"
+   }
+  },
+  {
+   "id": "word-cuxtal",
+   "headword": "cuxtal",
+   "form": "Cuxtal",
+   "dict": "pioperez",
+   "dict_page": 104,
+   "es_match": "^CUXTAL",
+   "en_match": "^CUXTAL",
+   "source": {
+    "key": "chumayel1913",
+    "page": 89,
+    "line": "ah Cimil; mau naa ticob; ah Cuxtal bin"
+   }
+  },
+  {
+   "id": "word-balam",
+   "headword": "balam",
+   "form": "Balam",
+   "dict": "pioperez",
+   "dict_page": 59,
+   "es_match": "^BALAM, BALAMIL",
+   "en_match": "^BALAM, BALAMIL",
+   "source": {
+    "key": "chumayel",
+    "page": 2,
+    "line": "Balam u hol u pop. ti xaman. ah puch u hol"
+   }
+  },
+  {
+   "id": "word-yaxche",
+   "headword": "yaxche",
+   "form": "yaxche",
+   "dict": "motul1",
+   "dict_page": 444,
+   "es_match": "^yaxche",
+   "en_match": "^yaxche",
+   "source": {
+    "key": "chumayel1913",
+    "page": 27,
+    "line": "ymix yaxche. v uul bal: Sac mucen"
+   }
+  },
+  {
+   "id": "word-noh",
+   "headword": "noh",
+   "form": "noh",
+   "dict": "pioperez",
+   "dict_page": 286,
+   "es_match": "^NOH: grande",
+   "en_match": "^NOH: ",
+   "source": {
+    "key": "chumayel",
+    "page": 38,
+    "line": "lay hun tul noh xibe = Bolon tul v mehene—y"
+   }
+  },
+  {
+   "id": "word-pixan",
+   "headword": "pixan",
+   "form": "pixan",
+   "dict": "pioperez",
+   "dict_page": 322,
+   "es_match": "^PIXAN",
+   "en_match": "^PIXAN",
+   "source": {
+    "key": "castewar",
+    "page": 9,
+    "line": "a Santo pixan tu yabal habo"
+   }
+  },
+  {
+   "id": "word-mehen",
+   "headword": "mehen",
+   "form": "mehen",
+   "dict": "pioperez",
+   "dict_page": 259,
+   "es_match": "^MEHEN: hijo",
+   "en_match": "^MEHEN: (son|a son)",
+   "source": {
+    "key": "chumayel",
+    "page": 9,
+    "line": "Balam: v mehen: Lay u chaah yx yaxum"
+   }
+  },
+  {
+   "id": "word-ixim",
+   "headword": "ixim",
+   "form": "yxim",
+   "dict": "pioperez",
+   "dict_page": 198,
+   "es_match": "^IXIM",
+   "en_match": "^IXIM",
+   "source": {
+    "key": "chumayel",
+    "page": 1,
+    "line": "bilob: Sac yxim yiximob: =="
+   }
+  },
+  {
+   "id": "word-nal",
+   "headword": "nal",
+   "form": "Nal",
+   "dict": "pioperez",
+   "dict_page": 277,
+   "es_match": "^NAL: la mata",
+   "en_match": "^NAL",
+   "source": {
+    "key": "chumayel",
+    "page": 73,
+    "line": "y hun çuyil u pole: - he klay pibil Nal ="
+   }
+  }
+ ]
+}
