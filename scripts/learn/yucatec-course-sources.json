@@ -54,8 +54,22 @@
   "notes": [
     {
       "id": "yn-1",
-      "title": "in, a, u: my, your, his",
-      "body": "Maya says whose a thing is with a short word in front of it: in kaba, my name; a kaba, your name; u kaba, his or her name. The same three words also stand in front of verbs, which is why Beltrán calls them 'mixed' pronouns.",
+      "title": "My, your, his",
+      "examples": [
+        [
+          "in kaba",
+          "my name"
+        ],
+        [
+          "a kaba",
+          "your name"
+        ],
+        [
+          "u kaba",
+          "his or her name"
+        ]
+      ],
+      "body": "Put in, a or u in front of a word to say whose it is.",
       "quotes": [
         {
           "key": "arte",
@@ -99,8 +113,18 @@
     },
     {
       "id": "yn-2",
-      "title": "Numbers take an ending",
-      "body": "A Maya number does not stand alone. It takes an ending that says what kind of thing is counted: -tul for people and animals, -pel for things. Ox is three; oxtul xiblal is three men, oxpel is three things. From 13 to 19 the number is a unit and ten: ox-la-hun, three-ten. Tozzer writes š where the older books write x, so his oš is ox.",
+      "title": "Counting people and things",
+      "examples": [
+        [
+          "oxtul xiblal",
+          "three men"
+        ],
+        [
+          "oxpel",
+          "three things"
+        ]
+      ],
+      "body": "A number never stands alone. Add -tul to count people, -pel to count things.",
       "quotes": [
         {
           "key": "tozzer",
@@ -131,8 +155,18 @@
     },
     {
       "id": "yn-3",
-      "title": "Whose: the owned thing comes first",
-      "body": "To say 'my father's son', Maya puts the son first and the father after: u mehen in yum, 'his son, my father'. The u ('his') goes on the thing owned, and the owner follows.",
+      "title": "Whose son?",
+      "examples": [
+        [
+          "u mehen in yum",
+          "my father’s son"
+        ],
+        [
+          "u xcħupal a na",
+          "your mother’s daughter"
+        ]
+      ],
+      "body": "Say the thing first, with u. Then say whose it is.",
       "quotes": [
         {
           "key": "tozzer",
@@ -278,12 +312,12 @@
         "page": 251,
         "head": "^MAC: quien"
       },
-      "note": "Pío Pérez enters it as mac and maax; Beltrán's catechism prints max.",
       "attest": {
         "key": "decl1860",
         "page": 11,
         "text": "max á kaba"
-      }
+      },
+      "source_note": "Pío Pérez enters it as mac and maax; Beltrán’s catechism prints max."
     },
     {
       "id": "yw-uaix",
@@ -294,12 +328,12 @@
         "page": 412,
         "head": "^UAIX:"
       },
-      "note": "Pío Pérez writes it as one word, uaix.",
       "attest": {
         "key": "decl1860",
         "page": 11,
         "text": "Pedro, ua ix Juan, in kaba."
-      }
+      },
+      "source_note": "Pío Pérez writes it as one word, uaix."
     },
     {
       "id": "yw-pal",
@@ -310,7 +344,7 @@
         "page": 309,
         "head": "^PAL: mozo"
       },
-      "note": "The catechist calls the child Pale.",
+      "note": "In the catechism the priest calls out Pale: “Child!”",
       "attest": {
         "key": "decl1860",
         "page": 11,
@@ -373,13 +407,13 @@
         "page": 40,
         "head": "^Cħupal, Muchacha"
       },
-      "note": "Cħuplal is the plural of cħupal (Coordinación, same page). Berendt's translation renders it 'woman'.",
       "attest": {
         "key": "berendt",
         "page": 10,
         "text": "cħup-lal",
         "form": "cħup-lal"
-      }
+      },
+      "source_note": "The Coordinación (same page) gives cħuplal as the plural of cħupal. Berendt’s translation renders it “woman”."
     },
     {
       "id": "yw-colel",
@@ -470,12 +504,12 @@
         "page": 358,
         "head": "^TALEZAH:"
       },
-      "note": "Pío Pérez enters the verb as talezah; Berendt prints the command, talez.",
       "attest": {
         "key": "berendt",
         "page": 11,
         "text": "Talez in bóx tzimin."
-      }
+      },
+      "source_note": "Pío Pérez enters the verb as talezah; Berendt prints the command, talez."
     },
     {
       "id": "yw-culen",
@@ -486,13 +520,13 @@
         "page": 34,
         "head": "^Cultal, culhi, culac"
       },
-      "note": "The dictionary enters the verb as cultal; Berendt and Ruz print the command, culen.",
       "attest": {
         "key": "berendt",
         "page": 11,
         "text": "Cu-len yokol tunich.",
         "form": "Culen"
-      }
+      },
+      "source_note": "The dictionary enters the verb as cultal; Berendt and Ruz print the command, culen."
     },
     {
       "id": "yw-hanal",
@@ -776,7 +810,8 @@
         "text": "ox-la-hun.",
         "form": "ox-la-hun"
       },
-      "dresden": "num-32-lo-g41-b"
+      "dresden": "num-32-lo-g41-b",
+      "note": "Ox + lahun: three and ten. Up to nineteen, the teens are built the same way."
     },
     {
       "id": "yw-canlahun",
@@ -916,12 +951,12 @@
         "counting",
         "things"
       ],
-      "note": "Pío Pérez spells it ppel; Berendt prints oxpel, campel, uucpel.",
       "attest": {
         "key": "berendt",
         "page": 12,
         "text": "Campel catac oxpel cu xocol uucpel"
-      }
+      },
+      "source_note": "Pío Pérez spells it ppel; Berendt prints oxpel, campel, uucpel."
     },
     {
       "id": "yw-tul",
@@ -1001,7 +1036,7 @@
         "page": 272,
         "head": "^NA: con pronunciacion fuerte"
       },
-      "note": "The same page has na, house: the vowel of 'mother' is said strongly, and some write it naa.",
+      "note": "Na also means house. In “mother” the vowel is said strongly, so some write naa.",
       "attest": {
         "key": "berendt",
         "page": 11,
@@ -1033,13 +1068,13 @@
         "page": 137,
         "head": "^CĦUPAL: muchacha"
       },
-      "note": "Berendt prints xcħupal; his translation gives 'daughter'.",
       "attest": {
         "key": "berendt",
         "page": 11,
         "text": "u xchup-al a na.",
         "form": "xcħup-al"
-      }
+      },
+      "source_note": "Berendt prints xcħupal; his translation gives “daughter”."
     },
     {
       "id": "yw-zucun",
@@ -1080,7 +1115,7 @@
         "page": 286,
         "head": "^NOHOCH:"
       },
-      "note": "Nohoch yum, 'great father', is translated 'grandfather' in Berendt.",
+      "note": "Nohoch yum, “great father”, is your grandfather.",
       "attest": {
         "key": "berendt",
         "page": 12,
@@ -1096,12 +1131,12 @@
         "page": 196,
         "head": "^ICH: cara"
       },
-      "note": "Pío Pérez enters the word under ICH; Berendt prints uich.",
       "attest": {
         "key": "berendt",
         "page": 11,
         "text": "u uich op."
-      }
+      },
+      "source_note": "Pío Pérez enters the word under ICH; Berendt prints uich."
     },
     {
       "id": "yw-ni",
@@ -1194,7 +1229,7 @@
         "page": 295,
         "head": "^OC: pi[ée]"
       },
-      "note": "Berendt's yoc is u + oc, 'its leg': after u, a word that starts with a vowel takes y.",
+      "note": "u + oc makes yoc: its leg. Before a vowel, u turns into y.",
       "note_ref": {
         "key": "tozzer",
         "page": 73
@@ -1235,7 +1270,7 @@
         "daughter",
         "woman"
       ],
-      "note": "In Berendt's yal in kab the same word, with y, names a finger of the hand.",
+      "note": "Yal in kab is a finger of my hand: the same al, with y in front.",
       "attest": {
         "key": "berendt",
         "page": 13,
@@ -1266,7 +1301,7 @@
       "rule": {
         "note": "yn-1",
         "quote": 1,
-        "text": "a, 'your', goes in front of the thing it owns: a bel, your road."
+        "text": "a goes in front of what it owns: a bel, your health."
       }
     },
     {
@@ -1290,7 +1325,7 @@
       "rule": {
         "note": "yn-1",
         "quote": 1,
-        "text": "á, 'your', stands in front of kaba, 'name'. Max, 'who', opens the question."
+        "text": "Max, who, comes first. Then á kaba: your name."
       }
     },
     {
@@ -1351,7 +1386,7 @@
       "rule": {
         "note": "yn-1",
         "quote": 0,
-        "text": "Coten, 'come here', opens the line. The a in front of hanal is the same 'your' that stands with nouns: Beltrán's 'mixed' pronoun serves verbs too."
+        "text": "Coten, come, goes first. Same a as in a kaba: here it means you."
       }
     },
     {
@@ -1360,7 +1395,7 @@
       "page": 11,
       "maya": "Cu-len yokol tunich.",
       "show": "Culen yokol tunich.",
-      "show_note": "Berendt breaks 'Cu-len' across a line.",
+      "show_note": "Berendt splits Cu-len across two lines.",
       "en": "Sit down upon the stone.",
       "words": [
         "yw-culen",
@@ -1373,7 +1408,7 @@
         "tunich."
       ],
       "rule": {
-        "text": "As in English: the command first, then 'upon', then the stone."
+        "text": "Same order as English: sit down, upon, the stone."
       }
     },
     {
@@ -1423,7 +1458,7 @@
       "rule": {
         "note": "yn-2",
         "quote": 1,
-        "text": "Each number carries -pel, and catac, 'and', joins the two numbers before cu xocol, 'are counted'."
+        "text": "Each number ends in -pel. Catac, and, goes between them."
       }
     },
     {
@@ -1494,7 +1529,7 @@
       "page": 13,
       "maya": "oxtul xib-lal y catul cħuplal",
       "show": "oxtul xiblal y catul cħuplal",
-      "show_note": "Berendt breaks 'xib-lal' across a line; the y is his barred y, short for yetel, 'and'.",
+      "show_note": "Berendt splits xib-lal across two lines. His y has a bar through it: short for yetel, “and”.",
       "en": "three males and two females",
       "words": [
         "yw-ox",
@@ -1518,7 +1553,7 @@
         "explain": {
           "note": "yn-2",
           "quote": 1,
-          "text": "Men are counted with -tul. Oxpel would count three things."
+          "text": "People take -tul. Oxpel would be three things."
         }
       }
     },
@@ -1528,7 +1563,7 @@
       "page": 11,
       "maya": "U me-hen in yum.",
       "show": "U mehen in yum.",
-      "show_note": "Berendt hyphenates syllables in this lesson: me-hen.",
+      "show_note": "Berendt splits the words into syllables in this lesson: me-hen.",
       "en": "My father's son.",
       "words": [
         "yw-u",
@@ -1545,7 +1580,7 @@
       "rule": {
         "note": "yn-3",
         "quote": 0,
-        "text": "The son comes first, with u, 'his'; the owner, in yum, 'my father', follows: 'his son, my father'."
+        "text": "Son first: u mehen, his son. Then whose: in yum, my father."
       }
     },
     {
@@ -1554,7 +1589,7 @@
       "page": 11,
       "maya": "u xchup-al a na.",
       "show": "u xcħupal a na.",
-      "show_note": "The page image prints xcħup-al with a barred h; the transcription reads xchup-al.",
+      "show_note": "The page prints xcħup-al with a barred h; the transcription reads xchup-al.",
       "en": "your mother's daughter.",
       "words": [
         "yw-u",
@@ -1571,7 +1606,7 @@
       "rule": {
         "note": "yn-3",
         "quote": 0,
-        "text": "The daughter comes first, with u, 'her'; the owner, a na, 'your mother', follows."
+        "text": "Daughter first: u xcħupal, her daughter. Then whose: a na, your mother."
       }
     },
     {
@@ -1618,7 +1653,7 @@
       "page": 11,
       "maya": "u noh-yum in cic.",
       "show": "u nohyum in cic.",
-      "show_note": "Berendt hyphenates syllables in this lesson: noh-yum.",
+      "show_note": "Berendt splits the words into syllables in this lesson: noh-yum.",
       "en": "my older sister's grandfather.",
       "words": [
         "yw-u",
@@ -1635,7 +1670,7 @@
       "rule": {
         "note": "yn-3",
         "quote": 0,
-        "text": "The grandfather comes first, with u; the owner, in cic, 'my older sister', follows."
+        "text": "Grandfather first: u nohyum. Then whose: in cic, my older sister."
       }
     },
     {
@@ -1655,7 +1690,7 @@
       "page": 11,
       "maya": "u pol kix-pach-och.",
       "show": "u pol kixpachoch.",
-      "show_note": "Berendt hyphenates syllables in this lesson: kix-pach-och.",
+      "show_note": "Berendt splits the words into syllables in this lesson: kix-pach-och.",
       "en": "the opossum's head.",
       "words": [
         "yw-u",
@@ -1695,7 +1730,7 @@
       "page": 11,
       "maya": "ox-pel yoc in caa.",
       "show": "oxpel yoc in caa.",
-      "show_note": "Berendt hyphenates syllables in this lesson: ox-pel.",
+      "show_note": "Berendt splits the words into syllables in this lesson: ox-pel.",
       "en": "the three legs of my grinding stone.",
       "words": [
         "yw-ox",
@@ -1736,7 +1771,15 @@
           ],
           "sentences": [
             "ys-bix-a-bel"
-          ]
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "u:3"
+            ],
+            "spells": "u",
+            "says": "This is u, his or her, as carved in stone. You will see it again in u kaba."
+          }
         },
         {
           "id": "yl-1-2",
@@ -1750,7 +1793,18 @@
           "sentences": [
             "ys-max-kaba",
             "ys-in-kaba"
-          ]
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "u:3",
+              "k'a:1",
+              "b'a:1"
+            ],
+            "spells": "u k'a-ba",
+            "word": "yw-kaba",
+            "says": "This spells u k'a-ba: u kaba, his name. Same word in glyphs."
+          }
         },
         {
           "id": "yl-1-3",
@@ -1766,7 +1820,12 @@
           ],
           "sentences": [
             "ys-hahal"
-          ]
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-eb",
+            "says": "Eb, a day sign in the Dresden Codex: a face in profile."
+          }
         },
         {
           "id": "yl-1-4",
@@ -1783,7 +1842,12 @@
           "sentences": [
             "ys-utz-lob",
             "ys-in-kaba"
-          ]
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-kan",
+            "says": "Kan, a day sign in the Dresden Codex. Pío Pérez gives kan as yellow."
+          }
         },
         {
           "id": "yl-1-5",
@@ -1799,7 +1863,12 @@
             "ys-coten",
             "ys-xen",
             "ys-talez"
-          ]
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-manik",
+            "says": "Manik, a day sign in the Dresden Codex: a shape like a hand."
+          }
         },
         {
           "id": "yl-1-6",
@@ -1815,7 +1884,18 @@
           ],
           "sentences": [
             "ys-culen"
-          ]
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "tu:1",
+              "ni:1"
+            ],
+            "spells": "tu-ni",
+            "word": "yw-tunich",
+            "spelling_ref": "wayeb2025 logogram TUN: tuun, stone; spelled tu-ni",
+            "says": "This spells tu-ni: tun, stone. Your word tunich means stone too."
+          }
         }
       ]
     },
@@ -1835,7 +1915,13 @@
             "yw-can",
             "yw-ho"
           ],
-          "sentences": []
+          "sentences": [],
+          "glyph": {
+            "kind": "numeral",
+            "value": 5,
+            "word": "yw-ho",
+            "says": "Five: one bar. Ho in Maya."
+          }
         },
         {
           "id": "yl-2-2",
@@ -1851,7 +1937,13 @@
             "yw-ox",
             "yw-can"
           ],
-          "sentences": []
+          "sentences": [],
+          "glyph": {
+            "kind": "numeral",
+            "value": 10,
+            "word": "yw-lahun",
+            "says": "Ten: two bars. Lahun in Maya."
+          }
         },
         {
           "id": "yl-2-3",
@@ -1868,7 +1960,13 @@
             "yw-bolonlahun",
             "yw-hunkal"
           ],
-          "sentences": []
+          "sentences": [],
+          "glyph": {
+            "kind": "numeral",
+            "value": 19,
+            "word": "yw-bolonlahun",
+            "says": "Nineteen: three bars and four dots. Bolonlahun in Maya."
+          }
         },
         {
           "id": "yl-2-4",
@@ -1884,7 +1982,13 @@
             "ys-oxpel-ti",
             "ys-oxlem",
             "ys-oxtul"
-          ]
+          ],
+          "glyph": {
+            "kind": "numeral",
+            "value": 7,
+            "word": "yw-uuc",
+            "says": "Seven: one bar and two dots. Campel catac oxpel: four and three make uucpel."
+          }
         }
       ]
     },
@@ -1912,7 +2016,18 @@
             "ys-mehen-yum",
             "ys-chupal-na",
             "ys-campel-yum"
-          ]
+          ],
+          "glyph": {
+            "kind": "stuart",
+            "signs": [
+              "ya:3",
+              "la:1"
+            ],
+            "spells": "ya-la",
+            "word": "yw-al",
+            "spelling_ref": "wayeb2025 logogram AL/YAL: (mother's) son; spelled ya-la",
+            "says": "This spells ya-la: yal, a woman’s child. Same word as al."
+          }
         },
         {
           "id": "yl-3-2",
@@ -1930,7 +2045,12 @@
             "ys-nohoch",
             "ys-cic",
             "ys-tal-yum"
-          ]
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-chuen",
+            "says": "Chuen, a day sign in the Dresden Codex: two curls facing each other."
+          }
         },
         {
           "id": "yl-3-3",
@@ -1945,7 +2065,12 @@
           "sentences": [
             "ys-pol",
             "ys-uich"
-          ]
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-cimi",
+            "says": "Cimi, a day sign in the Dresden Codex: a closed eye with lashes."
+          }
         },
         {
           "id": "yl-3-4",
@@ -1964,7 +2089,13 @@
             "ys-kab",
             "ys-oc",
             "ys-puczikal"
-          ]
+          ],
+          "glyph": {
+            "kind": "day",
+            "item": "study-day-oc",
+            "word": "yw-oc",
+            "says": "Oc, a day sign in the Dresden Codex. Pío Pérez gives oc as foot and leg: your word oc."
+          }
         }
       ]
     }

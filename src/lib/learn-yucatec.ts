@@ -29,7 +29,10 @@ export interface Word {
   form: string;
   short: string;
   number: number | null;
+  /** One plain line of lesson content. */
   note: string | null;
+  /** Spelling and source matters: shown only behind the "From the book" tap. */
+  source_note: string | null;
   note_ref: { key: string; page: number; url: string } | null;
   dict: { key: string; page: number; url: string; es: string; en: string };
   attest: { key: string; page: number; url: string; text: string; form: string; checked: string | null };
@@ -65,12 +68,20 @@ export interface Sentence {
 export interface Note {
   id: string;
   title: string;
+  /** Maya first: [maya, english] rows, then the one plain line in `body`. */
+  examples: [string, string][];
   body: string;
   quotes: (Quote & { cite: string })[];
   table: { key: string; page: number; url: string; cite: string; rows: [string, string, string][] } | null;
 }
 
-export interface Lesson { id: string; title: string; new: string[]; review?: string[]; sentences: string[] }
+/** The real glyph a lesson carries (resolved and checked by the builder; never drawn by hand). */
+export type Glyph =
+  | { kind: 'numeral'; value: number; word: string | null; says: string }
+  | { kind: 'stuart'; signs: { id: string; value: string; url: string; w: number; h: number }[]; spells: string; word: string | null; spelling_ref: string | null; says: string; credit: string }
+  | { kind: 'day'; item: string; sign: string; crop_url: string; codex_page: number; url: string; word: string | null; says: string };
+
+export interface Lesson { id: string; title: string; new: string[]; review?: string[]; sentences: string[]; glyph: Glyph }
 export interface Unit { id: string; n: number; title: string; note: string; lessons: Lesson[] }
 
 export interface Course {
@@ -426,6 +437,11 @@ export function isUnlocked(p: Progress, lessonId: string): boolean {
   const ls = allLessons();
   const i = ls.findIndex((l) => l.id === lessonId);
   return i === 0 || (i > 0 && !!p.lessons[ls[i - 1].id]);
+}
+
+/** Distinct words in the lessons finished so far: the count the lesson-complete screen shows. */
+export function wordsLearned(p: Progress): number {
+  return new Set(allLessons().filter((l) => p.lessons[l.id]).flatMap((l) => l.new)).size;
 }
 
 export function nextLesson(p: Progress): Lesson | null {

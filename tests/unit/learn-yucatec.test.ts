@@ -231,3 +231,41 @@ describe('modern forms and validation', () => {
     expect(validateProposal({ word_id: 'zz', form: 'x' })).toBe('bad word_id');
   });
 });
+
+describe('plain words and glyphs (Derek, 2026-10-18)', () => {
+  const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
+  const authored = () => [
+    ...COURSE.notes.flatMap((n) => [n.title, n.body]),
+    ...COURSE.words.map((w) => w.note ?? ''),
+    ...COURSE.sentences.flatMap((s) => [s.rule?.text ?? '', s.fill_text?.explain?.text ?? '']),
+    ...allLessons().map((l) => l.glyph.says),
+  ].filter(Boolean);
+
+  it('a grammar card leads with Maya examples and says one short thing', () => {
+    for (const n of COURSE.notes) {
+      expect(n.examples.length, n.id).toBeGreaterThan(0);
+      expect(words(n.body), n.id).toBeLessThanOrEqual(25);
+    }
+  });
+
+  it('lesson English uses no grammar terms or semicolons', () => {
+    for (const t of authored()) {
+      expect(t, t).not.toMatch(/\b(pronoun|plural|imperative|possessive|suffix|prefix)s?\b/i);
+      expect(t, t).not.toContain(';');
+      expect(words(t), t).toBeLessThanOrEqual(25);
+    }
+  });
+
+  it('every lesson carries a held glyph, and a Stuart drawing is credited', () => {
+    for (const l of allLessons()) {
+      const g = l.glyph;
+      expect(g, l.id).toBeTruthy();
+      if (g.kind === 'stuart') {
+        expect(g.credit).toBe('Drawing © David Stuart, used with permission');
+        for (const s of g.signs) expect(s.url).toMatch(/^https:\/\/images\.sourcelibrary\.org\/reference\/maya\/stuart-syllabary-v2\//);
+      }
+      if (g.kind === 'day') expect(g.crop_url).toMatch(/^https:\/\/images\.sourcelibrary\.org\/learn-maya\//);
+      if (g.kind === 'numeral' && g.word) expect(wordById(g.word)!.number).toBe(g.value);
+    }
+  });
+});

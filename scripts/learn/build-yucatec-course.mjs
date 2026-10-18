@@ -129,6 +129,7 @@ for (const w of SRC.words) {
     short: w.short,
     number: w.number ?? null,
     note: w.note ?? null,
+    source_note: w.source_note ?? null,
     note_ref: w.note_ref ? { ...w.note_ref, url: url(w.note_ref.key, w.note_ref.page) } : null,
     dict,
     attest: { key: a.key, page: a.page, url: url(a.key, a.page), text: a.text, form: a.form || w.form, checked: checked(a.key, a.page) },
@@ -184,6 +185,12 @@ for (const s of SRC.sentences) {
   });
 }
 
+// Every Maya word a learner can meet in the course, for checking a note's examples.
+const KNOWN = new Set([
+  ...SRC.words.flatMap((w) => [w.form, w.attest.form || w.form]),
+  ...sentences.flatMap((s) => s.show.split(/\s+/)),
+].map((t) => t.toLowerCase().replace(/[.,;:¿?¡!]/g, '')));
+
 const notes = [];
 for (const n of SRC.notes) {
   const quotes = [];
@@ -201,7 +208,52 @@ for (const n of SRC.notes) {
     if (!ok) refuse(n.id, 'table cell not on the page');
     else table = { ...n.table, url: url(n.table.key, n.table.page), cite: B[n.table.key].cite };
   }
-  notes.push({ id: n.id, title: n.title, body: n.body, quotes, table });
+  // The card leads with Maya the learner will meet: every word of an example is a course word or on a course line.
+  for (const [maya] of n.examples || []) {
+    const unknown = maya.toLowerCase().split(/\s+/).filter((t) => !KNOWN.has(t));
+    if (unknown.length) refuse(n.id, `example "${maya}": ${unknown.join(', ')} not in the course`);
+  }
+  if (!n.examples?.length) refuse(n.id, 'no examples');
+  notes.push({ id: n.id, title: n.title, examples: n.examples || [], body: n.body, quotes, table });
+}
+
+/**
+ * One real glyph per lesson, never drawn here: a bar-and-dot numeral (drawn by
+ * <Numeral> from the value), a Stuart syllabary drawing (only certain, filled
+ * cells with granted rights), or a Dresden day-sign crop already shown by a
+ * live /learn/maya study card.
+ */
+const units = [];
+for (const u of SRC.units) {
+  const lessons = [];
+  for (const l of u.lessons) {
+    const g = l.glyph;
+    let glyph = null;
+    if (!g) refuse(l.id, 'no glyph');
+    else if (g.word && !wordIds.has(g.word)) refuse(l.id, `glyph word ${g.word} unknown`);
+    else if (g.kind === 'numeral') {
+      const w = g.word && SRC.words.find((x) => x.id === g.word);
+      if (!Number.isInteger(g.value) || g.value < 1 || g.value > 19 || (w && w.number !== g.value)) refuse(l.id, `numeral ${g.value} does not match ${g.word}`);
+      else glyph = { kind: 'numeral', value: g.value, word: g.word || null, says: g.says };
+    } else if (g.kind === 'stuart') {
+      const signs = [];
+      for (const ref of g.signs) {
+        const [value, variant] = ref.split(':');
+        const d = await db.collection('maya_signs').findOne({ source: 'stuart-syllabary-v2', value, variant: Number(variant) }, { projection: { 'image.data': 0 } });
+        if (!d || d.empty || d.uncertain || !d.image?.url || !String(d.rights?.permission || '').startsWith('granted')) { refuse(l.id, `Stuart ${ref} missing, empty, uncertain or not cleared`); continue; }
+        signs.push({ id: d._id, value: d.value, url: d.image.url, w: d.image.w, h: d.image.h });
+      }
+      if (signs.length === g.signs.length) glyph = { kind: 'stuart', signs, spells: g.spells, word: g.word || null, spelling_ref: g.spelling_ref || null, says: g.says, credit: 'Drawing © David Stuart, used with permission' };
+    } else if (g.kind === 'day') {
+      const d = await db.collection('learn_maya_items').findOne({ _id: g.item, rung: 'study', status: 'live' }, { projection: { title: 1, figures: 1 } });
+      const f = d?.figures?.find((x) => x.kind === 'codex' && x.crop_url);
+      const page = f && /page (\d+)/.exec(f.label || '');
+      if (!f || !page) refuse(l.id, `day-sign card ${g.item} missing or has no codex crop`);
+      else glyph = { kind: 'day', item: g.item, sign: d.title, crop_url: f.crop_url, codex_page: Number(page[1]), url: f.url.replace(/^https:\/\/sourcelibrary\.org/, ''), word: g.word || null, says: g.says };
+    } else refuse(l.id, `glyph kind ${g.kind}`);
+    lessons.push({ ...l, glyph });
+  }
+  units.push({ ...u, lessons });
 }
 
 const sentenceIds = new Set(sentences.map((s) => s.id));
@@ -233,7 +285,7 @@ const course = {
   notes,
   words,
   sentences,
-  units: SRC.units,
+  units,
 };
 if (WRITE) {
   fs.mkdirSync(path.dirname(OUT), { recursive: true });

@@ -42,8 +42,22 @@
  "notes": [
   {
    "id": "yn-1",
-   "title": "in, a, u: my, your, his",
-   "body": "Maya says whose a thing is with a short word in front of it: in kaba, my name; a kaba, your name; u kaba, his or her name. The same three words also stand in front of verbs, which is why Beltrán calls them 'mixed' pronouns.",
+   "title": "My, your, his",
+   "examples": [
+    [
+     "in kaba",
+     "my name"
+    ],
+    [
+     "a kaba",
+     "your name"
+    ],
+    [
+     "u kaba",
+     "his or her name"
+    ]
+   ],
+   "body": "Put in, a or u in front of a word to say whose it is.",
    "quotes": [
     {
      "key": "arte",
@@ -95,8 +109,18 @@
   },
   {
    "id": "yn-2",
-   "title": "Numbers take an ending",
-   "body": "A Maya number does not stand alone. It takes an ending that says what kind of thing is counted: -tul for people and animals, -pel for things. Ox is three; oxtul xiblal is three men, oxpel is three things. From 13 to 19 the number is a unit and ten: ox-la-hun, three-ten. Tozzer writes š where the older books write x, so his oš is ox.",
+   "title": "Counting people and things",
+   "examples": [
+    [
+     "oxtul xiblal",
+     "three men"
+    ],
+    [
+     "oxpel",
+     "three things"
+    ]
+   ],
+   "body": "A number never stands alone. Add -tul to count people, -pel to count things.",
    "quotes": [
     {
      "key": "tozzer",
@@ -138,8 +162,18 @@
   },
   {
    "id": "yn-3",
-   "title": "Whose: the owned thing comes first",
-   "body": "To say 'my father's son', Maya puts the son first and the father after: u mehen in yum, 'his son, my father'. The u ('his') goes on the thing owned, and the owner follows.",
+   "title": "Whose son?",
+   "examples": [
+    [
+     "u mehen in yum",
+     "my father’s son"
+    ],
+    [
+     "u xcħupal a na",
+     "your mother’s daughter"
+    ]
+   ],
+   "body": "Say the thing first, with u. Then say whose it is.",
    "quotes": [
     {
      "key": "tozzer",
@@ -166,6 +200,7 @@
    "short": "how",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -191,6 +226,7 @@
    "short": "state of health; used in greeting",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -216,6 +252,7 @@
    "short": "your",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "coord",
@@ -241,6 +278,7 @@
    "short": "my",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "coord",
@@ -266,6 +304,7 @@
    "short": "his, her, its",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "coord",
@@ -291,6 +330,7 @@
    "short": "good",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -316,6 +356,7 @@
    "short": "harm, a bad thing",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -341,6 +382,7 @@
    "short": "name",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -365,7 +407,8 @@
    "form": "max",
    "short": "who",
    "number": null,
-   "note": "Pío Pérez enters it as mac and maax; Beltrán's catechism prints max.",
+   "note": null,
+   "source_note": "Pío Pérez enters it as mac and maax; Beltrán’s catechism prints max.",
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -390,7 +433,8 @@
    "form": "ua ix",
    "short": "or",
    "number": null,
-   "note": "Pío Pérez writes it as one word, uaix.",
+   "note": null,
+   "source_note": "Pío Pérez writes it as one word, uaix.",
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -415,7 +459,8 @@
    "form": "pal",
    "short": "boy, child",
    "number": null,
-   "note": "The catechist calls the child Pale.",
+   "note": "In the catechism the priest calls out Pale: “Child!”",
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -441,6 +486,7 @@
    "short": "man, person",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -466,6 +512,7 @@
    "short": "true",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -491,6 +538,7 @@
    "short": "male, the man",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -515,7 +563,8 @@
    "form": "cħuplal",
    "short": "girl, young woman",
    "number": null,
-   "note": "Cħuplal is the plural of cħupal (Coordinación, same page). Berendt's translation renders it 'woman'.",
+   "note": null,
+   "source_note": "The Coordinación (same page) gives cħuplal as the plural of cħupal. Berendt’s translation renders it “woman”.",
    "note_ref": null,
    "dict": {
     "key": "coord",
@@ -541,6 +590,7 @@
    "short": "lady",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -566,6 +616,7 @@
    "short": "old man",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -591,6 +642,7 @@
    "short": "child, youth",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -616,6 +668,7 @@
    "short": "come here",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "motul1",
@@ -641,6 +694,7 @@
    "short": "go away",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -665,7 +719,8 @@
    "form": "talez",
    "short": "bring",
    "number": null,
-   "note": "Pío Pérez enters the verb as talezah; Berendt prints the command, talez.",
+   "note": null,
+   "source_note": "Pío Pérez enters the verb as talezah; Berendt prints the command, talez.",
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -690,7 +745,8 @@
    "form": "culen",
    "short": "sit down",
    "number": null,
-   "note": "The dictionary enters the verb as cultal; Berendt and Ruz print the command, culen.",
+   "note": null,
+   "source_note": "The dictionary enters the verb as cultal; Berendt and Ruz print the command, culen.",
    "note_ref": null,
    "dict": {
     "key": "coord",
@@ -716,6 +772,7 @@
    "short": "to eat",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -741,6 +798,7 @@
    "short": "fish",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -766,6 +824,7 @@
    "short": "stone",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -791,6 +850,7 @@
    "short": "above, upon",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -816,6 +876,7 @@
    "short": "one",
    "number": 1,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -848,6 +909,7 @@
    "short": "two",
    "number": 2,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -880,6 +942,7 @@
    "short": "three",
    "number": 3,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -912,6 +975,7 @@
    "short": "four",
    "number": 4,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -944,6 +1008,7 @@
    "short": "five",
    "number": 5,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -969,6 +1034,7 @@
    "short": "six",
    "number": 6,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1001,6 +1067,7 @@
    "short": "seven",
    "number": 7,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1033,6 +1100,7 @@
    "short": "eight",
    "number": 8,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1065,6 +1133,7 @@
    "short": "nine",
    "number": 9,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1090,6 +1159,7 @@
    "short": "ten",
    "number": 10,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1122,6 +1192,7 @@
    "short": "eleven",
    "number": 11,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1154,6 +1225,7 @@
    "short": "twelve",
    "number": 12,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1185,7 +1257,8 @@
    "form": "oxlahun",
    "short": "thirteen",
    "number": 13,
-   "note": null,
+   "note": "Ox + lahun: three and ten. Up to nineteen, the teens are built the same way.",
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1218,6 +1291,7 @@
    "short": "fourteen",
    "number": 14,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1250,6 +1324,7 @@
    "short": "fifteen",
    "number": 15,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1282,6 +1357,7 @@
    "short": "sixteen",
    "number": 16,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1314,6 +1390,7 @@
    "short": "seventeen",
    "number": 17,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1346,6 +1423,7 @@
    "short": "eighteen",
    "number": 18,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1378,6 +1456,7 @@
    "short": "nineteen",
    "number": 19,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1403,6 +1482,7 @@
    "short": "twenty",
    "number": 20,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1427,7 +1507,8 @@
    "form": "-pel",
    "short": "ending for counting things",
    "number": null,
-   "note": "Pío Pérez spells it ppel; Berendt prints oxpel, campel, uucpel.",
+   "note": null,
+   "source_note": "Pío Pérez spells it ppel; Berendt prints oxpel, campel, uucpel.",
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1453,6 +1534,7 @@
    "short": "ending for counting people",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1478,6 +1560,7 @@
    "short": "and (between numbers)",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1503,6 +1586,7 @@
    "short": "to count, to read",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1528,6 +1612,7 @@
    "short": "father, lord",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1552,7 +1637,8 @@
    "form": "na",
    "short": "mother",
    "number": null,
-   "note": "The same page has na, house: the vowel of 'mother' is said strongly, and some write it naa.",
+   "note": "Na also means house. In “mother” the vowel is said strongly, so some write naa.",
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1578,6 +1664,7 @@
    "short": "son",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1602,7 +1689,8 @@
    "form": "cħupal",
    "short": "girl, young woman",
    "number": null,
-   "note": "Berendt prints xcħupal; his translation gives 'daughter'.",
+   "note": null,
+   "source_note": "Berendt prints xcħupal; his translation gives “daughter”.",
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1628,6 +1716,7 @@
    "short": "elder brother",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1653,6 +1742,7 @@
    "short": "elder sister",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1677,7 +1767,8 @@
    "form": "nohoch",
    "short": "large",
    "number": null,
-   "note": "Nohoch yum, 'great father', is translated 'grandfather' in Berendt.",
+   "note": "Nohoch yum, “great father”, is your grandfather.",
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1702,7 +1793,8 @@
    "form": "uich",
    "short": "face, eyes, fruit",
    "number": null,
-   "note": "Pío Pérez enters the word under ICH; Berendt prints uich.",
+   "note": null,
+   "source_note": "Pío Pérez enters the word under ICH; Berendt prints uich.",
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1728,6 +1820,7 @@
    "short": "nose",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1753,6 +1846,7 @@
    "short": "mouth",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "coord",
@@ -1778,6 +1872,7 @@
    "short": "ear",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1803,6 +1898,7 @@
    "short": "head",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1828,6 +1924,7 @@
    "short": "arm, hand",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1852,7 +1949,8 @@
    "form": "oc",
    "short": "foot, leg",
    "number": null,
-   "note": "Berendt's yoc is u + oc, 'its leg': after u, a word that starts with a vowel takes y.",
+   "note": "u + oc makes yoc: its leg. Before a vowel, u turns into y.",
+   "source_note": null,
    "note_ref": {
     "key": "tozzer",
     "page": 73,
@@ -1882,6 +1980,7 @@
    "short": "heart",
    "number": null,
    "note": null,
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1906,7 +2005,8 @@
    "form": "al",
    "short": "a woman's child",
    "number": null,
-   "note": "In Berendt's yal in kab the same word, with y, names a finger of the hand.",
+   "note": "Yal in kab is a finger of my hand: the same al, with y in front.",
+   "source_note": null,
    "note_ref": null,
    "dict": {
     "key": "piop",
@@ -1953,7 +2053,7 @@
    "rule": {
     "note": "yn-1",
     "quote": 1,
-    "text": "a, 'your', goes in front of the thing it owns: a bel, your road."
+    "text": "a goes in front of what it owns: a bel, your health."
    },
    "fill": null,
    "fill_text": null,
@@ -1985,7 +2085,7 @@
    "rule": {
     "note": "yn-1",
     "quote": 1,
-    "text": "á, 'your', stands in front of kaba, 'name'. Max, 'who', opens the question."
+    "text": "Max, who, comes first. Then á kaba: your name."
    },
    "fill": null,
    "fill_text": null,
@@ -2086,7 +2186,7 @@
    "rule": {
     "note": "yn-1",
     "quote": 0,
-    "text": "Coten, 'come here', opens the line. The a in front of hanal is the same 'your' that stands with nouns: Beltrán's 'mixed' pronoun serves verbs too."
+    "text": "Coten, come, goes first. Same a as in a kaba: here it means you."
    },
    "fill": null,
    "fill_text": null,
@@ -2099,7 +2199,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
    "maya": "Cu-len yokol tunich.",
    "show": "Culen yokol tunich.",
-   "show_note": "Berendt breaks 'Cu-len' across a line.",
+   "show_note": "Berendt splits Cu-len across two lines.",
    "es": null,
    "en": "Sit down upon the stone.",
    "en_short": null,
@@ -2115,7 +2215,7 @@
    ],
    "tiles_en": null,
    "rule": {
-    "text": "As in English: the command first, then 'upon', then the stone."
+    "text": "Same order as English: sit down, upon, the stone."
    },
    "fill": null,
    "fill_text": null,
@@ -2194,7 +2294,7 @@
    "rule": {
     "note": "yn-2",
     "quote": 1,
-    "text": "Each number carries -pel, and catac, 'and', joins the two numbers before cu xocol, 'are counted'."
+    "text": "Each number ends in -pel. Catac, and, goes between them."
    },
    "fill": null,
    "fill_text": null,
@@ -2287,7 +2387,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
    "maya": "oxtul xib-lal y catul cħuplal",
    "show": "oxtul xiblal y catul cħuplal",
-   "show_note": "Berendt breaks 'xib-lal' across a line; the y is his barred y, short for yetel, 'and'.",
+   "show_note": "Berendt splits xib-lal across two lines. His y has a bar through it: short for yetel, “and”.",
    "es": null,
    "en": "three males and two females",
    "en_short": null,
@@ -2317,7 +2417,7 @@
     "explain": {
      "note": "yn-2",
      "quote": 1,
-     "text": "Men are counted with -tul. Oxpel would count three things."
+     "text": "People take -tul. Oxpel would be three things."
     }
    },
    "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
@@ -2329,7 +2429,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
    "maya": "U me-hen in yum.",
    "show": "U mehen in yum.",
-   "show_note": "Berendt hyphenates syllables in this lesson: me-hen.",
+   "show_note": "Berendt splits the words into syllables in this lesson: me-hen.",
    "es": null,
    "en": "My father's son.",
    "en_short": null,
@@ -2349,7 +2449,7 @@
    "rule": {
     "note": "yn-3",
     "quote": 0,
-    "text": "The son comes first, with u, 'his'; the owner, in yum, 'my father', follows: 'his son, my father'."
+    "text": "Son first: u mehen, his son. Then whose: in yum, my father."
    },
    "fill": null,
    "fill_text": null,
@@ -2362,7 +2462,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
    "maya": "u xchup-al a na.",
    "show": "u xcħupal a na.",
-   "show_note": "The page image prints xcħup-al with a barred h; the transcription reads xchup-al.",
+   "show_note": "The page prints xcħup-al with a barred h; the transcription reads xchup-al.",
    "es": null,
    "en": "your mother's daughter.",
    "en_short": null,
@@ -2382,7 +2482,7 @@
    "rule": {
     "note": "yn-3",
     "quote": 0,
-    "text": "The daughter comes first, with u, 'her'; the owner, a na, 'your mother', follows."
+    "text": "Daughter first: u xcħupal, her daughter. Then whose: a na, your mother."
    },
    "fill": null,
    "fill_text": null,
@@ -2463,7 +2563,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
    "maya": "u noh-yum in cic.",
    "show": "u nohyum in cic.",
-   "show_note": "Berendt hyphenates syllables in this lesson: noh-yum.",
+   "show_note": "Berendt splits the words into syllables in this lesson: noh-yum.",
    "es": null,
    "en": "my older sister's grandfather.",
    "en_short": null,
@@ -2483,7 +2583,7 @@
    "rule": {
     "note": "yn-3",
     "quote": 0,
-    "text": "The grandfather comes first, with u; the owner, in cic, 'my older sister', follows."
+    "text": "Grandfather first: u nohyum. Then whose: in cic, my older sister."
    },
    "fill": null,
    "fill_text": null,
@@ -2518,7 +2618,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
    "maya": "u pol kix-pach-och.",
    "show": "u pol kixpachoch.",
-   "show_note": "Berendt hyphenates syllables in this lesson: kix-pach-och.",
+   "show_note": "Berendt splits the words into syllables in this lesson: kix-pach-och.",
    "es": null,
    "en": "the opossum's head.",
    "en_short": null,
@@ -2587,7 +2687,7 @@
    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
    "maya": "ox-pel yoc in caa.",
    "show": "oxpel yoc in caa.",
-   "show_note": "Berendt hyphenates syllables in this lesson: ox-pel.",
+   "show_note": "Berendt splits the words into syllables in this lesson: ox-pel.",
    "es": null,
    "en": "the three legs of my grinding stone.",
    "en_short": null,
@@ -2646,7 +2746,24 @@
      ],
      "sentences": [
       "ys-bix-a-bel"
-     ]
+     ],
+     "glyph": {
+      "kind": "stuart",
+      "signs": [
+       {
+        "id": "stuart2013:u:3",
+        "value": "u",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-3-1bccfedb.png",
+        "w": 86,
+        "h": 93
+       }
+      ],
+      "spells": "u",
+      "word": null,
+      "spelling_ref": null,
+      "says": "This is u, his or her, as carved in stone. You will see it again in u kaba.",
+      "credit": "Drawing © David Stuart, used with permission"
+     }
     },
     {
      "id": "yl-1-2",
@@ -2660,7 +2777,38 @@
      "sentences": [
       "ys-max-kaba",
       "ys-in-kaba"
-     ]
+     ],
+     "glyph": {
+      "kind": "stuart",
+      "signs": [
+       {
+        "id": "stuart2013:u:3",
+        "value": "u",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-u-3-1bccfedb.png",
+        "w": 86,
+        "h": 93
+       },
+       {
+        "id": "stuart2013:k'a:1",
+        "value": "k'a",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-k-a-1-f9187661.png",
+        "w": 131,
+        "h": 115
+       },
+       {
+        "id": "stuart2013:b'a:1",
+        "value": "b'a",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-b-a-1-28d3df35.png",
+        "w": 110,
+        "h": 122
+       }
+      ],
+      "spells": "u k'a-ba",
+      "word": "yw-kaba",
+      "spelling_ref": null,
+      "says": "This spells u k'a-ba: u kaba, his name. Same word in glyphs.",
+      "credit": "Drawing © David Stuart, used with permission"
+     }
     },
     {
      "id": "yl-1-3",
@@ -2676,7 +2824,17 @@
      ],
      "sentences": [
       "ys-hahal"
-     ]
+     ],
+     "glyph": {
+      "kind": "day",
+      "item": "study-day-eb",
+      "sign": "Eb",
+      "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g42-1-2abbea67.jpg",
+      "codex_page": 53,
+      "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+      "word": null,
+      "says": "Eb, a day sign in the Dresden Codex: a face in profile."
+     }
     },
     {
      "id": "yl-1-4",
@@ -2693,7 +2851,17 @@
      "sentences": [
       "ys-utz-lob",
       "ys-in-kaba"
-     ]
+     ],
+     "glyph": {
+      "kind": "day",
+      "item": "study-day-kan",
+      "sign": "Kan",
+      "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g5-2-f86d4491.jpg",
+      "codex_page": 53,
+      "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+      "word": null,
+      "says": "Kan, a day sign in the Dresden Codex. Pío Pérez gives kan as yellow."
+     }
     },
     {
      "id": "yl-1-5",
@@ -2709,7 +2877,17 @@
       "ys-coten",
       "ys-xen",
       "ys-talez"
-     ]
+     ],
+     "glyph": {
+      "kind": "day",
+      "item": "study-day-manik",
+      "sign": "Manik",
+      "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g44-2-00648b8c.jpg",
+      "codex_page": 53,
+      "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+      "word": null,
+      "says": "Manik, a day sign in the Dresden Codex: a shape like a hand."
+     }
     },
     {
      "id": "yl-1-6",
@@ -2725,7 +2903,31 @@
      ],
      "sentences": [
       "ys-culen"
-     ]
+     ],
+     "glyph": {
+      "kind": "stuart",
+      "signs": [
+       {
+        "id": "stuart2013:tu:1",
+        "value": "tu",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-tu-1-3def7bb5.png",
+        "w": 66,
+        "h": 122
+       },
+       {
+        "id": "stuart2013:ni:1",
+        "value": "ni",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ni-1-281e5c8a.png",
+        "w": 145,
+        "h": 61
+       }
+      ],
+      "spells": "tu-ni",
+      "word": "yw-tunich",
+      "spelling_ref": "wayeb2025 logogram TUN: tuun, stone; spelled tu-ni",
+      "says": "This spells tu-ni: tun, stone. Your word tunich means stone too.",
+      "credit": "Drawing © David Stuart, used with permission"
+     }
     }
    ]
   },
@@ -2745,7 +2947,13 @@
       "yw-can",
       "yw-ho"
      ],
-     "sentences": []
+     "sentences": [],
+     "glyph": {
+      "kind": "numeral",
+      "value": 5,
+      "word": "yw-ho",
+      "says": "Five: one bar. Ho in Maya."
+     }
     },
     {
      "id": "yl-2-2",
@@ -2761,7 +2969,13 @@
       "yw-ox",
       "yw-can"
      ],
-     "sentences": []
+     "sentences": [],
+     "glyph": {
+      "kind": "numeral",
+      "value": 10,
+      "word": "yw-lahun",
+      "says": "Ten: two bars. Lahun in Maya."
+     }
     },
     {
      "id": "yl-2-3",
@@ -2778,7 +2992,13 @@
       "yw-bolonlahun",
       "yw-hunkal"
      ],
-     "sentences": []
+     "sentences": [],
+     "glyph": {
+      "kind": "numeral",
+      "value": 19,
+      "word": "yw-bolonlahun",
+      "says": "Nineteen: three bars and four dots. Bolonlahun in Maya."
+     }
     },
     {
      "id": "yl-2-4",
@@ -2794,7 +3014,13 @@
       "ys-oxpel-ti",
       "ys-oxlem",
       "ys-oxtul"
-     ]
+     ],
+     "glyph": {
+      "kind": "numeral",
+      "value": 7,
+      "word": "yw-uuc",
+      "says": "Seven: one bar and two dots. Campel catac oxpel: four and three make uucpel."
+     }
     }
    ]
   },
@@ -2822,7 +3048,31 @@
       "ys-mehen-yum",
       "ys-chupal-na",
       "ys-campel-yum"
-     ]
+     ],
+     "glyph": {
+      "kind": "stuart",
+      "signs": [
+       {
+        "id": "stuart2013:ya:3",
+        "value": "ya",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-ya-3-1ad0d1fe.png",
+        "w": 141,
+        "h": 117
+       },
+       {
+        "id": "stuart2013:la:1",
+        "value": "la",
+        "url": "https://images.sourcelibrary.org/reference/maya/stuart-syllabary-v2/stuart2013-la-1-58d19365.png",
+        "w": 134,
+        "h": 129
+       }
+      ],
+      "spells": "ya-la",
+      "word": "yw-al",
+      "spelling_ref": "wayeb2025 logogram AL/YAL: (mother's) son; spelled ya-la",
+      "says": "This spells ya-la: yal, a woman’s child. Same word as al.",
+      "credit": "Drawing © David Stuart, used with permission"
+     }
     },
     {
      "id": "yl-3-2",
@@ -2840,7 +3090,17 @@
       "ys-nohoch",
       "ys-cic",
       "ys-tal-yum"
-     ]
+     ],
+     "glyph": {
+      "kind": "day",
+      "item": "study-day-chuen",
+      "sign": "Chuen",
+      "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g43-3-d5f94d3a.jpg",
+      "codex_page": 53,
+      "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+      "word": null,
+      "says": "Chuen, a day sign in the Dresden Codex: two curls facing each other."
+     }
     },
     {
      "id": "yl-3-3",
@@ -2855,7 +3115,17 @@
      "sentences": [
       "ys-pol",
       "ys-uich"
-     ]
+     ],
+     "glyph": {
+      "kind": "day",
+      "item": "study-day-cimi",
+      "sign": "Cimi",
+      "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g4-1-db7e5efd.jpg",
+      "codex_page": 53,
+      "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+      "word": null,
+      "says": "Cimi, a day sign in the Dresden Codex: a closed eye with lashes."
+     }
     },
     {
      "id": "yl-3-4",
@@ -2874,7 +3144,17 @@
       "ys-kab",
       "ys-oc",
       "ys-puczikal"
-     ]
+     ],
+     "glyph": {
+      "kind": "day",
+      "item": "study-day-oc",
+      "sign": "Oc",
+      "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g43-2-f36da0e3.jpg",
+      "codex_page": 53,
+      "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+      "word": "yw-oc",
+      "says": "Oc, a day sign in the Dresden Codex. Pío Pérez gives oc as foot and leg: your word oc."
+     }
     }
    ]
   }

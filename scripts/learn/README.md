@@ -92,10 +92,13 @@ from `scripts/learn/yucatec-course-sources.json`. The builder refuses (exit 1) a
 | sources field | meaning |
 |---|---|
 | `page_checks["key:page"]` | what was seen on the page image, and where it differs from the OCR (line-break hyphens, a barred letter) |
-| `words[]` | `{ id: yw-*, form, short, dict: { key, page, head }, attest: { key, page, text, form? }, note?, note_ref?, number?, dresden? (a learn_maya_items numeral id), keywords? }` |
+| `words[]` | `{ id: yw-*, form, short, dict: { key, page, head }, attest: { key, page, text, form? }, note? (one plain line of lesson content), source_note? (spelling/source matters, shown only behind the "From …" tap), note_ref?, number?, dresden? (a learn_maya_items numeral id), keywords? }` |
 | `sentences[]` | `{ id: ys-*, key, page, maya (as transcribed), show? (hyphens joined, with show_note), es?, en, words, tiles?, rule?, fill? (word id) or fill_text? }` |
-| `notes[]` | `{ id: yn-*, title, body, quotes: [{ key, page, es?, en }], table? }` |
-| `units[]` | `{ id, n, title, note, lessons: [{ id: yl-u-n, title, new, review?, sentences }] }` |
+| `notes[]` | `{ id: yn-*, title, examples: [[maya, english]], body (one plain line, ≤25 words), quotes: [{ key, page, es?, en }], table? }`. The card shows the examples and the line; quotes and table sit behind the "From …" tap. Every Maya word of an example must be a course word or on a course line |
+| `units[]` | `{ id, n, title, note, lessons: [{ id: yl-u-n, title, new, review?, sentences, glyph }] }` |
+| `lessons[].glyph` | the lesson's real glyph, resolved by the builder: `{ kind: 'numeral', value (1–19, drawn by <Numeral>), word? }`, `{ kind: 'stuart', signs: ['value:variant'], spells, word?, spelling_ref? }` (only filled, certain `maya_signs` cells with granted rights; credited "Drawing © David Stuart, used with permission"; never shown as how the Dresden Codex writes it) or `{ kind: 'day', item: <live /learn/maya study card> }` (its Dresden crop); plus `says`, the one line shown when the glyph is tapped. No Morley, nothing redrawn |
+
+**Writing (Derek, 2026-10-18).** Example first, then one plain line; one idea per card; ≤25 words of English; second person; no grammar terms or semicolons (the unit tests check the last three). Right answer: one warm line. Wrong answer: what you picked means X, the answer is Y, one line why. Sources stay one tap away, never in the lesson text.
 
 **Modern forms.** Every word carries `modern: null`. A word shows a modern form only when `modern = { form, confirmed_by, date }` is filled (set in the built file by a reviewed change after a speaker confirms; `modernForm()`). Signed-in learners propose forms on a word's card: `POST /api/learn/yucatec/proposals` → `learn_yucatec_proposals` `{ word_id, form, place, note, learner, status: 'pending', created_at }`. Untrusted text; never shown; no job reads it today.
 
