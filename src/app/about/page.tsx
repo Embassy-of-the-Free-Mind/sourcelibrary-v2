@@ -5,7 +5,13 @@ import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import SiteHeader from '@/components/layout/SiteHeader';
 import AboutHero, { type HeroStat } from '@/components/about/AboutHero';
 import WrittenPastChart from '@/components/about/WrittenPastChart';
+import ReadingDemo from '@/components/about/ReadingDemo';
 import { getSiteStats } from '@/lib/site-stats';
+
+// The hero stats come from system_config.homepage_stats, which a job refreshes
+// daily at 05:00. Without a revalidate window this page was prerendered once per
+// deploy and its numbers froze until the next merge.
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'About - Source Library',
@@ -44,21 +50,25 @@ const STEPS: { title: string; body: ReactNode }[] = [
   },
   {
     title: 'Read',
-    body: 'AI transcribes every page, old typefaces, abbreviations and handwriting included.',
+    body: 'AI transcribes each page, old typefaces, abbreviations and handwriting included.',
   },
   {
     title: 'Translate',
     body: 'Each page is translated into English and shown next to the scan, so any line can be checked against the original.',
   },
   {
+    title: 'Index',
+    body: 'Names, places, dates, terms and illustrations are tagged where they sit on the page, so you can search the library for what is in the books, not just their titles.',
+  },
+  {
     title: 'Share',
     body: (
-      <>
+      <span>
         Everything is free to read and cite. Published editions get a DOI through{' '}
         <a href="https://zenodo.org" target="_blank" rel="noopener noreferrer" className={link}>Zenodo</a>, and researchers and AI tools can use the{' '}
         <Link href="/developers" className={link}>API and MCP server</Link>, or{' '}
         <Link href="/connect" className={link}>connect it to Claude or ChatGPT</Link>.
-      </>
+      </span>
     ),
   },
 ];
@@ -85,7 +95,7 @@ export default async function AboutPage() {
     <ContentPageLayout header={<><SiteHeader variant="light" /><AboutHero stats={headlineStats} /></>} bg="bg-cream" maxWidth="wide" noPadding>
       {/* The gap */}
       <section className="px-6 md:px-12 py-14 md:py-16 border-b border-border-light">
-        <div className="grid lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
           <div>
             <h2 className={h2}>How much of the written past can anyone read today?</h2>
             <p className="mt-6 text-lg text-secondary leading-relaxed">
@@ -112,50 +122,31 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* What we do */}
-      <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
-        <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
-          <figure>
-            <Link
-              href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/69520c46ab34727b1f044154"
-              className="block border border-border-light bg-white"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
-                alt="An alchemical emblem from Michael Maier's Atalanta Fugiens (1618)"
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </Link>
-            <figcaption className="text-sm text-muted mt-3">
-              An emblem from Michael Maier&apos;s <em>Atalanta Fugiens</em>, 1618. Open it to read the translation beside the page.
-            </figcaption>
-          </figure>
-          <div>
-            <h2 className={h2}>What we do</h2>
-            <ol className="mt-8 space-y-7">
-              {STEPS.map((s, i) => (
-                <li key={s.title} className="grid grid-cols-[2.5rem_1fr] gap-3">
-                  <span className="text-sm font-semibold text-muted tabular-nums pt-0.5">{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-primary">{s.title}</h3>
-                    <p className="mt-1 text-secondary leading-relaxed">{s.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-8 text-secondary">
-              Follow one real page from the scan to the checks that run after it is published:{' '}
-              <Link href="/how-it-works" className={link}>How Source Library works</Link>.
-            </p>
-          </div>
-        </div>
+      {/* What we do: a real page read in front of you */}
+      <section className="px-6 md:px-12 py-14 md:py-20 border-b border-border-light">
+        <ReadingDemo>
+          <h2 className={h2}>What we do</h2>
+          <ol className="mt-8 space-y-5">
+            {STEPS.map((st, i) => (
+              <li key={st.title} data-i={i} className="rd-step grid grid-cols-[2.5rem_1fr] gap-3">
+                <span className="rd-num text-sm font-semibold tabular-nums pt-0.5">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3 className="text-lg font-semibold text-primary">{st.title}</h3>
+                  <p className="mt-1 text-secondary leading-relaxed">{st.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-8 text-secondary">
+            Follow one real page from the scan to the checks that run after it is published:{' '}
+            <Link href="/how-it-works" className={link}>How Source Library works</Link>.
+          </p>
+        </ReadingDemo>
       </section>
 
       {/* Where it started */}
       <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
-        <div className="grid md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 lg:gap-16 items-start">
           <div className="md:order-1 order-2">
             <h2 className={h2}>Where it started</h2>
             <p className="mt-6 text-secondary leading-relaxed">
@@ -188,7 +179,7 @@ export default async function AboutPage() {
 
       {/* Partner */}
       <section className="px-6 md:px-12 py-16 md:py-24 border-b border-border-light">
-        <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-[minmax(0,1fr)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-10 lg:gap-16 items-start">
           <figure>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -199,7 +190,7 @@ export default async function AboutPage() {
               className="w-full h-auto border border-border-light"
               loading="lazy"
             />
-            <figcaption className="text-sm text-muted mt-3">The Huis met de Hoofden on the Keizersgracht, Amsterdam.</figcaption>
+            <figcaption className="text-sm text-muted mt-3">The Embassy of the Free Mind, in the Huis met de Hoofden on the Keizersgracht, Amsterdam.</figcaption>
           </figure>
           <div>
             <h2 className={h2}>Our partners</h2>
@@ -240,7 +231,7 @@ export default async function AboutPage() {
 
       {/* Supporters + join */}
       <section className="px-6 md:px-12 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid grid-cols-[minmax(0,1fr)] md:grid-cols-2 gap-10 lg:gap-16">
           <div>
             <h2 className={h2}>With the support of</h2>
             <p className="mt-6 text-secondary leading-relaxed">
