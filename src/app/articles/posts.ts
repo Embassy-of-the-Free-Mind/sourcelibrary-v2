@@ -198,6 +198,21 @@ export const posts: BlogPost[] = [
     imageAlt: 'Joost R. Ritman',
   },
   {
+    slug: 'choreia',
+    title: 'Choreia: Dance in the Greek Sources',
+    subtitle:
+      'The Greek word for choral dance, from Homer’s dancing-floor to the planets: Plato’s Laws and Timaeus, Plutarch’s three parts of a dance, Lucian, Plotinus, and the disease called chorea.',
+    summary:
+      'Choreia, the Greek choral dance: Homer’s dancing-floor, Plato on rhythm and the dancing planets, Plutarch’s three parts of a dance, Lucian and Plotinus.',
+    date: '18 October 2026',
+    readTime: '11 min read',
+    kind: 'tours',
+    // Red chalk drawing of a bacchante dancing between two fauns (Raphael, per the Commons record; public domain).
+    image: 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg',
+    imageAlt:
+      'Red chalk drawing of a woman dancing in a flowing robe with a cymbal in each hand, between a faun with a curved horn and a faun with pan-pipes.',
+  },
+  {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
