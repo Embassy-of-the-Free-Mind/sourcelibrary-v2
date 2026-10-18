@@ -6,6 +6,7 @@ import { Camera, ChevronDown } from 'lucide-react';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import FilterChips, { type Chip } from '@/components/search-kit/FilterChips';
 import ApplyFooter from '@/components/search-kit/ApplyFooter';
+import DidYouMean, { useRescue } from '@/components/search-kit/DidYouMean';
 import GalleryStatsBand from '@/components/gallery/GalleryStatsBand';
 import type { GalleryStats } from '@/lib/gallery-stats';
 import { readRequest } from '@/lib/catalog/read-request';
@@ -99,6 +100,8 @@ export default function GalleryControls({ state, replace, update, data, loading,
   const [searchText, setSearchText] = useState(state.q);
   const [askText, setAskText] = useState('');
   const [asked, setAsked] = useState('');
+  // An ask that found nothing, answered with what it probably meant.
+  const [corrected, setCorrected] = useState<{ from: string; to: string } | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [advOpen, setAdvOpen] = useState(false);
   const [dirty, setDirty] = useState(false);
@@ -126,12 +129,12 @@ export default function GalleryControls({ state, replace, update, data, loading,
     };
   };
   const search = (text: string) => {
-    setAskText(''); setAsked(''); setSuggestions([]);
+    setAskText(''); setAsked(''); setSuggestions([]); setCorrected(null);
     replace(read(text, false));
   };
   const ask = (text: string) => {
     if (!text.trim()) return;
-    setSearchText(''); setAsked(text.trim()); setSuggestions([]);
+    setSearchText(''); setAsked(text.trim()); setSuggestions([]); setCorrected(null);
     replace(read(text, true));
     // The search guide's picture subjects, offered as other things to look at.
     guideTerms(text, 'image_terms').then(setSuggestions);
@@ -156,7 +159,27 @@ export default function GalleryControls({ state, replace, update, data, loading,
     const c = chips.find((x) => x.key === key);
     if (c) update(c.clear);
   };
-  const clearAll = () => { setSearchText(''); setAskText(''); setAsked(''); setSuggestions([]); replace({}); };
+  const clearAll = () => { setSearchText(''); setAskText(''); setAsked(''); setSuggestions([]); setCorrected(null); replace({}); };
+
+  /* --- nothing found: what it probably meant --- */
+  const foundNothing = !!state.q && !loading && data?.total === 0;
+  const rescues = useRescue(state.q, 'gallery', foundNothing && !corrected);
+  const applyRescue = (r: { q: string; type?: string }) => {
+    setSearchText(r.q);
+    update({ q: r.q, ...(r.type ? { type: r.type } : {}) });
+  };
+  // The librarian does not stop at nothing: an ask is answered with the best
+  // correction at once (once; a correction that also finds nothing stays put).
+  useEffect(() => {
+    if (!asked || corrected || !rescues.length) return;
+    const best = rescues[0];
+    queueMicrotask(() => {
+      setCorrected({ from: asked || state.q, to: best.type ? `${best.q} (${best.type}s)` : best.q });
+      // The ask bar keeps the reader's words; the note says what was searched.
+      update({ q: best.q, ...(best.type ? { type: best.type } : {}) });
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asked, corrected, rescues]);
 
   /* --- the numbers --- */
   const searched = chips.length > 0;
@@ -239,6 +262,8 @@ export default function GalleryControls({ state, replace, update, data, loading,
           </select>
         </div>
       </div>
+
+      <DidYouMean rescues={asked ? [] : rescues} corrected={corrected} onPick={applyRescue} />
 
       {advOpen && (
         <GalleryAdvanced

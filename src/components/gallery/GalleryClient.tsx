@@ -331,7 +331,7 @@ export default function GalleryClient({ initialData, bookCollections = [], initi
             {/* Uneven masonry cropped by a fixed-height container + fade mask (handled inside). */}
             {/* Every image on the page is shown: no crop and fade, since the next page starts after the last one. */}
             <GalleryMasonry items={allItems} hasMore={false} tenantPrefix={tenantPrefix} collectionScope={collectionFilter || undefined} />
-            <CatalogPagination currentPage={page} totalPages={totalPages} onPageChange={goToPage} />
+            <CatalogPagination currentPage={page} totalPages={totalPages} onPageChange={goToPage} variant="search" />
           </>
         )}
       </div>
