@@ -58,7 +58,13 @@ export const CALL_SUFFIX = '\n\nWhere the source marks a word <unclear>, transla
  * or reordered page refuses the whole call rather than putting one page's English on another.
  */
 export function splitBlockReply(reply, pageNumbers) {
-  const s = String(reply || '').replace(/^\s*```[a-z]*\s*\n/i, '').replace(/\n\s*```\s*$/, '');
+  let s = String(reply || '').replace(/^\s*```[a-z]*\s*\n/i, '').replace(/\n\s*```\s*$/, '');
+  // #6865: Opus sometimes closes the tag before the page's <summary>/<keywords>. With ONE page there is no other page
+  // they could belong to, so they are moved inside; a block reply that does it is still refused.
+  if (pageNumbers.length === 1) {
+    const tail = s.match(/<\/translation>((?:\s*<(summary|keywords)>[\s\S]*?<\/\2>)+)\s*$/);
+    if (tail) s = s.slice(0, tail.index) + tail[1] + '\n</translation>';
+  }
   const re = /<translation\s+page="(\d+)">([\s\S]*?)<\/translation>/g;
   const found = [...s.matchAll(re)];
   if (found.length !== pageNumbers.length) return null;
