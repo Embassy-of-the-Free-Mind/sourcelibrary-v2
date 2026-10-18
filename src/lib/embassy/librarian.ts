@@ -81,7 +81,10 @@ const FAST_TOOL_ROUNDS_DEFAULT = process.env.LIBRARIAN_FAST_TOOL_ROUNDS !== '0';
 /**
  * Citation prompt (#6946): the closing Formatting lines rewritten so a page
  * link goes only where that page states the claim (CITE_PAGES_LINES). Off
- * unless LIBRARIAN_CITE_PAGES=1 while its A/B runs.
+ * unless LIBRARIAN_CITE_PAGES=1. Blind A/B on 40 readers' questions
+ * (scripts/eval/experiments/2026-10-18-librarian-cite-prompt-6946.md):
+ * wrong-page links 26 → 30 (two Opus judges, the gauge's instrument), so the
+ * registered gate failed and the default prompt is unchanged.
  */
 const CITE_PAGES_DEFAULT = process.env.LIBRARIAN_CITE_PAGES === '1';
 /** Broken slugs we attempt to repair in one turn; the rest are disclaimed. */
