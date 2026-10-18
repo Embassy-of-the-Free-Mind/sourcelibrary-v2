@@ -112,19 +112,18 @@ export default function ChoreiaPage() {
     >
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          <em>Choreia</em> is the ancient Greek word for dancing in a group while singing. Our words choreography,
-          chorus and choir all come from it. The Greek writers used it for village dances and temple festivals, and
-          also for the way the planets move across the sky. This article is for a dancer who has heard that the
-          ancients thought the cosmos was a dance and wants to read where they said so. Every passage below links to
-          the page it comes from.
+          The Greeks used one word for a ring of villagers dancing at a festival and for the planets moving across
+          the night sky: <em>choreia</em>, dancing together in time. Plato thought the two were the same activity
+          at different scales. The stars keep formation like a chorus. The gods gave people a sense of rhythm so
+          that they could join that dance, and a person who had never been trained in a chorus was, in his word,
+          uneducated.
         </p>
 
         <p className={p}>
-          The idea is often credited to Aristotle. The passages are Plato&apos;s, Lucian&apos;s and Plotinus&apos;s.
-          Aristotle wrote about dance in the <em>Poetics</em>, where dancers are among the artists who imitate
-          character, feeling and action through rhythm, and in <em>On the Heavens</em> (book II, chapter 9) he
-          rejected the Pythagorean belief that the moving stars make music. His heavens turn in perfect circles and are
-          silent.
+          Our words choreography, chorus and choir all come from <em>choreia</em>. This article follows the idea
+          through the books that hold it: Homer&apos;s dancing-floor, Plato&apos;s chorus and his dancing planets,
+          Plutarch&apos;s three parts of a dance, Lucian&apos;s claim that dancing began with the world, and
+          Plotinus&apos;s universe moving like a single dancer. Every passage links to the page it comes from.
         </p>
 
         <h2 className={h2}>Six words</h2>
@@ -493,9 +492,10 @@ export default function ChoreiaPage() {
           Jowett&apos;s Plato, the Fowlers&apos; Lucian and Archer-Hind&apos;s notes are quoted in their printed
           English. The other quotations are the library&apos;s translations, copied from the pages they link to. The
           Plotinus manuscript is hard to read and its transcription has gaps, so it is quoted briefly and the argument
-          is summarised from the standard text of <em>Enneads</em> IV.4.33. Aristotle&apos;s <em>Poetics</em> and{' '}
-          <em>On the Heavens</em> and the dates for Sydenham and Huntington
-          are cited from outside the library.
+          is summarised from the standard text of <em>Enneads</em> IV.4.33. The dates for Sydenham and Huntington
+          are cited from outside the library. The cosmic dance is sometimes credited to Aristotle, but the passages
+          are Plato&apos;s, Lucian&apos;s and Plotinus&apos;s; Aristotle, in <em>On the Heavens</em> II.9, rejected
+          the idea that the moving stars make music.
         </p>
       </article>
     </ContentPageLayout>
