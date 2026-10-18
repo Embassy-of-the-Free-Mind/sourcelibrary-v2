@@ -28,7 +28,7 @@ stop_server() {
   # a server's engine is a grandchild: if VRAM is still held, stop THIS card's servers by their unique args
   if [ "$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)" -ge 600 ]; then
     pkill -f -- '--served-model-name m --port 8000'; pkill -f '[p]addlex_genai_server'; sleep 10
-    pkill -9 -f -- '--served-model-name m --port 8000'; pkill -9 -f '[p]addlex_genai_server'; pkill -9 -f 'VLLM::EngineCore'; sleep 3
+    pkill -9 -f -- '--served-model-name m --port 8000'; pkill -9 -f '[p]addlex_genai_server'; sleep 3   # never a bare EngineCore match: it would hit another job's engine
   fi
   rm -f "$R/serve.pid"
 }
