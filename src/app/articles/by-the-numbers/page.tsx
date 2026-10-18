@@ -2,12 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { BookOpen, FileText, Languages, Image as ImageIcon, Database, HardDrive, Sparkles, Globe, Building2, Cloud, Cpu, Coins, Hash } from 'lucide-react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-export const metadata: Metadata = {
-  title: 'By the Numbers | Source Library',
+
+export const metadata: Metadata = withArticleMeta('by-the-numbers', {
+  title: 'By the Numbers - Articles - Source Library',
   description: 'How big is Source Library? A visual tour of the corpus: books, pages, languages, time periods, and the storage that holds it all.',
-  alternates: { canonical: '/about/by-the-numbers' },
-};
+  alternates: { canonical: '/articles/by-the-numbers' },
+});
 
 const fmt = (n: number) => n.toLocaleString('en-US');
 
@@ -102,7 +104,7 @@ function StatCard({
 }) {
   const accentMap: Record<string, string> = {
     gold: 'text-accent-gold-dark bg-accent-gold/10',
-    rust: 'text-accent-rust bg-accent-rust/10',
+    rust: 'text-primary bg-primary/5',
     sage: 'text-accent-sage-dark bg-accent-sage/15',
     violet: 'text-accent-violet bg-accent-violet/10',
     stone: 'text-stone-700 bg-stone-100',
@@ -145,7 +147,7 @@ function VBar({ label, count, max, highlight }: { label: string; count: number; 
       <div className="text-xs tabular-nums text-secondary">{count >= 1000 ? `${(count / 1000).toFixed(1)}k` : count}</div>
       <div className="w-full bg-stone-100 rounded-t-sm relative" style={{ height: '180px' }}>
         <div
-          className={`absolute bottom-0 left-0 right-0 ${highlight ? 'bg-accent-rust' : 'bg-accent-gold'} rounded-t-sm transition-all`}
+          className={`absolute bottom-0 left-0 right-0 ${highlight ? 'bg-primary' : 'bg-accent-gold'} rounded-t-sm transition-all`}
           style={{ height: `${pct}%` }}
         />
       </div>
@@ -167,12 +169,14 @@ export default function ByTheNumbersPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader maxWidth="wide"
+        <ContentHeader feature headerVariant="dark" maxWidth="wide"
           title="Source Library, by the Numbers"
           subtitle="A snapshot of the corpus: what's in it, where it came from, and what it takes to hold it together."
           image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
-          imageAlt="Historical manuscript page"
-        />
+          imageAlt="Engraving headed “Clef XII”: an alchemist in his laboratory beside a furnace, a lion devouring a serpent at his feet, the sun and moon in the window."
+        >
+          <p>10 May 2026</p>
+        </ContentHeader>
       }
       maxWidth="wide"
       bg="bg-cream"
@@ -367,7 +371,7 @@ export default function ByTheNumbersPage() {
             {/* MongoDB */}
             <div className="bg-white rounded-2xl border border-border-light p-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-accent-rust/10 text-accent-rust"><Database className="w-5 h-5" /></div>
+                <div className="p-2 rounded-lg bg-primary/5 text-primary"><Database className="w-5 h-5" /></div>
                 <div>
                   <div className="font-medium text-primary">MongoDB Atlas</div>
                   <div className="text-xs text-muted">Primary metadata store</div>

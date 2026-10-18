@@ -2,16 +2,17 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { PASSAGES } from './passages';
+import { withArticleMeta } from '@/lib/article-metadata';
 
-// A static reading page that belongs to the Drebbel collection (#5936). It
-// lives beside `collections/[id]`, which still answers `/collections/drebbel`
-// because this folder has no page of its own at that level.
+
+// A static reading page that belongs to the Drebbel collection (#5936). Moved
+// from /collections/drebbel/beeckman to /articles on 2026-10-18 (redirected).
 //
 // The edition these passages were read from stays hidden (rights), so nothing
 // here links to it and no page image from it is shown.
 
-export const metadata: Metadata = {
-  title: 'Beeckman on Drebbel: the journal passages, 1619–1634 - Source Library',
+export const metadata: Metadata = withArticleMeta('beeckman-on-drebbel', {
+  title: 'Beeckman on Drebbel: the journal passages, 1619–1634 - Articles - Source Library',
   description:
     'What Isaac Beeckman wrote in his journal about Cornelis Drebbel’s machines: the boat that went under water, the perpetual motion, the weather-glass, the sun-driven harpsichord. His own Dutch and Latin, with an English translation, the date and the manuscript leaf.',
   openGraph: {
@@ -20,39 +21,25 @@ export const metadata: Metadata = {
       'Isaac Beeckman’s notes on Cornelis Drebbel’s machines, in his own Dutch and Latin with an English translation beside each.',
   },
   alternates: {
-    canonical: '/collections/drebbel/beeckman',
+    canonical: '/articles/beeckman-on-drebbel',
   },
-};
+});
 
 export default function BeeckmanOnDrebbelPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Beeckman on Drebbel"
           subtitle="What Isaac Beeckman wrote in his journal about Cornelis Drebbel&rsquo;s machines, 1619 to 1634, in his own words with an English translation"
-        />
+          image="https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg"
+          imageAlt="Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing."
+        >
+          <p>6 October 2026</p>
+        </ContentHeader>
       }
       bg="bg-cream"
     >
-      <div className="mb-8">
-        <Link
-          href="/collections/drebbel"
-          className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors text-sm"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Cornelis Drebbel collection
-        </Link>
-      </div>
-
       <article className="max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           Isaac Beeckman kept a notebook from 1604 to 1634, first in Zeeland and then as a
@@ -134,7 +121,7 @@ export default function BeeckmanOnDrebbelPage() {
           </p>
           <p className="text-secondary leading-relaxed font-body">
             Drebbel&rsquo;s own books, and what other contemporaries wrote about him, are in the{' '}
-            <Link href="/collections/drebbel" className="text-accent-rust hover:underline">
+            <Link href="/collections/drebbel">
               Cornelis Drebbel collection
             </Link>
             .

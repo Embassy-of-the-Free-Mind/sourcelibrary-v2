@@ -1,16 +1,18 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
+
 import { EVIDENCE, GAPS, IDEA_EXAMPLE, LIVE, MEASURED_ON, PICTURE_EXAMPLE, PLANS } from './content';
 
-export const metadata: Metadata = {
-  title: 'Search by Meaning | Source Library',
+export const metadata: Metadata = withArticleMeta('search-by-meaning', {
+  title: 'Search by Meaning - Articles - Source Library',
   description:
     'How the library finds passages that say the same thing in different words and different languages: two real examples, what works today, what does not, and what we plan to build.',
-  alternates: { canonical: '/about/meaning' },
-};
+  alternates: { canonical: '/articles/search-by-meaning' },
+});
 
-const A = 'text-accent-rust hover:underline';
+const A = '';
 const H2 = 'text-2xl md:text-3xl text-primary mb-3';
 const P = 'text-secondary leading-relaxed mb-4';
 
@@ -42,10 +44,14 @@ export default function MeaningPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="Search by Meaning"
           subtitle="How the library finds passages that say the same thing in different words, what that makes possible, and what does not work yet."
-        />
+          image="https://images.sourcelibrary.org/archived/86fe639a-5f3d-4e9e-9d99-128742a10809/84.jpg"
+          imageAlt="A manuscript page of close English handwriting, numbered 70 at the top."
+        >
+          <p>8 October 2026</p>
+        </ContentHeader>
       }
       bg="bg-cream"
     >

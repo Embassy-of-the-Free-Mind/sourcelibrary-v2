@@ -4,7 +4,7 @@
 # down: after a copy PR merges, run the checker with --tighten and commit the result.
 # Raising a number needs a reason a reviewer agrees with (a quoted source, a model
 # prompt, a parser that must match an em dash in data). Empty cells take an en dash.
-src/app/about/by-the-numbers/page.tsx 14  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/articles/by-the-numbers/page.tsx 14  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/about/faq/page.tsx 17  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/about/models/page.tsx 4  # compares against the '—' sentinel in src/data/public-models.ts (never rendered); rest rewritten in a #6215 copy PR
 src/app/about/page.tsx 16  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -216,7 +216,7 @@ src/app/census/CensusSearch.tsx 2  # rewritten in a #6215 copy PR; --tighten aft
 src/app/census/page.tsx 17  # server-side throw, reader sees the generic error page; rest rewritten in a #6215 copy PR
 src/app/check/[token]/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/collection-areas/[id]/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/collections/drebbel/beeckman/passages.ts 1  # quoted historical source (Beeckman's journal)
+src/app/articles/beeckman-on-drebbel/passages.ts 1  # quoted historical source (Beeckman's journal)
 src/app/collections/[id]/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/collections/jung-resonances/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/collections/mycology/page.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
@@ -347,7 +347,7 @@ src/app/roadmap/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it m
 src/app/scan/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/search/layout.tsx 4  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/search/visual/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges
-src/app/specimen/aldine/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
+src/app/articles/aldine-roman/page.tsx 11  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/sponsors/page.tsx 15  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/status/page.tsx 3  # rewritten in a #6215 copy PR; --tighten after it merges
 src/app/support/business/page.tsx 1  # rewritten in a #6215 copy PR; --tighten after it merges

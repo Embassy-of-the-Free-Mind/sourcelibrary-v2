@@ -257,6 +257,12 @@
     "revised": "2026-10-18T00:33:26+02:00",
     "revisions": 14
   },
+  "in-memoriam": {
+    "path": "src/app/articles/in-memoriam/page.tsx",
+    "published": "2026-10-18T15:35:15+02:00",
+    "revised": "2026-10-18T15:35:15+02:00",
+    "revisions": 1
+  },
   "incunabula-knowledge-graph": {
     "path": "src/app/articles/incunabula-knowledge-graph/page.tsx",
     "published": "2026-04-22T15:30:26+02:00",
@@ -508,6 +514,12 @@
     "published": "2026-03-15T01:03:43+01:00",
     "revised": "2026-10-18T00:33:26+02:00",
     "revisions": 15
+  },
+  "vision": {
+    "path": "src/app/articles/vision/page.tsx",
+    "published": "2026-06-19T15:17:47+02:00",
+    "revised": "2026-10-18T15:35:15+02:00",
+    "revisions": 12
   },
   "visualizing-classification": {
     "path": "src/app/articles/visualizing-classification/page.tsx",

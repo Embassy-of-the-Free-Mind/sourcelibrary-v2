@@ -49,6 +49,20 @@ function constValue(sources, name) {
   return null;
 }
 
+// `${BOOK_ID}/0020.jpg` -> the constant's value, so a template-literal hero is a
+// real URL in the share image. Left as null when a name can't be resolved.
+function resolveTemplate(sources, value, depth = 0) {
+  if (!value.includes('${')) return value;
+  if (depth > 3) return null;
+  let ok = true;
+  const out = value.replace(/\$\{\s*([A-Za-z_$][\w$]*)\s*\}/g, (_, name) => {
+    const v = constValue(sources, name);
+    if (v === null) ok = false;
+    return v ?? '';
+  });
+  return ok ? resolveTemplate(sources, out, depth + 1) : null;
+}
+
 export function buildArticleHeroes() {
   const out = {};
   for (const d of fs.readdirSync(ARTICLES, { withFileTypes: true })) {
@@ -60,7 +74,8 @@ export function buildArticleHeroes() {
       if (!tag) continue;
       const literal = tag.match(/\bimage=(?:\{\s*)?(['"])([^'"]+)\1/);
       const named = tag.match(/\bimage=\{\s*([A-Za-z_$][\w$]*)\s*\}/);
-      const value = literal ? literal[2] : named ? constValue(sources, named[1]) : null;
+      const raw = literal ? literal[2] : named ? constValue(sources, named[1]) : null;
+      const value = raw && resolveTemplate(sources, raw);
       if (value) out[d.name] = value;
       break;
     }

@@ -415,6 +415,10 @@ const nextConfig: NextConfig = {
       // Pages moved under /articles (2026-10-18). /in-memoriam is redirected in
       // src/proxy.ts instead, on the main site only: partner reading rooms keep it.
       { source: '/vision', destination: '/articles/vision', permanent: true },
+      { source: '/specimen/aldine', destination: '/articles/aldine-roman', permanent: true },
+      { source: '/collections/drebbel/beeckman', destination: '/articles/beeckman-on-drebbel', permanent: true },
+      { source: '/about/meaning', destination: '/articles/search-by-meaning', permanent: true },
+      { source: '/about/by-the-numbers', destination: '/articles/by-the-numbers', permanent: true },
       { source: '/blog', destination: '/articles', permanent: true },
       { source: '/blog/:path*', destination: '/articles/:path*', permanent: true },
       // Merged/retired collection slugs → successors (issue #3002). True HTTP

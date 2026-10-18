@@ -1,14 +1,16 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { withArticleMeta } from '@/lib/article-metadata';
+
 import { aldineVariables, aldineStack, cardoStack } from '@/lib/fonts/aldine';
 
-export const metadata: Metadata = {
-  title: 'The Aldine Roman: a facsimile type from De Aetna (1496) - Source Library',
+export const metadata: Metadata = withArticleMeta('aldine-roman', {
+  title: 'The Aldine Roman: a facsimile type from De Aetna (1496) - Articles - Source Library',
   description:
     'Francesco Griffo’s roman for Aldus Manutius, traced letter by letter from the 1496 De Aetna in the Source Library collection, shown beside the open-licence revival Cardo.',
-  alternates: { canonical: '/specimen/aldine' },
-};
+  alternates: { canonical: '/articles/aldine-roman' },
+});
 
 const BOOK_ID = '6a06d1f39a48d51399960d08';
 const PAGE_IMAGE = `https://images.sourcelibrary.org/pages/${BOOK_ID}/0020.jpg`;
@@ -34,12 +36,14 @@ export default function AldineSpecimenPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
+        <ContentHeader feature headerVariant="dark"
           title="The Aldine roman"
           subtitle="A facsimile type traced from the 1496 De Aetna, beside the revival that descends from it."
           image={PAGE_IMAGE}
           imageAlt="A page of Pietro Bembo's De Aetna, printed by Aldus Manutius in Venice, 1496"
-        />
+        >
+          <p>20 August 2026</p>
+        </ContentHeader>
       }
       bg="bg-cream"
     >
@@ -72,7 +76,7 @@ export default function AldineSpecimenPage() {
             ))}
           </div>
           <p className="text-xs text-muted mt-6">
-            <Link href={`/book/${BOOK_ID}?page=20`} className="text-accent-rust hover:underline">
+            <Link href={`/book/${BOOK_ID}?page=20`}>
               De Aetna, sig. A iii
             </Link>
             : the page in the header, set in the type traced from it.
@@ -169,7 +173,7 @@ export default function AldineSpecimenPage() {
           cast for the common case. K comes from De Aetna itself (&ldquo;Kalendis&rdquo;); X, Y and Z from
           the Greek alphabet tables of Lascaris&apos; grammar, where Aldus set the Greek majuscules from
           the roman case. The figures are old-style arabic numerals from the index of Perotti&apos;s{' '}
-          <Link href="/book/69b220f356715b0e32473bd0" className="text-accent-rust hover:underline">Cornucopiae</Link>{' '}
+          <Link href="/book/69b220f356715b0e32473bd0">Cornucopiae</Link>{' '}
           (1499), printed by the same shop, set in its smaller roman and scaled to this body, since the 1496
           text itself counts only in roman numerals. J, U and W did not exist in 1490s roman type (I and V
           did their work), so those three are <em>reconstructed</em> and marked as such: W is VV, exactly
@@ -187,20 +191,20 @@ export default function AldineSpecimenPage() {
         </p>
         <ul className="text-secondary mb-12 leading-relaxed list-disc pl-6">
           <li>
-            <a href="/fonts/aldine-aetna/AldineAetna-Regular.ttf" className="text-accent-rust hover:underline">AldineAetna-Regular.ttf</a>{' '}
-            · <a href="/fonts/aldine-aetna/AldineAetna-Regular.woff2" className="text-accent-rust hover:underline">woff2</a>{' '}
-            · public domain, <a href="/fonts/aldine-aetna/LICENSE.txt" className="text-accent-rust hover:underline">CC0</a>. Griffo cut these letters in 1496; we only traced them.
+            <a href="/fonts/aldine-aetna/AldineAetna-Regular.ttf">AldineAetna-Regular.ttf</a>{' '}
+            · <a href="/fonts/aldine-aetna/AldineAetna-Regular.woff2">woff2</a>{' '}
+            · public domain, <a href="/fonts/aldine-aetna/LICENSE.txt">CC0</a>. Griffo cut these letters in 1496; we only traced them.
           </li>
           <li>
             Source:{' '}
-            <Link href={`/book/${BOOK_ID}`} className="text-accent-rust hover:underline">
+            <Link href={`/book/${BOOK_ID}`}>
               Pietro Bembo, De Aetna dialogus (Venice: Aldus Manutius, 1496)
             </Link>
             , Biblioteca Nazionale Centrale di Firenze, via Internet Archive.
           </li>
           <li>
             More of the press:{' '}
-            <Link href="/collections/aldine-press" className="text-accent-rust hover:underline">the Aldine Press collection</Link>.
+            <Link href="/collections/aldine-press">the Aldine Press collection</Link>.
           </li>
         </ul>
       </div>

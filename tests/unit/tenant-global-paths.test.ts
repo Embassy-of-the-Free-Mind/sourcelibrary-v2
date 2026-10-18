@@ -322,6 +322,7 @@ describe('wiring', () => {
       /^src\/app\/librarian\//,
       /^src\/app\/es\/librarian\//,
       /^src\/app\/about\//,
+      /^src\/app\/articles\//,
       /^src\/app\/api\/embassy\//,
     ];
     // Not a rendered link: warm lists, route metadata, the locale registry,

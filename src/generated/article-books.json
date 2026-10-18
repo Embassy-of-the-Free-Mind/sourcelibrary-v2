@@ -5,6 +5,9 @@
     "minor-works-opuscula-schurman",
     "on-the-fundamentals-of-hebrew-de-rudimentis-hebraicis-reuchlin"
   ],
+  "aldine-roman": [
+    "69b220f356715b0e32473bd0"
+  ],
   "archive-ocr-against-proofread-pages": [
     "select-works-of-porphyry-on-abstinence-cave-of-the-nymphs-porphyry",
     "the-chronology-of-ancient-nations-sachau",
@@ -648,6 +651,14 @@
     "il-nobilissimo-et-antiquissimo-giuoco-pythagoreo-nominato-barozzi",
     "le-tres-excellent-et-ancien-jeu-pythagorique-dit-boissiere",
     "de-institutione-arithmetica-libri-ii-de-institutione-musica-friedlein"
+  ],
+  "search-by-meaning": [
+    "atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier",
+    "atalanta-fugiens-c-1625-english-ms-translator",
+    "platos-republic-greek-text-plato",
+    "daqaiq-al-haqaiq-or-7008",
+    "brahma-purana-press",
+    "dialogorum-libri-quattuor-german-das-buch-der-zweyer-red-mit-gregorius-i"
   ],
   "shipwrecks-and-buried-treasure": [
     "69c8716b6c6f3cc53c857589",

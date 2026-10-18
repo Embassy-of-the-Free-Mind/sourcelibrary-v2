@@ -103,62 +103,12 @@ export const UNLISTED_PAGES: Record<string, string> = {
   '[category]': 'The category pages (/articles/tours), not an article.',
 };
 
-// Pages that read as articles but still live at their own address. They show
+// Pages that are listed as articles but live at their own address. They show
 // on the /articles index and category pages only (not in the feed, sitemap or
-// home slider), until each is moved under /articles.
+// home slider). The Rithmomachia game stays at /rithmomachia: it is a
+// full-width game with its own guide and scenario pages, not an article; the
+// article about it is /articles/rithmomachia.
 export const LINKED_PAGES: BlogPost[] = [
-  {
-    slug: 'specimen-aldine',
-    href: '/specimen/aldine',
-    title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
-    subtitle: 'Francesco Griffo’s roman type for Aldus, traced letter by letter from our copy of De Aetna (1496).',
-    summary:
-      'Francesco Griffo’s roman for Aldus, cut in 1496 for Bembo’s De Aetna and traced letter by letter from our copy: the type Garamond and Times descend from.',
-    date: '20 August 2026',
-    readTime: '',
-    kind: 'stories',
-    image: 'https://images.sourcelibrary.org/pages/6a06d1f39a48d51399960d08/0020.jpg',
-    imageAlt: 'A page of Bembo’s De Aetna, printed by Aldus Manutius in 1496',
-  },
-  {
-    slug: 'beeckman-on-drebbel',
-    href: '/collections/drebbel/beeckman',
-    title: 'Beeckman on Drebbel: the journal passages, 1619–1634',
-    subtitle: 'What Isaac Beeckman wrote in his journal about Cornelis Drebbel’s machines, in his own words beside an English translation.',
-    summary:
-      'Isaac Beeckman’s journal entries on Cornelis Drebbel: the submarine, perpetual motion, the weather-glass, in his Dutch or Latin beside English.',
-    date: '6 October 2026',
-    readTime: '',
-    kind: 'tours',
-    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
-    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
-  },
-  {
-    slug: 'about-meaning',
-    href: '/about/meaning',
-    title: 'Search by Meaning',
-    subtitle: 'How the library finds passages that say the same thing in different words and languages, and where it still falls short.',
-    summary:
-      'How the library finds passages that say the same thing in different words and languages, using a 768-number index of each page, and its limits.',
-    date: '8 October 2026',
-    readTime: '',
-    kind: 'research',
-    image: 'https://images.sourcelibrary.org/archived/86fe639a-5f3d-4e9e-9d99-128742a10809/84.jpg',
-    imageAlt: 'A manuscript page of close English handwriting, numbered 70 at the top.',
-  },
-  {
-    slug: 'by-the-numbers',
-    href: '/about/by-the-numbers',
-    title: 'By the Numbers',
-    subtitle: 'How big the library is: books, pages, languages, centuries and the storage that holds it all.',
-    summary:
-      'A visual tour of the library’s size: books, pages, languages and centuries, how far the pages are through the pipeline, and the storage behind it.',
-    date: '10 May 2026',
-    readTime: '',
-    kind: 'research',
-    image: 'https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg',
-    imageAlt: 'Engraving headed “Clef XII”: an alchemist in his laboratory beside a furnace, a lion devouring a serpent at his feet, the sun and moon in the window.',
-  },
   {
     slug: 'play-rithmomachia',
     href: '/rithmomachia',
@@ -175,6 +125,54 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'aldine-roman',
+    title: 'The Aldine Roman: a facsimile type from De Aetna (1496)',
+    subtitle: 'Francesco Griffo’s roman type for Aldus, traced letter by letter from our copy of De Aetna (1496).',
+    summary:
+      'Francesco Griffo’s roman for Aldus, cut in 1496 for Bembo’s De Aetna and traced letter by letter from our copy: the type Garamond and Times descend from.',
+    date: '20 August 2026',
+    readTime: '',
+    kind: 'stories',
+    image: 'https://images.sourcelibrary.org/pages/6a06d1f39a48d51399960d08/0020.jpg',
+    imageAlt: 'A page of Bembo’s De Aetna, printed by Aldus Manutius in 1496',
+  },
+  {
+    slug: 'beeckman-on-drebbel',
+    title: 'Beeckman on Drebbel: the journal passages, 1619–1634',
+    subtitle: 'What Isaac Beeckman wrote in his journal about Cornelis Drebbel’s machines, in his own words beside an English translation.',
+    summary:
+      'Isaac Beeckman’s journal entries on Cornelis Drebbel: the submarine, perpetual motion, the weather-glass, in his Dutch or Latin beside English.',
+    date: '6 October 2026',
+    readTime: '',
+    kind: 'tours',
+    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
+    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
+  },
+  {
+    slug: 'search-by-meaning',
+    title: 'Search by Meaning',
+    subtitle: 'How the library finds passages that say the same thing in different words and languages, and where it still falls short.',
+    summary:
+      'How the library finds passages that say the same thing in different words and languages, using a 768-number index of each page, and its limits.',
+    date: '8 October 2026',
+    readTime: '',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/86fe639a-5f3d-4e9e-9d99-128742a10809/84.jpg',
+    imageAlt: 'A manuscript page of close English handwriting, numbered 70 at the top.',
+  },
+  {
+    slug: 'by-the-numbers',
+    title: 'By the Numbers',
+    subtitle: 'How big the library is: books, pages, languages, centuries and the storage that holds it all.',
+    summary:
+      'A visual tour of the library’s size: books, pages, languages and centuries, how far the pages are through the pipeline, and the storage behind it.',
+    date: '10 May 2026',
+    readTime: '',
+    kind: 'research',
+    image: 'https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg',
+    imageAlt: 'Engraving headed “Clef XII”: an alchemist in his laboratory beside a furnace, a lion devouring a serpent at his feet, the sun and moon in the window.',
+  },
   {
     slug: 'vision',
     title: 'Our Vision: A Letter from the Founder',
