@@ -188,3 +188,23 @@ export function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Pr
     new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
   ]);
 }
+
+// ---------- Highlight membership ----------
+
+/**
+ * Whether a curated highlight's book may be shown on a collection: it must be a
+ * MEMBER (`books.collections` holds the slug) with something to open — pages, or
+ * an artwork (`resource_type`). `highlighted_books` is a list of ids written by
+ * hand, by old bulk curation, and by sweeps, and nothing re-checks it when a
+ * book is untagged or retagged: /collections/maya opened ("Start here") on
+ * Herold's Heydenweldt, which was never in the collection, and 148 highlights in
+ * 50 collections pointed at non-members (#6899). The caller must project
+ * `collections` — a guard over a projected-away field drops everything.
+ */
+export function isHighlightMember(
+  book: Record<string, unknown> | null | undefined,
+  slug: string,
+): boolean {
+  if (!book || !Array.isArray(book.collections) || !book.collections.includes(slug)) return false;
+  return (Number(book.pages_count) || 0) > 0 || !!book.resource_type;
+}
