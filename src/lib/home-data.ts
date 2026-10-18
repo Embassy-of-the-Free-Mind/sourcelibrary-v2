@@ -82,7 +82,7 @@ async function getFeaturedCollections(): Promise<FeaturedItem[]> {
   if (collections.length === 0) return [];
 
   const allSlugs = collections.map(c => c.slug);
-  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1 };
+  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, collections: 1, pages_count: 1, resource_type: 1 };
 
   // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
   const highlightedIdsBySlug = new Map<string, string[]>();
