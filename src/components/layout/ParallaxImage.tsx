@@ -13,9 +13,14 @@ const OVERSCAN = 120;
  * A hero picture that drifts slightly slower than the page as you scroll, as
  * on /articles. Fills its positioned parent; off for reduced motion. Served
  * through the image optimiser at screen width when the host allows it (heroes
- * are often full page scans of several megabytes).
+ * are often full page scans of several megabytes). `placeholder` is a tiny
+ * blurred copy (src/generated/article-hero-placeholders.json) shown at once
+ * while a cold optimiser request, about a second, is still encoding.
+ *
+ * Quality 60: the hero sits under a dark gradient and the title, so the
+ * difference from 75 doesn't show, and the file is about a third smaller.
  */
-export default function ParallaxImage({ src, alt }: { src: string; alt: string }) {
+export default function ParallaxImage({ src, alt, placeholder }: { src: string; alt: string; placeholder?: string }) {
   const img = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -47,8 +52,9 @@ export default function ParallaxImage({ src, alt }: { src: string; alt: string }
         width={0}
         height={0}
         sizes="100vw"
-        quality={70}
+        quality={60}
         priority
+        {...(placeholder ? { placeholder: 'blur' as const, blurDataURL: placeholder } : {})}
         className={className}
         style={{ ...style, width: '100%' }}
       />
@@ -56,6 +62,13 @@ export default function ParallaxImage({ src, alt }: { src: string; alt: string }
   }
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
-    <img ref={img} src={src} alt={alt} fetchPriority="high" className={className} style={style} />
+    <img
+      ref={img}
+      src={src}
+      alt={alt}
+      fetchPriority="high"
+      className={className}
+      style={placeholder ? { ...style, backgroundImage: `url(${placeholder})`, backgroundSize: 'cover' } : style}
+    />
   );
 }

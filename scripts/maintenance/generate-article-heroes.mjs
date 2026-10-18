@@ -8,7 +8,7 @@
  *   node scripts/maintenance/generate-article-heroes.mjs
  *
  * Re-run after adding an article or changing a hero (tests/blog-posts.test.ts
- * fails if the file is out of date). Handles image="..." and image={NAME}
+ * fails if the file is out of date), then generate-article-hero-placeholders.mjs. Handles image="..." and image={NAME}
  * where NAME is a string constant in the article's folder.
  */
 import fs from 'node:fs';
