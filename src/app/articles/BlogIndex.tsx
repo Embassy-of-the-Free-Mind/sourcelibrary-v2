@@ -49,7 +49,7 @@ export function ArticleCard({ post, priority = false }: { post: BlogPost; priori
           priority={priority}
         />
       </div>
-      <p className="mt-4 text-sm text-muted">
+      <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-muted">
         {KIND_INFO[post.kind].label}
         <span className="mx-2 text-border-light" aria-hidden="true">|</span>
         {post.date}
@@ -60,10 +60,10 @@ export function ArticleCard({ post, priority = false }: { post: BlogPost; priori
           </>
         )}
       </p>
-      <h2 className="mt-2 font-serif text-2xl text-primary leading-snug">
+      <h2 className="mt-1.5 sm:mt-2 font-serif text-xl sm:text-2xl text-primary leading-snug">
         {post.title}
       </h2>
-      <p className="mt-2 text-secondary leading-relaxed font-body">{post.summary}</p>
+      <p className="mt-1.5 sm:mt-2 text-sm sm:text-base text-secondary leading-relaxed font-body">{post.summary}</p>
     </Link>
   );
 }
