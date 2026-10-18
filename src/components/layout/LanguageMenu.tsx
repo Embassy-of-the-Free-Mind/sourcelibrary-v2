@@ -14,13 +14,15 @@ import { localeHref, LOCALE_NATIVE_NAME, type Locale } from '@/lib/i18n';
 // "Latin" rather than "Latine" so a visitor who doesn't read it can still find it.
 export const HEADER_LANGUAGE_NAME: Record<Locale, string> = { ...LOCALE_NATIVE_NAME, la: 'Latin' };
 
-export default function LanguageMenu({ locales, current, pathname, onDark }: {
-  /** Locales this page exists in, English first (from the twin registry). */
+export default function LanguageMenu({ locales, current, pathname, onDark, englishOnly = false }: {
+  /** Every site language, English first; each links to its twin of this page or its homepage. */
   locales: Locale[];
   current: Locale;
   pathname: string | null;
   /** On the dark bar or over the hero image: light text, dark dropdown. */
   onDark: boolean;
+  /** This page has no translation: the other languages lead to their homepages, so say so. */
+  englishOnly?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -52,10 +54,15 @@ export default function LanguageMenu({ locales, current, pathname, onDark }: {
       </button>
       <div
         role="menu"
-        className={`absolute right-0 top-full mt-2 min-w-[11rem] py-1.5 z-50 border transition-[opacity,transform] duration-200 ${
+        className={`absolute right-0 top-full mt-2 min-w-[15rem] py-1.5 z-50 border transition-[opacity,transform] duration-200 ${
           onDark ? 'bg-dark border-white/15' : 'bg-white border-border-light shadow-lg'
         } ${open ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1.5 pointer-events-none'}`}
       >
+        {englishOnly && (
+          <p className={`px-4 pt-1.5 pb-2 mb-1 text-xs border-b ${onDark ? 'text-white/55 border-white/10' : 'text-muted border-border-light'}`}>
+            This page is only in English. The other languages open their home page.
+          </p>
+        )}
         {locales.map((l) => (
           <Link
             key={l}

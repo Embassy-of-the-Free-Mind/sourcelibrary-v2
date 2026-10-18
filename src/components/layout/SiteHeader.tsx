@@ -98,7 +98,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // in this language, measured rather than guessed: at 1180px English fits and
   // Latin doesn't. Below `lg` the CSS hides the row regardless.
   const [compact, setCompact] = useState(false);
-  const [underline, setUnderline] = useState<{ x: number; w: number } | null>(null);
   const midRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -136,14 +135,13 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   // 330,698 pageviews while /book/* drew 217,490; the site had no giving link
   // above the footer. Wikipedia's "Donate" leads its article nav.
   const showSupport = !(isTenantHost && isGlobalOnlyNavHref('/give'));
-  // The language menu shows only where a real twin of this page exists (home,
-  // sign-in, support…) — the thin-i18n bargain (#2763). On deep English-only
-  // pages it is hidden, so choosing a language never bounces the reader to a
-  // front page.
-  const showLangToggle = homeLocale !== undefined || hasLocalizedTwin(pathname);
-  const langLinks: Locale[] = ['en', ...PREFIXED_LOCALES.filter(
-    (l) => homeLocale !== undefined || l === locale || hasLocalizedTwin(pathname, l),
-  )];
+  // The language menu is on every page, so the row never shifts between pages
+  // (it used to hide on English-only pages, #2763, and the links jumped). Only
+  // the homepage, book pages and a few Spanish pages have twins; elsewhere each
+  // language links to its own homepage (`localeHref`'s fallback) and the menu
+  // says the page is English only, so the jump to a front page is announced.
+  const pageIsEnglishOnly = homeLocale === undefined && !hasLocalizedTwin(pathname);
+  const langLinks: Locale[] = ['en', ...PREFIXED_LOCALES];
   const searchHref = localePath('/search', locale);
   const onSupportClick = () => trackEvent('give_nav_click', { source: 'header', url: '/give' });
 
@@ -170,13 +168,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     document.fonts?.ready.then(measure);
     return () => ro.disconnect();
   }, [measure, locale, NAV_LINKS.length]);
-
-  // The underline rests under the current page and glides to the hovered link.
-  const restUnderline = useCallback(() => {
-    const active = navRef.current?.querySelector<HTMLElement>('a[aria-current="page"]');
-    setUnderline(active ? { x: active.offsetLeft, w: active.offsetWidth } : null);
-  }, []);
-  useLayoutEffect(() => { restUnderline(); }, [restUnderline, pathname, locale, compact]);
 
   useEffect(() => {
     if (!searching) return;
@@ -231,7 +222,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             <nav
               ref={navRef}
               aria-label="Site"
-              onMouseLeave={restUnderline}
               className={`relative flex items-center gap-[22px] transition-[opacity,transform] duration-300 ${
                 compact ? 'invisible absolute right-0' : ''
               } ${searching ? 'opacity-0 -translate-y-1.5 pointer-events-none' : ''}`}
@@ -244,7 +234,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
                     tabIndex={compact || searching ? -1 : undefined}
-                    onMouseEnter={(e) => setUnderline({ x: e.currentTarget.offsetLeft, w: e.currentTarget.offsetWidth })}
                     className={`py-2 text-[13.5px] whitespace-nowrap transition-colors ${
                       active ? 'text-white' : 'text-white/70 hover:text-white'
                     }`}
@@ -253,11 +242,6 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
                   </Link>
                 );
               })}
-              <span
-                aria-hidden="true"
-                className="absolute left-0 bottom-[3px] h-[1.5px] bg-white pointer-events-none transition-[transform,width,opacity] duration-500 ease-[cubic-bezier(.2,.8,.2,1)]"
-                style={{ width: underline?.w ?? 0, transform: `translateX(${underline?.x ?? 0}px)`, opacity: underline ? 1 : 0 }}
-              />
             </nav>
             <form
               action={searchHref}
@@ -290,9 +274,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               {searching ? <X className="w-[17px] h-[17px]" /> : <Search className="w-[17px] h-[17px]" />}
             </button>
             <span className="w-px h-5 bg-white/15 mx-1.5" aria-hidden="true" />
-            {showLangToggle && (
-              <LanguageMenu locales={langLinks} current={locale} pathname={pathname} onDark />
-            )}
+            <LanguageMenu locales={langLinks} current={locale} pathname={pathname} onDark englishOnly={pageIsEnglishOnly} />
             <span className="ml-1.5"><UserMenu variant="nav" /></span>
             {showSupport && (
               <Link
@@ -341,12 +323,12 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
         onClose={closeMenu}
         links={NAV_LINKS.map((l) => ({ key: l.key, label: l.label, href: l.href, active: isActive(l) }))}
         search={{ action: searchHref, label: t.search }}
-        languages={showLangToggle ? langLinks.map((l) => ({
+        languages={langLinks.map((l) => ({
           locale: l,
           href: localeHref(l, pathname),
           label: HEADER_LANGUAGE_NAME[l],
           current: l === locale,
-        })) : null}
+        }))}
         account={{ href: accountHref, label: accountLabel, avatar: accountAvatar }}
         support={showSupport ? { href: '/give', label: t.support, onClick: onSupportClick } : null}
       />
