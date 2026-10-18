@@ -1,0 +1,2882 @@
+{
+ "_doc": "Built by scripts/learn/build-yucatec-course.mjs from scripts/learn/yucatec-course-sources.json (#6921). Do not edit by hand: change the sources and rebuild.",
+ "built_at": "2026-10-18",
+ "books": {
+  "berendt": {
+   "id": "6acc3e26230e9a56175cdf9c",
+   "cite": "Berendt, Cartilla en lengua maya (1871)"
+  },
+  "ruz": {
+   "id": "6acc3dc5230e9a56175cd6de",
+   "cite": "Ruz, Cartilla ó silabario de lengua maya (1845)"
+  },
+  "decl1860": {
+   "id": "6acc3df2230e9a56175cdd1c",
+   "cite": "Beltrán, Declaración de la doctrina cristiana (1860)"
+  },
+  "piop": {
+   "id": "6acc3dfa230e9a56175cdd32",
+   "cite": "Pío Pérez, Diccionario de la lengua maya (1866–77)"
+  },
+  "motul1": {
+   "id": "6acc3d5f230e9a56175cc731",
+   "cite": "Diccionario de Motul, vol. 1"
+  },
+  "coord": {
+   "id": "6a9f3fa783c3b522416e4a0d",
+   "cite": "Beltrán, Coordinación alfabética de las voces del idioma maya (1898)"
+  },
+  "arte": {
+   "id": "6a9f3fa483c3b522416e48fa",
+   "cite": "Beltrán, Arte del idioma maya (1859)"
+  },
+  "tozzer": {
+   "id": "6acc3ed4230e9a56175ce8e7",
+   "cite": "Tozzer, A Maya Grammar (1921)"
+  },
+  "dresden": {
+   "id": "69dfd990220eedf04e13b0cf",
+   "cite": "Dresden Codex"
+  }
+ },
+ "notes": [
+  {
+   "id": "yn-1",
+   "title": "in, a, u: my, your, his",
+   "body": "Maya says whose a thing is with a short word in front of it: in kaba, my name; a kaba, your name; u kaba, his or her name. The same three words also stand in front of verbs, which is why Beltrán calls them 'mixed' pronouns.",
+   "quotes": [
+    {
+     "key": "arte",
+     "page": 35,
+     "es": "Este pronombre se llama mixto, porque igualmente sirve para demostrativos y posesivos.",
+     "en": "This pronoun is called mixed because it serves equally as demonstrative and possessive.",
+     "url": "/book/6a9f3fa483c3b522416e48fa?page=35",
+     "cite": "Beltrán, Arte del idioma maya (1859)"
+    },
+    {
+     "key": "arte",
+     "page": 35,
+     "es": "En cuanto posesivo sirve para declinar todos los nombres, que así mismo comienzan en consonante.",
+     "en": "As a possessive it serves to decline all nouns that likewise begin with a consonant, but only when denoting possession.",
+     "url": "/book/6a9f3fa483c3b522416e48fa?page=35",
+     "cite": "Beltrán, Arte del idioma maya (1859)"
+    },
+    {
+     "key": "tozzer",
+     "page": 63,
+     "en": "There are two forms of the pronoun, the real pronoun called \"verbal\" and used as a suffix and the possessive pronoun called \"nominal\" and used as a prefix.",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=63",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    }
+   ],
+   "table": {
+    "key": "arte",
+    "page": 35,
+    "rows": [
+     [
+      "In,",
+      "Yo ó mio.",
+      "I or mine."
+     ],
+     [
+      "A,",
+      "Tú ó tuyo.",
+      "You or yours."
+     ],
+     [
+      "U,",
+      "Aquel ó suyo.",
+      "That one or his."
+     ]
+    ],
+    "url": "/book/6a9f3fa483c3b522416e48fa?page=35",
+    "cite": "Beltrán, Arte del idioma maya (1859)"
+   }
+  },
+  {
+   "id": "yn-2",
+   "title": "Numbers take an ending",
+   "body": "A Maya number does not stand alone. It takes an ending that says what kind of thing is counted: -tul for people and animals, -pel for things. Ox is three; oxtul xiblal is three men, oxpel is three things. From 13 to 19 the number is a unit and ten: ox-la-hun, three-ten. Tozzer writes š where the older books write x, so his oš is ox.",
+   "quotes": [
+    {
+     "key": "tozzer",
+     "page": 127,
+     "en": "There is a large number of classificatory suffixes in use with the numerals. The latter can never stand alone.",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=127",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    },
+    {
+     "key": "tozzer",
+     "page": 127,
+     "en": "At the present time all nouns are broadly classified into two classes, animate and inanimate, by the two suffixes -tul and -p'el:",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=127",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    },
+    {
+     "key": "tozzer",
+     "page": 127,
+     "en": "oš-tul winik, three men, — oš-p'el na, three houses.",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=127",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    },
+    {
+     "key": "tozzer",
+     "page": 124,
+     "en": "oš la hun, 13 (3 and 10). — kan la hun, 14 (4 and 10), etc.",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=124",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    },
+    {
+     "key": "tozzer",
+     "page": 125,
+     "en": "These latter show, in most cases, a fleshless lower jaw signifying 10 in addition to the glyph for the numbers from 3 to 9.",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=125",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    }
+   ],
+   "table": null
+  },
+  {
+   "id": "yn-3",
+   "title": "Whose: the owned thing comes first",
+   "body": "To say 'my father's son', Maya puts the son first and the father after: u mehen in yum, 'his son, my father'. The u ('his') goes on the thing owned, and the owner follows.",
+   "quotes": [
+    {
+     "key": "tozzer",
+     "page": 73,
+     "en": "The forms of the nominal pronoun used to convey the idea of possession are attached to the name of the object possessed rather than to that of the possessor;",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=73",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    },
+    {
+     "key": "tozzer",
+     "page": 73,
+     "en": "u peq winik, the man's dog.",
+     "url": "/book/6acc3ed4230e9a56175ce8e7?page=73",
+     "cite": "Tozzer, A Maya Grammar (1921)"
+    }
+   ],
+   "table": null
+  }
+ ],
+ "words": [
+  {
+   "id": "yw-bix",
+   "form": "bix",
+   "short": "how",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 68,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=68",
+    "es": "BIX: como, bix a bel, como estás ó te hallas: bix u bel, como se halla, que te parece: bix ta tħan, que dices ó juzgas, como te parece, cuál es tu opinion?",
+    "en": "BIX: how; bix a bel, how are you, how do you find yourself; bix u bel, how is he, what do you think of it; bix ta tħan, what do you say or judge, how does it seem to you, what is your opinion?"
+   },
+   "attest": {
+    "key": "piop",
+    "page": 68,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=68",
+    "text": "bix a bel",
+    "form": "bix",
+    "checked": "Image read 2026-10-18. BIX entry with 'bix a bel, como estás ó te hallas' matches the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-bel",
+   "form": "bel",
+   "short": "state of health; used in greeting",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 64,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=64",
+    "es": "BEL: el estado de salud ó prosperidad, la situacion en que algo se encuentra: sirve para saludar ó informarse de su salud; bix a bel, bix u beloob.",
+    "en": "BEL: the state of health or prosperity, the situation in which something is found: it is used in greeting or in asking after someone's health; bix a bel, bix u beloob."
+   },
+   "attest": {
+    "key": "piop",
+    "page": 64,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=64",
+    "text": "bix a bel, bix u beloob",
+    "form": "bel",
+    "checked": "Image read 2026-10-18. BEL entry with 'bix a bel, bix u beloob' matches the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-a",
+   "form": "a",
+   "short": "your",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "coord",
+    "page": 17,
+    "url": "/book/6a9f3fa783c3b522416e4a0d?page=17",
+    "es": "A. pronombre posesivo de la 2ª persona. A kab: tu mano.",
+    "en": "A. possessive pronoun of the 2nd person. A kab: your hand."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "max á kaba",
+    "form": "á",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-in",
+   "form": "in",
+   "short": "my",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "coord",
+    "page": 53,
+    "url": "/book/6a9f3fa783c3b522416e4a0d?page=53",
+    "es": "In. pronombre de la primera persona. Mi.",
+    "en": "In. Pronoun of the first person. My."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "in kaba",
+    "form": "in",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-u",
+   "form": "u",
+   "short": "his, her, its",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "coord",
+    "page": 97,
+    "url": "/book/6a9f3fa783c3b522416e4a0d?page=97",
+    "es": "U. Su; pronombre posesivo de la tercera persona. U cuxtal, su vida:",
+    "en": "U. His, her, its; possessive pronoun of the third person. U cuxtal, his life."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "U me-hen in yum",
+    "form": "u",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-utz",
+   "form": "utz",
+   "short": "good",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 423,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=423",
+    "es": "UTZ: bueno. | Justo. | Propio. | Bonito. | Bondad. | Dicha ó felicidad. | Bien. | Util.",
+    "en": "UTZ: good. | Just. | Proper. | Pretty. | Goodness. | Good fortune or happiness. | Well. | Useful."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 13,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+    "text": "Le max cu betic utz ua lob utial leti cu betic.",
+    "form": "utz",
+    "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-lob",
+   "form": "lob",
+   "short": "harm, a bad thing",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 242,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=242",
+    "es": "LOB: daño, cosa mala, maleza, breña.",
+    "en": "LOB: harm, a bad thing, undergrowth, scrub."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 13,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+    "text": "Le max cu betic utz ua lob utial leti cu betic.",
+    "form": "lob",
+    "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-kaba",
+   "form": "kaba",
+   "short": "name",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 204,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=204",
+    "es": "KABA: nombre, denominacion.",
+    "en": "KABA: name, designation."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "max á kaba",
+    "form": "kaba",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-max",
+   "form": "max",
+   "short": "who",
+   "number": null,
+   "note": "Pío Pérez enters it as mac and maax; Beltrán's catechism prints max.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 251,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=251",
+    "es": "MAC: quien, equivale á Maax.",
+    "en": "MAC: who; it is equivalent to Maax."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "max á kaba",
+    "form": "max",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-uaix",
+   "form": "ua ix",
+   "short": "or",
+   "number": null,
+   "note": "Pío Pérez writes it as one word, uaix.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 412,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=412",
+    "es": "UAIX: quiza, ó Uaix Juan, ó Juan.",
+    "en": "UAIX: perhaps; or, Uaix Juan, or Juan."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "Pedro, ua ix Juan, in kaba.",
+    "form": "ua ix",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-pal",
+   "form": "pal",
+   "short": "boy, child",
+   "number": null,
+   "note": "The catechist calls the child Pale.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 309,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=309",
+    "es": "PAL: mozo que no es casado, mozo mancebo, jóven, muchacho, niño. Pal u than, niño en sus cosas. Pal yol, ser niño en sus producciones.",
+    "en": "PAL: an unmarried youth, young man, youth, boy, child. Pal u than, childish in his affairs. Pal yol, to be childish in what one produces."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "Pale, álten max á kaba?",
+    "form": "Pale",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-uinic",
+   "form": "uinic",
+   "short": "man, person",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 421,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=421",
+    "es": "UINIC: hombre, gente de suposicion.",
+    "en": "UINIC: man; a person of standing."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 10,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=10",
+    "text": "ui-nic",
+    "form": "ui-nic",
+    "checked": "Image read 2026-10-18. Lesson 8 list matches the OCR (me-hen, zu-cun, ui-nic, cħup-lal with barred h, xi-cin)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-hahal",
+   "form": "hahal",
+   "short": "true",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 150,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=150",
+    "es": "HAHAL: verdadero, verdadera.",
+    "en": "HAHAL: true."
+   },
+   "attest": {
+    "key": "decl1860",
+    "page": 11,
+    "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+    "text": "Hahal Dios, hahal uinicixan.",
+    "form": "hahal",
+    "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-xiblal",
+   "form": "xiblal",
+   "short": "male, the man",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 434,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=434",
+    "es": "XIBLAL: macho, varon en todo género de animales. | El hombre.",
+    "en": "XIBLAL: male, the male in every kind of animal. | The man."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "le mehen h xiblal yan ichna",
+    "form": "xiblal",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-chuplal",
+   "form": "cħuplal",
+   "short": "girl, young woman",
+   "number": null,
+   "note": "Cħuplal is the plural of cħupal (Coordinación, same page). Berendt's translation renders it 'woman'.",
+   "note_ref": null,
+   "dict": {
+    "key": "coord",
+    "page": 40,
+    "url": "/book/6a9f3fa783c3b522416e4a0d?page=40",
+    "es": "Cħupal, Muchacha, joven.",
+    "en": "Cħupal, Girl, young woman."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 10,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=10",
+    "text": "cħup-lal",
+    "form": "cħup-lal",
+    "checked": "Image read 2026-10-18. Lesson 8 list matches the OCR (me-hen, zu-cun, ui-nic, cħup-lal with barred h, xi-cin)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-colel",
+   "form": "colel",
+   "short": "lady",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 96,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=96",
+    "es": "COLEL: señora ó ama.",
+    "en": "COLEL: lady or mistress."
+   },
+   "attest": {
+    "key": "ruz",
+    "page": 14,
+    "url": "/book/6acc3dc5230e9a56175cd6de?page=14",
+    "text": "co-lel",
+    "form": "co-lel",
+    "checked": "Image read 2026-10-18. Two-syllable list matches the OCR (co-ten, ta-lez, tu-nich, cu-len, co-lel, ui-nic, xi-pal, me-hen, nu-xib, hun-tul, hun-pél)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-nuxib",
+   "form": "nuxib",
+   "short": "old man",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 294,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=294",
+    "es": "NUXIB: anciano, viejo: se dice del hombre y de los animales que tienen sexo masculino y de cosas que tienen vida. V. Nohxib.",
+    "en": "NUXIB: old man, aged: said of men, of animals of the male sex, and of living things. See Nohxib."
+   },
+   "attest": {
+    "key": "ruz",
+    "page": 14,
+    "url": "/book/6acc3dc5230e9a56175cd6de?page=14",
+    "text": "nu-xib",
+    "form": "nu-xib",
+    "checked": "Image read 2026-10-18. Two-syllable list matches the OCR (co-ten, ta-lez, tu-nich, cu-len, co-lel, ui-nic, xi-pal, me-hen, nu-xib, hun-tul, hun-pél)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-xipal",
+   "form": "xipal",
+   "short": "child, youth",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 435,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=435",
+    "es": "XIPAL: V. Xibpal, niño. | Jóven.",
+    "en": "XIPAL: See Xibpal, child. | Youth."
+   },
+   "attest": {
+    "key": "ruz",
+    "page": 14,
+    "url": "/book/6acc3dc5230e9a56175cd6de?page=14",
+    "text": "xi-pal",
+    "form": "xi-pal",
+    "checked": "Image read 2026-10-18. Two-syllable list matches the OCR (co-ten, ta-lez, tu-nich, cu-len, co-lel, ui-nic, xi-pal, me-hen, nu-xib, hun-tul, hun-pél)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-coten",
+   "form": "coten",
+   "short": "come here",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "motul1",
+    "page": 887,
+    "url": "/book/6acc3d5f230e9a56175cc731?page=887",
+    "es": "coten vaye: ven aca",
+    "en": "coten vaye: come here"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Coten a hanal cay.",
+    "form": "coten",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-xen",
+   "form": "xen",
+   "short": "go away",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 433,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=433",
+    "es": "XEN: véte, quita de aquí.",
+    "en": "XEN: go away, get out of here."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Xen ximbal ta cahal.",
+    "form": "xen",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-talez",
+   "form": "talez",
+   "short": "bring",
+   "number": null,
+   "note": "Pío Pérez enters the verb as talezah; Berendt prints the command, talez.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 358,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=358",
+    "es": "TALEZAH: v. a. traer, conducir, hacer venir. V. Talzah ó Tazah.",
+    "en": "TALEZAH: v. a. to bring, to conduct, to make come. See Talzah or Tazah."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Talez in bóx tzimin.",
+    "form": "talez",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-culen",
+   "form": "culen",
+   "short": "sit down",
+   "number": null,
+   "note": "The dictionary enters the verb as cultal; Berendt and Ruz print the command, culen.",
+   "note_ref": null,
+   "dict": {
+    "key": "coord",
+    "page": 34,
+    "url": "/book/6a9f3fa783c3b522416e4a0d?page=34",
+    "es": "Cultal, culhi, culac. Sentarse.",
+    "en": "Cultal, culhi, culac. To sit down."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Cu-len yokol tunich.",
+    "form": "Culen",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-hanal",
+   "form": "hanal",
+   "short": "to eat",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 153,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=153",
+    "es": "HANAL, HANI: comer generalmente.",
+    "en": "HANAL, HANI: to eat, in general."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Coten a hanal cay.",
+    "form": "hanal",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-cay",
+   "form": "cay",
+   "short": "fish",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 86,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=86",
+    "es": "CAY, CAYIL: pez, pescado.",
+    "en": "CAY, CAYIL: fish."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Coten a hanal cay.",
+    "form": "cay",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-tunich",
+   "form": "tunich",
+   "short": "stone",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 381,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=381",
+    "es": "TUNICH, TUNICHIL: piedra.",
+    "en": "TUNICH, TUNICHIL: stone."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Cu-len yokol tunich.",
+    "form": "tunich",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-yokol",
+   "form": "yokol",
+   "short": "above, upon",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 450,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=450",
+    "es": "YOKOL: encima, sobre. V. Okol, llorar.",
+    "en": "YOKOL: above, upon. See Okol, to weep."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "Cu-len yokol tunich.",
+    "form": "yokol",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-hun",
+   "form": "hun",
+   "short": "one",
+   "number": 1,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 189,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=189",
+    "es": "HUN: uno, solo: se junta con las terminaciones ppel, tul, pok, ten etc. Con los pronombres tin, ta, tu, significa yo solo, tin hun, tu solo, ta hun.",
+    "en": "HUN: one, alone. It joins with the endings ppel, tul, pok, ten, etc. With the pronouns tin, ta, tu, it means \"I alone,\" tin hun; \"you alone,\" ta hun."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "hun.",
+    "form": "hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-pos-L5",
+    "value": 1,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-pos-L5-c82e6a82.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-ca",
+   "form": "ca",
+   "short": "two",
+   "number": 2,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 78,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=78",
+    "es": "CA: numeral. Dos. Se une con las terminaciones propias de las cosas para contarlas.",
+    "en": "CA: numeral. Two. It is joined with the endings proper to the things being counted."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "ca.",
+    "form": "ca",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-27-pos-c2-20",
+    "value": 2,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-27-pos-c2-20-b3267a8b.jpg",
+    "codex_page": 48,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=27",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-ox",
+   "form": "ox",
+   "short": "three",
+   "number": 3,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 300,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=300",
+    "es": "OX: número cardinal que junto á las diversas terminaciones que tiene el idioma maya para contar las diversas sustancias que hay, significa tres.",
+    "en": "OX: a cardinal number which, joined to the various endings the Maya language has for counting the different kinds of things, means three."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "ox.",
+    "form": "ox",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-27-pos-c1-360",
+    "value": 3,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-27-pos-c1-360-e094b2a2.jpg",
+    "codex_page": 48,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=27",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-can",
+   "form": "can",
+   "short": "four",
+   "number": 4,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 83,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=83",
+    "es": "CAN, CANIL: numeral, cuatro.",
+    "en": "CAN, CANIL: numeral, four."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "can.",
+    "form": "can",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-s3a-1",
+    "value": 4,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-s3a-1-6763eae7.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-ho",
+   "form": "ho",
+   "short": "five",
+   "number": 5,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 171,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=171",
+    "es": "HO: cinco. Tambien se llama así la ciudad de Mérida.",
+    "en": "HO: five. The city of Mérida is also called by this name."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "| 5 | ho |",
+    "form": "ho",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-uac",
+   "form": "uac",
+   "short": "six",
+   "number": 6,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 411,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=411",
+    "es": "UAC: seis. 6",
+    "en": "UAC: six. 6"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "uac.",
+    "form": "uac",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-s3a-2",
+    "value": 6,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-s3a-2-f2ad75b6.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-uuc",
+   "form": "uuc",
+   "short": "seven",
+   "number": 7,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 423,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=423",
+    "es": "UUC: siete. 7",
+    "en": "UUC: seven. 7"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "uuc.",
+    "form": "uuc",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-s3a-3",
+    "value": 7,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-s3a-3-60e33857.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-uaxac",
+   "form": "uaxac",
+   "short": "eight",
+   "number": 8,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 415,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=415",
+    "es": "UAXAC: ocho.",
+    "en": "UAXAC: eight."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "ua-xac.",
+    "form": "ua-xac",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-pos-L1",
+    "value": 8,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-pos-L1-eb73f789.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-bolon",
+   "form": "bolon",
+   "short": "nine",
+   "number": 9,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 71,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=71",
+    "es": "BOLON: nueve.",
+    "en": "BOLON: nine."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "bolon.",
+    "form": "bolon",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-lahun",
+   "form": "lahun",
+   "short": "ten",
+   "number": 10,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 232,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=232",
+    "es": "LAHUN: diez. 10",
+    "en": "LAHUN: ten. 10"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "la-hun.",
+    "form": "la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-s3b-4",
+    "value": 10,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-s3b-4-1dca193c.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "red"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-buluc",
+   "form": "buluc",
+   "short": "eleven",
+   "number": 11,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 74,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=74",
+    "es": "BULUC: once:",
+    "en": "BULUC: eleven."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "bu-luc.",
+    "form": "bu-luc",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-32-lo-g45-c",
+    "value": 11,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-lo-g45-c-c21e52a3.jpg",
+    "codex_page": 53,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-lahca",
+   "form": "lahca",
+   "short": "twelve",
+   "number": 12,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 232,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=232",
+    "es": "LAHCA: doce, numeral. 12",
+    "en": "LAHCA: twelve, numeral. 12"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "lah-ca.",
+    "form": "lah-ca",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-s3a-4",
+    "value": 12,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-s3a-4-0d60750a.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-oxlahun",
+   "form": "oxlahun",
+   "short": "thirteen",
+   "number": 13,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 300,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=300",
+    "es": "OXLAHUN: trece. 13",
+    "en": "OXLAHUN: thirteen. 13"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "ox-la-hun.",
+    "form": "ox-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-32-lo-g41-b",
+    "value": 13,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-lo-g41-b-c12d6069.jpg",
+    "codex_page": 53,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-canlahun",
+   "form": "canlahun",
+   "short": "fourteen",
+   "number": 14,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 83,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=83",
+    "es": "CAN LAHUN: catorce.",
+    "en": "CAN LAHUN: fourteen."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "can-la-hun.",
+    "form": "can-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-pos-R3",
+    "value": 14,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-pos-R3-f07b5439.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-holahun",
+   "form": "holahun",
+   "short": "fifteen",
+   "number": 15,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 176,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=176",
+    "es": "HOLAHUN: quince: V. Holhun.",
+    "en": "HOLAHUN: fifteen. See Holhun."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "ho-la-hun.",
+    "form": "ho-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-pos-L3",
+    "value": 15,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-pos-L3-f0b0a691.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-uaclahun",
+   "form": "uaclahun",
+   "short": "sixteen",
+   "number": 16,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 411,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=411",
+    "es": "UAC-LAHUN: diez y seis. 16",
+    "en": "UAC-LAHUN: sixteen. 16"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "uac-la-hun.",
+    "form": "uac-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-41-pos-L2",
+    "value": 16,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-pos-L2-348ee661.jpg",
+    "codex_page": 62,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=41",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-uuclahun",
+   "form": "uuclahun",
+   "short": "seventeen",
+   "number": 17,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 423,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=423",
+    "es": "UUC-LAHUN: diez y siete. 17",
+    "en": "UUC-LAHUN: seventeen. 17"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "uuc-la-hun.",
+    "form": "uuc-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-32-up-g2-20",
+    "value": 17,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-up-g2-20-381e8f1e.jpg",
+    "codex_page": 53,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-uaxaclahun",
+   "form": "uaxaclahun",
+   "short": "eighteen",
+   "number": 18,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 415,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=415",
+    "es": "UAXAC-LAHUN: diez y ocho.",
+    "en": "UAXAC-LAHUN: eighteen."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "ua-xac-la-hun.",
+    "form": "ua-xac-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": {
+    "item_id": "num-32-lo-g44-d",
+    "value": 18,
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-lo-g44-d-734955ad.jpg",
+    "codex_page": 53,
+    "url": "/book/69dfd990220eedf04e13b0cf?page=32",
+    "color": "black"
+   },
+   "modern": null
+  },
+  {
+   "id": "yw-bolonlahun",
+   "form": "bolonlahun",
+   "short": "nineteen",
+   "number": 19,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 71,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=71",
+    "es": "BOLON LAHUN: diez y nueve,",
+    "en": "BOLON LAHUN: nineteen."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "bo-lon-la-hun.",
+    "form": "bo-lon-la-hun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-hunkal",
+   "form": "hunkal",
+   "short": "twenty",
+   "number": 20,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 190,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=190",
+    "es": "HUNKAL: veinte: 20.",
+    "en": "HUNKAL: twenty: 20."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "hun-kal.",
+    "form": "hun-kal",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-pel",
+   "form": "-pel",
+   "short": "ending for counting things",
+   "number": null,
+   "note": "Pío Pérez spells it ppel; Berendt prints oxpel, campel, uucpel.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 336,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=336",
+    "es": "PPEL: terminacion que se añade á los nombres numerales con que se cuentan las cosas en general hasta llegar á veinte. Unidad.",
+    "en": "PPEL: a suffix added to the numerals used for counting things in general, up to twenty. Unit."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "Campel catac oxpel cu xocol uucpel",
+    "form": "-pel",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-tul",
+   "form": "-tul",
+   "short": "ending for counting people",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 379,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=379",
+    "es": "TUL: unido ó terminando un número sirve para contar seres racionales.",
+    "en": "TUL: joined to or ending a number, it serves for counting rational beings."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 13,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+    "text": "oxtul xib-lal y catul cħuplal",
+    "form": "-tul",
+    "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-catac",
+   "form": "catac",
+   "short": "and (between numbers)",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 85,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=85",
+    "es": "CATAC: conjuncion, y, para unir números. Hunkal catac hopel, veinticinco.",
+    "en": "CATAC: conjunction, and, used to join numbers. Hunkal catac hopel, twenty-five."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "Campel catac oxpel cu xocol uucpel",
+    "form": "catac",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-xoc",
+   "form": "xoc",
+   "short": "to count, to read",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 437,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=437",
+    "es": "XOC, XOCAH: contar, leer. | Obedecer,",
+    "en": "XOC, XOCAH: to count, to read. | To obey,"
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "Campel catac oxpel cu xocol uucpel",
+    "form": "xoc",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-yum",
+   "form": "yum",
+   "short": "father, lord",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 451,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=451",
+    "es": "YUM: padre, señor, amo.",
+    "en": "YUM: father, lord, master."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "U me-hen in yum.",
+    "form": "yum",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-na",
+   "form": "na",
+   "short": "mother",
+   "number": null,
+   "note": "The same page has na, house: the vowel of 'mother' is said strongly, and some write it naa.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 272,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=272",
+    "es": "NA: con pronunciacion fuerte de la vocal maya, es madre expresando de quien.",
+    "en": "NA: with a strong pronunciation of the Maya vowel, it means \"mother\" when stating whose mother."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "u xchup-al a na.",
+    "form": "na",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-mehen",
+   "form": "mehen",
+   "short": "son",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 259,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=259",
+    "es": "MEHEN: hijo: los sobrinos del varon. Mehenob, los descendientes.",
+    "en": "MEHEN: son; a man's nephews. Mehenob, descendants."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "U me-hen in yum.",
+    "form": "me-hen",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-chupal",
+   "form": "cħupal",
+   "short": "girl, young woman",
+   "number": null,
+   "note": "Berendt prints xcħupal; his translation gives 'daughter'.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 137,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=137",
+    "es": "CĦUPAL: muchacha, jóven, doncella.",
+    "en": "CĦUPAL: girl, young woman, maiden."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "u xchup-al a na.",
+    "form": "xcħup-al",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-zucun",
+   "form": "zucun",
+   "short": "elder brother",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 464,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=464",
+    "es": "ZUCUN: hermano mayor. | Abuelo de parte de padre.",
+    "en": "ZUCUN: elder brother. | Paternal grandfather."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "Tħanten a zucun Juan.",
+    "form": "zucun",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-cic",
+   "form": "cic",
+   "short": "elder sister",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 89,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=89",
+    "es": "CIC: hermana mayor en edad.",
+    "en": "CIC: elder sister."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "u noh-yum in cic.",
+    "form": "cic",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-nohoch",
+   "form": "nohoch",
+   "short": "large",
+   "number": null,
+   "note": "Nohoch yum, 'great father', is translated 'grandfather' in Berendt.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 286,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=286",
+    "es": "NOHOCH: grande en tamaño: es singular de Nuc, plural.",
+    "en": "NOHOCH: large in size; it is the singular of Nuc, which is plural."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 12,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+    "text": "Binezti haa a nohoch yum.",
+    "form": "nohoch",
+    "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-ich",
+   "form": "uich",
+   "short": "face, eyes, fruit",
+   "number": null,
+   "note": "Pío Pérez enters the word under ICH; Berendt prints uich.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 196,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=196",
+    "es": "ICH: cara, ojos, vista, semblante, haz, anverso, fruta del árbol, superficie de la tierra.",
+    "en": "ICH: face, eyes, sight, countenance, front side, obverse, fruit of a tree, surface of the earth."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "u uich op.",
+    "form": "uich",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-ni",
+   "form": "ni",
+   "short": "nose",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 282,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=282",
+    "es": "NI: pronunciando la i con acento fuerte y maya. El hocico, nariz, trompa de animal: la punta ó parte delgada de algo: la cumbre de alguna altura.",
+    "en": "NI: pronounced with a strong, Maya-style accent on the i. The snout, nose, or trunk of an animal; the tip or thin end of anything; the summit of a height."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 9,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=9",
+    "text": "nii.",
+    "form": "nii",
+    "checked": "Image read 2026-10-18. Lesson 7 word list matches the OCR (naa, nii, paal, uich, chii)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-chi",
+   "form": "chi",
+   "short": "mouth",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "coord",
+    "page": 37,
+    "url": "/book/6a9f3fa783c3b522416e4a0d?page=37",
+    "es": "Chi, Boca, orilla.",
+    "en": "Chi, Mouth, edge."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 9,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=9",
+    "text": "chii.",
+    "form": "chii",
+    "checked": "Image read 2026-10-18. Lesson 7 word list matches the OCR (naa, nii, paal, uich, chii)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-xicin",
+   "form": "xicin",
+   "short": "ear",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 434,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=434",
+    "es": "XICIN: oreja, oido. | asa ancha de lienzo ó manto.",
+    "en": "XICIN: ear, hearing. | A broad loop of cloth or mantle."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 10,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=10",
+    "text": "xi-cin.",
+    "form": "xi-cin",
+    "checked": "Image read 2026-10-18. Lesson 8 list matches the OCR (me-hen, zu-cun, ui-nic, cħup-lal with barred h, xi-cin)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-pol",
+   "form": "pol",
+   "short": "head",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 324,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=324",
+    "es": "POL: cabeza y el cabello que nace en ella.",
+    "en": "POL: head, and the hair that grows on it."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "u pol kix-pach-och.",
+    "form": "pol",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-kab",
+   "form": "kab",
+   "short": "arm, hand",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 204,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=204",
+    "es": "KAB: brazo, mano, asa, mango, ramo. Kabché, ramo de árbol. U kab pax, palo de tambor, baquetas. Ukabil nok la manga del vestido.",
+    "en": "KAB: arm, hand, handle, haft, branch. Kabché, branch of a tree. U kab pax, drumstick. Ukabil nok, the sleeve of a garment."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 13,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+    "text": "U caɔiɔ yal in kab, tucħub u kaba.",
+    "form": "kab",
+    "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-oc",
+   "form": "oc",
+   "short": "foot, leg",
+   "number": null,
+   "note": "Berendt's yoc is u + oc, 'its leg': after u, a word that starts with a vowel takes y.",
+   "note_ref": {
+    "key": "tozzer",
+    "page": 73,
+    "url": "/book/6acc3ed4230e9a56175ce8e7?page=73"
+   },
+   "dict": {
+    "key": "piop",
+    "page": 295,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=295",
+    "es": "OC: pié y pierna, pisada, rastro, huella.",
+    "en": "OC: foot and leg, footstep, trail, footprint."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 11,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+    "text": "ox-pel yoc in caa.",
+    "form": "yoc",
+    "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-puczikal",
+   "form": "puczikal",
+   "short": "heart",
+   "number": null,
+   "note": null,
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 327,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=327",
+    "es": "PUCZIKAL: corazon de animal, voluntad, corazon, ánimo para obrar.",
+    "en": "PUCZIKAL: the heart of an animal; will, heart, the spirit to act."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 14,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=14",
+    "text": "Leiti cu bin antah ua ca katic y a puczikal.",
+    "form": "puczikal",
+    "checked": "Image read 2026-10-18. 'Leiti cu bin antah ua ca katic y a puczikal.' matches the OCR."
+   },
+   "dresden": null,
+   "modern": null
+  },
+  {
+   "id": "yw-al",
+   "form": "al",
+   "short": "a woman's child",
+   "number": null,
+   "note": "In Berendt's yal in kab the same word, with y, names a finger of the hand.",
+   "note_ref": null,
+   "dict": {
+    "key": "piop",
+    "page": 50,
+    "url": "/book/6acc3dfa230e9a56175cdd32?page=50",
+    "es": "AL: hijo ó hija de la mujer; así llama tambien á los de su hermana; por lo regular va unido á las letras eufónicas u, y, como ual para el hijo propio, yal para el ajeno.",
+    "en": "AL: son or daughter of a woman; she also calls her sister's children so. It is usually joined to the euphonic letters u, y, as ual for one's own child, yal for another's."
+   },
+   "attest": {
+    "key": "berendt",
+    "page": 13,
+    "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+    "text": "U caɔiɔ yal in kab, tucħub u kaba.",
+    "form": "yal",
+    "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+   },
+   "dresden": null,
+   "modern": null
+  }
+ ],
+ "sentences": [
+  {
+   "id": "ys-bix-a-bel",
+   "key": "piop",
+   "page": 68,
+   "url": "/book/6acc3dfa230e9a56175cdd32?page=68",
+   "maya": "bix a bel",
+   "show": "bix a bel",
+   "show_note": null,
+   "es": "como estás ó te hallas",
+   "en": "how are you, how do you find yourself",
+   "en_short": "How are you?",
+   "words": [
+    "yw-bix",
+    "yw-a",
+    "yw-bel"
+   ],
+   "tiles": [
+    "bix",
+    "a",
+    "bel"
+   ],
+   "tiles_en": null,
+   "rule": {
+    "note": "yn-1",
+    "quote": 1,
+    "text": "a, 'your', goes in front of the thing it owns: a bel, your road."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. BIX entry with 'bix a bel, como estás ó te hallas' matches the OCR."
+  },
+  {
+   "id": "ys-max-kaba",
+   "key": "decl1860",
+   "page": 11,
+   "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+   "maya": "Pale, álten max á kaba?",
+   "show": "Pale, álten max á kaba?",
+   "show_note": null,
+   "es": null,
+   "en": "Child, tell me, what is your name?",
+   "en_short": null,
+   "words": [
+    "yw-pal",
+    "yw-max",
+    "yw-a",
+    "yw-kaba"
+   ],
+   "tiles": [
+    "max",
+    "á",
+    "kaba?"
+   ],
+   "tiles_en": "what is your name?",
+   "rule": {
+    "note": "yn-1",
+    "quote": 1,
+    "text": "á, 'your', stands in front of kaba, 'name'. Max, 'who', opens the question."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+  },
+  {
+   "id": "ys-in-kaba",
+   "key": "decl1860",
+   "page": 11,
+   "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+   "maya": "Pedro, ua ix Juan, in kaba.",
+   "show": "Pedro, ua ix Juan, in kaba.",
+   "show_note": null,
+   "es": null,
+   "en": "Peter, or else John, is my name.",
+   "en_short": null,
+   "words": [
+    "yw-uaix",
+    "yw-in",
+    "yw-kaba"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-in",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+  },
+  {
+   "id": "ys-utz-lob",
+   "key": "berendt",
+   "page": 13,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+   "maya": "Le max cu betic utz ua lob utial leti cu betic.",
+   "show": "Le max cu betic utz ua lob utial leti cu betic.",
+   "show_note": null,
+   "es": null,
+   "en": "Whoever does good or evil, does it for himself.",
+   "en_short": null,
+   "words": [
+    "yw-max",
+    "yw-utz",
+    "yw-lob"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-utz",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+  },
+  {
+   "id": "ys-hahal",
+   "key": "decl1860",
+   "page": 11,
+   "url": "/book/6acc3df2230e9a56175cdd1c?page=11",
+   "maya": "Hahal Dios, hahal uinicixan.",
+   "show": "Hahal Dios, hahal uinicixan.",
+   "show_note": null,
+   "es": null,
+   "en": "True God, and true man as well.",
+   "en_short": null,
+   "words": [
+    "yw-hahal",
+    "yw-uinic"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. 'Pale, álten max á kaba?' / 'Pedro, ua ix Juan, in kaba.' / 'Hahal Dios, hahal uinicixan.' match the OCR."
+  },
+  {
+   "id": "ys-coten",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "Coten a hanal cay.",
+   "show": "Coten a hanal cay.",
+   "show_note": null,
+   "es": null,
+   "en": "Come eat fish.",
+   "en_short": null,
+   "words": [
+    "yw-coten",
+    "yw-a",
+    "yw-hanal",
+    "yw-cay"
+   ],
+   "tiles": [
+    "Coten",
+    "a",
+    "hanal",
+    "cay."
+   ],
+   "tiles_en": null,
+   "rule": {
+    "note": "yn-1",
+    "quote": 0,
+    "text": "Coten, 'come here', opens the line. The a in front of hanal is the same 'your' that stands with nouns: Beltrán's 'mixed' pronoun serves verbs too."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-culen",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "Cu-len yokol tunich.",
+   "show": "Culen yokol tunich.",
+   "show_note": "Berendt breaks 'Cu-len' across a line.",
+   "es": null,
+   "en": "Sit down upon the stone.",
+   "en_short": null,
+   "words": [
+    "yw-culen",
+    "yw-yokol",
+    "yw-tunich"
+   ],
+   "tiles": [
+    "Culen",
+    "yokol",
+    "tunich."
+   ],
+   "tiles_en": null,
+   "rule": {
+    "text": "As in English: the command first, then 'upon', then the stone."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-xen",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "Xen ximbal ta cahal.",
+   "show": "Xen ximbal ta cahal.",
+   "show_note": null,
+   "es": null,
+   "en": "Go walk in your town.",
+   "en_short": null,
+   "words": [
+    "yw-xen"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-talez",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "Talez in bóx tzimin.",
+   "show": "Talez in bóx tzimin.",
+   "show_note": null,
+   "es": null,
+   "en": "Bring my black horse.",
+   "en_short": null,
+   "words": [
+    "yw-talez",
+    "yw-in"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-in",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-campel",
+   "key": "berendt",
+   "page": 12,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+   "maya": "Campel catac oxpel cu xocol uucpel",
+   "show": "Campel catac oxpel cu xocol uucpel",
+   "show_note": null,
+   "es": "cuatro y tres cuéntanse siete.",
+   "en": "Four and three are counted as seven",
+   "en_short": null,
+   "words": [
+    "yw-can",
+    "yw-catac",
+    "yw-ox",
+    "yw-xoc",
+    "yw-uuc",
+    "yw-pel"
+   ],
+   "tiles": [
+    "Campel",
+    "catac",
+    "oxpel",
+    "cu xocol",
+    "uucpel"
+   ],
+   "tiles_en": null,
+   "rule": {
+    "note": "yn-2",
+    "quote": 1,
+    "text": "Each number carries -pel, and catac, 'and', joins the two numbers before cu xocol, 'are counted'."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+  },
+  {
+   "id": "ys-oxpel-ti",
+   "key": "berendt",
+   "page": 12,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+   "maya": "Oxpel ti uucpel yalatah campel",
+   "show": "Oxpel ti uucpel yalatah campel",
+   "show_note": null,
+   "es": "tres â siete sobran cuatro.",
+   "en": "Three from seven leaves four",
+   "en_short": null,
+   "words": [
+    "yw-ox",
+    "yw-uuc",
+    "yw-can",
+    "yw-pel"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": {
+    "blank": "uucpel",
+    "choices": [
+     {
+      "text": "uucpel",
+      "word": "yw-uuc"
+     },
+     {
+      "text": "uacpel",
+      "word": "yw-uac"
+     },
+     {
+      "text": "campel",
+      "word": "yw-can"
+     }
+    ]
+   },
+   "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+  },
+  {
+   "id": "ys-oxlem",
+   "key": "berendt",
+   "page": 13,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+   "maya": "Oxlem capel cu hokol uacpel",
+   "show": "Oxlem capel cu hokol uacpel",
+   "show_note": null,
+   "es": "dos veces tres salen seis.",
+   "en": "Three times two makes six",
+   "en_short": null,
+   "words": [
+    "yw-ox",
+    "yw-ca",
+    "yw-uac",
+    "yw-pel"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": {
+    "blank": "uacpel",
+    "choices": [
+     {
+      "text": "uacpel",
+      "word": "yw-uac"
+     },
+     {
+      "text": "uucpel",
+      "word": "yw-uuc"
+     },
+     {
+      "text": "campel",
+      "word": "yw-can"
+     }
+    ]
+   },
+   "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+  },
+  {
+   "id": "ys-oxtul",
+   "key": "berendt",
+   "page": 13,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+   "maya": "oxtul xib-lal y catul cħuplal",
+   "show": "oxtul xiblal y catul cħuplal",
+   "show_note": "Berendt breaks 'xib-lal' across a line; the y is his barred y, short for yetel, 'and'.",
+   "es": null,
+   "en": "three males and two females",
+   "en_short": null,
+   "words": [
+    "yw-ox",
+    "yw-tul",
+    "yw-xiblal",
+    "yw-ca",
+    "yw-chuplal"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": {
+    "blank": "oxtul",
+    "choices": [
+     {
+      "text": "oxtul",
+      "word": "yw-tul"
+     },
+     {
+      "text": "oxpel",
+      "word": "yw-pel"
+     }
+    ],
+    "explain": {
+     "note": "yn-2",
+     "quote": 1,
+     "text": "Men are counted with -tul. Oxpel would count three things."
+    }
+   },
+   "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+  },
+  {
+   "id": "ys-mehen-yum",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "U me-hen in yum.",
+   "show": "U mehen in yum.",
+   "show_note": "Berendt hyphenates syllables in this lesson: me-hen.",
+   "es": null,
+   "en": "My father's son.",
+   "en_short": null,
+   "words": [
+    "yw-u",
+    "yw-mehen",
+    "yw-in",
+    "yw-yum"
+   ],
+   "tiles": [
+    "U",
+    "mehen",
+    "in",
+    "yum."
+   ],
+   "tiles_en": null,
+   "rule": {
+    "note": "yn-3",
+    "quote": 0,
+    "text": "The son comes first, with u, 'his'; the owner, in yum, 'my father', follows: 'his son, my father'."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-chupal-na",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "u xchup-al a na.",
+   "show": "u xcħupal a na.",
+   "show_note": "The page image prints xcħup-al with a barred h; the transcription reads xchup-al.",
+   "es": null,
+   "en": "your mother's daughter.",
+   "en_short": null,
+   "words": [
+    "yw-u",
+    "yw-chupal",
+    "yw-a",
+    "yw-na"
+   ],
+   "tiles": [
+    "u",
+    "xcħupal",
+    "a",
+    "na."
+   ],
+   "tiles_en": null,
+   "rule": {
+    "note": "yn-3",
+    "quote": 0,
+    "text": "The daughter comes first, with u, 'her'; the owner, a na, 'your mother', follows."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-campel-yum",
+   "key": "berendt",
+   "page": 16,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=16",
+   "maya": "U camꝑel, bin á tzic á yum y á ná.",
+   "show": "U camꝑel, bin á tzic á yum y á ná.",
+   "show_note": null,
+   "es": null,
+   "en": "The fourth, you shall honor your father and your mother.",
+   "en_short": null,
+   "words": [
+    "yw-yum",
+    "yw-na",
+    "yw-a"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-yum",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. The commandments match the OCR (barred p in camꝑel)."
+  },
+  {
+   "id": "ys-zucun",
+   "key": "berendt",
+   "page": 12,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+   "maya": "Tħanten a zucun Juan.",
+   "show": "Tħanten a zucun Juan.",
+   "show_note": null,
+   "es": null,
+   "en": "Call your older brother John for me.",
+   "en_short": null,
+   "words": [
+    "yw-a",
+    "yw-zucun"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-zucun",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+  },
+  {
+   "id": "ys-nohoch",
+   "key": "berendt",
+   "page": 12,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+   "maya": "Binezti haa a nohoch yum.",
+   "show": "Binezti haa a nohoch yum.",
+   "show_note": null,
+   "es": null,
+   "en": "Carry water to your grandfather.",
+   "en_short": null,
+   "words": [
+    "yw-a",
+    "yw-nohoch",
+    "yw-yum"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-nohoch",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+  },
+  {
+   "id": "ys-cic",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "u noh-yum in cic.",
+   "show": "u nohyum in cic.",
+   "show_note": "Berendt hyphenates syllables in this lesson: noh-yum.",
+   "es": null,
+   "en": "my older sister's grandfather.",
+   "en_short": null,
+   "words": [
+    "yw-u",
+    "yw-in",
+    "yw-cic",
+    "yw-yum"
+   ],
+   "tiles": [
+    "u",
+    "nohyum",
+    "in",
+    "cic."
+   ],
+   "tiles_en": null,
+   "rule": {
+    "note": "yn-3",
+    "quote": 0,
+    "text": "The grandfather comes first, with u; the owner, in cic, 'my older sister', follows."
+   },
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-tal-yum",
+   "key": "berendt",
+   "page": 12,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=12",
+   "maya": "He cu tal a yum ich col.",
+   "show": "He cu tal a yum ich col.",
+   "show_note": null,
+   "es": null,
+   "en": "Here comes your father in the cornfield.",
+   "en_short": null,
+   "words": [
+    "yw-a",
+    "yw-yum"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Sentences, the 1–20 table and Lesson 14 (with its Spanish in brackets) match the OCR. A pencil 'tres' corrects the Spanish 'dos' of the second sum; that sum is not used."
+  },
+  {
+   "id": "ys-pol",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "u pol kix-pach-och.",
+   "show": "u pol kixpachoch.",
+   "show_note": "Berendt hyphenates syllables in this lesson: kix-pach-och.",
+   "es": null,
+   "en": "the opossum's head.",
+   "en_short": null,
+   "words": [
+    "yw-u",
+    "yw-pol"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-pol",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-uich",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "u uich op.",
+   "show": "u uich op.",
+   "show_note": null,
+   "es": null,
+   "en": "the custard apple's fruit.",
+   "en_short": null,
+   "words": [
+    "yw-u",
+    "yw-ich"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-kab",
+   "key": "berendt",
+   "page": 13,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=13",
+   "maya": "U caɔiɔ yal in kab, tucħub u kaba.",
+   "show": "U caɔiɔ yal in kab, tucħub u kaba.",
+   "show_note": null,
+   "es": null,
+   "en": "The second finger of my hand, its name is the index finger.",
+   "en_short": null,
+   "words": [
+    "yw-al",
+    "yw-in",
+    "yw-kab",
+    "yw-u",
+    "yw-kaba"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-kab",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Matches the OCR. 'xib-lal' breaks across a line (one word, xiblal). The 'y' in 'y catul' is the barred y, Berendt's sign for yetel, 'and' (his p. 4)."
+  },
+  {
+   "id": "ys-oc",
+   "key": "berendt",
+   "page": 11,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=11",
+   "maya": "ox-pel yoc in caa.",
+   "show": "oxpel yoc in caa.",
+   "show_note": "Berendt hyphenates syllables in this lesson: ox-pel.",
+   "es": null,
+   "en": "the three legs of my grinding stone.",
+   "en_short": null,
+   "words": [
+    "yw-ox",
+    "yw-pel",
+    "yw-oc",
+    "yw-in"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": null,
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. Lessons 11–12 match the OCR. 'Cu-len' is a hyphen at a line break (one word, culen). The image prints 'xcħup-al' with a barred h where the OCR has 'xchup-al'."
+  },
+  {
+   "id": "ys-puczikal",
+   "key": "berendt",
+   "page": 14,
+   "url": "/book/6acc3e26230e9a56175cdf9c?page=14",
+   "maya": "Leiti cu bin antah ua ca katic y a puczikal.",
+   "show": "Leiti cu bin antah ua ca katic y a puczikal.",
+   "show_note": null,
+   "es": null,
+   "en": "He will help if you ask with your heart.",
+   "en_short": null,
+   "words": [
+    "yw-a",
+    "yw-puczikal"
+   ],
+   "tiles": null,
+   "tiles_en": null,
+   "rule": null,
+   "fill": "yw-puczikal",
+   "fill_text": null,
+   "checked": "Image read 2026-10-18. 'Leiti cu bin antah ua ca katic y a puczikal.' matches the OCR."
+  }
+ ],
+ "units": [
+  {
+   "id": "yu-1",
+   "n": 1,
+   "title": "Greetings and people",
+   "note": "yn-1",
+   "lessons": [
+    {
+     "id": "yl-1-1",
+     "title": "How are you?",
+     "new": [
+      "yw-bix",
+      "yw-bel",
+      "yw-a",
+      "yw-in",
+      "yw-u"
+     ],
+     "sentences": [
+      "ys-bix-a-bel"
+     ]
+    },
+    {
+     "id": "yl-1-2",
+     "title": "What is your name?",
+     "new": [
+      "yw-max",
+      "yw-kaba",
+      "yw-pal",
+      "yw-uaix"
+     ],
+     "sentences": [
+      "ys-max-kaba",
+      "ys-in-kaba"
+     ]
+    },
+    {
+     "id": "yl-1-3",
+     "title": "People",
+     "new": [
+      "yw-uinic",
+      "yw-hahal",
+      "yw-xiblal",
+      "yw-chuplal",
+      "yw-colel",
+      "yw-nuxib",
+      "yw-xipal"
+     ],
+     "sentences": [
+      "ys-hahal"
+     ]
+    },
+    {
+     "id": "yl-1-4",
+     "title": "Good and bad",
+     "new": [
+      "yw-utz",
+      "yw-lob"
+     ],
+     "review": [
+      "yw-max",
+      "yw-in",
+      "yw-kaba"
+     ],
+     "sentences": [
+      "ys-utz-lob",
+      "ys-in-kaba"
+     ]
+    },
+    {
+     "id": "yl-1-5",
+     "title": "Come, go, bring",
+     "new": [
+      "yw-coten",
+      "yw-xen",
+      "yw-talez",
+      "yw-hanal",
+      "yw-cay"
+     ],
+     "sentences": [
+      "ys-coten",
+      "ys-xen",
+      "ys-talez"
+     ]
+    },
+    {
+     "id": "yl-1-6",
+     "title": "Sit on the stone",
+     "new": [
+      "yw-culen",
+      "yw-yokol",
+      "yw-tunich"
+     ],
+     "review": [
+      "yw-coten",
+      "yw-xen"
+     ],
+     "sentences": [
+      "ys-culen"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "yu-2",
+   "n": 2,
+   "title": "Numbers 1 to 20",
+   "note": "yn-2",
+   "lessons": [
+    {
+     "id": "yl-2-1",
+     "title": "One to five",
+     "new": [
+      "yw-hun",
+      "yw-ca",
+      "yw-ox",
+      "yw-can",
+      "yw-ho"
+     ],
+     "sentences": []
+    },
+    {
+     "id": "yl-2-2",
+     "title": "Six to ten",
+     "new": [
+      "yw-uac",
+      "yw-uuc",
+      "yw-uaxac",
+      "yw-bolon",
+      "yw-lahun"
+     ],
+     "review": [
+      "yw-ox",
+      "yw-can"
+     ],
+     "sentences": []
+    },
+    {
+     "id": "yl-2-3",
+     "title": "Eleven to twenty",
+     "new": [
+      "yw-buluc",
+      "yw-lahca",
+      "yw-oxlahun",
+      "yw-canlahun",
+      "yw-holahun",
+      "yw-uaclahun",
+      "yw-uuclahun",
+      "yw-uaxaclahun",
+      "yw-bolonlahun",
+      "yw-hunkal"
+     ],
+     "sentences": []
+    },
+    {
+     "id": "yl-2-4",
+     "title": "Counting things and people",
+     "new": [
+      "yw-pel",
+      "yw-tul",
+      "yw-catac",
+      "yw-xoc"
+     ],
+     "sentences": [
+      "ys-campel",
+      "ys-oxpel-ti",
+      "ys-oxlem",
+      "ys-oxtul"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "yu-3",
+   "n": 3,
+   "title": "Family and body",
+   "note": "yn-3",
+   "lessons": [
+    {
+     "id": "yl-3-1",
+     "title": "Father, mother, son, daughter",
+     "new": [
+      "yw-yum",
+      "yw-na",
+      "yw-mehen",
+      "yw-chupal"
+     ],
+     "review": [
+      "yw-u",
+      "yw-in",
+      "yw-a"
+     ],
+     "sentences": [
+      "ys-mehen-yum",
+      "ys-chupal-na",
+      "ys-campel-yum"
+     ]
+    },
+    {
+     "id": "yl-3-2",
+     "title": "Brothers, sisters, grandparents",
+     "new": [
+      "yw-zucun",
+      "yw-cic",
+      "yw-nohoch"
+     ],
+     "review": [
+      "yw-yum"
+     ],
+     "sentences": [
+      "ys-zucun",
+      "ys-nohoch",
+      "ys-cic",
+      "ys-tal-yum"
+     ]
+    },
+    {
+     "id": "yl-3-3",
+     "title": "The face",
+     "new": [
+      "yw-pol",
+      "yw-ich",
+      "yw-ni",
+      "yw-chi",
+      "yw-xicin"
+     ],
+     "sentences": [
+      "ys-pol",
+      "ys-uich"
+     ]
+    },
+    {
+     "id": "yl-3-4",
+     "title": "Hand, foot, heart",
+     "new": [
+      "yw-kab",
+      "yw-al",
+      "yw-oc",
+      "yw-puczikal"
+     ],
+     "review": [
+      "yw-kaba",
+      "yw-ox"
+     ],
+     "sentences": [
+      "ys-kab",
+      "ys-oc",
+      "ys-puczikal"
+     ]
+    }
+   ]
+  }
+ ]
+}
