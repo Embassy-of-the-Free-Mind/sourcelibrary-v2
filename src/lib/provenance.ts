@@ -118,10 +118,12 @@ export function markForExport(text: string, bookId: string, opts?: { ref?: strin
  * colophon on ~1-in-COLOPHON_RATE) into `translation.data` on the way out.
  *
  * Three properties this depends on — keep them true:
- * - DETERMINISTIC: content-keyed, never a per-request ref, so every viewer
- *   gets identical bytes and the reader's 24h ISR/CDN caching is unaffected.
- *   Do not thread `opts.ref` through here; a request-dependent mark on a
- *   shared-cached body would cross-serve one caller's ref to everyone.
+ * - DETERMINISTIC by default: content-keyed, no per-request ref, so every
+ *   viewer gets identical bytes and the reader's 24h ISR/CDN caching is
+ *   unaffected. The one exception is `opts.ref` for a flagged proxy pool
+ *   (#6950, `poolRefFor`), and ONLY on a response the caller serves
+ *   `private, no-store` — never on the cached page HTML, where it would
+ *   cross-serve one pool's ref to every reader.
  * - TRANSLATION ONLY: never the OCR. The OCR is a transcription of the
  *   original; bidi/zero-width characters can be genuine content there, and
  *   scholars diff it against the scans.
@@ -135,11 +137,11 @@ export function markForExport(text: string, bookId: string, opts?: { ref?: strin
  */
 export function markPageForReader<
   T extends { book_id?: unknown; translation?: { data?: unknown } | null }
->(page: T, bookId?: string): T {
+>(page: T, bookId?: string, opts?: { ref?: string }): T {
   const id = bookId || (typeof page?.book_id === 'string' ? page.book_id : undefined);
   const data = page?.translation?.data;
   if (!id || typeof data !== 'string' || !data) return page;
-  const marked = markForExport(data, id);
+  const marked = markForExport(data, id, opts?.ref ? { ref: opts.ref } : undefined);
   if (marked === data) return page;
   return { ...page, translation: { ...page.translation, data: marked } };
 }

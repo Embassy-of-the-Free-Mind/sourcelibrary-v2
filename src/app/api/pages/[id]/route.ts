@@ -9,6 +9,7 @@ import { recordCorrectionEvent } from '@/lib/correction-events';
 import { contentHash } from '@/lib/write-provenance'; // 16-hex, the repo convention (#4613)
 import { markPageForReader, stripProvenanceMarks } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
+import { poolRefFor } from '@/lib/suspected-pool';
 import { verifyCitationToken } from '@/lib/citation-token';
 import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
 
@@ -90,9 +91,11 @@ export async function GET(
     });
 
     // Reader-path provenance: translation carries the invisible imprimatur.
-    // Deterministic (no ref), so the cache header below stays valid.
-    return NextResponse.json(markPageForReader(page), {
-      headers: { 'Cache-Control': 'private, max-age=30, stale-while-revalidate=60' }
+    // Deterministic for readers; a flagged proxy pool also gets its extraction
+    // ref (#6950), and that response is never cached.
+    const ref = await poolRefFor(request);
+    return NextResponse.json(markPageForReader(page, undefined, { ref }), {
+      headers: { 'Cache-Control': ref ? 'private, no-store' : 'private, max-age=30, stale-while-revalidate=60' }
     });
   } catch (error) {
     console.error('Error fetching page:', error);
