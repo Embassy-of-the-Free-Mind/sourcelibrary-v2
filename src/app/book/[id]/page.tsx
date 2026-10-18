@@ -982,6 +982,10 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   const translationState = (book as unknown as TranslationStateSource).translation_state;
   const verdict = translationVerdict({ translation_state: translationState });
   const translationRung = storedRung({ translation_state: translationState });
+  // English editions: the stored "translation" is the OCR, and a first English
+  // translation can't be true (#3524). Main site only; embed/tenant views are
+  // unchanged until BPH approves.
+  const englishOriginalHere = !isEmbedded && !tenantSlug && !!translationState?.english_original;
   const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
@@ -1210,6 +1214,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           translated: stamped?.translated ?? translatedCount,
           translatable: stamped?.translatable ?? totalPages,
           transcribed: ocrCount,
+          pages: totalPages,
         },
       });
       // The shelf: books that share this holder (or, with no holder, this
@@ -1838,7 +1843,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   <span title={t.ocrTooltip(ocrCount, totalPages)} style={{ color: '#8fbfe6' }}>
                     {ocrPct >= 100 ? '✓' : `${ocrPct}%`} {t.ocr}
                   </span>
-                  {translatedPct > 0 && (
+                  {/* English originals carry their OCR as the "translation", so a
+                      Translated chip would count copies, not translations. */}
+                  {translatedPct > 0 && !englishOriginalHere && (
                     <span title={t.translatedTooltip(translatedCount)} style={{ color: '#86c98f' }}>
                       {verdict === 'complete'
                         ? `✓ ${t.translationComplete}`
@@ -1847,7 +1854,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                           : `${translatedPct}% ${t.translated}`}
                     </span>
                   )}
-                  {!!book.is_first_translation && translatedCount > 0 && ftClause && (
+                  {!!book.is_first_translation && translatedCount > 0 && ftClause && !englishOriginalHere && (
                     <span
                       title={
                         ftClaim === 'confirmed'
