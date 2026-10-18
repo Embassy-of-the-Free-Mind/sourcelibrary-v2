@@ -213,7 +213,7 @@ export default async function AboutPage() {
             className="w-32 h-40 object-cover rounded-lg border border-border-light shadow-sm flex-shrink-0"
           />
           <p className="text-secondary leading-relaxed">
-            Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English, and that AI was finally making it possible to change that. Read his <Link href="/vision" className="text-accent-rust hover:underline">founder&apos;s letter</Link> on where the project is headed.
+            Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English, and that AI was finally making it possible to change that. Read his <Link href="/articles/vision" className="text-accent-rust hover:underline">founder&apos;s letter</Link> on where the project is headed.
           </p>
         </div>
 
@@ -304,7 +304,7 @@ export default async function AboutPage() {
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
-            href="/vision"
+            href="/articles/vision"
             className="px-5 py-2.5 bg-white text-stone-900 rounded-full hover:bg-stone-100 transition-colors font-medium"
           >
             Read the vision

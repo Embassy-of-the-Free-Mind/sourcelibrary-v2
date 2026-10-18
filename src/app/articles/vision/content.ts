@@ -99,11 +99,14 @@ export interface VisionContent {
   };
 }
 
+// The hero picture, a constant so generate-article-heroes.mjs can find it.
+export const VISION_HERO_IMAGE = '/vision/hero.jpg';
+
 export const visionContent: VisionContent = {
   hero: {
     title: 'Bringing ancient wisdom into the future',
     subtitle: 'A letter from Derek Lomas, founder of Source Library',
-    image: '/vision/hero.jpg',
+    image: VISION_HERO_IMAGE,
     imageAlt: 'Historical illustration from the Bibliotheca Philosophica Hermetica',
   },
   dateline: 'Amsterdam, October 2026',

@@ -2,8 +2,8 @@
 
 import { createElement, useRef, useState } from 'react';
 import Link from 'next/link';
-import SiteHeader from '@/components/layout/SiteHeader';
-import type { EditComment, VisionContent } from './content';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { VISION_HERO_IMAGE, type EditComment, type VisionContent } from './content';
 
 // ── markdown-lite: **bold**, *italic*, [label](url) ──
 function formatInline(text: string): React.ReactNode {
@@ -19,7 +19,7 @@ function formatInline(text: string): React.ReactNode {
       const url = m[2];
       nodes.push(
         url.startsWith('/') ? (
-          <Link key={key++} href={url} className="text-accent-rust hover:underline">
+          <Link key={key++} href={url}>
             {label}
           </Link>
         ) : (
@@ -28,7 +28,6 @@ function formatInline(text: string): React.ReactNode {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent-rust hover:underline"
           >
             {label}
           </a>
@@ -48,9 +47,6 @@ function formatInline(text: string): React.ReactNode {
   if (last < text.length) nodes.push(text.slice(last));
   return nodes;
 }
-
-const HERO_GRADIENT =
-  'linear-gradient(to top, rgba(26,22,18,0.94) 0%, rgba(26,22,18,0.75) 35%, rgba(26,22,18,0.35) 65%, rgba(26,22,18,0.15) 100%)';
 
 function clone<T>(o: T): T {
   return JSON.parse(JSON.stringify(o)) as T;
@@ -196,50 +192,27 @@ export default function VisionView({
   const quote = content.quote;
 
   return (
-    <div className={`min-h-screen bg-cream${editable ? ' pb-28' : ''}`}>
-      <SiteHeader variant="light" />
-
+    <ContentPageLayout
+      header={
+        <ContentHeader feature headerVariant="dark"
+          title={content.hero.title}
+          subtitle={content.hero.subtitle}
+          image={VISION_HERO_IMAGE}
+          imageAlt={content.hero.imageAlt}
+        />
+      }
+      bg="bg-cream"
+      className={editable ? 'pb-28' : ''}
+    >
       {editable && (
-        <div className="bg-accent-rust text-white text-sm text-center px-4 py-2">
+        <div className="bg-accent-rust text-white text-sm text-center px-4 py-2 mb-8">
           Edit mode: change any text below, or click into a paragraph and press <strong>Add comment</strong>.
           Then <strong>Copy JSON</strong> and send it back. Nothing is saved automatically.
         </div>
       )}
 
-      {/* ── Hero ── */}
-      <div className="relative overflow-hidden text-white pt-16 pb-10 md:pt-24 md:pb-14 min-h-[260px] md:min-h-[340px] flex flex-col justify-end">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={content.hero.image}
-          alt={content.hero.imageAlt}
-          className="absolute inset-0 w-full h-full object-cover"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <div className="absolute inset-0" style={{ background: HERO_GRADIENT }} />
-        <div className="relative w-full max-w-[var(--container-wide)] mx-auto px-6 md:px-12">
-          {F({
-            as: 'h1',
-            path: 'hero.title',
-            value: content.hero.title,
-            dark: true,
-            className:
-              'font-serif text-4xl md:text-5xl tracking-tight mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]',
-          })}
-          {F({
-            as: 'p',
-            path: 'hero.subtitle',
-            value: content.hero.subtitle,
-            dark: true,
-            className:
-              'text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]',
-          })}
-        </div>
-      </div>
-
-      <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-12">
         {/* ── The letter ── */}
-        <article className="font-body text-[1.0625rem] md:text-lg text-secondary leading-[1.8] max-w-[68ch]">
+        <article className="font-body text-[1.0625rem] md:text-lg text-secondary leading-[1.8]">
           {F({ as: 'p', path: 'dateline', value: content.dateline, className: 'font-serif italic text-muted mb-8' })}
           {F({ as: 'p', path: 'salutation', value: content.salutation, className: 'mb-6' })}
 
@@ -258,7 +231,7 @@ export default function VisionView({
 
           {/* Optional pull-quote */}
           {quote && (
-          <figure className="my-12 pl-8 border-l-2 border-accent-rust">
+          <figure className="my-12 pl-8 border-l-2 border-accent-gold/60">
             {F({
               as: 'blockquote',
               path: 'quote.en',
@@ -283,7 +256,7 @@ export default function VisionView({
                   href={quote.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-accent-rust underline"
+                  className="underline"
                 >
                   {formatInline(quote.source)} &middot; {quote.linkLabel}
                 </a>
@@ -329,7 +302,7 @@ export default function VisionView({
             })}
             {content.image1.href && (
               <div className="text-center mt-1">
-                <Link href={content.image1.href} className="text-sm text-accent-rust hover:underline">
+                <Link href={content.image1.href} className="text-sm">
                   Read this page &rarr;
                 </Link>
               </div>
@@ -361,7 +334,7 @@ export default function VisionView({
             <ul className="space-y-3 mb-2 pl-0 list-none">
               {content.vision.items.map((item, i) => (
                 <li key={i} className="flex gap-3">
-                  <span aria-hidden="true" className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-rust" />
+                  <span aria-hidden="true" className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent-gold" />
                   {F({ as: 'span', path: `vision.items.${i}`, value: item, className: 'block' })}
                 </li>
               ))}
@@ -385,7 +358,7 @@ export default function VisionView({
                       as: 'span',
                       path: `phases.items.${i}.years`,
                       value: ph.years,
-                      className: 'text-xs uppercase tracking-widest text-accent-rust',
+                      className: 'text-xs uppercase tracking-widest text-muted',
                     })}
                     {F({
                       as: 'h3',
@@ -407,7 +380,7 @@ export default function VisionView({
                     as: 'p',
                     path: `phases.items.${i}.promise`,
                     value: ph.promise,
-                    className: 'font-serif italic text-primary border-l-2 border-accent-rust pl-4',
+                    className: 'font-serif italic text-primary border-l-2 border-accent-gold/60 pl-4',
                   })}
                 </li>
               ))}
@@ -480,10 +453,10 @@ export default function VisionView({
                   as: 'div',
                   path: 'signature.email',
                   value: content.signature.email,
-                  className: 'text-accent-rust text-sm',
+                  className: 'text-sm',
                 })
               ) : (
-                <a href={`mailto:${content.signature.email}`} className="text-accent-rust hover:underline text-sm">
+                <a href={`mailto:${content.signature.email}`} className="text-sm">
                   {content.signature.email}
                 </a>
               )}
@@ -492,7 +465,7 @@ export default function VisionView({
         </article>
 
         {/* ── The plan ── */}
-        <section className="mt-24 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
+        <section className="mt-24 font-body text-[1.0625rem] md:text-lg">
           {F({
             as: 'h2',
             path: 'plan.heading',
@@ -533,7 +506,7 @@ export default function VisionView({
 
         {/* ── Ways to take part ── */}
         {content.ways && (
-          <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch]">
+          <section className="mt-20 font-body text-[1.0625rem] md:text-lg">
             {F({
               as: 'h2',
               path: 'ways.heading',
@@ -579,7 +552,7 @@ export default function VisionView({
         )}
 
         {/* ── CTA ── */}
-        <section className="mt-20 font-body text-[1.0625rem] md:text-lg max-w-[68ch] border-t border-primary/10 pt-12">
+        <section className="mt-20 font-body text-[1.0625rem] md:text-lg border-t border-primary/10 pt-12">
           {F({
             as: 'h2',
             path: 'cta.heading',
@@ -615,7 +588,7 @@ export default function VisionView({
                 </a>
                 <Link
                   href={content.cta.secondaryHref}
-                  className="inline-block bg-white border border-primary/20 text-primary py-3 px-8 rounded-full hover:border-accent-rust hover:text-accent-rust transition-colors text-base font-medium text-center"
+                  className="inline-block bg-white border border-primary/20 text-primary py-3 px-8 rounded-full hover:border-primary/40 transition-colors text-base font-medium text-center"
                 >
                   {content.cta.secondaryLabel}
                 </Link>
@@ -624,7 +597,6 @@ export default function VisionView({
           </div>
           {F({ as: 'p', path: 'cta.footer', value: content.cta.footer, className: 'mt-6 text-sm text-muted' })}
         </section>
-      </main>
 
       {/* ── Edit toolbar ── */}
       {editable && (
@@ -748,6 +720,6 @@ export default function VisionView({
           </div>
         </div>
       )}
-    </div>
+    </ContentPageLayout>
   );
 }

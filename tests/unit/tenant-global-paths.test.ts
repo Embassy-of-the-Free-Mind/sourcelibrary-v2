@@ -143,7 +143,7 @@ describe('proxy behavior', () => {
     // Source Library's own institutional pages (#3370)
     '/about',
     '/about/progress',
-    '/vision',
+    '/articles/vision',
     '/census',
     '/research',
     '/ideas',
@@ -162,6 +162,19 @@ describe('proxy behavior', () => {
   ])('404s %s on a tenant subdomain', async (p) => {
     const res = await proxy(req(`https://bph.sourcelibrary.org${p}`, 'bph.sourcelibrary.org'));
     expect(res?.status).toBe(404);
+  });
+
+  // In Memoriam moved under /articles on the main site only (2026-10-18).
+  it('redirects /in-memoriam to /articles/in-memoriam on the main site', async () => {
+    const res = await proxy(req('https://sourcelibrary.org/in-memoriam', 'sourcelibrary.org'));
+    expect(res?.status).toBe(308);
+    expect(res?.headers.get('location')).toBe('https://sourcelibrary.org/articles/in-memoriam');
+  });
+
+  it('keeps /in-memoriam on a tenant subdomain', async () => {
+    const res = await proxy(req('https://bph.sourcelibrary.org/in-memoriam', 'bph.sourcelibrary.org'));
+    expect(res?.status).not.toBe(404);
+    expect(res?.headers.get('location') ?? '').not.toContain('/articles/');
   });
 
   it.each(TENANT_REACHABLE_INSTITUTIONAL_PATHS)(

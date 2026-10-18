@@ -905,6 +905,15 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // In Memoriam moved to /articles/in-memoriam on the main site (2026-10-18).
+  // Partner reading rooms keep the page at /in-memoriam: /articles is global-only
+  // there, and the BPH subdomain is Joost Ritman's own library.
+  if (!tenant && pathname === '/in-memoriam') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/articles/in-memoriam';
+    return NextResponse.redirect(url, 308);
+  }
+
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).
   // Checked before the rewrite block, which skips /api/* — the listed API twins
   // are the unscoped data sources behind these pages and must be refused too.

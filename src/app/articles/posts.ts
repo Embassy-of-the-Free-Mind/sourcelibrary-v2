@@ -68,6 +68,26 @@ export interface BlogPost {
   href?: string;
 }
 
+// Articles written by a person rather than drafted by AI. Their footer note is a
+// byline (NoteFooter) instead of the AI disclosure. Name, role and photo as the
+// founder's letter already gives them.
+export interface ArticleAuthor {
+  name: string;
+  bio: string;
+  photo: string;
+}
+
+const DEREK_LOMAS: ArticleAuthor = {
+  name: 'Derek Lomas',
+  bio: 'Founder, Source Library · Asst. Professor of Positive AI, TU Delft',
+  photo: '/founder-derek.jpg',
+};
+
+export const AUTHORED_ARTICLES: Record<string, ArticleAuthor> = {
+  vision: DEREK_LOMAS,
+  'in-memoriam': DEREK_LOMAS,
+};
+
 export function postHref(post: BlogPost): string {
   return post.href ?? `/articles/${post.slug}`;
 }
@@ -87,32 +107,6 @@ export const UNLISTED_PAGES: Record<string, string> = {
 // on the /articles index and category pages only (not in the feed, sitemap or
 // home slider), until each is moved under /articles.
 export const LINKED_PAGES: BlogPost[] = [
-  {
-    slug: 'vision',
-    href: '/vision',
-    title: 'Our Vision: A Letter from the Founder',
-    subtitle: 'Why Source Library exists, what it will take to translate the world’s untranslated books, and what that costs over five years.',
-    summary:
-      'Derek Lomas, who founded Source Library, on why it exists, what it takes to translate the world’s untranslated books, and the five-year budget.',
-    date: '19 June 2026',
-    readTime: '',
-    kind: 'library',
-    image: '/vision/hero.jpg',
-    imageAlt: 'An opening of an early printed Latin book in black-letter type, with the heading “Epistola responsiva” on the right-hand page.',
-  },
-  {
-    slug: 'in-memoriam',
-    href: '/in-memoriam',
-    title: 'In Memoriam: Joost R. Ritman (1941–2026)',
-    subtitle: 'Remembering the founder of the Bibliotheca Philosophica Hermetica, the library where Source Library began.',
-    summary:
-      'Remembering Joost R. Ritman (1941 to 2026), founder of the Bibliotheca Philosophica Hermetica, where Source Library began. His motto: ad fontes.',
-    date: '3 July 2026',
-    readTime: '',
-    kind: 'library',
-    image: '/memoriam/joost-ritman.jpg',
-    imageAlt: 'Joost R. Ritman',
-  },
   {
     slug: 'specimen-aldine',
     href: '/specimen/aldine',
@@ -181,6 +175,30 @@ export const LINKED_PAGES: BlogPost[] = [
 ];
 
 export const posts: BlogPost[] = [
+  {
+    slug: 'vision',
+    title: 'Our Vision: A Letter from the Founder',
+    subtitle: 'Why Source Library exists, what it will take to translate the world’s untranslated books, and what that costs over five years.',
+    summary:
+      'Derek Lomas, who founded Source Library, on why it exists, what it takes to translate the world’s untranslated books, and the five-year budget.',
+    date: '19 June 2026',
+    readTime: '',
+    kind: 'library',
+    image: '/vision/hero.jpg',
+    imageAlt: 'An opening of an early printed Latin book in black-letter type, with the heading “Epistola responsiva” on the right-hand page.',
+  },
+  {
+    slug: 'in-memoriam',
+    title: 'In Memoriam: Joost R. Ritman (1941–2026)',
+    subtitle: 'Remembering the founder of the Bibliotheca Philosophica Hermetica, the library where Source Library began.',
+    summary:
+      'Remembering Joost R. Ritman (1941 to 2026), founder of the Bibliotheca Philosophica Hermetica, where Source Library began. His motto: ad fontes.',
+    date: '3 July 2026',
+    readTime: '',
+    kind: 'library',
+    image: '/memoriam/joost-ritman.jpg',
+    imageAlt: 'Joost R. Ritman',
+  },
   {
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',

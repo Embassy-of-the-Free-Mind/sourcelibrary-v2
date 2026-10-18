@@ -50,7 +50,6 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // books, which was the last foreign-book link the leak audit could find on
   // bph.sourcelibrary.org. `/about` covers `/about/progress` by prefix.
   '/about',
-  '/vision',
   '/census',
   '/research',
   // Ideas across traditions (#6173): every page is a list of books from the
