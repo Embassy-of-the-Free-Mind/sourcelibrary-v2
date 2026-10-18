@@ -121,7 +121,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         className="absolute pointer-events-none z-0"
         style={{ top: 50, right: -160, width: 420, height: 420 }}
       >
-        {[10, 7, 4].map((r) => (
+        {[10, 7, 4].map((r, k) => (
           <circle
             key={r}
             cx="12"
@@ -132,12 +132,9 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
             strokeWidth="1"
             style={{
               transformOrigin: '12px 12px',
-              // Same start and fade as the links, so it all arrives together.
-              transform: open ? 'scale(1)' : 'scale(0.94)',
+              transform: open ? 'scale(1)' : 'scale(0.2)',
               opacity: open ? 1 : 0,
-              transition: open
-                ? 'transform 950ms ease-out 160ms, opacity 950ms ease-out 160ms'
-                : 'transform 200ms, opacity 200ms',
+              transition: `transform 1.5s cubic-bezier(.2,.8,.2,1) ${open ? k * 100 : 0}ms, opacity .8s`,
             }}
           />
         ))}
