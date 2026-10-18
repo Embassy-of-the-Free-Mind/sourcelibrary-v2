@@ -1,0 +1,387 @@
+{
+ "scored_pages": {
+  "real": 900,
+  "plant": 0
+ },
+ "primary": {
+  "all": {
+   "pages": 900,
+   "pos_pages": 618,
+   "units": 378116,
+   "pos_units": 4966,
+   "auroc_gain": 0.6036,
+   "p10_gain": 0.0284,
+   "r10_gain": 0.2163,
+   "thr10_gain": 0.1191,
+   "auroc_base": 0.5389,
+   "p10_base": 0.0206,
+   "r10_base": 0.1569,
+   "auroc_inll": 0.7091,
+   "p10_inll": 0.0401,
+   "r10_inll": 0.3057,
+   "base_rate": 0.0131,
+   "ci_gain": [
+    0.5713,
+    0.6367
+   ],
+   "ci_base": [
+    0.4966,
+    0.5723
+   ],
+   "ci_diff": [
+    0.0003,
+    0.1368
+   ],
+   "bar": false
+  },
+  "arabic": {
+   "pages": 26,
+   "pos_pages": 19,
+   "units": 9044,
+   "pos_units": 195,
+   "auroc_gain": 0.5776,
+   "p10_gain": 0.042,
+   "r10_gain": 0.1949,
+   "thr10_gain": 0.1144,
+   "auroc_base": 0.652,
+   "p10_base": 0.0409,
+   "r10_base": 0.1897,
+   "auroc_inll": 0.7489,
+   "p10_inll": 0.0653,
+   "r10_inll": 0.3026,
+   "base_rate": 0.0216,
+   "ci_gain": [
+    0.4952,
+    0.6488
+   ],
+   "ci_base": [
+    0.5833,
+    0.7183
+   ],
+   "ci_diff": [
+    -0.2099,
+    0.0454
+   ],
+   "bar": false
+  },
+  "chinese": {
+   "pages": 35,
+   "pos_pages": 17,
+   "units": 8277,
+   "pos_units": 128,
+   "auroc_gain": 0.5198,
+   "p10_gain": 0.0266,
+   "r10_gain": 0.1719,
+   "thr10_gain": -0.3172,
+   "auroc_base": 0.6403,
+   "p10_base": 0.0387,
+   "r10_base": 0.25,
+   "auroc_inll": 0.6669,
+   "p10_inll": 0.0302,
+   "r10_inll": 0.1953,
+   "base_rate": 0.0155,
+   "ci_gain": [
+    0.4291,
+    0.6067
+   ],
+   "ci_base": [
+    0.5404,
+    0.7483
+   ],
+   "ci_diff": [
+    -0.2763,
+    0.0191
+   ],
+   "bar": false
+  },
+  "german": {
+   "pages": 75,
+   "pos_pages": 50,
+   "units": 16696,
+   "pos_units": 398,
+   "auroc_gain": 0.6272,
+   "p10_gain": 0.0725,
+   "r10_gain": 0.304,
+   "thr10_gain": 0.223,
+   "auroc_base": 0.5515,
+   "p10_base": 0.0485,
+   "r10_base": 0.2035,
+   "auroc_inll": 0.7939,
+   "p10_inll": 0.0575,
+   "r10_inll": 0.2412,
+   "base_rate": 0.0238,
+   "ci_gain": [
+    0.4239,
+    0.7716
+   ],
+   "ci_base": [
+    0.4224,
+    0.7167
+   ],
+   "ci_diff": [
+    -0.278,
+    0.3476
+   ],
+   "bar": false
+  },
+  "greek": {
+   "pages": 170,
+   "pos_pages": 128,
+   "units": 84199,
+   "pos_units": 1081,
+   "auroc_gain": 0.6441,
+   "p10_gain": 0.0286,
+   "r10_gain": 0.2229,
+   "thr10_gain": -0.0104,
+   "auroc_base": 0.517,
+   "p10_base": 0.0095,
+   "r10_base": 0.074,
+   "auroc_inll": 0.7168,
+   "p10_inll": 0.0384,
+   "r10_inll": 0.2988,
+   "base_rate": 0.0128,
+   "ci_gain": [
+    0.6118,
+    0.6713
+   ],
+   "ci_base": [
+    0.4881,
+    0.5472
+   ],
+   "ci_diff": [
+    0.0697,
+    0.1754
+   ],
+   "bar": false
+  },
+  "hebrew": {
+   "pages": 6,
+   "pos_pages": 3,
+   "units": 4032,
+   "pos_units": 28,
+   "auroc_gain": 0.7453,
+   "p10_gain": 0.0273,
+   "r10_gain": 0.3929,
+   "thr10_gain": 0.0177,
+   "auroc_base": 0.6261,
+   "p10_base": 0.005,
+   "r10_base": 0.0714,
+   "auroc_inll": 0.8532,
+   "p10_inll": 0.0347,
+   "r10_inll": 0.5,
+   "base_rate": 0.0069,
+   "ci_gain": [
+    0.6362,
+    0.8824
+   ],
+   "ci_base": [
+    0.4243,
+    0.7595
+   ],
+   "ci_diff": [
+    -0.0531,
+    0.2502
+   ],
+   "bar": false
+  },
+  "latin": {
+   "pages": 588,
+   "pos_pages": 401,
+   "units": 255868,
+   "pos_units": 3136,
+   "auroc_gain": 0.5938,
+   "p10_gain": 0.0265,
+   "r10_gain": 0.2159,
+   "thr10_gain": 0.3361,
+   "auroc_base": 0.5496,
+   "p10_base": 0.0202,
+   "r10_base": 0.1649,
+   "auroc_inll": 0.6919,
+   "p10_inll": 0.0385,
+   "r10_inll": 0.3141,
+   "base_rate": 0.0123,
+   "ci_gain": [
+    0.5511,
+    0.6422
+   ],
+   "ci_base": [
+    0.485,
+    0.5973
+   ],
+   "ci_diff": [
+    -0.0444,
+    0.1535
+   ],
+   "bar": false
+  }
+ },
+ "plant": {
+  "all": {
+   "pages": 0,
+   "pos_pages": 0,
+   "units": 0,
+   "pos_units": 0
+  },
+  "word": {
+   "pages": 0,
+   "pos_pages": 0,
+   "units": 0,
+   "pos_units": 0
+  },
+  "sentence": {
+   "pages": 0,
+   "pos_pages": 0,
+   "units": 0,
+   "pos_units": 0
+  }
+ },
+ "by_kind": {
+  "garbled": {
+   "pages": 900,
+   "pos_pages": 49,
+   "units": 373628,
+   "pos_units": 478,
+   "auroc_gain": 0.6419,
+   "p10_gain": 0.0031,
+   "r10_gain": 0.2427,
+   "thr10_gain": 0.1258,
+   "auroc_base": 0.6029,
+   "p10_base": 0.0028,
+   "r10_base": 0.2218,
+   "auroc_inll": 0.837,
+   "p10_inll": 0.0063,
+   "r10_inll": 0.4937,
+   "base_rate": 0.0013,
+   "ci_gain": [
+    0.517,
+    0.7234
+   ],
+   "ci_base": [
+    0.5379,
+    0.6962
+   ],
+   "ci_diff": [
+    -0.1775,
+    0.1786
+   ]
+  },
+  "invented": {
+   "pages": 900,
+   "pos_pages": 61,
+   "units": 373812,
+   "pos_units": 662,
+   "auroc_gain": 0.857,
+   "p10_gain": 0.0106,
+   "r10_gain": 0.5967,
+   "thr10_gain": 0.1223,
+   "auroc_base": 0.2964,
+   "p10_base": 0.0009,
+   "r10_base": 0.0514,
+   "auroc_inll": 0.6321,
+   "p10_inll": 0.0056,
+   "r10_inll": 0.3157,
+   "base_rate": 0.0018,
+   "ci_gain": [
+    0.7792,
+    0.89
+   ],
+   "ci_base": [
+    0.1872,
+    0.4556
+   ],
+   "ci_diff": [
+    0.3407,
+    0.6946
+   ]
+  },
+  "sub_char": {
+   "pages": 900,
+   "pos_pages": 371,
+   "units": 374295,
+   "pos_units": 1145,
+   "auroc_gain": 0.4979,
+   "p10_gain": 0.0026,
+   "r10_gain": 0.0865,
+   "thr10_gain": 0.1268,
+   "auroc_base": 0.6202,
+   "p10_base": 0.0064,
+   "r10_base": 0.2105,
+   "auroc_inll": 0.7144,
+   "p10_inll": 0.0087,
+   "r10_inll": 0.283,
+   "base_rate": 0.0031,
+   "ci_gain": [
+    0.4684,
+    0.5214
+   ],
+   "ci_base": [
+    0.5931,
+    0.6509
+   ],
+   "ci_diff": [
+    -0.1813,
+    -0.0745
+   ]
+  },
+  "sub_lexical": {
+   "pages": 900,
+   "pos_pages": 422,
+   "units": 375832,
+   "pos_units": 2682,
+   "auroc_gain": 0.5794,
+   "p10_gain": 0.0125,
+   "r10_gain": 0.1745,
+   "thr10_gain": 0.124,
+   "auroc_base": 0.5525,
+   "p10_base": 0.0106,
+   "r10_base": 0.1491,
+   "auroc_inll": 0.703,
+   "p10_inll": 0.0204,
+   "r10_inll": 0.286,
+   "base_rate": 0.0071,
+   "ci_gain": [
+    0.5546,
+    0.6028
+   ],
+   "ci_base": [
+    0.5303,
+    0.5729
+   ],
+   "ci_diff": [
+    -0.0134,
+    0.0656
+   ]
+  }
+ },
+ "all_located_pages": {
+  "all": {
+   "pages": 523,
+   "pos_pages": 385,
+   "units": 204818,
+   "pos_units": 3206,
+   "auroc_gain": 0.62,
+   "p10_gain": 0.0402,
+   "r10_gain": 0.257,
+   "thr10_gain": 0.3657,
+   "auroc_base": 0.55,
+   "p10_base": 0.0258,
+   "r10_base": 0.165,
+   "auroc_inll": 0.7585,
+   "p10_inll": 0.0609,
+   "r10_inll": 0.389,
+   "base_rate": 0.0157,
+   "ci_gain": [
+    0.589,
+    0.6557
+   ],
+   "ci_base": [
+    0.521,
+    0.5762
+   ],
+   "ci_diff": [
+    0.0144,
+    0.134
+   ]
+  }
+ }
+}
