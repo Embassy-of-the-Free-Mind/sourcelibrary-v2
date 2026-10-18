@@ -10,7 +10,7 @@
  * Nahuatl and Mayan-language books to Opus after #6545 measured it +0.5/5 over Gemini 3.8 Flash in all five
  * languages under a cross-family judge). READ stage only; `cli-translate.mjs apply` writes.
  *
- *   node --env-file=.env.production.local scripts/batch/claude-translate.mjs read --page-ids-file=F --out=DIR
+ *   node --env-file=.env.production.local scripts/batch/claude-translate.mjs read --page-ids-file=F --out=DIR [--ocr-checked="..."]
  *        [--model=opus] [--per-call=10] [--job=NAME] [--instructions-file=F]
  *   node --env-file=.env.production.local scripts/batch/cli-translate.mjs apply --out=DIR --reason="..." [--apply]
  *
@@ -38,6 +38,7 @@ import os from 'node:os';
 import { spawn, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
+import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, buildBlockTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, dropLeafSeamBreaches, contentHash } from '../lib/translate-core.mjs';
 import { planBlocks } from '../lib/translate-batch-seam.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
@@ -128,6 +129,10 @@ async function main() {
   const ids = readPageIdsFile(arg('page-ids-file'));
   const prompts = await loadTranslationPrompts(db);
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PROJ }).toArray()).map((p) => [p.id, p]));
+  // Check the transcription before paying for a translation on top of it (#6865).
+  const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
+  console.log(gate.message);
+  if (!gate.ok) { await client.close(); process.exit(2); }
   const bookIds = [...new Set([...found.values()].map((p) => p.book_id))];
   const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }).toArray()).map((b) => [b.id, b]));
   // Every page of these books, for the neighbours: the seed page before a block and the next page's OCR.
