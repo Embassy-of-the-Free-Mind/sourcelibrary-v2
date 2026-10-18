@@ -69,8 +69,24 @@ const SORT_LABELS: [CatalogSort, string][] = [
   ['relevance', 'Most relevant'], ['popular', 'Most read'], ['year_asc', 'Oldest first'],
   ['year_desc', 'Newest first'], ['title', 'Title A–Z'], ['author', 'Author A–Z'],
 ];
-const SEARCH_EXAMPLES = ['Paracelsus', 'Atalanta fugiens', 'Latin alchemy', 'Greek 1500s'];
-const ASK_EXAMPLES = ['plague remedies before 1600', 'anything by Ficino that has been translated', 'German books on the philosophers’ stone'];
+/**
+ * Things to try, chosen to be fun and each tested on the real page for good
+ * results (2026-10-18): e.g. Witches 81 works, Comets 77, Kabbalah 252; asking
+ * "secret codes and ciphers" leads with Polygraphy and Steganography, "cures
+ * for melancholy" with The Anatomy of Melancholy. A different few each day.
+ * Before adding one, run it and read the first page of results.
+ */
+const SEARCH_POOL = ['Witches', 'Comets', 'Tarot', 'John Dee', 'Isaac Newton', 'Kabbalah', 'Ghosts', 'Hermes Trismegistus', 'Latin alchemy'];
+const ASK_POOL = [
+  'how to turn lead into gold', 'secret codes and ciphers', 'cures for melancholy', 'spells to summon angels',
+  'the music of the spheres', 'dragons and monsters', 'witch trials in German', 'ghosts and spirits before 1800',
+];
+/** `n` items from `pool`, rotating by the UTC day — the same on server and browser, so no hydration mismatch. */
+function ofTheDay<T>(pool: readonly T[], n: number, offset = 0): T[] {
+  const day = Math.floor(Date.now() / 86_400_000) + offset;
+  return Array.from({ length: Math.min(n, pool.length) }, (_, i) => pool[(day * n + i) % pool.length]);
+}
+
 const CLEAR: Partial<CatalogState> = {
   q: undefined, also: undefined, title: undefined, author: undefined, not: undefined, languages: undefined,
   category: undefined, collection: undefined, yearMin: undefined, yearMax: undefined,
@@ -159,6 +175,9 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   const [authorName, setAuthorName] = useState('');
   const [searchText, setSearchText] = useState(initialState.topic ? '' : (initialState.q ?? ''));
   const [askText, setAskText] = useState(initialState.ask ?? '');
+  // Worked out per render, not at module load: the server process outlives a day.
+  const searchExamples = ofTheDay(SEARCH_POOL, 4);
+  const askExamples = ofTheDay(ASK_POOL, 3, 3);
   const asking = useRef(0);
   const listCtl = useRef<AbortController | null>(null);
   // The catalogue's record for each asked work, by id; filled as works arrive.
@@ -449,7 +468,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
           </div>
           <div className={examplesRow}>
             <span className="shrink-0 text-muted mr-0.5">Try</span>
-            {SEARCH_EXAMPLES.map((e) => (
+            {searchExamples.map((e) => (
               <button key={e} type="button" className={exampleClass} onClick={() => { setSearchText(e); search(e); }}>{e}</button>
             ))}
           </div>
@@ -477,7 +496,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
             ) : (
               <>
                 <span className="shrink-0 text-muted mr-0.5">Try</span>
-                {ASK_EXAMPLES.map((e) => (
+                {askExamples.map((e) => (
                   <button key={e} type="button" className={exampleClass} onPointerEnter={() => warmExample(e)} onFocus={() => warmExample(e)} onClick={() => { setAskText(e); ask(e); }}>{e}</button>
                 ))}
               </>
