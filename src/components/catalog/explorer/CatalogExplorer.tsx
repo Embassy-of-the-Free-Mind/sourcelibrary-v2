@@ -7,6 +7,7 @@ import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import SearchAskBars from '@/components/search-kit/SearchAskBars';
 import FilterChips from '@/components/search-kit/FilterChips';
+import DidYouMean, { useRescue } from '@/components/search-kit/DidYouMean';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import StatsBand, { type BandStats } from './StatsBand';
 import AdvancedSearch, { type Draft } from './AdvancedSearch';
@@ -177,6 +178,8 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [authorName, setAuthorName] = useState('');
   const [searchText, setSearchText] = useState(initialState.topic ? '' : (initialState.q ?? ''));
+  // An ask that found nothing, answered with what it probably meant.
+  const [corrected, setCorrected] = useState<{ from: string; to: string } | null>(null);
   const [askText, setAskText] = useState(initialState.ask ?? '');
   // Worked out per render, not at module load: the server process outlives a day.
   const searchExamples = ofTheDay(SEARCH_POOL, 4);
@@ -330,6 +333,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     setAuthorName(who?.name ?? '');
     setAskText('');
     setSuggestions([]);
+    setCorrected(null);
     const next: CatalogState = {
       ...s, ...CLEAR, view: 'grid',
       q: topic || undefined, also: also.length ? also : undefined, author: who?.surname,
@@ -350,6 +354,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     setAuthorName(who?.name ?? '');
     setSearchText('');
     setSuggestions([]);
+    setCorrected(null);
     const next: CatalogState = {
       ...s, ...CLEAR, view: 'grid', ask: text.trim(),
       topic: topic || undefined, also: topic && also.length ? also : undefined, author: who?.surname,
@@ -450,9 +455,33 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     if (c) run(c.remove());
   };
   const clearAll = () => {
-    setSearchText(''); setAskText(''); setSuggestions([]); setAuthorName('');
+    setSearchText(''); setAskText(''); setSuggestions([]); setAuthorName(''); setCorrected(null);
     run({ ...s, ...CLEAR, sort: 'popular', view: 'grid' });
   };
+
+  /* --- nothing found: what it probably meant --- */
+  const foundNothing = topicMode
+    ? !!s.topic && !busy && shownWorks?.length === 0
+    : !!s.q && !loading && total === 0;
+  const rescueWords = (topicMode ? s.topic : s.q) ?? '';
+  const rescues = useRescue(rescueWords, 'library', foundNothing && !corrected);
+  const pickRescue = (r: { q: string }) => {
+    const also = synonymsFor(r.q);
+    setSearchText(r.q);
+    run({ ...s, q: r.q, also: also.length ? also : undefined, sort: 'relevance' });
+  };
+  // The librarian does not stop at nothing: an ask is answered with the best
+  // correction at once (once; a correction that also finds nothing stays put).
+  useEffect(() => {
+    if (!topicMode || corrected || !rescues.length) return;
+    const best = rescues[0];
+    const also = synonymsFor(best.q);
+    queueMicrotask(() => {
+      setCorrected({ from: s.ask ?? s.topic ?? '', to: best.q });
+      run({ ...s, topic: best.q, also: also.length ? also : undefined });
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [topicMode, corrected, rescues]);
 
 
   return (
@@ -524,6 +553,8 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
         </div>
       </div>
 
+      <DidYouMean rescues={topicMode ? [] : rescues} corrected={corrected} onPick={pickRescue} />
+
       {advOpen && (
         <AdvancedSearch
           key={advKey}
@@ -558,7 +589,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
         )}
       </div>
       <div className="mb-16">
-        <CatalogPagination currentPage={s.page} totalPages={pageCount} onPageChange={goToPage} />
+        <CatalogPagination currentPage={s.page} totalPages={pageCount} onPageChange={goToPage} variant="search" />
       </div>
     </div>
   );
