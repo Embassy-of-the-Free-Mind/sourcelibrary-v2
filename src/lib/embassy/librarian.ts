@@ -17,6 +17,9 @@ import {
   type GroundingReport,
 } from '@/lib/embassy/grounding';
 import { mergeNotebookClaimEdits, notebookClaimEdits } from '@/lib/embassy/notebook-claims';
+import { checkCitationPages, type CitationPassReport, type RoutedClaims } from '@/lib/embassy/citation-pages';
+import { flashLiteCitationRouter } from '@/lib/embassy/citation-router';
+import { CitationRoutingStream } from '@/lib/embassy/citation-routing';
 import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
 import { semanticSiteSearch } from '@/lib/semantic-search';
 import { esCollectionSlugs } from '@/lib/es-collections';
@@ -87,6 +90,23 @@ const NEIGHBOUR_CHARS = 700;
 const GROUNDING_MAX_PAGES = 150;
 /** Wall-clock ceiling on loading that support text; past it the pass judges nothing. */
 const GROUNDING_BUDGET_MS = 4000;
+/**
+ * The citation router (#6946) routes claims paragraph by paragraph while the
+ * answer streams; once the support is in, the last batch is waited for at most
+ * this long. Budget: +800 ms p90 after the last text chunk, with the
+ * deterministic passes inside it. A claim with no verdict in time keeps its link.
+ */
+const CITATION_ROUTER_WAIT_MS = 600;
+/** Hard ceiling on one router call. */
+const CITATION_ROUTER_TIMEOUT_MS = 4000;
+/**
+ * The flash-lite router is OFF unless LIBRARIAN_CITATION_ROUTER=1. On the
+ * #6904 replay it cut wrong-page links 25 → 18 / 24 → 21 (two Opus judges)
+ * but 3 of its 10 moves landed on a page that supports the claim less than the
+ * one it left, failing the zero-new-errors gate (#6946). The deterministic
+ * quote and caption checks run either way.
+ */
+const CITATION_ROUTER_ON = process.env.LIBRARIAN_CITATION_ROUTER === '1';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -1656,6 +1676,18 @@ export async function* streamAgenticResponse(
   // and quote checks (#5904).
   const groundingImages = new Map<string, GroundingImage>();
   const toolSupportText: string[] = [];
+  // Page-linked claims routed to the page that states them while the answer
+  // streams (#6946); the pass at the end applies the verdicts.
+  const citationRouting = !CITATION_ROUTER_ON ? null : new CitationRoutingStream({
+    router: flashLiteCitationRouter({ timeoutMs: CITATION_ROUTER_TIMEOUT_MS }),
+    loadPages: keys => loadSupportPages(keys, lang).catch(() => []),
+    resolveSlugs: slugs => resolveBookIds(slugs, allSources).catch(() => new Map()),
+    retrievedKeys: () => [...retrievedPageKeys],
+    ground: (unit, pages) => applyGroundingEdits(unit, groundAnswer({
+      text: unit, pages, supportLoaded: true, extraSupport: toolSupportText.join('\n'), images: [],
+      question: userMessage, siteBase: siteBase(lang),
+    }).edits),
+  });
   // Every image URL any tool returned this turn, plus every embed that survived
   // an earlier answer in this thread (see priorTurnImageUrls). The model may
   // embed these and nothing else; anything else in an `![](...)` is fabricated.
@@ -1738,6 +1770,7 @@ export async function* streamAgenticResponse(
         } else if (p.text) {
           generatedChunks.push(p.text);
           yield { type: 'text', text: p.text };
+          if (citationRouting && p.text.includes('\n')) citationRouting.feed(generatedChunks.join(''));
         }
       }
     }
@@ -1849,6 +1882,7 @@ export async function* streamAgenticResponse(
             finalParts.push(p);
             generatedChunks.push(p.text);
             yield { type: 'text', text: p.text };
+            if (citationRouting && p.text.includes('\n')) citationRouting.feed(generatedChunks.join(''));
           }
         }
       }
@@ -1903,29 +1937,12 @@ export async function* streamAgenticResponse(
   // clients apply events in arrival order. Fails open: if the support text
   // cannot be loaded in time, nothing is judged.
   const rawText = generatedChunks.join('');
-  const support = await withTimeout(
-    loadGroundingSupport(rawText, history, retrievedPageKeys, [...groundingImages.values()], lang).catch(err => {
-      console.warn('[Librarian] grounding support failed:', err instanceof Error ? err.message : err);
-      return null;
-    }),
-    GROUNDING_BUDGET_MS,
-    null,
-  );
-  const grounding = groundAnswer({
-    text: rawText,
-    pages: support?.pages ?? [],
-    supportLoaded: support !== null,
-    extraSupport: toolSupportText.join('\n'),
-    images: support?.images ?? [...groundingImages.values()],
-    question: userMessage,
-    siteBase: siteBase(lang),
+  citationRouting?.finish(rawText);
+  const { edits, report: groundingReport, citations } = await groundTurn({
+    rawText, history, retrievedPageKeys, images: [...groundingImages.values()], lang,
+    toolSupportText, userMessage, notebookSaved, routing: citationRouting,
   });
-  // The prompt forbids claiming a save that did not happen; the model claims
-  // one anyway about three times in four (#6255). Strip the claim when no
-  // add_to_notebook succeeded this turn — same event, same apply order.
-  const edits: GroundingEdit[] = notebookSaved
-    ? grounding.edits
-    : mergeNotebookClaimEdits(grounding.edits, notebookClaimEdits(rawText));
+  const grounding = { edits, report: groundingReport };
   if (edits.length > 0) {
     yield { type: 'grounding_edits', edits, report: grounding.report };
   }
@@ -2033,13 +2050,14 @@ export async function* streamAgenticResponse(
   }
 
   if (grounding.edits.length > 0) {
-    console.warn('[Librarian] grounding edits', grounding.report);
+    console.warn('[Librarian] grounding edits', grounding.report, citations);
     try {
       const db = await getDb();
       await db.collection('embassy_errors').insertOne({
         kind: 'grounding',
         threadId: threadId ?? null,
         report: grounding.report,
+        citations,
         createdAt: new Date(),
       });
     } catch { /* best effort */ }
@@ -2058,6 +2076,151 @@ export async function* streamAgenticResponse(
   });
 
   yield { type: 'usage', usage };
+}
+
+export interface GroundTurnInput {
+  rawText: string;
+  history: ConversationMessage[];
+  retrievedPageKeys: Set<string>;
+  images: GroundingImage[];
+  lang: Locale;
+  toolSupportText: string[];
+  userMessage: string;
+  notebookSaved: boolean;
+  /** The citation router's verdicts, routed while the answer streamed (#6946); null turns routing off. */
+  routing: Pick<CitationRoutingStream, 'settled' | 'verdicts'> | null;
+}
+
+/**
+ * Everything that runs on a finished answer before the reader sees it settle:
+ * the grounding pass (#5904), the notebook-claim strip (#6255) and the
+ * citation-page pass (#6946), returned as one list of edits in document order.
+ *
+ * Timing: the citation router has been routing claims paragraph by paragraph
+ * while the answer streamed (CitationRoutingStream); once the support is
+ * loaded, its last batch is waited for at most CITATION_ROUTER_WAIT_MS.
+ * Exported for the replay harness (scripts/eval/librarian-citations-6946).
+ */
+export async function groundTurn(input: GroundTurnInput): Promise<{
+  edits: GroundingEdit[];
+  report: GroundingReport;
+  citations: CitationPassReport;
+  /** The router's verdicts as they stood when the pass ran (null: routing off). */
+  verdicts: RoutedClaims | null;
+  timings: { supportMs: number; totalMs: number };
+}> {
+  const t0 = Date.now();
+  const { rawText, lang } = input;
+  const extraSupport = input.toolSupportText.join('\n');
+  const support = await withTimeout(
+    loadGroundingSupport(rawText, input.history, input.retrievedPageKeys, input.images, lang).catch(err => {
+      console.warn('[Librarian] grounding support failed:', err instanceof Error ? err.message : err);
+      return null;
+    }),
+    GROUNDING_BUDGET_MS,
+    null,
+  );
+  const supportMs = Date.now() - t0;
+  const grounding = groundAnswer({
+    text: rawText,
+    pages: support?.pages ?? [],
+    supportLoaded: support !== null,
+    extraSupport,
+    images: support?.images ?? input.images,
+    question: input.userMessage,
+    siteBase: siteBase(lang),
+  });
+  // The prompt forbids claiming a save that did not happen; the model claims
+  // one anyway about three times in four (#6255). Strip the claim when no
+  // add_to_notebook succeeded this turn — same event, same apply order.
+  const merged: GroundingEdit[] = input.notebookSaved
+    ? grounding.edits
+    : mergeNotebookClaimEdits(grounding.edits, notebookClaimEdits(rawText)) as GroundingEdit[];
+  // Page links point at the page that says it (#6946): quotations re-pointed
+  // deterministically, paraphrases by the router's verdicts (waited for at most
+  // CITATION_ROUTER_WAIT_MS from here), figure numbers in captions checked
+  // against the image's record.
+  let verdicts: RoutedClaims | null = null;
+  if (input.routing) {
+    await withTimeout(input.routing.settled(), Math.max(0, CITATION_ROUTER_WAIT_MS - (Date.now() - t0 - supportMs)), null);
+    verdicts = new Map(input.routing.verdicts);
+  }
+  const citation = await checkCitationPages({
+    text: rawText,
+    edits: merged,
+    pages: support?.pages ?? [],
+    supportLoaded: support !== null,
+    images: support?.images ?? input.images,
+    routed: verdicts ? Promise.resolve(verdicts) : undefined,
+    routedWaitMs: 0,
+  });
+  return {
+    edits: citation.edits,
+    report: grounding.report,
+    citations: citation.report,
+    verdicts,
+    timings: { supportMs, totalMs: Date.now() - t0 },
+  };
+}
+
+/** Book ids for cited slugs: the source cards first, then `books` by slug, alias or id. */
+export async function resolveBookIds(slugs: string[], sources: SourceCard[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  for (const s of sources) if (s.bookSlug && slugs.includes(s.bookSlug)) out.set(s.bookSlug, s.book_id);
+  const rest = slugs.filter(s => !out.has(s));
+  if (rest.length === 0) return out;
+  const db = await getDb();
+  const rows = await db.collection('books')
+    .find({ $or: [{ slug: { $in: rest } }, { slug_aliases: { $in: rest } }, { id: { $in: rest } }] })
+    .project({ id: 1, slug: 1, slug_aliases: 1 })
+    .maxTimeMS(3000)
+    .toArray();
+  for (const b of rows) {
+    for (const k of [b.slug, b.id, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])]) {
+      if (typeof k === 'string' && rest.includes(k)) out.set(k, b.id as string);
+    }
+  }
+  return out;
+}
+
+/** Grounding pages for `${bookId}:${page}` keys: translation + original (+ localized), with live slugs and titles. */
+export async function loadSupportPages(keys: string[], lang: Locale): Promise<GroundingPage[]> {
+  const byBook = new Map<string, number[]>();
+  for (const key of keys.slice(0, GROUNDING_MAX_PAGES)) {
+    const at = key.lastIndexOf(':');
+    const page = Number(key.slice(at + 1));
+    if (!Number.isFinite(page)) continue;
+    const bookId = key.slice(0, at);
+    byBook.set(bookId, [...(byBook.get(bookId) ?? []), page]);
+  }
+  if (byBook.size === 0) return [];
+  const db = await getDb();
+  const localField = lang === 'en' ? null : `translations.${lang}.data`;
+  const [pages, books] = await Promise.all([
+    db.collection('pages')
+      .find({ $or: [...byBook].map(([book_id, ps]) => ({ book_id, page_number: { $in: ps } })) })
+      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, ...(localField ? { [localField]: 1 } : {}) })
+      .maxTimeMS(3000)
+      .toArray(),
+    db.collection('books')
+      .find({ id: { $in: [...byBook.keys()] } })
+      .project({ id: 1, slug: 1, slug_aliases: 1, title: 1, display_title: 1 })
+      .maxTimeMS(3000)
+      .toArray(),
+  ]);
+  const meta = new Map(books.map(b => [b.id as string, b]));
+  return pages.map(p => {
+    const b = meta.get(p.book_id);
+    const local = localField ? (p.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data : undefined;
+    return {
+      bookId: p.book_id as string,
+      bookSlug: (b?.slug || p.book_id) as string,
+      bookTitle: (b?.display_title || b?.title || '') as string,
+      page: p.page_number as number,
+      text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
+      parts: [p.translation?.data, p.ocr?.data, local].map(t => (typeof t === 'string' ? t : '')),
+    };
+  });
 }
 
 /**
@@ -2105,28 +2268,12 @@ async function loadGroundingSupport(
   for (const img of images) if (img.bookId && img.page) keys.add(`${img.bookId}:${img.page}`);
   for (const c of citedIds) for (const n of [c.page - 1, c.page + 1]) if (n >= 1) keys.add(`${c.id}:${n}`);
 
-  const byBook = new Map<string, number[]>();
-  for (const key of [...keys].slice(0, GROUNDING_MAX_PAGES)) {
-    const at = key.lastIndexOf(':');
-    const page = Number(key.slice(at + 1));
-    if (!Number.isFinite(page)) continue;
-    const bookId = key.slice(0, at);
-    byBook.set(bookId, [...(byBook.get(bookId) ?? []), page]);
-  }
-  if (byBook.size === 0) return { pages: [], images };
-
-  const localField = lang === 'en' ? null : `translations.${lang}.data`;
-  const [pages, books] = await Promise.all([
-    db.collection('pages')
-      .find({ $or: [...byBook].map(([book_id, ps]) => ({ book_id, page_number: { $in: ps } })) })
-      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, ...(localField ? { [localField]: 1 } : {}) })
-      .maxTimeMS(3000)
-      .toArray(),
-    db.collection('books')
-      .find({ id: { $in: [...byBook.keys()] } })
-      .project({ id: 1, slug: 1, slug_aliases: 1, title: 1, display_title: 1 })
-      .maxTimeMS(3000)
-      .toArray(),
+  const imageBookIds = [...new Set(images.map(img => img.bookId).filter((x): x is string => !!x))];
+  const [supportPages, books] = await Promise.all([
+    loadSupportPages([...keys], lang),
+    imageBookIds.length
+      ? db.collection('books').find({ id: { $in: imageBookIds } }).project({ id: 1, slug: 1, slug_aliases: 1 }).maxTimeMS(3000).toArray()
+      : Promise.resolve([]),
   ]);
   const meta = new Map(books.map(b => [b.id as string, b]));
   const groundedImages = images.map(img => {
@@ -2136,18 +2283,6 @@ async function loadGroundingSupport(
       ...img,
       bookSlug: (b.slug as string | undefined) || img.bookSlug,
       bookAliases: [img.bookSlug, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])].filter((x): x is string => typeof x === 'string' && !!x),
-    };
-  });
-  const supportPages = pages.map(p => {
-    const b = meta.get(p.book_id);
-    const local = localField ? (p.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data : undefined;
-    return {
-      bookId: p.book_id as string,
-      bookSlug: (b?.slug || p.book_id) as string,
-      bookTitle: (b?.display_title || b?.title || '') as string,
-      page: p.page_number as number,
-      text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
-      parts: [p.translation?.data, p.ocr?.data, local].map(t => (typeof t === 'string' ? t : '')),
     };
   });
   return { pages: supportPages, images: groundedImages };
