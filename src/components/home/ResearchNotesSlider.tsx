@@ -35,7 +35,7 @@ export default function ResearchNotesSlider({
       action={
         <Link
           href="/articles"
-          className="h-11 inline-flex items-center gap-2 px-5 border border-primary/25 bg-white text-sm font-medium text-primary hover:bg-primary hover:border-primary hover:text-white transition-colors whitespace-nowrap"
+          className="h-11 inline-flex items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
         >
           {allLabel}
           <ArrowRight className="w-4 h-4" aria-hidden="true" />

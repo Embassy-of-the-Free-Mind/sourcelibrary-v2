@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { BOOK, CREDIT, PAPER } from './HeroBackdrop';
 
 // The /articles marbled paper behind a section further down a page (the
-// homepage Articles section). Faded at the top and bottom, and drifting
+// homepage Articles section). Full strength from the top of the section, fading
+// out so it ends a third of the way down the first card's picture; drifts
 // slightly slower than the page while the section is on screen.
 
 const PARALLAX = 0.15;
@@ -14,6 +15,20 @@ const OVERSCAN = 160;
 export default function MarbledBackdrop() {
   const box = useRef<HTMLDivElement>(null);
   const layer = useRef<HTMLDivElement>(null);
+
+  // Ends a third of the way down the first card picture in the section.
+  useEffect(() => {
+    const fit = () => {
+      const el = box.current;
+      const pic = el?.parentElement?.querySelector<HTMLElement>('[data-card] img');
+      if (!el || !pic) return;
+      const top = pic.getBoundingClientRect().top - el.getBoundingClientRect().top;
+      el.style.height = `${Math.round(top + pic.offsetHeight / 3)}px`;
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    return () => window.removeEventListener('resize', fit);
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -43,10 +58,10 @@ export default function MarbledBackdrop() {
     <>
       <div
         ref={box}
-        className="absolute inset-0 overflow-hidden pointer-events-none"
+        className="absolute inset-x-0 top-0 h-[70%] overflow-hidden pointer-events-none"
         style={{
-          maskImage: 'linear-gradient(to bottom, transparent, black 25%, black 70%, transparent)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 25%, black 70%, transparent)',
+          maskImage: 'linear-gradient(to bottom, black 55%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent)',
         }}
       >
         <div
@@ -55,7 +70,7 @@ export default function MarbledBackdrop() {
           style={{ top: -OVERSCAN, bottom: -OVERSCAN, backgroundImage: `url(${PAPER})` }}
         />
       </div>
-      <div className="absolute inset-x-0 bottom-4 hidden md:block">
+      <div className="absolute inset-x-0 top-4 hidden md:block">
         <div className="max-w-[1500px] mx-auto px-6 md:px-12 flex justify-end">
           <Link href={BOOK} className="relative z-10 text-xs text-muted hover:text-secondary transition-colors">
             {CREDIT}

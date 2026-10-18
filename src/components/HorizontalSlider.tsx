@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const ROUND =
   'w-9 h-9 inline-flex items-center justify-center rounded-full border border-border-medium bg-white text-primary shadow-sm hover:border-accent-rust hover:text-accent-rust disabled:opacity-30 disabled:cursor-not-allowed transition-colors';
 const SQUARE =
-  'w-11 h-11 inline-flex items-center justify-center border border-primary/25 bg-white text-primary hover:bg-primary hover:border-primary hover:text-white disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-primary disabled:hover:border-primary/25 disabled:cursor-not-allowed transition-colors';
+  'w-11 h-11 inline-flex items-center justify-center bg-primary text-white hover:bg-primary/80 disabled:opacity-25 disabled:hover:bg-primary disabled:cursor-not-allowed transition-colors';
 
 /**
  * Generic horizontal scroll-snap slider with prev/next arrows that advance one
@@ -20,7 +20,7 @@ const SQUARE =
  *
  * `header` sits on the left of the arrow row (a section title), `action` just
  * before the arrows (an "All articles" button). `variant="square"` is the
- * articles style: larger square arrows that fill dark on hover, no red.
+ * articles style: larger black square arrows, no red.
  */
 export default function HorizontalSlider({
   children,
