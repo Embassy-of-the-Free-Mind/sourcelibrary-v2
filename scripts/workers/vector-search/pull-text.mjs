@@ -3,7 +3,7 @@
 // Output: $VECTOR_SEARCH_ROOT/text/pages.sqlite. Resumable: each key range's cursor is committed in the
 // same transaction as its rows (table pull_ck). Read-only on the database. Safe beside sync-delta.mjs:
 // an upsert only replaces an older updated_at, so a delta's newer text is never overwritten.
-// Measured 2026-10-17 on a 1% sample: ~1.84 KB of translation per row, ~14 GB for 7.63M rows.
+// Measured 2026-10-17: ~1.84 KB of translation per row on a 1% sample; the full store is 19.3 GB at 7.64M rows.
 //
 // PRIOR ART: pull-embeddings.mjs (same directory) — same key ranges, worker pool and retry. Changed:
 // the text columns instead of the vector, and SQLite instead of append-only shards, because the delta

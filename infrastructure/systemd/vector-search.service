@@ -13,9 +13,11 @@
 #                                    (infrastructure/caddy/Caddyfile.l7a, #6843); ufw allows 80/443, not 3458.
 #   VECTOR_SEARCH_LOCAL_PORT=3459    127.0.0.1 only, no auth, /admin for sync-delta.mjs
 #
-# Memory: ~7 GB of index plus ~1 GB of row metadata, inside sourcelibrary.slice (MemoryMax 14G), so
-# the service owns more than half of the slice. Startup reads the index into RAM (`load`, not `view`)
-# and takes a minute or two; /health answers once it is ready.
+# Memory: ~9 GB resident (index + row metadata), in its own search.slice (infrastructure/systemd/
+# l7a-search.slice: MemoryMin 9G, no MemoryHigh), NOT sourcelibrary.slice: on 2026-10-17 two jobs pushed
+# that slice over its MemoryHigh and the kernel throttled this service with them, so every shadow call
+# timed out (#6821). Startup reads the index into RAM (`load`, not `view`) and takes a minute or two;
+# /health answers once it is ready.
 [Unit]
 Description=Source Library page-vector service (in-RAM HNSW over page_translations, #6821)
 After=network-online.target
@@ -23,7 +25,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-Slice=sourcelibrary.slice
+Slice=search.slice
 WorkingDirectory=/data/vector-search/app
 EnvironmentFile=/etc/vector-search.env
 Environment=VECTOR_SEARCH_ROOT=/data/vector-search
