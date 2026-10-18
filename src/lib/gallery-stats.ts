@@ -29,6 +29,14 @@ export interface GalleryStats {
   books: number;
   /** Standalone artworks in the set. */
   artworks: number;
+  /**
+   * Browse only (no search or scope): artworks in the mixed main gallery, which
+   * takes only those dated 1400–1800 (DEFAULT_ARTWORK_YEARS), and in the
+   * Artworks view, which takes them all. Equal once a year or kind is chosen.
+   * Null on any other view.
+   */
+  artworksMixed: number | null;
+  artworksAll: number | null;
   /** Half-centuries from 1400 to 1899, with an open bucket either side. Ignores the year filter, so the chart shows where the selection sits. */
   printed: { from: number | null; to: number | null; count: number }[];
   yearFirst: number | null;
@@ -88,7 +96,7 @@ const EMPTY: Facets = { total: 0, books: 0, kinds: new Map(), buckets: new Map()
 const OPTS = { allowDiskUse: true, maxTimeMS: 20_000 };
 
 /** The plates and artworks one set of gallery parameters serves, as facets. */
-async function setFacets(db: Db, sp: URLSearchParams, ctx: GalleryStatsContext, withCounts: boolean): Promise<{ plates: Facets; artworks: Facets }> {
+async function setFacets(db: Db, sp: URLSearchParams, ctx: GalleryStatsContext, withCounts: boolean): Promise<{ plates: Facets; artworks: Facets; mixed?: number; all?: number }> {
   const narrowing = parseGalleryNarrowing(sp);
   const minQuality = galleryMinQuality(sp);
   const maxPerBook = parseInt(sp.get('maxPerBook') || '1000');
@@ -104,15 +112,25 @@ async function setFacets(db: Db, sp: URLSearchParams, ctx: GalleryStatsContext, 
   const isPlainBrowse = !bookId && !searchQuery && !collectionSlug && !libraryFilter
     && !narrowing.subjectFilter && !narrowing.figureFilter && !narrowing.symbolFilter && !narrowing.iconclassFilter;
   if (isPlainBrowse && (source === 'all' || source === 'artwork')) {
-    const f = mergedBrowseFilters({
-      tenantId: ctx.tenantId, source, imageType: narrowing.imageType, minQuality, maxPerBook,
+    const opts = {
+      tenantId: ctx.tenantId, imageType: narrowing.imageType, minQuality, maxPerBook,
       yearStart: narrowing.yearStart, yearEnd: narrowing.yearEnd, qualityExplicit: sp.get('minQuality') !== null,
-    });
-    const [plates, artworks] = await Promise.all([
+    };
+    const f = mergedBrowseFilters({ ...opts, source });
+    // The other view's artworks, so the band can say why the two counts differ.
+    const other = mergedBrowseFilters({ ...opts, source: source === 'artwork' ? 'all' : 'artwork' }).art;
+    const [plates, artworks, otherCount] = await Promise.all([
       source === 'artwork' ? Promise.resolve([null]) : gi.aggregate([{ $match: f.illus }, plateStages], OPTS).toArray(),
       db.collection('books').aggregate([{ $match: f.art }, facetStages('year', 'resource_type', null, withCounts)], OPTS).toArray(),
+      withCounts ? db.collection('books').countDocuments(other, { maxTimeMS: 8000 }) : Promise.resolve(0),
     ]);
-    return { plates: source === 'artwork' ? EMPTY : readFacets(plates[0]), artworks: readFacets(artworks[0]) };
+    const art = readFacets(artworks[0]);
+    return {
+      plates: source === 'artwork' ? EMPTY : readFacets(plates[0]),
+      artworks: art,
+      mixed: source === 'artwork' ? otherCount : art.total,
+      all: source === 'artwork' ? art.total : otherCount,
+    };
   }
 
   const { collectionBookIds, libraryBookIds } = await resolveGalleryBookIds(db, ctx.tenantId, collectionSlug, libraryFilter);
@@ -159,6 +177,8 @@ export async function computeGalleryStats(db: Db, sp: URLSearchParams, ctx: Gall
     plates: main.plates.total,
     books: main.plates.books,
     artworks: main.artworks.total,
+    artworksMixed: main.mixed ?? null,
+    artworksAll: main.all ?? null,
     printed: PRINTED_BUCKETS.map(([from, to]) => {
       const key = from ?? -100_000;
       return { from, to, count: (when.plates.buckets.get(key) || 0) + (when.artworks.buckets.get(key) || 0) };
