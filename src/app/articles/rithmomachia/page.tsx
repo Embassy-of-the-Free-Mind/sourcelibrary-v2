@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import { optimisedSrc } from '@/components/articles/image-hosts';
 
 export const metadata: Metadata = withArticleMeta('rithmomachia', {
   title: 'Rithmomachia: The Forgotten Game That Taught Europe to Think Like Pythagoras - Articles - Source Library',
@@ -63,11 +65,13 @@ export default function RithmomachiaPage() {
 
         {/* Hero image — Selenus game board engraving */}
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg"
-            alt="Full-page copperplate engraving of a Rithmomachia game board with 24 numbered pieces arranged in starting position, from Selenus, Das Schach- oder König-Spiel, 1616"
-            className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-          />
+          <div className="max-w-2xl mx-auto">
+            <ArticleImage
+              src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/498.jpg"
+              alt="Full-page copperplate engraving of a Rithmomachia game board with 24 numbered pieces arranged in starting position, from Selenus, Das Schach- oder König-Spiel, 1616"
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
+          </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Rithmomachia game board with pieces in starting position. Copperplate engraving from Selenus, <em>Das Schach- oder König-Spiel</em>, 1616.{' '}
             <Link href="/book/the-game-of-chess-gustavus-selenus?page=498" className="text-accent-rust hover:text-accent-rust not-italic">Read &rarr;</Link>
@@ -202,10 +206,10 @@ export default function RithmomachiaPage() {
 
         <div className="grid md:grid-cols-2 gap-6 my-10">
           <figure>
-            <img
+            <ArticleImage
               src="https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/26.jpg"
               alt="Woodcut diagram of a Rithmomachia game board from Barozzi's 1572 Italian treatise, showing an 8x16 grid with numbered pieces in starting positions"
-              className="w-full rounded-lg shadow-md"
+              sizes="(max-width: 768px) 100vw, 448px"
             />
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Game board, Barozzi (1572).{' '}
@@ -213,10 +217,10 @@ export default function RithmomachiaPage() {
             </figcaption>
           </figure>
           <figure>
-            <img
+            <ArticleImage
               src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/37.jpg"
               alt="Diagram of a Rithmomachia game board from Boissiere's 1554 French treatise, showing an 8x16 grid divided into two 8x8 squares"
-              className="w-full rounded-lg shadow-md"
+              sizes="(max-width: 768px) 100vw, 448px"
             />
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Game board, Boissiere (1554).{' '}
@@ -308,11 +312,13 @@ export default function RithmomachiaPage() {
         </p>
 
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/39.jpg"
-            alt="Diagram from Boissiere's 1554 treatise showing a Rithmomachia game board with pieces of various shapes including circles, triangles and squares bearing numbers"
-            className="w-full max-w-xl mx-auto rounded-lg shadow-md"
-          />
+          <div className="max-w-xl mx-auto">
+            <ArticleImage
+              src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/39.jpg"
+              alt="Diagram from Boissiere's 1554 treatise showing a Rithmomachia game board with pieces of various shapes including circles, triangles and squares bearing numbers"
+              sizes="(max-width: 768px) 100vw, 576px"
+            />
+          </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Game board with pieces in starting position: circles, triangles, and squares bearing numerical values. Boissiere, 1554.{' '}
             <Link href="/book/le-tres-excellent-et-ancien-jeu-pythagorique-dit-boissiere?page=39" className="text-accent-rust hover:text-accent-rust not-italic">Read &rarr;</Link>
@@ -402,7 +408,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://images.sourcelibrary.org/archived/699fcdd19ff0f1d2c45182ec/1.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/699fcdd19ff0f1d2c45182ec/1.jpg')}
                 alt="Title page of Arithmetica decem libris demonstrata, printed in Paris, 1496"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -428,7 +434,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/10.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/10.jpg')}
                 alt="Title page of Le tres excellent et ancien Jeu Pythagorique by Claude de Boissiere, 1554"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -453,7 +459,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://images.sourcelibrary.org/archived/699fcd429ff0f1d2c4517fff/3.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/699fcd429ff0f1d2c4517fff/3.jpg')}
                 alt="Title page of The Most Noble, Auncient, and Learned Playe by Lever and Fulke, 1563"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -479,7 +485,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/5.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/699fcd369ff0f1d2c4517fbb/5.jpg')}
                 alt="Title page of Il nobilissimo et antiquissimo giuoco Pythagoreo by Francesco Barozzi, 1572"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -505,7 +511,7 @@ export default function RithmomachiaPage() {
           <div className="md:flex">
             <div className="md:w-48 shrink-0">
               <img
-                src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/248.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/248.jpg')}
                 alt="Copperplate engraving of two aristocratic men in late 16th century dress from Selenus's chess treatise, 1616"
                 className="w-full h-48 md:h-full object-cover"
               />
@@ -584,11 +590,13 @@ export default function RithmomachiaPage() {
 
         {/* Perspective view */}
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/499.jpg"
-            alt="Perspective engraving of a Rithmomachia board from Selenus 1616, showing an 8x12 checkered grid with rectangular piece formations"
-            className="w-full max-w-xl mx-auto rounded-lg shadow-md"
-          />
+          <div className="max-w-xl mx-auto">
+            <ArticleImage
+              src="https://images.sourcelibrary.org/archived/699fcd499ff0f1d2c4518062/499.jpg"
+              alt="Perspective engraving of a Rithmomachia board from Selenus 1616, showing an 8x12 checkered grid with rectangular piece formations"
+              sizes="(max-width: 768px) 100vw, 576px"
+            />
+          </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Perspective view of a Rithmomachia board. Selenus, 1616.{' '}
             <Link href="/book/the-game-of-chess-gustavus-selenus?page=499" className="text-accent-rust hover:text-accent-rust not-italic">Read &rarr;</Link>
@@ -883,11 +891,13 @@ export default function RithmomachiaPage() {
 
         {/* Boissiere mathematical proportions diagram */}
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/14.jpg"
-            alt="Mathematical diagram from Boissiere's 1554 treatise showing a grid of numbers used in Rithmomachia piece values"
-            className="w-full max-w-xl mx-auto rounded-lg shadow-md"
-          />
+          <div className="max-w-xl mx-auto">
+            <ArticleImage
+              src="https://images.sourcelibrary.org/archived/699fcd509ff0f1d2c4518280/14.jpg"
+              alt="Mathematical diagram from Boissiere's 1554 treatise showing a grid of numbers used in Rithmomachia piece values"
+              sizes="(max-width: 768px) 100vw, 576px"
+            />
+          </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Number table for deriving piece values. Boissiere, 1554.{' '}
             <Link href="/book/le-tres-excellent-et-ancien-jeu-pythagorique-dit-boissiere?page=14" className="text-accent-rust hover:text-accent-rust not-italic">Read &rarr;</Link>

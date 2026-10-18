@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('philosophers-stone', {
   title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources - Source Library",
@@ -55,12 +56,13 @@ export default function PhilosophersStonePage() {
 
         <figure className="my-12">
           <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804ceaefc8a337f6e2717b.jpg&x=0.105&y=0.264&w=0.65&h=0.518"
-              alt="Frontispiece engraving from Lambspringk's De Lapide Philosophico showing a philosopher standing beside an alchemical furnace, Frankfurt 1625"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage
+                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804ceaefc8a337f6e2717b.jpg&x=0.105&y=0.264&w=0.65&h=0.518"
+                alt="Frontispiece engraving from Lambspringk's De Lapide Philosophico showing a philosopher standing beside an alchemical furnace, Frankfurt 1625"
+                sizes="(max-width: 768px) 100vw, 448px"
+              />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Frontispiece to Lambspringk&rsquo;s <em>De Lapide Philosophico</em>, Frankfurt 1625. The philosopher stands beside the <em>athanor</em>, the alchemical furnace.{' '}
@@ -108,12 +110,13 @@ export default function PhilosophersStonePage() {
 
           <figure className="my-10">
             <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=12">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804e6e3103227c95c0959b.jpg&x=0.095&y=0.23&w=0.645&h=0.515"
-                alt="Allegorical engraving of two fish swimming in a sea, representing Soul and Spirit, from Lambspringk 1625"
-                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-sm mx-auto">
+                <ArticleImage
+                  src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69804e6e3103227c95c0959b.jpg&x=0.095&y=0.23&w=0.645&h=0.515"
+                  alt="Allegorical engraving of two fish swimming in a sea, representing Soul and Spirit, from Lambspringk 1625"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Two Fish: Soul and Spirit swimming in the Sea of the Body.{' '}
@@ -146,12 +149,13 @@ export default function PhilosophersStonePage() {
 
           <figure className="my-10">
             <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=20">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980516d4fdb08d66f63917e.jpg&x=0.092&y=0.256&w=0.65&h=0.508"
-                alt="Engraving of a stag and unicorn facing each other in a wooded landscape, representing Soul and Spirit in Lambspringk 1625"
-                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-sm mx-auto">
+                <ArticleImage
+                  src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980516d4fdb08d66f63917e.jpg&x=0.092&y=0.256&w=0.65&h=0.508"
+                  alt="Engraving of a stag and unicorn facing each other in a wooded landscape, representing Soul and Spirit in Lambspringk 1625"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Stag and the Unicorn: Soul and Spirit in the Forest of the Body.{' '}
@@ -183,12 +187,13 @@ export default function PhilosophersStonePage() {
 
           <figure className="my-10">
             <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=26">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69805353591f8fe93522148a.jpg&x=0.088&y=0.233&w=0.655&h=0.512"
-                alt="Winged dragon biting its own tail (ouroboros) in a forest, from Lambspringk 1625"
-                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-sm mx-auto">
+                <ArticleImage
+                  src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F69805353591f8fe93522148a.jpg&x=0.088&y=0.233&w=0.655&h=0.512"
+                  alt="Winged dragon biting its own tail (ouroboros) in a forest, from Lambspringk 1625"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Ouroboros: the dragon that devours itself, symbol of cyclical transformation.{' '}
@@ -405,12 +410,13 @@ export default function PhilosophersStonePage() {
 
           <figure className="my-10">
             <Link href="/book/alchemical-writings-stone-of-philosophers-kelly?page=9">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F9.jpg&x=0.234&y=0.674&w=0.408&h=0.177"
-                alt="Circular emblem from Kelly's Alchemical Writings with Latin motto 'Sic Pace beamur, propitioque Deo'"
-                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-sm mx-auto">
+                <ArticleImage
+                  src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F9.jpg&x=0.234&y=0.674&w=0.408&h=0.177"
+                  alt="Circular emblem from Kelly's Alchemical Writings with Latin motto 'Sic Pace beamur, propitioque Deo'"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Emblem from Kelly&rsquo;s <em>Alchemical Writings</em>: &ldquo;Thus may we be blessed with peace, and a propitious God.&rdquo;{' '}
@@ -452,12 +458,13 @@ export default function PhilosophersStonePage() {
 
           <figure className="my-10">
             <Link href="/book/alchemical-writings-stone-of-philosophers-kelly?page=190">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F190.jpg&x=0.326&y=0.486&w=0.456&h=0.284"
-                alt="Alchemical emblem depicting the Trinity as a three-headed figure within a celestial sphere, from Kelly's Theatre of Terrestrial Astronomy"
-                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-sm mx-auto">
+                <ArticleImage
+                  src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Farchived%2F6952d13377f38f6761bc5e29%2F190.jpg&x=0.326&y=0.486&w=0.456&h=0.284"
+                  alt="Alchemical emblem depicting the Trinity as a three-headed figure within a celestial sphere, from Kelly's Theatre of Terrestrial Astronomy"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Trinity emblem from Kelly&rsquo;s <em>Theatre of Terrestrial Astronomy</em>: a three-headed deity on a globe, framed by sun, moon, and divine triangle.{' '}
@@ -610,12 +617,13 @@ export default function PhilosophersStonePage() {
 
           <figure className="my-10">
             <Link href="/book/on-the-philosopher-s-stone-lambspringk?page=34">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980556c71f286663524db07.jpg&x=0.084&y=0.216&w=0.656&h=0.514"
-                alt="King seated on a dragon within a classical portico, Lambspringk 1625"
-                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-sm mx-auto">
+                <ArticleImage
+                  src="/api/crop-image?url=https%3A%2F%2Fimages.sourcelibrary.org%2Fuploads%2F69804b952c52aad359879321%2F6980556c71f286663524db07.jpg&x=0.084&y=0.216&w=0.656&h=0.514"
+                  alt="King seated on a dragon within a classical portico, Lambspringk 1625"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The King on the Dragon: mastery achieved. Lambspringk, Figure 10.{' '}

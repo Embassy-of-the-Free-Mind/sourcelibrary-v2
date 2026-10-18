@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('naked-philosophers', {
   title: 'The Naked Philosophers: How Alexander’s India Became the Rosicrucians’ Ancestor - Source Library',
@@ -200,12 +201,9 @@ export default function NakedPhilosophersPage() {
 
         <figure className="my-12">
           <Link href="/book/aromatum-et-simplicium-aliquot-medicamentorum-apud-indos-trans/page/69ef285385daccce30f2c783">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/gallery/69ef285385daccce30f2c71d/69ef285385daccce30f2c783-0.jpg"
-              alt="Sixteenth-century woodcut of the Indian aromatic plant Tamalapatra (Malabathrum) from García de Orta's Aromatum Historia, 1567"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/gallery/69ef285385daccce30f2c71d/69ef285385daccce30f2c783-0.jpg" alt="Sixteenth-century woodcut of the Indian aromatic plant Tamalapatra (Malabathrum) from García de Orta's Aromatum Historia, 1567" sizes="(max-width: 768px) 100vw, 448px" />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             India, observed first-hand: a woodcut of <em>Tamalapatra</em> (malabathrum) from García de Orta&rsquo;s{' '}
@@ -287,12 +285,9 @@ export default function NakedPhilosophersPage() {
 
         <figure className="my-12">
           <Link href="/book/symbols-of-the-golden-table-of-the-twelve-nations-maier/page/6959068695a91542b28bd75a">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/gallery/6952587bab34727b1f045546/6959068695a91542b28bd75a-0.jpg"
-              alt="The engraved frontispiece of Michael Maier's Symbola Aureae Mensae, 1617, depicting twelve philosophers of the nations around a golden table"
-              className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-lg mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/gallery/6952587bab34727b1f045546/6959068695a91542b28bd75a-0.jpg" alt="The engraved frontispiece of Michael Maier's Symbola Aureae Mensae, 1617, depicting twelve philosophers of the nations around a golden table" sizes="(max-width: 768px) 100vw, 512px" />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             The twelve sages of the nations gathered at the golden table: the engraved frontispiece to Maier&rsquo;s{' '}

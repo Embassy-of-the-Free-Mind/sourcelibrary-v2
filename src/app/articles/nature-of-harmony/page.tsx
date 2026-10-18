@@ -5,6 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import DissonanceDemo from '@/components/blog/DissonanceDemo';
 import { BalmerSpectrum, ChladniFigure } from '@/components/blog/HarmonyVisuals';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 const HERO = 'https://images.sourcelibrary.org/artwork/art-anima-mundi-the-world-soul.jpg';
 const HERO_ALT = "Robert Fludd's 1617 engraving Integrae Naturae Speculum, Artisque Imago: Nature as a crowned virgin chained to the divine name above and to an ape (Art) on the terrestrial globe below.";
@@ -110,12 +111,13 @@ export default function NatureOfHarmonyPage() {
 
         <figure className="my-12">
           <Link href="/book/complete-works-on-music-and-tuning-vols-4-5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/pages/69c6614901a26ccff09f5036/0098.jpg"
-              alt="A tuning diagram from Zhu Zaiyu's Complete Works on Music and Tuning: a graduated ladder of pitch-pipes with circular pitch-markers."
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-2xl mx-auto">
+              <ArticleImage
+                src="https://images.sourcelibrary.org/pages/69c6614901a26ccff09f5036/0098.jpg"
+                alt="A tuning diagram from Zhu Zaiyu's Complete Works on Music and Tuning: a graduated ladder of pitch-pipes with circular pitch-markers."
+                sizes="(max-width: 768px) 100vw, 672px"
+              />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             China's ladder of pitches: Zhu Zaiyu's twelve <em>lülü</em>, each length fixed by ratio from the yellow bell.{' '}
@@ -152,12 +154,13 @@ export default function NatureOfHarmonyPage() {
 
         <figure className="my-12">
           <Link href="/book/life-scenes-of-buddha-2nd-century-ce-limestone-amravati-andhra-pradesh-sculpture">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/artwork/art-lute-in-life-scenes-of-buddha-2nd-century-ce-amravati.jpg"
-              alt="A carved stone relief of Indian court musicians playing a lute and a transverse flute, Amravati, 2nd century CE."
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-2xl mx-auto">
+              <ArticleImage
+                src="https://images.sourcelibrary.org/artwork/art-lute-in-life-scenes-of-buddha-2nd-century-ce-amravati.jpg"
+                alt="A carved stone relief of Indian court musicians playing a lute and a transverse flute, Amravati, 2nd century CE."
+                sizes="(max-width: 768px) 100vw, 672px"
+              />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Court music of the Nāṭyaśāstra's age: Amravati, 2nd century CE, the world in which Bharata set two vīṇās against
@@ -191,12 +194,13 @@ export default function NatureOfHarmonyPage() {
 
         <figure className="my-12">
           <Link href="/book/utriusque-cosmi-historia-tomus-primus-de-macrocosmi-fludd/page/69593413b282844d7b277b15">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/pages/69593413b282844d7b277aaf/0102.jpg"
-              alt="Fludd's engraving of the world-monochord: a single string from a sun-faced tuning peg down to the earth, crossed by arcs marking the octave, fifth, and fourth."
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage
+                src="https://images.sourcelibrary.org/pages/69593413b282844d7b277aaf/0102.jpg"
+                alt="Fludd's engraving of the world-monochord: a single string from a sun-faced tuning peg down to the earth, crossed by arcs marking the octave, fifth, and fourth."
+                sizes="(max-width: 768px) 100vw, 448px"
+              />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             The world-monochord: one string from the sun-faced peg to the earth, divided by the octave, fifth, and fourth
@@ -241,12 +245,13 @@ export default function NatureOfHarmonyPage() {
 
         <figure className="my-12">
           <Link href="/book/mysterium-cosmographicum-1596-first-edition-kepler">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Kepler_Platonic_Solids.tif/lossy-page1-1100px-Kepler_Platonic_Solids.tif.jpg"
-              alt="Kepler's engraving of the nested Platonic solids model of the solar system: cube, tetrahedron, dodecahedron, icosahedron, and octahedron set between the planetary spheres, on an ornate goblet base."
-              className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-lg mx-auto">
+              <ArticleImage
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Kepler_Platonic_Solids.tif/lossy-page1-1100px-Kepler_Platonic_Solids.tif.jpg"
+                alt="Kepler's engraving of the nested Platonic solids model of the solar system: cube, tetrahedron, dodecahedron, icosahedron, and octahedron set between the planetary spheres, on an ornate goblet base."
+                sizes="(max-width: 768px) 100vw, 512px"
+              />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             The beautiful, wrong idea: Kepler's nested Platonic solids, which he believed fixed the size of the cosmos. It
@@ -321,12 +326,13 @@ export default function NatureOfHarmonyPage() {
 
         <figure className="my-12">
           <Link href="/book/universal-musical-work-volume-ii-musurgia-universalis-kircher">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/pages/69520516ab34727b1f04245b/0225.jpg"
-              alt="Kircher's page on the sympathetic-string experiment, with a diagram of nine horizontal strings labelled from Nete to Hypate."
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage
+                src="https://images.sourcelibrary.org/pages/69520516ab34727b1f04245b/0225.jpg"
+                alt="Kircher's page on the sympathetic-string experiment, with a diagram of nine horizontal strings labelled from Nete to Hypate."
+                sizes="(max-width: 768px) 100vw, 448px"
+              />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Sympathy on a bench: Kircher's nine strings, <em>Nete</em> to <em>Hypate</em>: strike one and every string tuned in

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 
@@ -184,12 +185,7 @@ export default function HistoryOfAstrologyPage() {
         </p>
 
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/74.jpg"
-            alt="The five planets depicted as sovereign figures, from the Kitab al-Bulhan Arabic astrological manuscript"
-            className="w-full rounded-lg shadow-md"
-            loading="lazy"
-          />
+          <ArticleImage src="https://images.sourcelibrary.org/archived/6953b56577f38f6761bd979d/74.jpg" alt="The five planets depicted as sovereign figures, from the Kitab al-Bulhan Arabic astrological manuscript" />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             The five planets as sovereign figures, from the{' '}
             <Link href="/book/book-of-wonders-al-isfahani" className="hover:text-accent-rust transition-colors">
@@ -227,12 +223,7 @@ export default function HistoryOfAstrologyPage() {
         </blockquote>
 
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg"
-            alt="The He Tu River Map cosmological diagram from the Wuxing Sanming Tongkao (1657)"
-            className="w-full rounded-lg shadow-md"
-            loading="lazy"
-          />
+          <ArticleImage src="https://images.sourcelibrary.org/archived/6992cac0d4d545ae73feea71/6.jpg" alt="The He Tu River Map cosmological diagram from the Wuxing Sanming Tongkao (1657)" />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             The <em>He Tu</em> (River Map) from the{' '}
             <Link href="/book/five-stars-three-fates-complete-guide-to-astrology-vol-1-tiangang" className="hover:text-accent-rust transition-colors">
@@ -255,12 +246,7 @@ export default function HistoryOfAstrologyPage() {
         </p>
 
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg"
-            alt="Zodiac Man (Homo Signorum) woodcut from Gregor Reisch, Margarita Philosophica (1503)"
-            className="w-full rounded-lg shadow-md"
-            loading="lazy"
-          />
+          <ArticleImage src="https://images.sourcelibrary.org/archived/699068948034a3640265b709/311.jpg" alt="Zodiac Man (Homo Signorum) woodcut from Gregor Reisch, Margarita Philosophica (1503)" />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             The <em>Homo Signorum</em> (&ldquo;Zodiac Man&rdquo;) from{' '}
             <Link href="/book/margarita-philosophica-reisch" className="hover:text-accent-rust transition-colors">
@@ -314,12 +300,7 @@ export default function HistoryOfAstrologyPage() {
         </p>
 
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/34.jpg"
-            alt="Kepler's nested Platonic solids diagram from Mysterium Cosmographicum (1596)"
-            className="w-full rounded-lg shadow-md"
-            loading="lazy"
-          />
+          <ArticleImage src="/articles/history-of-astrology/kepler-platonic-solids.jpg" alt="Kepler's nested Platonic solids diagram from Mysterium Cosmographicum (1596)" />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             Kepler&rsquo;s nested Platonic solids model from{' '}
             <Link href="/book/9754fae4-b3c6-45e6-8742-53c85117ca09" className="hover:text-accent-rust transition-colors">
@@ -340,12 +321,7 @@ export default function HistoryOfAstrologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
         <figure className="my-10">
-          <img
-            src="https://images.sourcelibrary.org/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/16.jpg"
-            alt="Schema magnarum Coniunctionum Saturni et Iovis: diagram of Great Conjunctions from Kepler's Mysterium Cosmographicum"
-            className="w-full rounded-lg shadow-md"
-            loading="lazy"
-          />
+          <ArticleImage src="https://images.sourcelibrary.org/archived/9754fae4-b3c6-45e6-8742-53c85117ca09/16.jpg" alt="Schema magnarum Coniunctionum Saturni et Iovis: diagram of Great Conjunctions from Kepler's Mysterium Cosmographicum" />
           <figcaption className="mt-3 text-sm text-center text-muted italic">
             <em>Schema magnarum Coniunctionum Saturni &amp; Iovis</em>: the pattern traced by Saturn&ndash;Jupiter conjunctions through the zodiac, from{' '}
             <Link href="/book/9754fae4-b3c6-45e6-8742-53c85117ca09" className="hover:text-accent-rust transition-colors">

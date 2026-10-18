@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import { optimisedSrc } from '@/components/articles/image-hosts';
 
 export const metadata: Metadata = withArticleMeta('hieroglyph-ocr', {
   title: 'Can AI Read Hieroglyphs? (No.) - Articles - Source Library',
@@ -101,7 +102,7 @@ export default function HieroglyphOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/600,/0/default.jpg"
+              src={optimisedSrc('https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/600,/0/default.jpg')}
               alt="Page 18 of Budge's Egyptian Reading Book: The Tale of the Two Brothers"
               className="w-full rounded-lg shadow-md"
             />
@@ -112,7 +113,7 @@ export default function HieroglyphOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://iiif.archive.org/iiif/egyptianreadingb00budguoft$200/full/600,/0/default.jpg"
+              src={optimisedSrc('https://iiif.archive.org/iiif/egyptianreadingb00budguoft$200/full/600,/0/default.jpg')}
               alt="Page 138 of Budge's Egyptian Reading Book: The Battle of Kadesh"
               className="w-full rounded-lg shadow-md"
             />
@@ -123,7 +124,7 @@ export default function HieroglyphOcrPage() {
           <figure className="m-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://iiif.archive.org/iiif/egyptianreadingb00budguoft$270/full/600,/0/default.jpg"
+              src={optimisedSrc('https://iiif.archive.org/iiif/egyptianreadingb00budguoft$270/full/600,/0/default.jpg')}
               alt="Page 208 of Budge's Egyptian Reading Book: The Stele of Pi-Ankhi"
               className="w-full rounded-lg shadow-md"
             />

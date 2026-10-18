@@ -1,33 +1,25 @@
-import Image from 'next/image';
+import FadeInImage from './FadeInImage';
+import { optimisable } from './image-hosts';
+import pictureSizes from '@/generated/article-image-sizes.json';
 
-// Hosts next.config.ts lets the image optimiser fetch from (images.remotePatterns),
-// for the ones articles use. Anything else falls back to a plain <img>.
-const OPTIMISABLE = [
-  'images.sourcelibrary.org',
-  'upload.wikimedia.org',
-  'iiif.wellcomecollection.org',
-  'iiif.archive.org',
-  'archive.org',
-  'gallica.bnf.fr',
-  'iiif.bodleian.ox.ac.uk',
-  'www.e-codices.unifr.ch',
-];
+export { optimisable };
 
-export function optimisable(src: string): boolean {
-  if (src.startsWith('/')) return true;
-  try {
-    return OPTIMISABLE.includes(new URL(src).hostname);
-  } catch {
-    return false;
-  }
-}
+// Each article picture's pixel size and a tiny blurred copy, keyed by src
+// (scripts/maintenance/generate-article-image-sizes.mjs). Read here, on the
+// server, so it never ships in a browser bundle.
+const SIZES = pictureSizes as Record<string, { w: number; h: number; blur?: string }>;
 
 /**
  * A picture in an article (.claude/docs/article-rules.md, "Pictures"): served
  * through the image optimiser at the width it is shown, as AVIF or WebP,
  * lazy-loaded, at its own proportions. Page scans are often 3,000 to 7,000
  * pixels tall and several megabytes; this is what keeps an article with twenty
- * of them light. `sizes` is the width it takes on the page.
+ * of them light. `sizes` is the widest it can be on the page; "auto" lets
+ * browsers that support it (Chrome, Edge) use the width it is actually drawn at,
+ * so a page held to a reading width doesn't download at full column width.
+ *
+ * The optimiser hands back the untouched original for sources over about 60
+ * megapixels: bring those into public/articles/<slug>/ at 2,000 px instead.
  */
 export default function ArticleImage({
   src,
@@ -40,21 +32,17 @@ export default function ArticleImage({
   sizes?: string;
   priority?: boolean;
 }) {
-  if (!optimisable(src)) {
-    /* eslint-disable-next-line @next/next/no-img-element */
-    return <img src={src} alt={alt} loading={priority ? 'eager' : 'lazy'} className="w-full h-auto" />;
-  }
+  const known = SIZES[src];
   return (
-    <Image
+    <FadeInImage
       src={src}
       alt={alt}
-      width={0}
-      height={0}
-      sizes={sizes}
-      quality={75}
+      sizes={priority ? sizes : `auto, ${sizes}`}
       priority={priority}
-      className="w-full h-auto"
-      style={{ width: '100%', height: 'auto' }}
+      width={known?.w}
+      height={known?.h}
+      blur={known?.blur}
+      optimise={optimisable(src)}
     />
   );
 }

@@ -26,8 +26,10 @@ Pictures carry a lot of these articles, but only when they add something. Decide
 ### Image size and weight
 
 - **Always show pictures through `PageFigure` or `SourceQuote`** (both use `ArticleImage`): they go through the image optimiser, so a 500 KB page scan arrives as a 30 to 80 KB AVIF or WebP at the width it is shown. Don't write a bare `<img>` in an article.
-- A picture from a host the optimiser can't fetch from falls back to the original file. If you use a new outside host often, add it to `images.remotePatterns` in `next.config.ts` and to `OPTIMISABLE` in `ArticleImage.tsx`.
+- A picture from a host the optimiser can't fetch from falls back to the original file. If you use a new outside host often, add it to `images.remotePatterns` in `next.config.ts` and to `OPTIMISABLE` in `src/components/articles/image-hosts.ts`.
 - **Files you add to `public/articles/<slug>/`:** JPEG at quality 80, longest side at most 2,000 px (2,400 for a map that needs the detail), progressive. PNG only for diagrams with flat colour or transparency. Aim under 400 KB.
+- **Over about 60 megapixels the optimiser gives up** and sends the original untouched (a 6,800 × 10,100 scan arrived as 5 MB). Some archived masters are that big. Bring those into `public/articles/<slug>/` at 2,000 px instead; `generate-article-image-sizes.mjs` lists any it finds.
+- **Pictures hold their place and fade in.** After adding or changing pictures, run `node scripts/maintenance/generate-article-image-sizes.mjs --base http://localhost:<port>` against your dev server: it records each picture's size and a tiny blurred copy, so the page keeps the picture's space while it loads instead of jumping. A picture missing from that file still works, it just doesn't reserve its space.
 - **Crop to the picture, not off the notice.** Never crop out a copyright or provenance notice printed on a scan (for example the Early European Books / ProQuest line). Keep it on the image and repeat it in the `credit` line.
 - **Tall single pages:** hold them to a reading width (a `max-w-md` or `max-w-lg` wrapper) so one page doesn't fill the screen.
 
@@ -104,5 +106,5 @@ one). The rest of this file (which pictures are worth it, length, quotes with th
 5. Every book drawn on is linked (or in `books.ts`); no hand-written book list.
 6. `posts.ts` entry with `kind`, `summary` (155 characters at most), `image`, `date`, `readTime`.
 7. SEO: title under 60 characters, summary 110 to 155, alt text on every picture and on the posts.ts entry, relative links.
-8. Pictures through PageFigure / SourceQuote; any new file in public/articles under 400 KB and 2,000 px; notices on scans left intact.
+8. Pictures through PageFigure / SourceQuote; any new file in public/articles under 400 KB and 2,000 px; notices on scans left intact; `generate-article-image-sizes.mjs` re-run.
 9. `npx vitest run tests/blog-posts.test.ts` passes.

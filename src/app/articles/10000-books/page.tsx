@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 import { withArticleMeta } from '@/lib/article-metadata';
@@ -74,12 +75,9 @@ export default function TenThousandBooksPage() {
 
         {/* Hero image */}
         <figure className="my-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg"
-            alt="Woodcut dedication page from Champier's Mirabilium divinorum humanorumque volumina quattuor, 1517, showing Christ enthroned within a celestial scene"
-            className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-          />
+          <div className="max-w-2xl mx-auto">
+            <ArticleImage src="https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg" alt="Woodcut dedication page from Champier's Mirabilium divinorum humanorumque volumina quattuor, 1517, showing Christ enthroned within a celestial scene" sizes="(max-width: 768px) 100vw, 672px" />
+          </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Symphorien Champier, <em>Mirabilium divinorum humanorumque volumina quattuor</em> (1517).
             Bibliotheca Philosophica Hermetica, Amsterdam.
@@ -144,12 +142,9 @@ export default function TenThousandBooksPage() {
           </h3>
 
           <figure className="my-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/69a5b99ed76b98f272fced25/40.jpg"
-              alt="Dürer's woodcut plan for an ideal fortified city, showing geometric bastions and defensive structures"
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-2xl mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/archived/69a5b99ed76b98f272fced25/40.jpg" alt="Dürer's woodcut plan for an ideal fortified city, showing geometric bastions and defensive structures" sizes="(max-width: 768px) 100vw, 672px" />
+            </div>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               D&uuml;rer&apos;s plan for an ideal fortified city. Getty Research Institute, via Internet Archive.
             </figcaption>
@@ -170,12 +165,9 @@ export default function TenThousandBooksPage() {
           </p>
 
           <figure className="my-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/69a5b99ed76b98f272fced25/22.jpg"
-              alt="Woodcut elevation of a fortification bastion with arched casemates"
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-2xl mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/archived/69a5b99ed76b98f272fced25/22.jpg" alt="Woodcut elevation of a fortification bastion with arched casemates" sizes="(max-width: 768px) 100vw, 672px" />
+            </div>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Elevation of a fortification bastion with arched casemates.
             </figcaption>
@@ -187,12 +179,9 @@ export default function TenThousandBooksPage() {
           </h3>
 
           <figure className="my-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984ea4a1df714da9b420ae8.jpg"
-              alt="Title page of Schurman's Opuscula, 1648 Elzevir edition"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984ea4a1df714da9b420ae8.jpg" alt="Title page of Schurman's Opuscula, 1648 Elzevir edition" sizes="(max-width: 768px) 100vw, 448px" />
+            </div>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Title page of Anna Maria van Schurman, <em>Opuscula</em> (1648). Bibliotheca Philosophica Hermetica.
             </figcaption>
@@ -224,12 +213,9 @@ export default function TenThousandBooksPage() {
           </h3>
 
           <figure className="my-6">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/6952062dab34727b1f0432ef/4.jpg"
-              alt="Page from Reuchlin's De rudimentis hebraicis showing Hebrew text and Latin commentary"
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-2xl mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/archived/6952062dab34727b1f0432ef/4.jpg" alt="Page from Reuchlin's De rudimentis hebraicis showing Hebrew text and Latin commentary" sizes="(max-width: 768px) 100vw, 672px" />
+            </div>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Johann Reuchlin, <em>De rudimentis hebraicis</em> (1506). Bibliotheca Philosophica Hermetica.
             </figcaption>

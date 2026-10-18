@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 const HERO = 'https://images.sourcelibrary.org/archived/6992c88d4f3a879124230200/346.jpg';
 
@@ -58,7 +59,7 @@ export default function ReadingClassicalChinesePage() {
 
         {/* --- Hero figure --- */}
         <figure className="my-12">
-          <img src={HERO} alt="Woodcut of laborers forging a large iron anchor, from the Tiangong Kaiwu" className="w-full rounded-lg" />
+          <ArticleImage src={HERO} alt="Woodcut of laborers forging a large iron anchor, from the Tiangong Kaiwu" />
           <figcaption className="text-sm text-muted mt-2 text-center">
             Forging iron, from Song Yingxing&rsquo;s <em>Tiangong Kaiwu</em> (&ldquo;The Exploitation of the Works of Nature,&rdquo; 1637), an encyclopedia of pre-modern Chinese technology. <a href="/book/tiangong-kaiwu-exploitation-of-the-works-of-nature" className="text-accent-rust hover:underline">View this book</a>.
           </figcaption>

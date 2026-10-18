@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { optimisable } from '@/components/articles/ArticleImage';
+import { optimisable } from '@/components/articles/image-hosts';
 
 // How much slower than the page the picture moves (0 = moves with the page).
 const PARALLAX = 0.3;

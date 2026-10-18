@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('fish-voiced-priest', {
   title: 'The Fish-Voiced Priest - Articles - Source Library',
@@ -130,13 +131,9 @@ export default function FishVoicedPriestPage() {
 
         <div className="mb-6">
           <p className="text-xs text-muted mb-2 uppercase tracking-wide">The page in question: folio 93r</p>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg"
-            alt="Folio 93 recto of the Codex Marcianus, dense tenth-century Greek minuscule with abbreviations"
-            className="w-full max-w-lg rounded border border-light"
-            loading="lazy"
-          />
+          <div className="max-w-lg">
+            <ArticleImage src="https://images.sourcelibrary.org/manuscripts/marciana-gr-299/208.jpg" alt="Folio 93 recto of the Codex Marcianus, dense tenth-century Greek minuscule with abbreviations" sizes="(max-width: 768px) 100vw, 512px" />
+          </div>
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">

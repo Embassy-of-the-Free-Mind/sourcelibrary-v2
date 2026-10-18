@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('confident-hallucinator', {
   title: 'The Confident Hallucinator - Articles - Source Library',
@@ -219,12 +220,9 @@ export default function ConfidentHallucinatorPage() {
         {/* Source page image */}
         <div className="mb-6">
           <p className="text-xs text-muted mb-2 uppercase tracking-wide">Source manuscript page</p>
-          <img
-            src="https://images.sourcelibrary.org/archived/695285cdab34727b1f04c25a/96.jpg"
-            alt="Page 96 of Sepher Maphteah Shelomo (Key of Solomon), a Hebrew magical manuscript"
-            className="w-full max-w-lg rounded border border-light"
-            loading="lazy"
-          />
+          <div className="max-w-lg">
+            <ArticleImage src="https://images.sourcelibrary.org/archived/695285cdab34727b1f04c25a/96.jpg" alt="Page 96 of Sepher Maphteah Shelomo (Key of Solomon), a Hebrew magical manuscript" sizes="(max-width: 768px) 100vw, 512px" />
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">

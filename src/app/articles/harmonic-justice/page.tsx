@@ -116,7 +116,6 @@ const ID = {
   divina: '69de988c1b234a773e438b33',
   wolowski: '69af5923522dc3dfdf725739',
   fama: '69b51e639a81ef7feb3d4592',
-  misselden: '6a8f6267ddd2f57fe0f81f3b',
   hartlib: '6ab5a4019e89e2a1f4139282',
   quesnay: '69568b13be7c607c5f03d575',
 };
@@ -650,7 +649,7 @@ export default function HarmonicJusticePage() {
         </p>
 
         <Fig
-          src={IMG(ID.misselden, 7)}
+          src="/articles/harmonic-justice/misselden-circle-of-commerce-p7.jpg"
           alt="A page of Misselden's dedicatory epistle in roman and italic type, with 'Malyne's Par' and 'Mystery in Exchange' set in italic."
           href={`${BOOK.misselden}?page=7`}
           source={<>Misselden, <em>The Circle of Commerce</em> (1623)</>}

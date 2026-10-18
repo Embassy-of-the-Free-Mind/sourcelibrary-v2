@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 const OG_IMAGE = '/articles/reciting-not-reading/mask-rect-zoom.jpg';
 const OG_ALT = 'A 1566 Vulgate page with a grey rectangle covering four lines of Genesis 1:2. Fragments of the covered lines remain visible at the right edge.';
@@ -58,7 +59,7 @@ export default function RecitingNotReadingPage() {
         </p>
 
         <figure className="my-8">
-          <img src="/articles/reciting-not-reading/mask-rect-zoom.jpg" alt={OG_ALT} className="w-full rounded-lg border border-stone-200" />
+          <ArticleImage src="/articles/reciting-not-reading/mask-rect-zoom.jpg" alt={OG_ALT} />
           <figcaption className="text-sm text-muted mt-3 leading-relaxed">
             The masked region, magnified. Verse 1 is readable above. Everything the model could see of verse 2 is the line-ends escaping the box on the right (<code>is</code>, <code>át</code>, <code>&amp;</code>, <code>a-</code>) plus <code>tur super aquas.</code> below it. About ten characters of a hundred-character passage.
           </figcaption>
@@ -157,7 +158,7 @@ export default function RecitingNotReadingPage() {
         </p>
 
         <figure className="my-8">
-          <img src="/articles/reciting-not-reading/mask-shapes.jpg" alt="Three versions of the same page region: a rectangle covering four lines, a diamond leaving text at both edges of every line, and a bowtie covering whole lines at top and bottom." className="w-full rounded-lg border border-stone-200" />
+          <ArticleImage src="/articles/reciting-not-reading/mask-shapes.jpg" alt="Three versions of the same page region: a rectangle covering four lines, a diamond leaving text at both edges of every line, and a bowtie covering whole lines at top and bottom." />
           <figcaption className="text-sm text-muted mt-3 leading-relaxed">
             Rectangle, diamond, bowtie. The diamond and the bowtie cover exactly the same area (half the box) and differ only in where.
           </figcaption>

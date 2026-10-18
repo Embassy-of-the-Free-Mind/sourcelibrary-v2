@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // DRAFT. Every value in DATA marked `pending` is a placeholder for a number the
@@ -208,7 +209,7 @@ export default function TibetanReocrPage() {
         </p>
 
         <figure className="my-8">
-          <img src={`https://images.sourcelibrary.org/archived/${DATA.pilotId}/3.jpg`} alt={OG_ALT} className="w-full rounded-lg border border-stone-200" />
+          <ArticleImage src={`https://images.sourcelibrary.org/archived/${DATA.pilotId}/3.jpg`} alt={OG_ALT} />
           <figcaption className="text-sm text-muted mt-3 leading-relaxed">
             Folio 3 of the {DATA.pilotTitle}. The manuscript is in dbu-can, the script the specialist models were built for. Photograph: Endangered Archives Programme, EAP310.
           </figcaption>

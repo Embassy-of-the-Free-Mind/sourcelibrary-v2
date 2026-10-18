@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import { optimisedSrc } from '@/components/articles/image-hosts';
 
 export const metadata: Metadata = withArticleMeta('tibetan-ocr', {
   title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Buddhist Manuscripts - Source Library',
@@ -53,11 +55,7 @@ export default function TibetanOcrPage() {
 
         {/* --- Hero image --- */}
         <figure className="my-12">
-          <img
-            src="https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg"
-            alt="A painted ritual mandala from Gangtey Monastery, Bhutan: concentric circles with hexagram, lotus petals, and Buddhist seed syllables"
-            className="w-full rounded-lg"
-          />
+          <ArticleImage src="https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/1200,/0/default.jpg" alt="A painted ritual mandala from Gangtey Monastery, Bhutan: concentric circles with hexagram, lotus petals, and Buddhist seed syllables" />
           <figcaption className="text-sm text-muted mt-2 text-center">
             A ritual mandala from the Gongd&uuml; collection at Gangtey Monastery, Bhutan. One of 1,358 manuscripts in our corpus. <a href="/book/bla-ma-dgongs-dus-kyi-dpe-ris-skor-collection" className="text-accent-rust hover:underline">View this manuscript</a>.
           </figcaption>
@@ -89,11 +87,11 @@ export default function TibetanOcrPage() {
         {/* --- Sample manuscripts --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-12">
           <figure>
-            <img src="https://images.eap.bl.uk/EAP310/EAP310_2_1_30/3.jp2/full/800,/0/default.jpg" alt="Neyphug dbu can manuscript" className="w-full rounded-lg" />
+            <img src={optimisedSrc('https://images.eap.bl.uk/EAP310/EAP310_2_1_30/3.jp2/full/800,/0/default.jpg')} alt="Neyphug dbu can manuscript" className="w-full rounded-lg" />
             <figcaption className="text-sm text-muted mt-2">Neyphug Monastery: formal dbu can script with red margin lines. <a href="/book/phurdrup-gonpa-dgongs-dus-dpe-ris-gonpa" className="text-accent-rust hover:underline">View</a></figcaption>
           </figure>
           <figure>
-            <img src="https://images.eap.bl.uk/EAP039/EAP039_1_4_100/5.jp2/full/800,/0/default.jpg" alt="Gangtey dbu med manuscript" className="w-full rounded-lg" />
+            <img src={optimisedSrc('https://images.eap.bl.uk/EAP039/EAP039_1_4_100/5.jp2/full/800,/0/default.jpg')} alt="Gangtey dbu med manuscript" className="w-full rounded-lg" />
             <figcaption className="text-sm text-muted mt-2">Gangtey Monastery: cursive dbu med astrological text. <a href="/book/o-rgyan-rnamm-thar-bka-thang-collection" className="text-accent-rust hover:underline">View</a></figcaption>
           </figure>
         </div>
@@ -261,11 +259,7 @@ export default function TibetanOcrPage() {
 
         {/* --- Torma image --- */}
         <figure className="my-12">
-          <img
-            src="https://images.eap.bl.uk/EAP105/EAP105_1_3_154/6.jp2/full/1200,/0/default.jpg"
-            alt="Red ink drawings of torma ritual offering cakes from a Pema Lingpa manuscript at Drametse Monastery"
-            className="w-full rounded-lg"
-          />
+          <ArticleImage src="https://images.eap.bl.uk/EAP105/EAP105_1_3_154/6.jp2/full/1200,/0/default.jpg" alt="Red ink drawings of torma ritual offering cakes from a Pema Lingpa manuscript at Drametse Monastery" />
           <figcaption className="text-sm text-muted mt-2 text-center">
             Torma (ritual offering cake) designs from a Pema Lingpa manuscript at Drametse Monastery. Each shape is labeled in Tibetan. <a href="/book/pad-gling-gtor-dpe-collection" className="text-accent-rust hover:underline">View this manuscript</a>.
           </figcaption>

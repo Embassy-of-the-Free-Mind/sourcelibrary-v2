@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 
@@ -216,12 +217,13 @@ export default function HogwartsLibraryPage() {
 
           <figure className="my-12">
             <Link href="/book/mutus-liber-the-silent-book-saulat">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg"
-                alt="Plate 4 of the Mutus Liber: alchemists collecting morning dew on linen sheets, with Sol and Luna above. 1677 engraving."
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage
+                  src="https://images.sourcelibrary.org/gallery/69526359ab34727b1f046d5a/69568fa01479a63c1108cdb0-0.jpg"
+                  alt="Plate 4 of the Mutus Liber: alchemists collecting morning dew on linen sheets, with Sol and Luna above. 1677 engraving."
+                  sizes="(max-width: 768px) 100vw, 448px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The <em>Mutus Liber</em>, Plate 4 (1677): alchemists collect morning dew on linen sheets stretched in a meadow, while Sol and Luna preside from above. The whole &ldquo;wordless book&rdquo; teaches the Stone in pictures alone.{' '}
@@ -233,12 +235,13 @@ export default function HogwartsLibraryPage() {
 
           <figure className="my-12">
             <Link href="/book/bodleian-library-ms-bodl-rolls-1-attributed">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/gallery/699065973dc2ed39a49f1e71/699065983dc2ed39a49f1e72-0.jpg"
-                alt="Opening of the Ripley Scroll showing Hermes Trismegistus holding an alchemical flask and a toad. c. 1450, Bodleian MS Bodl. Rolls 1."
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage
+                  src="https://images.sourcelibrary.org/gallery/699065973dc2ed39a49f1e71/699065983dc2ed39a49f1e72-0.jpg"
+                  alt="Opening of the Ripley Scroll showing Hermes Trismegistus holding an alchemical flask and a toad. c. 1450, Bodleian MS Bodl. Rolls 1."
+                  sizes="(max-width: 768px) 100vw, 448px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The opening of the Ripley Scroll, c. 1450: Hermes Trismegistus holding an alchemical flask and a toad. Six metres of illustrated alchemy, kept rolled.{' '}
@@ -316,12 +319,13 @@ export default function HogwartsLibraryPage() {
 
           <figure className="my-12">
             <Link href="/book/hortus-sanitatis-meydenbach">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/gallery/6957ef6bcbe1dcad7b76beff/6957ef6bcbe1dcad7b76c099-0.jpg"
-                alt="Hand-coloured woodcut from the Hortus Sanitatis, 1491: an apothecary's shop with two figures and shelves of medicinal jars."
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage
+                  src="https://images.sourcelibrary.org/gallery/6957ef6bcbe1dcad7b76beff/6957ef6bcbe1dcad7b76c099-0.jpg"
+                  alt="Hand-coloured woodcut from the Hortus Sanitatis, 1491: an apothecary's shop with two figures and shelves of medicinal jars."
+                  sizes="(max-width: 768px) 100vw, 448px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The apothecary&rsquo;s shop, from the <em>Hortus Sanitatis</em> (1491), the universal Garden of Health. Hand-coloured woodcut.{' '}
@@ -422,12 +426,13 @@ export default function HogwartsLibraryPage() {
 
           <figure className="my-12">
             <Link href="/book/serpentum-et-draconum-historiae-libri-duo-aldrovandi">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/gallery/6958e968813ea03889c32a24/6958e968813ea03889c32bb1-0.jpg"
-                alt="Woodcut of a seven-headed hydra with human-like faces, long scaly body, and clawed feet. From Aldrovandi's Serpentum et Draconum Historiae, 1640."
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage
+                  src="https://images.sourcelibrary.org/gallery/6958e968813ea03889c32a24/6958e968813ea03889c32bb1-0.jpg"
+                  alt="Woodcut of a seven-headed hydra with human-like faces, long scaly body, and clawed feet. From Aldrovandi's Serpentum et Draconum Historiae, 1640."
+                  sizes="(max-width: 768px) 100vw, 448px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               A seven-headed hydra, from Ulisse Aldrovandi&rsquo;s <em>Serpentum et Draconum Historiae</em> (1640). Aldrovandi catalogued these alongside actual snakes; the line between zoology and fantastic beasts was thinner than ours.{' '}
@@ -489,12 +494,13 @@ export default function HogwartsLibraryPage() {
           </p>
 
           <figure className="my-12">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/9/93/Francisco_de_Goya_y_Lucientes_-_Witches%27_Sabbath_-_WGA10007.jpg"
-              alt="Francisco de Goya, Witches' Sabbath (El Aquelarre), 1798. Oil on canvas, Museo Lázaro Galdiano, Madrid."
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-2xl mx-auto">
+              <ArticleImage
+                src="https://upload.wikimedia.org/wikipedia/commons/9/93/Francisco_de_Goya_y_Lucientes_-_Witches%27_Sabbath_-_WGA10007.jpg"
+                alt="Francisco de Goya, Witches' Sabbath (El Aquelarre), 1798. Oil on canvas, Museo Lázaro Galdiano, Madrid."
+                sizes="(max-width: 768px) 100vw, 672px"
+              />
+            </div>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Francisco de Goya, <em>Witches&rsquo; Sabbath (El Aquelarre)</em>, 1798. Museo L&aacute;zaro Galdiano, Madrid. Goya paints the witch-trial imagination at its most baroque: a horned satyr-goat presides over a coven offering infants, two centuries after the <em>Malleus</em>.
             </figcaption>
@@ -601,12 +607,13 @@ export default function HogwartsLibraryPage() {
 
           <figure className="my-12">
             <Link href="/book/a-true-faithful-relation-of-dr-john-dee-and-some-spirits-casaubon">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/gallery/69593025a41e40e9146a4acd/69593026a41e40e9146a4b2b-0.jpg"
-                alt="The Holy Table from John Dee's Enochian system: a square diagram with letters and seals, used to summon and converse with angels."
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage
+                  src="https://images.sourcelibrary.org/gallery/69593025a41e40e9146a4acd/69593026a41e40e9146a4b2b-0.jpg"
+                  alt="The Holy Table from John Dee's Enochian system: a square diagram with letters and seals, used to summon and converse with angels."
+                  sizes="(max-width: 768px) 100vw, 448px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               The Holy Table from John Dee&rsquo;s Enochian system: the actual apparatus on which Dee and Edward Kelley conversed with what they took to be angels. Reproduced in Meric Casaubon&rsquo;s 1659 edition.{' '}
@@ -757,12 +764,13 @@ export default function HogwartsLibraryPage() {
 
           <figure className="my-12">
             <Link href="/book/utriusque-cosmi-historia-1617-fludd">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/gallery/69904dd67d19f3f2aac1d49d/69904dd77d19f3f2aac1d500-0.jpg"
-                alt="Robert Fludd's Monochordum Mundanum: the divine hand reaching from a cloud to tune a cosmic monochord stretched across the spheres of the universe."
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage
+                  src="https://images.sourcelibrary.org/gallery/69904dd67d19f3f2aac1d49d/69904dd77d19f3f2aac1d500-0.jpg"
+                  alt="Robert Fludd's Monochordum Mundanum: the divine hand reaching from a cloud to tune a cosmic monochord stretched across the spheres of the universe."
+                  sizes="(max-width: 768px) 100vw, 448px"
+                />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Robert Fludd, <em>Monochordum Mundanum</em> (the World Monochord), 1617. The divine hand reaches from a cloud to tune the universe like a musical instrument. Fludd&rsquo;s book contains the most elaborate memory diagrams in the European tradition.{' '}

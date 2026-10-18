@@ -1,8 +1,10 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogPostSchema from '@/components/seo/BlogPostSchema';
 import { withArticleMeta } from '@/lib/article-metadata';
+import { optimisedSrc } from '@/components/articles/image-hosts';
 
 export const metadata: Metadata = withArticleMeta('first-translations', {
   title: 'First English Translations - Articles - Source Library',
@@ -125,7 +127,7 @@ export default function FirstTranslationsPage() {
             <div className="md:w-32 shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.sourcelibrary.org/cropped/698255f12f8186e7ada0c92c/698256b4d09a5f3b90400721.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/cropped/698255f12f8186e7ada0c92c/698256b4d09a5f3b90400721.jpg')}
                 alt="Frontispiece of Das mineralische Gluten by Dorothea Juliana Walchin"
                 className="w-full md:w-32 h-40 md:h-auto object-cover rounded-lg"
               />
@@ -205,12 +207,13 @@ export default function FirstTranslationsPage() {
 
           {/* Sanskrit astrology manuscript image */}
           <figure className="my-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/69905f4140bc3a0478efb47b/3.jpg"
-              alt="Page from the Brihat Samhita, a Sanskrit astrological encyclopedia"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage
+                src="https://images.sourcelibrary.org/archived/69905f4140bc3a0478efb47b/3.jpg"
+                alt="Page from the Brihat Samhita, a Sanskrit astrological encyclopedia"
+                sizes="(max-width: 768px) 100vw, 448px"
+              />
+            </div>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               A page from the <em>Brihat Samhita</em>, one of the foundational texts of Indian astrology.{' '}
               <Link href="https://sourcelibrary.org/book/brihat-samhita-the-great-compilation-varahamihira" className="text-accent-rust hover:text-accent-rust not-italic">Read in Source Library &rarr;</Link>
@@ -257,7 +260,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.sourcelibrary.org/archived/6952898bab34727b1f04d709/1.jpg"
+                  src={optimisedSrc('https://images.sourcelibrary.org/archived/6952898bab34727b1f04d709/1.jpg')}
                   alt="Title page of La chymie charitable et facile en faveur des dames by Marie Meurdrac, 1666"
                   className="w-full h-48 md:h-full object-cover"
                 />
@@ -281,7 +284,7 @@ export default function FirstTranslationsPage() {
                 <div className="md:w-40 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984e9808ab59930765fe050.jpg"
+                    src={optimisedSrc('https://images.sourcelibrary.org/cropped/6984e84d875ef560e34aef4e/6984e9808ab59930765fe050.jpg')}
                     alt="Frontispiece portrait of Anna Maria van Schurman from her Opuscula, 1648"
                     className="w-full h-48 md:h-full object-cover"
                   />
@@ -303,7 +306,7 @@ export default function FirstTranslationsPage() {
                 <div className="md:w-40 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="https://images.sourcelibrary.org/archived/69529036b184004c526a17f8/6.jpg"
+                    src={optimisedSrc('https://images.sourcelibrary.org/archived/69529036b184004c526a17f8/6.jpg')}
                     alt="Page from De claris selectisque mulieribus by Jacopo Filippo Foresti, 1497"
                     className="w-full h-48 md:h-full object-cover"
                   />
@@ -344,7 +347,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
+                  src={optimisedSrc('https://images.sourcelibrary.org/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg')}
                   alt="Frontispiece of Athanasius Kircher's Oedipus Aegyptiacus, 1653"
                   className="w-full h-48 md:h-full object-cover"
                 />
@@ -366,7 +369,7 @@ export default function FirstTranslationsPage() {
               <div className="md:w-48 shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.sourcelibrary.org/cropped/6909a2e7cf28baa1b4caec93/694d21a6ef5ebd3ae6429684.jpg"
+                  src={optimisedSrc('https://images.sourcelibrary.org/cropped/6909a2e7cf28baa1b4caec93/694d21a6ef5ebd3ae6429684.jpg')}
                   alt="Title page of Hermann Conring's De Hermetica Medicina, 1649"
                   className="w-full h-48 md:h-full object-cover"
                 />

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('origin-story', {
   title: 'Where Source Library Came From - Articles - Source Library',
@@ -50,12 +51,9 @@ export default function OriginStoryPage() {
 
         {/* Ficino bust with laptop */}
         <figure className="my-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg"
-            alt="Bronze bust of Marsilio Ficino labeled 'Divinus Interpres' with a laptop open to Plotinus translation work, at the Embassy of the Free Mind in Amsterdam"
-            className="w-full max-w-md mx-auto rounded-lg shadow-md"
-          />
+          <div className="max-w-md mx-auto">
+            <ArticleImage src="https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg" alt="Bronze bust of Marsilio Ficino labeled 'Divinus Interpres' with a laptop open to Plotinus translation work, at the Embassy of the Free Mind in Amsterdam" sizes="(max-width: 768px) 100vw, 448px" />
+          </div>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Marsilio Ficino, &ldquo;Divinus Interpres,&rdquo; with a laptop open to the translation of Plotinus&apos;s Enneads. Embassy of the Free Mind, Amsterdam. Ritualistically good luck.
           </figcaption>

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('cannabis-bangue', {
   title: "Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis - Source Library",
@@ -59,12 +60,9 @@ export default function CannabisBanguePage() {
 
         <figure className="my-12">
           <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/69ef286185daccce30f2cb87">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg"
-              alt="Botanical woodcut of the cannabis plant from Cristóvão da Costa's 1578 Tractado, showing root, stem, serrated leaves, and flowering tops, labelled Bangue"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg" alt="Botanical woodcut of the cannabis plant from Cristóvão da Costa's 1578 Tractado, showing root, stem, serrated leaves, and flowering tops, labelled Bangue" sizes="(max-width: 768px) 100vw, 448px" />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             &ldquo;Bangue&rdquo;: cannabis as the Portuguese met it in the Indies. Cristóvão da Costa,

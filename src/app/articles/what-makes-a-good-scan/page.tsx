@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import { optimisedSrc } from '@/components/articles/image-hosts';
 
 export const metadata: Metadata = withArticleMeta('what-makes-a-good-scan', {
   title: 'What Makes a Good Scan? - Articles - Source Library',
@@ -122,7 +123,7 @@ export default function WhatMakesAGoodScanPage() {
           <figure className="text-center">
             <div className="bg-warm border border-light p-4 rounded">
               <img
-                src="https://images.sourcelibrary.org/archived/69906a961cf6ed5fbc8f7135/157.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/69906a961cf6ed5fbc8f7135/157.jpg', 1200)}
                 alt="A completely blank white page"
                 className="w-full h-auto"
                 style={{ maxHeight: '400px', objectFit: 'contain' }}
@@ -136,7 +137,7 @@ export default function WhatMakesAGoodScanPage() {
           <figure className="text-center">
             <div className="bg-warm border border-light p-4 rounded">
               <img
-                src="https://images.sourcelibrary.org/archived/694bf8d2343422769f237558/212.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/694bf8d2343422769f237558/212.jpg', 1200)}
                 alt="A scan that is almost entirely blank with only a tiny fragment of text"
                 className="w-full h-auto"
                 style={{ maxHeight: '400px', objectFit: 'contain' }}
@@ -161,7 +162,7 @@ export default function WhatMakesAGoodScanPage() {
         <figure className="text-center my-8">
           <div className="bg-warm border border-light p-4 rounded inline-block">
             <img
-              src="https://images.sourcelibrary.org/archived/6968d9624fa3b04c6de86ecd/125.jpg"
+              src={optimisedSrc('https://images.sourcelibrary.org/archived/6968d9624fa3b04c6de86ecd/125.jpg', 1200)}
               alt="A 19th-century color topographic map of the area around Austerlitz showing rivers, villages, and terrain"
               className="w-full h-auto mx-auto"
               style={{ maxHeight: '500px', objectFit: 'contain' }}
@@ -289,7 +290,7 @@ export default function WhatMakesAGoodScanPage() {
           <figure className="text-center">
             <div className="bg-warm border border-light p-4 rounded">
               <img
-                src="https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/695592c47bd6d2cd1d61b10b/209.jpg', 1200)}
                 alt="Crisp woodcut of Ramon Llull with disciples and a city in the background. From Ars Inventiva Veritatis, 1515."
                 className="w-full h-auto"
                 style={{ maxHeight: '500px', objectFit: 'contain' }}
@@ -303,7 +304,7 @@ export default function WhatMakesAGoodScanPage() {
           <figure className="text-center">
             <div className="bg-warm border border-light p-4 rounded">
               <img
-                src="https://images.sourcelibrary.org/archived/69520773ab34727b1f043c4d/14.jpg"
+                src={optimisedSrc('https://images.sourcelibrary.org/archived/69520773ab34727b1f043c4d/14.jpg', 1200)}
                 alt="Microfilm scan of a printed page with visible pepper noise and jagged character edges. From Steganographia."
                 className="w-full h-auto"
                 style={{ maxHeight: '500px', objectFit: 'contain' }}

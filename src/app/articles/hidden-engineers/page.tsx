@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import ArticleImage from '@/components/articles/ArticleImage';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
 
@@ -64,12 +65,9 @@ export default function HiddenEngineersPage() {
 
         <figure className="my-12">
           <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=93">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg"
-              alt="Page from the Greek manuscript showing Hero of Alexandria's Aeolipile diagram with Greek text and technical annotations"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-md mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/93.jpg" alt="Page from the Greek manuscript showing Hero of Alexandria's Aeolipile diagram with Greek text and technical annotations" sizes="(max-width: 768px) 100vw, 448px" />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Hero&rsquo;s Aeolipile, a steam-powered rotating sphere, from the same
@@ -144,12 +142,9 @@ export default function HiddenEngineersPage() {
 
           <figure className="my-10">
             <Link href="/book/corpus-hermeticum-with-pneumatica-and-ocellus-lucanus-alexandria?page=153">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/153.jpg"
-                alt="Opening page of the Poimandres of Hermes Trismegistus with decorative red headpiece, from the same manuscript as Hero's Pneumatica"
-                className="w-full max-w-md mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-md mx-auto">
+                <ArticleImage src="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/153.jpg" alt="Opening page of the Poimandres of Hermes Trismegistus with decorative red headpiece, from the same manuscript as Hero's Pneumatica" sizes="(max-width: 768px) 100vw, 448px" />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Page 153 of the same manuscript: the <em>Poimandres</em> of Hermes Trismegistus

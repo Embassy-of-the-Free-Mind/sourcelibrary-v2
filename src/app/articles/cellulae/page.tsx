@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { withArticleMeta } from '@/lib/article-metadata';
+import ArticleImage from '@/components/articles/ArticleImage';
 
 export const metadata: Metadata = withArticleMeta('cellulae', {
   title: 'Cellulae: What Two Pages of a Medieval Manuscript Reveal About Biology, Law, and the Dangers of Careful Reasoning - Source Library',
@@ -51,12 +52,9 @@ export default function CellulaePage() {
 
         <figure className="my-12">
           <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/32.jpg"
-              alt="Page 32 of the Secretum Secretorum manuscript showing the cellulae passage in medieval Latin two-column format"
-              className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-            />
+            <div className="max-w-lg mx-auto">
+              <ArticleImage src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/32.jpg" alt="Page 32 of the Secretum Secretorum manuscript showing the cellulae passage in medieval Latin two-column format" sizes="(max-width: 768px) 100vw, 512px" />
+            </div>
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             Page 32 of the manuscript. The word <em>cellulas</em> appears in the left column, describing seven chambers of the womb.
@@ -159,12 +157,9 @@ export default function CellulaePage() {
 
           <figure className="my-12">
             <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c6">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/33.jpg"
-                alt="Page 33 of the manuscript showing the continuation of the reproductive dialogue including the rape argument and infertility discussion"
-                className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-lg mx-auto">
+                <ArticleImage src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/33.jpg" alt="Page 33 of the manuscript showing the continuation of the reproductive dialogue including the rape argument and infertility discussion" sizes="(max-width: 768px) 100vw, 512px" />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Page 33. The rape argument and the infertility discussion that contradicts it, both on the same page.{' '}
@@ -335,12 +330,9 @@ export default function CellulaePage() {
 
           <figure className="my-12">
             <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c7">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/34.jpg"
-                alt="Page 34 of the manuscript containing William of Conches' passage on memory and anticipation as the defining features of human cognition"
-                className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-              />
+              <div className="max-w-lg mx-auto">
+                <ArticleImage src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/34.jpg" alt="Page 34 of the manuscript containing William of Conches' passage on memory and anticipation as the defining features of human cognition" sizes="(max-width: 768px) 100vw, 512px" />
+              </div>
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Page 34. Two pages after the rape argument, a striking formulation of human temporal consciousness.{' '}
