@@ -20,7 +20,7 @@ export const PAGES: PairedPage[] = [
   ["bencao-gangmu-volume-52", 66, 0.387, 0.106, "本草綱目·卷五十二", "chinese-ext-4d129c-p66"],
   ["vol-7-1782366915003", 123, 0.549, 0.292, "事類賦·卷二十五~卷三十 (vol 7)", "chinese-ext-9090c0-p123"],
   ["vol-297", 66, 0.522, 0.277, "御定佩文韻府·卷二之二 (vol 297)", "chinese-ext-350724-p66"],
-  ["imperial-parallel-characters-vol-278", 44, 0.335, 0.095, "御定駢字類編·卷九十六 — Imperial Parallel Characters (vol 278)", "chinese-8ec8ed-p44"],
+  ["imperial-parallel-characters-vol-278", 44, 0.335, 0.095, "御定駢字類編·卷九十六: Imperial Parallel Characters (vol 278)", "chinese-8ec8ed-p44"],
   ["vol-151-5", 105, 0.407, 0.185, "五禮通考·卷二百二十一~卷二百二十二 (vol 151)", "chinese-ext-4a2980-p105"],
   ["vol-1-1782364303989", 77, 0.57, 0.369, "大戴禮記·卷一~卷三 (vol 1)", "chinese-48e6c5-p77"],
   ["vol-56", 82, 0.613, 0.415, "御定康熙字典·卷二十一 (vol 56)", "chinese-ext-8e4639-p82"],
