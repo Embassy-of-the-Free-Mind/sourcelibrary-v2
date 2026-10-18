@@ -1,0 +1,256 @@
+{
+  "_generated": "by scripts/eval/tibetan-expert-page/build-examples.mjs, read-only from Mongo; do not edit by hand",
+  "measured": "2026-10-18",
+  "census": {
+    "bl": {
+      "books": 1438,
+      "pages": 277663,
+      "tibetan": 269877,
+      "yigdzin": 266771,
+      "etext": 0,
+      "not_legible": 7454,
+      "english": 172022,
+      "english_by_model": {
+        "gemini-3-flash-preview": 170994,
+        "unknown": 2,
+        "gemini-3.1-flash-lite": 1026
+      }
+    },
+    "tengyur": {
+      "books": 213,
+      "pages": 128639,
+      "tibetan": 128369,
+      "yigdzin": 0,
+      "etext": 128369,
+      "not_legible": 0,
+      "english": 128329,
+      "english_by_model": {
+        "gemini-3-flash-preview": 104700,
+        "gemini-3.8-flash-low": 23625,
+        "unknown": 4
+      }
+    },
+    "other": {
+      "books": 46,
+      "pages": 22523,
+      "tibetan": 21868,
+      "yigdzin": 12228,
+      "etext": 9166,
+      "not_legible": 532,
+      "english": 13096,
+      "english_by_model": {
+        "gemini-3-flash-preview": 13096
+      }
+    }
+  },
+  "examples": {
+    "two-leaves": {
+      "book_id": "69e7abd05f1a22ab19a9e929",
+      "title": "Neyphug Kanjur rGyud Kha",
+      "page": 6,
+      "image": "https://images.sourcelibrary.org/archived/69e7abd05f1a22ab19a9e929/6.jpg",
+      "tibetan_source": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "གཙོ། །རིན་ཆེན་འཛིན་པ་ཀུན་གྱི་དབང་། །མཁའ་འགྲོ་ཀུན་དང་མཉམ་སྦྱོར་བས། །སངས་རྒྱས་ཀུན་དང་མཉམ་པར་འགྱུར། །སངས་རྒྱས་ཀུན་དང་མ་ཉམ་པས་ན། །རྡོ་རྗེ་མཁའ་འགྲོ\nཞེས་བྱར་འགྲུབ། །དཀྱིལ་འཁོར་ཆེན་པོའི་སྦྱོར་བ་ཡིས། །དེ་ནས་དཀྱིལ་འཁོར་",
+        "before": false,
+        "after": true
+      },
+      "english": {
+        "text": "chief. The power of all Jewel-holders. By the union with all Dakinis, one becomes equal to all Buddhas. By being equal to all Buddhas, one is accomplished as the \"Vajra Dakini.\" Through the union of the Great Mandala, all mandalas should then be drawn. In its center, one should correctly place Vajrasattva. Having the color of th",
+        "before": false,
+        "after": true
+      }
+    },
+    "cursive": {
+      "book_id": "69e7481e85f786e884a4b4dc",
+      "title": "Lamp Dispelling Darkness: Religious History and Lives of Padmasambhava",
+      "page": 57,
+      "image": "https://images.sourcelibrary.org/archived/69e7481e85f786e884a4b4dc/57.jpg",
+      "tibetan_source": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+      "not_legible": false,
+      "english_model": null,
+      "english_withheld": "unverified_script_ocr",
+      "tibetan": {
+        "text": "O༔ ༔ནས་འདྲི་བ་དང་༔ བདག་ཏུ་འཛིན་པ་མང་སྟེ་ཟིན་པ་ཉུང་༔ བགཌ་སྒྲུབ་བསྡུལ་མ་མཛད་ཡལ་དུ་ཅུག་༔ མངའ་བདག་རྒྱལ་པོ་ཉིད་ཀྱི་རྒྱལ་ས་ཡང་༔\nད་ནས་གདུང་རྒྱུད་མི་རབས་༢་སོང་ནས་༔ བོད་ཁཾས་ཡོངས་ཀྱི་བསོད་ནཾས་ཟད་པ་དང་༔ སྔོན་གྱི་གནོད་སྦྱིན་སྤུན་༣་ཚེ་འཕོས་པ་༔ རྒྱལ་པོ་སེང་གེའི་མག",
+        "before": false,
+        "after": true
+      },
+      "english": null
+    },
+    "byed-med": {
+      "book_id": "69e7ab895f1a22ab19a99cb5",
+      "title": "Thadrak Thor bu 024 Phreng lung rgya mtsho sogs",
+      "page": 25,
+      "image": "https://images.sourcelibrary.org/archived/69e7ab895f1a22ab19a99cb5/25.jpg",
+      "tibetan_source": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "དོན་བཞི་བཞི་ལ་དབང་མྱེད་པ་ཡིན་ཏེ། མིག་རྣ་དག་ནི་ལུས་མཛེས་པར་",
+        "before": true,
+        "after": true
+      },
+      "english": {
+        "text": "the faculties are respectively without power over four purposes each. The eye and ear do not exercise power over making the body beautiful, protecting the body, producing consciousness together with its concordant factors, and the u",
+        "before": true,
+        "after": true
+      }
+    },
+    "good-bl": {
+      "book_id": "69e788e74a6785cfd60d21ca",
+      "title": "sbyin sreg gi skor",
+      "page": 18,
+      "image": "https://images.sourcelibrary.org/archived/69e788e74a6785cfd60d21ca/18.jpg",
+      "tibetan_source": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "མིང་རུས་བཅས་པ་བྲིས ༔ ཕོ་ཉས་བཀུག་ལ་ཕུར་པས་གདབ ༔ རྡུལ་དུ་རློག་ཏེ་ཚོགས་མཆོད་འབུལ ༔ དྲག་པོའི་ལྷ་་་\nཚོགས་འཁོར་བཅས་ཀྱིས ༔ ཁཾས་གསུཾ་སྲིད་གསུཾ་ཐཾད་ཀུན ༔ རྡུལ་ཕྲན་བཞིན་དུ་རླ་པར་བྱ ༔ དྲག་པོའི་ཕྲིན་ལས་གྲུབ\nཔར་མཛོད ༔ ༈ དེ་ནས་ཕོ་ཉ་བསྐུལ་བ་ནི། ",
+        "before": false,
+        "after": true
+      },
+      "english": {
+        "text": "Write the name and clan [note: of the target]. Summon them with the messengers and strike them with the ritual dagger. Pulverize them and offer the gathering feast. By the assembly of wrathful deities and their entourages, may all the three realms and three existence be reduced to atoms like fine dust. Accomplish the wrathful activities! Next is the exhorta",
+        "before": false,
+        "after": true
+      }
+    },
+    "tengyur-good": {
+      "book_id": "6abeaad26a920ffd924ddbfc",
+      "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཅ (Derge Tengyur, vol. 84)",
+      "page": 256,
+      "image": "https://images.sourcelibrary.org/pages/6abeaad26a920ffd924ddbfc/0256.jpg",
+      "tibetan_source": "Esukhia digital Derge Tengyur",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "སྤྱོད་པས་འདི་ལྟར་ཡོངས་སུ་བརྟག་པར་བྱ་སྟེ། ཆོས་གང་འདས་པ་དང་། མ་བྱོན་པ་དང་། ད་ལྟར་བྱུང་བའི་སངས་རྒྱས་བཅོམ་ལྡན་འདས་རྣམས་ཀྱིས་བརྙེས་པར་གྱུར་པ་དང་། བརྙེས་པ་དང་། བརྙེས་པར་འགྱུར་བའི་ཆོས་དེ་དག་བདག་གིས་ཀྱང་ཐོབ་པར་བྱའོ་\nསྙམ་དུ་བརྟག་པར་བྱ",
+        "before": false,
+        "after": true
+      },
+      "english": {
+        "text": "The practitioner should examine things in this way: \"I must also obtain those same qualities that the past, future, and present Buddhas, the Bhagavan Blessed Ones, have attained, are attaining, and will attain.\" Subhuti, a Bodhisattva Mahasattva Great Heroic Being of Awakening who practices the Perfection of Wisdom, must strive in this manner. A Bo",
+        "before": false,
+        "after": true
+      }
+    },
+    "numeral": {
+      "book_id": "6abe8add6a920ffd924d507a",
+      "title": "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙ (Derge Tengyur, vol. 18)",
+      "page": 296,
+      "image": "https://images.sourcelibrary.org/pages/6abe8add6a920ffd924d507a/0296.jpg",
+      "tibetan_source": "Esukhia digital Derge Tengyur",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "ཀླུའི་རྒྱལ་པོ་སེང་ཤས་མི་མགོ་ལྔ་བརྒྱུས་པས་ངོ་མཚར་བའི་ཉམས་ཏེ། དེ",
+        "before": true,
+        "after": true
+      },
+      "english": {
+        "text": "Wearing the king of Nagas (serpent beings) Shesha, who is strung with five hundred human heads, represents the quality of wonder. Thus, there are the",
+        "before": true,
+        "after": true
+      }
+    },
+    "seam": {
+      "book_id": "69e7ac425f1a22ab19aa607c",
+      "title": "Neyphug Thor bu Pad gling bka' 'bum",
+      "page": 190,
+      "image": "https://images.sourcelibrary.org/archived/69e7ac425f1a22ab19aa607c/190.jpg",
+      "tibetan_source": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "དགེ་བཅུ་དང་འཚམས་མེད་ལྔ།།ལས་ངན་སྡིག་སྒྲིབ་མ་ལུས་ཀུན་དང་ལྟ་ཉ",
+        "before": true,
+        "after": true
+      },
+      "english": {
+        "text": "The ten virtues and the five crimes of immediate retribution, may all bad karma and obscurations without exception be abandoned and purified right now. Whatever aspi",
+        "before": true,
+        "after": true
+      }
+    },
+    "mansions": {
+      "book_id": "6a14e1cf311a9edd46224259",
+      "title": "Thor bu Dus bstan pa'I me long sogs",
+      "page": 8,
+      "image": "https://images.sourcelibrary.org/archived/6a14e1cf311a9edd46224259/8.jpg",
+      "tibetan_source": "Yigdzin 1 — BDRC tibetan-ocr VLM",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "མེ་བཞི་ལ࿒ ཡུལ་དུ་ར་པར་ངན་ཅིང་࿒ འདབ་ཆགས་ཀུན་ལ་ངན་ནོ࿒ ",
+        "before": true,
+        "after": true
+      },
+      "english": {
+        "text": "In Purvaphalguni, it is bad in the land of Ura and bad for all winged creatures. In Chitra, it i",
+        "before": true,
+        "after": true
+      }
+    },
+    "title-leaf": {
+      "book_id": "6abebae6896ea18127c8795c",
+      "title": "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། རི (Derge Tengyur, vol. 134)",
+      "page": 86,
+      "image": "https://images.sourcelibrary.org/pages/6abebae6896ea18127c8795c/0086.jpg",
+      "tibetan_source": "Esukhia digital Derge Tengyur",
+      "not_legible": false,
+      "english_model": null,
+      "english_withheld": "invented_by_eye",
+      "tibetan": null,
+      "english": null
+    },
+    "pramana": {
+      "book_id": "6abed3fc896ea18127c8d272",
+      "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
+      "page": 312,
+      "image": "https://images.sourcelibrary.org/pages/6abed3fc896ea18127c8d272/0312.jpg",
+      "tibetan_source": "Esukhia digital Derge Tengyur",
+      "not_legible": false,
+      "english_model": "gemini-3.8-flash-low",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "དོན་ནི་མ་ཡིན་ཏེ། ནང་དུ་ཡོངས་སུ་གསལ་བའི་ཕྱིར་དང་། འདོད་པའི་དབང་གིས་སྐྱེ་བ་དང་འགག་པར་རིགས་པ་མ་ཡིན་པའི་ཕྱིར་རོ།",
+        "before": true,
+        "after": true
+      },
+      "english": {
+        "text": "It is not an external object, because it is completely clear internally, and because it is not reasonable for an external object to arise and cease under the sway of desire. If it is cognition he",
+        "before": true,
+        "after": true
+      }
+    },
+    "vinaya": {
+      "book_id": "6abec4ee896ea18127c8a184",
+      "title": "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། པུ (Derge Tengyur, vol. 152)",
+      "page": 302,
+      "image": "https://images.sourcelibrary.org/pages/6abec4ee896ea18127c8a184/0302.jpg",
+      "tibetan_source": "Esukhia digital Derge Tengyur",
+      "not_legible": false,
+      "english_model": "gemini-3-flash-preview",
+      "english_withheld": null,
+      "tibetan": {
+        "text": "བྱེད་པ་པོའི་དགེ་འདུན་ལ་ཡང་འགལ་ཚབས་ཅན་དུ་འགྱུར་རོ",
+        "before": true,
+        "after": true
+      },
+      "english": {
+        "text": "it also becomes a grave offence sthūlātyaya for the community that carries out the act. The characteristics of b",
+        "before": true,
+        "after": true
+      }
+    }
+  }
+}
