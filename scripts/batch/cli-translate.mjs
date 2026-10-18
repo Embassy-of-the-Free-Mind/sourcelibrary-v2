@@ -11,7 +11,7 @@
  * exactly as the worker seeds, and that page's English is the read just made (nothing is stored yet), else the stored one.
  * No API key, no API spend.
  *
- *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low]
+ *   read   node --env-file=.env.production.local scripts/batch/cli-translate.mjs read --page-ids-file=F --out=DIR [--model=gemini-3.8-flash-low] [--ocr-checked="..."]
  *          Builds translate-core's single-page prompt from the stored OCR, asks the CLI, saves DIR/<page_id>.txt + .meta.json.
  *          Writes NOTHING to the database. Skips pages already read, pages with no translatable OCR, and blank pages.
  *          [--instructions-file=F]: JSON { page_id: "one line" } appended to that page's prompt (#6559: a Maya numeral the
@@ -44,6 +44,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { readPageIdsFile } from '../lib/ocr-targeting.mjs';
+import { ocrFirstGate } from '../lib/ocr-first-gate.mjs';
 import { PAGE_BREAK_SCOPED, buildTranslationPrompt, loadTranslationPrompts, isTranslatablePage, sameLanguageReason, sanitizeTranslationTags, writePageTranslation, syncBookTranslationCounters, contentHash } from '../lib/translate-core.mjs';
 import { cliChatterReason } from '../lib/cli-chatter.mjs';
 import { CLI, gatedTextCall, TRANSLATE_SUFFIX } from '../lib/agy-cli.mjs';
@@ -83,6 +84,10 @@ if (STAGE === 'read') {
   fs.mkdirSync(OUT, { recursive: true });
   const found = new Map((await db.collection('pages').find({ id: { $in: ids } }, { projection: PAGE_PROJECTION }).toArray()).map((p) => [p.id, p]));
   console.log(`${found.size} of ${ids.length} page ids found; model ${MODEL}; ${CLI} ${version}`);
+  // Check the transcription before paying for a translation on top of it (#6865).
+  const gate = ocrFirstGate([...found.values()], arg('ocr-checked'));
+  console.log(gate.message);
+  if (!gate.ok) { await client.close(); process.exit(2); }
   const books = new Map();
   for (const id of ids) {   // the file's order, which is page order
     const p = found.get(id);
