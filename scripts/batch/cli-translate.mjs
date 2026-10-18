@@ -25,7 +25,8 @@
  *          sweep_log row per page and one book_events row per book, and recounts the book.
  *          It also writes the reads of scripts/batch/claude-translate.mjs (Opus through the Claude CLI, #6559): their meta
  *          says `cli: 'claude'`, so the engine block is recorded as 'anthropic', and the exact prompt each call sent is
- *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused.
+ *          kept beside the reads (`prompt_sent_file`), so a read whose hash does not match it is refused. A meta's
+ *          `passes` (a draft and its review, scripts/batch/twopass-review.mjs) is copied into engine.run.passes.
  *
  * THE CALL (#6523, the OCR runner's config, shared code in scripts/lib/agy-cli.mjs): the prompt asks for the translation
  * between <<<BEGIN>>> / <<<END>>> markers and nothing outside them; a PreToolUse hook in the call's empty workspace
@@ -157,7 +158,8 @@ for (const m of metas) {
     name: engineNameForCli(m.cli), call_site: CALL_SITE, api: 'cli', cli: { name: m.cli, version: m.cli_version }, model: m.model,
     prompt: { id: m.prompt_ref?.id, name: m.prompt_ref?.name, version: m.prompt_ref?.version, hash: m.prompt_ref?.content_hash, sent_hash: sentHash, sent_chars: m.prompt_sent_chars },
     generationConfig: notRecorded(`${m.cli} -p exposes no temperature, output cap or thinking setting; the model id names the tier`),
-    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), reason: REASON },
+    // A two-pass read (#6865: a Gemini draft reviewed by Opus against the image) lists both passes in its meta.
+    run: { job_id: runId, code_version: await codeVersion(), host: host(), at: new Date(m.finished_at), read_started_at: m.started_at, ...(m.read_site && { read_site: m.read_site, read_call: m.call_id }), ...(m.passes && { passes: m.passes }), reason: REASON },
     input: translationInput({ ocrText: page.ocr?.data ?? '', ocrUpdatedAt: page.ocr?.updated_at, context: m.context }),
   });
   const res = await writePageTranslation(db, { page, book, text, promptRef: m.prompt_ref, model: m.model, jobId: runId, note: 'translate_cli', refuseUnhealthy: true, engine });
