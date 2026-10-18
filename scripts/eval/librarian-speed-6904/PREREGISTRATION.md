@@ -36,3 +36,14 @@ Questions: `questions.json` (40, frozen before any run). Order is interleaved pe
 
 ## Envelope
 Approved by Derek 2026-10-18: ≤ 100 Librarian turns, stop at $4 by the turns' own usage numbers.
+
+## Amendment before the main run (smoke test, 4 turns, excluded from analysis)
+- Smoke (q02 A and B; q02, q03 B): B's thinking tokens fell from 947 to 0 and its searches left at
+  1.4–1.9 s instead of 3.9 s, but at LOW thinking the model wrote no opening sentences before its tool
+  calls, so its first words came at 18–21 s against A's 3.1 s. Rewording the B line to ask for the
+  Step 1 opening first did not bring them back (2 of 2). The reworded line is the one that runs.
+- Search tool results took 17–20 s from this box in both arms; both arms share it.
+- Added to the ship rule, before any main-run turn: **B ships as the default only if its median time
+  to first text is also no later than A's.** A reader waiting 20 s for a first word is the experience
+  this issue is about, whatever the time to done.
+- Turns: 4 smoke + 88 main = 92 of the 100 approved.
