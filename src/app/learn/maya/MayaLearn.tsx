@@ -78,6 +78,7 @@ export default function MayaLearn() {
   const item = currentId ? byId.get(currentId) ?? null : null;
 
   const goTo = (r: Rung, state = local, skip?: string) => {
+    window.scrollTo(0, 0);
     setRung(r);
     setCurrentId(items ? nextItem(items, state, r, skip)?._id ?? null : null);
     setPhase('try');
@@ -124,6 +125,7 @@ export default function MayaLearn() {
     if (checking.index + 1 < checkItems.length) {
       setChecking({ index: checking.index + 1, answers });
       setTryAnswer('');
+      window.scrollTo(0, 0);
       return;
     }
     const score = answers.filter((a) => a.correct).length;
@@ -386,11 +388,11 @@ function Reveal({ item, answer, correct, byId }: { item: MayaItem; answer: strin
         <div className="mt-4 space-y-3">
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">{item.evidence.find((e) => e.kind === 'dictionary')?.label}</p>
-            <p className="font-serif text-lg text-primary">{item.answer.gloss_es}</p>
+            <p className="font-serif text-lg text-primary"><Italics text={item.answer.gloss_es ?? ''} /></p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">AI reading</p>
-            <p className="text-primary">{item.ai.reading}</p>
+            <p className="text-primary"><Italics text={item.ai.reading} /></p>
           </div>
         </div>
       ) : (
@@ -437,6 +439,11 @@ function Reveal({ item, answer, correct, byId }: { item: MayaItem; answer: strin
       </ul>
     </section>
   );
+}
+
+/** Dictionary page text marks italics as *word*; show them as italics, not asterisks. */
+function Italics({ text }: { text: string }) {
+  return <>{text.split(/(\*[^*]+\*)/).map((p, i) => (/^\*[^*]+\*$/.test(p) ? <em key={i}>{p.slice(1, -1)}</em> : <span key={i}>{p}</span>))}</>;
 }
 
 function CheckHistory({ checks }: { checks: LocalState['checks'] }) {
