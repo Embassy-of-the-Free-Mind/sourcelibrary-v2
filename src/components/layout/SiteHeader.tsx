@@ -41,8 +41,8 @@ function buildNavLinks(t: NavStrings, locale: Locale): NavLink[] {
     { key: 'library', label: t.library, href: '/catalog', activePrefix: '/catalog' },
     { key: 'gallery', label: t.gallery, href: '/gallery', activePrefix: '/gallery' },
     { key: 'collections', label: t.collections, href: '/collections', activePrefix: '/collections' },
-    // Research notes, renamed Articles. Moves to /articles with #6887, which redirects /blog.
-    { key: 'articles', label: t.articles, href: '/blog', activePrefix: '/blog' },
+    // Research notes, now Articles at /articles (#6887; /blog redirects there).
+    { key: 'articles', label: t.articles, href: '/articles', activePrefix: '/articles' },
     // Points at the /explore hub, not /explore/map: the hub carries the stats
     // and cards for all three visualizations (13 views vs the map's 262 in the
     // 30 days to 2026-08-13 when the nav skipped it).
