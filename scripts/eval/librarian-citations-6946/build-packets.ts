@@ -20,8 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import type { GroundingPage } from '@/lib/embassy/grounding';
-import { findPageLinks } from '@/lib/embassy/citation-pages';
-import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { judgePacket, type PacketLink } from './packet';
 
 const arg = (name: string, def?: string) => process.argv.find(a => a.startsWith(`--${name}=`))?.slice(name.length + 3) ?? def;
 const readMaybeGz = (f: string) => (f.endsWith('.gz') ? zlib.gunzipSync(fs.readFileSync(f)) : fs.readFileSync(f)).toString('utf8');
@@ -31,36 +30,14 @@ const support: Record<string, { pages: GroundingPage[] }> = JSON.parse(readMaybe
 const dir = arg('dir')!;
 const tag = arg('tag')!;
 const runs = (arg('runs', 'J1') as string).split(',');
-const PAGE_CHARS = 20000;
-
 fs.mkdirSync(path.join(dir, 'packets'), { recursive: true });
-const linksOut: Record<string, Array<{ id: string; slug: string; page: number; at: number; text: string }>> = {};
+const linksOut: Record<string, PacketLink[]> = {};
 
 for (const r of rows) {
-  const links = findPageLinks(r.text);
-  const ids = links.map((l, i) => ({ id: `L${i + 1}`, slug: l.slug, page: l.page, at: l.start, text: l.label }));
-  linksOut[r.key] = ids;
+  const { md, links } = judgePacket(r.q, r.text, support[r.key]?.pages ?? []);
+  linksOut[r.key] = links;
   if (links.length === 0) continue;
-  // Marker after each link, from the end so offsets hold.
-  let marked = r.text;
-  for (let i = links.length - 1; i >= 0; i--) marked = `${marked.slice(0, links[i].end)} ⟦L${i + 1}⟧${marked.slice(links[i].end)}`;
-  const pages = support[r.key]?.pages ?? [];
-  const bySlug = new Map<string, GroundingPage[]>();
-  for (const p of pages) bySlug.set(p.bookSlug, [...(bySlug.get(p.bookSlug) ?? []), p]);
-  const cited = new Set(links.map(l => `${l.slug} p.${l.page}`));
-  const head = (p: GroundingPage) => `${p.bookSlug} p.${p.page}`;
-  const ordered = [...pages].sort((a, b) => Number(cited.has(head(b))) - Number(cited.has(head(a))) || a.bookSlug.localeCompare(b.bookSlug) || a.page - b.page);
-  const linkList = ids.map(l => {
-    const known = pages.some(p => p.bookSlug === l.slug && p.page === l.page);
-    return `- ${l.id} → ${l.slug} p.${l.page}${known ? '' : ' (this page is NOT among the pages below)'}`;
-  }).join('\n');
-  const pageBlocks = ordered.map(p => {
-    // Editorial wrappers (<meta>, <summary>…) describe the page, often its neighbours: never page text.
-    const [tr, orig] = [p.parts?.[0] ?? p.text, p.parts?.[1] ?? ''].map(t => (t ? stripEditorialWrappers(t) : t));
-    return `### ${head(p)} — ${p.bookTitle}\n\n**English translation:**\n\n${(tr || '(none)').slice(0, PAGE_CHARS)}${orig ? `\n\n**Original transcription:**\n\n${orig.slice(0, PAGE_CHARS)}` : ''}`;
-  });
   const qid = r.key.replace(/:.*/, '');
-  const md = `## Question\n\n${r.q}\n\n## Answer\n\n${marked}\n\n## Links to label\n\n${linkList}\n\n## Pages the Librarian read (${pages.length})\n\n${pageBlocks.join('\n\n---\n\n') || '(none)'}\n`;
   for (const run of runs) fs.writeFileSync(path.join(dir, 'packets', `${qid}-${tag}-${run}.md`), md);
 }
 fs.writeFileSync(path.join(dir, `links-${tag}.json`), JSON.stringify(linksOut, null, 1));

@@ -23,3 +23,11 @@
 45 */2 * * * flock -w 600 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --max-old-space-size=2048 --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --reconcile >> /data/vector-search/logs/delta.log 2>&1
 40 3 * * * flock -w 900 /tmp/vector-search-delta.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --max-old-space-size=2048 --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/sync-delta.mjs --reconcile --hash --save --count-check >> /data/vector-search/logs/delta.log 2>&1
 10,40 * * * * flock -n /tmp/vector-search-freshness.lock systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/node --no-warnings --env-file=/root/sourcelibrary/.env.production.local /data/vector-search/app/freshness-check.mjs >> /data/vector-search/logs/freshness.log 2>&1
+
+# Mondays 06:00 UTC: the Librarian page-link gauge (#6946, scripts/audit/librarian-citation-gauge.ts). INSTALLED
+# 2026-10-18 in root's crontab on l7a (backup: /root/backups/crontab-20261018-215139). Samples 20 readers' first turns of
+# the last 7 days, Opus judges (claude -p, subscription; at most 25 calls, no Gemini) label every page link; one JSON line
+# to /var/log/sourcelibrary/librarian-quality.jsonl and a row in librarian-quality.md beside it. ntfy sourcelibrary-uptime
+# and a #6946 comment only when the wrong-page rate moves 10 points above (or back under) its trailing 4-run median.
+# Guarded on the file so it waits for the merge; flock -n so two never overlap; timeout 2h.
+0 6 * * 1 f=/data/scratch/sl/sourcelibrary/scripts/audit/librarian-citation-gauge.ts; [ -f $f ] && cd /data/scratch/sl/sourcelibrary && flock -n /tmp/librarian-citation-gauge.lock timeout 2h systemd-run --quiet --scope --slice=sourcelibrary.slice /usr/bin/npx tsx --env-file=/root/sourcelibrary/.env.production.local $f >> /data/scratch/sl/logs/librarian-citation-gauge.log 2>&1  # weekly page-link gauge, #6946
