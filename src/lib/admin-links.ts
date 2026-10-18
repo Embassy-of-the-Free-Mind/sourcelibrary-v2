@@ -71,6 +71,7 @@ export const ADMIN_SECTIONS: AdminSection[] = [
       { href: '/admin/catalog-coverage', label: 'Catalogue' },
       { href: '/admin/r2-coverage', label: 'R2 storage' },
       { href: '/admin/knowledge-graph', label: 'Knowledge graph' },
+      { href: '/admin/page-cleanup', label: 'Page cleanup' },
     ],
   },
   {
