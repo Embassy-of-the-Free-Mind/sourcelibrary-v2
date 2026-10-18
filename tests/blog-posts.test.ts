@@ -89,6 +89,43 @@ describe('blog post list', () => {
     expect(bad.map((p) => p.slug)).toEqual([]);
   });
 
+  // .claude/docs/article-rules.md, mechanically: every article has the tall
+  // dark hero (which is also its share image) and wraps its metadata.
+  const articleDirs = readdirSync(BLOG_DIR, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && !d.name.startsWith('[') && d.name !== 'page' && existsSync(path.join(BLOG_DIR, d.name, 'page.tsx')))
+    .map((d) => d.name);
+  const folderSource = (dir: string) =>
+    readdirSync(path.join(BLOG_DIR, dir))
+      .filter((f) => /\.tsx?$/.test(f))
+      .map((f) => readFileSync(path.join(BLOG_DIR, dir, f), 'utf8'))
+      .join('\n');
+
+  it('gives every article the tall dark hero (ContentHeader feature, headerVariant="dark")', () => {
+    const bad = articleDirs.filter((d) => {
+      const src = folderSource(d);
+      const tag = src.match(/<ContentHeader\b[\s\S]*?>/)?.[0] ?? '';
+      return !tag || !/\bfeature\b/.test(tag) || !/headerVariant="dark"/.test(tag);
+    });
+    expect(bad).toEqual([]);
+  });
+
+  it('wraps every article page metadata in withArticleMeta', () => {
+    const bad = articleDirs.filter((d) => !/withArticleMeta\(/.test(readFileSync(path.join(BLOG_DIR, d, 'page.tsx'), 'utf8')));
+    expect(bad).toEqual([]);
+  });
+
+  // No red text in articles. The older articles still carry the rust classes
+  // (globals.css neutralises them under .article-page); this ratchet only lets
+  // the number go DOWN. Lower it when you clean an article.
+  it('does not add red text classes to articles (ratchet)', () => {
+    const RATCHET = 63;
+    const files = articleDirs.flatMap((d) =>
+      readdirSync(path.join(BLOG_DIR, d)).filter((f) => /\.tsx?$/.test(f)).map((f) => path.join(BLOG_DIR, d, f)),
+    );
+    const withRust = files.filter((f) => /text-accent-rust/.test(readFileSync(f, 'utf8')));
+    expect(withRust.length, `files with text-accent-rust: ${withRust.map((f) => path.relative(BLOG_DIR, f)).join(', ')}`).toBeLessThanOrEqual(RATCHET);
+  });
+
   // The card picture's alt text, read by screen readers and search engines.
   it('describes every card picture (imageAlt)', () => {
     const bad = [...posts, ...LINKED_PAGES].filter((p) => !p.imageAlt?.trim());

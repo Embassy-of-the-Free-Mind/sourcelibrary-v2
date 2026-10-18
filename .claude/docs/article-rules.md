@@ -74,6 +74,14 @@ Most of this is automatic once the page wraps its metadata in `withArticleMeta`;
 - Plain words, like a knowledgeable person telling a friend. No em dashes. No marketing words, no rhetorical questions, no closing aphorism: stop when the information stops.
 - Every claim traceable to a page in the library or a cited source.
 
+## What the tests enforce
+
+`tests/blog-posts.test.ts` fails the PR if: a post has no category, summary (155 characters at most,
+no em dash), card picture or alt text; an article lacks the `feature` + `headerVariant="dark"` hero or
+the `withArticleMeta` wrapper; `src/generated/article-books.json` or `article-heroes.json` is stale; or
+more article files carry `text-accent-rust` than the ratchet allows (lower the number when you clean
+one). The rest of this file (pictures, quotes with their pages, licences, charts, wording) needs a person.
+
 ## Checklist before opening a PR
 
 1. Hero set, `feature` and `headerVariant="dark"` on `ContentHeader`; generators re-run.
