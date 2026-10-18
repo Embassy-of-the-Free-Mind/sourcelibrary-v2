@@ -30,3 +30,6 @@ PATH=/root/bin:/root/.local/bin:/usr/local/bin:/usr/bin:/bin
 # ── Work moved off main (#5660, 2026-10-17). Each line is commented out in main's crontab; never run both. ──
 # Withhold stale translations hourly (#4523): idempotent (a withheld page no longer matches the predicate), Mongo-only state.
 20 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/withhold-stale-translations.mjs ] && flock -n /tmp/sl-withhold-stale-tr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/withhold-stale-translations.mjs --apply" >> /var/log/sourcelibrary/withhold-stale-translations.log 2>&1
+
+# GPU task queue (#6871): `gpu-queue.sh add <task.sh>` queues; this starts the next one when nothing is running.
+*/5 * * * * /root/bin/gpu-queue.sh run >> /var/log/sourcelibrary/gpu-queue.log 2>&1  # GPU task queue, one at a time under /root/gpu.lock (#6871)
