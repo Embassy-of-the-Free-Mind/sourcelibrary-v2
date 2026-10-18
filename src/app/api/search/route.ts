@@ -8,6 +8,7 @@ import { expandNameQuery } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
+import { matchBookMetadata } from '@/lib/search/book-metadata-snapshot';
 import { semanticBookSearch, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { conceptPageSearch } from '@/lib/search/concept-search';
 import type { VectorShadowSink } from '@/lib/vector-search';
@@ -488,6 +489,24 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             if (words.length >= 2) {
               // Each word with its related forms (#5517): "botanical gardens" reaches books keyed "botany".
               const wordRegexes = words.map((w: string) => stemmedQueryRegex(w));
+              // In memory first (#2049): the Mongo query below reads every live book.
+              // Unfiltered (only visible + pages_count), the first matches are the answer,
+              // with slack for a book hidden since the snapshot; with filters, up to
+              // 2,000 candidates go through the same `find`, which applies them.
+              const unfiltered = Object.keys(bookFilters).length === 2;
+              const matched = await matchBookMetadata(db as any, wordRegexes, unfiltered ? limit * 2 : 2000);
+              if (matched && (matched.complete || unfiltered)) {
+                if (matched.ids.length === 0) return [];
+                const rank = new Map(matched.ids.map((id, i) => [id, i]));
+                books = (await db.collection('books')
+                  .find({ id: { $in: matched.ids }, ...bookFilters })
+                  .project(bookProjection)
+                  .maxTimeMS(5000)
+                  .toArray())
+                  .sort((a: any, b: any) => (rank.get(a.id) ?? 0) - (rank.get(b.id) ?? 0))
+                  .slice(0, limit);
+                return books;
+              }
               books = await db.collection('books')
                 .find({
                   $and: wordRegexes.map(rx => ({
