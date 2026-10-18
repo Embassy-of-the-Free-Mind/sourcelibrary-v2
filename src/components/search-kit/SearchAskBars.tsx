@@ -1,5 +1,7 @@
 'use client';
 
+import type { ReactNode } from 'react';
+
 /**
  * The two ways into a collection page: a search bar and an Ask-the-librarian
  * bar side by side, each with a line of things to try. Shared by /library and
@@ -30,6 +32,8 @@ export interface BarProps {
   examples: string[];
   /** Hovering or focusing an example — e.g. to start its search early. */
   onExampleWarm?: (e: string) => void;
+  /** Desktop only: a link at the right end of the examples line (the gallery's "Search by image"). */
+  aside?: ReactNode;
 }
 
 export interface AskBarProps extends BarProps {
@@ -66,7 +70,12 @@ export default function SearchAskBars({ search, ask }: { search: BarProps; ask: 
           <input id={search.id} type="search" value={search.value} onChange={(e) => search.onChange(e.target.value)} placeholder={search.placeholder} className={input} />
           <button type="submit" className={button}>Search</button>
         </div>
-        <Examples items={search.examples} label="Try" onWarm={search.onExampleWarm} onPick={(e) => { search.onChange(e); search.onSubmit(e); }} />
+        <div className="flex items-start gap-3">
+          <div className="flex-1 min-w-0">
+            <Examples items={search.examples} label="Try" onWarm={search.onExampleWarm} onPick={(e) => { search.onChange(e); search.onSubmit(e); }} />
+          </div>
+          {search.aside && <div className="hidden md:block shrink-0 mt-2">{search.aside}</div>}
+        </div>
       </form>
 
       <form onSubmit={(e) => { e.preventDefault(); ask.onSubmit(ask.value); }} aria-label={ask.label}>
