@@ -5,10 +5,14 @@ import { withArticleMeta } from '@/lib/article-metadata';
 import SourceQuote from '@/components/articles/SourceQuote';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
-// fetched through get_quote on 2026-10-18. English books (Jowett's Laws, the Fowlers' Lucian,
-// Archer-Hind's notes) are quoted in their printed English; the rest in the library's translation.
+// fetched through get_quote on 2026-10-18. English books (the Fowlers' Lucian, Archer-Hind's note) are
+// quoted in their printed English; the rest in the library's translation. Plato is quoted from the
+// Laurenziana manuscript of Ficino's Latin translation; its leaves 409 (Horum uero deorum choreas), 493
+// (Disciplinae igitur expers ... qui nunquam chorea usus est), 500 (Vtrorumque uero simul chorea
+// nominabatur, where the OCR drops the gloss "i. concentus") and 746 (omniumque chorearum
+// magnificentissima) were read from the page image on 2026-10-18.
 // Read from the page image on 2026-10-18: Plutarch p. 390 (the heading φορὰ καὶ σχῆμα καὶ δεῖξις),
-// Lucian p. 241, Jowett p. 223, Archer-Hind p. 134 (χορείας in the Greek and the note), Mercuriale
+// Lucian p. 241, Archer-Hind p. 134 (χορείας in the Greek and the note), Mercuriale
 // p. 136 (lationem, figuram, & indicationem), the Aldine Iliad leaf (ἐν δὲ χορὸν ποίκιλλε). The
 // Plotinus manuscript (BSB Cod.graec. 449) was opened but its hand was not read word by word, so it is
 // quoted briefly and the argument is given in summary. The Aldine Iliad leaf carries a ProQuest notice,
@@ -38,7 +42,7 @@ export const metadata: Metadata = withArticleMeta('choreia', {
 // Reader links, written out so scripts/maintenance/generate-article-books.mjs can find the books.
 const BOOK = {
   iliad: '/book/homeri-ilias-1517-aldine-edition-homer',
-  laws: '/book/dialogues-of-plato-vol-5-laws-epinomis-letters-plato',
+  ficino: '/book/plato-complete-works-ficino-translation-translator',
   plutarch: '/book/plutarchi-chaeronensis-moralia-vol-1-bernardakis-teubner-bernardakis',
   mercuriale: '/book/de-arte-gymnastica-libri-sex-amsterdam-ed-mercuriale',
   timaeus: '/book/timaeus-greek-text-with-commentary-archer-hind',
@@ -54,18 +58,25 @@ const SLUG = Object.fromEntries(Object.entries(BOOK).map(([k, v]) => [k, v.slice
 
 const PAGES = 'https://images.sourcelibrary.org/pages';
 const IMG = {
-  laws233: `${PAGES}/69ad656c75811c30866e1810/0233.jpg`,
-  laws254: `${PAGES}/69ad656c75811c30866e1810/0254.jpg`,
   plutarch457: `${PAGES}/69b21dfa94025df5d290ae35/0457.jpg`,
   plutarch460: `${PAGES}/69b21dfa94025df5d290ae35/0460.jpg`,
   mercuriale156: `${PAGES}/6a09dd1e24d4d312f5c30cae/0156.jpg`,
-  timaeus146: `${PAGES}/69905f1140bc3a0478efa1d3/0146.jpg`,
   lucian249: `${PAGES}/6a08a85450cb4ea746a09fb5/0249.jpg`,
   lucian258: `${PAGES}/6a08a85450cb4ea746a09fb5/0258.jpg`,
   plotinus290: `${PAGES}/699389ee74305116d72d2e0d/0290.jpg`,
   agrippa122: `${PAGES}/69b51e1c47b06ecd5818a308/0122.jpg`,
   paracelsus828: `${PAGES}/69bd9d546120d54bd0375241/0828.jpg`,
 };
+
+// Ficino's Latin Plato, a manuscript in the Biblioteca Medicea Laurenziana (CC BY-SA 4.0).
+const FICINO = 'https://images.sourcelibrary.org/archived/69b43d3c06b196d69f66f8f7';
+const FIC = {
+  timaeus409: `${FICINO}/409.jpg`,
+  laws493: `${FICINO}/493.jpg`,
+  laws500: `${FICINO}/500.jpg`,
+  epinomis746: `${FICINO}/746.jpg`,
+};
+const FICINO_SOURCE = 'Ficino’s Latin translation, manuscript, Biblioteca Medicea Laurenziana, Florence';
 
 const book = (slug: string, page?: number) => (page ? `/book/${slug}?page=${page}` : `/book/${slug}`);
 
@@ -131,31 +142,31 @@ export default function ChoreiaPage() {
         <h2 className={h2}>The planets dance</h2>
 
         <p className={p}>
-          The image starts in Plato&apos;s <em>Timaeus</em>, a dialogue about how the world was made. At 40c, after describing the stars as living, divine beings, Timaeus turns to how they move in
-          relation to one another, and the first word of the sentence is <em>choreias</em>, their dances.
+          The image starts in Plato&apos;s <em>Timaeus</em>, a dialogue about how the world was made. Western Europe
+          read Plato through the Latin of Marsilio Ficino, who translated every dialogue in Florence for the Medici;
+          the library holds a manuscript of his translation from the Medici library, now the Laurenziana. At 40c,
+          after describing the stars as living, divine beings, Timaeus turns to how they move in relation to one
+          another. Plato&apos;s Greek word is <span lang="grc">χορείας</span>, and Ficino kept it: <em>choreas</em>,
+          dances.
         </p>
 
         <SourceQuote
-          book={SLUG.timaeus}
-          page={146}
-          printedPage={134}
-          src={IMG.timaeus146}
-          source={<>Plato, <em>Timaeus</em> 40c, ed. R. D. Archer-Hind (London, 1888)</>}
-          original={<span lang="grc">χορείας δὲ τούτων αὐτῶν καὶ παραβολὰς ἀλλήλων</span>}
-          pageAlt="Page 134 of Archer-Hind's Timaeus: the Greek of 40c, with his note on the word choreias below."
+          book={SLUG.ficino}
+          page={409}
+          src={FIC.timaeus409}
+          source={<>Plato, <em>Timaeus</em> 40c, in {FICINO_SOURCE}</>}
+          original="Horum uero deorum choreas et inter ipsos concursiones circulorumque ipsorum reuolutiones varias et accessus"
+          pageAlt="A leaf of Ficino's Latin Timaeus in a humanist hand; the line beginning Horum uero deorum choreas is near the middle."
         >
-          And the dances of these same stars, and their approaches one to another, and the returnings of their
-          circles upon themselves and their advances, and in their conjunctions which of the gods come to be
-          alongside of one another and which are opposite, and behind which each one is hidden from us at certain
-          times and again appearing &hellip;
+          But to explain the dances of these gods and their concurrences among themselves, and the various
+          revolutions of the circuits themselves, &hellip; joined to one another or opposed, whether before among
+          themselves or behind, &hellip; at what times and in what manner each one hides itself or emerges &hellip;
         </SourceQuote>
 
         <p className={p}>
           Read as a dancer, the list is a description of a round dance seen from inside it: dancers draw level with
           one another, pass in front and behind, disappear behind someone and come back into view, and each returns to
-          the place where it began. Archer-Hind, in his own English translation on the{' '}
-          <Link href={book(SLUG.timaeus, 147)}>facing page</Link>, renders the word as &ldquo;circlings&rdquo;. His note
-          under the Greek explains the choice.
+          the place where it began. R. D. Archer-Hind, editing the Greek in 1888, explained the word in a note.
         </p>
 
         <Quote href={book(SLUG.timaeus, 146)} cite="R. D. Archer-Hind, note on Timaeus 40c (1888), p. 134">
@@ -164,10 +175,25 @@ export default function ChoreiaPage() {
         </Quote>
 
         <p className={p}>
-          The passage he cites, from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, says the heavens
-          are &ldquo;dancing the most beautiful and magnificent movement and dance of all dances&rdquo;. For Plato the stars move in a
-          chorus, in formation, keeping time with each other, and the human chorus, which he describes in the <em>Laws</em>{' '}
-          (below), is a small copy of it.
+          The passage he cites is from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, and Ficino&apos;s
+          Latin again uses the word for a dance.
+        </p>
+
+        <SourceQuote
+          book={SLUG.ficino}
+          page={746}
+          src={FIC.epinomis746}
+          source={<>Plato, <em>Epinomis</em> 982e, in {FICINO_SOURCE}</>}
+          original="que progressu et chorea optima vtens omniumque chorearum magnificentissima"
+          pageAlt="A leaf of Ficino's Latin Epinomis; the words chorea and chorearum are near the foot of the text."
+        >
+          This nature of the stars is most beautiful to behold, which, using the best path and dance, and being the
+          most magnificent of all dances, provides advantages to all animals.
+        </SourceQuote>
+
+        <p className={p}>
+          For Plato the stars move in a chorus, in formation, keeping time with each other, and the human chorus,
+          which he describes in the <em>Laws</em> (below), is a small copy of it.
         </p>
 
         <h2 className={h2}>Dance began with the world</h2>
@@ -305,53 +331,49 @@ export default function ChoreiaPage() {
         </p>
 
         <SourceQuote
-          book={SLUG.laws}
-          page={233}
-          printedPage={223}
-          src={IMG.laws233}
-          source={<>Plato, <em>Laws</em> II, tr. Benjamin Jowett (Oxford, 1875)</>}
-          pageAlt="Page 223 of Jowett's Laws, Book II: the Athenian on rhythm, harmony and the chorus."
+          book={SLUG.ficino}
+          page={493}
+          src={FIC.laws493}
+          source={<>Plato, <em>Laws</em> II, 653e&ndash;654b, in {FICINO_SOURCE}</>}
+          original="Disciplinae igitur expers dicendus est: qui nunquam chorea usus est"
+          pageAlt="A leaf of Ficino's Latin Laws, with the speakers' names written in red."
         >
-          But, whereas other animals have no perception of order or disorder in their movements, that is, of rhythm
-          or harmony, as they are called, to us, the Gods, who, as we say, have been appointed to be our partners in
-          the dance, have given the pleasurable sense of harmony and rhythm; and so they stir us into life, and we
-          follow them and join hands with one another in dances and songs; and these they call choruses, which is a
-          term naturally expressive of cheerfulness.
+          &hellip; to those gods whom we said were given to us as fellow-celebrants, a share of rhythm and harmony has
+          been granted as a sense; and they move us with pleasure, leading our chorus while coupling us to one another
+          with songs and dances &hellip; which chorus they have named from chara, that is, joy. &hellip; Therefore, one who
+          has never engaged in the chorus must be called destitute of education, whereas one who has done so
+          sufficiently is, on the contrary, possessed of education.
         </SourceQuote>
 
         <p className={p}>
-          Plato connects <em>choros</em> with <em>chara</em>, joy. Jowett notes at the foot of the page that the
-          derivation is wrong, and modern dictionaries agree, but it tells you how Plato thought of the thing. The
-          dialogue continues with a definition that a dancer can use: &ldquo;the uneducated is he who has not been
-          trained in the chorus, and the educated is he who has been well trained&rdquo;, and &ldquo;the chorus is made
-          up of two parts, dance and song&rdquo;.
+          Plato connects <em>choros</em> with <em>chara</em>, joy. The derivation is wrong, as modern dictionaries
+          show, but it tells you how Plato thought of the thing. In the next line the Athenian defines the art: every{' '}
+          <em>chorea</em>, in Ficino&apos;s Latin, is <em>tripudium simul et concentus</em>, dance and song at once.
         </p>
 
         <p className={p}>
-          Later in the same book the Athenian names what the two halves share.
+          A few pages later he names what the two halves share.
         </p>
 
         <SourceQuote
-          book={SLUG.laws}
-          page={254}
-          printedPage={244}
-          src={IMG.laws254}
-          source={<>Plato, <em>Laws</em> II, tr. Jowett (1875)</>}
-          pageAlt="Page 244 of Jowett's Laws: the movement of body and voice share rhythm."
+          book={SLUG.ficino}
+          page={500}
+          src={FIC.laws500}
+          source={<>Plato, <em>Laws</em> II, 664e&ndash;665a, in {FICINO_SOURCE}</>}
+          original="Vtrorumque uero simul chorea nominabatur"
+          pageAlt="A leaf of Ficino's Latin Laws; rhythmus, harmonia and chorea are in the lower half."
         >
-          And the movement of the body and the movement of the voice have a common form which is rhythm, but they
-          differ, in that the one is gesture, and the other song. &hellip; man, as we were saying, having attained the
-          sense of rhythm, created and invented dancing; and melody arousing and awakening rhythm, both united formed
-          the choral art.
+          &hellip; no other animal except the nature of man alone has a sense of the order of both of these. The name
+          of the order which is seen in movement is rhythm; &hellip; But of both together, it was named chorea. We also
+          said that the gods, pitying us, gave us Apollo and the Muses as fellow-celebrants and leaders of the chorea.
         </SourceQuote>
 
         <p className={p}>
-          For Plato a chorus also showed character. On the{' '}
-          <Link href={book(SLUG.laws, 234)}>next page of the dialogue</Link> he says that a brave person and a coward
-          in the same trouble will not use &ldquo;the same figures and gestures&rdquo;, and that the figures and
-          melodies of a good soul can be told from those of a bad one. That is why he treats training in the chorus as
-          the whole of early education, and why the <em>Laws</em> spends pages deciding which dances a city should
-          allow.
+          For Plato a chorus also showed character. Further down the{' '}
+          <Link href={book(SLUG.ficino, 493)}>same leaf of the <em>Laws</em></Link> he says that a brave person and
+          a coward in the same trouble will not move or sing alike, and that the figures and melodies of a good soul
+          can be told from those of a bad one. That is why he treats training in the chorus as the whole of early
+          education, and why the <em>Laws</em> spends pages deciding which dances a city should allow.
         </p>
 
         <h2 className={h2}>Three parts of a dance</h2>
@@ -490,8 +512,9 @@ export default function ChoreiaPage() {
         </dl>
 
         <p className="text-sm text-muted leading-relaxed">
-          Jowett&apos;s Plato, the Fowlers&apos; Lucian and Archer-Hind&apos;s notes are quoted in their printed
-          English. The other quotations are the library&apos;s translations, copied from the pages they link to. The
+          The Fowlers&apos; Lucian and Archer-Hind&apos;s note are quoted in their printed English. The other
+          quotations, Plato among them in Ficino&apos;s Latin, are the library&apos;s translations, copied from the
+          pages they link to. The
           Plotinus manuscript is hard to read and its transcription has gaps, so it is quoted briefly and the argument
           is summarised from the standard text of <em>Enneads</em> IV.4.33. The dates for Sydenham and Huntington
           are cited from outside the library. The cosmic dance is sometimes credited to Aristotle, but the passages
