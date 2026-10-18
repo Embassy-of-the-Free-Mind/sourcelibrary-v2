@@ -10,7 +10,6 @@
   "chumayel1913": "699259a03d2d40d1b0592ce8",
   "bacabs": "6ad191a242debc96269252b6",
   "castewar": "6ad191b742debc9626925415",
-  "morley": "6abfbf433c453a90d66639d1",
   "landa": "69f8c0f74c6a515115aedadd"
  },
  "day_sign_dictionary_pages": {
@@ -1694,7 +1693,6 @@
     "page": 28,
     "line": "marzo lah cet kin y akab —"
    },
-   "glyph": "Akbal",
    "short": "night",
    "group": "other"
   },
@@ -1728,7 +1726,6 @@
     "page": 20,
     "line": "cimil toon xan: manan yutz kin ton"
    },
-   "glyph": "Cimi",
    "short": "illness, death",
    "group": "other"
   },
@@ -1745,7 +1742,6 @@
     "page": 20,
     "line": "nan ahau can ti lay v hel ahau"
    },
-   "glyph": "Chicchan",
    "short": "snake",
    "group": "other"
   },
@@ -1830,7 +1826,6 @@
     "page": 28,
     "line": "okel tabal vay yokol cab lae"
    },
-   "glyph": "Caban",
    "short": "earth, the world",
    "group": "other"
   },
@@ -2317,185 +2312,67 @@
   }
  ],
  "study": {
-  "_doc": "Study cards (Derek, 2026-10-18 on #6921): a printed key shown before a learner first meets a sign or the numeral rule. Boxes normalised on the archived page image, checked by eye on contact sheets.",
+  "_doc": "Study cards (Derek, 2026-10-18 on #6921, revised 18:38): the reference image is the clearest Dresden crop of the sign (never a held-out item); the sentence says only what is visible, plus a meaning from the colonial dictionaries (page cited) where the dictionary word is the day name itself. Landa appears only as a framed history note. No Morley.",
   "numerals": {
-   "book": "morley",
-   "page": 122,
-   "label": "Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 39, p. 88",
-   "box": [
-    0.07,
-    0.32,
-    0.585,
-    0.245
-   ],
-   "text": "A dot is one and a bar is five. Up to 19, a number is bars with dots above them. The shell sign is zero."
+   "title": "Bar-and-dot numbers",
+   "text": "A dot is one and a bar is five. Up to 19, a number is bars with dots above them. The shell sign is zero.",
+   "examples": [
+    [
+     "num-41-pos-L5",
+     "1"
+    ],
+    [
+     "num-27-pos-c1-360",
+     "3"
+    ],
+    [
+     "num-41-s3b-4",
+     "10, in red"
+    ],
+    [
+     "num-32-lo-g41-b",
+     "13"
+    ],
+    [
+     "num-32-lo-g42-0",
+     "0, the shell"
+    ]
+   ]
   },
-  "landa": {
-   "book": "landa",
-   "page": 327,
-   "label": "Landa, Relación de las cosas de Yucatán (c. 1566), Brasseur ed. 1864, p. 204",
+  "day_intro": {
+   "title": "The twenty day signs",
+   "text": "Each day has a number from 1 to 13 and one of twenty signs, always in the same order. On this page of the Dresden Codex the red dots are the numbers: 1 Imix, 2 Ik, 3 Akbal, three days in a row.",
+   "leaf": 32,
+   "codex_page": 53,
    "box": [
-    0.13,
-    0.415,
-    0.75,
-    0.335
-   ],
-   "text": "Bishop Diego de Landa drew these twenty day signs around 1566, each with its name, to show how the Maya counted days. His drawings are the first key to the script."
+    0.2,
+    0.252,
+    0.09,
+    0.113
+   ]
   },
   "day_signs": {
-   "morley": {
-    "book": "morley",
-    "page": 69,
-    "label": "Morley (1915), fig. 17: the day signs in the codices, p. 39",
-    "boxes": {
-     "Imix": [
-      0.06,
-      0.117,
-      0.15,
-      0.084
-     ],
-     "Ik": [
-      0.406,
-      0.117,
-      0.147,
-      0.084
-     ],
-     "Akbal": [
-      0.774,
-      0.117,
-      0.148,
-      0.084
-     ],
-     "Kan": [
-      0.06,
-      0.237,
-      0.156,
-      0.089
-     ],
-     "Chicchan": [
-      0.257,
-      0.237,
-      0.141,
-      0.089
-     ],
-     "Cimi": [
-      0.591,
-      0.237,
-      0.139,
-      0.089
-     ],
-     "Manik": [
-      0.072,
-      0.367,
-      0.148,
-      0.087
-     ],
-     "Lamat": [
-      0.247,
-      0.367,
-      0.147,
-      0.087
-     ],
-     "Muluc": [
-      0.612,
-      0.367,
-      0.142,
-      0.087
-     ],
-     "Oc": [
-      0.783,
-      0.367,
-      0.139,
-      0.087
-     ],
-     "Chuen": [
-      0.07,
-      0.494,
-      0.15,
-      0.087
-     ],
-     "Eb": [
-      0.439,
-      0.494,
-      0.146,
-      0.087
-     ],
-     "Ben": [
-      0.629,
-      0.494,
-      0.139,
-      0.087
-     ],
-     "Ix": [
-      0.78,
-      0.494,
-      0.151,
-      0.087
-     ],
-     "Men": [
-      0.067,
-      0.617,
-      0.144,
-      0.082
-     ],
-     "Cib": [
-      0.259,
-      0.617,
-      0.144,
-      0.082
-     ],
-     "Caban": [
-      0.6,
-      0.617,
-      0.149,
-      0.082
-     ],
-     "Etznab": [
-      0.072,
-      0.74,
-      0.146,
-      0.081
-     ],
-     "Cauac": [
-      0.416,
-      0.74,
-      0.151,
-      0.081
-     ],
-     "Ahau": [
-      0.617,
-      0.74,
-      0.146,
-      0.081
-     ]
-    },
-    "letters": {
-     "Imix": "a",
-     "Ik": "c",
-     "Akbal": "e",
-     "Kan": "f",
-     "Chicchan": "g",
-     "Cimi": "i",
-     "Manik": "k",
-     "Lamat": "l",
-     "Muluc": "n",
-     "Oc": "o",
-     "Chuen": "p",
-     "Eb": "r",
-     "Ben": "s",
-     "Ix": "t",
-     "Men": "u",
-     "Cib": "v",
-     "Caban": "x",
-     "Etznab": "z",
-     "Cauac": "b′",
-     "Ahau": "c′"
-    }
+   "reference": {
+    "Imix": "day-32-day-g2-1",
+    "Ik": "day-32-day-g2-2",
+    "Akbal": "day-32-day-g45-1",
+    "Kan": "day-32-day-g5-2",
+    "Chicchan": "day-32-day-g45-3",
+    "Cimi": "day-32-day-g4-1",
+    "Manik": "day-32-day-g44-2",
+    "Lamat": "day-32-day-g44-3",
+    "Muluc": "day-32-day-g3-1",
+    "Oc": "day-32-day-g43-2",
+    "Chuen": "day-32-day-g43-3",
+    "Eb": "day-32-day-g42-1",
+    "Ben": "day-09-day-c2-1",
+    "Ix": "day-32-day-g42-3",
+    "Caban": "day-09-day-c2-3"
    },
    "landa": {
     "book": "landa",
     "page": 327,
-    "label": "Landa (c. 1566), Brasseur ed. 1864, p. 204",
+    "label": "Diego de Landa, who recorded these names in the 1560s, drew it like this (Brasseur ed. 1864, p. 204)",
     "boxes": {
      "Kan": [
       0.14,
@@ -2620,26 +2497,21 @@
     }
    },
    "features": {
-    "Imix": "A dark cap with a row of dots along the top, and short strokes hanging below.",
-    "Ik": "A T-shaped mark in the middle.",
-    "Akbal": "Two curved bands either side of a central point, over a row of teeth.",
-    "Kan": "A small bar at the top, a broad curved band across the middle, and upright stripes below.",
-    "Chicchan": "A cross-hatched patch, like snakeskin.",
-    "Cimi": "A closed eye with lashes: the death sign.",
-    "Manik": "A hand, with a T-shaped mark above it.",
+    "Imix": "Short strokes hang down to the lower edge.",
+    "Ik": "A T-shaped mark in the middle. Pío Pérez gives ik as wind, air, breath (p. 197).",
+    "Akbal": "Two upright panels, with a row of small scallops along the bottom.",
+    "Kan": "A small bar at the top and a short upright stub at the bottom centre. Pío Pérez gives kan as yellow (p. 208).",
+    "Chicchan": "A cross-hatched patch.",
+    "Cimi": "A closed eye with lashes.",
+    "Manik": "A shape like a hand, curled at the lower left.",
     "Lamat": "A cross dividing it into four, with a small ring in each quarter.",
     "Muluc": "A ring with a dot at its centre.",
-    "Oc": "A large curl on the right side.",
-    "Chuen": "Two curls facing each other, with a stepped notch at the bottom.",
-    "Eb": "A grotesque face in profile, with a dotted band behind it.",
-    "Ben": "Two upright strokes at the top and a band of upright lines below.",
-    "Ix": "Spots and dots scattered over it.",
-    "Men": "An old face in profile, with a dotted line above the eye.",
-    "Cib": "A curl like a reversed question mark.",
-    "Caban": "A single curl, like a lock of hair.",
-    "Etznab": "Two lines crossing in an X.",
-    "Cauac": "A cluster of small circles, like grapes, with a dotted line.",
-    "Ahau": "A face: two eyes and a round mouth, with a line down the middle."
+    "Oc": "A curl on the right side, with a dot inside it. Pío Pérez gives oc as foot and leg (p. 295).",
+    "Chuen": "Two curls facing each other above a pointed chin.",
+    "Eb": "A face in profile. Pío Pérez gives eb as staircase (p. 139).",
+    "Ben": "A band of upright strokes across the lower half.",
+    "Ix": "Scattered spots.",
+    "Caban": "A curl at the upper left."
    }
   }
  },

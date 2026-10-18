@@ -34,13 +34,13 @@ node --env-file=.env.production.local scripts/learn/build-maya-items.mjs [--appl
 | `teach` | the one sentence the reveal leaves behind (bar-and-dot arithmetic, what a day sign's name means in Pío Pérez, how a number word is built) |
 | `provenance` | `{ builder, issue, built_at }` |
 
-**Study cards** (`rung: 'study'`, Derek 2026-10-18): `{ study_for: { rung, sign }, title, text, figures: [{ label, url, crop_url }] }`. Shown once, before a learner first meets the numeral rule (Morley 1915, fig. 39) or the day signs (Landa c. 1566 via Brasseur 1864, p. 204, then per sign Morley fig. 17 beside Landa's drawing, with one sentence on what identifies it). Seen cards are kept in local progress (`studied`). Gold items (numerals, day signs) are not put to the learner for a verdict; only non-gold items (words) ask "Is the AI reading right?".
+**Study cards** (`rung: 'study'`, Derek 2026-10-18, revised the same evening): `{ study_for: { rung, sign }, title, text, figures: [{ kind: codex | history, label, url, crop_url }] }`. Shown once, before a learner first meets the numeral rule or a day sign. The picture is always the Dresden Codex itself (the clearest live crop of that sign, never a held-out one); the sentence says only what is visible, plus a meaning from Pío Pérez with the page where his word is the day name itself. Landa's c. 1566 drawing appears only as a framed history note. Morley (1915) is not used: he wrote before the syllabic decipherment. Seen cards are kept in local progress (`studied`). Gold items (numerals, day signs) are not put to the learner for a verdict; only non-gold items (words) ask "Is the AI reading right?".
 
 **Rules the builder enforces:** a gloss is taken from the dictionary page's own text (OCR line and its translation line), never written by hand or by a model; a source line must occur verbatim in that page's text as the reader shows it (tags stripped), or the item is refused. A numeral's `value` is what is painted; where the scribe erred, `note` says so and gives Förstemann's correction.
 
 **Adding items:** measure the box on the leaf, render it and look at it before adding it to `maya-item-sources.json` (a crop that shows a neighbour's dot teaches the wrong number). Day signs need Förstemann's identification for that slot.
 
-Phase 1 bank (2026-10-18): 22 study cards, 53 numerals (leaves 27, 32, 41 = codex 48, 53, 62), 36 day signs (leaves 9, 32 = codex 9c, 53; one retired: the 9c Cauac carries an X that Morley's key gives to Etznab, so a learner could not square it with the card), 54 words (Pío Pérez and Motul vol. 1; lines from the Chumayel, the 1913 Chumayel facsimile and a Caste War letter). Ten held out.
+Phase 1 bank (2026-10-18): 17 study cards, 53 numerals (leaves 27, 32, 41 = codex 48, 53, 62), 36 day signs (leaves 9, 32 = codex 9c, 53; one retired: the 9c Cauac carries an X mark unlike the Cauac a learner meets anywhere else in the bank or in Landa), 54 words (Pío Pérez and Motul vol. 1; lines from the Chumayel, the 1913 Chumayel facsimile and a Caste War letter). Ten held out.
 
 ## `learn_maya_judgements`
 

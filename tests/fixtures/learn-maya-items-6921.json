@@ -89,7 +89,7 @@
    "position": 8
   },
   "note": null,
-  "teach": "Lamat is split into four by a cross, with a small ring in each quarter.",
+  "teach": "A cross dividing it into four, with a small ring in each quarter.",
   "ai": {
    "reading": "Lamat",
    "confident": true,
@@ -227,7 +227,7 @@
    "number": null
   },
   "note": null,
-  "teach": "The day sign Cimi carries this word in its name.",
+  "teach": null,
   "ai": {
    "reading": "illness. | Death.",
    "confident": true,
@@ -253,12 +253,7 @@
    "checked_by_eye": false
   },
   "links": {
-   "glyph_sign": "Cimi",
-   "day_sign_ids": [
-    "day-32-day-g1-3",
-    "day-32-day-g4-1",
-    "day-32-day-g44-1"
-   ]
+   "glyph_sign": null
   }
  },
  {
@@ -331,7 +326,7 @@
   }
  },
  {
-  "_id": "study-landa",
+  "_id": "study-days",
   "rung": "study",
   "order": 1,
   "status": "live",
@@ -340,12 +335,13 @@
    "sign": null
   },
   "title": "The twenty day signs",
-  "text": "Bishop Diego de Landa drew these twenty day signs around 1566, each with its name, to show how the Maya counted days. His drawings are the first key to the script.",
+  "text": "Each day has a number from 1 to 13 and one of twenty signs, always in the same order. On this page of the Dresden Codex the red dots are the numbers: 1 Imix, 2 Ik, 3 Akbal, three days in a row.",
   "figures": [
    {
-    "label": "Landa, Relación de las cosas de Yucatán (c. 1566), Brasseur ed. 1864, p. 204",
-    "url": "https://sourcelibrary.org/book/69f8c0f74c6a515115aedadd?page=327",
-    "crop_url": "https://images.sourcelibrary.org/learn-maya/69f8c0f74c6a515115aedadd/study-landa-db390e05.jpg"
+    "kind": "codex",
+    "label": "Dresden Codex, page 53",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=32",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/study-days-214d46f5.jpg"
    }
   ]
  },
@@ -362,12 +358,14 @@
   "text": "A cross dividing it into four, with a small ring in each quarter.",
   "figures": [
    {
-    "label": "Morley (1915), fig. 17: the day signs in the codices, p. 39, l",
-    "url": "https://sourcelibrary.org/book/6abfbf433c453a90d66639d1?page=69",
-    "crop_url": "https://images.sourcelibrary.org/learn-maya/6abfbf433c453a90d66639d1/study-day-lamat-morley-014f5b3a.jpg"
+    "kind": "codex",
+    "label": "Dresden Codex, page 53",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=32",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g44-3-f0a114db.jpg"
    },
    {
-    "label": "Landa (c. 1566), Brasseur ed. 1864, p. 204",
+    "kind": "history",
+    "label": "Diego de Landa, who recorded these names in the 1560s, drew it like this (Brasseur ed. 1864, p. 204)",
     "url": "https://sourcelibrary.org/book/69f8c0f74c6a515115aedadd?page=327",
     "crop_url": "https://images.sourcelibrary.org/learn-maya/69f8c0f74c6a515115aedadd/study-day-lamat-landa-84ec9d18.jpg"
    }
@@ -386,9 +384,34 @@
   "text": "A dot is one and a bar is five. Up to 19, a number is bars with dots above them. The shell sign is zero.",
   "figures": [
    {
-    "label": "Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 39, p. 88",
-    "url": "https://sourcelibrary.org/book/6abfbf433c453a90d66639d1?page=122",
-    "crop_url": "https://images.sourcelibrary.org/learn-maya/6abfbf433c453a90d66639d1/study-numerals-dbe47db5.jpg"
+    "kind": "codex",
+    "label": "1",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=41",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-pos-L5-c82e6a82.jpg"
+   },
+   {
+    "kind": "codex",
+    "label": "3",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=27",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-27-pos-c1-360-e094b2a2.jpg"
+   },
+   {
+    "kind": "codex",
+    "label": "10, in red",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=41",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-41-s3b-4-1dca193c.jpg"
+   },
+   {
+    "kind": "codex",
+    "label": "13",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=32",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-lo-g41-b-c12d6069.jpg"
+   },
+   {
+    "kind": "codex",
+    "label": "0, the shell",
+    "url": "https://sourcelibrary.org/book/69dfd990220eedf04e13b0cf?page=32",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-lo-g42-0-382d991e.jpg"
    }
   ]
  }

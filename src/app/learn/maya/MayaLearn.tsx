@@ -467,22 +467,31 @@ function Reveal({ item, answer, correct, byId }: { item: MayaItem; answer: strin
 }
 
 function StudyCardView({ card, onDone }: { card: StudyCard; onDone: () => void }) {
+  const codex = card.figures.filter((f) => f.kind !== 'history');
+  const history = card.figures.filter((f) => f.kind === 'history');
   return (
     <section className="mb-4">
       <p className="text-xs uppercase tracking-wide text-muted mb-1">Before you start</p>
       <h2 className="font-serif text-3xl text-primary mb-3">{card.title}</h2>
-      <div className={`grid gap-3 ${card.figures.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
-        {card.figures.map((f) => (
+      <div className={`grid gap-2 ${codex.length > 2 ? 'grid-cols-3' : codex.length === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        {codex.map((f) => (
           <figure key={f.crop_url}>
-            <div className="rounded-lg bg-[#efe6d6] flex items-center justify-center p-2">
+            <div className="rounded-lg bg-[#efe6d6] flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={f.crop_url} alt={f.label} className="max-h-[32vh] w-full object-contain" />
+              <img src={f.crop_url} alt={f.label} className={`${codex.length > 1 ? 'max-h-[18vh]' : 'max-h-[34vh]'} w-full object-contain rounded-lg`} />
             </div>
             <figcaption className="text-xs text-muted mt-1"><a href={f.url} className="underline underline-offset-2">{f.label}</a></figcaption>
           </figure>
         ))}
       </div>
       <p className="text-lg text-primary mt-4">{card.text}</p>
+      {history.map((f) => (
+        <aside key={f.crop_url} className="mt-4 flex gap-3 items-center rounded-lg border border-border-light bg-white p-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={f.crop_url} alt="" className="h-20 w-auto shrink-0" />
+          <p className="text-sm text-secondary"><a href={f.url} className="underline underline-offset-2">{f.label}</a>.</p>
+        </aside>
+      ))}
       <button onClick={onDone} className="mt-6 w-full py-4 rounded-lg bg-[#1a1612] text-white font-medium">Now try one</button>
     </section>
   );

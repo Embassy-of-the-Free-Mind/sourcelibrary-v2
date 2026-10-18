@@ -59,30 +59,9 @@ const SOURCE_NAME = {
   castewar: 'Caste War letters, 1848–1850',
 };
 const DAY_SIGNS = ['Imix', 'Ik', 'Akbal', 'Kan', 'Chicchan', 'Cimi', 'Manik', 'Lamat', 'Muluc', 'Oc', 'Chuen', 'Eb', 'Ben', 'Ix', 'Men', 'Cib', 'Caban', 'Etznab', 'Cauac', 'Ahau'];
-// One sentence each reveal leaves behind. A meaning is quoted only where Pío Pérez gives one
-// (page cited); otherwise the sentence says what to look for, as painted in this bank's crops.
-const DAY_TEACH = {
-  Imix: 'Imix has short strokes hanging down to its lower edge.',
-  Ik: 'Ik is the T-shaped mark, and ik means wind or breath (Pío Pérez, p. 197).',
-  Akbal: 'Its name holds akab, night (Pío Pérez, p. 49).',
-  Kan: 'kan also means yellow (Pío Pérez, p. 208).',
-  Chicchan: 'Look for the cross-hatched patch; can is snake (Pío Pérez, p. 82).',
-  Cimi: 'Cimi is the death sign: cimil is death (Pío Pérez, p. 91).',
-  Manik: 'Manik is drawn as a hand.',
-  Lamat: 'Lamat is split into four by a cross, with a small ring in each quarter.',
-  Muluc: 'Muluc is a ring with a dot at its centre.',
-  Oc: 'oc means foot, footprint (Pío Pérez, p. 295).',
-  Chuen: 'Chuen has two curls facing each other, and comes right after Oc in the count.',
-  Eb: 'eb means staircase (Pío Pérez, p. 139).',
-  Ben: 'Ben has a band along its lower half crossed by upright strokes.',
-  Ix: 'Ix is scattered with spots.',
-  Men: 'men means craftsman (Pío Pérez, p. 261); the sign is an old face in profile.',
-  Cib: 'cib means wax or candle (Pío Pérez, p. 89).',
-  Caban: 'Its name holds cab, earth (Pío Pérez, p. 79).',
-  Etznab: 'Etznab follows Caban and comes before Cauac.',
-  Cauac: 'In this almanac Cauac carries an X-shaped mark.',
-  Ahau: 'ahau means king, lord (Pío Pérez, p. 44).',
-};
+// One sentence each reveal leaves behind: what is visible in the Dresden sign, plus a meaning
+// from Pío Pérez (page cited) only where his word is the day name itself. No etymologies.
+const DAY_TEACH = SRC.study.day_signs.features;
 const NUMBER_PARTS = {
   oxlahun: 'Oxlahun is ox, three, and lahun, ten.',
   lahca: 'Lahca is lah(un), ten, and ca, two.',
@@ -99,8 +78,7 @@ function wordTeach(w) {
   if (NUMBER_PARTS[w.headword]) return NUMBER_PARTS[w.headword];
   if (w.number != null && w.number < 20) return `On the codex, ${w.number} is ${explainNumeral(w.number)}.`;
   if (['chac', 'zac', 'ek', 'lakin', 'chikin', 'xaman', 'nohol'].includes(w.headword)) return DIRECTIONS;
-  if (NAMED_DAY[w.headword]) return `${NAMED_DAY[w.headword]} is also one of the twenty day signs.`;
-  if (w.glyph) return `The day sign ${w.glyph} carries this word in its name.`;
+  if (NAMED_DAY[w.headword]) return `${NAMED_DAY[w.headword]} is also the name of one of the twenty day signs.`;
   return null;
 }
 
@@ -262,30 +240,35 @@ for (const w of SRC.words) {
   for (const w of words) delete w.group;
 }
 
-// Study cards: the printed key a learner sees before first meeting a sign or the numeral rule.
+// Study cards: shown once, before a learner first meets the numeral rule or a day sign.
+// The picture is the Dresden Codex itself; Landa appears only as a framed history note.
 const ST = SRC.study;
-const studyFig = (id, spec, box) => ({
-  label: spec.label,
-  url: PAGE_URL(B[spec.book], spec.page),
-  crop_url: cropFor(id, B[spec.book], PAGE_IMG(spec.book, spec.page), box),
-});
+const byIdNow = new Map(items.map((i) => [i._id, i]));
+const dresdenFig = (itemId, caption) => {
+  const it = byIdNow.get(itemId);
+  if (!it || it.status !== 'live') throw new Error(`study card wants live item ${itemId}`);
+  return { kind: 'codex', label: caption ?? `Dresden Codex, page ${it.image.codex_page}`, url: PAGE_URL(B.dresden, it.image.leaf), crop_url: it.image.crop_url };
+};
 items.push({
   _id: 'study-numerals', rung: 'study', order: 0, status: 'live', study_for: { rung: 'numeral', sign: null },
-  title: 'Bar-and-dot numbers', text: ST.numerals.text, figures: [studyFig('study-numerals', ST.numerals, ST.numerals.box)], provenance,
+  title: ST.numerals.title, text: ST.numerals.text,
+  figures: ST.numerals.examples.map(([id, cap]) => dresdenFig(id, cap)), provenance,
 });
 items.push({
-  _id: 'study-landa', rung: 'study', order: 1, status: 'live', study_for: { rung: 'day-sign', sign: null },
-  title: 'The twenty day signs', text: ST.landa.text, figures: [studyFig('study-landa', ST.landa, ST.landa.box)], provenance,
+  _id: 'study-days', rung: 'study', order: 1, status: 'live', study_for: { rung: 'day-sign', sign: null },
+  title: ST.day_intro.title, text: ST.day_intro.text,
+  figures: [{ kind: 'codex', label: `Dresden Codex, page ${ST.day_intro.codex_page}`, url: PAGE_URL(B.dresden, ST.day_intro.leaf), crop_url: cropFor('study-days', B.dresden, LEAF_URL(ST.day_intro.leaf), ST.day_intro.box) }],
+  provenance,
 });
-for (const sign of DAY_SIGNS) {
+for (const [sign, refId] of Object.entries(ST.day_signs.reference)) {
   const id = `study-day-${sign.toLowerCase()}`;
-  const m = ST.day_signs.morley, l = ST.day_signs.landa;
+  const l = ST.day_signs.landa;
   items.push({
     _id: id, rung: 'study', order: 2 + DAY_SIGNS.indexOf(sign), status: 'live', study_for: { rung: 'day-sign', sign },
     title: sign, text: ST.day_signs.features[sign],
     figures: [
-      { ...studyFig(`${id}-morley`, m, m.boxes[sign]), label: `${m.label}, ${m.letters[sign]}` },
-      ...(l.boxes[sign] ? [studyFig(`${id}-landa`, l, l.boxes[sign])] : []),
+      dresdenFig(refId),
+      { kind: 'history', label: l.label, url: PAGE_URL(B[l.book], l.page), crop_url: cropFor(`${id}-landa`, B[l.book], PAGE_IMG(l.book, l.page), l.boxes[sign]) },
     ],
     provenance,
   });
@@ -346,6 +329,12 @@ if (APPLY) {
     updateOne: { filter: { _id }, update: { $set: { ...doc, updated_at: builtAt }, $setOnInsert: { created_at: builtAt } }, upsert: true },
   }));
   const r = await col.bulkWrite(ops, { ordered: false });
+  // An item dropped from the sources leaves the bank: retired, not deleted, so judgements keep their item.
+  const gone = await col.updateMany(
+    { _id: { $nin: items.map((i) => i._id) }, status: { $ne: 'retired' } },
+    { $set: { status: 'retired', updated_at: builtAt } },
+  );
+  console.log(`retired ${gone.modifiedCount} items no longer in the sources`);
   await col.createIndex({ rung: 1, status: 1, order: 1 });
   await db.collection('learn_maya_judgements').createIndex({ item_id: 1, created_at: -1 });
   await db.collection('learn_maya_judgements').createIndex({ 'learner.id': 1, created_at: -1 });

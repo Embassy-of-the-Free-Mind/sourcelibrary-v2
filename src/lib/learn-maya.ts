@@ -73,8 +73,8 @@ export interface MayaItem {
 }
 
 /**
- * A printed key shown once, before a learner first meets the numeral rule or a
- * day sign: Morley (1915) and Landa (c. 1566), cropped from their pages.
+ * Shown once, before a learner first meets the numeral rule or a day sign: the
+ * sign as painted on the Dresden Codex, with Landa's c. 1566 drawing as history.
  */
 export interface StudyCard {
   _id: string;
@@ -83,7 +83,7 @@ export interface StudyCard {
   study_for: { rung: Rung; sign: string | null };
   title: string;
   text: string;
-  figures: { label: string; url: string; crop_url: string }[];
+  figures: { kind: 'codex' | 'history'; label: string; url: string; crop_url: string }[];
 }
 
 /** The card a learner should see before this item, or null if they have seen them all. */

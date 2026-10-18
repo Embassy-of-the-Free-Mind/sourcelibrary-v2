@@ -60,11 +60,11 @@ describe('gradeAnswer', () => {
 });
 
 describe('study cards and gold', () => {
-  it('a day sign is preceded by Landa\'s key, then by its own card, each once', () => {
+  it('a day sign is preceded by the day-count card, then by its own card, each once', () => {
     const d = get('day-32-day-g4-3'); // Lamat
-    expect(studyCardFor(d, cards, [])?._id).toBe('study-landa');
-    expect(studyCardFor(d, cards, ['study-landa'])?._id).toBe('study-day-lamat');
-    expect(studyCardFor(d, cards, ['study-landa', 'study-day-lamat'])).toBeNull();
+    expect(studyCardFor(d, cards, [])?._id).toBe('study-days');
+    expect(studyCardFor(d, cards, ['study-days'])?._id).toBe('study-day-lamat');
+    expect(studyCardFor(d, cards, ['study-days', 'study-day-lamat'])).toBeNull();
     expect(studyCardFor(get('num-32-up-g2-1'), cards, [])?._id).toBe('study-numerals');
     expect(studyCardFor(get('word-zac'), cards, [])).toBeNull();
   });
