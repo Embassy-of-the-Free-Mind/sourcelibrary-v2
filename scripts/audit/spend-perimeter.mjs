@@ -159,6 +159,7 @@ const UNATTENDED = [
     note: 'decision queue drainer: reads decision_answers, runs safe-merge.sh / gh pr comment for answers Derek gave on /platform/admin/decisions; no model call (#6258)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
+  { match: 'backfill-cover-cards.mjs', spends: false, gated: false, note: 'sharp resize of R2 cover scans to 500px AVIF + Mongo pointer (#4342), no model calls' },
   { match: 'rebuild-human-read-count-5048.mjs', spends: false, gated: false, note: 'Mongo/Postgres recompute of books.human_read_count (#5048), no model calls' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
   { match: 'build-gallery-subject-index.mjs', spends: false, gated: false,

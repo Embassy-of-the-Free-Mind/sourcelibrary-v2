@@ -175,6 +175,13 @@
 # mirror it to books_catalog. What "popular", the sitemap and the OCR queues sort by. ~1 min, no paid calls.
 55 4 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/rebuild-human-read-count-5048.mjs ] && flock -n /tmp/sl-human-reads.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/rebuild-human-read-count-5048.mjs --apply" >> /var/log/sourcelibrary/human-reads.log 2>&1
 
+# Cover card variants (#4342): the 500px -card.avif that book grids load instead of the full
+# display scan (often 300 KB to 5 MB). Nothing in import or cover-change writes it, and every cover
+# write clears image_card, so without this the backlog regrows. Picks up only live books whose
+# image_card is not a string; idempotent. No paid calls: R2 read + write, ~3 books/s. --limit caps a
+# bad night. Measured 2026-10-18: 1,210 books in its reach, ~6 min for the first run. (daily 5:05am)
+5 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-cover-cards.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-cover-cards.mjs --limit=3000" >> /var/log/sourcelibrary/cover-cards.log 2>&1
+
 # Browse pre-warm + homepage stats (daily 5:15am)
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
 
