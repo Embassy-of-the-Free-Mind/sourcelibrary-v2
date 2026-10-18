@@ -4,6 +4,8 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { experiment } from '@/lib/experiments-index';
 import { TENGYUR_QUALITY } from '@/lib/tengyur-quality';
 import data from '@/data/tibetan-expert-page.json';
+import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
+import { ENGLISH, NO_ENGLISH, Figure, Swatch, TraditionProgress, type TraditionProgressRow } from '../canon-gap/diagrams';
 
 // A briefing for Tibetologists whose feedback we are asking for: what we hold, how the Tibetan
 // text and the English are made, what has been measured, real pages that went right and wrong,
@@ -228,6 +230,89 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
+/* ---------- done and remaining ---------- */
+
+type GroupCensus = {
+  books: number;
+  pages: number;
+  tibetan: number;
+  english: number;
+  reader_by_model: Record<string, number>;
+  english_by_model: Record<string, number>;
+  book_pages: TraditionProgressRow['book_pages'];
+};
+
+function progressRow(id: string, name: string, g: GroupCensus, href?: string): TraditionProgressRow {
+  return {
+    id,
+    name,
+    books: g.books,
+    readable_books: g.book_pages.filter((b) => b[5] > 0).length,
+    pages_scanned: g.pages,
+    pages_transcribed: g.tibetan,
+    pages_translated: g.english,
+    canon_page_equivalents: 0,
+    ocr_engines: Object.entries(g.reader_by_model),
+    translation_models: Object.entries(g.english_by_model),
+    book_pages: g.book_pages,
+    href,
+  };
+}
+
+const PROGRESS: TraditionProgressRow[] = [
+  progressRow('bhutan', 'Manuscripts from Bhutan', C.bl as unknown as GroupCensus, '/collections/bhutan'),
+  progressRow('tengyur', 'Derge Tengyur', C.tengyur as unknown as GroupCensus),
+  progressRow('other', 'Other Tibetan volumes', C.other as unknown as GroupCensus),
+];
+
+// How much of the canon anyone has put into English: 84000's published share, page-weighted, from
+// the canon gap map (/research/canon-gap), which reads the 84000 Reading Room catalogue.
+const CANON_ENGLISH = (['derge-kangyur', 'derge-tengyur'] as const).map((id) => {
+  const r = gapMap.rows.find((x) => x.id === id);
+  if (!r || r.english.fraction == null) throw new Error(`canon gap map has no English share for ${id}`);
+  return { id, name: id === 'derge-kangyur' ? 'Kangyur' : 'Tengyur', fraction: r.english.fraction, chars: r.size.base_chars as number };
+});
+const GAP_ASOF = fmtDate(gapMap.generated_at.slice(0, 10));
+
+function CanonEnglishBars({ n }: { n: number }) {
+  const max = Math.max(...CANON_ENGLISH.map((c) => c.chars));
+  return (
+    <Figure
+      n={n}
+      title="How much of the canon has a published English translation"
+      caption={
+        <>
+          Share of each canon, by pages, that 84000 lists as published in English, from the 84000 Reading Room
+          catalogue as read on {GAP_ASOF}. Bar length is the size of the typed Tibetan text, so the two bars compare
+          directly: the Tengyur is about twice the Kangyur. Translations 84000 lists as in progress are not
+          counted. Source: <A href="/research/canon-gap">The Open Canons</A>.
+        </>
+      }
+    >
+      <div className="font-body text-xs text-stone-600 mb-4">
+        <Swatch style={{ backgroundColor: ENGLISH }} label="published English (84000)" />
+        <Swatch style={{ backgroundColor: NO_ENGLISH }} label="no published English" />
+      </div>
+      <div className="space-y-3">
+        {CANON_ENGLISH.map((c) => (
+          <div key={c.id} className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-3 items-center">
+            <div className="font-serif text-lg text-stone-900">{c.name}</div>
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex h-5 rounded-r overflow-hidden" style={{ width: `${(c.chars / max) * 100}%` }}>
+                <div style={{ width: `max(${c.fraction * 100}%, 2px)`, backgroundColor: ENGLISH }} />
+                <div className="flex-1" style={{ backgroundColor: NO_ENGLISH }} />
+              </div>
+              <span className="font-body text-sm text-stone-700 whitespace-nowrap tabular-nums">
+                {c.fraction < 0.01 ? (c.fraction * 100).toFixed(1) : Math.round(c.fraction * 100)}%
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Figure>
+  );
+}
+
 /* ---------- tables ---------- */
 
 const BL_COLLECTIONS: [string, number, string, string][] = [
@@ -419,6 +504,33 @@ export default function TibetanBriefingPage() {
           <p>
             {n0(other.books)} further Tibetan volumes, from BDRC and the Internet Archive, mostly modern prints.
           </p>
+
+          <H3>What has been done, and what remains</H3>
+          <p>
+            Every page we hold has been photographed. Most now carry Tibetan text, and most of those an English
+            draft. The grey squares below are pages with no text yet, mostly the {n0(bl.not_legible)} manuscript
+            pages marked not reliably legible. The orange squares are pages whose Tibetan is ready but not yet
+            translated.
+          </p>
+          <TraditionProgress
+            n={1}
+            rows={PROGRESS}
+            title="Our Tibetan holdings, page by page"
+            caption={
+              <>
+                Each square is 1,000 pages, rounded, with at least one square for any stage that has pages. A page
+                is transcribed when it carries Tibetan text, read by OCR or fitted from the Esukhia e-text, and
+                translated when it has a draft English translation. Each square opens a book whose pages it stands
+                for. &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; are shares of pages, from the engine each page
+                records. Counted from our database on {fmtDate(data.measured)}.
+              </>
+            }
+          />
+          <p>
+            How much English already exists differs sharply between the two parts of the canon. 84000&rsquo;s
+            translators have published over half of the Kangyur, and under one percent of the Tengyur.
+          </p>
+          <CanonEnglishBars n={2} />
         </Section>
 
         <Section id="pipeline" title="How a page is made">

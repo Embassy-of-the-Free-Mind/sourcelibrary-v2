@@ -269,13 +269,24 @@ const SCANNED_ONLY = '#d6d3d1';
 // A stage with any pages gets at least one square, so a small start is visible rather than rounded away.
 const squares = (n: number) => (n > 0 ? Math.max(1, Math.round(n / UNIT)) : 0);
 
-export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n: number }) {
+export function TraditionProgress({
+  rows,
+  n,
+  title = 'What we hold, tradition by tradition',
+  caption,
+}: {
+  rows: TraditionProgressRow[];
+  n: number;
+  /** /research/tibetan reuses the figure for its own collections, with its own title and caption. */
+  title?: string;
+  caption?: ReactNode;
+}) {
   return (
     <Figure
       n={n}
-      title="What we hold, tradition by tradition"
+      title={title}
       caption={
-        <>
+        caption ?? <>
           Each square is {fmt(UNIT)} pages of scanned books in our library, any edition, published or still held for checking, rounded to the nearest square;
           squares are the same size in every tradition, so the areas compare directly. A page is transcribed when we
           hold its text (read from the image, or matched from an open typed edition) and translated when it has a

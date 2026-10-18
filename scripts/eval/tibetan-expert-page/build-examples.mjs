@@ -73,7 +73,7 @@ const pages = db.collection('pages');
 // ── Census ──────────────────────────────────────────────────────────────────────────────
 const live = { language: 'Tibetan', visible: true, pages_count: { $gt: 0 } };
 const liveBooks = await books
-  .find(live, { projection: { id: 1, title: 1, contributing_library: 1, pages_count: 1 } })
+  .find(live, { projection: { id: 1, title: 1, display_title: 1, contributing_library: 1, pages_count: 1 } })
   .toArray();
 const groups = {
   bl: liveBooks.filter((b) => b.contributing_library === 'British Library'),
@@ -82,8 +82,13 @@ const groups = {
 const inGroup = new Set([...groups.bl, ...groups.tengyur].map((b) => b.id));
 groups.other = liveBooks.filter((b) => !inGroup.has(b.id));
 
-async function pageStates(ids) {
-  const t = { pages: 0, tibetan: 0, yigdzin: 0, etext: 0, not_legible: 0, english: 0, english_by_model: {} };
+// Per group: totals, the engines that read and translated the pages, and per book
+// [id, title, public, pages scanned, transcribed, translated] for the progress squares on the page.
+async function pageStates(list) {
+  const ids = list.map((b) => b.id);
+  const titles = new Map(list.map((b) => [b.id, b.display_title || b.title]));
+  const perBook = new Map();
+  const t = { pages: 0, tibetan: 0, yigdzin: 0, etext: 0, not_legible: 0, english: 0, english_by_model: {}, reader_by_model: {} };
   for (let i = 0; i < ids.length; i += 100) {
     const rows = await pages
       .aggregate(
@@ -92,6 +97,7 @@ async function pageStates(ids) {
           {
             $group: {
               _id: {
+                book: '$book_id',
                 reader: { $ifNull: ['$ocr.model', '$ocr.source'] },
                 has: { $and: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, { $ne: ['$ocr.data', ''] }] },
                 unreadable: { $eq: ['$ocr.unreadable', true] },
@@ -111,17 +117,27 @@ async function pageStates(ids) {
       )
       .toArray();
     for (const { _id, n } of rows) {
+      const b = perBook.get(_id.book) ?? [_id.book, titles.get(_id.book) ?? '', true, 0, 0, 0];
+      perBook.set(_id.book, b);
       t.pages += n;
+      b[3] += n;
       if (_id.unreadable) { t.not_legible += n; continue; }
-      if (_id.has) t.tibetan += n;
+      if (_id.has) {
+        t.tibetan += n;
+        b[4] += n;
+        const reader = _id.reader || 'unrecorded';
+        t.reader_by_model[reader] = (t.reader_by_model[reader] || 0) + n;
+      }
       if (_id.has && _id.reader === 'bdrc-yigdzin-v1') t.yigdzin += n;
       if (_id.has && /^esukhia/.test(_id.reader || '')) t.etext += n;
       if (_id.en) {
         t.english += n;
+        b[5] += n;
         t.english_by_model[_id.en] = (t.english_by_model[_id.en] || 0) + n;
       }
     }
   }
+  t.book_pages = [...perBook.values()].sort((a, b) => b[5] - a[5] || b[3] - a[3]);
   return t;
 }
 
@@ -131,8 +147,9 @@ const previous = examplesOnly ? JSON.parse(fs.readFileSync(OUT, 'utf8')) : null;
 const census = previous ? previous.census : {};
 if (!previous) {
   for (const [g, list] of Object.entries(groups)) {
-    census[g] = { books: list.length, ...(await pageStates(list.map((b) => b.id))) };
-    console.log(g, JSON.stringify(census[g]));
+    census[g] = { books: list.length, ...(await pageStates(list)) };
+    const { book_pages, ...totals } = census[g];
+    console.log(g, JSON.stringify(totals), `${book_pages.length} books`);
   }
 }
 
