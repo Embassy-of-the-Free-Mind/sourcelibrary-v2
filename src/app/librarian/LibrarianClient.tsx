@@ -178,11 +178,14 @@ function SourceCardRow({ sources, tenant, lang, t }: { sources: SourceCard[]; te
 
 // ── Search Steps Component ────────────────────────────────────────────
 
-function SearchSteps({ steps, t }: { steps: SearchStep[]; t: LibrarianStrings }) {
+// `waiting`: the turn is still streaming and no prose has arrived. Once every
+// search has returned, the model is writing; without a row that says so the
+// steps sit finished and still for seconds and the turn reads as stalled (#6904).
+function SearchSteps({ steps, waiting, t }: { steps: SearchStep[]; waiting: boolean; t: LibrarianStrings }) {
   if (steps.length === 0) return null;
   const busy = steps.some(s => s.status === 'searching');
   return (
-    <div role="status" aria-live="polite" aria-busy={busy} className="space-y-1 mb-2">
+    <div role="status" aria-live="polite" aria-busy={busy || waiting} className="space-y-1 mb-2">
       {steps.map((step, i) => {
         const statusLabel =
           step.status === 'searching' ? 'in progress'
@@ -213,6 +216,14 @@ function SearchSteps({ steps, t }: { steps: SearchStep[]; t: LibrarianStrings })
         </div>
         );
       })}
+      {waiting && !busy && (
+        <div className="flex items-center gap-2 text-[12px] font-sans text-[#8a8480]">
+          <span aria-hidden className="inline-block w-3.5 text-center text-[#c9a86c]">
+            <span className="inline-block animate-pulse">...</span>
+          </span>
+          <span>{t.readingWhatItFound}</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -645,14 +656,21 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                   break;
 
                 case 'tool_result':
-                  updateLastAssistant(m => ({
-                    ...m,
-                    steps: m.steps.map((s, i) =>
-                      i === m.steps.length - 1 && s.status === 'searching'
-                        ? { ...s, status: 'done' as const, summary: event.summary, found: event.found }
-                        : s
-                    ),
-                  }));
+                  // A round's calls are all announced first and their results
+                  // follow in call order, so a result closes the OLDEST open
+                  // step. Closing only the last one left the first of two
+                  // parallel searches pulsing forever (#6904).
+                  updateLastAssistant(m => {
+                    const open = m.steps.findIndex(s => s.status === 'searching');
+                    return {
+                      ...m,
+                      steps: m.steps.map((s, i) =>
+                        i === open
+                          ? { ...s, status: 'done' as const, summary: event.summary, found: event.found }
+                          : s
+                      ),
+                    };
+                  });
                   break;
 
                 case 'choices':
@@ -1018,7 +1036,11 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                           )}
 
                           {/* Search steps */}
-                          <SearchSteps steps={assistant.steps} t={t} />
+                          <SearchSteps
+                            steps={assistant.steps}
+                            waiting={!assistant.content && sending && i === messages.length - 1}
+                            t={t}
+                          />
 
                           {/* Response text */}
                           {assistant.content && (
@@ -1101,10 +1123,13 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                             </div>
                           )}
 
-                          {/* Loading state: no content yet and still sending */}
-                          {!assistant.content && !assistant.thinking && assistant.steps.length === 0 && sending && i === messages.length - 1 && (
-                            <div className="bg-[#f5f0e8] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <p className="text-[13px] text-[#8a8480] font-body italic animate-pulse">Thinking...</p>
+                          {/* Loading state: nothing to read yet and still sending.
+                              Deterministic, shown the moment Ask is pressed — the
+                              model often searches before its first sentence, and
+                              that sentence can be 8–10 s away (#6904). */}
+                          {!assistant.content && assistant.steps.length === 0 && sending && i === messages.length - 1 && (
+                            <div role="status" className="bg-[#f5f0e8] rounded-2xl rounded-bl-sm px-4 py-3">
+                              <p className="text-[13px] text-[#8a8480] font-body italic animate-pulse">{t.lookingThroughLibrary}</p>
                             </div>
                           )}
                         </div>
