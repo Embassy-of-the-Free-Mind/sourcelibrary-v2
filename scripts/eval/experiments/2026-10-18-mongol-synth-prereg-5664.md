@@ -121,3 +121,11 @@ Corpus: 3,890 Buddhist lines (402K characters), oversampled 8× so they are abou
 - Most training text is modern Inner Mongolian, not 18th-century Buddhist Mongolian.
 
 **Spend:** $0. The rKTs crawl was 1,397 pages at ≤ 3 concurrent requests. The judge and calibration run on the Claude subscription, and the GPU is the owned GEX45. No Gemini. **Nothing written to `pages` or any production store**: the Mongo reads are `books` and `pages` lookups only.
+
+### Amendments after the prereg commit (ca4fa1613), before any model read
+
+Training had not started when these were made. No read, base or trained, existed.
+- **Ink palette.** The renderer's ink was visibly too saturated pink beside the real crops. It is now a muted brick palette, and 60 % of columns get a 10–60 % pull towards grey. The 80,000 training columns and the 400 held-out columns were rendered after this change.
+- **Training scale.** Unsloth's vision collator resizes by default to a 512 px long side. That would have trained on strips about 48 px high and read the real columns at 84 px. It now runs with `resize='max'` (no resize), so training and inference see the same scale.
+- **Steps.** `MAX_STEPS` is 6,000 from the measured 4.3 s per step (batch 16) of the smoke test, inside an 8.3 h training budget.
+- **Smoke test** (40 steps on 1,200 columns, gex45, 2026-10-18 06:42–06:47 UTC): peak 8.9 GB, inference 1.9 s per column at batch 16. The loss fell from 4.5. No real column was read.
