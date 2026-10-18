@@ -20,7 +20,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { ART_EXCLUDED_RESOURCE_TYPES, bookTitle, isHighlightMember, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl, toDisplayVariantUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { isTranslationReadable } from '@/lib/first-translation/derive';
@@ -861,8 +861,10 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   const curatedBookMap = new Map(
     (highlights as Record<string, unknown>[]).map(b => [b.id as string, b]),
   );
+  // Members only (#6899): a highlight whose book left the collection, or never
+  // joined it, must not open the page as "Start here".
   const mergedHighlights = curatedHighlights
-    .filter((h: CuratedHighlight) => curatedBookMap.has(h.book_id))
+    .filter((h: CuratedHighlight) => isHighlightMember(curatedBookMap.get(h.book_id) as Record<string, unknown> | undefined, id))
     .map((h: CuratedHighlight) => {
       const book = curatedBookMap.get(h.book_id) as Record<string, unknown>;
       return {

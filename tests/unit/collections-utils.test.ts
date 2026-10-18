@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sanitizeThumbnail, bookTitle, PINNED_COLLECTION_SLUGS, sortCollections } from '@/lib/collections-utils';
+import { sanitizeThumbnail, bookTitle, PINNED_COLLECTION_SLUGS, sortCollections, isHighlightMember } from '@/lib/collections-utils';
 
 describe('sanitizeThumbnail', () => {
   it('passes through https URLs', () => {
@@ -93,5 +93,26 @@ describe('sortCollections', () => {
     // Both are pinned — hermetica comes before alchemy in PINNED_COLLECTION_SLUGS
     expect(sorted[0].slug).toBe('hermetica');
     expect(sorted[1].slug).toBe('alchemy');
+  });
+});
+
+describe('isHighlightMember (#6899)', () => {
+  // /collections/maya opened on Herold's Heydenweldt: visible, readable, never tagged `maya`.
+  it('rejects a visible, readable book that is not tagged with the collection', () => {
+    expect(isHighlightMember({ collections: ['ancient-religion'], pages_count: 412 }, 'maya')).toBe(false);
+  });
+
+  it('accepts a tagged book with pages', () => {
+    expect(isHighlightMember({ collections: ['maya', 'americas'], pages_count: 300 }, 'maya')).toBe(true);
+  });
+
+  it('accepts a tagged artwork without pages, rejects a tagged record with neither', () => {
+    expect(isHighlightMember({ collections: ['erotic-art'], pages_count: 0, resource_type: 'print' }, 'erotic-art')).toBe(true);
+    expect(isHighlightMember({ collections: ['erotic-art'], pages_count: 0 }, 'erotic-art')).toBe(false);
+  });
+
+  it('rejects a missing book and a book whose collections were projected away', () => {
+    expect(isHighlightMember(undefined, 'maya')).toBe(false);
+    expect(isHighlightMember({ pages_count: 300 }, 'maya')).toBe(false);
   });
 });
