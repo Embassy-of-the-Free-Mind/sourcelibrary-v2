@@ -6,7 +6,7 @@ scripts: [Latn]
 canons: []
 n_books: 99
 n_pages: 99
-verdict: "Under the preregistered bar, GLM-OCR earns the 1500s (median CER 3.1% vs flash-lite 5.6%, paired Δ −1.1 points, CI −2.9 to −0.3) and no open engine earns the 1600s. The whole margin is flash-lite writing ſ as f. With f folded to s (post hoc), lite reads 0.7% / 1.4% and beats every open engine in both centuries by 1–5 points. By eye, lite read the letters better on all 12 pages checked. Gemini 3.8 Flash (agy) is best overall: 0.6% / 1.4%."
+verdict: "Under the preregistered bar, GLM-OCR earns the 1500s (median CER 3.1% vs flash-lite 5.6%, paired Δ −1.1 points, CI −2.9 to −0.3) and no open engine earns the 1600s. The whole margin is flash-lite writing ſ as f. With f folded to s (post hoc), lite reads 0.7% / 1.4% and beats every open engine in both centuries by 1–5 points. By eye, lite read better on 10 of the 12 pages checked (1 tie, 1 real Kraken win). Gemini 3.8 Flash (agy) is best overall: 0.6% / 1.4%."
 status: undecided
 decision: "Recommended: no standing Latin lane on the GEX45. Fix ſ on the Gemini side instead (3.8 Flash, or lite plus a long-s pass). The preregistered rule names GLM-OCR for the 1500s; Derek decides (DECISION on #5924). MinerU2.5-Pro and olmOCR-2 are queued behind Mongolian (gpu-queue 20-latin-mineru-olmocr)"
 superseded_by: null
