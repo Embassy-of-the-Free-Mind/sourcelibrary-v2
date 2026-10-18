@@ -6,6 +6,7 @@ import PageFigure from '@/components/articles/PageFigure';
 import SourceQuote from '@/components/articles/SourceQuote';
 import { CycleWheels, CyclesMeet, DateCounter, KauaSequences, NumeralBuilder } from './MayaInteractives';
 import { GearTrain } from './MayaGears';
+import { EclipseTable, VenusTable } from './MayaTables';
 
 // Every quotation below is copied from the stored text of the page it links to (#6925): the served English
 // translation for Landa, the Motul dictionary, the Kaua book and Förstemann's commentary (Förstemann's is the
@@ -332,10 +333,20 @@ export default function MayaMathematicsPage() {
         </SourceQuote>
 
         <p className={p}>
-          37,960 days is 146 runs of the 260-day count, 104 years and 65 Venus cycles. Choose cycles below to see
-          where they meet. Whole days cannot match the sky exactly: by the end of the 37,960 days the 584-day Venus
+          37,960 days is 146 runs of the 260-day count, 104 years and 65 Venus cycles. Whole days cannot match the sky exactly: by the end of the 37,960 days the 584-day Venus
           count has run about five days ahead of the planet. The table has places that look like corrections for this,
           and how they work is still argued over.
+        </p>
+
+        <p className={p}>
+          Below is the table itself, laid out as Bowditch reads it: thirteen rows, each running across the five pages,
+          every day named in the 260-day count. Step through it and watch the count pull ahead of the planet.
+        </p>
+
+        <VenusTable />
+
+        <p className={p}>
+          The same method works for any set of cycles. Choose some below to see where they meet.
         </p>
 
         <CyclesMeet />
@@ -379,6 +390,15 @@ export default function MayaMathematicsPage() {
           average month comes out close to the true one. The span of the table, 11,960 days, is also exactly 46 runs
           of the 260-day count, so the table starts again on the same day of the ritual calendar.
         </p>
+
+        <p className={p}>
+          Förstemann also lists the whole series: 69 groups, each of 177, 178 or 148 days, with the 148s always in the
+          same place before one of the table&apos;s pictures. Step through it below. The groups are counted in lunar
+          months, but the pattern of fives and sixes keeps the table in step with something else as well: the eclipse
+          seasons, the times of year when the moon crosses the sun&apos;s path and an eclipse can happen.
+        </p>
+
+        <EclipseTable />
 
         <h3 className={h3}>Serpent numbers</h3>
 
