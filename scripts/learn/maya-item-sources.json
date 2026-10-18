@@ -9,7 +9,9 @@
   "chumayel": "6ad191bb42debc9626925592",
   "chumayel1913": "699259a03d2d40d1b0592ce8",
   "bacabs": "6ad191a242debc96269252b6",
-  "castewar": "6ad191b742debc9626925415"
+  "castewar": "6ad191b742debc9626925415",
+  "morley": "6abfbf433c453a90d66639d1",
+  "landa": "69f8c0f74c6a515115aedadd"
  },
  "day_sign_dictionary_pages": {
   "Imix": 197,
@@ -1437,7 +1439,9 @@
     "page": 38,
     "line": "hun tul yx nuc = Bolon tul yale: yume cij"
    },
-   "number": 1
+   "number": 1,
+   "short": "one",
+   "group": "number"
   },
   {
    "id": "word-ca",
@@ -1452,7 +1456,9 @@
     "page": 3,
     "line": "lam: v ca tul = ah kin chable: v yahauob:"
    },
-   "number": 2
+   "number": 2,
+   "short": "two",
+   "group": "number"
   },
   {
    "id": "word-ox",
@@ -1467,7 +1473,9 @@
     "page": 8,
     "line": "Ox kin ɔaman nobi: Ca binti Cul: Sac"
    },
-   "number": 3
+   "number": 3,
+   "short": "three",
+   "group": "number"
   },
   {
    "id": "word-can-83",
@@ -1482,7 +1490,9 @@
     "page": 10,
     "line": "tan: Can tul vinicobe: buluc ahau."
    },
-   "number": 4
+   "number": 4,
+   "short": "four",
+   "group": "number"
   },
   {
    "id": "word-ho",
@@ -1497,7 +1507,9 @@
     "page": 23,
     "line": "Cumku 21 Junio ti yayab ho pel kin"
    },
-   "number": 5
+   "number": 5,
+   "short": "five",
+   "group": "number"
   },
   {
    "id": "word-uac",
@@ -1512,7 +1524,9 @@
     "page": 34,
     "line": "Hex v uac chic than bin katabac ti"
    },
-   "number": 6
+   "number": 6,
+   "short": "six",
+   "group": "number"
   },
   {
    "id": "word-uuc",
@@ -1527,7 +1541,9 @@
     "page": 75,
     "line": "ti maya pan u heɔ katun ti uuc ahau."
    },
-   "number": 7
+   "number": 7,
+   "short": "seven",
+   "group": "number"
   },
   {
    "id": "word-uaxac",
@@ -1542,7 +1558,9 @@
     "page": 75,
     "line": "ti lahun chable. u heɔ katun ti uaxac ahau katun —"
    },
-   "number": 8
+   "number": 8,
+   "short": "eight",
+   "group": "number"
   },
   {
    "id": "word-bolon",
@@ -1557,7 +1575,9 @@
     "page": 38,
     "line": "lay hun tul noh xibe = Bolon tul v mehene—y"
    },
-   "number": 9
+   "number": 9,
+   "short": "nine",
+   "group": "number"
   },
   {
    "id": "word-lahun",
@@ -1572,7 +1592,9 @@
     "page": 17,
     "line": "lahun ahau katun: vch ci v cha"
    },
-   "number": 10
+   "number": 10,
+   "short": "ten",
+   "group": "number"
   },
   {
    "id": "word-buluc",
@@ -1587,7 +1609,9 @@
     "page": 13,
     "line": "Buluc. Ahau. katun: Cu maan ti pop: Cu maan"
    },
-   "number": 11
+   "number": 11,
+   "short": "eleven",
+   "group": "number"
   },
   {
    "id": "word-lahca",
@@ -1602,7 +1626,9 @@
     "page": 84,
     "line": "Y Lahca ahau. te chabi. Oɔ mal u tunile."
    },
-   "number": 12
+   "number": 12,
+   "short": "twelve",
+   "group": "number"
   },
   {
    "id": "word-oxlahun",
@@ -1617,7 +1643,9 @@
     "page": 56,
     "line": "V taahte Oxlahun Ahau. Chicul u"
    },
-   "number": 13
+   "number": 13,
+   "short": "thirteen",
+   "group": "number"
   },
   {
    "id": "word-kal",
@@ -1632,7 +1660,9 @@
     "page": 18,
     "line": "ah y tzaob hool hun kal haab. v talel yu"
    },
-   "number": 20
+   "number": 20,
+   "short": "a count of twenties",
+   "group": "number"
   },
   {
    "id": "word-ik",
@@ -1647,7 +1677,9 @@
     "page": 19,
     "line": "akab: tulis yk. cuxim kal xan"
    },
-   "glyph": "Ik"
+   "glyph": "Ik",
+   "short": "wind, air, breath",
+   "group": "other"
   },
   {
    "id": "word-akab",
@@ -1662,7 +1694,9 @@
     "page": 28,
     "line": "marzo lah cet kin y akab —"
    },
-   "glyph": "Akbal"
+   "glyph": "Akbal",
+   "short": "night",
+   "group": "other"
   },
   {
    "id": "word-kan",
@@ -1677,7 +1711,9 @@
     "page": 1,
     "line": "bilob: Kan tok tun. v kunil: V nohol"
    },
-   "glyph": "Kan"
+   "glyph": "Kan",
+   "short": "yellow",
+   "group": "direction"
   },
   {
    "id": "word-cimil",
@@ -1692,7 +1728,9 @@
     "page": 20,
     "line": "cimil toon xan: manan yutz kin ton"
    },
-   "glyph": "Cimi"
+   "glyph": "Cimi",
+   "short": "illness, death",
+   "group": "other"
   },
   {
    "id": "word-can-82",
@@ -1707,7 +1745,9 @@
     "page": 20,
     "line": "nan ahau can ti lay v hel ahau"
    },
-   "glyph": "Chicchan"
+   "glyph": "Chicchan",
+   "short": "snake",
+   "group": "other"
   },
   {
    "id": "word-eb",
@@ -1722,7 +1762,9 @@
     "page": 145,
     "line": "ci caan y luum: Ca Eb: ument ci yax Eb ="
    },
-   "glyph": "Eb"
+   "glyph": "Eb",
+   "short": "staircase",
+   "group": "other"
   },
   {
    "id": "word-oc",
@@ -1737,7 +1779,9 @@
     "page": 33,
     "line": "kula: Heyx sasac ɔiminlae: lay y oc"
    },
-   "glyph": "Oc"
+   "glyph": "Oc",
+   "short": "foot, footprint",
+   "group": "other"
   },
   {
    "id": "word-men",
@@ -1752,7 +1796,9 @@
     "page": 65,
     "line": "hun men"
    },
-   "glyph": "Men"
+   "glyph": "Men",
+   "short": "craftsman",
+   "group": "other"
   },
   {
    "id": "word-cib",
@@ -1767,7 +1813,9 @@
     "page": 147,
     "line": "ci ument ci yax cib: Vchci u ça silhal:"
    },
-   "glyph": "Cib"
+   "glyph": "Cib",
+   "short": "candle, wax",
+   "group": "other"
   },
   {
    "id": "word-cab",
@@ -1782,7 +1830,9 @@
     "page": 28,
     "line": "okel tabal vay yokol cab lae"
    },
-   "glyph": "Caban"
+   "glyph": "Caban",
+   "short": "earth, the world",
+   "group": "other"
   },
   {
    "id": "word-ahau",
@@ -1797,7 +1847,9 @@
     "page": 9,
     "line": "Lao bi ahau v nup v thanobe: ti yahau"
    },
-   "glyph": "Ahau"
+   "glyph": "Ahau",
+   "short": "king, sovereign",
+   "group": "other"
   },
   {
    "id": "word-chac",
@@ -1811,7 +1863,9 @@
     "key": "chumayel",
     "page": 2,
     "line": "Chac yx chuuah cabob ti lakin: chac"
-   }
+   },
+   "short": "red",
+   "group": "direction"
   },
   {
    "id": "word-ek",
@@ -1825,7 +1879,9 @@
     "key": "chumayel",
     "page": 2,
     "line": "Ek yx chuuah cab u cabob. ti chikin. Ek"
-   }
+   },
+   "short": "black",
+   "group": "direction"
   },
   {
    "id": "word-zac",
@@ -1839,7 +1895,9 @@
     "key": "chumayel",
     "page": 2,
     "line": "Sac yx chuuah cabob. ti xaman Sac ix"
-   }
+   },
+   "short": "white",
+   "group": "direction"
   },
   {
    "id": "word-yax",
@@ -1853,7 +1911,9 @@
     "key": "chumayel",
     "page": 1,
     "line": "ymix yax che: Kan ymix yax che."
-   }
+   },
+   "short": "first",
+   "group": "direction"
   },
   {
    "id": "word-lakin",
@@ -1867,7 +1927,9 @@
     "key": "chumayel",
     "page": 16,
     "line": "ti lakin u talelob: ca a v lob = Op"
-   }
+   },
+   "short": "the East",
+   "group": "direction"
   },
   {
    "id": "word-chikin",
@@ -1881,7 +1943,9 @@
     "key": "chumayel",
     "page": 1,
     "line": "Ek tok tun: v kunil. ti chikin: Ek ymix"
-   }
+   },
+   "short": "the west",
+   "group": "direction"
   },
   {
    "id": "word-xaman",
@@ -1895,7 +1959,9 @@
     "key": "chumayel",
     "page": 90,
     "line": "Nom tal ti la kin = tal ti xaman ="
-   }
+   },
+   "short": "the North",
+   "group": "direction"
   },
   {
    "id": "word-nohol",
@@ -1909,7 +1975,9 @@
     "key": "chumayel",
     "page": 2,
     "line": "Kan yx chuuah cabob ti nohol. Kan tal u"
-   }
+   },
+   "short": "the South",
+   "group": "direction"
   },
   {
    "id": "word-kin",
@@ -1923,7 +1991,9 @@
     "key": "chumayel",
     "page": 33,
     "line": "yalabal tie: kak chumuc kin. cabin xic v"
-   }
+   },
+   "short": "sun, day, time",
+   "group": "other"
   },
   {
    "id": "word-haa",
@@ -1937,7 +2007,9 @@
     "key": "chumayel",
     "page": 5,
     "line": "ti u panahob hai: Ca tal ob: Cucu chil haa:"
-   }
+   },
+   "short": "water",
+   "group": "other"
   },
   {
    "id": "word-tun",
@@ -1951,7 +2023,9 @@
     "key": "chumayel",
     "page": 1,
     "line": "bolon pel. Vij v canan maob: Chac tok tun"
-   }
+   },
+   "short": "stone",
+   "group": "other"
   },
   {
    "id": "word-che",
@@ -1965,7 +2039,9 @@
     "key": "chumayel",
     "page": 104,
     "line": "che, y tunich; elom"
-   }
+   },
+   "short": "wood, tree",
+   "group": "other"
   },
   {
    "id": "word-uinic",
@@ -1979,7 +2055,9 @@
     "key": "chumayel",
     "page": 16,
     "line": "tumenel ɔulob: sac uinicob = y"
-   }
+   },
+   "short": "man",
+   "group": "other"
   },
   {
    "id": "word-ku",
@@ -1993,7 +2071,9 @@
     "key": "chumayel1913",
     "page": 109,
     "line": "ɔoci: v caput cuxtal hahal ku hahal Ds: Cauci"
-   }
+   },
+   "short": "God",
+   "group": "other"
   },
   {
    "id": "word-katun",
@@ -2007,7 +2087,9 @@
     "key": "chumayel",
     "page": 11,
     "line": "Vaxac ahau v kaba katun: vch ci v tap"
-   }
+   },
+   "short": "a score of years",
+   "group": "other"
   },
   {
    "id": "word-haab",
@@ -2021,7 +2103,9 @@
     "key": "chumayel",
     "page": 20,
     "line": "ox kal haab yan toon: tu luk"
-   }
+   },
+   "short": "the year",
+   "group": "other"
   },
   {
    "id": "word-uinal",
@@ -2035,7 +2119,9 @@
     "key": "chumayel1913",
     "page": 145,
     "line": "mim: y U muu: Çi uinal: çihci kin ="
-   }
+   },
+   "short": "a period of 20 days",
+   "group": "other"
   },
   {
    "id": "word-cah",
@@ -2049,7 +2135,9 @@
     "key": "chumayel",
     "page": 80,
     "line": "men multepal ych cah mayapan lal lae —"
-   }
+   },
+   "short": "town",
+   "group": "other"
   },
   {
    "id": "word-kak",
@@ -2063,7 +2151,9 @@
     "key": "chumayel",
     "page": 16,
     "line": "e lob tumen kak: tu cahal Ysrael"
-   }
+   },
+   "short": "fire",
+   "group": "other"
   },
   {
    "id": "word-caan",
@@ -2077,7 +2167,9 @@
     "key": "chumayel1913",
     "page": 145,
     "line": "V kaba çihci: Caan y luum: Eb haa: luum"
-   }
+   },
+   "short": "sky",
+   "group": "other"
   },
   {
    "id": "word-luum",
@@ -2091,7 +2183,9 @@
     "key": "chumayel",
     "page": 26,
     "line": "V chun luum Campech. u pucçikal luum. Mani —"
-   }
+   },
+   "short": "earth, ground",
+   "group": "other"
   },
   {
    "id": "word-cuxtal",
@@ -2105,7 +2199,9 @@
     "key": "chumayel1913",
     "page": 89,
     "line": "ah Cimil; mau naa ticob; ah Cuxtal bin"
-   }
+   },
+   "short": "to live",
+   "group": "other"
   },
   {
    "id": "word-balam",
@@ -2119,7 +2215,9 @@
     "key": "chumayel",
     "page": 2,
     "line": "Balam u hol u pop. ti xaman. ah puch u hol"
-   }
+   },
+   "short": "tiger, lion",
+   "group": "other"
   },
   {
    "id": "word-yaxche",
@@ -2133,7 +2231,9 @@
     "key": "chumayel1913",
     "page": 27,
     "line": "ymix yaxche. v uul bal: Sac mucen"
-   }
+   },
+   "short": "the ceiba",
+   "group": "other"
   },
   {
    "id": "word-noh",
@@ -2147,7 +2247,9 @@
     "key": "chumayel",
     "page": 38,
     "line": "lay hun tul noh xibe = Bolon tul v mehene—y"
-   }
+   },
+   "short": "large, principal",
+   "group": "other"
   },
   {
    "id": "word-pixan",
@@ -2161,7 +2263,9 @@
     "key": "castewar",
     "page": 9,
     "line": "a Santo pixan tu yabal habo"
-   }
+   },
+   "short": "soul",
+   "group": "other"
   },
   {
    "id": "word-mehen",
@@ -2175,7 +2279,9 @@
     "key": "chumayel",
     "page": 9,
     "line": "Balam: v mehen: Lay u chaah yx yaxum"
-   }
+   },
+   "short": "son",
+   "group": "other"
   },
   {
    "id": "word-ixim",
@@ -2189,7 +2295,9 @@
     "key": "chumayel",
     "page": 1,
     "line": "bilob: Sac yxim yiximob: =="
-   }
+   },
+   "short": "maize",
+   "group": "other"
   },
   {
    "id": "word-nal",
@@ -2203,7 +2311,339 @@
     "key": "chumayel",
     "page": 73,
     "line": "y hun çuyil u pole: - he klay pibil Nal ="
+   },
+   "short": "green maize plant",
+   "group": "other"
+  }
+ ],
+ "study": {
+  "_doc": "Study cards (Derek, 2026-10-18 on #6921): a printed key shown before a learner first meets a sign or the numeral rule. Boxes normalised on the archived page image, checked by eye on contact sheets.",
+  "numerals": {
+   "book": "morley",
+   "page": 122,
+   "label": "Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 39, p. 88",
+   "box": [
+    0.07,
+    0.32,
+    0.585,
+    0.245
+   ],
+   "text": "A dot is one and a bar is five. Up to 19, a number is bars with dots above them. The shell sign is zero."
+  },
+  "landa": {
+   "book": "landa",
+   "page": 327,
+   "label": "Landa, Relación de las cosas de Yucatán (c. 1566), Brasseur ed. 1864, p. 204",
+   "box": [
+    0.13,
+    0.415,
+    0.75,
+    0.335
+   ],
+   "text": "Bishop Diego de Landa drew these twenty day signs around 1566, each with its name, to show how the Maya counted days. His drawings are the first key to the script."
+  },
+  "day_signs": {
+   "morley": {
+    "book": "morley",
+    "page": 69,
+    "label": "Morley (1915), fig. 17: the day signs in the codices, p. 39",
+    "boxes": {
+     "Imix": [
+      0.06,
+      0.117,
+      0.15,
+      0.084
+     ],
+     "Ik": [
+      0.406,
+      0.117,
+      0.147,
+      0.084
+     ],
+     "Akbal": [
+      0.774,
+      0.117,
+      0.148,
+      0.084
+     ],
+     "Kan": [
+      0.06,
+      0.237,
+      0.156,
+      0.089
+     ],
+     "Chicchan": [
+      0.257,
+      0.237,
+      0.141,
+      0.089
+     ],
+     "Cimi": [
+      0.591,
+      0.237,
+      0.139,
+      0.089
+     ],
+     "Manik": [
+      0.072,
+      0.367,
+      0.148,
+      0.087
+     ],
+     "Lamat": [
+      0.247,
+      0.367,
+      0.147,
+      0.087
+     ],
+     "Muluc": [
+      0.612,
+      0.367,
+      0.142,
+      0.087
+     ],
+     "Oc": [
+      0.783,
+      0.367,
+      0.139,
+      0.087
+     ],
+     "Chuen": [
+      0.07,
+      0.494,
+      0.15,
+      0.087
+     ],
+     "Eb": [
+      0.439,
+      0.494,
+      0.146,
+      0.087
+     ],
+     "Ben": [
+      0.629,
+      0.494,
+      0.139,
+      0.087
+     ],
+     "Ix": [
+      0.78,
+      0.494,
+      0.151,
+      0.087
+     ],
+     "Men": [
+      0.067,
+      0.617,
+      0.144,
+      0.082
+     ],
+     "Cib": [
+      0.259,
+      0.617,
+      0.144,
+      0.082
+     ],
+     "Caban": [
+      0.6,
+      0.617,
+      0.149,
+      0.082
+     ],
+     "Etznab": [
+      0.072,
+      0.74,
+      0.146,
+      0.081
+     ],
+     "Cauac": [
+      0.416,
+      0.74,
+      0.151,
+      0.081
+     ],
+     "Ahau": [
+      0.617,
+      0.74,
+      0.146,
+      0.081
+     ]
+    },
+    "letters": {
+     "Imix": "a",
+     "Ik": "c",
+     "Akbal": "e",
+     "Kan": "f",
+     "Chicchan": "g",
+     "Cimi": "i",
+     "Manik": "k",
+     "Lamat": "l",
+     "Muluc": "n",
+     "Oc": "o",
+     "Chuen": "p",
+     "Eb": "r",
+     "Ben": "s",
+     "Ix": "t",
+     "Men": "u",
+     "Cib": "v",
+     "Caban": "x",
+     "Etznab": "z",
+     "Cauac": "b′",
+     "Ahau": "c′"
+    }
+   },
+   "landa": {
+    "book": "landa",
+    "page": 327,
+    "label": "Landa (c. 1566), Brasseur ed. 1864, p. 204",
+    "boxes": {
+     "Kan": [
+      0.14,
+      0.425,
+      0.12,
+      0.076
+     ],
+     "Chicchan": [
+      0.29,
+      0.425,
+      0.14,
+      0.076
+     ],
+     "Cimi": [
+      0.455,
+      0.425,
+      0.135,
+      0.076
+     ],
+     "Manik": [
+      0.6,
+      0.425,
+      0.13,
+      0.076
+     ],
+     "Lamat": [
+      0.74,
+      0.425,
+      0.13,
+      0.076
+     ],
+     "Muluc": [
+      0.14,
+      0.502,
+      0.12,
+      0.083
+     ],
+     "Oc": [
+      0.29,
+      0.502,
+      0.14,
+      0.083
+     ],
+     "Chuen": [
+      0.455,
+      0.502,
+      0.135,
+      0.083
+     ],
+     "Eb": [
+      0.6,
+      0.502,
+      0.13,
+      0.083
+     ],
+     "Ben": [
+      0.74,
+      0.502,
+      0.13,
+      0.083
+     ],
+     "Ix": [
+      0.14,
+      0.582,
+      0.12,
+      0.08
+     ],
+     "Men": [
+      0.29,
+      0.582,
+      0.14,
+      0.08
+     ],
+     "Cib": [
+      0.455,
+      0.582,
+      0.135,
+      0.08
+     ],
+     "Caban": [
+      0.6,
+      0.582,
+      0.13,
+      0.08
+     ],
+     "Etznab": [
+      0.74,
+      0.582,
+      0.13,
+      0.08
+     ],
+     "Cauac": [
+      0.14,
+      0.662,
+      0.12,
+      0.083
+     ],
+     "Ahau": [
+      0.29,
+      0.662,
+      0.14,
+      0.083
+     ],
+     "Imix": [
+      0.455,
+      0.662,
+      0.135,
+      0.083
+     ],
+     "Ik": [
+      0.6,
+      0.662,
+      0.13,
+      0.083
+     ],
+     "Akbal": [
+      0.74,
+      0.662,
+      0.13,
+      0.083
+     ]
+    }
+   },
+   "features": {
+    "Imix": "A dark cap with a row of dots along the top, and short strokes hanging below.",
+    "Ik": "A T-shaped mark in the middle.",
+    "Akbal": "Two curved bands either side of a central point, over a row of teeth.",
+    "Kan": "A small bar at the top, a broad curved band across the middle, and upright stripes below.",
+    "Chicchan": "A cross-hatched patch, like snakeskin.",
+    "Cimi": "A closed eye with lashes: the death sign.",
+    "Manik": "A hand, with a T-shaped mark above it.",
+    "Lamat": "A cross dividing it into four, with a small ring in each quarter.",
+    "Muluc": "A ring with a dot at its centre.",
+    "Oc": "A large curl on the right side.",
+    "Chuen": "Two curls facing each other, with a stepped notch at the bottom.",
+    "Eb": "A grotesque face in profile, with a dotted band behind it.",
+    "Ben": "Two upright strokes at the top and a band of upright lines below.",
+    "Ix": "Spots and dots scattered over it.",
+    "Men": "An old face in profile, with a dotted line above the eye.",
+    "Cib": "A curl like a reversed question mark.",
+    "Caban": "A single curl, like a lock of hair.",
+    "Etznab": "Two lines crossing in an X.",
+    "Cauac": "A cluster of small circles, like grapes, with a dotted line.",
+    "Ahau": "A face: two eyes and a round mouth, with a line down the middle."
    }
   }
+ },
+ "retired": [
+  "day-09-day-c1-1"
  ]
 }

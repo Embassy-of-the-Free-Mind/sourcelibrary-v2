@@ -8,6 +8,7 @@ import {
   LOCAL_KEY,
   RUNGS,
   RUNG_LABEL,
+  asksVerdict,
   checkDue,
   cropUrl,
   emptyState,
@@ -17,10 +18,13 @@ import {
   parseState,
   recordAttempt,
   rungProgress,
+  showSenses,
   startingRung,
+  studyCardFor,
   type LocalState,
   type MayaItem,
   type Rung,
+  type StudyCard,
   type Verdict,
 } from '@/lib/learn-maya';
 
@@ -32,6 +36,7 @@ export default function MayaLearn() {
   const { data: session, status: authStatus } = useSession();
   const signedIn = !!session?.user;
   const [items, setItems] = useState<MayaItem[] | null>(null);
+  const [cards, setCards] = useState<StudyCard[]>([]);
   const [loadError, setLoadError] = useState(false);
   const [local, setLocal] = useState<LocalState>(emptyState);
   const [hydrated, setHydrated] = useState(false);
@@ -52,8 +57,10 @@ export default function MayaLearn() {
     fetch('/api/learn/maya/items')
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((d) => {
-        const bank = d.items as MayaItem[];
+        const all = d.items as (MayaItem | StudyCard)[];
+        const bank = all.filter((i): i is MayaItem => i.rung !== 'study');
         setItems(bank);
+        setCards(all.filter((i): i is StudyCard => i.rung === 'study'));
         setLocal(state);
         setHydrated(true);
         if (checkDue(state) && heldOut(bank).length === CHECK_SIZE) {
@@ -76,6 +83,15 @@ export default function MayaLearn() {
   const checkItems = useMemo(() => (items ? heldOut(items) : []), [items]);
 
   const item = currentId ? byId.get(currentId) ?? null : null;
+  const card = item && phase === 'try' ? studyCardFor(item, cards, local.studied) : null;
+
+  // While the learner reads a reveal, fetch the next item's picture (and its card's) so it is there on tap.
+  useEffect(() => {
+    if (phase !== 'reveal' || !items || !item) return;
+    const n = nextItem(items, local, rung, item._id);
+    const urls = [n?.image ? cropUrl(n.image) : null, ...(n ? studyCardFor(n, cards, local.studied)?.figures.map((f) => f.crop_url) ?? [] : [])];
+    for (const u of urls) if (u) new Image().src = u;
+  }, [phase, items, item, local, rung, cards]);
 
   const goTo = (r: Rung, state = local, skip?: string) => {
     window.scrollTo(0, 0);
@@ -96,7 +112,8 @@ export default function MayaLearn() {
     save(recordAttempt(local, item._id, ok));
   };
 
-  const judge = (verdict: Verdict) => {
+  /** verdict null: a gold item, answered but not judged. */
+  const judge = (verdict: Verdict | null) => {
     if (!item) return;
     if (signedIn) {
       fetch('/api/learn/maya/judgements', {
@@ -174,7 +191,8 @@ export default function MayaLearn() {
         </div>
         {checking.index === 0 && (
           <p className="text-sm text-secondary mb-4">
-            Ten items, no answers shown. {first ? 'Guess freely: this is your starting point.' : 'The same ten as before, so the score shows what you can now read.'}
+            {first && <>Learn to read Maya numbers, day signs and Yucatec words from the Dresden Codex and the colonial dictionaries. </>}
+            Ten items, no answers shown. {first ? 'Guess freely: these ten are your baseline.' : 'The same ten as before, so the score shows what you can now read.'}
           </p>
         )}
         <Material item={ci} />
@@ -230,15 +248,19 @@ export default function MayaLearn() {
         </div>
       ) : (
         <>
-          {rung === 'numeral' && local.seq === 0 && phase === 'try' && (
-            <p className="text-sm text-secondary mb-3">A dot is one, a bar is five, a shell is zero. Count them.</p>
-          )}
+          {card ? (
+            <StudyCardView key={card._id} card={card} onDone={() => save({ ...local, studied: [...local.studied, card._id] })} />
+          ) : (
+          <>
           <Material item={item} />
           {phase === 'try' ? (
             <TryControls key={item._id} item={item} onSubmit={submitTry} value={tryAnswer} setValue={setTryAnswer} />
           ) : (
             <>
               <Reveal item={item} answer={tryAnswer} correct={correct} byId={byId} />
+              {!asksVerdict(item) ? (
+                <button onClick={() => judge(null)} className="mt-6 w-full py-4 rounded-lg bg-[#1a1612] text-white font-medium">Next</button>
+              ) : (
               <section className="mt-6 border-t border-border-light pt-4">
                 <h2 className="text-sm font-medium text-primary mb-3">Is the AI reading right?</h2>
                 {!disputing ? (
@@ -269,7 +291,10 @@ export default function MayaLearn() {
                   </p>
                 )}
               </section>
+              )}
             </>
+          )}
+          </>
           )}
           {local.checks.length > 0 && (
             <p className="text-xs text-muted mt-8">
@@ -289,6 +314,7 @@ function Material({ item }: { item: MayaItem }) {
         <div className="rounded-lg bg-[#efe6d6] flex items-center justify-center min-h-[38vh]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            key={item._id}
             src={cropUrl(item.image)}
             alt={`${item.rung === 'numeral' ? 'Bar-and-dot number' : 'Day sign'} from the Dresden Codex, page ${item.image.codex_page}`}
             className="max-h-[42vh] w-full object-contain rounded-lg"
@@ -375,24 +401,23 @@ function Reveal({ item, answer, correct, byId }: { item: MayaItem; answer: strin
         {correct ? 'Yes. ' : answer ? 'Not quite. ' : ''}
         {item.rung === 'numeral' && <>It is {item.answer.value}.</>}
         {item.rung === 'day-sign' && <>It is {item.answer.sign}.</>}
-        {item.rung === 'word' && <>{item.word?.form}</>}
+        {item.rung === 'word' && <>{item.word?.form} means “{item.answer.short}”.</>}
       </p>
       {item.rung === 'day-sign' && (
         <p className="text-secondary">The {ORDINAL(item.answer.position ?? 0)} of the twenty day signs, here with the coefficient {item.answer.coefficient}.</p>
       )}
       {item.teach && <p className="text-primary mt-1">{item.teach}</p>}
-      {item.rung === 'word' && answer && <p className="text-sm text-muted">You wrote “{answer}”.</p>}
       {item.note && <p className="text-secondary mt-2">{item.note}</p>}
 
       {item.rung === 'word' ? (
         <div className="mt-4 space-y-3">
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">{item.evidence.find((e) => e.kind === 'dictionary')?.label}</p>
-            <p className="font-serif text-lg text-primary"><Italics text={item.answer.gloss_es ?? ''} /></p>
+            <p className="font-serif text-lg text-primary"><Italics text={showSenses(item.answer.gloss_es ?? '')} /></p>
           </div>
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">AI reading</p>
-            <p className="text-primary"><Italics text={item.ai.reading} /></p>
+            <p className="text-primary"><Italics text={showSenses(item.ai.reading)} /></p>
           </div>
         </div>
       ) : (
@@ -413,7 +438,7 @@ function Reveal({ item, answer, correct, byId }: { item: MayaItem; answer: strin
           {linkedWord?.word && (
             <p className="text-secondary">
               In Yucatec: <span className="font-serif text-xl text-primary">{linkedWord.word.headword}</span>
-              {linkedWord.ai.reading ? <span className="text-muted">, “{linkedWord.ai.reading.split(/[.;|]/)[0]}”</span> : null}
+              {linkedWord.answer.short ? <span className="text-muted">, “{linkedWord.answer.short}”</span> : null}
             </p>
           )}
           {linkedCrops.length > 0 && (
@@ -437,6 +462,28 @@ function Reveal({ item, answer, correct, byId }: { item: MayaItem; answer: strin
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+function StudyCardView({ card, onDone }: { card: StudyCard; onDone: () => void }) {
+  return (
+    <section className="mb-4">
+      <p className="text-xs uppercase tracking-wide text-muted mb-1">Before you start</p>
+      <h2 className="font-serif text-3xl text-primary mb-3">{card.title}</h2>
+      <div className={`grid gap-3 ${card.figures.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        {card.figures.map((f) => (
+          <figure key={f.crop_url}>
+            <div className="rounded-lg bg-[#efe6d6] flex items-center justify-center p-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={f.crop_url} alt={f.label} className="max-h-[32vh] w-full object-contain" />
+            </div>
+            <figcaption className="text-xs text-muted mt-1"><a href={f.url} className="underline underline-offset-2">{f.label}</a></figcaption>
+          </figure>
+        ))}
+      </div>
+      <p className="text-lg text-primary mt-4">{card.text}</p>
+      <button onClick={onDone} className="mt-6 w-full py-4 rounded-lg bg-[#1a1612] text-white font-medium">Now try one</button>
     </section>
   );
 }

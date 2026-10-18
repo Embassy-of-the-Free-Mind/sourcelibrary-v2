@@ -11,12 +11,20 @@
  *   node --env-file=.env.production.local scripts/learn/build-maya-items.mjs            # dry run
  *   node --env-file=.env.production.local scripts/learn/build-maya-items.mjs --apply    # upsert
  *
+ * --apply also renders every crop once and uploads it to R2 under
+ * learn-maya/<book_id>/<item_id>-<hash>.jpg (book-scoped, assertBookScopedKey),
+ * so the page never asks /api/crop-image to fetch a 3104×6664 leaf per item.
+ *
  * Schema: scripts/learn/README.md
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import crypto from 'node:crypto';
 import { MongoClient } from 'mongodb';
+import sharp from 'sharp';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { assertBookScopedKey } from '../lib/r2-key.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const APPLY = process.argv.includes('--apply');
@@ -24,7 +32,20 @@ const OUT = process.argv.find((a) => a.startsWith('--out='))?.slice(6);
 const SRC = JSON.parse(fs.readFileSync(path.join(HERE, 'maya-item-sources.json'), 'utf8'));
 const B = SRC.books;
 const SITE = 'https://sourcelibrary.org';
-const LEAF_URL = (leaf) => `https://images.sourcelibrary.org/archived/${B.dresden}/${leaf}.jpg`;
+const R2_PUBLIC = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+const PAGE_IMG = (bookKey, n) => `https://images.sourcelibrary.org/archived/${B[bookKey]}/${n}.jpg`;
+const LEAF_URL = (leaf) => PAGE_IMG('dresden', leaf);
+const retired = new Set(SRC.retired || []);
+
+// ── Crops, rendered once ──
+const crops = []; // { key, src, box, bookId }
+function cropFor(id, bookId, src, box) {
+  const hash = crypto.createHash('sha1').update(`${src}|${box.join(',')}`).digest('hex').slice(0, 8);
+  const key = `learn-maya/${bookId}/${id}-${hash}.jpg`;
+  assertBookScopedKey(key, bookId, 'build-maya-items');
+  crops.push({ key, src, box, bookId });
+  return `${R2_PUBLIC}/${key}`;
+}
 const PAGE_URL = (book, n) => `${SITE}/book/${book}?page=${n}`;
 const DICT_NAME = {
   motul1: 'Diccionario de Motul (c. 1577), vol. 1',
@@ -51,7 +72,7 @@ const DAY_TEACH = {
   Lamat: 'Lamat is split into four by a cross, with a small ring in each quarter.',
   Muluc: 'Muluc is a ring with a dot at its centre.',
   Oc: 'oc means foot, footprint (Pío Pérez, p. 295).',
-  Chuen: 'Chuen comes right after Oc and before Eb.',
+  Chuen: 'Chuen has two curls facing each other, and comes right after Oc in the count.',
   Eb: 'eb means staircase (Pío Pérez, p. 139).',
   Ben: 'Ben has a band along its lower half crossed by upright strokes.',
   Ix: 'Ix is scattered with spots.',
@@ -148,7 +169,7 @@ for (const n of SRC.numerals) {
     order: numeralDifficulty(n) * 100 + items.length,
     status: heldout.has(n.id) ? 'heldout' : 'live',
     prompt: { kind: 'count', text: 'What number is this?' },
-    image: { book_id: B.dresden, leaf: n.leaf, codex_page: n.codex_page, src: LEAF_URL(n.leaf), box: n.box, color: n.color },
+    image: { book_id: B.dresden, leaf: n.leaf, codex_page: n.codex_page, src: LEAF_URL(n.leaf), box: n.box, color: n.color, crop_url: cropFor(n.id, B.dresden, LEAF_URL(n.leaf), n.box) },
     answer: { value: n.value },
     note: n.note || null,
     teach: n.value === 0 ? 'The shell is zero.' : `A bar is five and a dot is one: ${explainNumeral(n.value)} ${n.value === 1 || n.value === 5 ? 'makes' : 'make'} ${n.value}.`,
@@ -169,9 +190,9 @@ for (const d of SRC.day_signs) {
     _id: d.id,
     rung: 'day-sign',
     order: items.length,
-    status: heldout.has(d.id) ? 'heldout' : 'live',
+    status: retired.has(d.id) ? 'retired' : heldout.has(d.id) ? 'heldout' : 'live',
     prompt: { kind: 'pick', text: 'Which day sign is this?', options: [d.sign, ...hashPick(d.id, DAY_SIGNS.filter((s) => s !== d.sign), 3)].sort() },
-    image: { book_id: B.dresden, leaf: d.leaf, codex_page: d.codex_page, src: LEAF_URL(d.leaf), box: d.box, color: 'black' },
+    image: { book_id: B.dresden, leaf: d.leaf, codex_page: d.codex_page, src: LEAF_URL(d.leaf), box: d.box, color: 'black', crop_url: cropFor(d.id, B.dresden, LEAF_URL(d.leaf), d.box) },
     answer: { sign: d.sign, coefficient: d.coefficient, position: DAY_SIGNS.indexOf(d.sign) + 1 },
     note: null,
     teach: DAY_TEACH[d.sign],
@@ -194,8 +215,10 @@ for (const w of SRC.words) {
   const sp = await page(w.source.key, w.source.page);
   // Compared against the page text as the reader shows it (tags stripped), line by line.
   const srcOk = sp && lines(sp.ocr?.data).some((l) => l.includes(w.source.line));
-  if (!es || !en || !srcOk) {
-    refused.push({ id: w.id, es: !!es, en: !!en, source: !!srcOk });
+  // The short gloss on the button must be words of the entry's own English, not a paraphrase.
+  const shortOk = !!en && (w.short.toLowerCase().match(/\p{L}+|\d+/gu) || []).every((t) => en.toLowerCase().includes(t));
+  if (!es || !en || !srcOk || !shortOk) {
+    refused.push({ id: w.id, es: !!es, en: !!en, source: !!srcOk, short: shortOk });
     continue;
   }
   items.push({
@@ -203,7 +226,8 @@ for (const w of SRC.words) {
     rung: 'word',
     order: items.length,
     status: heldout.has(w.id) ? 'heldout' : 'live',
-    prompt: { kind: 'gloss', text: 'What does this word mean?' },
+    prompt: { kind: 'pick', text: 'What does this word mean?', options: [] },
+    group: w.group,
     word: {
       headword: w.headword,
       form: w.form,
@@ -212,7 +236,7 @@ for (const w of SRC.words) {
         line: w.source.line, url: PAGE_URL(B[w.source.key], w.source.page),
       },
     },
-    answer: { gloss_es: es, gloss_en: en, keywords: glossKeywords(en, w.headword), number: w.number ?? null },
+    answer: { short: w.short, gloss_es: es, gloss_en: en, keywords: glossKeywords(en, w.headword), number: w.number ?? null },
     note: null,
     teach: wordTeach(w),
     ai: { reading: en.replace(/^[^:]*:\s*/, ''), confident: true, model: dp.translation?.model || null, run: 'site translation of the dictionary page' },
@@ -222,6 +246,47 @@ for (const w of SRC.words) {
     ],
     gold: { is_gold: false, basis: null, checked_by_eye: false },
     links: { glyph_sign: w.glyph || null },
+    provenance,
+  });
+}
+
+// A word's four choices: its own short gloss and three from words of the same kind
+// (numbers among numbers, colours and directions among themselves), so the pick tests meaning.
+{
+  const words = items.filter((i) => i.rung === 'word');
+  for (const w of words) {
+    const same = words.filter((o) => o._id !== w._id && o.group === w.group && o.answer.short !== w.answer.short).map((o) => o.answer.short);
+    const pool = same.length >= 3 ? same : words.filter((o) => o._id !== w._id && o.answer.short !== w.answer.short).map((o) => o.answer.short);
+    w.prompt.options = [w.answer.short, ...hashPick(w._id, [...new Set(pool)], 3)].sort();
+  }
+  for (const w of words) delete w.group;
+}
+
+// Study cards: the printed key a learner sees before first meeting a sign or the numeral rule.
+const ST = SRC.study;
+const studyFig = (id, spec, box) => ({
+  label: spec.label,
+  url: PAGE_URL(B[spec.book], spec.page),
+  crop_url: cropFor(id, B[spec.book], PAGE_IMG(spec.book, spec.page), box),
+});
+items.push({
+  _id: 'study-numerals', rung: 'study', order: 0, status: 'live', study_for: { rung: 'numeral', sign: null },
+  title: 'Bar-and-dot numbers', text: ST.numerals.text, figures: [studyFig('study-numerals', ST.numerals, ST.numerals.box)], provenance,
+});
+items.push({
+  _id: 'study-landa', rung: 'study', order: 1, status: 'live', study_for: { rung: 'day-sign', sign: null },
+  title: 'The twenty day signs', text: ST.landa.text, figures: [studyFig('study-landa', ST.landa, ST.landa.box)], provenance,
+});
+for (const sign of DAY_SIGNS) {
+  const id = `study-day-${sign.toLowerCase()}`;
+  const m = ST.day_signs.morley, l = ST.day_signs.landa;
+  items.push({
+    _id: id, rung: 'study', order: 2 + DAY_SIGNS.indexOf(sign), status: 'live', study_for: { rung: 'day-sign', sign },
+    title: sign, text: ST.day_signs.features[sign],
+    figures: [
+      { ...studyFig(`${id}-morley`, m, m.boxes[sign]), label: `${m.label}, ${m.letters[sign]}` },
+      ...(l.boxes[sign] ? [studyFig(`${id}-landa`, l, l.boxes[sign])] : []),
+    ],
     provenance,
   });
 }
@@ -245,7 +310,37 @@ const counts = items.reduce((a, i) => ((a[`${i.rung}/${i.status}`] = (a[`${i.run
 console.log(JSON.stringify({ items: items.length, counts, refused }, null, 1));
 if (OUT) fs.writeFileSync(OUT, JSON.stringify(items, null, 1));
 
+async function uploadCrops() {
+  const r2 = new S3Client({
+    region: 'auto',
+    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY },
+  });
+  const bucket = process.env.R2_BUCKET_NAME || 'sourcelibrary-images';
+  const sources = new Map();
+  for (const c of crops) {
+    if (!sources.has(c.src)) {
+      const r = await fetch(c.src);
+      if (!r.ok) throw new Error(`fetch ${c.src}: ${r.status}`);
+      sources.set(c.src, Buffer.from(await r.arrayBuffer()));
+    }
+    const img = sharp(sources.get(c.src));
+    const { width: W, height: H } = await img.metadata();
+    const [x, y, w, h] = c.box;
+    const left = Math.max(0, Math.floor(x * W)), top = Math.max(0, Math.floor(y * H));
+    const body = await sharp(sources.get(c.src))
+      .extract({ left, top, width: Math.min(W - left, Math.ceil(w * W)), height: Math.min(H - top, Math.ceil(h * H)) })
+      .resize(900, 900, { fit: 'inside', kernel: 'lanczos3' })
+      .jpeg({ quality: 85 })
+      .toBuffer();
+    assertBookScopedKey(c.key, c.bookId, 'build-maya-items');
+    await r2.send(new PutObjectCommand({ Bucket: bucket, Key: c.key, Body: body, ContentType: 'image/jpeg', CacheControl: 'public, max-age=31536000, immutable' }));
+  }
+  console.log(`uploaded ${crops.length} crops`);
+}
+
 if (APPLY) {
+  await uploadCrops();
   const col = db.collection('learn_maya_items');
   const ops = items.map(({ _id, ...doc }) => ({
     updateOne: { filter: { _id }, update: { $set: { ...doc, updated_at: builtAt }, $setOnInsert: { created_at: builtAt } }, upsert: true },

@@ -18,26 +18,29 @@ node --env-file=.env.production.local scripts/learn/build-maya-items.mjs [--appl
 
 | field | meaning |
 |---|---|
-| `rung` | `numeral` · `day-sign` · `word` (glyph captions become a fourth rung once #6903 reports; see `RUNGS` in `src/lib/learn-maya.ts`) |
+| `rung` | `numeral` · `day-sign` · `word` · `study` (glyph captions become a fourth rung once #6903 reports; see `RUNGS` in `src/lib/learn-maya.ts`) |
 | `status` | `live` (in rotation) · `heldout` (the 10-item check only, never revealed) · `retired` |
 | `order` | teaching order inside the rung (numerals: dots-only first, red and zero later) |
-| `prompt` | `{ kind: count \| pick \| gloss, text, options? }` (`options` = the sign + 3 day signs chosen deterministically from the id) |
-| `image` | numeral/day sign: `{ book_id, leaf, codex_page, src, box:[x,y,w,h] normalised on the full leaf, color }`, served through `/api/crop-image` |
+| `prompt` | `{ kind: count \| pick \| gloss, text, options? }`. Day signs: the sign + 3 others; words: the word's `answer.short` + 3 short glosses of words of the same kind (numbers, colours/directions, other), chosen deterministically from the id. `gloss` (typed) is kept for later rungs |
+| `image` | numeral/day sign: `{ book_id, leaf, codex_page, src, box:[x,y,w,h] normalised on the full leaf, color, crop_url }`. `crop_url` is the crop rendered once by the builder to R2 at `learn-maya/<book_id>/<item_id>-<hash>.jpg` (book-scoped, `assertBookScopedKey`); `/api/crop-image` is only the fallback |
 | `word` | `{ headword, form (as spelled in the line), source: { book_id, page_number, title, line (verbatim page text), url } }` |
-| `answer` | numeral `{ value }` (what is PAINTED); day sign `{ sign, coefficient, position }`; word `{ gloss_es (verbatim dictionary OCR), gloss_en (verbatim from the dictionary page's translation), keywords, number }` |
+| `answer` | numeral `{ value }` (what is PAINTED); day sign `{ sign, coefficient, position }`; word `{ short (words of the entry's own English, checked at build), gloss_es (verbatim dictionary OCR), gloss_en (verbatim from the dictionary page's translation), keywords, number }` |
 | `note` | teaching note, e.g. a scribal slip Förstemann corrects |
 | `ai` | `{ reading, confident, model, run }`: numerals and day signs are Opus arm B of `dresden-opus-test` (#6559); words are the site's translation of the dictionary page |
 | `evidence[]` | `{ kind: leaf \| forstemann \| dictionary \| source, label, url, text? }`, page-linked `https://sourcelibrary.org/book/<id>?page=N` |
 | `gold` | `{ is_gold, basis, checked_by_eye }`. Numerals and day signs are gold at build (Förstemann's value or the table arithmetic, every crop checked by eye). Words start not gold; an expert "AI is right" makes an item gold, "AI is wrong" removes gold |
 | `links` | `word_id` (numeral/day sign → its Yucatec word), `numeral_ids` / `day_sign_ids` (word → crops showing it), `glyph_sign` |
 | `review` | the last expert verdict `{ verdict, correction, note, by (user id), at }` |
+| `teach` | the one sentence the reveal leaves behind (bar-and-dot arithmetic, what a day sign's name means in Pío Pérez, how a number word is built) |
 | `provenance` | `{ builder, issue, built_at }` |
+
+**Study cards** (`rung: 'study'`, Derek 2026-10-18): `{ study_for: { rung, sign }, title, text, figures: [{ label, url, crop_url }] }`. Shown once, before a learner first meets the numeral rule (Morley 1915, fig. 39) or the day signs (Landa c. 1566 via Brasseur 1864, p. 204, then per sign Morley fig. 17 beside Landa's drawing, with one sentence on what identifies it). Seen cards are kept in local progress (`studied`). Gold items (numerals, day signs) are not put to the learner for a verdict; only non-gold items (words) ask "Is the AI reading right?".
 
 **Rules the builder enforces:** a gloss is taken from the dictionary page's own text (OCR line and its translation line), never written by hand or by a model; a source line must occur verbatim in that page's text as the reader shows it (tags stripped), or the item is refused. A numeral's `value` is what is painted; where the scribe erred, `note` says so and gives Förstemann's correction.
 
 **Adding items:** measure the box on the leaf, render it and look at it before adding it to `maya-item-sources.json` (a crop that shows a neighbour's dot teaches the wrong number). Day signs need Förstemann's identification for that slot.
 
-Phase 1 bank (2026-10-18): 53 numerals (leaves 27, 32, 41 = codex 48, 53, 62), 36 day signs (leaves 9, 32 = codex 9c, 53), 54 words (Pío Pérez and Motul vol. 1; lines from the Chumayel, the 1913 Chumayel facsimile and a Caste War letter). Ten held out.
+Phase 1 bank (2026-10-18): 22 study cards, 53 numerals (leaves 27, 32, 41 = codex 48, 53, 62), 36 day signs (leaves 9, 32 = codex 9c, 53; one retired: the 9c Cauac carries an X that Morley's key gives to Etznab, so a learner could not square it with the card), 54 words (Pío Pérez and Motul vol. 1; lines from the Chumayel, the 1913 Chumayel facsimile and a Caste War letter). Ten held out.
 
 ## `learn_maya_judgements`
 

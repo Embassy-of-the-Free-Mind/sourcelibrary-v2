@@ -2,6 +2,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import fixtures from '../fixtures/learn-maya-items-6921.json';
 import {
   CHECK_EVERY,
+  asksVerdict,
+  showSenses,
+  studyCardFor,
+  type StudyCard,
   checkDue,
   emptyState,
   gradeAnswer,
@@ -18,7 +22,8 @@ import {
  * scribe miswrote, a day sign, and three dictionary words), not hand-written
  * ones: the gloss keywords are whatever the dictionary page's text produced.
  */
-const items = fixtures as unknown as MayaItem[];
+const items = (fixtures as unknown as (MayaItem | StudyCard)[]).filter((i): i is MayaItem => i.rung !== 'study');
+const cards = (fixtures as unknown as (MayaItem | StudyCard)[]).filter((i): i is StudyCard => i.rung === 'study');
 const get = (id: string) => items.find((i) => i._id === id)!;
 
 describe('gradeAnswer', () => {
@@ -34,15 +39,44 @@ describe('gradeAnswer', () => {
     expect(gradeAnswer(d, 'Manik')).toBe(false);
   });
 
-  it('a gloss matches any sense on the dictionary page, not just the first', () => {
-    // Pío Pérez: "ZAC: the eleventh month ... | White. | A cloud in the eye." In the Chumayel line it means white.
-    expect(gradeAnswer(get('word-zac'), 'white')).toBe(true);
-    expect(gradeAnswer(get('word-cimil'), 'death')).toBe(true);
-    expect(gradeAnswer(get('word-cimil'), 'dying')).toBe(false);
-    expect(gradeAnswer(get('word-ho'), '5')).toBe(true);
-    expect(gradeAnswer(get('word-ho'), 'Merida')).toBe(true);
-    expect(gradeAnswer(get('word-zac'), 'the')).toBe(false);
-    expect(gradeAnswer(get('word-zac'), '')).toBe(false);
+  it('a word is a pick among four short glosses, one of them its own', () => {
+    // Pío Pérez: "ZAC: the eleventh month ... | White." In the Chumayel line it means white.
+    const z = get('word-zac');
+    expect(z.prompt.options).toHaveLength(4);
+    expect(z.prompt.options).toContain('white');
+    expect(gradeAnswer(z, 'white')).toBe(true);
+    expect(gradeAnswer(z, z.prompt.options!.find((o) => o !== 'white')!)).toBe(false);
+  });
+
+  it('a typed gloss (kept for later rungs) matches any sense on the dictionary page', () => {
+    const typed = (id: string) => ({ ...get(id), prompt: { kind: 'gloss' as const, text: '' } });
+    expect(gradeAnswer(typed('word-zac'), 'white')).toBe(true);
+    expect(gradeAnswer(typed('word-cimil'), 'death')).toBe(true);
+    expect(gradeAnswer(typed('word-cimil'), 'dying')).toBe(false);
+    expect(gradeAnswer(typed('word-ho'), '5')).toBe(true);
+    expect(gradeAnswer(typed('word-ho'), 'Merida')).toBe(true);
+    expect(gradeAnswer(typed('word-zac'), 'the')).toBe(false);
+  });
+});
+
+describe('study cards and gold', () => {
+  it('a day sign is preceded by Landa\'s key, then by its own card, each once', () => {
+    const d = get('day-32-day-g4-3'); // Lamat
+    expect(studyCardFor(d, cards, [])?._id).toBe('study-landa');
+    expect(studyCardFor(d, cards, ['study-landa'])?._id).toBe('study-day-lamat');
+    expect(studyCardFor(d, cards, ['study-landa', 'study-day-lamat'])).toBeNull();
+    expect(studyCardFor(get('num-32-up-g2-1'), cards, [])?._id).toBe('study-numerals');
+    expect(studyCardFor(get('word-zac'), cards, [])).toBeNull();
+  });
+
+  it('gold items are not put to the learner for a verdict; words are', () => {
+    expect(asksVerdict(get('num-32-up-g2-1'))).toBe(false);
+    expect(asksVerdict(get('day-32-day-g4-3'))).toBe(false);
+    expect(asksVerdict(get('word-zac'))).toBe(true);
+  });
+
+  it('dictionary sense breaks show as semicolons', () => {
+    expect(showSenses(get('word-cimil').answer.gloss_es!)).toBe('CIMIL: enfermedad; Muerte.');
   });
 });
 
@@ -106,6 +140,7 @@ describe('validateJudgement', () => {
     expect(validateJudgement({ kind: 'check', score: 4, total: 10, answers: [] })).toBeNull();
     expect(validateJudgement({ item_id: 'num-41-pos-l1', answer: '8', correct: true, verdict: 'maybe' })).toBe('bad verdict');
     expect(validateJudgement({ kind: 'check', score: 11, total: 10, answers: [] })).toBe('bad score');
+    expect(validateJudgement({ item_id: 'day-32-day-g4-3', answer: 'Lamat', correct: true, verdict: null })).toBeNull();
   });
 });
 

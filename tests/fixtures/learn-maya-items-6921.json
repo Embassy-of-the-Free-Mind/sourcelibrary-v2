@@ -19,7 +19,8 @@
     0.085,
     0.035
    ],
-   "color": "black"
+   "color": "black",
+   "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/num-32-up-g2-1-5753d76e.jpg"
   },
   "answer": {
    "value": 13
@@ -79,7 +80,8 @@
     0.07,
     0.036
    ],
-   "color": "black"
+   "color": "black",
+   "crop_url": "https://images.sourcelibrary.org/learn-maya/69dfd990220eedf04e13b0cf/day-32-day-g4-3-14e51a2d.jpg"
   },
   "answer": {
    "sign": "Lamat",
@@ -124,8 +126,14 @@
   "order": 116,
   "status": "live",
   "prompt": {
-   "kind": "gloss",
-   "text": "What does this word mean?"
+   "kind": "pick",
+   "text": "What does this word mean?",
+   "options": [
+    "red",
+    "the East",
+    "the west",
+    "white"
+   ]
   },
   "word": {
    "headword": "zac",
@@ -139,6 +147,7 @@
    }
   },
   "answer": {
+   "short": "white",
    "gloss_es": "ZAC: undécimo mes de los indios; empezaba en 1.° de Febrero. | Blanco. | Nube en el ojo.",
    "gloss_en": "ZAC: the eleventh month of the Indians; it began on February 1. | White. | A cloud in the eye.",
    "keywords": [
@@ -187,8 +196,14 @@
   "order": 106,
   "status": "live",
   "prompt": {
-   "kind": "gloss",
-   "text": "What does this word mean?"
+   "kind": "pick",
+   "text": "What does this word mean?",
+   "options": [
+    "illness, death",
+    "sky",
+    "staircase",
+    "wood, tree"
+   ]
   },
   "word": {
    "headword": "cimil",
@@ -202,6 +217,7 @@
    }
   },
   "answer": {
+   "short": "illness, death",
    "gloss_es": "CIMIL: enfermedad, | Muerte.",
    "gloss_en": "CIMIL: illness. | Death.",
    "keywords": [
@@ -251,8 +267,14 @@
   "order": 93,
   "status": "live",
   "prompt": {
-   "kind": "gloss",
-   "text": "What does this word mean?"
+   "kind": "pick",
+   "text": "What does this word mean?",
+   "options": [
+    "eight",
+    "five",
+    "three",
+    "two"
+   ]
   },
   "word": {
    "headword": "ho",
@@ -266,6 +288,7 @@
    }
   },
   "answer": {
+   "short": "five",
    "gloss_es": "HO: cinco. Tambien se llama así la ciudad de Mérida.",
    "gloss_en": "HO: five. The city of Mérida is also called by this name.",
    "keywords": [
@@ -306,5 +329,67 @@
    "glyph_sign": null,
    "numeral_ids": []
   }
+ },
+ {
+  "_id": "study-landa",
+  "rung": "study",
+  "order": 1,
+  "status": "live",
+  "study_for": {
+   "rung": "day-sign",
+   "sign": null
+  },
+  "title": "The twenty day signs",
+  "text": "Bishop Diego de Landa drew these twenty day signs around 1566, each with its name, to show how the Maya counted days. His drawings are the first key to the script.",
+  "figures": [
+   {
+    "label": "Landa, Relación de las cosas de Yucatán (c. 1566), Brasseur ed. 1864, p. 204",
+    "url": "https://sourcelibrary.org/book/69f8c0f74c6a515115aedadd?page=327",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69f8c0f74c6a515115aedadd/study-landa-db390e05.jpg"
+   }
+  ]
+ },
+ {
+  "_id": "study-day-lamat",
+  "rung": "study",
+  "order": 9,
+  "status": "live",
+  "study_for": {
+   "rung": "day-sign",
+   "sign": "Lamat"
+  },
+  "title": "Lamat",
+  "text": "A cross dividing it into four, with a small ring in each quarter.",
+  "figures": [
+   {
+    "label": "Morley (1915), fig. 17: the day signs in the codices, p. 39, l",
+    "url": "https://sourcelibrary.org/book/6abfbf433c453a90d66639d1?page=69",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/6abfbf433c453a90d66639d1/study-day-lamat-morley-014f5b3a.jpg"
+   },
+   {
+    "label": "Landa (c. 1566), Brasseur ed. 1864, p. 204",
+    "url": "https://sourcelibrary.org/book/69f8c0f74c6a515115aedadd?page=327",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/69f8c0f74c6a515115aedadd/study-day-lamat-landa-84ec9d18.jpg"
+   }
+  ]
+ },
+ {
+  "_id": "study-numerals",
+  "rung": "study",
+  "order": 0,
+  "status": "live",
+  "study_for": {
+   "rung": "numeral",
+   "sign": null
+  },
+  "title": "Bar-and-dot numbers",
+  "text": "A dot is one and a bar is five. Up to 19, a number is bars with dots above them. The shell sign is zero.",
+  "figures": [
+   {
+    "label": "Morley, An Introduction to the Study of the Maya Hieroglyphs (1915), fig. 39, p. 88",
+    "url": "https://sourcelibrary.org/book/6abfbf433c453a90d66639d1?page=122",
+    "crop_url": "https://images.sourcelibrary.org/learn-maya/6abfbf433c453a90d66639d1/study-numerals-dbe47db5.jpg"
+   }
+  ]
  }
 ]

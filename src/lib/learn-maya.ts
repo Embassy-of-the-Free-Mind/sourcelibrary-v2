@@ -46,7 +46,7 @@ export interface MayaItem {
   order: number;
   status: 'live' | 'heldout' | 'retired';
   prompt: { kind: 'count' | 'pick' | 'gloss'; text: string; options?: string[] };
-  image?: { book_id: string; leaf: number; codex_page: number; src: string; box: [number, number, number, number]; color: string };
+  image?: { book_id: string; leaf: number; codex_page: number; src: string; box: [number, number, number, number]; color: string; crop_url?: string };
   word?: {
     headword: string;
     form: string;
@@ -57,6 +57,7 @@ export interface MayaItem {
     sign?: string;
     coefficient?: number;
     position?: number;
+    short?: string;
     gloss_es?: string;
     gloss_en?: string;
     keywords?: string[];
@@ -71,11 +72,38 @@ export interface MayaItem {
   links: { word_id?: string; numeral_ids?: string[]; day_sign_ids?: string[]; glyph_sign?: string | null };
 }
 
+/**
+ * A printed key shown once, before a learner first meets the numeral rule or a
+ * day sign: Morley (1915) and Landa (c. 1566), cropped from their pages.
+ */
+export interface StudyCard {
+  _id: string;
+  rung: 'study';
+  order: number;
+  study_for: { rung: Rung; sign: string | null };
+  title: string;
+  text: string;
+  figures: { label: string; url: string; crop_url: string }[];
+}
+
+/** The card a learner should see before this item, or null if they have seen them all. */
+export function studyCardFor(item: MayaItem, cards: StudyCard[], studied: string[]): StudyCard | null {
+  const wanted = cards.filter((c) => c.study_for.rung === item.rung && (c.study_for.sign === null || c.study_for.sign === item.answer.sign));
+  return wanted.sort((a, b) => a.order - b.order).find((c) => !studied.includes(c._id)) ?? null;
+}
+
+/** Gold items carry a checked answer (Förstemann, the arithmetic, an expert): a beginner is not asked to judge them. */
+export const asksVerdict = (item: MayaItem) => !item.gold?.is_gold;
+
+/** Dictionary text marks sense breaks with "|"; show them as semicolons. */
+export const showSenses = (t: string) => t.replace(/[.,;]?\s*\|\s*/g, '; ');
+
 export type Verdict = 'agree' | 'disagree' | 'unsure';
 export const VERDICTS: Verdict[] = ['agree', 'disagree', 'unsure'];
 
-/** Crop through the public crop route; the box is normalised on the full leaf. */
+/** The pre-rendered crop (R2), else the public crop route; the box is normalised on the full leaf. */
 export function cropUrl(image: NonNullable<MayaItem['image']>): string {
+  if (image.crop_url) return image.crop_url;
   const [x, y, w, h] = image.box;
   const q = new URLSearchParams({ url: image.src, x: String(x), y: String(y), w: String(w), h: String(h), padding: '0.004' });
   return `/api/crop-image?${q.toString()}`;
@@ -88,7 +116,7 @@ export function gradeAnswer(item: MayaItem, answer: string): boolean {
   const a = answer.trim();
   if (!a) return false;
   if (item.rung === 'numeral') return Number(a) === item.answer.value;
-  if (item.prompt.kind === 'pick') return a === (item.answer.sign ?? '');
+  if (item.prompt.kind === 'pick') return a === (item.answer.sign ?? item.answer.short ?? '');
   const keys = (item.answer.keywords ?? []).map(norm);
   const words: string[] = norm(a).match(/\p{L}{3,}|\d+/gu) ?? [];
   if (item.answer.number != null && words.includes(String(item.answer.number))) return true;
@@ -105,6 +133,7 @@ export interface LocalState {
   seen: Record<string, SeenState>;
   checks: CheckResult[];
   checkSkippedAt: number | null;
+  studied: string[];
 }
 
 export const CHECK_EVERY = 50;
@@ -113,14 +142,14 @@ export const CHECK_SIZE = 10;
 const RETURN_AFTER = [4, 12, 40];
 
 export function emptyState(): LocalState {
-  return { v: 1, seq: 0, seen: {}, checks: [], checkSkippedAt: null };
+  return { v: 1, seq: 0, seen: {}, checks: [], checkSkippedAt: null, studied: [] };
 }
 
 export function parseState(raw: string | null): LocalState {
   if (!raw) return emptyState();
   try {
     const s = JSON.parse(raw);
-    if (s?.v === 1 && typeof s.seq === 'number' && s.seen && Array.isArray(s.checks)) return { checkSkippedAt: null, ...s };
+    if (s?.v === 1 && typeof s.seq === 'number' && s.seen && Array.isArray(s.checks)) return { checkSkippedAt: null, studied: [], ...s };
   } catch { /* fall through */ }
   return emptyState();
 }
@@ -192,7 +221,8 @@ export function validateJudgement(body: unknown): string | null {
     return null;
   }
   if (typeof b.item_id !== 'string' || !/^[A-Za-z0-9-]{3,60}$/.test(b.item_id)) return 'bad item_id';
-  if (!VERDICTS.includes(b.verdict as Verdict)) return 'bad verdict';
+  // null: a gold item, where the learner answered but was not asked to judge.
+  if (b.verdict !== null && !VERDICTS.includes(b.verdict as Verdict)) return 'bad verdict';
   if (typeof b.answer !== 'string' || b.answer.length > 200) return 'bad answer';
   if (typeof b.correct !== 'boolean') return 'bad correct';
   if (b.correction != null && (typeof b.correction !== 'string' || b.correction.length > 500)) return 'bad correction';
