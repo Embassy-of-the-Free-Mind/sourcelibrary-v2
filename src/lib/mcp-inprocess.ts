@@ -71,7 +71,12 @@ function routeFor(path: string): (() => Promise<Handler>) | undefined {
   if (path in ROUTES) return ROUTES[path];
   const m = BOOK_SEARCH.exec(path);
   if (!m) return undefined;
-  const id = decodeURIComponent(m[1]);
+  let id: string;
+  try {
+    id = decodeURIComponent(m[1]);
+  } catch {
+    return undefined; // a malformed %-escape: over HTTP, which answers it as before
+  }
   return async () => {
     const { GET } = await import('@/app/api/books/[id]/search/route');
     return (request) => GET(request, { params: Promise.resolve({ id }) });

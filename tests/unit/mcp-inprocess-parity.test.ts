@@ -168,6 +168,13 @@ describe('MCP search tools: in-process output is byte-identical to the HTTP self
     expect(fetched).toHaveLength(0);
   });
 
+  it('a book_id the route could not be handed (a slash, a malformed %-escape) goes over HTTP, as before', async () => {
+    const { inProcessEnabled } = await import('@/lib/mcp-inprocess');
+    expect(inProcessEnabled('/books/abc/search')).toBe(true);
+    expect(inProcessEnabled('/books/%E0%A4%A/search')).toBe(false);
+    expect(inProcessEnabled('/books/a/b/search')).toBe(false);
+  });
+
   it('answers a repeat from the 60 s cache, but never caches a no-store (partial) answer', async () => {
     const a = await callTool('search_concept', { query: 'repeat me' });
     const b = await callTool('search_concept', { query: 'repeat me' });
