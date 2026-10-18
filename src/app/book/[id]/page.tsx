@@ -90,7 +90,7 @@ import { displayablePriorPicks } from '@/lib/ft-prior-guard';
 import type { PriorTranslationCredit, TranslationVerification } from '@/lib/types/book';
 import { getEffectiveByline } from '@/lib/byline';
 import AuthorName from '@/components/AuthorName';
-import { localePath, type Locale } from '@/lib/locale-path';
+import { localePath, PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
 import { BOOK_STRINGS, languageName } from '@/lib/book-i18n';
 import { localizedTitle, originalTitleIfDifferent, hasLocalizedEdition } from '@/lib/localized';
 import ReadingLanguagePreference from '@/components/ReadingLanguagePreference';
@@ -2780,7 +2780,8 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
       // unknown. Getting this backwards makes the gate silently never fire.
       hasEdition = doc ? (hasLocalizedEdition(doc as unknown as Record<string, unknown>, lang) ?? false) : null;
     }
-    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}`);
+    // `?lang=` keeps the header in the reader's language on the English page (#6938).
+    if (hasEdition === false) redirect(`/book/${canonicalSlug || id}?lang=${lang}`);
 
     // The proxy canonicalises /book/<id> → /book/<slug>, but its matcher is
     // English-only (`^/book/([^/]+)$`), so the localized twin does it here. Safe
@@ -2828,10 +2829,15 @@ export default async function BookDetailPage({ params, tenantContext, previewPro
 
   return (
     <div className={isEmbedded ? "" : "min-h-screen bg-cream"} lang={lang === 'en' ? undefined : lang}>
-      {/* Migrates a legacy `?lang=es` link to the `/es` twin and sweeps the
-          retired reading-language localStorage key. The language of a page is
-          its URL prefix; nothing is recorded. See src/lib/reading-language.ts. */}
-      {lang === 'en' && <ReadingLanguagePreference />}
+      {/* Sends a carried `?lang=xx` on to the `/xx` edition when this book has
+          one, and sweeps the retired reading-language localStorage key. The
+          language of a page is in its URL; nothing is recorded. See
+          src/lib/reading-language.ts. */}
+      {lang === 'en' && (
+        <ReadingLanguagePreference
+          editions={PREFIXED_LOCALES.filter((l) => hasLocalizedEdition(earlyBook as unknown as Record<string, unknown>, l) === true)}
+        />
+      )}
       {!isEmbedded && <ConditionalSiteHeader variant="dark" />}
 
       {/* Tenant reading rooms (EFM/BPH iframe + subdomains) get a breadcrumb

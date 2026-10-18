@@ -8,7 +8,7 @@ import UserMenu from './UserMenu';
 import LanguageMenu, { HEADER_LANGUAGE_NAME } from './LanguageMenu';
 import SiteMenuPanel from './SiteMenuPanel';
 import { Search, X } from 'lucide-react';
-import { useLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
+import { useChromeLocale, hasLocalizedTwin, localePath, localeHref, canonicalPath, NAV_STRINGS, CHROME_STRINGS, FOOTER_STRINGS, PREFIXED_LOCALES, type NavStrings, type Locale } from '@/lib/i18n';
 import { isGlobalOnlyNavHref } from '@/lib/tenant-global-paths';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useStableSession } from '@/hooks/useStableSession';
@@ -103,7 +103,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
   const searchInputRef = useRef<HTMLInputElement>(null);
   const burgerRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
-  const pathnameLocale = useLocale();
+  const pathnameLocale = useChromeLocale();
   // Prefer the homepage's explicit locale (server-known) over the pathname-
   // derived one (null during static prerender).
   const locale = homeLocale ?? pathnameLocale;

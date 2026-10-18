@@ -1055,6 +1055,7 @@ function ReaderSiteMenu({ onClose, spanishAvailable, nativeLocales = [] }: {
                   <Link
                     key={target}
                     href={target}
+                    hrefLang={code}
                     onClick={onClose}
                     className="h-9 px-5 flex items-center justify-center border font-sans text-[12.5px] no-underline transition-colors"
                     style={active

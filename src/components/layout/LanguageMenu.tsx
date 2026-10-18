@@ -21,7 +21,7 @@ export default function LanguageMenu({ locales, current, pathname, onDark, engli
   pathname: string | null;
   /** On the dark bar or over the hero image: light text, dark dropdown. */
   onDark: boolean;
-  /** This page has no translation: the other languages lead to their homepages, so say so. */
+  /** This page has no translation: the other languages change the menus, not the page, so say so. */
   englishOnly?: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -60,7 +60,7 @@ export default function LanguageMenu({ locales, current, pathname, onDark, engli
       >
         {englishOnly && (
           <p className={`px-4 pt-1.5 pb-2 mb-1 text-xs border-b ${onDark ? 'text-white/55 border-white/10' : 'text-muted border-border-light'}`}>
-            This page is only in English. The other languages open their home page.
+            This page is only in English. Another language keeps the menus in it, and every page that has it.
           </p>
         )}
         {locales.map((l) => (
@@ -70,6 +70,9 @@ export default function LanguageMenu({ locales, current, pathname, onDark, engli
             tabIndex={open ? 0 : -1}
             href={localeHref(l, pathname)}
             hrefLang={l}
+            // A `?lang=` link is this same English page with other chrome: not
+            // a page for a crawler to follow and index (#6938).
+            rel={localeHref(l, pathname).includes('?') ? 'nofollow' : undefined}
             lang={l}
             aria-current={current === l ? 'page' : undefined}
             className={`flex items-center justify-between px-4 py-2 text-sm transition-colors ${

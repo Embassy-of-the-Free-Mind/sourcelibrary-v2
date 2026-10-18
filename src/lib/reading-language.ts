@@ -17,12 +17,18 @@
  * edge-cached HTML"). The store is gone; `clearLegacyReadingLanguage` below
  * exists only to sweep the stale key out of browsers that still carry it.
  *
+ * A `?lang=xx` on an English URL is a different thing: it is IN the address
+ * bar, carried link to link through pages that have no twin (#6938,
+ * `carryLocale` in locale-path.ts). It localizes chrome only.
+ *
  * To resolve the locale of the current page, use `useLocale()`
  * (`src/lib/i18n.ts`) or `localeFromPathname()` (`src/lib/locale-path.ts`).
  */
 
-/** Legacy `?lang=es` links minted before `/es` existed still point at English URLs. */
-export const READING_LANGUAGE_PARAM = 'lang';
+import { carriedLocale, CARRIED_LOCALE_PARAM, localeFromPathname, type PrefixedLocale } from '@/lib/locale-path';
+
+/** The query parameter that names a language on an English URL (#6938, and legacy `?lang=es` links). */
+export const READING_LANGUAGE_PARAM = CARRIED_LOCALE_PARAM;
 
 /** The key the retired preference store used. Read by nothing; only cleared. */
 const LEGACY_STORAGE_KEY = 'sl:reading-language';
@@ -42,20 +48,23 @@ export function clearLegacyReadingLanguage(): void {
 }
 
 /**
- * The `/es` twin of a legacy `?lang=es` URL, or null when there is nothing to
- * migrate. Returns null for paths that are already localized, so this is safe to
- * call unconditionally.
+ * The `/xx` edition of an English URL carrying `?lang=xx`, or null when there
+ * is nothing to move to. `hasEdition` must answer for THIS page from real data
+ * (the book page asks the server): answering from the route registry alone
+ * would loop, because `/xx/book/<id>` 307s a book without that edition back to
+ * `/book/<id>?lang=xx`. Returns null for already-localized paths, so this is
+ * safe to call unconditionally.
  */
 export function legacyLangRedirect(
   pathname: string,
   search: string,
-  hasTwin: (path: string) => boolean,
+  hasEdition: (lang: PrefixedLocale) => boolean,
 ): string | null {
+  const lang = carriedLocale(search);
+  if (!lang || localeFromPathname(pathname) !== 'en') return null;
+  if (!hasEdition(lang)) return null;
   const params = new URLSearchParams(search);
-  if (params.get(READING_LANGUAGE_PARAM) !== 'es') return null;
-  if (pathname === '/es' || pathname.startsWith('/es/')) return null;
-  if (!hasTwin(pathname)) return null;
   params.delete(READING_LANGUAGE_PARAM);
   const rest = params.toString();
-  return `/es${pathname}${rest ? `?${rest}` : ''}`;
+  return `/${lang}${pathname}${rest ? `?${rest}` : ''}`;
 }

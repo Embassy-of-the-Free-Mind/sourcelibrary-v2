@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSession } from 'next-auth/react';
-import { useLocale, FEEDBACK_STRINGS } from '@/lib/i18n';
+import { useChromeLocale, FEEDBACK_STRINGS } from '@/lib/i18n';
 import { useFeedbackImages } from './useFeedbackImages';
 import { FeedbackImageAttach } from './FeedbackImageAttach';
 
@@ -11,7 +11,7 @@ export default function FeedbackWidget({ className, style, initialMessage, label
   const { data: session } = useSession();
   // Explicit props still win — callers that pass copy (the 404 page, a book
   // page's "Request one") are saying something specific, not just labelling.
-  const t = FEEDBACK_STRINGS[useLocale()];
+  const t = FEEDBACK_STRINGS[useChromeLocale()];
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
