@@ -195,8 +195,8 @@ export function EclipseTable() {
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-sm mt-4">
         <dt className="text-muted">Groups counted</dt><dd className="text-primary">{i} of 69{i ? `; the last, group ${cur.n} on Dresden ${cur.page}, is ${cur.days} days` : ''}</dd>
         <dt className="text-muted">Days and months</dt><dd className="font-mono text-primary">{fmt(days)} days, {months} months</dd>
-        <dt className="text-muted">Against the moon</dt><dd className="text-primary">{i ? `${signed(moonDrift, 2)} days from ${months} true lunar months` : '—'}</dd>
-        <dt className="text-muted">In the eclipse season</dt><dd className="text-primary">{i ? `${signed(offsets[i - 1])} days from its middle` : '—'}</dd>
+        <dt className="text-muted">Against the moon</dt><dd className="text-primary">{i ? `${signed(moonDrift, 2)} days from ${months} true lunar months` : '–'}</dd>
+        <dt className="text-muted">In the eclipse season</dt><dd className="text-primary">{i ? `${signed(offsets[i - 1])} days from its middle` : '–'}</dd>
       </dl>
 
       <div className="flex flex-wrap gap-2 mt-4">
