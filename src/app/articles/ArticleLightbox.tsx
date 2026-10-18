@@ -45,6 +45,9 @@ function originalSrc(img: HTMLImageElement): string {
 
 function qualifies(img: HTMLImageElement): boolean {
   if (img.closest('[data-no-lightbox]')) return false;
+  // A picture inside a link is a card (another article, a book): the click
+  // should follow the link, not open the viewer.
+  if (img.closest('a[href]')) return false;
   // Article pictures count even before they load (lazy images measure 0 until then).
   if (img.closest('figure, [data-lightbox-href]')) return true;
   const r = img.getBoundingClientRect();

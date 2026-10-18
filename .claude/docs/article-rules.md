@@ -64,7 +64,7 @@ Most of this is automatic once the page wraps its metadata in `withArticleMeta`;
 - **Link every book you draw on** where you mention it (`/book/<slug>` or `/book/<slug>?page=N`). The "Books in this article" grid is built from those links.
 - **No "The books" list at the end.** The grid replaces it. A short source note (whose translation, what is cited from outside the library) can stay as a small paragraph.
 - A book the article relies on but never links in the text goes in `src/app/articles/<slug>/books.ts` as `EXTRA_BOOKS` (see the Maya article).
-- After adding or editing an article: `node scripts/maintenance/generate-article-books.mjs` and `node scripts/maintenance/generate-article-heroes.mjs`. `tests/blog-posts.test.ts` fails if either generated file is stale.
+- After adding or editing an article: `node scripts/maintenance/generate-article-books.mjs` and `node scripts/maintenance/generate-article-heroes.mjs`. `tests/blog-posts.test.ts` fails if either generated file is stale. Then `node scripts/maintenance/generate-article-hero-files.mjs`, which makes the hero as static AVIF files so it shows at once (without it, a new hero waits on the image optimiser's first conversion, 0.5 to 2 s).
 
 ## The listing entry (posts.ts)
 

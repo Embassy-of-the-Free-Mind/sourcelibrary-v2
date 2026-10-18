@@ -11,16 +11,20 @@ const OVERSCAN = 120;
 
 /**
  * A hero picture that drifts slightly slower than the page as you scroll, as
- * on /articles. Fills its positioned parent; off for reduced motion. Served
- * through the image optimiser at screen width when the host allows it (heroes
- * are often full page scans of several megabytes). `placeholder` is a tiny
- * blurred copy (src/generated/article-hero-placeholders.json) shown at once
- * while a cold optimiser request, about a second, is still encoding.
+ * on /articles. Fills its positioned parent; off for reduced motion.
  *
- * Quality 60: the hero sits under a dark gradient and the title, so the
- * difference from 75 doesn't show, and the file is about a third smaller.
+ * `srcset` is the hero made ahead of time as static AVIF files
+ * (scripts/maintenance/generate-article-hero-files.mjs), served straight from
+ * the CDN: the optimiser converts on first request, which kept the hero blank
+ * for 0.5 to 2 s on a cold article. Without it, the picture goes through the
+ * optimiser at screen width when the host allows it (heroes are often full
+ * page scans of several megabytes). Quality 60 there: the hero sits under a
+ * dark gradient and the title, so the difference from 75 doesn't show.
+ *
+ * The picture's own background is the hero's dark colour, so the frame is dark
+ * rather than pale for the moment before it paints.
  */
-export default function ParallaxImage({ src, alt, placeholder }: { src: string; alt: string; placeholder?: string }) {
+export default function ParallaxImage({ src, alt, srcset }: { src: string; alt: string; srcset?: { src: string; w: number }[] }) {
   const img = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -40,9 +44,25 @@ export default function ParallaxImage({ src, alt, placeholder }: { src: string; 
     };
   }, []);
 
-  const className = 'absolute inset-x-0 w-full object-cover will-change-transform';
+  const className = 'absolute inset-x-0 w-full object-cover will-change-transform bg-[#2a1f17]';
   const style = { top: -OVERSCAN, height: `calc(100% + ${OVERSCAN * 2}px)` };
 
+  if (srcset?.length) {
+    return (
+      /* eslint-disable-next-line @next/next/no-img-element */
+      <img
+        ref={img}
+        src={srcset[0].src}
+        srcSet={srcset.map((f) => `${f.src} ${f.w}w`).join(', ')}
+        sizes="100vw"
+        alt={alt}
+        fetchPriority="high"
+        decoding="async"
+        className={className}
+        style={style}
+      />
+    );
+  }
   if (optimisable(src)) {
     return (
       <Image
@@ -54,7 +74,6 @@ export default function ParallaxImage({ src, alt, placeholder }: { src: string; 
         sizes="100vw"
         quality={60}
         priority
-        {...(placeholder ? { placeholder: 'blur' as const, blurDataURL: placeholder } : {})}
         className={className}
         style={{ ...style, width: '100%' }}
       />
@@ -68,7 +87,7 @@ export default function ParallaxImage({ src, alt, placeholder }: { src: string; 
       alt={alt}
       fetchPriority="high"
       className={className}
-      style={placeholder ? { ...style, backgroundImage: `url(${placeholder})`, backgroundSize: 'cover' } : style}
+      style={style}
     />
   );
 }
