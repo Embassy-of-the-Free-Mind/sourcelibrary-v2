@@ -15,6 +15,7 @@ import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
 import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
 import ScrollReveal from "@/components/layout/ScrollReveal";
+import PageStatusBar from "@/components/layout/PageStatusBar";
 
 
 
@@ -169,6 +170,7 @@ export default async function RootLayout({
           <ScrollReveal />
           <ConditionalFooter />
           <SiteModeIndicator />
+          <PageStatusBar />
         </Providers>
         <ClientToaster />
         <CookieConsent />

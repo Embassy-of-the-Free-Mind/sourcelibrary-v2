@@ -3,6 +3,7 @@ import { withBotId } from 'botid/next/config';
 import { withPostHogConfig } from '@posthog/nextjs-config';
 import collectionRedirects from './src/lib/collection-redirects.json';
 import { CSP_IMG_SRC } from './src/lib/csp-img-hosts';
+import { pageStatusSources } from './src/lib/page-status';
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
@@ -378,6 +379,17 @@ const nextConfig: NextConfig = {
         source: '/account',
         headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
       },
+      // Internal, draft and archived pages (src/lib/page-status.ts) are served
+      // to admins only, so Cloudflare must never keep a copy and search engines
+      // must never index one. Last in the list so they override the 24h
+      // CDN rules above for the same path.
+      ...pageStatusSources().map((source) => ({
+        source,
+        headers: [
+          { key: 'CDN-Cache-Control', value: 'private, no-store' },
+          { key: 'X-Robots-Tag', value: 'noindex' },
+        ],
+      })),
     ];
   },
   async rewrites() {

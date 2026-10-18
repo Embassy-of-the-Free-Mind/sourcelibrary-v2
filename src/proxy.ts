@@ -20,6 +20,9 @@ import { isForgedChrome, FORGED_CHROME_RESPONSE } from '@/lib/client-hint-gate';
 import { classifyAgentRequest, recordAgentRequest } from '@/lib/agent-requests';
 import { logBotRead, bookSegmentFromPath } from '@/lib/bot-reads';
 import { isTrustedByUserAgent } from '@/lib/bot-gate';
+import { getToken } from 'next-auth/jwt';
+import { pageStatusFor } from '@/lib/page-status';
+import { pageStatusDecision } from '@/lib/page-status-gate';
 
 // Precomputed variant-slug → canonical-slug map for /author URL dedup (#2250).
 // Bundled because the proxy runs at the edge with no DB access; regenerate with
@@ -821,6 +824,35 @@ export async function proxy(request: NextRequest) {
   const aliasPolicy = aliasPolicyForHost(host);
   if (aliasPolicy && shouldRedirectToCanonical(pathname, aliasPolicy)) {
     return NextResponse.redirect(canonicalUrl(pathname, request.nextUrl.search), 308);
+  }
+
+  // --- Page states: internal / draft / archived (src/lib/page-status.ts) ---
+  // Listed pages are admins-only; everyone else is redirected. Decided here,
+  // not in the page, because the pages are ISR and a role check there would
+  // need headers() (dynamic rendering) — and because a redirect() inside a
+  // streamed page commits a 200 first. The session token is only decoded for
+  // a listed path, so live pages pay nothing. Targets are paths on the
+  // request's own host, so a partner subdomain is never redirected off itself.
+  // Noindex and no-CDN-caching for listed pages are set in next.config.ts.
+  if (pageStatusFor(pathname)) {
+    const secureCookie = request.cookies.has('__Secure-authjs.session-token');
+    const cookieName = secureCookie ? '__Secure-authjs.session-token' : 'authjs.session-token';
+    const token = request.cookies.has(cookieName)
+      ? await getToken({ req: request, secret: process.env.AUTH_SECRET, secureCookie, cookieName, salt: cookieName }).catch(() => null)
+      : null;
+    const decision = pageStatusDecision(pathname, { signedIn: Boolean(token), role: token?.role });
+    if (decision.action !== 'pass') {
+      // clone() keeps the request's host, as the other on-host redirects here do.
+      const target = request.nextUrl.clone();
+      const [targetPath, targetQuery] = decision.path.split('?');
+      target.pathname = targetPath;
+      target.search = targetQuery ? `?${targetQuery}` : '';
+      const response = NextResponse.redirect(target, 307);
+      response.headers.set('Cache-Control', 'private, no-store');
+      response.headers.set('CDN-Cache-Control', 'private, no-store');
+      response.headers.set('X-Robots-Tag', 'noindex');
+      return response;
+    }
   }
 
   // --- Canonical author URL redirect (#2250) ---
