@@ -439,17 +439,6 @@ export default function OneSentenceOfHermesPage() {
           passage above.
         </PageFigure>
 
-        <div className="mx-auto max-w-lg">
-          <PageFigure
-            src={`${DIR}/1593-secunda.jpg`}
-            alt="Patrizi 1593: “Æternitas quę ſecunda eſt ex ſenſibili mundo”."
-            href={`${BOOK.patrizi}?page=164`}
-            source={SRC.patrizi}
-          >
-            The same word, the same long s.
-          </PageFigure>
-        </div>
-
         <p className="text-secondary leading-relaxed mb-6">
           All five printed editions whose scans we checked print <em>secunda</em>, with the long s. Our OCR read
           four of them as <em>fecunda</em>, &ldquo;fruitful&rdquo;, and our translations follow it. It read the fifth

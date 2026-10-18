@@ -157,16 +157,6 @@ export default function TreesOfLifePage() {
           leaves are the Vedic hymns.
         </p>
 
-        <Fig
-          src="https://images.sourcelibrary.org/artwork/art-tree-of-life-fludd-1.jpg"
-          alt="Fludd’s inverted tree: the Tetragrammaton along the trunk, the sefirot as branches, the angelic orders as roots"
-          href="/artwork/tree-of-life-fludd-1"
-          source={<>Robert Fludd, <em>Utriusque Cosmi Historia</em> (1621)</>}
-          credit={<>Wikimedia Commons, public domain.</>}
-        >
-          The four letters of the divine name run down the trunk.
-        </Fig>
-
         <Section id="norse">Norse: Yggdrasil</Section>
 
         <p className={p}>
@@ -434,24 +424,14 @@ export default function TreesOfLifePage() {
           deity before a tree recurs across the codices of the Borgia group.
         </p>
 
-        <Pair>
-          <PageFigure
+        <Fig
             src={`${IMG}/codex-laud-25.jpg`}
             alt="A deity seated before a blue tree with flowering branches, day signs below"
             href="/book/codex-laud-260-day-tonalpohualli-cycle-with-ritual-mesoamerican?page=25"
             source={<em>Codex Laud</em>}
           >
             A deity before a flowering tree.
-          </PageFigure>
-          <PageFigure
-            src={`${IMG}/codex-laud-24.jpg`}
-            alt="A deity enthroned before a brown tree, with a parrot and day signs below"
-            href="/book/codex-laud-260-day-tonalpohualli-cycle-with-ritual-mesoamerican?page=24"
-            source={<em>Codex Laud</em>}
-          >
-            A deity enthroned before a tree, with a parrot.
-          </PageFigure>
-        </Pair>
+        </Fig>
 
         <Section id="eden">Eden, the Cross and the Tree of Jesse</Section>
 
@@ -461,23 +441,14 @@ export default function TreesOfLifePage() {
           tree of life, and Revelation 22 returns it to the end of the Bible, beside the river of the heavenly city.
         </p>
 
-        <Pair>
-          <PageFigure
+        <Fig
             src={`${IMG}/speculum-fall.jpg`}
             alt="Woodcut: Adam and Eve holding fruit on either side of a tree whose trunk is a serpent with a woman’s head"
             href="/book/speculum-humanae-salvationis-german-spiegel-menschlicher-beh?page=9"
             source={<><em>Spiegel menschlicher Behaltnuss</em> (1476)</>}
           >
             The Fall, with a woman-headed serpent for a trunk.
-          </PageFigure>
-          <PageFigure
-            src={`${IMG}/saenredam-adam-eve.jpg`}
-            alt="Engraving: Adam and Eve standing beside the tree of knowledge, Eve pointing upward"
-            href="/artwork/saenredam-adam-and-eve-before-the-tree-of-knowledge"
-            source={<>Jan Saenredam after Abraham Bloemaert, <em>Adam and Eve before the Tree of Knowledge</em>, engraving</>}
-            credit={<>National Gallery of Art, Washington, CC0.</>}
-          />
-        </Pair>
+        </Fig>
 
         <p className={p}>
           The Tree of Jesse makes a family tree out of Isaiah 11:1, “a rod out of the stem of Jesse”: a vine rises
@@ -553,24 +524,14 @@ export default function TreesOfLifePage() {
           The Waqwaq tree.
         </Fig>
 
-        <Pair>
-          <PageFigure
+        <Fig
             src={`${IMG}/qazwini-waqwaq-1.jpg`}
             alt="Persian painting: a red-trunked tree on a rocky island, small human figures in its branches, animals below"
             href="/book/aja-ib-al-makhluqat-ms-nn-3-74-al-qazwini?page=111"
             source={<>al-Qazwīnī, <em>ʿAjāʾib al-makhlūqāt</em>, Cambridge University Library MS Nn.3.74</>}
           >
             The Waqwaq tree.
-          </PageFigure>
-          <PageFigure
-            src={`${IMG}/qazwini-waqwaq-2.jpg`}
-            alt="Persian painting: a tree whose branches bear human figures, rocks around its foot"
-            href="/book/aja-ib-al-makhluqat-ms-nn-3-74-al-qazwini?page=114"
-            source={<>al-Qazwīnī, <em>ʿAjāʾib al-makhlūqāt</em></>}
-          >
-            A second Waqwaq tree from the same manuscript.
-          </PageFigure>
-        </Pair>
+        </Fig>
 
         <p className={p}>
           The Qur’an (53:14) names a tree at the edge of the seventh heaven, the lote tree of the boundary

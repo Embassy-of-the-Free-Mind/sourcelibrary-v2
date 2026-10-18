@@ -97,7 +97,6 @@ const BOOK_ID = {
   epiphanius: '6a3f035697e91e1768f6a0b5',
   landa: '69f8c0f74c6a515115aedadd',
   florentine: '69dfeba8090ad7d5c33b0f36',
-  paredes: '6acc3ae4c1411f8cc628f4e5',
   motul1: '6acc3d5f230e9a56175cc731',
   motul2: '6acc3d6c230e9a56175ccae2',
   kaua: '6a87102131598d129803de7b',
@@ -417,18 +416,6 @@ export default function PreservedByEnemiesPage() {
           still had to tell people not to be afraid of the old gods.
         </p>
 
-        <div className="mx-auto max-w-md">
-          <PageFigure
-            src={img(BOOK_ID.paredes, 181)}
-            alt="A printed page of Nahuatl sermon text headed Platica decimaseptima mexicana, with Spanish glosses in italic parentheses, among them Hechizeros, Nahuales."
-            href={`${BOOK.paredes}?page=181`}
-            source={<>Ignacio de Paredes, <em>Promptuario manual mexicano</em> (Mexico, 1759)</>}
-          >
-            The seventeenth sermon, printed p. 128. Near the foot of the page the Spanish gloss reads <em>que invoca, consulta,
-            &amp;c. Hechizeros, Nahuales</em>, beside the Nahuatl <em>Nânahualtin</em>.
-          </PageFigure>
-        </div>
-
         <p className={p}>
           Some of these records are less a sermon than a census. Hernando Ruiz de Alarcón&rsquo;s <em>Treatise on the
           Heathen Superstitions</em> (1629) recorded the incantations Nahua healers and farmers used, in Nahuatl with a
@@ -450,17 +437,6 @@ export default function PreservedByEnemiesPage() {
           &ldquo;Bewitched: pulaan yaah yokol&rdquo; (
           <Link href={PAGE.motul2_236}>vol. 2</Link>). Those words will come back.
         </p>
-
-        <div className="mx-auto max-w-md">
-          <PageFigure
-            src={img(BOOK_ID.motul1, 47)}
-            alt="A manuscript dictionary page, folio 20, with Maya headwords beginning ah k and Spanish definitions, each entry ticked in the margin."
-            href={`${BOOK.motul1}?page=47`}
-            source={<><em>Diccionario de Motul</em>, Maya&ndash;Spanish, vol. 1</>}
-          >
-            Folio 20: <em>ah kin: sacerdote</em>, and a few lines below it <em>ah kinyah</em>, the sorcerer who casts lots.
-          </PageFigure>
-        </div>
 
         <h2 className={h2}>Where the parallel breaks</h2>
 

@@ -582,16 +582,6 @@ export default function HyperboreaPage() {
           </Link>
         </P>
 
-        <PageFigure
-          src="/articles/hyperborea/stukeley-prospect-southwest.jpg"
-          alt="Engraving of the standing and fallen stones of Stonehenge, with a shepherd and dog, a couple walking and a man resting on the grass"
-          href="/book/stonehenge-stukeley?page=102"
-          source={<>William Stukeley, <em>Stonehenge</em> (1740)</>}
-          wide
-        >
-          &ldquo;Prospect of Stonehenge from the Southwest.&rdquo;
-        </PageFigure>
-
         <P>
           Several details fit. Britain lies opposite Gaul and is far larger than Sicily. The moon&apos;s rising
           and setting points swing to their extremes and back over 18.6 years, and the four Station Stones at

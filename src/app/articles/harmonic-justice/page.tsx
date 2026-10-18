@@ -73,14 +73,12 @@ const SLUG = {
 // are the same reader page numbers.
 const PAGES = 'https://images.sourcelibrary.org/pages';
 const PAGE_IMG = {
-  aristotle7: `${PAGES}/69b220b356715b0e324732e1/0007.jpg`,
   aristotle584: `${PAGES}/69b220b356715b0e324732e1/0584.jpg`,
   oresme9: `${PAGES}/6991e16bb53cae6bb6024014/0009.jpg`,
   oresme143: `${PAGES}/6991e16bb53cae6bb6024014/0143.jpg`,
   kepler133: `${PAGES}/697d9ca2e930671f09614566/0133.jpg`,
   kepler203: `${PAGES}/697d9ca2e930671f09614566/0203.jpg`,
   kepler204: `${PAGES}/697d9ca2e930671f09614566/0204.jpg`,
-  splendor43: `${PAGES}/6952dbf977f38f6761bc7720/0043.jpg`,
   splendor129: `${PAGES}/6952dbf977f38f6761bc7720/0129.jpg`,
   becher6: `${PAGES}/6a42727728e9db2e39c14050/0006.jpg`,
   smith344: `${PAGES}/69568c79be7c607c5f03d7bb/0344.jpg`,
@@ -208,17 +206,6 @@ export default function HarmonicJusticePage() {
           <em>nomisma</em>,&rdquo; from <em>nomos</em>, custom or law. The measure is a convention, and it holds only
           with respect to need.
         </p>
-
-        <PageFigure
-          src={PAGE_IMG.aristotle7}
-          alt="Contents leaf of the Aldine volume, in Greek and Latin, listing the Ethics to Nicomachus, the Politics, the Economics, the Magna Moralia and the Eudemian Ethics with their numbers of books"
-          href={`${BOOK.aristotle}?page=7`}
-          source={<>Aristotle, <em>Opera</em> vol. 6 (Venice: Aldus, 1495)</>}
-        >
-          The contents leaf of the volume, in Greek and then in Latin: the <em>Ethics</em> to Nicomachus in ten books,
-          the <em>Politics</em> in eight, the <em>Economics</em> in two, the <em>Magna Moralia</em> in two and the
-          ethics to Eudemus in eight.
-        </PageFigure>
 
         <h2 className={h2}>Oresme: the measure belongs to the community</h2>
 
@@ -397,16 +384,6 @@ export default function HarmonicJusticePage() {
           ratio of whole numbers at all, and that is what makes it divine.
         </p>
 
-        <Fig
-          src={IMG(ID.divina, 270)}
-          alt="Woodcut of a many-faced solid shaded with hatching, captioned 'Septuaginta duarum basium solidum'."
-          href={`${BOOK.divina}?page=270`}
-          source={<><em>De divina proportione</em> (Venice, 1509)</>}
-        >
-          One of the woodcut solids after Leonardo&apos;s drawings: the solid of seventy-two faces, &ldquo;Septuaginta
-          duarum basium solidum.&rdquo;
-        </Fig>
-
         <h2 className={h2}>Copernicus at the mint</h2>
 
         <p className={p}>
@@ -569,16 +546,6 @@ export default function HarmonicJusticePage() {
           Stone. Whatever one makes of the chemistry, it is an exact picture of what credit promises: a source that
           gives without being used up.
         </p>
-
-        <PageFigure
-          src={PAGE_IMG.splendor43}
-          alt="Plate VI of Splendor Solis, The Other Parable: inside an ornate architectural frame a man on a ladder picks fruit from a tree into a bag while two robed men talk below; bathers sit in the foreground"
-          href={`${BOOK.splendor}?page=43`}
-          source={<><em>Splendor Solis</em> (London, 1920), plate VI</>}
-        >
-          &ldquo;The Other Parable&rdquo;: a man on a ladder gathers the fruit of a tree into a bag while two men talk
-          beneath it.
-        </PageFigure>
 
         <p className={p}>
           The people who held this picture of metals were not all recluses. Gerard de Malynes was a merchant, an adviser
