@@ -54,19 +54,29 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
     document.documentElement.dataset.siteMenuOpen = '1';
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
-    const onResize = () => setViewport(window.innerHeight * 10000 + window.innerWidth);
-    window.addEventListener('resize', onResize);
     return () => {
       document.body.style.overflow = prev;
       delete document.documentElement.dataset.siteMenuOpen;
       window.scrollTo(0, y);
       document.removeEventListener('keydown', onKey);
-      window.removeEventListener('resize', onResize);
     };
   }, [open, onClose]);
 
-  // Start from the roomiest layout whenever the menu opens or the screen changes.
-  useLayoutEffect(() => { if (open) setLevel(0); }, [open, viewport, linksKey]);
+  // The closed panel is invisible but still laid out, so the fit and the rings
+  // are worked out on page load and on resize, never at the moment of opening.
+  // Measuring on open cost the first open a re-render on a real phone, and the
+  // rings (already animating) arrived ahead of the links; every later open was
+  // smooth. Now the first open is the same as the rest.
+  useEffect(() => {
+    const onResize = () => setViewport(window.innerHeight * 10000 + window.innerWidth);
+    onResize();
+    window.addEventListener('resize', onResize);
+    document.fonts?.ready.then(onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Start from the roomiest layout whenever the screen or the links change.
+  useLayoutEffect(() => { setLevel(0); }, [viewport, linksKey]);
 
   const placeRings = useCallback(() => {
     const rings = ringsRef.current, list = linksRef.current;
@@ -80,11 +90,10 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
   }, []);
 
   useLayoutEffect(() => {
-    if (!open) return;
     const panel = panelRef.current;
     if (panel && level < 2 && panel.scrollHeight > panel.clientHeight + 1) { setLevel(level + 1); return; }
     placeRings();
-  }, [open, level, viewport, linksKey, placeRings]);
+  }, [level, viewport, linksKey, placeRings]);
 
   const stagger = (i: number) => ({
     transitionDelay: open ? `${160 + i * 40}ms` : '0ms',
@@ -112,7 +121,7 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
         className="absolute pointer-events-none z-0"
         style={{ top: 50, right: -160, width: 420, height: 420 }}
       >
-        {[10, 7, 4].map((r, k) => (
+        {[10, 7, 4].map((r) => (
           <circle
             key={r}
             cx="12"
@@ -123,9 +132,12 @@ export default function SiteMenuPanel({ id, open, onClose, links, search, langua
             strokeWidth="1"
             style={{
               transformOrigin: '12px 12px',
-              transform: open ? 'scale(1)' : 'scale(0.2)',
+              // Same start and fade as the links, so it all arrives together.
+              transform: open ? 'scale(1)' : 'scale(0.94)',
               opacity: open ? 1 : 0,
-              transition: `transform 1.5s cubic-bezier(.2,.8,.2,1) ${open ? k * 100 : 0}ms, opacity .8s`,
+              transition: open
+                ? 'transform 950ms ease-out 160ms, opacity 950ms ease-out 160ms'
+                : 'transform 200ms, opacity 200ms',
             }}
           />
         ))}
