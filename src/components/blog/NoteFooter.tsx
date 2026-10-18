@@ -36,7 +36,7 @@ export default function NoteFooter() {
 
   const rev = (revisions as Record<string, RevisionEntry>)[slug];
   const revisedDate = rev
-    ? new Date(rev.revised).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    ? new Date(rev.revised).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
     : null;
   const sourcePath = rev?.path || `src/app/articles/${slug}/page.tsx`;
 

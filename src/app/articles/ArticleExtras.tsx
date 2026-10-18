@@ -23,7 +23,11 @@ const RELATED_COUNT = 9;
 
 function isoDate(date: string) {
   const t = Date.parse(date);
-  return Number.isNaN(t) ? undefined : new Date(t).toISOString().slice(0, 10);
+  if (Number.isNaN(t)) return undefined;
+  // Read in whatever time zone parsed it, written out as that calendar day:
+  // server (UTC) and browser must render the same string.
+  const d = new Date(t);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 const newestFirst = (a: BlogPost, b: BlogPost) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
