@@ -177,7 +177,8 @@ function fillFor(lessonId: string, sentenceId: string, pool: string[]): Exercise
   if (!s.fill) return null;
   const w = wordById(s.fill)!;
   const blank = w.attest.key === s.key && w.attest.page === s.page ? w.attest.form : w.form;
-  const others = PRONOUNS.includes(w.id) ? PRONOUNS.filter((p) => p !== w.id) : distractors(id, w.id, pool);
+  // A suffix (-pel, -tul) cannot fill a word's slot, so it is never offered there.
+  const others = PRONOUNS.includes(w.id) ? PRONOUNS.filter((p) => p !== w.id) : distractors(id, w.id, pool.filter((o) => !wordById(o)?.form.startsWith('-')));
   return {
     kind: 'fill',
     id,
@@ -348,16 +349,24 @@ export interface Progress {
   srs: LocalState;
   lessons: Record<string, { done: number; at: string }>;
   days: string[];
+  /** Grammar notes already shown (each opens its unit once). */
+  notes: string[];
 }
 
-export const emptyProgress = (): Progress => ({ v: 1, srs: emptyState(), lessons: {}, days: [] });
+export const emptyProgress = (): Progress => ({ v: 1, srs: emptyState(), lessons: {}, days: [], notes: [] });
 
 export function parseProgress(raw: string | null): Progress {
   if (!raw) return emptyProgress();
   try {
     const p = JSON.parse(raw);
     if (p?.v === 1 && p.srs && typeof p.lessons === 'object' && Array.isArray(p.days)) {
-      return { v: 1, srs: parseSrs(JSON.stringify(p.srs)), lessons: p.lessons, days: p.days.filter((d: unknown) => typeof d === 'string') };
+      return {
+        v: 1,
+        srs: parseSrs(JSON.stringify(p.srs)),
+        lessons: p.lessons,
+        days: p.days.filter((d: unknown) => typeof d === 'string'),
+        notes: Array.isArray(p.notes) ? p.notes.filter((n: unknown) => typeof n === 'string') : [],
+      };
     }
   } catch { /* fall through */ }
   return emptyProgress();
@@ -377,10 +386,30 @@ function prevDay(day: string): string {
   return dayOf(new Date(y, m - 1, d - 1));
 }
 
+/** A finished lesson or review keeps the streak for that day. */
+export function markDay(p: Progress, today: string): Progress {
+  return p.days.includes(today) ? p : { ...p, days: [...p.days, today].sort().slice(-400) };
+}
+
 export function completeLesson(p: Progress, lessonId: string, today: string): Progress {
   const prev = p.lessons[lessonId];
-  const days = p.days.includes(today) ? p.days : [...p.days, today].sort().slice(-400);
-  return { ...p, days, lessons: { ...p.lessons, [lessonId]: { done: (prev?.done ?? 0) + 1, at: today } } };
+  return { ...markDay(p, today), lessons: { ...p.lessons, [lessonId]: { done: (prev?.done ?? 0) + 1, at: today } } };
+}
+
+/** Merge the server's log into this device's progress: the longer attempt history wins; days, lessons and notes are unioned. */
+export function mergeProgress(local: Progress, remote: Progress): Progress {
+  const base = remote.srs.seq > local.srs.seq ? remote : local;
+  const lessons = { ...remote.lessons };
+  for (const [id, l] of Object.entries(local.lessons)) {
+    const r = lessons[id];
+    lessons[id] = r ? { done: Math.max(r.done, l.done), at: r.at > l.at ? r.at : l.at } : l;
+  }
+  return {
+    ...base,
+    lessons,
+    days: [...new Set([...local.days, ...remote.days])].sort().slice(-400),
+    notes: [...new Set([...local.notes, ...remote.notes])],
+  };
 }
 
 /** Days in a row with a finished lesson or review, ending today (or yesterday, if today is not done yet). */

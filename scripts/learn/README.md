@@ -72,3 +72,31 @@ The next rung is `glyph` (add it to `RUNGS` in `src/lib/learn-maya.ts`; the page
 - show the AI's guess as its reading, and keep its measured accuracy off the page; use it to route items to the expert queue (an item from a weak arm goes to the queue on the first learner dispute, or before any);
 - published readings (e.g. Vail & Hernández) are private answer keys only: never shown, quoted or stored in `learn_maya_items`;
 - gold for a glyph item comes from an expert verdict, not from the build.
+
+---
+
+# /learn/yucatec: the Yucatec course (#6921)
+
+**Read this when:** changing `/learn/yucatec`, `src/lib/learn-yucatec.ts`, `build-yucatec-course.mjs`, its sources file, or `learn_yucatec_proposals`.
+
+A short-daily-lesson course (units of 4–6 lessons, 8–12 exercises each) built from real lines in Berendt's *Cartilla* (1871), Ruz's *Cartilla* (1845) and Beltrán's *Declaración* (1860), glossed from Pío Pérez, the Motul and Beltrán's *Coordinación*, with one grammar note per unit from Beltrán's *Arte* (1859) and Tozzer (1921).
+
+**The course is a file, not a collection:** `src/data/learn-yucatec-course.json`, written only by
+
+```
+node --env-file=.env.production.local scripts/learn/build-yucatec-course.mjs [--write]
+```
+
+from `scripts/learn/yucatec-course-sources.json`. The builder refuses (exit 1) any sentence not found verbatim in its page's OCR, any English not in the page's translation, any Spanish not on the page, any gloss whose short English is not in the dictionary entry's own translation, and any sentence or word whose page has no entry in `page_checks` (the record that the page IMAGE was read). Dictionary entries are pulled whole (OCR line + translation line) from the `head` regex; `es_excerpt`/`en_excerpt` take a clause from a long Motul line.
+
+| sources field | meaning |
+|---|---|
+| `page_checks["key:page"]` | what was seen on the page image, and where it differs from the OCR (line-break hyphens, a barred letter) |
+| `words[]` | `{ id: yw-*, form, short, dict: { key, page, head }, attest: { key, page, text, form? }, note?, note_ref?, number?, dresden? (a learn_maya_items numeral id), keywords? }` |
+| `sentences[]` | `{ id: ys-*, key, page, maya (as transcribed), show? (hyphens joined, with show_note), es?, en, words, tiles?, rule?, fill? (word id) or fill_text? }` |
+| `notes[]` | `{ id: yn-*, title, body, quotes: [{ key, page, es?, en }], table? }` |
+| `units[]` | `{ id, n, title, note, lessons: [{ id: yl-u-n, title, new, review?, sentences }] }` |
+
+**Modern forms.** Every word carries `modern: null`. A word shows a modern form only when `modern = { form, confirmed_by, date }` is filled (set in the built file by a reviewed change after a speaker confirms; `modernForm()`). Signed-in learners propose forms on a word's card: `POST /api/learn/yucatec/proposals` → `learn_yucatec_proposals` `{ word_id, form, place, note, learner, status: 'pending', created_at }`. Untrusted text; never shown; no job reads it today.
+
+**Attempts.** Signed-in answers go to `learn_maya_judgements` with `kind: 'yucatec'` (`item_id`, `answer`, `correct`, `exercise`, `lesson_id`) or `kind: 'yucatec-lesson'` (`lesson_id`, `day`), learner = session user id. The glyph expert queue reads only `kind: 'judgement'`, so it never sees these. `GET /api/learn/yucatec/attempts` returns the learner's own log, replayed through `recordAttempt` (learn-maya) to rebuild the review queue on another device. Signed out: `localStorage` `sl-learn-yucatec-v1`, never sent.

@@ -122,6 +122,16 @@ describe('buildLesson', () => {
   });
 });
 
+describe('fill blanks', () => {
+  it('never offer a suffix where a whole word goes', () => {
+    for (const l of allLessons()) {
+      for (const e of buildLesson(l.id)) {
+        if (e.kind === 'fill' && !sentenceById(e.sentence)!.fill_text) for (const o of e.options) expect(o.text.startsWith('-'), e.id).toBe(false);
+      }
+    }
+  });
+});
+
 describe('grading and explanations', () => {
   const lesson = buildLesson('yl-1-1');
   const pick = lesson.find((e) => e.kind === 'pick' && e.word === 'yw-bix') as Extract<Exercise, { kind: 'pick' }>;
