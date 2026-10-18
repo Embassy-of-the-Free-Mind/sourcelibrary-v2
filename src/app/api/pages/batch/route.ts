@@ -4,6 +4,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { markPageForReader } from '@/lib/provenance';
 import { gatePagesForRequest } from '@/lib/metered-gate';
 import { meteredReaderEnabled } from '@/lib/free-preview';
+import { poolRefFor } from '@/lib/suspected-pool';
 
 export const preferredRegion = 'fra1';
 
@@ -49,15 +50,18 @@ export async function POST(request: NextRequest) {
     pages = await gatePagesForRequest(db, request, pages, { exempt: !!tenantId });
 
     // Strip MongoDB _id; weave the reader-path provenance mark into each
-    // translation. Deterministic (content-keyed, no ref), so the shared
-    // s-maxage cache below serves identical bytes to every caller.
-    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest));
+    // translation. Deterministic (content-keyed, no ref) for readers, so the
+    // shared s-maxage cache below serves identical bytes to every caller. A
+    // flagged proxy pool also gets its extraction ref (#6950) and a
+    // private, no-store response.
+    const ref = await poolRefFor(request);
+    const cleaned = pages.map(({ _id, ...rest }) => markPageForReader(rest, undefined, { ref }));
 
     // With metering on, the body depends on who asked (session vs anon) —
     // never let a shared cache serve one caller's variant to another. POSTs
     // aren't CDN-cached today, so this is belt and braces, not a behavior
     // change for the flag-off default.
-    const cacheControl = meteredReaderEnabled()
+    const cacheControl = ref || meteredReaderEnabled()
       ? 'private, no-store'
       : 'public, max-age=0, s-maxage=60, stale-while-revalidate=300';
 
