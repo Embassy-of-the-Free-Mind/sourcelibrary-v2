@@ -26,6 +26,23 @@ function backend(url: string): { status: number; body: unknown; cacheControl: st
   const q = u.searchParams.get('q') || '';
   if (q === 'server error please') return { status: 500, body: { error: 'Search failed', message: 'boom' }, cacheControl: 'public, s-maxage=10' };
   const n = (q.length % 5) + 3;
+  // /books/<id>/search (search_within_book): its own body shape, and no Cache-Control, as the route sends.
+  if (/^\/api\/books\/[^/]+\/search$/.test(u.pathname)) {
+    return {
+      status: 200,
+      cacheControl: '',
+      body: {
+        query: q, lang: u.searchParams.get('lang') || 'en', total: n * 2, returned: n, ocrPages: 1, translationPages: n - 1,
+        front_matter_results: q.includes('preface') ? 1 : 0,
+        ...(q.includes('blind') ? { semantic_coverage: { status: 'none', embedded_pages: 0, translated_pages: 40, caveat: 'not embedded' } } : {}),
+        results: Array.from({ length: n }, (_, i) => ({
+          pageId: `p${i}`, pageNumber: i * 3 + 1, score: 1 - i / 10, found_by: i % 3 ? 'keyword' : 'both',
+          matches: [{ field: i % 2 ? 'ocr' : 'translation', snippet: `${ZW}…${q} at ${i}…`, position: i }],
+          ...(q.includes('preface') && i === n - 1 ? { is_front_matter: true, reason: 'roman-pagination' } : {}),
+        })),
+      },
+    };
+  }
   const semantic = u.pathname.endsWith('/semantic');
   const results = Array.from({ length: n }, (_, i) => semantic
     ? {
@@ -54,6 +71,7 @@ function backend(url: string): { status: number; body: unknown; cacheControl: st
 
 const fetched: string[] = [];
 const routed: Array<{ url: string; ua: string | null; xff: string | null; identity: unknown }> = [];
+const bookParams: string[] = [];
 
 vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => {
   const url = String(input);
@@ -71,6 +89,12 @@ const { route } = vi.hoisted(() => ({
 }));
 vi.mock('@/app/api/search/route', () => ({ GET: Object.assign(route, { handler: route }) }));
 vi.mock('@/app/api/search/semantic/route', () => ({ GET: (req: Request) => route(req, undefined) }));
+vi.mock('@/app/api/books/[id]/search/route', () => ({
+  GET: async (req: Request, ctx: { params: Promise<{ id: string }> }) => {
+    bookParams.push((await ctx.params).id);
+    return route(req, undefined);
+  },
+}));
 
 async function callTool(name: string, args: Record<string, unknown>): Promise<string> {
   const { POST } = await import('@/app/api/mcp/route');
@@ -82,7 +106,7 @@ async function callTool(name: string, args: Record<string, unknown>): Promise<st
   return res.text();
 }
 
-// Ten fixed queries across the three tools that moved in-process.
+// Fixed queries across the four tools that moved in-process.
 const QUERIES: Array<[string, Record<string, unknown>]> = [
   ['search_library', { query: 'Paracelsus', limit: 5 }],
   ['search_library', { query: 'emerald tablet', language: 'Latin', year_from: 1500, year_to: 1700, has_translation: true }],
@@ -94,6 +118,11 @@ const QUERIES: Array<[string, Record<string, unknown>]> = [
   ['search_concept', { query: 'memory palace', year_from: 1400, year_to: 1650, max_per_book: 2, diversity: 'off' }],
   ['search_concept', { query: 'daemon', lang: 'de' }],
   ['search_translations', { query: 'server error please' }],
+  ['search_within_book', { book_id: '6993831b84cf5845c644cde3', query: 'agency, judgment, externals' }],
+  ['search_within_book', { book_id: '69ae95b87f0f0e8879510aaf', query: 'βούλει πλούσιόν τινα ποιῆσαι' }],
+  ['search_within_book', { book_id: 'b7', query: 'translator preface', lang: 'fr' }],
+  ['search_within_book', { book_id: 'b8', query: 'blind book' }],
+  ['search_within_book', { book_id: 'b9', query: 'server error please' }],
 ];
 
 describe('MCP search tools: in-process output is byte-identical to the HTTP self-call (#6853)', () => {
@@ -127,6 +156,23 @@ describe('MCP search tools: in-process output is byte-identical to the HTTP self
     expect(routed[0]).toMatchObject({ ua: expect.stringMatching(/^SourceLibrary-MCP\//), xff: CALLER_IP, identity: IDENTITY });
     // The semantic route takes no identity argument; search-log reads it from inprocess-caller.
     expect(routed[1]).toMatchObject({ ua: expect.stringMatching(/^SourceLibrary-MCP\//), xff: CALLER_IP });
+  });
+
+  it('search_within_book hands the route its book id as the dynamic segment, and never caches (the route sends no s-maxage)', async () => {
+    bookParams.length = 0;
+    await callTool('search_within_book', { book_id: '69ae95b87f0f0e8879510aaf', query: 'twice' });
+    await callTool('search_within_book', { book_id: '69ae95b87f0f0e8879510aaf', query: 'twice' });
+    expect(bookParams).toEqual(['69ae95b87f0f0e8879510aaf', '69ae95b87f0f0e8879510aaf']);
+    expect(routed).toHaveLength(2);
+    expect(routed[0]).toMatchObject({ ua: expect.stringMatching(/^SourceLibrary-MCP\//), xff: CALLER_IP });
+    expect(fetched).toHaveLength(0);
+  });
+
+  it('a book_id the route could not be handed (a slash, a malformed %-escape) goes over HTTP, as before', async () => {
+    const { inProcessEnabled } = await import('@/lib/mcp-inprocess');
+    expect(inProcessEnabled('/books/abc/search')).toBe(true);
+    expect(inProcessEnabled('/books/%E0%A4%A/search')).toBe(false);
+    expect(inProcessEnabled('/books/a/b/search')).toBe(false);
   });
 
   it('answers a repeat from the 60 s cache, but never caches a no-store (partial) answer', async () => {

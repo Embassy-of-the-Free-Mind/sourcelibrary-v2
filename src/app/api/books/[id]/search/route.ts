@@ -10,6 +10,7 @@ import { logSearchEvent } from '@/lib/search-event-log';
 import { frontMatterVerdict } from '@/lib/front-matter';
 import { scorePages } from '@/lib/passage-score';
 import { semanticCoverage, type SemanticCoverage } from '@/lib/semantic-coverage';
+import { keywordSearchMode, serveKeywordPages } from '@/lib/keyword-search';
 
 /**
  * How many pages to pull before scoring. The cap must be applied AFTER ranking,
@@ -130,7 +131,7 @@ export async function GET(
     // doc is found we preserve prior behavior (just search pages) rather than 404.
     const gateBook = await db.collection('books').findOne(
       { $or: [{ id: bookId }, { slug: bookId }] },
-      { projection: { id: 1, visible: 1, pages_translated: 1 } }
+      { projection: { id: 1, visible: 1, hidden: 1, pages_count: 1, pages_translated: 1 } }
     );
     if (gateBook && !(await isBookReadable(gateBook, request))) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
@@ -144,6 +145,9 @@ export async function GET(
     const rawKeywordScore = new Map<string, number>();
     /** Semantic relevance — cosine similarity, already 0-1. */
     const rawSemanticScore = new Map<string, number>();
+
+    /** Whether the keyword page service answered the keyword leg (logged with the search). */
+    let keywordLane: 'served' | 'fallback' | undefined;
 
     // Run keyword search and semantic search in parallel
     const [keywordResults, semanticResults] = await Promise.all([
@@ -190,13 +194,50 @@ export async function GET(
           }
         }
 
-        let pages: Record<string, unknown>[];
+        let pages: Record<string, unknown>[] = [];
         let usedAtlas = false;
 
         try {
           // Other spellings of a person the query names (Drebbel → Drebelius); [] otherwise (#5888).
           const nameVariants = await expandPersonNames(trimmedQuery);
-          pages = await db.collection('pages').aggregate([
+          // The keyword page service (#6852, #2049), when it serves /api/search:
+          // the same BM25 over the same two fields, from RAM on Hetzner. A cold
+          // book-filtered Atlas $search took 0.3–5.7 s (p90 4.2 s) on 30 real
+          // calls, almost all of it before the first document came back; the
+          // service answers in tens of ms and the pages are then read by id.
+          // Only for a LIVE book: the service holds no other, and this route
+          // admits a hidden one for an editor. Not on a tenant host. On any
+          // error or timeout, Atlas below, as before.
+          const live = !!gateBook && gateBook.visible === true && Number(gateBook.pages_count) > 0 && gateBook.hidden !== true;
+          if (live && !tenantContext.id && keywordSearchMode() === 'serve') {
+            try {
+              const { r, docs } = await serveKeywordPages(db, {
+                query: trimmedQuery,
+                // A margin for the non-content pages hydration drops, which the
+                // Atlas pool filters before its $limit.
+                k: CANDIDATE_POOL + 50,
+                bookIds: [gateBook.id as string],
+                // The Atlas leg ORs the variants into its one query; the service
+                // asks them as a second list (pages printing a variant), which
+                // follows the main list here as it does in /api/search.
+                variants: nameVariants,
+                variantK: CANDIDATE_POOL,
+                rollup: null,
+              }, { query: matchQuery, variants: nameVariants });
+              const seen = new Set(r.main.map((x) => x.page_id));
+              const order = new Map([...r.main, ...r.variants.filter((x) => !seen.has(x.page_id))].map((x, i) => [x.page_id, i]));
+              pages = docs
+                .filter((d) => order.has(d.id as string))
+                .sort((a, b) => order.get(a.id as string)! - order.get(b.id as string)!)
+                .slice(0, CANDIDATE_POOL);
+              usedAtlas = true; // same shape: searchScore + highlights (synthesized)
+              keywordLane = 'served';
+            } catch (err) {
+              console.warn('[book-search] keyword service failed, using Atlas:', err instanceof Error ? err.message : String(err));
+              keywordLane = 'fallback';
+            }
+          }
+          if (!usedAtlas) pages = await db.collection('pages').aggregate([
             buildPageSearchStage(trimmedQuery, bookId, { nameVariants }),
             { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             // NO { $sort: { page_number: 1 } }, { $limit: 50 }. Atlas returns in
@@ -462,7 +503,7 @@ export async function GET(
     logSearchEvent({
       request, db, query: trimmedQuery, resultsCount: results.length, source: 'book_search',
       tenantId: tenantContext.id || null,
-      filters: { book_id: bookId, lang: textLang },
+      filters: { book_id: bookId, lang: textLang, ...(keywordLane ? { keyword_lane: keywordLane } : {}) },
     });
 
     return NextResponse.json({
