@@ -220,7 +220,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </div>
               <Link
                 href="/catalog"
-                className="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors hidden md:flex"
+                className="hidden md:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
                 <span className="text-xs">&rarr;</span>
@@ -275,9 +275,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </h2>
               <Link
                 href="/catalog?sort=last_translated"
-                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+                className="hidden sm:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
-                {t.browseCatalog} &rarr;
+                {t.browseCatalog}
+                <span className="text-xs">&rarr;</span>
               </Link>
             </div>
             <p className="text-muted mb-6 max-w-2xl">
