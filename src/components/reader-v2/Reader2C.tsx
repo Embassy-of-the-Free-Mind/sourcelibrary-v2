@@ -4018,6 +4018,26 @@ export default function Reader2C({ initialBook, initialPage, initialPageList, qu
             </section>
           )}
 
+          {/* Page turns at the panes' edges, halfway down. The bar's chevrons
+              are 15px glyphs in a corner, and readers looked for a page turn
+              beside the page, where the reader before v2 kept it. Placed on
+              <main>, which does not scroll, so they hold still while a pane
+              scrolls under them; the left one steps clear of an open drawer. */}
+          {prevPage && (
+            <button type="button" aria-label={t.toolbar.previousPage} onClick={r.goPrev}
+              className="absolute top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity"
+              style={{ left: (leftPanel ? leftPanelWidth : 0) + 10, background: 'rgba(36,30,22,0.78)', color: '#fdfcf9', boxShadow: '0 2px 10px rgba(30,20,8,0.35)' }}>
+              <ChevronLeft size={24} />
+            </button>
+          )}
+          {nextPage && (
+            <button type="button" aria-label={t.toolbar.nextPage} onClick={r.goNext}
+              className="absolute top-1/2 -translate-y-1/2 right-2.5 z-30 w-11 h-11 rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity"
+              style={{ background: 'rgba(36,30,22,0.78)', color: '#fdfcf9', boxShadow: '0 2px 10px rgba(30,20,8,0.35)' }}>
+              <ChevronRight size={24} />
+            </button>
+          )}
+
           {/* Left slide-out panel (Contents / Search / Settings) */}
           {leftPanel && isDesktop && (
             <div
