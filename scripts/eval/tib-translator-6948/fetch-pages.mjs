@@ -21,12 +21,12 @@ const out = [];
 for (let i = 0; i < ids.length; i += 200) {
   const pages = await db.collection('pages').find({ id: { $in: ids.slice(i, i + 200) } }, { projection: {
     _id: 0, id: 1, book_id: 1, page_number: 1, page_label: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.pipeline': 1, 'ocr.text_edition': 1,
-    translation_withheld: 1, 'translation.data': 1, archived_photo: 1, display_photo: 1 } }).toArray();
+    translation_withheld: 1, 'translation.data': 1 } }).toArray();
   for (const p of pages) {
     if (p.translation?.data) throw new Error(`${p.id} has English now: not a frame page`);
     const r = { id: p.id, book_id: p.book_id, page_number: p.page_number, ocr: p.ocr?.data || '' };
     if (FULL) Object.assign(r, { page_label: p.page_label || null, ocr_model: p.ocr?.model, ocr_pipeline: p.ocr?.pipeline || null,
-      text_edition: p.ocr?.text_edition || null, withheld: p.translation_withheld || null, image: p.archived_photo || p.display_photo || null });
+      text_edition: p.ocr?.text_edition || null, withheld: p.translation_withheld || null });
     out.push(r);
   }
 }
