@@ -78,6 +78,15 @@ const TEMPERATURE = 0.7;
  * LIBRARIAN_FAST_TOOL_ROUNDS=0 turns it off.
  */
 const FAST_TOOL_ROUNDS_DEFAULT = process.env.LIBRARIAN_FAST_TOOL_ROUNDS !== '0';
+/**
+ * Citation prompt (#6946): the closing Formatting lines rewritten so a page
+ * link goes only where that page states the claim (CITE_PAGES_LINES). Off
+ * unless LIBRARIAN_CITE_PAGES=1. Blind A/B on 40 readers' questions
+ * (scripts/eval/experiments/2026-10-18-librarian-cite-prompt-6946.md):
+ * wrong-page links 26 → 30 (two Opus judges, the gauge's instrument), so the
+ * registered gate failed and the default prompt is unchanged.
+ */
+const CITE_PAGES_DEFAULT = process.env.LIBRARIAN_CITE_PAGES === '1';
 /** Broken slugs we attempt to repair in one turn; the rest are disclaimed. */
 const MAX_REPAIR_SLUGS = 12;
 /** Wall-clock ceiling on the whole repair loop, guarding the turn's deadline. */
@@ -1437,6 +1446,7 @@ function buildSystemPrompt(
   collectionOpts?: { catalog?: string; collectionContext?: string | null },
   lang: Locale = 'en',
   fastToolRounds = false,
+  citePages = false,
 ): string {
   const catalog = collectionOpts?.catalog?.trim();
   const collectionContext = collectionOpts?.collectionContext;
@@ -1455,7 +1465,7 @@ ${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not eve
 `
     : '';
 
-  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds);
+  return buildSystemPromptBody(notebookContext, messageIndex, collectionSection, lang, fastToolRounds, citePages);
 }
 
 /**
@@ -1484,7 +1494,7 @@ Links: the tool results give URLs under \`${base}/book/…\` — copy them exact
 `;
 }
 
-function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false): string {
+export function buildSystemPromptBody(notebookContext: string, messageIndex: number, collectionSection: string, lang: Locale = 'en', fastToolRounds = false, citePages = false): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -1574,11 +1584,23 @@ ${collectionSection}## Formatting
 - Link authors to their author pages ONLY with the author link supplied in the tool results — never a self-built /author/... URL. No tool-supplied link → plain text name.
 - Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)* — slug copied exactly from a tool result this turn, never built from the title
 - Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
-- Make clear when speaking from general knowledge vs. specific texts
+${citePages ? CITE_PAGES_LINES : `- Make clear when speaking from general knowledge vs. specific texts
 - Every paragraph or list item that reports what a book says ends with the link to the page it came from. A reader cannot tell a cited claim from an uncited one unless the link is there.
 - Quotation marks and numbers are claims about a page. Put words in quotation marks only if you read them on a page this turn, and give a measure, sum or count ("280 pounds", "twenty times an hour") only if a page or tool result gave it to you — otherwise paraphrase without quotation marks and leave the number out. Answers are checked against the pages you read after you write them; an unsupported quote loses its quotation marks and an unsupported number loses its sentence.
-- Under every embedded image, write one italic caption line saying what the image is and where it is from: its own book and page, as the tool gave them. Never caption a picture as illustrating something its own book does not say — an athanor from Khunrath's book is Khunrath's athanor, not Drebbel's oven, however closely it resembles it.`;
+- Under every embedded image, write one italic caption line saying what the image is and where it is from: its own book and page, as the tool gave them. Never caption a picture as illustrating something its own book does not say — an athanor from Khunrath's book is Khunrath's athanor, not Drebbel's oven, however closely it resembles it.`}`;
 }
+
+/**
+ * Arm B of the citation-prompt A/B (#6946): the four closing Formatting lines,
+ * rewritten against the failure kinds the per-link judges found (a link to the
+ * book's first hit instead of the page that says it, background dressed as a
+ * page's claim, blockquotes stitched from several pages, captions that add to
+ * the image record). Same slot, same count of lines as the text it replaces.
+ */
+const CITE_PAGES_LINES = `- A page link tells the reader "this page says this". Put one on a sentence or list item only when the text of that page, as you read it this turn, states the claim, and link the page where those words are, not the first page you found in the book. When a paragraph mixes what a page says with background, the link goes on the part the page says.
+- Background you did not read on a page this turn is stated plainly ("historians generally date it to…") with no page link. Never present it as what a book says.
+- Quotation marks and numbers are claims about a page. Quote only words that appear in a tool result this turn, and give a measure, sum or count only if a page or tool result gave it — otherwise paraphrase without quotation marks and leave the number out. A blockquote comes from one page, and its link is that page.
+- Under every embedded image, write one italic caption line: what the tool's record says the image is, and its own book and page. Describe only what the record says: no figure number, name, date or meaning it does not give, and never present it as illustrating another book.`;
 
 // ── Agentic Streaming ─────────────────────────────────────────────────
 
@@ -1591,11 +1613,12 @@ export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
   threadId?: string,
-  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean },
+  options?: { collection?: string | null; lang?: Locale; fastToolRounds?: boolean; citePages?: boolean },
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   const lang: Locale = options?.lang ?? 'en';
   const fastToolRounds = options?.fastToolRounds ?? FAST_TOOL_ROUNDS_DEFAULT;
+  const citePages = options?.citePages ?? CITE_PAGES_DEFAULT;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
   const _t0 = Date.now();
@@ -1618,7 +1641,7 @@ export async function* streamAgenticResponse(
     resolveCollectionSlug(options?.collection),
   ]);
   const notebookContext = formatNotebookForPrompt(notebook);
-  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds);
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex, { catalog, collectionContext }, lang, fastToolRounds, citePages);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
