@@ -341,9 +341,9 @@ const es: HomeStrings = {
   discoverSubtitle: 'Fuentes primarias traducidas de la colección.',
   discoverEmpty: 'Explora la colección para descubrir fuentes primarias traducidas.',
 
-  blogHeading: 'Notas de investigación',
-  blogSubtitle: 'Investigación asistida por IA sobre la colección y su historia',
-  blogAllPosts: 'Todas las entradas',
+  blogHeading: 'Artículos',
+  blogSubtitle: 'Historias, recorridos de lectura, notas de investigación y cosas para probar, a partir de los libros de la biblioteca',
+  blogAllPosts: 'Todos los artículos',
   tagDeepDive: 'Análisis',
   tagCollection: 'Colección',
 
@@ -592,9 +592,9 @@ const nl: HomeStrings = {
 
   // The posts themselves are English, so the heading says so (i18n.md rule 4:
   // what is not in the page's language is labelled, never passed off).
-  blogHeading: 'Onderzoeksnotities (in het Engels)',
-  blogSubtitle: 'Onderzoek naar de collectie en haar geschiedenis, met hulp van AI',
-  blogAllPosts: 'Alle berichten',
+  blogHeading: 'Artikelen (in het Engels)',
+  blogSubtitle: 'Verhalen, leesrondleidingen, onderzoeksnotities en dingen om uit te proberen, uit de boeken van de bibliotheek',
+  blogAllPosts: 'Alle artikelen',
   tagDeepDive: 'Verdieping',
   tagCollection: 'Collectie',
 
@@ -717,7 +717,7 @@ const zh: HomeStrings = {
 
   // The posts themselves are English, so the heading says so (i18n.md rule 4:
   // what is not in the page's language is labelled, never passed off).
-  blogHeading: '研究笔记（英文）',
+  blogHeading: '文章（英文）',
   blogSubtitle: '借助 AI 开展的关于馆藏及其历史的研究',
   blogAllPosts: '全部文章',
   tagDeepDive: '深度解读',
