@@ -340,7 +340,7 @@ export default function ChoreiaPage() {
         >
           &hellip; to those gods whom we said were given to us as fellow-celebrants, a share of rhythm and harmony has
           been granted as a sense; and they move us with pleasure, leading our chorus while coupling us to one another
-          with songs and dances&mdash;which chorus they have named from chara, that is, joy. &hellip; Therefore, one who
+          with songs and dances &hellip; which chorus they have named from chara, that is, joy. &hellip; Therefore, one who
           has never engaged in the chorus must be called destitute of education, whereas one who has done so
           sufficiently is, on the contrary, possessed of education.
         </SourceQuote>
