@@ -269,3 +269,17 @@ describe('plain words and glyphs (Derek, 2026-10-18)', () => {
     }
   });
 });
+
+describe('no AI speak in the course English (Derek, 2026-10-18)', () => {
+  const BANNED = [/\bnot (just|only|merely)\b.*\bbut\b/i, /worth noting/i, /interestingly/i, /\bdelve/i, /tapestry/i, /testament/i, /\bjourney/i, /\bunlock/i, /fascinating/i, /\brich\b/i, /seamless/i, /\brobust/i, /dive in/i, /—/, /!/];
+  const strings = [
+    ...COURSE.notes.flatMap((n) => [n.title, n.body, ...n.examples.map(([, en]) => en)]),
+    ...COURSE.words.flatMap((w) => [w.note ?? '', w.source_note ?? '']),
+    ...COURSE.sentences.flatMap((s) => [s.rule?.text ?? '', s.fill_text?.explain?.text ?? '', s.show_note ?? '']),
+    ...allLessons().map((l) => l.glyph.says),
+  ].filter(Boolean);
+
+  it('no authored string uses a banned phrase, an em dash or an exclamation mark', () => {
+    for (const t of strings) for (const re of BANNED) expect(re.test(t), `${re} in: ${t}`).toBe(false);
+  });
+});

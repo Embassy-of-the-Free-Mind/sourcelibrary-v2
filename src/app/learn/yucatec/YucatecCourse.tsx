@@ -162,7 +162,7 @@ export default function YucatecCourse() {
           ) : (
             <span className="inline-flex items-center justify-center w-28 h-28 yk-pill bg-emerald-600 text-white text-5xl yk-pop">✓</span>
           )}
-          <h1 className="font-serif text-4xl text-primary mt-5">{lesson ? 'Lesson done!' : 'Review done!'}</h1>
+          <h1 className="font-serif text-4xl text-primary mt-5">{lesson ? 'Lesson done' : 'Review done'}</h1>
           {lesson && <p className="text-secondary mt-1">{lesson.title}</p>}
         </div>
 

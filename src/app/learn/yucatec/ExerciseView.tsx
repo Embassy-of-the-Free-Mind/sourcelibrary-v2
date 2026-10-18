@@ -366,14 +366,14 @@ export function Feedback({ ex, correct, explanation, misses }: { ex: Exercise; c
   const lines: ReactNode[] = [];
 
   if (correct) {
-    if ((ex.kind === 'pick' || ex.kind === 'pick-form') && x) lines.push(<>Yes: <Maya>{x.right.label}</Maya> is “{x.right.means}”.</>);
-    else if (ex.kind === 'fill' && sentence) lines.push(<>Yes: <Maya>{sentence.show}</Maya></>);
-    else if (sentence) lines.push(<>Yes: “{sentence.tiles_en && ex.kind === 'build' ? sentence.tiles_en : sentence.en}”</>);
+    if ((ex.kind === 'pick' || ex.kind === 'pick-form') && x) lines.push(<><Maya>{x.right.label}</Maya> is “{x.right.means}”.</>);
+    else if (ex.kind === 'fill' && sentence) lines.push(<><Maya>{sentence.show}</Maya></>);
+    else if (sentence) lines.push(<>“{sentence.tiles_en && ex.kind === 'build' ? sentence.tiles_en : sentence.en}”</>);
     else lines.push(<>All pairs right.</>);
   } else if (ex.kind === 'match') {
     for (const m of misses ?? []) {
       const w = wordById(m.word)!;
-      lines.push(<><Maya>{w.form}</Maya> is “{w.short}”, not “{m.chosen}”.</>);
+      lines.push(<>You matched <Maya>{w.form}</Maya> with “{m.chosen}”. <Maya>{w.form}</Maya> is “{w.short}”.</>);
     }
   } else if (x) {
     if (ex.kind === 'pick' && x.chosen) lines.push(<>“{x.chosen.means}” is <Maya>{x.chosen.label}</Maya>. <Maya>{x.right.label}</Maya> is “{x.right.means}”.</>);
@@ -395,7 +395,7 @@ export function Feedback({ ex, correct, explanation, misses }: { ex: Exercise; c
     <div className="text-base">
       <p className={`flex items-center gap-2 font-bold text-xl mb-1 ${correct ? 'text-emerald-700' : 'text-accent-rust'}`}>
         <span aria-hidden className={`inline-flex w-8 h-8 yk-pill items-center justify-center text-white text-lg yk-pop ${correct ? 'bg-emerald-600' : 'bg-accent-rust'}`}>{correct ? '✓' : '×'}</span>
-        {correct ? 'Nice!' : 'Not quite'}
+        {correct ? 'Yes.' : 'Not quite.'}
       </p>
       <div className={`space-y-1 ${correct ? 'text-emerald-900' : 'text-primary'}`}>
         {lines.map((l, i) => <p key={i}>{l}</p>)}

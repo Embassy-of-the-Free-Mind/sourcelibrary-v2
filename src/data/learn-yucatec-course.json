@@ -120,7 +120,7 @@
      "three things"
     ]
    ],
-   "body": "A number never stands alone. Add -tul to count people, -pel to count things.",
+   "body": "Add -tul to count people, -pel to count things.",
    "quotes": [
     {
      "key": "tozzer",
@@ -459,7 +459,7 @@
    "form": "pal",
    "short": "boy, child",
    "number": null,
-   "note": "In the catechism the priest calls out Pale: “Child!”",
+   "note": "In the catechism the priest calls the child Pale.",
    "source_note": null,
    "note_ref": null,
    "dict": {
