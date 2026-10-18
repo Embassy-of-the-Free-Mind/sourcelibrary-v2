@@ -56,6 +56,12 @@ pages = [
     P("p7", "b4", 2, "", "materia prima, sine forma"),
     P("p8", "b5", 1, "道德經 第一章"),
     P("p9", "b6", 1, "prima materia stone"), P("p10", "b6", 2, "prima materia again, stone"), P("p11", "b6", 3, "prima materia, stone, third"),
+    # #6877: the page a reader copies 司射遂適階 from, against pages dense in its characters but not the run.
+    P("h1", "b7", 1, "", "大射之禮，司射遂適階西，東面。"),
+    P("h2", "b7", 2, "", "射射射 司司 遂 適適 階階 射者，司射者，適階者。"),
+    P("h3", "b7", 3, "", "射射射射射射射射射射。"),
+    P("t1", "b7", 4, "", "ཞེས་བུཾ་པ་དབང་ཙག་གི་ཚིག་ལས།"),
+    P("t2", "b7", 5, "", "པ་པ་པ་པ་བུཾ་ཙག་དབང་པ་བུཾ་པ་པ།"),
 ]
 for _ in range(40):  # enough filler that IDF behaves like a corpus, not like eleven pages
     pages.append(P(f"f{_}", "b9", 100 + _, "an ordinary page of prose about other things entirely"))
@@ -69,8 +75,16 @@ w.wait_merging_threads()
 books.save()
 del w, idx
 e = server.Engine()
-e.set_live(["b1", "b2", "b4", "b5", "b6", "b9"])
+e.set_live(["b1", "b2", "b4", "b5", "b6", "b7", "b9"])
 ids = lambda rows: [r["page_id"] for r in rows]
+
+r = e.lane({"query": "司射遂適階", "k": 25})
+check("unquoted Han run: the page printing it ranks first (#6877)", ids(r["main"])[0], "h1")
+check("...and the any-character pages still follow", {"h2", "h3"} <= set(ids(r["main"])), True)
+r = e.lane({"query": "བུཾ་པ་དབང་ཙག", "k": 25})
+check("unquoted Tibetan syllables: the page printing them ranks first (#6877)", ids(r["main"])[0], "t1")
+check("...not a phrase-only query", "t2" in ids(r["main"]) and r["phrase"] is False, True)
+check("a 6+ character Han run is not fuzzy", e.lane({"query": "大射之禮司射", "k": 5})["fuzzy_terms"], 0)
 
 r = e.lane({"query": "alchemy stone", "k": 25})
 check("ANY word: p1 and p2 found", {"p1", "p2"} <= set(ids(r["main"])), True)
