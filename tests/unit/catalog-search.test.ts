@@ -99,6 +99,11 @@ describe('readRequest', () => {
     expect(byName.category).toBeUndefined();
   });
 
+  it('drops filler words and punctuation from the topic', () => {
+    expect(readRequest('printers at their presses', vocab).topic).toBe('printers presses');
+    expect(readRequest('mushrooms, poisonous and edible', vocab).topic).toBe('mushrooms poisonous edible');
+  });
+
   it('does not stem in the search bar', () => {
     expect(readRequest('alchemical', vocab, { stems: false }).category).toBeUndefined();
   });

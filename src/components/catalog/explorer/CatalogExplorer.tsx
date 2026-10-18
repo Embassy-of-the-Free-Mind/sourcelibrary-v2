@@ -2,9 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Download, LayoutGrid, List, X } from 'lucide-react';
+import { ChevronDown, Download, LayoutGrid, List } from 'lucide-react';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
+import SearchAskBars from '@/components/search-kit/SearchAskBars';
+import FilterChips from '@/components/search-kit/FilterChips';
 import CollectionBookCard, { type CollectionBook } from '@/components/CollectionBookCard';
 import StatsBand, { type BandStats } from './StatsBand';
 import AdvancedSearch, { type Draft } from './AdvancedSearch';
@@ -443,68 +445,32 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
     if (s.topic) run({ ...s, also: [...also, t] });
     else run({ ...s, topic: t, sort: 'relevance' });
   };
+  const removeChip = (key: string) => {
+    const c = chips.find((x) => x.key === key);
+    if (c) run(c.remove());
+  };
   const clearAll = () => {
     setSearchText(''); setAskText(''); setSuggestions([]); setAuthorName('');
     run({ ...s, ...CLEAR, sort: 'popular', view: 'grid' });
   };
 
-  // The black button sits over the bar's border (-my-px -mr-px) so it reads as
-  // the bar's full height. Phones get a 40px bar (16px text stays, so iOS does not zoom); desktop 52px.
-  const fieldClass = 'flex items-stretch h-10 sm:h-[52px] border border-border-medium bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary';
-  const exampleClass = 'shrink-0 px-1 py-0.5 text-[11.5px] sm:text-[12.5px] text-muted underline decoration-border-medium underline-offset-[3px] hover:text-primary hover:decoration-primary';
-  // One line of examples on a phone, scrolled sideways; wrapped on wider screens.
-  const examplesRow = 'flex flex-nowrap sm:flex-wrap items-center gap-x-1 gap-y-0.5 mt-1.5 sm:mt-2 text-[11.5px] sm:text-[12.5px] overflow-x-auto sm:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] whitespace-nowrap sm:whitespace-normal';
 
   return (
     <div>
       {/* The two ways in */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-7">
-        <form onSubmit={(e) => { e.preventDefault(); search(searchText); }} role="search" aria-label="Search the catalogue">
-          <label htmlFor="catalog-search" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Search the catalogue</label>
-          <div className={fieldClass} data-catalog-bar>
-            <input id="catalog-search" type="search" value={searchText} onChange={(e) => setSearchText(e.target.value)}
-              placeholder="Title, author, subject, date"
-              className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none focus-visible:outline-none placeholder:text-muted/70" />
-            <button type="submit" className="-my-px -mr-px px-3.5 sm:px-5 bg-primary text-cream text-[13px] sm:text-sm shrink-0">Search</button>
-          </div>
-          <div className={examplesRow}>
-            <span className="shrink-0 text-muted mr-0.5">Try</span>
-            {searchExamples.map((e) => (
-              <button key={e} type="button" className={exampleClass} onClick={() => { setSearchText(e); search(e); }}>{e}</button>
-            ))}
-          </div>
-        </form>
-
-        <form onSubmit={(e) => { e.preventDefault(); ask(askText); }} aria-label="Ask the librarian">
-          <label htmlFor="catalog-ask" className="block text-[12px] sm:text-[13.5px] font-semibold text-primary mb-1 sm:mb-2">Ask the librarian</label>
-          <div className={fieldClass} data-catalog-bar>
-            <input id="catalog-ask" type="text" value={askText} onChange={(e) => setAskText(e.target.value)}
-              placeholder="What are you looking for?"
-              className="flex-1 min-w-0 px-3 sm:px-4 text-base text-primary bg-transparent outline-none focus-visible:outline-none placeholder:text-muted/70" />
-            <button type="submit" aria-busy={!!busy} className="relative -my-px -mr-px px-3.5 sm:px-5 bg-primary text-cream text-[13px] sm:text-sm shrink-0">
-              <span className={busy ? 'invisible' : ''}>Ask</span>
-              {busy && <span aria-hidden className="absolute left-1/2 top-1/2 -ml-2 -mt-2 w-4 h-4 rounded-full border-2 border-cream/30 border-t-cream animate-spin" />}
-            </button>
-          </div>
-          <div className={examplesRow}>
-            {suggestionList.length > 0 ? (
-              <>
-                <span className="shrink-0 text-muted mr-0.5">{s.topic ? 'Add to search' : 'Also try'}</span>
-                {suggestionList.map((t) => (
-                  <button key={t} type="button" className={exampleClass} onClick={() => addSuggestion(t)}>{s.topic ? `+ ${t}` : t}</button>
-                ))}
-              </>
-            ) : (
-              <>
-                <span className="shrink-0 text-muted mr-0.5">Try</span>
-                {askExamples.map((e) => (
-                  <button key={e} type="button" className={exampleClass} onPointerEnter={() => warmExample(e)} onFocus={() => warmExample(e)} onClick={() => { setAskText(e); ask(e); }}>{e}</button>
-                ))}
-              </>
-            )}
-          </div>
-        </form>
-      </div>
+      <SearchAskBars
+        search={{
+          id: 'catalog-search', label: 'Search the catalogue', placeholder: 'Title, author, subject, date',
+          value: searchText, onChange: setSearchText, onSubmit: search, examples: searchExamples,
+        }}
+        ask={{
+          id: 'catalog-ask', label: 'Ask the librarian', placeholder: 'What are you looking for?',
+          value: askText, onChange: setAskText, onSubmit: ask, examples: askExamples, onExampleWarm: warmExample,
+          busy: !!busy, suggestions: suggestionList,
+          suggestionsLabel: s.topic ? 'Add to search' : 'Also try', suggestionPrefix: s.topic ? '+ ' : '',
+          onSuggestion: addSuggestion,
+        }}
+      />
 
       <StatsBand
         stats={stats}
@@ -539,20 +505,7 @@ export default function CatalogExplorer({ initialState, initialBooks, initialTot
           <ChevronDown className={`w-3.5 h-3.5 transition-transform ${advOpen ? 'rotate-180' : ''}`} aria-hidden />
         </button>
         {/* Chips: their own row on a phone, under Advanced search and the sort. */}
-        {chipCount > 0 && (
-        <div className="order-3 basis-full sm:order-none sm:basis-auto flex flex-wrap items-center gap-2 sm:gap-2.5">
-        {chips.map((c) => (
-          <span key={c.key} className={`inline-flex items-center gap-1.5 h-7 sm:h-[30px] pl-2.5 sm:pl-3 pr-1 sm:pr-1.5 border text-[12.5px] sm:text-[13.5px] whitespace-nowrap ${c.other ? 'bg-warm border-dashed border-border-medium' : 'bg-white border-border-medium'}`}>
-            {c.other && <span className="text-muted">also</span>}
-            {c.label}
-            <button type="button" onClick={() => run(c.remove())} aria-label={`Remove ${c.label}`} className="w-5 h-5 rounded-full grid place-items-center text-muted hover:bg-warm hover:text-primary">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </span>
-        ))}
-        {chipCount > 1 && <button type="button" onClick={clearAll} className="text-[12.5px] sm:text-[13.5px] text-muted underline underline-offset-[3px]">Clear all</button>}
-        </div>
-        )}
+        <FilterChips chips={chips} onRemove={removeChip} onClearAll={clearAll} />
         <div className="order-2 sm:order-none ml-auto flex items-center gap-2 sm:gap-2.5">
           <a href={csvHref} className="hidden md:inline-flex items-center gap-1 text-xs text-muted hover:text-primary" title="Download the catalogue as CSV">
             <Download className="w-3.5 h-3.5" aria-hidden /> CSV
