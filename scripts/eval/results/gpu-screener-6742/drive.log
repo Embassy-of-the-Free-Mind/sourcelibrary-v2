@@ -1,0 +1,26 @@
+memory.used [MiB]
+2 MiB
+2026-10-17T22:11:49Z serve Qwen/Qwen3-14B-AWQ
+2026-10-17T22:13:09Z server up
+15278 MiB
+2026-10-17T22:13:09Z arm P start
+2026-10-17T22:54:57Z arm P done: {"ran":300,"wallSecs":2507.554,"joinsPerSec":0.12}
+2026-10-17T22:55:12Z stopped; 2 MiB
+memory.used [MiB]
+2 MiB
+2026-10-17T23:03:18Z serve Qwen/Qwen3-14B-AWQ
+2026-10-17T23:04:03Z server up
+15358 MiB
+2026-10-17T23:04:03Z arm S start
+2026-10-17T23:12:08Z arm S done: 300 prompts, 300 to run on qwen3-14b-awq think=false
+2026-10-17T23:12:08Z arm R start
+2026-10-17T23:50:30Z arm R done: {"ran":300,"wallSecs":2301.87,"joinsPerSec":0.13}
+2026-10-17T23:50:45Z stopped; 2 MiB
+memory.used [MiB]
+2 MiB
+2026-10-17T23:51:26Z serve Qwen/Qwen3-14B-AWQ
+2026-10-17T23:52:06Z server up
+15358 MiB
+2026-10-17T23:52:06Z arm S start
+2026-10-18T00:01:53Z arm S done: {"ran":296,"wallSecs":586.609,"joinsPerSec":0.505}
+2026-10-18T00:02:08Z stopped; 2 MiB

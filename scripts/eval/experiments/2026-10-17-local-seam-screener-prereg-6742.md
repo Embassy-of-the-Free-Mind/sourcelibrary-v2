@@ -7,9 +7,9 @@ canons: []
 n_books: 300
 n_pages: 600
 verdict: "Preregistration only: an open model on the GEX45 (Qwen3-14B-AWQ, vLLM) as the page-join screener, scored against Opus labels on the #6742 300-junction set, with the agy Flash screener's agreement as the bar. No result here."
-status: undecided
+status: superseded
 decision: null
-superseded_by: null
+superseded_by: "2026-10-18-local-seam-screener-6742.md"
 issue: [6742, 6871]
 ---
 PRIOR ART: `2026-10-16-seam-repair-lean-6742.md` (Test B: Gemini 3.8 Flash low via agy, same prompt, scored as a repairer by verified yield; its labels were never scored alone against Opus). `2026-10-15-seams-scale-opus-flashlite-6742.md` (the 300-junction set and the Opus labels; paid flash-lite detect arms D1–D5).

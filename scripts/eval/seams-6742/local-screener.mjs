@@ -37,13 +37,15 @@ async function stage(out) {
   console.log(JSON.stringify({ prompts: items.length }));
 }
 
-/** The label from a reply: the last {...} that parses and carries a known label; <think> blocks stripped. */
+/** The label from a reply: a {...} that parses and carries a known label; <think> blocks stripped. Bounded: the
+ *  last 8 closing braces × the first 32 opening ones (an unbounded scan hung on a degenerate brace-heavy reply). */
 export function parseLabel(text) {
-  const body = String(text || '').replace(/<think>[\s\S]*?<\/think>/g, '').replace(/^[\s\S]*<\/think>/, '');
-  for (let end = body.lastIndexOf('}'); end > 0; end = body.lastIndexOf('}', end - 1)) {
-    for (let start = body.lastIndexOf('{', end); start >= 0; start = body.lastIndexOf('{', start - 1)) {
-      try { const j = JSON.parse(body.slice(start, end + 1)); if (j && LABELS.includes(j.label)) return j; } catch { /* keep looking */ }
-    }
+  const body = String(text || '').replace(/<think>[\s\S]*?<\/think>/g, '').replace(/^[\s\S]*<\/think>/, '').slice(0, 20000);
+  const pos = (ch) => { const a = []; for (let i = body.indexOf(ch); i >= 0; i = body.indexOf(ch, i + 1)) a.push(i); return a; };
+  const ends = pos('}').slice(-8).reverse(), starts = pos('{').slice(0, 32);
+  for (const end of ends) for (const start of starts) {
+    if (start >= end) break;
+    try { const j = JSON.parse(body.slice(start, end + 1)); if (j && LABELS.includes(j.label)) return j; } catch { /* keep looking */ }
   }
   return null;
 }
@@ -62,7 +64,7 @@ async function run() {
       try {
         const res = await fetch(`${url}/v1/chat/completions`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
           model, messages: [{ role: 'user', content: p.prompt }], max_tokens: maxTokens, temperature: think ? 0.6 : 0.7, top_p: think ? 0.95 : 0.8, top_k: 20,
-          seed: 6742, chat_template_kwargs: { enable_thinking: think } }) });
+          seed: Number(arg('seed', 6742)), chat_template_kwargs: { enable_thinking: think } }) });
         const j = await res.json();
         const text = j.choices?.[0]?.message?.content ?? '', reasoning = j.choices?.[0]?.message?.reasoning_content ?? '';
         const parsed = parseLabel(text);
@@ -70,7 +72,7 @@ async function run() {
           evidence: parsed?.evidence ?? null, repair: parsed?.repair ?? null, finish: j.choices?.[0]?.finish_reason ?? null, usage: j.usage ?? null,
           secs: (Date.now() - s) / 1000, raw: parsed ? undefined : (text + reasoning).slice(-1500), err: j.error ? JSON.stringify(j.error).slice(0, 300) : undefined };
       } catch (e) { row = { id: p.id, parsed: false, label: null, err: String(e).slice(0, 300), secs: (Date.now() - s) / 1000 }; }
-      fs.appendFileSync(out, JSON.stringify({ ...row, model, think, at: new Date().toISOString() }) + '\n');
+      fs.appendFileSync(out, JSON.stringify({ ...row, model, think, seed: Number(arg("seed", 6742)), at: new Date().toISOString() }) + '\n');
     }
   };
   await Promise.all(Array.from({ length: conc }, worker));
