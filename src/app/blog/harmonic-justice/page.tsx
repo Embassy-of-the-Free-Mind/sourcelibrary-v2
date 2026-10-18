@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 // Every quotation from a Source Library book is copied from the stored text of the page it links to,
-// fetched through the get_quote tool on 2026-10-16 and 2026-10-17. Claims from outside the library link
+// fetched through the get_quote tool on 2026-10-16 to 2026-10-18. Claims from outside the library link
 // to their source. This note absorbed "Ledgers and Heavens" (2026-10-17); that URL redirects here.
 // The hero print is signed "Cross sculpsit" on the plate; our artwork record attributes it to Goltzius,
 // which the signature contradicts, so the caption describes only what the print shows.
@@ -11,7 +11,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 const TITLE = 'Harmonic Justice';
 const DESCRIPTION =
-  'Before economics was a science, money and fair exchange were problems of proportion, worked out with the tools used on music and the heavens. Philosophers, a banker, a friar who taught merchants, Copernicus at the mint, Kepler correcting Bodin, the alchemists, a London exchange dealer and Adam Smith.';
+  'Before economics was a science, money and fair exchange were problems of proportion, worked out with the tools used on music and the heavens. Xenophon and Aristotle, a banker, a friar who taught merchants, Copernicus at the mint, Kepler correcting Bodin, the alchemists, Adam Smith, and the nineteenth-century harmony economists Fourier, Bastiat and Carey.';
 const HERO = 'https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg';
 const HERO_ALT =
   'English satirical engraving signed "Cross sculpsit": Money, a coin with wings and bird legs, runs off to the right; a spendthrift labelled Prodigality scatters coins; the scales of Justice lie on the ground; hounds named Diligence, Industry, Labour, Rapine, Hazard and Deceit are held on leashes.';
@@ -32,6 +32,8 @@ export const metadata: Metadata = {
 };
 
 const BOOK = {
+  xenophonLoeb: '/book/xenophon-memorabilia-oeconomicus-symposium-apologia-loeb-168-xenophon',
+  cyropaedia: '/book/xenophon-opera-cyropaedia-hunting-spartan-constitution-xenophon',
   aristotle: '/book/aristotle-opera-vol-6-metaphysica-aldine-editio-princeps-aristotle',
   oresme: '/book/traictie-de-la-premiere-invention-des-monnoies-oresme',
   plotinus: '/book/enneads-1580-greek-latin-ficino-trans-plotinus-ficino',
@@ -49,6 +51,13 @@ const BOOK = {
   becher: '/book/narrische-weiszheit-und-weise-narrheit-oder-ein-hundert-so-becher',
   quesnay: '/book/economic-table-tableau-oeconomique-quesnay',
   smithTms: '/book/the-theory-of-moral-sentiments-smith',
+  noyes: '/book/history-of-american-socialisms-noyes',
+  davis: '/book/the-principles-of-nature-davis',
+  levi: '/book/le-grand-arcane-ou-l-occultisme-devoile-levi',
+  bastiat: '/book/harmonies-economiques-bastiat',
+  careyHarmony: '/book/the-harmony-of-interests-agricultural-manufacturing-and-carey',
+  careyUnity: '/book/the-unity-of-law-as-exhibited-in-the-relations-of-physical-carey',
+  luxemburg: '/book/die-akkumulation-des-kapitals-luxemburg',
   nicomachus: '/book/nicomachus-of-gerasa-introduction-to-arithmetic-d-ooge',
   fludd: '/book/the-symphonic-monochord-of-the-world-fludd',
   giorgi: '/book/de-harmonia-mundi-totius-zorzi',
@@ -56,6 +65,9 @@ const BOOK = {
 
 // The reader route takes a page id, not a page number (quote-and-snippet-integrity.md).
 const PAGE = {
+  oeconomicus436: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947e`,
+  oeconomicus437: `${BOOK.xenophonLoeb}/page/6a08a3c48fae3d3f19b7947f`,
+  cyropaedia285: `${BOOK.cyropaedia}/page/69b2218b08069e96e8430469`,
   aristotle584: `${BOOK.aristotle}/page/69b220b356715b0e32473529`,
   oresme143: `${BOOK.oresme}/page/6991e16bb53cae6bb60240a3`,
   ficino8: `${BOOK.plotinus}/page/699258fb8812793469fdf450`,
@@ -70,6 +82,15 @@ const PAGE = {
   hartlib171: `${BOOK.hartlib}/page/6ab5a4019e89e2a1f413932d`,
   becher7: `${BOOK.becher}/page/6a42727728e9db2e39c14057`,
   smith344: `${BOOK.smithTms}/page/69569c011479a63c11090b3f`,
+  noyes659: `${BOOK.noyes}/page/6a58a3da08c84bb29c91ce6e`,
+  davis586: `${BOOK.davis}/page/69905c85aaa7f10ed4cfbe2f`,
+  levi35: `${BOOK.levi}/page/6959329ab91a6184ea943e45`,
+  bastiat4: `${BOOK.bastiat}/page/6991dc4979a19ded6bdb3f04`,
+  bastiat20: `${BOOK.bastiat}/page/6991dc4979a19ded6bdb3f14`,
+  careyUnityVi: `${BOOK.careyUnity}/page/69569ac31479a63c1108f977`,
+  careyUnity85: `${BOOK.careyUnity}/page/69569ac31479a63c1108f9e0`,
+  careyUnity377: `${BOOK.careyUnity}/page/69569ac31479a63c1108fb06`,
+  luxemburg237: `${BOOK.luxemburg}/page/69ae8f840cec1b9ab2cef023`,
 };
 
 const Q = {
@@ -121,7 +142,7 @@ export default function HarmonicJusticePage() {
           image={HERO}
           imageAlt={HERO_ALT}
         >
-          <p className="text-stone-400 text-sm mt-4">17 October 2026 &middot; 18 min read</p>
+          <p className="text-stone-400 text-sm mt-4">18 October 2026 &middot; 25 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -141,8 +162,9 @@ export default function HarmonicJusticePage() {
           prices, money and trade did it as philosophers, astronomers, music theorists and alchemists, and they used
           the tools they used on the heavens: proportion, the theory of means, and the idea that a whole holds
           together when its parts stand in the right ratios. The people who handled money for a living read the same
-          books. This note follows both through the library, from Aristotle to Adam Smith: a banker, a friar who taught
-          merchants, an astronomer at the mint, a London exchange dealer and a financier among them.
+          books. This note follows both through the library, from Xenophon to the nineteenth-century economists who put
+          the word &ldquo;harmony&rdquo; in their titles: a banker, a friar who taught merchants, an astronomer at the
+          mint, a London exchange dealer and a financier among them.
         </p>
 
         <p className={p}>
@@ -171,6 +193,49 @@ export default function HarmonicJusticePage() {
             Hazard and Deceit on the other.
           </figcaption>
         </figure>
+
+        <h2 className={h2}>Xenophon: the beauty of an ordered house</h2>
+
+        <p className={p}>
+          The word economics comes from Xenophon&apos;s <em>Oeconomicus</em>, a dialogue on <em>oikonomia</em>, the
+          management of a household and its estate, written in the fourth century BC. Its model manager, Ischomachus,
+          tells Socrates how he taught his young wife to run the house, and the lesson is about order. A chorus whose
+          members do as they please is mere confusion; an army in disorder is a mob; a merchant ship stows its whole
+          cargo so the mate can find anything in a storm. Then he turns to the storeroom. In E. C. Marchant&apos;s Loeb
+          translation of 1923:
+        </p>
+
+        <Quote href={PAGE.oeconomicus437} cite="Xenophon, Oeconomicus VIII.19–20, tr. E. C. Marchant (Loeb, 1923), p. 437">
+          Yes, no serious man will smile when I claim that there is beauty in the order even of pots and pans set out in
+          neat array, however much it may move the laughter of a wit. There is nothing, in short, that does not gain in
+          beauty when set out in order. For each set looks like a troop of utensils, and the space between the sets is
+          beautiful to see, when each set is kept clear of it, just as a troop of dancers about the altar is a beautiful
+          spectacle in itself, and even the free space looks beautiful and unencumbered.
+        </Quote>
+
+        <p className={p}>
+          Xenophon does not use the word <em>harmonia</em> here, but the{' '}
+          <Link href={PAGE.oeconomicus436} className={linkClass}>
+            Greek on the facing page
+          </Link>{' '}
+          is closer to music than the English. The pots look <em>eurhythmon</em>, well-rhythmed; things lie{' '}
+          <em>kata kosmon</em>, in good order; and Marchant&apos;s &ldquo;troop of utensils&rdquo; is a{' '}
+          <em>choros</em>, a chorus of utensils, with the empty floor in the middle like the space inside a circle of
+          dancers. Xenophon&apos;s order is made, not found: someone has to decide where each thing goes and teach the
+          household to keep it there.
+        </p>
+
+        <p className={p}>
+          He also saw where specialization comes from. In the <em>Education of Cyrus</em> he explains why food from the
+          Persian king&apos;s table tastes better, in a passage often cited as the first account of the division of
+          labour. In a Latin edition of 1511 in the library:
+        </p>
+
+        <Quote href={PAGE.cyropaedia285} cite="Xenophon, Cyropaedia VIII.2, in a Latin edition (1511), p. 285. Copy: Biblioteca Nazionale Centrale di Firenze">
+          For in small cities, the same man makes a bed, doors, a plow, a table. &hellip; Therefore, it cannot be that one
+          who uses many arts should do all things beautifully. But in great cities, because many need individual things,
+          one art is enough for each to earn a living, and often not even an entire one.
+        </Quote>
 
         <h2 className={h2}>Aristotle: money is a mean</h2>
 
@@ -540,6 +605,128 @@ export default function HarmonicJusticePage() {
           partly by how well they satisfied the imagination. The same test can be put to his own.
         </p>
 
+        <h2 className={h2}>The harmony economists</h2>
+
+        <p className={p}>
+          In the generation after Smith, harmony stopped being a comparison and became a programme, and three rival
+          programmes claimed it at once.
+        </p>
+
+        <p className={p}>
+          The first was Charles Fourier&apos;s (1772&ndash;1837). He called the society he was planning
+          &ldquo;Harmony,&rdquo; to be built of communities called phalanxes, and his motto was that attractions are
+          proportional to destinies: rightly arranged, people&apos;s passions would draw them to the work that needed
+          doing, as gravity draws the planets. Fourier&apos;s own books are not yet in the library, but the way he was
+          read is. An American summary of his system, which John Humphrey Noyes quoted in his{' '}
+          <Link href={BOOK.noyes} className={linkClass}>
+            <em>History of American Socialisms</em>
+          </Link>{' '}
+          (1870), begins:
+        </p>
+
+        <Quote href={PAGE.noyes659} cite="Fourier's system summarized, in J. H. Noyes, History of American Socialisms (Philadelphia, 1870), p. 659">
+          Fourier says: There are certain Laws of Organization in nature, which are the source of order and harmony in
+          creation. These laws human reason must discover and apply in the organization of society, if a true social order
+          is to be established on the earth.
+        </Quote>
+
+        <p className={p}>
+          The seer Andrew Jackson Davis took it literally. Fourier, he wrote in 1847, showed &ldquo;that the world of
+          mankind is composed of the requisite notes to play a perfect tune of peace and harmony,&rdquo; and that each
+          note needs only to be properly placed for the whole race to move &ldquo;like a perfectly-tuned
+          instrument&rdquo; (
+          <Link href={PAGE.davis586} className={linkClass}>
+            <em>The Principles of Nature</em>, p. 586
+          </Link>
+          ). The occultist Eliphas Lévi agreed with the motto and saw the flaw. Fourier, he wrote, &ldquo;was wrong not to
+          distinguish between fatal attractions and artificial attractions,&rdquo; and he asked what Fourier would have
+          done &ldquo;with people whose attraction, proportional according to him to their destiny, would have been to
+          disturb and demolish the phalanstery&rdquo; (
+          <Link href={PAGE.levi35} className={linkClass}>
+            <em>Le Grand Arcane</em>, p. 35
+          </Link>
+          ).
+        </p>
+
+        <p className={p}>
+          The second was Frédéric Bastiat&apos;s. He wrote <em>Economic Harmonies</em> in 1850, the year he died, against
+          the socialists, Fourier&apos;s followers among them, and he put the whole quarrel into one question:
+        </p>
+
+        <Quote href={PAGE.bastiat4} cite="Frédéric Bastiat, Harmonies économiques (Paris, 1850), p. 4. Copy: Biblioteca Nazionale Centrale di Firenze">
+          What radically separates the various socialist schools (I mean here those who seek the solution to the social
+          problem in an artificial organization) from the economist school is not this or that detail of vision, or this or
+          that governmental combination; it is the starting point, the preliminary and dominant question: Are human
+          interests, left to themselves, harmonious or antagonistic? &hellip; It is not necessary to constrain toward harmony
+          that which is harmonious in itself.
+        </Quote>
+
+        <p className={p}>
+          His answer was a creed, and he wrote it as one, in the first person, addressed to the young people of France:
+        </p>
+
+        <Quote href={PAGE.bastiat20} cite="Bastiat, Harmonies économiques (1850), p. 20">
+          I believe that He who arranged the material world did not wish to remain a stranger to the arrangements of the
+          social world; I believe that He knew how to combine and set in motion [harmoniously] free agents just as well as
+          inert molecules. I believe that His providence shines forth at least as much, if not more, in the laws to which
+          He has subjected interests and wills as in those He has imposed upon weights and speeds.
+        </Quote>
+
+        <p className={p}>
+          The passage ends: &ldquo;Interests are harmonic, therefore the solution is entirely in this word:
+          LIBERTY.&rdquo; This is Smith&apos;s invisible hand stated as a creed. Xenophon&apos;s storeroom needed a
+          manager; Bastiat&apos;s society is a storeroom that arranges itself.
+        </p>
+
+        <p className={p}>
+          The third was Henry Charles Carey&apos;s, in Philadelphia, and it used the same word for the opposite policy.
+          Carey&apos;s{' '}
+          <Link href={BOOK.careyHarmony} className={linkClass}>
+            <em>The Harmony of Interests, Agricultural, Manufacturing and Commercial</em>
+          </Link>{' '}
+          (1851; our copy is of 1868) argued for tariffs: the harmony he meant was the farmer and the manufacturer living
+          side by side, trading with each other instead of across an ocean through middlemen. Twenty years later, in{' '}
+          <Link href={BOOK.careyUnity} className={linkClass}>
+            <em>The Unity of Law</em>
+          </Link>{' '}
+          (1872), he made the astronomy explicit. Society, he argued, obeys the same laws as matter, and a nation needs
+          many local centres of attraction, as the solar system does:
+        </p>
+
+        <Quote href={PAGE.careyUnity85} cite="Henry C. Carey, The Unity of Law (Philadelphia, 1872), p. 85. Copy: University of California">
+          To the equal action of opposing forces it is due that the celestial world is enabled to exhibit such wonderful
+          harmony and such unceasing motion. In the application of this principle to the societary movement the people of
+          Greece had all this yet to learn&hellip;
+        </Quote>
+
+        <p className={p}>
+          As local centres grow in number, he wrote, society tends daily toward &ldquo;the same beautiful system by means of
+          which the harmony of the universe is maintained&rdquo; (
+          <Link href={PAGE.careyUnity377} className={linkClass}>
+            p. 377
+          </Link>
+          ). Carey and Bastiat agreed on the harmony and disagreed on the tariff. They also shared a theory of value,
+          and Carey made sure his readers knew who had it first: a footnote to his preface quotes the Italian economist
+          Francesco Ferrara, &ldquo;Carey, and after him Bastiat, have introduced a
+          formula à posteriori, that I believe destined to be universally adopted&rdquo; (
+          <Link href={PAGE.careyUnityVi} className={linkClass}>
+            p. vi
+          </Link>
+          ).
+        </p>
+
+        <p className={p}>
+          Free trade, protection, the phalanstery: by 1850 the word could be made to bless any of them, which is a sign it
+          had stopped doing the work Kepler asked of it. Sixty years later Rosa Luxemburg used it as a label for a school
+          that had stopped thinking. &ldquo;If economic harmony theory,&rdquo; she wrote, &ldquo;had meanwhile descended from
+          the height of Ricardo to Bastiat-Schulze, social criticism had correspondingly carried out the slide from Sismondi
+          to Rodbertus&rdquo; (
+          <Link href={PAGE.luxemburg237} className={linkClass}>
+            <em>Die Akkumulation des Kapitals</em>, 1913, p. 237
+          </Link>
+          ). Her German is <em>ökonomische Harmonielehre</em>: the economic doctrine of harmony.
+        </p>
+
         <h2 className={h2}>Keynes and the last of the magicians</h2>
 
         <p className={p}>
@@ -561,13 +748,14 @@ export default function HarmonicJusticePage() {
 
         <p className={p}>
           The first is apologetic. The system is already harmonious; what looks like conflict is concord at a higher
-          level; the shares are fair because providence, or the market, set them. Bastiat&apos;s{' '}
-          <em>Economic Harmonies</em> (1850) is the plainest case, and Smith&apos;s invisible hand can be read that
-          way.
+          level; the shares are fair because providence, or the market, set them. Bastiat is the plainest case, and
+          Smith&apos;s invisible hand can be read that way. Carey and Fourier used the word the same way for other
+          ends: each called harmony the state the world would reach if only his own plan were followed.
         </p>
 
         <p className={p}>
-          The second is critical, and it is older. Aristotle says the measure is a convention that holds only with
+          The second is critical, and it is older. Xenophon says order is beautiful and has to be made and kept by
+          someone. Aristotle says the measure is a convention that holds only with
           respect to need. Oresme says it belongs to the community and should not be moved at will, and Copernicus,
           from the mint, says the same. Kepler says that if you call a distribution harmonic, show the ratios and test
           them against something other than authority. The alchemists, read soberly, describe the thing to be wary of:
@@ -593,6 +781,11 @@ export default function HarmonicJusticePage() {
         <h2 className={h2}>The books</h2>
 
         <ul className="list-disc pl-6 space-y-2 text-secondary font-body mb-8">
+          <li>
+            Xenophon, <Link href={BOOK.xenophonLoeb} className={linkClass}><em>Oeconomicus</em></Link>, Greek and
+            English (Loeb, 1923), and <Link href={BOOK.cyropaedia} className={linkClass}><em>Cyropaedia</em></Link>{' '}
+            (Latin, 1511)
+          </li>
           <li>
             Aristotle, <Link href={BOOK.aristotle} className={linkClass}><em>Opera</em>, vol. 6</Link> (Aldine, Venice,
             1495): <em>Nicomachean Ethics</em>, <em>Politics</em>, <em>Economics</em>
@@ -636,6 +829,21 @@ export default function HarmonicJusticePage() {
             Adam Smith, <Link href={BOOK.smithTms} className={linkClass}><em>The Theory of Moral Sentiments</em></Link> (1759)
           </li>
           <li>
+            On Fourier: Andrew Jackson Davis, <Link href={BOOK.davis} className={linkClass}><em>The Principles of Nature</em></Link>{' '}
+            (1847); John Humphrey Noyes, <Link href={BOOK.noyes} className={linkClass}><em>History of American Socialisms</em></Link>{' '}
+            (1870); Eliphas Lévi, <Link href={BOOK.levi} className={linkClass}><em>Le Grand Arcane</em></Link> (1898)
+          </li>
+          <li>
+            Frédéric Bastiat, <Link href={BOOK.bastiat} className={linkClass}><em>Harmonies économiques</em></Link> (1850)
+          </li>
+          <li>
+            Henry Charles Carey, <Link href={BOOK.careyHarmony} className={linkClass}><em>The Harmony of Interests</em></Link>{' '}
+            (1868 edition) and <Link href={BOOK.careyUnity} className={linkClass}><em>The Unity of Law</em></Link> (1872)
+          </li>
+          <li>
+            Rosa Luxemburg, <Link href={BOOK.luxemburg} className={linkClass}><em>Die Akkumulation des Kapitals</em></Link> (1913)
+          </li>
+          <li>
             For the mathematics of the three means: Nicomachus,{' '}
             <Link href={BOOK.nicomachus} className={linkClass}><em>Introduction to Arithmetic</em></Link>. For harmony as
             a picture of the whole world: Francesco Giorgi,{' '}
@@ -646,9 +854,11 @@ export default function HarmonicJusticePage() {
         </ul>
 
         <p className="text-sm text-muted leading-relaxed">
-          Quotations are the library&apos;s English translations, or for Malynes and Misselden the printed English, copied
-          from the pages they link to. Where a book is itself a translation (Geijsbeek&apos;s Pacioli, Wolowski&apos;s
-          Copernicus), the wording is the translator&apos;s. Bodin&apos;s <em>République</em> is not yet in the library,
+          Quotations are the library&apos;s English translations, or for English books (Malynes, Misselden, Davis,
+          Noyes, Carey) the printed English, copied from the pages they link to. Where a book is itself a translation
+          (Marchant&apos;s Xenophon, Geijsbeek&apos;s Pacioli, Wolowski&apos;s Copernicus), the wording is the
+          translator&apos;s. The word in square brackets in the Bastiat creed is his <em>harmonieusement</em>, restored
+          from the French. Bodin&apos;s <em>République</em> is not yet in the library,
           so his theory is given here in Kepler&apos;s account of it. Gresham&apos;s will and Petty&apos;s professorship
           are cited from outside the library.
         </p>

@@ -81,9 +81,9 @@ export const posts: BlogPost[] = [
     slug: 'harmonic-justice',
     title: 'Harmonic Justice',
     subtitle:
-      'Before economics was a science, money and fair exchange were problems of proportion. Aristotle and Oresme, Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus at the mint, Kepler correcting Bodin, the alchemists and a London exchange dealer, Quesnay and Adam Smith.',
-    date: '17 October 2026',
-    readTime: '18 min read',
+      'Before economics was a science, money and fair exchange were problems of proportion. Xenophon’s ordered house, Aristotle and Oresme, Cosimo de’ Medici’s Hermes, Pacioli’s two proportions, Copernicus at the mint, Kepler correcting Bodin, the alchemists, Adam Smith, and the harmony economists Fourier, Bastiat and Carey.',
+    date: '18 October 2026',
+    readTime: '25 min read',
     kind: 'stories',
     // English satirical print signed "Cross sculpsit": Money as a winged coin, Justice's scales on the ground.
     image: 'https://images.sourcelibrary.org/artwork/art-goltzius-print-satirical-print.jpg',
