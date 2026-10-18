@@ -8,7 +8,7 @@ n_books: null
 n_pages: null
 verdict: "Thinking LOW on the Librarian's tool rounds, plus one parallel-search prompt line, halves time to done (p50 20.5 → 11.7 s) with no quality loss two blind Opus judges can see (B 20, A 18, tie 2 on 40 readers' questions)."
 status: adopted
-decision: "Fast tool rounds on by default in src/lib/embassy/librarian.ts; LIBRARIAN_FAST_TOOL_ROUNDS=0 turns them off (#6904)"
+decision: "Fast tool rounds on by default in src/lib/embassy/librarian.ts; LIBRARIAN_FAST_TOOL_ROUNDS=0 turns them off (PR #6909, #6904)"
 superseded_by: null
 issue: [6904]
 ---
