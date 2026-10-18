@@ -201,9 +201,9 @@ export const posts: BlogPost[] = [
     slug: 'choreia',
     title: 'Choreia: Dance in the Greek Sources',
     subtitle:
-      'The Greek word for choral dance, from Homer’s dancing-floor to the planets: Plato’s Laws and Timaeus, Plutarch’s three parts of a dance, Lucian, Plotinus, and the disease called chorea.',
+      'The Greeks saw the planets dancing: Plato’s Timaeus, Lucian’s dance as old as the world, Plotinus’s cosmos as one dancer, then Homer’s dancing-floor, Plato’s chorus and Plutarch’s three parts of a dance.',
     summary:
-      'Choreia, the Greek choral dance: Homer’s dancing-floor, Plato on rhythm and the dancing planets, Plutarch’s three parts of a dance, Lucian and Plotinus.',
+      'The cosmic dance in the Greek sources: Plato’s dancing planets, Lucian, Plotinus, and the human chorus that copied them.',
     date: '18 October 2026',
     readTime: '11 min read',
     kind: 'tours',

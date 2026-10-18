@@ -18,7 +18,7 @@ import SourceQuote from '@/components/articles/SourceQuote';
 
 const TITLE = 'Choreia: Dance in the Greek Sources';
 const DESCRIPTION =
-  'Choreia, the Greek choral dance, read in the sources: Homer’s dancing-floor, Plato on rhythm and on the dance of the planets, Plutarch’s three parts of a dance, Lucian, Plotinus, and the disease called chorea.';
+  'The Greeks saw the planets dancing. Choreia read in the sources: Plato’s Timaeus, Lucian, Plotinus’s cosmos as one dancer, Homer’s dancing-floor, Plato’s chorus, Plutarch’s three parts of a dance, and the disease called chorea.';
 const HERO = 'https://images.sourcelibrary.org/artwork/art-raphael-raffaello-bacchantin-zwischen-zwei-faunen-tanzend-217.jpg';
 const HERO_ALT =
   'Red chalk drawing of a woman dancing in a flowing robe, a cymbal raised in each hand, between a faun blowing a curved horn and a faun playing pan-pipes.';
@@ -101,7 +101,7 @@ export default function ChoreiaPage() {
       header={
         <ContentHeader feature headerVariant="dark"
           title={TITLE}
-          subtitle="The Greek word for choral dance, from Homer’s dancing-floor to the planets, read in the books"
+          subtitle="The planets as a chorus, and the human dance that copied them, read in the books"
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -112,53 +112,166 @@ export default function ChoreiaPage() {
     >
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          The Greeks used one word for a ring of villagers dancing at a festival and for the planets moving across
-          the night sky: <em>choreia</em>, dancing together in time. Plato thought the two were the same activity
-          at different scales. The stars keep formation like a chorus. The gods gave people a sense of rhythm so
-          that they could join that dance, and a person who had never been trained in a chorus was, in his word,
-          uneducated.
+          Plato looked at the night sky and saw a chorus. In his account of how the world was made, the planets do
+          not simply circle: they dance, drawing level with one another, passing in front and behind, vanishing and
+          coming back into view, the way dancers do in a round. Later writers took the image further. Lucian said
+          dancing began with the creation of the universe, and Plotinus pictured the whole cosmos as a single dancer
+          whose every limb moves because the dance requires it.
         </p>
 
         <p className={p}>
-          Our words choreography, chorus and choir all come from <em>choreia</em>. This article follows the idea
-          through the books that hold it: Homer&apos;s dancing-floor, Plato&apos;s chorus and his dancing planets,
-          Plutarch&apos;s three parts of a dance, Lucian&apos;s claim that dancing began with the world, and
-          Plotinus&apos;s universe moving like a single dancer. Every passage links to the page it comes from.
+          The Greek word is <em>choreia</em>, dancing together in time, the root of choreography, chorus and choir.
+          It named the movement of the planets and also a ring of villagers at a festival, and Plato thought these
+          were the same activity at different scales: the gods gave people a sense of rhythm so that they could join
+          the dance, and a person never trained in a chorus was, in his word, uneducated. This article reads the idea
+          in the books that hold it, starting in the sky and coming down to the dancing-floor. Every passage links to
+          the page it comes from.
         </p>
 
-        <h2 className={h2}>Six words</h2>
+        <h2 className={h2}>The planets dance</h2>
 
         <p className={p}>
-          The sources use a small vocabulary, and most of it is still in use in dance studios in some form.
+          The image starts in Plato&apos;s <em>Timaeus</em>, a dialogue about how the world was made. At 40c, after describing the stars as living, divine beings, Timaeus turns to how they move in
+          relation to one another, and the first word of the sentence is <em>choreias</em>, their dances.
         </p>
 
-        <dl className="my-8 border-y border-stone-200">
-          <Term greek="χορός" latin="choros">
-            The group of dancers, and also the place where they dance. Homer uses the same word for both.
-          </Term>
-          <Term greek="χορεία" latin="choreia">
-            What the choros does: dancing and singing together. Latin writers spelled it <em>chorea</em>.
-          </Term>
-          <Term greek="ὄρχησις" latin="orchēsis">
-            Dancing as such, the body&apos;s part of the art. The <em>orchestra</em> of a Greek theatre was the
-            dancing-floor in front of the stage.
-          </Term>
-          <Term greek="φορά" latin="phora">
-            Movement: the travel of the body from one position to the next.
-          </Term>
-          <Term greek="σχῆμα" latin="schēma">
-            Figure: the position a movement arrives at and holds, a pose. The same word is used for the arrangement of
-            the planets at a given moment.
-          </Term>
-          <Term greek="δεῖξις" latin="deixis">
-            Pointing: a gesture that shows a thing directly, the sky, the ground, a person standing nearby.
-          </Term>
-        </dl>
+        <SourceQuote
+          book={SLUG.timaeus}
+          page={146}
+          printedPage={134}
+          src={IMG.timaeus146}
+          source={<>Plato, <em>Timaeus</em> 40c, ed. R. D. Archer-Hind (London, 1888)</>}
+          original={<span lang="grc">χορείας δὲ τούτων αὐτῶν καὶ παραβολὰς ἀλλήλων</span>}
+          pageAlt="Page 134 of Archer-Hind's Timaeus: the Greek of 40c, with his note on the word choreias below."
+        >
+          And the dances of these same stars, and their approaches one to another, and the returnings of their
+          circles upon themselves and their advances, and in their conjunctions which of the gods come to be
+          alongside of one another and which are opposite, and behind which each one is hidden from us at certain
+          times and again appearing &hellip;
+        </SourceQuote>
+
+        <p className={p}>
+          Read as a dancer, the list is a description of a round dance seen from inside it: dancers draw level with
+          one another, pass in front and behind, disappear behind someone and come back into view, and each returns to
+          the place where it began. Archer-Hind, in his own English translation on the{' '}
+          <Link href={book(SLUG.timaeus, 147)}>facing page</Link>, renders the word as &ldquo;circlings&rdquo;. His note
+          under the Greek explains the choice.
+        </p>
+
+        <Quote href={book(SLUG.timaeus, 146)} cite="R. D. Archer-Hind, note on Timaeus 40c (1888), p. 134">
+          This is an astronomical term signifying the revolution of the planets around a common centre, as it were in a
+          round dance: see Epinomis 982 E.
+        </Quote>
+
+        <p className={p}>
+          The passage he cites, from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, says the heavens
+          are &ldquo;dancing the most beautiful and magnificent movement and dance of all dances&rdquo;. For Plato the stars move in a
+          chorus, in formation, keeping time with each other, and the human chorus, which he describes in the <em>Laws</em>{' '}
+          (below), is a small copy of it.
+        </p>
+
+        <h2 className={h2}>Dance began with the world</h2>
+
+        <p className={p}>
+          Lucian, a Syrian writer of the second century AD who wrote in Greek, took the idea further in his dialogue{' '}
+          <em>On the Dance</em> (<em>Of Pantomime</em> in the Fowlers&apos; translation). Crato, a stern philosopher,
+          scolds his friend Lycinus for spending his time at dance performances. Lycinus answers with a history of
+          dancing, and it begins before there were people.
+        </p>
+
+        <SourceQuote
+          book={SLUG.lucian}
+          page={249}
+          printedPage={241}
+          src={IMG.lucian249}
+          source={<>Lucian, <em>Of Pantomime</em> §7, tr. H. W. and F. G. Fowler (Oxford, 1905)</>}
+          pageAlt="Page 241 of the Fowlers' Lucian: Lycinus traces dancing back to the creation of the universe."
+        >
+          The best antiquarians, let me tell you, trace dancing back to the creation of the universe; it is coeval with
+          that Eros who was the beginning of all things. In the dance of the heavenly bodies, in the complex involutions
+          whereby the planets are brought into harmonious intercourse with the fixed stars, you have an example of that
+          art in its infancy, which, by gradual development, by continual improvements and additions, seems at length to
+          have reached its climax in the subtle harmonious versatility of modern Pantomime.
+        </SourceQuote>
+
+        <p className={p}>
+          This is the passage behind most modern statements that the Greeks saw the cosmos as a dance. Lucian puts it in
+          the mouth of an enthusiast arguing with a sceptic, and then moves down to earth. On the{' '}
+          <Link href={book(SLUG.lucian, 250)}>next page</Link> the Curetes dance in armour, beating their swords on their
+          shields so that the infant Zeus&apos;s cries are not heard by his father. Homer&apos;s warrior Meriones is
+          praised as a dancer because his footwork let him dodge spears.
+        </p>
+
+        <p className={p}>
+          The pantomime dancer Lucian admires was a soloist who acted out a whole myth in silence while a chorus sang
+          the words. Lucian&apos;s list of what such a dancer has to know is long.
+        </p>
+
+        <SourceQuote
+          book={SLUG.lucian}
+          page={258}
+          printedPage={250}
+          src={IMG.lucian258}
+          source={<>Lucian, <em>Of Pantomime</em> §36&ndash;37, tr. Fowler (1905)</>}
+          pageAlt="Page 250 of the Fowlers' Lucian: what the pantomime must know."
+        >
+          Like Calchas in Homer, the pantomime must know all &lsquo;that is, that was, that shall be&rsquo;; nothing must
+          escape his ever ready memory. &hellip; the intelligibility, in the present case, depending on clearness of
+          gesticulation. &hellip; He must know the history of the world, from the time when it first emerged from Chaos
+          down to the days of Egyptian Cleopatra.
+        </SourceQuote>
+
+        <h2 className={h2}>The cosmos as one dancer</h2>
+
+        <p className={p}>
+          In the third century AD the philosopher Plotinus turned the image round. He was arguing about astrology:
+          whether the stars cause what happens on earth. His answer, in the fourth <em>Ennead</em> (IV.4.33), is that
+          the universe is a single living being moving as a whole, and that the positions of its parts follow from the
+          movement of the whole, the way a dancer&apos;s limbs follow from the dance. A hand is lifted because the
+          figure requires it. A reader who knows the dance can read the rest of the
+          figure from the position of one limb, which is how Plotinus thought astrologers could read events from the
+          stars without the stars causing them. The library holds the passage in a fifteenth-century Greek manuscript;
+          a reader of that copy wrote <em>Elegans comparatio</em>, &ldquo;an elegant comparison&rdquo;, in the margin
+          beside it.
+        </p>
+
+        <SourceQuote
+          book={SLUG.plotinus}
+          page={290}
+          src={IMG.plotinus290}
+          source={<>Plotinus, <em>Enneads</em> IV.4.33, Greek manuscript (Munich, BSB Cod.graec. 449)</>}
+          pageAlt="A manuscript page of Plotinus in a dense Greek hand, with Latin notes in the left margin."
+        >
+          the order of things toward one another, being as if in a single, richly varied dance. For in actions, just as
+          in dances, we see the movements of the dance according to each of the motions &hellip; If the deliberate choice
+          of the dancer looks toward something else, the parts of the body are affected as a consequence of the dance.
+        </SourceQuote>
+
+        <p className={p}>
+          Renaissance readers collected all of this. Cornelius Agrippa, in a book published in 1530 that attacks every art
+          and science in turn, summarises the ancient story of dancing before he condemns it: it came forth, some say,
+          from the movements of the stars, &ldquo;as if it were a certain harmonious choreography of the heavens&rdquo;,
+          in the Latin <em>tanquam harmonica quadam cælestium choræa</em>, and was used in worship by the Curetes, the
+          Brahmins, the Egyptians and the Salian priests of Rome.
+        </p>
+
+        <SourceQuote
+          book={SLUG.agrippa}
+          page={122}
+          src={IMG.agrippa122}
+          source={<>Agrippa, <em>Of the Uncertainty and Vanity of the Sciences</em> (Cologne, 1598)</>}
+          original="tanquam harmonica quadam cælestium choræa, vna cum mundi generatione diuinitus prodijsse dicunt"
+          pageAlt="A page of Agrippa's De incertitudine headed De saltatione et chorea."
+        >
+          &hellip; from the movements of the stars and constellations, and their advance and retreat, conjunction, and
+          order (as if it were a certain harmonious choreography of the heavens) proceeded divinely along with the
+          creation of the world.
+        </SourceQuote>
 
         <h2 className={h2}>The dancing-floor</h2>
 
         <p className={p}>
-          The oldest description is in the <em>Iliad</em>. In book 18 the smith-god Hephaestus makes a shield for
+          On earth, the oldest description of a chorus is in the <em>Iliad</em>. In book 18 the smith-god Hephaestus makes a shield for
           Achilles and covers it with scenes of ordinary life. In the vineyard the harvesters dance as they carry the
           grapes, and at the end of the series he makes a dancing-floor. The Greek line, in the{' '}
           <Link href={book(SLUG.iliad, 542)}>Aldine edition printed in Venice in 1517</Link>, reads{' '}
@@ -316,147 +429,6 @@ export default function ChoreiaPage() {
           and rest, just as harmony consists of tones and intervals.
         </SourceQuote>
 
-        <h2 className={h2}>The planets dance</h2>
-
-        <p className={p}>
-          The cosmic side of <em>choreia</em> comes from Plato&apos;s <em>Timaeus</em>, a dialogue about how the world
-          was made. At 40c, after describing the stars as living, divine beings, Timaeus turns to how they move in
-          relation to one another, and the first word of the sentence is <em>choreias</em>, their dances.
-        </p>
-
-        <SourceQuote
-          book={SLUG.timaeus}
-          page={146}
-          printedPage={134}
-          src={IMG.timaeus146}
-          source={<>Plato, <em>Timaeus</em> 40c, ed. R. D. Archer-Hind (London, 1888)</>}
-          original={<span lang="grc">χορείας δὲ τούτων αὐτῶν καὶ παραβολὰς ἀλλήλων</span>}
-          pageAlt="Page 134 of Archer-Hind's Timaeus: the Greek of 40c, with his note on the word choreias below."
-        >
-          And the dances of these same stars, and their approaches one to another, and the returnings of their
-          circles upon themselves and their advances, and in their conjunctions which of the gods come to be
-          alongside of one another and which are opposite, and behind which each one is hidden from us at certain
-          times and again appearing &hellip;
-        </SourceQuote>
-
-        <p className={p}>
-          Read as a dancer, the list is a description of a round dance seen from inside it: dancers draw level with
-          one another, pass in front and behind, disappear behind someone and come back into view, and each returns to
-          the place where it began. Archer-Hind, in his own English translation on the{' '}
-          <Link href={book(SLUG.timaeus, 147)}>facing page</Link>, renders the word as &ldquo;circlings&rdquo;. His note
-          under the Greek explains the choice.
-        </p>
-
-        <Quote href={book(SLUG.timaeus, 146)} cite="R. D. Archer-Hind, note on Timaeus 40c (1888), p. 134">
-          This is an astronomical term signifying the revolution of the planets around a common centre, as it were in a
-          round dance: see Epinomis 982 E.
-        </Quote>
-
-        <p className={p}>
-          The passage he cites, from the <em>Epinomis</em>, a short sequel to the <em>Laws</em>, says the heavens
-          are &ldquo;dancing the most beautiful and magnificent movement and dance of all dances&rdquo;. For Plato the stars move in a
-          chorus, in formation, keeping time with each other, and the human chorus in the <em>Laws</em> is a small copy
-          of it.
-        </p>
-
-        <h2 className={h2}>Dance began with the world</h2>
-
-        <p className={p}>
-          Lucian, a Syrian writer of the second century AD who wrote in Greek, took the idea further in his dialogue{' '}
-          <em>On the Dance</em> (<em>Of Pantomime</em> in the Fowlers&apos; translation). Crato, a stern philosopher,
-          scolds his friend Lycinus for spending his time at dance performances. Lycinus answers with a history of
-          dancing, and it begins before there were people.
-        </p>
-
-        <SourceQuote
-          book={SLUG.lucian}
-          page={249}
-          printedPage={241}
-          src={IMG.lucian249}
-          source={<>Lucian, <em>Of Pantomime</em> §7, tr. H. W. and F. G. Fowler (Oxford, 1905)</>}
-          pageAlt="Page 241 of the Fowlers' Lucian: Lycinus traces dancing back to the creation of the universe."
-        >
-          The best antiquarians, let me tell you, trace dancing back to the creation of the universe; it is coeval with
-          that Eros who was the beginning of all things. In the dance of the heavenly bodies, in the complex involutions
-          whereby the planets are brought into harmonious intercourse with the fixed stars, you have an example of that
-          art in its infancy, which, by gradual development, by continual improvements and additions, seems at length to
-          have reached its climax in the subtle harmonious versatility of modern Pantomime.
-        </SourceQuote>
-
-        <p className={p}>
-          This is the passage behind most modern statements that the Greeks saw the cosmos as a dance. Lucian puts it in
-          the mouth of an enthusiast arguing with a sceptic, and then moves down to earth. On the{' '}
-          <Link href={book(SLUG.lucian, 250)}>next page</Link> the Curetes dance in armour, beating their swords on their
-          shields so that the infant Zeus&apos;s cries are not heard by his father. Homer&apos;s warrior Meriones is
-          praised as a dancer because his footwork let him dodge spears.
-        </p>
-
-        <p className={p}>
-          The pantomime dancer Lucian admires was a soloist who acted out a whole myth in silence while a chorus sang
-          the words. Lucian&apos;s list of what such a dancer has to know is long.
-        </p>
-
-        <SourceQuote
-          book={SLUG.lucian}
-          page={258}
-          printedPage={250}
-          src={IMG.lucian258}
-          source={<>Lucian, <em>Of Pantomime</em> §36&ndash;37, tr. Fowler (1905)</>}
-          pageAlt="Page 250 of the Fowlers' Lucian: what the pantomime must know."
-        >
-          Like Calchas in Homer, the pantomime must know all &lsquo;that is, that was, that shall be&rsquo;; nothing must
-          escape his ever ready memory. &hellip; the intelligibility, in the present case, depending on clearness of
-          gesticulation. &hellip; He must know the history of the world, from the time when it first emerged from Chaos
-          down to the days of Egyptian Cleopatra.
-        </SourceQuote>
-
-        <h2 className={h2}>The cosmos as one dancer</h2>
-
-        <p className={p}>
-          In the third century AD the philosopher Plotinus turned the image round. He was arguing about astrology:
-          whether the stars cause what happens on earth. His answer, in the fourth <em>Ennead</em> (IV.4.33), is that
-          the universe is a single living being moving as a whole, and that the positions of its parts follow from the
-          movement of the whole, the way a dancer&apos;s limbs follow from the dance. A hand is lifted because the
-          figure requires it. A reader who knows the dance can read the rest of the
-          figure from the position of one limb, which is how Plotinus thought astrologers could read events from the
-          stars without the stars causing them. The library holds the passage in a fifteenth-century Greek manuscript;
-          a reader of that copy wrote <em>Elegans comparatio</em>, &ldquo;an elegant comparison&rdquo;, in the margin
-          beside it.
-        </p>
-
-        <SourceQuote
-          book={SLUG.plotinus}
-          page={290}
-          src={IMG.plotinus290}
-          source={<>Plotinus, <em>Enneads</em> IV.4.33, Greek manuscript (Munich, BSB Cod.graec. 449)</>}
-          pageAlt="A manuscript page of Plotinus in a dense Greek hand, with Latin notes in the left margin."
-        >
-          the order of things toward one another, being as if in a single, richly varied dance. For in actions, just as
-          in dances, we see the movements of the dance according to each of the motions &hellip; If the deliberate choice
-          of the dancer looks toward something else, the parts of the body are affected as a consequence of the dance.
-        </SourceQuote>
-
-        <p className={p}>
-          Renaissance readers collected all of this. Cornelius Agrippa, in a book published in 1530 that attacks every art
-          and science in turn, summarises the ancient story of dancing before he condemns it: it came forth, some say,
-          from the movements of the stars, &ldquo;as if it were a certain harmonious choreography of the heavens&rdquo;,
-          in the Latin <em>tanquam harmonica quadam cælestium choræa</em>, and was used in worship by the Curetes, the
-          Brahmins, the Egyptians and the Salian priests of Rome.
-        </p>
-
-        <SourceQuote
-          book={SLUG.agrippa}
-          page={122}
-          src={IMG.agrippa122}
-          source={<>Agrippa, <em>Of the Uncertainty and Vanity of the Sciences</em> (Cologne, 1598)</>}
-          original="tanquam harmonica quadam cælestium choræa, vna cum mundi generatione diuinitus prodijsse dicunt"
-          pageAlt="A page of Agrippa's De incertitudine headed De saltatione et chorea."
-        >
-          &hellip; from the movements of the stars and constellations, and their advance and retreat, conjunction, and
-          order (as if it were a certain harmonious choreography of the heavens) proceeded divinely along with the
-          creation of the world.
-        </SourceQuote>
-
         <h2 className={h2}>Chorea as a disease</h2>
 
         <p className={p}>
@@ -487,6 +459,35 @@ export default function ChoreiaPage() {
           medicine today, chorea means involuntary, irregular movement, movement with
           no order and no intention behind it.
         </p>
+
+        <h2 className={h2}>Six words</h2>
+
+        <p className={p}>
+          For reference, the words the sources use. Most are still heard in dance studios in some form.
+        </p>
+
+        <dl className="my-8 border-y border-stone-200">
+          <Term greek="χορός" latin="choros">
+            The group of dancers, and also the place where they dance. Homer uses the same word for both.
+          </Term>
+          <Term greek="χορεία" latin="choreia">
+            What the choros does: dancing and singing together. Latin writers spelled it <em>chorea</em>.
+          </Term>
+          <Term greek="ὄρχησις" latin="orchēsis">
+            Dancing as such, the body&apos;s part of the art. The <em>orchestra</em> of a Greek theatre was the
+            dancing-floor in front of the stage.
+          </Term>
+          <Term greek="φορά" latin="phora">
+            Movement: the travel of the body from one position to the next.
+          </Term>
+          <Term greek="σχῆμα" latin="schēma">
+            Figure: the position a movement arrives at and holds, a pose. The same word is used for the arrangement of
+            the planets at a given moment.
+          </Term>
+          <Term greek="δεῖξις" latin="deixis">
+            Pointing: a gesture that shows a thing directly, the sky, the ground, a person standing nearby.
+          </Term>
+        </dl>
 
         <p className="text-sm text-muted leading-relaxed">
           Jowett&apos;s Plato, the Fowlers&apos; Lucian and Archer-Hind&apos;s notes are quoted in their printed
