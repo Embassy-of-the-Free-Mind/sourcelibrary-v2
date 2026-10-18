@@ -5,8 +5,8 @@
  * (`stemmedQueryRegex`) against five fields of every live book: categories,
  * subject_keywords, language, title, display_title. As a MongoDB query that is
  * an unanchored regex over unindexed fields: it FETCHes every live book (42,372
- * on 2026-10-18) and took 1.0–2.2 s on 16 of 40 sampled reader queries, finding
- * a book in 2 of them. The lane was waiting on it for nothing most of the time.
+ * on 2026-10-18) and took 0.9–2.2 s on 16 of 40 sampled reader queries, or hit
+ * its 3 s maxTimeMS and failed the whole lane, finding a book in 2 of them. The lane was waiting on it for nothing most of the time.
  *
  * This keeps those five fields of every live book in memory per instance
  * (~11 MB over the wire, 1.6–3.0 s to load) and runs the same RegExp objects
@@ -91,7 +91,8 @@ function refreshInBackground(db: Db): void {
 
 /**
  * Ids of live books where every regex matches at least one of the five fields,
- * in index order, at most `cap` of them. Null while the snapshot is not loaded
+ * in index order, at most `cap` of them. The regexes must be stateless (no `g`
+ * or `y` flag), as stemmedQueryRegex's are. Null while the snapshot is not loaded
  * (this call starts the load): the caller then runs the Mongo query as before.
  */
 export function matchBookMetadata(db: Db, regexes: RegExp[], cap: number): { ids: string[]; complete: boolean } | null {
