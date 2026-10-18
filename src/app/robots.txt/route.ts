@@ -29,6 +29,7 @@
  */
 
 import { TRIPWIRE_PATH } from '@/lib/tripwire';
+import { pageStatusRobotsDisallow } from '@/lib/page-status';
 
 const BASE_URL = 'https://sourcelibrary.org';
 
@@ -100,6 +101,9 @@ const DEFAULT_DISALLOW = [
   '/reading-history',
   '/highlights',
   '/favorites',
+  // Internal and draft pages from src/lib/page-status.ts (admins only).
+  // Archived pages stay crawlable so search engines follow their redirect.
+  ...pageStatusRobotsDisallow(),
   // Tripwire (#5995): disallowed for EVERY group, so a fetch of it means the
   // client ignored robots.txt. Groups ending in `Disallow: /` cover it already.
   TRIPWIRE_PATH,
