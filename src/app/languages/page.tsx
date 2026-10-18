@@ -4,6 +4,7 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 import languageCardImages from '@/data/language-card-images.json';
+import { languageSlug } from '@/lib/language-utils';
 
 // Card images chosen by eye from each language's gallery illustrations
 // (gallery_quality >= 0.85, one per book). Languages not listed fall back to
@@ -31,10 +32,6 @@ interface LanguageStats {
   yearRange?: string;
   heroImage?: string;
   heroAlt?: string;
-}
-
-function languageSlug(name: string): string {
-  return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 async function fetchLanguageStats(): Promise<{ languages: LanguageStats[]; totalBooks: number }> {

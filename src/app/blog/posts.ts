@@ -71,8 +71,8 @@ export const UNLISTED_PAGES: Record<string, string> = {
   'how-these-are-made': 'About the notes rather than a note; linked from the index header.',
   'tibetan-reocr': 'Draft (DRAFT = true, noindex) until its pending numbers are filled.',
   'autonomous-agents': 'Withdrawn: needs a rewrite with proper import-session data.',
-  '2000-first-translations': 'Superseded: its March 2026 counts are out of date; see counting-first-translations.',
-  'worlds-largest-collection': 'Superseded: its March 2026 counts are out of date; see how-big-is-the-library.',
+  '2000-first-translations': 'Superseded: its March 2026 counts are out of date; redirects to counting-first-translations (next.config.ts).',
+  'worlds-largest-collection': 'Superseded: its March 2026 counts are out of date; redirects to how-big-is-the-library (next.config.ts).',
   'why-terminals-cant-edit': 'Off topic for Research Notes (terminal editors, not old books).',
 };
 
