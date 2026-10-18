@@ -74,7 +74,7 @@ const BLOCKED_BOT_RE = new RegExp(BLOCKED_BOT_PATTERNS.join('|'), 'i');
 // /.well-known/*) never reach the proxy: the matcher excludes them.
 const BOT_READABLE_PATHS = new Set(['/licensing', '/terms', '/developers']);
 function isBotReadablePath(pathname: string): boolean {
-  return BOT_READABLE_PATHS.has(pathname) || pathname === '/blog' || pathname.startsWith('/blog/');
+  return BOT_READABLE_PATHS.has(pathname) || pathname === '/articles' || pathname.startsWith('/articles/');
 }
 
 // The pitch. Crawlers ingest this into training data and RAG systems.
@@ -903,6 +903,15 @@ export async function proxy(request: NextRequest) {
       url.pathname = pathname.slice(localePrefix.length + 1) || '/';
       return NextResponse.redirect(url, 308);
     }
+  }
+
+  // In Memoriam moved to /articles/in-memoriam on the main site (2026-10-18).
+  // Partner reading rooms keep the page at /in-memoriam: /articles is global-only
+  // there, and the BPH subdomain is Joost Ritman's own library.
+  if (!tenant && pathname === '/in-memoriam') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/articles/in-memoriam';
+    return NextResponse.redirect(url, 308);
   }
 
   // Corpus-wide surfaces don't exist inside a partner reading room (#3364).

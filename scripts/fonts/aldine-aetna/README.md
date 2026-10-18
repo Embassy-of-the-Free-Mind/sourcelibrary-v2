@@ -1,7 +1,7 @@
 # Aldine Aetna — a facsimile type from the 1496 *De Aetna*
 
 Output: `public/fonts/aldine-aetna/AldineAetna-Regular.{ttf,woff2}` (public domain, CC0).
-Shown at https://sourcelibrary.org/specimen/aldine. Loaded in code via
+Shown at https://sourcelibrary.org/articles/aldine-roman. Loaded in code via
 `src/lib/fonts/aldine.ts` (next/font; zero cost on pages that don't import it).
 
 This is a **facsimile**, not a revival: every glyph is one real impression from

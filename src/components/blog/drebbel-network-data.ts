@@ -1,4 +1,4 @@
-// Data for the Drebbel network on /blog/drebbel. Every tie is sourced in the research
+// Data for the Drebbel network on /articles/drebbel. Every tie is sourced in the research
 // dossier for #5898 (associates.md, primary-sources.md): Tierie's 1932 Leiden thesis
 // (http://www.drebbel.net/Tierie.pdf) is the backbone; the States General patents and the
 // 1624 resolution were read in REPUBLIC; Beeckman, Tymme, Boyle 1660 and Wilkins 1648 were
@@ -25,12 +25,12 @@ const SL = '/book/';
 
 export const GROUPS: Record<Group, { label: string; color: string }> = {
   self: { label: 'Drebbel', color: '#1a1612' },
-  kin: { label: 'Family', color: '#9e4a3a' },
-  patron: { label: 'Patrons and rulers', color: '#9e7c3c' },
-  circle: { label: 'Friends and collaborators', color: '#5e6d52' },
-  print: { label: 'Editors and writers', color: '#7c5db5' },
-  witness: { label: 'Witnesses and reporters', color: '#3d6c8f' },
-  heirs: { label: 'Heirs of the work', color: '#2f7d6d' },
+  kin: { label: 'Family', color: '#6250d6' },
+  patron: { label: 'Patrons and rulers', color: '#c98500' },
+  circle: { label: 'Friends and collaborators', color: '#008300' },
+  print: { label: 'Editors and writers', color: '#d55181' },
+  witness: { label: 'Witnesses and reporters', color: '#2a78d6' },
+  heirs: { label: 'Heirs of the work', color: '#1baf7a' },
   unsupported: { label: 'Claimed, not supported', color: '#a39e96' },
 };
 
@@ -41,7 +41,7 @@ export const PEOPLE: Person[] = [
   { id: "drebbel", name: "Cornelis Drebbel", life: "1572–1633", group: "self", year: 1590,
     tie: "Engraver, alchemist, inventor of the perpetual-motion clock, the submarine and the thermostat oven.",
     ev: "doc", evidence: "Born in Alkmaar, trained as an engraver in Haarlem, patented in the Dutch Republic in 1598, and lived most of his life in England as an inventor in royal service.",
-    links: [["Two Treatises (Latin, 1621), his own words", SL + "9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4?page=11"], ["The 1597 map of Alkmaar he engraved", SL + "69b525de2f891867c1ae5d21"]] },
+    links: [["Tractatus duo (Latin, Geneva 1628), his own words", SL + "drebbel-tractatus-duo-1628-latin-laurembergius?page=11"], ["The 1597 map of Alkmaar he engraved", SL + "kaart-van-alkmaar-cornelius-drebbel-sculptor-drebbel"]] },
 
   // Family
   { id: "goltzius", name: "Hendrick Goltzius", life: "1558–1617", group: "kin", year: 1592,
@@ -79,7 +79,7 @@ export const PEOPLE: Person[] = [
   { id: "james", name: "James I", life: "1566–1625", group: "patron", year: 1605,
     tie: "Royal patron; received the perpetual motion.", ev: "doc",
     evidence: "Drebbel arrived about 1604–06 and was lodged and pensioned at Eltham. Tymme (1612) says the perpetual motion was 'presented to the Kings most royall hands'. Drebbel walked in the king's funeral in 1625. The tale that James rode in the submarine is not attested.",
-    links: [["Drebbel's letter to the king (Latin, 1621 ed.)", SL + "9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4?page=62"]] },
+    links: [["Drebbel's letter to the king (Tractatus duo, 1628), p. 63", SL + "drebbel-tractatus-duo-1628-latin-laurembergius?page=62"]] },
   { id: "henry", name: "Henry, Prince of Wales", life: "1594–1612", group: "patron", year: 1607,
     tie: "Patron at Eltham.", ev: "doc",
     evidence: "Drebbel entered the prince's service about 1606–08. In his letter to James he recalls promising Henry to be back from Prague within six months.", links: [] },
@@ -130,18 +130,18 @@ export const PEOPLE: Person[] = [
   { id: "tymme", name: "Thomas Tymme", life: "d. 1620", group: "print", year: 1612,
     tie: "Published the first picture of the perpetual motion.", ev: "doc",
     evidence: "A Dialogue Philosophicall (1612): 'a most strange and wittie invention of another Archimedes ... as it was presented to the Kings most royall hands, by Cornelius Drebble of Alchmar in Holland'. He used it to argue for a motionless earth.",
-    links: [["Tymme, A Dialogue Philosophicall (1612)", SL + "6ac3ade2864e04424c043050"]] },
+    links: [["Tymme, A Dialogue Philosophicall (1612)", SL + "a-dialogue-philosophicall-wherein-natures-secret-closet-is-opened-tymm"]] },
   { id: "jonson", name: "Ben Jonson", life: "1572–1637", group: "print", year: 1609,
     tie: "Mocked the perpetual motion on stage.", ev: "report",
     evidence: "The DNB cites allusions in the Epigrams and Epicoene (V.3). The exact lines were not checked.",
-    links: [["Jonson, Workes (1640)", SL + "6a08fd0925e3a402b23b370f"]] },
+    links: [["Jonson, Workes (1640)", SL + "the-workes-of-benjamin-jonson-1640-second-folio-vol-2-ben-jo"]] },
   { id: "morsius", name: "Joachim Morsius", life: "1593–1642", group: "print", year: 1619,
     tie: "Edited the Quintessence; Drebbel signed his album in London, Nov 1619.", ev: "doc",
     evidence: "The album signature fixes Drebbel in London in 1619. Morsius is the only documented bridge to the Rosicrucian enthusiasts.", links: [] },
   { id: "lauremberg", name: "Petrus Lauremberg", life: "1585–1639", group: "print", year: 1621,
     tie: "Put the Elements treatise into Latin (Hamburg, 1621).", ev: "doc",
     evidence: "'E Belgico idiomate in Latinum vertit D. Petrus Laurembergius.' His dedication is dated 21 May 1621.",
-    links: [["Two Treatises, dedication p.5", SL + "9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4?page=5"]] },
+    links: [["Tractatus duo, end of the dedication, p. 6", SL + "drebbel-tractatus-duo-1628-latin-laurembergius?page=5"]] },
 
   // Witnesses
   { id: "kepler", name: "Johannes Kepler", life: "1571–1630", group: "witness", year: 1607,
@@ -169,27 +169,27 @@ export const PEOPLE: Person[] = [
   { id: "mersenne", name: "Marin Mersenne", life: "1588–1648", group: "witness", year: 1623,
     tie: "Repeated the submarine story in print.", ev: "report",
     evidence: "Quaestiones in Genesin (1623), Questions théologiques (1634) and Cogitata (1644): 'a small ship was constructed by Cornelius Drebbel in England, which swam while submerged'.",
-    links: [["Mersenne, Cogitata (1644), p.309", SL + "69af0dab9f13b61d0a6c6105?page=309"]] },
+    links: [["Mersenne, Cogitata (1644), p. 207", SL + "cogitata-physico-mathematica-mersenne?page=309"]] },
   { id: "kircher", name: "Athanasius Kircher", life: "1602–1680", group: "witness", year: 1641,
     tie: "Explained (and doubted) the sphere of elements.", ev: "report",
     evidence: "Magnes (1641): 'If, therefore, Drebbel's ingenious sphere of elements is claimed to be fashioned by this method...'",
-    links: [["Kircher, Magnes (1641), p.727", SL + "69527376ab34727b1f04948a?page=727"]] },
+    links: [["Kircher, Magnes (1641), p. 309", SL + "magnes-sive-de-arte-magnetica-kircher?page=727"]] },
   { id: "wilkins", name: "John Wilkins", life: "1614–1672", group: "witness", year: 1648,
     tie: "Treated the submarine as proven.", ev: "report",
     evidence: "Mathematicall Magick (1648): 'already experimented here in England by Cornelius Dreble'. Also describes his sun-driven musical instrument, and mocks Tymme's use of the perpetual motion.",
-    links: [["Wilkins, Mathematicall Magick, p.177", SL + "69aebe60c0472fef6455a8f3?page=177"]] },
+    links: [["Wilkins, Mathematicall Magick (1648), p. 178", SL + "mathematicall-magick-wilkins?page=206"]] },
   { id: "borel", name: "Pierre Borel", life: "c.1620–1671", group: "witness", year: 1655,
     tie: "Denied him the telescope; printed Boreel's letter.", ev: "report",
     evidence: "De vero telescopii inventore (1655), chapter heading: 'That Metius the Dutchman did not invent the Telescope, nor did Cornelius Drebbel.'",
-    links: [["Borel (1655), p.40", SL + "69b1858ac4be2cdd0edc36fa?page=40"]] },
+    links: [["Borel, De vero telescopii inventore (1655), p. 22", SL + "de-vero-telescopii-inventore-borel?page=40"]] },
   { id: "schott", name: "Gaspar Schott", life: "1608–1666", group: "witness", year: 1657,
     tie: "Described the perpetual motion as two fighting liquids.", ev: "report",
     evidence: "'Cornelius Drebbel is said to have enclosed two opposing and highly antipathetic liquids in a glass ring, which fought against each other in a perpetual struggle.'",
-    links: [["Schott (1657), p.475", SL + "69a5f6cd1cf742c3604142ea?page=475"]] },
+    links: [["Schott, Mechanica hydraulico-pneumatica (1657), p. 377", SL + "mechanica-hydraulico-pneumatica-schott?page=475"]] },
   { id: "monconys", name: "Balthasar de Monconys", life: "1611–1665", group: "witness", year: 1663,
     tie: "Heard in London how Drebbel freshened air and sea water.", ev: "report",
     evidence: "'He knew how to extract a subtle spirit from the air ... and the son-in-law of said Drebel ... knew the way to distill sea water and render it sweet.' Also saw Wren's furnace 'like Mr Kuffler's'.",
-    links: [["Monconys, Journal (1666 Eng.), p.43", SL + "6a44359d0235c9147000dd12?page=43"]] },
+    links: [["Monconys, Journal des voyages (1666), p. 33", SL + "journal-des-voyages-de-m-de-monconys-publie-par-le-sieur-de-monconys?page=43"]] },
 
   // Heirs
   { id: "galileo", name: "Galileo Galilei", life: "1564–1642", group: "heirs", year: 1624,
@@ -209,7 +209,7 @@ export const PEOPLE: Person[] = [
   { id: "boyle", name: "Robert Boyle", life: "1627–1691", group: "heirs", year: 1660,
     tie: "Recorded the submarine's 'Quintessence' of air from the family.", ev: "doc",
     evidence: "New Experiments (1660): tried 'in the Thames, with admired successe, the Vessel carrying twelve Rowers', kept alive by 'a certain Quintessence (as Chymists speake)' of the air restored from 'a Chymicall liquor'. His informant was 'an Ingenious Physitian that marry'd his daughter'.",
-    links: [["Boyle, General History of the Air (1692)", SL + "6ac3af023b2f03f7e59cba4e"]] },
+    links: [["Boyle, General History of the Air (1692), p. 81", SL + "the-general-history-of-the-air-boyle-robert?page=101"]] },
   { id: "goddard", name: "Jonathan Goddard", life: "1617–1675", group: "heirs", year: 1662,
     tie: "Brought the thermostat to the Royal Society.", ev: "doc",
     evidence: "Birch, History of the Royal Society, 1662: 'Dr. Goddard suggested Drebbel's method of governing a furnace by a thermometer of quicksilver.'", links: [] },
@@ -217,13 +217,13 @@ export const PEOPLE: Person[] = [
     tie: "Built a furnace 'like Mr Kuffler's'.", ev: "report", evidence: "Seen by Monconys in 1663.", links: [] },
   { id: "sorbiere", name: "Samuel Sorbière", life: "1615–1670", group: "heirs", year: 1664,
     tie: "Described Kuffler's furnace on his English journey.", ev: "report", evidence: "Relation d'un voyage en Angleterre, p.68.",
-    links: [["Sorbière, Relation (1666), p.68", SL + "6ac2798f02c7f994f8506b1e?page=68"]] },
+    links: [["Sorbière, Relation d'un voyage en Angleterre (1666), p. 56", SL + "relation-dun-voyage-en-angleterre-ou-sont-touchees-plusieurs-choses-qu?page=68"]] },
   { id: "hooke", name: "Robert Hooke", life: "1635–1703", group: "heirs", year: 1675,
     tie: "Knew Mrs Kuffler; wrote of her to Boyle, 1675.", ev: "doc", evidence: "", links: [] },
   { id: "chuygens", name: "Christiaan Huygens", life: "1629–1695", group: "heirs", year: 1703,
     tie: "Named Drebbel as the first maker of the microscope.", ev: "report",
     evidence: "Opuscula postuma (1703): 'in the year 1621 ... such microscopes were seen in London, at the home of our countryman Drebelius, and he was then considered the first inventor of them.' He was four when Drebbel died.",
-    links: [["Huygens, Opuscula postuma, p.245", SL + "69b6c2618566c838146599f0?page=245"]] },
+    links: [["Huygens, Opuscula postuma (1703), p. 221", SL + "christiani-hugenii-zelemii-dum-viveret-toparchae-opuscula-huygens?page=245"]] },
   { id: "glauber", name: "Johann Rudolf Glauber", life: "1604–1670", group: "heirs", year: 1650,
     tie: "Said to have worked with J. S. Kuffler.", ev: "weak", evidence: "Stated by Wikipedia only.", links: [] },
 

@@ -191,6 +191,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **Pipeline/cron/Lambda/OCR/translation:** read `memory/pipeline-ops.md` (or `/pipeline-context`)
 - **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
 - **Collection page layout / design:** governed by `.claude/docs/collection-page-redesign-spec.md` — read before changing structure or styling; hard rule: no new design primitives, every value maps to an existing token.
+- **Writing or editing an article (/articles):** follow `.claude/docs/article-rules.md` (hero, pictures in every section, `SourceQuote` for library quotes, no red text, book grid instead of a "The books" list).
 - **Writing a collection intro:** follow `.claude/docs/collection-intro-writing-rules.md` — required for `/curate-collection` and any authored collection prose.
 - **Writing a featured-work description:** use the `featured-work-description` skill — it sells the BOOK, never the platform.
 - **Choosing the quote-band background image:** use the `quote-background-image` skill.

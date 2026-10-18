@@ -136,7 +136,7 @@ export default function GlobalFooter() {
               />
             </Link>
             <span className="w-px h-[18px] md:h-5 bg-white/20" aria-hidden="true" />
-            <Link href="/in-memoriam" className="font-serif italic text-white/45 text-lg md:text-xl hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
+            <Link href={isEmbedded ? '/in-memoriam' : '/articles/in-memoriam'} className="font-serif italic text-white/45 text-lg md:text-xl hover:text-white/70 transition-colors" title="In memoriam: Joost R. Ritman">
               ad fontes
             </Link>
           </div>

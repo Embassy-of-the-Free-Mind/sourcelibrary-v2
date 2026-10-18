@@ -55,9 +55,10 @@ const POLICY_PREAMBLE = `# As a condition of accessing this website, you agree t
 # AI training is licensable: a standing rate card and standard terms are at ${BASE_URL}/licensing (see also ${BASE_URL}/llms.txt).`;
 
 // Endpoints a reserved AI crawler MAY still reach: the structured API, the
-// partnership/licensing docs, and the blog. Everything else (full text) is reserved.
+// partnership/licensing docs, and the articles. Everything else (full text) is reserved.
 const AI_ALLOW_LIST = [
-  '/blog/',
+  '/articles',
+  '/articles/',
   '/api/search',
   '/api/books/',
   '/api/verify',
@@ -67,8 +68,8 @@ const AI_ALLOW_LIST = [
   '/licensing',
   '/developers',
 ];
-// Reserved crawlers that aren't given API access still get the public docs + blog.
-const DOCS_ONLY = ['/blog/', '/llms.txt', '/terms', '/licensing', '/developers'];
+// Reserved crawlers that aren't given API access still get the public docs + articles.
+const DOCS_ONLY = ['/articles', '/articles/', '/llms.txt', '/terms', '/licensing', '/developers'];
 
 const DEFAULT_DISALLOW = [
   '/talks/', // password-gated internal decks; the route also sends X-Robots-Tag: noindex

@@ -114,19 +114,26 @@ function layout(): Record<string, Placed> {
     .stop();
   for (let i = 0; i < 400; i++) sim.tick();
   const pad = 30;
+  // Rounded to 2 decimals: the force arithmetic can differ in the last digits between
+  // the server and the browser, which would make the SVG attributes fail to hydrate.
+  const r2 = (v: number) => Math.round(v * 100) / 100;
   return Object.fromEntries(
     nodes.map((n) => [
       n.id,
-      { ...n, x: Math.max(pad, Math.min(W - 130, n.x ?? CX)), y: Math.max(pad + 10, Math.min(H - pad, n.y ?? CY)) },
+      { ...n, x: r2(Math.max(pad, Math.min(W - 130, n.x ?? CX))), y: r2(Math.max(pad + 10, Math.min(H - pad, n.y ?? CY))) },
     ]),
   );
 }
+
+const LINK = 'text-primary underline decoration-accent-gold/60 underline-offset-2 hover:decoration-accent-gold';
+
+const POS = layout();
 
 const DASH: Record<Evidence, string | undefined> = { doc: undefined, report: '6 3', weak: '1.5 3.5' };
 const EV_LABEL: Record<Evidence, { text: string; cls: string }> = {
   doc: { text: 'Documented', cls: 'text-accent-sage-dark border-accent-sage-dark' },
   report: { text: 'Reported second-hand', cls: 'text-accent-gold-dark border-accent-gold-dark' },
-  weak: { text: 'Unverified', cls: 'text-accent-rust border-accent-rust' },
+  weak: { text: 'Unverified', cls: 'text-secondary border-border-medium' },
 };
 
 function yearNote(y: number) {
@@ -140,15 +147,21 @@ function yearNote(y: number) {
 }
 
 export default function DrebbelNetwork() {
-  const pos = useMemo(layout, []);
+  const pos = POS;
   const [year, setYear] = useState(LAST_YEAR);
   const [hidden, setHidden] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState('drebbel');
   const [playing, setPlaying] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const plateRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => { if (timer.current) clearInterval(timer.current); }, []);
+  // On a phone the plate is wider than the screen and scrolls sideways; start it on Drebbel.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (el && el.scrollWidth > el.clientWidth) el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+  }, []);
 
   const play = () => {
     if (timer.current) {
@@ -196,7 +209,8 @@ export default function DrebbelNetwork() {
   return (
     <figure className="not-prose my-10" aria-label="Network of Cornelis Drebbel’s associates">
       <div ref={plateRef} className="border border-border-light bg-white">
-        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full h-auto" role="img" aria-label="Network centred on Cornelis Drebbel; select a name below the plate for details">
+        <div ref={scrollRef} className="overflow-x-auto">
+        <svg viewBox={`0 0 ${W} ${H}`} className="block w-full min-w-[760px] md:min-w-0 h-auto" role="group" aria-label="Network centred on Cornelis Drebbel; select a name on the plate or in the list below it for details">
           <g>
             {TIES.map((t, i) => {
               const a = pos[t.source];
@@ -235,7 +249,7 @@ export default function DrebbelNetwork() {
                   role="button"
                   aria-label={p.name}
                   aria-pressed={selected === p.id}
-                  className="cursor-pointer focus:outline-none focus-visible:[&>circle]:stroke-accent-rust"
+                  className="cursor-pointer focus:outline-none focus-visible:[&>circle.dot]:stroke-[#2a78d6]"
                   onClick={() => choose(p.id)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
@@ -244,7 +258,9 @@ export default function DrebbelNetwork() {
                     }
                   }}
                 >
+                  <circle r={Math.max(r + 10, 20)} fill="transparent" />
                   <circle
+                    className="dot"
                     r={r}
                     fill={GROUPS[p.group].color}
                     fillOpacity={p.group === 'unsupported' ? 0.55 : 1}
@@ -255,13 +271,13 @@ export default function DrebbelNetwork() {
                     x={isCenter ? 0 : r + 4}
                     y={isCenter ? -26 : 4}
                     textAnchor={isCenter ? 'middle' : 'start'}
-                    fontSize={isCenter ? 24 : 13}
+                    fontSize={isCenter ? 24 : 14}
                     fill="#1a1612"
                     stroke="#ffffff"
                     strokeWidth={3}
                     strokeLinejoin="round"
                     paintOrder="stroke"
-                    className={isCenter ? 'font-serif' : 'font-body'}
+                    className="font-sans"
                     style={{ pointerEvents: 'none' }}
                   >
                     {isCenter ? 'Drebbel' : shortName(p.name)}
@@ -271,13 +287,15 @@ export default function DrebbelNetwork() {
             })}
           </g>
         </svg>
+        </div>
+        <p className="md:hidden px-4 pt-2 text-xs text-muted font-sans">Swipe the plate sideways to see all of it, or tap a name in the list below.</p>
 
         <div className="border-t border-border-light px-4 py-3 space-y-3">
           <div className="flex flex-wrap items-center gap-3">
-            <label htmlFor="drebbel-year" className="text-xs uppercase tracking-wider text-muted">
+            <label htmlFor="drebbel-year" className="text-sm text-muted font-sans">
               Ties formed by
             </label>
-            <span className="font-mono text-lg tabular-nums text-primary w-[4ch]">{year}</span>
+            <span className="font-sans text-lg tabular-nums text-primary w-[4ch]">{year}</span>
             <input
               id="drebbel-year"
               type="range"
@@ -286,17 +304,17 @@ export default function DrebbelNetwork() {
               step={1}
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="flex-1 min-w-[160px] accent-[#9e4a3a]"
+              className="flex-1 min-w-[160px] h-8 accent-[#3d3a35]"
             />
             <button
               type="button"
               onClick={play}
-              className="text-xs uppercase tracking-wider border border-border-medium px-3 py-1.5 text-primary hover:border-accent-rust hover:text-accent-rust"
+              className="font-sans text-sm border border-border-medium px-4 py-2 text-primary hover:border-primary"
             >
               {playing ? 'Pause' : 'Play'}
             </button>
           </div>
-          <p className="text-sm italic text-muted font-body">{yearNote(year)}</p>
+          <p className="text-sm text-muted font-sans">{yearNote(year)}</p>
           <div className="flex flex-wrap gap-2">
             {GROUP_ORDER.map((g) => {
               const on = !hidden.has(g);
@@ -313,7 +331,7 @@ export default function DrebbelNetwork() {
                       return next;
                     })
                   }
-                  className={`inline-flex items-center gap-1.5 text-sm border border-border-light px-2 py-0.5 font-body text-primary ${on ? '' : 'opacity-40'}`}
+                  className={`inline-flex items-center gap-1.5 text-sm border border-border-light px-2.5 py-1.5 font-sans text-primary ${on ? '' : 'opacity-40'}`}
                 >
                   <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: GROUPS[g].color }} />
                   {GROUPS[g].label}
@@ -321,7 +339,7 @@ export default function DrebbelNetwork() {
               );
             })}
           </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted">
+          <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted font-sans">
             {(['doc', 'report', 'weak'] as Evidence[]).map((ev) => (
               <span key={ev} className="inline-flex items-center gap-1.5">
                 <svg width="28" height="8" aria-hidden="true">
@@ -334,30 +352,30 @@ export default function DrebbelNetwork() {
         </div>
       </div>
 
-      <div className="border border-t-0 border-border-light bg-cream px-5 py-5 space-y-3" aria-live="polite">
-        <div className="flex items-center gap-2 text-xs uppercase tracking-wider" style={{ color: GROUPS[person.group].color }}>
+      <div className="border border-t-0 border-border-light bg-cream px-5 py-5 space-y-3 font-sans" aria-live="polite">
+        <div className="flex items-center gap-2 text-sm text-secondary">
           <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: GROUPS[person.group].color }} />
           {GROUPS[person.group].label}
         </div>
         <h3 className="font-serif text-2xl text-primary leading-tight">{person.name}</h3>
-        <p className="font-mono text-sm text-muted">
+        <p className="text-sm text-muted tabular-nums">
           {[person.life, person.id !== 'drebbel' ? `tie from ${person.year}` : ''].filter(Boolean).join(' · ')}
         </p>
-        <p className="font-body text-lg italic text-primary leading-snug">{person.tie}</p>
+        <p className="text-lg text-primary leading-snug">{person.tie}</p>
         {person.id !== 'drebbel' && (
           <span className={`inline-block text-[11px] uppercase tracking-wider border px-2 py-0.5 ${EV_LABEL[person.ev].cls}`}>
             {EV_LABEL[person.ev].text}
           </span>
         )}
-        {person.evidence && <p className="font-body text-secondary leading-relaxed">{person.evidence}</p>}
+        {person.evidence && <p className="text-secondary leading-relaxed">{person.evidence}</p>}
         {person.links.length > 0 && (
           <ul className="space-y-1 text-sm">
             {person.links.map(([label, href]) => (
               <li key={href}>
                 {href.startsWith('/') ? (
-                  <Link href={href} className="text-accent-rust hover:underline">{label}</Link>
+                  <Link href={href} className={LINK}>{label}</Link>
                 ) : (
-                  <a href={href} className="text-accent-rust hover:underline" target="_blank" rel="noopener noreferrer">{label}</a>
+                  <a href={href} className={LINK} target="_blank" rel="noopener noreferrer">{label}</a>
                 )}
               </li>
             ))}
@@ -369,7 +387,7 @@ export default function DrebbelNetwork() {
             {otherTies.map((t, i) => (
               <span key={t.other}>
                 {i > 0 && ', '}
-                <button type="button" onClick={() => choose(t.other)} className="text-accent-rust underline underline-offset-2">
+                <button type="button" onClick={() => choose(t.other)} className={LINK}>
                   {shortName(byId[t.other].name)}
                 </button>{' '}
                 ({t.label})
@@ -381,32 +399,32 @@ export default function DrebbelNetwork() {
           {selected === 'drebbel' ? (
             `${PEOPLE.length - 1} people, ${TIES.length} ties. Click any name on the plate or in the list below.`
           ) : (
-            <button type="button" onClick={() => choose('drebbel')} className="text-accent-rust underline underline-offset-2">
+            <button type="button" onClick={() => choose('drebbel')} className={LINK}>
               Back to Drebbel
             </button>
           )}
         </p>
       </div>
 
-      <div className="mt-6 columns-1 sm:columns-2 gap-8 text-sm">
+      <div className="mt-6 columns-1 sm:columns-2 gap-8 text-sm font-sans">
         {GROUP_ORDER.map((g) => (
           <div key={g} className="break-inside-avoid mb-4">
-            <p className="flex items-center gap-1.5 text-xs uppercase tracking-wider mb-1" style={{ color: GROUPS[g].color }}>
+            <p className="flex items-center gap-1.5 text-sm font-medium text-primary mb-1">
               <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: GROUPS[g].color }} />
               {GROUPS[g].label}
             </p>
             {PEOPLE.filter((p) => p.group === g)
               .sort((a, b) => a.year - b.year)
               .map((p) => (
-                <button key={p.id} type="button" onClick={() => choose(p.id, true)} className="block text-left font-body text-primary hover:text-accent-rust py-px">
-                  <span className="font-mono text-xs text-muted tabular-nums">{p.year}</span> {p.name}
+                <button key={p.id} type="button" onClick={() => choose(p.id, true)} className="block text-left text-primary hover:underline py-1 md:py-px">
+                  <span className="text-xs text-muted tabular-nums">{p.year}</span> {p.name}
                 </button>
               ))}
           </div>
         ))}
       </div>
-      <figcaption className="text-sm text-muted font-body mt-2">
-        Sources: G. Tierie, <a href="http://www.drebbel.net/Tierie.pdf" className="text-accent-rust hover:underline">Cornelis Drebbel (1572–1633)</a>, Leiden 1932; the States General resolutions (REPUBLIC); Beeckman’s journal; Tymme 1612; Boyle 1660; Wilkins 1648. Book links open the passage in Source Library.
+      <figcaption className="text-sm text-muted font-sans mt-2">
+        Sources: G. Tierie, <a href="http://www.drebbel.net/Tierie.pdf" className={LINK}>Cornelis Drebbel (1572–1633)</a>, Leiden 1932; the States General resolutions (REPUBLIC); Beeckman’s journal; Tymme 1612; Boyle 1660; Wilkins 1648. Book links open the passage in Source Library.
       </figcaption>
     </figure>
   );

@@ -6,6 +6,7 @@ import EditorialSpread from '@/components/prototype/EditorialSpread';
 import BookSlider, { type MiniBook } from '@/components/BookSlider';
 import GalleryMasonry from '@/components/GalleryMasonry';
 import ResearchNotesSlider from '@/components/home/ResearchNotesSlider';
+import { posts as ARTICLES } from '@/app/articles/posts';
 import RecentlyRead from '@/components/home/RecentlyRead';
 import CuratedShowcase from '@/components/home/CuratedShowcase';
 import SubjectIndex from '@/components/home/SubjectIndex';
@@ -14,6 +15,11 @@ import { type HomeData } from '@/lib/home-data';
 import CollectionCardImage from '@/components/collections/CollectionCardImage';
 import { HOME_STRINGS, NATIVE_SHELF_LANGUAGE, type HomeLang, collectionName } from '@/lib/home-i18n';
 import { localePath, readsOriginal } from '@/lib/locale-path';
+
+// The newest twelve articles for the homepage slider (posts.ts is the one list).
+const NEWEST_ARTICLES = [...ARTICLES]
+  .sort((a, b) => (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0))
+  .slice(0, 12);
 
 // Shared homepage body. The English `/` route renders it with lang="en"; the
 // Spanish `/es` route with lang="es". Keeping a single component means the two
@@ -25,7 +31,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, nativeShelf, beginnerShelf } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -214,7 +220,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </div>
               <Link
                 href="/catalog"
-                className="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors hidden md:flex"
+                className="hidden md:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
                 {t.browseCatalog}
                 <span className="text-xs">&rarr;</span>
@@ -269,9 +275,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               </h2>
               <Link
                 href="/catalog?sort=last_translated"
-                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+                className="hidden sm:inline-flex h-11 items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors whitespace-nowrap"
               >
-                {t.browseCatalog} &rarr;
+                {t.browseCatalog}
+                <span className="text-xs">&rarr;</span>
               </Link>
             </div>
             <p className="text-muted mb-6 max-w-2xl">
@@ -322,7 +329,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
               <div className="mt-8 flex justify-center">
                 <Link
                   href="/gallery"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium px-5 py-2.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+                  className="h-11 inline-flex items-center gap-2 px-5 bg-primary text-sm font-medium text-white hover:bg-primary/80 transition-colors"
                 >
                   {t.galleryViewAll(counts.illustrationCount)}
                   <span className="text-xs">&rarr;</span>
@@ -354,30 +361,14 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
         </section>
       )}
 
-      {/* Blog Section */}
+      {/* Articles: the newest twelve */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
-          <div className="flex items-baseline justify-between mb-10">
-            <div>
-              <h2 className="text-3xl md:text-4xl text-primary font-display">
-                {t.blogHeading}
-              </h2>
-              <p className="text-muted mt-2">
-                {t.blogSubtitle}
-              </p>
-            </div>
-            <Link
-              href="/blog"
-              className="text-sm text-accent-rust hover:underline"
-            >
-              {t.blogAllPosts}
-            </Link>
-          </div>
-
           <ResearchNotesSlider
-            posts={blogPosts}
-            deepDiveLabel={t.tagDeepDive}
-            collectionLabel={t.tagCollection}
+            posts={NEWEST_ARTICLES}
+            heading={t.blogHeading}
+            subtitle={t.blogSubtitle}
+            allLabel={t.blogAllPosts}
           />
         </div>
       </section>

@@ -19,10 +19,10 @@
  *
  * Usage:
  *   node scripts/maintenance/check-blog-links.mjs --all
- *   node scripts/maintenance/check-blog-links.mjs src/app/blog/foo/page.tsx [...]
+ *   node scripts/maintenance/check-blog-links.mjs src/app/articles/foo/page.tsx [...]
  *
  * Options:
- *   --all                 Check every src/app/blog/⋆⋆/page.tsx, plus the
+ *   --all                 Check every src/app/articles/⋆⋆/page.tsx, plus the
  *                         shortlinks in every source file under src/
  *   --base-url <url>      Target site (default https://sourcelibrary.org)
  *   --concurrency <n>     Parallel fetches (default 8)
@@ -49,7 +49,7 @@ const CONCURRENCY = parseInt(getOpt('--concurrency', '8'), 10);
 const ALL = args.includes('--all');
 if (ALL) args.splice(args.indexOf('--all'), 1);
 
-const BLOG_DIR = 'src/app/blog';
+const BLOG_DIR = 'src/app/articles';
 
 function allBlogPages(dir = BLOG_DIR, out = []) {
   for (const entry of readdirSync(dir)) {

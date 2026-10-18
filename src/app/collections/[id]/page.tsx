@@ -399,7 +399,7 @@ const COMPACT_LIMIT = 14;
 // the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
 // meta row and is never shown inside a partner room.
 const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }> = {
-  drebbel: { href: '/collections/drebbel/beeckman', label: 'Beeckman on Drebbel, in his own words' },
+  drebbel: { href: '/articles/beeckman-on-drebbel', label: 'Beeckman on Drebbel, in his own words' },
 };
 
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.

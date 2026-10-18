@@ -837,6 +837,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
   }
 
   const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+  // `ocr_head` (1,200 characters of each page's OCR) is for the cover and
+  // representative-page choice made on the server below; no client component
+  // reads it. Strip it before the page list is serialised to the browser, so
+  // the payload doesn't carry 100 pages of text, including text flagged
+  // `ocr.unreadable` (#4523) because we know it is wrong.
+  const clientPages = (pages as Array<Page & { ocr_head?: unknown }>).map(({ ocr_head: _ocrHead, ...rest }) => rest as Page);
 
   // What we can honestly SAY about this book's first-translation status (#3459).
   // The flag decides whether a claim appears at all; this decides its register —
@@ -1732,7 +1738,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               bookTitle={book.display_title || book.title}
               bookAuthor={book.author}
               bookYear={book.published}
-              pages={pages}
+              pages={clientPages}
               trigger={
                 <div className="flex flex-col items-center md:items-start">
                   {coverDisplay ? (
@@ -1950,7 +1956,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
             belowContent={readingDropdowns}
             bookId={book.id}
             bookSlug={bookSlug}
-            pages={pages}
+            pages={clientPages}
             plates={galleryImages.map(p => ({ id: p.id, thumbnail_url: p.thumbnail_url, extracted_url: p.extracted_url, image_url: p.image_url, description: p.description }))}
           />
         </div>
@@ -1986,7 +1992,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 : digitizer
                   ? t.pagesDigitizedBy(digitizer)
                   : t.pagesInReadingOrder;
-              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} readHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/read` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
+              const pagesEl = <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={clientPages} totalPageCount={totalPages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} overviewHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/overview` : undefined} readHref={embedPolicy.showBookOverviewLink ? `/book/${bookSlug}/read` : undefined} subtitle={pagesSubtitle} fallbackImages={witnessFallbacks.length > 0 ? witnessFallbacks : undefined} />;
               const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
               if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
                 return <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>{pagesEl}</EarlyAccessGate>;
@@ -2081,7 +2087,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 bookTitle={book.display_title || book.title}
                 bookAuthor={book.author}
                 bookYear={book.published}
-                pages={pages}
+                pages={clientPages}
               />
             </div>
 
@@ -2655,11 +2661,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
             return (
               <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
-                <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+                <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={clientPages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
               </EarlyAccessGate>
             );
           }
-          return <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+          return <BookPagesSection bookId={book.id} bookPath={book.slug || book.id} bookTitle={book.display_title || book.title} pages={clientPages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
         <AuthCheck role="inner_circle">
           <BookHistory bookId={book.id} />

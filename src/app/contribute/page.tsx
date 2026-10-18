@@ -294,7 +294,7 @@ export default async function ParticipatePage() {
             </div>
 
             <Link
-              href="/blog"
+              href="/articles"
               className="group p-6 rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-sm transition-all"
             >
               <div className="flex items-start gap-4">

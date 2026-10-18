@@ -3442,7 +3442,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         // One batch job carries one model, so partition before pooling. Sending
         // a Chinese or Sanskrit book to flash-lite is the failure the routing
         // rule exists to prevent — it does not fail, it invents plausible text
-        // (see src/app/blog/tibetan-ocr/). The previous inline path ignored
+        // (see src/app/articles/tibetan-ocr/). The previous inline path ignored
         // this and used flash-lite for every book; that is not carried over.
         const byModel = new Map();
         for (const book of stillNeedPreview) {

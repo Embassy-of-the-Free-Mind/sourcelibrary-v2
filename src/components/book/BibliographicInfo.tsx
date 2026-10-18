@@ -447,7 +447,7 @@ export default function BibliographicInfo({
                             )}
                             <p className="text-stone-600 text-[10px]">
                               Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via {book.translation_verification.model || 'AI'}
-                              {showExternalLinks && <>{' '}&middot;{' '}<a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>}
+                              {showExternalLinks && <>{' '}&middot;{' '}<a href="/articles/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>}
                             </p>
                           </div>
                         </details>

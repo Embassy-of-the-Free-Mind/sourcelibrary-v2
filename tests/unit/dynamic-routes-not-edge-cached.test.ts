@@ -163,8 +163,8 @@ describe('no route is both force-dynamic and edge-cached', () => {
    * Shrink this array when you fix one. Never grow it without saying why.
    */
   const KNOWN_COLLISIONS = new Set([
-    '/blog/man-his-own-maker',
-    '/blog/singularity-1486',
+    '/articles/man-his-own-maker',
+    '/articles/singularity-1486',
     '/book/[id]/overview',
     '/browse/artists/[letter]',
     '/browse/authors/[letter]',
